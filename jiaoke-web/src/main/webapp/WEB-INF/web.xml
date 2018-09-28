@@ -4,10 +4,6 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
-
-
-
-
         <listener>
             <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
         </listener>
@@ -17,8 +13,6 @@
             <param-name>contextConfigLocation</param-name>
             <param-value>classpath*:conf/applicationContext.xml</param-value>
         </context-param>
-
-
 
         <filter>
             <filter-name>encodingFilter</filter-name>
