@@ -1,0 +1,238 @@
+@charset "utf-8";
+/* 以下实际使用若已初始化可删除 .nav height父级需逐级设置为100%*/
+body, html {
+    height: 100%;
+    background: #ffffff
+}
+
+body, ul {
+    margin: 0;
+    padding: 0
+}
+
+body {
+    font: 14px "微软雅黑", "宋体", "Arial Narrow", HELVETICA;
+    -webkit-text-size-adjust: 100%;
+}
+
+li {
+    list-style: none
+}
+
+a {
+    text-decoration: none;
+}
+
+/* 以上实际使用若已初始化可删除 */
+
+/* nav */
+.nav {
+    width: 180px;
+    min-height: 100%;
+    height: auto;
+    /*background: #367448;*/
+    transition: all .3s;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.nav a {
+    display: block;
+    overflow: hidden;
+    padding-left: 20px;
+    line-height: 40px;
+    max-height: 40px;
+    /*color: #ffffff;*/
+    transition: all .3s;
+}
+
+.nav a span {
+    margin-left: 30px;
+}
+
+.nav-item {
+    position: relative;
+}
+
+.nav-item.nav-show {
+    border-bottom: none;
+}
+
+.nav-item ul {
+    display: none;
+    /*background: rgba(0, 0, 0, .1);*/
+}
+
+.nav-item.nav-show ul {
+    display: block;
+}
+
+.nav-item > a:before {
+    content: "";
+    position: absolute;
+    left: 0px;
+    width: 99%;
+    height: 40px;
+    opacity: 0;
+    transition: all .3s;
+    box-shadow: 1px 1px 5px 0px #a7a7a7;
+}
+
+.nav .nav-icon {
+    font-size: 20px;
+    position: absolute;
+    margin-left: -1px;
+}
+
+/* 此处修改导航图标 可自定义iconfont 替换*/
+.icon_1::after {
+    content: "\e62b";
+}
+
+.icon_2::after {
+    content: "\e669";
+}
+
+.icon_3::after {
+    content: "\e61d";
+}
+
+/*---------------------*/
+.nav-more {
+    float: right;
+    margin-right: 20px;
+    margin-top: 5px;
+    font-size: 12px;
+    transition: transform .3s;
+}
+
+/* 此处为导航右侧箭头 如果自定义iconfont 也需要替换*/
+.nav-more::after {
+    content: "\e621";
+}
+
+/*---------------------*/
+.nav-show .nav-more {
+    transform: rotate(90deg);
+}
+
+.nav-show, .nav-item > a:hover {
+    /*color: #FFF;*/
+    /*background: rgba(0, 0, 0, .1);*/
+}
+
+.nav-show > a:before, .nav-item > a:hover:before {
+    opacity: 1;
+}
+
+.nav-item li:hover a {
+    /*color: #FFF;*/
+    background: rgba(0, 0, 0, .1);
+}
+
+/* nav-mini */
+.nav-mini.nav {
+    width: 60px;
+}
+
+.nav-mini.nav .nav-icon { /* margin-left:-2px; */
+}
+
+.nav-mini.nav .nav-item > a span {
+    display: none;
+}
+
+.nav-mini.nav .nav-more {
+    margin-right: -20px;
+}
+
+.nav-mini.nav .nav-item ul {
+    position: absolute;
+    top: 0px;
+    left: 60px;
+    width: 160px;
+    z-index: 99;
+    /*background: #367448;*/
+    overflow: hidden;
+}
+
+.nav-mini.nav .nav-item:hover {
+    background: rgba(255, 255, 255, .1);
+}
+
+.nav-mini.nav .nav-item:hover .nav-item a {
+    color: #FFF;
+}
+
+.nav-mini.nav .nav-item:hover a:before {
+    opacity: 1;
+}
+
+.nav-mini.nav .nav-item:hover ul {
+    display: block;
+}
+
+.right_page {
+    transition: width 2s;
+    -moz-transition: width 2s; /* Firefox 4 */
+    -webkit-transition: width 0.3s; /* Safari and Chrome */
+    -o-transition: width 2s; /* Opera */
+    height: 99%;
+    width: 96%;
+    float: right;
+    background-color: #fff;
+}
+
+/*现在位置*/
+.now_location {
+    height: 6%;
+    width: 98%;
+    padding: 5px 0 5px 20px;
+    border-bottom: 1px #d5d6d7 solid;
+}
+
+.now_location_icon {
+    display: inline-block;
+    width: 35px;
+    height: 35px;
+    margin-right: 10px;
+    vertical-align: top;
+}
+
+.now_location_icon img {
+    width: 25px;
+    height: 25px;
+    margin: 4px 0 0 10px;
+}
+
+.now_location_content {
+    display: inline-block;
+    line-height: 34px;
+    width: auto;
+    height: 35px;
+    font-size: 14px;
+}
+
+
+.nav-item ul li a{
+    font-size: 10px;: ;
+}
+
+/*overflow滚动条样式*/
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #E5E8EC;
+    background-clip: padding-box;
+    border: 1px solid #E6E5E6;
+    min-height: 28px;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-track-piece {
+    background-color: #fff;
+}

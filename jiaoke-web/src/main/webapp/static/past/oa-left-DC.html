@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<link href="../css/default.css" rel="stylesheet" type="text/css">
+<link href="../css/style/green.css" rel="stylesheet" type="text/css" id = 'link'>
+</head>
+
+<body >
+  
+        <ul class="leftmenu">
+            <li>
+                <a href="" target="right">
+                    <i class="iconfont">&#xe652;</i>员工档案</a>
+            </li>
+            <li>
+                <a href="" target="right" class="selected">
+                    <i class="iconfont">&#xe63e;</i>设备档案</a>
+            </li>
+            <li>
+                <a href="" target="right">
+                    <i class="iconfont">&#xe63a;</i>资质档案</a>
+            </li>
+            <li>
+                <a href="" target="right">
+                    <i class="iconfont">&#xe67c;</i>产品档案</a>
+            </li>
+          
+        </ul>
+
+
+</body>
+	<script type="text/javascript" src="../js/jquery.js"></script>
+    <script type="text/javascript" src="../js/common.js"></script>
+    <script type="text/javascript" src="../js/skin.js"></script>
+    
+    <script type="text/javascript"> 
+    $(".tab > li").click(function(){
+        $(".tab > li").removeClass("tabcurrent");
+        $(this).addClass("tabcurrent");
+        $(".website,.userinfo").hide();
+        $("." + $(".tab >li.tabcurrent").attr("name")).show();
+    });
+    </script>
+</html>

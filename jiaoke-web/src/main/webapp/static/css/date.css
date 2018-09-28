@@ -1,0 +1,157 @@
+button{
+	margin: 0;
+  	font: inherit;
+  	color: inherit;
+  	overflow: visible;
+  	text-transform: none;
+  	border: none;
+  	text-align: center;
+}
+ul,li{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+.rightPart2{
+	float: left;
+	width: 440px;
+	height: 445px;
+	border: 1px #ccc solid;
+}
+/* 我的日程 */
+.title2{
+	height: 40px;
+	line-height: 40px;
+	border-bottom: 1px #c7c7c7 solid;
+	padding-left: 20px;
+}
+.today{
+	width:40px;
+	height:24px;
+	line-height:24px;
+	text-align:center;
+	background:#e0f2ff;
+	color:#666;
+	border-radius: 2px;
+	float: right;
+	margin-right: 30px;
+	margin-top: 8px;
+	cursor: pointer;
+}
+.schedule{
+	width:100%;
+}
+.dateShow{
+	border-bottom: 1px #dbdbdb solid;
+	height:125px;
+}
+table.dates{
+	width:100%;
+	margin-top:8px;
+}
+table.dates tr th{
+	padding:5px;
+	color:#666;
+	font-weight: normal !important;
+}
+table.dates tr th,
+table.dates tr td{
+	text-align:center;
+}
+table.dates tr td{
+	padding:6px 0;
+	cursor: pointer;
+}
+table.dates tr th button{
+	padding:6px;
+	cursor: pointer;
+	width:24px;
+	height:24px;
+}
+.lastM{
+	background:#fff url(images/double-left.png) no-repeat;
+	background-position:0 8px; 
+}
+.lastW{
+	background:#fff url(images/pre.png) no-repeat;
+	background-position:5px 8px; 
+}
+.nextW{
+	background:#fff url(images/next.png) no-repeat;
+	background-position:5px 8px; 
+}
+.nextM{
+	background:#fff url(images/double-right.png) no-repeat;
+	background-position:14px 8px; 
+}
+table.dates tr td button{
+	/* width:24px; */
+	height:24px;
+	line-height:24px;
+	text-align:center;
+	background: #fff;
+	cursor: pointer;
+}
+.mark1{
+	background: #028BE0 !important;
+	color:#fff;
+	border-radius: 2px;
+}
+.mark2{
+	background: url(images/spoint.png) no-repeat top;
+}
+.padleft{
+	padding-left:38px !important;
+}
+.padright{
+	padding-right:38px !important;
+}
+.tl{
+	text-align:left !important;
+}
+.tr{
+	text-align:right !important;
+}
+.detailed{
+	padding:10px 16px;
+	height:220px;
+	overflow:hidden;
+	overflow-y:auto;
+}
+.rclist{
+	overflow:hidden;
+	padding-bottom:20px;
+}
+.detailed ul li{
+	
+}
+.detailed ul li span{
+	display: inline-block;
+	color:#666;
+}
+.detailed ul li{
+	width:100%;
+	/* position: relative; */
+	float:left;
+	margin-bottom: 10px;
+}
+.time{
+	width:60px;
+	float:left;
+	background: url(images/point.png) no-repeat left;
+	padding-left:14px;
+}
+.explain{
+	width:310px;
+	float:left;
+	/* position: absolute;
+	left:60px;
+	top:0; */
+}
+.downBtn{
+	width:100%;
+	background: url(images/downbtn.png) center;
+	text-align: center;
+	cursor: pointer; 
+	display: block;
+}
