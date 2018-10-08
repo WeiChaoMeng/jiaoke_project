@@ -6,13 +6,21 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+    String path = request.getContextPath();
+
+    String basePath = request.getScheme()+ "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+
+    request.setAttribute("path",basePath);
+%>
 <html>
 <head>
     <meta charset="utf-8">
     <title>路驰办公系统</title>
-    <link href="../../static/css/default.css" rel="stylesheet" type="text/css">
-    <link href="../../static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
-    <link rel="icon" href="../../static/images/favicon.ico" type="image/ico"/>
+    <link href="/static/css/default.css" rel="stylesheet" type="text/css">
+    <link href="/static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
+    <link rel="icon" href="/static/images/favicon.ico" type="image/ico"/>
     <style>
         html {
             overflow: hidden;
@@ -20,6 +28,7 @@
     </style>
 </head>
 <body style="background:url(../../static/images/line.gif) repeat-y 0 0;">
+
 
 <div id="flag"></div>
 <!--弹窗背景变暗-->
@@ -45,10 +54,10 @@
 
 <div class="header">
     <div class="headtop">
-        <span class="logo" id="logo"><img src="../../static/images/logo-2.png"></span>
+        <span class="logo" id="logo"><img src="/static/images/logo-2.png"></span>
         <ul class="nav">
             <li>
-                <a href="#" class="manu" id="index">首页</a>
+                <a href="#" class="manu" id="index"  >首页</a>
             </li>
             <li>
                 <a href="#" class="manu" id="OA">OA系统</a>
@@ -105,7 +114,7 @@
 </div>
 
 <div class="rightdown">
-    <iframe src="./default.jsp" id="iframe" name="right" width="100%" height="100%" frameborder="0"
+    <iframe src="default.do" id="iframe" name="right" width="100%" height="100%" frameborder="0"
             scrolling="auto"></iframe>
 </div>
 
@@ -115,10 +124,10 @@
 </div>
 
 </body>
-<script type="text/javascript" src="../../static/js/jquery.js"></script>
-<script type="text/javascript" src="../../static/js/common.js"></script>
-<script type="text/javascript" src="../../static/js/skin.js"></script>
-<script src="../../static/js/layer/layer.js"></script>
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/js/common.js"></script>
+<script type="text/javascript" src="/static/js/skin.js"></script>
+<script src="/static/js/layer/layer.js"></script>
 <script>
 
     ;!function () {
@@ -156,17 +165,17 @@
 
                 case 'index':
 
-                    $("#iframe").attr("src", "default.jsp");
+                    $("#iframe").attr("src", "default.do");
                     break;
 
                 case 'OA':
 
-                    $("#iframe").attr("src", "oa/oa_navigation.jsp");
+                    $("#iframe").attr("src", "oaIndex.do");
                     break;
 
                 case 'quality_control':
 
-                    $("#iframe").attr("src", "quality/qc_heard.jsp");
+                    $("#iframe").attr("src", "qualityIndex.do");
                     break;
 
                 case 'HR':
@@ -201,7 +210,7 @@
     $('#index').click(function () {
         $('.selected').attr('class', 'manu');
         $(this).attr('class', 'selected');
-        $('#iframe').attr('src', 'default.jsp');
+        $('#iframe').attr('src', 'default.do');
 
     });
 </script>

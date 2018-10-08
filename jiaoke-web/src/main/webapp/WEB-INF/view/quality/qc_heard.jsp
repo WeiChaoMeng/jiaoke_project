@@ -10,8 +10,8 @@
 <head>
     <meta charset="utf-8">
     <title>路驰公司企业综合管理平台</title>
-    <link href="../../css/default.css" rel="stylesheet" type="text/css">
-    <link href="../../css/style/green.css" rel="stylesheet" type="text/css" id='link'>
+    <link href="/static/css/default.css" rel="stylesheet" type="text/css">
+    <link href="/static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
     <style>
         html {
             overflow: hidden;
@@ -56,7 +56,7 @@
 </div>
 
 
-<iframe src="qc_index.jsp" id="iframe" name="right" width="100%" height="70%" frameborder="0" scrolling="auto" style="height: 510px;"></iframe>
+<iframe src="qc_index.do" id="iframe" name="right" width="100%" height="70%" frameborder="0" scrolling="auto" style="height: 510px;"></iframe>
 
 
 <!--right end-->
@@ -67,9 +67,9 @@
 
 <!--footer start-->
 <!--footer end-->
-<script type="text/javascript" src="../../js/jquery.js"></script>
-<script type="text/javascript" src="../../js/skin.js"></script>
-<script src="../../js/layer/layer.js"></script>
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/js/skin.js"></script>
+<script src="/static/js/layer/layer.js"></script>
 <script type="text/javascript">
     $(function () {
 //关于

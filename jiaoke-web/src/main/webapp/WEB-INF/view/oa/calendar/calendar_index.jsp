@@ -5,7 +5,8 @@
   Time: 14:21
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html;charset=utf-8" pageEncoding="utf-8" %>
+
 <html>
 <head>
     <meta charset="utf-8">
@@ -597,7 +598,7 @@
 
                 function Y(e, c) {
                     if (arguments.length > 1) {
-                        var b = /([.*+?^=!:${}()|[\]\/\\])/g,
+                        var b = /([.*+?^=!:()|[\]\/\\])/g,
                             Z = "{".replace(b, "\\$1"),
                             d = "}".replace(b, "\\$1");
                         var a = new RegExp("#" + Z + "([^" + Z + d + "]+)" + d, "g");

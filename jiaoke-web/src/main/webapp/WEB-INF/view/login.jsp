@@ -6,6 +6,15 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+    String path = request.getContextPath();
+
+    String basePath = request.getScheme()+ "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+
+    request.setAttribute("path",basePath);
+%>
+
 <html>
 <head>
     <meta charset="utf-8">
@@ -33,17 +42,17 @@
             </div>
 
             <div class="login-form">
-                <form>
+                <form  method="post" action="login.do" >
                     <div class="login_input_content">
                         <div class="left-icon"><img src="../../static/images/username.png" alt=""></div>
-                        <input type="text" placeholder="账号" class="right-input">
+                        <input type="text" placeholder="账号" name="username" class="right-input">
                     </div>
                     <div class="login_input_content">
                         <div class="left-icon"><img src="../../static/images/password.png" alt=""></div>
                         <input type="password" placeholder="密码" name="password" id="password" class="right-input">
                     </div>
                     <div class="login_input_content">
-                        <button type="button" class="login-but" id="submit">登录</button>
+                        <button type="submit" class="login-but" id="submit">登录</button>
                     </div>
                 </form>
             </div>
@@ -68,8 +77,6 @@
         $(".login").css("padding-top", $(window).height() / 2 - $(".login").height() / 2);
     });
 
-    $('#submit').on('click', function () {
-        window.location.href = "main.html";
-    })
+
 </script>
 </html>
