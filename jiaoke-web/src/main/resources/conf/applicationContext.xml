@@ -49,6 +49,6 @@
     </bean>
 
     <!-- 2.扫描Mapper接口 -->
-    <mybatis-spring:scan base-package="com.jiaoke.dao"/>
+    <mybatis-spring:scan base-package="com.jiaoke.*.dao"/>
 
 </beans>

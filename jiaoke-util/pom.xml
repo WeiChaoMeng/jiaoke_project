@@ -13,5 +13,12 @@
 
     <packaging>jar</packaging>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.jiaoke</groupId>
+            <artifactId>jiaoke-bean</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
 </project>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.quality.dao.QualityWarningDao">
+
+    <insert id="insertQualityWarningCrew" parameterType="map"  keyProperty="id" useGeneratedKeys="true">
+        insert into quality_warning_promessage_crew(produce_date,
+                                                            produce_time,
+                                                            produce_ratio_id,
+                                                            produce_car_num,
+                                                            produce_disc_num,
+                                                            produce_user,
+                                                            produce_custom_num,
+                                                            produce_crewNum)
+                  values (#{produce_date},
+                            #{produce_time},
+                            #{produce_ratio_id},
+                            #{produce_car_num},
+                            #{produce_disc_num},
+                            #{produce_user},
+                            #{produce_custom_num},
+                            #{produce_crewNum})
+    </insert>
+
+    <select id="selectRatioTemplateByCrew1MoudelId" resultType="com.jiaoke.quality.bean.QualityRatioTemplate" statementType="STATEMENT" >
+
+        select id,
+               pro_name as proName,
+               repertory_one as repertoryOne,
+               repertory_two as repertoryTwo,
+               repertory_three as repertoryThree,
+               repertory_four as repertoryFour,
+               repertory_five as repertoryFive,
+               repertory_six as repertorySix,
+               breeze as breeze,
+               ratio_stone as ratioStone,
+               ratio_regenerate as ratioRegenerate,
+               ratio_additive as ratioAdditive,
+               regenerate as regenerate,
+               additive as additive,
+               temperature_asphalt as temperatureAsphalt,
+               temperature_aggregate as temperatureAggregate,
+               temperature_mixture as temperatureMixture,
+               temperature_milling as temperatureMilling
+        from quality_proportioning_message
+        where ${columeName} = ${crewMoudelId}
+
+    </select>
+
+</mapper>

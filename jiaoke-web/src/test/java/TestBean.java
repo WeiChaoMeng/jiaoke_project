@@ -7,10 +7,8 @@
  * 作者姓名     修改时间    版本号        描述
  **/
 
-import com.jiaoke.inf.TestInf;
-import org.junit.Test;
+
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -26,12 +24,5 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class TestBean {
 
-    @Autowired
-    private TestInf testInf;
-
-    @Test
-    public void te(){
-        testInf.testInf();
-    }
 
 }
