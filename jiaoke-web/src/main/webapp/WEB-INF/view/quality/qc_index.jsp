@@ -19,74 +19,90 @@
 <body style="padding:15px 8px 400px 8px;overflow-x: hidden;">
 
 <div class="chartbox1">
-    <div class="boxtitle"><span>本周产品用料统计</span></div>
+    <div class="boxtitle"><span>本周产量统计</span></div>
     <div id="chart2" class="charts1"></div>
 </div>
 
 <script type="text/javascript">
     // 基于准备好的dom，初始化echarts实例
     var myChart1 = echarts.init(document.getElementById('chart2'), 'uimaker');
-    // 指定图表的配置项和数据
-    option = {
-        tooltip: {
-            trigger: 'axis',
-            axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-                type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-            }
-        },
 
-        grid: {
-            x: 60,
-            x2: 40,
-            y: 10,
-            height: 200
-        },
+    var url = '${pageContext.request.contextPath}/getLastWeekCrewData.do';
 
-        calculable: true,
-        xAxis: [
-            {
-                type: 'category',
-                data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-            }
-        ],
-        yAxis: [
-            {
-                type: 'value'
-            }
-        ],
-        series: [
-            {
-                name: '骨料',
-                type: 'bar',
-                data: [320, 332, 301, 334, 390, 330, 320]
-            },
-            {
-                name: '沥青',
-                type: 'bar',
-                stack: '广告',
-                data: [120, 132, 101, 134, 90, 230, 210]
-            },
-            {
-                name: '碎石',
-                type: 'bar',
-                stack: '广告',
-                data: [220, 182, 191, 234, 290, 330, 310]
-            },
-            {
-                name: '添加料',
-                type: 'bar',
-                stack: '广告',
-                data: [150, 232, 201, 154, 190, 330, 410]
+        // 指定图表的配置项和数据
+        option = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
             },
 
-        ]
-    };
+            grid: {
+                x: 60,
+                x2: 40,
+                y: 10,
+                height: 200
+            },
+
+            calculable: true,
+            xAxis: [
+                {
+                    type: 'category',
+                    data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '机组一',
+                    type: 'bar',
+                    data: [320, 332, 301, 334, 390, 330, 320]
+                },
+                {
+                    name: '机组二',
+                    type: 'bar',
+                    stack: '广告',
+                    data: [120, 132, 101, 134, 90, 230, 210]
+                }
+
+            ]
+        };
+
+        $.ajax({
+            type:'post',
+            url:url,
+            dataType:'json',
+            success:function(result){
+
+                if(result){
+                    //将返回的category和series对象赋值给options对象内的category和series
+                    option.xAxis[0].data = result.axis;
+                    option.legend.data = result.legend;
+                    var series_arr=result.series;
+                    for(var i=0;i<series_arr.length;i++){
+                        option.series[i] = result.series[i];
+                    }
+                    myChart.hideLoading();
+                    myChart.setOption(option);
+                }
+            },
+            error:function(errMsg){
+                console.error("加载数据失败")
+            }
+
+        })
 
     // 使用刚指定的配置项和数据显示图表。
-    myChart1.setOption(option);
-    window.addEventListener("resize", function () {
-        myChart1.resize();
-    });
+        myChart1.setOption(option);
+        window.addEventListener("resize", function () {
+            myChart1.resize();
+        });
+
 </script>
 
 <div class="divbox">

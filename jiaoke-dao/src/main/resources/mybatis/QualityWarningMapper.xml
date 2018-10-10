@@ -2,7 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jiaoke.quality.dao.QualityWarningDao">
 
-    <insert id="insertQualityWarningCrew" parameterType="map"  keyProperty="id" useGeneratedKeys="true">
+    <insert id="insertQualityWarningCrew" parameterType="java.util.Map"  keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        <selectKey resultType="String" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() as id
+        </selectKey>
         insert into quality_warning_promessage_crew(produce_date,
                                                             produce_time,
                                                             produce_ratio_id,
@@ -33,7 +36,8 @@
                repertory_six as repertorySix,
                breeze as breeze,
                ratio_stone as ratioStone,
-               ratio_regenerate as ratioRegenerate,
+               ratio_regenerate1 as ratioRegenerate1,
+               ratio_regenerate2 as ratioRegenerate2,
                ratio_additive as ratioAdditive,
                regenerate as regenerate,
                additive as additive,
@@ -45,5 +49,22 @@
         where ${columeName} = ${crewMoudelId}
 
     </select>
+    
+    <insert id="insertQualityWarningData" parameterType="java.util.List" useGeneratedKeys="false" >
+
+            insert into quality_warning_data
+            (crew_id,material_name,actual_ratio,moudle_ratio,deviation_ratio,warning_level)
+            values
+            <foreach collection="warningDataList" item="item" index="index" separator=",">
+                (
+                #{item.crewId},
+                #{item.materialName},
+                #{item.actualRatio},
+                #{item.moudleRatio},
+                #{item.deviationRatio},
+                #{item.warningLevel}
+                )
+            </foreach>
+    </insert>
 
 </mapper>

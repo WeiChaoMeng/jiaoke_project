@@ -9,8 +9,10 @@
 package com.jiaoke.quality.dao;
 
 import com.jiaoke.quality.bean.QualityRatioTemplate;
+import com.jiaoke.quality.bean.QualityWarningData;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,4 +40,5 @@ public interface QualityWarningDao {
     QualityRatioTemplate selectRatioTemplateByCrew1MoudelId(@Param("crewMoudelId") String crewMoudelId, @Param("columeName")String columeName);
 
 
+    void insertQualityWarningData( @Param("warningDataList") List<QualityWarningData> warningDataList);
 }

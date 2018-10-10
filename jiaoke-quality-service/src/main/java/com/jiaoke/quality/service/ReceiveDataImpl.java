@@ -9,15 +9,14 @@
 package com.jiaoke.quality.service;
 
 import com.alibaba.druid.util.StringUtils;
-import com.jiake.utils.CommonUtil;
+import com.jiake.utils.QualityWarningUtil;
 import com.jiaoke.quality.bean.QualityRatioTemplate;
 import com.jiaoke.quality.bean.QualityWarningData;
 import com.jiaoke.quality.dao.QualityWarningDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  *  <一句话功能描述>
@@ -49,7 +48,7 @@ public class ReceiveDataImpl implements ReceiveDataInf {
         if(StringUtils.isEmpty(messageData)) return;
 
         //分解字符串同时替换日期
-        String[] messageArray = CommonUtil.splitDataToMap(messageData);
+        String[] messageArray = QualityWarningUtil.splitDataToMap(messageData);
 
         if (0 == messageArray.length || null == messageArray) return;
         //分解出机组号
@@ -65,8 +64,8 @@ public class ReceiveDataImpl implements ReceiveDataInf {
         map.put("produce_crewNum",crewNum);
 
         //插入数据库表quality_warning_promessage_crew，返回主键ID
-        int id = qualityWarningDao.insertQualityWarningCrew(map);
-
+         qualityWarningDao.insertQualityWarningCrew(map);
+        int id =Integer.parseInt(map.get("id"));
 
         //根据机组获取字段名称
         String fieldName = "";
@@ -87,64 +86,28 @@ public class ReceiveDataImpl implements ReceiveDataInf {
         //根据配比号，获取模板数据
         QualityRatioTemplate ratioTemplate = qualityWarningDao.selectRatioTemplateByCrew1MoudelId(map.get("produce_ratio_id"), fieldName);
 
-        int aggregate6 = Integer.parseInt(messageArray[6]);
-        int aggregate5 = Integer.parseInt(messageArray[7]);
-        int aggregate4 = Integer.parseInt(messageArray[8]);
-        int aggregate3 = Integer.parseInt(messageArray[9]);
-        int aggregate2 = Integer.parseInt(messageArray[10]);
-        int aggregate1 = Integer.parseInt(messageArray[11]);
-        //石粉
-        float stone1 = Float.parseFloat(messageArray[12]);
-        float stone2 = Float.parseFloat(messageArray[13]);
-        //沥青
-        float asphalt = Float.parseFloat(messageArray[14]);
-        //再生料
-        int regenerate = Integer.parseInt(messageArray[15]);
-        //添加剂
-        int additive = Integer.parseInt(messageArray[16]);
-        //总计
-        float total = Float.parseFloat(messageArray[17]);
-        //一仓温度
-        int warehouse1 = Integer.parseInt(messageArray[18]);
+        if (null == ratioTemplate) return;
+
         //混合料温度
         int mixture = Integer.parseInt(messageArray[19]);
-        //除尘器温度
-        int duster = Integer.parseInt(messageArray[20]);
-        //沥青温度
-        int temperatureAsphalt = Integer.parseInt(messageArray[21]);
         //骨料温度
         int aggregate = Integer.parseInt(messageArray[22]);
-
-
-        //获取实际配比
-        //骨料实际配比
-        String aggregate1Ratio = CommonUtil.calculateRatio(total, aggregate1);
-        String aggregate2Ratio = CommonUtil.calculateRatio(total, aggregate2);
-        String aggregate3Ratio = CommonUtil.calculateRatio(total, aggregate3);
-        String aggregate4Ratio = CommonUtil.calculateRatio(total, aggregate4);
-        String aggregate5Ratio = CommonUtil.calculateRatio(total, aggregate5);
-        String aggregate6Ratio = CommonUtil.calculateRatio(total, aggregate6);
-
-        //石粉实际配比
-        String stone1Ratio = CommonUtil.calculateRatio(total, stone1);
-        String stone2Ratio = CommonUtil.calculateRatio(total, stone2);
-
-        //沥青实际配比
-        String asphaltRatio = CommonUtil.calculateRatio(total, asphalt);
-        //再生料实际配比
-        String regenerateRatio = CommonUtil.calculateRatio(total, regenerate);
-        //添加剂实际配比
-        String additiveRatio = CommonUtil.calculateRatio(total, additive);
-
-        float[] f = new float[2];
-        f[1] = ratioTemplate.getRepertoryOne();
-        f[2] = aggregate1;
-        //获取温度差值判断后插入
-        QualityWarningData asphaltObj = CommonUtil.temperatureWarningLevel(ratioTemplate.getTemperatureAsphalt(), temperatureAsphalt, id, "沥青");
-        QualityWarningData mixtureObj = CommonUtil.temperatureWarningLevel(ratioTemplate.getTemperatureMixture(), mixture, id, "混合料");
-        QualityWarningData aggregateObj = CommonUtil.temperatureWarningLevel(ratioTemplate.getTemperatureAggregate(), aggregate, id, "骨料");
+        //沥青温度
+        int temperatureAsphalt = Integer.parseInt(messageArray[21]);
+        //截取材料实际数值
+        String[] temArray;
+        temArray = Arrays.copyOfRange(messageArray,6,18);
 
         //判断材料百分比差值后插入
-        QualityWarningData aggregate1 = CommonUtil.materialWarningLevel(total, aggregate1, ratioTemplate.getRepertoryOne(), id, "骨料1");
+        List<QualityWarningData>  warningDataList = QualityWarningUtil.materialWarningObj(id,temArray,ratioTemplate);
+
+        //获取温度差值判断后插入
+        warningDataList.add(QualityWarningUtil.temperatureWarningLevel(ratioTemplate.getTemperatureAsphalt(), temperatureAsphalt, id, "沥青温度"));
+        warningDataList.add(QualityWarningUtil.temperatureWarningLevel(ratioTemplate.getTemperatureMixture(), mixture, id, "混合料温度"));
+        warningDataList.add(QualityWarningUtil.temperatureWarningLevel(ratioTemplate.getTemperatureAggregate(), aggregate, id, "骨料温度"));
+
+        //插入数据库
+        qualityWarningDao.insertQualityWarningData(warningDataList);
+
     }
 }

@@ -32,8 +32,10 @@ public class QualityRatioTemplate {
     private float breeze;
     //油石比
     private float ratioStone;
-    //再生料比
-    private float ratioRegenerate;
+    //再生料比1
+    private float ratioRegenerate1;
+    //再生料比2
+    private float ratioRegenerate2;
     //添加剂比
     private float ratioAdditive;
     //再生料编号

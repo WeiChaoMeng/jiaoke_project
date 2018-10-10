@@ -28,6 +28,16 @@ public class QualityController {
     @Autowired
     ReceiveDataInf receiveDataInf;
 
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <机组端发送数据，存入预警表>
+     * @param: [messageStr]
+     * @return: void
+     * @auther:
+     * @date: 2018/10/9 17:43
+     */
     @RequestMapping(value = "/qualityData.do")
     public void receiveByClient(@RequestParam("messageStr") String messageStr){
 
@@ -35,6 +45,12 @@ public class QualityController {
 
         receiveDataInf.receiveDataToDB(messageStr);
 
+    }
+
+
+    @RequestMapping("/getLastWeekCrewData.do")
+    public String getLastWeekCrewData(){
+        return "";
     }
 
 }

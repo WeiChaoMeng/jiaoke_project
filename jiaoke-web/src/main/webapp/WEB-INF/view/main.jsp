@@ -115,7 +115,7 @@
 
 <div class="rightdown">
     <iframe src="default.do" id="iframe" name="right" width="100%" height="100%" frameborder="0"
-            scrolling="auto"></iframe>
+            scrolling="auto" ></iframe>
 </div>
 
 <div class="footer">
