@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.quality.dao.QualityMatchingDao">
+    <select id="selectMatchingMoudelByLimte"  resultType="com.jiaoke.quality.bean.QualityRatioModel">
+        select  id,message_id as messageId,  model_name as modelName , create_time as createTime , modify_time as modifyTime  ,create_user as createUser
+        from quality_proportioning_model
+        limit #{startLineNum},#{endLineNum};
+    </select>
+    <!--start-->
+    <select id="selectMatchingMoudelDataCount" resultType="int" >
+        select  count(*) from quality_proportioning_model;
+    </select>
+    <!--end-->
+    
+    <!--start-->
+    <select id="selectRegenerateTypeList" resultType="java.util.Map">
+        select * from quality_proportioning_regenerate;
+    </select>
+    <!--end-->
+
+    <!--start-->
+    <select id="selectAdditiveTypeList" resultType="java.util.Map">
+        select * from quality_proportioning_additive;
+    </select>
+    <!--end-->
+</mapper>

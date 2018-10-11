@@ -1,0 +1,51 @@
+/**
+ * FileName: QualityMatchingDao
+ * Author:   Melone
+ * Date:     2018/10/11 10:04
+ * History:
+ * <author>    <time>     <version>   <desc>
+ * 作者姓名     修改时间    版本号        描述
+ **/
+package com.jiaoke.quality.dao;
+
+import com.jiaoke.quality.bean.QualityRatioModel;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ *  <一句话功能描述>
+ *  配比模板页面数据Dao层
+ * @author: Melone
+ * @create: 2018/10/11 10:04
+ * @Description:
+ */
+public interface QualityMatchingDao {
+
+    /**
+     * 分页查询 配比模板简单信息对象
+     * @param startLineNum
+     * @param endLineNum
+     * @return
+     */
+    List<QualityRatioModel> selectMatchingMoudelByLimte(@Param("startLineNum") int startLineNum,@Param("endLineNum") int endLineNum);
+
+    /**
+     * 分页查询 配比模板简单信息对象个数
+     * @return
+     */
+    int selectMatchingMoudelDataCount();
+
+    /**
+     * 返回所有再生料的类型
+     * @return
+     */
+    List<Map<String, String>> selectRegenerateTypeList();
+
+    /**
+     * 返回所有添加剂的类型
+     * @return
+     */
+    List<Map<String, String>> selectAdditiveTypeList();
+}

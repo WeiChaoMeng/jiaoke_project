@@ -544,7 +544,7 @@ table {
 }
 
 .pagelist li a.pageico {
-    padding: 0 5px;
+
 }
 
 .pagelist li a.first {
@@ -1164,7 +1164,7 @@ table {
     text-align: center;
     color: #fff;
     border-radius: 10px;
-    background: #769c8e;
+    background: #ffffff;
 }
 
 /*form*/
@@ -1192,7 +1192,7 @@ table {
 }
 
 .tlabels {
-    background: #348084;
+    background: #ffffff;
     width: 123px;
     text-align: right;
     padding-right: 20px;
@@ -1398,4 +1398,22 @@ table {
 
 .log_window_son {
     height: 350px;
+}
+
+.my_form_table {
+    border-bottom: none;
+}
+.my_form_table td {
+    line-height: 40px;
+    text-indent: 15px;
+}
+.my_form_input{
+    width: 88px;
+    height: 26px;
+    border: solid 1px #c6c6c6;
+    line-height: 26px;
+    text-indent: 8px;
+    font-family: '微软雅黑';
+    float: left;
+    margin-left: 15px;
 }

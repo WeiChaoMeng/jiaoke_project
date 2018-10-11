@@ -8,6 +8,7 @@
  **/
 package com.jiaoke.quality.service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,5 +24,11 @@ public interface QualityIndexInf {
      * 返回上个星期每周各机组产量
      * @return
      */
-    Map<String,String> getLastWeekCrewData();
+    String getLastWeekCrewData();
+
+    /**
+     * 返回最近生产的八条数据展示在首页
+     * @return
+     */
+    List<Map<String,String>> getLastProductData();
 }

@@ -8,10 +8,13 @@
  **/
 package com.jiaoke.quality.service;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.jiaoke.quality.dao.QualityIndexDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,7 +30,23 @@ public class QualityIndexImpl implements QualityIndexInf {
     @Autowired
     QualityIndexDao qualityIndexDao;
 
-    public Map<String, String> getLastWeekCrewData() {
-        return null;
+    public String getLastWeekCrewData() {
+
+        List<Map<String, String>> lastWeekCrewData = qualityIndexDao.getLastWeekCrewData();
+
+        if (null == lastWeekCrewData) return null;
+
+        String lastWeekCrewDataJson = JSONArray.parseArray(JSONObject.toJSONString(lastWeekCrewData)).toJSONString();
+
+        return lastWeekCrewDataJson;
+    }
+
+    public  List<Map<String,String>> getLastProductData() {
+
+        List<Map<String,String>> list = qualityIndexDao.getLastProductData();
+
+        if(null == list) return null;
+
+        return list;
     }
 }

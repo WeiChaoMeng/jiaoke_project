@@ -26,4 +26,9 @@ public interface QualityIndexDao {
      */
     List<Map<String,String>> getLastWeekCrewData();
 
+    /**
+     * 返回最后生产的八条数据展示在首页
+     * @return
+     */
+    List<Map<String,String>> getLastProductData();
 }

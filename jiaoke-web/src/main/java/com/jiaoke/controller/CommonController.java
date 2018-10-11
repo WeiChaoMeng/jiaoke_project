@@ -8,9 +8,14 @@
  **/
 package com.jiaoke.controller;
 
+import com.jiaoke.quality.service.QualityIndexInf;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+import java.util.Map;
 /**
  *  <一句话功能描述>
  * 公共跳转相关，如首页访问跳转
@@ -20,6 +25,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class CommonController {
+
+    @Autowired
+    QualityIndexInf qualityIndexInf;
 
     /**
      *
@@ -98,14 +106,21 @@ public class CommonController {
     /**
      *
      * 功能描述: <br>
-     *  <返回iframe质量管理首页>
-     * @param: []
-     * @return: java.lang.String
-     * @auther:
-     * @date: 2018/9/29 18:46
+     *  <>
+     * @param [model]
+     * @return java.lang.String
+     * @auther Melone
+     * @date 2018/10/11 19:13
      */
     @RequestMapping("/qc_index.do")
-    public String qc_index(){
+    public String qc_index(Model model){
+
+        List<Map<String,String>> list =  qualityIndexInf.getLastProductData();
+
+        if (null == list) return null;
+
+        model.addAttribute("list",list);
+
         return "quality/qc_index";
     }
 

@@ -96,7 +96,7 @@
     }
 
     function matching_model() {
-        $('iframe').attr("src", "qc_matching_model.jsp");
+        $('iframe').attr("src", "qc_matching_model.do");
     }
 
     function data_manager() {

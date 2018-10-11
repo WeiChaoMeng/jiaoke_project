@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: lihui
@@ -14,81 +15,129 @@
     <link href="/static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
     <script src="/static/js/echarts/echarts.js"></script>
     <script src="/static/js/echarts/uimaker.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.js"></script>
+    <script type="text/javascript" src="/static/js/common.js"></script>
+    <script type="text/javascript" src="/static/js/skin.js"></script>
 </head>
 
 <body style="padding:15px 8px 400px 8px;overflow-x: hidden;">
 
 <div class="chartbox1">
-    <div class="boxtitle"><span>本周产量统计</span></div>
+    <div class="boxtitle"><span>上周产量统计</span></div>
     <div id="chart2" class="charts1"></div>
 </div>
 
 <script type="text/javascript">
+
+    function dateArray(proDate,prototal,crew1Array) {
+
+        switch (proDate) {
+            case 'Monday':
+                crew1Array[0] =prototal;
+                break;
+            case 'Tuesday':
+                crew1Array[1] =prototal;
+                break;
+            case 'Wednesday':
+                crew1Array[2] =prototal;
+                break;
+            case 'Thursday':
+                crew1Array[3] =prototal;
+                break;
+            case 'Friday':
+                crew1Array[4] =prototal;
+                break;
+            case 'Saturday':
+                crew1Array[5] =prototal;
+                break;
+            case 'Sunday':
+                crew1Array[6] =prototal;
+                break;
+        }
+
+        return crew1Array;
+    }
     // 基于准备好的dom，初始化echarts实例
-    var myChart1 = echarts.init(document.getElementById('chart2'), 'uimaker');
+    var myChart1 = echarts.init(document.getElementById('chart2'));
 
     var url = '${pageContext.request.contextPath}/getLastWeekCrewData.do';
 
         // 指定图表的配置项和数据
-        option = {
-            tooltip: {
-                trigger: 'axis',
-                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-                }
-            },
-
-            grid: {
-                x: 60,
-                x2: 40,
-                y: 10,
-                height: 200
-            },
-
-            calculable: true,
-            xAxis: [
-                {
-                    type: 'category',
-                    data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-                }
-            ],
-            yAxis: [
-                {
-                    type: 'value'
-                }
-            ],
-            series: [
-                {
-                    name: '机组一',
-                    type: 'bar',
-                    data: [320, 332, 301, 334, 390, 330, 320]
-                },
-                {
-                    name: '机组二',
-                    type: 'bar',
-                    stack: '广告',
-                    data: [120, 132, 101, 134, 90, 230, 210]
-                }
-
-            ]
-        };
-
         $.ajax({
             type:'post',
             url:url,
             dataType:'json',
+            async: false,
             success:function(result){
 
                 if(result){
-                    //将返回的category和series对象赋值给options对象内的category和series
-                    option.xAxis[0].data = result.axis;
-                    option.legend.data = result.legend;
-                    var series_arr=result.series;
-                    for(var i=0;i<series_arr.length;i++){
-                        option.series[i] = result.series[i];
-                    }
-                    myChart.hideLoading();
-                    myChart.setOption(option);
+
+                    var crew1Array = new Array(0,0,0,0,0,0,0);
+                    var crew2Array = new Array(0,0,0,0,0,0,0);
+                    for(var i=0;i<result.length;i++){
+
+                        if (result[i].crewNum == "crew1"){
+
+                            crew1Array = dateArray(result[i].proDate,result[i].prototal,crew1Array);
+                        }else {
+                            crew2Array = dateArray(result[i].proDate,result[i].prototal,crew2Array);
+                        }
+                    };
+                    // 指定图表的配置项和数据
+                    option = {
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                                type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                            }
+                        },
+
+                        grid: {
+                            x: 60,
+                            x2: 40,
+                            y: 10,
+                            height: 200
+                        },
+
+                        calculable: true,
+                        xAxis: [
+                            {
+                                type: 'category',
+                                data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+                            }
+                        ],
+                        yAxis: [
+                            {
+                                type: 'value'
+                            }
+                        ],
+                        series: [
+                            {
+                                name: '机组一',
+                                type: 'bar',
+                                itemStyle:{
+                                    normal:{
+                                        color:'#76EEC6'
+                                    }
+                                },
+                                data: crew1Array
+                            },
+                            {
+                                name: '机组二',
+                                type: 'bar',
+                                stack: '广告',
+                                itemStyle:{
+                                    normal:{
+                                        color:'#87CEFA'
+                                    }
+                                },
+                                data: crew2Array
+                            }
+
+                        ]
+                    };
+                    myChart1.hideLoading();
+                    myChart1.setOption(option);
                 }
             },
             error:function(errMsg){
@@ -115,88 +164,27 @@
                 <table class="simpletable">
 
                     <thead>
-                    <th>产品编号</th>
-                    <th>产量)</th>
+                    <th>产品盘号</th>
+                    <th>产品重量</th>
+                    <th>生产日期</th>
                     <th>生产时间</th>
-                    <th>生产完成时间</th>
-                    <th>生产人</th>
+                    <th>客户</th>
+                    <th>机组</th>
                     <th>操作</th>
                     </thead>
 
                     <tbody>
-
-                    <tr>
-                        <td>20171101</td>
-                        <td>256</td>
-                        <td>2017-11-01 16:35:26</td>
-                        <td>2017-11-01</td>
-                        <td>uimaker</td>
-                        <td><a href="#">查看</a></td>
-                    </tr>
-
-                    <tr>
-                        <td>20171102</td>
-                        <td>300</td>
-                        <td>2017-11-02 10:50:08</td>
-                        <td>2017-11-02</td>
-                        <td>admin</td>
-                        <td><a href="#">查看</a></td>
-                    </tr>
-
-                    <tr>
-                        <td>20171103</td>
-                        <td>500</td>
-                        <td>2017-11-03 00:00:14</td>
-                        <td>2017-11-03</td>
-                        <td>nanjing</td>
-                        <td><a href="#">查看</a></td>
-                    </tr>
-
-                    <tr>
-                        <td>20171104</td>
-                        <td>1000</td>
-                        <td>2017-11-04 16:22:00</td>
-                        <td>2017-11-04</td>
-                        <td>office</td>
-                        <td><a href="#">查看</a></td>
-                    </tr>
-
-                    <tr>
-                        <td>20171105</td>
-                        <td>200</td>
-                        <td>2017-11-05 04:00:00</td>
-                        <td>2017-11-05</td>
-                        <td>uimaker</td>
-                        <td><a href="#">查看</a></td>
-                    </tr>
-
-                    <tr>
-                        <td>20171106</td>
-                        <td>150</td>
-                        <td>2017-11-06 18:20:10</td>
-                        <td>2017-11-06</td>
-                        <td>guanliyuan</td>
-                        <td><a href="#">查看</a></td>
-                    </tr>
-
-                    <tr>
-                        <td>20171107</td>
-                        <td>450</td>
-                        <td>2017-11-07 08:34:00</td>
-                        <td>2017-11-07</td>
-                        <td>moodoc</td>
-                        <td><a href="#">查看</a></td>
-                    </tr>
-
-                    <tr>
-                        <td>20171108</td>
-                        <td>500</td>
-                        <td>2017-11-08 19:00:14</td>
-                        <td>2017-11-08</td>
-                        <td>iphonex</td>
-                        <td><a href="#">查看</a></td>
-                    </tr>
-
+                        <c:forEach items="${list}" var ="map" >
+                            <tr>
+                                <td>${map.produce_disc_num}</td>
+                                <td>${map.material_total}</td>
+                                <td>${map.produce_date}</td>
+                                <td>${map.produce_time}</td>
+                                <td>${map.produce_custom_num}</td>
+                                <td>${map.crew1}</td>
+                                <td><a href="#">查看</a></td>
+                            </tr>
+                        </c:forEach>
                     </tbody>
 
                 </table>
@@ -227,7 +215,4 @@
 
 
 </body>
-<script type="text/javascript" src="/static/js/jquery.js"></script>
-<script type="text/javascript" src="/static/js/common.js"></script>
-<script type="text/javascript" src="/static/js/skin.js"></script>
 </html>
