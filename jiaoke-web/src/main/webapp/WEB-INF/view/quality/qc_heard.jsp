@@ -25,7 +25,7 @@
 <!--header end-->
 <!--main start-->
 
-<div class="headdown">
+<div class="">
     <ul class="menu">
         <li>
             <a href="#" id="matching_manager" onclick="matching_model()" class="menu_selected"><i
@@ -91,7 +91,7 @@
 
     function real_time_protection() {
 
-        $('iframe').attr("src", "qc_real_time_monitoring.jsp");
+        $('iframe').attr("src", "qc_real_time_monitoring.do");
 
     }
 
@@ -100,25 +100,26 @@
     }
 
     function data_manager() {
-        $('iframe').attr("src", "qc_data_manager.html");
+        $('iframe').attr("src", "qc_data_manager.do");
     }
 
     function quality_warning() {
-        $('iframe').attr("src", "qc_quality_warning.jsp");
+        $('iframe').attr("src", "qc_quality_warning.do");
     }
 
     function auxiliary_analysis() {
-        $('iframe').attr("src", "qc_auxiliary_analysis.html");
+        $('iframe').attr("src", "qc_auxiliary_analysis.do");
     }
     function prodoct_list() {
-        $('iframe').attr("src", "qc_prodoct_list.jsp");
+        $('iframe').attr("src", "qc_prodoct_list.do");
     }
     function testing() {
-        $('iframe').attr("src", "qc_test_detection.jsp");
+        $('iframe').attr("src", "qc_test_detection.do");
     }    
     function real_data(){
-        $('iframe').attr("src", "qc_real_data.jsp");
+        $('iframe').attr("src", "qc_real_data.do");
     }
+
     //二级菜单选中时添加背景色
     $('.menu_selected').click(function () {
 

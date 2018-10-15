@@ -10,10 +10,10 @@
 
 <head>
     <meta charset="utf-8">
-    <link href="../../css/test_detection.css" rel="stylesheet" type="text/css">
-    <link href="../../css/default.css" rel="stylesheet" type="text/css">
-    <script src="../../js/echarts/echarts.js"></script>
-    <script src="../../js/echarts/uimaker.js"></script>
+    <link href="/static/css/test_detection.css" rel="stylesheet" type="text/css">
+    <link href="/static/css/default.css" rel="stylesheet" type="text/css">
+    <script src="/static/js/echarts/echarts.js"></script>
+    <script src="/static/js/echarts/uimaker.js"></script>
 </head>
 
 <body >
@@ -276,7 +276,7 @@
         </div>
     </div>
 </body>
-<script type="text/javascript" src="../../js/jquery.js"></script>
-<script type="text/javascript" src="../../js/qc/detection.js"></script>
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/js/qc/detection.js"></script>
 
 </html>

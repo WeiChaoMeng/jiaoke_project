@@ -10,10 +10,11 @@ package com.jiaoke.quality.service;
 
 import com.jiaoke.common.bean.PageBean;
 import com.jiaoke.quality.bean.QualityRatioModel;
+import com.jiaoke.quality.bean.QualityRatioTemplate;
 import com.jiaoke.quality.dao.QualityMatchingDao;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
@@ -27,9 +28,10 @@ import java.util.Map;
 @Service
 public class QualityMatchingImpl implements QualityMatchingInf{
 
-    @Autowired
+    @Resource
     QualityMatchingDao qualityMatchingDao;
 
+    @Override
     public PageBean<QualityRatioModel> selectMatchingMoudelByLimte(int currentPageNum,String url) {
 
         if ( 0 == currentPageNum ) return null;
@@ -57,4 +59,14 @@ public class QualityMatchingImpl implements QualityMatchingInf{
         List<Map<String, String>> list = qualityMatchingDao.selectRegenerateTypeList();
         return list;
     }
+
+    public boolean insetRatioTemplate(QualityRatioTemplate qualityRatioTemplate) {
+
+        int id = qualityMatchingDao.insetRatioTemplate(qualityRatioTemplate);
+
+        boolean bo = id > 0? true:false;
+
+        return bo;
+    }
+
 }

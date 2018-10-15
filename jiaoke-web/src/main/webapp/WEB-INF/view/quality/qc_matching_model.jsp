@@ -136,6 +136,7 @@
         <span class="pageinfo">共 ${pageBean.dataCountNum} 条记录，每页 ${pageBean.eachPageDataNum} 条，当前第 ${pageBean.currentPageNum} 页，共 ${pageBean.pageCount} 页</span>
     </div>
     <!--pagination end-->
+
     <!--删除弹出-->
     <div class="popup_back" style="display:none;">
     </div>
@@ -146,129 +147,139 @@
     </div>
     <!--新建弹出-->
     <div class="form_background"  style="display:none;" ></div>
-        <div class="form_model" style="display:none;" >
-            <form  id="myForm" style="padding-top:7%;"  >
-                <table class="my_form_table">
-            
-                    <tbody>
-            
-                        <tr>
-                            <td class="tlabels">配比名称：</td>
-                            <td colspan="3">
-                                <input type="text" name="proName" style="width: 97%;" class="forminput inputstyle" style="width: 72%;" value="cl-17沥青模板"">
-                            </td>
-                        </tr>
-            
-                        <tr>
-                            <td class="tlabels">1#仓：</td>
-                            <td>
-                                <input type="text" name="repertoryOne" class="forminput inputstyle" value="3">
-                            </td>
-                            <td class="tlabels">2#仓：</td>
-                            <td>
-                                <input type="text"  name="repertoryTwo" class="forminput inputstyle" value="5">
-                            </td>
-                        </tr>
-            
-                        <tr>
-                            <td class="tlabels">3#仓：</td>
-                            <td>
-                                <input type="text" name="repertoryThree" class="forminput inputstyle" value="17">
-                            </td>
-                            <td class="tlabels">4#仓：</td>
-                            <td>
-                                <input type="text" name="repertoryFour" class="forminput inputstyle" value="35">
-                            </td>
-                        </tr>
-            
-                        <tr>
-                            <td class="tlabels">5#仓：</td>
-                            <td>
-                                <input type="text" name="repertoryFive" class="forminput inputstyle" value="75">
-                            </td>
-                            <td class="tlabels">6#仓：</td>
-                            <td>
-                                <input type="text" name="repertorySix" class="forminput inputstyle" value="85">
-                            </td>
-                        </tr>
-            
-                        <tr>
-                            <td class="tlabels">矿粉：</td>
-                            <td>
-                                <input type="text" name="breeze" class="forminput inputstyle" value="5">
-                            </td>
-                            <td class="tlabels">油石比：</td>
-                            <td>
-                                <input type="text" name="ratioStone" class="forminput inputstyle" value="1.2">
-                            </td>
-                        </tr>
-            
-            
-                        <tr>
-                            <td class="tlabels">沥青加热温度：</td>
-                            <td>
-                                <input type="text" name="temperatureAsphalt" class="forminput inputstyle" value="157">
-                            </td>
-                            <td class="tlabels">骨料加热温度：</td>
-                            <td>
-                                <input type="text" name="temperatureAggregate" class="forminput inputstyle" value="152">
-                            </td>
-                        </tr>
-            
-                        <tr>
-                            <td class="tlabels">混合料出厂温度：</td>
-                            <td>
-                                <input type="text" name="temperatureMixture" class="forminput inputstyle" value="52">
-                            </td>
-                            <td class="tlabels">铣刨料加热温度：</td>
-                            <td>
-                                <input type="text" name="temperatureMilling" class="forminput inputstyle" value="37">
-                            </td>
-                        </tr>
-            
-                        <tr>
-                            <td class="tlabels">再生料：</td>
-                            <td>
-                                <select class="form_swidth" name="regenerate" data-value="0">
-                                    <c:forEach items="${listAdditive}" var="item">
-                                        <option value="${item.id}">${item.name}</option>
-                                    </c:forEach>
-                                </select>
-                            </td>
-                            <td class="tlabels">再生料比1、2：</td>
-                            <td>
-                                <input type="text" name="ratioRegenerate1" class="my_form_input" value="2">
-                                <input type="text" name="ratioRegenerate2" class="my_form_input" value="1">
-                            </td>
-                        </tr>
-            
-            
-                        <tr>
-                            <td class="tlabels">添加剂：</td>
-                            <td>
-                                <select class="form_swidth"  name="additive" data-value="0">
-                                    <c:forEach items="${listRegenerate}" var="item">
-                                        <option value="${item.id}">${item.name}</option>
-                                    </c:forEach>
-                                </select>
-                            </td>
-                            <td class="tlabels">添加剂比：</td>
-                            <td>
-                                <input type="text" name="ratioAdditive" class="forminput inputstyle" value="2">
-                            </td>
-                        </tr>
-            
-                    </tbody>
-            
-                </table>
-            
-                <div class="form_btn">
-                    <input type="submit"  onclick="addRation()" value="保存" class="btn_save">
-                    <input type="button" onclick="closefrom()" value="关闭" class="btn_cancel">
-                </div>
-            
-            </form>
-        </div>
+    <div class="form_model" style="display:none;" >
+        <form  id="myForm" style="padding-top:3%;"  action="/addRation.do" method="post" >
+            <table class="my_form_table">
+
+                <tbody>
+
+                <tr>
+                    <td class="tlabels">配比名称：</td>
+                    <td colspan="3">
+                        <input type="text" name="proName" style="width: 97%;" class="forminput inputstyle" style="width: 72%;" value="cl-17沥青模板">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="tlabels">1#仓：</td>
+                    <td>
+                        <input type="number" name="repertoryOne" class="forminput inputstyle" value="3">
+                    </td>
+                    <td class="tlabels">2#仓：</td>
+                    <td>
+                        <input type="number"  name="repertoryTwo" class="forminput inputstyle" value="5">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="tlabels">3#仓：</td>
+                    <td>
+                        <input type="number" name="repertoryThree" class="forminput inputstyle" value="17">
+                    </td>
+                    <td class="tlabels">4#仓：</td>
+                    <td>
+                        <input type="number" name="repertoryFour" class="forminput inputstyle" value="35">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="tlabels">5#仓：</td>
+                    <td>
+                        <input type="number" name="repertoryFive" class="forminput inputstyle" value="75">
+                    </td>
+                    <td class="tlabels">6#仓：</td>
+                    <td>
+                        <input type="number" name="repertorySix" class="forminput inputstyle" value="85">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="tlabels">矿粉：</td>
+                    <td>
+                        <input type="number" name="breeze" class="forminput inputstyle" value="5">
+                    </td>
+                    <td class="tlabels">油石比：</td>
+                    <td>
+                        <input type="number" name="ratioStone" class="forminput inputstyle" value="1.2">
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="tlabels">沥青加热温度：</td>
+                    <td>
+                        <input type="number" name="temperatureAsphalt" class="forminput inputstyle" value="157">
+                    </td>
+                    <td class="tlabels">骨料加热温度：</td>
+                    <td>
+                        <input type="number" name="temperatureAggregate" class="forminput inputstyle" value="152">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="tlabels">混合料出厂温度：</td>
+                    <td>
+                        <input type="number" name="temperatureMixture" class="forminput inputstyle" value="52">
+                    </td>
+                    <td class="tlabels">铣刨料加热温度：</td>
+                    <td>
+                        <input type="number" name="temperatureMilling" class="forminput inputstyle" value="37">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="tlabels">再生料：</td>
+                    <td>
+                        <select class="form_swidth" name="regenerate" data-value="0">
+                            <c:forEach items="${listAdditive}" var="item">
+                                <option value="${item.id}">${item.name}</option>
+                            </c:forEach>
+                        </select>
+                    </td>
+                    <td class="tlabels">再生料比1、2：</td>
+                    <td>
+                        <input type="number" name="ratioRegenerate1" class="my_form_input" value="2">
+                        <input type="number" name="ratioRegenerate2" class="my_form_input" value="1">
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="tlabels">添加剂：</td>
+                    <td>
+                        <select class="form_swidth"  name="additive" data-value="0">
+                            <c:forEach items="${listRegenerate}" var="item">
+                                <option value="${item.id}">${item.name}</option>
+                            </c:forEach>
+                        </select>
+                    </td>
+                    <td class="tlabels">添加剂比：</td>
+                    <td>
+                        <input type="number" name="ratioAdditive" class="forminput inputstyle" value="2">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="tlabels">模板在机组一的编号：</td>
+                    <td>
+                        <input type="number" name="crew1ModeleId" class="forminput inputstyle" value="52">
+                    </td>
+                    <td class="tlabels">模板在机组二的编号：</td>
+                    <td>
+                        <input type="number" name="crew2ModeleId" class="forminput inputstyle" value="37">
+                    </td>
+                </tr>
+                </tbody>
+
+            </table>
+
+            <div class="form_btn">
+                <input type="submit"   value="保存" class="btn_save">
+                <input type="button" onclick="closefrom()" value="关闭" class="btn_cancel">
+            </div>
+
+        </form>
+    </div>
 </body>
 
 <script type="text/javascript" src="/static/js/jquery.js"></script>
@@ -301,55 +312,44 @@
         $('.popup_back,.popup_window_first').hide();
     }
     $('#btn_click').click(function() {
-        $('.popup_window_first,.popup_back').show();
-    });
-    
-    //点击弹出添加模板
-    function closefrom() {
-            $('.form_background,.form_model').hide();
-    }
-    $('#from_click').click(function () {
-        $('.form_background,.form_model').show();
+        /*$('.popup_window_first,.popup_back').show();*/
+        alert("111111")
     });
 
-    function addRation(){
-        debugger
-        var form = document.getElementById("myForm");
-        var f = new FormData();
-        $.ajax({
-            url:${path}+"addRation.do",
-            type:"post",
-            async:false,
-            data:f,
-            success:function (res) {
-                if (res.messages == 'success'){
-                    location.reload();
-                }
-            }
-        })
+
+
+    //点击弹出添加模板
+    function closefrom() {
+        $('.form_background,.form_model').hide();
     }
+
+    $('#from_click').click(function () {
+        //$('.form_background,.form_model').show();
+        alert("1111");
+    });
 
 </script>
 
-<script>
+<%--<script>
     ;
     ! function() {
         //关于
-        $('#add').on('click', function() {
+            debugger
+            if((${messages}) == 'success'){
+                layer.open({
+                    title: '添加成功',
+                    type: 2,
+                    area: ['600px', '450px'],
+                    fixed: false, //不固定
+                    maxmin: true,
+                    content: '信息添加成功',
+                    btn: ['火速围观', '残忍拒绝'],
+                    btnAlign: 'c'
 
-            parent.layer.open({
-                title: '信息添加',
-                type: 2,
-                area: ['600px', '450px'],
-                fixed: false, //不固定
-                maxmin: true,
-                content: 'add.html'
-            });
-
-        });
-
+                });
+            }
 
     }();
-</script>
+</script>--%>
 
 </html>

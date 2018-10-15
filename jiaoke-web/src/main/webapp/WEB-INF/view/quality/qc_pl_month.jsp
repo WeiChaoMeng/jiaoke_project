@@ -11,10 +11,10 @@
 <head>
     <meta charset="utf-8">
     <title>产品月报表</title>
-    <link href="../../css/default.css" rel="stylesheet" type="text/css">
-    <link href="../../css/style/green.css" rel="stylesheet" type="text/css" id='link'>
-    <script src="../../js/echarts/echarts.js"></script>
-    <script src="../../js/echarts/uimaker.js"></script>
+    <link href="/static/css/default.css" rel="stylesheet" type="text/css">
+    <link href="/static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
+    <script src="/static/js/echarts/echarts.js"></script>
+    <script src="/static/js/echarts/uimaker.js"></script>
 </head>
 
 <body style="padding:10px 8px 100px 8px;">
@@ -268,8 +268,8 @@
 
 
 </body>
-<script type="text/javascript" src="../../js/jquery.js"></script>
-<script type="text/javascript" src="../../js/common.js"></script>
-<script type="text/javascript" src="../../js/skin.js"></script>
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/js/common.js"></script>
+<script type="text/javascript" src="/static/js/skin.js"></script>
 
 </html>

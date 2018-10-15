@@ -11,13 +11,17 @@
 <head>
     <meta charset="utf-8">
     <title>实时监控</title>
-    <link href="../../css/default.css" rel="stylesheet" type="text/css">
-    <link href="../../css/style/green.css" rel="stylesheet" type="text/css" id='link'>
-    <script src="../../js/echarts/echarts.js"></script>
-    <script src="../../js/echarts/uimaker.js"></script>
+    <link href="/static/css/default.css" rel="stylesheet" type="text/css">
+    <link href="/static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
+    <script src="/static/js/echarts/echarts.js"></script>
+    <script src="/static/js/echarts/uimaker.js"></script>
 </head>
 
-<body style="padding:15px 8px 1000px 8px;background: #e8e8e8;">
+<body style="padding:15px 8px 1000px 8px;background: #ffffff;">
+
+<%
+    request.setAttribute("path",request.getContextPath());
+%>
 
     <div class="infolist_realtime">
 
@@ -25,7 +29,7 @@
             <span class="span_realtime">一号机组产品信息</span>
         </div>
         <div>
-            <table class="realtime_table">
+            <table class="realtime_table"  >
 
                 <thead>
                     <th>生产日期</th>
@@ -33,20 +37,18 @@
                     <th>配比号</th>
                     <th>车号</th>
                     <th>盘号</th>
-                    <th>生产人</th>
                     <th>客户号</th>
                 </thead>
 
                 <tbody>
 
                     <tr>
-                        <td>20171101</td>
-                        <td>8:35</td>
-                        <td>256</td>
-                        <td>京C66666</td>
-                        <td>A16</td>
-                        <td>王建军</td>
-                        <td>1554568791</td>
+                        <td id="crew1_basic_date" >20171101</td>
+                        <td id="crew1_basic_time" >8:35</td>
+                        <td id="crew1_basic_ratio" >256</td>
+                        <td id="crew1_basic_carNum" >京C66666</td>
+                        <td id="crew1_basic_discNum" >A16</td>
+                        <td  id="crew1_basic_userNum" >1554568791</td>
                     </tr>
                 </tbody>
             </table>
@@ -72,24 +74,27 @@
                 <tbody>
 
                     <tr>
-                        <td>8:30:44</td>
-                        <td>75
+                        <td id="crew1_data_Aggregate1" >8:30:44</td>
+                        <td  id="crew1_data_Aggregate2" >75
+                            <i>%</i>
+                        </td>
+                        <td id="crew1_data_Aggregate3" >256
                             <i>℃</i>
                         </td>
-                        <td>256
+                        <td id="crew1_data_Aggregate4" >16
+                            <i>%</i>
+                        </td>
+                        <td id="crew1_data_Aggregate5" >16
+                            <i>%</i>
+                        </td >
+                        <td  id="crew1_data_Aggregate6"  >16
+                            <i>%</i>
+                        </td>
+                        <td id="crew1_data_warehouse1" >16
                             <i>℃</i>
                         </td>
-                        <td>16
-                            <i>%</i>
-                        </td>
-                        <td>16
-                            <i>%</i>
-                        </td>
-                        <td>16
-                            <i>%</i>
-                        </td>
-                        <td>16
-                            <i>%</i>
+                        <td id="crew1_data_duster" >16
+                            <i>℃</i>
                         </td>
                     </tr>
                 </tbody>
@@ -108,24 +113,27 @@
                 <tbody>
 
                     <tr>
-                        <td>8:30:44</td>
-                        <td>75
+                        <td id="crew1_data_stone1"  >8<i>%</i></td>
+                        <td id="crew1_data_stone2"  >75
+                            <i>%</i>
+                        </td>
+                        <td id="crew1_data_asphalt" >256
+                            <i>%</i>
+                        </td>
+                        <td id="crew1_data_regenerate" >16
+                            <i>%</i>
+                        </td>
+                        <td  id="crew1_data_additive" >16
+                            <i>%</i>
+                        </td>
+                        <td  id="crew1_data_total" >16
+                            <i>kg</i>
+                        </td>
+                        <td id="crew1_data_temasphalt" >16
                             <i>℃</i>
                         </td>
-                        <td>256
+                        <td id="crew1_data_aggregate" >16
                             <i>℃</i>
-                        </td>
-                        <td>16
-                            <i>%</i>
-                        </td>
-                        <td>16
-                            <i>%</i>
-                        </td>
-                        <td>16
-                            <i>%</i>
-                        </td>
-                        <td>16
-                            <i>%</i>
                         </td>
                     </tr>
                 </tbody>
@@ -208,117 +216,122 @@
 
     <div class="infolist_realtime">
 
-        <div class="boxtitle">
-            <span class="span_realtime">二号机组产品信息</span>
-        </div>
-        <div>
-            <table class="realtime_table">
-
-                <thead>
-                    <th>生产日期</th>
-                    <th>生产时间</th>
-                    <th>配比号</th>
-                    <th>车号</th>
-                    <th>盘号</th>
-                    <th>生产人</th>
-                    <th>客户号</th>
-                </thead>
-
-                <tbody>
-
-                    <tr>
-                        <td>20171101</td>
-                        <td>8:35</td>
-                        <td>256</td>
-                        <td>京C66666</td>
-                        <td>A16</td>
-                        <td>王建军</td>
-                        <td>1554568791</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="boxtitle">
-            <span class="span_realtime">二号机组产品状态数据</span>
-        </div>
-        <div>
-            <table class="realtime_table">
-
-                <thead>
-                    <th>骨料1</th>
-                    <th>骨料2</th>
-                    <th>骨料3</th>
-                    <th>骨料4</th>
-                    <th>骨料5</th>
-                    <th>骨料6</th>
-                    <th>1仓温度</th>
-                    <th> 除尘器入口温度</th>
-                </thead>
-
-                <tbody>
-
-                    <tr>
-                        <td>8:30:44</td>
-                        <td>75
-                            <i>℃</i>
-                        </td>
-                        <td>256
-                            <i>℃</i>
-                        </td>
-                        <td>16
-                            <i>%</i>
-                        </td>
-                        <td>16
-                            <i>%</i>
-                        </td>
-                        <td>16
-                            <i>%</i>
-                        </td>
-                        <td>16
-                            <i>%</i>
-                        </td>
-                    </tr>
-                </tbody>
-
-                <thead>
-                    <th>石粉1</th>
-                    <th>石粉2</th>
-                    <th>沥青</th>
-                    <th>再生料</th>
-                    <th>添加剂</th>
-                    <th>合计kg</th>
-                    <th>沥青温度</th>
-                    <th>混合料温度</th>
-                </thead>
-
-                <tbody>
-
-                    <tr>
-                        <td>8:30:44</td>
-                        <td>75
-                            <i>℃</i>
-                        </td>
-                        <td>256
-                            <i>℃</i>
-                        </td>
-                        <td>16
-                            <i>%</i>
-                        </td>
-                        <td>16
-                            <i>%</i>
-                        </td>
-                        <td>16
-                            <i>%</i>
-                        </td>
-                        <td>16
-                            <i>%</i>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+    <div class="boxtitle">
+        <span class="span_realtime">二号机组产品信息</span>
     </div>
+    <div>
+        <table class="realtime_table"  >
+
+            <thead>
+            <th>生产日期</th>
+            <th>生产时间</th>
+            <th>配比号</th>
+            <th>车号</th>
+            <th>盘号</th>
+            <th>客户号</th>
+            </thead>
+
+            <tbody>
+
+            <tr>
+                <td id="crew2_basic_date" >20171101</td>
+                <td id="crew2_basic_time" >8:35</td>
+                <td id="crew2_basic_ratio" >256</td>
+                <td id="crew2_basic_carNum" >京C66666</td>
+                <td id="crew2_basic_discNum" >A16</td>
+                <td  id="crew2_basic_userNum" >1554568791</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="boxtitle">
+        <span class="span_realtime">二号机组产品状态数据</span>
+    </div>
+    <div>
+        <table class="realtime_table">
+
+            <thead>
+            <th>骨料1</th>
+            <th>骨料2</th>
+            <th>骨料3</th>
+            <th>骨料4</th>
+            <th>骨料5</th>
+            <th>骨料6</th>
+            <th>1仓温度</th>
+            <th> 除尘器入口温度</th>
+            </thead>
+
+            <tbody>
+
+            <tr>
+                <td id="crew2_data_Aggregate1" >8<i>%</i></td>
+                <td  id="crew2_data_Aggregate2" >75
+                    <i>%</i>
+                </td>
+                <td id="crew2_data_Aggregate3" >256
+                    <i>℃</i>
+                </td>
+                <td id="crew2_data_Aggregate4" >16
+                    <i>%</i>
+                </td>
+                <td id="crew2_data_Aggregate5" >16
+                    <i>%</i>
+                </td >
+                <td  id="crew2_data_Aggregate6"  >16
+                    <i>%</i>
+                </td>
+                <td id="crew2_data_warehouse1" >16
+                    <i>℃</i>
+                </td>
+                <td id="crew2_data_duster" >16
+                    <i>℃</i>
+                </td>
+            </tr>
+            </tbody>
+
+            <thead>
+            <th>石粉1</th>
+            <th>石粉2</th>
+            <th>沥青</th>
+            <th>再生料</th>
+            <th>添加剂</th>
+            <th>合计kg</th>
+            <th>沥青温度</th>
+            <th>混合料温度</th>
+            </thead>
+
+            <tbody>
+
+            <tr>
+                <td id="crew2_data_stone1"  >8<i>%</i></td>
+                <td id="crew2_data_stone2"  >75
+                    <i>%</i>
+                </td>
+                <td id="crew2_data_asphalt" >256
+                    <i>%</i>
+                </td>
+                <td id="crew2_data_regenerate" >16
+                    <i>%</i>
+                </td>
+                <td  id="crew2_data_additive" >16
+                    <i>%</i>
+                </td>
+                <td  id="crew2_data_total" >16
+                    <i>kg</i>
+                </td>
+                <td id="crew2_data_temasphalt" >16
+                    <i>℃</i>
+                </td>
+                <td id="crew2_data_aggregate" >16
+                    <i>℃</i>
+                </td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+</div>
 
     <div class="divbox_realtime">
 
@@ -592,8 +605,98 @@
     </div>
 
 </body>
-<script type="text/javascript" src="../../js/jquery.js"></script>
-<script type="text/javascript" src="../../js/common.js"></script>
-<script type="text/javascript" src="../../js/skin.js"></script>
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/js/common.js"></script>
+<script type="text/javascript" src="/static/js/skin.js"></script>
+
+
+<script type="text/javascript" >
+
+
+
+    /****************************************************************************/
+    function  getRealTimeData() {
+        $.ajax({
+            url:"http://localhost:8080/getRealTimeData.do",
+            type:"get",
+            dataType:"json",
+            success:function (res) {
+
+                renderDataToPage(res);
+            }
+
+        })
+    }
+
+    function renderDataToPage(listStr) {
+
+        if (listStr){
+            for (var i=0;i<listStr.length;i++){
+
+                if ( listStr[i].crewNum == 'crew1' ){
+
+                    $("#crew1_basic_date").html(listStr[i].produce_date);
+                    $("#crew1_basic_time").html(listStr[i].produce_time);
+                    $("#crew1_basic_ratio").html(listStr[i].produce_proportioning_num);
+                    $("#crew1_basic_carNum").html(listStr[i].produce_car_num);
+                    $("#crew1_basic_discNum").html(listStr[i].produce_disc_num);
+                    $("#crew1_basic_userNum").html(listStr[i].produce_custom_num);
+                    $("#crew1_data_Aggregate1").html(listStr[i].material_aggregate_1 + "<i>%</i>");
+                    $("#crew1_data_Aggregate2").html(listStr[i].material_aggregate_2 + "<i>%</i>");
+                    $("#crew1_data_Aggregate3").html(listStr[i].material_aggregate_3 + "<i>%</i>");
+                    $("#crew1_data_Aggregate4").html(listStr[i].material_aggregate_4 + "<i>%</i>");
+                    $("#crew1_data_Aggregate5").html(listStr[i].material_aggregate_5 + "<i>%</i>");
+                    $("#crew1_data_Aggregate6").html(listStr[i].material_aggregate_6 + "<i>%</i>");
+                    $("#crew1_data_warehouse1").html(listStr[i].temperature_warehouse_1 + " <i>℃</i>");
+                    $("#crew1_data_duster").html(listStr[i].temperature_duster+ " <i>℃</i>");
+
+                    $("#crew1_data_stone1").html(listStr[i].material_stone_1+ "<i>%</i>");
+                    $("#crew1_data_stone2").html(listStr[i].material_stone_2+ "<i>%</i>");
+                    $("#crew1_data_asphalt").html(listStr[i].material_asphalt+ "<i>%</i>");
+                    $("#crew1_data_regenerate").html(listStr[i].material_regenerate+ "<i>%</i>");
+                    $("#crew1_data_additive").html(listStr[i].material_additive+ "<i>%</i>");
+                    $("#crew1_data_total").html(listStr[i].material_total+ "<i>Kg</i>");
+                    $("#crew1_data_temasphalt").html(listStr[i].temperature_asphalt+ " <i>℃</i>");
+                    $("#crew1_data_aggregate").html(listStr[i].temperature_aggregate+ " <i>℃</i>");
+
+                }else {
+                 debugger
+                    $("#crew2_basic_date").html(listStr[i].produce_date);
+                    $("#crew2_basic_time").html(listStr[i].produce_time);
+                    $("#crew2_basic_ratio").html(listStr[i].produce_proportioning_num);
+                    $("#crew2_basic_carNum").html(listStr[i].produce_car_num);
+                    $("#crew2_basic_discNum").html(listStr[i].produce_disc_num);
+                    $("#crew2_basic_userNum").html(listStr[i].produce_custom_num);
+                    $("#crew2_data_Aggregate1").html(listStr[i].material_aggregate_1 + "<i>%</i>");
+                    $("#crew2_data_Aggregate2").html(listStr[i].material_aggregate_2 + "<i>%</i>");
+                    $("#crew2_data_Aggregate3").html(listStr[i].material_aggregate_3 + "<i>%</i>");
+                    $("#crew2_data_Aggregate4").html(listStr[i].material_aggregate_4 + "<i>%</i>");
+                    $("#crew2_data_Aggregate5").html(listStr[i].material_aggregate_5 + "<i>%</i>");
+                    $("#crew2_data_Aggregate6").html(listStr[i].material_aggregate_6 + "<i>%</i>");
+                    $("#crew2_data_warehouse1").html(listStr[i].temperature_warehouse_1 + " <i>℃</i>");
+                    $("#crew2_data_duster").html(listStr[i].temperature_duster+ " <i>℃</i>");
+                    $("#crew2_data_stone1").html(listStr[i].material_stone_1+ "<i>%</i>");
+                    $("#crew2_data_stone2").html(listStr[i].material_stone_2+ "<i>%</i>");
+                    $("#crew2_data_asphalt").html(listStr[i].material_asphalt+ "<i>%</i>");
+                    $("#crew2_data_regenerate").html(listStr[i].material_regenerate+ "<i>%</i>");
+                    $("#crew2_data_additive").html(listStr[i].material_additive+ "<i>%</i>");
+                    $("#crew2_data_total").html(listStr[i].material_total+ "<i>Kg</i>");
+                    $("#crew2_data_temasphalt").html(listStr[i].temperature_asphalt+ " <i>℃</i>");
+                    $("#crew2_data_aggregate").html(listStr[i].temperature_aggregate+ " <i>℃</i>");
+
+                }
+            }
+        }
+
+    }
+    /****************************************************************************/
+
+        window.setInterval(getRealTimeData,3000);
+
+
+    $(function () {
+
+    });
+</script>
 
 </html>

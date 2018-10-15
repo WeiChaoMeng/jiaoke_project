@@ -9,6 +9,7 @@
 package com.jiaoke.quality.dao;
 
 import com.jiaoke.quality.bean.QualityRatioModel;
+import com.jiaoke.quality.bean.QualityRatioTemplate;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -48,4 +49,11 @@ public interface QualityMatchingDao {
      * @return
      */
     List<Map<String, String>> selectAdditiveTypeList();
+
+    /**
+     * 插入配比模板数据返回主键ID
+     * @param qualityRatioTemplate
+     * @return
+     */
+    int insetRatioTemplate( @Param("qualityRatioTemplate") QualityRatioTemplate qualityRatioTemplate);
 }

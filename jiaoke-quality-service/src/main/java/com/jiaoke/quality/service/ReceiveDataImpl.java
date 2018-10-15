@@ -13,10 +13,13 @@ import com.jiake.utils.QualityWarningUtil;
 import com.jiaoke.quality.bean.QualityRatioTemplate;
 import com.jiaoke.quality.bean.QualityWarningData;
 import com.jiaoke.quality.dao.QualityWarningDao;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import javax.annotation.Resource;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  *  <一句话功能描述>
@@ -28,8 +31,8 @@ import java.util.*;
 @Service
 public class ReceiveDataImpl implements ReceiveDataInf {
 
-    @Autowired
-    QualityWarningDao qualityWarningDao;
+    @Resource
+    private  QualityWarningDao qualityWarningDao;
 
 
     /**
@@ -41,6 +44,7 @@ public class ReceiveDataImpl implements ReceiveDataInf {
      * @auther:
      * @date: 2018/10/8 10:47
      */
+    @Override
     public void receiveDataToDB(String messageData) {
 
         Map<String,String> map = new HashMap<String, String>();

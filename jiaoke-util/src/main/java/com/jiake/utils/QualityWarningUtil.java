@@ -152,14 +152,14 @@ public class QualityWarningUtil {
 
         QualityWarningData qualityWarningData = new QualityWarningData();
 
-        float diffMaterialRation = materialRationMoudel - materialRationReal;
+        float diffMaterialRation = materialRationReal - materialRationMoudel;
 
         if (diffMaterialRation < -15 || diffMaterialRation > 15) {
-            qualityWarningData = QualityWarningUtil.pushMapByParam(id, name, materialRationReal, materialRationMoudel, diffMaterialRation, "三级预警");
+            qualityWarningData = QualityWarningUtil.pushMapByParam(id, name, materialRationReal, materialRationMoudel, diffMaterialRation, "2");
         }else if (diffMaterialRation > 10 || diffMaterialRation < -10){
-            qualityWarningData = QualityWarningUtil.pushMapByParam( id, name, materialRationReal, materialRationMoudel, diffMaterialRation, "二级预警");
+            qualityWarningData = QualityWarningUtil.pushMapByParam( id, name, materialRationReal, materialRationMoudel, diffMaterialRation, "1");
         }else {
-            qualityWarningData = QualityWarningUtil.pushMapByParam( id, name, materialRationReal, materialRationMoudel, diffMaterialRation, "一级预警");
+            qualityWarningData = QualityWarningUtil.pushMapByParam( id, name, materialRationReal, materialRationMoudel, diffMaterialRation, "0");
         }
 
         return qualityWarningData;

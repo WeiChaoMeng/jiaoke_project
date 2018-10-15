@@ -11,9 +11,9 @@
 <head>
     <meta charset="utf-8">
     <title>新建模板</title>
-    <link href="../../css/default.css" rel="stylesheet" type="text/css">
-    <link href="../../css/style/green.css" rel="stylesheet" type="text/css" id='link'>
-    <link href="../../js/umeditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
+    <link href="/static/css/default.css" rel="stylesheet" type="text/css">
+    <link href="/static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
+    <link href="/static/js/umeditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
 </head>
 
 <body style="padding:15px 8px 0px 8px;">
@@ -134,13 +134,13 @@
 
     </form>
 </body>
-<script type="text/javascript" src="../../js/jquery.js"></script>
-<script type="text/javascript" src="../../js/common.js"></script>
-<script type="text/javascript" src="../../js/skin.js"></script>
-<script type="text/javascript" src="../../js/jquery.select.js"></script>
-<script type="text/javascript" charset="utf-8" src="../../js/umeditor/umeditor.config.js"></script>
-<script type="text/javascript" charset="utf-8" src="../../js/umeditor/umeditor.min.js"></script>
-<script type="text/javascript" src="../../js/umeditor/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/js/common.js"></script>
+<script type="text/javascript" src="/static/js/skin.js"></script>
+<script type="text/javascript" src="/static/js/jquery.select.js"></script>
+<script type="text/javascript" charset="utf-8" src="/static/js/umeditor/umeditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="/static/js/umeditor/umeditor.min.js"></script>
+<script type="text/javascript" src="/static/js/umeditor/lang/zh-cn/zh-cn.js"></script>
 <script type="text/javascript">
     var state = UM.getEditor('editor-state');
     state.setWidth("99.91%");

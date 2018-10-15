@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.quality.dao.QualityDataManagerDao">
+
+    <select id="selectHistoryDataToDay" resultType="com.jiaoke.quality.bean.QualityDataManagerDay">
+        SELECT *
+        FROM
+             (
+
+             (SELECT
+                     'crew1' as crewNum,
+                     date_format(produce_date, '%Y-%m-%d') AS produceDate,
+                     SUM(material_total) DIV 100 AS materialTotal,
+                     date_format(MIN(produce_time), '%T') AS startTime,
+                     date_format(MAX(produce_time), '%T') AS endTime
+              FROM
+                   quality_monitoring_realtime_data1
+              GROUP BY
+                       produceDate)
+
+             UNION ALL
+
+             (SELECT
+                     'crew2' as crewNum,
+                     date_format(produce_date, '%Y-%m-%d') AS produceDate,
+                     SUM(material_total) DIV 100 AS materialTotal,
+                     date_format(MIN(produce_time), '%T') AS startTime,
+                     date_format(MAX(produce_time), '%T') AS endTime
+              FROM
+                   quality_monitoring_realtime_data2
+              GROUP BY
+                       produceDate)
+
+             ) AS t
+        ORDER BY
+                 t.produceDate DESC
+        LIMIT #{pageFirstNum},#{eachPageDataNum}
+    </select>
+
+    <select id="selectHistoryDataToDayCount" resultType="int">
+
+        SELECT
+               count(*)
+        FROM
+             (
+             SELECT
+                    produce_date
+             FROM
+                  quality_monitoring_realtime_data1
+             GROUP BY
+                      produce_date
+             UNION ALL
+             SELECT
+                    produce_date
+             FROM
+                  quality_monitoring_realtime_data2
+             GROUP BY
+                      produce_date
+             ) AS f;
+
+    </select>
+
+</mapper>

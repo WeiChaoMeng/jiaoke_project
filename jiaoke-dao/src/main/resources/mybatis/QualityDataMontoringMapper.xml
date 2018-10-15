@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.quality.dao.QualityDataMontoringDao">
+
+    <select id="selectProductionData" resultType="java.util.HashMap">
+        (SELECT 	'crew1' as 'crewNum',date_format(produce_date, '%Y-%m-%d') as produce_date ,date_format(produce_time, '%T') as produce_time,produce_disc_num,produce_proportioning_num,produce_car_num,produce_custom_num,material_aggregate_1,material_aggregate_2,
+                   material_aggregate_3,material_aggregate_4,material_aggregate_5,material_aggregate_6,material_stone_1,material_stone_2,material_asphalt,material_regenerate,
+                   material_additive,material_total,temperature_warehouse_1,temperature_mixture,temperature_duster,temperature_asphalt,temperature_aggregate
+         FROM quality_monitoring_realtime_data1
+         ORDER BY id DESC limit 1)
+        UNION ALL
+                (SELECT 'crew2' as 'crewNum', date_format(produce_date, '%Y-%m-%d') as produce_date,date_format(produce_time, '%T') as produce_time,produce_disc_num,produce_proportioning_num,produce_car_num,produce_custom_num,material_aggregate_1,material_aggregate_2,
+                        material_aggregate_3,material_aggregate_4,material_aggregate_5,material_aggregate_6,material_stone_1,material_stone_2,material_asphalt,material_regenerate,
+                        material_additive,material_total,temperature_warehouse_1,temperature_mixture,temperature_duster,temperature_asphalt,temperature_aggregate
+                 FROM quality_monitoring_realtime_data2
+                 ORDER BY id DESC limit 1)
+    </select>
+
+
+
+</mapper>

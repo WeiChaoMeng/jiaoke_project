@@ -714,7 +714,7 @@ table {
 }
 
 .even {
-    background: #f6f6f6;
+    background: #c8fff0;
 }
 
 .textlist {
@@ -1252,7 +1252,7 @@ table {
     line-height: 30px;
     font-weight: bold;
     text-align: left;
-    background: #ddf3bf;
+    background: #cdf1db;
     text-indent: 15px;
     border: none;
     white-space: nowrap;
@@ -1416,4 +1416,54 @@ table {
     font-family: '微软雅黑';
     float: left;
     margin-left: 15px;
+}
+
+/*my_pagination*/
+.my_pagination {
+    padding-top: 520px;
+    position: absolute;
+}
+
+.my_pagelist {
+    float: left;
+}
+
+.my_pagelist li {
+    float: left;
+    margin-right: 5px;
+}
+
+.my_pagelist li a {
+    display: block;
+    height: 26px;
+    line-height: 26px;
+    background: #c8fff0;
+    border: solid 1px #d0caca;
+    padding: 0 10px;
+    border-radius: 1px;
+    color: #000;
+}
+
+.my_pagelist li a:hover {
+    background: #fff;
+}
+
+.my_pagelist li a.pageico {
+
+}
+
+.my_pagelist li a.first {
+    color: #858585;
+}
+
+.my_pagelist li a.selected,
+.my_pagelist li a.selected:hover {
+    color: rgb(255, 255, 255);
+}
+
+.my_pageinfo {
+    padding-left: 16%;
+    float: right;
+    line-height: 28px;
+    color: #8d8d8d;
 }

@@ -10,8 +10,8 @@
 <head>
     <meta charset="utf-8">
     <title>数据管理</title>
-    <link href="../../css/default.css" rel="stylesheet" type="text/css">
-    <link href="../../css/style/green.css" rel="stylesheet" type="text/css" id='link'>
+    <link href="/static/css/default.css" rel="stylesheet" type="text/css">
+    <link href="/static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
 </head>
 
 <body style="padding:15px 8px 0px 8px;">
@@ -75,6 +75,6 @@
 
 
 </body>
-<script type="text/javascript" src="../../../js/jquery.js"></script>
-<script type="text/javascript" src="../../../js/oa/oa_common.js"></script>
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/js/oa/oa_common.js"></script>
 </html>

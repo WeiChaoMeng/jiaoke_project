@@ -50,5 +50,9 @@ public class QualityRatioTemplate {
     private int temperatureMixture;
     //铣刨料温度
     private int temperatureMilling;
+    //机组一对应的模板ID
+    private int crew1ModeleId;
+    //机组二对应的模板ID
+    private int crew2ModeleId;
 
 }

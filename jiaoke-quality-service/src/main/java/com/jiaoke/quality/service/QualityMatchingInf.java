@@ -10,6 +10,7 @@ package com.jiaoke.quality.service;
 
 import com.jiaoke.common.bean.PageBean;
 import com.jiaoke.quality.bean.QualityRatioModel;
+import com.jiaoke.quality.bean.QualityRatioTemplate;
 
 import java.util.List;
 import java.util.Map;
@@ -40,4 +41,11 @@ public interface QualityMatchingInf {
      * @return
      */
     List<Map<String, String>> selectRegenerateTypeList();
+
+    /**
+     *  插入配比模板对象
+     * @param qualityRatioTemplate
+     * @return
+     */
+    boolean insetRatioTemplate(QualityRatioTemplate qualityRatioTemplate);
 }

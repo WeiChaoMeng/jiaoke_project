@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.quality.dao.QualityAuxiliaryAnalysisDao">
+
+    <select id="selelectWarningLiveDataToList" resultType="java.util.Map">
+        SELECT
+               m1.*,m2.*
+        FROM
+             quality_warning_promessage_crew AS m1
+                 INNER JOIN quality_warning_data AS m2 ON m1.id = m2.crew_id
+        WHERE
+                m2.warning_level > #{warningLive}
+        ORDER BY
+                 m1.produce_date,
+                 m1.produce_time DESC
+        LIMIT #{pageFirstNum},#{eachPageDataNum}
+    </select>
+
+    <select id="selelectCountWarningLive" resultType="int">
+        SELECT COUNT(*) from quality_warning_data WHERE warning_level > #{warningLive}
+    </select>
+
+</mapper>

@@ -10,11 +10,11 @@
 
 <head>
     <meta charset="utf-8">
-    <title>模板更新</title>
-    <link href="../../css/default.css" rel="stylesheet" type="text/css">
-    <link href="../../css/style/green.css" rel="stylesheet" type="text/css" id='link'>
-    <script src="../../js/echarts/echarts.js"></script>
-    <script src="../../js/echarts/uimaker.js"></script>
+    <title>数据预警</title>
+    <link href="/static/css/default.css" rel="stylesheet" type="text/css">
+    <link href="/static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
+    <script src="/static/js/echarts/echarts.js"></script>
+    <script src="/static/js/echarts/uimaker.js"></script>
 </head>
 
 <body style="padding:15px 8px 500px 8px;">
@@ -43,13 +43,13 @@
                 <tbody>
 
                     <tr class="warning_table_even">
-                        <td>20171101</td>
-                        <td>8:35</td>
-                        <td>256</td>
-                        <td>京C66666</td>
-                        <td>A16</td>
-                        <td>王建军</td>
-                        <td>1554568791</td>
+                        <td id="crew1_produce_date">20171101</td>
+                        <td id="crew1_produce_time">8:35</td>
+                        <td id="crew1_produce_ratio_id">256</td>
+                        <td id="crew1_produce_car_num">京C66666</td>
+                        <td id="crew1_produce_disc_num">A16</td>
+                        <td id="crew1_produce_user">王建军</td>
+                        <td id="crew1_produce_custom_num">1554568791</td>
                         <td>
 
                             <li>
@@ -74,20 +74,20 @@
                     <th>预警级别</th>
                 </thead>
 
-                <tbody>
+                <tbody id="crew1_material" >
 
                     <tr class="warning_table_even">
-                        <td>沥青</td>
-                        <td>20
+                        <td  id="crew1_material_name" >沥青</td>
+                        <td id="crew1_moudle_ratio" >20
                             <i>%</i>
                         </td>
-                        <td>10
+                        <td id="crew1_actual_ratio"  >10
                             <i>%</i>
                         </td>
-                        <td>10
+                        <td  id="crew1_deviation_ratio">10
                             <i>%</i>
                         </td>
-                        <td>一级</td>
+                        <td id="crew1_warning_level" >一级</td>
 
                     </tr>
 
@@ -389,7 +389,7 @@
 
         <div>
             <div class="boxtitle">
-                <span>一号机组实时数据预警</span>
+                <span>二号机组实时数据预警</span>
             </div>
         </div>
         <div>
@@ -406,26 +406,26 @@
                     <th>操作</th>
                 </thead>
 
-                <tbody>
+                <tbody  id="crew2_message" >
 
-                    <tr class="warning_table_even">
-                        <td>20171101</td>
-                        <td>8:35</td>
-                        <td>256</td>
-                        <td>京C66666</td>
-                        <td>A16</td>
-                        <td>王建军</td>
-                        <td>1554568791</td>
-                        <td>
+                <tr class="warning_table_even">
+                    <td id="crew2_produce_date">20171101</td>
+                    <td id="crew2_produce_time">8:35</td>
+                    <td id="crew2_produce_ratio_id">256</td>
+                    <td id="crew2_produce_car_num">京C66666</td>
+                    <td id="crew2_produce_disc_num">A16</td>
+                    <td id="crew2_produce_user">王建军</td>
+                    <td id="crew2_produce_custom_num">1554568791</td>
+                    <td>
 
-                            <li>
-                                <a href="#">
-                                    <i class="toolico iconfont">&#xe6eb;</i>导出</a>
-                            </li>
+                        <li>
+                            <a href="#">
+                                <i class="toolico iconfont">&#xe6eb;</i>导出</a>
+                        </li>
 
-                        </td>
+                    </td>
 
-                    </tr>
+                </tr>
                 </tbody>
             </table>
         </div>
@@ -440,23 +440,22 @@
                     <th>预警级别</th>
                 </thead>
 
-                <tbody>
+                <tbody id="crew2_material" >
 
-                    <tr class="warning_table_even">
-                        <td>沥青</td>
-                        <td>20
-                            <i>%</i>
-                        </td>
-                        <td>10
-                            <i>%</i>
-                        </td>
-                        <td>10
-                            <i>%</i>
-                        </td>
-                        <td>一级</td>
+                <tr class="warning_table_even">
+                    <td  id="crew2_material_name" >沥青</td>
+                    <td id="crew2_moudle_ratio" >20
+                        <i>%</i>
+                    </td>
+                    <td id="crew2_actual_ratio"  >10
+                        <i>%</i>
+                    </td>
+                    <td  id="crew2_deviation_ratio">10
+                        <i>%</i>
+                    </td>
+                    <td id="crew2_warning_level" >一级</td>
 
-                    </tr>
-
+                </tr>
 
                     <tr class="warning_table_even">
                         <td>石料</td>
@@ -749,8 +748,9 @@
 
 
 </body>
-<script type="text/javascript" src="../../js/jquery.js"></script>
-<script type="text/javascript" src="../../js/common.js"></script>
-<script type="text/javascript" src="../../js/skin.js"></script>
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/js/common.js"></script>
+<script type="text/javascript" src="/static/js/skin.js"></script>
+<script type="text/javascript" src="/static/js/qc/quality_warning.js"></script>
 
 </html>

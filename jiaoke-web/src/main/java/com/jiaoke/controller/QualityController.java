@@ -9,15 +9,12 @@
 package com.jiaoke.controller;
 
 import com.alibaba.druid.util.StringUtils;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.jiake.utils.QualityMatchingUtil;
 import com.jiaoke.common.bean.PageBean;
+import com.jiaoke.quality.bean.QualityDataManagerDay;
 import com.jiaoke.quality.bean.QualityRatioModel;
 import com.jiaoke.quality.bean.QualityRatioTemplate;
-import com.jiaoke.quality.service.QualityIndexInf;
-import com.jiaoke.quality.service.QualityMatchingInf;
-import com.jiaoke.quality.service.ReceiveDataInf;
+import com.jiaoke.quality.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,11 +37,19 @@ import java.util.Map;
 public class QualityController {
 
     @Autowired
-    ReceiveDataInf receiveDataInf;
+    private  ReceiveDataInf receiveDataInf;
     @Autowired
-    QualityIndexInf qualityIndexInf;
+    private QualityIndexInf qualityIndexInf;
     @Autowired
-    QualityMatchingInf qualityMatchingInf;
+    private QualityMatchingInf qualityMatchingInf;
+    @Autowired
+    private QualityDataMontoringInf qualityDataMontoringInf;
+    @Autowired
+    private  QualityDataManagerInf qualityDataManagerInf;
+    @Autowired
+    private QualityAuxiliaryAnalysisInf qualityAuxiliaryAnalysisInf;
+    @Autowired
+    private QualityRealTimeWarningInf qualityRealTimeWarningInf;
     /**
      *
      * 功能描述: <br>
@@ -64,6 +68,7 @@ public class QualityController {
         receiveDataInf.receiveDataToDB(messageStr);
 
     }
+    /**********************************  质量监控首页 Start ************************************************/
 
     /**
      *
@@ -82,6 +87,10 @@ public class QualityController {
 
         return lastWeekCrewDataJson;
     }
+
+    /**********************************  质量监控首页 end ************************************************/
+
+    /************************************  配比管理 String **********************************************/
 
     /**
      *
@@ -122,12 +131,142 @@ public class QualityController {
     }
 
 
-    @ResponseBody
+
     @RequestMapping(value ={"/addRation.do"} , method = RequestMethod.POST)
     public String addRation(QualityRatioTemplate qualityRatioTemplate){
-        Map<String,String> map = new HashMap<String, String>();
-        map.put("messages","success");
-       String str = JSON.toJSONString(map);
-        return str;
+
+        boolean bo =  qualityMatchingInf.insetRatioTemplate(qualityRatioTemplate);
+
+        return "redirect:qc_index.do";
     }
+
+
+
+    /************************************  配比管理 end **********************************************/
+
+
+    /********************************  实时监控 Start *****************************************/
+
+    @RequestMapping("/qc_real_time_monitoring.do")
+    public String realTimeMonitoring(){
+
+        return "quality/qc_real_time_monitoring";
+    }
+
+    @ResponseBody
+    @RequestMapping("/getRealTimeData.do")
+    public String getRealTimeData(){
+
+        String JsonData = qualityDataMontoringInf.selectProductionData();
+
+        if (JsonData == "") return null;
+        return JsonData;
+    }
+
+    /********************************  实时监控 end *****************************************/
+
+
+
+    /********************************  数据管理 Start *****************************************/
+
+    @RequestMapping("/qc_data_manager.do")
+    public String dataManager(HttpServletRequest request){
+
+        String temp = request.getParameter("currentPageNum");
+        String url = QualityMatchingUtil.getUrl(request);
+
+        PageBean<QualityDataManagerDay> pageBean = new PageBean<QualityDataManagerDay>();
+        if ( temp == null || temp.trim().isEmpty() ){
+            pageBean = qualityDataManagerInf.selectHistoryDataToDay(1,url);
+        }else {
+            pageBean = qualityDataManagerInf.selectHistoryDataToDay(Integer.parseInt(temp),url);
+        }
+
+        request.setAttribute("pageBean",pageBean);
+
+        return "quality/qc_data_manager";
+    }
+
+    /********************************  数据管理 end *****************************************/
+
+
+    /********************************  质量预警 Start *****************************************/
+
+    @RequestMapping("/qc_quality_warning.do")
+    public String qualityWarning(){
+
+        return "quality/qc_quality_warning";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getQualityWarningData.do",method = RequestMethod.POST,produces = {"text/html;charset=utf-8"})
+    public String getQualityWarningData(){
+
+        String listStr = qualityRealTimeWarningInf.selectLastWarningData();
+
+        return listStr;
+    }
+
+    /********************************  质量预警 end *****************************************/
+
+
+    /********************************  辅助分析 Start *****************************************/
+
+    @RequestMapping("/qc_auxiliary_analysis.do")
+    public String auxiliaryAnalysis(HttpServletRequest request){
+
+        String temp = request.getParameter("currentPageNum");
+        String warningLive = request.getParameter("warningLive");
+        String url = QualityMatchingUtil.getUrl(request);
+
+        if ("" == warningLive || warningLive == null)  warningLive = "0";
+
+        PageBean<Map<String,String>> pageBean = new PageBean<Map<String,String>>();
+        if ( temp == null || temp.trim().isEmpty() ){
+            pageBean = qualityAuxiliaryAnalysisInf.selelectWarningLiveData(1,url,warningLive);
+        }else {
+            pageBean = qualityAuxiliaryAnalysisInf.selelectWarningLiveData(Integer.parseInt(temp),url,warningLive);
+        }
+
+        request.setAttribute("pageBean",pageBean);
+
+        return "quality/qc_auxiliary_analysis";
+    }
+
+    /********************************  辅助分析 end *****************************************/
+
+
+    /********************************  产品列表 Start *****************************************/
+
+    @RequestMapping("/qc_prodoct_list.do")
+    public String prodoctList(){
+
+        return "quality/qc_prodoct_list";
+    }
+
+    /********************************  产品列表 end *****************************************/
+
+
+    /********************************  实验检测 Start *****************************************/
+
+    @RequestMapping("/qc_test_detection.do")
+    public String testDetection(){
+
+        return "quality/qc_test_detection";
+    }
+
+    /********************************  实验检测 end *****************************************/
+
+
+    /********************************  真实数据 Start *****************************************/
+
+    @RequestMapping("/qc_real_data.do")
+    public String realData(){
+
+        return "quality/qc_real_data";
+    }
+
+    /********************************  真实数据 end *****************************************/
+
+
 }

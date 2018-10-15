@@ -23,4 +23,57 @@
         select * from quality_proportioning_additive;
     </select>
     <!--end-->
+
+    <!--start-->
+    <insert id="insetRatioTemplate" parameterType="com.jiaoke.quality.bean.QualityRatioTemplate">
+        <selectKey resultType="int" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() as id
+        </selectKey>
+
+        INSERT INTO quality_proportioning_message (
+                pro_name,
+                repertory_one,
+                repertory_two,
+                repertory_three,
+                repertory_four,
+                repertory_five,
+                repertory_six,
+                breeze,
+                ratio_stone,
+                ratio_regenerate1,
+                ratio_regenerate2,
+                ratio_additive,
+                regenerate,
+                additive,
+                temperature_asphalt,
+                temperature_aggregate,
+                temperature_mixture,
+                temperature_milling,
+                crew1_modele_id,
+                crew2_modele_id
+                )
+        VALUES
+               (
+                       #{qualityRatioTemplate.proName},
+                       #{qualityRatioTemplate.repertoryOne},
+                       #{qualityRatioTemplate.repertoryTwo},
+                       #{qualityRatioTemplate.repertoryThree},
+                       #{qualityRatioTemplate.repertoryFour},
+                       #{qualityRatioTemplate.repertoryFive},
+                       #{qualityRatioTemplate.repertorySix},
+                       #{qualityRatioTemplate.breeze},
+                       #{qualityRatioTemplate.ratioStone},
+                       #{qualityRatioTemplate.ratioRegenerate1},
+                       #{qualityRatioTemplate.ratioRegenerate2},
+                       #{qualityRatioTemplate.ratioAdditive},
+                       #{qualityRatioTemplate.regenerate},
+                       #{qualityRatioTemplate.additive},
+                       #{qualityRatioTemplate.temperatureAsphalt},
+                       #{qualityRatioTemplate.temperatureAggregate},
+                       #{qualityRatioTemplate.temperatureMixture},
+                       #{qualityRatioTemplate.temperatureMilling},
+                       #{qualityRatioTemplate.crew1ModeleId},
+                       #{qualityRatioTemplate.crew2ModeleId})
+    </insert>
+    <!--end-->
 </mapper>
