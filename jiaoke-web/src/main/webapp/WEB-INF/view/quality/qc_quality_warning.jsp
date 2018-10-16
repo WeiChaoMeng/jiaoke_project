@@ -76,206 +76,14 @@
 
                 <tbody id="crew1_material" >
 
-                    <tr class="warning_table_even">
-                        <td  id="crew1_material_name" >沥青</td>
-                        <td id="crew1_moudle_ratio" >20
-                            <i>%</i>
-                        </td>
-                        <td id="crew1_actual_ratio"  >10
-                            <i>%</i>
-                        </td>
-                        <td  id="crew1_deviation_ratio">10
-                            <i>%</i>
-                        </td>
-                        <td id="crew1_warning_level" >一级</td>
 
-                    </tr>
-
-
-                    <tr class="warning_table_even">
-                        <td>石料</td>
-                        <td>15
-                            <i>%</i>
-                        </td>
-                        <td>10
-                            <i>%</i>
-                        </td>
-                        <td>5
-                            <i>%</i>
-                        </td>
-                        <td>一级</td>
-
-                    </tr>
-
-
-                    <tr class="warning_table_even">
-                        <td>骨料</td>
-                        <td>30
-                            <i>%</i>
-                        </td>
-                        <td>21
-                            <i>%</i>
-                        </td>
-                        <td>9
-                            <i>%</i>
-                        </td>
-                        <td>一级</td>
-
-                    </tr>
-
-
-                    <tr class="warning_table_even">
-                        <td>石料1</td>
-                        <td>40
-                            <i>%</i>
-                        </td>
-                        <td>30
-                            <i>%</i>
-                        </td>
-                        <td>10
-                            <i>%</i>
-                        </td>
-                        <td>一级</td>
-
-                    </tr>
-
-                    <tr class="warning_table_even">
-                        <td>骨料2</td>
-                        <td>30
-                            <i>%</i>
-                        </td>
-                        <td>10
-                            <i>%</i>
-                        </td>
-                        <td>20
-                            <i>%</i>
-                        </td>
-                        <td>一级</td>
-
-                    </tr>
-
-                    <tr class="warning_table_even">
-                        <td>骨料3</td>
-                        <td>10
-                            <i>%</i>
-                        </td>
-                        <td>7
-                            <i>%</i>
-                        </td>
-                        <td>3
-                            <i>%</i>
-                        </td>
-                        <td>一级</td>
-                    </tr>
-
-                    <tr class="warning_table_even">
-                        <td>添加剂</td>
-                        <td>20
-                            <i>%</i>
-                        </td>
-                        <td>17
-                            <i>%</i>
-                        </td>
-                        <td>3
-                            <i>%</i>
-                        </td>
-                        <td>一级</td>
-                    </tr>
-
-
-                    <tr class="warning_table_even">
-                        <td>添加剂</td>
-                        <td>20
-                            <i>%</i>
-                        </td>
-                        <td>17
-                            <i>%</i>
-                        </td>
-                        <td>3
-                            <i>%</i>
-                        </td>
-                        <td>一级</td>
-                    </tr>
-
-
-                    <tr class="warning_table_even">
-                        <td>1仓温度</td>
-                        <td>159
-                            <i>℃</i>
-                        </td>
-                        <td>150
-                            <i>℃</i>
-                        </td>
-                        <td>9
-                            <i>℃</i>
-                        </td>
-                        <td>一级</td>
-                    </tr>
-
-
-                    <tr class="warning_table_even">
-                        <td>混合料温度</td>
-                        <td>35
-                            <i>℃</i>
-                        </td>
-                        <td>28
-                            <i>℃</i>
-                        </td>
-                        <td>30
-                            <i>℃</i>
-                        </td>
-                        <td>一级</td>
-                    </tr>
-
-                    <tr class="warning_table_even">
-                        <td>除尘器入口温度</td>
-                        <td>71
-                            <i>℃</i>
-                        </td>
-                        <td>65
-                            <i>℃</i>
-                        </td>
-                        <td>6
-                            <i>℃</i>
-                        </td>
-                        <td>一级</td>
-                    </tr>
-
-                    <tr class="warning_table_even">
-                        <td>沥青温度</td>
-                        <td>158
-                            <i>℃</i>
-                        </td>
-                        <td>120
-                            <i>℃</i>
-                        </td>
-                        <td>38
-                            <i>℃</i>
-                        </td>
-                        <td>二级</td>
-                    </tr>
-
-
-                    <tr class="warning_table_even">
-                        <td>骨料温度</td>
-                        <td>184
-                            <i>℃</i>
-                        </td>
-                        <td>165
-                            <i>℃</i>
-                        </td>
-                        <td>19
-                            <i>℃</i>
-                        </td>
-                        <td>二级</td>
-                    </tr>
                 </tbody>
 
             </table>
         </div>
         <div class="div_echar">
 
-            <li style="margin-top: 60px;">
+            <li >
 
                 <div>
 
@@ -321,7 +129,7 @@
                             },
                             type: 'category',
                             boundaryGap: false,
-                            data: ['石料', '石料1', '石料2', '粉料', '沥青', '骨料', '骨料一', '石料', '石料1', '石料2', '粉料', '沥青', '骨料', '骨料一']
+                            data: ['矿粉','沥青', '再生料', '添加剂', '骨料1', '骨料2', '骨料3', '骨料4', '骨料5', '骨料6', '骨料一']
                         }],
                         yAxis: {
                             type: 'value',
@@ -370,14 +178,6 @@
                     };
 
 
-                    setInterval(function () { //把option.series[0].data[0].value的值使用random()方法获取一个随机数
-                        option.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
-                        myChart.setOption(option, true);
-                    }, 2000);
-                    myChart.setOption(option);
-                    window.addwarning_table_EventListener("resize", function () {
-                        myChart.resize();
-                    });
                 </script>
             </li>
         </div>
@@ -442,205 +242,13 @@
 
                 <tbody id="crew2_material" >
 
-                <tr class="warning_table_even">
-                    <td  id="crew2_material_name" >沥青</td>
-                    <td id="crew2_moudle_ratio" >20
-                        <i>%</i>
-                    </td>
-                    <td id="crew2_actual_ratio"  >10
-                        <i>%</i>
-                    </td>
-                    <td  id="crew2_deviation_ratio">10
-                        <i>%</i>
-                    </td>
-                    <td id="crew2_warning_level" >一级</td>
-
-                </tr>
-
-                    <tr class="warning_table_even">
-                        <td>石料</td>
-                        <td>15
-                            <i>%</i>
-                        </td>
-                        <td>10
-                            <i>%</i>
-                        </td>
-                        <td>5
-                            <i>%</i>
-                        </td>
-                        <td>一级</td>
-
-                    </tr>
-
-
-                    <tr class="warning_table_even">
-                        <td>骨料</td>
-                        <td>30
-                            <i>%</i>
-                        </td>
-                        <td>21
-                            <i>%</i>
-                        </td>
-                        <td>9
-                            <i>%</i>
-                        </td>
-                        <td>一级</td>
-
-                    </tr>
-
-
-                    <tr class="warning_table_even">
-                        <td>石料1</td>
-                        <td>40
-                            <i>%</i>
-                        </td>
-                        <td>30
-                            <i>%</i>
-                        </td>
-                        <td>10
-                            <i>%</i>
-                        </td>
-                        <td>一级</td>
-
-                    </tr>
-
-                    <tr class="warning_table_even">
-                        <td>骨料2</td>
-                        <td>30
-                            <i>%</i>
-                        </td>
-                        <td>10
-                            <i>%</i>
-                        </td>
-                        <td>20
-                            <i>%</i>
-                        </td>
-                        <td>一级</td>
-
-                    </tr>
-
-                    <tr class="warning_table_even">
-                        <td>骨料3</td>
-                        <td>10
-                            <i>%</i>
-                        </td>
-                        <td>7
-                            <i>%</i>
-                        </td>
-                        <td>3
-                            <i>%</i>
-                        </td>
-                        <td>一级</td>
-                    </tr>
-
-                    <tr class="warning_table_even">
-                        <td>添加剂</td>
-                        <td>20
-                            <i>%</i>
-                        </td>
-                        <td>17
-                            <i>%</i>
-                        </td>
-                        <td>3
-                            <i>%</i>
-                        </td>
-                        <td>一级</td>
-                    </tr>
-
-
-                    <tr class="warning_table_even">
-                        <td>添加剂</td>
-                        <td>20
-                            <i>%</i>
-                        </td>
-                        <td>17
-                            <i>%</i>
-                        </td>
-                        <td>3
-                            <i>%</i>
-                        </td>
-                        <td>一级</td>
-                    </tr>
-
-
-                    <tr class="warning_table_even">
-                        <td>1仓温度</td>
-                        <td>159
-                            <i>℃</i>
-                        </td>
-                        <td>150
-                            <i>℃</i>
-                        </td>
-                        <td>9
-                            <i>℃</i>
-                        </td>
-                        <td>一级</td>
-                    </tr>
-
-
-                    <tr class="warning_table_even">
-                        <td>混合料温度</td>
-                        <td>35
-                            <i>℃</i>
-                        </td>
-                        <td>28
-                            <i>℃</i>
-                        </td>
-                        <td>30
-                            <i>℃</i>
-                        </td>
-                        <td>一级</td>
-                    </tr>
-
-                    <tr class="warning_table_even">
-                        <td>除尘器入口温度</td>
-                        <td>71
-                            <i>℃</i>
-                        </td>
-                        <td>65
-                            <i>℃</i>
-                        </td>
-                        <td>6
-                            <i>℃</i>
-                        </td>
-                        <td>一级</td>
-                    </tr>
-
-                    <tr class="warning_table_even">
-                        <td>沥青温度</td>
-                        <td>158
-                            <i>℃</i>
-                        </td>
-                        <td>120
-                            <i>℃</i>
-                        </td>
-                        <td>38
-                            <i>℃</i>
-                        </td>
-                        <td>二级</td>
-                    </tr>
-
-
-                    <tr class="warning_table_even">
-                        <td>骨料温度</td>
-                        <td>184
-                            <i>℃</i>
-                        </td>
-                        <td>165
-                            <i>℃</i>
-                        </td>
-                        <td>19
-                            <i>℃</i>
-                        </td>
-                        <td>二级</td>
-                    </tr>
                 </tbody>
 
             </table>
         </div>
         <div class="div_echar">
 
-            <li style="margin-top: 60px;">
+            <li>
 
                 <div>
 
@@ -735,10 +343,7 @@
                     };
 
 
-                    myChart2.setOption(option2);
-                    window.addwarning_table_EventListener("resize", function () {
-                        myChart2.resize();
-                    });
+
                 </script>
             </li>
         </div>

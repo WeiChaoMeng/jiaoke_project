@@ -23,4 +23,9 @@ public interface QualityRealTimeWarningInf {
      */
     String selectLastWarningData();
 
+    /**
+     * 查询预警信息的Echars信息
+     * @return
+     */
+    String getWarningEcharsData();
 }

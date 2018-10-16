@@ -16,6 +16,116 @@
                  ORDER BY id DESC limit 1)
     </select>
 
+    <select id="selectRealTimeDataEcharsTemp" resultType="java.util.HashMap">
 
+        (SELECT produce_disc_num,temperature_warehouse_1,temperature_mixture,temperature_duster,temperature_asphalt,temperature_aggregate, 'crew1' as crewNum FROM `quality_monitoring_realtime_data1` ORDER BY id DESC LIMIT 7)
+        UNION ALL
+        (SELECT produce_disc_num,temperature_warehouse_1,temperature_mixture,temperature_duster,temperature_asphalt,temperature_aggregate, 'crew2' as crewNum FROM `quality_monitoring_realtime_data2` ORDER BY id DESC LIMIT 7);
+
+    </select>
+
+    <select id="selectRealTimeDataEcharsMaterial" resultType="java.util.HashMap">
+        (SELECT
+                t1.*,
+                'crew1' AS 'crewNum',
+                t2.material_aggregate_1,
+                t2.material_aggregate_2,
+                t2.material_aggregate_3,
+                t2.material_aggregate_4,
+                t2.material_aggregate_5,
+                t2.material_aggregate_6,
+                t2.material_stone_1,
+                t2.material_stone_2,
+                t2.material_asphalt,
+                t2.material_regenerate,
+                t2.material_additive,
+                t2.temperature_warehouse_1,
+                t2.temperature_mixture,
+                t2.temperature_duster,
+                t2.temperature_asphalt,
+                t2.temperature_aggregate,
+                t2.material_total
+         FROM
+              quality_proportioning_message AS t1
+                  INNER JOIN (
+                             SELECT
+                                    produce_proportioning_num,
+                                    material_aggregate_1,
+                                    material_aggregate_2,
+                                    material_aggregate_3,
+                                    material_aggregate_4,
+                                    material_aggregate_5,
+                                    material_aggregate_6,
+                                    material_stone_1,
+                                    material_stone_2,
+                                    material_asphalt,
+                                    material_regenerate,
+                                    material_additive,
+                                    temperature_warehouse_1,
+                                    temperature_mixture,
+                                    temperature_duster,
+                                    temperature_asphalt,
+                                    temperature_aggregate,
+                                    material_total
+                             FROM
+                                  quality_monitoring_realtime_data1
+                             ORDER BY
+                                      id DESC
+                             LIMIT 1
+                             ) as t2
+                      on t1.crew1_modele_id = t2.produce_proportioning_num)
+        UNION ALL
+                (SELECT
+                        t1.*,
+                        'crew2' AS 'crewNum',
+                        t2.material_aggregate_1,
+                        t2.material_aggregate_2,
+                        t2.material_aggregate_3,
+                        t2.material_aggregate_4,
+                        t2.material_aggregate_5,
+                        t2.material_aggregate_6,
+                        t2.material_stone_1,
+                        t2.material_stone_2,
+                        t2.material_asphalt,
+                        t2.material_regenerate,
+                        t2.material_additive,
+                        t2.temperature_warehouse_1,
+                        t2.temperature_mixture,
+                        t2.temperature_duster,
+                        t2.temperature_asphalt,
+                        t2.temperature_aggregate,
+                        t2.material_total
+                 FROM
+                      quality_proportioning_message AS t1
+                          INNER JOIN (
+                                     SELECT
+                                            produce_proportioning_num,
+                                            material_aggregate_1,
+                                            material_aggregate_2,
+                                            material_aggregate_3,
+                                            material_aggregate_4,
+                                            material_aggregate_5,
+                                            material_aggregate_6,
+                                            material_stone_1,
+                                            material_stone_2,
+                                            material_asphalt,
+                                            material_regenerate,
+                                            material_additive,
+                                            temperature_warehouse_1,
+                                            temperature_mixture,
+                                            temperature_duster,
+                                            temperature_asphalt,
+                                            temperature_aggregate,
+                                            material_total
+                                     FROM
+                                          quality_monitoring_realtime_data2
+                                     ORDER BY
+                                              id DESC
+                                     LIMIT 1
+                                     ) as t2
+                              on t1.crew1_modele_id = t2.produce_proportioning_num)
+
+
+    </select>
 
 </mapper>

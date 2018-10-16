@@ -26,4 +26,16 @@ public interface QualityDataMontoringDao {
      */
     List<Map<String,Object>> selectProductionData();
 
+    /**
+     * 查询机组最后七盘数据
+     * @return
+     */
+    List<Map<String, String>> selectRealTimeDataEcharsTemp();
+
+
+    /**
+     * 查询机组最新数据展现质量预警图表上
+     * @return
+     */
+    List<Map<String, String>> selectRealTimeDataEcharsMaterial();
 }

@@ -22,4 +22,17 @@ public interface QualityDataMontoringInf {
      * @return
      */
     String selectProductionData();
+
+    /**
+     *  返回几天内各材料温度
+     * @return
+     */
+    String getRealTimeDataEcharsTemp();
+
+
+    /**
+     * 返回最新数据材料图表数据
+     * @return
+     */
+    String getRealTimeDataEcharsMaterial();
 }

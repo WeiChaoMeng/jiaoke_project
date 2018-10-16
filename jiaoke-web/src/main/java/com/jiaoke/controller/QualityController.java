@@ -153,6 +153,15 @@ public class QualityController {
         return "quality/qc_real_time_monitoring";
     }
 
+    /**
+     *
+     * 功能描述: <br>
+     *  <返回质量监控页面字符数据需要的数据>
+     * @param []
+     * @return java.lang.String
+     * @auther Melone
+     * @date 2018/10/16 14:46
+     */
     @ResponseBody
     @RequestMapping("/getRealTimeData.do")
     public String getRealTimeData(){
@@ -161,6 +170,25 @@ public class QualityController {
 
         if (JsonData == "") return null;
         return JsonData;
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/getRealTimeDataEcharsTemp.do",method = RequestMethod.POST)
+    public String getRealTimeDataEcharsTemp(){
+
+        String jsonStr = qualityDataMontoringInf.getRealTimeDataEcharsTemp();
+
+        return jsonStr;
+
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getRealTimeDataEcharsMaterial.do",method = RequestMethod.POST)
+    public String getRealTimeDataEcharsMaterial(){
+
+        String  jsonStr = qualityDataMontoringInf.getRealTimeDataEcharsMaterial();
+        return jsonStr;
     }
 
     /********************************  实时监控 end *****************************************/
@@ -205,6 +233,15 @@ public class QualityController {
         String listStr = qualityRealTimeWarningInf.selectLastWarningData();
 
         return listStr;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getWarningEcharsData.do",method = RequestMethod.POST)
+    public String getWarningEcharsData(){
+
+        String jsonStr = qualityRealTimeWarningInf.getWarningEcharsData();
+
+        return jsonStr;
     }
 
     /********************************  质量预警 end *****************************************/

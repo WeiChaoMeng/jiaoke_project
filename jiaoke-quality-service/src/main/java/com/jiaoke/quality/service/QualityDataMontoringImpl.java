@@ -16,6 +16,7 @@ import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +33,15 @@ public class QualityDataMontoringImpl implements QualityDataMontoringInf {
     @Resource
     private QualityDataMontoringDao qualityDataMontoringDao;
 
+    /**
+     *
+     * 功能描述: <br>
+     *  <返回机组实时数据>
+     * @param []
+     * @return java.lang.String
+     * @auther Melone
+     * @date 2018/10/16 14:52
+     */
     @Override
     public String selectProductionData() {
 
@@ -80,4 +90,50 @@ public class QualityDataMontoringImpl implements QualityDataMontoringInf {
         return str;
     }
 
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <返回echars图表温度>
+     * @param []
+     * @return java.lang.String
+     * @auther Melone
+     * @date 2018/10/16 14:52
+     */
+    @Override
+    public String getRealTimeDataEcharsTemp() {
+
+        List<Map<String,String>> list =  qualityDataMontoringDao.selectRealTimeDataEcharsTemp();
+
+        if (null == list) return null;
+
+        String jsonStr = JSONArray.parseArray(JSONObject.toJSONString(list)).toString();
+
+        return jsonStr;
+
+    }
+
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <返回最新产品的材料数据，用于质量实时监控echars>
+     * @param []
+     * @return java.lang.String
+     * @auther Melone
+     * @date 2018/10/16 17:48
+     */
+    @Override
+    public String getRealTimeDataEcharsMaterial() {
+
+        List<Map<String,String>> list = qualityDataMontoringDao.selectRealTimeDataEcharsMaterial();
+
+
+        if (null == list) return null;
+
+        String jsonStr = JSONArray.parseArray(JSONObject.toJSONString(list)).toString();
+
+        return jsonStr;
+
+    }
 }

@@ -188,29 +188,28 @@
                     name: 'y'
                 },
                 series: [{
-                    name: '上限温度',
+                    name: '一仓温度',
                     type: 'line',
                     data: [1, 3, 9, 27, 81, 247, 741, 2223, 6669]
                 }, {
-                    name: '实际温度',
+                    name: '混合料温度',
                     type: 'line',
                     data: [1, 2, 4, 8, 16, 32, 64, 128, 256]
                 }, {
-                    name: '下限温度',
+                    name: '沥青温度',
+                    type: 'line',
+                    data: [1 / 2, 1 / 4, 1 / 8, 1 / 16, 1 / 32, 1 / 64, 1 / 128, 1 / 256, 1 / 512]
+                }, {
+                    name: '骨料温度',
+                    type: 'line',
+                    data: [1 / 2, 1 / 4, 1 / 8, 1 / 16, 1 / 32, 1 / 64, 1 / 128, 1 / 256, 1 / 512]
+                }, {
+                    name: '除尘器温度',
                     type: 'line',
                     data: [1 / 2, 1 / 4, 1 / 8, 1 / 16, 1 / 32, 1 / 64, 1 / 128, 1 / 256, 1 / 512]
                 }]
             };
 
-
-            setInterval(function () { //把option.series[0].data[0].value的值使用random()方法获取一个随机数
-                option1.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
-                myChart1.setOption(option1, true);
-            }, 2000);
-            myChart1.setOption(option1);
-            window.addEventListener("resize", function () {
-                myChart1.resize();
-            });
         </script>
     </div>
 
@@ -346,7 +345,7 @@
             var myChart5 = echarts.init(document.getElementById('chart5'));
             // 指定图表的配置项和数据
             var colors = ['#5793f3', '#d14a61', '#675bba'];
-            var option5 = {
+            var option5= {
                 title: {
                     text: '产品温度走势图',
                     left: 'left'
@@ -378,27 +377,28 @@
                     name: 'y'
                 },
                 series: [{
-                    name: '上限温度',
+                    name: '一仓温度',
                     type: 'line',
                     data: [1, 3, 9, 27, 81, 247, 741, 2223, 6669]
                 }, {
-                    name: '实际温度',
+                    name: '混合料温度',
                     type: 'line',
                     data: [1, 2, 4, 8, 16, 32, 64, 128, 256]
                 }, {
-                    name: '下限温度',
+                    name: '沥青温度',
+                    type: 'line',
+                    data: [1 / 2, 1 / 4, 1 / 8, 1 / 16, 1 / 32, 1 / 64, 1 / 128, 1 / 256, 1 / 512]
+                }, {
+                    name: '骨料温度',
+                    type: 'line',
+                    data: [1 / 2, 1 / 4, 1 / 8, 1 / 16, 1 / 32, 1 / 64, 1 / 128, 1 / 256, 1 / 512]
+                }, {
+                    name: '除尘器温度',
                     type: 'line',
                     data: [1 / 2, 1 / 4, 1 / 8, 1 / 16, 1 / 32, 1 / 64, 1 / 128, 1 / 256, 1 / 512]
                 }]
             };
-            setInterval(function () { //把option.series[0].data[0].value的值使用random()方法获取一个随机数
-                option5.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
-                myChart.setOption(option5, true);
-            }, 2000);
-            myChart5.setOption(option5);
-            window.addEventListener("resize", function () {
-                myChart5.resize();
-            });
+
         </script>
     </div>
 
@@ -408,14 +408,14 @@
             <div class="boxtitle">
 
             </div>
-            <div id="chart2" class="charts1"></div>
+            <div id="chart7" class="charts1"></div>
         </div>
 
         <script type="text/javascript">
-            var myChart2 = echarts.init(document.getElementById('chart2'));
+            var myChart7= echarts.init(document.getElementById('chart7'));
             // 指定图表的配置项和数据
             var colors = ['#5793f3', '#d14a61', '#675bba'];
-            var option2 = {
+            var option7= {
                 title: {
                     text: '一号机组配比图',
                     x: 'center'
@@ -446,7 +446,7 @@
                     },
                     type: 'category',
                     boundaryGap: false,
-                    data: ['石料', '石料1', '石料2', '粉料', '沥青', '骨料', '骨料一', '石料', '石料1', '石料2', '粉料', '沥青', '骨料', '骨料一']
+                    data: ['骨料1', '骨料2', '骨料3', '骨料4', '骨料5', '骨料6', '石粉', '沥青', '再生料', '添加剂', '沥青温度', '骨料温度', '混合料温度']
                 }],
                 yAxis: {
                     type: 'value',
@@ -496,11 +496,6 @@
             };
 
 
-
-            myChart2.setOption(option2);
-            window.addEventListener("resize", function () {
-                myChart2.resize();
-            });
         </script>
     </div>
 
@@ -518,7 +513,7 @@
             var colors = ['#5793f3', '#d14a61', '#675bba'];
             var option4 = {
                 title: {
-                    text: '一号机组配比图',
+                    text: '二号机组配比图',
                     x: 'center'
                 },
                 tooltip: {
@@ -547,7 +542,7 @@
                     },
                     type: 'category',
                     boundaryGap: false,
-                    data: ['石料', '石料1', '石料2', '粉料', '沥青', '骨料', '骨料一', '石料', '石料1', '石料2', '粉料', '沥青', '骨料', '骨料一']
+                    data: ['骨料1', '骨料2', '骨料3', '骨料4', '骨料5', '骨料6', '石粉', '沥青', '再生料', '添加剂', '沥青温度', '骨料温度', '混合料温度']
                 }],
                 yAxis: {
                     type: 'value',
@@ -597,10 +592,7 @@
             };
 
 
-            myChart4.setOption(option4);
-            window.addEventListener("resize", function () {
-                myChart4.resize();
-            });
+
         </script>
     </div>
 
@@ -608,95 +600,7 @@
 <script type="text/javascript" src="/static/js/jquery.js"></script>
 <script type="text/javascript" src="/static/js/common.js"></script>
 <script type="text/javascript" src="/static/js/skin.js"></script>
+<script type="text/javascript" src="/static/js/qc/quality_monitoring.js"></script>
 
-
-<script type="text/javascript" >
-
-
-
-    /****************************************************************************/
-    function  getRealTimeData() {
-        $.ajax({
-            url:"http://localhost:8080/getRealTimeData.do",
-            type:"get",
-            dataType:"json",
-            success:function (res) {
-
-                renderDataToPage(res);
-            }
-
-        })
-    }
-
-    function renderDataToPage(listStr) {
-
-        if (listStr){
-            for (var i=0;i<listStr.length;i++){
-
-                if ( listStr[i].crewNum == 'crew1' ){
-
-                    $("#crew1_basic_date").html(listStr[i].produce_date);
-                    $("#crew1_basic_time").html(listStr[i].produce_time);
-                    $("#crew1_basic_ratio").html(listStr[i].produce_proportioning_num);
-                    $("#crew1_basic_carNum").html(listStr[i].produce_car_num);
-                    $("#crew1_basic_discNum").html(listStr[i].produce_disc_num);
-                    $("#crew1_basic_userNum").html(listStr[i].produce_custom_num);
-                    $("#crew1_data_Aggregate1").html(listStr[i].material_aggregate_1 + "<i>%</i>");
-                    $("#crew1_data_Aggregate2").html(listStr[i].material_aggregate_2 + "<i>%</i>");
-                    $("#crew1_data_Aggregate3").html(listStr[i].material_aggregate_3 + "<i>%</i>");
-                    $("#crew1_data_Aggregate4").html(listStr[i].material_aggregate_4 + "<i>%</i>");
-                    $("#crew1_data_Aggregate5").html(listStr[i].material_aggregate_5 + "<i>%</i>");
-                    $("#crew1_data_Aggregate6").html(listStr[i].material_aggregate_6 + "<i>%</i>");
-                    $("#crew1_data_warehouse1").html(listStr[i].temperature_warehouse_1 + " <i>℃</i>");
-                    $("#crew1_data_duster").html(listStr[i].temperature_duster+ " <i>℃</i>");
-
-                    $("#crew1_data_stone1").html(listStr[i].material_stone_1+ "<i>%</i>");
-                    $("#crew1_data_stone2").html(listStr[i].material_stone_2+ "<i>%</i>");
-                    $("#crew1_data_asphalt").html(listStr[i].material_asphalt+ "<i>%</i>");
-                    $("#crew1_data_regenerate").html(listStr[i].material_regenerate+ "<i>%</i>");
-                    $("#crew1_data_additive").html(listStr[i].material_additive+ "<i>%</i>");
-                    $("#crew1_data_total").html(listStr[i].material_total+ "<i>Kg</i>");
-                    $("#crew1_data_temasphalt").html(listStr[i].temperature_asphalt+ " <i>℃</i>");
-                    $("#crew1_data_aggregate").html(listStr[i].temperature_aggregate+ " <i>℃</i>");
-
-                }else {
-                 debugger
-                    $("#crew2_basic_date").html(listStr[i].produce_date);
-                    $("#crew2_basic_time").html(listStr[i].produce_time);
-                    $("#crew2_basic_ratio").html(listStr[i].produce_proportioning_num);
-                    $("#crew2_basic_carNum").html(listStr[i].produce_car_num);
-                    $("#crew2_basic_discNum").html(listStr[i].produce_disc_num);
-                    $("#crew2_basic_userNum").html(listStr[i].produce_custom_num);
-                    $("#crew2_data_Aggregate1").html(listStr[i].material_aggregate_1 + "<i>%</i>");
-                    $("#crew2_data_Aggregate2").html(listStr[i].material_aggregate_2 + "<i>%</i>");
-                    $("#crew2_data_Aggregate3").html(listStr[i].material_aggregate_3 + "<i>%</i>");
-                    $("#crew2_data_Aggregate4").html(listStr[i].material_aggregate_4 + "<i>%</i>");
-                    $("#crew2_data_Aggregate5").html(listStr[i].material_aggregate_5 + "<i>%</i>");
-                    $("#crew2_data_Aggregate6").html(listStr[i].material_aggregate_6 + "<i>%</i>");
-                    $("#crew2_data_warehouse1").html(listStr[i].temperature_warehouse_1 + " <i>℃</i>");
-                    $("#crew2_data_duster").html(listStr[i].temperature_duster+ " <i>℃</i>");
-                    $("#crew2_data_stone1").html(listStr[i].material_stone_1+ "<i>%</i>");
-                    $("#crew2_data_stone2").html(listStr[i].material_stone_2+ "<i>%</i>");
-                    $("#crew2_data_asphalt").html(listStr[i].material_asphalt+ "<i>%</i>");
-                    $("#crew2_data_regenerate").html(listStr[i].material_regenerate+ "<i>%</i>");
-                    $("#crew2_data_additive").html(listStr[i].material_additive+ "<i>%</i>");
-                    $("#crew2_data_total").html(listStr[i].material_total+ "<i>Kg</i>");
-                    $("#crew2_data_temasphalt").html(listStr[i].temperature_asphalt+ " <i>℃</i>");
-                    $("#crew2_data_aggregate").html(listStr[i].temperature_aggregate+ " <i>℃</i>");
-
-                }
-            }
-        }
-
-    }
-    /****************************************************************************/
-
-        window.setInterval(getRealTimeData,3000);
-
-
-    $(function () {
-
-    });
-</script>
 
 </html>

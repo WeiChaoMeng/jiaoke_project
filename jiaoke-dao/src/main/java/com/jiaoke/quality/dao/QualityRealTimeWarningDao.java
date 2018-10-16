@@ -26,4 +26,9 @@ public interface QualityRealTimeWarningDao {
      */
     List<Map<String,String>> selectLastWarningData();
 
+    /**
+     * 查询最后的预警信息展现echars
+     * @return
+     */
+    List<Map<String, String>> selectWarningEcharsData();
 }

@@ -1000,8 +1000,8 @@ table {
     margin: 50px;
     width: 45%;
     float: left;
-    background: #c8f1da;
-    border: solid 1px #d6d6d6;
+    background: #f0f0f0;
+    border: solid 1px #f3f3f3;
 }
 
 .divbox_realtime_2 {
@@ -1009,9 +1009,9 @@ table {
     width: 48%;
     float: left;
     height: 350px;
-    border: solid 1px #dedbd6;
+    border: solid 1px #ffffff;
     margin-left: 15px;
-    background: #99bb9f45;
+    background: #ffffff45;
 }
 
 .realtime_table {
@@ -1252,7 +1252,7 @@ table {
     line-height: 30px;
     font-weight: bold;
     text-align: left;
-    background: #cdf1db;
+    background: #c8fff0;
     text-indent: 15px;
     border: none;
     white-space: nowrap;
@@ -1279,11 +1279,11 @@ table {
 
 .div_echar {
     float: left;
-    width: 34%;
-    border: solid 1px #d6d6d6;
-    height: 421px;
-    margin: 12px 0px 3px 9px;
-    background: #eef8f8;
+    width: 33%;
+    border: solid 1px #d8d6d7;
+    height: 324px;
+    margin: 16px 0px 7px 25px;
+    background: #ffffff;
 }
 
 /*overflow滚动条样式*/
@@ -1421,7 +1421,7 @@ table {
 /*my_pagination*/
 .my_pagination {
     padding-top: 520px;
-    position: absolute;
+    /*position: absolute;*/
 }
 
 .my_pagelist {
@@ -1462,7 +1462,7 @@ table {
 }
 
 .my_pageinfo {
-    padding-left: 16%;
+    padding-left: 10%;
     float: right;
     line-height: 28px;
     color: #8d8d8d;
