@@ -153,16 +153,6 @@ public class CommonController {
     }
 
     /**
-     * 跳转合同档案
-     *
-     * @return oa_new_contract.jsp
-     */
-    @RequestMapping("/OAContractArchives.do")
-    public String contractArchives() {
-        return "oa/archives/oa_contract_archives";
-    }
-
-    /**
      * 个人考勤
      *
      * @return  oa_personal_attendance.jsp
