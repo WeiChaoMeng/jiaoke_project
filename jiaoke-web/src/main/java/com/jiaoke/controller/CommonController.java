@@ -43,23 +43,6 @@ public class CommonController {
         return "login";
     }
 
-
-    /**
-     *
-     * 功能描述: <br>
-     *  <登陆跳转>
-     * @param: []
-     * @return: java.lang.String
-     * @auther:
-     * @date: 2018/9/29 18:09
-     */
-    @RequestMapping("/login.do")
-    public String login(String username , String password){
-        System.out.println(username);
-        //此处编写逻辑
-        return "main";
-    }
-
     /**
      *
      * 功能描述: <br>
@@ -117,7 +100,9 @@ public class CommonController {
 
         List<Map<String,String>> list =  qualityIndexInf.getLastProductData();
 
-        if (null == list) return null;
+        if (null == list){
+            return null;
+        }
 
         model.addAttribute("list",list);
 
@@ -138,7 +123,254 @@ public class CommonController {
         return "oa/calendar/calendar_index";
     }
 
+    /**
+     * 跳转oa_navigation.jsp
+     *
+     * @return oa_navigation.jsp
+     * @author lihui
+     * @date 2018/10/8 12:00
+     */
+    @RequestMapping("/oaNavigation.do")
+    public String toOANavigation() {
+        return "oa/oa_navigation";
+    }
 
+    /**
+     * 跳转oa_wage_statistics_inner.jsp
+     *
+     * @return oa_wage_statistics_inner.jsp
+     * @author lihui
+     * @date 2018/10/9 18:34
+     */
+    @RequestMapping("/OAWageStatisticsInner.do")
+    public String toOAWageStatisticsInner() {
+        return "oa/personal/oa_wage_statistics_inner";
+    }
+
+    @RequestMapping("/index.do")
+    public String logout() {
+        return "permission/index";
+    }
+
+    /**
+     * 跳转合同档案
+     *
+     * @return oa_new_contract.jsp
+     */
+    @RequestMapping("/OAContractArchives.do")
+    public String contractArchives() {
+        return "oa/archives/oa_contract_archives";
+    }
+
+    /**
+     * 个人考勤
+     *
+     * @return  oa_personal_attendance.jsp
+     */
+    @RequestMapping("/OAPersonalAttendance.do")
+    public String personalAttendance() {
+        return "oa/personal/oa_personal_attendance";
+    }
+
+    /**
+     * 日程计划
+     *
+     * @return  oa_schedule_planning.jsp
+     */
+    @RequestMapping("/OASchedulePlanning.do")
+    public String schedulePlanning() {
+        return "oa/personal/oa_schedule_planning";
+    }
+
+    /**
+     * 个人工资
+     *
+     * @return  oa_schedule_planning.jsp
+     */
+    @RequestMapping("/OAPersonalSalary.do")
+    public String personalSalary() {
+        return "oa/personal/oa_personal_salary";
+    }
+
+    /**
+     * 待办记事
+     *
+     * @return  oa_schedule_planning.jsp
+     */
+    @RequestMapping("/OANotepad.do")
+    public String notepad() {
+        return "oa/personal/oa_notepad";
+    }
+
+     /**
+     * 待发事项
+     *
+     * @return  oa_schedule_planning.jsp
+     */
+    @RequestMapping("/OANewMatter.do")
+    public String newMatter() {
+        return "oa/collaboration/oa_new_matter";
+    }
+
+    /**
+     * 待发事项
+     *
+     * @return  oa_schedule_planning.jsp
+     */
+    @RequestMapping("/OAWaitingMatter.do")
+    public String waitingMatter() {
+        return "oa/collaboration/oa_waiting_matter";
+    }
+
+    /**
+     * 已发事项
+     *
+     * @return  oa_schedule_planning.jsp
+     */
+    @RequestMapping("/OAAlreadyIssuedMatter.do")
+    public String alreadyIssuedMatter() {
+        return "oa/collaboration/oa_already_issued_matter";
+    }
+
+    /**
+     * 待办事项
+     *
+     * @return  oa_schedule_planning.jsp
+     */
+    @RequestMapping("/OAUpcomingMatter.do")
+    public String upcomingMatter() {
+        return "oa/collaboration/oa_upcoming_matter";
+    }
+
+    /**
+     * 已办事项
+     *
+     * @return  oa_schedule_planning.jsp
+     */
+    @RequestMapping("/OAManagedMatter.do")
+    public String managedMatter() {
+        return "oa/collaboration/oa_managed_matter";
+    }
+
+    /**
+     * 督办事项
+     *
+     * @return  oa_schedule_planning.jsp
+     */
+    @RequestMapping("/OASupervisionMatters.do")
+    public String supervisionMatters() {
+        return "oa/collaboration/oa_supervision_matters";
+    }
+
+    /**
+     * 会议安排
+     *
+     * @return  oa_schedule_planning.jsp
+     */
+    @RequestMapping("/OAMeetingSchedule.do")
+    public String meetingSchedule() {
+        return "oa/meeting/oa_meeting_schedule";
+    }
+
+    /**
+     * 会议日历
+     *
+     * @return  oa_schedule_planning.jsp
+     */
+    @RequestMapping("/OAConferenceCalendar.do")
+    public String conferenceCalendar() {
+        return "oa/meeting/oa_conference_calendar";
+    }
+
+    /**
+     * 待开会议
+     *
+     * @return  oa_schedule_planning.jsp
+     */
+    @RequestMapping("/OAPendingMeeting.do")
+    public String pendingMeeting() {
+        return "oa/meeting/oa_pending_meeting";
+    }
+
+    /**
+     * 已开会议
+     *
+     * @return  oa_schedule_planning.jsp
+     */
+    @RequestMapping("/OAHistoricalConference.do")
+    public String historicalConference() {
+        return "oa/meeting/oa_historical_conference";
+    }
+
+    /**
+     * 会议资源
+     *
+     * @return  oa_schedule_planning.jsp
+     */
+    @RequestMapping("/OAConferenceResources.do")
+    public String conferenceResources() {
+        return "oa/meeting/oa_conference_resources";
+    }
+
+    /**
+     * 资源入库
+     *
+     * @return  oa_schedule_planning.jsp
+     */
+    @RequestMapping("/OAResourceStorage.do")
+    public String resourceStorage() {
+        return "oa/resources/oa_resource_storage";
+    }
+
+    /**
+     * 资源档案
+     *
+     * @return  oa_schedule_planning.jsp
+     */
+    @RequestMapping("/OAResourcesArchives.do")
+    public String resourcesArchives() {
+        return "oa/resources/oa_resources_archives";
+    }
+
+    /**
+     * 申领资源
+     *
+     * @return  oa_schedule_planning.jsp
+     */
+    @RequestMapping("/OAResourceApply.do")
+    public String resourceApply() {
+        return "oa/resources/oa_resource_apply";
+    }
+
+    /**
+     * 申领记录
+     *
+     * @return  oa_schedule_planning.jsp
+     */
+    @RequestMapping("/OAReceiveRecord.do")
+    public String receiveRecord() {
+        return "oa/resources/oa_receive_record";
+    }
+
+    /**
+     * 公告管理
+     *
+     * @return  oa_schedule_planning.jsp
+     */
+    @RequestMapping("/OAAnnouncements.do")
+    public String announcements() {
+        return "oa/culture/oa_announcements";
+    }
+
+    /**
+     * 新闻管理
+     *
+     * @return  oa_schedule_planning.jsp
+     */
+    @RequestMapping("/OANewsCenter.do")
+    public String newsCenter() {
+        return "oa/culture/oa_news_center";
+    }
 
 
 }

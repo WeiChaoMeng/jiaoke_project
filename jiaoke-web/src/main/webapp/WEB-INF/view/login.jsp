@@ -42,19 +42,19 @@
             </div>
 
             <div class="login-form">
-                <form  method="post" action="login.do" >
-                    <div class="login_input_content">
-                        <div class="left-icon"><img src="../../static/images/username.png" alt=""></div>
-                        <input type="text" placeholder="账号" name="username" class="right-input">
-                    </div>
-                    <div class="login_input_content">
-                        <div class="left-icon"><img src="../../static/images/password.png" alt=""></div>
-                        <input type="password" placeholder="密码" name="password" id="password" class="right-input">
-                    </div>
-                    <div class="login_input_content">
-                        <button type="submit" class="login-but" id="submit">登录</button>
-                    </div>
-                </form>
+                <div class="login_input_content">
+                    <div class="left-icon"><img src="../../static/images/username.png" alt=""></div>
+                    <input type="text" placeholder="账号" name="username" id="username" value="" class="right-input"
+                           onkeyup="this.value=this.value.replace(/\s+/g,'')">
+                </div>
+                <div class="login_input_content">
+                    <div class="left-icon"><img src="../../static/images/password.png" alt=""></div>
+                    <input type="password" placeholder="密码" name="password" id="password" value=""
+                           class="right-input" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+                </div>
+                <div class="login_input_content">
+                    <button type="submit" class="login-but" id="submit">登录</button>
+                </div>
             </div>
         </div>
     </div>
@@ -77,6 +77,39 @@
         $(".login").css("padding-top", $(window).height() / 2 - $(".login").height() / 2);
     });
 
+    $('#submit').on('click', function () {
+        var username = $('#username').val();
+        var password = $('#password').val();
+        if (username === "") {
+            alert('用户名不可以是空的');
+        } else {
+            if (password === "") {
+                alert("密码不可以是空的");
+            } else {
+                $.ajax({
+                    cache: true,
+                    type: "POST",
+                    // url: '/login/login.do',
+                    url: 'http://47.105.114.70/login/login.do',
+                    data: {"username": username, "password": password},
+                    error: function (request) {
+                        alert("Connection error");
+                    },
+                    success: function (result) {
+                        if (result === "success") {
+                            // window.location.href = '/login/homePage.do';
+                            window.location.href = 'http://47.105.114.70/login/homePage.do';
+                        } else {
+                            alert("您输入的账号密码不匹配");
+                        }
+                    }
+                });
+            }
+        }
+    });
 
+    //Cookie失效后跳转的登录页
+    if (top != window)
+        top.location.href = window.location.href;
 </script>
 </html>

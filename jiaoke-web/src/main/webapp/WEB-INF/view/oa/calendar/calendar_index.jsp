@@ -616,11 +616,11 @@
                 function G(b) {
                     var a = Q.getJson().dateArray[b.dateIndex];
                     var Z = b.cell;
-                    var c = "#{solarYear}&nbsp;年&nbsp;#{solarMonth}&nbsp;月&nbsp;#{solarDate}&nbsp;日&nbsp;#{solarWeekDayInChinese}";
-                    c += "<br><b>农历&nbsp;#{lunarMonthInChinese}月#{lunarDateInChinese}</b>";
-                    c += "<br>#{ganzhiYear}年&nbsp;#{ganzhiMonth}月&nbsp;#{ganzhiDate}日";
+                    var c = "${solarYear}&nbsp;年&nbsp;%+${solarMonth}&nbsp;月&nbsp;${solarDate}&nbsp;日&nbsp;${solarWeekDayInChinese}";
+                    c += "<br><b>农历&nbsp;${lunarMonthInChinese}月${lunarDateInChinese}</b>";
+                    c += "<br>${ganzhiYear}年&nbsp;${ganzhiMonth}月&nbsp;${ganzhiDate}日";
                     if (a.solarFestival != "" || a.lunarFestival != "" || a.jieqi != "") {
-                        c += "<br><b>#{lunarFestival} #{solarFestival} #{jieqi}</b>"
+                        c += "<br><b>${lunarFestival} ${solarFestival} ${jieqi}</b>"
                     }
                     C.innerHTML = Y(c, a);
                     C.style.top = Z.offsetTop + Z.offsetHeight - 5 + "px";

@@ -33,104 +33,106 @@ $(function () {
     $("#persional_attendance").on("click", function () {
         removeOwnName();
         personal(this);
-        $('#oa-iframe').attr("src", "personal/oa_personal_attendance.jsp");
+        $('#oa-iframe').attr("src", "OAPersonalAttendance.do");
     });
 
     //日程计划
     $("#schedule_planning").on("click", function () {
         removeOwnName();
         personal(this);
-        $('#oa-iframe').attr("src", "personal/oa_schedule_planning.jsp");
+        $('#oa-iframe').attr("src", "OASchedulePlanning.do");
     });
 
     //个人工资
     $("#persional_salary").on("click", function () {
         removeOwnName();
         personal(this);
-        $('#oa-iframe').attr("src", "personal/oa_personal_salary.jsp");
+        $('#oa-iframe').attr("src", "OAPersonalSalary.do");
     });
 
     //工资统计
     $("#wage_statistics").on("click", function () {
         removeOwnName();
         personal(this);
-        $('#oa-iframe').attr("src", "personal/oa_wage_statistics_inner.jsp");
+        $('#oa-iframe').attr("src", "OAWageStatisticsInner.do");
     });
 
     //待办记事
     $("#notepad").on("click", function () {
         removeOwnName();
         personal(this);
-        $('#oa-iframe').attr("src", "personal/oa_notepad.jsp");
+        $('#oa-iframe').attr("src", "OANotepad.do");
     });
 
     /*--- 协同工作 ---*/
 
     //新建事项
     $("#new_matter").on("click", function () {
-        window.open('collaboration/oa_new_matter.jsp', '_blank', 'height=700, width=1400, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
+        window.open('OANewMatter.do', '_blank', 'height=700, width=1400, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
     });
 
     //待发事项
     $("#waiting_matter").on("click", function () {
         removeOwnName();
         synergetic_work(this);
-        $("#oa-iframe").attr("src", "collaboration/oa_waiting_matter.jsp")
+        $("#oa-iframe").attr("src", "OAWaitingMatter.do")
     });
 
     //已发事项
     $("#already_issued_matter").on("click", function () {
         removeOwnName();
         synergetic_work(this);
-        $("#oa-iframe").attr("src", "collaboration/oa_already_issued_matter.jsp")
+        $("#oa-iframe").attr("src", "OAAlreadyIssuedMatter.do")
     });
 
     //待办事项
     $("#to_do_matter").on("click", function () {
         removeOwnName();
         synergetic_work(this);
-        $("#oa-iframe").attr("src", "collaboration/oa_upcoming_matter.jsp")
+        $("#oa-iframe").attr("src", "OAUpcomingMatter.do")
     });
 
     //已办事项
     $("#managed_matter").on("click", function () {
         removeOwnName();
         synergetic_work(this);
-        $("#oa-iframe").attr("src", "collaboration/oa_managed_matter.jsp")
+        $("#oa-iframe").attr("src", "OAManagedMatter.do")
     });
 
     //督办事项
     $("#supervision_matters").on("click", function () {
         removeOwnName();
         synergetic_work(this);
-        $("#oa-iframe").attr("src", "collaboration/oa_supervision_matters.jsp")
+        $("#oa-iframe").attr("src", "OASupervisionMatters.do")
     });
 
     /*--- 公文管理 ---*/
-    //公文发布
-    $("#document_processing").on("click", function () {
-        window.open('document/oa_document_processing.jsp', '_blank', 'height=700, width=1400, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
+    //待办公文
+    $("#pending_document").on("click", function () {
+        removeOwnName();
+        document(this);
+        $("#oa-iframe").attr("src", "document/pendingDocument.do")
+    });
+
+    //已办公文
+    $("#done_document").on("click", function () {
+        removeOwnName();
+        document(this);
+        $("#oa-iframe").attr("src", "document/doneDocument.do")
     });
 
     //待发公文
-    $("#waiting_document").on("click", function () {
+    $("#primed_document").on("click", function () {
         removeOwnName();
         document(this);
-        $("#oa-iframe").attr("src", "document/oa_waiting_document.jsp")
+        $("#oa-iframe").attr("src", "document/primedDocument.do")
     });
 
-    //公文签收
-    $("#document_signing").on("click", function () {
+    //已发公文
+    $("#issued_document").on("click", function () {
         removeOwnName();
         document(this);
-        $("#oa-iframe").attr("src", "document/oa_document_signing.jsp")
-    });
-
-    //历史公文
-    $("#historical_documents").on("click", function () {
-        removeOwnName();
-        document(this);
-        $("#oa-iframe").attr("src", "document/oa_documents_historical.jsp")
+        $("#oa-iframe").attr("src", "document/issuedDocument.do")
     });
 
     /*--- 档案管理 ---*/
@@ -152,7 +154,7 @@ $(function () {
     $("#contract_archives").on("click", function () {
         removeOwnName();
         archives(this);
-        $('#oa-iframe').attr("src", "archives/oa_contract_archives.jsp");
+        $('#oa-iframe').attr("src", "OAContractArchives.do");
     });
 
     /*--- 会议管理 ---*/
@@ -160,35 +162,35 @@ $(function () {
     $("#meeting_schedule").on("click", function () {
         removeOwnName();
         meeting(this);
-        $("#oa-iframe").attr("src", "meeting/oa_meeting_schedule.jsp");
+        $("#oa-iframe").attr("src", "OAMeetingSchedule.do");
     });
 
     //会议日历
     $("#conference_calendar").on("click", function () {
         removeOwnName();
         meeting(this);
-        $("#oa-iframe").attr("src", "meeting/oa_conference_calendar.jsp")
+        $("#oa-iframe").attr("src", "OAConferenceCalendar.do")
     });
 
     //待开会议
     $("#not_open_meeting").on("click", function () {
         removeOwnName();
         meeting(this);
-        $("#oa-iframe").attr("src", "meeting/oa_pending_meeting.jsp")
+        $("#oa-iframe").attr("src", "OAPendingMeeting.do")
     });
 
     //已开会议
     $("#historical_conference").on("click", function () {
         removeOwnName();
         meeting(this);
-        $("#oa-iframe").attr("src", "meeting/oa_historical_conference.jsp")
+        $("#oa-iframe").attr("src", "OAHistoricalConference.do")
     });
 
     //会议资源
     $("#conference_resources").on("click", function () {
         removeOwnName();
         meeting(this);
-        $("#oa-iframe").attr("src", "meeting/oa_conference_resources.jsp")
+        $("#oa-iframe").attr("src", "OAConferenceResources.do")
     });
 
     /*--- 资源管理 ---*/
@@ -196,28 +198,28 @@ $(function () {
     $("#resource_storage").on("click", function () {
         removeOwnName();
         resources(this);
-        $('#oa-iframe').attr("src", "resources/oa_resource_storage.jsp");
+        $('#oa-iframe').attr("src", "OAResourceStorage.do");
     });
 
     //资源档案
     $("#resources_archives").on("click", function () {
         removeOwnName();
         resources(this);
-        $('#oa-iframe').attr("src", "resources/oa_resources_archives.jsp");
+        $('#oa-iframe').attr("src", "OAResourcesArchives.do");
     });
 
     //申领资源
     $("#apply_resource").on("click", function () {
         removeOwnName();
         resources(this);
-        $('#oa-iframe').attr("src", "resources/oa_resource_apply.jsp");
+        $('#oa-iframe').attr("src", "OAResourceApply.do");
     });
 
     //申领记录
     $("#receive_record").on("click", function () {
         removeOwnName();
         resources(this);
-        $('#oa-iframe').attr("src", "resources/oa_receive_record.jsp");
+        $('#oa-iframe').attr("src", "OAReceiveRecord.do");
     });
 
     /*--- 文化建设 ---*/
@@ -225,14 +227,14 @@ $(function () {
     $("#announcements").on("click", function () {
         removeOwnName();
         cultural_construction(this);
-        $('#oa-iframe').attr("src", "culture/oa_announcements.jsp");
+        $('#oa-iframe').attr("src", "OAAnnouncements.do");
     });
 
     //新闻管理
     $("#news").on("click", function () {
         removeOwnName();
         cultural_construction(this);
-        $('#oa-iframe').attr("src", "culture/oa_news_center.jsp");
+        $('#oa-iframe').attr("src", "OANewsCenter.do");
     });
 
     /*当前位置*/

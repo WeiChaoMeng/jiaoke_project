@@ -32,7 +32,6 @@ public class QualityRealTimeWarningImpl implements  QualityRealTimeWarningInf {
     @Resource
     QualityRealTimeWarningDao qualityRealTimeWarningDao;
 
-    @Override
     public String selectLastWarningData() {
 
         List<Map<String,String>> list = qualityRealTimeWarningDao.selectLastWarningData();
@@ -53,23 +52,22 @@ public class QualityRealTimeWarningImpl implements  QualityRealTimeWarningInf {
      * @auther Melone
      * @date 2018/10/16 13:01
      */
-    @Override
     public String getWarningEcharsData() {
 
         List<Map<String,String>> list = qualityRealTimeWarningDao.selectWarningEcharsData();
 
 
         List<Long> crew1topList = new ArrayList<Long>();
-        List<Integer> crew1realList = new ArrayList<>();
-        List<Long> crew1downList = new ArrayList<>();
-        List<String> crew1nameList = new ArrayList<>();
+        List<Integer> crew1realList = new ArrayList<Integer>();
+        List<Long> crew1downList = new ArrayList<Long>();
+        List<String> crew1nameList = new ArrayList<String>();
 
         List<Long> crew2topList = new ArrayList<Long>();
-        List<Integer> crew2realList = new ArrayList<>();
-        List<Long> crew2downList = new ArrayList<>();
-        List<String> crew2nameList = new ArrayList<>();
+        List<Integer> crew2realList = new ArrayList<Integer>();
+        List<Long> crew2downList = new ArrayList<Long>();
+        List<String> crew2nameList = new ArrayList<String>();
 
-        Map<String,Object> map = new HashMap<>();
+        Map<String,Object> map = new HashMap<String,Object>(16);
 
 
         for(int i = 0; i < list.size(); i++){

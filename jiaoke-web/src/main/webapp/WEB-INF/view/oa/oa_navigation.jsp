@@ -1,5 +1,12 @@
-<!DOCTYPE html>
-<html lang="zh">
+<%--
+  Created by IntelliJ IDEA.
+  User: lihui
+  Date: 2018/10/8
+  Time: 10:21
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -45,10 +52,10 @@
             <a><i class="iconfont icon-gongwen"></i><span style="margin-left: 10px;">公文管理</span><i
                     class="my-icon nav-more"></i></a>
             <ul>
-                <li><a id="document_processing"><span>公文发布</span></a></li>
-                <li><a id="waiting_document"><span>待发公文</span></a></li>
-                <li><a id="document_signing"><span>公文签收</span></a></li>
-                <li><a id="historical_documents"><span>历史公文</span></a></li>
+                <li><a id="pending_document"><span>待办公文</span></a></li>
+                <li><a id="done_document"><span>已办公文</span></a></li>
+                <li><a id="primed_document"><span>待发公文</span></a></li>
+                <li><a id="issued_document"><span>已发公文</span></a></li>
             </ul>
         </li>
         <li class="nav-item">
@@ -56,15 +63,15 @@
                     style="margin-left: 10px;">档案管理</span><i
                     class="my-icon nav-more"></i></a>
             <ul>
-                <li><a id="employee_files"><span>自有员工档案</span></a></li>
-                <li><a id="dispatch_file"><span>劳务派遣档案</span></a></li>
                 <li><a id="contract_archives"><span>合同档案</span></a></li>
+                <%--<li><a id="employee_files"><span>自有员工档案</span></a></li>
+                <li><a id="dispatch_file"><span>劳务派遣档案</span></a></li>
                 <li><a id=""><span>财务管理档案</span></a></li>
                 <li><a id=""><span>生产管理部档案</span></a></li>
                 <li><a id=""><span>质量技术部档案</span></a></li>
                 <li><a id=""><span>物资管理部档案</span></a></li>
                 <li><a id=""><span>综合办公室档案</span></a></li>
-                <li><a id=""><span>经营开发部档案</span></a></li>
+                <li><a id=""><span>经营开发部档案</span></a></li>--%>
             </ul>
         </li>
         <li class="nav-item">
@@ -115,7 +122,7 @@
             </span>
         </div>
 
-        <iframe src="oa_index.jsp" id="oa-iframe" name="right" width="99%" height="92%" frameborder="0"
+        <iframe src="oaIndex.do" id="oa-iframe" name="right" width="99%" height="92%" frameborder="0"
                 scrolling="auto" style="padding-left:10px;"></iframe>
     </div>
 </div>

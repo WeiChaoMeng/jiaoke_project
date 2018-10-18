@@ -170,13 +170,12 @@ table {
 }
 
 .simpletable thead tr th {
-    background: #9affe4;
+    background: #92ebff;
     border: solid 1px #fff;
 }
 
 .simpletable tbody tr td {
     line-height: 30px;
-    text-indent: 15px;
     border: none;
     white-space: nowrap;
     text-align: center;
@@ -187,7 +186,7 @@ table {
 }
 
 .simpletable_color thead tr th {
-    background: #9affe4;
+    background: #92ebff;
     border: solid 1px #fff;
 }
 
@@ -361,11 +360,11 @@ table {
 }
 
 /*pagination*/
-.pagination {
+/*.pagination {
     padding-top: 8px;
     border: 1px #d5d6d8 solid;
     height: 35px;
-}
+}*/
 
 .pagelist {
     float: right;
@@ -609,7 +608,7 @@ table {
 
 /*form*/
 .forminput, .search {
-    height: 21px;
+    height: 26px;
     border: solid 1px #c6c6c6;
     line-height: 22px;
     padding-left: 8px;
@@ -694,7 +693,7 @@ table {
 
 .th_title {
     width: 3%;
-    text-align: left;
+    text-align: right;
 }
 
 .tlabel {
@@ -706,7 +705,7 @@ table {
 }
 
 .inputstyle {
-    width: 190px;
+    width: 200px;
     color: #000;
 }
 

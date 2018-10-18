@@ -23,7 +23,8 @@
             <tbody>
             <tr>
                 <td>
-                    <div class="head_left_button" id="new-employee-files" onmousemove="select_color(this)" onmouseout="unselected_color(this)">
+                    <div class="head_left_button" id="new-employee-files" onmousemove="select_color(this)"
+                         onmouseout="unselected_color(this)">
                         &#xeb86; 新建
                     </div>
 
@@ -159,7 +160,8 @@
 <script>
     //新建会议
     $("#new-employee-files").on("click", function () {
-        window.open('oa_new_contract.jsp', '_blank', 'height=700, width=1000, top=0, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
+        // window.location.href = 'contractArchives/OANewContract.do';
+        window.location.href = 'http://47.105.114.70/contractArchives/OANewContract.do';
     });
 </script>
 </html>

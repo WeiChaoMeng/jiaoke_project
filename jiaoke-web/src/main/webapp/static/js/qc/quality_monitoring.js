@@ -5,7 +5,8 @@
 /******************************** 数据渲染Start********************************************/
 function  getRealTimeData() {
     $.ajax({
-        url:"http://localhost:8080/getRealTimeData.do",
+        // url:"http://localhost:8080/getRealTimeData.do",
+        url:"http://47.105.114.70/getRealTimeData.do",
         type:"get",
         dataType:"json",
         success:function (res) {
@@ -88,7 +89,8 @@ function renderDataToPage(listStr) {
 /******************************** Echart材料比渲染Start********************************************/
 function getRealTimeDataEcharsMaterial() {
     $.ajax({
-        url:"http://localhost:8080/getRealTimeDataEcharsMaterial.do",
+        // url:"http://localhost:8080/getRealTimeDataEcharsMaterial.do",
+        url:"http://47.105.114.70/getRealTimeDataEcharsMaterial.do",
         type:"post",
         dataType:"json",
         success:function (res) {
@@ -205,7 +207,8 @@ window.addEventListener("resize", function () {
 /******************************** Echart温度图表渲染Start********************************************/
 function getRealTimeDataEcharsTemp(){
     $.ajax({
-        url:"http://localhost:8080/getRealTimeDataEcharsTemp.do",
+        // url:"http://localhost:8080/getRealTimeDataEcharsTemp.do",
+        url:"http://47.105.114.70/getRealTimeDataEcharsTemp.do",
         type:"post",
         dataType:"json",
         success:function (res) {

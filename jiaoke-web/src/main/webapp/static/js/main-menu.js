@@ -348,7 +348,7 @@ function right_change(id) {
         //公文发布
         case 'document_processing':
             //更改引用
-            window.open('oa_document_processing.jsp', '_blank', 'height=700, width=1400, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
+            window.open('oa_release_document.jsp', '_blank', 'height=700, width=1400, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
             //添加选择后样式
             $('#document_processing').attr("class", "selected");
             //添加右侧控制台最上标签
@@ -360,7 +360,7 @@ function right_change(id) {
         //待发公文
         case 'waiting_document':
             //更改引用
-            $("#oa-iframe").attr("src", "oa_waiting_document.jsp")
+            $("#oa-iframe").attr("src", "oa_primed_document.jsp")
             //添加选择后样式
             $('#waiting_document').attr("class", "selected");
             //添加右侧控制台最上标签
@@ -372,7 +372,7 @@ function right_change(id) {
         //公文签收
         case 'document_signing':
             //更改引用
-            $("#oa-iframe").attr("src", "oa_document_signing.jsp")
+            $("#oa-iframe").attr("src", "oa_pending_document.jsp")
             //添加选择后样式
             $('#document_signing').attr("class", "selected");
             //添加右侧控制台最上标签
@@ -385,7 +385,7 @@ function right_change(id) {
         //历史公文
         case 'historical_documents':
             //更改引用
-            $("#oa-iframe").attr("src", "oa_documents_historical.jsp")
+            $("#oa-iframe").attr("src", "oa_issued_document.jsp")
             //添加选择后样式
             $('#historical_documents').attr("class", "selected");
             //添加右侧控制台最上标签

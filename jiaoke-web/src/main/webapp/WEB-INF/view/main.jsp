@@ -19,7 +19,7 @@
     <meta charset="utf-8">
     <title>路驰办公系统</title>
     <link href="/static/css/default.css" rel="stylesheet" type="text/css">
-    <link href="/static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
+    <link href="../../static/css/style/green.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="/static/images/favicon.ico" type="image/ico"/>
     <style>
         html {
@@ -114,7 +114,7 @@
 </div>
 
 <div class="rightdown">
-    <iframe src="default.do" id="iframe" name="right" width="100%" height="100%" frameborder="0"
+    <iframe src="/default.do" id="iframe" name="right" width="100%" height="100%" frameborder="0"
             scrolling="auto" ></iframe>
 </div>
 
@@ -165,17 +165,17 @@
 
                 case 'index':
 
-                    $("#iframe").attr("src", "default.do");
+                    $("#iframe").attr("src", "/default.do");
                     break;
 
                 case 'OA':
 
-                    $("#iframe").attr("src", "oaIndex.do");
+                    $("#iframe").attr("src", "/oaNavigation.do");
                     break;
 
                 case 'quality_control':
 
-                    $("#iframe").attr("src", "qualityIndex.do");
+                    $("#iframe").attr("src", "/qualityIndex.do");
                     break;
 
                 case 'HR':
@@ -206,7 +206,7 @@
     $('#index').click(function () {
         $('.selected').attr('class', 'manu');
         $(this).attr('class', 'selected');
-        $('#iframe').attr('src', 'default.do');
+        $('#iframe').attr('src', '/default.do');
 
     });
 </script>
