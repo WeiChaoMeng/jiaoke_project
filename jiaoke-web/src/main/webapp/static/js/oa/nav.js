@@ -154,7 +154,7 @@ $(function () {
     $("#contract_archives").on("click", function () {
         removeOwnName();
         archives(this);
-        $('#oa-iframe').attr("src", "OAContractArchives.do");
+        $('#oa-iframe').attr("src", "contractArchives/OAContractArchives.do");
     });
 
     /*--- 会议管理 ---*/

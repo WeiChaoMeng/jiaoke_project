@@ -168,8 +168,8 @@
 <script>
     //查看详情
     function particulars(id) {
-        // window.location.href = "documentDetails?id=" + id;
-        window.location.href = "http://47.105.114.70/documentDetails?id=" + id;
+        window.location.href = "documentDetails?id=" + id;
+        // window.location.href = "http://47.105.114.70/documentDetails?id=" + id;
     }
 </script>
 </html>

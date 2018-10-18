@@ -18,6 +18,7 @@
 <head>
     <meta charset="UTF-8">
     <title>合同档案</title>
+    <link href="/static/js/datepicker/css/bootstrap-datepicker.css" rel="stylesheet">
 
     <style>
         * {
@@ -99,7 +100,7 @@
     </style>
 </head>
 <body>
-<form id="biaodan">
+<form action="/contractArchives/add" id="oaContractArchives" name="oaContractArchives" method="post">
     <!-- 表单内容 -->
     <div class="contract-new-page">
         <div class="contract-block-title">
@@ -112,7 +113,7 @@
                 <i>*</i>
             </label>
             <div class="contract-form-input">
-                <input type="text">
+                <input type="text" name="serialNumber" value="" required>
             </div>
         </div>
 
@@ -123,7 +124,7 @@
                 <i>*</i>
             </label>
             <div class="contract-form-input">
-                <input type="text">
+                <input type="text" name="title" value="" required>
             </div>
         </div>
 
@@ -134,7 +135,7 @@
                 <i>*</i>
             </label>
             <div class="contract-form-input">
-                <input type="text">
+                <input type="text" name="archivesAbstract" value="" required>
             </div>
         </div>
 
@@ -145,7 +146,7 @@
                 <i>*</i>
             </label>
             <div class="contract-form-input">
-                <input type="text">
+                <input type="text" name="operator" value="" required>
             </div>
         </div>
 
@@ -156,7 +157,7 @@
                 <i>*</i>
             </label>
             <div class="contract-form-input">
-                <input type="text" value="" name="">
+                <input type="text" name="signingUnit" value="" required>
             </div>
         </div>
 
@@ -167,26 +168,19 @@
                 <i>*</i>
             </label>
             <div class="contract-form-input">
-                <input type="text" value="" id="createTime" name="createTime">
+                <input type="text" name="signingDate" value="" class="forminput" id="start" required>
             </div>
         </div>
-
-        <!-- 上传图片-->
-        <!--<div class="contract-block-title">
-            <span>上传图片:</span>
-        </div>
-        <div id="demo" class="demo"></div>-->
 
         <div id="editor">
             <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
         </div>
         <div style="text-align: center;padding-top: 20px;">
-            <input type="hidden" name="company" value="" id="editorHTNL">
+            <input type="hidden" name="richText" value="" id="editorHTNL">
             <input type="button" value="返回"
                    style="margin-right:20px;padding: 7px 20px; background: #92ebff;border: 1px #a5a5a5 solid;"
                    onclick="javascript:history.back()">
-            <input type="button" value="提交" style="padding: 7px 20px; background: #92ebff;border: 1px #a5a5a5 solid;"
-                   onclick="addFrom('biaodan')">
+            <input type="submit" value="提交" style="padding: 7px 20px; background: #92ebff;border: 1px #a5a5a5 solid;">
         </div>
 
     </div>
@@ -194,6 +188,8 @@
 </body>
 
 <script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/js/datepicker/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="/static/js/datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
 <!-- 注意， 只需要引用 JS，无需引用任何 CSS ！！！-->
 <script type="text/javascript" src="../../../../static/editor/release/wangEditor.min.js"></script>
 <script type="text/javascript">
@@ -237,8 +233,8 @@
         formData.append('file', files[0]);
         $.ajax({
             type: "POST",
-            // url: '/uploadPic/uploadImg',
-            url: 'http://47.105.114.70/uploadPic/uploadImg',
+            url: '/uploadPic/uploadImg',
+            // url: 'http://47.105.114.70/uploadPic/uploadImg',
             // data: {"file": files},
             data: formData,
             async: true,
@@ -249,7 +245,8 @@
                 if (ret.message == "success") {
                     alert("成功");
                     // 上传代码返回结果之后，将图片插入到编辑器中
-                    insert(ret.imageFilePaths)
+                    insert(ret.imageFilePaths);
+                    $("#editorHTNL").val(editor.txt.html());
                 } else {
                     alert("失败");
                 }
@@ -273,13 +270,13 @@
          alert(editor.txt.text())
      }, false);*/
 
-    function addFrom(formId) {
+    /*function addFrom(formId) {
         console.log(editor.txt.html());
         $("#editorHTNL").val(editor.txt.html());
         $.ajax({
             type: "post",
-            // url: '/contractArchives/add',
-            url: 'http://47.105.114.70/contractArchives/add',
+            url: '/contractArchives/add',
+            // url: 'http://47.105.114.70/contractArchives/add',
             data: $("#" + formId).serialize(),
             async: false,
             error: function (request) {
@@ -289,6 +286,21 @@
 
             }
         });
-    }
+    }*/
+
+    //日期选择器
+    $("#start").datepicker({
+        "language": "zh-CN",
+        "format": 'yyyy-mm-dd'
+    });
+    $("#end").datepicker({
+        "language": "zh-CN",
+        "format": 'yyyy-mm-dd'
+    });
+    $(".date .iconfont").click(function () {
+        $(this).prev().trigger("focus");
+    });
+
+    $('select.select').select();
 </script>
 </html>

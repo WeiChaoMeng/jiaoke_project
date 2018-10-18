@@ -5,8 +5,8 @@ window.setInterval(getWarningData, 3000);
 /***********************间隔执行End*****************************/
 function getWarningData() {
     $.ajax({
-        // url: "http://localhost:8080/getQualityWarningData.do",
-        url: "http://47.105.114.70/getQualityWarningData.do",
+        url: "http://localhost:8080/getQualityWarningData.do",
+        // url: "http://47.105.114.70/getQualityWarningData.do",
         type: "post",
         dataType: "json",
         success: function (res) {
@@ -77,8 +77,8 @@ function getWarningData() {
 function getEcharsData() {
 
     $.ajax({
-        // url: "http://localhost:8080/getWarningEcharsData.do",
-        url: "http://47.105.114.70/getWarningEcharsData.do",
+        url: "http://localhost:8080/getWarningEcharsData.do",
+        // url: "http://47.105.114.70/getWarningEcharsData.do",
         type: "post",
         dataType: "json",
         success:function (res) {

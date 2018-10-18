@@ -56,7 +56,7 @@ public class OaDocumentController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String add(OaDocument oaDocument) {
         if (oaDocumentService.add(oaDocument) == 1) {
-            return "oa/document/oa_issued_document";
+            return "redirect:/document/issuedDocument.do";
         } else {
             return null;
         }

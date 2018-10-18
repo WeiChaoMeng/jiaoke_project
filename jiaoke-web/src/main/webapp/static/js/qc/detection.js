@@ -1,3 +1,4 @@
+// noinspection JSAnnotator
 window.onload() = () => {
 
 }
