@@ -3,8 +3,6 @@ package com.jiaoke.controller.oa;
 
 import com.google.gson.Gson;
 import com.jiake.utils.OaResources;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -245,7 +243,7 @@ public class UploadPicController {
      * @param html     html
      */
     public void writeHtml(HttpServletResponse response, String html) {
-        Logger logger = LoggerFactory.getLogger(getClass());
+
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setContentType("text/html;;charset=utf-8");
         response.setHeader("Pragma", "No-cache");
@@ -257,7 +255,7 @@ public class UploadPicController {
             pw.write(html);
             pw.flush();
         } catch (Exception e) {
-            logger.info("输出HTML数据异常", e);
+
         } finally {
             if (pw != null) {
                 pw.close();
