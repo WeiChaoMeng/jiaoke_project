@@ -233,8 +233,8 @@
         formData.append('file', files[0]);
         $.ajax({
             type: "POST",
-            url: '/uploadPic/uploadImg',
-            // url: 'http://47.105.114.70/uploadPic/uploadImg',
+            // url: '/uploadPic/uploadImg',
+            url: 'http://47.105.114.70/uploadPic/uploadImg',
             // data: {"file": files},
             data: formData,
             async: true,
@@ -259,34 +259,6 @@
 
 
     editor.create();
-
-    /* document.getElementById('btn1').addEventListener('click', function () {
-         // 读取 html
-         alert(editor.txt.html())
-     }, false);
-
-     document.getElementById('btn2').addEventListener('click', function () {
-         // 读取 text
-         alert(editor.txt.text())
-     }, false);*/
-
-    /*function addFrom(formId) {
-        console.log(editor.txt.html());
-        $("#editorHTNL").val(editor.txt.html());
-        $.ajax({
-            type: "post",
-            url: '/contractArchives/add',
-            // url: 'http://47.105.114.70/contractArchives/add',
-            data: $("#" + formId).serialize(),
-            async: false,
-            error: function (request) {
-                alert("Connection error");
-            },
-            success: function (data) {
-
-            }
-        });
-    }*/
 
     //日期选择器
     $("#start").datepicker({
