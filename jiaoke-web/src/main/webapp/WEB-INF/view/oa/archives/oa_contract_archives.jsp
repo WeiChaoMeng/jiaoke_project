@@ -138,14 +138,14 @@
 <script>
     //新建会议
     $("#new-employee-files").on("click", function () {
-        // window.location.href = 'OANewContract.do';
-        window.location.href = 'http://47.105.114.70/contractArchives/OANewContract.do';
+        window.location.href = 'OANewContract.do';
+        // window.location.href = 'http://47.105.114.70/contractArchives/OANewContract.do';
     });
 
     //详情
     function particulars(id) {
-        // window.location.href = "details?id=" + id;
-        window.location.href = "http://47.105.114.70/details?id=" + id;
+        window.location.href = "details?id=" + id;
+        // window.location.href = "http://47.105.114.70/details?id=" + id;
     }
 </script>
 </html>

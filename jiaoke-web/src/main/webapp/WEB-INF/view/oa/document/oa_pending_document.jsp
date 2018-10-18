@@ -187,14 +187,14 @@
 <script>
     //新建
     function createDocument() {
-        // window.location.href = "/document/releaseDocument.do";
-        window.location.href = "http://47.105.114.70/document/releaseDocument.do";
+        window.location.href = "/document/releaseDocument.do";
+        // window.location.href = "http://47.105.114.70/document/releaseDocument.do";
     }
 
     //查看详情
     function particulars(id) {
-        // window.location.href = "documentDetails?id=" + id;
-        window.location.href = "http://47.105.114.70/documentDetails?id=" + id;
+        window.location.href = "documentDetails?id=" + id;
+        // window.location.href = "http://47.105.114.70/documentDetails?id=" + id;
     }
 </script>
 </html>

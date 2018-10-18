@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.oa.dao.OaDocumentMapper">
+    <resultMap id="BaseResultMap" type="com.jiaoke.oa.bean.OaDocument">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="form_title" jdbcType="VARCHAR" property="formTitle"/>
+        <result column="Importance" jdbcType="INTEGER" property="importance"/>
+        <result column="associated_project" jdbcType="VARCHAR" property="associatedProject"/>
+        <result column="pre_archiving" jdbcType="VARCHAR" property="preArchiving"/>
+        <result column="flow" jdbcType="VARCHAR" property="flow"/>
+        <result column="process_deadline" jdbcType="VARCHAR" property="processDeadline"/>
+        <result column="track" jdbcType="INTEGER" property="track"/>
+        <result column="text_title" jdbcType="VARCHAR" property="textTitle"/>
+        <result column="text_number" jdbcType="VARCHAR" property="textNumber"/>
+        <result column="rank" jdbcType="INTEGER" property="rank"/>
+        <result column="Identification" jdbcType="INTEGER" property="identification"/>
+        <result column="drafting_department" jdbcType="VARCHAR" property="draftingDepartment"/>
+        <result column="drafted_person" jdbcType="VARCHAR" property="draftedPerson"/>
+        <result column="nuclear_drafts" jdbcType="VARCHAR" property="nuclearDrafts"/>
+        <result column="Issue" jdbcType="VARCHAR" property="issue"/>
+        <result column="countersign" jdbcType="VARCHAR" property="countersign"/>
+        <result column="storage_life" jdbcType="INTEGER" property="storageLife"/>
+        <result column="thematic_words" jdbcType="VARCHAR" property="thematicWords"/>
+        <result column="main_give" jdbcType="VARCHAR" property="mainGive"/>
+        <result column="copy_give" jdbcType="VARCHAR" property="copyGive"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="print" jdbcType="VARCHAR" property="print"/>
+        <result column="proofreading" jdbcType="VARCHAR" property="proofreading"/>
+        <result column="attachment_number" jdbcType="INTEGER" property="attachmentNumber"/>
+        <result column="attachment" jdbcType="VARCHAR" property="attachment"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="process_state" jdbcType="VARCHAR" property="processState"/>
+        <result column="form_state" jdbcType="INTEGER" property="formState"/>
+        <result column="user_info_id" jdbcType="VARCHAR" property="userInfoId"/>
+        <result column="processing_state" jdbcType="INTEGER" property="processingState"/>
+        <result column="urging_number" jdbcType="INTEGER" property="urgingNumber"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, form_title, Importance, associated_project, pre_archiving, flow, process_deadline, track, `text_title`,
+    text_number, `rank`, Identification, drafting_department, drafted_person, nuclear_drafts, 
+    Issue, countersign, storage_life, thematic_words, main_give, copy_give, content, 
+    `print`, proofreading, attachment_number, attachment, create_time, process_state, 
+    form_state, user_info_id, processing_state, urging_number
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+            oa_document.id,
+            oa_document.form_title,
+            oa_document.Importance,
+            oa_document.associated_project,
+            oa_document.pre_archiving,
+            oa_document.flow,
+            oa_document.process_deadline,
+            oa_document.track,
+            oa_document.`text_title`,
+            oa_document.text_number,
+            oa_document.`rank`,
+            oa_document.Identification,
+            oa_document.drafting_department,
+            oa_document.drafted_person,
+            oa_document.nuclear_drafts,
+            oa_document.Issue,
+            oa_document.countersign,
+            oa_document.storage_life,
+            oa_document.thematic_words,
+            oa_document.main_give,
+            oa_document.copy_give,
+            oa_document.content,
+            oa_document.`print`,
+            oa_document.proofreading,
+            oa_document.attachment_number,
+            oa_document.attachment,
+            oa_document.create_time,
+            oa_document.process_state,
+            oa_document.form_state,
+            user_info.usename AS user_info_id ,
+            oa_document.processing_state
+        from oa_document
+        LEFT JOIN user_info ON oa_document.user_info_id = user_info.id
+        where oa_document.id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from oa_document
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.jiaoke.oa.bean.OaDocument">
+    insert into oa_document (id, form_title, Importance, 
+      associated_project, pre_archiving, flow, process_deadline,
+      track, `text_title`, text_number,
+      `rank`, Identification, drafting_department, 
+      drafted_person, nuclear_drafts, Issue, 
+      countersign, storage_life, thematic_words, 
+      main_give, copy_give, content, 
+      `print`, proofreading, attachment_number, 
+      attachment, create_time, process_state, 
+      form_state, user_info_id, processing_state, urging_number)
+    values (#{id,jdbcType=INTEGER}, #{formTitle,jdbcType=VARCHAR}, #{importance,jdbcType=INTEGER}, 
+      #{associatedProject,jdbcType=VARCHAR}, #{preArchiving,jdbcType=VARCHAR}, #{flow,jdbcType=VARCHAR}, #{processDeadline,jdbcType=VARCHAR},
+      #{track,jdbcType=INTEGER}, #{textTitle,jdbcType=VARCHAR}, #{textNumber,jdbcType=VARCHAR}, 
+      #{rank,jdbcType=INTEGER}, #{identification,jdbcType=INTEGER}, #{draftingDepartment,jdbcType=VARCHAR}, 
+      #{draftedPerson,jdbcType=VARCHAR}, #{nuclearDrafts,jdbcType=VARCHAR}, #{issue,jdbcType=VARCHAR}, 
+      #{countersign,jdbcType=VARCHAR}, #{storageLife,jdbcType=INTEGER}, #{thematicWords,jdbcType=VARCHAR}, 
+      #{mainGive,jdbcType=VARCHAR}, #{copyGive,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{print,jdbcType=VARCHAR}, #{proofreading,jdbcType=VARCHAR}, #{attachmentNumber,jdbcType=INTEGER}, 
+      #{attachment,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{processState,jdbcType=VARCHAR}, 
+      #{formState,jdbcType=INTEGER}, #{userInfoId,jdbcType=VARCHAR}, #{processingState,jdbcType=INTEGER}, #{urgingNumber,jdbcType=INTEGER})
+  </insert>
+    <insert id="insertSelective" parameterType="com.jiaoke.oa.bean.OaDocument">
+        insert into oa_document
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="formTitle != null">
+                form_title,
+            </if>
+            <if test="importance != null">
+                Importance,
+            </if>
+            <if test="associatedProject != null">
+                associated_project,
+            </if>
+            <if test="preArchiving != null">
+                pre_archiving,
+            </if>
+            <if test="flow != null">
+                flow,
+            </if>
+            <if test="processDeadline != null">
+                process_deadline,
+            </if>
+            <if test="track != null">
+                track,
+            </if>
+            <if test="textTitle != null">
+                `text_title`,
+            </if>
+            <if test="textNumber != null">
+                text_number,
+            </if>
+            <if test="rank != null">
+                `rank`,
+            </if>
+            <if test="identification != null">
+                Identification,
+            </if>
+            <if test="draftingDepartment != null">
+                drafting_department,
+            </if>
+            <if test="draftedPerson != null">
+                drafted_person,
+            </if>
+            <if test="nuclearDrafts != null">
+                nuclear_drafts,
+            </if>
+            <if test="issue != null">
+                Issue,
+            </if>
+            <if test="countersign != null">
+                countersign,
+            </if>
+            <if test="storageLife != null">
+                storage_life,
+            </if>
+            <if test="thematicWords != null">
+                thematic_words,
+            </if>
+            <if test="mainGive != null">
+                main_give,
+            </if>
+            <if test="copyGive != null">
+                copy_give,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="print != null">
+                `print`,
+            </if>
+            <if test="proofreading != null">
+                proofreading,
+            </if>
+            <if test="attachmentNumber != null">
+                attachment_number,
+            </if>
+            <if test="attachment != null">
+                attachment,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="processState != null">
+                process_state,
+            </if>
+            <if test="formState != null">
+                form_state,
+            </if>
+            <if test="userInfoId != null">
+                user_info_id,
+            </if>
+            <if test="processingState != null">
+                processing_state,
+            </if>
+            <if test="urgingNumber != null">
+                urging_number,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="formTitle != null">
+                #{formTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="importance != null">
+                #{importance,jdbcType=INTEGER},
+            </if>
+            <if test="associatedProject != null">
+                #{associatedProject,jdbcType=VARCHAR},
+            </if>
+            <if test="preArchiving != null">
+                #{preArchiving,jdbcType=VARCHAR},
+            </if>
+            <if test="flow != null">
+                #{flow,jdbcType=VARCHAR},
+            </if>
+            <if test="processDeadline != null">
+                #{processDeadline,jdbcType=VARCHAR},
+            </if>
+            <if test="track != null">
+                #{track,jdbcType=INTEGER},
+            </if>
+            <if test="textTitle != null">
+                #{textTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="textNumber != null">
+                #{textNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="rank != null">
+                #{rank,jdbcType=INTEGER},
+            </if>
+            <if test="identification != null">
+                #{identification,jdbcType=INTEGER},
+            </if>
+            <if test="draftingDepartment != null">
+                #{draftingDepartment,jdbcType=VARCHAR},
+            </if>
+            <if test="draftedPerson != null">
+                #{draftedPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="nuclearDrafts != null">
+                #{nuclearDrafts,jdbcType=VARCHAR},
+            </if>
+            <if test="issue != null">
+                #{issue,jdbcType=VARCHAR},
+            </if>
+            <if test="countersign != null">
+                #{countersign,jdbcType=VARCHAR},
+            </if>
+            <if test="storageLife != null">
+                #{storageLife,jdbcType=INTEGER},
+            </if>
+            <if test="thematicWords != null">
+                #{thematicWords,jdbcType=VARCHAR},
+            </if>
+            <if test="mainGive != null">
+                #{mainGive,jdbcType=VARCHAR},
+            </if>
+            <if test="copyGive != null">
+                #{copyGive,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="print != null">
+                #{print,jdbcType=VARCHAR},
+            </if>
+            <if test="proofreading != null">
+                #{proofreading,jdbcType=VARCHAR},
+            </if>
+            <if test="attachmentNumber != null">
+                #{attachmentNumber,jdbcType=INTEGER},
+            </if>
+            <if test="attachment != null">
+                #{attachment,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="processState != null">
+                #{processState,jdbcType=VARCHAR},
+            </if>
+            <if test="formState != null">
+                #{formState,jdbcType=INTEGER},
+            </if>
+            <if test="userInfoId != null">
+                #{userInfoId,jdbcType=VARCHAR},
+            </if>
+            <if test="processingState != null">
+                #{processingState,jdbcType=INTEGER},
+            </if>
+            <if test="urgingNumber != null">
+                #{urgingNumber,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.jiaoke.oa.bean.OaDocument">
+        update oa_document
+        <set>
+            <if test="formTitle != null">
+                form_title = #{formTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="importance != null">
+                Importance = #{importance,jdbcType=INTEGER},
+            </if>
+            <if test="associatedProject != null">
+                associated_project = #{associatedProject,jdbcType=VARCHAR},
+            </if>
+            <if test="preArchiving != null">
+                pre_archiving = #{preArchiving,jdbcType=VARCHAR},
+            </if>
+            <if test="flow != null">
+                flow = #{flow,jdbcType=VARCHAR},
+            </if>
+            <if test="processDeadline != null">
+                process_deadline = #{processDeadline,jdbcType=VARCHAR},
+            </if>
+            <if test="track != null">
+                track = #{track,jdbcType=INTEGER},
+            </if>
+            <if test="textTitle != null">
+                `text_title` = #{textTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="textNumber != null">
+                text_number = #{textNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="rank != null">
+                `rank` = #{rank,jdbcType=INTEGER},
+            </if>
+            <if test="identification != null">
+                Identification = #{identification,jdbcType=INTEGER},
+            </if>
+            <if test="draftingDepartment != null">
+                drafting_department = #{draftingDepartment,jdbcType=VARCHAR},
+            </if>
+            <if test="draftedPerson != null">
+                drafted_person = #{draftedPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="nuclearDrafts != null">
+                nuclear_drafts = #{nuclearDrafts,jdbcType=VARCHAR},
+            </if>
+            <if test="issue != null">
+                Issue = #{issue,jdbcType=VARCHAR},
+            </if>
+            <if test="countersign != null">
+                countersign = #{countersign,jdbcType=VARCHAR},
+            </if>
+            <if test="storageLife != null">
+                storage_life = #{storageLife,jdbcType=INTEGER},
+            </if>
+            <if test="thematicWords != null">
+                thematic_words = #{thematicWords,jdbcType=VARCHAR},
+            </if>
+            <if test="mainGive != null">
+                main_give = #{mainGive,jdbcType=VARCHAR},
+            </if>
+            <if test="copyGive != null">
+                copy_give = #{copyGive,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="print != null">
+                `print` = #{print,jdbcType=VARCHAR},
+            </if>
+            <if test="proofreading != null">
+                proofreading = #{proofreading,jdbcType=VARCHAR},
+            </if>
+            <if test="attachmentNumber != null">
+                attachment_number = #{attachmentNumber,jdbcType=INTEGER},
+            </if>
+            <if test="attachment != null">
+                attachment = #{attachment,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="processState != null">
+                process_state = #{processState,jdbcType=VARCHAR},
+            </if>
+            <if test="formState != null">
+                form_state = #{formState,jdbcType=INTEGER},
+            </if>
+            <if test="userInfoId != null">
+                user_info_id = #{userInfoId,jdbcType=VARCHAR},
+            </if>
+            <if test="processingState != null">
+                processing_state = #{processingState,jdbcType=INTEGER},
+            </if>
+            <if test="urgingNumber != null">
+                urging_number = #{urgingNumber,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.jiaoke.oa.bean.OaDocument">
+    update oa_document
+    set form_title = #{formTitle,jdbcType=VARCHAR},
+      Importance = #{importance,jdbcType=INTEGER},
+      associated_project = #{associatedProject,jdbcType=VARCHAR},
+      pre_archiving = #{preArchiving,jdbcType=VARCHAR},
+      flow = #{flow,jdbcType=VARCHAR},
+      process_deadline = #{processDeadline,jdbcType=VARCHAR},
+      track = #{track,jdbcType=INTEGER},
+      `text_title` = #{textTitle,jdbcType=VARCHAR},
+      text_number = #{textNumber,jdbcType=VARCHAR},
+      `rank` = #{rank,jdbcType=INTEGER},
+      Identification = #{identification,jdbcType=INTEGER},
+      drafting_department = #{draftingDepartment,jdbcType=VARCHAR},
+      drafted_person = #{draftedPerson,jdbcType=VARCHAR},
+      nuclear_drafts = #{nuclearDrafts,jdbcType=VARCHAR},
+      Issue = #{issue,jdbcType=VARCHAR},
+      countersign = #{countersign,jdbcType=VARCHAR},
+      storage_life = #{storageLife,jdbcType=INTEGER},
+      thematic_words = #{thematicWords,jdbcType=VARCHAR},
+      main_give = #{mainGive,jdbcType=VARCHAR},
+      copy_give = #{copyGive,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      `print` = #{print,jdbcType=VARCHAR},
+      proofreading = #{proofreading,jdbcType=VARCHAR},
+      attachment_number = #{attachmentNumber,jdbcType=INTEGER},
+      attachment = #{attachment,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      process_state = #{processState,jdbcType=VARCHAR},
+      form_state = #{formState,jdbcType=INTEGER},
+      user_info_id = #{userInfoId,jdbcType=VARCHAR},
+      processing_state = #{processingState,jdbcType=INTEGER},
+      urging_number = #{urgingNumber,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <select id="getAllByFormState" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from oa_document
+        where form_state = #{formState,jdbcType=INTEGER}
+    </select>
+
+    <select id="getTotalByFormState" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select
+            COUNT( * )
+        from oa_document
+        where form_state = #{formState,jdbcType=INTEGER}
+    </select>
+
+    <select id="getPagingByFormState" parameterType="map" resultMap="BaseResultMap">
+        select
+            *
+        from oa_document
+        where form_state = #{formState,jdbcType=INTEGER}
+        ORDER BY create_time DESC
+        LIMIT #{start},#{rows}
+    </select>
+</mapper>
