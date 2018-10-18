@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: lihui
@@ -97,55 +98,32 @@
     <table class="simpletable">
 
         <thead>
-        <th><input type="checkbox"></th>
-        <th>标记</th>
-        <th>编号</th>
-        <th>标题</th>
-        <th>摘要</th>
-        <th>经手人</th>
-        <th>签署单位</th>
-        <th>签署日期</th>
-        <th>建档日期</th>
+        <th style="width: 3%;"><input type="checkbox"></th>
+        <th style="width: 10%;">编号</th>
+        <th style="width: 25%;">标题</th>
+        <th style="width: 15%;">摘要</th>
+        <th style="width: 7%;">经办人</th>
+        <th style="width: 15%;">签署单位</th>
+        <th style="width: 10%;">签署日期</th>
+        <th style="width: 13%;">建档日期</th>
         </thead>
 
         <tbody>
 
         <tr></tr>
-        <tr>
-            <td><input type="checkbox"></td>
-            <td class="iconfont" onclick="flag(this)">&#xe6f5;</td>
-            <td>GLB1001</td>
-            <td>2018年与xxx单位合作合同</td>
-            <td>北京朝阳区xxx路，路面铺设</td>
-            <td>刘喜福</td>
-            <td>xxx有限公司</td>
-            <td>2018-06-04</td>
-            <td>2018-06-12</td>
-        </tr>
+        <c:forEach var="oaContractArchives" items="${oaContractArchivesList}" varStatus="status">
+            <tr onclick="particulars(${oaContractArchives.id})">
+                <td><input type="checkbox" onclick="window.event.cancelBubble=true;"></td>
+                <td>${oaContractArchives.serialNumber}</td>
+                <td>${oaContractArchives.title}</td>
+                <td>${oaContractArchives.archivesAbstract}</td>
+                <td>${oaContractArchives.operator}</td>
+                <td>${oaContractArchives.signingUnit}</td>
+                <td>${oaContractArchives.signingDate}</td>
+                <td>${oaContractArchives.createdDateStr}</td>
+            </tr>
+        </c:forEach>
 
-        <tr>
-            <td><input type="checkbox"></td>
-            <td class="iconfont" onclick="flag(this)">&#xe6f5;</td>
-            <td>CGB1001</td>
-            <td>xxx采购合同</td>
-            <td>购买xxx产品</td>
-            <td>张华伦</td>
-            <td>xxx有限公司</td>
-            <td>2018-06-04</td>
-            <td>2018-06-12</td>
-        </tr>
-
-        <tr>
-            <td><input type="checkbox"></td>
-            <td class="iconfont" onclick="flag(this)">&#xe6f5;</td>
-            <td>AQB1001</td>
-            <td>电视监控工程安装合同</td>
-            <td>电视监控安装</td>
-            <td>康斯莱</td>
-            <td>xxx有限公司</td>
-            <td>2018-06-04</td>
-            <td>2018-06-12</td>
-        </tr>
         </tbody>
 
     </table>
@@ -160,8 +138,14 @@
 <script>
     //新建会议
     $("#new-employee-files").on("click", function () {
-        // window.location.href = 'contractArchives/OANewContract.do';
+        // window.location.href = 'OANewContract.do';
         window.location.href = 'http://47.105.114.70/contractArchives/OANewContract.do';
     });
+
+    //详情
+    function particulars(id) {
+        // window.location.href = "details?id=" + id;
+        window.location.href = "http://47.105.114.70/details?id=" + id;
+    }
 </script>
 </html>
