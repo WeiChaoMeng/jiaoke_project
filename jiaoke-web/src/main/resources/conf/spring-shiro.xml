@@ -18,6 +18,8 @@
                     authc  需要认证
                     perms  匹配权限
                 -->
+                /favicon.ico = anon
+                /static/** = anon
                 /uploadPic/uploadImg = anon
                 /login/login.do = anon
                 /OAWageStatisticsInner.do = perms[/test]
