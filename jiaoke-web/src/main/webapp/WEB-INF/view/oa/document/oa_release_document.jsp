@@ -310,8 +310,8 @@
             $.ajax({
                 cache: true,
                 type: "POST",
-                url: '/document/preservationPending',
-                // url: 'http://47.105.114.70/document/preservationPending',
+                // url: '/document/preservationPending',
+                url: 'http://47.105.114.70/document/preservationPending',
                 data: $("#oaDocumentProcessing").serialize(),
                 error: function (request) {
                     alert("Connection error");

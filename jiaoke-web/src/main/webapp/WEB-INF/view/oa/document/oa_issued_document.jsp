@@ -163,8 +163,8 @@
 
             $.ajax({
                 type: "post",
-                url: '/document/pagingList',
-                // url: 'http://47.105.114.70/document/pagingList',
+                // url: '/document/pagingList',
+                url: 'http://47.105.114.70/document/pagingList',
                 data: {"formState": 0, "page": page, "rows": rows},
                 success: function (data) {
                     if (data == "error") {
@@ -259,8 +259,8 @@
 
     //查看详情
     function particulars(id) {
-        window.location.href = "documentDetails?id=" + id;
-        // window.location.href = "http://47.105.114.70/documentDetails?id=" + id;
+        // window.location.href = "documentDetails?id=" + id;
+        window.location.href = "http://47.105.114.70/documentDetails?id=" + id;
     }
 </script>
 </html>
