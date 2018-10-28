@@ -1,11 +1,14 @@
+var basePath = "";
+// 初始化
+(function ($) {
+    basePath = $("#path").val();
+    getEcharsData()
+    getWarningData();
+})(jQuery);
 
-/***********************间隔执行Start*****************************/
-window.setInterval(getWarningData, 3000);
-
-/***********************间隔执行End*****************************/
 function getWarningData() {
     $.ajax({
-        url: "http://localhost:8080/getQualityWarningData.do",
+        url: basePath + "/getQualityWarningData.do",
         // url: "http://47.105.114.70/getQualityWarningData.do",
         type: "post",
         dataType: "json",
@@ -77,7 +80,7 @@ function getWarningData() {
 function getEcharsData() {
 
     $.ajax({
-        url: "http://localhost:8080/getWarningEcharsData.do",
+        url: basePath + "/getWarningEcharsData.do",
         // url: "http://47.105.114.70/getWarningEcharsData.do",
         type: "post",
         dataType: "json",
@@ -151,9 +154,11 @@ function eachList(inArray,toArray) {
     }
 
 }
-// 初始化
-(function ($) {
-    getEcharsData()
-    getWarningData();
-})(jQuery);
+
+/***********************间隔执行Start*****************************/
+window.setInterval(getWarningData, 3000);
+
+/***********************间隔执行End*****************************/
+/***********************间隔执行End*****************************/
+
  

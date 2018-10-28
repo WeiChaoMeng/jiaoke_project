@@ -15,6 +15,7 @@ import com.jiaoke.quality.bean.QualityDataManagerDay;
 import com.jiaoke.quality.bean.QualityRatioModel;
 import com.jiaoke.quality.bean.QualityRatioTemplate;
 import com.jiaoke.quality.service.*;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,7 +61,7 @@ public class QualityController {
      * @auther:
      * @date: 2018/10/9 17:43
      */
-    @RequestMapping(value = "/qualityData.do")
+    @RequestMapping(value ={"/qualityData.do"} , method = RequestMethod.POST)
     public void receiveByClient(@RequestParam("messageStr") String messageStr){
 
         if (StringUtils.isEmpty(messageStr)) return;
@@ -115,7 +116,7 @@ public class QualityController {
             pageBean = qualityMatchingInf.selectMatchingMoudelByLimte(Integer.parseInt(temp),url);
         }
 
-        if (null == pageBean) return null;
+        if (null == pageBean) {return null;}
 
 
         //获取再生料以及添加剂类型
@@ -131,13 +132,53 @@ public class QualityController {
     }
 
 
-
+    /**
+     *
+     * 功能描述: <br>
+     *  <添加配比>
+     * @param [qualityRatioTemplate]
+     * @return java.lang.String
+     * @auther Melone
+     * @date 2018/10/25 18:45
+     */
     @RequestMapping(value ={"/addRation.do"} , method = RequestMethod.POST)
     public String addRation(QualityRatioTemplate qualityRatioTemplate){
 
         boolean bo =  qualityMatchingInf.insetRatioTemplate(qualityRatioTemplate);
 
         return "redirect:qc_index.do";
+    }
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <删除模板，传入多个模板id字符串>
+     * @param [idStr]
+     * @return java.lang.String
+     * @auther Melone
+     * @date 2018/10/25 18:47
+     */
+    @ResponseBody
+    @RequestMapping(value ={"/delectRation"} , method = RequestMethod.POST)
+    public String delectRation(String idStr){
+        String jsonMessage =  qualityMatchingInf.delectRation(idStr);
+        return jsonMessage;
+    }
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据id返回模板对象>
+     * @param [idStr]
+     * @return java.lang.String
+     * @auther Melone
+     * @date 2018/10/26 13:32
+     */
+    @ResponseBody
+    @RequestMapping(value ={"/showRatioById.do"} , method = RequestMethod.POST)
+    public String showRatioById(String idStr){
+
+        String jsonMessage =  qualityMatchingInf.selectRationById(idStr);
+        return jsonMessage;
     }
 
 
@@ -196,7 +237,15 @@ public class QualityController {
 
 
     /********************************  数据管理 Start *****************************************/
-
+    /**
+     *
+     * 功能描述: <br>
+     *  <数据管理首页获取数据渲染>
+     * @param [request]
+     * @return java.lang.String
+     * @auther Melone
+     * @date 2018/10/26 15:03
+     */
     @RequestMapping("/qc_data_manager.do")
     public String dataManager(HttpServletRequest request){
 
@@ -213,6 +262,19 @@ public class QualityController {
         request.setAttribute("pageBean",pageBean);
 
         return "quality/qc_data_manager";
+    }
+
+
+    @RequestMapping("/getProducttionByDate.do")
+    public String getProducttionByDate(HttpServletRequest request,String producedDate,String crewNum){
+
+        if (Strings.isBlank(producedDate) || Strings.isBlank(crewNum) ) {return null;}
+
+        Map<String,Object> map = qualityDataManagerInf.selectProducttionByDate(producedDate,crewNum);
+
+        request.setAttribute("baseMap",map);
+
+        return "quality/qc_dm_data_matching";
     }
 
     /********************************  数据管理 end *****************************************/

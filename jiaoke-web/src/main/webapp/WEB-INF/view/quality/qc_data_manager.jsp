@@ -11,7 +11,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>打卡记录</title>
+    <title>生产记录</title>
     <link href="/static/css/default.css" rel="stylesheet" type="text/css">
     <link href="/static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
     <script src="/static/js/echarts/echarts.js"></script>
@@ -56,7 +56,7 @@
                                             <td>${item.crewNum == 'crew1' ? '机组1':'机组2'} </td>
                                             <td>
 
-                                                <a class="selected" id="add" href="qc_dm_data_matching.jsp" target="_self"><i class="toolico iconfont">&#xe970;</i>查看</a>
+                                                <a class="selected" id="add" href="${path}/getProducttionByDate.do?producedDate=${item.produceDate}&crewNum=${item.crewNum}" ><i class="toolico iconfont">&#xe970;</i>查看</a>
                                                 <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont">&#xe8e5;</i>导出</a>
 
                                             </td>

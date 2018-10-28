@@ -48,4 +48,18 @@ public interface QualityMatchingInf {
      * @return
      */
     boolean insetRatioTemplate(QualityRatioTemplate qualityRatioTemplate);
+
+    /**
+     * 根据id传入待删除的配比模板id
+     * @param idStr
+     * @return
+     */
+    String delectRation(String idStr);
+
+    /**
+     * 根据传入ID查询模板对象
+     * @param idStr
+     * @return
+     */
+    String selectRationById(String idStr);
 }

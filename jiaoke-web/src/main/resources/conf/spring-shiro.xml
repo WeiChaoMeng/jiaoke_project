@@ -22,6 +22,8 @@
                 /static/** = anon
                 /uploadPic/uploadImg = anon
                 /login/login.do = anon
+                /qualityData.do = anon
+                <!--/*.do = anon-->
                 /OAWageStatisticsInner.do = perms[/test]
                 /login/*.do = authc
                 /oa/*.do = authc

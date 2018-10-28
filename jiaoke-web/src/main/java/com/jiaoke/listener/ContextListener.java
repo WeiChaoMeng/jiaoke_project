@@ -23,14 +23,23 @@ import javax.servlet.ServletContextListener;
 public class ContextListener implements ServletContextListener {
 
 
+    @Override
     public void contextInitialized(ServletContextEvent sce) {
-        ServletContext servletContext = sce.getServletContext();
-        String contextPath = servletContext.getContextPath();
-        System.out.println(contextPath);
+        ServletContext sc = sce.getServletContext();
+        String path = getContextPath(sc);
 
+        sc.setAttribute("path","http://localhost:8080" );
+//        sc.setAttribute("path","http://47.105.114.70/" );
     }
 
+    @Override
     public void contextDestroyed(ServletContextEvent sce) {
-
+        ServletContext sc = sce.getServletContext();
+        sc.removeAttribute("path");
     }
+
+    private String getContextPath(ServletContext sc) {
+        return sc.getContextPath();
+    }
+
 }

@@ -19,7 +19,7 @@
 
 <body style="padding:15px 8px 500px 8px;">
 
-    <div>
+    <div class="my_echars_div_block" >
 
         <div>
             <div class="boxtitle">
@@ -185,7 +185,7 @@
 
     </div>
 
-    <div>
+    <div class="my_echars_div_block" >
 
         <div>
             <div class="boxtitle">
@@ -351,7 +351,8 @@
 
     </div>
 
-
+    <%--js获取路径--%>
+    <input id="path" type="hidden" value="${path}"/>
 </body>
 <script type="text/javascript" src="/static/js/jquery.js"></script>
 <script type="text/javascript" src="/static/js/common.js"></script>

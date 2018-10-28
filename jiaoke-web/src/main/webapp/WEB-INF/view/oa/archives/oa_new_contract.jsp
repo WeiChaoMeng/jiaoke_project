@@ -233,8 +233,8 @@
         formData.append('file', files[0]);
         $.ajax({
             type: "POST",
-            url: '/uploadPic/uploadImg',
-            // url: 'http://47.105.114.70/uploadPic/uploadImg',
+            // url: '/uploadPic/uploadImg',
+            url: 'http://47.105.114.70/uploadPic/uploadImg',
             // data: {"file": files},
             data: formData,
             async: true,

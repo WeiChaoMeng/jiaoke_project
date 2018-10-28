@@ -22,6 +22,6 @@ public interface ReceiveDataInf {
      * 获取传入的数据解析后传入数据库
      * @param messageData
      */
-    public void  receiveDataToDB( String messageData );
+     void  receiveDataToDB( String messageData );
 
 }

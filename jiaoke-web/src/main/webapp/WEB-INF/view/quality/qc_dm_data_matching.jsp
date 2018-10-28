@@ -6,10 +6,11 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
 <meta charset="utf-8">
-<title>打卡记录</title>
+<title>生产记录</title>
 <link href="/static/css/default.css" rel="stylesheet" type="text/css">
 <link href="/static/css/style/green.css" rel="stylesheet" type="text/css" id = 'link'>
 <link type="text/css" rel="stylesheet" href="/static/slider/css/carousel.css">
@@ -17,864 +18,137 @@
 <script src="/static/js/echarts/uimaker.js"></script>
 </head>
 
-<body style="padding:10px 8px 1800px 8px;">
+<body style="padding:auto;">
 
-<div class="infolist1">
 
-    <div class="infoboxleft">
-        <div class="boxtitle">
-            <span>一号配比</span>
-            <a href="qc_dm_data_number.jsp" target="_self">更多
-                <i class="iconfont">&#xeba8;</i>
-            </a>
+    <c:forEach items="${baseMap.ratioNumList}" var="ratioNum">
+
+        <div class="infolist1">
+            <div class="infoboxleft">
+                <div class="boxtitle">
+                    <span>${ratioNum}号配比</span>
+                    <a href="qc_dm_data_number.jsp" target="_self">更多
+                        <i class="iconfont">&#xeba8;</i>
+                    </a>
+                </div>
+
+                <div class="boxdown">
+                    <table class="simpletable">
+
+                        <thead>
+                        <th>产品盘号</th>
+                        <th>生产时间</th>
+                        <th>客户名</th>
+                        <th>操作</th>
+                        </thead>
+                        <tbody>
+                        <c:forEach items="${baseMap.producedList}" begin="0" end="7" var="produced">
+
+                            <c:if test="${produced.produce_proportioning_num  ==  ratioNum}">
+                                <tr>
+                                    <td>${produced.produce_disc_num}</td>
+
+                                    <td>${produced.produce_time}</td>
+
+                                    <td>${produced.produce_custom_num}</td>
+                                    <td>
+                                        <a href="qc_dm_data_detail.jsp" target="_self" class="selected" id="">
+                                            <i class="toolico iconfont">&#xe970;</i>查看</a>
+                                    </td>
+                                </tr>
+                            </c:if>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
 
-        <div class="boxdown">
-                   <table class="simpletable">
-
-            <thead>
-                <th>产品盘号</th>
-
-                <th>生产时间</th>
-                <th>客户名</th>
-                <th>操作</th>
-            </thead>
-
-            <tbody>
-
-                <tr>
-                    <td>20171101</td>
-
-                    <td>2017-11-01</td>
-
-                    <td>uimaker</td>
-                    <td>
-                        <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                        <a href="qc_dm_data_detail.jsp" target="_self" class="selected" id="">
-                            <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>20171102</td>
-
-                    <td>2017-11-02</td>
-
-                    <td>admin</td>
-                    <td>
-                        <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                        <a href="qc_dm_data_detail.jsp" target="_self" class="selected" id="">
-                            <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>20171103</td>
-
-                    <td>2017-11-03 </td>
-
-                    <td>nanjing</td>
-                    <td>
-                        <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                        <a href="qc_dm_data_detail.jsp" target="_self" class="selected" id="">
-                            <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>20171104</td>
-
-                    <td>2017-11-04</td>
-
-                    <td>office</td>
-                    <td>
-                        <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                        <a href="qc_dm_data_detail.jsp" target="_self" class="selected" id="add">
-                            <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>20171105</td>
-
-                    <td>2017-11-05</td>
-
-                    <td>uimaker</td>
-                    <td>
-                        <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                        <a href="qc_dm_data_detail.jsp" target="_self" class="selected" id="add">
-                            <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>20171106</td>
- 
-                    <td>2017-11-06 </td>
-
-                    <td>guanliyuan</td>
-                    <td>
-                        <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                        <a href="qc_dm_data_detail.jsp" target="_self" class="selected" id="add">
-                            <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>20171107</td>
- 
-                    <td>2017-11-07 </td>
-
-                    <td>moodoc</td>
-                    <td>
-                        <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                        <a href="qc_dm_data_detail.jsp" target="_self" class="selected" id="add">
-                            <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>20171108</td>
-
-                    <td>2017-11-08 </td>
-
-                    <td>iphonex</td>
-                    <td>
-                        <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                        <a href="qc_dm_data_detail.jsp" target="_self" class="selected" id="add">
-                            <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                    </td>
-                </tr>
-
-
-            </tbody>
-
-        </table>
-        </div>
-
-    </div>
-</div>
-
-<div class="chartbox4">
-    <div class="boxtitle">
-        <span>一号配比产品温度走势图</span>
-        <a href="#">更多
-            <i class="iconfont">&#xeba8;</i>
-        </a>
-    </div>
-    <div id="chart1" class="charts"></div>
-
-<script type="text/javascript">
-    var myChart1 = echarts.init(document.getElementById('chart1'));
-    // 指定图表的配置项和数据
-    var colors = ['#5793f3', '#d14a61', '#675bba'];
-    var option1 =  {
-            title: {
-                text: '',
-                left: 'center'
-            },
-            tooltip: {
-                trigger: 'item',
-                formatter: '{a} <br/>{b} : {c}'
-            },
-            legend: {
-                left: 'left',
-                data: ['上限温度', '实际温度', '下限温度']
-            },
-            xAxis: {
-                type: 'category',
-                name: 'x',
-                splitLine: {
-                    show: false
-                },
-                data: ['一', '二', '三', '四', '五', '六', '七', '八', '九']
-            },
-            grid: {
-                left: '3%',
-                right: '4%',
-                bottom: '3%',
-                containLabel: true
-            },
-            yAxis: {
-                type: 'log',
-                name: 'y'
-            },
-            series: [{
-                name: '上限温度',
-                type: 'line',
-                data: [1, 3, 9, 27, 81, 247, 741, 2223, 6669]
-            }, {
-                name: '实际温度',
-                type: 'line',
-                data: [1, 2, 4, 8, 16, 32, 64, 128, 256]
-            }, {
-                name: '下限温度',
-                type: 'line',
-                data: [1 / 2, 1 / 4, 1 / 8, 1 / 16, 1 / 32, 1 / 64, 1 / 128, 1 / 256, 1 / 512]
-            }]
-        };
-        setInterval(function () {//把option.series[0].data[0].value的值使用random()方法获取一个随机数
-            option1.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
-            myChart.setOption(option1, true);
-        }, 2000);
-        myChart1.setOption(option1);
-        window.addEventListener("resize", function () {
-            myChart1.resize();
-        });
-    </script>
-
-</div>
-
-<div class="infolist1">
-
-    <div class="infoboxleft">
-        <div class="boxtitle">
-            <span>二号配比</span>
-            <a href="qc_dm_data_number.jsp" target="_self">更多
-                <i class="iconfont">&#xeba8;</i>
-            </a>
-        </div>
-
-        <div class="boxdown">
-            <table class="simpletable">
-
-                <thead>
-                    <th>产品盘号</th>
-
-                    <th>生产时间</th>
-                    <th>客户名</th>
-                    <th>操作</th>
-                </thead>
-
-                <tbody>
-
-                    <tr>
-                        <td>20171101</td>
-
-                        <td>2017-11-01</td>
-
-                        <td>uimaker</td>
-                        <td>
-                            <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                            <a href="#" class="selected" id="">
-                                <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>20171102</td>
-
-                        <td>2017-11-02</td>
-
-                        <td>admin</td>
-                        <td>
-                            <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                            <a href="#" class="selected" id="">
-                                <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>20171103</td>
-
-                        <td>2017-11-03 </td>
-
-                        <td>nanjing</td>
-                        <td>
-                            <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                            <a href="#" class="selected" id="">
-                                <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>20171104</td>
-
-                        <td>2017-11-04</td>
-
-                        <td>office</td>
-                        <td>
-                            <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                            <a href="qc_dm_data_detail.jsp" target="_self" class="selected" id="add">
-                                <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>20171105</td>
-
-                        <td>2017-11-05</td>
-
-                        <td>uimaker</td>
-                        <td>
-                            <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                            <a href="qc_dm_data_detail.jsp" target="_self" class="selected" id="add">
-                                <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>20171106</td>
-
-                        <td>2017-11-06 </td>
-
-                        <td>guanliyuan</td>
-                        <td>
-                            <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                            <a href="qc_dm_data_detail.jsp" target="_self" class="selected" id="add">
-                                <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>20171107</td>
-
-                        <td>2017-11-07 </td>
-
-                        <td>moodoc</td>
-                        <td>
-                            <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                            <a href="qc_dm_data_detail.jsp" target="_self" class="selected" id="add">
-                                <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>20171108</td>
-
-                        <td>2017-11-08 </td>
-
-                        <td>iphonex</td>
-                        <td>
-                            <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                            <a href="qc_dm_data_detail.jsp" target="_self" class="selected" id="add">
-                                <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                        </td>
-                    </tr>
-
-
-                </tbody>
-
-            </table>
-        </div>
-
-    </div>
-</div>
-
-<div class="chartbox4">
-    <div class="boxtitle">
-        <span>二号配比产品统计图</span>
-        <a href="#">更多
-            <i class="iconfont">&#xeba8;</i>
-        </a>
-    </div>
-    <div id="chart2" class="charts"></div>
-
-    <script type="text/javascript">
-        var myChart2 = echarts.init(document.getElementById('chart2'));
-        // 指定图表的配置项和数据
-        var colors = ['#5793f3', '#d14a61', '#675bba'];
-        var option2 = {
-                title: {
-                    text: '',
-                    left: 'center'
-                },
-                tooltip: {
-                    trigger: 'item',
-                    formatter: '{a} <br/>{b} : {c}'
-                },
-                legend: {
-                    left: 'left',
-                    data: ['上限温度', '实际温度', '下限温度']
-                },
-                xAxis: {
-                    type: 'category',
-                    name: 'x',
-                    splitLine: {
-                        show: false
-                    },
-                    data: ['一', '二', '三', '四', '五', '六', '七', '八', '九']
-                },
-                grid: {
-                    left: '3%',
-                    right: '4%',
-                    bottom: '3%',
-                    containLabel: true
-                },
-                yAxis: {
-                    type: 'log',
-                    name: 'y'
-                },
-                series: [{
-                    name: '上限温度',
-                    type: 'line',
-                    data: [1, 3, 9, 27, 81, 247, 741, 2223, 6669]
-                }, {
-                    name: '实际温度',
-                    type: 'line',
-                    data: [1, 2, 4, 8, 16, 32, 64, 128, 256]
-                }, {
-                    name: '下限温度',
-                    type: 'line',
-                    data: [1 / 2, 1 / 4, 1 / 8, 1 / 16, 1 / 32, 1 / 64, 1 / 128, 1 / 256, 1 / 512]
-                }]
-            };
-        setInterval(function () {//把option.series[0].data[0].value的值使用random()方法获取一个随机数
-            option2.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
-            myChart2.setOption(option2, true);
-        }, 2000);
-        myChart2.setOption(option2);
-        window.addEventListener("resize", function () {
-            myChart2.resize();
-        });
-    </script>
-
-</div>
-
-<div class="infolist1">
-
-    <div class="infoboxleft">
-        <div class="boxtitle">
-            <span>三号配比</span>
-            <a href="qc_dm_data_number.jsp" target="_self">更多
-                <i class="iconfont">&#xeba8;</i>
-            </a>
-        </div>
-
-        <div class="boxdown">
-            <table class="simpletable">
-
-                <thead>
-                    <th>产品盘号</th>
-
-                    <th>生产时间</th>
-                    <th>客户名</th>
-                    <th>操作</th>
-                </thead>
-
-                <tbody>
-
-                    <tr>
-                        <td>20171101</td>
-
-                        <td>2017-11-01</td>
-
-                        <td>uimaker</td>
-                        <td>
-                            <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                            <a href="#" class="selected" id="">
-                                <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>20171102</td>
-
-                        <td>2017-11-02</td>
-
-                        <td>admin</td>
-                        <td>
-                            <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                            <a href="#" class="selected" id="">
-                                <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>20171103</td>
-
-                        <td>2017-11-03 </td>
-
-                        <td>nanjing</td>
-                        <td>
-                            <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                            <a href="#" class="selected" id="">
-                                <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>20171104</td>
-
-                        <td>2017-11-04</td>
-
-                        <td>office</td>
-                        <td>
-                            <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                            <a href="qc_dm_data_detail.jsp" target="_self" class="selected" id="add">
-                                <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>20171105</td>
-
-                        <td>2017-11-05</td>
-
-                        <td>uimaker</td>
-                        <td>
-                            <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                            <a href="qc_dm_data_detail.jsp" target="_self" class="selected" id="add">
-                                <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>20171106</td>
-
-                        <td>2017-11-06 </td>
-
-                        <td>guanliyuan</td>
-                        <td>
-                            <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                            <a href="qc_dm_data_detail.jsp" target="_self" class="selected" id="add">
-                                <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>20171107</td>
-
-                        <td>2017-11-07 </td>
-
-                        <td>moodoc</td>
-                        <td>
-                            <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                            <a href="qc_dm_data_detail.jsp" target="_self" class="selected" id="add">
-                                <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>20171108</td>
-
-                        <td>2017-11-08 </td>
-
-                        <td>iphonex</td>
-                        <td>
-                            <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                            <a href="qc_dm_data_detail.jsp" target="_self" class="selected" id="add">
-                                <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                        </td>
-                    </tr>
-
-
-                </tbody>
-
-            </table>
-        </div>
-
-    </div>
-</div>
-
-<div class="chartbox4">
-    <div class="boxtitle">
-        <span>三号配比产品统计图</span>
-        <a href="#">更多
-            <i class="iconfont">&#xeba8;</i>
-        </a>
-    </div>
-    <div id="chart3" class="charts"></div>
-
-    <script type="text/javascript">
-        var myChart3 = echarts.init(document.getElementById('chart3'));
-        // 指定图表的配置项和数据
-        var colors = ['#5793f3', '#d14a61', '#675bba'];
-        var option3 = {
-                title: {
-                    text: '',
-                    left: 'center'
-                },
-                tooltip: {
-                    trigger: 'item',
-                    formatter: '{a} <br/>{b} : {c}'
-                },
-                legend: {
-                    left: 'left',
-                    data: ['上限温度', '实际温度', '下限温度']
-                },
-                xAxis: {
-                    type: 'category',
-                    name: 'x',
-                    splitLine: {
-                        show: false
-                    },
-                    data: ['一', '二', '三', '四', '五', '六', '七', '八', '九']
-                },
-                grid: {
-                    left: '3%',
-                    right: '4%',
-                    bottom: '3%',
-                    containLabel: true
-                },
-                yAxis: {
-                    type: 'log',
-                    name: 'y'
-                },
-                series: [{
-                    name: '上限温度',
-                    type: 'line',
-                    data: [1, 3, 9, 27, 81, 247, 741, 2223, 6669]
-                }, {
-                    name: '实际温度',
-                    type: 'line',
-                    data: [1, 2, 4, 8, 16, 32, 64, 128, 256]
-                }, {
-                    name: '下限温度',
-                    type: 'line',
-                    data: [1 / 2, 1 / 4, 1 / 8, 1 / 16, 1 / 32, 1 / 64, 1 / 128, 1 / 256, 1 / 512]
-                }]
-            };
-        setInterval(function () {//把option.series[0].data[0].value的值使用random()方法获取一个随机数
-            option3.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
-            myChart3.setOption(option3, true);
-        }, 2000);
-        myChart3.setOption(option3);
-        window.addEventListener("resize", function () {
-            myChart3.resize();
-        });
-    </script>
-
-</div>
-
-<div class="infolist1">
-
-    <div class="infoboxleft">
-        <div class="boxtitle">
-            <span>四号配比</span>
-            <a href="qc_dm_data_number.jsp" target="_self">更多
-                <i class="iconfont">&#xeba8;</i>
-            </a>
-        </div>
-
-        <div class="boxdown">
-            <table class="simpletable">
-
-                <thead>
-                    <th>产品盘号</th>
-
-                    <th>生产时间</th>
-                    <th>客户名</th>
-                    <th>操作</th>
-                </thead>
-
-                <tbody>
-
-                    <tr>
-                        <td>20171101</td>
-
-                        <td>2017-11-01</td>
-
-                        <td>uimaker</td>
-                        <td>
-                            <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                            <a href="#" class="selected" id="">
-                                <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>20171102</td>
-
-                        <td>2017-11-02</td>
-
-                        <td>admin</td>
-                        <td>
-                            <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                            <a href="#" class="selected" id="">
-                                <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>20171103</td>
-
-                        <td>2017-11-03 </td>
-
-                        <td>nanjing</td>
-                        <td>
-                            <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                            <a href="#" class="selected" id="">
-                                <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>20171104</td>
-
-                        <td>2017-11-04</td>
-
-                        <td>office</td>
-                        <td>
-                            <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                            <a href="qc_dm_data_detail.jsp" target="_self" class="selected" id="add">
-                                <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>20171105</td>
-
-                        <td>2017-11-05</td>
-
-                        <td>uimaker</td>
-                        <td>
-                            <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                            <a href="qc_dm_data_detail.jsp" target="_self" class="selected" id="add">
-                                <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>20171106</td>
-
-                        <td>2017-11-06 </td>
-
-                        <td>guanliyuan</td>
-                        <td>
-                            <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                            <a href="qc_dm_data_detail.jsp" target="_self" class="selected" id="add">
-                                <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>20171107</td>
-
-                        <td>2017-11-07 </td>
-
-                        <td>moodoc</td>
-                        <td>
-                            <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                            <a href="qc_dm_data_detail.jsp" target="_self" class="selected" id="add">
-                                <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>20171108</td>
-
-                        <td>2017-11-08 </td>
-
-                        <td>iphonex</td>
-                        <td>
-                            <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                            <a href="qc_dm_data_detail.jsp" target="_self" class="selected" id="add">
-                                <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                        </td>
-                    </tr>
-
-
-                </tbody>
-
-            </table>
-        </div>
-
-    </div>
-</div>
-
-<div class="chartbox4">
-    <div class="boxtitle">
-        <span>四号配比产品统计图</span>
-        <a href="#">更多
-            <i class="iconfont">&#xeba8;</i>
-        </a>
-    </div>
-    <div id="chart4" class="charts"></div>
-
-    <script type="text/javascript">
-        var myChart4 = echarts.init(document.getElementById('chart4'));
-        // 指定图表的配置项和数据
-        var colors = ['#5793f3', '#d14a61', '#675bba'];
-        var option4 = {
-                title: {
-                    text: '',
-                    left: 'center'
-                },
-                tooltip: {
-                    trigger: 'item',
-                    formatter: '{a} <br/>{b} : {c}'
-                },
-                legend: {
-                    left: 'left',
-                    data: ['上限温度', '实际温度', '下限温度']
-                },
-                xAxis: {
-                    type: 'category',
-                    name: 'x',
-                    splitLine: {
-                        show: false
-                    },
-                    data: ['一', '二', '三', '四', '五', '六', '七', '八', '九']
-                },
-                grid: {
-                    left: '3%',
-                    right: '4%',
-                    bottom: '3%',
-                    containLabel: true
-                },
-                yAxis: {
-                    type: 'log',
-                    name: 'y'
-                },
-                series: [{
-                    name: '上限温度',
-                    type: 'line',
-                    data: [1, 3, 9, 27, 81, 247, 741, 2223, 6669]
-                }, {
-                    name: '实际温度',
-                    type: 'line',
-                    data: [1, 2, 4, 8, 16, 32, 64, 128, 256]
-                }, {
-                    name: '下限温度',
-                    type: 'line',
-                    data: [1 / 2, 1 / 4, 1 / 8, 1 / 16, 1 / 32, 1 / 64, 1 / 128, 1 / 256, 1 / 512]
-                }]
-            };
-        setInterval(function () {//把option.series[0].data[0].value的值使用random()方法获取一个随机数
-            option4.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
-            myChart4.setOption(option4, true);
-        }, 2000);
-        myChart4.setOption(option4);
-        window.addEventListener("resize", function () {
-            myChart4.resize();
-        });
-    </script>
-
-</div>
-
+        <c:forEach items="${baseMap.rationProSVG}" var="producedSVG" varStatus="i">
+            <c:if test="${producedSVG.rationNum == ratioNum}" >
+                <div class="chartbox4">
+                    <div class="my_echars_title">
+                        <span  >今日${ratioNum}号配比产品平均走势图</span>
+                        <a href="qc_dm_data_number.jsp" target="_self">更多
+                            <i class="iconfont">&#xeba8;</i>
+                        </a>
+                    </div>
+                    <div id="chart${i.count}" class="charts"></div>
+
+                    <script type="text/javascript">
+                        var myChart${i.count} = echarts.init(document.getElementById('chart${i.count}'));
+                        // 指定图表的配置项和数据
+                        var colors = ['#5793f3', '#d14a61', '#675bba'];
+                        var option${i.count} =  {
+                            tooltip: {
+                                trigger: 'axis'
+                            },
+                            legend: {
+                                data:['上限配比','实际配比','下限配比']
+                            },
+                            grid: {
+                                left: '3%',
+                                right: '4%',
+                                bottom: '3%',
+                                containLabel: true
+                            },
+                            toolbox: {
+                                feature: {
+                                    saveAsImage: {}
+                                }
+                            },
+                            xAxis: {
+                                type: 'category',
+                                boundaryGap: false,
+                                data:  ['骨料1', '骨料2', '骨料3', '骨料4', '骨料5', '骨料6', '石粉', '沥青', '再生料', '添加剂']
+                            },
+                            yAxis: {
+                                type: 'value'
+                            },
+                            grid: {
+                                left: '3%',
+                                right: '4%',
+                                bottom: '3%',
+                                containLabel: true
+                            },
+                            yAxis: {
+                                type: 'log',
+                                name: 'y'
+                            },
+                            <c:forEach items="${baseMap.rationMessageList}" var="ration">
+                                <c:if test="${producedSVG.rationNum == ration.crew1ModeleId || producedSVG.rationNum == ration.crew2ModeleId }" >
+                                    series: [
+                                        {
+                                            name:'上线配比',
+                                            type:'line',
+                                            data: [${ration.repertoryOne + (ration.repertoryOne * 0.5)}, ${ration.repertoryTwo + (ration.repertoryTwo * 0.5)}, ${ration.repertoryThree + (ration.repertoryThree * 0.5)}, ${ration.repertoryFour + (ration.repertoryFour * 0.5)}, ${ration.repertoryFive + (ration.repertoryFive * 0.5)}, ${ration.repertorySix + (ration.repertorySix * 0.5)}, ${ration.breeze + (ration.breeze * 0.5)}, ${ration.ratioStone + (ration.ratioStone * 0.5)}, ${ration.ratioRegenerate1 > ration.ratioRegenerate2 ? ration.ratioRegenerate1+ (ration.ratioRegenerate1 * 0.5):ration.ratioRegenerate2+ (ration.ratioRegenerate2 * 0.5)},  ${ration.ratioAdditive + (ration.ratioAdditive * 0.5)}]
+                                        },
+                                        {
+                                            name:'实际配比',
+                                            type:'line',
+                                            data: [${producedSVG.aggregate_1}, ${producedSVG.aggregate_2}, ${producedSVG.aggregate_3}, ${producedSVG.aggregate_4}, ${producedSVG.aggregate_5}, ${producedSVG.aggregate_6}, ${producedSVG.stone_1 > producedSVG.stone_2 ? producedSVG.stone_1:producedSVG.stone_2 }, ${producedSVG.asphalt}, ${producedSVG.regenerate}, ${producedSVG.additive}]
+                                        },
+                                        {
+                                            name:'下限配比',
+                                            type:'line',
+                                            data: [${ration.repertoryOne - (ration.repertoryOne * 0.5)}, ${ration.repertoryTwo - (ration.repertoryTwo * 0.5)}, ${ration.repertoryThree - (ration.repertoryThree * 0.5)}, ${ration.repertoryFour - (ration.repertoryFour * 0.5)}, ${ration.repertoryFive - (ration.repertoryFive * 0.5)}, ${ration.repertorySix - (ration.repertorySix * 0.5)}, ${ration.breeze - (ration.breeze * 0.5)}, ${ration.ratioStone - (ration.ratioStone * 0.5)}, ${ration.ratioRegenerate1 > ration.ratioRegenerate2 ? ration.ratioRegenerate1 - (ration.ratioRegenerate1 * 0.5):ration.ratioRegenerate2 - (ration.ratioRegenerate2 * 0.5)},  ${ration.ratioAdditive - (ration.ratioAdditive * 0.5)}]
+                                        }]
+                                </c:if>
+
+                            </c:forEach>
+                        };
+
+                        myChart${i.count}.setOption(option${i.count});
+                        window.addEventListener("resize", function () {
+                            myChart${i.count}.resize();
+                        });
+                    </script>
+
+                </div>
+            </c:if>
+        </c:forEach>
+
+    </c:forEach>
 
 
 
@@ -900,110 +174,18 @@
                 </thead>
 
                 <tbody>
-
+                <c:forEach items="${baseMap.userProList}" var="userPro" begin="0" end="7" >
                     <tr>
-                        <td>ct-80</td>
-                        <td>320</td>
-                        <td>2017-11-01</td>
-                        <td>uimaker</td>
+                        <td>${userPro.rationNum}</td>
+                        <td>${userPro.total}</td>
+                        <td>${userPro.startTime}</td>
+                        <td>${userPro.userName}</td>
                         <td>
-                            <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
                             <a href="#" class="selected" id="">
                                 <i class="toolico iconfont">&#xe970;</i>查看</a>
-
                         </td>
                     </tr>
-
-                    <tr>
-                        <td>ct-80</td>
-                        <td>320</td>
-                        <td>2017-11-01</td>
-                        <td>uimaker</td>
-                        <td>
-                            <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                            <a href="#" class="selected" id="">
-                                <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>ct-80</td>
-                        <td>320</td>
-                        <td>2017-11-01</td>
-                        <td>uimaker</td>
-                        <td>
-                            <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                            <a href="#" class="selected" id="">
-                                <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>ct-80</td>
-                        <td>320</td>
-                        <td>2017-11-01</td>
-                        <td>uimaker</td>
-                        <td>
-                            <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                            <a href="qc_dm_data_detail.jsp" target="_self" class="selected" id="add">
-                                <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>ct-80</td>
-                        <td>320</td>
-                        <td>2017-11-01</td>
-                        <td>uimaker</td>
-                        <td>
-                            <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                            <a href="qc_dm_data_detail.jsp" target="_self" class="selected" id="add">
-                                <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>ct-80</td>
-                        <td>320</td>
-                        <td>2017-11-01</td>
-                        <td>uimaker</td>
-                        <td>
-                            <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                            <a href="qc_dm_data_detail.jsp" target="_self" class="selected" id="add">
-                                <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>ct-80</td>
-                        <td>320</td>
-                        <td>2017-11-01</td>
-                        <td>uimaker</td>
-                        <td>
-                            <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                            <a href="qc_dm_data_detail.jsp" target="_self" class="selected" id="add">
-                                <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>ct-80</td>
-                        <td>320</td>
-                        <td>2017-11-01</td>
-                        <td>uimaker</td>
-                        <td>
-                            <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont"></i>导出</a>
-                            <a href="qc_dm_data_detail.jsp" target="_self" class="selected" id="add">
-                                <i class="toolico iconfont">&#xe970;</i>查看</a>
-
-                        </td>
-                    </tr>
+                </c:forEach>
 
 
                 </tbody>
@@ -1015,19 +197,16 @@
 </div>
 
 <div class="chartbox4">
-    <div class="boxtitle">
+    <div class="my_echars_title">
         <span>当日客户产量占比图</span>
-        <a href="#">更多
-            <i class="iconfont">&#xeba8;</i>
-        </a>
     </div>
-    <div id="chart5" class="charts"></div>
+    <div id="chart500" class="charts"></div>
 
     <script type="text/javascript">
-        var myChart5 = echarts.init(document.getElementById('chart5'));
+        var myChart500 = echarts.init(document.getElementById('chart500'));
         // 指定图表的配置项和数据
         var colors = ['#5793f3', '#d14a61', '#675bba'];
-        var option5 =  {
+        var option500 =  {
                 title: {
                     text: '',
                     subtext: '',
@@ -1040,8 +219,18 @@
                 legend: {
                     orient: 'vertical',
                     left: 'left',
-                    data: ['张XX', '王XX', '李XX', '赵XX', '黄XX']
-                },
+                    data: [
+                        <c:forEach items="${baseMap.userProTotal}"  var="userPro" varStatus="sta">
+                                <c:choose>
+                                    <c:when test="${sta.last}">
+                                        '${userPro.userName}'
+                                    </c:when>
+                                    <c:otherwise>
+                                        '${userPro.userName}',
+                                    </c:otherwise>
+                                </c:choose>
+                        </c:forEach>
+                    ]},
                 series: [
                     {
                         name: '占比总量',
@@ -1049,11 +238,16 @@
                         radius: '55%',
                         center: ['50%', '60%'],
                         data: [
-                            { value: 335, name: '张XX' },
-                            { value: 310, name: '王XX' },
-                            { value: 234, name: '李XX' },
-                            { value: 135, name: '赵XX' },
-                            { value: 1548, name: '黄XX' }
+                            <c:forEach items="${baseMap.userProTotal}" var="userList" varStatus="stus">
+                                <c:choose>
+                                    <c:when test="${sta.last}">
+                                        { value:${userList.userTotal}, name:'${userList.userName}'}
+                                    </c:when>
+                                    <c:otherwise>
+                                        { value:${userList.userTotal}, name:'${userList.userName}'},
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
                         ],
                         itemStyle: {
                             emphasis: {
@@ -1065,19 +259,16 @@
                     }
                 ]
             };
-        setInterval(function () {//把option.series[0].data[0].value的值使用random()方法获取一个随机数
-            option5.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
-            myChart5.setOption(option5, true);
-        }, 2000);
-        myChart5.setOption(option5);
+        myChart500.setOption(option500);
         window.addEventListener("resize", function () {
-            myChart5.resize();
+            myChart500.resize();
         });
     </script>
 
 </div>
 
 </div>
+
 
 
 </body>

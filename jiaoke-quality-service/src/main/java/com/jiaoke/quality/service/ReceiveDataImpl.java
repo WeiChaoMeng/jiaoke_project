@@ -44,7 +44,7 @@ public class ReceiveDataImpl implements ReceiveDataInf {
      * @auther:
      * @date: 2018/10/8 10:47
      */
-    @Override
+
     public void receiveDataToDB(String messageData) {
 
         Map<String,String> map = new HashMap<String, String>();

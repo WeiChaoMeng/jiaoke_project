@@ -8,6 +8,7 @@
  **/
 package com.jiaoke.quality.service;
 
+import com.alibaba.fastjson.JSON;
 import com.jiaoke.common.bean.PageBean;
 import com.jiaoke.quality.bean.QualityRatioModel;
 import com.jiaoke.quality.bean.QualityRatioTemplate;
@@ -15,6 +16,9 @@ import com.jiaoke.quality.dao.QualityMatchingDao;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +35,7 @@ public class QualityMatchingImpl implements QualityMatchingInf{
     @Resource
     QualityMatchingDao qualityMatchingDao;
 
-    @Override
+
     public PageBean<QualityRatioModel> selectMatchingMoudelByLimte(int currentPageNum,String url) {
 
         if ( 0 == currentPageNum ) return null;
@@ -60,13 +64,81 @@ public class QualityMatchingImpl implements QualityMatchingInf{
         return list;
     }
 
+
+
     public boolean insetRatioTemplate(QualityRatioTemplate qualityRatioTemplate) {
+
+
+        //获取创建时间
+        Date now = new Date();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        String format = sdf.format(now);
+
 
         int id = qualityMatchingDao.insetRatioTemplate(qualityRatioTemplate);
 
         boolean bo = id > 0? true:false;
 
+        System.out.println(id);
+
+        if (bo){
+            Map<String,String> map = new HashMap<String, String>();
+            map.put("messageId",String.valueOf(qualityRatioTemplate.getId()));
+            map.put("modelName",qualityRatioTemplate.getProName());
+            map.put("createTime",format);
+            map.put("remaker",qualityRatioTemplate.getRemark());
+            map.put("createUser",qualityRatioTemplate.getUpUser());
+            int reId = qualityMatchingDao.insertRationCreateMessage(map);
+            bo =  reId > 0? true:false;
+        }
+
         return bo;
     }
 
+
+    /**
+     * 根据id传入待删除的配比模板id
+     * @param idStr
+     * @return
+     */
+    public String delectRation(String idStr) {
+
+        if(idStr == null || idStr == "") return null;
+
+        String[] strArray =  idStr.split(",");
+
+        int count = qualityMatchingDao.delectRation(strArray);
+
+        String str = count > 0? "success":"fail";
+
+        Map<String,String> map = new HashMap<String, String>();
+
+        map.put("messages",str);
+
+        String reStr = JSON.toJSONString(map);
+
+        return reStr;
+    }
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据ID返回json字符串>
+     * @param [idStr]
+     * @return java.lang.String
+     * @auther Melone
+     * @date 2018/10/26 13:24
+     */
+    public String selectRationById(String idStr) {
+
+        if(idStr == null || idStr == "") return null;
+
+        QualityRatioTemplate qualityRatioTemplate = qualityMatchingDao.selectRationById(idStr);
+
+        String jsonStr = JSON.toJSONString(qualityRatioTemplate);
+
+        return jsonStr;
+    }
 }

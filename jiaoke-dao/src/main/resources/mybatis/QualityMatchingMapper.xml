@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jiaoke.quality.dao.QualityMatchingDao">
     <select id="selectMatchingMoudelByLimte"  resultType="com.jiaoke.quality.bean.QualityRatioModel">
-        select  id,message_id as messageId,  model_name as modelName , create_time as createTime , modify_time as modifyTime  ,create_user as createUser
+        select  id,message_id as messageId,  model_name as modelName , create_time as createTime , remaker as remaker  ,create_user as createUser
         from quality_proportioning_model
         limit #{startLineNum},#{endLineNum};
     </select>
@@ -25,10 +25,7 @@
     <!--end-->
 
     <!--start-->
-    <insert id="insetRatioTemplate" parameterType="com.jiaoke.quality.bean.QualityRatioTemplate">
-        <selectKey resultType="int" order="AFTER" keyProperty="id">
-            SELECT LAST_INSERT_ID() as id
-        </selectKey>
+    <insert id="insetRatioTemplate" useGeneratedKeys="true" keyProperty="id"  parameterType="com.jiaoke.quality.bean.QualityRatioTemplate">
 
         INSERT INTO quality_proportioning_message (
                 pro_name,
@@ -54,26 +51,91 @@
                 )
         VALUES
                (
-                       #{qualityRatioTemplate.proName},
-                       #{qualityRatioTemplate.repertoryOne},
-                       #{qualityRatioTemplate.repertoryTwo},
-                       #{qualityRatioTemplate.repertoryThree},
-                       #{qualityRatioTemplate.repertoryFour},
-                       #{qualityRatioTemplate.repertoryFive},
-                       #{qualityRatioTemplate.repertorySix},
-                       #{qualityRatioTemplate.breeze},
-                       #{qualityRatioTemplate.ratioStone},
-                       #{qualityRatioTemplate.ratioRegenerate1},
-                       #{qualityRatioTemplate.ratioRegenerate2},
-                       #{qualityRatioTemplate.ratioAdditive},
-                       #{qualityRatioTemplate.regenerate},
-                       #{qualityRatioTemplate.additive},
-                       #{qualityRatioTemplate.temperatureAsphalt},
-                       #{qualityRatioTemplate.temperatureAggregate},
-                       #{qualityRatioTemplate.temperatureMixture},
-                       #{qualityRatioTemplate.temperatureMilling},
-                       #{qualityRatioTemplate.crew1ModeleId},
-                       #{qualityRatioTemplate.crew2ModeleId})
+                       #{proName},
+                       #{repertoryOne},
+                       #{repertoryTwo},
+                       #{repertoryThree},
+                       #{repertoryFour},
+                       #{repertoryFive},
+                       #{repertorySix},
+                       #{breeze},
+                       #{ratioStone},
+                       #{ratioRegenerate1},
+                       #{ratioRegenerate2},
+                       #{ratioAdditive},
+                       #{regenerate},
+                       #{additive},
+                       #{temperatureAsphalt},
+                       #{temperatureAggregate},
+                       #{temperatureMixture},
+                       #{temperatureMilling},
+                       #{crew1ModeleId},
+                       #{crew2ModeleId})
     </insert>
     <!--end-->
+
+
+    <!--Start-->
+
+    <insert id="insertRationCreateMessage" parameterType="java.util.Map">
+        <selectKey resultType="int" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() as id
+        </selectKey>
+        INSERT INTO quality_proportioning_model (
+                message_id,
+                model_name,
+                create_time,
+                remaker,
+                create_user
+                )
+        VALUES
+               (#{map.messageId},
+                       #{map.modelName},
+                       #{map.createTime},
+                       #{map.remaker},
+                       #{map.createUser})
+    </insert>
+
+    <delete id="delectRation"  >
+
+        DELETE  t1.*,t2.*
+        FROM
+        quality_proportioning_model AS t1
+        INNER JOIN quality_proportioning_message AS t2 ON t1.message_id = t2.id
+        where t1.message_id in
+        <foreach collection="idArray" open="(" separator="," close=")" item="id">
+            #{id}
+        </foreach>
+
+    </delete>
+
+    <select id="selectRationById" resultType="com.jiaoke.quality.bean.QualityRatioTemplate">
+        SELECT
+               t1.pro_name AS proName,
+               t1.repertory_one AS repertoryOne,
+               t1.repertory_two AS repertoryTwo,
+               t1.repertory_three AS repertoryThree,
+               t1.repertory_four AS repertoryFour,
+               t1.repertory_five AS repertoryFive,
+               t1.repertory_six AS repertorySix,
+               t1.breeze AS breeze,
+               t1.ratio_stone AS ratioStone,
+               t1.ratio_regenerate1 AS ratioRegenerate1,
+               t1.ratio_regenerate2 AS ratioRegenerate2,
+               t1.ratio_additive AS ratioAdditive,
+               t1.temperature_asphalt AS temperatureAsphalt,
+               t1.temperature_asphalt AS temperatureAggregate,
+               t1.temperature_mixture AS temperatureMixture,
+               t1.temperature_milling AS temperatureMilling,
+               t1.crew1_modele_id AS crew1ModeleId,
+               t1.crew2_modele_id AS crew2ModeleId,
+               t2.create_user AS upUser,
+               t2.remaker AS remark
+        FROM
+             quality_proportioning_message AS t1
+                 INNER JOIN quality_proportioning_model AS t2 ON t1.id = t2.message_id
+        WHERE
+                t1.id = #{idStr}
+    </select>
+
 </mapper>
