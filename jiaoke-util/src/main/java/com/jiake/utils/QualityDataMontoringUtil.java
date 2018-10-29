@@ -37,7 +37,7 @@ public class QualityDataMontoringUtil {
 
         if (Strings.isBlank(total) || Double.parseDouble(total) == 0 || Double.parseDouble(molecule) == 0 || Strings.isBlank(molecule))  return "0";
 
-        double reValue = Double.parseDouble(total)/Double.parseDouble(molecule);
+        double reValue = Double.parseDouble(molecule)/Double.parseDouble(total)*100;
 
         DecimalFormat df = new DecimalFormat("#.0");
 
@@ -47,8 +47,75 @@ public class QualityDataMontoringUtil {
 
     }
 
+    /**
+     *
+     * 功能描述: <br>
+     *  <计算平均值，返回每日平均占比>
+     * @param [count, Total, molecule]
+     * @return java.lang.String
+     * @auther Melone
+     * @date 2018/10/27 12:12
+     */
+    public static String calculateSVG( String count ,String total , String molecule ){
+
+        if (Strings.isBlank(count) || Strings.isBlank(total) ||Strings.isBlank(molecule) ) return "0";
+
+        double svgTotal = Double.parseDouble(total) / Double.parseDouble(count);
+        double svgMolecule = Double.parseDouble(molecule) / Double.parseDouble(count);
+
+        String calculateSVG = calculateRatio(String.valueOf(svgTotal),String.valueOf(svgMolecule));
+
+        return calculateSVG;
+
+    }
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <计算平均值，返回每日平均占比>
+     * @param [count, Total, molecule]
+     * @return java.lang.String
+     * @auther Melone
+     * @date 2018/10/27 12:12
+     */
+    public static String calculateSVG( String count , String molecule ){
+
+        if (Strings.isBlank(count) || Strings.isBlank(molecule) ) return "0";
 
 
+        double svgMolecule = Double.parseDouble(molecule) / Double.parseDouble(count);
+
+
+        return String.valueOf(svgMolecule);
+
+    }
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <判断key是否在数组内>
+     * @param [Key, strings]
+     * @return boolean
+     * @auther Melone
+     * @date 2018/10/27 13:04
+     */
+    public static boolean judgeKeyInArray(String key,String[] strings){
+
+        if (Strings.isBlank(key) || 0 == strings.length  ) return false;
+
+        boolean bo = false;
+
+        for (int i = 0; i < strings.length; i++) {
+
+            if (strings[i].equals(key)) {
+                bo = true;
+                break;
+            }
+        }
+
+        return bo;
+
+    }
 
 
 }

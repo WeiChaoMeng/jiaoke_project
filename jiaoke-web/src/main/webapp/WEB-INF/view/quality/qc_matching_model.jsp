@@ -6,11 +6,9 @@
   Time: 14:21
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java"  isELIgnored="false" %>
+
 <html>
-<%
-    request.setAttribute("path",request.getContextPath());
-%>
 <head>
     <meta charset="utf-8">
     <title>配比模板</title>
@@ -25,10 +23,7 @@
     <ul class="toolbar">
         <li><a href="#" id="from_click" ><i class="toolico iconfont">&#xe7e9;</i>新建</a></li>
         <li><a href="#" id="btn_click"><i class="toolico iconfont">&#xe7ea;</i>删除</a></li>
-        <li>
-            <a href="/static/download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip">
-                <i class="toolico iconfont">&#xe7eb;</i>导出</a>
-        </li>
+
     </ul>
     <!--toolbar end-->
 
@@ -41,7 +36,7 @@
                 <th>模板编号</th>
                 <th>模板名称</th>
                 <th>上传时间</th>
-                <th>修改时间</th>
+                <th>备注信息</th>
                 <th>上传人</th>
                 <th>操作</th>
             </thead>
@@ -50,13 +45,13 @@
 
             <c:forEach items="${pageBean.pageData}" var="item">
                 <tr>
-                    <td class="tdnum"><input type="checkbox"></td>
+                    <td class="tdnum"><input name="spCodeId" type="checkbox" value="${item.messageId}" ></td>
                     <td>${item.messageId}</td>
                     <td><a href="#">${item.modelName}</a></td>
                     <td>${item.createTime}</td>
-                    <td>${item.modifyTime}</td>
+                    <td>${item.remaker}</td>
                     <td>${item.createUser}</td>
-                    <td><a style="color: rgb(114, 112, 209);" >查看</a></td>
+                    <td><a   href="javascript:;"   name="${item.messageId}" onclick="showRatio(this.name)" style="color: rgb(114, 112, 209);" >查看</a></td>
                 </tr>
             </c:forEach>
 
@@ -142,12 +137,12 @@
     </div>
     <div class="popup_window_first" style="display:none;">
         <p class="popup_cont">是否删除？</p>
-        <a href="javascript:void(0)" class="popup_btn" onclick="closeWindow();">确定</a>
+        <a href="javascript:void(0)" class="popup_btn" onclick="delectRatio();">确定</a>
         <a href="javascript:void(0)" class="popup_btn" onclick="closeWindow();">取消</a>
     </div>
-    <!--新建弹出-->
-    <div class="form_background"  style="display:none;" ></div>
-    <div class="form_model" style="display:none;" >
+    <!--新建模板弹出-->
+    <div id="addRatioBrk" class="form_background"  style="display:none;" ></div>
+    <div id="addRatio" class="form_model" style="display:none;" >
         <form  id="myForm" style="padding-top:3%;"  action="/addRation.do" method="post" >
             <table class="my_form_table">
 
@@ -156,51 +151,51 @@
                 <tr>
                     <td class="tlabels">配比名称：</td>
                     <td colspan="3">
-                        <input type="text" name="proName" style="width: 97%;" class="forminput inputstyle" style="width: 72%;" value="cl-17沥青模板">
+                        <input type="text" id="proName" name="proName" required="required"  style="width: 97%;" class="forminput inputstyle" style="width: 72%;" value="cl-17沥青模板">
                     </td>
                 </tr>
 
                 <tr>
                     <td class="tlabels">1#仓：</td>
                     <td>
-                        <input type="number" name="repertoryOne" class="forminput inputstyle" value="3">
+                        <input type="number" name="repertoryOne" class="forminput inputstyle" value="0">
                     </td>
                     <td class="tlabels">2#仓：</td>
                     <td>
-                        <input type="number"  name="repertoryTwo" class="forminput inputstyle" value="5">
+                        <input type="number"  name="repertoryTwo" class="forminput inputstyle" value="0">
                     </td>
                 </tr>
 
                 <tr>
                     <td class="tlabels">3#仓：</td>
                     <td>
-                        <input type="number" name="repertoryThree" class="forminput inputstyle" value="17">
+                        <input type="number" name="repertoryThree" class="forminput inputstyle" value="0">
                     </td>
                     <td class="tlabels">4#仓：</td>
                     <td>
-                        <input type="number" name="repertoryFour" class="forminput inputstyle" value="35">
+                        <input type="number" name="repertoryFour" class="forminput inputstyle" value="0">
                     </td>
                 </tr>
 
                 <tr>
                     <td class="tlabels">5#仓：</td>
                     <td>
-                        <input type="number" name="repertoryFive" class="forminput inputstyle" value="75">
+                        <input type="number" name="repertoryFive" class="forminput inputstyle" value="0">
                     </td>
                     <td class="tlabels">6#仓：</td>
                     <td>
-                        <input type="number" name="repertorySix" class="forminput inputstyle" value="85">
+                        <input type="number" name="repertorySix" class="forminput inputstyle" value="0">
                     </td>
                 </tr>
 
                 <tr>
                     <td class="tlabels">矿粉：</td>
                     <td>
-                        <input type="number" name="breeze" class="forminput inputstyle" value="5">
+                        <input type="number" name="breeze" class="forminput inputstyle" value="0">
                     </td>
                     <td class="tlabels">油石比：</td>
                     <td>
-                        <input type="number" name="ratioStone" class="forminput inputstyle" value="1.2">
+                        <input type="number" name="ratioStone" class="forminput inputstyle" value="0">
                     </td>
                 </tr>
 
@@ -208,22 +203,22 @@
                 <tr>
                     <td class="tlabels">沥青加热温度：</td>
                     <td>
-                        <input type="number" name="temperatureAsphalt" class="forminput inputstyle" value="157">
+                        <input type="number" name="temperatureAsphalt" class="forminput inputstyle" value="0">
                     </td>
                     <td class="tlabels">骨料加热温度：</td>
                     <td>
-                        <input type="number" name="temperatureAggregate" class="forminput inputstyle" value="152">
+                        <input type="number" name="temperatureAggregate" class="forminput inputstyle" value="0">
                     </td>
                 </tr>
 
                 <tr>
                     <td class="tlabels">混合料出厂温度：</td>
                     <td>
-                        <input type="number" name="temperatureMixture" class="forminput inputstyle" value="52">
+                        <input type="number" name="temperatureMixture" class="forminput inputstyle" value="0">
                     </td>
                     <td class="tlabels">铣刨料加热温度：</td>
                     <td>
-                        <input type="number" name="temperatureMilling" class="forminput inputstyle" value="37">
+                        <input type="number" name="temperatureMilling" class="forminput inputstyle" value="0">
                     </td>
                 </tr>
 
@@ -238,8 +233,8 @@
                     </td>
                     <td class="tlabels">再生料比1、2：</td>
                     <td>
-                        <input type="number" name="ratioRegenerate1" class="my_form_input" value="2">
-                        <input type="number" name="ratioRegenerate2" class="my_form_input" value="1">
+                        <input type="number" name="ratioRegenerate1" class="my_form_input" value="0">
+                        <input type="number" name="ratioRegenerate2" class="my_form_input" value="0">
                     </td>
                 </tr>
 
@@ -255,27 +250,164 @@
                     </td>
                     <td class="tlabels">添加剂比：</td>
                     <td>
-                        <input type="number" name="ratioAdditive" class="forminput inputstyle" value="2">
+                        <input type="number" name="ratioAdditive" class="forminput inputstyle" value="0">
                     </td>
                 </tr>
 
                 <tr>
                     <td class="tlabels">模板在机组一的编号：</td>
                     <td>
-                        <input type="number" name="crew1ModeleId" class="forminput inputstyle" value="52">
+                        <input type="number" id="crew1ModeleId" name="crew1ModeleId"  required="required"  class="forminput inputstyle" value="0">
                     </td>
                     <td class="tlabels">模板在机组二的编号：</td>
                     <td>
-                        <input type="number" name="crew2ModeleId" class="forminput inputstyle" value="37">
+                        <input type="number"  id="crew2ModeleId" name="crew2ModeleId"  required="required"  class="forminput inputstyle" value="0">
                     </td>
                 </tr>
+
+                <tr>
+                    <td class="tlabels">上传人：</td>
+                    <td>
+                        <input type="text" name="upUser"  required="required"  class="forminput inputstyle" value="张三">
+                    </td>
+                    <td class="tlabels">备注：</td>
+                    <td>
+                        <input type="text" name="remark"  required="required"  class="forminput inputstyle" value="对模板相关备注">
+                    </td>
+                </tr>
+
                 </tbody>
 
             </table>
 
             <div class="form_btn">
-                <input type="submit"   value="保存" class="btn_save">
+                <input type="submit"  id="btn"  value="保存" class="btn_save">
                 <input type="button" onclick="closefrom()" value="关闭" class="btn_cancel">
+            </div>
+
+        </form>
+    </div>
+
+    <!--查看模板弹出-->
+    <div id="showRatioBrk" class="form_background"  style="display:none;" ></div>
+    <div id="showRatio" class="ration_form_model" style="display:none;" >
+            <table class="my_form_table">
+                <tbody>
+
+                <tr>
+                    <td colspan="3">
+                        <input type="text" data-value="proName" disabled="disabled"  style="width: 97%;font-size: 24px;padding-bottom: 13px;padding-left: 35%;" class="ration_forminput ration_inputstyle" style="width: 72%;" value="cl-17沥青模板">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="ration_tlabels">1#仓：</td>
+                    <td>
+                        <input type="number" disabled="disabled" data-value="repertoryOne" class="ration_forminput ration_inputstyle" value="3">
+                    </td>
+                    <td class="ration_tlabels">2#仓：</td>
+                    <td>
+                        <input type="number" disabled="disabled"  data-value="repertoryTwo" class="ration_forminput ration_inputstyle" value="5">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="ration_tlabels">3#仓：</td>
+                    <td>
+                        <input type="number"  disabled="disabled" data-value="repertoryThree" class="ration_forminput ration_inputstyle" value="17">
+                    </td>
+                    <td class="ration_tlabels">4#仓：</td>
+                    <td>
+                        <input type="number" disabled="disabled" data-value="repertoryFour" class="ration_forminput ration_inputstyle" value="35">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="ration_tlabels">5#仓：</td>
+                    <td>
+                        <input type="number" disabled="disabled" data-value="repertoryFive" class="ration_forminput ration_inputstyle" value="75">
+                    </td>
+                    <td class="ration_tlabels">6#仓：</td>
+                    <td>
+                        <input type="number" disabled="disabled" data-value="repertorySix" class="ration_forminput ration_inputstyle" value="85">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="ration_tlabels">矿粉：</td>
+                    <td>
+                        <input type="number" disabled="disabled" data-value="breeze" class="ration_forminput ration_inputstyle" value="5">
+                    </td>
+                    <td class="ration_tlabels">油石比：</td>
+                    <td>
+                        <input type="number" disabled="disabled" data-value="ratioStone" class="ration_forminput ration_inputstyle" value="1">
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="ration_tlabels">沥青加热温度：</td>
+                    <td>
+                        <input type="number" disabled="disabled" data-value="temperatureAsphalt" class="ration_forminput ration_inputstyle" value="157">
+                    </td>
+                    <td class="ration_tlabels">骨料加热温度：</td>
+                    <td>
+                        <input type="number" disabled="disabled" data-value="temperatureAggregate" class="ration_forminput ration_inputstyle" value="152">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="ration_tlabels">混合料出厂温度：</td>
+                    <td>
+                        <input type="number" disabled="disabled" data-value="temperatureMixture" class="ration_forminput ration_inputstyle" value="52">
+                    </td>
+                    <td class="tlabels">铣刨料加热温度：</td>
+                    <td>
+                        <input type="number" disabled="disabled" data-value="temperatureMilling" class="ration_forminput ration_inputstyle" value="37">
+                    </td>
+                </tr>
+
+                <tr>
+
+                    <td class="ration_tlabels">再生料比1、2：</td>
+                    <td>
+                        <input type="number" disabled="disabled" data-value="ratioRegenerate1" class="ration_form_input" value="1">
+                        <input type="number" disabled="disabled" data-value="ratioRegenerate2" class="ration_form_input" value="1">
+                    </td>
+                    <td class="ration_tlabels">添加剂比：</td>
+                    <td>
+                        <input type="number" disabled="disabled" data-value="ratioAdditive" class="ration_forminput ration_inputstyle" value="2">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="ration_tlabels">模板在机组一的编号：</td>
+                    <td>
+                        <input type="number" disabled="disabled"  data-value="crew1ModeleId"    class="ration_forminput ration_inputstyle" value="52">
+                    </td>
+                    <td class="ration_tlabels">模板在机组二的编号：</td>
+                    <td>
+                        <input type="number" disabled="disabled"  data-value="crew2ModeleId"    class="ration_forminput ration_inputstyle" value="37">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="ration_tlabels">上传人：</td>
+                    <td>
+                        <input type="text" data-value="upUser"  disabled="disabled"  class="ration_forminput ration_inputstyle" value="">
+                    </td>
+                    <td class="ration_tlabels">备注：</td>
+                    <td>
+                        <input type="text" data-value="remark"  disabled="disabled"  class="ration_forminput ration_inputstyle" value="">
+                    </td>
+                </tr>
+
+                </tbody>
+
+            </table>
+
+            <div class="form_btn">
+                <input type="button" onclick="closeShowRatio()" value="关闭" class="ration_btn_cancel">
             </div>
 
         </form>
@@ -293,6 +425,7 @@
 <script type="text/javascript" src="/static/js/datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
 
 <script type="text/javascript">
+
     $("#start").datepicker({
         "language": "zh-CN",
         "format": 'yyyy-mm-dd'
@@ -312,21 +445,85 @@
         $('.popup_back,.popup_window_first').hide();
     }
     $('#btn_click').click(function() {
-        /*$('.popup_window_first,.popup_back').show();*/
-        alert("111111")
+        $('.popup_window_first,.popup_back').show();
     });
 
 
 
     //点击弹出添加模板
     function closefrom() {
-        $('.form_background,.form_model').hide();
+        $('#addRatioBrk,#addRatio').hide();
     }
 
     $('#from_click').click(function () {
-        $('.form_background,.form_model').show();
+        $('#addRatioBrk,#addRatio').show();
     });
 
+    //点击查看模板
+    function closeShowRatio() {
+        $('#showRatioBrk,#showRatio').hide();
+    }
+
+
+    function delectRatio() {
+
+            var spCodesTemp = "";
+            $('input:checkbox[name=spCodeId]:checked').each(function(i){
+                if(0==i){
+                    spCodesTemp = $(this).val();
+                }else{
+                    spCodesTemp += (","+$(this).val());
+                }
+
+            });
+
+            if(spCodesTemp == null || spCodesTemp == ""){
+                closeWindow()
+            }else {
+                $.ajax({
+                    url: "${path}/delectRation.do",
+                    type: "post",
+                    data:{
+                        "idStr" : spCodesTemp
+                    },
+                    dataType:"json",
+                    success:function (res) {
+                        if(res.messages == "success"){
+                            location.reload();
+                        }else {
+                            layer.msg('删除失败');
+                            closeWindow()
+                        }
+                    }
+                    
+
+                })
+            }
+    }
+
+    function showRatio( ratioId ) {
+
+        $.ajax({
+            url:"${path}/showRatioById.do",
+            type: "post",
+            data:{
+                "idStr" : ratioId
+            },
+            dataType:"json",
+            success:function (res) {
+
+                if (res == null || res == "") {
+                    layer.msg('获取模板失败');
+
+                }
+
+                for (var k in res){
+                    $("input[data-value='" +k + "']").val(res[k])
+                }
+            }
+        })
+        $('#showRatioBrk,#showRatio').show();
+    }
 </script>
 
 <%--<script>

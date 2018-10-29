@@ -595,8 +595,10 @@
 
         </script>
     </div>
-
+    <%--js获取路径--%>
+    <input id="path" type="hidden" value="${path}"/>
 </body>
+
 <script type="text/javascript" src="/static/js/jquery.js"></script>
 <script type="text/javascript" src="/static/js/common.js"></script>
 <script type="text/javascript" src="/static/js/skin.js"></script>

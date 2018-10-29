@@ -89,7 +89,7 @@
                 $.ajax({
                     cache: true,
                     type: "POST",
-                    url: '/login/login.do',
+                    url: '${path}/login/login.do',
                     // url: 'http://47.105.114.70/login/login.do',
                     data: {"username": username, "password": password},
                     error: function (request) {
@@ -97,7 +97,7 @@
                     },
                     success: function (result) {
                         if (result === "success") {
-                            window.location.href = '/login/homePage.do';
+                            window.location.href = '${path}/login/homePage.do';
                             // window.location.href = 'http://47.105.114.70/login/homePage.do';
                         } else {
                             alert("您输入的账号密码不匹配");

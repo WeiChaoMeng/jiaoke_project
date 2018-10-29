@@ -54,5 +54,9 @@ public class QualityRatioTemplate {
     private int crew1ModeleId;
     //机组二对应的模板ID
     private int crew2ModeleId;
+    //上传人
+    private String upUser;
+    //备注
+    private String remark;
 
 }

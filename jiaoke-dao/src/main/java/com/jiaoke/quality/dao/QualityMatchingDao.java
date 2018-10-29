@@ -55,5 +55,26 @@ public interface QualityMatchingDao {
      * @param qualityRatioTemplate
      * @return
      */
-    int insetRatioTemplate( @Param("qualityRatioTemplate") QualityRatioTemplate qualityRatioTemplate);
+    int insetRatioTemplate(  QualityRatioTemplate qualityRatioTemplate);
+
+
+    /**
+     * 插入配比模板简略数据
+     * @param map
+     */
+    int insertRationCreateMessage(@Param("map")Map<String,String> map);
+
+    /**
+     * 根据id传入待删除的配比模板id
+     * @param strArray
+     * @return
+     */
+    int delectRation(@Param("idArray") String[] strArray);
+
+    /**
+     * 根据传入id查询模板
+     * @param idStr
+     * @return
+     */
+    QualityRatioTemplate selectRationById(@Param("idStr") String idStr);
 }

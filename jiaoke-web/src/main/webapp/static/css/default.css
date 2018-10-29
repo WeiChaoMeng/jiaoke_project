@@ -627,7 +627,7 @@ table {
 .chartbox4 {
     float: left;
     margin-left: 8px;
-    width: 32%;
+    width: 34%;
     border: solid 1px #d6d6d6;
     height: 327px;
 }
@@ -1117,7 +1117,7 @@ table {
     right: 0;
     left: 0;
     text-align: center;
-    background: rgb(115, 91, 138);
+    background: rgb(119, 112, 127);
     color: #fff;
     border-radius: 10px;
 }
@@ -1126,7 +1126,6 @@ table {
     width: 100%;
     height: 76%;
     line-height: 110px;
-    border-bottom: 1px solid #d6c9c9;
 }
 
 .popup_window_first .popup_btn {
@@ -1153,8 +1152,8 @@ table {
 }
 
 .form_model {
-    width: 750px;
-    height: 500px;
+    width: 770px;
+    height: 550px;
     position: fixed;
     margin: auto;
     top: 0;
@@ -1281,7 +1280,7 @@ table {
     float: left;
     width: 33%;
     border: solid 1px #d8d6d7;
-    height: 324px;
+    height: 350px;
     margin: 16px 0px 7px 25px;
     background: #ffffff;
 }
@@ -1402,6 +1401,7 @@ table {
 
 .my_form_table {
     border-bottom: none;
+    margin-top: 22px;
 }
 .my_form_table td {
     line-height: 40px;
@@ -1466,4 +1466,143 @@ table {
     float: right;
     line-height: 28px;
     color: #8d8d8d;
+}
+
+/****质量监控echarsdiv****/
+my_echars_div_block{
+
+    height: 525px;
+
+}
+
+/******展示配比模板******/
+.ration_form_model {
+    width: 770px;
+    height: 500px;
+    position: fixed;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    text-align: center;
+    color: #fff;
+    border-radius: 10px;
+    background: #ffffff;
+}
+
+/*form*/
+.ration_form_table {
+    border: solid 1px #ecd6d6;
+    border-bottom: none;
+    width: 100%;
+}
+.ration_inputstyle {
+    width: 190px;
+    color: #000;
+    /*border-bottom: 1px solid #ccbbbbd4;*/
+    text-align: center;
+    outline: 0;
+    background: #fff;
+}
+.ration_form_table td {
+    line-height: 40px;
+    border-right: solid 1px #c59f9f;
+    border-bottom: solid 1px #c19d9d;
+    text-indent: 15px;
+}
+
+.ration_form_table td a:hover {
+    text-decoration: underline;
+}
+
+.ration_form_table td em {
+    font-style: normal;
+    color: #8d8d8d;
+    font-size: 12px;
+}
+
+.ration_tlabels {
+    background: #ffffff;
+    width: 123px;
+    text-align: right;
+    padding-right: 20px;
+    white-space: nowrap;
+}
+
+.ration_form_btn {
+    padding-top: 25px;
+    padding-left: 280px;
+}
+
+.ration_btn_save {
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    color: #000;
+    display: block;
+    width: 74px;
+    border-radius: 2px;
+    cursor: pointer;
+    float: left;
+}
+
+.ration_btn_cancel {
+    display: block;
+    width: 74px;
+    height: 30px;
+    background: #dedede;
+    border: solid 1px #dedede;
+    text-align: center;
+    float: left;
+    margin-left: 50px;
+    cursor: pointer;
+}
+
+.ration_form_swidth {
+    width: 190px;
+    position: relative;
+    min-width: 134px;
+    height: 26px;
+    border: 1px solid #c6c6c6;
+    cursor: pointer;
+    text-indent: 0;
+    margin-right: 20px;
+}
+.ration_form_input{
+    width: 88px;
+    height: 26px;
+    /*border: solid 1px #c6c6c6;*/
+    line-height: 26px;
+    text-indent: 8px;
+    font-family: '微软雅黑';
+    float: left;
+    margin-left: 15px;
+    background: #fff;
+}
+.my_echars_title{
+    padding-left: 20px;
+    display: block;
+    float: left;
+    font-weight: bold;
+    font-size: 14px;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    margin-bottom: 5%;
+    width: 95%;
+    border-bottom: solid 1px #d4d4d4;
+}
+.my_echars_title span{
+
+    display: block;
+    float: left;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.my_echars_title a{
+    float: right;
+    font-style: normal;
+    color: #a99d9d;
+    /*padding-right: 4%;*/
 }

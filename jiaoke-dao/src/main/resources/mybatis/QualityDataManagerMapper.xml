@@ -60,4 +60,111 @@
 
     </select>
 
+
+    <select id="selectRatioNumListByDate" resultType="java.lang.String">
+        SELECT
+                produce_proportioning_num
+                FROM
+                     quality_monitoring_realtime_${crewNum}
+                WHERE
+                produce_date = ${producedDate}
+                GROUP BY produce_proportioning_num
+    </select>
+
+    <select id="selectProducedSVG" resultType="java.util.Map">
+        SELECT
+               produce_proportioning_num as rationNum,
+               COUNT(*) as procount,
+               SUM(material_aggregate_1) as aggregate_1 ,
+               SUM(material_aggregate_2) as aggregate_2,
+               SUM(material_aggregate_3) as aggregate_3,
+               SUM(material_aggregate_4) as aggregate_4,
+               SUM(material_aggregate_5) as aggregate_5,
+               SUM(material_aggregate_6) as aggregate_6,
+               SUM(material_stone_1) as stone_1,
+               SUM(material_stone_2) as stone_2,
+               SUM(material_asphalt)	as asphalt,
+               SUM(material_regenerate) as regenerate,
+               SUM(material_additive) as additive,
+               SUM(material_total) as total,
+               SUM(temperature_warehouse_1) as warehouse_1,
+               SUM(temperature_mixture) as mixture,
+               SUM(temperature_duster) as duster,
+               SUM(temperature_asphalt) as temAsphalt,
+               SUM(temperature_aggregate) as aggregate
+        FROM
+             quality_monitoring_realtime_${crewNum}
+        WHERE
+                produce_date = ${producedDate}
+        GROUP BY
+                 produce_proportioning_num
+    </select>
+
+    <select id="selectRatioMessageById" resultType="com.jiaoke.quality.bean.QualityRatioTemplate">
+        SELECT
+        pro_name AS proName,
+        repertory_one AS repertoryOne,
+        repertory_two AS repertoryTwo,
+        repertory_three AS repertoryThree,
+        repertory_four AS repertoryFour,
+        repertory_five AS repertoryFive,
+        repertory_six AS repertorySix,
+        breeze AS breeze,
+        ratio_stone AS ratioStone,
+        ratio_regenerate1 AS ratioRegenerate1,
+        ratio_regenerate2 AS ratioRegenerate2,
+        ratio_additive AS ratioAdditive,
+        temperature_asphalt AS temperatureAsphalt,
+        temperature_asphalt AS temperatureAggregate,
+        temperature_mixture AS temperaturemixture,
+        temperature_milling AS temperatureMilling,
+        crew1_modele_id AS crew1ModeleId,
+        crew2_modele_id AS crew2ModeleId
+        FROM
+        quality_proportioning_message
+        WHERE
+        ${crewNum}_modele_id IN
+
+        <foreach collection="ratioNumList" item="item" open="(" close=")" separator=",">
+            ${item}
+        </foreach>
+    </select>
+
+    <select id="selectProduceByDate" resultType="java.util.Map">
+        SELECT
+                *
+        FROM
+             quality_monitoring_realtime_${crewNum}
+        WHERE
+            produce_date = ${producedDate}
+    </select>
+
+    <select id="selectProduceMessageByDate" resultType="java.util.Map">
+        SELECT
+               produce_proportioning_num as rationNum,
+               count(*) as total,
+               MIN(produce_time) as startTime,
+               produce_custom_num as userName
+        FROM
+             quality_monitoring_realtime_${crewNum}
+        WHERE
+                produce_date = ${producedDate}
+        GROUP BY
+                 produce_custom_num,produce_proportioning_num
+    </select>
+
+    <select id="selectUserProTotalByDate" resultType="java.util.Map">
+        SELECT
+               produce_custom_num as userName,
+               SUM(material_total) as userTotal
+        FROM
+             quality_monitoring_realtime_${crewNum}
+        WHERE
+                produce_date = ${producedDate}
+        GROUP BY
+                 produce_custom_num
+
+    </select>
+
+
 </mapper>

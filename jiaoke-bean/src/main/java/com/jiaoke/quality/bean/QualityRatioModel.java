@@ -27,7 +27,7 @@ public class QualityRatioModel {
     private int messageId;
     private String modelName;
     private String createTime;
-    private String modifyTime;
+    private String remaker;
     private String createUser;
 
 }
