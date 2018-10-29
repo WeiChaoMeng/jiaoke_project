@@ -43,12 +43,12 @@
 
             <div class="login-form">
                 <div class="login_input_content">
-                    <div class="left-icon"><img src="../../static/images/username.png" alt=""></div>
+                    <div class="left-icon"><img src="../../static/images/icon/username.png" alt=""></div>
                     <input type="text" placeholder="账号" name="username" id="username" value="" class="right-input"
                            onkeyup="this.value=this.value.replace(/\s+/g,'')">
                 </div>
                 <div class="login_input_content">
-                    <div class="left-icon"><img src="../../static/images/password.png" alt=""></div>
+                    <div class="left-icon"><img src="../../static/images/icon/password.png" alt=""></div>
                     <input type="password" placeholder="密码" name="password" id="password" value=""
                            class="right-input" onkeyup="this.value=this.value.replace(/\s+/g,'')">
                 </div>

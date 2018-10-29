@@ -523,7 +523,7 @@ body {
 }
 
 .meeting_mark {
-    background-image: url(../../images/sign.png);
+    background-image: url(../../images/icon/sign.png);
     background-repeat: no-repeat;
     background-position: 5px 0;
     background-size: 34px;

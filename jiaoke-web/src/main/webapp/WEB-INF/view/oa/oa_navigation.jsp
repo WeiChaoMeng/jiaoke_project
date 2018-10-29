@@ -20,7 +20,7 @@
 <body>
 <div class="nav nav-mini">
     <div class="nav-top">
-        <div id="mini" style="border-bottom: 2px #fff solid;"><img  style="padding: 3.5px 13px" src="../../../static/images/mini.png"></div>
+        <div id="mini" style="border-bottom: 2px #fff solid;"><img  style="padding: 3.5px 13px" src="../../../static/images/icon/mini.png"></div>
     </div>
     <ul>
         <li class="nav-item">
@@ -113,7 +113,7 @@
 
         <div class="now_location">
             <span class="now_location_icon">
-                <img src="../../../static/images/homepage.png">
+                <img src="../../../static/images/icon/homepage.png">
             </span>
 
             <span class="now_location_content" id="content">

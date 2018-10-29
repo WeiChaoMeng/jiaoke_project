@@ -36,7 +36,7 @@
         .box404 {
             width: 354px;
             height: 255px;
-            background: url(../../../static/images/permission.png) no-repeat left;
+            background: url(../../../static/images/shiro/permission.png) no-repeat left;
             margin: 0 auto;
             margin-top: 135px;
             padding-left: 286px;

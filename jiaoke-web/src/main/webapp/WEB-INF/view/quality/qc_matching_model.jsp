@@ -324,8 +324,7 @@
     }
 
     $('#from_click').click(function () {
-        //$('.form_background,.form_model').show();
-        alert("1111");
+        $('.form_background,.form_model').show();
     });
 
 </script>

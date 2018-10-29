@@ -243,7 +243,6 @@
             processData: false,    //不可缺
             success: function (ret) {
                 if (ret.message == "success") {
-                    alert("成功");
                     // 上传代码返回结果之后，将图片插入到编辑器中
                     insert(ret.imageFilePaths);
                     $("#editorHTNL").val(editor.txt.html());

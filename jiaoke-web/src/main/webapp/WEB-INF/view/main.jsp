@@ -54,7 +54,7 @@
 
 <div class="header">
     <div class="headtop">
-        <span class="logo" id="logo"><img src="/static/images/logo-2.png"></span>
+        <span class="logo" id="logo"><img src="/static/images/logo/logo-2.png"></span>
         <ul class="nav">
             <li>
                 <a href="#" class="manu" id="index"  >首页</a>
