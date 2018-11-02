@@ -155,15 +155,15 @@
                         <tbody>
                         <tr>
                             <td class="template" valign="middle">
-                                <a class="check_color" title="人力资源需求申请表"><img src="/static/images/table.png">人力资源需求申请表</a>
+                                <a class="check_color" title="人力资源需求申请表"><img src="/static/images/icon/table.png">人力资源需求申请表</a>
                             </td>
 
                             <td class="template" valign="middle">
-                                <a class="check_color" title="费用报销单"><img src="/static/images/table.png">费用报销单</a>
+                                <a class="check_color" title="费用报销单"><img src="/static/images/icon/table.png">费用报销单</a>
                             </td>
 
                             <td class="template" valign="middle">
-                                <a class="check_color" title="合同付款申请单"><img src="/static/images/table.png">合同付款申请单</a>
+                                <a class="check_color" title="合同付款申请单"><img src="/static/images/icon/table.png">合同付款申请单</a>
                             </td>
                         </tr>
                         </tbody>
@@ -174,15 +174,15 @@
                         <tbody>
                         <tr>
                             <td class="template" valign="middle">
-                                <a class="check_color" title="借款单"><img src="/static/images/table.png">借款单</a>
+                                <a class="check_color" title="借款单"><img src="/static/images/icon/table.png">借款单</a>
                             </td>
 
                             <td class="template" valign="middle">
-                                <a class="check_color" title="出差申请单"><img src="/static/images/table.png">出差申请单</a>
+                                <a class="check_color" title="出差申请单"><img src="/static/images/icon/table.png">出差申请单</a>
                             </td>
 
                             <td class="template" valign="middle">
-                                <a class="check_color" title="合同审批单"><img src="/static/images/table.png">合同审批单</a>
+                                <a class="check_color" title="合同审批单"><img src="/static/images/icon/table.png">合同审批单</a>
                             </td>
                         </tr>
                         </tbody>
@@ -192,15 +192,15 @@
                         <tbody>
                         <tr>
                             <td class="template" valign="middle">
-                                <a class="check_color" title="离职审批单"><img src="/static/images/table.png">离职审批单</a>
+                                <a class="check_color" title="离职审批单"><img src="/static/images/icon/table.png">离职审批单</a>
                             </td>
 
                             <td class="template" valign="middle">
-                                <a class="check_color" title="考勤申请单"><img src="/static/images/table.png">考勤申请单</a>
+                                <a class="check_color" title="考勤申请单"><img src="/static/images/icon/table.png">考勤申请单</a>
                             </td>
 
                             <td class="template" valign="middle">
-                                <a class="check_color" title="员工转正审批单"><img src="/static/images/table.png">员工转正审批单</a>
+                                <a class="check_color" title="员工转正审批单"><img src="/static/images/icon/table.png">员工转正审批单</a>
                             </td>
                         </tr>
                         </tbody>
@@ -211,7 +211,7 @@
                         <tbody>
                         <tr>
                             <td class="template" valign="middle">
-                                <a class="check_color" title="资产采购申请单"><img src="/static/images/table.png">资产采购申请单</a>
+                                <a class="check_color" title="资产采购申请单"><img src="/static/images/icon/table.png">资产采购申请单</a>
                             </td>
 
                             <td class="template" valign="middle">
@@ -219,7 +219,7 @@
                             </td>
 
                             <td class="template" valign="middle">
-                                <a class="check_color" title="公务用车申请单"><img src="/static/images/table.png">公务用车申请单</a>
+                                <a class="check_color" title="公务用车申请单"><img src="/static/images/icon/table.png">公务用车申请单</a>
                             </td>
                         </tr>
                         </tbody>
@@ -229,15 +229,15 @@
                         <tbody>
                         <tr>
                             <td class="template" valign="middle">
-                                <a class="check_color" title="油补申请审批表"><img src="/static/images/table.png">油补申请审批表</a>
+                                <a class="check_color" title="油补申请审批表"><img src="/static/images/icon/table.png">油补申请审批表</a>
                             </td>
 
                             <td class="template" valign="middle">
-                                <a class="check_color" title="审计委托申请书"><img src="/static/images/table.png">审计委托申请书</a>
+                                <a class="check_color" title="审计委托申请书"><img src="/static/images/icon/table.png">审计委托申请书</a>
                             </td>
 
                             <td class="template" valign="middle">
-                                <a class="check_color" title="带薪年休假审批单"><img src="/static/images/table.png">带薪年休假审批单</a>
+                                <a class="check_color" title="带薪年休假审批单"><img src="/static/images/icon/table.png">带薪年休假审批单</a>
                             </td>
                         </tr>
                         </tbody>
