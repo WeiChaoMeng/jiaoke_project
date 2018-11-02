@@ -51,6 +51,10 @@ public class QualityController {
     private QualityAuxiliaryAnalysisInf qualityAuxiliaryAnalysisInf;
     @Autowired
     private QualityRealTimeWarningInf qualityRealTimeWarningInf;
+    @Autowired
+    private QualityStatementInf qualityStatementInf;
+
+
     /**
      *
      * 功能描述: <br>
@@ -213,7 +217,15 @@ public class QualityController {
         return JsonData;
     }
 
-
+    /**
+     *
+     * 功能描述: <br>
+     *  <返回几天内材料温度>
+     * @param []
+     * @return java.lang.String
+     * @auther Melone
+     * @date 2018/10/29 18:44
+     */
     @ResponseBody
     @RequestMapping(value = "/getRealTimeDataEcharsTemp.do",method = RequestMethod.POST)
     public String getRealTimeDataEcharsTemp(){
@@ -224,6 +236,15 @@ public class QualityController {
 
     }
 
+    /**
+     *
+     * 功能描述: <br>
+     *  <返回材料图表的数据>
+     * @param []
+     * @return java.lang.String
+     * @auther Melone
+     * @date 2018/10/29 18:45
+     */
     @ResponseBody
     @RequestMapping(value = "/getRealTimeDataEcharsMaterial.do",method = RequestMethod.POST)
     public String getRealTimeDataEcharsMaterial(){
@@ -335,15 +356,40 @@ public class QualityController {
     /********************************  辅助分析 end *****************************************/
 
 
-    /********************************  产品列表 Start *****************************************/
+    /********************************  产品报表 Start *****************************************/
 
+    /**
+     *
+     * 功能描述: <br>
+     *  <跳转到产品报表方法>
+     * @param []
+     * @return java.lang.String
+     * @auther Melone
+     * @date 2018/11/2 10:51
+     */
     @RequestMapping("/qc_prodoct_list.do")
     public String prodoctList(){
 
         return "quality/qc_prodoct_list";
     }
 
-    /********************************  产品列表 end *****************************************/
+    /**
+     *
+     * 功能描述: <br>
+     *  <返回上个月各级预警材料总重>
+     * @param []
+     * @return java.lang.String
+     * @auther Melone
+     * @date 2018/11/2 10:56
+     */
+    @RequestMapping("/getMonthStatementToEchars")
+    public String getMonthStatementToEchars(){
+       String res = qualityStatementInf.selectLastMonthStatementToEchars();
+
+       return res;
+    }
+
+    /********************************  产品报表 end *****************************************/
 
 
     /********************************  实验检测 Start *****************************************/
@@ -356,16 +402,6 @@ public class QualityController {
 
     /********************************  实验检测 end *****************************************/
 
-
-    /********************************  真实数据 Start *****************************************/
-
-    @RequestMapping("/qc_real_data.do")
-    public String realData(){
-
-        return "quality/qc_real_data";
-    }
-
-    /********************************  真实数据 end *****************************************/
 
 
 }

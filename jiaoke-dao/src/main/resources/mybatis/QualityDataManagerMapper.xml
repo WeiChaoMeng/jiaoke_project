@@ -132,11 +132,22 @@
 
     <select id="selectProduceByDate" resultType="java.util.Map">
         SELECT
-                *
+        *
         FROM
-             quality_monitoring_realtime_${crewNum}
+        (
+        SELECT
+        *, row_number () over (
+        PARTITION BY produce_proportioning_num
+        ORDER BY
+        produce_date DESC
+        ) AS rowindex
+        FROM
+        quality_monitoring_realtime_${crewNum}
         WHERE
-            produce_date = ${producedDate}
+        produce_date = ${producedDate}
+        ) AS t1
+        WHERE
+        t1.rowindex <![CDATA[ <= ]]>  7
     </select>
 
     <select id="selectProduceMessageByDate" resultType="java.util.Map">

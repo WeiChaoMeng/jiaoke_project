@@ -42,14 +42,22 @@ public class QualityRatioTemplate {
     private int regenerate;
     //添加剂编号
     private int additive;
-    //沥青温度
+    //沥青温度下限
     private int temperatureAsphalt;
-    //骨料温度
+    //沥青温度上限
+    private int temperatureAsphaltUp;
+    //骨料温度下限
     private int temperatureAggregate;
+    //骨料温度上限
+    private int temperatureAggregateUp;
     //混合料温度
     private int temperatureMixture;
+    //混合料温度上限
+    private int temperatureMixtureUp;
     //铣刨料温度
     private int temperatureMilling;
+    //铣刨料温度上限
+    private int temperatureMillingUp;
     //机组一对应的模板ID
     private int crew1ModeleId;
     //机组二对应的模板ID

@@ -6,6 +6,11 @@ var basePath = "";
     getWarningData();
 })(jQuery);
 
+/***********************间隔执行Start*****************************/
+setInterval(getWarningData, 3000);
+
+/***********************间隔执行End*****************************/
+
 function getWarningData() {
     $.ajax({
         url: basePath + "/getQualityWarningData.do",
@@ -34,6 +39,8 @@ function getWarningData() {
 
                     /****************渲染预警级别*****************/
                     switch (res[i].warning_level) {
+                        case "0":
+                            warningLeve = "无预警";
                         case "1":
                             warningLeve = "一级预警";
                             break;
@@ -95,7 +102,7 @@ function getEcharsData() {
             var crew2topArray = new Array();
             var crew2downArray = new Array();
             var crew2realArray = new Array();
-
+            debugger
             for (var k in res){
                 switch (k) {
                     case "crew1nameList":
@@ -155,10 +162,6 @@ function eachList(inArray,toArray) {
 
 }
 
-/***********************间隔执行Start*****************************/
-window.setInterval(getWarningData, 3000);
 
-/***********************间隔执行End*****************************/
-/***********************间隔执行End*****************************/
 
  

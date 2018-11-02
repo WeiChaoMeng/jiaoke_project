@@ -516,7 +516,7 @@ table {
 
 /*pagination*/
 .pagination {
-    padding-top: 10px;
+    padding-top: 25%;
 }
 
 .pagelist {
@@ -992,7 +992,7 @@ table {
     border: solid 1px #d4d4d4;
     clear: both;
     padding: 2px 10px 10px 10px;
-    height: 498px;
+    height: 545px;
 }
 
 /*实时监控DIV */
@@ -1152,7 +1152,7 @@ table {
 }
 
 .form_model {
-    width: 770px;
+    width: 820px;
     height: 550px;
     position: fixed;
     margin: auto;
@@ -1199,8 +1199,8 @@ table {
 }
 
 .form_btn {
-    padding-top: 25px;
-    padding-left: 280px;
+    padding-top: 15px;
+    padding-left: 328px;
 }
 
 .btn_save {
@@ -1605,4 +1605,72 @@ my_echars_div_block{
     font-style: normal;
     color: #a99d9d;
     /*padding-right: 4%;*/
+}
+
+/*data_manager_pagination*/
+.data_manager_pagination {
+    padding-top: 21%;
+}
+
+.data_manager_pagelist {
+    float: left;
+}
+
+.data_manager_pagelist li {
+    float: left;
+    margin-right: 5px;
+}
+
+.data_manager_pagelist li a {
+    display: block;
+    height: 26px;
+    line-height: 26px;
+    background: #d2d2d2;
+    border: solid 1px #acacac;
+    padding: 0 10px;
+    border-radius: 1px;
+    color: #000;
+}
+
+.data_manager_pagelist li a:hover {
+    background: #fff;
+}
+
+.data_manager_pagelist li a.pageico {
+
+}
+
+.data_manager_pagelist li a.first {
+    color: #858585;
+}
+
+.data_manager_pagelist li a.selected,
+.data_manager_pagelist li a.selected:hover {
+    color: rgb(255, 255, 255);
+}
+
+.data_manager_pageinfo {
+    display: block;
+    float: right;
+    line-height: 28px;
+    color: #8d8d8d;
+}
+.statement_div_echar {
+    width: 50%;
+    height: 50%;
+}
+
+.statement_chartbox1 {
+    border: solid 1px #d6d6d6;
+}
+
+.statement_charts1 {
+    height: 80%;
+}
+.statement_infoboxright {
+    height: 498px;
+    width: 21%;
+    margin-left: 0px;
+    padding-left: 5%;
+    padding-top: 5%;
 }

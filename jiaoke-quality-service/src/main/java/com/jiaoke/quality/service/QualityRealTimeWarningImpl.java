@@ -32,6 +32,16 @@ public class QualityRealTimeWarningImpl implements  QualityRealTimeWarningInf {
     @Resource
     QualityRealTimeWarningDao qualityRealTimeWarningDao;
 
+    /**
+     *
+     * 功能描述: <br>
+     *  <返回最新的预警数据>
+     * @param []
+     * @return java.lang.String
+     * @auther Melone
+     * @date 2018/10/30 18:09
+     */
+    @Override
     public String selectLastWarningData() {
 
         List<Map<String,String>> list = qualityRealTimeWarningDao.selectLastWarningData();
@@ -52,42 +62,103 @@ public class QualityRealTimeWarningImpl implements  QualityRealTimeWarningInf {
      * @auther Melone
      * @date 2018/10/16 13:01
      */
+    @Override
     public String getWarningEcharsData() {
 
         List<Map<String,String>> list = qualityRealTimeWarningDao.selectWarningEcharsData();
 
 
-        List<Long> crew1topList = new ArrayList<Long>();
-        List<Integer> crew1realList = new ArrayList<Integer>();
-        List<Long> crew1downList = new ArrayList<Long>();
+        List<Float> crew1topList = new ArrayList<Float>();
+        List<Float> crew1realList = new ArrayList<Float>();
+        List<Float> crew1downList = new ArrayList<Float>();
         List<String> crew1nameList = new ArrayList<String>();
 
-        List<Long> crew2topList = new ArrayList<Long>();
-        List<Integer> crew2realList = new ArrayList<Integer>();
-        List<Long> crew2downList = new ArrayList<Long>();
+        List<Float> crew2topList = new ArrayList<Float>();
+        List<Float> crew2realList = new ArrayList<Float>();
+        List<Float> crew2downList = new ArrayList<Float>();
         List<String> crew2nameList = new ArrayList<String>();
 
         Map<String,Object> map = new HashMap<String,Object>(16);
 
+        float upRatio = 0;
+        float downRatio = 0;
+
 
         for(int i = 0; i < list.size(); i++){
-
-            int total = Math.round(Float.parseFloat(list.get(i).get("moudle_ratio"))) ;
-            long upRatio = Math.round(total + (total*0.15));
-            long downRatio = Math.round(total - (total*0.15));
             String  crewNum = String.valueOf(list.get(i).get("produce_crewNum")) ;
+            String moudle = list.get(i).get("moudle_ratio");
+            String name = list.get(i).get("material_name");
+            float total = 0 ;
 
-            if ( crewNum.equals("1") ){
+            switch (name){
+                case "骨料6":
+                    total = Float.parseFloat(moudle);
+                    upRatio = total + 5;
+                     downRatio = total - 5;
+                    break;
+                case "骨料5":
+                    total = Float.parseFloat(moudle);
+                    upRatio = total + 5;
+                    downRatio = total - 5;
+                    break;
+                case "骨料4":
+                    total = Float.parseFloat(moudle);
+                    upRatio = total + 5;
+                    downRatio = total - 5;
+                    break;
+                case "骨料3":
+                    total = Float.parseFloat(moudle);
+                    upRatio = total + 5;
+                    downRatio = total - 5;
+                    break;
+                case "骨料2":
+                    total = Float.parseFloat(moudle);
+                    upRatio = total + 2;
+                    downRatio = total - 2;
+                    break;
+                case "骨料1":
+                    total = Float.parseFloat(moudle);
+                    upRatio = total + 2;
+                    downRatio = total - 2;
+                    break;
+                case "矿粉":
+                    total = Float.parseFloat(moudle);
+                    upRatio = total + 1;
+                    downRatio = total - 1;
+                    break;
+                case "沥青":
+                    total = Float.parseFloat(moudle);
+                    upRatio = total + 2;
+                    downRatio = total - 2;
+                    break;
+                case "沥青温度":
+                    String[] split = moudle.split("-");
+                    upRatio = Math.round(Float.parseFloat(split[1]));
+                    downRatio = Math.round(Float.parseFloat(split[0]));
+                    break;
+                case "混合料温度":
+                    String[] split1 = moudle.split("-");
+                    upRatio = Math.round(Float.parseFloat(split1[1]));
+                    downRatio = Math.round(Float.parseFloat(split1[0]));
+                    break;
+                case "骨料温度":
+                    String[] split2 = moudle.split("-");
+                    upRatio = Math.round(Float.parseFloat(split2[1]));
+                    downRatio = Math.round(Float.parseFloat(split2[0]));
+                    break;
+            }
+
+            if ( "1".equals(crewNum) ){
 
                 crew1nameList.add(list.get(i).get("material_name") );
                 crew1topList.add(upRatio);
-                crew1realList.add(Integer.parseInt(list.get(i).get("actual_ratio")));
+                crew1realList.add(Float.parseFloat(list.get(i).get("actual_ratio")));
                 crew1downList.add(downRatio);
 
             }else {
                 crew2nameList.add(list.get(i).get("material_name") );
                 crew2topList.add(upRatio);
-                crew2realList.add(Integer.parseInt(list.get(i).get("actual_ratio")));
+                crew2realList.add(Float.parseFloat(list.get(i).get("actual_ratio")));
                 crew2downList.add(downRatio);
             }
 

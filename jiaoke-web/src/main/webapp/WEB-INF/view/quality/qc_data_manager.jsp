@@ -57,7 +57,6 @@
                                             <td>
 
                                                 <a class="selected" id="add" href="${path}/getProducttionByDate.do?producedDate=${item.produceDate}&crewNum=${item.crewNum}" ><i class="toolico iconfont">&#xe970;</i>查看</a>
-                                                <a href="../../download/commons-io-2.4-src.zip" download="commons-io-2.4-src.zip"><i class="toolico iconfont">&#xe8e5;</i>导出</a>
 
                                             </td>
                                         </tr>
@@ -71,8 +70,8 @@
 
             </div>
         </div>
-        <div class="pagination">
-            <ul class="pagelist">
+        <div class="data_manager_pagination">
+            <ul class="data_manager_pagelist">
                 <%--首页--%>
                 <c:choose>
                     <c:when test="${pageBean.currentPageNum == 1}">
@@ -137,7 +136,7 @@
                 </c:choose>
             </ul>
 
-            <span class="pageinfo">共 ${pageBean.dataCountNum} 条记录，每页 ${pageBean.eachPageDataNum} 条，当前第 ${pageBean.currentPageNum} 页，共 ${pageBean.pageCount} 页</span>
+            <span class="data_manager_pageinfo">共 ${pageBean.dataCountNum} 条记录，每页 ${pageBean.eachPageDataNum} 条，当前第 ${pageBean.currentPageNum} 页，共 ${pageBean.pageCount} 页</span>
         </div>
     </div>
 

@@ -25,7 +25,7 @@
 <!--header end-->
 <!--main start-->
 
-<div class="">
+<div style="height: 10%">
     <ul class="menu">
         <li>
             <a href="#" id="matching_manager" onclick="matching_model()" class="menu_selected"><i
@@ -48,7 +48,6 @@
 
         <li><a href="#" id="prodoct_list" onclick="prodoct_list()" class="menu_selected"><i class="menuico iconfont1">&#xebdc;</i>产品报表</a></li>
         <li><a href="#" id="testing" onclick="testing()" class="menu_selected"><i class="menuico iconfont1">&#xeb9f;</i>实验检测</a></li>
-        <li><a href="#" id="real_data" onclick="real_data()" class="menu_selected"><i class="menuico iconfont1">&#xe689;</i>真实数据</a></li>
     </ul>
 
 
@@ -56,7 +55,7 @@
 </div>
 
 
-<iframe src="qc_index.do" id="iframe" name="right" width="100%" height="100%" frameborder="0" scrolling="auto" style="height: 650px;"></iframe>
+<iframe src="qc_index.do" id="iframe" name="right" width="100%" height="90%" frameborder="0" scrolling="auto" ></iframe>
 
 
 <!--right end-->

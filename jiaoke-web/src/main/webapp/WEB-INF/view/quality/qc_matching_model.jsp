@@ -151,74 +151,78 @@
                 <tr>
                     <td class="tlabels">配比名称：</td>
                     <td colspan="3">
-                        <input type="text" id="proName" name="proName" required="required"  style="width: 97%;" class="forminput inputstyle" style="width: 72%;" value="cl-17沥青模板">
+                        <input type="text" id="proName" name="proName"  required="required"  style="width: 97%;" class="forminput inputstyle" style="width: 72%;" value="cl-17沥青模板">
                     </td>
                 </tr>
 
                 <tr>
                     <td class="tlabels">1#仓：</td>
                     <td>
-                        <input type="number" name="repertoryOne" class="forminput inputstyle" value="0">
+                        <input type="number" min="0.0" step="0.01" name="repertoryOne" class="forminput inputstyle" value="0.0">
                     </td>
                     <td class="tlabels">2#仓：</td>
                     <td>
-                        <input type="number"  name="repertoryTwo" class="forminput inputstyle" value="0">
+                        <input type="number" min="0.0" step="0.01"  name="repertoryTwo" class="forminput inputstyle" value="0.0">
                     </td>
                 </tr>
 
                 <tr>
                     <td class="tlabels">3#仓：</td>
                     <td>
-                        <input type="number" name="repertoryThree" class="forminput inputstyle" value="0">
+                        <input type="number" min="0.0" step="0.01" name="repertoryThree" class="forminput inputstyle" value="0.0">
                     </td>
                     <td class="tlabels">4#仓：</td>
                     <td>
-                        <input type="number" name="repertoryFour" class="forminput inputstyle" value="0">
+                        <input type="number" min="0.0" step="0.01" name="repertoryFour" class="forminput inputstyle" value="0.0">
                     </td>
                 </tr>
 
                 <tr>
                     <td class="tlabels">5#仓：</td>
                     <td>
-                        <input type="number" name="repertoryFive" class="forminput inputstyle" value="0">
+                        <input type="number" min="0.0" step="0.01" name="repertoryFive" class="forminput inputstyle" value="0.0">
                     </td>
                     <td class="tlabels">6#仓：</td>
                     <td>
-                        <input type="number" name="repertorySix" class="forminput inputstyle" value="0">
+                        <input type="number" min="0.0" step="0.01" name="repertorySix" class="forminput inputstyle" value="0.0">
                     </td>
                 </tr>
 
                 <tr>
                     <td class="tlabels">矿粉：</td>
                     <td>
-                        <input type="number" name="breeze" class="forminput inputstyle" value="0">
+                        <input type="number" min="0.0" step="0.01" name="breeze" class="forminput inputstyle" value="0.0">
                     </td>
-                    <td class="tlabels">油石比：</td>
+                    <td class="tlabels">沥青(含量)：</td>
                     <td>
-                        <input type="number" name="ratioStone" class="forminput inputstyle" value="0">
+                        <input type="number" min="0.0" step="0.01" name="ratioStone" class="forminput inputstyle" value="0.0">
                     </td>
                 </tr>
 
 
                 <tr>
-                    <td class="tlabels">沥青加热温度：</td>
+                    <td class="tlabels">沥青加热温度 上/下限：</td>
                     <td>
-                        <input type="number" name="temperatureAsphalt" class="forminput inputstyle" value="0">
+                        <input type="number" name="temperatureAsphalt" class="my_form_input" value="0">
+                        <input type="number" name="temperatureAsphaltUp" class="my_form_input" value="0">
                     </td>
-                    <td class="tlabels">骨料加热温度：</td>
+                    <td class="tlabels">骨料加热温度 上/下限：</td>
                     <td>
-                        <input type="number" name="temperatureAggregate" class="forminput inputstyle" value="0">
+                        <input type="number" name="temperatureAggregate" class="my_form_input" value="0">
+                        <input type="number" name="temperatureAggregateUp" class="my_form_input" value="0">
                     </td>
                 </tr>
 
                 <tr>
-                    <td class="tlabels">混合料出厂温度：</td>
+                    <td class="tlabels">混合料出厂温度 上/下限：</td>
                     <td>
-                        <input type="number" name="temperatureMixture" class="forminput inputstyle" value="0">
+                        <input type="number" name="temperatureMixture" class="my_form_input" value="0">
+                        <input type="number" name="temperatureMixtureUp" class="my_form_input" value="0">
                     </td>
-                    <td class="tlabels">铣刨料加热温度：</td>
+                    <td class="tlabels">铣刨料加热温度 上/下限：</td>
                     <td>
-                        <input type="number" name="temperatureMilling" class="forminput inputstyle" value="0">
+                        <input type="number" name="temperatureMilling" class="my_form_input" value="0">
+                        <input type="number" name="temperatureMillingUp" class="my_form_input" value="0">
                     </td>
                 </tr>
 
@@ -233,14 +237,14 @@
                     </td>
                     <td class="tlabels">再生料比1、2：</td>
                     <td>
-                        <input type="number" name="ratioRegenerate1" class="my_form_input" value="0">
-                        <input type="number" name="ratioRegenerate2" class="my_form_input" value="0">
+                        <input type="number" min="0.0" step="0.01" name="ratioRegenerate1" class="my_form_input" value="0.0">
+                        <input type="number" min="0.0" step="0.01" name="ratioRegenerate2" class="my_form_input" value="0.0">
                     </td>
                 </tr>
 
 
                 <tr>
-                    <td class="tlabels">添加剂：</td>
+                    <td class="tlabels">盐沥青：</td>
                     <td>
                         <select class="form_swidth"  name="additive" data-value="0">
                             <c:forEach items="${listRegenerate}" var="item">
@@ -248,9 +252,9 @@
                             </c:forEach>
                         </select>
                     </td>
-                    <td class="tlabels">添加剂比：</td>
+                    <td class="tlabels">盐沥青：</td>
                     <td>
-                        <input type="number" name="ratioAdditive" class="forminput inputstyle" value="0">
+                        <input type="number" min="0.0" step="0.01" name="ratioAdditive" class="forminput inputstyle" value="0.0">
                     </td>
                 </tr>
 

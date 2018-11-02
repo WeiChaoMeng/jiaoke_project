@@ -117,76 +117,122 @@ function eachMaterialList(res) {
     for (var i = 0; i < res.length;i++){
 
         if (res[i].crewNum == 'crew1'){
+            //各材料上下限展现
+            debugger
+            crew1upArray.push(Number(res[i].repertory_one) + 2);
+            crew1upArray.push(Number(res[i].repertory_two) + 2);
+            crew1upArray.push(Number(res[i].repertory_three) + 5);
+            crew1upArray.push(Number(res[i].repertory_four) + 5);
+            crew1upArray.push(Number(res[i].repertory_five) + 5);
+            crew1upArray.push(Number(res[i].repertory_six) + 5);
+            crew1upArray.push(Number(res[i].breeze) + 1);
+            crew1upArray.push(Number(res[i].ratio_stone) + 2);
+            crew1upArray.push(Number(res[i].ratio_regenerate1) + Number(res[i].ratio_regenerate2)+ 2);
+            crew1upArray.push(Number(res[i].ratio_additive) + 2);
+            crew1upArray.push(Number(res[i].temperature_asphalt_up));
+            crew1upArray.push(Number(res[i].temperature_aggregate_up));
+            crew1upArray.push(Number(res[i].temperature_mixture_up));
 
-            crew1upArray.push(Number(res[i].repertory_one) + 15);
-            crew1upArray.push(Number(res[i].repertory_two) + 15);
-            crew1upArray.push(Number(res[i].repertory_three) + 15);
-            crew1upArray.push(Number(res[i].repertory_four) + 15);
-            crew1upArray.push(Number(res[i].repertory_five) + 15);
-            crew1upArray.push(Number(res[i].repertory_six) + 15);
-            crew1upArray.push(Number(res[i].breeze) + 15);
-            crew1upArray.push(Number(res[i].ratio_stone) + 15);
-            crew1upArray.push(Number(res[i].ratio_regenerate1) + Number(res[i].ratio_regenerate2)+ 15);
-            crew1upArray.push(Number(res[i].ratio_additive) + 15);
-            crew1upArray.push(Number(res[i].temperature_asphalt) + 15);
-            crew1upArray.push(Number(res[i].temperature_aggregate) + 15);
-            crew1upArray.push(Number(res[i].temperature_mixture) + 15);
+            var crew1_total = Number(res[i].material_total)
+            var crew1_material_aggregate_1 = Number(res[i].material_aggregate_1) - Number(res[i].material_aggregate_2);
+            var crew1_material_aggregate_2 = Number(res[i].material_aggregate_2) - Number(res[i].material_aggregate_3);
+            var crew1_material_aggregate_3 = Number(res[i].material_aggregate_3) - Number(res[i].material_aggregate_4);
+            var crew1_material_aggregate_4 = Number(res[i].material_aggregate_4) - Number(res[i].material_aggregate_5);
+            var crew1_material_aggregate_5 = Number(res[i].material_aggregate_5) - Number(res[i].material_aggregate_6);
+            var crew1_material_aggregate_6 = Number(res[i].material_aggregate_6)
 
-            crew1realArray.push((Number(res[i].material_aggregate_1)/Number(res[i].material_total) *100).toFixed(2))
-            crew1realArray.push((Number(res[i].material_aggregate_2)/Number(res[i].material_total) *100).toFixed(2))
-            crew1realArray.push(((Number(res[i].material_aggregate_3)/Number(res[i].material_total)) *100).toFixed(2))
-            crew1realArray.push(((Number(res[i].material_aggregate_4)/Number(res[i].material_total)) *100).toFixed(2))
-            crew1realArray.push(((Number(res[i].material_aggregate_5)/Number(res[i].material_total)) *100).toFixed(2))
-            crew1realArray.push(((Number(res[i].material_aggregate_6)/Number(res[i].material_total)) *100).toFixed(2))
+            crew1realArray.push((crew1_material_aggregate_1/crew1_total * 100).toFixed(2))
+            crew1realArray.push((crew1_material_aggregate_2/crew1_total * 100).toFixed(2))
+            crew1realArray.push((crew1_material_aggregate_3/crew1_total * 100).toFixed(2))
+            crew1realArray.push((crew1_material_aggregate_4/crew1_total * 100).toFixed(2))
+            crew1realArray.push((crew1_material_aggregate_5/crew1_total * 100).toFixed(2))
+            crew1realArray.push((crew1_material_aggregate_6/crew1_total * 100).toFixed(2))
+
             var material_stone = Number(res[i].material_stone_1) > Number(res[i].material_stone_2) ? Number(res[i].material_stone_1):Number(res[i].material_stone_2);
             crew1realArray.push(((material_stone/Number(res[i].material_total)) *100).toFixed(2))
             crew1realArray.push(((Number(res[i].material_asphalt)/Number(res[i].material_total)) *100).toFixed(2))
             crew1realArray.push(((Number(res[i].material_regenerate)/Number(res[i].material_total)) *100).toFixed(2))
             crew1realArray.push(((Number(res[i].material_additive)/Number(res[i].material_total)) *100).toFixed(2))
-            crew1realArray.push(res[i].temperature_asphalt)
-            crew1realArray.push(res[i].temperature_aggregate)
-            crew1realArray.push(res[i].temperature_mixture)
+            crew1realArray.push(res[i].tem_asphalt)
+            crew1realArray.push(res[i].tem_aggregate)
+            crew1realArray.push(res[i].tem_mixture)
+
+
+
+            crew1downArray.push(Number(res[i].repertory_one) - 2);
+            crew1downArray.push(Number(res[i].repertory_two) - 2);
+            crew1downArray.push(Number(res[i].repertory_three) - 5);
+            crew1downArray.push(Number(res[i].repertory_four) - 5);
+            crew1downArray.push(Number(res[i].repertory_five) - 5);
+            crew1downArray.push(Number(res[i].repertory_six) - 5);
+            crew1downArray.push(Number(res[i].breeze) - 1);
+            crew1downArray.push(Number(res[i].ratio_stone) - 2);
+            crew1downArray.push(Number(res[i].ratio_regenerate1) + Number(res[i].ratio_regenerate2) - 2);
+            crew1downArray.push(Number(res[i].ratio_additive) - 2);
+            crew1downArray.push(Number(res[i].temperature_asphalt));
+            crew1downArray.push(Number(res[i].temperature_aggregate));
+            crew1downArray.push(Number(res[i].temperature_mixture));
 
         }else {
-            crew2upArray.push(Number(res[i].repertory_one) + 15);
-            crew2upArray.push(Number(res[i].repertory_two) + 15);
-            crew2upArray.push(Number(res[i].repertory_three) + 15);
-            crew2upArray.push(Number(res[i].repertory_four) + 15);
-            crew2upArray.push(Number(res[i].repertory_five) + 15);
-            crew2upArray.push(Number(res[i].repertory_six) + 15);
-            crew2upArray.push(Number(res[i].breeze) + 15);
-            crew2upArray.push(Number(res[i].ratio_stone) + 15);
-            crew2upArray.push(Number(res[i].ratio_regenerate1) + Number(res[i].ratio_regenerate2)+ 15);
-            crew2upArray.push(Number(res[i].ratio_additive) + 15);
-            crew2upArray.push(Number(res[i].temperature_asphalt) + 15);
-            crew2upArray.push(Number(res[i].temperature_aggregate) + 15);
-            crew2upArray.push(Number(res[i].temperature_mixture) + 15);
+            crew2upArray.push(Number(res[i].repertory_one) + 2);
+            crew2upArray.push(Number(res[i].repertory_two) + 2);
+            crew2upArray.push(Number(res[i].repertory_three) + 5);
+            crew2upArray.push(Number(res[i].repertory_four) + 5);
+            crew2upArray.push(Number(res[i].repertory_five) + 5);
+            crew2upArray.push(Number(res[i].repertory_six) + 5);
+            crew2upArray.push(Number(res[i].breeze) + 1);
+            crew2upArray.push(Number(res[i].ratio_stone) + 2);
+            crew2upArray.push(Number(res[i].ratio_regenerate1) + Number(res[i].ratio_regenerate2)+ 2);
+            crew2upArray.push(Number(res[i].ratio_additive) + 2);
+            crew2upArray.push(Number(res[i].temperature_asphalt_up));
+            crew2upArray.push(Number(res[i].temperature_aggregate_up));
+            crew2upArray.push(Number(res[i].temperature_mixture_up));
 
 
-            crew2realArray.push((Number(res[i].material_aggregate_1)/Number(res[i].material_total) *100).toFixed(2))
-            crew2realArray.push((Number(res[i].material_aggregate_2)/Number(res[i].material_total) *100).toFixed(2))
-            crew2realArray.push(((Number(res[i].material_aggregate_3)/Number(res[i].material_total)) *100).toFixed(2))
-            crew2realArray.push(((Number(res[i].material_aggregate_4)/Number(res[i].material_total)) *100).toFixed(2))
-            crew2realArray.push(((Number(res[i].material_aggregate_5)/Number(res[i].material_total)) *100).toFixed(2))
-            crew2realArray.push(((Number(res[i].material_aggregate_6)/Number(res[i].material_total)) *100).toFixed(2))
+            var crew2_total = Number(res[i].material_total)
+            var crew2_material_aggregate_1 = Number(res[i].material_aggregate_1) - Number(res[i].material_aggregate_2);
+            var crew2_material_aggregate_2 = Number(res[i].material_aggregate_2) - Number(res[i].material_aggregate_3);
+            var crew2_material_aggregate_3 = Number(res[i].material_aggregate_3) - Number(res[i].material_aggregate_4);
+            var crew2_material_aggregate_4 = Number(res[i].material_aggregate_4) - Number(res[i].material_aggregate_5);
+            var crew2_material_aggregate_5 = Number(res[i].material_aggregate_5) - Number(res[i].material_aggregate_6);
+            var crew2_material_aggregate_6 = Number(res[i].material_aggregate_6)
+
+            crew2realArray.push((crew2_material_aggregate_1/crew2_total * 100).toFixed(2))
+            crew2realArray.push((crew2_material_aggregate_2/crew2_total * 100).toFixed(2))
+            crew2realArray.push((crew2_material_aggregate_3/crew2_total * 100).toFixed(2))
+            crew2realArray.push((crew2_material_aggregate_4/crew2_total * 100).toFixed(2))
+            crew2realArray.push((crew2_material_aggregate_5/crew2_total * 100).toFixed(2))
+            crew2realArray.push((crew2_material_aggregate_6/crew2_total * 100).toFixed(2))
+
             var material_stone = Number(res[i].material_stone_1) > Number(res[i].material_stone_2) ? Number(res[i].material_stone_1):Number(res[i].material_stone_2);
             crew2realArray.push(((material_stone/Number(res[i].material_total)) *100).toFixed(2))
             crew2realArray.push(((Number(res[i].material_asphalt)/Number(res[i].material_total)) *100).toFixed(2))
             crew2realArray.push(((Number(res[i].material_regenerate)/Number(res[i].material_total)) *100).toFixed(2))
             crew2realArray.push(((Number(res[i].material_additive)/Number(res[i].material_total)) *100).toFixed(2))
-            crew2realArray.push(res[i].temperature_asphalt)
-            crew2realArray.push(res[i].temperature_aggregate)
-            crew2realArray.push(res[i].temperature_mixture)
+            crew2realArray.push(res[i].tem_asphalt)
+            crew2realArray.push(res[i].tem_aggregate)
+            crew2realArray.push(res[i].tem_mixture)
+
+
+            crew2downArray.push(Number(res[i].repertory_one) - 2);
+            crew2downArray.push(Number(res[i].repertory_two) - 2);
+            crew2downArray.push(Number(res[i].repertory_three) - 5);
+            crew2downArray.push(Number(res[i].repertory_four) - 5);
+            crew2downArray.push(Number(res[i].repertory_five) - 5);
+            crew2downArray.push(Number(res[i].repertory_six) - 5);
+            crew2downArray.push(Number(res[i].breeze) - 1);
+            crew2downArray.push(Number(res[i].ratio_stone) - 2);
+            crew2downArray.push(Number(res[i].ratio_regenerate1) + Number(res[i].ratio_regenerate2) - 2);
+            crew2downArray.push(Number(res[i].ratio_additive) - 2);
+            crew2downArray.push(Number(res[i].temperature_asphalt));
+            crew2downArray.push(Number(res[i].temperature_aggregate));
+            crew2downArray.push(Number(res[i].temperature_mixture));
+
+
         }
     }
 
-    for (var i = 0; i < crew2upArray.length; i++){
-        crew2downArray[i] = crew2upArray[i] -30;
-    }
 
-    for (var i = 0; i < crew1upArray.length; i++){
-        crew1downArray[i] = crew1upArray[i] -30;
-    }
 
     option7.series[0].data = crew1upArray;
     option7.series[1].data = crew1realArray;

@@ -44,7 +44,11 @@
                temperature_asphalt as temperatureAsphalt,
                temperature_aggregate as temperatureAggregate,
                temperature_mixture as temperatureMixture,
-               temperature_milling as temperatureMilling
+               temperature_milling as temperatureMilling,
+               temperature_asphalt_up as temperatureAsphaltUp,
+               temperature_aggregate_up as temperatureAggregateUp,
+               temperature_mixture_up as temperatureMixtureUp,
+               temperature_milling_up as temperatureMillingUp
         from quality_proportioning_message
         where ${columeName} = ${crewMoudelId}
 

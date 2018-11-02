@@ -45,6 +45,7 @@ public class ReceiveDataImpl implements ReceiveDataInf {
      * @date: 2018/10/8 10:47
      */
 
+    @Override
     public void receiveDataToDB(String messageData) {
 
         Map<String,String> map = new HashMap<String, String>();
@@ -98,7 +99,7 @@ public class ReceiveDataImpl implements ReceiveDataInf {
         int aggregate = Integer.parseInt(messageArray[22]);
         //沥青温度
         int temperatureAsphalt = Integer.parseInt(messageArray[21]);
-        //截取材料实际数值
+        //截取材料实际数值到数组
         String[] temArray;
         temArray = Arrays.copyOfRange(messageArray,6,18);
 
@@ -106,9 +107,9 @@ public class ReceiveDataImpl implements ReceiveDataInf {
         List<QualityWarningData>  warningDataList = QualityWarningUtil.materialWarningObj(id,temArray,ratioTemplate);
 
         //获取温度差值判断后插入
-        warningDataList.add(QualityWarningUtil.temperatureWarningLevel(ratioTemplate.getTemperatureAsphalt(), temperatureAsphalt, id, "沥青温度"));
-        warningDataList.add(QualityWarningUtil.temperatureWarningLevel(ratioTemplate.getTemperatureMixture(), mixture, id, "混合料温度"));
-        warningDataList.add(QualityWarningUtil.temperatureWarningLevel(ratioTemplate.getTemperatureAggregate(), aggregate, id, "骨料温度"));
+        warningDataList.add(QualityWarningUtil.temperatureWarningLevel(ratioTemplate.getTemperatureAsphalt(), ratioTemplate.getTemperatureAsphaltUp(), temperatureAsphalt, id, "沥青温度"));
+        warningDataList.add(QualityWarningUtil.temperatureWarningLevel(ratioTemplate.getTemperatureMixture(), ratioTemplate.getTemperatureMixtureUp(), mixture, id, "混合料温度"));
+        warningDataList.add(QualityWarningUtil.temperatureWarningLevel(ratioTemplate.getTemperatureAggregate(), ratioTemplate.getTemperatureAggregateUp(), aggregate, id, "骨料温度"));
 
         //插入数据库
         qualityWarningDao.insertQualityWarningData(warningDataList);

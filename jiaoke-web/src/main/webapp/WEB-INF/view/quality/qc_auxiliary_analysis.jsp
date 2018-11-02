@@ -137,9 +137,12 @@
                                 <c:when test="${item.warning_level == '2'}">
                                     二级预警
                                 </c:when>
-                                <c:otherwise>
-                                    三级预警
-                                </c:otherwise>
+                                    <c:when test="${item.warning_level == '0'}">
+                                        无预警
+                                    </c:when>
+                                    <c:when test="${item.warning_level == '3'}">
+                                        三级预警
+                                    </c:when>
                             </c:choose>
                             </td>
 

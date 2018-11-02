@@ -45,7 +45,7 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
     public PageBean<QualityDataManagerDay> selectHistoryDataToDay(int currentPageNum, String url) {
 
 
-        if ( 0 == currentPageNum ) return null;
+        if ( 0 == currentPageNum ) {return null;}
 
         int count = qualityDataManagerDao.selectHistoryDataToDayCount();
 
@@ -74,7 +74,7 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
     @Override
     public Map<String, Object> selectProducttionByDate(String producedDate, String crewNum) {
 
-        if (Strings.isBlank(producedDate) || Strings.isBlank(crewNum) ) return null;
+        if (Strings.isBlank(producedDate) || Strings.isBlank(crewNum) ) {return null;}
 
         String crew=  "crew1".equals(crewNum) ? "data1":"data2";
         String date = "'" + producedDate + "'";
@@ -124,9 +124,44 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
                     String  temSVG =  QualityDataMontoringUtil.calculateSVG(count,value);
                     SVGList.get(i).put(key,temSVG);
                 }else {
+
                     //获取平均值后计算百分比
                     String  materialsSVG =  QualityDataMontoringUtil.calculateSVG(count,total,value);
                     SVGList.get(i).put(key,materialsSVG);
+
+                    switch (key){
+                        case "aggregate_1":
+                            Object obj1 = list.get(i).get("aggregate_2");
+                            double  temp1 = Double.parseDouble(value) - Double.parseDouble(obj1.toString());
+                            materialsSVG =  QualityDataMontoringUtil.calculateSVG(count,total,String.valueOf(temp1));
+                            SVGList.get(i).put(key,materialsSVG);
+                            break;
+                        case "aggregate_2":
+                            Object obj2 = list.get(i).get("aggregate_3");
+                            double  temp2 = Double.parseDouble(value) - Double.parseDouble(obj2.toString());
+                            materialsSVG =  QualityDataMontoringUtil.calculateSVG(count,total,String.valueOf(temp2));
+                            SVGList.get(i).put(key,materialsSVG);
+                            break;
+                        case "aggregate_3":
+                            Object obj3 = list.get(i).get("aggregate_4");
+                            double  temp3 = Double.parseDouble(value) - Double.parseDouble(obj3.toString());
+                            materialsSVG =  QualityDataMontoringUtil.calculateSVG(count,total,String.valueOf(temp3));
+                            SVGList.get(i).put(key,materialsSVG);
+                            break;
+                        case "aggregate_4":
+                            Object obj4 = list.get(i).get("aggregate_5");
+                            double  temp4 = Double.parseDouble(value) - Double.parseDouble(obj4.toString());
+                            materialsSVG =  QualityDataMontoringUtil.calculateSVG(count,total,String.valueOf(temp4));
+                            SVGList.get(i).put(key,materialsSVG);
+                            break;
+                        case "aggregate_5":
+                            Object obj5 = list.get(i).get("aggregate_6");
+                            double  temp5 = Double.parseDouble(value) - Double.parseDouble(obj5.toString());
+                            materialsSVG =  QualityDataMontoringUtil.calculateSVG(count,total,String.valueOf(temp5));
+                            SVGList.get(i).put(key,materialsSVG);
+                            break;
+                    }
+
                 }
 
             }

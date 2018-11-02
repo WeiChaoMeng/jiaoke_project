@@ -35,7 +35,7 @@ public class QualityMatchingImpl implements QualityMatchingInf{
     @Resource
     QualityMatchingDao qualityMatchingDao;
 
-
+    @Override
     public PageBean<QualityRatioModel> selectMatchingMoudelByLimte(int currentPageNum,String url) {
 
         if ( 0 == currentPageNum ) return null;
@@ -53,12 +53,12 @@ public class QualityMatchingImpl implements QualityMatchingInf{
 
         return pageBean;
     }
-
+    @Override
     public List<Map<String, String>> selectAdditiveTypeList() {
         List<Map<String, String>> list = qualityMatchingDao.selectAdditiveTypeList();
         return list;
     }
-
+    @Override
     public List<Map<String, String>> selectRegenerateTypeList() {
         List<Map<String, String>> list = qualityMatchingDao.selectRegenerateTypeList();
         return list;
@@ -66,6 +66,7 @@ public class QualityMatchingImpl implements QualityMatchingInf{
 
 
 
+    @Override
     public boolean insetRatioTemplate(QualityRatioTemplate qualityRatioTemplate) {
 
 
@@ -131,6 +132,7 @@ public class QualityMatchingImpl implements QualityMatchingInf{
      * @auther Melone
      * @date 2018/10/26 13:24
      */
+    @Override
     public String selectRationById(String idStr) {
 
         if(idStr == null || idStr == "") return null;

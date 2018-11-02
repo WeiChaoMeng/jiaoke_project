@@ -1,80 +1,867 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: lihui
-  Date: 2018/9/26
-  Time: 14:21
-  To change this template use File | Settings | File Templates.
---%>
+<!doctype html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
+
 <head>
+
     <meta charset="utf-8">
     <title>数据管理</title>
     <link href="/static/css/default.css" rel="stylesheet" type="text/css">
     <link href="/static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
+
+    <link rel="stylesheet" type="text/css" href="/static/css/statement/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/statement/demo.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/statement/component.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/statement.css" />
+    <script src="/static/js/echarts/echarts.js"></script>
 </head>
 
 <body style="padding:15px 8px 0px 8px;">
+    <svg class="hidden">
+        <symbol id="icon-arrow" viewBox="0 0 24 24">
+            <title>arrow</title>
+            <polygon points="6.3,12.8 20.9,12.8 20.9,11.2 6.3,11.2 10.2,7.2 9,6 3.1,12 9,18 10.2,16.8 " />
+        </symbol>
+        <symbol id="icon-drop" viewBox="0 0 24 24">
+            <title>drop</title>
+            <path d="M12,21c-3.6,0-6.6-3-6.6-6.6C5.4,11,10.8,4,11.4,3.2C11.6,3.1,11.8,3,12,3s0.4,0.1,0.6,0.3c0.6,0.8,6.1,7.8,6.1,11.2C18.6,18.1,15.6,21,12,21zM12,4.8c-1.8,2.4-5.2,7.4-5.2,9.6c0,2.9,2.3,5.2,5.2,5.2s5.2-2.3,5.2-5.2C17.2,12.2,13.8,7.3,12,4.8z" />
+            <path d="M12,18.2c-0.4,0-0.7-0.3-0.7-0.7s0.3-0.7,0.7-0.7c1.3,0,2.4-1.1,2.4-2.4c0-0.4,0.3-0.7,0.7-0.7c0.4,0,0.7,0.3,0.7,0.7C15.8,16.5,14.1,18.2,12,18.2z" />
+        </symbol>
+        <symbol id="icon-caret" viewBox="0 0 24 24">
+            <title>caret</title>
+            <polygon points="15.7,16.6 11.1,12 15.7,7.4 14.3,6 8.3,12 14.3,18" />
+        </symbol>
+        <symbol id="icon-menu" viewBox="0 0 24 24">
+            <title>menu</title>
+            <path d="M23.8,6H0.1V3h23.7V6z M23.8,10.5H0.1v3h23.7V10.5z M14.2,18h-14v3h14V18z" />
+        </symbol>
+        <symbol id="icon-cross" viewBox="0 0 24 24">
+            <title>cross</title>
+            <path d="M14.1,12l7.3,7.3l-2.1,2.1L12,14.1l-7.3,7.3l-2.1-2.1L9.9,12L2.6,4.7l2.1-2.1L12,9.9l7.3-7.3l2.1,2.1L14.1,12z" />
+        </symbol>
+    </svg>
+    <main class="view">
+        <div class="content">
+            <div class="statement_div_echar">
+                <div class="boxtitle"><span>上月产品预警统计</span></div>
+                <div id="chart2" class="statement_charts1">
+                    <script type="text/javascript">
+                        var myChart1 = echarts.init(document.getElementById('chart2'), 'uimaker');
+                        option = {
+                            tooltip: {
+                                trigger: 'item',
+                                formatter: "{a} <br/>{b} : {c} ({d}%)"
+                            },
+                            legend: {
+                                orient: 'vertical',
+                                top: 'middle',
+                                bottom: 10,
+                                left: '',
+                                data: ['无预警', '一级预警', '二级预警', '三级预警']
+                            },
+                            series: [
+                                {
+                                    type: 'pie',
+                                    radius: '65%',
+                                    center: ['50%', '50%'],
+                                    selectedMode: 'single',
+                                    data: [
+                                        { value: 535, name: '三级预警' },
+                                        { value: 510, name: '二级预警' },
+                                        { value: 634, name: '一级预警' },
+                                        { value: 735, name: '无预警' }
+                                    ],
+                                    itemStyle: {
+                                        emphasis: {
+                                            shadowBlur: 10,
+                                            shadowOffsetX: 0,
+                                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                        }
+                                    }
+                                }
+                            ]
+                        };
+                        // 使用刚指定的配置项和数据显示图表。
+                        myChart1.setOption(option);
+                        window.addEventListener("resize", function () {
+                            myChart1.resize();
+                        });
+                    </script>
+                </div>
+            </div>
+            <div class="statement_div_echar">
+                <div class="boxtitle"><span>上月产品预警统计</span></div>
+                <div id="chart7" class="statement_charts1">
+                    <script type="text/javascript">
+                        var myChart7 = echarts.init(document.getElementById('chart7'), 'uimaker');
+                        option7 = {
+                            tooltip: {
+                                trigger: 'item',
+                                formatter: "{a} <br/>{b} : {c} ({d}%)"
+                            },
+                            legend: {
+                                orient: 'vertical',
+                                top: 'middle',
+                                bottom: 10,
+                                left: '',
+                                data: ['无预警', '一级预警', '二级预警', '三级预警']
+                            },
+                            series: [
+                                {
+                                    type: 'pie',
+                                    radius: '65%',
+                                    center: ['50%', '50%'],
+                                    selectedMode: 'single',
+                                    data: [
+                                        { value: 535, name: '三级预警' },
+                                        { value: 510, name: '二级预警' },
+                                        { value: 634, name: '一级预警' },
+                                        { value: 735, name: '无预警' }
+                                    ],
+                                    itemStyle: {
+                                        emphasis: {
+                                            shadowBlur: 10,
+                                            shadowOffsetX: 0,
+                                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                        }
+                                    }
+                                }
+                            ]
+                        };
+                        // 使用刚指定的配置项和数据显示图表。
+                        myChart7.setOption(option7);
+                        window.addEventListener("resize", function () {
+                            myChart7.resize();
+                        });
+                    </script>
+                </div>
+            </div>
+            </header>
+        </div>
+        <div class="div_from">
+            <div class="input_div">
+                <form>
+                    <div class="parcel_div">
+                        <span>开始日期 :</span>
+                        <input type="text" value="Message">
+                    </div>
 
+                    <div class="parcel_div">
+                        <span>截至日期 :</span>
+                        <input type="text" value="Message">
+                    </div>
+                    <div class="parcel_div">
+                        <span>生产总数(盘) :</span>
+                        <input type="text" value="Message">
+                    </div>
+                    <div class="parcel_div">
+                        <span>材料使用总量 :</span>
+                        <input type="text" value="Message">
+                    </div>
+                    <div class="parcel_div">
+                        <span>三级报警最多材料 :</span>
+                        <input type="text" value="Message">
+                    </div>
+                    <div class="parcel_div">
+                        <span>最大误差 :</span>
+                        <input type="text" value="Message">
+                    </div>
 
+                    <div class="parcel_div">
+                        <span>使用最多配比 :</span>
+                        <input type="text" value="Message">
+                    </div>
 
-<div class="inforight">
-    <div class="infoboxright">
-        <div class="boxtitle"><span>月报表</span><a href="qc_pl_month.jsp" target="_self" >更多<i class="iconfont">&#xeba8;</i></a></div>
+                    <div class="parcel_div">
+                        <span>生产数量(盘) :</span>
+                        <input type="text" value="Message">
+                    </div>
 
-        <ul class="textlist">
-            <li><span></span><a href="#">路驰一八年一月产品报表</a><i>11-10</i></li>
-            <li><span></span><a href="#">路驰一八年二月产品报表</a><i>11-09</i></li>
-            <li><span></span><a href="#">路驰一八年三月产品报表</a><i>11-08</i></li>
-            <li><span></span><a href="#">路驰一八年四月产品报表</a><i>11-07</i></li>
-            <li><span></span><a href="#">路驰一八年五月产品报表</a><i>11-06</i></li>
-            <li><span></span><a href="#">路驰一八年六月产品报表</a><i>11-05</i></li>
-            <li><span></span><a href="#">路驰一八年七月产品报表</a><i>11-04</i></li>
-            <li><span></span><a href="#">路驰一八年八月产品报表</a><i>11-03</i></li>
-            <li><span></span><a href="#">路驰一八年九月产品报表</a><i>11-02</i></li>
-        </ul>
+                </form>
+            </div>
+        </div>
 
+        <div class="div_from2">
+            <div class="input_div">
+                <form>
+                    <div class="parcel_div">
+                        <span>生产总数(盘) :</span>
+                        <input type="text" value="Message">
+                    </div>
+                    <div class="parcel_div">
+                        <span>材料使用总量 :</span>
+                        <input type="text" value="Message">
+                    </div>
+                    <div class="parcel_div">
+                        <span>三级报警最多材料 :</span>
+                        <input type="text" value="Message">
+                    </div>
+                    <div class="parcel_div">
+                        <span>最大误差 :</span>
+                        <input type="text" value="Message">
+                    </div>
+                    <div class="parcel_div">
+                        <span>使用最多配比 :</span>
+                        <input type="text" value="Message">
+                    </div>
+                    <div class="parcel_div">
+                        <span>生产数量(盘) :</span>
+                        <input type="text" value="Message">
+                    </div>
 
-    </div>
-</div>
+                </form>
+            </div>
+        </div>
+        <button class="btn btn--menu">
+            <svg class="icon icon--menu">
+                <use xlink:href="#icon-menu"></use>
+            </svg>
+            <svg class="icon icon--cross">
+                <use xlink:href="#icon-cross"></use>
+            </svg>
+        </button>
+        <nav class="tabsnav tabsnav--vertical tabsnav--ander">
+            <div class="tabsnav__item">
+                <div class="tabsnav__bar"></div>
+                <h3 class="tabsnav__title">年报表</h3>
 
-<div class="inforight">
-    <div class="infoboxright">
-        <div class="boxtitle"><span>季报表</span><a href="#">更多<i class="iconfont">&#xeba8;</i></a></div>
+            </div>
+            <div class="tabsnav__item">
+                <div class="tabsnav__bar"></div>
+                <h3 class="tabsnav__title">季报表</h3>
+            </div>
+            <div class="tabsnav__item">
+                <div class="tabsnav__bar"></div>
+                <h3 class="tabsnav__title">月报表</h3>
+            </div>
+        </nav>
+        <div class="tabscontent">
+            <div class="tabscontent__item">
+                <div class="statement_infoboxright">
+                    <div class="select">
 
-        <ul class="textlist">
-            <li><span></span><a href="#">路驰一七年第一季度报表</a><i>11-10</i></li>
-            <li><span></span><a href="#">路驰一七年第二季度报表</a><i>11-09</i></li>
-            <li><span></span><a href="#">路驰一七年第三季度报表</a><i>11-08</i></li>
-            <li><span></span><a href="#">路驰一七年第四季度报表</a><i>11-07</i></li>
-            <li><span></span><a href="#">路驰一八年第一季度报表</a><i>11-05</i></li>
-            <li><span></span><a href="#">路驰一八年第二季度报表</a><i>11-04</i></li>
-            <li><span></span><a href="#">路驰一八年第三季度报表</a><i>11-03</i></li>
-            <li><span></span><a href="#">路驰一八年第四季度报表</a><i>11-02</i></li>
-        </ul>
+                        <select name="">
+                            <option value="2018-9-1">2018-9-1</option>
+                            <option value="2018-10-1">2018-10-1</option>
+                        </select>
 
+                    </div>
+                    <ul class="textlist">
+                        <li><a href="#">路驰一八年一月产品报表</a></li>
+                        <li><a href="#">路驰一八年二月产品报表</a></li>
+                        <li><a href="#">路驰一八年三月产品报表</a></li>
+                        <li><a href="#">路驰一八年四月产品报表</a></li>
+                        <li><a href="#">路驰一八年五月产品报表</a></li>
+                        <li><a href="#">路驰一八年六月产品报表</a></li>
+                        <li><a href="#">路驰一八年七月产品报表</a></li>
+                        <li><a href="#">路驰一八年八月产品报表</a></li>
+                        <li><a href="#">路驰一八年九月产品报表</a></li>
+                    </ul>
+                </div>
 
-    </div>
-</div>
+                <div class="content">
+                    <div class="statement_div_echar">
+                        <div class="boxtitle"><span>上月一号机组产品预警统计</span></div>
+                        <div id="chart14" class="statement_charts1">
+                            <script type="text/javascript">
+                                var myChart14 = echarts.init(document.getElementById('chart14'), 'uimaker');
+                                option14 = {
+                                    tooltip: {
+                                        trigger: 'item',
+                                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                                    },
+                                    legend: {
+                                        orient: 'vertical',
+                                        top: 'middle',
+                                        bottom: 10,
+                                        left: '',
+                                        data: ['无预警', '一级预警', '二级预警', '三级预警']
+                                    },
+                                    series: [
+                                        {
+                                            type: 'pie',
+                                            radius: '65%',
+                                            center: ['50%', '50%'],
+                                            selectedMode: 'single',
+                                            data: [
+                                                { value: 535, name: '三级预警' },
+                                                { value: 510, name: '二级预警' },
+                                                { value: 634, name: '一级预警' },
+                                                { value: 735, name: '无预警' }
+                                            ],
+                                            itemStyle: {
+                                                emphasis: {
+                                                    shadowBlur: 10,
+                                                    shadowOffsetX: 0,
+                                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                                }
+                                            }
+                                        }
+                                    ]
+                                };
+                                // 使用刚指定的配置项和数据显示图表。
+                                myChart14.setOption(option14);
+                                window.addEventListener("resize", function () {
+                                    myChart14.resize();
+                                });
+                            </script>
+                        </div>
+                    </div>
+                    <div class="statement_div_echar">
+                        <div class="boxtitle"><span>上月二号机组产品预警统计</span></div>
+                        <div id="chart15" class="statement_charts1">
+                            <script type="text/javascript">
+                                var myChart15 = echarts.init(document.getElementById('chart15'), 'uimaker');
+                                option15 = {
+                                    tooltip: {
+                                        trigger: 'item',
+                                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                                    },
+                                    legend: {
+                                        orient: 'vertical',
+                                        top: 'middle',
+                                        bottom: 10,
+                                        left: '',
+                                        data: ['无预警', '一级预警', '二级预警', '三级预警']
+                                    },
+                                    series: [
+                                        {
+                                            type: 'pie',
+                                            radius: '65%',
+                                            center: ['50%', '50%'],
+                                            selectedMode: 'single',
+                                            data: [
+                                                { value: 535, name: '三级预警' },
+                                                { value: 510, name: '二级预警' },
+                                                { value: 634, name: '一级预警' },
+                                                { value: 735, name: '无预警' }
+                                            ],
+                                            itemStyle: {
+                                                emphasis: {
+                                                    shadowBlur: 10,
+                                                    shadowOffsetX: 0,
+                                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                                }
+                                            }
+                                        }
+                                    ]
+                                };
+                                // 使用刚指定的配置项和数据显示图表。
+                                myChart15.setOption(option15);
+                                window.addEventListener("resize", function () {
+                                    myChart15.resize();
+                                });
+                            </script>
+                        </div>
+                    </div>
+                    </header>
+                </div>
+                <div class="div_from_month">
+                    <div class="input_div">
+                        <form>
+                            <div class="parcel_div">
+                                <span>开始日期 :</span>
+                                <input type="text" value="Message">
+                            </div>
 
-<div class="inforight">
-    <div class="infoboxright">
-        <div class="boxtitle"><span>年报表</span><a href="#">更多<i class="iconfont">&#xeba8;</i></a></div>
+                            <div class="parcel_div">
+                                <span>截至日期 :</span>
+                                <input type="text" value="Message">
+                            </div>
+                            <div class="parcel_div">
+                                <span>生产总数(盘) :</span>
+                                <input type="text" value="Message">
+                            </div>
+                            <div class="parcel_div">
+                                <span>材料使用总量 :</span>
+                                <input type="text" value="Message">
+                            </div>
+                            <div class="parcel_div">
+                                <span>三级报警最多材料 :</span>
+                                <input type="text" value="Message">
+                            </div>
+                            <div class="parcel_div">
+                                <span>最大误差 :</span>
+                                <input type="text" value="Message">
+                            </div>
 
-        <ul class="textlist">
-            <li><span></span><a href="#">路驰2014年终报表</a><i>11-10</i></li>
-            <li><span></span><a href="#">路驰2015年终报表</a><i>11-10</i></li>
-            <li><span></span><a href="#">路驰2016年终报表</a><i>11-10</i></li>
-            <li><span></span><a href="#">路驰2017年终报表</a><i>11-10</i></li>
-            <li><span></span><a href="#">路驰2018年终报表</a><i>11-10</i></li>
-        </ul>
+                            <div class="parcel_div">
+                                <span>使用最多配比 :</span>
+                                <input type="text" value="Message">
+                            </div>
 
+                            <div class="parcel_div">
+                                <span>生产数量(盘) :</span>
+                                <input type="text" value="Message">
+                            </div>
 
-    </div>
-</div>
+                        </form>
+                    </div>
+                </div>
 
+                <div class="div_from_month2">
+                    <div class="input_div">
+                        <form>
+                            <div class="parcel_div">
+                                <span>生产总数(盘) :</span>
+                                <input type="text" value="Message">
+                            </div>
+                            <div class="parcel_div">
+                                <span>材料使用总量 :</span>
+                                <input type="text" value="Message">
+                            </div>
+                            <div class="parcel_div">
+                                <span>三级报警最多材料 :</span>
+                                <input type="text" value="Message">
+                            </div>
+                            <div class="parcel_div">
+                                <span>最大误差 :</span>
+                                <input type="text" value="Message">
+                            </div>
+                            <div class="parcel_div">
+                                <span>使用最多配比 :</span>
+                                <input type="text" value="Message">
+                            </div>
+                            <div class="parcel_div">
+                                <span>生产数量(盘) :</span>
+                                <input type="text" value="Message">
+                            </div>
 
+                        </form>
+                    </div>
+                </div>
+                <figure class="poster">
+                    <img class="poster__img" src="img/img1.jpg" alt="Poster 1" />
+                    <figcaption class="poster__caption">
+                        <h2 class="poster__title">wild<br />corn</h2>
+                        <p class="poster__deco">nothing lost</p>
+                        <div class="poster__box"></div>
+                        <span class="poster__number">01</span>
+                    </figcaption>
+                </figure>
+            </div>
+            <div class="tabscontent__item">
+                <div class="statement_infoboxright">
+                    <div class="select">
+
+                        <select name="">
+                            <option value="2018-9-1">2018-9-1</option>
+                            <option value="2018-10-1">2018-10-1</option>
+                        </select>
+
+                    </div>
+                    <ul class="textlist">
+                        <li><a href="#">路驰一八年一月产品报表</a></li>
+                        <li><a href="#">路驰一八年二月产品报表</a></li>
+                        <li><a href="#">路驰一八年三月产品报表</a></li>
+                        <li><a href="#">路驰一八年四月产品报表</a></li>
+                        <li><a href="#">路驰一八年五月产品报表</a></li>
+                        <li><a href="#">路驰一八年六月产品报表</a></li>
+                        <li><a href="#">路驰一八年七月产品报表</a></li>
+                        <li><a href="#">路驰一八年八月产品报表</a></li>
+                        <li><a href="#">路驰一八年九月产品报表</a></li>
+                    </ul>
+                </div>
+
+                <div class="content">
+                    <div class="statement_div_echar">
+                        <div class="boxtitle"><span>上月一号机组产品预警统计</span></div>
+                        <div id="chart5" class="statement_charts1">
+                            <script type="text/javascript">
+                                var myChart5 = echarts.init(document.getElementById('chart5'), 'uimaker');
+                                option5 = {
+                                    tooltip: {
+                                        trigger: 'item',
+                                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                                    },
+                                    legend: {
+                                        orient: 'vertical',
+                                        top: 'middle',
+                                        bottom: 10,
+                                        left: '',
+                                        data: ['无预警', '一级预警', '二级预警', '三级预警']
+                                    },
+                                    series: [
+                                        {
+                                            type: 'pie',
+                                            radius: '65%',
+                                            center: ['50%', '50%'],
+                                            selectedMode: 'single',
+                                            data: [
+                                                { value: 535, name: '三级预警' },
+                                                { value: 510, name: '二级预警' },
+                                                { value: 634, name: '一级预警' },
+                                                { value: 735, name: '无预警' }
+                                            ],
+                                            itemStyle: {
+                                                emphasis: {
+                                                    shadowBlur: 10,
+                                                    shadowOffsetX: 0,
+                                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                                }
+                                            }
+                                        }
+                                    ]
+                                };
+                                // 使用刚指定的配置项和数据显示图表。
+                                myChart5.setOption(option5);
+                                window.addEventListener("resize", function () {
+                                    myChart5.resize();
+                                });
+                            </script>
+                        </div>
+                    </div>
+                    <div class="statement_div_echar">
+                        <div class="boxtitle"><span>上月二号机组产品预警统计</span></div>
+                        <div id="charts" class="statement_charts1">
+                            <script type="text/javascript">
+                                var myCharts = echarts.init(document.getElementById('charts'), 'uimaker');
+                                options = {
+                                    tooltip: {
+                                        trigger: 'item',
+                                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                                    },
+                                    legend: {
+                                        orient: 'vertical',
+                                        top: 'middle',
+                                        bottom: 10,
+                                        left: '',
+                                        data: ['无预警', '一级预警', '二级预警', '三级预警']
+                                    },
+                                    series: [
+                                        {
+                                            type: 'pie',
+                                            radius: '65%',
+                                            center: ['50%', '50%'],
+                                            selectedMode: 'single',
+                                            data: [
+                                                { value: 535, name: '三级预警' },
+                                                { value: 510, name: '二级预警' },
+                                                { value: 634, name: '一级预警' },
+                                                { value: 735, name: '无预警' }
+                                            ],
+                                            itemStyle: {
+                                                emphasis: {
+                                                    shadowBlur: 10,
+                                                    shadowOffsetX: 0,
+                                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                                }
+                                            }
+                                        }
+                                    ]
+                                };
+                                // 使用刚指定的配置项和数据显示图表。
+                                myCharts.setOption(options);
+                                window.addEventListener("resize", function () {
+                                    myCharts.resize();
+                                });
+                            </script>
+                        </div>
+                    </div>
+                    </header>
+                </div>
+                <div class="div_from_month">
+                    <div class="input_div">
+                        <form>
+                            <div class="parcel_div">
+                                <span>开始日期 :</span>
+                                <input type="text" value="Message">
+                            </div>
+
+                            <div class="parcel_div">
+                                <span>截至日期 :</span>
+                                <input type="text" value="Message">
+                            </div>
+                            <div class="parcel_div">
+                                <span>生产总数(盘) :</span>
+                                <input type="text" value="Message">
+                            </div>
+                            <div class="parcel_div">
+                                <span>材料使用总量 :</span>
+                                <input type="text" value="Message">
+                            </div>
+                            <div class="parcel_div">
+                                <span>三级报警最多材料 :</span>
+                                <input type="text" value="Message">
+                            </div>
+                            <div class="parcel_div">
+                                <span>最大误差 :</span>
+                                <input type="text" value="Message">
+                            </div>
+
+                            <div class="parcel_div">
+                                <span>使用最多配比 :</span>
+                                <input type="text" value="Message">
+                            </div>
+
+                            <div class="parcel_div">
+                                <span>生产数量(盘) :</span>
+                                <input type="text" value="Message">
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+                <div class="div_from_month2">
+                    <div class="input_div">
+                        <form>
+                            <div class="parcel_div">
+                                <span>生产总数(盘) :</span>
+                                <input type="text" value="Message">
+                            </div>
+                            <div class="parcel_div">
+                                <span>材料使用总量 :</span>
+                                <input type="text" value="Message">
+                            </div>
+                            <div class="parcel_div">
+                                <span>三级报警最多材料 :</span>
+                                <input type="text" value="Message">
+                            </div>
+                            <div class="parcel_div">
+                                <span>最大误差 :</span>
+                                <input type="text" value="Message">
+                            </div>
+                            <div class="parcel_div">
+                                <span>使用最多配比 :</span>
+                                <input type="text" value="Message">
+                            </div>
+                            <div class="parcel_div">
+                                <span>生产数量(盘) :</span>
+                                <input type="text" value="Message">
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+                <figure class="poster">
+                    <img class="poster__img" src="img/img1.jpg" alt="Poster 1" />
+                    <figcaption class="poster__caption">
+                        <h2 class="poster__title">blue<br />gun</h2>
+                        <p class="poster__deco">fingerpaint</p>
+                        <div class="poster__box"></div>
+                        <span class="poster__number">02</span>
+                    </figcaption>
+                </figure>
+            </div>
+            <div class="tabscontent__item">
+                <div class="statement_infoboxright">
+                    <div class="select">
+
+                        <select name="">
+                            <option value="2018-9-1">2018-9-1</option>
+                            <option value="2018-10-1">2018-10-1</option>
+                        </select>
+
+                    </div>
+                    <ul class="textlist">
+                        <li><a href="#">路驰一八年一月产品报表</a></li>
+                        <li><a href="#">路驰一八年二月产品报表</a></li>
+                        <li><a href="#">路驰一八年三月产品报表</a></li>
+                        <li><a href="#">路驰一八年四月产品报表</a></li>
+                        <li><a href="#">路驰一八年五月产品报表</a></li>
+                        <li><a href="#">路驰一八年六月产品报表</a></li>
+                        <li><a href="#">路驰一八年七月产品报表</a></li>
+                        <li><a href="#">路驰一八年八月产品报表</a></li>
+                        <li><a href="#">路驰一八年九月产品报表</a></li>
+                    </ul>
+                </div>
+
+                <div class="content">
+                    <div class="statement_div_echar">
+                        <div class="boxtitle"><span>上月一号机组产品预警统计</span></div>
+                        <div id="chart11" class="statement_charts1">
+                            <script type="text/javascript">
+                                var myChart11 = echarts.init(document.getElementById('chart11'), 'uimaker');
+                                option11 = {
+                                    tooltip: {
+                                        trigger: 'item',
+                                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                                    },
+                                    legend: {
+                                        orient: 'vertical',
+                                        top: 'middle',
+                                        bottom: 10,
+                                        left: '',
+                                        data: ['无预警', '一级预警', '二级预警', '三级预警']
+                                    },
+                                    series: [
+                                        {
+                                            type: 'pie',
+                                            radius: '65%',
+                                            center: ['50%', '50%'],
+                                            selectedMode: 'single',
+                                            data: [
+                                                { value: 535, name: '三级预警' },
+                                                { value: 510, name: '二级预警' },
+                                                { value: 634, name: '一级预警' },
+                                                { value: 735, name: '无预警' }
+                                            ],
+                                            itemStyle: {
+                                                emphasis: {
+                                                    shadowBlur: 10,
+                                                    shadowOffsetX: 0,
+                                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                                }
+                                            }
+                                        }
+                                    ]
+                                };
+                                // 使用刚指定的配置项和数据显示图表。
+                                myChart11.setOption(option11);
+                                window.addEventListener("resize", function () {
+                                    myChart11.resize();
+                                });
+                            </script>
+                        </div>
+                    </div>
+                    <div class="statement_div_echar">
+                        <div class="boxtitle"><span>上月二号机组产品预警统计</span></div>
+                        <div id="chart12" class="statement_charts1">
+                            <script type="text/javascript">
+                                var myChart12 = echarts.init(document.getElementById('chart12'), 'uimaker');
+                                option12 = {
+                                    tooltip: {
+                                        trigger: 'item',
+                                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                                    },
+                                    legend: {
+                                        orient: 'vertical',
+                                        top: 'middle',
+                                        bottom: 10,
+                                        left: '',
+                                        data: ['无预警', '一级预警', '二级预警', '三级预警']
+                                    },
+                                    series: [
+                                        {
+                                            type: 'pie',
+                                            radius: '65%',
+                                            center: ['50%', '50%'],
+                                            selectedMode: 'single',
+                                            data: [
+                                                { value: 535, name: '三级预警' },
+                                                { value: 510, name: '二级预警' },
+                                                { value: 634, name: '一级预警' },
+                                                { value: 735, name: '无预警' }
+                                            ],
+                                            itemStyle: {
+                                                emphasis: {
+                                                    shadowBlur: 10,
+                                                    shadowOffsetX: 0,
+                                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                                }
+                                            }
+                                        }
+                                    ]
+                                };
+                                // 使用刚指定的配置项和数据显示图表。
+                                myChart12.setOption(option12);
+                                window.addEventListener("resize", function () {
+                                    myChart12.resize();
+                                });
+                            </script>
+                        </div>
+                    </div>
+                    </header>
+                </div>
+                <div class="div_from_month">
+                    <div class="input_div">
+                        <form>
+                            <div class="parcel_div">
+                                <span>开始日期 :</span>
+                                <input type="text" value="Message">
+                            </div>
+
+                            <div class="parcel_div">
+                                <span>截至日期 :</span>
+                                <input type="text" value="Message">
+                            </div>
+                            <div class="parcel_div">
+                                <span>生产总数(盘) :</span>
+                                <input type="text" value="Message">
+                            </div>
+                            <div class="parcel_div">
+                                <span>材料使用总量 :</span>
+                                <input type="text" value="Message">
+                            </div>
+                            <div class="parcel_div">
+                                <span>三级报警最多材料 :</span>
+                                <input type="text" value="Message">
+                            </div>
+                            <div class="parcel_div">
+                                <span>最大误差 :</span>
+                                <input type="text" value="Message">
+                            </div>
+
+                            <div class="parcel_div">
+                                <span>使用最多配比 :</span>
+                                <input type="text" value="Message">
+                            </div>
+
+                            <div class="parcel_div">
+                                <span>生产数量(盘) :</span>
+                                <input type="text" value="Message">
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+                <div class="div_from_month2">
+                    <div class="input_div">
+                        <form>
+                            <div class="parcel_div">
+                                <span>生产总数(盘) :</span>
+                                <input type="text" value="Message">
+                            </div>
+                            <div class="parcel_div">
+                                <span>材料使用总量 :</span>
+                                <input type="text" value="Message">
+                            </div>
+                            <div class="parcel_div">
+                                <span>三级报警最多材料 :</span>
+                                <input type="text" value="Message">
+                            </div>
+                            <div class="parcel_div">
+                                <span>最大误差 :</span>
+                                <input type="text" value="Message">
+                            </div>
+                            <div class="parcel_div">
+                                <span>使用最多配比 :</span>
+                                <input type="text" value="Message">
+                            </div>
+                            <div class="parcel_div">
+                                <span>生产数量(盘) :</span>
+                                <input type="text" value="Message">
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+                <figure class="poster">
+                    <img class="poster__img" src="img/img1.jpg" alt="Poster 1" />
+                    <figcaption class="poster__caption">
+                        <h2 class="poster__title">home<br />maze</h2>
+                        <p class="poster__deco">binary sun</p>
+                        <div class="poster__box"></div>
+                        <span class="poster__number">03</span>
+                    </figcaption>
+                </figure>
+            </div>
+            <button class="btn btn--back"><svg class="icon icon--caret">
+                <use xlink:href="#icon-caret"></use>
+            </svg></button>
+        </div>
+    </main>
+    <%--js获取路径--%>
+    <input id="path" type="hidden" value="${path}"/>
 </body>
 <script type="text/javascript" src="/static/js/jquery.js"></script>
 <script type="text/javascript" src="/static/js/oa/oa_common.js"></script>
+
+<script src="/static/js/qc/statement/anime.min.js"></script>
+<script src="/static/js/qc/statement/enquire.min.js"></script>
+<script src="/static/js/qc/statement/tabsnav.js"></script>
+<script src="/static/js/qc/statement/demo1.js"></script>
+<script src="/static/js/qc/quality_statement.js"></script>
 </html>

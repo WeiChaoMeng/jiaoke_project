@@ -43,9 +43,13 @@
                 regenerate,
                 additive,
                 temperature_asphalt,
+                temperature_asphalt_up,
                 temperature_aggregate,
+                temperature_aggregate_up,
                 temperature_mixture,
+                temperature_mixture_up,
                 temperature_milling,
+                temperature_milling_up,
                 crew1_modele_id,
                 crew2_modele_id
                 )
@@ -66,9 +70,13 @@
                        #{regenerate},
                        #{additive},
                        #{temperatureAsphalt},
+                       #{temperatureAsphaltUp},
                        #{temperatureAggregate},
+                       #{temperatureAggregateUp},
                        #{temperatureMixture},
+                       #{temperatureMixtureUp},
                        #{temperatureMilling},
+                       #{temperatureMillingUp},
                        #{crew1ModeleId},
                        #{crew2ModeleId})
     </insert>
