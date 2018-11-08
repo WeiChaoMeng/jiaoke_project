@@ -373,14 +373,14 @@ li {
 .div_left2 {
     float: left;
     width: 100%;
-    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .infolist1 {
     clear: both;
-    width: 65%;
+    width: 67%;
     float: left;
-    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .achievement li {
@@ -391,7 +391,7 @@ li {
 }
 
 li.mainPic {
-    width: 430px;
+    width: 555px;
     height: 251px;
 }
 

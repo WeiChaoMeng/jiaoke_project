@@ -12,10 +12,11 @@
     <title>发布公文</title>
     <link href="../../../../static/css/oa/oa_common.css" rel="stylesheet" type="text/css">
     <link href="../../../../static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
+    <link href="../../../../static/js/datepicker/css/bootstrap-datepicker.css" rel="stylesheet">
 </head>
 <style>
     .swidth {
-        width: 200px;
+        width: 265px;
         margin: 0;
     }
 
@@ -120,7 +121,7 @@
                 <th class="th_title" nowrap="nowrap">流程:</th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" value="" name="flow" placeholder="<点击新建流程>">
+                        <input type="text" value="" name="flow" placeholder="公文、[张三、李四、王五]、总经理" readonly="readonly">
                     </div>
                 </td>
                 <td class="condition_select_frame">
@@ -190,23 +191,47 @@
             <td class="tlabel">密级：</td>
             <td>
                 <select class="select swidth" name="rank" data-value="0" required>
-                    <option value="0">请选择</option>
-                    <option value="1">普通公文</option>
-                    <option value="2">秘密公文</option>
-                    <option value="3">机密公文</option>
-                    <option value="4">绝密公文</option>
+                    <option value="0">普通公文</option>
+                    <option value="1">秘密公文</option>
+                    <option value="2">机密公文</option>
+                    <option value="3">绝密公文</option>
                 </select>
             </td>
             <td class="tlabel">标识：</td>
             <td>
                 <select class="select swidth" name="identification" data-value="0" required>
-                    <option value="0">请选择</option>
+                    <option value="0">平行文</option>
                     <option value="1">上行文</option>
-                    <option value="2">下行文</option>
-                    <option value="3">平行文</option>
-                    <option value="4">内部行文</option>
-                    <option value="5">外部行文</option>
-                    <option value="6">其它</option>
+                    <option value="2">内部行文</option>
+                    <option value="3">外部行文</option>
+                    <option value="4">其它</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tlabel">公文类型：</td>
+            <td>
+                <select class="select swidth" name="docType" data-value="0">
+                    <option value="0">公文</option>
+                    <option value="1">会议纪要</option>
+                    <option value="2">请示</option>
+                    <option value="3">通知</option>
+                    <option value="4">通告</option>
+                    <option value="5">函</option>
+                </select>
+            </td>
+            <td class="tlabel">发文时间：</td>
+            <td colspan="tlabel">
+                <input type="text" class="forminput inputstyle" id="writingTime" name="writingTime" value=""
+                       readonly="readonly" required>
+            </td>
+            <td class="tlabel">保存期限：</td>
+            <td>
+                <select class="select swidth" name="storageLife" data-value="0" required>
+                    <option value="0">10年</option>
+                    <option value="1">30年</option>
+                    <option value="2">永久</option>
                 </select>
             </td>
         </tr>
@@ -215,44 +240,37 @@
             <td class="tlabel">拟稿部门：</td>
             <td>
                 <select class="select swidth" name="draftingDepartment" data-value="0" required>
-                    <option value="0">请选择</option>
-                    <option value="1">办公室</option>
-                    <option value="2">组织人事部</option>
-                    <option value="3">党群工作部</option>
-                    <option value="4">生产经营部</option>
-                    <option value="5">财务管理部</option>
-                    <option value="6">企业管理部</option>
-                    <option value="7">内控审计部</option>
-                    <option value="8">安全管理部</option>
-                    <option value="9">纪委监督部</option>
+                    <option value="0">办公室</option>
+                    <option value="1">组织人事部</option>
+                    <option value="2">党群工作部</option>
+                    <option value="3">生产经营部</option>
+                    <option value="4">财务管理部</option>
+                    <option value="5">企业管理部</option>
+                    <option value="6">内控审计部</option>
+                    <option value="7">安全管理部</option>
+                    <option value="8">纪委监督部</option>
                 </select>
             </td>
             <td class="tlabel">拟稿人：</td>
             <td><input type="text" class="forminput inputstyle" name="draftedPerson" value="" required></td>
             <td class="tlabel">核稿人：</td>
-            <td><input type="text" class="forminput inputstyle" name="nuclearDrafts" value="" required></td>
+            <td><input type="text" class="forminput inputstyle" name="nuclearDrafts" value="" disabled="disabled"
+                       style="background: #f4f4f4;"></td>
         </tr>
 
         <tr>
             <td class="tlabel">签发：</td>
-            <td><input type="text" class="forminput inputstyle" name="issue" value="" required></td>
-            <td class="tlabel">会签：</td>
-            <td colspan=""><input type="text" class="forminput inputstyle" name="countersign" value="" required></td>
-            <td class="tlabel">保存期限：</td>
-            <td>
-                <select class="select swidth" name="storageLife" data-value="0" required>
-                    <option value="0">请选择</option>
-                    <option value="1">10年</option>
-                    <option value="2">30年</option>
-                    <option value="3">永久</option>
-                </select>
+            <td colspan="2.5" style="height: 70px">
+                <textarea rows="10" name="issue" disabled="disabled"
+                          style="background: #f4f4f4;resize:none;width: 87%;margin: 10px 0; border: 1px #bdbdbd solid;padding:5px;font-size: 14px;height: 74px;outline: none"
+                          required></textarea>
             </td>
-        </tr>
 
-        <tr>
-            <td class="tlabel">主题词：</td>
-            <td colspan="5"><input type="text" class="forminput inputstyle inputadress" name="thematicWords" value=""
-                                   required>
+            <td class="tlabel">会签：</td>
+            <td colspan="2.5" rowspan="1">
+                <textarea rows="10" name="countersign" disabled="disabled"
+                          style="background: #f4f4f4;resize:none;width: 87%;margin: 10px 0; border: 1px #bdbdbd solid;padding:5px;font-size: 14px;height: 74px;outline: none"
+                          required></textarea>
             </td>
         </tr>
 
@@ -275,9 +293,10 @@
 
         <tr>
             <td class="tlabel">印制：</td>
-            <td><input type="text" class="forminput inputstyle" value="" name="print" id="print" required></td>
+            <td><input type="text" class="forminput inputstyle" value="综合办公室" name="print" id="print" readonly></td>
             <td class="tlabel">校对：</td>
-            <td><input type="text" class="forminput inputstyle" value="" name="proofreading" id="proofreading" required>
+            <td><input type="text" class="forminput inputstyle" value="${nickName}" name="proofreading"
+                       id="proofreading" readonly>
             </td>
             <td class="tlabel">份数：</td>
             <td><input readonly="readonly" value="" name="attachmentNumber"></td>
@@ -299,6 +318,9 @@
 <script type="text/javascript" src="../../../../static/js/common.js"></script>
 <script type="text/javascript" src="../../../../static/js/skin.js"></script>
 <script type="text/javascript" src="../../../../static/js/oa/oa_common.js"></script>
+<script type="text/javascript" src="../../../../static/js/datepicker/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript"
+        src="../../../../static/js/datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
 <script>
     //保存待发
     $("#preservationPending").on("click", function () {
@@ -310,8 +332,8 @@
             $.ajax({
                 cache: true,
                 type: "POST",
-                // url: '/document/preservationPending',
-                url: 'http://47.105.114.70/document/preservationPending',
+                url: '/document/preservationPending',
+                // url: 'http://47.105.114.70/document/preservationPending',
                 data: $("#oaDocumentProcessing").serialize(),
                 error: function (request) {
                     alert("Connection error");
@@ -335,6 +357,12 @@
         $("#radioall").attr("checked", flag);
         flag = !flag;
     }
+
+    //日期选择器
+    $("#writingTime").datepicker({
+        "language": "zh-CN",
+        "format": 'yyyy-mm-dd'
+    });
 </script>
 </html>
 

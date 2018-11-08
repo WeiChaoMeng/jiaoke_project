@@ -30,7 +30,7 @@
     <div class="login-title-content" style="height: 80px;width: 80%;margin: 0 auto">
         <div>
             <img src="../../static/images/login-logo.jpg" alt="" style="height: 60px;padding: 10px 0">
-            <span style="height: 50px;font-size: 17px;line-height:  80px;position: absolute;margin-left: 20px">路驰管理后台</span>
+            <span style="height: 50px;font-size: 17px;line-height:  80px;position: absolute;margin-left: 20px">路驰公司企业综合管理平台</span>
         </div>
     </div>
 </div>
@@ -89,7 +89,7 @@
                 $.ajax({
                     cache: true,
                     type: "POST",
-                    url: '${path}/login/login.do',
+                    url: 'http://localhost:8080/login/login.do',
                     // url: 'http://47.105.114.70/login/login.do',
                     data: {"username": username, "password": password},
                     error: function (request) {
@@ -97,7 +97,7 @@
                     },
                     success: function (result) {
                         if (result === "success") {
-                            window.location.href = '${path}/login/homePage.do';
+                            window.location.href = 'http://localhost:8080/login/homePage.do';
                             // window.location.href = 'http://47.105.114.70/login/homePage.do';
                         } else {
                             alert("您输入的账号密码不匹配");

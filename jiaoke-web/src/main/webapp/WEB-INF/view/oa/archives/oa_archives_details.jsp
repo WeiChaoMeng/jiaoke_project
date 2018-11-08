@@ -17,7 +17,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>图片上传</title>
+    <title>档案详情</title>
     <!-- 引用控制层插件样式 -->
     <link href="/static/css/oa/oa_common.css" rel="stylesheet" type="text/css">
 

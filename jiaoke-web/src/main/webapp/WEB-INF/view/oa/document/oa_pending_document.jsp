@@ -7,6 +7,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -36,15 +37,6 @@
             <tbody>
             <tr>
                 <td>
-                    <div class="head_left_button" onmousemove="select_color(this)" onmouseout="unselected_color(this)"
-                         onclick="createDocument()">
-                        &#xeb86; 新建
-                    </div>
-
-                    <div class="separation_line">
-
-                    </div>
-
                     <div class="head_left_button" onmousemove="select_color(this)" onmouseout="unselected_color(this)">
                         &#xe990; 归档
                     </div>
@@ -142,6 +134,7 @@
             <c:forEach var="oaDocument" items="${oaDocumentList}" varStatus="status">
                 <tr onclick="particulars(${oaDocument.id})">
                     <td class="tdnum">
+                        <input type="hidden" id="taskId" value="${oaDocument.taskId}">
                         <input type="checkbox" onclick="window.event.cancelBubble=true;">
                     </td>
                     <td>
@@ -185,16 +178,11 @@
 <script type="text/javascript" src="../../../../static/js/oa/oa_common.js"></script>
 
 <script>
-    //新建
-    function createDocument() {
-        // window.location.href = "/document/releaseDocument.do";
-        window.location.href = "http://47.105.114.70/document/releaseDocument.do";
-    }
-
     //查看详情
     function particulars(id) {
-        // window.location.href = "documentDetails?id=" + id;
-        window.location.href = "http://47.105.114.70/document/documentDetails?id=" + id;
+        var taskId = $("#taskId").val();
+        window.location.href = "documentDetails?id=" + id + "&taskId=" + taskId;
+        // window.location.href = "http://47.105.114.70/document/documentDetails?id=" + id;
     }
 </script>
 </html>

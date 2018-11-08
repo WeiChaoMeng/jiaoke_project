@@ -8,9 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * OA-公文
@@ -32,8 +30,7 @@ public class OaDocumentServiceImpl implements OaDocumentService {
      * @return NumberOfAffectedRows
      */
     public int add(OaDocument oaDocument) {
-        //创建主键
-        oaDocument.setId(random());
+
         //创建时间
         oaDocument.setCreateTime(new Date());
 
@@ -60,6 +57,18 @@ public class OaDocumentServiceImpl implements OaDocumentService {
             oaDocument.setCreateTimeStr(getStringDate(oaDocument.getCreateTime()));
         }
         return oaDocumentList;
+    }
+
+    /**
+     * 根据id获取列表
+     *
+     * @param id id
+     * @return list
+     */
+    public OaDocument getAllById(Integer id) {
+        OaDocument oaDocument = oaDocumentMapper.getAllById(id);
+        oaDocument.setCreateTimeStr(getStringDate(oaDocument.getCreateTime()));
+        return oaDocument;
     }
 
     /**
@@ -103,20 +112,31 @@ public class OaDocumentServiceImpl implements OaDocumentService {
     }
 
     /**
-     * 随机数
+     * 更新会签
      *
-     * @return 10位纯数字
+     * @param id id
+     * @return NumberOfAffectedRows
      */
-    public Integer random() {
-        int end = 4;
-        SimpleDateFormat sdf = new SimpleDateFormat("HHmmss");
-        String newDate = sdf.format(new Date());
-        String result = "";
-        Random random = new Random();
-        for (int i = 0; i < end; i++) {
-            result += random.nextInt(10);
+    @Override
+    public int updateCountersignature(int id) {
+        Integer bossId = 1006;
+        UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
+        if (bossId.equals(userInfo.getId())) {
+            return oaDocumentMapper.updateSignatureIssuance(userInfo.getNickName(), id);
+        } else {
+            return oaDocumentMapper.updateCountersignature(userInfo.getNickName(), id);
         }
-        return Integer.valueOf(newDate + result);
+    }
+
+    @Override
+    public List<OaDocument> getListById(List<String> list) {
+        List<OaDocument> oaDocumentList = new ArrayList<>();
+        for (String s : list) {
+            OaDocument oaDocument = oaDocumentMapper.getAllById(Integer.valueOf(s));
+            oaDocument.setCreateTimeStr(getStringDate(oaDocument.getCreateTime()));
+            oaDocumentList.add(oaDocument);
+        }
+        return oaDocumentList;
     }
 
     /**

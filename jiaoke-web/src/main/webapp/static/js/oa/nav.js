@@ -107,6 +107,13 @@ $(function () {
     });
 
     /*--- 公文管理 ---*/
+    //新建公文
+    $("#release_document").on("click", function () {
+        removeOwnName();
+        document(this);
+        $("#oa-iframe").attr("src", "document/releaseDocument.do")
+    });
+
     //待办公文
     $("#pending_document").on("click", function () {
         removeOwnName();
@@ -136,25 +143,53 @@ $(function () {
     });
 
     /*--- 档案管理 ---*/
-    //自有员工档案
-    $("#employee_files").on("click", function () {
-        removeOwnName();
-        archives(this);
-        $('#oa-iframe').attr("src", "archives/oa_employee_files.jsp");
-    });
-
-    //劳务派遣档案
-    $("#dispatch_file").on("click", function () {
-        removeOwnName();
-        archives(this);
-        $('#oa-iframe').attr("src", "archives/oa_dispatch_file.jsp");
-    });
-
     //合同档案
     $("#contract_archives").on("click", function () {
         removeOwnName();
         archives(this);
         $('#oa-iframe').attr("src", "contractArchives/OAContractArchives.do");
+    });
+
+    //综合办公室档案
+    $("#general_office").on("click", function () {
+        removeOwnName();
+        archives(this);
+        $('#oa-iframe').attr("src", "generalOffice/generalOffice.do");
+    });
+
+    //经营开发部档案
+    $("#business_development").on("click", function () {
+        removeOwnName();
+        archives(this);
+        $('#oa-iframe').attr("src", "businessDevelopment/businessDevelopment.do");
+    });
+
+    //质量技术部档案
+    $("#quality_technology").on("click", function () {
+        removeOwnName();
+        archives(this);
+        $('#oa-iframe').attr("src", "qualityTechnology/qualityTechnology.do");
+    });
+
+    //物资管理部档案
+    $("#material_administration").on("click", function () {
+        removeOwnName();
+        archives(this);
+        $('#oa-iframe').attr("src", "materialAdministration/materialAdministration.do");
+    });
+
+    //财务管理部档案
+    $("#finance_administration").on("click", function () {
+        removeOwnName();
+        archives(this);
+        $('#oa-iframe').attr("src", "financeAdministration/financeAdministration.do");
+    });
+
+    //生产管理部档案
+    $("#production_administration").on("click", function () {
+        removeOwnName();
+        archives(this);
+        $('#oa-iframe').attr("src", "productionAdministration/productionAdministration.do");
     });
 
     /*--- 会议管理 ---*/

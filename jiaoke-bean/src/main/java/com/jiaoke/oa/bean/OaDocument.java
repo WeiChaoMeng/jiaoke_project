@@ -104,9 +104,16 @@ public class OaDocument implements Serializable {
     private Integer storageLife;
 
     /**
-     * 主题词
+     * 发文类型
      */
-    private String thematicWords;
+    private String docType;
+
+    /**
+     * 发文时间
+     */
+    private String writingTime;
+
+    private String writingTimeStr;
 
     /**
      * 主送
@@ -174,6 +181,11 @@ public class OaDocument implements Serializable {
      * 催办次数
      */
     private Integer urgingNumber;
+
+    /**
+     * 任务id
+     */
+    private String taskId;
 
     private static final long serialVersionUID = 1L;
 
@@ -321,12 +333,28 @@ public class OaDocument implements Serializable {
         this.storageLife = storageLife;
     }
 
-    public String getThematicWords() {
-        return thematicWords;
+    public String getDocType() {
+        return docType;
     }
 
-    public void setThematicWords(String thematicWords) {
-        this.thematicWords = thematicWords;
+    public void setDocType(String docType) {
+        this.docType = docType;
+    }
+
+    public String getWritingTime() {
+        return writingTime;
+    }
+
+    public void setWritingTime(String writingTime) {
+        this.writingTime = writingTime;
+    }
+
+    public String getWritingTimeStr() {
+        return writingTimeStr;
+    }
+
+    public void setWritingTimeStr(String writingTimeStr) {
+        this.writingTimeStr = writingTimeStr;
     }
 
     public String getMainGive() {
@@ -439,5 +467,13 @@ public class OaDocument implements Serializable {
 
     public void setUrgingNumber(Integer urgingNumber) {
         this.urgingNumber = urgingNumber;
+    }
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
     }
 }

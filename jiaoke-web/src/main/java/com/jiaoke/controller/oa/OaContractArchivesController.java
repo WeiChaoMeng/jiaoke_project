@@ -31,8 +31,8 @@ public class OaContractArchivesController {
      */
     @RequestMapping("/OAContractArchives.do")
     public String contractArchives(Model model) {
-        List<OaContractArchives> oaContractArchivesList = oaContractArchivesService.getAll();
-        model.addAttribute("oaContractArchivesList", oaContractArchivesList);
+        List<OaContractArchives> list = oaContractArchivesService.getAll();
+        model.addAttribute("list", list);
         return "oa/archives/oa_contract_archives";
     }
 

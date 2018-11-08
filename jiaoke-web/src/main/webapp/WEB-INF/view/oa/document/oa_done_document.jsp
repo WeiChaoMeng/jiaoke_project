@@ -118,7 +118,7 @@
         <th style="width: 12%">公文文号</th>
         <th style="width: 6%">发起人</th>
         <th style="width: 12%">发起时间</th>
-        <th style="width: 12%">处理时间</th>
+        <th style="width: 12%">结束时间</th>
         <th style="width: 6%">跟踪状态</th>
         <th style="width: 6%">流程日志</th>
         </thead>
@@ -133,10 +133,10 @@
                     <input type="checkbox" onclick="window.event.cancelBubble=true;">
                 </td>
                 <td>
-                    <c:if test="${oaDocument.rank == 1}">普通公文</c:if>
-                    <c:if test="${oaDocument.rank == 2}">秘密公文</c:if>
-                    <c:if test="${oaDocument.rank == 3}">机密公文</c:if>
-                    <c:if test="${oaDocument.rank == 4}">绝密公文</c:if>
+                    <c:if test="${oaDocument.rank == 0}">普通公文</c:if>
+                    <c:if test="${oaDocument.rank == 1}">秘密公文</c:if>
+                    <c:if test="${oaDocument.rank == 2}">机密公文</c:if>
+                    <c:if test="${oaDocument.rank == 3}">绝密公文</c:if>
                 </td>
                 <td class="text_style"
                     title="${oaDocument.formTitle}">${oaDocument.formTitle}
@@ -168,8 +168,8 @@
 <script>
     //查看详情
     function particulars(id) {
-        // window.location.href = "documentDetails?id=" + id;
-        window.location.href = "http://47.105.114.70/document/documentDetails?id=" + id;
+        window.location.href = "completeDetails?id=" + id;
+        // window.location.href = "http://47.105.114.70/document/documentDetails?id=" + id;
     }
 </script>
 </html>

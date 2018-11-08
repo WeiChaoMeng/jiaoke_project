@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -20,7 +21,8 @@
 <body>
 <div class="nav nav-mini">
     <div class="nav-top">
-        <div id="mini" style="border-bottom: 2px #fff solid;"><img  style="padding: 3.5px 13px" src="../../../static/images/icon/mini.png"></div>
+        <div id="mini" style="border-bottom: 2px #fff solid;"><img style="padding: 3.5px 13px"
+                                                                   src="../../../static/images/icon/mini.png"></div>
     </div>
     <ul>
         <li class="nav-item">
@@ -52,10 +54,14 @@
             <a><i class="iconfont icon-gongwen"></i><span style="margin-left: 10px;">公文管理</span><i
                     class="my-icon nav-more"></i></a>
             <ul>
+                <shiro:hasPermission name="createDocument">
+                    <li><a id="release_document"><span>新建公文</span></a></li>
+                    <li><a id="primed_document"><span>待发公文</span></a></li>
+                    <li><a id="issued_document"><span>已发公文</span></a></li>
+                </shiro:hasPermission>
                 <li><a id="pending_document"><span>待办公文</span></a></li>
                 <li><a id="done_document"><span>已办公文</span></a></li>
-                <li><a id="primed_document"><span>待发公文</span></a></li>
-                <li><a id="issued_document"><span>已发公文</span></a></li>
+
             </ul>
         </li>
         <li class="nav-item">
@@ -64,14 +70,12 @@
                     class="my-icon nav-more"></i></a>
             <ul>
                 <li><a id="contract_archives"><span>合同档案</span></a></li>
-                <%--<li><a id="employee_files"><span>自有员工档案</span></a></li>
-                <li><a id="dispatch_file"><span>劳务派遣档案</span></a></li>
-                <li><a id=""><span>财务管理档案</span></a></li>
-                <li><a id=""><span>生产管理部档案</span></a></li>
-                <li><a id=""><span>质量技术部档案</span></a></li>
-                <li><a id=""><span>物资管理部档案</span></a></li>
-                <li><a id=""><span>综合办公室档案</span></a></li>
-                <li><a id=""><span>经营开发部档案</span></a></li>--%>
+                <li><a id="general_office"><span>综合办公室</span></a></li>
+                <li><a id="business_development"><span>经营开发部</span></a></li>
+                <li><a id="quality_technology"><span>质量技术部</span></a></li>
+                <li><a id="material_administration"><span>物资管理部</span></a></li>
+                <li><a id="finance_administration"><span>财务管理部</span></a></li>
+                <li><a id="production_administration"><span>生产管理部</span></a></li>
             </ul>
         </li>
         <li class="nav-item">

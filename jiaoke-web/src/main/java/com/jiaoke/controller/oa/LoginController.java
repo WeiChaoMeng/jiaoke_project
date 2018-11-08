@@ -1,9 +1,12 @@
 package com.jiaoke.controller.oa;
 
+import com.jiaoke.oa.bean.UserInfo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -45,10 +48,12 @@ public class LoginController {
     /**
      * 登录成功后进入首页
      *
-     * @return main.jsp
+     * @return security_index.jsp
      */
     @RequestMapping("/homePage.do")
-    public String homePage() {
+    public String homePage(Model model) {
+        UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
+        model.addAttribute("userInfo", userInfo);
         return "main";
     }
 }

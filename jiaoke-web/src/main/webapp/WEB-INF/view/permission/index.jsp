@@ -9,7 +9,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>无标题文档</title>
+    <title>权限管理</title>
     <link href="../../../static/css/default.css" rel="stylesheet" type="text/css">
     <link href="../../../static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
     <style>

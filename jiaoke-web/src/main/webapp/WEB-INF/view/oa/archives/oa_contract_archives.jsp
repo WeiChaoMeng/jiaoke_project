@@ -111,7 +111,7 @@
         <tbody>
 
         <tr></tr>
-        <c:forEach var="oaContractArchives" items="${oaContractArchivesList}" varStatus="status">
+        <c:forEach var="oaContractArchives" items="${list}" varStatus="status">
             <tr onclick="particulars(${oaContractArchives.id})">
                 <td><input type="checkbox" onclick="window.event.cancelBubble=true;"></td>
                 <td>${oaContractArchives.serialNumber}</td>
@@ -136,16 +136,16 @@
 <script type="text/javascript" src="../../../../static/js/common.js"></script>
 <script type="text/javascript" src="../../../../static/js/oa/oa_common.js"></script>
 <script>
-    //新建会议
+    //新建档案
     $("#new-employee-files").on("click", function () {
-        // window.location.href = 'OANewContract.do';
-        window.location.href = 'http://47.105.114.70/contractArchives/OANewContract.do';
+        window.location.href = 'OANewContract.do';
+        // window.location.href = 'http://47.105.114.70/contractArchives/OANewContract.do';
     });
 
     //详情
     function particulars(id) {
-        // window.location.href = "details?id=" + id;
-        window.location.href = "http://47.105.114.70/contractArchives/details?id=" + id;
+        window.location.href = "details?id=" + id;
+        // window.location.href = "http://47.105.114.70/contractArchives/details?id=" + id;
     }
 </script>
 </html>

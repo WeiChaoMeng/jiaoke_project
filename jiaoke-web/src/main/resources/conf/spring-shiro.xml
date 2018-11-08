@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsd">
+       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <context:component-scan base-package="com.jiaoke.*"/>
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
         <!--默认的登陆访问url-->
@@ -20,10 +22,16 @@
                 -->
                 /favicon.ico = anon
                 /static/** = anon
-                /uploadPic/uploadImg = anon
                 /login/login.do = anon
                 /qualityData.do = anon
                 <!--/*.do = anon-->
+                <!--公文跳转、发布、保存待发、待发公文跳转、已发公文跳转-->
+                /document/releaseDocument.do = perms[createDocument]
+                /document/add = perms[createDocument]
+                /document/preservationPending = perms[createDocument]
+                /document/primedDocument.do = perms[createDocument]
+                /document/issuedDocument.do = perms[createDocument]
+
                 /OAWageStatisticsInner.do = perms[/test]
                 /login/*.do = authc
                 /oa/*.do = authc
@@ -39,7 +47,7 @@
         <property name="cacheManager" ref="cacheManager"/>
         <!-- session管理器 -->
         <property name="sessionManager" ref="sessionManager"/>
-        
+
         <property name="rememberMeManager" ref="rememberMeManager"/>
     </bean>
 
@@ -63,6 +71,7 @@
     <!-- spring基于Ehcache实现的缓存管理器 -->
     <bean id="ehCacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
         <property name="configLocation" value="classpath:/conf/ehcache.xml"/>
+        <property name="shared" value="true"/>
     </bean>
 
     <!-- 自定义Realm -->
@@ -82,7 +91,7 @@
         <property name="sessionIdUrlRewritingEnabled" value="false"/>
         <property name="sessionValidationSchedulerEnabled" value="true"/>
         <property name="sessionValidationScheduler" ref="sessionValidationScheduler"/>
-        <property name="sessionDAO" ref="sessionDAO" />
+        <property name="sessionDAO" ref="sessionDAO"/>
         <property name="sessionIdCookieEnabled" value="true"/>
         <property name="sessionIdCookie" ref="sessionIdCookie"/>
     </bean>
@@ -108,7 +117,6 @@
 
     <!--sessionId生成-->
     <bean id="sessionIdGenerator" class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator"/>
-
 
 
 </beans>

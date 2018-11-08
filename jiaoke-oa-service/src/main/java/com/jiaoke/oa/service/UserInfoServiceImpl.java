@@ -31,6 +31,7 @@ public class UserInfoServiceImpl implements UserInfoService {
      * @param userName userName
      * @return UserInfo
      */
+    @Override
     public UserInfo getUserInfoByUserName(String userName) {
         return userInfoMapper.getUserInfoByUserName(userName);
     }
@@ -41,6 +42,7 @@ public class UserInfoServiceImpl implements UserInfoService {
      * @param userInfoId userInfoId
      * @return permission
      */
+    @Override
     public List<Permission> getPermissionsByUserInfoId(Integer userInfoId) {
         return permissionMapper.getPermissionsByUserInfoId(userInfoId);
     }

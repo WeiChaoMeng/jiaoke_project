@@ -597,9 +597,9 @@ table {
 .listbox {
     border: solid 1px #d6d6d6;
     height: 70px;
-    width: 170px;
+    width: 190px;
     float: left;
-    margin-right: 13.5px;
+    margin-right: 14px;
 }
 
 .listbox:hover {
@@ -648,7 +648,7 @@ table {
     width: 33%;
     height: 330px;
     float: left;
-    margin-bottom: 20px;
+    margin:20px 0;
 }
 
 .boxtitle {
@@ -1089,11 +1089,12 @@ table {
 
 .div_top {
     height: 450px;
-    width: 100%;
+    width: 80%;
+    margin: 0 auto;
 }
 
 .wrap {
-    width: 1100px;
+    width: 80%;
     margin: 0 auto;
 }
 

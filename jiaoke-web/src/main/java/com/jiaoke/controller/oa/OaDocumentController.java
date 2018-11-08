@@ -1,7 +1,13 @@
 package com.jiaoke.controller.oa;
 
 import com.jiaoke.oa.bean.OaDocument;
+import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.service.OaDocumentService;
+import org.activiti.engine.ProcessEngine;
+import org.activiti.engine.ProcessEngines;
+import org.activiti.engine.TaskService;
+import org.activiti.engine.task.Task;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
+import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * 公文管理
@@ -22,8 +30,11 @@ import java.util.List;
 @RequestMapping(value = "/document")
 public class OaDocumentController {
 
-    @Autowired
+    @Resource
     private OaDocumentService oaDocumentService;
+
+    @Resource
+    private ActivitiUtil activitiUtil;
 
     /**
      * 待办公文跳转
@@ -32,7 +43,19 @@ public class OaDocumentController {
      */
     @RequestMapping(value = "/pendingDocument.do")
     public String pendingDocument(Model model) {
-        List<OaDocument> oaDocumentList = oaDocumentService.getAllByFormState(3);
+        //获取当前登录人的名称
+        UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
+        //根据登录人的名称查询任务
+        List<Task> taskList = activitiUtil.getTaskByAssignee(userInfo.getId());
+
+        List<OaDocument> oaDocumentList = new ArrayList<>();
+        for (Task task : taskList) {
+            //根据taskId查询businessId
+            String businessId = activitiUtil.getBusinessByTaskId(task.getId());
+            OaDocument document = oaDocumentService.getAllById(Integer.valueOf(businessId));
+            document.setTaskId(task.getId());
+            oaDocumentList.add(document);
+        }
         model.addAttribute("oaDocumentList", oaDocumentList);
         return "oa/document/oa_pending_document";
     }
@@ -43,7 +66,10 @@ public class OaDocumentController {
      * @return oa_release_document.jsp
      */
     @RequestMapping(value = "/releaseDocument.do")
-    public String releaseDocument() {
+    public String releaseDocument(Model model) {
+        //获取当前登录人的名称
+        UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
+        model.addAttribute("nickName", userInfo.getNickName());
         return "oa/document/oa_release_document";
     }
 
@@ -55,7 +81,27 @@ public class OaDocumentController {
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String add(OaDocument oaDocument) {
+        //生成公文id
+        Integer random = random();
+        oaDocument.setId(random);
         if (oaDocumentService.add(oaDocument) == 1) {
+            //获取当前登录人的id
+            UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
+            Map<String, Object> map = new HashMap<>(16);
+            map.put("assignee", userInfo.getId());
+            //启动流程实例
+            String document = activitiUtil.startProceesInstance("document", random.toString(), map);
+            //获取任务id
+            Task taskId = activitiUtil.getTaskIdByProcessInstanceId(document);
+            //指定会签人员
+            Map<String, Object> assigneeListMap = new HashMap<>(16);
+            List<Object> assigneeList = new ArrayList<>();
+            assigneeList.add("1003");
+            assigneeList.add("1004");
+            assigneeList.add("1005");
+            assigneeListMap.put("assigneeList", assigneeList);
+            activitiUtil.designatedCountersignPersonnel(taskId.getId(), assigneeListMap);
+
             return "redirect:/document/issuedDocument.do";
         } else {
             return null;
@@ -78,18 +124,33 @@ public class OaDocumentController {
         }
     }
 
-
     /**
      * 已办公文跳转
      *
      * @param model model
-     * @return oa_done_document.jsp
+     * @return oa_complete_details.jsp
      */
     @RequestMapping(value = "/doneDocument.do")
     public String doneDocument(Model model) {
-        List<OaDocument> oaDocumentList = oaDocumentService.getAllByFormState(2);
+        UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
+        List<String> businessKeyList = activitiUtil.historicTask(userInfo.getId().toString());
+        List<OaDocument> oaDocumentList = oaDocumentService.getListById(businessKeyList);
         model.addAttribute("oaDocumentList", oaDocumentList);
         return "oa/document/oa_done_document";
+    }
+
+    /**
+     * 根据id获取已办公文详情
+     *
+     * @param id    id
+     * @param model model
+     * @return oa_details_document.jsp
+     */
+    @RequestMapping(value = "/completeDetails")
+    public String completeDetails(Integer id, Model model) {
+        OaDocument oaDocument = oaDocumentService.getDocumentDetailsById(id);
+        model.addAttribute("oaDocument", oaDocument);
+        return "oa/document/oa_complete_details";
     }
 
     /**
@@ -120,19 +181,28 @@ public class OaDocumentController {
     }
 
     /**
-     * 根据id获取公文详情
+     * 根据id获取待办公文详情
      *
      * @param id    id
      * @param model model
      * @return oa_details_document.jsp
      */
     @RequestMapping(value = "/documentDetails")
-    public String details(Integer id, Model model) {
+    public String details(Integer id, String taskId, Model model) {
         OaDocument oaDocument = oaDocumentService.getDocumentDetailsById(id);
+        oaDocument.setTaskId(taskId);
         model.addAttribute("oaDocument", oaDocument);
         return "oa/document/oa_details_document";
     }
 
+    /**
+     * 分页
+     *
+     * @param formState formState
+     * @param page      page
+     * @param rows      rows
+     * @return list
+     */
     @RequestMapping(value = "/pagingList")
     @ResponseBody
     public Object getPagingByFormState(Integer formState, Integer page, Integer rows) {
@@ -142,5 +212,40 @@ public class OaDocumentController {
         } else {
             return "error";
         }
+    }
+
+    /**
+     * 公文审批结果
+     *
+     * @param taskId        任务id
+     * @param variableName  变量名
+     * @param variableValue 变量值
+     * @return
+     */
+    @RequestMapping(value = "/documentApproval")
+    public String documentApproval(String taskId, String variableName, String variableValue, int id) {
+        String value = "1";
+        activitiUtil.completeTaskByTaskId(taskId, variableName, variableValue);
+        if (value.equals(variableValue)) {
+            oaDocumentService.updateCountersignature(id);
+        }
+        return "redirect:/document/pendingDocument.do";
+    }
+
+    /**
+     * 随机数
+     *
+     * @return 10位纯数字
+     */
+    private Integer random() {
+        int end = 2;
+        SimpleDateFormat sdf = new SimpleDateFormat("HHmmss");
+        String newDate = sdf.format(new Date());
+        String result = "";
+        Random random = new Random();
+        for (int i = 0; i < end; i++) {
+            result += random.nextInt(10);
+        }
+        return Integer.valueOf(newDate + result);
     }
 }

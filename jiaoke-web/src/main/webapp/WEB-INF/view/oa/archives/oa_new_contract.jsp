@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%
     String path = request.getContextPath();
 
@@ -17,7 +18,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>合同档案</title>
+    <title>新建档案</title>
     <link href="/static/js/datepicker/css/bootstrap-datepicker.css" rel="stylesheet">
 
     <style>
@@ -168,7 +169,7 @@
                 <i>*</i>
             </label>
             <div class="contract-form-input">
-                <input type="text" name="signingDate" value="" class="forminput" id="start" required>
+                <input type="text" name="signingDate" value="" class="forminput" id="start" readonly="readonly" required>
             </div>
         </div>
 
@@ -233,8 +234,8 @@
         formData.append('file', files[0]);
         $.ajax({
             type: "POST",
-            // url: '/uploadPic/uploadImg',
-            url: 'http://47.105.114.70/uploadPic/uploadImg',
+            url: '/uploadPic/uploadImg',
+            // url: 'http://47.105.114.70/uploadPic/uploadImg',
             // data: {"file": files},
             data: formData,
             async: true,
@@ -264,14 +265,5 @@
         "language": "zh-CN",
         "format": 'yyyy-mm-dd'
     });
-    $("#end").datepicker({
-        "language": "zh-CN",
-        "format": 'yyyy-mm-dd'
-    });
-    $(".date .iconfont").click(function () {
-        $(this).prev().trigger("focus");
-    });
-
-    $('select.select').select();
 </script>
 </html>

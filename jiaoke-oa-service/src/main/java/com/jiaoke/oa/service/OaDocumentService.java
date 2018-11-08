@@ -3,6 +3,7 @@ package com.jiaoke.oa.service;
 import com.jiaoke.oa.bean.OaDocument;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * OA-公文
@@ -30,6 +31,14 @@ public interface OaDocumentService {
     List<OaDocument> getAllByFormState(Integer formState);
 
     /**
+     * 根据id获取列表
+     *
+     * @param id id
+     * @return list
+     */
+    OaDocument getAllById(Integer id);
+
+    /**
      * 根据表单状态获取总数
      *
      * @param formState formState
@@ -54,4 +63,20 @@ public interface OaDocumentService {
      * @return OaDocumentList
      */
     List<OaDocument> getPagingByFormState(Integer formState, Integer page, Integer rows);
+
+    /**
+     * 更新会签
+     *
+     * @param id id
+     * @return NumberOfAffectedRows
+     */
+    int updateCountersignature(int id);
+
+    /**
+     * 根据id获取list
+     *
+     * @param list id
+     * @return list
+     */
+    List<OaDocument> getListById(List<String> list);
 }

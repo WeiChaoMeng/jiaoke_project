@@ -17,174 +17,19 @@
     <script src="../../static/js/echarts/uimaker.js"></script>
 </head>
 
-<body style="background-color: #e8e8e8;">
+<body>
 
 <div>
-    <div style="background-color: #ffffff;height: 1500px;">
+    <div>
 
         <!--top-->
         <div class="div_top">
-            <iframe src="../../static/lbt/index.html" id="iframe" name="right" width="100%" height="100%" frameborder="0"
+            <iframe src="../../static/lbt/index.html" id="iframe" name="right" width="100%" height="100%"
+                    frameborder="0"
                     scrolling="auto"></iframe>
         </div>
 
         <div class="wrap">
-            <div class="div_left">
-                <div class="wrapper clearfix">
-                    <ul class="content">
-                        <li data-src="0"><a href="javascript:void(0)"><img src="../../static/slider/image/1.jpg" alt=""></a></li>
-                        <li data-src="1"><a href="javascript:void(0)"><img src="../../static/slider/image/2.jpg" alt=""></a></li>
-                        <li data-src="2"><a href="javascript:void(0)"><img src="../../static/slider/image/3.jpg" alt=""></a></li>
-                        <li data-src="3"><a href="javascript:void(0)"><img src="../../static/slider/image/4.jpg" alt=""></a></li>
-                    </ul>
-
-
-                    <div class="h_qhbt" style="display: block;">
-                        <ul class="carousel">
-                            <li id="1" class="active"></li>
-                            <li id="2"></li>
-                            <li id="3"></li>
-                            <li id="4"></li>
-                        </ul>
-                        <a id="active_a" href="javascript:void(0)" target="_blank"
-                           title=""
-                           style="display: inline;">2018年3月18日我司对G104线维护现场...</a>
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="h_g_height">
-                <div class="h_g_m ">
-                    <ul class="qs_clear">
-                        <li class="news01 tab_n">
-                            <a>权威发布</a>
-                        </li>
-                        <li class="news01 tab_n">
-                            <a>环保动态</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="div_left1">
-
-                <div class="h_1_b">
-                    <div id="h_ddd" class="h_ddd news01_x qs_clear column" runat="server" style="z-index: 5;">
-                        <div class="h_g_c " opentype="page">
-                            <ul>
-                                <li>
-                                    <span>2018-06-26</span>
-                                    <a href="javascript:void(0)"
-                                       target="_blank"
-                                       title="北京市发展和改革委员会 北京市环境保护局关于发布2018年第一批21家通过清洁生产审核评估单位的通知">北京市发展和改革委员会
-                                        北京市环境保护局关...</a>
-                                </li>
-                                <li>
-                                    <span>2018-06-25</span>
-                                    <a href="javascript:void(0)"
-                                       target="_blank"
-                                       title="北京市环境保护局关于推荐北京市初级辐射安全培训单位（第四批）的公告">北京市环境保护局关于推荐北京市初级辐射安...</a>
-                                </li>
-                                <li>
-                                    <span>2018-06-25</span>
-                                    <a href="javascript:void(0)"
-                                       target="_blank"
-                                       title="北京市环境保护局关于公开征求北京市地方标准《农村生活污水处理设施 水污染物排放标准》（征求意见稿）意见的函">北京市环境保护局关于公开征求北京市地方标...</a>
-                                </li>
-                                <li>
-                                    <span>2018-06-22</span>
-                                    <a href="javascript:void(0)"
-                                       target="_blank" title="2018年5月北京市环境空气质量状况">2018年5月北京市环境空气质量状况</a>
-                                </li>
-                                <li>
-                                    <span>2018-06-22</span>
-                                    <a href="javascript:void(0)"
-                                       onclick="void(0)"
-                                       target="_blank" title="“坚持以人民为中心，推动法治信访建设” 我市2018年环境信访主题宣传月活动启动">“坚持以人民为中心，推动法治信访建设”
-                                        我...</a>
-                                </li>
-                                <li>
-                                    <span>2018-06-21</span>
-                                    <a href="javascript:void(0)"
-                                       target="_blank"
-                                       title="北京市环境保护局关于公开征求 北京市地方标准《电子工业大气污染物 排放标准》（征求意见稿）意见的函">北京市环境保护局关于公开征求
-                                        北京市地方标...</a>
-                                </li>
-                                <li>
-                                    <span>2018-06-21</span>
-                                    <a href="javascript:void(0)"
-                                       onclick="void(0)"
-                                       target="_blank"
-                                       title="北京市环保系统“清河行动”战役正式打响多部门联合开展水环境专项执法">北京市环保系统“清河行动”战役正式打响多...</a>
-                                </li>
-                                <li>
-                                    <span>2018-06-20</span>
-                                    <a href="javascript:void(0)"
-                                       target="_blank"
-                                       title="2018年5月北京市环境保护局受理环保投诉举报情况">2018年5月北京市环境保护局受理环保投诉举报...</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div id="h_sss" class="h_sss news01_x qs_clear column" runat="server" style="z-index: -5;">
-                        <div class="h_g_c" opentype="page">
-                            <ul>
-                                <li>
-                                    <span>2018-06-27</span>
-                                    <a href="javascript:void(0)"
-                                       target="_blank"
-                                       title="平谷区“四个强化”持续打好“一微克”攻坚行动">平谷区“四个强化”持续打好“一微克”攻坚...</a>
-                                </li>
-                                <li>
-                                    <span>2018-06-27</span>
-                                    <a href="javascript:void(0)"
-                                       target="_blank"
-                                       title="朝阳区多举措推进扬尘污染治理">朝阳区多举措推进扬尘污染治理</a>
-                                </li>
-                                <li>
-                                    <span>2018-06-27</span>
-                                    <a href="javascript:void(0)"
-                                       target="_blank"
-                                       title="5月全市餐饮执法检查力度进一步加大">5月全市餐饮执法检查力度进一步加大</a>
-                                </li>
-                                <li>
-                                    <span>2018-06-26</span>
-                                    <a href="javascript:void(0)"
-                                       target="_blank"
-                                       title="1-5月全市环境信访和投诉举报同比减少15.1%">1-5月全市环境信访和投诉举报同比减少15.1%</a>
-                                </li>
-                                <li>
-                                    <span>2018-06-26</span>
-                                    <a href="javascript:void(0)"
-                                       target="_blank"
-                                       title="延庆区区长穆鹏督查官厅水库水源地环境问题整改情况">延庆区区长穆鹏督查官厅水库水源地环境问题...</a>
-                                </li>
-                                <li>
-                                    <span>2018-06-26</span>
-                                    <a href="javascript:void(0)"
-                                       target="_blank"
-                                       title="大兴区落实市环保督察组反馈问题整改进展顺利">大兴区落实市环保督察组反馈问题整改进展顺...</a>
-                                </li>
-                                <li>
-                                    <span>2018-06-25</span>
-                                    <a href="javascript:void(0)"
-                                       target="_blank"
-                                       title="市环保局组织全市应急管理人员参加生态环境部网络交流培训班">市环保局组织全市应急管理人员参加生态环境...</a>
-                                </li>
-                                <li>
-                                    <span>2018-06-25</span>
-                                    <a href="javascript:void(0)"
-                                       target="_blank"
-                                       title="北京市环保局与湖北省十堰市环保局开展对口协作交流">北京市环保局与湖北省十堰市环保局开展对口...</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <div class="div_left2">
                 <ul>
                     <li>
@@ -306,40 +151,10 @@
                 </div>
             </div>
 
-            ﻿
-
         </div>
 
     </div>
 
-</div>
-
-<div class="footBox">
-    <div class="foot">
-        <div class="contactUs">
-            <h4>联系我们</h4>
-            <ul>
-                <li>联系电话<br/>
-                    010-60281984
-                </li>
-                <li>地址：北京市大兴区黄村镇王立庄村铁路西一公里</li>
-                <li>版权所有：北京市政路桥建材集团有限公司路驰分公司</li>
-                <li>备案号：京ICP备09035252号</li>
-                <li>技术支持：信息中心</li>
-            </ul>
-        </div>
-        <div class="weChat">
-            <h4>关注我们</h4>
-            <div class="code">
-                <p><img src="../../static/images/test/code1.jpg" alt="集团公众号"></p>
-                <p>集团公众号</p>
-            </div>
-            <div class="code">
-                <p><img src="../../static/images/test/code2.jpg" alt="人才招聘公众"></p>
-                <p>人才招聘公众号</p>
-            </div>
-        </div>
-    </div>
 </div>
 
 </body>

@@ -362,5 +362,24 @@ public class CommonController {
         return "oa/culture/oa_news_center";
     }
 
+    /**
+     *  跳转正在建设提示页面
+     *
+     * @return construction.jsp
+     */
+    @RequestMapping("/construction.do")
+    public String construction(){
+        return "construction/construction";
+    }
+
+    /**
+     * 跳转厂区安全
+     * @return security_index.jsp
+     */
+    @RequestMapping("/security.do")
+    public String security(){
+        return "security/security_index";
+    }
+
 
 }

@@ -61,5 +61,31 @@ public interface OaDocumentMapper {
      */
     List<OaDocument> getAllByFormState(Integer formState);
 
+    /**
+     * 根据id获取列表
+     *
+     * @param id id
+     * @return list
+     */
+    OaDocument getAllById(Integer id);
+
     List<OaDocument> getPagingByFormState(@Param("formState") Integer formState, @Param("start") Integer start, @Param("rows") Integer rows);
+
+    /**
+     * 更新会签
+     *
+     * @param nickName 昵称
+     * @param id       id
+     * @return NumberOfAffectedRows
+     */
+    int updateCountersignature(@Param("nickName") String nickName, @Param("id") int id);
+
+    /**
+     * 更新签发
+     *
+     * @param nickName 昵称
+     * @param id       id
+     * @return NumberOfAffectedRows
+     */
+    int updateSignatureIssuance(@Param("nickName") String nickName, @Param("id") int id);
 }
