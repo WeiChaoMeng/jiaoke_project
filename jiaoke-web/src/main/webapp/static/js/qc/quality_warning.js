@@ -1,9 +1,9 @@
 var basePath = "";
 // 初始化
 (function ($) {
-    basePath = $("#path").val();
-    getEcharsData()
+    getEcharsData();
     getWarningData();
+    basePath = $("#path").val();
 })(jQuery);
 
 /***********************间隔执行Start*****************************/
@@ -102,7 +102,7 @@ function getEcharsData() {
             var crew2topArray = new Array();
             var crew2downArray = new Array();
             var crew2realArray = new Array();
-            debugger
+
             for (var k in res){
                 switch (k) {
                     case "crew1nameList":

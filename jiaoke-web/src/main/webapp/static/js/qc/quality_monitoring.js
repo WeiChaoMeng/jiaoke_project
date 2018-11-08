@@ -118,7 +118,6 @@ function eachMaterialList(res) {
 
         if (res[i].crewNum == 'crew1'){
             //各材料上下限展现
-            debugger
             crew1upArray.push(Number(res[i].repertory_one) + 2);
             crew1upArray.push(Number(res[i].repertory_two) + 2);
             crew1upArray.push(Number(res[i].repertory_three) + 5);
@@ -129,9 +128,7 @@ function eachMaterialList(res) {
             crew1upArray.push(Number(res[i].ratio_stone) + 2);
             crew1upArray.push(Number(res[i].ratio_regenerate1) + Number(res[i].ratio_regenerate2)+ 2);
             crew1upArray.push(Number(res[i].ratio_additive) + 2);
-            crew1upArray.push(Number(res[i].temperature_asphalt_up));
-            crew1upArray.push(Number(res[i].temperature_aggregate_up));
-            crew1upArray.push(Number(res[i].temperature_mixture_up));
+
 
             var crew1_total = Number(res[i].material_total)
             var crew1_material_aggregate_1 = Number(res[i].material_aggregate_1) - Number(res[i].material_aggregate_2);
@@ -153,9 +150,6 @@ function eachMaterialList(res) {
             crew1realArray.push(((Number(res[i].material_asphalt)/Number(res[i].material_total)) *100).toFixed(2))
             crew1realArray.push(((Number(res[i].material_regenerate)/Number(res[i].material_total)) *100).toFixed(2))
             crew1realArray.push(((Number(res[i].material_additive)/Number(res[i].material_total)) *100).toFixed(2))
-            crew1realArray.push(res[i].tem_asphalt)
-            crew1realArray.push(res[i].tem_aggregate)
-            crew1realArray.push(res[i].tem_mixture)
 
 
 
@@ -169,9 +163,6 @@ function eachMaterialList(res) {
             crew1downArray.push(Number(res[i].ratio_stone) - 2);
             crew1downArray.push(Number(res[i].ratio_regenerate1) + Number(res[i].ratio_regenerate2) - 2);
             crew1downArray.push(Number(res[i].ratio_additive) - 2);
-            crew1downArray.push(Number(res[i].temperature_asphalt));
-            crew1downArray.push(Number(res[i].temperature_aggregate));
-            crew1downArray.push(Number(res[i].temperature_mixture));
 
         }else {
             crew2upArray.push(Number(res[i].repertory_one) + 2);
@@ -184,9 +175,7 @@ function eachMaterialList(res) {
             crew2upArray.push(Number(res[i].ratio_stone) + 2);
             crew2upArray.push(Number(res[i].ratio_regenerate1) + Number(res[i].ratio_regenerate2)+ 2);
             crew2upArray.push(Number(res[i].ratio_additive) + 2);
-            crew2upArray.push(Number(res[i].temperature_asphalt_up));
-            crew2upArray.push(Number(res[i].temperature_aggregate_up));
-            crew2upArray.push(Number(res[i].temperature_mixture_up));
+
 
 
             var crew2_total = Number(res[i].material_total)
@@ -209,9 +198,7 @@ function eachMaterialList(res) {
             crew2realArray.push(((Number(res[i].material_asphalt)/Number(res[i].material_total)) *100).toFixed(2))
             crew2realArray.push(((Number(res[i].material_regenerate)/Number(res[i].material_total)) *100).toFixed(2))
             crew2realArray.push(((Number(res[i].material_additive)/Number(res[i].material_total)) *100).toFixed(2))
-            crew2realArray.push(res[i].tem_asphalt)
-            crew2realArray.push(res[i].tem_aggregate)
-            crew2realArray.push(res[i].tem_mixture)
+
 
 
             crew2downArray.push(Number(res[i].repertory_one) - 2);
@@ -224,9 +211,6 @@ function eachMaterialList(res) {
             crew2downArray.push(Number(res[i].ratio_stone) - 2);
             crew2downArray.push(Number(res[i].ratio_regenerate1) + Number(res[i].ratio_regenerate2) - 2);
             crew2downArray.push(Number(res[i].ratio_additive) - 2);
-            crew2downArray.push(Number(res[i].temperature_asphalt));
-            crew2downArray.push(Number(res[i].temperature_aggregate));
-            crew2downArray.push(Number(res[i].temperature_mixture));
 
 
         }

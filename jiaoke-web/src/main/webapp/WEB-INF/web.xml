@@ -31,6 +31,15 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+    <!--ajax跨域处理过滤器-->
+    <!--<filter>-->
+        <!--<filter-name>cors</filter-name>-->
+        <!--<filter-class>com.jiaoke.filter.CrossFilter</filter-class>-->
+    <!--</filter>-->
+    <!--<filter-mapping>-->
+        <!--<filter-name>cors</filter-name>-->
+        <!--<url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
         <filter>
             <filter-name>encodingFilter</filter-name>
             <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>

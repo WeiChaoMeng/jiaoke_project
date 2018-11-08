@@ -41,27 +41,6 @@
             <tbody>
             <tr>
                 <td>
-                    <a href="../../download/commons-io-2.4-src.zip" download="">
-                    <div class="head_left_button" onmousemove="select_color(this)" onmouseout="unselected_color(this)">
-                        &#xe8e5; 导出
-                    </div>
-                    </a>
-
-                    <div class="separation_line">
-
-                    </div>
-                    
-                    <a  href="#" id="delect" >
-                    <div class="head_left_button" onmousemove="select_color(this)" onmouseout="unselected_color(this)">
-                        &#xeaa5; 删除
-                    </div>
-                    </a>
-                    <div class="separation_line">
-
-                    </div>
-
-                </td>
-                <td>
                     <div class="conditional_query">
 
                         <!--条件查询-->

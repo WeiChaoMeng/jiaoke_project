@@ -48,16 +48,8 @@
                         <td id="crew1_produce_ratio_id">256</td>
                         <td id="crew1_produce_car_num">京C66666</td>
                         <td id="crew1_produce_disc_num">A16</td>
-                        <td id="crew1_produce_user">王建军</td>
+                        <td id="crew1_produce_user"></td>
                         <td id="crew1_produce_custom_num">1554568791</td>
-                        <td>
-
-                            <li>
-                                <a href="#">
-                                    <i class="toolico iconfont">&#xe6eb;</i>导出</a>
-                            </li>
-
-                        </td>
 
                     </tr>
                 </tbody>
@@ -143,13 +135,7 @@
                                 type: 'line',
                                 data: [11, 11, 15, 13, 12, 13, 10, 11, 11, 15, 13, 12, 13, 10],
                                 formatter: '{value} %',
-                                markPoint: {
 
-                                    data: [
-                                        { type: 'max', name: '最大值' },
-                                        { type: 'min', name: '最小值' }
-                                    ]
-                                }
                             }, {
                                 name: '实际占比',
                                 type: 'line',
@@ -167,12 +153,7 @@
                                 name: '下线占比',
                                 type: 'line',
                                 data: [1, 2, 2, 5, 3, 2, 0, 1, 2, 2, 5, 3, 2, 0],
-                                markPoint: {
-                                    data: [
-                                        { type: 'max', name: '最大值' },
-                                        { type: 'min', name: '最小值' }
-                                    ]
-                                }
+
                             }
                         ]
                     };
@@ -214,17 +195,8 @@
                     <td id="crew2_produce_ratio_id">256</td>
                     <td id="crew2_produce_car_num">京C66666</td>
                     <td id="crew2_produce_disc_num">A16</td>
-                    <td id="crew2_produce_user">王建军</td>
+                    <td id="crew2_produce_user"></td>
                     <td id="crew2_produce_custom_num">1554568791</td>
-                    <td>
-
-                        <li>
-                            <a href="#">
-                                <i class="toolico iconfont">&#xe6eb;</i>导出</a>
-                        </li>
-
-                    </td>
-
                 </tr>
                 </tbody>
             </table>
@@ -308,20 +280,13 @@
                                 type: 'line',
                                 data: [11, 11, 15, 13, 12, 13, 10, 11, 11, 15, 13, 12, 13, 10],
                                 formatter: '{value} %',
-                                markPoint: {
 
-                                    data: [
-                                        { type: 'max', name: '最大值' },
-                                        { type: 'min', name: '最小值' }
-                                    ]
-                                }
                             }, {
                                 name: '实际占比',
                                 type: 'line',
                                 data: [7, 8, 9, 10, 8, 13, 7, 9, 7, 9, 6, 8, 7, 5],
                                 formatter: '{value} %',
                                 markPoint: {
-
                                     data: [
                                         { type: 'max', name: '最大值' },
                                         { type: 'min', name: '最小值' }
@@ -332,12 +297,7 @@
                                 name: '下线占比',
                                 type: 'line',
                                 data: [1, 2, 2, 5, 3, 2, 0, 1, 2, 2, 5, 3, 2, 0],
-                                markPoint: {
-                                    data: [
-                                        { type: 'max', name: '最大值' },
-                                        { type: 'min', name: '最小值' }
-                                    ]
-                                }
+
                             }
                         ]
                     };

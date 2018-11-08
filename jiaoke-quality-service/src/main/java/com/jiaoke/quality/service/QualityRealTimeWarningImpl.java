@@ -57,7 +57,7 @@ public class QualityRealTimeWarningImpl implements  QualityRealTimeWarningInf {
      *
      * 功能描述: <br>
      *  <返回echars图标需要的值>
-     * @param []
+     * @param 无
      * @return java.lang.String
      * @auther Melone
      * @date 2018/10/16 13:01
@@ -131,35 +131,26 @@ public class QualityRealTimeWarningImpl implements  QualityRealTimeWarningInf {
                     upRatio = total + 2;
                     downRatio = total - 2;
                     break;
-                case "沥青温度":
-                    String[] split = moudle.split("-");
-                    upRatio = Math.round(Float.parseFloat(split[1]));
-                    downRatio = Math.round(Float.parseFloat(split[0]));
-                    break;
-                case "混合料温度":
-                    String[] split1 = moudle.split("-");
-                    upRatio = Math.round(Float.parseFloat(split1[1]));
-                    downRatio = Math.round(Float.parseFloat(split1[0]));
-                    break;
-                case "骨料温度":
-                    String[] split2 = moudle.split("-");
-                    upRatio = Math.round(Float.parseFloat(split2[1]));
-                    downRatio = Math.round(Float.parseFloat(split2[0]));
-                    break;
             }
 
-            if ( "1".equals(crewNum) ){
-
-                crew1nameList.add(list.get(i).get("material_name") );
-                crew1topList.add(upRatio);
-                crew1realList.add(Float.parseFloat(list.get(i).get("actual_ratio")));
-                crew1downList.add(downRatio);
-
+            if ("沥青温度".equals(name) || "混合料温度".equals(name) || "骨料温度".equals(name)){
+                continue;
             }else {
-                crew2nameList.add(list.get(i).get("material_name") );
-                crew2topList.add(upRatio);
-                crew2realList.add(Float.parseFloat(list.get(i).get("actual_ratio")));
-                crew2downList.add(downRatio);
+
+                if ( "1".equals(crewNum) ){
+
+                    crew1nameList.add(list.get(i).get("material_name") );
+                    crew1topList.add(upRatio);
+                    crew1realList.add(Float.parseFloat(list.get(i).get("actual_ratio")));
+                    crew1downList.add(downRatio);
+
+                }else {
+                    crew2nameList.add(list.get(i).get("material_name") );
+                    crew2topList.add(upRatio);
+                    crew2realList.add(Float.parseFloat(list.get(i).get("actual_ratio")));
+                    crew2downList.add(downRatio);
+                }
+
             }
 
         }

@@ -71,8 +71,8 @@
                 <c:if test="${producedSVG.rationNum == ratioNum}" >
                     <div class="chartbox4">
                         <div class="my_echars_title">
-                            <span  >今日${ratioNum}号配比产品平均走势图</span>
-                            <a href="qc_dm_data_number.jsp" target="_self">更多
+                            <span  >${ratioNum}号配比产品平均图</span>
+                            <a href="javascript:;" name="${ratioNum}" class="proSVG" >更多
                                 <i class="iconfont">&#xeba8;</i>
                             </a>
                         </div>
@@ -178,7 +178,8 @@
         <div class="infoboxleft">
             <div class="boxtitle">
                 <span>客户分类产品统计</span>
-                <a href="qc_dm_data_number.jsp" target="_self">更多
+                <%--qc_dm_data_number.jsp--%>
+                <a href="javascript:;" target="_self">更多
                     <i class="iconfont">&#xeba8;</i>
                 </a>
             </div>
@@ -286,9 +287,152 @@
             });
         </script>
 
-    </div>
+        <!--查看模板弹出-->
+        <div id="showSVGBrk" class="form_background"  style="display:none;" ></div>
+        <div id="showSVG" class="dm_form_model" style="display:none;" >
+            <table class="dm_form_table">
+                <tbody>
 
-    </div>
+                <tr>
+                    <td colspan="4">
+                        <input type="text" id="proNam" disabled="disabled"  style="width: 97%;font-size: 24px;padding-bottom: 13px;padding-left: 30%;" class="dm_forminput dm_inputstyle" style="width: 72%;" value="">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="dm_tlabels">配比编号：</td>
+                    <td>
+                        <input type="number" disabled="disabled" id="rationNum" class="dm_forminput dm_inputstyle" value="3">
+                    </td>
+                    <td class="dm_tlabels">产品总数(盘)：</td>
+                    <td>
+                        <input type="number" id="procount" class="dm_forminput dm_inputstyle" value="5">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="dm_tlabels">骨料1总量(kg)：</td>
+                    <td>
+                        <input type="number"  disabled="disabled" id="aggregate_1" class="dm_forminput dm_inputstyle" value="17">
+                    </td>
+                    <td class="dm_tlabels">骨料2总量(kg)：</td>
+                    <td>
+                        <input type="number" disabled="disabled" id="aggregate_2" class="dm_forminput dm_inputstyle" value="35">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="dm_tlabels">骨料3总量(kg)：</td>
+                    <td>
+                        <input type="number" disabled="disabled" id="aggregate_3" class="dm_forminput dm_inputstyle" value="75">
+                    </td>
+                    <td class="dm_tlabels">骨料4总量(kg)：</td>
+                    <td>
+                        <input type="number" disabled="disabled"  id="aggregate_4" class="dm_forminput dm_inputstyle" value="85">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="dm_tlabels">骨料5总量(kg)：</td>
+                    <td>
+                        <input type="number" disabled="disabled" id="aggregate_5" class="dm_forminput dm_inputstyle" value="5">
+                    </td>
+                    <td class="dm_tlabels">骨料6总量(kg)：</td>
+                    <td>
+                        <input type="number" disabled="disabled" id="aggregate_6" class="dm_forminput dm_inputstyle" value="1">
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="dm_tlabels">石粉1总量(kg)：</td>
+                    <td>
+                        <input type="number" disabled="disabled" id="stone_1" class="dm_forminput dm_inputstyle" value="157">
+                    </td>
+                    <td class="dm_tlabels">石粉2总量(kg)：</td>
+                    <td>
+                        <input type="number" disabled="disabled" id="stone_2"  class="dm_forminput dm_inputstyle" value="152">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="dm_tlabels">沥青总量(kg)：</td>
+                    <td>
+                        <input type="number" disabled="disabled" id="asphalt" class="dm_forminput dm_inputstyle" value="52">
+                    </td>
+                    <td class="tlabels">再生料总量(kg)：</td>
+                    <td>
+                        <input type="number" disabled="disabled" id="regenerate" class="dm_forminput dm_inputstyle" value="37">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="dm_tlabels">添加剂总量(kg)：</td>
+                    <td>
+                        <input type="number" disabled="disabled" id="additive" class="dm_forminput dm_inputstyle" value="52">
+                    </td>
+                    <td class="tlabels">材料总使用量(kg)：</td>
+                    <td>
+                        <input type="number" disabled="disabled" id="total" class="dm_forminput dm_inputstyle" value="37">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="4">
+                        <input type="text" disabled="disabled"  style="color: #000;outline: 0;background: #fff;padding-top: 1%;font-size: 18px;padding-bottom: 9px;padding-left: 35%;" style="width: 72%;" value="平均配比信息">
+                    </td>
+                    <table class="gridtable">
+                        <tr>
+                            <th>骨料1</th>
+                            <th>骨料2</th>
+                            <th>骨料3</th>
+                            <th>骨料4</th>
+                            <th>骨料5</th>
+                            <th>骨料6</th>
+                            <th>石粉1</th>
+                            <th>石粉2</th>
+                            <th>沥青</th>
+                            <th>再生料</th>
+                            <th>添加剂</th>
+                            <th>1仓温度</th>
+                            <th>混合料温度</th>
+                            <th>除尘器入口温度</th>
+                            <th>沥青温度</th>
+                            <th>骨料温度</th>
+                        </tr>
+                        <tr>
+                            <td id="aggregate_1_svg" ><i>%</i></td>
+                            <td id="aggregate_2_svg" ><i>%</i></td>
+                            <td id="aggregate_3_svg" ><i>%</i></td>
+                            <td id="aggregate_4_svg" ><i>%</i></td>
+                            <td id="aggregate_5_svg" ><i>%</i></td>
+                            <td id="aggregate_6_svg" ><i>%</i></td>
+                            <td id="stone_1_svg" ><i>%</i></td>
+                            <td id="stone_2_svg" ><i>%</i></td>
+                            <td id="asphalt_svg" ><i>%</i></td>
+                            <td id="regenerate_svg" ><i>%</i></td>
+                            <td id="additive_svg" ><i>%</i></td>
+                            <td id="warehouse_1_svg"><i>℃</i></td>
+                            <td id="mixture_svg" ><i>℃</i></td>
+                            <td id="duster_svg" ><i>℃</i></td>
+                            <td id="temAsphalt_svg" ><i>℃</i></td>
+                            <td id="aggregate_svg" ><i>℃</i></td>
+                        </tr>
+                    </table>
+                </tr>
+
+
+                </tbody>
+
+            </table>
+
+            <div class="form_btn">
+                <input type="submit"  id="btn"  value="打印" class="btn_save">
+                <input type="button" id="from_click"  value="关闭" class="btn_cancel">
+            </div>
+
+            </form>
+        </div>
 
     <div style="width: 100%; height: 125%;" ></div>
 
@@ -296,4 +440,52 @@
 <script type="text/javascript" src="/static/js/jquery.js"></script>
 <script type="text/javascript" src="/static/js/common.js"></script>
 <script type="text/javascript" src="/static/js/skin.js"></script>
+
+<script type="text/javascript">
+
+
+    $('#from_click').click(function () {
+        $('#addSVGBrk,#showSVG').hide();
+    });
+
+    //展示选定配比号相关信息
+    $(".proSVG").click(function () {
+        that_ = this;
+        var raionNum = this.name;
+        //获取当天各模板总数
+        var proTotalList = ${baseMap.produceTotal};
+        //获取当天各模板实际配比
+        var proSVGList = ${baseMap.ProSVG};
+        $("#proNam").val("今日"+raionNum + "号配比生产信息");
+        // var objArr = eval("(" + proTotalList + ")");
+        for (var i in proTotalList) {
+            for (var k in proTotalList[i]){
+                if (raionNum == proTotalList[i].rationNum ){
+                    $("#" + k).val(proTotalList[i][k]);
+                }
+            }
+        }
+
+        for(var i in proSVGList){
+            if (raionNum == proSVGList[i].rationNum ){
+                for (var y in proSVGList[i]) {
+                    if ( y == 'warehouse_1' || y == 'mixture' || y == 'duster' || y == 'temAsphalt' || y == 'aggregate'){
+                        $("#" + y + "_svg").html(proSVGList[i][y] + "<i>℃</i>");
+                    }else {
+                        $("#" + y + "_svg").html(proSVGList[i][y] + "<i>%</i>");
+                    }
+
+                }
+            }
+        }
+        $('#addSVGBrk,#showSVG').show();
+    })
+
+    //点击查看模板
+    function closeShowRatio() {
+        $('#showRatioBrk,#showRatio').hide();
+    }
+
+</script>
+
 </html>

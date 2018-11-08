@@ -8,6 +8,7 @@
  **/
 package com.jiaoke.quality.service;
 
+import com.alibaba.fastjson.JSON;
 import com.jiake.utils.QualityDataMontoringUtil;
 import com.jiaoke.common.bean.PageBean;
 import com.jiaoke.quality.bean.QualityDataManagerDay;
@@ -169,11 +170,16 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
         }
 
 
+        String total = JSON.toJSONString(list);
+        String SVG = JSON.toJSONString(SVGList);
+
         map.put("ratioNumList",ratioNumList);
         map.put("rationMessageList",rationMessageList);
         map.put("producedList",producedList);
-        map.put("produceTotal",list);
+        map.put("produceTotal",total);
         map.put("rationProSVG",SVGList);
+        //js用
+        map.put("ProSVG",SVG);
 
         //客户相关展示
         map.put("userProList",userProList);

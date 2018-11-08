@@ -131,23 +131,49 @@
     </select>
 
     <select id="selectProduceByDate" resultType="java.util.Map">
-        SELECT
-        *
-        FROM
-        (
-        SELECT
-        *, row_number () over (
-        PARTITION BY produce_proportioning_num
-        ORDER BY
-        produce_date DESC
-        ) AS rowindex
-        FROM
-        quality_monitoring_realtime_${crewNum}
-        WHERE
-        produce_date = ${producedDate}
-        ) AS t1
-        WHERE
-        t1.rowindex <![CDATA[ <= ]]>  7
+#         SELECT
+#         *
+#         FROM
+#         (
+#         SELECT
+#         *, row_number () over (
+#         PARTITION BY produce_proportioning_num
+#         ORDER BY
+#         produce_date DESC
+#         ) AS rowindex
+#         FROM
+#         quality_monitoring_realtime_${crewNum}
+#         WHERE
+#         produce_date = ${producedDate}
+#         ) AS t1
+#         WHERE
+#         t1.rowindex <![CDATA[ <= ]]>  7
+
+
+
+        SELECT X.*
+        FROM quality_monitoring_realtime_${crewNum} as  X
+        INNER JOIN (SELECT *
+        FROM (SELECT T.produce_proportioning_num,
+        T.produce_date,
+        T.produce_time,
+        COUNT(*) RNS
+        FROM quality_monitoring_realtime_${crewNum} T
+        LEFT JOIN quality_monitoring_realtime_${crewNum} R
+        ON T.produce_proportioning_num =
+        R.produce_proportioning_num
+        AND T.produce_date = R.produce_date
+        AND T.produce_time <![CDATA[ <= ]]>  R.produce_time
+        WHERE T.produce_date = date ${producedDate}
+        GROUP BY T.produce_proportioning_num,
+        T.produce_date,
+        T.produce_time) as T1
+        WHERE T1.RNS <![CDATA[ <= ]]>  7
+        ORDER BY produce_proportioning_num, RNS ) as N
+        ON X.produce_proportioning_num = N.produce_proportioning_num
+        AND X.produce_date = N.produce_date
+        AND X.produce_time = N.produce_time
+        ORDER BY X.produce_proportioning_num, X.produce_time DESC
     </select>
 
     <select id="selectProduceMessageByDate" resultType="java.util.Map">

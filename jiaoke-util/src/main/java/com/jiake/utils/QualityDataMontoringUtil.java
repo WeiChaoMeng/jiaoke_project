@@ -63,7 +63,13 @@ public class QualityDataMontoringUtil {
         double svgTotal = Double.parseDouble(total) / Double.parseDouble(count);
         double svgMolecule = Double.parseDouble(molecule) / Double.parseDouble(count);
 
-        String calculateSVG = calculateRatio(String.valueOf(svgTotal),String.valueOf(svgMolecule));
+        DecimalFormat dFormat = new DecimalFormat("#.#");
+
+        String totalStr = dFormat.format(svgTotal);
+
+        String moleculeStr = dFormat.format(svgMolecule);
+
+        String calculateSVG = calculateRatio(String.valueOf(totalStr),String.valueOf(moleculeStr));
 
         return calculateSVG;
 
@@ -85,8 +91,11 @@ public class QualityDataMontoringUtil {
 
         double svgMolecule = Double.parseDouble(molecule) / Double.parseDouble(count);
 
+        DecimalFormat dFormat = new DecimalFormat("#.#");
 
-        return String.valueOf(svgMolecule);
+        String svg = dFormat.format(svgMolecule);
+
+        return svg;
 
     }
 

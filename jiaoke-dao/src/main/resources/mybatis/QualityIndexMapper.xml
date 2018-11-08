@@ -18,12 +18,11 @@
     </select>
 
     <select id="getLastProductData" resultType="java.util.HashMap">
-
         (
         SELECT
                produce_disc_num,
                material_total,
-               produce_date,
+               DATE_FORMAT(produce_date,'%Y-%c-%d') as produce_date,
                produce_time,
                produce_custom_num,
                '机组一' AS crew1

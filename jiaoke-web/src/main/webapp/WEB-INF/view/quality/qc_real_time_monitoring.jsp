@@ -142,77 +142,6 @@
         </div>
     </div>
 
-    <div class="divbox_realtime">
-
-
-        <div>
-            <div class="boxtitle">
-                <span class="span_realtime"></span>
-            </div>
-            <div id="chart1" class="charts1"></div>
-        </div>
-
-        <script type="text/javascript">
-            var myChart1 = echarts.init(document.getElementById('chart1'));
-            // 指定图表的配置项和数据
-            var colors = ['#5793f3', '#d14a61', '#675bba'];
-            var option1 = {
-                title: {
-                    text: '产品温度走势图',
-                    left: 'left'
-                },
-                tooltip: {
-                    trigger: 'item',
-                    formatter: '{a} <br/>{b} : {c}'
-                },
-                legend: {
-                    left: 'right',
-                    data: ['上限温度', '实际温度', '下限温度']
-                },
-                xAxis: {
-                    type: 'category',
-                    name: 'x',
-                    splitLine: {
-                        show: false
-                    },
-                    data: ['一', '二', '三', '四', '五', '六', '七', '八', '九']
-                },
-                grid: {
-                    left: '3%',
-                    right: '4%',
-                    bottom: '3%',
-                    containLabel: true
-                },
-                yAxis: {
-                    type: 'log',
-                    name: 'y'
-                },
-                series: [{
-                    name: '一仓温度',
-                    type: 'line',
-                    data: [1, 3, 9, 27, 81, 247, 741, 2223, 6669]
-                }, {
-                    name: '混合料温度',
-                    type: 'line',
-                    data: [1, 2, 4, 8, 16, 32, 64, 128, 256]
-                }, {
-                    name: '沥青温度',
-                    type: 'line',
-                    data: [1 / 2, 1 / 4, 1 / 8, 1 / 16, 1 / 32, 1 / 64, 1 / 128, 1 / 256, 1 / 512]
-                }, {
-                    name: '骨料温度',
-                    type: 'line',
-                    data: [1 / 2, 1 / 4, 1 / 8, 1 / 16, 1 / 32, 1 / 64, 1 / 128, 1 / 256, 1 / 512]
-                }, {
-                    name: '除尘器温度',
-                    type: 'line',
-                    data: [1 / 2, 1 / 4, 1 / 8, 1 / 16, 1 / 32, 1 / 64, 1 / 128, 1 / 256, 1 / 512]
-                }]
-            };
-
-        </script>
-    </div>
-
     <div class="infolist_realtime">
 
     <div class="boxtitle">
@@ -332,6 +261,284 @@
     </div>
 </div>
 
+    <div class="divbox_realtime_2">
+    <div>
+        <div class="boxtitle">
+
+        </div>
+        <div id="chart7" class="charts1"></div>
+    </div>
+
+    <script type="text/javascript">
+        var myChart7= echarts.init(document.getElementById('chart7'));
+        // 指定图表的配置项和数据
+        var colors = ['#5793f3', '#d14a61', '#675bba'];
+        var option7= {
+            title: {
+                text: '一号机组配比图',
+                x: 'center'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['上限占比', '实际占比', '下限占比'],
+                x: 'left'
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    dataZoom: {
+                        yAxisIndex: 'none'
+                    },
+                    dataView: { readOnly: false },
+                    magicType: { type: ['line', 'bar'] },
+                    restore: {},
+                    saveAsImage: {}
+                }
+            },
+            xAxis: [{
+                axisLabel: {
+                    rotate: 70,
+                    interval: 0
+                },
+                type: 'category',
+                boundaryGap: false,
+                data: ['骨料1', '骨料2', '骨料3', '骨料4', '骨料5', '骨料6', '石粉', '沥青', '再生料', '添加剂']
+            }],
+            yAxis: {
+                type: 'value',
+                axisLabel: {
+                    formatter: '{value} %'
+                }
+            },
+            series: [
+                {
+                    name: '上限占比',
+                    type: 'line',
+                    data: [11, 11, 15, 13, 12, 13, 10, 11, 11, 15, 13, 12, 13, 10],
+                    formatter: '{value} %',
+                    markPoint: {
+
+                        data: [
+                            { type: 'max', name: '最大值' },
+                            { type: 'min', name: '最小值' }
+                        ]
+                    }
+                }, {
+                    name: '实际占比',
+                    type: 'line',
+                    data: [7, 8, 9, 10, 8, 13, 7, 9, 7, 9, 6, 8, 7, 5],
+                    formatter: '{value} %',
+                    markPoint: {
+
+                        data: [
+                            { type: 'max', name: '最大值' },
+                            { type: 'min', name: '最小值' }
+                        ]
+                    }
+                },
+                {
+                    name: '下限占比',
+                    type: 'line',
+                    data: [1, 2, 2, 5, 3, 2, 0, 1, 2, 2, 5, 3, 2, 0],
+                    formatter: '{value} %',
+                    markPoint: {
+                        data: [
+                            { type: 'max', name: '最大值' },
+                            { type: 'min', name: '最小值' }
+                        ]
+                    }
+                }
+            ]
+        };
+
+
+    </script>
+</div>
+
+    <div class="divbox_realtime_2">
+    <div>
+        <div class="boxtitle">
+
+        </div>
+        <div id="chart4" class="charts1"></div>
+    </div>
+
+    <script type="text/javascript">
+        var myChart4 = echarts.init(document.getElementById('chart4'));
+        // 指定图表的配置项和数据
+        var colors = ['#5793f3', '#d14a61', '#675bba'];
+        var option4 = {
+            title: {
+                text: '二号机组配比图',
+                x: 'center'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['上限占比', '实际占比', '下限占比'],
+                x: 'left'
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    dataZoom: {
+                        yAxisIndex: 'none'
+                    },
+                    dataView: { readOnly: false },
+                    magicType: { type: ['line', 'bar'] },
+                    restore: {},
+                    saveAsImage: {}
+                }
+            },
+            xAxis: [{
+                axisLabel: {
+                    rotate: 70,
+                    interval: 0
+                },
+                type: 'category',
+                boundaryGap: false,
+                data: ['骨料1', '骨料2', '骨料3', '骨料4', '骨料5', '骨料6', '石粉', '沥青', '再生料', '添加剂']
+            }],
+            yAxis: {
+                type: 'value',
+                axisLabel: {
+                    formatter: '{value} %'
+                }
+            },
+            series: [
+                {
+                    name: '上限占比',
+                    type: 'line',
+                    data: [11, 11, 15, 13, 12, 13, 10, 11, 11, 15, 13, 12, 13, 10],
+                    formatter: '{value} %',
+                }, {
+                    name: '实际占比',
+                    type: 'line',
+                    data: [7, 8, 9, 10, 8, 13, 7, 9, 7, 9, 6, 8, 7, 5],
+                    formatter: '{value} %',
+                    markPoint: {
+
+                        data: [
+                            { type: 'max', name: '最大值' },
+                            { type: 'min', name: '最小值' }
+                        ]
+                    }
+                },
+                {
+                    name: '下限占比',
+                    type: 'line',
+                    data: [1, 2, 2, 5, 3, 2, 0, 1, 2, 2, 5, 3, 2, 0],
+                    formatter: '{value} %',
+
+                }
+            ]
+        };
+
+
+
+    </script>
+</div>
+
+    <div class="divbox_realtime">
+
+
+        <div>
+            <div class="boxtitle">
+                <span class="span_realtime"></span>
+            </div>
+            <div id="chart1" class="charts1"></div>
+        </div>
+
+        <script type="text/javascript">
+            var myChart1 = echarts.init(document.getElementById('chart1'));
+            // 指定图表的配置项和数据
+            var colors = ['#5793f3', '#d14a61', '#675bba'];
+            var option1 =  {
+                title: {
+                    text: '一号机组产品温度走势图'
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data:['最高气温','最低气温']
+                },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        dataZoom: {
+                            yAxisIndex: 'none'
+                        },
+                        dataView: {readOnly: false},
+                        magicType: {type: ['line', 'bar']},
+                        restore: {},
+                        saveAsImage: {}
+                    }
+                },
+                xAxis:  {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: ['周一','周二','周三','周四','周五','周六','周日']
+                },
+                yAxis: {
+                    type: 'value',
+                    axisLabel: {
+                        formatter: '{value} °C'
+                    }
+                },
+                series: [
+                    {
+                        name:'一仓温度',
+                        type:'line',
+                        data:[11, 11, 15, 13, 12, 13, 10],
+                        markPoint: {
+                            data: [
+                                {type: 'max', name: '最大值'},
+                                {type: 'min', name: '最小值'}
+                            ]
+                        }
+                    },        {
+                        name:'混合料温度',
+                        type:'line',
+                        data:[12, 13, 16, 17, 14, 11, 12],
+                        markPoint: {
+                            data: [
+                                {type: 'max', name: '最大值'},
+                                {type: 'min', name: '最小值'}
+                            ]
+                        }
+                    },        {
+                        name:'沥青温度',
+                        type:'line',
+                        data:[11, 11, 15, 13, 12, 13, 10],
+                        markPoint: {
+                            data: [
+                                {type: 'max', name: '最大值'},
+                                {type: 'min', name: '最小值'}
+                            ]
+                        }
+                    },
+                    {
+                        name:'骨料温度',
+                        type:'line',
+                        data:[1, -2, 2, 5, 3, 2, 0],
+
+                    },
+                    {
+                        name:'除尘器温度',
+                        type:'line',
+                        data:[1, -2, 2, 5, 3, 2, 0],
+
+                    }
+                ]
+            };
+
+        </script>
+    </div>
+
     <div class="divbox_realtime">
 
         <div>
@@ -347,85 +554,13 @@
             var colors = ['#5793f3', '#d14a61', '#675bba'];
             var option5= {
                 title: {
-                    text: '产品温度走势图',
-                    left: 'left'
-                },
-                tooltip: {
-                    trigger: 'item',
-                    formatter: '{a} <br/>{b} : {c}'
-                },
-                legend: {
-                    left: 'right',
-                    data: ['上限温度', '实际温度', '下限温度']
-                },
-                xAxis: {
-                    type: 'category',
-                    name: 'x',
-                    splitLine: {
-                        show: false
-                    },
-                    data: ['一', '二', '三', '四', '五', '六', '七', '八', '九']
-                },
-                grid: {
-                    left: '3%',
-                    right: '4%',
-                    bottom: '3%',
-                    containLabel: true
-                },
-                yAxis: {
-                    type: 'log',
-                    name: 'y'
-                },
-                series: [{
-                    name: '一仓温度',
-                    type: 'line',
-                    data: [1, 3, 9, 27, 81, 247, 741, 2223, 6669]
-                }, {
-                    name: '混合料温度',
-                    type: 'line',
-                    data: [1, 2, 4, 8, 16, 32, 64, 128, 256]
-                }, {
-                    name: '沥青温度',
-                    type: 'line',
-                    data: [1 / 2, 1 / 4, 1 / 8, 1 / 16, 1 / 32, 1 / 64, 1 / 128, 1 / 256, 1 / 512]
-                }, {
-                    name: '骨料温度',
-                    type: 'line',
-                    data: [1 / 2, 1 / 4, 1 / 8, 1 / 16, 1 / 32, 1 / 64, 1 / 128, 1 / 256, 1 / 512]
-                }, {
-                    name: '除尘器温度',
-                    type: 'line',
-                    data: [1 / 2, 1 / 4, 1 / 8, 1 / 16, 1 / 32, 1 / 64, 1 / 128, 1 / 256, 1 / 512]
-                }]
-            };
-
-        </script>
-    </div>
-
-
-    <div class="divbox_realtime_2">
-        <div>
-            <div class="boxtitle">
-
-            </div>
-            <div id="chart7" class="charts1"></div>
-        </div>
-
-        <script type="text/javascript">
-            var myChart7= echarts.init(document.getElementById('chart7'));
-            // 指定图表的配置项和数据
-            var colors = ['#5793f3', '#d14a61', '#675bba'];
-            var option7= {
-                title: {
-                    text: '一号机组配比图',
-                    x: 'center'
+                    text: '二号机组产品温度走势图'
                 },
                 tooltip: {
                     trigger: 'axis'
                 },
                 legend: {
-                    data: ['上限占比', '实际占比', '下限占比'],
-                    x: 'left'
+                    data:['最高气温','最低气温']
                 },
                 toolbox: {
                     show: true,
@@ -433,167 +568,75 @@
                         dataZoom: {
                             yAxisIndex: 'none'
                         },
-                        dataView: { readOnly: false },
-                        magicType: { type: ['line', 'bar'] },
+                        dataView: {readOnly: false},
+                        magicType: {type: ['line', 'bar']},
                         restore: {},
                         saveAsImage: {}
                     }
                 },
-                xAxis: [{
-                    axisLabel: {
-                        rotate: 70,
-                        interval: 0
-                    },
+                xAxis:  {
                     type: 'category',
                     boundaryGap: false,
-                    data: ['骨料1', '骨料2', '骨料3', '骨料4', '骨料5', '骨料6', '石粉', '沥青', '再生料', '添加剂', '沥青温度', '骨料温度', '混合料温度']
-                }],
+                    data: ['周一','周二','周三','周四','周五','周六','周日']
+                },
                 yAxis: {
                     type: 'value',
                     axisLabel: {
-                        formatter: '{value} %'
+                        formatter: '{value} °C'
                     }
                 },
                 series: [
                     {
-                        name: '上限占比',
-                        type: 'line',
-                        data: [11, 11, 15, 13, 12, 13, 10, 11, 11, 15, 13, 12, 13, 10],
-                        formatter: '{value} %',
+                        name:'一仓温度',
+                        type:'line',
+                        data:[11, 11, 15, 13, 12, 13, 10],
                         markPoint: {
-
                             data: [
-                                { type: 'max', name: '最大值' },
-                                { type: 'min', name: '最小值' }
+                                {type: 'max', name: '最大值'},
+                                {type: 'min', name: '最小值'}
                             ]
                         }
-                    }, {
-                        name: '实际占比',
-                        type: 'line',
-                        data: [7, 8, 9, 10, 8, 13, 7, 9, 7, 9, 6, 8, 7, 5],
-                        formatter: '{value} %',
+                    },        {
+                        name:'混合料温度',
+                        type:'line',
+                        data:[12, 13, 16, 17, 14, 11, 12],
                         markPoint: {
-
                             data: [
-                                { type: 'max', name: '最大值' },
-                                { type: 'min', name: '最小值' }
+                                {type: 'max', name: '最大值'},
+                                {type: 'min', name: '最小值'}
+                            ]
+                        }
+                    },        {
+                        name:'沥青温度',
+                        type:'line',
+                        data:[11, 11, 15, 13, 12, 13, 10],
+                        markPoint: {
+                            data: [
+                                {type: 'max', name: '最大值'},
+                                {type: 'min', name: '最小值'}
                             ]
                         }
                     },
                     {
-                        name: '下限占比',
-                        type: 'line',
-                        data: [1, 2, 2, 5, 3, 2, 0, 1, 2, 2, 5, 3, 2, 0],
-                        formatter: '{value} %',
-                        markPoint: {
-                            data: [
-                                { type: 'max', name: '最大值' },
-                                { type: 'min', name: '最小值' }
-                            ]
-                        }
+                        name:'骨料温度',
+                        type:'line',
+                        data:[1, -2, 2, 5, 3, 2, 0],
+
+                    },
+                    {
+                        name:'除尘器温度',
+                        type:'line',
+                        data:[1, -2, 2, 5, 3, 2, 0],
+
                     }
                 ]
             };
-
 
         </script>
     </div>
 
-    <div class="divbox_realtime_2">
-        <div>
-            <div class="boxtitle">
+    <div>
 
-            </div>
-            <div id="chart4" class="charts1"></div>
-        </div>
-
-        <script type="text/javascript">
-            var myChart4 = echarts.init(document.getElementById('chart4'));
-            // 指定图表的配置项和数据
-            var colors = ['#5793f3', '#d14a61', '#675bba'];
-            var option4 = {
-                title: {
-                    text: '二号机组配比图',
-                    x: 'center'
-                },
-                tooltip: {
-                    trigger: 'axis'
-                },
-                legend: {
-                    data: ['上限占比', '实际占比', '下限占比'],
-                    x: 'left'
-                },
-                toolbox: {
-                    show: true,
-                    feature: {
-                        dataZoom: {
-                            yAxisIndex: 'none'
-                        },
-                        dataView: { readOnly: false },
-                        magicType: { type: ['line', 'bar'] },
-                        restore: {},
-                        saveAsImage: {}
-                    }
-                },
-                xAxis: [{
-                    axisLabel: {
-                        rotate: 70,
-                        interval: 0
-                    },
-                    type: 'category',
-                    boundaryGap: false,
-                    data: ['骨料1', '骨料2', '骨料3', '骨料4', '骨料5', '骨料6', '石粉', '沥青', '再生料', '添加剂', '沥青温度', '骨料温度', '混合料温度']
-                }],
-                yAxis: {
-                    type: 'value',
-                    axisLabel: {
-                        formatter: '{value} %'
-                    }
-                },
-                series: [
-                    {
-                        name: '上限占比',
-                        type: 'line',
-                        data: [11, 11, 15, 13, 12, 13, 10, 11, 11, 15, 13, 12, 13, 10],
-                        formatter: '{value} %',
-                        markPoint: {
-
-                            data: [
-                                { type: 'max', name: '最大值' },
-                                { type: 'min', name: '最小值' }
-                            ]
-                        }
-                    }, {
-                        name: '实际占比',
-                        type: 'line',
-                        data: [7, 8, 9, 10, 8, 13, 7, 9, 7, 9, 6, 8, 7, 5],
-                        formatter: '{value} %',
-                        markPoint: {
-
-                            data: [
-                                { type: 'max', name: '最大值' },
-                                { type: 'min', name: '最小值' }
-                            ]
-                        }
-                    },
-                    {
-                        name: '下限占比',
-                        type: 'line',
-                        data: [1, 2, 2, 5, 3, 2, 0, 1, 2, 2, 5, 3, 2, 0],
-                        formatter: '{value} %',
-                        markPoint: {
-                            data: [
-                                { type: 'max', name: '最大值' },
-                                { type: 'min', name: '最小值' }
-                            ]
-                        }
-                    }
-                ]
-            };
-
-
-
-        </script>
     </div>
     <%--js获取路径--%>
     <input id="path" type="hidden" value="${path}"/>
