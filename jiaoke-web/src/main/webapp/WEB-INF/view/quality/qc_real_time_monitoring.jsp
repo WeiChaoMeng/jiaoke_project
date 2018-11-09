@@ -639,7 +639,7 @@
 
     </div>
     <%--js获取路径--%>
-    <input id="path" type="hidden" value="${path}"/>
+    <input id="path" type="hidden" value="http://47.105.114.70"/>
 </body>
 
 <script type="text/javascript" src="/static/js/jquery.js"></script>

@@ -182,7 +182,7 @@
 <script>
     //查看详情
     function particulars(id) {
-        window.location.href = "${path}/document/completeDetails?id=" + id;
+        window.location.href = "http://47.105.114.70/document/completeDetails?id=" + id;
     }
 </script>
 </html>
