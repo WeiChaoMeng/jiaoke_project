@@ -37,10 +37,12 @@
 
 <body>
 <div class="chartbox3" id="chart_box" style="width: 100%;height: 100%;float: right;margin-top: 20px">
-    <div class="data-display" style="height: 150px;width: 100%;padding-left: 10px">
+
+    <div class="data-display" style="height: 150px;width: 100%;padding-left: 30px">
         <div style="width: 100%;margin:0;">
             <p style="font-size: 15px" id="updateDate">更新时间：2018-11-10</p>
         </div>
+
         <div>
             <span class="data-title">PM2.5</span>
             <p class="current">当前值：37μg/m3</p>
@@ -66,7 +68,7 @@
             <p class="current">当前值：8m³</p>
         </div>
     </div>
-    <div id="chart2" style="height:500px;width: 100%;"></div>
+    <div id="chart2" style="height:400px;width: 95%;padding-left: 30px"></div>
 
     <script type="text/javascript">
         var myChart1 = echarts.init(document.getElementById('chart2'));

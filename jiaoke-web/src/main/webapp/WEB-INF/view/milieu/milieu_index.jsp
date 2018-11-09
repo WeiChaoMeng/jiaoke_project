@@ -8,6 +8,15 @@
         .nav-mini.nav .nav-item ul {
             background-color: #fff;
         }
+
+        .nav-item a img {
+            width: 25px;
+            padding: 5px 0
+        }
+
+        .nav a{
+            padding-left: 16px;
+        }
     </style>
 </head>
 <body>
@@ -20,12 +29,12 @@
     <ul>
         <li class="nav-item">
             <a id="circumstanceIndex">
-                <img src="../../../static/images/milieu/index1.png" style="padding: 5px 0">
+                <img src="../../../static/images/milieu/index1.png">
                 <span style="margin-left: 10px;position: absolute;font-size: 13px;">首页</span>
             </a>
         </li>
         <li class="nav-item">
-            <a><img src="../../../static/images/milieu/realTime.png" style="padding: 5px 0">
+            <a><img src="../../../static/images/milieu/realTime.png">
                 <span style="margin-left: 10px;position: absolute;font-size: 13px;">实时数据</span>
             </a>
             <ul>
@@ -33,7 +42,7 @@
             </ul>
         </li>
         <li class="nav-item">
-            <a><img src="../../../static/images/milieu/history1.png" style="padding: 5px 0">
+            <a><img src="../../../static/images/milieu/history1.png">
                 <span style="margin-left: 10px;position: absolute;font-size: 13px;">历史数据</span>
             </a>
             <ul>
@@ -43,7 +52,7 @@
     </ul>
 </div>
 <div class="rightdown"
-     style="float: right;width: 100%;transition: width 2s;-moz-transition: width 2s; -webkit-transition: width 0.3s;-o-transition: width 2s;">
+     style="float:right;width:96%;transition: width 2s;-moz-transition: width 2s; -webkit-transition: width 0.3s;-o-transition: width 2s;">
     <iframe src="weatherIndex.do" id="iframe" name="right" width="100%" height="100%" frameborder="0"
             scrolling="auto" style="min-height: 750px;"></iframe>
 </div>
