@@ -847,7 +847,7 @@
         </div>
     </main>
     <%--js获取路径--%>
-    <input id="path" type="hidden" value="http://47.105.114.70"/>
+    <input id="path" type="hidden" value="${path}"/>
 </body>
 <script type="text/javascript" src="/static/js/jquery.js"></script>
 <script type="text/javascript" src="/static/js/oa/oa_common.js"></script>

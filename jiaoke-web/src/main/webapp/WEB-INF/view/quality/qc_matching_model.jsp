@@ -508,7 +508,7 @@
     function showRatio( ratioId ) {
 
         $.ajax({
-            url:"http://47.105.114.70/showRatioById.do",
+            url:"${path}/showRatioById.do",
             type: "post",
             data:{
                 "idStr" : ratioId

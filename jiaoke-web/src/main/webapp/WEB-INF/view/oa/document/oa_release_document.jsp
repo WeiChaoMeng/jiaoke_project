@@ -337,7 +337,7 @@
             $.ajax({
                 cache: true,
                 type: "POST",
-                url: 'http://47.105.114.70/document/preservationPending',
+                url: '${path}/document/preservationPending',
                 data: $("#oaDocumentProcessing").serialize(),
                 error: function (request) {
                     alert("Connection error");

@@ -224,13 +224,13 @@
     function consent() {
         var id = $("#id").val();
         variableValue = "1";
-        window.location.href = "http://47.105.114.70/document/documentApproval?taskId=" + taskId + "&variableName=" + variableName + "&variableValue=" + variableValue + "&id=" + id;
+        window.location.href = "${path}/document/documentApproval?taskId=" + taskId + "&variableName=" + variableName + "&variableValue=" + variableValue + "&id=" + id;
     }
 
     //不同意
     function noConsent() {
         variableValue = "2";
-        window.location.href = "http://47.105.114.70/document/documentApproval?taskId=" + taskId + "&variableName=" + variableName + "&variableValue=" + variableValue;
+        window.location.href = "${path}/document/documentApproval?taskId=" + taskId + "&variableName=" + variableName + "&variableValue=" + variableValue;
     }
 </script>
 </html>

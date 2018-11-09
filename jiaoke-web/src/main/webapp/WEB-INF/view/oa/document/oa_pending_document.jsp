@@ -196,7 +196,7 @@
     //查看详情
     function particulars(id) {
         var taskId = $("#taskId").val();
-        window.location.href = "http://47.105.114.70/document/documentDetails?id=" + id + "&taskId=" + taskId;
+        window.location.href = "${path}/document/documentDetails?id=" + id + "&taskId=" + taskId;
     }
 </script>
 </html>
