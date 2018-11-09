@@ -381,5 +381,38 @@ public class CommonController {
         return "security/security_index";
     }
 
+    /**
+     * 跳转环保监控
+     * @return milieu_index.jsp
+     */
+    @RequestMapping("/milieuIndex.do")
+    public String milieuIndex(){
+        return "milieu/milieu_index";
+    }
+ /**
+     * 跳转环保监控-实时数据
+     * @return real_time_data.jsp
+     */
+    @RequestMapping("/realTimeData.do")
+    public String realTimeData(){
+        return "milieu/real_time_data";
+    }
+ /**
+     * 跳转环保监控-环境监测
+     * @return circumstance.jsp
+     */
+    @RequestMapping("/circumstance.do")
+    public String circumstance(){
+        return "milieu/circumstance";
+    }
+ /**
+     * 跳转环保监控-首页
+     * @return index.jsp
+     */
+    @RequestMapping("/weatherIndex.do")
+    public String weatherIndex(){
+        return "milieu/index";
+    }
+
 
 }

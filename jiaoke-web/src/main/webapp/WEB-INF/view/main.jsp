@@ -195,7 +195,7 @@
 
                 case 'HB':
 
-                    $("#iframe").attr("src", "/construction.do");
+                    $("#iframe").attr("src", "/milieuIndex.do");
                     break;
 
                 case 'AQ':
