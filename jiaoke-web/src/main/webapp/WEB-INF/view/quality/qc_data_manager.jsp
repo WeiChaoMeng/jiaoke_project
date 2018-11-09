@@ -56,7 +56,7 @@
                                             <td>${item.crewNum == 'crew1' ? '机组1':'机组2'} </td>
                                             <td>
 
-                                                <a class="selected" id="add" href="${path}/getProducttionByDate.do?producedDate=${item.produceDate}&crewNum=${item.crewNum}" ><i class="toolico iconfont">&#xe970;</i>查看</a>
+                                                <a class="selected" id="add" href="http://47.105.114.70/getProducttionByDate.do?producedDate=${item.produceDate}&crewNum=${item.crewNum}" ><i class="toolico iconfont">&#xe970;</i>查看</a>
 
                                             </td>
                                         </tr>
