@@ -709,7 +709,7 @@
                         </div>
                     </div>
                     <div class="statement_div_echar">
-                        <div class="boxtitle"><span>上月二号机组产品预警统计</span></div>
+                        <div class="boxtitle"><span>九月二号机组产品预警统计</span></div>
                         <div id="chart15" class="statement_charts1">
                             <script type="text/javascript">
                                 var myChart15 = echarts.init(document.getElementById('chart15'), 'uimaker');
