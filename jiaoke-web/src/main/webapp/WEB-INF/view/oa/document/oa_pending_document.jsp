@@ -8,6 +8,11 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+    request.setAttribute("path", basePath);
+%>
 <html>
 <head>
     <meta charset="utf-8">
@@ -129,40 +134,50 @@
             </thead>
             <tbody>
 
-            <tr></tr>
+            <c:choose>
+                <c:when test="${oaDocumentList.size() == 0}">
+                    <tr>
+                        <td colspan="11">没有查询到匹配记录</td>
+                    </tr>
+                </c:when>
+                <c:otherwise>
+                    <tr></tr>
 
-            <c:forEach var="oaDocument" items="${oaDocumentList}" varStatus="status">
-                <tr onclick="particulars(${oaDocument.id})">
-                    <td class="tdnum">
-                        <input type="hidden" id="taskId" value="${oaDocument.taskId}">
-                        <input type="checkbox" onclick="window.event.cancelBubble=true;">
-                    </td>
-                    <td>
-                        <c:if test="${oaDocument.rank == 1}">普通公文</c:if>
-                        <c:if test="${oaDocument.rank == 2}">秘密公文</c:if>
-                        <c:if test="${oaDocument.rank == 3}">机密公文</c:if>
-                        <c:if test="${oaDocument.rank == 4}">绝密公文</c:if>
-                    </td>
-                    <td class="text_style"
-                        title="${oaDocument.formTitle}">${oaDocument.formTitle}
-                    </td>
-                    <td>${oaDocument.textNumber}</td>
-                    <td>${oaDocument.userInfoId}</td>
-                    <td>${oaDocument.createTimeStr}</td>
-                    <td>${oaDocument.createTimeStr}</td>
-                    <td>
-                        <c:if test="${oaDocument.track == 0}">无</c:if>
-                        <c:if test="${oaDocument.track == 1}">全部</c:if>
-                        <c:if test="${oaDocument.track == 2}">指定</c:if>
-                    </td>
-                    <td>${oaDocument.urgingNumber}</td>
-                    <td>
-                        <c:if test="${oaDocument.processState == 0}">未读</c:if>
-                        <c:if test="${oaDocument.processState == 1}">已读</c:if>
-                    </td>
-                    <td style="text-align: center"><i class="iconfont">&#xe64c;</i></td>
-                </tr>
-            </c:forEach>
+                    <c:forEach var="oaDocument" items="${oaDocumentList}" varStatus="status">
+                        <tr onclick="particulars(${oaDocument.id})">
+                            <td class="tdnum">
+                                <input type="hidden" id="taskId" value="${oaDocument.taskId}">
+                                <input type="checkbox" onclick="window.event.cancelBubble=true;">
+                            </td>
+                            <td>
+                                <c:if test="${oaDocument.rank == 1}">普通公文</c:if>
+                                <c:if test="${oaDocument.rank == 2}">秘密公文</c:if>
+                                <c:if test="${oaDocument.rank == 3}">机密公文</c:if>
+                                <c:if test="${oaDocument.rank == 4}">绝密公文</c:if>
+                            </td>
+                            <td class="text_style"
+                                title="${oaDocument.formTitle}">${oaDocument.formTitle}
+                            </td>
+                            <td>${oaDocument.textNumber}</td>
+                            <td>${oaDocument.userInfoId}</td>
+                            <td>${oaDocument.createTimeStr}</td>
+                            <td>${oaDocument.createTimeStr}</td>
+                            <td>
+                                <c:if test="${oaDocument.track == 0}">无</c:if>
+                                <c:if test="${oaDocument.track == 1}">全部</c:if>
+                                <c:if test="${oaDocument.track == 2}">指定</c:if>
+                            </td>
+                            <td>${oaDocument.urgingNumber}</td>
+                            <td>
+                                <c:if test="${oaDocument.processState == 0}">未读</c:if>
+                                <c:if test="${oaDocument.processState == 1}">已读</c:if>
+                            </td>
+                            <td style="text-align: center"><i class="iconfont">&#xe64c;</i></td>
+                        </tr>
+                    </c:forEach>
+                </c:otherwise>
+            </c:choose>
+
 
             </tbody>
 
@@ -181,8 +196,7 @@
     //查看详情
     function particulars(id) {
         var taskId = $("#taskId").val();
-        window.location.href = "documentDetails?id=" + id + "&taskId=" + taskId;
-        // window.location.href = "http://47.105.114.70/document/documentDetails?id=" + id;
+        window.location.href = "${path}/document/documentDetails?id=" + id + "&taskId=" + taskId;
     }
 </script>
 </html>

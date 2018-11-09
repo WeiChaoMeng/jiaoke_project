@@ -134,9 +134,14 @@ public class OaDocumentController {
     public String doneDocument(Model model) {
         UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
         List<String> businessKeyList = activitiUtil.historicTask(userInfo.getId().toString());
-        List<OaDocument> oaDocumentList = oaDocumentService.getListById(businessKeyList);
-        model.addAttribute("oaDocumentList", oaDocumentList);
-        return "oa/document/oa_done_document";
+        if (businessKeyList.size() == 0) {
+            model.addAttribute("oaDocumentList", businessKeyList);
+            return "oa/document/oa_done_document";
+        } else {
+            List<OaDocument> oaDocumentList = oaDocumentService.getListById(businessKeyList);
+            model.addAttribute("oaDocumentList", oaDocumentList);
+            return "oa/document/oa_done_document";
+        }
     }
 
     /**

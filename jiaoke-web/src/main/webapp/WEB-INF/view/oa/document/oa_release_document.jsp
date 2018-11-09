@@ -6,6 +6,11 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+    request.setAttribute("path", basePath);
+%>
 <html>
 <head>
     <meta charset="utf-8">
@@ -332,8 +337,7 @@
             $.ajax({
                 cache: true,
                 type: "POST",
-                url: '/document/preservationPending',
-                // url: 'http://47.105.114.70/document/preservationPending',
+                url: '${path}/document/preservationPending',
                 data: $("#oaDocumentProcessing").serialize(),
                 error: function (request) {
                     alert("Connection error");

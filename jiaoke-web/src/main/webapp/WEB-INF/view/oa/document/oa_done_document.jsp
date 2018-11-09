@@ -7,6 +7,11 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+    request.setAttribute("path", basePath);
+%>
 <html>
 <head>
     <meta charset="utf-8">
@@ -125,34 +130,43 @@
 
         <tbody class="tbodys">
 
-        <tr></tr>
+        <c:choose>
+            <c:when test="${oaDocumentList.size() == 0}">
+                <tr>
+                    <td colspan="9">没有查询到匹配记录</td>
+                </tr>
+            </c:when>
+            <c:otherwise>
+                <tr></tr>
 
-        <c:forEach var="oaDocument" items="${oaDocumentList}" varStatus="status">
-            <tr onclick="particulars(${oaDocument.id})">
-                <td class="tdnum">
-                    <input type="checkbox" onclick="window.event.cancelBubble=true;">
-                </td>
-                <td>
-                    <c:if test="${oaDocument.rank == 0}">普通公文</c:if>
-                    <c:if test="${oaDocument.rank == 1}">秘密公文</c:if>
-                    <c:if test="${oaDocument.rank == 2}">机密公文</c:if>
-                    <c:if test="${oaDocument.rank == 3}">绝密公文</c:if>
-                </td>
-                <td class="text_style"
-                    title="${oaDocument.formTitle}">${oaDocument.formTitle}
-                </td>
-                <td>${oaDocument.textNumber}</td>
-                <td>${oaDocument.userInfoId}</td>
-                <td>${oaDocument.createTimeStr}</td>
-                <td>${oaDocument.createTimeStr}</td>
-                <td>
-                    <c:if test="${oaDocument.track == 0}">无</c:if>
-                    <c:if test="${oaDocument.track == 1}">全部</c:if>
-                    <c:if test="${oaDocument.track == 2}">指定</c:if>
-                </td>
-                <td style="text-align: center"><i class="iconfont">&#xe64c;</i></td>
-            </tr>
-        </c:forEach>
+                <c:forEach var="oaDocument" items="${oaDocumentList}" varStatus="status">
+                    <tr onclick="particulars(${oaDocument.id})">
+                        <td class="tdnum">
+                            <input type="checkbox" onclick="window.event.cancelBubble=true;">
+                        </td>
+                        <td>
+                            <c:if test="${oaDocument.rank == 0}">普通公文</c:if>
+                            <c:if test="${oaDocument.rank == 1}">秘密公文</c:if>
+                            <c:if test="${oaDocument.rank == 2}">机密公文</c:if>
+                            <c:if test="${oaDocument.rank == 3}">绝密公文</c:if>
+                        </td>
+                        <td class="text_style"
+                            title="${oaDocument.formTitle}">${oaDocument.formTitle}
+                        </td>
+                        <td>${oaDocument.textNumber}</td>
+                        <td>${oaDocument.userInfoId}</td>
+                        <td>${oaDocument.createTimeStr}</td>
+                        <td>${oaDocument.createTimeStr}</td>
+                        <td>
+                            <c:if test="${oaDocument.track == 0}">无</c:if>
+                            <c:if test="${oaDocument.track == 1}">全部</c:if>
+                            <c:if test="${oaDocument.track == 2}">指定</c:if>
+                        </td>
+                        <td style="text-align: center"><i class="iconfont">&#xe64c;</i></td>
+                    </tr>
+                </c:forEach>
+            </c:otherwise>
+        </c:choose>
 
         </tbody>
 
@@ -168,8 +182,7 @@
 <script>
     //查看详情
     function particulars(id) {
-        window.location.href = "completeDetails?id=" + id;
-        // window.location.href = "http://47.105.114.70/document/documentDetails?id=" + id;
+        window.location.href = "${path}/document/completeDetails?id=" + id;
     }
 </script>
 </html>

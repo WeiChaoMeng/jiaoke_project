@@ -234,9 +234,7 @@
         formData.append('file', files[0]);
         $.ajax({
             type: "POST",
-            url: '/uploadPic/uploadImg',
-            // url: 'http://47.105.114.70/uploadPic/uploadImg',
-            // data: {"file": files},
+            url: '${path}/uploadPic/uploadImg',
             data: formData,
             async: true,
             cache: false,

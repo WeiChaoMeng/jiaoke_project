@@ -7,6 +7,13 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String path = request.getContextPath();
+
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+
+    request.setAttribute("path", basePath);
+%>
 <html>
 <head>
     <meta charset="utf-8">
@@ -125,14 +132,12 @@
 <script>
     //新建会议
     $("#new-employee-files").on("click", function () {
-        window.location.href = 'OANewContract.do';
-        // window.location.href = 'http://47.105.114.70/contractArchives/OANewContract.do';
+        window.location.href = '${path}/contractArchives/OANewContract.do';
     });
 
     //详情
     function particulars(id) {
-        window.location.href = "details?id=" + id;
-        // window.location.href = "http://47.105.114.70/contractArchives/details?id=" + id;
+        window.location.href = "${path}/contractArchives/details?id=" + id;
     }
 </script>
 </html>

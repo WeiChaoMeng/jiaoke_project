@@ -9,15 +9,6 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
 
-    <modules>
-        <module>jiaoke-util</module>
-        <module>jiaoke-bean</module>
-        <module>jiaoke-dao</module>
-        <module>jiaoke-oa-service</module>
-        <module>jiaoke-quality-service</module>
-        <module>jiaoke-web</module>
-    </modules>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
@@ -291,6 +282,14 @@
 
     </dependencies>
 
+    <modules>
+        <module>jiaoke-util</module>
+        <module>jiaoke-bean</module>
+        <module>jiaoke-dao</module>
+        <module>jiaoke-oa-service</module>
+        <module>jiaoke-quality-service</module>
+        <module>jiaoke-web</module>
+    </modules>
 
     <build>
         <plugins>

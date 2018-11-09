@@ -8,6 +8,11 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+    request.setAttribute("path", basePath);
+%>
 <html>
 <head>
     <meta charset="utf-8">
@@ -219,13 +224,13 @@
     function consent() {
         var id = $("#id").val();
         variableValue = "1";
-        window.location.href = "documentApproval?taskId=" + taskId + "&variableName=" + variableName + "&variableValue=" + variableValue + "&id=" + id;
+        window.location.href = "${path}/document/documentApproval?taskId=" + taskId + "&variableName=" + variableName + "&variableValue=" + variableValue + "&id=" + id;
     }
 
     //不同意
     function noConsent() {
         variableValue = "2";
-        window.location.href = "documentApproval?taskId=" + taskId + "&variableName=" + variableName + "&variableValue=" + variableValue;
+        window.location.href = "${path}/document/documentApproval?taskId=" + taskId + "&variableName=" + variableName + "&variableValue=" + variableValue;
     }
 </script>
 </html>

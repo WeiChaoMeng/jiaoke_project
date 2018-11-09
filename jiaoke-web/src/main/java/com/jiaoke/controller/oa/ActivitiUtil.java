@@ -126,21 +126,26 @@ public class ActivitiUtil {
      */
     public List<String> historicTask(String userInfoId) {
         //获得当前用户处理的历史流程实例
+        ArrayList<String> list = new ArrayList<>();
         List<HistoricTaskInstance> historicTaskInstanceList = historyService.createHistoricTaskInstanceQuery().taskAssignee(userInfoId).orderByTaskId().desc().list();
-        Set<String> processInstanceIds = new HashSet<>();
-        for (HistoricTaskInstance t : historicTaskInstanceList) {
-            String processId = t.getProcessInstanceId();
-            if (!processInstanceIds.contains(processId)) {
-                processInstanceIds.add(processId);
+        if (historicTaskInstanceList.size() == 0) {
+            return list;
+        } else {
+            Set<String> processInstanceIds = new HashSet<>();
+            for (HistoricTaskInstance t : historicTaskInstanceList) {
+                String processId = t.getProcessInstanceId();
+                if (!processInstanceIds.contains(processId)) {
+                    processInstanceIds.add(processId);
+                }
             }
+
+            //根据历史流程实例，获得业务key
+            List<HistoricProcessInstance> hisProcessList = historyService.createHistoricProcessInstanceQuery().processInstanceIds(processInstanceIds).orderByProcessInstanceId().desc().list();
+            for (HistoricProcessInstance p : hisProcessList) {
+                list.add(p.getBusinessKey());
+            }
+            return list;
         }
 
-        //根据历史流程实例，获得业务key
-        ArrayList<String> list = new ArrayList<>();
-        List<HistoricProcessInstance> hisProcessList = historyService.createHistoricProcessInstanceQuery().processInstanceIds(processInstanceIds).orderByProcessInstanceId().desc().list();
-        for (HistoricProcessInstance p : hisProcessList) {
-            list.add(p.getBusinessKey());
-        }
-        return list;
     }
 }

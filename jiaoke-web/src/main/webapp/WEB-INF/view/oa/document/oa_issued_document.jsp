@@ -1,6 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page isELIgnored="false" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+    request.setAttribute("path", basePath);
+%>
 <%--
   Created by IntelliJ IDEA.
   User: lihui
@@ -163,8 +167,7 @@
 
             $.ajax({
                 type: "post",
-                url: '/document/pagingList',
-                // url: 'http://47.105.114.70/document/pagingList',
+                url: '${path}/document/pagingList',
                 data: {"formState": 0, "page": page, "rows": rows},
                 success: function (data) {
                     if (data == "error") {
@@ -259,8 +262,7 @@
 
     //查看详情
     function particulars(id) {
-        window.location.href = "completeDetails?id=" + id;
-        // window.location.href = "http://47.105.114.70/document/documentDetails?id=" + id;
+        window.location.href = "${path}/document/completeDetails?id=" + id;
     }
 </script>
 </html>
