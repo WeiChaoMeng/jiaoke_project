@@ -79,4 +79,12 @@ public interface OaDocumentService {
      * @return list
      */
     List<OaDocument> getListById(List<String> list);
+
+    /**
+     * 保存编辑公文
+     *
+     * @param oaDocument oaDocument
+     * @return NumberOfAffectedRows
+     */
+    int edit(OaDocument oaDocument);
 }

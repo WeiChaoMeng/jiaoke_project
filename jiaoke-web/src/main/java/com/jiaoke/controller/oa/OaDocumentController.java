@@ -1,8 +1,10 @@
 package com.jiaoke.controller.oa;
 
+import com.jiake.utils.RandomUtil;
 import com.jiaoke.oa.bean.OaDocument;
 import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.service.OaDocumentService;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.ProcessEngines;
 import org.activiti.engine.TaskService;
@@ -82,7 +84,7 @@ public class OaDocumentController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String add(OaDocument oaDocument) {
         //生成公文id
-        Integer random = random();
+        Integer random = RandomUtil.random();
         oaDocument.setId(random);
         if (oaDocumentService.add(oaDocument) == 1) {
             //获取当前登录人的id
@@ -171,6 +173,30 @@ public class OaDocumentController {
         return "oa/document/oa_primed_document";
     }
 
+    /**
+     * 跳转公文编辑页面
+     *
+     * @param id    id
+     * @param model model
+     * @return oa_edit_document.jsp
+     */
+    @RequestMapping(value = "/toEdit")
+    public String toEdit(Integer id, Model model) {
+        OaDocument oaDocument = oaDocumentService.getDocumentDetailsById(id);
+        model.addAttribute("oaDocument", oaDocument);
+        return "oa/document/oa_edit_document";
+    }
+
+    @RequestMapping(value = "/edit")
+    @ResponseBody
+    public String edit(OaDocument oaDocument) {
+        int edit = oaDocumentService.edit(oaDocument);
+        if (edit == 1) {
+            return "success";
+        }
+        return "error";
+    }
+
 
     /**
      * 已发公文跳转
@@ -235,22 +261,5 @@ public class OaDocumentController {
             oaDocumentService.updateCountersignature(id);
         }
         return "redirect:/document/pendingDocument.do";
-    }
-
-    /**
-     * 随机数
-     *
-     * @return 10位纯数字
-     */
-    private Integer random() {
-        int end = 2;
-        SimpleDateFormat sdf = new SimpleDateFormat("HHmmss");
-        String newDate = sdf.format(new Date());
-        String result = "";
-        Random random = new Random();
-        for (int i = 0; i < end; i++) {
-            result += random.nextInt(10);
-        }
-        return Integer.valueOf(newDate + result);
     }
 }

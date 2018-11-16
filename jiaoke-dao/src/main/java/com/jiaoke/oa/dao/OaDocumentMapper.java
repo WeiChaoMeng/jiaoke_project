@@ -15,10 +15,28 @@ import java.util.List;
  */
 
 public interface OaDocumentMapper {
+    /**
+     * 根据主键删除
+     *
+     * @param id id
+     * @return NumberOfAffectedRows
+     */
     int deleteByPrimaryKey(Integer id);
 
+    /**
+     * 根据主键选择性更新
+     *
+     * @param record OaDocument
+     * @return NumberOfAffectedRows
+     */
     int updateByPrimaryKeySelective(OaDocument record);
 
+    /**
+     * 根据主键更新
+     *
+     * @param record OaDocument
+     * @return NumberOfAffectedRows
+     */
     int updateByPrimaryKey(OaDocument record);
 
     /**

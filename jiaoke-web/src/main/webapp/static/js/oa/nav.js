@@ -192,6 +192,22 @@ $(function () {
         $('#oa-iframe').attr("src", "productionAdministration/productionAdministration.do");
     });
 
+    /*---综合办公室档案---*/
+    //公司发文
+    /*$("#office_release_document").on("click", function () {
+        removeOwnName();
+        archives(this);
+        $('#oa-iframe').attr("src", "comprehensiveOffice/officeReleaseDocument");
+    });*/
+
+    function office(id,url){
+        $(id).on("click", function () {
+            removeOwnName();
+            archives(this);
+            $('#oa-iframe').attr("src", url);
+        });
+    }
+
     /*--- 会议管理 ---*/
     //会议安排
     $("#meeting_schedule").on("click", function () {

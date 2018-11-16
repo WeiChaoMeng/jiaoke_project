@@ -38,20 +38,32 @@ function popupBackdrop(parameter) {
     } else if (parameter === "officeAreaLine2") {
         // $('#video').append('<video width="100%" height="100%" controls autoplay="autoplay" loop="loop">' +
         $('#video').append('<video width="100%" height="100%" autoplay="autoplay" loop="loop">' +
-            '<source type="video/mp4" src="../../../static/images/security/video2.mp4">' +
-            '<embed src="../../../static/images/security/video2.mp4" width="100%" height="100%">' +
+            '<source type="video/mp4" src="../../../static/images/security/video6.mp4">' +
+            '<embed src="../../../static/images/security/video6.mp4" width="100%" height="100%">' +
             '</video>');
         $('.popup-window').show();
-    } else if (parameter === "productionLine1") {
+    } else if (parameter === "eastProductionLine1") {
         $('#video').append('<video width="100%" height="100%" autoplay="autoplay" loop="loop">' +
-            '<source type="video/mp4" src="../../../static/images/security/video2.mp4">' +
-            '<embed src="../../../static/images/security/video3.mp4" width="100%" height="100%">' +
+            '<source type="video/mp4" src="../../../static/images/security/video6.mp4">' +
+            '<embed src="../../../static/images/security/video6.mp4" width="100%" height="100%">' +
             '</video>');
         $('.popup-window').show();
-    } else if (parameter === "productionLine2") {
+    } else if (parameter === "eastProductionLine2") {
         $('#video').append('<video width="100%" height="100%" autoplay="autoplay" loop="loop">' +
             '<source type="video/mp4" src="../../../static/images/security/video3.mp4">' +
             '<embed src="../../../static/images/security/video3.mp4" width="100%" height="100%">' +
+            '</video>');
+        $('.popup-window').show();
+    }else if (parameter === "westProductionLine1") {
+        $('#video').append('<video width="100%" height="100%" autoplay="autoplay" loop="loop">' +
+            '<source type="video/mp4" src="../../../static/images/security/video4.mp4">' +
+            '<embed src="../../../static/images/security/video4.mp4" width="100%" height="100%">' +
+            '</video>');
+        $('.popup-window').show();
+    }else if (parameter === "westProductionLine2") {
+        $('#video').append('<video width="100%" height="100%" autoplay="autoplay" loop="loop">' +
+            '<source type="video/mp4" src="../../../static/images/security/video5.mp4">' +
+            '<embed src="../../../static/images/security/video4.mp4" width="100%" height="100%">' +
             '</video>');
         $('.popup-window').show();
     }

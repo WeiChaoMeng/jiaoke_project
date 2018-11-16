@@ -31,6 +31,7 @@
                 /document/preservationPending = perms[createDocument]
                 /document/primedDocument.do = perms[createDocument]
                 /document/issuedDocument.do = perms[createDocument]
+                /comprehensiveOffice/* = perms[comprehensiveOffice]
 
                 /OAWageStatisticsInner.do = perms[/test]
                 /login/*.do = authc

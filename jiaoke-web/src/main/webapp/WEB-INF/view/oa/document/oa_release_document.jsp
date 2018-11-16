@@ -245,15 +245,12 @@
             <td class="tlabel">拟稿部门：</td>
             <td>
                 <select class="select swidth" name="draftingDepartment" data-value="0" required>
-                    <option value="0">办公室</option>
-                    <option value="1">组织人事部</option>
-                    <option value="2">党群工作部</option>
-                    <option value="3">生产经营部</option>
-                    <option value="4">财务管理部</option>
-                    <option value="5">企业管理部</option>
-                    <option value="6">内控审计部</option>
-                    <option value="7">安全管理部</option>
-                    <option value="8">纪委监督部</option>
+                    <option value="0">综合办公室</option>
+                    <option value="1">经营开发部</option>
+                    <option value="2">生产管理部</option>
+                    <option value="3">财务管理部</option>
+                    <option value="4">物资管理部</option>
+                    <option value="5">质量技术部</option>
                 </select>
             </td>
             <td class="tlabel">拟稿人：</td>

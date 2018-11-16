@@ -46,13 +46,25 @@
         <li class="nav-item">
             <a>
                 <img src="../../../static/images/security/factory.png">
-                <span>生产区</span>
+                <span>生产区(东)</span>
             </a>
             <ul>
-                <li><a onclick="popupBackdrop('productionLine1')" id="new_matter"><span>线路一</span></a></li>
-                <li><a onclick="popupBackdrop('productionLine2')" id="waiting_matter"><span>线路二</span></a></li>
-                <li><a id="already_issued_matter"><span>线路三</span></a></li>
-                <li><a id="to_do_matter"><span>线路四</span></a></li>
+                <li><a onclick="popupBackdrop('eastProductionLine1')"><span>(东)线路一</span></a></li>
+                <li><a onclick="popupBackdrop('eastProductionLine2')"><span>(东)线路二</span></a></li>
+                <li><a><span>线路三</span></a></li>
+                <li><a><span>线路四</span></a></li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a>
+                <img src="../../../static/images/security/factory1.png">
+                <span>生产区(西)</span>
+            </a>
+            <ul>
+                <li><a onclick="popupBackdrop('westProductionLine1')"><span>(西)线路一</span></a></li>
+                <li><a onclick="popupBackdrop('westProductionLine2')"><span>(西)线路二</span></a></li>
+                <li><a><span>线路三</span></a></li>
+                <li><a><span>线路四</span></a></li>
             </ul>
         </li>
         <li class="nav-item">
@@ -81,10 +93,14 @@
              onclick="popupBackdrop('officeAreaLine1')">
         <img src="../../../static/images/security/monitor.png" title="办公区(线路二)" class="twinkle office-area-line2"
              onclick="popupBackdrop('officeAreaLine2')">
-        <img src="../../../static/images/security/monitor.png" title="生产区(线路一)" class="twinkle production-line1"
-             onclick="popupBackdrop('productionLine1')">
-        <img src="../../../static/images/security/monitor.png" title="生产区(线路二)" class="twinkle production-line2"
-             onclick="popupBackdrop('productionLine2')">
+        <img src="../../../static/images/security/monitor.png" title="生产区(东-线路一)" class="twinkle east-production-line1"
+             onclick="popupBackdrop('eastProductionLine1')">
+        <img src="../../../static/images/security/monitor.png" title="生产区(东-线路二)" class="twinkle east-production-line2"
+             onclick="popupBackdrop('eastProductionLine2')">
+        <img src="../../../static/images/security/monitor.png" title="生产区(西-线路一)" class="twinkle west-production-line1"
+             onclick="popupBackdrop('westProductionLine1')">
+        <img src="../../../static/images/security/monitor.png" title="生产区(西-线路二)" class="twinkle west-production-line2"
+             onclick="popupBackdrop('westProductionLine2')">
     </div>
 </div>
 
