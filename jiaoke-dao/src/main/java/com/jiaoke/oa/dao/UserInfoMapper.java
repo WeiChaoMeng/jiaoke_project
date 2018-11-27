@@ -2,6 +2,7 @@ package com.jiaoke.oa.dao;
 
 import com.jiaoke.oa.bean.UserInfo;
 
+import java.util.List;
 
 
 public interface UserInfoMapper {
@@ -24,4 +25,20 @@ public interface UserInfoMapper {
      * @return UserInfo
      */
     UserInfo getUserInfoByUserName(String userName);
+
+    /**
+     * 获取部门成员
+     *
+     * @param departmentKey 部门id
+     * @return list
+     */
+    List<UserInfo> getUserByDepartmentKey(String departmentKey);
+
+    /**
+     * 根据昵称获取id
+     *
+     * @param nickName 昵称
+     * @return id
+     */
+    Integer getIdByNickName(String nickName);
 }

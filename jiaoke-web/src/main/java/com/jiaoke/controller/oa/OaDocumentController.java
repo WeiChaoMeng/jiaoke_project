@@ -1,9 +1,11 @@
 package com.jiaoke.controller.oa;
 
+import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.oa.bean.OaDocument;
 import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.service.OaDocumentService;
+import com.jiaoke.oa.service.UserInfoService;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.ProcessEngines;
@@ -37,6 +39,9 @@ public class OaDocumentController {
 
     @Resource
     private ActivitiUtil activitiUtil;
+
+    @Resource
+    private UserInfoService userInfoService;
 
     /**
      * 待办公文跳转
@@ -119,6 +124,7 @@ public class OaDocumentController {
     @RequestMapping(value = "/preservationPending")
     @ResponseBody
     public String preservationPending(OaDocument oaDocument) {
+        oaDocument.setId(RandomUtil.random());
         if (oaDocumentService.add(oaDocument) == 1) {
             return "success";
         } else {
@@ -187,11 +193,16 @@ public class OaDocumentController {
         return "oa/document/oa_edit_document";
     }
 
+    /**
+     * 修改
+     *
+     * @param oaDocument oaDocument
+     * @return result
+     */
     @RequestMapping(value = "/edit")
     @ResponseBody
     public String edit(OaDocument oaDocument) {
-        int edit = oaDocumentService.edit(oaDocument);
-        if (edit == 1) {
+        if (oaDocumentService.edit(oaDocument) == 1) {
             return "success";
         }
         return "error";
@@ -251,15 +262,29 @@ public class OaDocumentController {
      * @param taskId        任务id
      * @param variableName  变量名
      * @param variableValue 变量值
-     * @return
+     * @param draftedPerson 拟稿人
+     * @return oa_pending_document
      */
     @RequestMapping(value = "/documentApproval")
-    public String documentApproval(String taskId, String variableName, String variableValue, int id) {
+    public String documentApproval(String taskId, String variableName, String variableValue, int id, String draftedPerson) {
         String value = "1";
         activitiUtil.completeTaskByTaskId(taskId, variableName, variableValue);
         if (value.equals(variableValue)) {
-            oaDocumentService.updateCountersignature(id);
+            oaDocumentService.updateCountersignature(id, draftedPerson);
         }
         return "redirect:/document/pendingDocument.do";
+    }
+
+    /**
+     * 获取部门成员
+     *
+     * @param departmentKey 部门id
+     * @return 成员列表
+     */
+    @RequestMapping(value = "/departmentMember")
+    @ResponseBody
+    public String departmentMember(String departmentKey) {
+        List<UserInfo> userInfoList = userInfoService.getUserByDepartmentKey(departmentKey);
+        return JsonHelper.toJSONString(userInfoList);
     }
 }

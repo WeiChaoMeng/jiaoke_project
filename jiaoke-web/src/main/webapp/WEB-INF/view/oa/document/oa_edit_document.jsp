@@ -444,8 +444,7 @@
             <td class="tlabel">发文时间：</td>
             <td colspan="tlabel">
                 <input type="text" class="forminput inputstyle" id="writingTime" name="writingTime"
-                       value="${oaDocument.writingTime}"
-                       readonly="readonly" required>
+                       value="${oaDocument.writingTime}" onfocus="this.blur()" required>
             </td>
             <td class="tlabel">保存期限：</td>
             <td>
@@ -481,84 +480,60 @@
         <tr>
             <td class="tlabel">拟稿部门：</td>
             <td>
-                <select class="select swidth" name="draftingDepartment" data-value="0" required>
+                <select class="select swidth" name="draftingDepartment" id="draftingDepartment" data-value="0" required>
                     <c:choose>
-                        <c:when test="${oaDocument.draftingDepartment == 0}">
-                            <option value="0" selected="selected">办公室</option>
+                        <c:when test="${oaDocument.draftingDepartment == 10}">
+                            <option value="10" selected="selected">综合办公室</option>
                         </c:when>
                         <c:otherwise>
-                            <option value="0">办公室</option>
+                            <option value="10">综合办公室</option>
                         </c:otherwise>
                     </c:choose>
                     <c:choose>
-                        <c:when test="${oaDocument.draftingDepartment == 1}">
-                            <option value="1" selected="selected">组织人事部</option>
+                        <c:when test="${oaDocument.draftingDepartment == 11}">
+                            <option value="11" selected="selected">经营开发部</option>
                         </c:when>
                         <c:otherwise>
-                            <option value="1">组织人事部</option>
+                            <option value="11">经营开发部</option>
                         </c:otherwise>
                     </c:choose>
                     <c:choose>
-                        <c:when test="${oaDocument.draftingDepartment == 2}">
-                            <option value="2" selected="selected">党群工作部</option>
+                        <c:when test="${oaDocument.draftingDepartment == 12}">
+                            <option value="12" selected="selected">生产管理部</option>
                         </c:when>
                         <c:otherwise>
-                            <option value="2">党群工作部</option>
+                            <option value="12">生产管理部</option>
                         </c:otherwise>
                     </c:choose>
                     <c:choose>
-                        <c:when test="${oaDocument.draftingDepartment == 3}">
-                            <option value="3" selected="selected">生产经营部</option>
+                        <c:when test="${oaDocument.draftingDepartment == 13}">
+                            <option value="13" selected="selected">财务管理部</option>
                         </c:when>
                         <c:otherwise>
-                            <option value="3">生产经营部</option>
+                            <option value="13">财务管理部</option>
                         </c:otherwise>
                     </c:choose>
                     <c:choose>
-                        <c:when test="${oaDocument.draftingDepartment == 4}">
-                            <option value="4" selected="selected">财务管理部</option>
+                        <c:when test="${oaDocument.draftingDepartment == 14}">
+                            <option value="14" selected="selected">物资管理部</option>
                         </c:when>
                         <c:otherwise>
-                            <option value="4">财务管理部</option>
+                            <option value="14">物资管理部</option>
                         </c:otherwise>
                     </c:choose>
                     <c:choose>
-                        <c:when test="${oaDocument.draftingDepartment == 5}">
-                            <option value="5" selected="selected">企业管理部</option>
+                        <c:when test="${oaDocument.draftingDepartment == 15}">
+                            <option value="15" selected="selected">质量技术部</option>
                         </c:when>
                         <c:otherwise>
-                            <option value="5">企业管理部</option>
-                        </c:otherwise>
-                    </c:choose>
-                    <c:choose>
-                        <c:when test="${oaDocument.draftingDepartment == 6}">
-                            <option value="6" selected="selected">内控审计部</option>
-                        </c:when>
-                        <c:otherwise>
-                            <option value="6">内控审计部</option>
-                        </c:otherwise>
-                    </c:choose>
-                    <c:choose>
-                        <c:when test="${oaDocument.draftingDepartment == 7}">
-                            <option value="7" selected="selected">安全管理部</option>
-                        </c:when>
-                        <c:otherwise>
-                            <option value="7">安全管理部</option>
-                        </c:otherwise>
-                    </c:choose>
-                    <c:choose>
-                        <c:when test="${oaDocument.draftingDepartment == 8}">
-                            <option value="8" selected="selected">纪委监督部</option>
-                        </c:when>
-                        <c:otherwise>
-                            <option value="8">纪委监督部</option>
+                            <option value="15">质量技术部</option>
                         </c:otherwise>
                     </c:choose>
                 </select>
             </td>
             <td class="tlabel">拟稿人：</td>
             <td><input type="text" class="forminput inputstyle" name="draftedPerson" value="${oaDocument.draftedPerson}"
-                       required></td>
+                       onclick="selectReviewer()" id="draftedPerson" onfocus="this.blur()" required></td>
             <td class="tlabel">核稿人：</td>
             <td><input type="text" class="forminput inputstyle" name="nuclearDrafts" value="" disabled="disabled"
                        style="background: #f4f4f4;"></td>
@@ -582,12 +557,14 @@
 
         <tr>
             <td class="tlabel">主送：</td>
-            <td colspan="5"><input type="text" class="forminput inputstyle inputadress" name="mainGive" value="${oaDocument.mainGive}"></td>
+            <td colspan="5"><input type="text" class="forminput inputstyle inputadress" name="mainGive"
+                                   value="${oaDocument.mainGive}"></td>
         </tr>
 
         <tr>
             <td class="tlabel">抄送：</td>
-            <td colspan="5"><input type="text" class="forminput inputstyle inputadress" name="copyGive" value="${oaDocument.copyGive}"></td>
+            <td colspan="5"><input type="text" class="forminput inputstyle inputadress" name="copyGive"
+                                   value="${oaDocument.copyGive}"></td>
         </tr>
 
         <tr>
@@ -599,7 +576,8 @@
 
         <tr>
             <td class="tlabel">印制：</td>
-            <td><input type="text" class="forminput inputstyle" value="${oaDocument.print}" name="print" id="print" readonly></td>
+            <td><input type="text" class="forminput inputstyle" value="${oaDocument.print}" name="print" id="print"
+                       readonly></td>
             <td class="tlabel">校对：</td>
             <td><input type="text" class="forminput inputstyle" value="${oaDocument.proofreading}" name="proofreading"
                        id="proofreading" readonly>
@@ -668,6 +646,38 @@
         "language": "zh-CN",
         "format": 'yyyy-mm-dd'
     });
+
+    //拟稿部门发生改变则清空拟稿人
+    $('#draftingDepartment').change(function () {
+        $('#draftedPerson').val('');
+    });
+
+    //选择核稿人
+    function selectReviewer() {
+        var departmentKey = $('#draftingDepartment').val();
+        if (departmentKey === "") {
+            alert("请先选择部门！")
+        } else {
+            $.ajax({
+                cache: true,
+                type: "POST",
+                url: '${path}/document/departmentMember',
+                data: {"departmentKey": departmentKey},
+                error: function (request) {
+                    alert("Connection error");
+                },
+                success: function (result) {
+                    console.log(JSON.parse(result))
+                    parent.openBack(JSON.parse(result));
+                }
+            });
+        }
+    }
+
+    //插入选择的核稿人
+    function insertReviewer(parameter) {
+        $('#draftedPerson').val(parameter);
+    }
 </script>
 </html>
 

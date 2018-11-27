@@ -75,7 +75,7 @@
             oa_document.create_time,
             oa_document.process_state,
             oa_document.form_state,
-            user_info.usename AS user_info_id ,
+            user_info.nick_name AS user_info_id ,
             oa_document.processing_state
         from oa_document
         LEFT JOIN user_info ON oa_document.user_info_id = user_info.id
@@ -554,9 +554,36 @@
 	      id = #{id,jdbcType=INTEGER}
     </update>
 
+    <update id="updateReviewer" parameterType="map">
+        UPDATE oa_document
+        SET nuclear_drafts = #{nickName,jdbcType=VARCHAR}
+        WHERE
+	      id = #{id,jdbcType=INTEGER}
+    </update>
+
     <update id="updateSignatureIssuance" parameterType="map">
         UPDATE oa_document
         SET Issue = #{nickName,jdbcType=VARCHAR}
+        WHERE
+	      id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!--更新签发和核稿人-->
+    <update id="updateSignatureIssuanceAndReviewer" parameterType="map">
+        UPDATE oa_document
+        SET
+            Issue = #{nickName,jdbcType=VARCHAR},
+            nuclear_drafts = #{nickName,jdbcType=VARCHAR}
+        WHERE
+	      id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!--更新会签和核稿人-->
+    <update id="updateCountersignatureAndReviewer" parameterType="map">
+        UPDATE oa_document
+        SET
+            countersign = CONCAT_WS( ',',countersign,#{nickName,jdbcType=VARCHAR}),
+            nuclear_drafts = #{nickName,jdbcType=VARCHAR}
         WHERE
 	      id = #{id,jdbcType=INTEGER}
     </update>

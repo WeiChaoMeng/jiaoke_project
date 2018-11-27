@@ -64,6 +64,11 @@ public class UserInfo implements Serializable {
      */
     private String departmentKey;
 
+    /**
+     * 部门负责人
+     */
+    private String deptPrincipal;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -144,5 +149,13 @@ public class UserInfo implements Serializable {
 
     public void setDepartmentKey(String departmentKey) {
         this.departmentKey = departmentKey;
+    }
+
+    public String getDeptPrincipal() {
+        return deptPrincipal;
+    }
+
+    public void setDeptPrincipal(String deptPrincipal) {
+        this.deptPrincipal = deptPrincipal;
     }
 }

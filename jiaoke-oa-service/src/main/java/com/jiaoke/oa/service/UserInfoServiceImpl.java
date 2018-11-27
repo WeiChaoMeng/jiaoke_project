@@ -46,4 +46,15 @@ public class UserInfoServiceImpl implements UserInfoService {
     public List<Permission> getPermissionsByUserInfoId(Integer userInfoId) {
         return permissionMapper.getPermissionsByUserInfoId(userInfoId);
     }
+
+    /**
+     * 获取部门成员
+     *
+     * @param departmentKey 部门id
+     * @return list
+     */
+    @Override
+    public List<UserInfo> getUserByDepartmentKey(String departmentKey) {
+        return userInfoMapper.getUserByDepartmentKey(departmentKey);
+    }
 }

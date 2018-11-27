@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 /**
@@ -412,6 +413,11 @@ public class CommonController {
     @RequestMapping("/weatherIndex.do")
     public String weatherIndex(){
         return "milieu/index";
+    }
+
+    @RequestMapping("/leaveRequest.do")
+    public String leave(){
+        return "oa/activiti/act_leave_request";
     }
 
 

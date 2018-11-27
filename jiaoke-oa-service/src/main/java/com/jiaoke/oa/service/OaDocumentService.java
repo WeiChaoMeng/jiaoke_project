@@ -68,9 +68,10 @@ public interface OaDocumentService {
      * 更新会签
      *
      * @param id id
+     * @param draftedPerson 拟稿人
      * @return NumberOfAffectedRows
      */
-    int updateCountersignature(int id);
+    int updateCountersignature(int id, String draftedPerson);
 
     /**
      * 根据id获取list

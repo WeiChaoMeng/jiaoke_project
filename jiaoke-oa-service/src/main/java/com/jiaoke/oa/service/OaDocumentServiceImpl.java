@@ -5,6 +5,7 @@ import com.jiake.utils.RandomUtil;
 import com.jiaoke.oa.bean.OaDocument;
 import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.dao.OaDocumentMapper;
+import com.jiaoke.oa.dao.UserInfoMapper;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,9 @@ public class OaDocumentServiceImpl implements OaDocumentService {
 
     @Resource
     private OaDocumentMapper oaDocumentMapper;
+
+    @Resource
+    private UserInfoMapper userInfoMapper;
 
     /**
      * 添加
@@ -120,13 +124,24 @@ public class OaDocumentServiceImpl implements OaDocumentService {
      * @return NumberOfAffectedRows
      */
     @Override
-    public int updateCountersignature(int id) {
+    public int updateCountersignature(int id, String draftedPerson) {
         Integer bossId = 1006;
+        //当前用户id
         UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
-        if (bossId.equals(userInfo.getId())) {
-            return oaDocumentMapper.updateSignatureIssuance(userInfo.getNickName(), id);
+        //部门负责人id
+        Integer userInfoId = userInfoMapper.getIdByNickName(draftedPerson);
+        if (userInfo.getId().equals(bossId)) {
+            if (userInfo.getId().equals(userInfoId)) {
+                return oaDocumentMapper.updateSignatureIssuanceAndReviewer(userInfo.getNickName(), id);
+            } else {
+                return oaDocumentMapper.updateSignatureIssuance(userInfo.getNickName(), id);
+            }
         } else {
-            return oaDocumentMapper.updateCountersignature(userInfo.getNickName(), id);
+            if(userInfo.getId().equals(userInfoId)){
+                return oaDocumentMapper.updateCountersignatureAndReviewer(userInfo.getNickName(), id);
+            }else {
+                return oaDocumentMapper.updateCountersignature(userInfo.getNickName(), id);
+            }
         }
     }
 
