@@ -291,13 +291,44 @@ public class QualityController {
 
         if (Strings.isBlank(producedDate) || Strings.isBlank(crewNum) ) {return null;}
 
-        Map<String,Object> map = qualityDataManagerInf.selectProducttionByDate(producedDate,crewNum);
-
-        request.setAttribute("baseMap",map);
+        Map<String,Object> map = qualityDataManagerInf.selectProducttionByDate(producedDate,crewNum, request);
 
         return "quality/qc_dm_data_matching";
     }
 
+    /**
+     *
+     * 功能描述: <br>
+     *  <点击查看产品详情页面>
+     * @param [request, id]
+     * @return java.lang.String
+     * @auther Melone
+     * @date 2018/11/13 9:52
+     */
+    @RequestMapping(value = "/getProductMessage.do",method = RequestMethod.GET )
+    public String getProductMessage(HttpServletRequest request,@RequestParam("id") String id,@RequestParam("crewNum") String crewNum){
+
+        if (id.isEmpty()) return "";
+
+        Map<String,Object> map =  qualityDataManagerInf.selectProductMessageById(id,crewNum);
+
+        request.setAttribute("product",map);
+
+        return "quality/qc_dm_data_detail";
+    }
+    @RequestMapping("getProListByRatioNumAndDate.do")
+    public String getProListByRatioNumAndDate(HttpServletRequest request,@RequestParam("ratioNum") String ratioNum,@RequestParam("crewNum") String crewNum,@RequestParam("date") String date){
+
+        if (ratioNum.isEmpty() || crewNum.isEmpty() || date.isEmpty()) {return null;}
+
+
+        Map<String,Object> prolist = qualityDataManagerInf.selectProListByRatioNumAndDate(ratioNum,crewNum,date);
+
+
+        request.setAttribute("baseMap",prolist);
+
+        return "quality/qc_data_message";
+    }
     /********************************  数据管理 end *****************************************/
 
 
@@ -347,8 +378,10 @@ public class QualityController {
         }else {
             pageBean = qualityAuxiliaryAnalysisInf.selelectWarningLiveData(Integer.parseInt(temp),url,warningLive);
         }
+        List<Map<String,String>> list = qualityAuxiliaryAnalysisInf.selectWaringData(pageBean);
 
         request.setAttribute("pageBean",pageBean);
+        request.setAttribute("waringList",list);
 
         return "quality/qc_auxiliary_analysis";
     }
@@ -382,11 +415,37 @@ public class QualityController {
      * @auther Melone
      * @date 2018/11/2 10:56
      */
-    @RequestMapping("/getMonthStatementToEchars")
+    @ResponseBody
+    @RequestMapping("/getMonthStatementToEchars.do")
     public String getMonthStatementToEchars(){
+
        String res = qualityStatementInf.selectLastMonthStatementToEchars();
 
        return res;
+    }
+
+    @ResponseBody
+    @RequestMapping("/getMonthStatementToData.do")
+    public String getMonthStatementToData(){
+
+        String res = qualityStatementInf.selectMonthStatementToData();
+
+        return res;
+    }
+    //获取上一年生产信息，及当前年份集合
+    @ResponseBody
+    @RequestMapping("/getYearStatementDateAndDate.do")
+    public String getYearStatementDateAndDate(){
+        String res = qualityStatementInf.selectYearStatementDateAndDate();
+        return res;
+    }
+    //返回各个月份集合
+    @ResponseBody
+    @RequestMapping("/getMonthDateList.do")
+    public String getMonthDateList(){
+        String  res = qualityStatementInf.selectMonthDateList();
+
+        return res;
     }
 
     /********************************  产品报表 end *****************************************/

@@ -11,6 +11,7 @@ package com.jiaoke.quality.service;
 import com.jiaoke.common.bean.PageBean;
 import com.jiaoke.quality.bean.QualityDataManagerDay;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -34,5 +35,23 @@ public interface QualityDataManagerInf {
      * @param crewNum
      * @return
      */
-    Map<String, Object> selectProducttionByDate(String producedDate, String crewNum);
+    Map<String, Object> selectProducttionByDate(String producedDate, String crewNum, HttpServletRequest request);
+
+    /**
+     * 点击查看按钮后根据传来的id查询信息
+     * @param id
+     * @return
+     */
+    Map<String, Object> selectProductMessageById(String id,String crewNum);
+
+    /**
+     * 根据配比号、日期、机组查询所有产品
+     * @param ratioNum
+     * @param crewNum
+     * @param date
+     * @return
+     */
+    Map<String,Object> selectProListByRatioNumAndDate(String ratioNum, String crewNum, String date);
+
+
 }

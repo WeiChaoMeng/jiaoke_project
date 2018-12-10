@@ -18,6 +18,8 @@ import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.text.DecimalFormat;
 import java.util.*;
 
 /**
@@ -73,7 +75,7 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
      * @date 2018/10/26 16:03
      */
     @Override
-    public Map<String, Object> selectProducttionByDate(String producedDate, String crewNum) {
+    public Map<String, Object> selectProducttionByDate(String producedDate, String crewNum, HttpServletRequest request) {
 
         if (Strings.isBlank(producedDate) || Strings.isBlank(crewNum) ) {return null;}
 
@@ -173,17 +175,124 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
         String total = JSON.toJSONString(list);
         String SVG = JSON.toJSONString(SVGList);
 
-        map.put("ratioNumList",ratioNumList);
-        map.put("rationMessageList",rationMessageList);
-        map.put("producedList",producedList);
-        map.put("produceTotal",total);
-        map.put("rationProSVG",SVGList);
-        //js用
-        map.put("ProSVG",SVG);
 
+        request.setAttribute("ratioNumList",ratioNumList);
+        request.setAttribute("rationMessageList",rationMessageList);
+        request.setAttribute("produceTotal",total);
+        request.setAttribute("rationProSVG",SVGList);
+        request.setAttribute("producedList",producedList);
+        //js用
+        request.setAttribute("ProSVG",SVG);
         //客户相关展示
-        map.put("userProList",userProList);
-        map.put("userProTotal",userProTotal);
+        request.setAttribute("userProList",userProList);
+        request.setAttribute("userProTotal",userProTotal);
+        //保存日期，点击更多时查询用
+        request.setAttribute("date",producedDate);
+        request.setAttribute("crewNum",crewNum);
+        return map;
+    }
+
+    /**
+     * 点击查看按钮后根据传来的id查询基本信息与报警详细信息
+     * @param id
+     * @return
+     */
+    @Override
+    public Map<String, Object> selectProductMessageById( String id, String crewNum) {
+
+        Map<String,Object> modelMap = new HashMap<>();
+        //根据id与机组查询基本信息
+        String crewStr;
+        switch (crewNum){
+            case "crew1":
+                crewStr = "data1";
+                break;
+            case "crew2":
+                crewStr = "data2";
+                break;
+                default:
+                    crewStr = "data1";
+        }
+            Map<String,String> map =  qualityDataManagerDao.selectProductMessageById(id,crewStr);
+
+        //根据日期与盘号查询各材料百分比、预警信息
+        Object date =  map.get("produce_date");
+        String discNum =  map.get("produce_disc_num");
+        String crew ;
+        switch (crewNum){
+            case "crew1":
+                crew = "1";
+                break;
+            case "crew2":
+                crew = "2";
+                break;
+                default:
+                    crew = "1";
+        }
+       List<Map<String,String>>  waringData =  qualityDataManagerDao.selectProduceByDateAndDiscNum(String.valueOf(date),discNum,crew);
+
+        modelMap.put("proBase",map);
+        modelMap.put("proMessage",waringData);
+
+        return modelMap;
+    }
+
+
+    /**
+     * 根据配比号、日期、机组查询所有产品
+     * @param ratioNum
+     * @param crewNum
+     * @param date
+     * @return
+     */
+    @Override
+    public Map<String,Object> selectProListByRatioNumAndDate(String ratioNum, String crewNum, String date) {
+
+        Map<String,Object> map = new HashMap<>();
+        List<Integer> aggregate = new ArrayList<>();
+        List<Integer> mixture = new ArrayList<>();
+        List<Integer> asphalt = new ArrayList<>();
+        List<Integer> warehouse1 = new ArrayList<>();
+        List<String> dateList = new ArrayList<>();
+        List<String> asphaltRatio = new ArrayList<>();
+
+        QualityRatioTemplate template = qualityDataManagerDao.selectRationById(ratioNum,crewNum);
+
+        String crew = "data1";
+        switch (crewNum){
+            case "crew1":
+                crew = "data1";
+                break;
+            case "crew2":
+                crew = "data2";
+                break;
+        }
+        date = "'" + date + "'";
+        List<Map<String, Object>> list = qualityDataManagerDao.selectProListByRatioNumAndDate(ratioNum,crew,date);
+
+        for (int i = 0 ; i < list.size();i++){
+            warehouse1.add(Integer.parseInt(list.get(i).get("temperature_warehouse_1").toString()));
+            aggregate.add(Integer.parseInt(list.get(i).get("temperature_aggregate").toString()));
+            mixture.add(Integer.parseInt(list.get(i).get("temperature_mixture").toString()));
+            asphalt.add(Integer.parseInt(list.get(i).get("temperature_asphalt").toString()));
+            dateList.add("'" + list.get(i).get("produce_time").toString() + "'");
+
+            float material_asphalt = Float.parseFloat(list.get(i).get("material_asphalt").toString());
+            float total = Float.parseFloat(list.get(i).get("material_total").toString());
+            DecimalFormat decimalFormat=new DecimalFormat("#.#");
+            String asphaltRation = decimalFormat.format(material_asphalt/total * 100);
+
+            asphaltRatio.add(asphaltRation);
+        }
+
+        map.put("aggregate",aggregate);
+        map.put("mixture",mixture);
+        map.put("asphalt",asphalt);
+        map.put("warehouse1",warehouse1);
+        map.put("dateList",dateList);
+        map.put("prolist",list);
+        map.put("template",template);
+        map.put("asphaltRatio",asphaltRatio);
 
         return map;
     }

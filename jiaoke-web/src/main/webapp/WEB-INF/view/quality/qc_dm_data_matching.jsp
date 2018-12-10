@@ -17,19 +17,18 @@
 <link href="/static/css/style/green.css" rel="stylesheet" type="text/css" id = 'link'>
 <link type="text/css" rel="stylesheet" href="/static/slider/css/carousel.css">
 <script src="/static/js/echarts/echarts.js"></script>
-<script src="/static/js/echarts/uimaker.js"></script>
 </head>
 
 <body style="padding:auto;">
 
 
-        <c:forEach items="${baseMap.ratioNumList}" var="ratioNum">
+        <c:forEach items="${ratioNumList}" var="ratioNum">
 
             <div class="infolist1">
                 <div class="infoboxleft">
                     <div class="boxtitle">
                         <span>${ratioNum}号配比</span>
-                        <a href="qc_dm_data_number.jsp" target="_self">更多
+                        <a href="${path}/getProListByRatioNumAndDate.do?ratioNum=${ratioNum}&date=${date}&crewNum=${crewNum}" target="_self">更多
                             <i class="iconfont">&#xeba8;</i>
                         </a>
                     </div>
@@ -44,7 +43,7 @@
                             <th>操作</th>
                             </thead>
                             <tbody>
-                            <c:forEach items="${baseMap.producedList}"  varStatus="status" var="produced">
+                            <c:forEach items="${producedList}"  varStatus="status" var="produced">
 
                                 <c:if test="${produced.produce_proportioning_num  ==  ratioNum}">
 
@@ -55,7 +54,7 @@
 
                                         <td>${produced.produce_custom_num}</td>
                                         <td>
-                                            <a href="qc_dm_data_detail.jsp" target="_self" class="selected" id="">
+                                            <a href="${path}/getProductMessage.do?id=${produced.Id}&crewNum=${crewNum}" target="_self" class="selected" >
                                                 <i class="toolico iconfont">&#xe970;</i>查看</a>
                                         </td>
                                     </tr>
@@ -67,7 +66,7 @@
                 </div>
             </div>
 
-            <c:forEach items="${baseMap.rationProSVG}" var="producedSVG" varStatus="i">
+            <c:forEach items="${rationProSVG}" var="producedSVG" varStatus="i">
                 <c:if test="${producedSVG.rationNum == ratioNum}" >
                     <div class="chartbox4">
                         <div class="my_echars_title">
@@ -118,22 +117,25 @@
                                     type: 'log',
                                     name: 'y'
                                 },
-                                <c:forEach items="${baseMap.rationMessageList}" var="ration">
+                                <c:forEach items="${rationMessageList}" var="ration">
                                     <c:if test="${producedSVG.rationNum == ration.crew1ModeleId || producedSVG.rationNum == ration.crew2ModeleId }" >
                                         series: [
                                             {
                                                 name:'上线配比',
                                                 type:'line',
+
+
+
                                                 data: [     <fmt:formatNumber value="${ration.repertoryOne + 2 }" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.repertoryTwo + 2}" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.repertoryThree +2}" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.repertoryFour + 2}" pattern="#.00"/>,
+                                                    <fmt:formatNumber value="${ration.repertoryTwo + 2 }" pattern="#.00"/>,
+                                                    <fmt:formatNumber value="${ration.repertoryThree + 2 }" pattern="#.00"/>,
+                                                    <fmt:formatNumber value="${ration.repertoryFour + 2 }" pattern="#.00"/>,
                                                     <fmt:formatNumber value="${ration.repertoryFive + 2 }" pattern="#.00"/>,
                                                     <fmt:formatNumber value="${ration.repertorySix + 2}" pattern="#.00"/>,
                                                     <fmt:formatNumber value="${ration.breeze + 1}" pattern="#.00"/>,
                                                     <fmt:formatNumber value=" ${ration.ratioStone + 2 }" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.ratioRegenerate1 > ration.ratioRegenerate2 ? ration.ratioRegenerate1+ 2 :ration.ratioRegenerate2+ 2 }" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.ratioAdditive + 2 }" pattern="#.00"/>]
+                                                    <fmt:formatNumber value="${ration.ratioRegenerate1 + ration.ratioRegenerate2+ 2 }" pattern="#.00"/>,
+                                                    <fmt:formatNumber value="${ration.ratioAdditive+2 }" pattern="#.00"/>]
                                             },
                                             {
                                                 name:'实际配比',
@@ -143,15 +145,15 @@
                                             {
                                                 name:'下限配比',
                                                 type:'line',
-                                                data: [     <fmt:formatNumber value="${ration.repertoryOne - 2 }" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.repertoryTwo - 2}" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.repertoryThree -2}" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.repertoryFour - 2}" pattern="#.00"/>,
+                                                data: [<fmt:formatNumber value="${ration.repertoryOne - 2 }" pattern="#.00"/>,
+                                                    <fmt:formatNumber value="${ration.repertoryTwo - 2 }" pattern="#.00"/>,
+                                                    <fmt:formatNumber value="${ration.repertoryThree - 2 }" pattern="#.00"/>,
+                                                    <fmt:formatNumber value="${ration.repertoryFour - 2 }" pattern="#.00"/>,
                                                     <fmt:formatNumber value="${ration.repertoryFive - 2 }" pattern="#.00"/>,
                                                     <fmt:formatNumber value="${ration.repertorySix - 2}" pattern="#.00"/>,
                                                     <fmt:formatNumber value="${ration.breeze - 1}" pattern="#.00"/>,
-                                                    <fmt:formatNumber value=" ${ration.ratioStone - 2 }" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.ratioRegenerate1 > ration.ratioRegenerate2 ? ration.ratioRegenerate1 - 2 :ration.ratioRegenerate2 - 2 }" pattern="#.00"/>,
+                                                    <fmt:formatNumber value="${ration.ratioStone - 2 }" pattern="#.00"/>,
+                                                    <fmt:formatNumber value="${ration.ratioRegenerate1 + ration.ratioRegenerate2 - 2 }" pattern="#.00"/>,
                                                     <fmt:formatNumber value="${ration.ratioAdditive - 2 }" pattern="#.00"/>]
                                             }]
                                     </c:if>
@@ -164,6 +166,8 @@
                                 myChart${i.count}.resize();
                             });
                         </script>
+
+
 
                     </div>
                 </c:if>
@@ -196,7 +200,7 @@
                     </thead>
 
                     <tbody>
-                    <c:forEach items="${baseMap.userProList}" var="userPro" begin="0" end="7" >
+                    <c:forEach items="${userProList}" var="userPro" begin="0" end="7" >
                         <tr>
                             <td>${userPro.rationNum}</td>
                             <td>${userPro.total}</td>
@@ -242,7 +246,7 @@
                         orient: 'vertical',
                         left: 'left',
                         data: [
-                            <c:forEach items="${baseMap.userProTotal}"  var="userPro" varStatus="sta">
+                            <c:forEach items="${userProTotal}"  var="userPro" varStatus="sta">
                                     <c:choose>
                                         <c:when test="${sta.last}">
                                             '${userPro.userName}'
@@ -260,7 +264,7 @@
                             radius: '55%',
                             center: ['50%', '60%'],
                             data: [
-                                <c:forEach items="${baseMap.userProTotal}" var="userList" varStatus="stus">
+                                <c:forEach items="${userProTotal}" var="userList" varStatus="stus">
                                     <c:choose>
                                         <c:when test="${sta.last}">
                                             { value:${userList.userTotal}, name:'${userList.userName}'}
@@ -289,97 +293,97 @@
 
         <!--查看模板弹出-->
         <div id="showSVGBrk" class="form_background"  style="display:none;" ></div>
-        <div id="showSVG" class="dm_form_model" style="display:none;" >
+        <div id="showSVG" class="dm_form_model"  style="display:none;" >
+            <div id="point">
             <table class="dm_form_table">
                 <tbody>
 
                 <tr>
-                    <td colspan="4">
-                        <input type="text" id="proNam" disabled="disabled"  style="width: 97%;font-size: 24px;padding-bottom: 13px;padding-left: 30%;" class="dm_forminput dm_inputstyle" style="width: 72%;" value="">
+                    <td colspan="4" style="width: 97%;font-size: 24px;padding-bottom: 13px;padding-left: 35%;" id="proNam">
                     </td>
                 </tr>
 
                 <tr>
                     <td class="dm_tlabels">配比编号：</td>
-                    <td>
-                        <input type="number" disabled="disabled" id="rationNum" class="dm_forminput dm_inputstyle" value="3">
+                    <td class="dm_forminput dm_inputstyle" id="rationNum" >
+
                     </td>
                     <td class="dm_tlabels">产品总数(盘)：</td>
-                    <td>
-                        <input type="number" id="procount" class="dm_forminput dm_inputstyle" value="5">
+                    <td class="dm_forminput dm_inputstyle" id="procount"  >
+
                     </td>
                 </tr>
 
                 <tr>
                     <td class="dm_tlabels">骨料1总量(kg)：</td>
-                    <td>
-                        <input type="number"  disabled="disabled" id="aggregate_1" class="dm_forminput dm_inputstyle" value="17">
+                    <td id="aggregate_1" class="dm_forminput dm_inputstyle" >
+
                     </td>
                     <td class="dm_tlabels">骨料2总量(kg)：</td>
-                    <td>
-                        <input type="number" disabled="disabled" id="aggregate_2" class="dm_forminput dm_inputstyle" value="35">
+                    <td id="aggregate_2" class="dm_forminput dm_inputstyle" >
+
                     </td>
                 </tr>
 
                 <tr>
                     <td class="dm_tlabels">骨料3总量(kg)：</td>
-                    <td>
-                        <input type="number" disabled="disabled" id="aggregate_3" class="dm_forminput dm_inputstyle" value="75">
+                    <td id="aggregate_3" class="dm_forminput dm_inputstyle" >
+
                     </td>
                     <td class="dm_tlabels">骨料4总量(kg)：</td>
-                    <td>
-                        <input type="number" disabled="disabled"  id="aggregate_4" class="dm_forminput dm_inputstyle" value="85">
+                    <td id="aggregate_4" class="dm_forminput dm_inputstyle" >
+
                     </td>
                 </tr>
 
                 <tr>
                     <td class="dm_tlabels">骨料5总量(kg)：</td>
-                    <td>
-                        <input type="number" disabled="disabled" id="aggregate_5" class="dm_forminput dm_inputstyle" value="5">
+                    <td id="aggregate_5" class="dm_forminput dm_inputstyle" >
+
                     </td>
                     <td class="dm_tlabels">骨料6总量(kg)：</td>
-                    <td>
-                        <input type="number" disabled="disabled" id="aggregate_6" class="dm_forminput dm_inputstyle" value="1">
+                    <td id="aggregate_6" class="dm_forminput dm_inputstyle" >
+
                     </td>
                 </tr>
 
 
                 <tr>
                     <td class="dm_tlabels">石粉1总量(kg)：</td>
-                    <td>
-                        <input type="number" disabled="disabled" id="stone_1" class="dm_forminput dm_inputstyle" value="157">
+                    <td id="stone_1" class="dm_forminput dm_inputstyle" >
+
                     </td>
                     <td class="dm_tlabels">石粉2总量(kg)：</td>
-                    <td>
-                        <input type="number" disabled="disabled" id="stone_2"  class="dm_forminput dm_inputstyle" value="152">
+                    <td id="stone_2" class="dm_forminput dm_inputstyle"  >
+
                     </td>
                 </tr>
 
                 <tr>
                     <td class="dm_tlabels">沥青总量(kg)：</td>
-                    <td>
-                        <input type="number" disabled="disabled" id="asphalt" class="dm_forminput dm_inputstyle" value="52">
+                    <td id="asphalt" class="dm_forminput dm_inputstyle" >
+
                     </td>
                     <td class="tlabels">再生料总量(kg)：</td>
-                    <td>
-                        <input type="number" disabled="disabled" id="regenerate" class="dm_forminput dm_inputstyle" value="37">
+                    <td id="regenerate" class="dm_forminput dm_inputstyle" >
+
                     </td>
                 </tr>
 
                 <tr>
                     <td class="dm_tlabels">添加剂总量(kg)：</td>
-                    <td>
-                        <input type="number" disabled="disabled" id="additive" class="dm_forminput dm_inputstyle" value="52">
+                    <td id="additive" class="dm_forminput dm_inputstyle" >
+
                     </td>
                     <td class="tlabels">材料总使用量(kg)：</td>
-                    <td>
-                        <input type="number" disabled="disabled" id="total" class="dm_forminput dm_inputstyle" value="37">
+                    <td id="total" class="dm_forminput dm_inputstyle" >
+
                     </td>
                 </tr>
 
                 <tr>
                     <td colspan="4">
-                        <input type="text" disabled="disabled"  style="color: #000;outline: 0;background: #fff;padding-top: 1%;font-size: 18px;padding-bottom: 9px;padding-left: 35%;" style="width: 72%;" value="平均配比信息">
+                        <input type="text" disabled="disabled"  style="color: #000;outline: 0;background: #fff;margin-top: 1%;font-size: 18px;margin-bottom: 20px;padding-left: 40%;" style="width: 72%;" value="平均配比信息">
                     </td>
                     <table class="gridtable">
                         <tr>
@@ -425,9 +429,9 @@
                 </tbody>
 
             </table>
-
+            </div>
             <div class="form_btn">
-                <input type="submit"  id="btn"  value="打印" class="btn_save">
+                <input type="submit"  id="btn" onclick="print()" value="打印" class="btn_save">
                 <input type="button" id="from_click"  value="关闭" class="btn_cancel">
             </div>
 
@@ -437,10 +441,11 @@
     <div style="width: 100%; height: 125%;" ></div>
 
 </body>
+
 <script type="text/javascript" src="/static/js/jquery.js"></script>
 <script type="text/javascript" src="/static/js/common.js"></script>
 <script type="text/javascript" src="/static/js/skin.js"></script>
-
+<script language="javascript" src="/static/js/qc/jquery.jqprint-0.3.js"></script>
 <script type="text/javascript">
 
 
@@ -453,15 +458,17 @@
         that_ = this;
         var raionNum = this.name;
         //获取当天各模板总数
-        var proTotalList = ${baseMap.produceTotal};
+        var proTotalList = ${produceTotal};
         //获取当天各模板实际配比
-        var proSVGList = ${baseMap.ProSVG};
-        $("#proNam").val("今日"+raionNum + "号配比生产信息");
+        var proSVGList = ${ProSVG};
+        $("#proNam").empty();
+        $("#proNam").append("今日"+raionNum + "号配比生产信息");
         // var objArr = eval("(" + proTotalList + ")");
         for (var i in proTotalList) {
             for (var k in proTotalList[i]){
                 if (raionNum == proTotalList[i].rationNum ){
-                    $("#" + k).val(proTotalList[i][k]);
+                    $("#" + k).empty();
+                    $("#" + k).append(proTotalList[i][k]);
                 }
             }
         }
@@ -486,6 +493,15 @@
         $('#showRatioBrk,#showRatio').hide();
     }
 
+    //打印相关
+    function  print(){
+        $("#point").jqprint({
+            debug: true, //如果是true则可以显示iframe查看效果（iframe默认高和宽都很小，可以再源码中调大），默认是false
+            importCSS: true, //true表示引进原来的页面的css，默认是true。（如果是true，先会找$("link[media=print]")，若没有会去找$("link")中的css文件）
+            printContainer: true, //表示如果原来选择的对象必须被纳入打印（注意：设置为false可能会打破你的CSS规则）。
+            operaSupport: true//表示如果插件也必须支持歌opera浏览器，在这种情况下，它提供了建立一个临时的打印选项卡。默认是true
+        });
+    }
 </script>
 
 </html>

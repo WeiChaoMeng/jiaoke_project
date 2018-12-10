@@ -2,9 +2,346 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jiaoke.quality.dao.QualityStatementDao">
 
-    <!--<select id="selectLastMonthStatementToEchars" resultType="java.util.Map">-->
+    <select id="selectLastMonthStatementToEchars" resultType="java.util.Map">
+        (
+        SELECT
+               'crew1' AS crewnum,
+               COUNT(*) as count,
+               T2.maxlevel as leve
+        FROM
+             quality_warning_promessage_crew AS t1
+                 INNER JOIN (
+                            SELECT
+                                   crew_id,
+                                   max(warning_level) AS maxlevel
+                            FROM
+                                 quality_warning_data
+                            GROUP BY
+                                     crew_id
+                            ) AS T2 ON t1.id = T2.crew_id
+                                           AND PERIOD_DIFF(
+                                                   date_format(now(), '%Y%m'),
+                                                   date_format(t1.produce_date, '%Y%m')
+                                                       ) = 1
+                                           AND produce_crewNum = 1
+        GROUP BY
+                 T2.maxlevel
+        )
+        UNION ALL
+                (
+                SELECT
+                       'crew2' AS crewnum,
+                       COUNT(*) as count,
+                       T2.maxlevel as leve
+                FROM
+                     quality_warning_promessage_crew AS t1
+                         INNER JOIN (
+                                    SELECT
+                                           crew_id,
+                                           max(warning_level) AS maxlevel
+                                    FROM
+                                         quality_warning_data
+                                    GROUP BY
+                                             crew_id
+                                    ) AS T2 ON t1.id = T2.crew_id
+                                                   AND PERIOD_DIFF(
+                                                           date_format(now(), '%Y%m'),
+                                                           date_format(t1.produce_date, '%Y%m')
+                                                               ) = 1
+                                                   AND produce_crewNum = 2
+                GROUP BY
+                         T2.maxlevel
+                )
+    </select>
 
-    <!--</select>-->
+    <select id="selectDateAndCount" resultType="java.util.Map">
+        (
+        SELECT
+               'crew1' AS crew,
+               DATE_FORMAT(MIN(produce_date),"%Y-%m-%d")  AS startDate,
+               DATE_FORMAT(MAX(produce_date),"%Y-%m-%d")  AS endDate,
+               COUNT(id) AS totalPro,
+               floor(SUM(material_total) / 1000) AS total
+        FROM
+             quality_monitoring_realtime_data1
+        WHERE
+                PERIOD_DIFF(
+                    date_format(now(), '%Y%m'),
+                    date_format(produce_date, '%Y%m')
+                        ) = 1
+        )
+        UNION ALL
+                (
+                SELECT
+                       'crew2' AS crew,
+                       DATE_FORMAT(MIN(produce_date),"%Y-%m-%d") AS startDate,
+                       DATE_FORMAT(MAX(produce_date),"%Y-%m-%d") AS endDate,
+                       COUNT(id) AS totalPro,
+                       floor(SUM(material_total) / 1000) AS total
+                FROM
+                     quality_monitoring_realtime_data2
+                WHERE
+                        PERIOD_DIFF(
+                            date_format(now(), '%Y%m'),
+                            date_format(produce_date, '%Y%m')
+                                ) = 1
+                );
+    </select>
+
+    <select id="selectMaterialMaxLever" resultType="java.util.Map">
+        (       SELECT
+                       'crew1' as crew,
+                       material_name,
+                       MAX(deviation_ratio) AS maxDeviation
+                FROM
+                     quality_warning_data AS t1
+                         INNER JOIN quality_warning_promessage_crew AS t2 ON t1.crew_id = t2.id
+                WHERE
+                        t1.warning_level = 3
+                  AND PERIOD_DIFF(
+                          date_format(now(), '%Y%m'),
+                          date_format(t2.produce_date, '%Y%m')
+                              ) = 1
+                  AND t2.produce_crewNum = 1
+                GROUP BY
+                         material_name
+                ORDER BY
+                         COUNT(*) DESC
+                LIMIT 1)
+        UNION ALL
+                (       SELECT
+                               'crew2' as crew,
+                               material_name,
+                               MAX(deviation_ratio) AS maxDeviation
+                        FROM
+                             quality_warning_data AS t1
+                                 INNER JOIN quality_warning_promessage_crew AS t2 ON t1.crew_id = t2.id
+                        WHERE
+                                t1.warning_level = 3
+                          AND PERIOD_DIFF(
+                                  date_format(now(), '%Y%m'),
+                                  date_format(t2.produce_date, '%Y%m')
+                                      ) = 1
+                          AND t2.produce_crewNum = 2
+                        GROUP BY
+                                 material_name
+                        ORDER BY
+                                 COUNT(*) DESC
+                        LIMIT 1);
+    </select>
+
+    <select id="selectMaxRationAndcount" resultType="java.util.Map">
+        (        SELECT
+                        'crew1' as crew,
+                        produce_proportioning_num,
+                        COUNT(*) AS count
+                 FROM
+                      quality_monitoring_realtime_data1
+                 WHERE
+                         PERIOD_DIFF(
+                             date_format(now(), '%Y%m'),
+                             date_format(produce_date, '%Y%m')
+                                 ) = 1
+                 GROUP BY
+                          produce_proportioning_num
+                 ORDER BY
+                          COUNT(*) DESC
+                 LIMIT 1)
+        UNION ALL
+                (        SELECT
+                                'crew2' as crew,
+                                produce_proportioning_num,
+                                COUNT(*) AS count
+                         FROM
+                              quality_monitoring_realtime_data2
+                         WHERE
+                                 PERIOD_DIFF(
+                                     date_format(now(), '%Y%m'),
+                                     date_format(produce_date, '%Y%m')
+                                         ) = 1
+                         GROUP BY
+                                  produce_proportioning_num
+                         ORDER BY
+                                  COUNT(*) DESC
+                         LIMIT 1)
+    </select>
 
 
+    <!-- Year Start -->
+    <select id="selectLastYearStatementToEchars" resultType="java.util.Map">
+        (
+        SELECT
+               'crew1' AS crewnum,
+               COUNT(*) AS count,
+               T2.maxlevel AS leve
+        FROM
+             quality_warning_promessage_crew AS t1
+                 INNER JOIN (
+                            SELECT
+                                   crew_id,
+                                   max(warning_level) AS maxlevel
+                            FROM
+                                 quality_warning_data
+                            GROUP BY
+                                     crew_id
+                            ) AS T2 ON t1.id = T2.crew_id
+                                           AND PERIOD_DIFF(
+                                                   date_format(now(), '%Y'),
+                                                   date_format(t1.produce_date, '%Y')
+                                                       ) = 0
+                                           AND produce_crewNum = 1
+        GROUP BY
+                 T2.maxlevel
+        )
+        UNION ALL
+                (
+                SELECT
+                       'crew2' AS crewnum,
+                       COUNT(*) AS count,
+                       T2.maxlevel AS leve
+                FROM
+                     quality_warning_promessage_crew AS t1
+                         INNER JOIN (
+                                    SELECT
+                                           crew_id,
+                                           max(warning_level) AS maxlevel
+                                    FROM
+                                         quality_warning_data
+                                    GROUP BY
+                                             crew_id
+                                    ) AS T2 ON t1.id = T2.crew_id
+                                                   AND PERIOD_DIFF(
+                                                           date_format(now(), '%Y'),
+                                                           date_format(t1.produce_date, '%Y')
+                                                               ) = 0
+                                                   AND produce_crewNum = 2
+                GROUP BY
+                         T2.maxlevel
+                )
+    </select>
+
+    <select id="selectYearList" resultType="java.util.Map">
+        SELECT DATE_FORMAT(produce_date,'%Y') as dates FROM `quality_monitoring_realtime_data1` GROUP BY DATE_FORMAT(produce_date,'%Y');
+    </select>
+
+    <select id="selectLastYearAndCount" resultType="java.util.Map">
+        (
+        SELECT
+               'crew1' AS crew,
+               DATE_FORMAT(MIN(produce_date),"%Y-%m-%d")  AS startDate,
+               DATE_FORMAT(MAX(produce_date),"%Y-%m-%d")  AS endDate,
+               COUNT(id) AS totalPro,
+               floor(SUM(material_total) / 1000) AS total
+        FROM
+             quality_monitoring_realtime_data1
+        WHERE
+                PERIOD_DIFF(
+                    date_format(now(), '%Y'),
+                    date_format(produce_date, '%Y')
+                        ) = 0
+        )
+        UNION ALL
+                (
+                SELECT
+                       'crew2' AS crew,
+                       DATE_FORMAT(MIN(produce_date),"%Y-%m-%d") AS startDate,
+                       DATE_FORMAT(MAX(produce_date),"%Y-%m-%d") AS endDate,
+                       COUNT(id) AS totalPro,
+                       floor(SUM(material_total) / 1000) AS total
+                FROM
+                     quality_monitoring_realtime_data2
+                WHERE
+                        PERIOD_DIFF(
+                            date_format(now(), '%Y'),
+                            date_format(produce_date, '%Y')
+                                ) = 0
+                );
+    </select>
+
+    <select id="selectLastYearMaterialMaxLever" resultType="java.util.Map">
+        (
+        SELECT
+               'crew1' AS crew,
+               material_name,
+               MAX(deviation_ratio) AS maxDeviation
+        FROM
+             quality_warning_data AS t1
+                 INNER JOIN quality_warning_promessage_crew AS t2 ON t1.crew_id = t2.id
+        WHERE
+                t1.warning_level = 3
+          AND PERIOD_DIFF(
+                  date_format(now(), '%Y'),
+                  date_format(t2.produce_date, '%Y')
+                      ) = 0
+          AND t2.produce_crewNum = 1
+        GROUP BY
+                 material_name
+        ORDER BY
+                 COUNT(*) DESC
+        LIMIT 1
+        )
+        UNION ALL
+                (
+                SELECT
+                       'crew2' AS crew,
+                       material_name,
+                       MAX(deviation_ratio) AS maxDeviation
+                FROM
+                     quality_warning_data AS t1
+                         INNER JOIN quality_warning_promessage_crew AS t2 ON t1.crew_id = t2.id
+                WHERE
+                        t1.warning_level = 3
+                  AND PERIOD_DIFF(
+                          date_format(now(), '%Y'),
+                          date_format(t2.produce_date, '%Y')
+                              ) = 0
+                  AND t2.produce_crewNum = 2
+                GROUP BY
+                         material_name
+                ORDER BY
+                         COUNT(*) DESC
+                LIMIT 1
+                );
+    </select>
+
+    <select id="selectLastYearMaxRationAndcount" resultType="java.util.Map">
+        (        SELECT
+                        'crew1' as crew,
+                        produce_proportioning_num,
+                        COUNT(*) AS count
+                 FROM
+                      quality_monitoring_realtime_data1
+                 WHERE
+                         PERIOD_DIFF(
+                             date_format(now(), '%Y'),
+                             date_format(produce_date, '%Y')
+                                 ) = 0
+                 GROUP BY
+                          produce_proportioning_num
+                 ORDER BY
+                          COUNT(*) DESC
+                 LIMIT 1)
+        UNION ALL
+                (        SELECT
+                                'crew2' as crew,
+                                produce_proportioning_num,
+                                COUNT(*) AS count
+                         FROM
+                              quality_monitoring_realtime_data2
+                         WHERE
+                                 PERIOD_DIFF(
+                                     date_format(now(), '%Y'),
+                                     date_format(produce_date, '%Y')
+                                         ) = 0
+                         GROUP BY
+                                  produce_proportioning_num
+                         ORDER BY
+                                  COUNT(*) DESC
+                         LIMIT 1)
+    </select>
+    <!-- Year End -->
+    <!-- Month Start -->
+    <select id="selectMonthDateList" resultType="java.util.Map">
+        SELECT  DATE_FORMAT(produce_date,'%Y%m') as dates FROM quality_monitoring_realtime_data1 GROUP BY DATE_FORMAT(produce_date,'%Y%m')
+    </select>
 </mapper>

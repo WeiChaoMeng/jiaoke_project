@@ -245,6 +245,10 @@
                     <artifactId>commons-lang3</artifactId>
                     <groupId>org.apache.commons</groupId>
                 </exclusion>
+                <exclusion>
+                    <groupId>de.odysseus.juel</groupId>
+                    <artifactId>juel-spi</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
 
@@ -277,6 +281,7 @@
                     <artifactId>commons-lang3</artifactId>
                     <groupId>org.apache.commons</groupId>
                 </exclusion>
+
             </exclusions>
         </dependency>
 

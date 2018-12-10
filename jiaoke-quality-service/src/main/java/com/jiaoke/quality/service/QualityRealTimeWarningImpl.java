@@ -93,43 +93,48 @@ public class QualityRealTimeWarningImpl implements  QualityRealTimeWarningInf {
             switch (name){
                 case "骨料6":
                     total = Float.parseFloat(moudle);
-                    upRatio = total + 5;
-                     downRatio = total - 5;
+                    upRatio = total == 0? 0: total + 5;
+                     downRatio = total == 0? 0: total - 5;
                     break;
                 case "骨料5":
                     total = Float.parseFloat(moudle);
-                    upRatio = total + 5;
-                    downRatio = total - 5;
+                    upRatio = total == 0? 0: total + 5;
+                    downRatio = total == 0? 0: total - 5;
                     break;
                 case "骨料4":
                     total = Float.parseFloat(moudle);
-                    upRatio = total + 5;
-                    downRatio = total - 5;
+                    upRatio = total == 0? 0: total + 5;
+                    downRatio = total == 0? 0: total - 5;
                     break;
                 case "骨料3":
                     total = Float.parseFloat(moudle);
-                    upRatio = total + 5;
-                    downRatio = total - 5;
+                    upRatio = total == 0? 0: total + 5;
+                    downRatio = total == 0? 0: total - 5;
                     break;
                 case "骨料2":
                     total = Float.parseFloat(moudle);
-                    upRatio = total + 2;
-                    downRatio = total - 2;
+                    upRatio = total == 0? 0: total + 2;
+                    downRatio = total == 0? 0: total - 2;
                     break;
                 case "骨料1":
                     total = Float.parseFloat(moudle);
-                    upRatio = total + 2;
-                    downRatio = total - 2;
+                    upRatio = total == 0? 0: total + 2;
+                    downRatio = total == 0? 0: total - 2;
                     break;
                 case "矿粉":
                     total = Float.parseFloat(moudle);
-                    upRatio = total + 1;
-                    downRatio = total - 1;
+                    upRatio = total == 0? 0: total + 1;
+                    downRatio = total == 0? 0: total - 2;
                     break;
                 case "沥青":
                     total = Float.parseFloat(moudle);
-                    upRatio = total + 2;
-                    downRatio = total - 2;
+                    upRatio = total == 0? 0: total + 2;
+                    downRatio = total == 0? 0: total - 2;
+                    break;
+                case "再生料":
+                    total = Float.parseFloat(moudle);
+                    upRatio = total == 0? 0: total + 2;
+                    downRatio = total == 0? 0: total - 2;
                     break;
             }
 

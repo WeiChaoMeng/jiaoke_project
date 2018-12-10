@@ -38,16 +38,18 @@ function getWarningData() {
                     }
 
                     /****************渲染预警级别*****************/
+
                     switch (res[i].warning_level) {
-                        case "0":
+                        case 0:
                             warningLeve = "无预警";
-                        case "1":
+                            break;
+                        case 1:
                             warningLeve = "一级预警";
                             break;
-                        case "2":
+                        case 2:
                             warningLeve = "二级预警";
                             break;
-                        case "3":
+                        case 3:
                             warningLeve = "三级预警";
                             break;
                     }

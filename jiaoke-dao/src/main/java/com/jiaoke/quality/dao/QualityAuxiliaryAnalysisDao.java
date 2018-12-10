@@ -39,4 +39,10 @@ public interface QualityAuxiliaryAnalysisDao {
     int selelectCountWarningLive(@Param("warningLive") int warningLive);
 
 
+    /**
+     * 根据预警基础信息查询预警级别详细信息
+     * @param idList
+     * @return
+     */
+    List<Map<String, String>> selectWaringData(@Param("idList")  List<String> idList);
 }

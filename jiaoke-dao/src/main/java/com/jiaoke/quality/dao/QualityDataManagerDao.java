@@ -89,4 +89,36 @@ public interface QualityDataManagerDao {
      * @return
      */
     List<Map<String, String>> selectUserProTotalByDate(@Param("producedDate") String producedDate,@Param("crewNum") String crewNum);
+
+    /**
+     * 根据id、与生产机组查询产品信息
+     * @param id
+     * @param crewNum
+     * @return
+     */
+    Map<String, String> selectProductMessageById(@Param("id")String id, @Param("crewNum")String crewNum);
+
+    /**
+     *根据日期与盘号、机组号查询相关数据
+     * @param date
+     * @param discNum
+     * @param crew
+     * @return
+     */
+    List<Map<String, String>> selectProduceByDateAndDiscNum(@Param("date") String date,@Param("discNum") String discNum, @Param("crewNum") String crewNum);
+
+    /**
+     * 查询每天各个模板产品信息
+     * @param producedDate
+     * @param crewNum
+     * @return
+     */
+    List<Map<String, Object>> selectProListByRatioNumAndDate(@Param("ratioNum")  String ratioNum,@Param("crewNum")  String crewNum,@Param("date")  String date);
+
+    /**
+     * 查询模板数据
+     * @param ratioNum
+     * @return
+     */
+    QualityRatioTemplate selectRationById(@Param("ratioNum") String ratioNum,@Param("crewNum") String crewNum);
 }

@@ -10,6 +10,7 @@ package com.jiaoke.quality.service;
 
 import com.jiaoke.common.bean.PageBean;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,4 +30,11 @@ public interface QualityAuxiliaryAnalysisInf {
      * @return
      */
     PageBean<Map<String,String>> selelectWarningLiveData(int i, String url, String warningLive);
+
+    /**
+     * 根据预警基本信息查询所有相关的预警信息
+     * @param pageBean
+     * @return
+     */
+    List<Map<String, String>> selectWaringData(PageBean<Map<String, String>> pageBean);
 }

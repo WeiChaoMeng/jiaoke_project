@@ -163,7 +163,7 @@ public class QualityWarningUtil {
      * @date: 2018/10/9 11:21
      */
 
-    public static QualityWarningData materialWarningLevel(float materialRationMoudel,float materialRationReal,int id, String name){
+    public static QualityWarningData  materialWarningLevel(float materialRationMoudel,float materialRationReal,int id, String name){
 
         if (0 == materialRationReal) return null;
 
@@ -185,10 +185,10 @@ public class QualityWarningUtil {
                 qualityWarningData = compareDifference(5,7,9,materialRationReal,materialRationMoudel,id,name);
                 break;
             case "骨料2":
-                qualityWarningData = compareDifference(2,4,6,materialRationReal,materialRationMoudel,id,name);
+                qualityWarningData = compareDifference(4,5,6,materialRationReal,materialRationMoudel,id,name);
                 break;
             case "骨料1":
-                qualityWarningData = compareDifference(2,4,6,materialRationReal,materialRationMoudel,id,name);
+                qualityWarningData = compareDifference(4,5,6,materialRationReal,materialRationMoudel,id,name);
                 break;
             case "矿粉":
                 qualityWarningData = compareDifference(2,4,6,materialRationReal,materialRationMoudel,id,name);

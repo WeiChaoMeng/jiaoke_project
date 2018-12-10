@@ -203,5 +203,53 @@
 
     </select>
 
+    <select id="selectProductMessageById" resultType="java.util.Map" >
+        select * from  quality_monitoring_realtime_${crewNum} where id = ${id}
+    </select>
 
+    <select id="selectProduceByDateAndDiscNum" resultType="java.util.Map">
+        SELECT
+               T1.*
+        FROM
+             quality_warning_data AS T1
+                 INNER JOIN (
+                            SELECT
+                                    *
+                            FROM
+                                 quality_warning_promessage_crew
+                            WHERE
+                                    produce_date = DATE #{date}
+                              AND produce_disc_num = #{discNum}
+                              AND produce_crewNum = #{crewNum}
+                            ) AS T2 ON T1.crew_id = T2.id
+    </select>
+    <select id="selectProListByRatioNumAndDate" resultType="java.util.Map">
+        SELECT * from quality_monitoring_realtime_${crewNum} WHERE produce_proportioning_num = ${ratioNum} and  produce_date = date ${date}
+    </select>
+    <select id="selectRationById" resultType="com.jiaoke.quality.bean.QualityRatioTemplate">
+        select
+               pro_name as proName,
+               repertory_one as repertoryOne,
+               repertory_two as repertoryTwo,
+               repertory_three as repertoryThree,
+               repertory_four as repertoryFour,
+               repertory_five as repertoryFive,
+               repertory_six as repertorySix,
+               breeze as breeze,
+               ratio_stone as ratioStone,
+               ratio_regenerate1 as ratioRegenerate1,
+               ratio_regenerate2 as ratioRegenerate2,
+               ratio_additive as ratioAdditive,
+               regenerate as regenerate,
+               additive as additive,
+               temperature_asphalt as temperatureAsphalt,
+               temperature_aggregate as temperatureAggregate,
+               temperature_mixture as temperatureMixture,
+               temperature_milling as temperatureMilling,
+               temperature_asphalt_up as temperatureAsphaltUp,
+               temperature_aggregate_up as temperatureAggregateUp,
+               temperature_mixture_up as temperatureMixtureUp,
+               temperature_milling_up as temperatureMillingUp
+        from quality_proportioning_message where ${crewNum}_modele_id = ${ratioNum}
+    </select>
 </mapper>
