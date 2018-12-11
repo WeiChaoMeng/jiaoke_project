@@ -73,7 +73,7 @@
     </div>
 </div>
 <!--  -->
-<form action="/document/add" name="oaDocumentProcessing" id="oaDocumentProcessing" method="post" onsubmit="">
+<form action="${path}/document/add" name="oaDocumentProcessing" id="oaDocumentProcessing" method="post" onsubmit="">
     <div class="form_area">
         <table style="width: 100%">
             <tbody>
@@ -195,7 +195,8 @@
             </td>
             <td class="tlabel">密级：</td>
             <td>
-                <select class="select swidth" name="rank" data-value="0" required>
+                <select class="select swidth" name="rank" data-value="0" required="true">
+                    <option value="">---请选择---</option>
                     <option value="0">普通公文</option>
                     <option value="1">秘密公文</option>
                     <option value="2">机密公文</option>
@@ -204,7 +205,8 @@
             </td>
             <td class="tlabel">标识：</td>
             <td>
-                <select class="select swidth" name="identification" data-value="0" required>
+                <select class="select swidth" name="identification" data-value="0" required="true">
+                    <option value="">---请选择---</option>
                     <option value="0">平行文</option>
                     <option value="1">上行文</option>
                     <option value="2">内部行文</option>
@@ -217,7 +219,8 @@
         <tr>
             <td class="tlabel">公文类型：</td>
             <td>
-                <select class="select swidth" name="docType" data-value="0">
+                <select class="select swidth" name="docType" data-value="0" required="true">
+                    <option value="">---请选择---</option>
                     <option value="0">公文</option>
                     <option value="1">会议纪要</option>
                     <option value="2">请示</option>
@@ -229,11 +232,12 @@
             <td class="tlabel">发文时间：</td>
             <td colspan="tlabel">
                 <input type="text" class="forminput inputstyle" id="writingTime" name="writingTime" value=""
-                       readonly="readonly" required>
+                       onfocus="this.blur()" required>
             </td>
             <td class="tlabel">保存期限：</td>
             <td>
-                <select class="select swidth" name="storageLife" data-value="0" required>
+                <select class="select swidth" name="storageLife" data-value="0" required="true">
+                    <option value="">---请选择---</option>
                     <option value="0">10年</option>
                     <option value="1">30年</option>
                     <option value="2">永久</option>
@@ -244,20 +248,20 @@
         <tr>
             <td class="tlabel">拟稿部门：</td>
             <td>
-                <select class="select swidth" name="draftingDepartment" data-value="0" required>
-                    <option value="0">办公室</option>
-                    <option value="1">组织人事部</option>
-                    <option value="2">党群工作部</option>
-                    <option value="3">生产经营部</option>
-                    <option value="4">财务管理部</option>
-                    <option value="5">企业管理部</option>
-                    <option value="6">内控审计部</option>
-                    <option value="7">安全管理部</option>
-                    <option value="8">纪委监督部</option>
+                <select class="select swidth" name="draftingDepartment" id="draftingDepartment" data-value="0"
+                        required="true">
+                    <option value="">---请选择---</option>
+                    <option value="10">综合办公室</option>
+                    <option value="11">经营开发部</option>
+                    <option value="12">生产管理部</option>
+                    <option value="13">财务管理部</option>
+                    <option value="14">物资管理部</option>
+                    <option value="15">质量技术部</option>
                 </select>
             </td>
             <td class="tlabel">拟稿人：</td>
-            <td><input type="text" class="forminput inputstyle" name="draftedPerson" value="" required></td>
+            <td><input type="text" class="forminput inputstyle" onclick="selectReviewer()" name="draftedPerson"
+                       id="draftedPerson" value="" onfocus="this.blur()" required></td>
             <td class="tlabel">核稿人：</td>
             <td><input type="text" class="forminput inputstyle" name="nuclearDrafts" value="" disabled="disabled"
                        style="background: #f4f4f4;"></td>
@@ -367,6 +371,38 @@
         "language": "zh-CN",
         "format": 'yyyy-mm-dd'
     });
+
+    //拟稿部门发生改变则清空拟稿人
+    $('#draftingDepartment').change(function () {
+        $('#draftedPerson').val('');
+    });
+
+    //选择核稿人
+    function selectReviewer() {
+        var departmentKey = $('#draftingDepartment').val();
+        if (departmentKey === "") {
+            alert("请先选择部门！")
+        } else {
+            $.ajax({
+                cache: true,
+                type: "POST",
+                url: '${path}/document/departmentMember',
+                data: {"departmentKey": departmentKey},
+                error: function (request) {
+                    alert("Connection error");
+                },
+                success: function (result) {
+                    console.log(JSON.parse(result))
+                    parent.openBack(JSON.parse(result));
+                }
+            });
+        }
+    }
+
+    //插入选择的核稿人
+    function insertReviewer(parameter) {
+        $('#draftedPerson').val(parameter);
+    }
 </script>
 </html>
 

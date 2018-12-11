@@ -1,8 +1,12 @@
 package com.jiaoke.controller.oa;
 
+import com.jiake.utils.JsonHelper;
+import com.jiake.utils.RandomUtil;
 import com.jiaoke.oa.bean.OaDocument;
 import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.service.OaDocumentService;
+import com.jiaoke.oa.service.UserInfoService;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.ProcessEngines;
 import org.activiti.engine.TaskService;
@@ -35,6 +39,9 @@ public class OaDocumentController {
 
     @Resource
     private ActivitiUtil activitiUtil;
+
+    @Resource
+    private UserInfoService userInfoService;
 
     /**
      * 待办公文跳转
@@ -82,7 +89,7 @@ public class OaDocumentController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String add(OaDocument oaDocument) {
         //生成公文id
-        Integer random = random();
+        Integer random = RandomUtil.random();
         oaDocument.setId(random);
         if (oaDocumentService.add(oaDocument) == 1) {
             //获取当前登录人的id
@@ -117,6 +124,7 @@ public class OaDocumentController {
     @RequestMapping(value = "/preservationPending")
     @ResponseBody
     public String preservationPending(OaDocument oaDocument) {
+        oaDocument.setId(RandomUtil.random());
         if (oaDocumentService.add(oaDocument) == 1) {
             return "success";
         } else {
@@ -169,6 +177,35 @@ public class OaDocumentController {
         int total = oaDocumentService.getTotalByFormState(1);
         model.addAttribute("total", total);
         return "oa/document/oa_primed_document";
+    }
+
+    /**
+     * 跳转公文编辑页面
+     *
+     * @param id    id
+     * @param model model
+     * @return oa_edit_document.jsp
+     */
+    @RequestMapping(value = "/toEdit")
+    public String toEdit(Integer id, Model model) {
+        OaDocument oaDocument = oaDocumentService.getDocumentDetailsById(id);
+        model.addAttribute("oaDocument", oaDocument);
+        return "oa/document/oa_edit_document";
+    }
+
+    /**
+     * 修改
+     *
+     * @param oaDocument oaDocument
+     * @return result
+     */
+    @RequestMapping(value = "/edit")
+    @ResponseBody
+    public String edit(OaDocument oaDocument) {
+        if (oaDocumentService.edit(oaDocument) == 1) {
+            return "success";
+        }
+        return "error";
     }
 
 
@@ -225,32 +262,29 @@ public class OaDocumentController {
      * @param taskId        任务id
      * @param variableName  变量名
      * @param variableValue 变量值
-     * @return
+     * @param draftedPerson 拟稿人
+     * @return oa_pending_document
      */
     @RequestMapping(value = "/documentApproval")
-    public String documentApproval(String taskId, String variableName, String variableValue, int id) {
+    public String documentApproval(String taskId, String variableName, String variableValue, int id, String draftedPerson) {
         String value = "1";
         activitiUtil.completeTaskByTaskId(taskId, variableName, variableValue);
         if (value.equals(variableValue)) {
-            oaDocumentService.updateCountersignature(id);
+            oaDocumentService.updateCountersignature(id, draftedPerson);
         }
         return "redirect:/document/pendingDocument.do";
     }
 
     /**
-     * 随机数
+     * 获取部门成员
      *
-     * @return 10位纯数字
+     * @param departmentKey 部门id
+     * @return 成员列表
      */
-    private Integer random() {
-        int end = 2;
-        SimpleDateFormat sdf = new SimpleDateFormat("HHmmss");
-        String newDate = sdf.format(new Date());
-        String result = "";
-        Random random = new Random();
-        for (int i = 0; i < end; i++) {
-            result += random.nextInt(10);
-        }
-        return Integer.valueOf(newDate + result);
+    @RequestMapping(value = "/departmentMember")
+    @ResponseBody
+    public String departmentMember(String departmentKey) {
+        List<UserInfo> userInfoList = userInfoService.getUserByDepartmentKey(departmentKey);
+        return JsonHelper.toJSONString(userInfoList);
     }
 }

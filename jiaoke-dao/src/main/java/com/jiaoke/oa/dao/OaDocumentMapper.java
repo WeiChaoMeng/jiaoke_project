@@ -15,10 +15,28 @@ import java.util.List;
  */
 
 public interface OaDocumentMapper {
+    /**
+     * 根据主键删除
+     *
+     * @param id id
+     * @return NumberOfAffectedRows
+     */
     int deleteByPrimaryKey(Integer id);
 
+    /**
+     * 根据主键选择性更新
+     *
+     * @param record OaDocument
+     * @return NumberOfAffectedRows
+     */
     int updateByPrimaryKeySelective(OaDocument record);
 
+    /**
+     * 根据主键更新
+     *
+     * @param record OaDocument
+     * @return NumberOfAffectedRows
+     */
     int updateByPrimaryKey(OaDocument record);
 
     /**
@@ -81,6 +99,15 @@ public interface OaDocumentMapper {
     int updateCountersignature(@Param("nickName") String nickName, @Param("id") int id);
 
     /**
+     * 更新核稿人
+     *
+     * @param nickName 昵称
+     * @param id       id
+     * @return NumberOfAffectedRows
+     */
+    int updateReviewer(@Param("nickName") String nickName, @Param("id") int id);
+
+    /**
      * 更新签发
      *
      * @param nickName 昵称
@@ -88,4 +115,22 @@ public interface OaDocumentMapper {
      * @return NumberOfAffectedRows
      */
     int updateSignatureIssuance(@Param("nickName") String nickName, @Param("id") int id);
+
+    /**
+     * 更新签发和核稿人
+     *
+     * @param nickName 昵称
+     * @param id       id
+     * @return NumberOfAffectedRows
+     */
+    int updateSignatureIssuanceAndReviewer(@Param("nickName") String nickName, @Param("id") int id);
+
+    /**
+     * 更新会签和核稿人
+     *
+     * @param nickName 昵称
+     * @param id       id
+     * @return NumberOfAffectedRows
+     */
+    int updateCountersignatureAndReviewer(@Param("nickName") String nickName, @Param("id") int id);
 }

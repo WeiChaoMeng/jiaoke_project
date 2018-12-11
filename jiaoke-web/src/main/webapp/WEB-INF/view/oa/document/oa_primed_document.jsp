@@ -1,3 +1,5 @@
+
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core_1_1" %>
 <%--
   Created by IntelliJ IDEA.
@@ -176,7 +178,7 @@
                     } else {
                         var pagingHtml = "";
                         for (let i = 0; i < data.length; i++) {
-                            pagingHtml += '<tr onclick="particulars('+data[i].id+')">';
+                            pagingHtml += '<tr onclick="particulars(' + data[i].id + ')">';
                             pagingHtml += '<td class="tdnum">';
                             pagingHtml += '<input type="checkbox" onclick="window.event.cancelBubble=true;">';
                             pagingHtml += '</td>';
@@ -191,9 +193,9 @@
                                 pagingHtml += '绝密公文';
                             }
                             pagingHtml += '</td>';
-                            pagingHtml += '<td class="text_style" title="' + data[i].formTitle + '"> '+data[i].formTitle+' </td>';
-                            pagingHtml += '<td>'+data[i].textNumber+'</td>';
-                            pagingHtml += '<td>'+data[i].createTimeStr+'</td>';
+                            pagingHtml += '<td class="text_style" title="' + data[i].formTitle + '"> ' + data[i].formTitle + ' </td>';
+                            pagingHtml += '<td>' + data[i].textNumber + '</td>';
+                            pagingHtml += '<td>' + data[i].createTimeStr + '</td>';
                             pagingHtml += '<td>';
                             if (data[i].importance === 0) {
                                 pagingHtml += '普通';
@@ -246,7 +248,7 @@
 
     //查看详情
     function particulars(id) {
-        window.location.href = "${path}/document/completeDetails?id=" + id;
+        window.location.href = "${path}/document/toEdit?id=" + id;
     }
 </script>
 </html>

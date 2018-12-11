@@ -19,16 +19,88 @@
     <link rel="stylesheet" type="text/css" href="/static/fonts/font_3/iconfont.css">
 </head>
 <body>
+<!--弹窗背景-->
+<div id='windowBackgroundColor'></div>
+
+<!--窗口实体-->
+<div id="selectWindow" class="option-window">
+
+    <div class="option-window-head">选择拟稿人</div>
+
+    <div class="option-window-body">
+        <div class="option-window-body-head">
+            <div class="selection-box">
+                <div class="selection-box-title">
+                    <span>选择</span>
+                    <span>：</span>
+                </div>
+                <div class="selection-content-outer">
+                    <div id="selectDiv" class="selection-content-inside">
+
+                        <ul id="selectContent">
+
+                        </ul>
+
+                        <%--<li class="selection-box-li">
+                                                   <a>
+                                                       <div></div>
+                                                       <img src="../../../static/images/icon/doc.png">
+                                                       <span>综合办公室
+                                                       <i class="my-icon nav-more"></i>
+                                                       </span>
+                                                   </a>
+
+                                                   <ul class="selection-box-ul">
+                                                       <li onclick="add(this)">
+                                                           <img src="../../../static/images/icon/personnel.png">
+                                                           <span id="1212">哈哈哈</span>
+                                                           <div></div>
+                                                       </li>
+
+                                                       <li onclick="add(this)">
+                                                           <img src="../../../static/images/icon/personnel.png">
+                                                           <span id="1231">嘻嘻嘻</span>
+                                                           <div></div>
+                                                       </li>
+                                                   </ul>
+                                               </li>--%>
+                    </div>
+                </div>
+            </div>
+
+            <div class="selected-box">
+                <div class="selected-box-title ">
+                    <span>已选</span>
+                    <span>：</span>
+                </div>
+                <div class="selected-box-content">
+                    <ul id="selectedReviewer">
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="option-window-body-bottom">
+            <input type="button" value="确认" onclick="consent()" class="body-bottom-button">
+            <input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">
+        </div>
+    </div>
+</div>
+
 <div class="nav nav-mini">
     <div class="nav-top">
-        <div id="mini" style="border-bottom: 2px #fff solid;"><img style="padding: 3.5px 13px"
-                                                                   src="../../../static/images/icon/mini.png"></div>
+        <div id="mini" style="border-bottom: 2px #fff solid;">
+            <img style="padding: 3.5px 13px" src="../../../static/images/icon/mini.png">
+        </div>
     </div>
     <ul>
         <li class="nav-item">
-            <a><i class="iconfont icon-gerenshiwu"></i><span
-                    style="margin-left: 10px;">个人事务</span><i
-                    class="my-icon nav-more"></i></a>
+            <a>
+                <i class="iconfont icon-gerenshiwu"></i>
+                <span class="parent-menu-span">个人事务</span>
+                <i class="my-icon nav-more"></i>
+            </a>
             <ul>
                 <li><a id="persional_attendance"><span>个人考勤</span></a></li>
                 <li><a id="persional_salary"><span>个人工资</span></a></li>
@@ -39,7 +111,8 @@
         </li>
         <li class="nav-item">
             <a><i class="iconfont icon-m3-newCoordination-copy"></i>
-                <span id="aaa" style="margin-left: 10px;">协同工作</span><i class="my-icon nav-more"></i>
+                <span class="parent-menu-span">协同工作</span>
+                <i class="my-icon nav-more"></i>
             </a>
             <ul>
                 <li><a id="new_matter"><span>新建事项</span></a></li>
@@ -51,8 +124,9 @@
             </ul>
         </li>
         <li class="nav-item">
-            <a><i class="iconfont icon-gongwen"></i><span style="margin-left: 10px;">公文管理</span><i
-                    class="my-icon nav-more"></i></a>
+            <a><i class="iconfont icon-gongwen"></i>
+                <span class="parent-menu-span">公文管理</span>
+                <i class="my-icon nav-more"></i></a>
             <ul>
                 <shiro:hasPermission name="createDocument">
                     <li><a id="release_document"><span>新建公文</span></a></li>
@@ -64,10 +138,12 @@
 
             </ul>
         </li>
-        <li class="nav-item">
-            <a><i class="iconfont icon-danganguanli"></i><span
-                    style="margin-left: 10px;">档案管理</span><i
-                    class="my-icon nav-more"></i></a>
+
+        <%--<li class="nav-item">
+            <a><i class="iconfont icon-danganguanli"></i>
+                <span class="parent-menu-span">档案管理</span>
+                <i class="my-icon nav-more"></i>
+            </a>
             <ul>
                 <li><a id="contract_archives"><span>合同档案</span></a></li>
                 <li><a id="general_office"><span>综合办公室</span></a></li>
@@ -77,10 +153,82 @@
                 <li><a id="finance_administration"><span>财务管理部</span></a></li>
                 <li><a id="production_administration"><span>生产管理部</span></a></li>
             </ul>
-        </li>
+        </li>--%>
+
+        <shiro:hasPermission name="comprehensiveOffice">
+            <li class="nav-item">
+                <a><i class="iconfont icon-danganguanli"></i>
+                    <span class="parent-menu-span" id="office">综合办公室档案</span>
+                    <i class="my-icon nav-more"></i>
+                </a>
+                <ul>
+                    <li>
+                        <a id="office_release_document"
+                           onclick="IFrame(this,$('#office').text(),'comprehensiveOffice/officeReleaseDocument')">
+                            <span>公司发文</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a id="office_receive_document"
+                           onclick="IFrame(this,$('#office').text(),'comprehensiveOffice/officeReceiveDocument')">
+                            <span>公司收文</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a id="office_meeting_summary"
+                           onclick="IFrame(this,$('#office').text(),'comprehensiveOffice/officeMeetingSummary')">
+                            <span>会议纪要</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a id="office_management_system"
+                           onclick="IFrame(this,$('#office').text(),'comprehensiveOffice/officeManagementSystem')">
+                            <span>管理体系相关</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a id="office_contract_agreement"
+                           onclick="IFrame(this,$('#office').text(),'comprehensiveOffice/officeContractAgreement')">
+                            <span>合同、协议</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a id="office_eia_monitoring"
+                           onclick="IFrame(this,$('#office').text(),'comprehensiveOffice/officeEiaMonitor')">
+                            <span>环评监测报告</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a id="office_other_documents"
+                           onclick="IFrame(this,$('#office').text(),'comprehensiveOffice/officeOtherDocuments')">
+                            <span>其他文件</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </shiro:hasPermission>
+
+        <shiro:hasPermission name="financialManagement">
+            <li class="nav-item">
+                <a><i class="iconfont icon-danganguanli"></i>
+                    <span class="parent-menu-span">财务管理部档案</span>
+                    <i class="my-icon nav-more"></i>
+                </a>
+                <ul>
+                    <li><a id="voucher"><span>凭证</span></a></li>
+                    <li><a id="finance_contract"><span>合同</span></a></li>
+                    <li><a id="finance_bill"><span>票据</span></a></li>
+                    <li><a id="confirm"><span>确认</span></a></li>
+                    <li><a id="report_material"><span>报表及资料</span></a></li>
+                    <li><a id="finance_other_documents"><span>其他文件</span></a></li>
+                </ul>
+            </li>
+        </shiro:hasPermission>
+
         <li class="nav-item">
-            <a><i class="iconfont icon-huiyiguanli"></i><span style="margin-left: 10px;">会议管理</span><i
-                    class="my-icon nav-more"></i></a>
+            <a><i class="iconfont icon-huiyiguanli"></i>
+                <span class="parent-menu-span">会议管理</span>
+                <i class="my-icon nav-more"></i></a>
             <ul>
                 <li><a id="meeting_schedule"><span>会议安排</span></a></li>
                 <li><a id="conference_calendar"><span>会议日历</span></a></li>
@@ -90,9 +238,9 @@
             </ul>
         </li>
         <li class="nav-item">
-            <a><i class="iconfont icon-ziyuanguanli"></i><span
-                    style="margin-left: 10px;">资源管理</span><i
-                    class="my-icon nav-more"></i></a>
+            <a><i class="iconfont icon-ziyuanguanli"></i>
+                <span class="parent-menu-span">资源管理</span>
+                <i class="my-icon nav-more"></i></a>
             <ul>
                 <li><a id="resource_storage"><span>资源入库</span></a></li>
                 <li><a id="resources_archives"><span>资源档案</span></a></li>
@@ -101,8 +249,9 @@
             </ul>
         </li>
         <li class="nav-item">
-            <a><i class="iconfont icon-wenhua"></i><span style="margin-left: 10px;">企业文化建设</span><i
-                    class="my-icon nav-more"></i></a>
+            <a><i class="iconfont icon-wenhua"></i>
+                <span class="parent-menu-span">企业文化建设</span>
+                <i class="my-icon nav-more"></i></a>
             <ul>
                 <li><a id="announcements"><span>公告</span></a></li>
                 <li><a id="news"><span>新闻</span></a></li>
@@ -126,14 +275,120 @@
             </span>
         </div>
 
-        <iframe src="oaIndex.do" id="oa-iframe" name="right" width="99%" height="92%" frameborder="0"
+        <iframe src="oaIndex.do" id="oa-iframe" name="ifr" width="99%" height="92%" frameborder="0"
                 scrolling="auto" style="padding-left:10px;"></iframe>
     </div>
 </div>
-
+</body>
 <!--<script src="http://cdn.bootcss.com/jquery/1.11.0/jquery.min.js" type="text/javascript"></script>-->
 <!--<script>window.jQuery || document.write('<script src="js/jquery-1.11.0.min.js"><\/script>')</script>-->
-<script src="/static/js/jquery.min.js" type="text/javascript"></script>
-<script type="text/javascript" src="/static/js/oa/nav.js"></script>
-</body>
+<script src="../../../static/js/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="../../../static/js/oa/nav.js"></script>
+<script>
+    function IFrame(own, fatherMenuTitle, url) {
+        var content = $('#content');
+        content.empty();
+        content.append("<a style='margin-right:8px'>" + fatherMenuTitle + "</a>" + ">" + "<a style='margin-left: 8px'>" + $(own).children().text() + "</a>");
+        $('#oa-iframe').attr("src", url);
+    }
+
+    function openBack(userInfoList) {
+        $("#windowBackgroundColor").css("display", "block");
+        $("#selectWindow").css("display", "block");
+        //清空已选列表
+        $('#selectedReviewer li').remove();
+        var content = '';
+        if (userInfoList.length <= 0) {
+            //当前部门没有人员
+            content += '<img style="padding: 37% 27%;" src="../../../static/images/icon/empty.png">';
+        } else {
+            for (let i = 0; i < userInfoList.length; i++) {
+                content +=
+                    '<li onclick="add(this)" class="selection-box-li">' +
+                    '<img src="../../../static/images/icon/personnel.png">' +
+                    '<span id="' + userInfoList[i].id + '">' + userInfoList[i].nickName + '</span>' +
+                    '<div></div>' +
+                    '</li>';
+            }
+        }
+        //添加到选择列表
+        $("#selectContent").html(content);
+    }
+
+    //关闭弹窗背景
+    $("#windowBackgroundColor").on("click", function () {
+        $("#windowBackgroundColor").css("display", "none");
+        $("#selectWindow").css("display", "none");
+    });
+
+    //选择列表的选择与取消
+    function add(own) {
+        var id = $(own).children('span').attr('id');
+        var text = $(own).children('span').text();
+        if ($(own).children('div').hasClass("select")) {
+            $(own).children('div').removeClass("select");
+            //遍历已选列表
+            $("#selectedReviewer").each(function () {
+                $(this).find('li').each(function () {
+                    // alert($(this).attr('id'));
+                    if ($(this).children('span').attr('id') === id) {
+                        $(this).remove();
+                    }
+                });
+            });
+        } else {
+            $(own).children('div').addClass("select");
+            $('#selectedReviewer').append(' <li style="padding:5px 20px">' +
+                '<img src="../../../static/images/icon/personnel.png" style="vertical-align:middle;">' +
+                '<span style="margin-left:8px" id="' + id + '">' + text + '</span>' +
+                '<img src="../../../static/images/icon/delete.png" style="float:right">' +
+                '</li>')
+        }
+    }
+
+    //删除已选列表选中的标签并且删除选择列表中选中的样式
+    $('#selectedReviewer').on("click", "li", function () {
+        //获取选中li的id
+        var selectedId = $(this).children('span').attr('id');
+        //删除选中的li
+        $(this).remove();
+        //遍历选择列表
+        $('#selectDiv').each(function () {
+            $(this).find('ul').each(function () {
+                $(this).find('li').each(function () {
+                    // alert($(this).children('span').attr('id'));
+                    var selectId = $(this).children('span').attr('id');
+                    if (selectedId === selectId) {
+                        //删除选择列表对应已选列表li-div-class
+                        $(this).children('span').next('div').removeClass();
+                    }
+                })
+            })
+        });
+    });
+
+    //取消
+    function cancel() {
+        $("#windowBackgroundColor").css("display", "none");
+        $("#selectWindow").css("display", "none");
+    }
+
+    //确认
+    function consent() {
+        $("#selectedReviewer").each(function () {
+            var size = $(this).find('li').size();
+            if (size > 1) {
+                alert("只能选择一个核稿人");
+            } else if (size < 1) {
+                alert("请选择一个核稿人");
+            } else {
+                $(this).find('li').each(function () {
+                    //调用子页面方式
+                    ifr.window.insertReviewer($(this).text());
+                    cancel();
+                });
+            }
+        });
+    }
+</script>
 </html>

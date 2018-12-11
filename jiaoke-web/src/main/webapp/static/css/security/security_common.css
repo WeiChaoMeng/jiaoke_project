@@ -82,8 +82,8 @@ body {
 /*西门*/
 .west-door {
     position: absolute;
-    left: 44%;
-    top: 89%;
+    left: 62%;
+    top: 32%;
     font-size: 20px;
     width: 3%;
 }
@@ -91,8 +91,8 @@ body {
 /*南门坐标*/
 .south-door {
     position: absolute;
-    left: 96%;
-    top: 45%;
+    left: 27%;
+    top: 55%;
     font-size: 20px;
     width: 3%;
 }
@@ -100,35 +100,53 @@ body {
 /*办公区线路1*/
 .office-area-line1 {
     position: absolute;
-    left: 63%;
-    top: 36%;
+    left: 50%;
+    top: 60%;
     font-size: 20px;
-    width: 3%
+    width: 3%;
 }
 
 /*办公区线路2*/
 .office-area-line2 {
     position: absolute;
-    left: 63%;
+    left: 50%;
     top: 50%;
     font-size: 20px;
-    width: 3%
+    width: 3%;
 }
 
-/*生产区线路1*/
-.production-line1 {
+/*生产区东-线路1*/
+.east-production-line1 {
     position: absolute;
-    left: 25%;
+    left: 75%;
     top: 52%;
     font-size: 20px;
-    width: 3%
+    width: 3%;
 }
 
-/*生产区线路2*/
-.production-line2 {
+/*生产区东-线路2*/
+.east-production-line2 {
     position: absolute;
-    left: 45%;
-    top: 75%;
+    left: 62%;
+    top: 38%;
     font-size: 20px;
-    width: 3%
+    width: 3%;
+}
+
+/*生产区西-线路1*/
+.west-production-line1 {
+    position: absolute;
+    left: 35%;
+    top: 15%;
+    font-size: 20px;
+    width: 3%;
+}
+
+/*生产区西-线路2*/
+.west-production-line2 {
+    position: absolute;
+    left: 57%;
+    top: 17%;
+    font-size: 20px;
+    width: 3%;
 }

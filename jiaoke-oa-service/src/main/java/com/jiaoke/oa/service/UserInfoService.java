@@ -30,4 +30,11 @@ public interface UserInfoService {
      */
     List<Permission> getPermissionsByUserInfoId(Integer userInfoId);
 
+    /**
+     * 获取部门成员
+     *
+     * @param departmentKey 部门id
+     * @return list
+     */
+    List<UserInfo> getUserByDepartmentKey(String departmentKey);
 }

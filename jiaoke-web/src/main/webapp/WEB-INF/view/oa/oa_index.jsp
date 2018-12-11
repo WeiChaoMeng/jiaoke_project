@@ -1,5 +1,10 @@
-<!DOCTYPE html>
-<%@ page language="java" contentType="text/html;charset=utf-8" pageEncoding="utf-8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+    request.setAttribute("path", basePath);
+%>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -155,7 +160,8 @@
                         <tbody>
                         <tr>
                             <td class="template" valign="middle">
-                                <a class="check_color" title="人力资源需求申请表"><img src="/static/images/icon/table.png">人力资源需求申请表</a>
+                                <a class="check_color" id="leaveRequest" title="请假申请单">
+                                    <img src="../../../static/images/icon/table.png">请假申请单</a>
                             </td>
 
                             <td class="template" valign="middle">
@@ -368,6 +374,12 @@
 </div>
 
 </body>
-<script type="text/javascript" src="/static/js/jquery.js"></script>
-<script type="text/javascript" src="/static/js/oa/oa_common.js"></script>
+<script type="text/javascript" src="../../../static/js/jquery.js"></script>
+<script type="text/javascript" src="../../../static/js/oa/oa_common.js"></script>
+
+<script>
+    $('#leaveRequest').on('click', function () {
+        window.location.href = "${path}/leaveRequest.do";
+    })
+</script>
 </html>

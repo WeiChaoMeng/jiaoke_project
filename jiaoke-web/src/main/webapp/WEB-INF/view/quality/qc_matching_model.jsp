@@ -485,7 +485,7 @@
                 closeWindow()
             }else {
                 $.ajax({
-                    url: "${path}/delectRation.do",
+                    url: "http://47.105.114.70/delectRation.do",
                     type: "post",
                     data:{
                         "idStr" : spCodesTemp

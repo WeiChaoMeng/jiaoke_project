@@ -27,6 +27,19 @@ $(function () {
         }
     });
 
+    //拟稿人选择框
+    /*$('.selection-box-li>a').on('click', function () {
+        if ($(this).next('ul').css('display') == "none") {
+            //展开未展开
+            $(this).children('ul').slideUp(300);
+            $(this).next('ul').slideDown(300);
+            $(this).parent('li').addClass('nav-show');
+        } else {
+            //收缩已展开
+            $(this).next('ul').slideUp(300);
+            $('.selection-box-li').removeClass('nav-show');
+        }
+    });*/
 
     /*--- 个人事务 ---*/
     //个人考勤
@@ -191,6 +204,22 @@ $(function () {
         archives(this);
         $('#oa-iframe').attr("src", "productionAdministration/productionAdministration.do");
     });
+
+    /*---综合办公室档案---*/
+    //公司发文
+    /*$("#office_release_document").on("click", function () {
+        removeOwnName();
+        archives(this);
+        $('#oa-iframe').attr("src", "comprehensiveOffice/officeReleaseDocument");
+    });*/
+
+    function office(id,url){
+        $(id).on("click", function () {
+            removeOwnName();
+            archives(this);
+            $('#oa-iframe').attr("src", url);
+        });
+    }
 
     /*--- 会议管理 ---*/
     //会议安排

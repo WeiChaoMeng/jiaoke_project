@@ -94,6 +94,7 @@
     <tbody>
     <input type="hidden" id="taskId" value="${oaDocument.taskId}">
     <input type="hidden" id="id" value="${oaDocument.id}">
+    <input type="hidden" id="draftedPerson" value="${oaDocument.draftedPerson}">
     <tr>
         <td class="tlabel">标题：</td>
         <td colspan="5">${oaDocument.textTitle}</td>
@@ -144,15 +145,12 @@
     <tr>
         <td class="tlabel">拟稿部门：</td>
         <td>
-            <c:if test="${oaDocument.draftingDepartment == 0}">办公室</c:if>
-            <c:if test="${oaDocument.draftingDepartment == 1}">组织人事部</c:if>
-            <c:if test="${oaDocument.draftingDepartment == 2}">党群工作部</c:if>
-            <c:if test="${oaDocument.draftingDepartment == 3}">生产经营部</c:if>
-            <c:if test="${oaDocument.draftingDepartment == 4}">财务管理部</c:if>
-            <c:if test="${oaDocument.draftingDepartment == 5}">企业管理部</c:if>
-            <c:if test="${oaDocument.draftingDepartment == 6}">内控审计部</c:if>
-            <c:if test="${oaDocument.draftingDepartment == 7}">安全管理部</c:if>
-            <c:if test="${oaDocument.draftingDepartment == 8}">纪委监督部</c:if>
+            <c:if test="${oaDocument.draftingDepartment == 10}">综合办公室</c:if>
+            <c:if test="${oaDocument.draftingDepartment == 11}">经营开发部</c:if>
+            <c:if test="${oaDocument.draftingDepartment == 12}">生产管理部</c:if>
+            <c:if test="${oaDocument.draftingDepartment == 13}">财务管理部</c:if>
+            <c:if test="${oaDocument.draftingDepartment == 14}">物资管理部</c:if>
+            <c:if test="${oaDocument.draftingDepartment == 15}">质量技术部</c:if>
         </td>
         <td class="tlabel">拟稿人：</td>
         <td>${oaDocument.draftedPerson}</td>
@@ -223,8 +221,9 @@
     //同意
     function consent() {
         var id = $("#id").val();
+        var draftedPerson = $("#draftedPerson").val();
         variableValue = "1";
-        window.location.href = "${path}/document/documentApproval?taskId=" + taskId + "&variableName=" + variableName + "&variableValue=" + variableValue + "&id=" + id;
+        window.location.href = "${path}/document/documentApproval?taskId=" + taskId + "&variableName=" + variableName + "&variableValue=" + variableValue + "&id=" + id + "&draftedPerson=" + draftedPerson;
     }
 
     //不同意

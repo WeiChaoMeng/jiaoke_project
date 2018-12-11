@@ -12,9 +12,10 @@
         <result column="birthday" jdbcType="DATE" property="birthday"/>
         <result column="register_time" jdbcType="TIMESTAMP" property="registerTime"/>
         <result column="department_key" jdbcType="VARCHAR" property="departmentKey"/>
+        <result column="dept_principal" jdbcType="VARCHAR" property="deptPrincipal"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, usename, `password`, nick_name, phone, sex, email, birthday, register_time, department_key
+    id, usename, `password`, nick_name, phone, sex, email, birthday, register_time, department_key, dept_principal
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -30,11 +31,11 @@
     insert into user_info (id, usename, `password`, 
       nick_name, phone, sex, 
       email, birthday, register_time, 
-      department_key)
+      department_key, dept_principal)
     values (#{id,jdbcType=INTEGER}, #{usename,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{nickName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, 
       #{email,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, #{registerTime,jdbcType=TIMESTAMP}, 
-      #{departmentKey,jdbcType=VARCHAR})
+      #{departmentKey,jdbcType=VARCHAR}, #{deptPrincipal,jdbcType=VARCHAR})
   </insert>
     <insert id="insertSelective" parameterType="com.jiaoke.oa.bean.UserInfo">
         insert into user_info
@@ -69,6 +70,9 @@
             <if test="departmentKey != null">
                 department_key,
             </if>
+            <if test="departmentKey != null">
+                dept_principal,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -100,6 +104,9 @@
             </if>
             <if test="departmentKey != null">
                 #{departmentKey,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentKey != null">
+                #{deptPrincipal,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -133,6 +140,9 @@
             <if test="departmentKey != null">
                 department_key = #{departmentKey,jdbcType=VARCHAR},
             </if>
+            <if test="departmentKey != null">
+                dept_principal = #{deptPrincipal,jdbcType=VARCHAR},
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
@@ -146,7 +156,8 @@
       email = #{email,jdbcType=VARCHAR},
       birthday = #{birthday,jdbcType=DATE},
       register_time = #{registerTime,jdbcType=TIMESTAMP},
-      department_key = #{departmentKey,jdbcType=VARCHAR}
+      department_key = #{departmentKey,jdbcType=VARCHAR},
+      dept_principal = #{deptPrincipal,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 
@@ -155,5 +166,21 @@
         <include refid="Base_Column_List"/>
         from user_info
         where usename = #{userName,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getUserByDepartmentKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+          id,
+          nick_name,
+          department_key
+        from user_info
+        where department_key = #{departmentKey,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getIdByNickName" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select
+          dept_principal
+        from user_info
+        where nick_name = #{nickName,jdbcType=VARCHAR}
     </select>
 </mapper>

@@ -1,8 +1,11 @@
 package com.jiaoke.oa.service;
 
+import com.jiake.utils.DateUtil;
+import com.jiake.utils.RandomUtil;
 import com.jiaoke.oa.bean.OaDocument;
 import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.dao.OaDocumentMapper;
+import com.jiaoke.oa.dao.UserInfoMapper;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +25,9 @@ public class OaDocumentServiceImpl implements OaDocumentService {
 
     @Resource
     private OaDocumentMapper oaDocumentMapper;
+
+    @Resource
+    private UserInfoMapper userInfoMapper;
 
     /**
      * 添加
@@ -54,7 +60,7 @@ public class OaDocumentServiceImpl implements OaDocumentService {
     public List<OaDocument> getAllByFormState(Integer formState) {
         List<OaDocument> oaDocumentList = oaDocumentMapper.getAllByFormState(formState);
         for (OaDocument oaDocument : oaDocumentList) {
-            oaDocument.setCreateTimeStr(getStringDate(oaDocument.getCreateTime()));
+            oaDocument.setCreateTimeStr(DateUtil.getStringDate(oaDocument.getCreateTime()));
         }
         return oaDocumentList;
     }
@@ -67,7 +73,7 @@ public class OaDocumentServiceImpl implements OaDocumentService {
      */
     public OaDocument getAllById(Integer id) {
         OaDocument oaDocument = oaDocumentMapper.getAllById(id);
-        oaDocument.setCreateTimeStr(getStringDate(oaDocument.getCreateTime()));
+        oaDocument.setCreateTimeStr(DateUtil.getStringDate(oaDocument.getCreateTime()));
         return oaDocument;
     }
 
@@ -89,7 +95,7 @@ public class OaDocumentServiceImpl implements OaDocumentService {
      */
     public OaDocument getDocumentDetailsById(Integer id) {
         OaDocument oaDocument = oaDocumentMapper.selectByPrimaryKey(id);
-        oaDocument.setCreateTimeStr(getStringDate(oaDocument.getCreateTime()));
+        oaDocument.setCreateTimeStr(DateUtil.getStringDate(oaDocument.getCreateTime()));
         return oaDocument;
     }
 
@@ -106,7 +112,7 @@ public class OaDocumentServiceImpl implements OaDocumentService {
         Integer start = (page - one) * rows;
         List<OaDocument> oaDocumentList = oaDocumentMapper.getPagingByFormState(formState, start, rows);
         for (OaDocument oaDocument : oaDocumentList) {
-            oaDocument.setCreateTimeStr(getStringDate(oaDocument.getCreateTime()));
+            oaDocument.setCreateTimeStr(DateUtil.getStringDate(oaDocument.getCreateTime()));
         }
         return oaDocumentList;
     }
@@ -118,13 +124,24 @@ public class OaDocumentServiceImpl implements OaDocumentService {
      * @return NumberOfAffectedRows
      */
     @Override
-    public int updateCountersignature(int id) {
+    public int updateCountersignature(int id, String draftedPerson) {
         Integer bossId = 1006;
+        //当前用户id
         UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
-        if (bossId.equals(userInfo.getId())) {
-            return oaDocumentMapper.updateSignatureIssuance(userInfo.getNickName(), id);
+        //部门负责人id
+        Integer userInfoId = userInfoMapper.getIdByNickName(draftedPerson);
+        if (userInfo.getId().equals(bossId)) {
+            if (userInfo.getId().equals(userInfoId)) {
+                return oaDocumentMapper.updateSignatureIssuanceAndReviewer(userInfo.getNickName(), id);
+            } else {
+                return oaDocumentMapper.updateSignatureIssuance(userInfo.getNickName(), id);
+            }
         } else {
-            return oaDocumentMapper.updateCountersignature(userInfo.getNickName(), id);
+            if(userInfo.getId().equals(userInfoId)){
+                return oaDocumentMapper.updateCountersignatureAndReviewer(userInfo.getNickName(), id);
+            }else {
+                return oaDocumentMapper.updateCountersignature(userInfo.getNickName(), id);
+            }
         }
     }
 
@@ -133,20 +150,14 @@ public class OaDocumentServiceImpl implements OaDocumentService {
         List<OaDocument> oaDocumentList = new ArrayList<>();
         for (String s : list) {
             OaDocument oaDocument = oaDocumentMapper.getAllById(Integer.valueOf(s));
-            oaDocument.setCreateTimeStr(getStringDate(oaDocument.getCreateTime()));
+            oaDocument.setCreateTimeStr(DateUtil.getStringDate(oaDocument.getCreateTime()));
             oaDocumentList.add(oaDocument);
         }
         return oaDocumentList;
     }
 
-    /**
-     * 时间转换 date > string
-     *
-     * @param date date
-     * @return string
-     */
-    private static String getStringDate(Date date) {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return formatter.format(date);
+    @Override
+    public int edit(OaDocument oaDocument) {
+        return oaDocumentMapper.updateByPrimaryKeySelective(oaDocument);
     }
 }

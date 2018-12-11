@@ -113,8 +113,6 @@ public class OaDocument implements Serializable {
      */
     private String writingTime;
 
-    private String writingTimeStr;
-
     /**
      * 主送
      */
@@ -347,14 +345,6 @@ public class OaDocument implements Serializable {
 
     public void setWritingTime(String writingTime) {
         this.writingTime = writingTime;
-    }
-
-    public String getWritingTimeStr() {
-        return writingTimeStr;
-    }
-
-    public void setWritingTimeStr(String writingTimeStr) {
-        this.writingTimeStr = writingTimeStr;
     }
 
     public String getMainGive() {
