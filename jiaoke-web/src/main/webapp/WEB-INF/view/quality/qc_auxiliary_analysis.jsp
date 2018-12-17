@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="C" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: lihui
@@ -12,7 +13,8 @@
     <meta charset="utf-8">
     <title>辅助分析</title>
     <link href="/static/css/default.css" rel="stylesheet" type="text/css">
-    <link href="/static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
+    <link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
+    <link href="/static/css/qc/jqTable.css" rel="stylesheet" type="text/css">
     <style>
         .nform li span {
             width: 28%;
@@ -36,102 +38,161 @@
 
 <div class="">
 
-    <div class="table_top">
-        <table width="100%" height="100%">
-            <tbody>
-            <tr>
-                <td>
-                    <div class="conditional_query">
+    <div data-level="true">
 
-                        <!--条件查询-->
-                        <div id="div1" class="head_right_side">
-                            <select id="condition">
-                                <option value="0">- -查询条件- -</option>
-                                <option value="1">预警级别一</option>
-                                <option value="2">预警级别二</option>
-                                <option value="3">预警级别三</option>
-                            </select>
-                        </div>
-                    </div>
 
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="content_title">
-
-        <table class="simpletable" style="width: 100%;">
-
+        <div class="c-table--main c-table J-table c-table--noWrap g-toggleTable--main c-table__cell--block el-table--enable-row-transition" style="width: 100%;padding-left: 10%;"><div class="c-table__header-wrapper"> <table cellspacing="0" cellpadding="0" border="0" class="c-table__header" role="c-table4" style="width: 1470px;">
+            <colgroup>
+                <col name="" width="15%">
+                <col name="" width="15%">
+                <col name="" width="15%">
+                <col name="" width="15%">
+                <col name="" width="15%">
+                <col name="" width="15%">
+                <col name="" width="15%">
+            </colgroup>
             <thead>
-            <th style="width: 40px"><input type="checkbox" id="checkAll" ></th>
-
-            <th style="width: 150px ">生产日期</th>
-            <th style="width: 150px" >生产时间</th>
-            <th style="width: 150px">盘号</th>
-            <th style="width: 150px ">配比号</th>
-            <th style="width: 150px " >生产机组</th>
-            <th style="width: 150px">材料名</th>
-            <th style="width: 150px">实际配比</th>
-            <th style="width: 150px">模板配比</th>
-            <th style="width: 150px">偏差比</th>
-            <th style="width: 150px ">预警级别</th>
-            <th style="width: 10px"></th>
+            <tr class="g-toggleTable--title">
+                <th class="">
+                    <div class="cell"><i class="iconfont icon-right text-muted mr10 g-toggleTable--buttonAll" aria-hidden="true"></i>产品编号</div>
+                </th>
+                <th class="">
+                    <div class="cell">生产日期</div>
+                </th>
+                <th>
+                    <div clas="">生产时间</div>
+                </th>
+                <th>
+                    <div clas="">配比号</div>
+                </th>
+                <th>
+                    <div clas="">产品盘号</div>
+                </th>
+                <th>
+                    <div clas="">机组</div>
+                </th>
+            </tr>
             </thead>
-            <c:choose>
-                <c:when test="${pageBean.pageData == null}" >
-                    <span>暂无预警数据</span>
-                </c:when>
-                <c:otherwise>
-                    <tbody>
-                    <tr></tr>
-                    <c:forEach items="${pageBean.pageData}" var="item">
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td STYLE="text-align: center" >${item.produce_date}</td>
-                            <td STYLE="text-align: center" >${item.produce_time}</td>
-                            <td STYLE="text-align: center" >${item.produce_disc_num}</td>
-                            <td STYLE="text-align: center">${item.produce_ratio_id}</td>
-                            <td STYLE="text-align: center">${item.produce_crewNum == '1' ? '机组1':'机组2'}</td>
-                            <td STYLE="text-align: center">${item.material_name}</td>
-                            <c:choose>
-                                <c:when test="${item.material_name == '沥青温度' || item.material_name == '混合料温度' || item.material_name == '骨料温度' }">
-                                    <td STYLE="text-align: center">${item.actual_ratio}<i>°C</i></td>
-                                    <td STYLE="text-align: center">${item.moudle_ratio}<i>°C</i></td>
-                                    <td STYLE="text-align: center">${item.deviation_ratio}<i>°C</i></td>
-                                </c:when>
-                                <c:otherwise>
-                                    <td STYLE="text-align: center">${item.actual_ratio}<i>%</i></td>
-                                    <td STYLE="text-align: center">${item.moudle_ratio}<i>%</i></td>
-                                    <td STYLE="text-align: center">${item.deviation_ratio}<i>%</i></td>
-                                </c:otherwise>
-                            </c:choose>
 
-                            <td>
-                                <c:choose>
-                                <c:when test="${item.warning_level == '1'}">
-                                    一级预警
-                                </c:when>
-                                <c:when test="${item.warning_level == '2'}">
-                                    二级预警
-                                </c:when>
-                                    <c:when test="${item.warning_level == '0'}">
-                                        无预警
-                                    </c:when>
-                                    <c:when test="${item.warning_level == '3'}">
-                                        三级预警
-                                    </c:when>
-                            </c:choose>
-                            </td>
+        </table></div><div class="c-table__body-wrapper"> <table cellspacing="0" cellpadding="0" border="0" class="c-table__body" role="c-table4" style="width: 1470px;">
+            <colgroup>
+                <col name="" width="15%">
+                <col name="" width="15%">
+                <col name="" width="15%">
+                <col name="" width="15%">
+                <col name="" width="15%">
+                <col name="" width="15%">
+                <col name="" width="15%">
+            </colgroup>
 
-                        </tr>
-                    </c:forEach>
-                    </tbody>
-                </c:otherwise>
-            </c:choose>
-        </table>
+            <tbody>
+
+            <c:forEach items="${pageBean.pageData}" var="item" varStatus="statusd">
+
+                <tr class="c-table__row c-table__row-${statusd.index} g-toggleTable--title">
+
+                    <td class="">
+                        <div class="cell"><i class="iconfont icon-right text-muted mr10 g-toggleTable--button" aria-hidden="true"></i> ${item.id}</div>
+                    </td>
+                    <td class="">
+                        <div class="cell">${item.produce_date}</div>
+                    </td>
+                    <td>
+                        <div class="cell">${item.produce_time}</div>
+                    </td>
+                    <td>
+                        <div class="cell">${item.produce_ratio_id}</div>
+                    </td>
+                    <td>
+                        <div class="cell">${item.produce_disc_num}</div>
+                    </td>
+                    <td>
+                        <div class="cell">${item.produce_crewNum == 1 ?  "机组1":"机组2"}</div>
+                    </td>
+                </tr>
+
+                <tr class="c-table__row c-table__row-${statusd.index} c-table__child c-table__child-default hide">
+
+                    <td class="" >
+                        <div class="cell">&nbsp;</div>
+                    </td>
+                    <td class="">
+                        <div class="cell">材料</div>
+                    </td>
+                    <td class="">
+                        <div class="cell">模板值</div>
+                    </td>
+                    <td>
+                        <div class="cell">实际值</div>
+                    </td>
+                    <td>
+                        <div class="cell">偏差值</div>
+                    </td>
+                    <td>
+                        <div class="cell">报警级别</div>
+                    </td>
+
+                </tr>
+
+                <c:forEach items="${waringList}" var="waringData" varStatus="status">
+
+                    <c:if test="${item.id == waringData.crew_id}" >
+                        <c:choose>
+                            <c:when test="${waringData.material_name == '沥青温度' || waringData.material_name == '混合料温度' || waringData.material_name == '骨料温度' }">
+                                <tr class="c-table__row c-table__row-${statusd.index} c-table__child c-table__child-default hide">
+
+                                    <td class="" >
+                                        <div class="cell">&nbsp;</div>
+                                    </td>
+                                    <td class="">
+                                        <div class="cell">${waringData.material_name}</div>
+                                    </td>
+                                    <td class="">
+                                        <div class="cell">${waringData.moudle_ratio}℃</div>
+                                    </td>
+                                    <td>
+                                        <div class="cell">${waringData.actual_ratio}℃</div>
+                                    </td>
+                                    <td>
+                                        <div class="cell">${waringData.deviation_ratio}℃</div>
+                                    </td>
+                                    <td>
+                                        <div class="cell">${waringData.warning_level}级预警</div>
+                                    </td>
+                                </tr>
+
+                            </c:when>
+                            <c:otherwise>
+                                <tr class="c-table__row c-table__row-${status.index} c-table__child c-table__child-default hide">
+
+                                    <td class="" >
+                                        <div class="cell">&nbsp;</div>
+                                    </td>
+                                    <td class="">
+                                        <div class="cell">${waringData.material_name}</div>
+                                    </td>
+                                    <td class="">
+                                        <div class="cell">${waringData.moudle_ratio}%</div>
+                                    </td>
+                                    <td>
+                                        <div class="cell">${waringData.actual_ratio}%</div>
+                                    </td>
+                                    <td>
+                                        <div class="cell">${waringData.deviation_ratio}%</div>
+                                    </td>
+                                    <td>
+                                        <div class="cell">${waringData.warning_level}级预警</div>
+                                    </td>
+                                </tr>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:if>
+                 </c:forEach>
+            </c:forEach>
+            </tbody>
+        </table></div> </div>
     </div>
+
     <div class="my_pagination">
         <ul class="my_pagelist">
             <%--首页--%>
@@ -211,10 +272,12 @@
     </div>
 
 </body>
-<script type="text/javascript" src="/static/js/jquery.js"></script>
-<script type="text/javascript" src="/static/js/common.js"></script>
-<script type="text/javascript" src="/static/js/skin.js"></script>
 
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script src="/static/js/qc/zipJs/jquery.mousewheel.min.js"></script>
+<script type="text/javascript" src="/static/js/qc/zipJs/jqTable.all.min.js"></script>
+<script type="text/javascript" src="/static/js/qc/zipJs/artTemplate.js"></script>
+<script type="text/javascript" src="/static/js/qc/zipJs/message.js"></script>
 <script type="text/javascript">
     (function(){
 

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: lihui
@@ -31,20 +32,18 @@
                                 <th>配比号</th>
                                 <th>车号</th>
                                 <th>盘号</th>
-                                <th>生产人</th>
                                 <th>客户号</th>
                             </thead>
                             
                             <tbody>
                             
                                 <tr>
-                                    <td>20171101</td>
-                                    <td>8:35</td>
-                                    <td>256</td>
-                                    <td>京C66666</td>
-                                    <td>A16</td>
-                                    <td>王建军</td>
-                                    <td>1554568791</td>
+                                    <td>${product.proBase.produce_date}</td>
+                                    <td>${product.proBase.produce_time}</td>
+                                    <td>${product.proBase.produce_proportioning_num}</td>
+                                    <td>${product.proBase.produce_car_num}</td>
+                                    <td>${product.proBase.produce_disc_num}</td>
+                                    <td>${product.proBase.produce_custom_num}</td>
                                 </tr>
                             
                             </tbody>
@@ -64,17 +63,19 @@
         <div class="boxdown">
             <table class="simpletable">
                 <thead>
-                    <th style="width: 70px ">预警级别</th>
-                    <th style="width: 70px ">日期</th>
-                    <th style="width: 70px">时间</th>
                     <th style="width: 70px">盘号</th>
                     <th style="width: 70px ">配比号</th>
-                    <th style="width: 70px">骨料4</th>
-                    <th style="width: 70px">骨料3</th>
-                    <th style="width: 70px">骨料2</th>
                     <th style="width: 70px">骨料1</th>
+                    <th style="width: 70px">骨料2</th>
+                    <th style="width: 70px">骨料3</th>
+                    <th style="width: 70px">骨料4</th>
+                    <th style="width: 70px">骨料5</th>
+                    <th style="width: 70px">骨料6</th>
                     <th style="width: 70px ">石粉2</th>
+                    <th style="width: 70px ">石粉1</th>
                     <th style="width: 70px ">沥青</th>
+                    <th style="width: 70px ">再生料</th>
+                    <th style="width: 70px ">添加剂</th>
                     <th style="width: 100px">合计(kg)</th>
                    
                 </thead>
@@ -82,19 +83,20 @@
                 <tbody>
                     <tr></tr>
                     <tr>
-                        <td>3</td>
-                        <td>6月10日</td>
-                        <td>20:13:28</td>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>1543</td>
-                        <td>2783</td>
-                        <td>3344</td>
-                        <td>4636</td>
-                        <td>126.1</td>
-                        <td>235.5</td>
-                        <td>4997.6</td>
-                        
+                        <td>${product.proBase.produce_disc_num}</td>
+                        <td>${product.proBase.produce_proportioning_num}</td>
+                        <td>${product.proBase.material_aggregate_1 - product.proBase.material_aggregate_2}</td>
+                        <td>${product.proBase.material_aggregate_2 - product.proBase.material_aggregate_3}</td>
+                        <td>${product.proBase.material_aggregate_3 - product.proBase.material_aggregate_4}</td>
+                        <td>${product.proBase.material_aggregate_4 - product.proBase.material_aggregate_5}</td>
+                        <td>${product.proBase.material_aggregate_5 - product.proBase.material_aggregate_6}</td>
+                        <td>${product.proBase.material_aggregate_6}</td>
+                        <td>${product.proBase.material_stone_1}</td>
+                        <td>${product.proBase.material_stone_2}</td>
+                        <td>${product.proBase.material_asphalt}</td>
+                        <td>${product.proBase.material_regenerate}</td>
+                        <td>${product.proBase.material_additive}</td>
+                        <td>${product.proBase.material_total}</td>
                     </tr>
                 
                 </tbody>
@@ -102,28 +104,55 @@
                     <th style="width: 100px ">1仓温度</th>
                     <th style="width: 100px ">混合料温度</th>
                     <th style="width: 100px ">除尘器入口温度</th>
-                    <th style="width: 100px ">每锅总量</th>
-                    <th style="width: 100px ">石料总重</th>
-                    <th style="width: 100px ">石料1比例</th>
-                    <th style="width: 100px ">石料2比例</th>
-                    <th style="width: 100px ">石料3比例</th>
-                    <th style="width: 100px ">石料4比例</th>
-                    <th style="width: 100px ">粉料比例</th>
-                    <th style="width: 100px ">沥青含量</th>
-                    <th style="width: 10px"></th>
+                    <th style="width: 100px ">沥青温度</th>
+                    <th style="width: 100px ">再生料温度</th>
+                    <th style="width: 100px ">骨料1比例</th>
+                    <th style="width: 100px ">骨料2比例</th>
+                    <th style="width: 100px ">骨料3比例</th>
+                    <th style="width: 100px ">骨料4比例</th>
+                    <th style="width: 100px ">骨料5比例</th>
+                    <th style="width: 100px ">骨料6比例</th>
+                    <th style="width: 100px ">矿料1比例</th>
+                    <th style="width: 100px ">沥青占比</th>
+                    <th style="width: 100px ">再生料占比</th>
                 </thead>
                 <tbody>
-                    <td>176</td>
-                    <td>104</td>
-                    <td>88</td>
-                    <td>4997.6</td>
-                    <td>4636</td>
-                    <td>25.85</td>
-                    <td>11.23</td>
-                    <td>24.81</td>
-                    <td>30.87</td>
-                    <td>2.52</td>
-                    <td>4.71</td>
+                    <td>${product.proBase.temperature_warehouse_1}</td>
+                    <td>${product.proBase.temperature_mixture}</td>
+                    <td>${product.proBase.temperature_duster}</td>
+                    <td>${product.proBase.temperature_asphalt}</td>
+                    <td>${product.proBase.temperature_aggregate}</td>
+                    <c:forEach items="${product.proMessage}" var="item">
+                        <c:choose>
+                            <c:when test="${item.material_name == '骨料1'}">
+                                <td>${item.actual_ratio}</td>
+                            </c:when>
+                            <c:when test="${item.material_name == '骨料2'}">
+                                <td>${item.actual_ratio}</td>
+                            </c:when>
+                            <c:when test="${item.material_name == '骨料3'}">
+                                <td>${item.actual_ratio}</td>
+                            </c:when>
+                            <c:when test="${item.material_name == '骨料4'}">
+                                <td>${item.actual_ratio}</td>
+                            </c:when>
+                            <c:when test="${item.material_name == '骨料5'}">
+                                <td>${item.actual_ratio}</td>
+                            </c:when>
+                            <c:when test="${item.material_name == '骨料6'}">
+                                <td>${item.actual_ratio}</td>
+                            </c:when>
+                            <c:when test="${item.material_name == '矿粉'}">
+                                <td>${item.actual_ratio}</td>
+                            </c:when>
+                            <c:when test="${item.material_name == '沥青'}">
+                                <td>${item.actual_ratio}</td>
+                            </c:when>
+                            <c:when test="${item.material_name == '再生料'}">
+                                <td>${item.actual_ratio}</td>
+                            </c:when>
+                        </c:choose>
+                    </c:forEach>
                 </tbody>
             </table>
         </div>
@@ -160,7 +189,7 @@
                 legend: {
                     orient: 'vertical',
                     left: 'left',
-                    data: ['骨料', '碎石', '骨料1', '碎石2', '添加剂']
+                    data: ['骨料1', '骨料2','骨料3','骨料4','骨料5','骨料6','石粉1', '石粉2', '沥青', '再生料','添加剂']
                 },
                 series: [
                     {
@@ -169,11 +198,17 @@
                         radius: '55%',
                         center: ['50%', '60%'],
                         data: [
-                            {value: 335, name: '骨料'},
-                            {value: 310, name: '碎石'},
-                            {value: 234, name: '骨料1'},
-                            {value: 135, name: '碎石2'},
-                            {value: 1548, name: '添加剂'}
+                            {value: ${product.proBase.material_aggregate_1 - product.proBase.material_aggregate_2}, name: '骨料1'},
+                            {value: ${product.proBase.material_aggregate_2 - product.proBase.material_aggregate_3}, name: '骨料2'},
+                            {value: ${product.proBase.material_aggregate_3 - product.proBase.material_aggregate_4}, name: '骨料3'},
+                            {value: ${product.proBase.material_aggregate_4 - product.proBase.material_aggregate_5}, name: '骨料4'},
+                            {value: ${product.proBase.material_aggregate_5 - product.proBase.material_aggregate_6}, name: '骨料5'},
+                            {value: ${product.proBase.material_aggregate_6}, name: '骨料6'},
+                            {value: ${product.proBase.material_stone_1}, name: '石粉1'},
+                            {value: ${product.proBase.material_stone_2}, name: '石粉2'},
+                            {value: ${product.proBase.material_asphalt}, name: '沥青'},
+                            {value: ${product.proBase.material_regenerate}, name: '再生料'},
+                            {value: ${product.proBase.material_additive}, name: '添加剂'}
                         ],
                         itemStyle: {
                             emphasis: {
@@ -187,10 +222,6 @@
             };
 
 
-            setInterval(function () { //把option.series[0].data[0].value的值使用random()方法获取一个随机数
-                option.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
-                myChart.setOption(option, true);
-            }, 2000);
             myChart.setOption(option);
             window.addEventListener("resize", function () {
                 myChart.resize();
@@ -238,7 +269,7 @@
                 xAxis: {
                     type: 'category',
                     boundaryGap: false,
-                    data: ['石料', '石料1', '石料2', '粉料', '沥青', '骨料', '骨料一']
+                    data: ['骨料1','骨料2','骨料3','骨料4','骨料5','骨料6','矿粉','沥青','再生料']
                 },
                 yAxis: {
                     type: 'value',
@@ -248,34 +279,122 @@
                 },
                 series: [
                     {
-                        name: '模板占比',
+                        name: '上限占比',
                         type: 'line',
-                        data: [11, 11, 15, 13, 12, 13, 10],
-                        formatter: '{value} %',
-                        markPoint: {
-                            
-                            data: [
-                                { type: 'max', name: '最大值' },
-                                { type: 'min', name: '最小值' }
-                            ]
-                        }
+                        data: [
+                        <c:forEach items="${product.proMessage}" var="item" varStatus="sta">
+                            <c:choose>
+                                <c:when test="${item.material_name == '骨料1'}">
+                                    ${item.moudle_ratio + 2 },
+                                </c:when>
+                                <c:when test="${item.material_name == '骨料2'}">
+                                    ${item.moudle_ratio + 2},
+                                </c:when>
+                                <c:when test="${item.material_name == '骨料3'}">
+                                    ${item.moudle_ratio + 4},
+                                </c:when>
+                                <c:when test="${item.material_name == '骨料4'}">
+                                    ${item.moudle_ratio + 4 },
+                                </c:when>
+                                <c:when test="${item.material_name == '骨料5'}">
+                                    ${item.moudle_ratio + 4 },
+                                </c:when>
+                                <c:when test="${item.material_name == '骨料6'}">
+                                    ${item.moudle_ratio + 4},
+                                </c:when>
+                                <c:when test="${item.material_name == '矿粉'}">
+                                    ${item.moudle_ratio + 1},
+                                </c:when>
+                                <c:when test="${item.material_name == '沥青'}">
+                                    ${item.moudle_ratio + 1},
+                                </c:when>
+                                <c:when test="${item.material_name == '再生料'}">
+                                    ${item.moudle_ratio + 1},
+                                </c:when>
+                            </c:choose>
+                        </c:forEach>
+                         ],
+                        formatter: '{value} %'
                     },
                     {
                         name: '实际占比',
                         type: 'line',
-                        data: [1, 2, 2, 5, 3, 2, 0],
-                        markPoint: {
-                            data: [
-                                { type: 'max', name: '最大值' },
-                                { type: 'min', name: '最小值' }
-                            ]
-                        }
+                        data: [
+                            <c:forEach items="${product.proMessage}" var="item" varStatus="sta">
+                                <c:choose>
+                                    <c:when test="${item.material_name == '骨料1'}">
+                                        ${item.actual_ratio},
+                                    </c:when>
+                                    <c:when test="${item.material_name == '骨料2'}">
+                                        ${item.actual_ratio},
+                                    </c:when>
+                                    <c:when test="${item.material_name == '骨料3'}">
+                                        ${item.actual_ratio},
+                                    </c:when>
+                                    <c:when test="${item.material_name == '骨料4'}">
+                                        ${item.actual_ratio},
+                                    </c:when>
+                                    <c:when test="${item.material_name == '骨料5'}">
+                                        ${item.actual_ratio},
+                                    </c:when>
+                                    <c:when test="${item.material_name == '骨料6'}">
+                                        ${item.actual_ratio},
+                                    </c:when>
+                                    <c:when test="${item.material_name == '矿粉'}">
+                                        ${item.actual_ratio},
+                                    </c:when>
+                                    <c:when test="${item.material_name == '沥青'}">
+                                        ${item.actual_ratio},
+                                    </c:when>
+                                    <c:when test="${item.material_name == '再生料'}">
+                                        ${item.actual_ratio},
+                                    </c:when>
+                                </c:choose>
+                            </c:forEach>
+                        ],
+                        formatter: '{value} %'
+                    },
+                    {
+                        name: '下限占比',
+                        type: 'line',
+                        data: [
+                            <c:forEach items="${product.proMessage}" var="item" varStatus="sta">
+                                <c:choose>
+                                    <c:when test="${item.material_name == '骨料1'}">
+                                    ${item.moudle_ratio - 2 },
+                                    </c:when>
+                                    <c:when test="${item.material_name == '骨料2'}">
+                                    ${item.moudle_ratio - 2},
+                                    </c:when>
+                                    <c:when test="${item.material_name == '骨料3'}">
+                                    ${item.moudle_ratio - 4},
+                                    </c:when>
+                                    <c:when test="${item.material_name == '骨料4'}">
+                                    ${item.moudle_ratio - 4 },
+                                    </c:when>
+                                    <c:when test="${item.material_name == '骨料5'}">
+                                    ${item.moudle_ratio - 4 },
+                                    </c:when>
+                                    <c:when test="${item.material_name == '骨料6'}">
+                                    ${item.moudle_ratio - 4},
+                                    </c:when>
+                                    <c:when test="${item.material_name == '矿粉'}">
+                                    ${item.moudle_ratio - 1},
+                                    </c:when>
+                                    <c:when test="${item.material_name == '沥青'}">
+                                    ${item.moudle_ratio - 1},
+                                    </c:when>
+                                    <c:when test="${item.material_name == '再生料'}">
+                                    ${item.moudle_ratio - 1},
+                                    </c:when>
+                                </c:choose>
+                            </c:forEach>
+                        ],
+                        formatter: '{value} %'
                     }
                 ]
             };
 
-
-            
             myChart2.setOption(option2);
             window.addEventListener("resize", function () {
                 myChart2.resize();

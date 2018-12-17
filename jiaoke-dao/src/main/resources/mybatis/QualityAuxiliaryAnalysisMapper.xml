@@ -4,20 +4,33 @@
 
     <select id="selelectWarningLiveDataToList" resultType="java.util.Map">
         SELECT
-               m1.*,m2.*
+               t1.id,t1.*
         FROM
-             quality_warning_promessage_crew AS m1
-                 INNER JOIN quality_warning_data AS m2 ON m1.id = m2.crew_id
+             quality_warning_promessage_crew t1
+                 JOIN quality_warning_data t2 ON t1.id = t2.crew_id
         WHERE
-                m2.warning_level > #{warningLive}
+                warning_level > #{warningLive}
+        GROUP BY t1.id
         ORDER BY
-                 m1.produce_date,
-                 m1.produce_time DESC
+                 t1.id DESC
         LIMIT #{pageFirstNum},#{eachPageDataNum}
     </select>
 
     <select id="selelectCountWarningLive" resultType="int">
-        SELECT COUNT(*) from quality_warning_data WHERE warning_level > #{warningLive}
+        SELECT COUNT(*) FROM
+                             (SELECT
+                                     t1.id
+                              FROM
+                                   quality_warning_promessage_crew t1
+                                       JOIN quality_warning_data t2 ON t1.id = t2.crew_id
+                              WHERE
+                                      warning_level > #{warningLive}
+                              GROUP BY t1.id) as b1
     </select>
-
+    <select id="selectWaringData" resultType="java.util.Map">
+        SELECT * FROM quality_warning_data WHERE crew_id in
+       <foreach collection="idList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+       </foreach>
+    </select>
 </mapper>

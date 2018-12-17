@@ -38,6 +38,7 @@ body{
     position: absolute;
     width: 65%;
     left: 40%;
+    top: 10%;
 }
 .div_from2{
     position: absolute;
@@ -90,10 +91,10 @@ body{
     float: left;
     font-family:宋体;
      font-weight: bold;
-    padding-right: 5%;
+    padding-right: 2%;
     color: #737070;
     font-family: Verdana,Arial;
-    font-size: 11pt;
+    font-size: 10pt;
     padding-top: 4%;
 
 }
@@ -101,11 +102,11 @@ body{
     float: left;
     border-bottom: 1px solid #ccbbbbd4;
     box-shadow: 0 5px 8px -5px rgba(0, 0, 0, 0.075);
-    height: 33px;
+    height: 35px;
     outline: 0;
     padding-top: 5px;
     font-family:Verdana,Arial; 
-    font-size: 10pt;
+    font-size: 9pt;
     -webkit-text-fill-color: cornflowerblue;
     text-align: center;
     BACKGROUND-COLOR: transparent;

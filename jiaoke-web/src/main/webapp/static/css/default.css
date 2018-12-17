@@ -627,9 +627,10 @@ table {
 .chartbox4 {
     float: left;
     margin-left: 8px;
-    width: 34%;
+    width: 32%;
     border: solid 1px #d6d6d6;
     height: 327px;
+    margin-top: 20px;
 }
 
 .infoboxleft {
@@ -676,11 +677,23 @@ table {
     font-size: 10px;
 }
 
+.data_chartbox {
+    border: solid 1px #d6d6d6;
+    width: 47%;
+    float: left;
+    margin-left: 2%;
+    margin-bottom: 1%;
+    margin-top: 1%;
+}
+
 .charts {
     height: 188px;
     text-align: center;
 }
-
+.data_charts {
+    height: 250px;
+    margin-right: 4px;
+}
 .boxdown {
     margin: 0 8px 0 8px;
 }
@@ -689,6 +702,8 @@ table {
     width: 100%;
     border: none;
     border-top: solid 1px #d4d4d4;
+    page-break-after:always;
+    cellspacing:0;
 }
 
 .simpletable thead tr th {
@@ -1421,12 +1436,13 @@ table {
 
 /*my_pagination*/
 .my_pagination {
-    padding-top: 520px;
+    padding-top: 2%;
     /*position: absolute;*/
 }
 
 .my_pagelist {
     float: left;
+    margin-left: 10%;
 }
 
 .my_pagelist li {
@@ -1438,7 +1454,7 @@ table {
     display: block;
     height: 26px;
     line-height: 26px;
-    background: #c8fff0;
+    /*background: #c8fff0;*/
     border: solid 1px #d0caca;
     padding: 0 10px;
     border-radius: 1px;
@@ -1612,7 +1628,8 @@ my_echars_div_block{
 
 /*data_manager_pagination*/
 .data_manager_pagination {
-    padding-top: 21%;
+    position: absolute;
+    top: 94%;
 }
 
 .data_manager_pagelist {
@@ -1628,11 +1645,11 @@ my_echars_div_block{
     display: block;
     height: 26px;
     line-height: 26px;
-    background: #d2d2d2;
-    border: solid 1px #acacac;
+    background: #c8fff0;
+    border: solid 1px #e4dfdf;
     padding: 0 10px;
     border-radius: 1px;
-    color: #000;
+    color: #777373;
 }
 
 .data_manager_pagelist li a:hover {
@@ -1657,6 +1674,7 @@ my_echars_div_block{
     float: right;
     line-height: 28px;
     color: #8d8d8d;
+
 }
 .statement_div_echar {
     width: 50%;
@@ -1871,4 +1889,10 @@ table.gridtable td {
     float: right;
     line-height: 28px;
     color: #8d8d8d;
+}
+.div_dataMessage {
+    border: solid 1px #d4d4d4;
+    clear: both;
+    padding: 2px 10px 10px 10px;
+    /* height: 545px; */
 }

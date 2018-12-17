@@ -33,7 +33,8 @@ public class UserInfoServiceImpl implements UserInfoService {
      */
     @Override
     public UserInfo getUserInfoByUserName(String userName) {
-        return userInfoMapper.getUserInfoByUserName(userName);
+        UserInfo u =  userInfoMapper.getUserInfoByUserName(userName);
+        return u;
     }
 
     /**

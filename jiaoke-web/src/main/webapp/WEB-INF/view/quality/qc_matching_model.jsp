@@ -219,7 +219,7 @@
                         <input type="number" name="temperatureMixture" class="my_form_input" value="0">
                         <input type="number" name="temperatureMixtureUp" class="my_form_input" value="0">
                     </td>
-                    <td class="tlabels">铣刨料加热温度 上/下限：</td>
+                    <td class="tlabels">一仓温度 上/下限：</td>
                     <td>
                         <input type="number" name="temperatureMilling" class="my_form_input" value="0">
                         <input type="number" name="temperatureMillingUp" class="my_form_input" value="0">
@@ -365,7 +365,7 @@
                     <td>
                         <input type="number" disabled="disabled" data-value="temperatureMixture" class="ration_forminput ration_inputstyle" value="52">
                     </td>
-                    <td class="tlabels">铣刨料加热温度：</td>
+                    <td class="tlabels">一仓温度：</td>
                     <td>
                         <input type="number" disabled="disabled" data-value="temperatureMilling" class="ration_forminput ration_inputstyle" value="37">
                     </td>

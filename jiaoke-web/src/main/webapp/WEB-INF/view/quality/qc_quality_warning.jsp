@@ -37,7 +37,6 @@
                     <th>盘号</th>
                     <th>生产人</th>
                     <th>客户号</th>
-                    <th>操作</th>
                 </thead>
 
                 <tbody>
@@ -184,7 +183,6 @@
                     <th>盘号</th>
                     <th>生产人</th>
                     <th>客户号</th>
-                    <th>操作</th>
                 </thead>
 
                 <tbody  id="crew2_message" >
