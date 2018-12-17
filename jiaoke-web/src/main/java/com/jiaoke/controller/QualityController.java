@@ -72,6 +72,8 @@ public class QualityController {
 
         receiveDataInf.receiveDataToDB(messageStr);
 
+
+
     }
     /**********************************  质量监控首页 Start ************************************************/
 
