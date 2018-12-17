@@ -96,7 +96,7 @@
                     },
                     success: function (result) {
                         if (result === "success") {
-                            window.location.href = '${path}/login/homePage.do';
+                            window.location.href = '${path}login/homePage.do';
                         } else {
                             alert("您输入的账号密码不匹配");
                         }

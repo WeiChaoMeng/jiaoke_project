@@ -20,6 +20,9 @@ $('#conditional_search').on('click', function () {
     location.reload();
 });
 
+//隔行换色
+$('.simpletable tbody tr:even').addClass('even');
+
 //标记
 function flag(parameter) {
     var currentColor = $(parameter).css('color');

@@ -191,7 +191,7 @@ table {
 }
 
 .even {
-    background: #f6f6f6;
+    background: #f1f1f1;
 }
 
 .search {
@@ -451,6 +451,7 @@ table {
     margin-bottom: 10px;
     background: #f7f6f6;
     border: solid 1px #d4d4d4;
+    border-top: none;
 }
 
 .form_area table tbody tr {
@@ -562,9 +563,14 @@ table {
     width: 13%;
 }
 
+.td_right_padding {
+    padding-right: 10px;
+}
+
 .common_th {
     width: 6%;
     text-align: right;
+    padding-right: 5px;
 }
 
 .common_radio {
@@ -613,7 +619,7 @@ table {
     line-height: 22px;
     padding-left: 8px;
     color: #585858;
-    text-align: center;
+    text-align: left;
 }
 
 .nforminput {
@@ -694,6 +700,7 @@ table {
 .th_title {
     width: 3%;
     text-align: right;
+    padding-right: 5px;
 }
 
 .tlabel {
@@ -714,9 +721,8 @@ table {
 }
 
 .swidth {
-    width: 190px;
-    margin-left: 15px;
-    *margin-left: 0;
+    width: 265px;
+    margin: 0;
 }
 
 /*select*/
@@ -852,10 +858,9 @@ table {
 }
 
 .formal-workers-head {
-    height: 30px;
+    height: 35px;
     width: 100%;
     background: #f1f1f1;
-    position: fixed;
 }
 
 .tab-switch {
@@ -1034,10 +1039,10 @@ table {
     height: 300px;
 }
 
-.fixed{
+.fixed {
     position: fixed;
     border: solid 0px #d6d6d6;
-    margin-top: 40px;
+    margin-top: 100px;
 }
 
 .personnel-archives {
@@ -1092,7 +1097,6 @@ table {
 
 .top_toolbar {
     border: solid 1px #d4d4d4;
-    padding-left: 5px;
     background: #f7f6f6;
 }
 
@@ -1218,4 +1222,43 @@ table {
     overflow: auto;
     line-height: 20px;
     outline: none;
+}
+
+.send_button_td {
+    width: 1px
+}
+
+.send_button_inp {
+    padding: 15px;
+    margin: 5px 10px;
+    background-color: #00a6f570;
+}
+
+.permissions_color {
+    background: #f4f4f4;
+}
+
+.textarea_style {
+    resize: none;
+    width: 87%;
+    margin: 10px 0;
+    border: 1px #bdbdbd solid;
+    padding: 5px;
+    font-size: 14px;
+    height: 74px;
+    outline: none;
+}
+
+.content_textarea_style {
+    resize: none;
+    width: 95%;
+    margin: 10px 0;
+    border: 1px #bdbdbd solid;
+    padding: 5px;
+    font-size: 14px;
+    height: 106px;
+}
+
+.textarea_td {
+    height: 70px
 }

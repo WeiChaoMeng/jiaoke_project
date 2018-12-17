@@ -563,8 +563,8 @@
 
         <tr>
             <td class="tlabel">抄送：</td>
-            <td colspan="5"><input type="text" class="forminput inputstyle inputadress" name="copyGive"
-                                   value="${oaDocument.copyGive}"></td>
+            <td colspan="5"><input type="text" class="forminput inputstyle inputadress" id="copyGive" name="copyGive"
+                                   value="${oaDocument.copyGive}" onfocus="this.blur()"></td>
         </tr>
 
         <tr>
@@ -677,6 +677,10 @@
     //插入选择的核稿人
     function insertReviewer(parameter) {
         $('#draftedPerson').val(parameter);
+    }
+
+    function insertCopyGive(array) {
+        $('#copyGive').val(array);
     }
 </script>
 </html>

@@ -162,10 +162,22 @@
   </update>
 
     <select id="getUserInfoByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from user_info
-        where usename = #{userName,jdbcType=VARCHAR}
+        SELECT
+            user_info.id,
+            user_info.usename,
+            user_info.`password`,
+            user_info.nick_name,
+            user_info.phone,
+            user_info.sex,
+            user_info.email,
+            user_info.birthday,
+            user_info.register_time,
+            department.department_name AS department_key ,
+            user_info.dept_principal
+        FROM
+            user_info
+            LEFT JOIN department ON department.department_key = user_info.department_key
+        WHERE usename = #{userName,jdbcType=VARCHAR}
     </select>
 
     <select id="getUserByDepartmentKey" parameterType="java.lang.String" resultMap="BaseResultMap">

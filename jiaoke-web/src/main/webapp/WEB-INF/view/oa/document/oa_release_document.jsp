@@ -6,30 +6,17 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%
-    String path = request.getContextPath();
+<% String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
-    request.setAttribute("path", basePath);
-%>
+    request.setAttribute("path", basePath);%>
 <html>
 <head>
     <meta charset="utf-8">
     <title>发布公文</title>
     <link href="../../../../static/css/oa/oa_common.css" rel="stylesheet" type="text/css">
     <link href="../../../../static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
-    <link href="../../../../static/js/datepicker/css/bootstrap-datepicker.css" rel="stylesheet">
+    <link href="../../../../static/js/date_pickers/date_picker.css" rel="stylesheet">
 </head>
-<style>
-    .swidth {
-        width: 265px;
-        margin: 0;
-    }
-
-    .forminput, .search {
-        text-align: left;
-    }
-
-</style>
 
 <body style="padding: 20px">
 
@@ -72,14 +59,14 @@
         </a>
     </div>
 </div>
-<!--  -->
+<!-- 公文form -->
 <form action="${path}/document/add" name="oaDocumentProcessing" id="oaDocumentProcessing" method="post" onsubmit="">
     <div class="form_area">
         <table style="width: 100%">
             <tbody>
             <tr>
-                <td rowspan="2" nowrap="nowrap" style="width: 1px">
-                    <input type="submit" value="发送" style="padding: 15px;margin: 5px 10px;background-color: #00a6f570">
+                <td rowspan="2" nowrap="nowrap" class="send_button_td">
+                    <input class="send_button_inp" type="submit" value="发送">
                 </td>
 
                 <th nowrap="nowrap" class="th_title">标题:</th>
@@ -113,7 +100,7 @@
 
                 <th class="common_th">预归档到:</th>
 
-                <td class="common_condition_select_frame">
+                <td class="common_condition_select_frame td_right_padding">
                     <div class="common_select_frame">
                         <select name="preArchiving">
                             <option value="0">无</option>
@@ -124,11 +111,13 @@
 
             <tr>
                 <th class="th_title" nowrap="nowrap">流程:</th>
+
                 <td>
                     <div class="common_input_frame">
                         <input type="text" value="" name="flow" placeholder="公文、[张三、李四、王五]、总经理" readonly="readonly">
                     </div>
                 </td>
+
                 <td class="condition_select_frame">
                     <div class="common_select_frame">
                         <input type="button" value="编辑流程">
@@ -163,6 +152,7 @@
                         </label>
                     </div>
                 </th>
+
                 <td colspan="3">
                     <div class="common_radio">
                         <label for="radioall">
@@ -174,6 +164,7 @@
                     </div>
                 </td>
             </tr>
+
             </tbody>
         </table>
     </div>
@@ -183,6 +174,7 @@
         <tbody>
         <tr>
             <td class="tlabel">标题：</td>
+
             <td colspan="5">
                 <input class="forminput inputstyle inputadress" type="text" name="textTitle" value="" required>
             </td>
@@ -190,10 +182,13 @@
 
         <tr>
             <td class="tlabel">文号：</td>
+
             <td>
                 <input class="forminput inputstyle" type="text" name="textNumber" value="" required>
             </td>
+
             <td class="tlabel">密级：</td>
+
             <td>
                 <select class="select swidth" name="rank" data-value="0" required="true">
                     <option value="">---请选择---</option>
@@ -203,7 +198,9 @@
                     <option value="3">绝密公文</option>
                 </select>
             </td>
+
             <td class="tlabel">标识：</td>
+
             <td>
                 <select class="select swidth" name="identification" data-value="0" required="true">
                     <option value="">---请选择---</option>
@@ -229,12 +226,16 @@
                     <option value="5">函</option>
                 </select>
             </td>
+
             <td class="tlabel">发文时间：</td>
+
             <td colspan="tlabel">
-                <input type="text" class="forminput inputstyle" id="writingTime" name="writingTime" value=""
+                <input type="text" class="forminput inputstyle date_picker" id="writingTime" name="writingTime" value=""
                        onfocus="this.blur()" required>
             </td>
+
             <td class="tlabel">保存期限：</td>
+
             <td>
                 <select class="select swidth" name="storageLife" data-value="0" required="true">
                     <option value="">---请选择---</option>
@@ -247,6 +248,7 @@
 
         <tr>
             <td class="tlabel">拟稿部门：</td>
+
             <td>
                 <select class="select swidth" name="draftingDepartment" id="draftingDepartment" data-value="0"
                         required="true">
@@ -259,56 +261,73 @@
                     <option value="15">质量技术部</option>
                 </select>
             </td>
+
             <td class="tlabel">拟稿人：</td>
-            <td><input type="text" class="forminput inputstyle" onclick="selectReviewer()" name="draftedPerson"
-                       id="draftedPerson" value="" onfocus="this.blur()" required></td>
+
+            <td>
+                <input type="text" class="forminput inputstyle" onclick="selectReviewer()" name="draftedPerson"
+                       id="draftedPerson" value="" onfocus="this.blur()" required>
+            </td>
+
             <td class="tlabel">核稿人：</td>
-            <td><input type="text" class="forminput inputstyle" name="nuclearDrafts" value="" disabled="disabled"
-                       style="background: #f4f4f4;"></td>
+            <td>
+                <input type="text" class="forminput inputstyle permissions_color" name="nuclearDrafts" value=""
+                       disabled="disabled">
+            </td>
         </tr>
 
         <tr>
             <td class="tlabel">签发：</td>
-            <td colspan="2.5" style="height: 70px">
-                <textarea rows="10" name="issue" disabled="disabled"
-                          style="background: #f4f4f4;resize:none;width: 87%;margin: 10px 0; border: 1px #bdbdbd solid;padding:5px;font-size: 14px;height: 74px;outline: none"
+            <td colspan="2.5" class="textarea_td">
+                <textarea class="textarea_style permissions_color" rows="10" name="issue" disabled="disabled"
                           required></textarea>
             </td>
 
             <td class="tlabel">会签：</td>
             <td colspan="2.5" rowspan="1">
-                <textarea rows="10" name="countersign" disabled="disabled"
-                          style="background: #f4f4f4;resize:none;width: 87%;margin: 10px 0; border: 1px #bdbdbd solid;padding:5px;font-size: 14px;height: 74px;outline: none"
+                <textarea class="textarea_style permissions_color" rows="10" name="countersign" disabled="disabled"
                           required></textarea>
             </td>
         </tr>
 
         <tr>
             <td class="tlabel">主送：</td>
-            <td colspan="5"><input type="text" class="forminput inputstyle inputadress" name="mainGive" value=""></td>
+            <td colspan="5">
+                <input type="text" class="forminput inputstyle inputadress" name="mainGive" value="">
+            </td>
         </tr>
 
         <tr>
             <td class="tlabel">抄送：</td>
-            <td colspan="5"><input type="text" class="forminput inputstyle inputadress" name="copyGive" value=""></td>
+            <td colspan="5">
+                <input type="text" class="forminput inputstyle inputadress" name="copyGive" id="copyGive" value=""
+                       onclick="carbonCopy()" onfocus="this.blur()" required>
+            </td>
         </tr>
 
         <tr>
             <td class="tlabel">内容：</td>
-            <td colspan="5"><textarea rows="10" name="content"
-                                      style=" resize:none;width: 95%;margin: 10px 0; border: 1px #bdbdbd solid;padding:5px;font-size: 14px;height: 106px;"></textarea>
+            <td colspan="5">
+                <textarea class="content_textarea_style" rows="10" name="content"></textarea>
             </td>
         </tr>
 
         <tr>
             <td class="tlabel">印制：</td>
-            <td><input type="text" class="forminput inputstyle" value="综合办公室" name="print" id="print" readonly></td>
+            <td>
+                <input type="text" class="forminput inputstyle" value="${departmentName}" name="print" id="print" readonly>
+            </td>
+
             <td class="tlabel">校对：</td>
-            <td><input type="text" class="forminput inputstyle" value="${nickName}" name="proofreading"
+            <td>
+                <input type="text" class="forminput inputstyle" value="${nickName}" name="proofreading"
                        id="proofreading" readonly>
             </td>
+
             <td class="tlabel">份数：</td>
-            <td><input readonly="readonly" value="" name="attachmentNumber"></td>
+            <td>
+                <input readonly="readonly" value="" name="attachmentNumber">
+            </td>
         </tr>
 
         <tr>
@@ -327,10 +346,14 @@
 <script type="text/javascript" src="../../../../static/js/common.js"></script>
 <script type="text/javascript" src="../../../../static/js/skin.js"></script>
 <script type="text/javascript" src="../../../../static/js/oa/oa_common.js"></script>
-<script type="text/javascript" src="../../../../static/js/datepicker/js/bootstrap-datepicker.js"></script>
-<script type="text/javascript"
-        src="../../../../static/js/datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+<script type="text/javascript" src="../../../../static/js/date_pickers/jquery.date_input.pack.js"></script>
 <script>
+
+    //日期选择器
+    $(function () {
+        $('.date_picker').date_input();
+    });
+
     //保存待发
     $("#preservationPending").on("click", function () {
         var formTitle = $("#formTitle").val();
@@ -355,22 +378,14 @@
                 }
             })
         }
-
     });
 
     //跟踪选择切换
     var flag = false;
-
     function choice() {
         $("#radioall").attr("checked", flag);
         flag = !flag;
     }
-
-    //日期选择器
-    $("#writingTime").datepicker({
-        "language": "zh-CN",
-        "format": 'yyyy-mm-dd'
-    });
 
     //拟稿部门发生改变则清空拟稿人
     $('#draftingDepartment').change(function () {
@@ -392,7 +407,7 @@
                     alert("Connection error");
                 },
                 success: function (result) {
-                    console.log(JSON.parse(result))
+                    console.log(JSON.parse(result));
                     parent.openBack(JSON.parse(result));
                 }
             });
@@ -402,6 +417,16 @@
     //插入选择的核稿人
     function insertReviewer(parameter) {
         $('#draftedPerson').val(parameter);
+    }
+
+    //选择抄送人员
+    function carbonCopy() {
+        parent.openMultiSelectWindows();
+    }
+
+    //插入已选抄送人员
+    function insertCopyGive(array) {
+        $('#copyGive').val(array);
     }
 </script>
 </html>

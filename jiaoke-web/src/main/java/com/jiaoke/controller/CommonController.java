@@ -14,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 /**
@@ -139,13 +138,13 @@ public class CommonController {
     /**
      * 跳转oa_wage_statistics_inner.jsp
      *
-     * @return oa_wage_statistics_inner.jsp
+     * @return oa_wage_statistics.jsp
      * @author lihui
      * @date 2018/10/9 18:34
      */
     @RequestMapping("/OAWageStatisticsInner.do")
     public String toOAWageStatisticsInner() {
-        return "oa/personal/oa_wage_statistics_inner";
+        return "oa/personal/oa_wage_statistics";
     }
 
     @RequestMapping("/index.do")
@@ -171,16 +170,6 @@ public class CommonController {
     @RequestMapping("/OASchedulePlanning.do")
     public String schedulePlanning() {
         return "oa/personal/oa_schedule_planning";
-    }
-
-    /**
-     * 个人工资
-     *
-     * @return  oa_schedule_planning.jsp
-     */
-    @RequestMapping("/OAPersonalSalary.do")
-    public String personalSalary() {
-        return "oa/personal/oa_personal_salary";
     }
 
     /**

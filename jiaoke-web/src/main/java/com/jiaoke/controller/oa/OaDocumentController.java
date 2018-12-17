@@ -6,13 +6,8 @@ import com.jiaoke.oa.bean.OaDocument;
 import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.service.OaDocumentService;
 import com.jiaoke.oa.service.UserInfoService;
-import com.sun.org.apache.xpath.internal.operations.Mod;
-import org.activiti.engine.ProcessEngine;
-import org.activiti.engine.ProcessEngines;
-import org.activiti.engine.TaskService;
 import org.activiti.engine.task.Task;
 import org.apache.shiro.SecurityUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 公文管理
@@ -77,6 +74,7 @@ public class OaDocumentController {
         //获取当前登录人的名称
         UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
         model.addAttribute("nickName", userInfo.getNickName());
+        model.addAttribute("departmentName", userInfo.getDepartmentKey());
         return "oa/document/oa_release_document";
     }
 

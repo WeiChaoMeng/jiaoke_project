@@ -22,7 +22,7 @@
 <!--弹窗背景-->
 <div id='windowBackgroundColor'></div>
 
-<!--窗口实体-->
+<!--多选-->
 <div id="selectWindow" class="option-window">
 
     <div class="option-window-head">选择拟稿人</div>
@@ -38,32 +38,72 @@
                     <div id="selectDiv" class="selection-content-inside">
 
                         <ul id="selectContent">
+                            <li onclick="add(this)" class="selection-box-li">
+                                <img class="department" src="../../../static/images/icon/department.png">
+                                <span id="123">综合办公室</span>
+                                <div></div>
 
+                                <ul class="submenu-ul">
+                                    <li onclick="add(this)">
+                                        <img src="../../../static/images/icon/personnel.png">
+                                        <span id="1234">张三</span>
+                                        <div></div>
+                                    </li>
+                                </ul>
+                                <ul class="submenu-ul">
+                                    <li onclick="add(this)">
+                                        <img src="../../../static/images/icon/personnel.png">
+                                        <span id="1235">李四</span>
+                                        <div></div>
+                                    </li>
+                                </ul>
+
+                            </li>
+
+                            <li onclick="add(this)" class="selection-box-li">
+                                <img class="department" src="../../../static/images/icon/department.png">
+                                <span id="124">经营开发部</span>
+                                <div></div>
+
+                                <ul class="submenu-ul">
+                                    <li onclick="add(this)">
+                                        <img src="../../../static/images/icon/personnel.png">
+                                        <span id="1244">王五</span>
+                                        <div></div>
+                                    </li>
+                                </ul>
+                                <ul class="submenu-ul">
+                                    <li onclick="add(this)">
+                                        <img src="../../../static/images/icon/personnel.png">
+                                        <span id="1245">赵六</span>
+                                        <div></div>
+                                    </li>
+                                </ul>
+
+                            </li>
+
+                            <li onclick="add(this)" class="selection-box-li">
+                                <img class="department" src="../../../static/images/icon/department.png">
+                                <span id="125">生产管理部</span>
+                                <div></div>
+
+                                <ul class="submenu-ul">
+                                    <li onclick="add(this)">
+                                        <img src="../../../static/images/icon/personnel.png">
+                                        <span id="1254">黄七</span>
+                                        <div></div>
+                                    </li>
+                                </ul>
+                                <ul class="submenu-ul">
+                                    <li onclick="add(this)">
+                                        <img src="../../../static/images/icon/personnel.png">
+                                        <span id="1255">马八</span>
+                                        <div></div>
+                                    </li>
+                                </ul>
+
+                            </li>
                         </ul>
-
-                        <%--<li class="selection-box-li">
-                                                   <a>
-                                                       <div></div>
-                                                       <img src="../../../static/images/icon/doc.png">
-                                                       <span>综合办公室
-                                                       <i class="my-icon nav-more"></i>
-                                                       </span>
-                                                   </a>
-
-                                                   <ul class="selection-box-ul">
-                                                       <li onclick="add(this)">
-                                                           <img src="../../../static/images/icon/personnel.png">
-                                                           <span id="1212">哈哈哈</span>
-                                                           <div></div>
-                                                       </li>
-
-                                                       <li onclick="add(this)">
-                                                           <img src="../../../static/images/icon/personnel.png">
-                                                           <span id="1231">嘻嘻嘻</span>
-                                                           <div></div>
-                                                       </li>
-                                                   </ul>
-                                               </li>--%>
                     </div>
                 </div>
             </div>
@@ -83,6 +123,36 @@
 
         <div class="option-window-body-bottom">
             <input type="button" value="确认" onclick="consent()" class="body-bottom-button">
+            <input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">
+        </div>
+    </div>
+</div>
+
+<%-- 单选 --%>
+<div id="singleSelection" class="single-option-window">
+
+    <div class="option-window-head">选择拟稿人</div>
+
+    <div class="option-window-body">
+        <div class="option-window-body-head">
+            <div>
+                <div class="selection-box-title">
+                    <span>综合管理部</span>
+                    <span>：</span>
+                </div>
+                <div class="selection-content-outer" style="width: auto">
+                    <div id="singleSelectionDiv" class="selection-content-inside">
+
+                        <ul id="singleSelectionContent">
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="option-window-body-bottom">
+            <input type="button" value="确认" onclick="confirm()" class="body-bottom-button">
             <input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">
         </div>
     </div>
@@ -285,6 +355,8 @@
 <script src="../../../static/js/jquery.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="../../../static/js/oa/nav.js"></script>
 <script>
+
+    //当前所在页面导航
     function IFrame(own, fatherMenuTitle, url) {
         var content = $('#content');
         content.empty();
@@ -292,11 +364,25 @@
         $('#oa-iframe').attr("src", url);
     }
 
-    function openBack(userInfoList) {
+    //拟稿人选择框
+    $('.department').on('click', function () {
+        if ($(this).siblings('ul').css('display') == "none") {
+            //展开未展开
+            $(this).siblings('ul').slideUp(300);
+            $(this).siblings('ul').slideDown(300);
+        } else {
+            //收缩已展开
+            $(this).siblings('ul').slideUp(300);
+        }
+        preventBubble();
+    });
+
+    //多选弹窗
+    function openMultiSelectWindows(userInfoList) {
         $("#windowBackgroundColor").css("display", "block");
         $("#selectWindow").css("display", "block");
         //清空已选列表
-        $('#selectedReviewer li').remove();
+        // $('#selectedReviewer li').remove();
         var content = '';
         if (userInfoList.length <= 0) {
             //当前部门没有人员
@@ -305,7 +391,7 @@
             for (let i = 0; i < userInfoList.length; i++) {
                 content +=
                     '<li onclick="add(this)" class="selection-box-li">' +
-                    '<img src="../../../static/images/icon/personnel.png">' +
+                    '<img onclick="department()" src="../../../static/images/icon/department.png">' +
                     '<span id="' + userInfoList[i].id + '">' + userInfoList[i].nickName + '</span>' +
                     '<div></div>' +
                     '</li>';
@@ -315,18 +401,12 @@
         $("#selectContent").html(content);
     }
 
-    //关闭弹窗背景
-    $("#windowBackgroundColor").on("click", function () {
-        $("#windowBackgroundColor").css("display", "none");
-        $("#selectWindow").css("display", "none");
-    });
-
     //选择列表的选择与取消
     function add(own) {
         var id = $(own).children('span').attr('id');
         var text = $(own).children('span').text();
-        if ($(own).children('div').hasClass("select")) {
-            $(own).children('div').removeClass("select");
+        if ($(own).children('div').hasClass("selection")) {
+            $(own).children('div').removeClass("selection");
             //遍历已选列表
             $("#selectedReviewer").each(function () {
                 $(this).find('li').each(function () {
@@ -337,13 +417,14 @@
                 });
             });
         } else {
-            $(own).children('div').addClass("select");
+            $(own).children('div').addClass("selection");
             $('#selectedReviewer').append(' <li style="padding:5px 20px">' +
                 '<img src="../../../static/images/icon/personnel.png" style="vertical-align:middle;">' +
                 '<span style="margin-left:8px" id="' + id + '">' + text + '</span>' +
                 '<img src="../../../static/images/icon/delete.png" style="float:right">' +
                 '</li>')
         }
+        preventBubble();
     }
 
     //删除已选列表选中的标签并且删除选择列表中选中的样式
@@ -367,28 +448,94 @@
         });
     });
 
+    //确认
+    function consent() {
+
+        $("#selectedReviewer").each(function () {
+            var size = $(this).find('li').size();
+            if (size < 1) {
+                alert("请最少选择一个！");
+            } else {
+                var array = new Array();
+                $(this).find('li').each(function () {
+                    //调用子页面方式
+                    array.push($(this).text());
+                });
+                console.log(array);
+                ifr.window.insertCopyGive(array);
+                cancel();
+            }
+
+        });
+    }
+
+    //单选窗口 - 选择核稿人
+    function openBack(userInfoList) {
+        $("#windowBackgroundColor").css("display", "block");
+        $("#singleSelection").css("display", "block");
+
+        var content = '';
+        if (userInfoList.length <= 0) {
+            //当前部门没有人员
+            content += '<img style="padding: 28% 32%;" src="../../../static/images/icon/empty.png">';
+        } else {
+            for (let i = 0; i < userInfoList.length; i++) {
+                content +=
+                    '<li class="single-election-box-li">' +
+                    '<img src="../../../static/images/icon/personnel.png">' +
+                    '<span id="' + userInfoList[i].id + '">' + userInfoList[i].nickName + '</span>' +
+                    '<div></div>' +
+                    '</li>';
+            }
+        }
+        //添加到选择列表
+        $("#singleSelectionContent").html(content);
+    }
+
+    //单选弹窗 - 确认
+    function confirm() {
+        var lis = $("#singleSelectionContent").find("li").find("div");
+        //是否包含selection
+        if (lis.hasClass("selection")) {
+            ifr.window.insertReviewer($(".selection").prev().text());
+            cancel();
+        } else {
+            alert('请选择核稿人！')
+        }
+    }
+
+    //单选弹窗 - li选择器
+    $("#singleSelectionContent").on('click', 'li', function () {
+        if ($(this).find("div").hasClass("selection")) {
+            $(this).find("div").removeClass("selection");
+        } else {
+            var trs = $(this).parent().find("li").find("div");
+            trs.removeClass("selection");
+            $(this).find("div").addClass("selection");
+        }
+    });
+
     //取消
     function cancel() {
         $("#windowBackgroundColor").css("display", "none");
-        $("#selectWindow").css("display", "none");
+        $("#singleSelection,#selectWindow").css("display", "none");
     }
 
-    //确认
-    function consent() {
-        $("#selectedReviewer").each(function () {
-            var size = $(this).find('li').size();
-            if (size > 1) {
-                alert("只能选择一个核稿人");
-            } else if (size < 1) {
-                alert("请选择一个核稿人");
-            } else {
-                $(this).find('li').each(function () {
-                    //调用子页面方式
-                    ifr.window.insertReviewer($(this).text());
-                    cancel();
-                });
-            }
-        });
+    //点击任意位置关闭弹窗
+    $("#windowBackgroundColor").on("click", function () {
+        $("#windowBackgroundColor").css("display", "none");
+        $("#selectWindow").css("display", "none");
+        $("#singleSelection").css("display", "none");
+    });
+
+    //组织冒泡
+    function preventBubble(event) {
+        var e = arguments.callee.caller.arguments[0] || event; //若省略此句，下面的e改为event，IE运行可以，但是其他浏览器就不兼容  
+        if (e && e.stopPropagation) {
+            e.stopPropagation();
+        } else if (window.event) {
+            window.event.cancelBubble = true;
+        }
     }
 </script>
 </html>
