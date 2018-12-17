@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -23,106 +24,76 @@
 <div class="">
     <div class="boxdown">
 
-        <table class="simpletable" style="border: none">
+        <table class="simpletable" style="border: none;margin-top: 10px;width: 2320px;color: #000">
 
             <thead>
-            <th>员工编号</th>
-            <th>部门</th>
-            <th>姓名</th>
-            <th>岗位</th>
-            <th>岗位工资</th>
-            <th>技术职称津贴</th>
-            <th>特殊工种津贴</th>
-            <th>补发工资</th>
-            <th>奖金</th>
-            <th>月奖</th>
-            <th>补助</th>
-            <th>高温津贴</th>
-            <th>加班费</th>
-            <th>应发工资</th>
-            <th>养老险</th>
-            <th>失业险</th>
-            <th>医保</th>
-            <th>大额</th>
-            <th>公积金</th>
-            <th>个人所得税</th>
-            <th>会费</th>
-            <th>实发金额</th>
-            <th>操作</th>
+            <th style="width: 80px;">结算日期</th>
+            <th style="width: 100px;">姓名</th>
+            <th style="width: 100px;">部门</th>
+            <th style="width: 150px;">岗位</th>
+            <th style="width: 80px;">岗位工资</th>
+            <th style="width: 100px;">技术职称津贴</th>
+            <th style="width: 100px;">特殊工种津贴</th>
+            <th style="width: 80px;">补发工资</th>
+            <th style="width: 80px;">奖金</th>
+            <th style="width: 80px;">月奖</th>
+            <th style="width: 80px;">补助</th>
+            <th style="width: 80px;">高温津贴</th>
+            <th style="width: 80px;">加班费</th>
+            <th style="width: 80px;">扣发工资</th>
+            <th style="width: 80px;">应发工资</th>
+            <th style="width: 80px;">养老险</th>
+            <th style="width: 80px;">失业险</th>
+            <th style="width: 80px;">医保</th>
+            <th style="width: 80px;">大额</th>
+            <th style="width: 80px;">公积金</th>
+            <th style="width: 150px;">本月应扣三险一金合计</th>
+            <th style="width: 150px;">扣三险及公积金后工资</th>
+            <th style="width: 100px;">个人所得税</th>
+            <th style="width: 80px;">会费</th>
+            <th style="width: 80px;">实发金额</th>
+            <th style="width: 10px"></th>
             </thead>
 
             <tbody>
-
-            <tr>
-                <td>B801</td>
-                <td>生产经营部</td>
-                <td>张三</td>
-                <td>施工管理</td>
-                <td>10000</td>
-                <td>1000</td>
-                <td>600</td>
-                <td>300</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-                <td>800</td>
-                <td>0</td>
-                <td>12400</td>
-                <td>992</td>
-                <td>24.8</td>
-                <td>248</td>
-                <td>1488</td>
-                <td>674.44</td>
-                <td>172.76</td>
-                <td>172.76</td>
-                <td>8972.76</td>
-                <td>删除</td>
-            </tr>
-
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<!--外包职工-->
-<div class="" style="margin-top: 50px">
-    <div class="boxdown">
-
-        <table class="simpletable" style="border: none;width: 1100px;">
-
-            <thead>
-            <th>员工编号</th>
-            <th>部门</th>
-            <th>姓名</th>
-            <th>岗位</th>
-            <th>岗位工资</th>
-            <th>技术职称津贴</th>
-            <th>特殊工种津贴</th>
-            <th>补发工资</th>
-            <th>月奖</th>
-            <th>高温津贴</th>
-            <th>超时服务费</th>
-            <th>应发工资</th>
-            <th>操作</th>
-            </thead>
-
-            <tbody>
-
-            <tr class="even">
-                <td>W601</td>
-                <td>技术部</td>
-                <td>李四</td>
-                <td>仪器仪表</td>
-                <td>8000</td>
-                <td>300</td>
-                <td>600</td>
-                <td>100</td>
-                <td>400</td>
-                <td>200</td>
-                <td>0</td>
-                <td>9600</td>
-                <td>删除</td>
-            </tr>
+            <c:choose>
+                <c:when test="${personalWages == null}">
+                    <tr>
+                        <td colspan="26">
+                            暂无数据
+                        </td>
+                    </tr>
+                </c:when>
+                <c:otherwise>
+                    <tr>
+                        <td>${personalWages.settlementDate}</td>
+                        <td>${personalWages.name}</td>
+                        <td>${personalWages.department}</td>
+                        <td>${personalWages.position}</td>
+                        <td>${personalWages.positionSalary}</td>
+                        <td>${personalWages.technicalTitleAllowance}</td>
+                        <td>${personalWages.specialWorkAllowance}</td>
+                        <td>${personalWages.reissueWages}</td>
+                        <td>${personalWages.bonus}</td>
+                        <td>${personalWages.monthlyAward}</td>
+                        <td>${personalWages.subsidy}</td>
+                        <td>${personalWages.megathermalAllowance}</td>
+                        <td>${personalWages.overtimePay}</td>
+                        <td>${personalWages.withholdingWages}</td>
+                        <td>${personalWages.wagesPayable}</td>
+                        <td>${personalWages.endowmentInsurance}</td>
+                        <td>${personalWages.unemploymentInsurance}</td>
+                        <td>${personalWages.medicalInsurance}</td>
+                        <td>${personalWages.largeMedicalInsurance}</td>
+                        <td>${personalWages.accumulationFund}</td>
+                        <td>${personalWages.deductibleExpenses}</td>
+                        <td>${personalWages.feeAfterDeduction}</td>
+                        <td>${personalWages.individualIncomeTax}</td>
+                        <td>${personalWages.membershipFee}</td>
+                        <td>${personalWages.actualAmount}</td>
+                    </tr>
+                </c:otherwise>
+            </c:choose>
 
             </tbody>
         </table>
@@ -152,7 +123,7 @@
                 legend: {
                     orient: 'vertical',
                     x: 'left',
-                    data: ['基本工资', '出勤', '餐补', '加班费用', '交通补助','其他']
+                    data: ['基本工资', '出勤', '餐补', '加班费用', '交通补助', '其他']
                 },
                 series: [
                     {
@@ -242,7 +213,7 @@
 <script type="text/javascript" src="../../../../static/js/calendar.js"></script>
 <script>
     $(function () {
-        document.getElementById('chart_box').setAttribute('class','fixed');
+        document.getElementById('chart_box').setAttribute('class', 'fixed');
     });
 </script>
 </html>

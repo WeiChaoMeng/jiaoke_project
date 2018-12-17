@@ -252,7 +252,7 @@ a {
     display: none;
 }
 
-.select {
+.selection {
     background: url("../../static/images/icon/select1.png") no-repeat;
     width: 16px;
     height: 16px;
@@ -274,6 +274,18 @@ a {
     position: absolute;
     top: 20px;
     left: 30%;
+    z-index: 9999;
+    border-radius: 10px;
+    padding: 0 30px;
+}
+
+.single-option-window {
+    width: 400px;
+    background: #ffffff;
+    display: none;
+    position: absolute;
+    top: 20px;
+    left: 35%;
     z-index: 9999;
     border-radius: 10px;
     padding: 0 30px;
@@ -373,16 +385,16 @@ a {
     height: 100%;
 }
 
-.selection-content-inside ul {
+.selection-content-inside>ul {
     padding: 10px 0;
 }
 
-.selection-box-li:hover {
-    background: #e6e6e6;
+.selection-box-li span:hover {
+    border-bottom: 1.5px solid #000;
 }
 
 .selection-box-li {
-    padding: 5px 20px;
+    margin: 5px 20px;
 }
 
 .selection-box-li img {
@@ -391,4 +403,30 @@ a {
 
 .selection-box-li span {
     margin-left: 5px
+}
+
+.single-election-box-li:hover {
+    background: #e6e6e6;
+}
+
+.single-election-box-li {
+    padding: 5px 20px;
+}
+
+.single-election-box-li img {
+    vertical-align: middle;
+}
+
+.single-election-box-li span {
+    margin-left: 5px
+}
+
+.submenu-ul {
+    display: none;
+    padding: 0;
+    font-size: 13px;
+}
+
+.submenu-ul li {
+    margin: 5px 0 5px 20px;
 }
