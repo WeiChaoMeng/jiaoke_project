@@ -73,7 +73,6 @@ public class QualityController {
         receiveDataInf.receiveDataToDB(messageStr);
 
 
-
     }
     /**********************************  质量监控首页 Start ************************************************/
 
@@ -465,4 +464,12 @@ public class QualityController {
 
 
 
+    /********************************  动态管理 Start *****************************************/
+    @RequestMapping("/qc_dynamic_management.do")
+    public String dynamicManagement(){
+
+        return "quality/qc_dynamic_management";
+    }
+
+    /********************************  动态管理 end *****************************************/
 }
