@@ -472,4 +472,39 @@ public class QualityController {
     }
 
     /********************************  动态管理 end *****************************************/
+
+
+
+    /********************************  实时监测（假） start *****************************************/
+    /**
+     * 跳转实时监测（假）页面
+     *
+     * @return qc_real_time_surveillance.jsp
+     */
+    @RequestMapping(value = "/qc_real_time_surveillance.do")
+    public String toRealTimeSurveillance(){
+        return "quality/qc_real_time_surveillance";
+    }
+
+
+    /********************************  实时监测（假） end *****************************************/
+
+
+
+    /********************************  历史数据（假） start *****************************************/
+    /**
+     * 跳转历史数据页面
+     *
+     * @return qc_historical_data.jsp
+     */
+    @RequestMapping(value = "/qc_historical_data.do")
+    public String toHistoricalData(){
+
+        return "quality/qc_historical_data";
+    }
+
+
+    /********************************  历史数据（假） end *****************************************/
+
+
 }
