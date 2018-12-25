@@ -150,7 +150,7 @@ public class QualityDynamicImpl implements QualityDynamicInf {
                         //添加平均值上限
                         svg5up.get(svgentry.getKey()).add(df.format(svgX + 0.577 * svgR));
                         //添加平均值下限
-                        svg5up.get(svgentry.getKey()).add(df.format(svgX - 0.577 * svgR));
+                        svg5down.get(svgentry.getKey()).add(df.format(svgX - 0.577 * svgR));
 
                     }
                 }
