@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.quality.dao.QualityDynamicDao">
+
+    <select id="getLastDayToChars" resultType="java.util.Map">
+        SELECT
+               material_asphalt,
+               material_total,
+               produce_proportioning_num
+        FROM
+             quality_monitoring_realtime_data1
+        WHERE
+                to_days(NOW()) - TO_DAYS(produce_date) = 1;
+    </select>
+
+
+    <select id="getAggregateRatioByMoudelId" resultType="java.util.Map">
+
+        SELECT
+               crew1_modele_id,
+               ratio_stone
+        FROM
+             quality_proportioning_message
+        WHERE
+                crew1_modele_id in
+        <foreach collection="moudelId"  separator="," open="(" close=")" item="item">
+            ${item}
+        </foreach>
+
+    </select>
+
+</mapper>

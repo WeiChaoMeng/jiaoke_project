@@ -146,7 +146,7 @@
                                 xAxis: {
                                     type: 'category',
                                     name: '',
-                                    splitLine: linecolor,
+                                    // splitLine: linecolor,
                                     axisTick:{show:false},
                                     axisLine:linecolor,
                                     // axisLabel:{color:'#fff'},
@@ -158,12 +158,13 @@
                                     name: '含量',
                                     axisTick:{show:false},
                                     axisLine:linecolor,
-                                    splitLine: linecolor,
+                                    // splitLine: linecolor,
                                     // axisLabel:{color:'#fff'},
                                     axisLabel: {
                                         formatter: '{value} %'
                                     },
-                                    max: <fmt:formatNumber value="${moudelRatio[keys] + 3}" type="currency" pattern="0.0#"/>
+                                    max: <fmt:formatNumber value="${moudelRatio[keys] + 2}" type="currency" pattern="0.0#"/>,
+                                    min: <fmt:formatNumber value="${moudelRatio[keys] - 2}" type="currency" pattern="0.0#"/>,
 
                                 },
                                 series: [
@@ -172,7 +173,7 @@
                                         type: 'line',
                                         lineStyle:{normal:{color:'#333333',width:2}},
 
-                                        smooth:true,
+                                        smooth:false,
                                         symbol:'circle',
                                         //     symbol:"image://",
                                         symbolSize: 7,
@@ -263,6 +264,11 @@
                                         return res;
                                     }
                                 },
+                                toolbox: {
+                                    feature: {
+                                        saveAsImage: {}
+                                    }
+                                },
                                 grid: {
                                     left: '3%',
                                     right: '4%',
@@ -272,7 +278,7 @@
                                 xAxis: {
                                     type: 'category',
                                     name: '',
-                                    splitLine: linecolor,
+                                    // splitLine: linecolor,
                                     axisTick:{show:false},
                                     axisLine:linecolor,
                                     // axisLabel:{color:'#fff'},
@@ -284,7 +290,7 @@
                                     name: '',
                                     axisTick:{show:false},
                                     axisLine:linecolor,
-                                    splitLine: linecolor,
+                                    // splitLine: linecolor,
                                     // axisLabel:{color:'#fff'},
                                     axisLabel: {
                                         formatter: '{value} %'
@@ -399,16 +405,29 @@
                                         return res;
                                     }
                                 },
+                                toolbox: {
+                                    feature: {
+                                        saveAsImage: {}
+                                    }
+                                },
                                 grid: {
                                     left: '3%',
                                     right: '4%',
                                     bottom: '3%',
                                     containLabel: true
                                 },
+                                dataZoom: [
+                                    {
+                                        start:0,
+                                        end:100,
+                                    },
+                                    {
+                                        type: 'inside'
+                                    }],
                                 xAxis: {
                                     type: 'category',
                                     name: '',
-                                    splitLine: linecolor,
+                                    // splitLine: linecolor,
                                     axisTick:{show:false},
                                     axisLine:linecolor,
                                     // axisLabel:{color:'#fff'},
@@ -420,39 +439,73 @@
                                     name: '',
                                     axisTick:{show:false},
                                     axisLine:linecolor,
-                                    splitLine: linecolor,
+                                    // splitLine: linecolor,
                                     // axisLabel:{color:'#fff'},
                                     axisLabel: {
                                         formatter: '{value} %'
                                     },
-                                    max: <fmt:formatNumber value="${moudelRatio[keys] + 3}" type="currency" pattern="0.0#"/>
+                                    max: <fmt:formatNumber value="${moudelRatio[keys] }" type="currency" pattern="0.0#"/>,
+                                    min: <fmt:formatNumber value="${moudelRatio[keys] - 0.5}" type="currency" pattern="0.0#"/>
 
                                 },
                                 series: [
                                     {
+                                        name: '上限',
+                                        type: 'line',
+                                        lineStyle:{normal:{color:'#333333',width:2}},
+                                        step: 'start',
+                                        symbol:'none',  //这句就是去掉点的
+                                        smooth:false,  //这句就是让曲线变平滑的
+                                        itemStyle:{
+                                            normal:{
+                                                lineStyle:{
+                                                    width:2,
+                                                    type:'dotted'  //'dotted'虚线 'solid'实线
+                                                }
+                                            }
+                                        },
+                                        data:[
+                                            <c:forEach items="${svg5up[keys]}" var="svg5upRation">
+                                            ${svg5upRation}, ${svg5upRation}, ${svg5upRation}, ${svg5upRation}, ${svg5upRation},
+                                            </c:forEach>
+                                        ]},
+                                    {
                                         name: '3的指数',
                                         type: 'line',
                                         lineStyle:{normal:{color:'#333333',width:2}},
-
-                                        smooth:true,
-                                        symbol:'circle',
-                                        //     symbol:"image://",
+                                        // step: 'start',
+                                        symbol:'circle', //这句就是去掉点的
+                                        smooth:false,  //这句就是让曲线变平滑的
                                         symbolSize: 7,
 
                                         data:
+
                                             <c:forEach items="${svg3}" var="svg3Ration">
                                                 <c:if test="${svg3Ration.key == keys}" >
                                                  ${svg3Ration.value},
                                                 </c:if>
                                             </c:forEach>
-                                        markLine:{
-                                            data: [
-
-                                                { yAxis: '${moudelRatio[keys] + 1}', xAxis: ${fn:length(svg3[keys])}},
-                                                { yAxis: '${moudelRatio[keys] - 1}', xAxis: ${fn:length(svg3[keys])}}
-                                            ]
-                                        }
                                     },
+                                    {
+                                        name: '下限',
+                                        type: 'line',
+                                        lineStyle:{normal:{color:'#333333',width:2}},
+                                        step: 'start',
+                                        symbol:'none',  //这句就是去掉点的
+                                        smooth:false,  //这句就是让曲线变平滑的
+                                        itemStyle:{
+                                            normal:{
+                                                lineStyle:{
+                                                    width:2,
+                                                    type:'dotted'  //'dotted'虚线 'solid'实线
+                                                }
+                                            }
+                                        },
+                                        data:[
+                                            <c:forEach items="${svg5down[keys]}" var="svg5downRation">
+                                            ${svg5downRation}, ${svg5downRation}, ${svg5downRation}, ${svg5downRation}, ${svg5downRation},
+                                            </c:forEach>
+                                        ]},
                                 ]
                             };
                             myChart${status.index + 300}.setOption(option${status.index + 300});
