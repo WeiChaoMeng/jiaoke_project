@@ -32,7 +32,6 @@ public class QualityDynamicImpl implements QualityDynamicInf {
     @Override
     public void getLastDayToChars(HttpServletRequest request) {
 
-        long startTime = System.currentTimeMillis();
 
         List<Map<String,String>> list = qualityDynamicDao.getLastDayToChars();
 
@@ -60,7 +59,7 @@ public class QualityDynamicImpl implements QualityDynamicInf {
         }
 
 
-        long queryTime = System.currentTimeMillis();
+
         List<Map<String,Object>> ratioMap =  qualityDynamicDao.getAggregateRatioByMoudelId(ratios);
 
         for (int i = 0; i < ratioMap.size();i++){
@@ -69,7 +68,7 @@ public class QualityDynamicImpl implements QualityDynamicInf {
             moudelRatio.put(ratioMap.get(i).get("crew1_modele_id").toString(),String.valueOf(df.format(asphalt_ratio_moudle/(100 - asphalt_ratio_moudle) * 100)));
         }
 
-        long queryEndTime = System.currentTimeMillis();
+
 
         //计算油石比
         for (int i = 0; i < list.size();i++){
@@ -78,7 +77,9 @@ public class QualityDynamicImpl implements QualityDynamicInf {
             String total = String.valueOf(list.get(i).get("material_total"));
             String key = list.get(i).get("produce_proportioning_num");
 
+            //计算沥青含量
             Float asphalt_content = Float.parseFloat(asphalt)/Float.parseFloat(total) * 100;
+            //计算油石比
             Float asphalt_ratio = (asphalt_content/(100 - asphalt_content)) * 100;
 
             content.get(key).add(df.format(asphalt_ratio));
@@ -88,6 +89,7 @@ public class QualityDynamicImpl implements QualityDynamicInf {
         //计算极差及三个数据平均值
         for (Map.Entry<String, List<String>> entry : content.entrySet()) {
 
+            //删除少于二十盘的配比号，使用Set集合做控制
             if(entry.getValue().size() <= 20 ) {
                 ratios.remove(entry.getKey());
                 continue;
@@ -115,11 +117,11 @@ public class QualityDynamicImpl implements QualityDynamicInf {
         for (Map.Entry<String, List<String>> maxMinentry : maxMin.entrySet()) {
             for (int i = 1; i < maxMinentry.getValue().size(); i++) {
                 if(i%5 == 0) {
-                    double a1 = Double.parseDouble(maxMinentry.getValue().get(i - 4));
-                    double b2 = Double.parseDouble(maxMinentry.getValue().get(i - 3));
-                    double c3 = Double.parseDouble(maxMinentry.getValue().get(i - 2));
-                    double d4 = Double.parseDouble(maxMinentry.getValue().get(i - 1));
-                    double e5 = Double.parseDouble(maxMinentry.getValue().get(i));
+                    double a1 = Double.parseDouble(maxMinentry.getValue().get(i - 5));
+                    double b2 = Double.parseDouble(maxMinentry.getValue().get(i - 4));
+                    double c3 = Double.parseDouble(maxMinentry.getValue().get(i - 3));
+                    double d4 = Double.parseDouble(maxMinentry.getValue().get(i - 2));
+                    double e5 = Double.parseDouble(maxMinentry.getValue().get(i - 1));
 
                     //极差平均值
                     double maxMinX = (a1 + b2 + c3 + d4 + e5)/5;
@@ -141,7 +143,7 @@ public class QualityDynamicImpl implements QualityDynamicInf {
 
                         //平均值
                         double svgX = (a1 + b2 + c3 + d4 + e5)/5;
-
+                        //此处逻辑，获得5个三次平均后的值，再次平均。获得已经获得的极差上限除以固定值获得5个三次极差的平均值后套用公式
                         //极差
                         double svgR =  i/5 ==1? Double.parseDouble(maxMinUp.get(svgentry.getKey()).get(0))/2.115 : Double.parseDouble(maxMinUp.get(svgentry.getKey()).get(i/5 - 1))/2.115;
 
@@ -163,10 +165,7 @@ public class QualityDynamicImpl implements QualityDynamicInf {
         request.setAttribute("svg5up",svg5up);
         request.setAttribute("svg5down",svg5down);
         request.setAttribute("maxMinUp",maxMinUp);
-        long endTime = System.currentTimeMillis();    //获取结束时间
 
-        System.out.println("程序运行时间：" + (queryEndTime - queryTime) + "ms");
-        System.out.println("程序运行时间：" + (endTime - startTime) + "ms");
     }
 
 }
