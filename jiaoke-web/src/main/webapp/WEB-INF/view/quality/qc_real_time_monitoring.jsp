@@ -487,7 +487,8 @@
                     type: 'value',
                     axisLabel: {
                         formatter: '{value} °C'
-                    }
+                    },
+                    min:60
                 },
                 series: [
                     {
@@ -583,7 +584,8 @@
                     type: 'value',
                     axisLabel: {
                         formatter: '{value} °C'
-                    }
+                    },
+                    min:50
                 },
                 series: [
                     {

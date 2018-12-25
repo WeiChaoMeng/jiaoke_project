@@ -53,6 +53,8 @@ public class QualityController {
     private QualityRealTimeWarningInf qualityRealTimeWarningInf;
     @Autowired
     private QualityStatementInf qualityStatementInf;
+    @Autowired
+    private QualityDynamicInf qualityDynamicInf;
 
 
     /**
@@ -463,18 +465,6 @@ public class QualityController {
     /********************************  实验检测 end *****************************************/
 
 
-
-    /********************************  动态管理 Start *****************************************/
-    @RequestMapping("/qc_dynamic_management.do")
-    public String dynamicManagement(){
-
-        return "quality/qc_dynamic_management";
-    }
-
-    /********************************  动态管理 end *****************************************/
-
-
-
     /********************************  实时监测（假） start *****************************************/
     /**
      * 跳转实时监测（假）页面
@@ -506,5 +496,21 @@ public class QualityController {
 
     /********************************  历史数据（假） end *****************************************/
 
+    /********************************  动态管理 start *****************************************/
 
+    @RequestMapping("/qc_dynamic_management.do")
+    public String getLastDayAsphaltRationToChars (HttpServletRequest request){
+        qualityDynamicInf.getLastDayToChars(request);
+        return "quality/qc_dynamic_management";
+    }
+
+
+    @RequestMapping(value = "/getEcharsDataByMaterialAndDate.do")
+    public String dayToChars(String date,String material,HttpServletRequest request){
+        System.out.println(date);
+        System.out.println(material);
+        return "quality/qc_dynamic_management";
+    }
+
+    /********************************  动态管理 end *****************************************/
 }
