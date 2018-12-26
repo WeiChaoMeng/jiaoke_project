@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.quality.dao.QualityWarningDataFalseMapper">
+  <resultMap id="BaseResultMap" type="com.jiaoke.quality.bean.QualityWarningDataFalse">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="realtime_data_sham_id" jdbcType="INTEGER" property="realtimeDataShamId" />
+    <result column="material_name" jdbcType="VARCHAR" property="materialName" />
+    <result column="actual_ratio" jdbcType="DOUBLE" property="actualRatio" />
+    <result column="moudle_ratio" jdbcType="DOUBLE" property="moudleRatio" />
+    <result column="deviation_ratio" jdbcType="DOUBLE" property="deviationRatio" />
+    <result column="warning_level" jdbcType="INTEGER" property="warningLevel" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, realtime_data_sham_id, material_name, actual_ratio, moudle_ratio, deviation_ratio, 
+    warning_level
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from quality_warning_data_false
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from quality_warning_data_false
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jiaoke.quality.bean.QualityWarningDataFalse">
+    insert into quality_warning_data_false (id, realtime_data_sham_id, material_name, 
+      actual_ratio, moudle_ratio, deviation_ratio, 
+      warning_level)
+    values (#{id,jdbcType=INTEGER}, #{realtimeDataShamId,jdbcType=INTEGER}, #{materialName,jdbcType=VARCHAR}, 
+      #{actualRatio,jdbcType=DOUBLE}, #{moudleRatio,jdbcType=DOUBLE}, #{deviationRatio,jdbcType=DOUBLE}, 
+      #{warningLevel,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jiaoke.quality.bean.QualityWarningDataFalse">
+    insert into quality_warning_data_false
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="realtimeDataShamId != null">
+        realtime_data_sham_id,
+      </if>
+      <if test="materialName != null">
+        material_name,
+      </if>
+      <if test="actualRatio != null">
+        actual_ratio,
+      </if>
+      <if test="moudleRatio != null">
+        moudle_ratio,
+      </if>
+      <if test="deviationRatio != null">
+        deviation_ratio,
+      </if>
+      <if test="warningLevel != null">
+        warning_level,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="realtimeDataShamId != null">
+        #{realtimeDataShamId,jdbcType=INTEGER},
+      </if>
+      <if test="materialName != null">
+        #{materialName,jdbcType=VARCHAR},
+      </if>
+      <if test="actualRatio != null">
+        #{actualRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="moudleRatio != null">
+        #{moudleRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="deviationRatio != null">
+        #{deviationRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="warningLevel != null">
+        #{warningLevel,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jiaoke.quality.bean.QualityWarningDataFalse">
+    update quality_warning_data_false
+    <set>
+      <if test="realtimeDataShamId != null">
+        realtime_data_sham_id = #{realtimeDataShamId,jdbcType=INTEGER},
+      </if>
+      <if test="materialName != null">
+        material_name = #{materialName,jdbcType=VARCHAR},
+      </if>
+      <if test="actualRatio != null">
+        actual_ratio = #{actualRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="moudleRatio != null">
+        moudle_ratio = #{moudleRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="deviationRatio != null">
+        deviation_ratio = #{deviationRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="warningLevel != null">
+        warning_level = #{warningLevel,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jiaoke.quality.bean.QualityWarningDataFalse">
+    update quality_warning_data_false
+    set realtime_data_sham_id = #{realtimeDataShamId,jdbcType=INTEGER},
+      material_name = #{materialName,jdbcType=VARCHAR},
+      actual_ratio = #{actualRatio,jdbcType=DOUBLE},
+      moudle_ratio = #{moudleRatio,jdbcType=DOUBLE},
+      deviation_ratio = #{deviationRatio,jdbcType=DOUBLE},
+      warning_level = #{warningLevel,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

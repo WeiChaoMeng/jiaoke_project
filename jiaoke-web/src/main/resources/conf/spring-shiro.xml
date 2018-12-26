@@ -34,6 +34,12 @@
                 /comprehensiveOffice/* = perms[comprehensiveOffice]
 
                 /OAWageStatisticsInner.do = perms[/test]
+                <!--质量监控-->
+                /qc_real_time_monitoring.do = perms[qualityDataView]
+                /getRealTimeData.do = perms[qualityDataView]
+                /getRealTimeDataEcharsTemp.do = perms[qualityDataView]
+                /getRealTimeDataEcharsMaterial.do = perms[qualityDataView]
+
                 /login/*.do = authc
                 /oa/*.do = authc
                 /*.do = authc

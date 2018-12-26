@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -61,10 +62,13 @@
     </ul>
 
     <ul class="menu">
+
+        <shiro:hasPermission name="qualityDataView">
         <li>
             <a href="#" id="real_time_protection" class="menu_selected" onclick="real_time_protection()"><i
                     class="menuico iconfont1">&#xeba7;</i>实时监控</a>
         </li>
+        </shiro:hasPermission>
 
         <li>
             <a href="#" id="data_manager" onclick="data_manager()" class="menu_selected">

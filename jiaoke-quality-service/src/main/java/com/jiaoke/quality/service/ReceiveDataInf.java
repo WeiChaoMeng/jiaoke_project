@@ -8,6 +8,8 @@
  **/
 package com.jiaoke.quality.service;
 
+import java.text.ParseException;
+
 /**
  *  <一句话功能描述>
  * 接受并处理生产本地发送过来的数据
@@ -24,4 +26,10 @@ public interface ReceiveDataInf {
      */
      void  receiveDataToDB( String messageData );
 
+    /**
+     * 获取传入的数据解析后传入数据库(假)
+     *
+     * @param messageData 消息数据
+     */
+    void receiveDataToDBSham(String messageData);
 }

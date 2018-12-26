@@ -9,11 +9,13 @@
 package com.jiaoke.controller;
 
 import com.alibaba.druid.util.StringUtils;
+import com.jiake.utils.JsonHelper;
 import com.jiake.utils.QualityMatchingUtil;
 import com.jiaoke.common.bean.PageBean;
 import com.jiaoke.quality.bean.QualityDataManagerDay;
 import com.jiaoke.quality.bean.QualityRatioModel;
 import com.jiaoke.quality.bean.QualityRatioTemplate;
+import com.jiaoke.quality.bean.QualityTimelyDataFalse;
 import com.jiaoke.quality.service.*;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +25,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -53,6 +57,10 @@ public class QualityController {
     private QualityRealTimeWarningInf qualityRealTimeWarningInf;
     @Autowired
     private QualityStatementInf qualityStatementInf;
+    @Resource
+    private QualityTimelyDataFalseService qualityTimelyDataFalseService;
+    @Resource
+    private QualityHistoricalDataService qualityHistoricalDataService;
 
 
     /**
@@ -66,11 +74,13 @@ public class QualityController {
      * @date: 2018/10/9 17:43
      */
     @RequestMapping(value ={"/qualityData.do"} , method = RequestMethod.POST)
-    public void receiveByClient(@RequestParam("messageStr") String messageStr){
+    public void receiveByClient(@RequestParam("messageStr") String messageStr) {
 
         if (StringUtils.isEmpty(messageStr)) return;
 
         receiveDataInf.receiveDataToDB(messageStr);
+
+        receiveDataInf.receiveDataToDBSham(messageStr);
 
 
     }
@@ -482,8 +492,15 @@ public class QualityController {
      * @return qc_real_time_surveillance.jsp
      */
     @RequestMapping(value = "/qc_real_time_surveillance.do")
-    public String toRealTimeSurveillance(){
+    public String toRealTimeSurveillanceFalse(){
         return "quality/qc_real_time_surveillance";
+    }
+
+    @RequestMapping(value = "/getRealTimeSurveillanceFalse.do")
+    @ResponseBody
+    public String getRealTimeSurveillanceFalse(){
+        QualityTimelyDataFalse timeSurveillanceFalseData = qualityTimelyDataFalseService.getTimeSurveillanceFalseData();
+        return JsonHelper.toJSONString(timeSurveillanceFalseData);
     }
 
 
@@ -498,10 +515,22 @@ public class QualityController {
      * @return qc_historical_data.jsp
      */
     @RequestMapping(value = "/qc_historical_data.do")
-    public String toHistoricalData(){
+    public String toHistoricalData(HttpServletRequest request){
+        String temp = request.getParameter("currentPageNum");
+        String url = QualityMatchingUtil.getUrl(request);
 
+        PageBean<QualityDataManagerDay> pageBean = new PageBean<>();
+        if ( temp == null || temp.trim().isEmpty() ){
+            pageBean = qualityHistoricalDataService.selectHistoryDataToDay(1,url);
+        }else {
+            pageBean = qualityHistoricalDataService.selectHistoryDataToDay(Integer.parseInt(temp),url);
+        }
+
+        request.setAttribute("pageBean",pageBean);
         return "quality/qc_historical_data";
     }
+
+
 
 
     /********************************  历史数据（假） end *****************************************/

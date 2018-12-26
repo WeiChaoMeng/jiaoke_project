@@ -71,4 +71,32 @@
             </foreach>
     </insert>
 
+    <select id="getQualityRatioTemplateById" parameterType="java.lang.Integer" resultType="com.jiaoke.quality.bean.QualityRatioTemplate">
+        select id,
+               pro_name as proName,
+               repertory_one as repertoryOne,
+               repertory_two as repertoryTwo,
+               repertory_three as repertoryThree,
+               repertory_four as repertoryFour,
+               repertory_five as repertoryFive,
+               repertory_six as repertorySix,
+               breeze as breeze,
+               ratio_stone as ratioStone,
+               ratio_regenerate1 as ratioRegenerate1,
+               ratio_regenerate2 as ratioRegenerate2,
+               ratio_additive as ratioAdditive,
+               regenerate as regenerate,
+               additive as additive,
+               temperature_asphalt as temperatureAsphalt,
+               temperature_aggregate as temperatureAggregate,
+               temperature_mixture as temperatureMixture,
+               temperature_milling as temperatureMilling,
+               temperature_asphalt_up as temperatureAsphaltUp,
+               temperature_aggregate_up as temperatureAggregateUp,
+               temperature_mixture_up as temperatureMixtureUp,
+               temperature_milling_up as temperatureMillingUp
+        from quality_proportioning_message
+        where id = #{id}
+
+    </select>
 </mapper>
