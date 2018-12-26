@@ -645,7 +645,7 @@
 <script type="text/javascript" src="/static/js/jquery.js"></script>
 <script type="text/javascript" src="/static/js/common.js"></script>
 <script type="text/javascript" src="/static/js/skin.js"></script>
-<%--<script type="text/javascript" src="/static/js/qc/quality_monitoring.js"></script>--%>
+<script type="text/javascript" src="/static/js/qc/quality_monitoring_false.js.js"></script>
 
 <script>
     $(function () {
