@@ -15,6 +15,7 @@
     <link href="/static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
     <script src="/static/js/echarts/echarts.js"></script>
     <script src="/static/js/echarts/uimaker.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.js"></script>
 </head>
 
 <body style="padding:15px 8px 500px 8px;">
@@ -122,36 +123,48 @@
                     <td>${product.proBase.temperature_duster}</td>
                     <td>${product.proBase.temperature_asphalt}</td>
                     <td>${product.proBase.temperature_aggregate}</td>
+                    <td id="one">0</td>
+                    <td id="two" >0</td>
+                    <td id="three" >0</td>
+                    <td id="four" >0</td>
+                    <td id="five" >0</td>
+                    <td id="six" >0</td>
+                    <td id="k" >0</td>
+                    <td id="l" >0</td>
+                    <td id="z" >0</td>
                     <c:forEach items="${product.proMessage}" var="item">
-                        <c:choose>
-                            <c:when test="${item.material_name == '骨料1'}">
-                                <td>${item.actual_ratio}</td>
-                            </c:when>
-                            <c:when test="${item.material_name == '骨料2'}">
-                                <td>${item.actual_ratio}</td>
-                            </c:when>
-                            <c:when test="${item.material_name == '骨料3'}">
-                                <td>${item.actual_ratio}</td>
-                            </c:when>
-                            <c:when test="${item.material_name == '骨料4'}">
-                                <td>${item.actual_ratio}</td>
-                            </c:when>
-                            <c:when test="${item.material_name == '骨料5'}">
-                                <td>${item.actual_ratio}</td>
-                            </c:when>
-                            <c:when test="${item.material_name == '骨料6'}">
-                                <td>${item.actual_ratio}</td>
-                            </c:when>
-                            <c:when test="${item.material_name == '矿粉'}">
-                                <td>${item.actual_ratio}</td>
-                            </c:when>
-                            <c:when test="${item.material_name == '沥青'}">
-                                <td>${item.actual_ratio}</td>
-                            </c:when>
-                            <c:when test="${item.material_name == '再生料'}">
-                                <td>${item.actual_ratio}</td>
-                            </c:when>
-                        </c:choose>
+                        <script type="text/javascript">
+
+                                switch ('${item.material_name}') {
+                                    case '骨料1' :
+                                        $('#one').text(${item.actual_ratio});
+                                        break;
+                                    case '骨料2' :
+                                        $('#two').text(${item.actual_ratio});
+                                        break;
+                                    case '骨料3' :
+                                        $('#three').text(${item.actual_ratio});
+                                        break;
+                                    case '骨料4' :
+                                        $('#four').text(${item.actual_ratio});
+                                        break;
+                                    case '骨料5' :
+                                        $('#five').text(${item.actual_ratio});
+                                        break;
+                                    case '骨料6' :
+                                        $('#six').text(${item.actual_ratio});
+                                        break;
+                                    case '矿粉' :
+                                        $('#k').text(${item.actual_ratio});
+                                        break;
+                                    case '沥青' :
+                                        $('#l').text(${item.actual_ratio});
+                                        break;
+                                    case '再生料' :
+                                        $('#z').text(${item.actual_ratio});
+                                        break;
+                                }
+                            </script>
                     </c:forEach>
                 </tbody>
             </table>
@@ -281,131 +294,121 @@
                     {
                         name: '上限占比',
                         type: 'line',
-                        data: [
-                        <c:forEach items="${product.proMessage}" var="item" varStatus="sta">
-                            <c:choose>
-                                <c:when test="${item.material_name == '骨料1'}">
-                                    ${item.moudle_ratio + 2 },
-                                </c:when>
-                                <c:when test="${item.material_name == '骨料2'}">
-                                    ${item.moudle_ratio + 2},
-                                </c:when>
-                                <c:when test="${item.material_name == '骨料3'}">
-                                    ${item.moudle_ratio + 4},
-                                </c:when>
-                                <c:when test="${item.material_name == '骨料4'}">
-                                    ${item.moudle_ratio + 4 },
-                                </c:when>
-                                <c:when test="${item.material_name == '骨料5'}">
-                                    ${item.moudle_ratio + 4 },
-                                </c:when>
-                                <c:when test="${item.material_name == '骨料6'}">
-                                    ${item.moudle_ratio + 4},
-                                </c:when>
-                                <c:when test="${item.material_name == '矿粉'}">
-                                    ${item.moudle_ratio + 1},
-                                </c:when>
-                                <c:when test="${item.material_name == '沥青'}">
-                                    ${item.moudle_ratio + 1},
-                                </c:when>
-                                <c:when test="${item.material_name == '再生料'}">
-                                    ${item.moudle_ratio + 1},
-                                </c:when>
-                            </c:choose>
-                        </c:forEach>
-                         ],
+                        data:getUpData('up'),
                         formatter: '{value} %'
                     },
                     {
                         name: '实际占比',
                         type: 'line',
-                        data: [
-                            <c:forEach items="${product.proMessage}" var="item" varStatus="sta">
-                                <c:choose>
-                                    <c:when test="${item.material_name == '骨料1'}">
-                                        ${item.actual_ratio},
-                                    </c:when>
-                                    <c:when test="${item.material_name == '骨料2'}">
-                                        ${item.actual_ratio},
-                                    </c:when>
-                                    <c:when test="${item.material_name == '骨料3'}">
-                                        ${item.actual_ratio},
-                                    </c:when>
-                                    <c:when test="${item.material_name == '骨料4'}">
-                                        ${item.actual_ratio},
-                                    </c:when>
-                                    <c:when test="${item.material_name == '骨料5'}">
-                                        ${item.actual_ratio},
-                                    </c:when>
-                                    <c:when test="${item.material_name == '骨料6'}">
-                                        ${item.actual_ratio},
-                                    </c:when>
-                                    <c:when test="${item.material_name == '矿粉'}">
-                                        ${item.actual_ratio},
-                                    </c:when>
-                                    <c:when test="${item.material_name == '沥青'}">
-                                        ${item.actual_ratio},
-                                    </c:when>
-                                    <c:when test="${item.material_name == '再生料'}">
-                                        ${item.actual_ratio},
-                                    </c:when>
-                                </c:choose>
-                            </c:forEach>
-                        ],
+                        data: getUpData('real'),
                         formatter: '{value} %'
                     },
                     {
                         name: '下限占比',
                         type: 'line',
-                        data: [
-                            <c:forEach items="${product.proMessage}" var="item" varStatus="sta">
-                                <c:choose>
-                                    <c:when test="${item.material_name == '骨料1'}">
-                                    ${item.moudle_ratio - 2 },
-                                    </c:when>
-                                    <c:when test="${item.material_name == '骨料2'}">
-                                    ${item.moudle_ratio - 2},
-                                    </c:when>
-                                    <c:when test="${item.material_name == '骨料3'}">
-                                    ${item.moudle_ratio - 4},
-                                    </c:when>
-                                    <c:when test="${item.material_name == '骨料4'}">
-                                    ${item.moudle_ratio - 4 },
-                                    </c:when>
-                                    <c:when test="${item.material_name == '骨料5'}">
-                                    ${item.moudle_ratio - 4 },
-                                    </c:when>
-                                    <c:when test="${item.material_name == '骨料6'}">
-                                    ${item.moudle_ratio - 4},
-                                    </c:when>
-                                    <c:when test="${item.material_name == '矿粉'}">
-                                    ${item.moudle_ratio - 1},
-                                    </c:when>
-                                    <c:when test="${item.material_name == '沥青'}">
-                                    ${item.moudle_ratio - 1},
-                                    </c:when>
-                                    <c:when test="${item.material_name == '再生料'}">
-                                    ${item.moudle_ratio - 1},
-                                    </c:when>
-                                </c:choose>
-                            </c:forEach>
-                        ],
+                        data: getUpData('down'),
                         formatter: '{value} %'
                     }
                 ]
             };
 
+            function getUpData(tem){
+                var upArray = new Array(9);
+                var realArray = new Array(9);
+                var downArray = new Array(9);
+
+
+
+                <c:forEach items="${product.proMessage}" var="item" varStatus="sta">
+                <c:choose>
+                <c:when test="${item.material_name == '骨料1'}">
+                    upArray[0] = ${item.moudle_ratio + 2};
+                realArray[0] = ${item.actual_ratio};
+                downArray[0] = ${item.moudle_ratio - 2};
+
+                </c:when>
+                <c:when test="${item.material_name == '骨料2'}">
+                upArray[1] = ${item.moudle_ratio + 2};
+                realArray[1] = ${item.actual_ratio};
+                downArray[1] = ${item.moudle_ratio - 2};
+
+                </c:when>
+                <c:when test="${item.material_name == '骨料3'}">
+                upArray[2] = ${item.moudle_ratio + 4};
+                realArray[2] = ${item.actual_ratio};
+                downArray[2] = ${item.moudle_ratio - 4};
+
+                </c:when>
+                <c:when test="${item.material_name == '骨料4'}">
+                upArray[3] = ${item.moudle_ratio + 4};
+                realArray[3] = ${item.actual_ratio};
+                downArray[3] = ${item.moudle_ratio - 4};
+
+                </c:when>
+                <c:when test="${item.material_name == '骨料5'}">
+                upArray[4] = ${item.moudle_ratio + 4};
+                realArray[4] = ${item.actual_ratio};
+                downArray[4] = ${item.moudle_ratio - 4};
+
+                </c:when>
+                <c:when test="${item.material_name == '骨料6'}">
+
+                upArray[5] = ${item.moudle_ratio + 4};
+                realArray[5] = ${item.actual_ratio};
+                downArray[5] = ${item.moudle_ratio - 4};
+
+                </c:when>
+                <c:when test="${item.material_name == '矿粉'}">
+                upArray[6] = ${item.moudle_ratio +1};
+                realArray[6] = ${item.actual_ratio};
+                downArray[6] = ${item.moudle_ratio - 1};
+
+                </c:when>
+                <c:when test="${item.material_name == '沥青'}">
+                upArray[7] = ${item.moudle_ratio + 1};
+                realArray[7] = ${item.actual_ratio};
+                downArray[7] = ${item.moudle_ratio - 1};
+
+                </c:when>
+                <c:when test="${item.material_name == '再生料'}">
+                upArray[8] = ${item.moudle_ratio + 1};
+                realArray[8] = ${item.actual_ratio};
+                downArray[8] = ${item.moudle_ratio - 1};
+                </c:when>
+                </c:choose>
+                </c:forEach>
+
+                for (var i = 0; i < upArray.length ; i ++){
+                    upArray[i] =  isNaN(upArray[i]) ? 0:upArray[i];
+                    realArray[i] = isNaN(realArray[i]) ? 0:realArray[i];
+                    downArray[i] = isNaN(downArray[i] )? 0:downArray[i];
+                }
+                switch (tem) {
+                    case 'up':
+                        return upArray;
+                        break;
+                    case 'real':
+                        return realArray;
+                        break;
+                    case 'down':
+                        return downArray;
+                        break;
+                    default:
+                        return '';
+                }
+            }
             myChart2.setOption(option2);
             window.addEventListener("resize", function () {
                 myChart2.resize();
             });
+        console.log(option2.series[1].data)
     </script>
 </div>
 </li>
 
 
 </body>
-<script type="text/javascript" src="/static/js/jquery.js"></script>
+
 <script type="text/javascript" src="/static/js/common.js"></script>
 <script type="text/javascript" src="/static/js/skin.js"></script>
 </html>

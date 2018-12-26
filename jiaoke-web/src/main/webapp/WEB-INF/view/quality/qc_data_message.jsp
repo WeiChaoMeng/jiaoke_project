@@ -146,8 +146,8 @@
                     axisLabel: {
                         formatter: '{value} ℃'
                     },
-                    min:${baseMap.template.temperatureMixture - 50},
-                    max:${baseMap.template.temperatureMixtureUp + 50},
+                    min:50,
+                    max:220,
                     axisPointer: {
                         snap: true
                     }
