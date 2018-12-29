@@ -645,48 +645,13 @@
 <script type="text/javascript" src="/static/js/jquery.js"></script>
 <script type="text/javascript" src="/static/js/common.js"></script>
 <script type="text/javascript" src="/static/js/skin.js"></script>
-<script type="text/javascript" src="/static/js/qc/quality_monitoring_false.js.js"></script>
+<script type="text/javascript" src="/static/js/qc/quality_monitoring_false.js"></script>
 
-<script>
-    $(function () {
-       getRealTimeData();
-    });
+<%--<script>--%>
+    <%--$(function () {--%>
 
-    //获取实时数据
-    function getRealTimeData(){
-        $.ajax({
-            url:"${path}/getRealTimeSurveillanceFalse.do",
-            type:"post",
-            success:function (res) {
-                console.log(JSON.parse(res));
-                var result = JSON.parse(res);
-                $("#crew1_basic_date").html(result.produceDate.substring(0,10));
-                $("#crew1_basic_time").html(result.productTime.substring(11,19));
-                $("#crew1_basic_ratio").html(result.produceProportioningNum);
-                $("#crew1_basic_carNum").html(result.produceCarNum);
-                $("#crew1_basic_discNum").html(result.produceDiscNum);
-                $("#crew1_basic_userNum").html(result.produceCustomNum);
+    <%--});--%>
 
-                $("#crew1_data_Aggregate1").html(result.materialAggregate1);
-                $("#crew1_data_Aggregate2").html(result.materialAggregate2);
-                $("#crew1_data_Aggregate3").html(result.materialAggregate3);
-                $("#crew1_data_Aggregate4").html(result.materialAggregate4);
-                $("#crew1_data_Aggregate5").html(result.materialAggregate5);
-                $("#crew1_data_Aggregate6").html(result.materialAggregate6);
-                $("#crew1_data_warehouse1").html(result.temperatureWarehouse1+ "<i>℃</i>");
-                $("#crew1_data_duster").html(result.temperatureDuster+ "<i>℃</i>");
 
-                $("#crew1_data_stone1").html(result.materialStone1);
-                $("#crew1_data_stone2").html(result.materialStone2);
-                $("#crew1_data_asphalt").html(result.materialAsphalt);
-                $("#crew1_data_regenerate").html(result.materialRegenerate);
-                $("#crew1_data_additive").html(result.materialAdditive);
-                $("#crew1_data_total").html(result.materialTotal);
-                $("#crew1_data_temasphalt").html(result.temperatureAsphalt+ "<i>℃</i>");
-                $("#crew1_data_aggregate").html(result.temperatureAggregate+ "<i>℃</i>");
-            }
-        })
-    }
-    window.setInterval(getRealTimeData,3000);
-</script>
+<%--</script>--%>
 </html>

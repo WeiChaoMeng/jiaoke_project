@@ -80,9 +80,15 @@ public class QualityController {
 
         if (StringUtils.isEmpty(messageStr)) return;
 
+        long startTime = System.currentTimeMillis();
+
         receiveDataInf.receiveDataToDB(messageStr);
 
         receiveDataInf.receiveDataToDBSham(messageStr);
+
+        long endTime = System.currentTimeMillis();
+
+        System.out.println("程序运行时间：" + (endTime - startTime) + "ms");    //输出程序运行时间
 
 
     }
@@ -489,8 +495,15 @@ public class QualityController {
     @RequestMapping(value = "/getRealTimeSurveillanceFalse.do")
     @ResponseBody
     public String getRealTimeSurveillanceFalse(){
-        QualityTimelyDataFalse timeSurveillanceFalseData = qualityTimelyDataFalseService.getTimeSurveillanceFalseData();
-        return JsonHelper.toJSONString(timeSurveillanceFalseData);
+        List<Map<String,String>> list = qualityTimelyDataFalseService.getTimeSurveillanceFalseData();
+        return JsonHelper.toJSONString(list);
+    }
+
+    @RequestMapping("/getFalseDataToChars.do")
+    @ResponseBody
+    public String getFalseDataToChars(){
+        String  resoure = qualityTimelyDataFalseService.selectFalseDataToChars();
+        return  resoure;
     }
 
 

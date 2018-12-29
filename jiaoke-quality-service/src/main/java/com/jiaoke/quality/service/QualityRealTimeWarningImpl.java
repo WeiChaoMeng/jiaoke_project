@@ -57,7 +57,7 @@ public class QualityRealTimeWarningImpl implements  QualityRealTimeWarningInf {
      *
      * 功能描述: <br>
      *  <返回echars图标需要的值>
-     * @param 无
+     * @param
      * @return java.lang.String
      * @auther Melone
      * @date 2018/10/16 13:01

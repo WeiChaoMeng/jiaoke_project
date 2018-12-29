@@ -69,6 +69,9 @@
       #{temperatureAggregate,jdbcType=INTEGER}, #{crewNum,jdbcType=INTEGER})
   </insert>
     <insert id="insertSelective" parameterType="com.jiaoke.quality.bean.QualityTimelyDataFalse">
+        <selectKey resultType="int" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() as id
+        </selectKey>
         insert into quality_timely_data_false
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -332,15 +335,74 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-    <select id="getTimeSurveillanceFalseData" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from quality_timely_data_false
-        WHERE
-        crew_num = 1
+    <select id="getTimeSurveillanceFalseData" resultMap="java.util.HashMap">
+        (
+        SELECT
+               'crew1' AS 'crewNum',
+               date_format(produce_date, '%Y-%m-%d') AS produce_date,
+               date_format(produce_time, '%T') AS produce_time,
+               produce_disc_num,
+               produce_proportioning_num,
+               produce_car_num,
+               produce_custom_num,
+               material_aggregate_1,
+               material_aggregate_2,
+               material_aggregate_3,
+               material_aggregate_4,
+               material_aggregate_5,
+               material_aggregate_6,
+               material_stone_1,
+               material_stone_2,
+               material_asphalt,
+               material_regenerate,
+               material_additive,
+               material_total,
+               temperature_warehouse_1 ,
+               temperature_mixture ,
+               temperature_duster ,
+               temperature_asphalt ,
+               temperature_aggregate
+        FROM
+             quality_timely_data_false
+        WHERE crew_num = 1
         ORDER BY
-        product_time DESC
+                 id DESC
         LIMIT 1
+        )
+        UNION ALL
+                (
+                SELECT
+                       'crew2' AS 'crewNum',
+                       date_format(produce_date, '%Y-%m-%d') AS produce_date,
+                       date_format(produce_time, '%T') AS produce_time,
+                       produce_disc_num,
+                       produce_proportioning_num,
+                       produce_car_num,
+                       produce_custom_num,
+                       material_aggregate_1,
+                       material_aggregate_2,
+                       material_aggregate_3,
+                       material_aggregate_4,
+                       material_aggregate_5,
+                       material_aggregate_6,
+                       material_stone_1,
+                       material_stone_2,
+                       material_asphalt,
+                       material_regenerate,
+                       material_additive,
+                       material_total,
+                       temperature_warehouse_1 ,
+                       temperature_mixture,
+                       temperature_duster,
+                       temperature_asphalt ,
+                       temperature_aggregate
+                FROM
+                     quality_timely_data_false
+                WHERE crew_num = 2
+                ORDER BY
+                         id DESC
+                LIMIT 1
+                )
     </select>
 
     <select id="selectHistoryDataToDayCount" resultType="int">
@@ -370,4 +432,131 @@
             t.produceDate DESC
         LIMIT #{pageFirstNum},#{eachPageDataNum}
     </select>
+
+    <insert id="insertWarningPromessage" parameterType="com.jiaoke.quality.bean.QualityWaringDataFalse">
+        INSERT INTO quality_warning_data_false (
+        realtime_data_sham_id,
+        material_name,
+        actual_ratio,
+        moudle_ratio,
+        deviation_ratio,
+        warning_level
+        )
+        VALUES
+        <foreach collection ="list" item="reddemCode" index= "index" separator =",">
+            (
+            #{reddemCode.realtimeDataShamId},
+            #{reddemCode.materialName},
+            #{reddemCode.actualRatio},
+            #{reddemCode.moudleRatio},
+            #{reddemCode.deviationRatio},
+            #{reddemCode.warningLevel}
+            )
+        </foreach >
+    </insert>
+
+    <select id="selectFalseDataToChars" resultType="java.util.Map">
+        (SELECT
+                t1.*,
+                'crew1' AS 'crewNum',
+                t2.material_aggregate_1,
+                t2.material_aggregate_2,
+                t2.material_aggregate_3,
+                t2.material_aggregate_4,
+                t2.material_aggregate_5,
+                t2.material_aggregate_6,
+                t2.material_stone_1,
+                t2.material_stone_2,
+                t2.material_asphalt,
+                t2.material_regenerate,
+                t2.material_additive,
+                t2.temperature_warehouse_1 as tem_warehouse_1,
+                t2.temperature_mixture as tem_mixture,
+                t2.temperature_duster as tem_duster,
+                t2.temperature_asphalt as tem_asphalt ,
+                t2.temperature_aggregate as tem_aggregate,
+                t2.material_total
+         FROM
+              quality_proportioning_message AS t1
+                  INNER JOIN (
+                             SELECT
+                                    produce_proportioning_num,
+                                    material_aggregate_1,
+                                    material_aggregate_2,
+                                    material_aggregate_3,
+                                    material_aggregate_4,
+                                    material_aggregate_5,
+                                    material_aggregate_6,
+                                    material_stone_1,
+                                    material_stone_2,
+                                    material_asphalt,
+                                    material_regenerate,
+                                    material_additive,
+                                    temperature_warehouse_1,
+                                    temperature_mixture,
+                                    temperature_duster,
+                                    temperature_asphalt,
+                                    temperature_aggregate,
+                                    material_total
+                             FROM
+                                  quality_timely_data_false
+                             WHERE crew_num = 1
+                             ORDER BY
+                                      id DESC
+                             LIMIT 1
+                             ) as t2
+                      on t1.crew1_modele_id = t2.produce_proportioning_num)
+        UNION ALL
+                (SELECT
+                        t1.*,
+                        'crew2' AS 'crewNum',
+                        t2.material_aggregate_1,
+                        t2.material_aggregate_2,
+                        t2.material_aggregate_3,
+                        t2.material_aggregate_4,
+                        t2.material_aggregate_5,
+                        t2.material_aggregate_6,
+                        t2.material_stone_1,
+                        t2.material_stone_2,
+                        t2.material_asphalt,
+                        t2.material_regenerate,
+                        t2.material_additive,
+                        t2.temperature_warehouse_1 as tem_warehouse_1,
+                        t2.temperature_mixture as tem_mixture,
+                        t2.temperature_duster as tem_duster,
+                        t2.temperature_asphalt as tem_asphalt ,
+                        t2.temperature_aggregate as tem_aggregate,
+                        t2.material_total
+                 FROM
+                      quality_proportioning_message AS t1
+                          INNER JOIN (
+                                     SELECT
+                                            produce_proportioning_num,
+                                            material_aggregate_1,
+                                            material_aggregate_2,
+                                            material_aggregate_3,
+                                            material_aggregate_4,
+                                            material_aggregate_5,
+                                            material_aggregate_6,
+                                            material_stone_1,
+                                            material_stone_2,
+                                            material_asphalt,
+                                            material_regenerate,
+                                            material_additive,
+                                            temperature_warehouse_1,
+                                            temperature_mixture,
+                                            temperature_duster,
+                                            temperature_asphalt,
+                                            temperature_aggregate,
+                                            material_total
+                                     FROM
+                                          quality_timely_data_false
+                                     WHERE crew_num = 2
+                                     ORDER BY
+                                              id DESC
+                                     LIMIT 1
+                                     ) as t2
+                              on t1.crew1_modele_id = t2.produce_proportioning_num)
+    </select>
+
 </mapper>

@@ -115,4 +115,6 @@
       warning_level = #{warningLevel,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+
 </mapper>

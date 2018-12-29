@@ -9,84 +9,84 @@ $(function(){
 /******************************** 数据渲染Start********************************************/
 function  getRealTimeData() {
 
-    // $.ajax({
-    //     url:basePath + "/getRealTimeData.do",
-    //     // url:"http://47.105.114.70/getRealTimeData.do",
-    //     type:"get",
-    //     dataType:"json",
-    //     success:function (res) {
-    //
-    //         renderDataToPage(res);
-    //     }
-    //
-    // })
+    /*******渲染页面数据********/
+    renderDataToPage();
     /*******echars温度图表方法********/
     getRealTimeDataEcharsTemp();
     /*******echars材料图表方法********/
     getRealTimeDataEcharsMaterial();
 }
 
-function renderDataToPage(listStr) {
 
-    if (listStr){
-        for (var i=0;i<listStr.length;i++){
+//获取实时数据
+function renderDataToPage(){
+    debugger
+    $.ajax({
+        url:basePath +"/getRealTimeSurveillanceFalse.do",
+        type:"post",
+        success:function (res) {
+            if (listStr){
+                for (var i=0;i<listStr.length;i++){
 
-            if ( listStr[i].crewNum == 'crew1' ){
+                    if ( listStr[i].crewNum == 'crew1' ){
 
-                $("#crew1_basic_date").html(listStr[i].produce_date);
-                $("#crew1_basic_time").html(listStr[i].produce_time);
-                $("#crew1_basic_ratio").html(listStr[i].produce_proportioning_num);
-                $("#crew1_basic_carNum").html(listStr[i].produce_car_num);
-                $("#crew1_basic_discNum").html(listStr[i].produce_disc_num);
-                $("#crew1_basic_userNum").html(listStr[i].produce_custom_num);
-                $("#crew1_data_Aggregate1").html(listStr[i].material_aggregate_1 + "<i>%</i>");
-                $("#crew1_data_Aggregate2").html(listStr[i].material_aggregate_2 + "<i>%</i>");
-                $("#crew1_data_Aggregate3").html(listStr[i].material_aggregate_3 + "<i>%</i>");
-                $("#crew1_data_Aggregate4").html(listStr[i].material_aggregate_4 + "<i>%</i>");
-                $("#crew1_data_Aggregate5").html(listStr[i].material_aggregate_5 + "<i>%</i>");
-                $("#crew1_data_Aggregate6").html(listStr[i].material_aggregate_6 + "<i>%</i>");
-                $("#crew1_data_warehouse1").html(listStr[i].temperature_warehouse_1 + " <i>℃</i>");
-                $("#crew1_data_duster").html(listStr[i].temperature_duster+ " <i>℃</i>");
+                        $("#crew1_basic_date").html(listStr[i].produce_date);
+                        $("#crew1_basic_time").html(listStr[i].produce_time);
+                        $("#crew1_basic_ratio").html(listStr[i].produce_proportioning_num);
+                        $("#crew1_basic_carNum").html(listStr[i].produce_car_num);
+                        $("#crew1_basic_discNum").html(listStr[i].produce_disc_num);
+                        $("#crew1_basic_userNum").html(listStr[i].produce_custom_num);
+                        $("#crew1_data_Aggregate1").html(listStr[i].material_aggregate_1 + "<i>%</i>");
+                        $("#crew1_data_Aggregate2").html(listStr[i].material_aggregate_2 + "<i>%</i>");
+                        $("#crew1_data_Aggregate3").html(listStr[i].material_aggregate_3 + "<i>%</i>");
+                        $("#crew1_data_Aggregate4").html(listStr[i].material_aggregate_4 + "<i>%</i>");
+                        $("#crew1_data_Aggregate5").html(listStr[i].material_aggregate_5 + "<i>%</i>");
+                        $("#crew1_data_Aggregate6").html(listStr[i].material_aggregate_6 + "<i>%</i>");
+                        $("#crew1_data_warehouse1").html(listStr[i].temperature_warehouse_1 + " <i>℃</i>");
+                        $("#crew1_data_duster").html(listStr[i].temperature_duster+ " <i>℃</i>");
 
-                $("#crew1_data_stone1").html(listStr[i].material_stone_1+ "<i>%</i>");
-                $("#crew1_data_stone2").html(listStr[i].material_stone_2+ "<i>%</i>");
-                $("#crew1_data_asphalt").html(listStr[i].material_asphalt+ "<i>%</i>");
-                $("#crew1_data_regenerate").html(listStr[i].material_regenerate+ "<i>%</i>");
-                $("#crew1_data_additive").html(listStr[i].material_additive+ "<i>%</i>");
-                $("#crew1_data_total").html(listStr[i].material_total+ "<i>Kg</i>");
-                $("#crew1_data_temasphalt").html(listStr[i].temperature_asphalt+ " <i>℃</i>");
-                $("#crew1_data_aggregate").html(listStr[i].temperature_aggregate+ " <i>℃</i>");
+                        $("#crew1_data_stone1").html(listStr[i].material_stone_1+ "<i>%</i>");
+                        $("#crew1_data_stone2").html(listStr[i].material_stone_2+ "<i>%</i>");
+                        $("#crew1_data_asphalt").html(listStr[i].material_asphalt+ "<i>%</i>");
+                        $("#crew1_data_regenerate").html(listStr[i].material_regenerate+ "<i>%</i>");
+                        $("#crew1_data_additive").html(listStr[i].material_additive+ "<i>%</i>");
+                        $("#crew1_data_total").html(listStr[i].material_total+ "<i>Kg</i>");
+                        $("#crew1_data_temasphalt").html(listStr[i].temperature_asphalt+ " <i>℃</i>");
+                        $("#crew1_data_aggregate").html(listStr[i].temperature_aggregate+ " <i>℃</i>");
 
-            }else {
+                    }else {
 
-                $("#crew2_basic_date").html(listStr[i].produce_date);
-                $("#crew2_basic_time").html(listStr[i].produce_time);
-                $("#crew2_basic_ratio").html(listStr[i].produce_proportioning_num);
-                $("#crew2_basic_carNum").html(listStr[i].produce_car_num);
-                $("#crew2_basic_discNum").html(listStr[i].produce_disc_num);
-                $("#crew2_basic_userNum").html(listStr[i].produce_custom_num);
-                $("#crew2_data_Aggregate1").html(listStr[i].material_aggregate_1 + "<i>%</i>");
-                $("#crew2_data_Aggregate2").html(listStr[i].material_aggregate_2 + "<i>%</i>");
-                $("#crew2_data_Aggregate3").html(listStr[i].material_aggregate_3 + "<i>%</i>");
-                $("#crew2_data_Aggregate4").html(listStr[i].material_aggregate_4 + "<i>%</i>");
-                $("#crew2_data_Aggregate5").html(listStr[i].material_aggregate_5 + "<i>%</i>");
-                $("#crew2_data_Aggregate6").html(listStr[i].material_aggregate_6 + "<i>%</i>");
-                $("#crew2_data_warehouse1").html(listStr[i].temperature_warehouse_1 + " <i>℃</i>");
-                $("#crew2_data_duster").html(listStr[i].temperature_duster+ " <i>℃</i>");
-                $("#crew2_data_stone1").html(listStr[i].material_stone_1+ "<i>%</i>");
-                $("#crew2_data_stone2").html(listStr[i].material_stone_2+ "<i>%</i>");
-                $("#crew2_data_asphalt").html(listStr[i].material_asphalt+ "<i>%</i>");
-                $("#crew2_data_regenerate").html(listStr[i].material_regenerate+ "<i>%</i>");
-                $("#crew2_data_additive").html(listStr[i].material_additive+ "<i>%</i>");
-                $("#crew2_data_total").html(listStr[i].material_total+ "<i>Kg</i>");
-                $("#crew2_data_temasphalt").html(listStr[i].temperature_asphalt+ " <i>℃</i>");
-                $("#crew2_data_aggregate").html(listStr[i].temperature_aggregate+ " <i>℃</i>");
+                        $("#crew2_basic_date").html(listStr[i].produce_date);
+                        $("#crew2_basic_time").html(listStr[i].produce_time);
+                        $("#crew2_basic_ratio").html(listStr[i].produce_proportioning_num);
+                        $("#crew2_basic_carNum").html(listStr[i].produce_car_num);
+                        $("#crew2_basic_discNum").html(listStr[i].produce_disc_num);
+                        $("#crew2_basic_userNum").html(listStr[i].produce_custom_num);
+                        $("#crew2_data_Aggregate1").html(listStr[i].material_aggregate_1 + "<i>%</i>");
+                        $("#crew2_data_Aggregate2").html(listStr[i].material_aggregate_2 + "<i>%</i>");
+                        $("#crew2_data_Aggregate3").html(listStr[i].material_aggregate_3 + "<i>%</i>");
+                        $("#crew2_data_Aggregate4").html(listStr[i].material_aggregate_4 + "<i>%</i>");
+                        $("#crew2_data_Aggregate5").html(listStr[i].material_aggregate_5 + "<i>%</i>");
+                        $("#crew2_data_Aggregate6").html(listStr[i].material_aggregate_6 + "<i>%</i>");
+                        $("#crew2_data_warehouse1").html(listStr[i].temperature_warehouse_1 + " <i>℃</i>");
+                        $("#crew2_data_duster").html(listStr[i].temperature_duster+ " <i>℃</i>");
+                        $("#crew2_data_stone1").html(listStr[i].material_stone_1+ "<i>%</i>");
+                        $("#crew2_data_stone2").html(listStr[i].material_stone_2+ "<i>%</i>");
+                        $("#crew2_data_asphalt").html(listStr[i].material_asphalt+ "<i>%</i>");
+                        $("#crew2_data_regenerate").html(listStr[i].material_regenerate+ "<i>%</i>");
+                        $("#crew2_data_additive").html(listStr[i].material_additive+ "<i>%</i>");
+                        $("#crew2_data_total").html(listStr[i].material_total+ "<i>Kg</i>");
+                        $("#crew2_data_temasphalt").html(listStr[i].temperature_asphalt+ " <i>℃</i>");
+                        $("#crew2_data_aggregate").html(listStr[i].temperature_aggregate+ " <i>℃</i>");
 
+                    }
+                }
             }
         }
-    }
-
+    })
 }
+window.setInterval(getRealTimeData,3000);
+
 /******************************** 数据渲染End********************************************/
 
 
@@ -94,7 +94,7 @@ function renderDataToPage(listStr) {
 /******************************** Echart材料比渲染Start********************************************/
 function getRealTimeDataEcharsMaterial() {
     $.ajax({
-        url:basePath + "/getRealTimeDataEcharsMaterial.do",
+        url:basePath + "/getFalseDataToChars.do",
         // url:"http://47.105.114.70/getRealTimeDataEcharsMaterial.do",
         type:"post",
         dataType:"json",
@@ -139,7 +139,7 @@ function eachMaterialList(res) {
             var additive_up = Number(res[i].ratio_additive) == 0 ? 0 : Number(res[i].ratio_additive) + 2;
             crew1upArray.push(additive_up);
 
-            debugger
+
             var crew1_total = Number(res[i].material_total)
             var crew1_material_aggregate_1 = Number(res[i].material_aggregate_1) - Number(res[i].material_aggregate_2);
             var crew1_material_aggregate_2 = Number(res[i].material_aggregate_2) - Number(res[i].material_aggregate_3);
@@ -259,7 +259,7 @@ function eachMaterialList(res) {
         }
     }
 
-    debugger
+
     option7.series[0].data = crew1upArray;
     option7.series[1].data = crew1realArray;
     option7.series[2].data = crew1downArray;

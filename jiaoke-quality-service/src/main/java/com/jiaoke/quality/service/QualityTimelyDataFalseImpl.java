@@ -1,10 +1,13 @@
 package com.jiaoke.quality.service;
 
-import com.jiaoke.quality.bean.QualityTimelyDataFalse;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.jiaoke.quality.dao.QualityTimelyDataFalseMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author lihui
@@ -18,7 +21,21 @@ public class QualityTimelyDataFalseImpl implements QualityTimelyDataFalseService
     private QualityTimelyDataFalseMapper qualityTimelyDataFalseMapper;
 
     @Override
-    public QualityTimelyDataFalse getTimeSurveillanceFalseData() {
+    public List<Map<String,String>> getTimeSurveillanceFalseData() {
         return qualityTimelyDataFalseMapper.getTimeSurveillanceFalseData();
+    }
+
+    @Override
+    public String selectFalseDataToChars() {
+
+        List<Map<String,String>> list = qualityTimelyDataFalseMapper.selectFalseDataToChars();
+
+
+        if (null == list) {return null;}
+
+        String jsonStr = JSONArray.parseArray(JSONObject.toJSONString(list)).toString();
+
+        return jsonStr;
+
     }
 }

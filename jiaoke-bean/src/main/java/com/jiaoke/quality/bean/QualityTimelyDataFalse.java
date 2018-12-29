@@ -14,7 +14,7 @@ public class QualityTimelyDataFalse implements Serializable {
     /**
      * 主键
      */
-    private Integer id;
+    private int  id;
 
     /**
      * 生产日期
