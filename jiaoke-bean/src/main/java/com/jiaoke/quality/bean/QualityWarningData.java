@@ -26,4 +26,52 @@ public class QualityWarningData {
     private String moudleRatio;
     private String deviationRatio;
     private String warningLevel;
+
+    public String getCrewId() {
+        return crewId;
+    }
+
+    public void setCrewId(String crewId) {
+        this.crewId = crewId;
+    }
+
+    public String getMaterialName() {
+        return materialName;
+    }
+
+    public void setMaterialName(String materialName) {
+        this.materialName = materialName;
+    }
+
+    public String getActualRatio() {
+        return actualRatio;
+    }
+
+    public void setActualRatio(String actualRatio) {
+        this.actualRatio = actualRatio;
+    }
+
+    public String getMoudleRatio() {
+        return moudleRatio;
+    }
+
+    public void setMoudleRatio(String moudleRatio) {
+        this.moudleRatio = moudleRatio;
+    }
+
+    public String getDeviationRatio() {
+        return deviationRatio;
+    }
+
+    public void setDeviationRatio(String deviationRatio) {
+        this.deviationRatio = deviationRatio;
+    }
+
+    public String getWarningLevel() {
+        return warningLevel;
+    }
+
+    public void setWarningLevel(String warningLevel) {
+        this.warningLevel = warningLevel;
+    }
 }

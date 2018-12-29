@@ -94,7 +94,7 @@ function getEcharsData() {
         type: "post",
         dataType: "json",
         success:function (res) {
-
+            debugger
             var crew1nameArray = new Array();
             var crew1topArray = new Array();
             var crew1downArray = new Array();

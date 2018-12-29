@@ -24,4 +24,10 @@ public interface ReceiveDataInf {
      */
      void  receiveDataToDB( String messageData );
 
+    /**
+     * 获取传入的数据解析后传入数据库(假)
+     *
+     * @param messageData 消息数据
+     */
+    void receiveDataToDBSham(String messageData);
 }

@@ -41,4 +41,6 @@ public interface QualityWarningDao {
 
 
     void insertQualityWarningData( @Param("warningDataList") List<QualityWarningData> warningDataList);
+
+    QualityRatioTemplate getQualityRatioTemplateById(int id);
 }

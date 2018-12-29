@@ -10,7 +10,7 @@
         FROM
              quality_monitoring_realtime_data1
         WHERE
-                to_days(NOW()) - TO_DAYS(produce_date) = 1;
+                to_days(NOW()) - TO_DAYS(produce_date) = 2;
     </select>
 
 
