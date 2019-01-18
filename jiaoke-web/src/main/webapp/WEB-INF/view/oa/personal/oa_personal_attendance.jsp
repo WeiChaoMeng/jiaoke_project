@@ -6,6 +6,13 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+    request.setAttribute("path", basePath);
+%>
 <html>
 <head>
     <meta charset="utf-8">
@@ -64,23 +71,27 @@
             </colgroup>
             <thead>
             <tr>
-                <th class=""><span><div style="text-align: center;">姓名</div></span></th>
+                <th class="" style="width: 111px;height: 53px;">
+                    <span>
+                        <div style="text-align: center;">姓名</div>
+                    </span>
+                </th>
                 <th class=""><span><div style="text-align: center;">部门</div></span></th>
                 <th class=""><span><div style="text-align: center;">工号</div></span></th>
                 <th class=""><span><div style="text-align: center;">职位</div></span></th>
-                <th class=""><span><div style="text-align: center;">出勤天数</div></span></th>
-                <th class=""><span><div style="text-align: center;">休息天数</div></span></th>
-                <th class=""><span><div style="text-align: center;">工作时长</div></span></th>
-                <th class=""><span><div style="text-align: center;">迟到次数</div></span></th>
-                <th class=""><span><div style="text-align: center;">迟到时长</div></span></th>
-                <th class=""><span><div style="text-align: center;">严重迟到次数</div></span></th>
-                <th class=""><span><div style="text-align: center;">严重迟到时长</div></span></th>
-                <th class=""><span><div style="text-align: center;">旷工迟到天数</div></span></th>
-                <th class=""><span><div style="text-align: center;">早退次数</div></span></th>
-                <th class=""><span><div style="text-align: center;">早退时长</div></span></th>
-                <th class=""><span><div style="text-align: center;">上班缺卡次数</div></span></th>
-                <th class=""><span><div style="text-align: center;">下班缺卡次数</div></span></th>
-                <th class=""><span><div style="text-align: center;">旷工天数</div></span></th>
+                <%--<c:forEach items="${recordResultList}" var="recordResult">
+                    <th class="">
+                    <span>
+                        <div class="date_header_item">
+                            <div class="date_header_item_week">${"日一二三四五六".charAt(recordResult.workDate.getDay())}</div>
+                            <div class="date_header_item_date">
+                                <fmt:formatDate value="${recordResult.workDate}"
+                                                pattern="dd"/>
+                            </div>
+                        </div>
+                    </span>
+                    </th>
+                </c:forEach>--%>
                 <th class="">
                     <span>
                         <div class="date_header_item">
@@ -89,71 +100,34 @@
                         </div>
                     </span>
                 </th>
-                <th class="">
-                    <span>
-                        <div class="date_header_item">
-                            <div class="date_header_item_week">四</div>
-                            <div class="date_header_item_date">2</div>
-                        </div>
-                    </span>
-                </th>
-                <th class="">
-                    <span>
-                        <div class="date_header_item">
-                            <div class="date_header_item_week">五</div>
-                            <div class="date_header_item_date">3</div>
-                        </div>
-                    </span>
-                </th>
-                <th class="">
-                    <span>
-                        <div class="date_header_item">
-                            <div class="date_header_item_week">六</div>
-                            <div class="date_header_item_date">4</div>
-                        </div>
-                    </span>
-                </th>
-                <th class="">
-                    <span>
-                        <div class="date_header_item">
-                            <div class="date_header_item_week">日</div>
-                            <div class="date_header_item_date">5</div>
-                        </div>
-                    </span>
-                </th>
-                <th class="">
-                    <span>
-                        <div class="date_header_item">
-                            <div class="date_header_item_week">一</div>
-                            <div class="date_header_item_date">6</div>
-                        </div>
-                    </span>
-                </th>
-                <th class="">
-                    <span>
-                        <div class="date_header_item">
-                            <div class="date_header_item_week">二</div>
-                            <div class="date_header_item_date">7</div>
-                        </div>
-                    </span>
-                </th>
-                <th class="">
-                    <span>
-                        <div class="date_header_item">
-                            <div class="date_header_item_week">三</div>
-                            <div class="date_header_item_date">8</div>
-                        </div>
-                    </span>
-                </th>
 
             </tr>
             </thead>
 
-            <tbody>
+            <tbody id="attendanceDetails">
 
-            <tr></tr>
-            <tr class="even">
-            <tr class="tr">
+            <%--<c:forEach var="checkingAttendance" items="${oaCheckingAttendanceList}">
+                <tr class="tr">
+                    <td>${checkingAttendance.userName}</td>
+                    <td>${checkingAttendance.department}</td>
+                    <td>${checkingAttendance.jobnumber}</td>
+                    <td>${checkingAttendance.position}</td>
+                    <td>
+                        <c:forEach items="${recordResultList}" var="recordResult">
+                            <c:choose>
+                                <c:when test="${checkingAttendance.userId == recordResult.userId}">
+                                    <div><fmt:formatDate value="${recordResult.userCheckTime}"
+                                                         pattern="HH:mm:ss"/></div>
+                                </c:when>
+                                <c:otherwise>
+
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                    </td>
+                </tr>
+            </c:forEach>--%>
+            <%--<tr class="tr">
                 <td>张三</td>
                 <td>生产经营部</td>
                 <td>008</td>
@@ -208,7 +182,7 @@
                 <td>正常</td>
                 <td>正常</td>
                 <td>正常</td>
-            </tr>
+            </tr>--%>
             </tbody>
 
         </table>
@@ -239,8 +213,18 @@
                     <colgroup>
                         <col style="width: 120px; min-width: 120px;">
                     </colgroup>
-                    <tbody>
-                    <tr>
+                    <tbody id="staffName">
+                    <%--<c:forEach var="checkingAttendance" items="${oaCheckingAttendanceList}">
+                        <tr>
+                            <td class="">
+                                <span></span>
+                                <div style="text-align: center;">
+                                    <div>${checkingAttendance.userName}</div>
+                                </div>
+                            </td>
+                        </tr>
+                    </c:forEach>--%>
+                    <%--<tr>
                         <td class="">
                             <span></span>
                             <div style="text-align: center;">
@@ -255,7 +239,7 @@
                                 <div>李四</div>
                             </div>
                         </td>
-                    </tr>
+                    </tr>--%>
                     </tbody>
                 </table>
             </div>
@@ -286,6 +270,69 @@
             "</div>" +
             "</span>" +
             "</th>");
+        $.ajax({
+            cache: true,
+            type: "POST",
+            url: '${path}/OaCheckingAttendance/attendanceDetails',
+            error: function (request) {
+                alert("Connection error");
+            },
+            success: function (resultJson) {
+                console.log(JSON.parse(resultJson));
+                var result = JSON.parse(resultJson);
+                var attendanceDetails = '';
+                var attendanceName = '';
+                for (var key in result) {
+                    if (key === "list") {
+                        for (var i = 0; i < result[key].length; i++) {
+                            attendanceDetails += '<tr class="tr">';
+                            attendanceDetails += '<td>' + result[key][i].userName + '</td>';
+                            attendanceDetails += '<td>' + result[key][i].department + '</td>';
+                            attendanceDetails += '<td>' + result[key][i].jobnumber + '</td>';
+                            attendanceDetails += '<td>' + result[key][i].position + '</td>';
+                            attendanceDetails += '</tr>';
+
+                            //左边固定姓名栏
+                            attendanceName += '<tr>';
+                            attendanceName += '<td class="">';
+                            attendanceName += '<span></span>';
+                            attendanceName += '<div style="text-align: center;">';
+                            attendanceName += '<div>' + result[key][i].userName + '</div>';
+                            attendanceName += '</div>';
+                            attendanceName += '</td>';
+                            attendanceName += '</tr>';
+                        }
+                    }else {
+                        for (var j = 0; j < result[key].length; j++) {
+
+                        }
+                    }
+                }
+                $("#attendanceDetails").html(attendanceDetails);
+                $("#staffName").html(attendanceName);
+            }
+        })
     });
+
+    window.onload = function () {
+        /* let trNum =  $('#attendanceDetails').find('.tr').length;
+         for (let i = 0; i < trNum; i++) {
+             alert($('#attendanceDetails').find('.tr').outerHeight());
+         }*/
+        /*$("#attendanceDetails tr").each(function () {
+            var external = $(this);
+            $("#staffName tr").each(function () {
+                var inside = $(this);
+                inside.css('height',external.outerHeight());
+            })
+        });*/
+
+        let trNum = $('#attendanceDetails').find('.tr').length;
+        for (let i = 0; i < trNum; i++) {
+            var height = $('#attendanceDetails tr').eq(i).height();
+            $('#staffName tr').eq(i).css('height', height);
+        }
+    };
+
 </script>
 </html>

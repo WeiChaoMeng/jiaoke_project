@@ -126,7 +126,7 @@ table {
 }
 
 .head_right_side_input input {
-    height: 19px;
+    height: 20px;
     width: 130px;
     border: solid 1px;
     margin-right: 3px;
@@ -614,10 +614,10 @@ table {
 
 /*form*/
 .forminput, .search {
-    height: 26px;
+    height: 21px;
     border: solid 1px #c6c6c6;
     line-height: 22px;
-    padding-left: 8px;
+    padding-left: 6px;
     color: #585858;
     text-align: left;
 }
@@ -954,7 +954,6 @@ table {
 .attendance-list-content {
     margin-top: 30px;
     position: relative;
-    width: 2360px;
 }
 
 .attendance-list-content thead tr th {
@@ -968,7 +967,6 @@ table {
 }
 
 .attendance-list-content tbody tr td {
-    line-height: 30px;
     white-space: nowrap;
     text-align: center;
     border: solid 1px #bdbdbd;
@@ -1261,4 +1259,12 @@ table {
 
 .textarea_td {
     height: 70px
+}
+
+.clickColor {
+    background: #bdbdbd80;
+}
+
+.simpletable tbody tr:hover {
+    background: #bdbdbd80;
 }

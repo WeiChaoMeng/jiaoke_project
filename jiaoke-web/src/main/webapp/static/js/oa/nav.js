@@ -28,13 +28,6 @@ $(function () {
     });
 
     /*--- 个人事务 ---*/
-    //个人考勤
-    $("#persional_attendance").on("click", function () {
-        removeOwnName();
-        personal(this);
-        $('#oa-iframe').attr("src", "OAPersonalAttendance.do");
-    });
-
     //日程计划
     $("#schedule_planning").on("click", function () {
         removeOwnName();
@@ -244,32 +237,32 @@ $(function () {
     });
 
     /*--- 资源管理 ---*/
-    //资源入库
+    //资产入库
     $("#resource_storage").on("click", function () {
         removeOwnName();
         resources(this);
-        $('#oa-iframe').attr("src", "OAResourceStorage.do");
+        $('#oa-iframe').attr("src", "assetsManagement/toAssetsManagement");
     });
 
-    //资源档案
+    //资产档案
     $("#resources_archives").on("click", function () {
         removeOwnName();
         resources(this);
-        $('#oa-iframe').attr("src", "OAResourcesArchives.do");
+        $('#oa-iframe').attr("src", "assetsManagement/toAssetsArchives");
     });
 
     //申领资源
     $("#apply_resource").on("click", function () {
         removeOwnName();
         resources(this);
-        $('#oa-iframe').attr("src", "OAResourceApply.do");
+        $('#oa-iframe').attr("src", "assetsManagement/OAResourceApply.do");
     });
 
     //申领记录
     $("#receive_record").on("click", function () {
         removeOwnName();
         resources(this);
-        $('#oa-iframe').attr("src", "OAReceiveRecord.do");
+        $('#oa-iframe').attr("src", "assetsManagement/OAReceiveRecord.do");
     });
 
     /*--- 文化建设 ---*/

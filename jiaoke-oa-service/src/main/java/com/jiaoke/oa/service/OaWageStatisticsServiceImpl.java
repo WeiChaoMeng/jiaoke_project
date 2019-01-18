@@ -74,7 +74,7 @@ public class OaWageStatisticsServiceImpl implements OaWageStatisticsService {
     public List<OaWageStatistics> getAllRegularEmployee() {
         List<OaWageStatistics> wageStatisticsList = oaWageStatisticsMapper.getAllRegularEmployee();
         for (OaWageStatistics oaWageStatistics : wageStatisticsList) {
-            oaWageStatistics.setCreateDateStr(DateUtil.getStringDate(oaWageStatistics.getCreateDate()));
+            oaWageStatistics.setCreateDateStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaWageStatistics.getCreateDate()));
         }
         return wageStatisticsList;
     }

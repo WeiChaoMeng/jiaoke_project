@@ -234,13 +234,13 @@
                 <ul>
                     <li>
                         <a id="office_release_document"
-                           onclick="IFrame(this,$('#office').text(),'comprehensiveOffice/officeReleaseDocument')">
+                           onclick="IFrame(this,$('#office').text(),'releaseDocument/toReleaseDocument')">
                             <span>公司发文</span>
                         </a>
                     </li>
                     <li>
                         <a id="office_receive_document"
-                           onclick="IFrame(this,$('#office').text(),'comprehensiveOffice/officeReceiveDocument')">
+                           onclick="IFrame(this,$('#office').text(),'receiveDocument/toReceiveDocument')">
                             <span>公司收文</span>
                         </a>
                     </li>
@@ -258,7 +258,7 @@
                     </li>
                     <li>
                         <a id="office_contract_agreement"
-                           onclick="IFrame(this,$('#office').text(),'comprehensiveOffice/officeContractAgreement')">
+                           onclick="IFrame(this,$('#office').text(),'contractAgreement/toContractAgreement')">
                             <span>合同、协议</span>
                         </a>
                     </li>

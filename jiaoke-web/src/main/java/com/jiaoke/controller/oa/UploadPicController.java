@@ -49,7 +49,7 @@ public class UploadPicController {
      * @param response response
      * @throws IOException exc
      */
-    @RequestMapping(value = "/uploadImg",method = RequestMethod.POST)
+    @RequestMapping(value = "/uploadImg", method = RequestMethod.POST)
     @ResponseBody
     public void uploadPicture(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request, HttpServletResponse response) throws IOException {
         Map<String, Object> map = new HashMap<>(16);

@@ -10,15 +10,15 @@
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%
     String path = request.getContextPath();
-    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
     request.setAttribute("path", basePath);
 %>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>新建公司发文</title>
-    <link href="../../../../../static/js/datepicker/css/bootstrap-datepicker.css" rel="stylesheet">
-
+    <title>新建公司收文</title>
+    <link href="../../../../../../static/js/datepicker/css/bootstrap-datepicker.css" rel="stylesheet">
+    <link href="../../../../../../static/js/date_pickers/date_picker.css" rel="stylesheet">
     <style>
         * {
             font-size: 12px;
@@ -82,7 +82,7 @@
             float: left;
         }
 
-        .contract-form-input input,select {
+        .contract-form-input input, select {
             width: 60%;
             height: 30px;
             padding: 6px 12px;
@@ -99,59 +99,21 @@
     </style>
 </head>
 <body>
-<form action="${path}/office/addCompanyWriting" id="oaContractArchives" name="oaContractArchives" method="post">
+<form action="${path}/receiveDocument/addReceiveDocument" name="oaReceiveDocument" method="post">
     <!-- 表单内容 -->
     <div class="contract-new-page">
         <div class="contract-block-title">
             <span>表单内容:</span>
         </div>
-        <div class="contract-form">
-            <label class="contract-form-title">
-                <span>:</span>
-                <span>发文编号</span>
-                <i>*</i>
-            </label>
-            <div class="contract-form-input">
-                <input type="text" name="serialNumber" value="" required>
-            </div>
-        </div>
 
         <div class="contract-form">
             <label class="contract-form-title">
                 <span>:</span>
-                <span>文件类别</span>
+                <span>收文时间</span>
                 <i>*</i>
             </label>
             <div class="contract-form-input">
-                <select>
-                    <option value="0">行政文件</option>
-                    <option value="1">党支部文件</option>
-                    <option value="2">普通文件</option>
-                    <option value="3">上报请示</option>
-                    <option value="4">函文</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="contract-form">
-            <label class="contract-form-title">
-                <span>:</span>
-                <span>文件名称</span>
-                <i>*</i>
-            </label>
-            <div class="contract-form-input">
-                <input type="text" name="archivesAbstract" value="" required>
-            </div>
-        </div>
-
-        <div class="contract-form">
-            <label class="contract-form-title">
-                <span>:</span>
-                <span>访问日期</span>
-                <i>*</i>
-            </label>
-            <div class="contract-form-input">
-                <input type="text" name="signingDate" value="" class="forminput" id="start" readonly="readonly"
+                <input type="text" name="receiveDateStr" value="" class="forminput" id="datePicker" readonly="readonly"
                        required>
             </div>
         </div>
@@ -159,11 +121,33 @@
         <div class="contract-form">
             <label class="contract-form-title">
                 <span>:</span>
-                <span>主送部门</span>
+                <span>收文编号</span>
                 <i>*</i>
             </label>
             <div class="contract-form-input">
-                <input type="text" name="operator" value="" required>
+                <input type="text" name="documentNumber" value="" required>
+            </div>
+        </div>
+
+        <div class="contract-form">
+            <label class="contract-form-title">
+                <span>:</span>
+                <span>来文字号</span>
+                <i>*</i>
+            </label>
+            <div class="contract-form-input">
+                <input type="text" name="documentReceivedNumber" value="" required>
+            </div>
+        </div>
+
+        <div class="contract-form">
+            <label class="contract-form-title">
+                <span>:</span>
+                <span>标题</span>
+                <i>*</i>
+            </label>
+            <div class="contract-form-input">
+                <input type="text" name="documentName" value="" required>
             </div>
         </div>
 
@@ -174,7 +158,32 @@
                 <i>*</i>
             </label>
             <div class="contract-form-input">
-                <input type="text" name="signingUnit" value="" required>
+                <input type="text" name="remarks" value="" required>
+            </div>
+        </div>
+
+        <div class="contract-form">
+            <label class="contract-form-title">
+                <span>:</span>
+                <span>发文部室</span>
+                <i>*</i>
+            </label>
+            <div class="contract-form-input">
+                <select name="publishingDepartment">
+                    <option value="888">发文部室</option>
+                    <option value="0">安全管理部</option>
+                    <option value="1">办公室</option>
+                    <option value="2">财务管理部</option>
+                    <option value="3">纪检监察部</option>
+                    <option value="4">企业管理部</option>
+                    <option value="5">生产经营部</option>
+                    <option value="6">组织人事部</option>
+                    <option value="7">建材集团党发</option>
+                    <option value="8">建材集团工会发</option>
+                    <option value="9">共青团发</option>
+                    <option value="10">市政路桥集团发</option>
+                    <option value="11">其他收文</option>
+                </select>
             </div>
         </div>
 
@@ -183,22 +192,20 @@
         </div>
         <div style="text-align: center;padding-top: 20px;">
             <input type="hidden" name="richText" value="" id="editorHTNL">
+            <input type="submit" value="提交" id="submit" style="padding: 7px 20px; background: #92ebff;border: 1px #a5a5a5 solid;">
             <input type="button" value="返回"
-                   style="margin-right:20px;padding: 7px 20px; background: #92ebff;border: 1px #a5a5a5 solid;"
+                   style="margin-left:20px;padding: 7px 20px; background: #92ebff;border: 1px #a5a5a5 solid;"
                    onclick="javascript:history.back()">
-            <input type="submit" value="提交" style="padding: 7px 20px; background: #92ebff;border: 1px #a5a5a5 solid;">
         </div>
 
     </div>
 </form>
 </body>
 
-<script type="text/javascript" src="../../../../../static/js/jquery.js"></script>
-<script type="text/javascript" src="../../../../../static/js/datepicker/js/bootstrap-datepicker.js"></script>
-<script type="text/javascript"
-        src="../../../../../static/js/datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+<script type="text/javascript" src="../../../../../../static/js/jquery.js"></script>
+<script type="text/javascript" src="../../../../../../static/js/date_pickers/jquery.date_input.pack.js"></script>
 <!-- 注意， 只需要引用 JS，无需引用任何 CSS ！！！-->
-<script type="text/javascript" src="../../../../../static/editor/release/wangEditor.min.js"></script>
+<script type="text/javascript" src="../../../../../../static/editor/release/wangEditor.min.js"></script>
 <script type="text/javascript">
     var E = window.wangEditor;
     var editor = new E('#editor');
@@ -261,13 +268,15 @@
         });
     };
 
+    $("#submit").on('click',function () {
+        $("#editorHTNL").val(editor.txt.html());
+    });
 
     editor.create();
 
     //日期选择器
-    $("#start").datepicker({
-        "language": "zh-CN",
-        "format": 'yyyy-mm-dd'
+    $(function () {
+        $('#datePicker').date_input();
     });
 </script>
 </html>

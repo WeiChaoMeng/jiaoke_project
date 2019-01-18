@@ -60,7 +60,7 @@ public class OaDocumentServiceImpl implements OaDocumentService {
     public List<OaDocument> getAllByFormState(Integer formState) {
         List<OaDocument> oaDocumentList = oaDocumentMapper.getAllByFormState(formState);
         for (OaDocument oaDocument : oaDocumentList) {
-            oaDocument.setCreateTimeStr(DateUtil.getStringDate(oaDocument.getCreateTime()));
+            oaDocument.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaDocument.getCreateTime()));
         }
         return oaDocumentList;
     }
@@ -73,7 +73,7 @@ public class OaDocumentServiceImpl implements OaDocumentService {
      */
     public OaDocument getAllById(Integer id) {
         OaDocument oaDocument = oaDocumentMapper.getAllById(id);
-        oaDocument.setCreateTimeStr(DateUtil.getStringDate(oaDocument.getCreateTime()));
+        oaDocument.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaDocument.getCreateTime()));
         return oaDocument;
     }
 
@@ -95,7 +95,7 @@ public class OaDocumentServiceImpl implements OaDocumentService {
      */
     public OaDocument getDocumentDetailsById(Integer id) {
         OaDocument oaDocument = oaDocumentMapper.selectByPrimaryKey(id);
-        oaDocument.setCreateTimeStr(DateUtil.getStringDate(oaDocument.getCreateTime()));
+        oaDocument.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaDocument.getCreateTime()));
         return oaDocument;
     }
 
@@ -112,7 +112,7 @@ public class OaDocumentServiceImpl implements OaDocumentService {
         Integer start = (page - one) * rows;
         List<OaDocument> oaDocumentList = oaDocumentMapper.getPagingByFormState(formState, start, rows);
         for (OaDocument oaDocument : oaDocumentList) {
-            oaDocument.setCreateTimeStr(DateUtil.getStringDate(oaDocument.getCreateTime()));
+            oaDocument.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaDocument.getCreateTime()));
         }
         return oaDocumentList;
     }
@@ -150,7 +150,7 @@ public class OaDocumentServiceImpl implements OaDocumentService {
         List<OaDocument> oaDocumentList = new ArrayList<>();
         for (String s : list) {
             OaDocument oaDocument = oaDocumentMapper.getAllById(Integer.valueOf(s));
-            oaDocument.setCreateTimeStr(DateUtil.getStringDate(oaDocument.getCreateTime()));
+            oaDocument.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaDocument.getCreateTime()));
             oaDocumentList.add(oaDocument);
         }
         return oaDocumentList;

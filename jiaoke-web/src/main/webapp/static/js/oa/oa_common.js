@@ -15,13 +15,8 @@ $("#top_toolbar_a").mousemove(function () {
 
 $('select.select').select();
 
-/*搜索*/
-$('#conditional_search').on('click', function () {
-    location.reload();
-});
-
 //隔行换色
-$('.simpletable tbody tr:even').addClass('even');
+// $('.simpletable tbody tr:even').addClass('even');
 
 //标记
 function flag(parameter) {
@@ -99,13 +94,12 @@ $("#condition").on("change", function () {
     var opt = $("#condition").val();
     if (opt == 1) {
         $(".matter_title").css("display", "block");
-        $(".matter_importance  , .matter_status").css("display", "none");
+        $(".matter_importance").css("display", "none");
+        $(".matter_importance").children('input').val('');
     } else if (opt == 2) {
         $(".matter_importance").css("display", "block");
-        $(".matter_title  , .matter_status").css("display", "none");
-    } else if (opt == 3) {
-        $(".matter_status").css("display", "block");
-        $(".matter_title  , .matter_importance").css("display", "none");
+        $(".matter_title").css("display", "none");
+        $(".matter_title").children('input').val('');
     } else {
         $(".head_right_side_input").css("display", "none");
         $(".head_right_side_select").css("display", "none");

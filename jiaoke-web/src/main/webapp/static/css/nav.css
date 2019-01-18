@@ -430,3 +430,85 @@ a {
 .submenu-ul li {
     margin: 5px 0 5px 20px;
 }
+
+
+/*弹窗*/
+
+* {
+    font-size: 12px;
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.win_form_table {
+    border: solid 1px #d4d4d4;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.win_form_table td {
+    line-height: 45px;
+    border-right: solid 1px #e5e5e5;
+    border-bottom: solid 1px #e5e5e5;
+}
+
+.win_form_table td i {
+    color: red;
+    font-style: normal;
+    margin-right: 3px;
+}
+
+.win_table_field {
+    background: #f6f6f6;
+    width: 120px;
+    text-align: right;
+    padding-right: 20px;
+    white-space: nowrap;
+}
+
+.win_table_input_field {
+    padding: 0 10px;
+}
+
+.win_form{
+    margin-top: 55px;
+    padding: 15px;
+}
+
+.win_form_input {
+    width: 100%;
+    color: #000;
+    height: 30px;
+    border: solid 1px #c6c6c6;
+    line-height: 26px;
+    text-indent: 8px;
+    outline: none;
+}
+
+.win_form_select {
+    width: 100%;
+    position: relative;
+    min-width: 134px;
+    height: 30px;
+    border: 1px solid #c6c6c6;
+    cursor: pointer;
+    text-indent: 8px;
+    outline: none;
+}
+
+.win_form_btn {
+    padding-top: 25px;
+    text-align: center;
+}
+
+.win_btn_save {
+    padding: 7px 20px;
+    background: #92ebff;
+    border: 1px #a5a5a5 solid;
+}

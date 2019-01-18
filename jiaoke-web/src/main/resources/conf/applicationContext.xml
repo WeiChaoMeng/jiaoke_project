@@ -44,7 +44,7 @@
         <!--定义在从数据库获取新连接失败后重复尝试的次数。默认值: 30 ；小于等于0表示无限次-->
         <property name="acquireRetryAttempts" value="0"/>
         <!--重新尝试的时间间隔，默认为：1000毫秒-->
-        <property name="acquireRetryDelay" value="1000" />
+        <property name="acquireRetryDelay" value="1000"/>
         <!--关闭连接时，是否提交未提交的事务，默认为false，即关闭连接，回滚未提交的事务 -->
         <property name="autoCommitOnClose" value="false"/>
         <!--c3p0将建一张名为Test的空表，并使用其自带的查询语句进行测试。如果定义了这个参数那么属性preferredTestQuery将被忽略。你不能在这张Test表上进行任何操作，它将只供c3p0测试使用。默认值: null -->
@@ -72,10 +72,32 @@
         <!-- 引入Mapper映射文件 -->
         <property name="mapperLocations" value="classpath*:mybatis/*.xml"/>
         <!-- MyBatis全局配置文件中其他配置：如起别名 -->
+        <property name="typeAliasesPackage" value="com.jiaoke.oa.bean"/>
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <property name="properties">
+                        <value>
+                        </value>
+                    </property>
+                </bean>
+                <bean class="com.github.abel533.mapperhelper.MapperInterceptor"/>
+            </array>
+        </property>
     </bean>
 
+
+    <!--在Spring中配置Mapper接口 -->
+    <bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.jiaoke.*.dao"/>
+    </bean>
+    <!--<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"
+          scope="prototype">
+        <constructor-arg index="0" ref="sqlSessionFactory"/>
+    </bean>-->
+
     <!-- 2.扫描Mapper接口 -->
-    <mybatis-spring:scan base-package="com.jiaoke.*.dao"/>
+    <!--<mybatis-spring:scan base-package="com.jiaoke.*.dao"/>-->
 
     <!--activi配置-->
     <bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">

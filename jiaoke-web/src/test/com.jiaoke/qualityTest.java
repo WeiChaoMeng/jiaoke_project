@@ -1,12 +1,13 @@
 package com.jiaoke;
 
 import com.jiaoke.controller.SpringHelper;
-import com.jiaoke.quality.bean.QualityRatioTemplate;
-import com.jiaoke.quality.dao.QualityWarningDao;
+import com.jiaoke.oa.bean.OaAssetManagement;
+import com.jiaoke.oa.bean.OaReleaseDocument;
+import com.jiaoke.oa.dao.OaAssetsManagementMapper;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.lang.reflect.Field;
+import java.util.List;
 
 /**
  * @author lihui
@@ -15,16 +16,19 @@ import java.lang.reflect.Field;
  */
 public class qualityTest {
 
-    private QualityWarningDao qualityWarningDao;
+    private OaAssetsManagementMapper oaAssetsManagementMapper;
 
     @Before
     public void setUp() {
-        qualityWarningDao = SpringHelper.getBean("qualityWarningDao");
+        oaAssetsManagementMapper = SpringHelper.getBean("oaAssetsManagementMapper");
     }
 
     @Test
     public void testUser() {
-        QualityRatioTemplate qualityRatioTemplate = qualityWarningDao.getQualityRatioTemplateById(1);
-
+        OaAssetManagement assetManagement = new OaAssetManagement();
+        assetManagement.setId(1);
+        OaAssetManagement oaAssetManagement = oaAssetsManagementMapper.selectByPrimaryKey(1);
+        System.out.println(oaAssetManagement);
     }
+
 }

@@ -293,46 +293,6 @@ public class CommonController {
     }
 
     /**
-     * 资源入库
-     *
-     * @return  oa_schedule_planning.jsp
-     */
-    @RequestMapping("/OAResourceStorage.do")
-    public String resourceStorage() {
-        return "oa/resources/oa_resource_storage";
-    }
-
-    /**
-     * 资源档案
-     *
-     * @return  oa_schedule_planning.jsp
-     */
-    @RequestMapping("/OAResourcesArchives.do")
-    public String resourcesArchives() {
-        return "oa/resources/oa_resources_archives";
-    }
-
-    /**
-     * 申领资源
-     *
-     * @return  oa_schedule_planning.jsp
-     */
-    @RequestMapping("/OAResourceApply.do")
-    public String resourceApply() {
-        return "oa/resources/oa_resource_apply";
-    }
-
-    /**
-     * 申领记录
-     *
-     * @return  oa_schedule_planning.jsp
-     */
-    @RequestMapping("/OAReceiveRecord.do")
-    public String receiveRecord() {
-        return "oa/resources/oa_receive_record";
-    }
-
-    /**
      * 公告管理
      *
      * @return  oa_schedule_planning.jsp

@@ -462,7 +462,7 @@ function right_change(id) {
         /*--- 资源管理 ---*/
         //资源入库
         case 'resource_storage':
-            $('#oa-iframe').attr("src", "oa_resource_storage.jsp");
+            $('#oa-iframe').attr("src", "oa_asset_management.jsp");
             $('#resource_storage').attr("class", "selected");
             if ($("#resource_storage_menu").attr("id") == null) {
                 $('.menutab').last().after(right_top_str);
@@ -471,7 +471,7 @@ function right_change(id) {
 
         //资源档案
         case 'resources_archives':
-            $('#oa-iframe').attr("src", "oa_resources_archives.jsp");
+            $('#oa-iframe').attr("src", "oa_assets_archives.jsp");
             $('#resources_archives').attr("class", "selected");
             if ($("#resources_archives_menu").attr("id") == null) {
                 $('.menutab').last().after(right_top_str);

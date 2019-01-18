@@ -335,7 +335,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-    <select id="getTimeSurveillanceFalseData" resultMap="java.util.HashMap">
+    <select id="getTimeSurveillanceFalseData" resultType="java.util.HashMap">
         (
         SELECT
                'crew1' AS 'crewNum',

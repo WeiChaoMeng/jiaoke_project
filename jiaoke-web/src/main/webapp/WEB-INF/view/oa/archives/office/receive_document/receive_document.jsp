@@ -17,9 +17,9 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>公司发文</title>
-    <link href="../../../../../static/css/oa/oa_common.css" rel="stylesheet" type="text/css">
-    <link href="../../../../../static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
+    <title>公司收文</title>
+    <link href="../../../../../../static/css/oa/oa_common.css" rel="stylesheet" type="text/css">
+    <link href="../../../../../../static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
 </head>
 
 <body style="padding:15px 8px 0px 8px;">
@@ -138,9 +138,9 @@
 
 
 </body>
-<script type="text/javascript" src="../../../../../static/js/jquery.js"></script>
-<script type="text/javascript" src="../../../../../static/js/common.js"></script>
-<script type="text/javascript" src="../../../../../static/js/oa/oa_common.js"></script>
+<script type="text/javascript" src="../../../../../../static/js/jquery.js"></script>
+<script type="text/javascript" src="../../../../../../static/js/common.js"></script>
+<script type="text/javascript" src="../../../../../../static/js/oa/oa_common.js"></script>
 <script>
     //新建公司发文
     $("#newCompanyWriting").on("click", function () {
