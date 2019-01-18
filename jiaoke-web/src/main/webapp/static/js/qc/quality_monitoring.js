@@ -99,6 +99,7 @@ function getRealTimeDataEcharsMaterial() {
         type:"post",
         dataType:"json",
         success:function (res) {
+            debugger
             eachMaterialList(res);
         }
     })
@@ -106,169 +107,48 @@ function getRealTimeDataEcharsMaterial() {
 
 function eachMaterialList(res) {
 
-    var crew1upArray = new Array();
-    var crew1realArray = new Array();
-    var crew1downArray = new Array();
-
-    var crew2upArray = new Array();
-    var crew2realArray = new Array();
-    var crew2downArray = new Array();
 
     for (var i = 0; i < res.length;i++){
 
-        if (res[i].crewNum == 'crew1'){
-            //各材料上下限展现
-            var one_up = (res[i].repertory_one) == 0? 0 : Number(res[i].repertory_one) +2;
-            crew1upArray.push(one_up);
-            var two_up = Number(res[i].repertory_two) == 0 ? 0 : Number(res[i].repertory_two) +2;
-            crew1upArray.push(two_up);
-            var three_up = Number(res[i].repertory_three) == 0 ? 0 : Number(res[i].repertory_three) + 5;
-            crew1upArray.push(three_up);
-            var four_up = Number(res[i].repertory_four) == 0 ? 0 : Number(res[i].repertory_four) + 5;
-            crew1upArray.push(four_up);
-            var five_up = Number(res[i].repertory_five) == 0 ? 0 : Number(res[i].repertory_five) + 5;
-            crew1upArray.push(five_up);
-            var six_up = Number(res[i].repertory_six) == 0 ? 0 : Number(res[i].repertory_six) + 5;
-            crew1upArray.push(six_up);
-            var breeze_up = Number(res[i].breeze) == 0 ? 0 : Number(res[i].breeze) + 1;
-            crew1upArray.push(breeze_up);
-            var stone_up = Number(res[i].ratio_stone) == 0 ? 0 : Number(res[i].ratio_stone) + 2;
-            crew1upArray.push(stone_up);
-            var regenerate_up = Number(res[i].ratio_regenerate1) + Number(res[i].ratio_regenerate2) == 0 ? 0 : Number(res[i].ratio_regenerate1) + Number(res[i].ratio_regenerate2)  + 5;
-            crew1upArray.push(regenerate_up);
-            var additive_up = Number(res[i].ratio_additive) == 0 ? 0 : Number(res[i].ratio_additive) + 2;
-            crew1upArray.push(additive_up);
+        var arr = res[i]['crew1'];
 
-            debugger
-            var crew1_total = Number(res[i].material_total)
-            var crew1_material_aggregate_1 = Number(res[i].material_aggregate_1) - Number(res[i].material_aggregate_2);
-            var crew1_material_aggregate_2 = Number(res[i].material_aggregate_2) - Number(res[i].material_aggregate_3);
-            var crew1_material_aggregate_3 = Number(res[i].material_aggregate_3) - Number(res[i].material_aggregate_4);
-            var crew1_material_aggregate_4 = Number(res[i].material_aggregate_4) - Number(res[i].material_aggregate_5);
-            var crew1_material_aggregate_5 = Number(res[i].material_aggregate_5) - Number(res[i].material_aggregate_6);
-            var crew1_material_aggregate_6 = Number(res[i].material_aggregate_6)
-
-            crew1realArray.push((crew1_material_aggregate_1/crew1_total * 100).toFixed(2))
-            crew1realArray.push((crew1_material_aggregate_2/crew1_total * 100).toFixed(2))
-            crew1realArray.push((crew1_material_aggregate_3/crew1_total * 100).toFixed(2))
-            crew1realArray.push((crew1_material_aggregate_4/crew1_total * 100).toFixed(2))
-            crew1realArray.push((crew1_material_aggregate_5/crew1_total * 100).toFixed(2))
-            crew1realArray.push((crew1_material_aggregate_6/crew1_total * 100).toFixed(2))
-
-            var material_stone = Number(res[i].material_stone_1) > Number(res[i].material_stone_2) ? Number(res[i].material_stone_1):Number(res[i].material_stone_2);
-            crew1realArray.push(((material_stone/Number(res[i].material_total)) *100).toFixed(2))
-            crew1realArray.push(((Number(res[i].material_asphalt)/Number(res[i].material_total)) *100).toFixed(2))
-            crew1realArray.push(((Number(res[i].material_regenerate)/Number(res[i].material_total)) *100).toFixed(2))
-            crew1realArray.push(((Number(res[i].material_additive)/Number(res[i].material_total)) *100).toFixed(2))
+        if (res[i]['crew1']){
 
 
-            var one_down1 = (res[i].repertory_one) == 0? 0 : Number(res[i].repertory_one) - 2;
-            var two_down1 = Number(res[i].repertory_two) == 0 ? 0 : Number(res[i].repertory_two) - 2;
-            var three_down1 = Number(res[i].repertory_three) == 0 ? 0 : Number(res[i].repertory_three) - 5;
-            var four_down1 = Number(res[i].repertory_four) == 0 ? 0 : Number(res[i].repertory_four) - 5;
-            var five_down1 = Number(res[i].repertory_five) == 0 ? 0 : Number(res[i].repertory_five) - 5;
-            var six_down1 = Number(res[i].repertory_six) == 0 ? 0 : Number(res[i].repertory_six)  - 5;
-            var breeze_down1 = Number(res[i].breeze) == 0 ? 0 : Number(res[i].breeze) - 1;
-            var stone_down1 = Number(res[i].ratio_stone) == 0 ? 0 : Number(res[i].ratio_stone) - 2;
-            var regenerate_down1 = Number(res[i].ratio_regenerate1) + Number(res[i].ratio_regenerate2) == 0 ? 0 : Number(res[i].ratio_regenerate1) + Number(res[i].ratio_regenerate2)  -  5;
-            var additive_down1 = Number(res[i].ratio_additive) == 0 ? 0 : Number(res[i].ratio_additive) - 2;
+            var arr = returnJsonArray(res[i]['crew1']['moudleList']);
+            var temArray  = returnArrayToJson(res[i]['crew1']['moudleList']);
 
-            crew1downArray.push(one_down1);
-            crew1downArray.push(two_down1);
-            crew1downArray.push(three_down1);
-            crew1downArray.push(four_down1);
-            crew1downArray.push(five_down1);
-            crew1downArray.push(six_down1);
-            crew1downArray.push(breeze_down1);
-            crew1downArray.push(stone_down1);
-            crew1downArray.push(regenerate_down1);
-            crew1downArray.push(additive_down1);
+            option7.xAxis.max = arr[arr.length - 1][0];
+            option7.series[0].markLine.data = temArray;
+            option7.series[1].data = returnJsonArray(res[i]['crew1']['moudleList']);
+            option7.series[2].data = returnJsonArray(res[i]['crew1']['realList']);
+            option7.series[3].data = returnJsonArray(res[i]['crew1']['upList']);
+            option7.series[4].data = returnJsonArray(res[i]['crew1']['midList']);
+            option7.series[5].data = returnJsonArray(res[i]['crew1']['downList']);
+            myChart7.setOption(option7);
+            window.addEventListener("resize", function () {
+                myChart7.resize();
+            });
 
         }else {
 
-            //各材料上下限展现
-            var one_up2 = (res[i].repertory_one) == 0? 0 : Number(res[i].repertory_one) +2;
-            crew2upArray.push(one_up2);
-            var two_up2 = Number(res[i].repertory_two) == 0 ? 0 : Number(res[i].repertory_two) +2;
-            crew2upArray.push(two_up2);
-            var three_up2 = Number(res[i].repertory_three) == 0 ? 0 : Number(res[i].repertory_three) + 5;
-            crew2upArray.push(three_up2);
-            var four_up2 = Number(res[i].repertory_four) == 0 ? 0 : Number(res[i].repertory_four) + 5;
-            crew2upArray.push(four_up2);
-            var five_up2 = Number(res[i].repertory_five) == 0 ? 0 : Number(res[i].repertory_five) + 5;
-            crew2upArray.push(five_up2);
-            var six_up2 = Number(res[i].repertory_six) == 0 ? 0 : Number(res[i].repertory_six) + 5;
-            crew2upArray.push(six_up2);
-            var breeze_up2 = Number(res[i].breeze) == 0 ? 0 : Number(res[i].breeze) + 1;
-            crew2upArray.push(breeze_up2);
-            var stone_up2 = Number(res[i].ratio_stone) == 0 ? 0 : Number(res[i].ratio_stone) + 2;
-            crew2upArray.push(stone_up2);
-            var regenerate_up2 = Number(res[i].ratio_regenerate1) + Number(res[i].ratio_regenerate2) == 0 ? 0 : Number(res[i].ratio_regenerate1) + Number(res[i].ratio_regenerate2)  + 5;
-            crew2upArray.push(regenerate_up2);
-            var additive_up2 = Number(res[i].ratio_additive) == 0 ? 0 : Number(res[i].ratio_additive) + 2;
-            crew2upArray.push(additive_up2);
+            var temArr = returnJsonArray(res[i]['crew2']['moudleList']);
 
-
-
-            var crew2_total = Number(res[i].material_total)
-            var crew2_material_aggregate_1 = Number(res[i].material_aggregate_1) - Number(res[i].material_aggregate_2);
-            var crew2_material_aggregate_2 = Number(res[i].material_aggregate_2) - Number(res[i].material_aggregate_3);
-            var crew2_material_aggregate_3 = Number(res[i].material_aggregate_3) - Number(res[i].material_aggregate_4);
-            var crew2_material_aggregate_4 = Number(res[i].material_aggregate_4) - Number(res[i].material_aggregate_5);
-            var crew2_material_aggregate_5 = Number(res[i].material_aggregate_5) - Number(res[i].material_aggregate_6);
-            var crew2_material_aggregate_6 = Number(res[i].material_aggregate_6)
-
-            crew2realArray.push((crew2_material_aggregate_1/crew2_total * 100).toFixed(2))
-            crew2realArray.push((crew2_material_aggregate_2/crew2_total * 100).toFixed(2))
-            crew2realArray.push((crew2_material_aggregate_3/crew2_total * 100).toFixed(2))
-            crew2realArray.push((crew2_material_aggregate_4/crew2_total * 100).toFixed(2))
-            crew2realArray.push((crew2_material_aggregate_5/crew2_total * 100).toFixed(2))
-            crew2realArray.push((crew2_material_aggregate_6/crew2_total * 100).toFixed(2))
-
-            var material_stone = Number(res[i].material_stone_1) > Number(res[i].material_stone_2) ? Number(res[i].material_stone_1):Number(res[i].material_stone_2);
-            crew2realArray.push(((material_stone/Number(res[i].material_total)) *100).toFixed(2))
-            crew2realArray.push(((Number(res[i].material_asphalt)/Number(res[i].material_total)) *100).toFixed(2))
-            crew2realArray.push(((Number(res[i].material_regenerate)/Number(res[i].material_total)) *100).toFixed(2))
-            crew2realArray.push(((Number(res[i].material_additive)/Number(res[i].material_total)) *100).toFixed(2))
-
-
-
-            var one_down2 = (res[i].repertory_one) == 0? 0 : Number(res[i].repertory_one) - 2;
-            var two_down2 = Number(res[i].repertory_two) == 0 ? 0 : Number(res[i].repertory_two) - 2;
-            var three_down2 = Number(res[i].repertory_three) == 0 ? 0 : Number(res[i].repertory_three) - 5;
-            var four_down2 = Number(res[i].repertory_four) == 0 ? 0 : Number(res[i].repertory_four) - 5;
-            var five_down2 = Number(res[i].repertory_five) == 0 ? 0 : Number(res[i].repertory_five) - 5;
-            var six_down2 = Number(res[i].repertory_six) == 0 ? 0 : Number(res[i].repertory_six) - 5;
-            var breeze_down2 = Number(res[i].breeze) == 0 ? 0 : Number(res[i].breeze) - 1;
-            var stone_down2 = Number(res[i].ratio_stone) == 0 ? 0 : Number(res[i].ratio_stone) - 2;
-            var regenerate_down2 = Number(res[i].ratio_regenerate1) + Number(res[i].ratio_regenerate2) == 0 ? 0 : Number(res[i].ratio_regenerate1) + Number(res[i].ratio_regenerate2) - 5;
-            var additive_down2 = Number(res[i].ratio_additive) == 0 ? 0 : Number(res[i].ratio_additive) - 2;
-
-            crew2downArray.push(one_down2);
-            crew2downArray.push(two_down2);
-            crew2downArray.push(three_down2);
-            crew2downArray.push(four_down2);
-            crew2downArray.push(five_down2);
-            crew2downArray.push(six_down2);
-            crew2downArray.push(breeze_down2);
-            crew2downArray.push(stone_down2);
-            crew2downArray.push(regenerate_down2);
-            crew2downArray.push(additive_down2);
-
-
+            option4.xAxis.max = temArr[temArr.length - 1][0];
+            option4.series[0].markLine.data = returnArrayToJson(res[i]['crew2']['moudleList']);
+            option4.series[1].data = returnJsonArray(res[i]['crew2']['moudleList']);
+            option4.series[2].data = returnJsonArray(res[i]['crew2']['realList']);
+            option4.series[3].data = returnJsonArray(res[i]['crew2']['upList']);
+            option4.series[4].data = returnJsonArray(res[i]['crew2']['midList']);
+            option4.series[5].data = returnJsonArray(res[i]['crew2']['downList']);
+            myChart4.setOption(option4);
+            window.addEventListener("resize", function () {
+                myChart4.resize();
+            });
         }
     }
 
-    debugger
-    option7.series[0].data = crew1upArray;
-    option7.series[1].data = crew1realArray;
-    option7.series[2].data = crew1downArray;
-    myChart7.setOption(option7);
 
-    option4.series[0].data = crew2upArray;
-    option4.series[1].data = crew2realArray;
-    option4.series[2].data = crew2downArray;
-    myChart4.setOption(option4);
 
 }
 window.addEventListener("resize", function () {
@@ -355,3 +235,161 @@ window.addEventListener("resize", function () {
 /******************************** Echart温度图表渲染nd********************************************/
 window.setInterval(getRealTimeData,3000);
 
+
+//遍历json，返回指定格式数据
+function returnJsonArray(jsonArray) {
+    var array = new Array();
+
+    for (var i = 0 ; i < jsonArray.length; i++) {
+
+        for (var key in jsonArray[i]){
+
+            var temArray = new Array();
+
+
+            switch (key) {
+                case '0.075':
+                    temArray.push(0.312);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+                case '0.15':
+                    temArray.push(0.426);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+                case '0.3':
+                    temArray.push(0.582);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+                case '0.6':
+                    temArray.push(0.795);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+                case '1.18':
+                    temArray.push(1.007);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+                case '2.36':
+                    temArray.push(1.472);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+                case '4.75':
+                    temArray.push(2.016);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+                case '9.5':
+                    temArray.push(2.754);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+                case '13.2':
+                    temArray.push(3.193);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+
+                case '16':
+                    temArray.push(3.482);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+                case '19':
+                    temArray.push(3.762);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+                case '26.5':
+                    temArray.push(4.370);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+                case '31.5':
+                    temArray.push(4.723);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+                case '37.5':
+                    temArray.push(5.109);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+                case '53':
+                    temArray.push(5.969);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+                case '63':
+                    temArray.push(6.452);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+            }
+
+            array.push(temArray);
+        }
+    }
+    array.sort(sortNumber);
+
+    return array;
+}
+
+//返回筛孔数组，用于X轴
+function returnArrayToJson(json) {
+
+    var array = new Array();
+
+    for (var i = 0 ; i < json.length; i++){
+        for (var key in json[i]){
+            switch (key) {
+                case '0.075':
+                    array.push({xAxis:0.312,label: {normal: {formatter: key+""}}});
+                    break;
+                case '0.15':
+                    array.push({xAxis:0.426,label: {normal: {formatter: key+""}}});
+                    break;
+                case '0.3':
+                    array.push({xAxis:0.582,label: {normal: {formatter: key+""}}});
+                    break;
+                case '0.6':
+                    array.push({xAxis:0.795,label: {normal: {formatter: key+""}}});
+                    break;
+                case '1.18':
+                    array.push({xAxis:1.007,label: {normal: {formatter: key+""}}});
+                    break;
+                case '2.36':
+                    array.push({xAxis:1.472,label: {normal: {formatter: key+""}}});
+                    break;
+                case '4.75':
+                    array.push({xAxis:2.016,label: {normal: {formatter: key+""}}});
+                    break;
+                case '9.5':
+                    array.push({xAxis:2.754,label: {normal: {formatter: key+""}}});
+                    break;
+                case '13.2':
+                    array.push({xAxis:3.193,label: {normal: {formatter: key+""}}});
+                    break;
+
+                case '16':
+                    array.push({xAxis:3.482,label: {normal: {formatter: key+""}}});
+                    break;
+                case '19':
+                    array.push({xAxis:3.762,label: {normal: {formatter: key+""}}});
+                    break;
+                case '26.5':
+                    array.push({xAxis:4.370,label: {normal: {formatter: key+""}}});
+                    break;
+                case '31.5':
+                    array.push({xAxis:4.723,label: {normal: {formatter: key+""}}});
+                    break;
+                case '37.5':
+                    array.push({xAxis:5.109,label: {normal: {formatter: key+""}}});
+                    break;
+                case '53':
+                    array.push({xAxis:5.969,label: {normal: {formatter: key+""}}});
+                    break;
+                case '63':
+                    array.push({xAxis:6.452,label: {normal: {formatter: key+""}}});
+                    break;
+            }
+
+        }
+    }
+
+    return array;
+}
+
+//排序
+function sortNumber(a, b)
+{
+    return a[0] - b[0]
+}

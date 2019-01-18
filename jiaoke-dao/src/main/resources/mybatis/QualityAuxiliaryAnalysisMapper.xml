@@ -8,8 +8,27 @@
         FROM
              quality_warning_promessage_crew t1
                  JOIN quality_warning_data t2 ON t1.id = t2.crew_id
+
         WHERE
-                warning_level > #{warningLive}
+          warning_level >= #{warningLive}
+
+        <if test="startDate != '' and endDate != ''">
+            AND produce_date BETWEEN #{startDate} AND #{endDate}
+        </if>
+
+
+        <if test="crew != null">
+          <if test="crew == 'data1'">
+              AND produce_crewNum  = 1
+          </if>
+            <if test="crew == 'data2'">
+                AND produce_crewNum  = 2
+            </if>
+        </if>
+
+        <if test="rationId != null and rationId != 'select'">
+            AND produce_ratio_id = #{rationId}
+        </if>
         GROUP BY t1.id
         ORDER BY
                  t1.id DESC
@@ -24,7 +43,26 @@
                                    quality_warning_promessage_crew t1
                                        JOIN quality_warning_data t2 ON t1.id = t2.crew_id
                               WHERE
-                                      warning_level > #{warningLive}
+                                      warning_level >= #{warningLive}
+
+                                <if test="startDate != '' and endDate != ''">
+                                    AND produce_date BETWEEN #{startDate} AND #{endDate}
+                                </if>
+
+
+                                <if test="crew != null">
+                                    <if test="crew == 'data1'">
+                                        AND produce_crewNum  = 1
+                                    </if>
+                                    <if test="crew == 'data2'">
+                                        AND produce_crewNum  = 2
+                                    </if>
+                                </if>
+
+                                <if test="rationId != null and rationId != 'select'">
+                                    AND produce_ratio_id = #{rationId}
+                                </if>
+
                               GROUP BY t1.id) as b1
     </select>
     <select id="selectWaringData" resultType="java.util.Map">
@@ -32,5 +70,71 @@
        <foreach collection="idList" index="index" item="item" open="(" separator="," close=")">
             #{item}
        </foreach>
+    </select>
+
+    <select id="getProMessageByDate" resultType="java.util.Map">
+        SELECT * from quality_monitoring_realtime_${crewNum} WHERE produce_date = DATE  &apos;${prodate}&apos; AND produce_disc_num = ${discNum}
+    </select>
+
+    <select id="getWaringList" resultType="java.util.Map">
+        SELECT * from quality_warning_data WHERE crew_id = #{producedId}
+    </select>
+
+    <select id="selectRealTimeDataEcharsMaterial" resultType="java.util.Map">
+        SELECT
+               t1.*, 'crew1' AS 'crewNum',
+               t2.produce_proportioning_num,
+               t2.material_aggregate_1,
+               t2.material_aggregate_2,
+               t2.material_aggregate_3,
+               t2.material_aggregate_4,
+               t2.material_aggregate_5,
+               t2.material_aggregate_6,
+               t2.material_stone_1,
+               t2.material_stone_2,
+               t2.material_asphalt,
+               t2.material_regenerate,
+               t2.material_additive,
+               t2.temperature_warehouse_1 AS tem_warehouse_1,
+               t2.temperature_mixture AS tem_mixture,
+               t2.temperature_duster AS tem_duster,
+               t2.temperature_asphalt AS tem_asphalt,
+               t2.temperature_aggregate AS tem_aggregate,
+               t2.material_total
+        FROM
+             quality_proportioning_message AS t1
+                 INNER JOIN (
+                            SELECT
+                                   produce_proportioning_num,
+                                   material_aggregate_1,
+                                   material_aggregate_2,
+                                   material_aggregate_3,
+                                   material_aggregate_4,
+                                   material_aggregate_5,
+                                   material_aggregate_6,
+                                   material_stone_1,
+                                   material_stone_2,
+                                   material_asphalt,
+                                   material_regenerate,
+                                   material_additive,
+                                   temperature_warehouse_1,
+                                   temperature_mixture,
+                                   temperature_duster,
+                                   temperature_asphalt,
+                                   temperature_aggregate,
+                                   material_total
+                            FROM
+                                 quality_monitoring_realtime_${crewNum}
+                            WHERE Id = ${id}
+                            ) AS t2 ON t1.crew1_modele_id = t2.produce_proportioning_num
+    </select>
+
+    <select id="selectGradingBycrewNumAndRationNum" resultType="java.util.Map">
+        SELECT
+                *
+        FROM
+             quality_proportioning_grading
+        WHERE
+                ${crewNum}_id = ${rationNum};
     </select>
 </mapper>

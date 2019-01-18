@@ -18,15 +18,46 @@
 
         SELECT
                crew1_modele_id,
-               ratio_stone
+               ${ratioName}
         FROM
              quality_proportioning_message
         WHERE
-                crew1_modele_id in
+                ${crew}_modele_id in
         <foreach collection="moudelId"  separator="," open="(" close=")" item="item">
             ${item}
         </foreach>
 
     </select>
+
+    <select id="selectRatioListByDate" resultType="java.util.Map">
+        SELECT
+               pro_name,
+               ${crewNum}_modele_id as modele_id
+        FROM
+             quality_proportioning_message
+        WHERE
+                ${crewNum}_modele_id IN
+        (SELECT
+               produce_proportioning_num
+        FROM
+             quality_monitoring_realtime_${crew}
+        WHERE produce_date
+                      BETWEEN  &apos;${startDate}&apos;
+                      AND &apos;${endDate}&apos;
+        GROUP BY
+                 produce_proportioning_num)
+    </select>
+
+    <select id="selectProductByMaterialAndDate" resultType="java.util.Map">
+        SELECT
+                *
+                FROM
+                quality_monitoring_realtime_${crew}
+                WHERE
+                produce_date BETWEEN &apos;${startDate}&apos;
+                AND &apos;${endDate}&apos;
+                AND produce_proportioning_num = ${ratioNum}
+    </select>
+
 
 </mapper>

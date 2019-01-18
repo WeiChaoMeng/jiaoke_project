@@ -14,22 +14,14 @@
     <title>辅助分析</title>
     <link href="/static/css/default.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
+
+    <link type="text/css" rel="stylesheet" href="/static/css/qc/jeDate-test.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/qc/jedate.css">
+    <script type="text/javascript" src="/static/js/qc/jedate.js"></script>
+    <link type="text/css" rel="stylesheet" href="/static/css/qc/qc_select.css">
     <link href="/static/css/qc/jqTable.css" rel="stylesheet" type="text/css">
     <style>
-        .nform li span {
-            width: 28%;
-        }
 
-        .simpletable thead tr th {
-            background: #9affe4;
-            border: solid 1px #fff;
-            height: 30px;
-            line-height: 30px;
-            font-weight: bold;
-            text-align: center;
-            text-indent: 0;
-            white-space: nowrap;
-        }
 
     </style>
 </head>
@@ -37,230 +29,159 @@
 <body style="padding:15px 8px 0px 8px;">
 
 <div class="">
+    <li class="card-item active">
+        <div class="card">
+            <div class="card-content content-second">
+                <div class="main-info">
+                    <div style="width: 100%;height: 10%;" >
+                            <div class="jeitem">
+                                <label class="jelabel">日期范围选择</label>
+                                <div class="jeinpbox">
+                                    <input type="text" class="jeinput" id="test11" placeholder="YYYY-MM-DD" value="${proData}" onchange="getModelByDateAndCrew()" >
+                                </div>
 
-    <div data-level="true">
+                                <label class="jelabel">机组选择</label>
+                                <div class="dy_select_div"   >
+                                    <select id="crew_num" class="dy_select" onchange="getModelByDateAndCrew()" >
+                                        <option value="data1">机组一</option>
+                                        <option value="data2">机组二</option>
+                                    </select>
+                                </div>
 
+                                <label class="jelabel">模板选择</label>
+                                <div class="dy_select_div" >
+                                    <select  id="ratio_id" class="dy_select">
+                                        <option value="select" >请选择</option>
+                                    </select>
+                                </div>
 
-        <div class="c-table--main c-table J-table c-table--noWrap g-toggleTable--main c-table__cell--block el-table--enable-row-transition" style="width: 100%;padding-left: 10%;"><div class="c-table__header-wrapper"> <table cellspacing="0" cellpadding="0" border="0" class="c-table__header" role="c-table4" style="width: 1470px;">
-            <colgroup>
-                <col name="" width="15%">
-                <col name="" width="15%">
-                <col name="" width="15%">
-                <col name="" width="15%">
-                <col name="" width="15%">
-                <col name="" width="15%">
-                <col name="" width="15%">
-            </colgroup>
-            <thead>
-            <tr class="g-toggleTable--title">
-                <th class="">
-                    <div class="cell"><i class="iconfont icon-right text-muted mr10 g-toggleTable--buttonAll" aria-hidden="true"></i>产品编号</div>
-                </th>
-                <th class="">
-                    <div class="cell">生产日期</div>
-                </th>
-                <th>
-                    <div clas="">生产时间</div>
-                </th>
-                <th>
-                    <div clas="">配比号</div>
-                </th>
-                <th>
-                    <div clas="">产品盘号</div>
-                </th>
-                <th>
-                    <div clas="">机组</div>
-                </th>
-            </tr>
-            </thead>
+                                <label class="jelabel">预警选择</label>
+                                <div class="dy_select_div" >
+                                    <select  id="waring_leve" class="dy_select">
+                                        <option value="0">无预警</option>
+                                        <option value="1">一级预警</option>
+                                        <option value="2">二级预警</option>
+                                        <option value="3">三级预警</option>
+                                    </select>
+                                </div>
+                                <button style="width: 160px;height: 36px;margin-left: 5%;" onclick="selectProductMessage()" >查询</button>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        </table></div><div class="c-table__body-wrapper"> <table cellspacing="0" cellpadding="0" border="0" class="c-table__body" role="c-table4" style="width: 1470px;">
-            <colgroup>
-                <col name="" width="15%">
-                <col name="" width="15%">
-                <col name="" width="15%">
-                <col name="" width="15%">
-                <col name="" width="15%">
-                <col name="" width="15%">
-                <col name="" width="15%">
-            </colgroup>
+    </li>
 
-            <tbody>
+    <div class="">
 
-            <c:forEach items="${pageBean.pageData}" var="item" varStatus="statusd">
+                <div class="boxdown">
+                    <table class="auxiliary_simpletable">
 
-                <tr class="c-table__row c-table__row-${statusd.index} g-toggleTable--title">
-
-                    <td class="">
-                        <div class="cell"><i class="iconfont icon-right text-muted mr10 g-toggleTable--button" aria-hidden="true"></i> ${item.id}</div>
-                    </td>
-                    <td class="">
-                        <div class="cell">${item.produce_date}</div>
-                    </td>
-                    <td>
-                        <div class="cell">${item.produce_time}</div>
-                    </td>
-                    <td>
-                        <div class="cell">${item.produce_ratio_id}</div>
-                    </td>
-                    <td>
-                        <div class="cell">${item.produce_disc_num}</div>
-                    </td>
-                    <td>
-                        <div class="cell">${item.produce_crewNum == 1 ?  "机组1":"机组2"}</div>
-                    </td>
-                </tr>
-
-                <tr class="c-table__row c-table__row-${statusd.index} c-table__child c-table__child-default hide">
-
-                    <td class="" >
-                        <div class="cell">&nbsp;</div>
-                    </td>
-                    <td class="">
-                        <div class="cell">材料</div>
-                    </td>
-                    <td class="">
-                        <div class="cell">模板值</div>
-                    </td>
-                    <td>
-                        <div class="cell">实际值</div>
-                    </td>
-                    <td>
-                        <div class="cell">偏差值</div>
-                    </td>
-                    <td>
-                        <div class="cell">报警级别</div>
-                    </td>
-
-                </tr>
-
-                <c:forEach items="${waringList}" var="waringData" varStatus="status">
-
-                    <c:if test="${item.id == waringData.crew_id}" >
                         <c:choose>
-                            <c:when test="${waringData.material_name == '沥青温度' || waringData.material_name == '混合料温度' || waringData.material_name == '骨料温度' }">
-                                <tr class="c-table__row c-table__row-${statusd.index} c-table__child c-table__child-default hide">
-
-                                    <td class="" >
-                                        <div class="cell">&nbsp;</div>
-                                    </td>
-                                    <td class="">
-                                        <div class="cell">${waringData.material_name}</div>
-                                    </td>
-                                    <td class="">
-                                        <div class="cell">${waringData.moudle_ratio}℃</div>
-                                    </td>
-                                    <td>
-                                        <div class="cell">${waringData.actual_ratio}℃</div>
-                                    </td>
-                                    <td>
-                                        <div class="cell">${waringData.deviation_ratio}℃</div>
-                                    </td>
-                                    <td>
-                                        <div class="cell">${waringData.warning_level}级预警</div>
-                                    </td>
-                                </tr>
-
+                            <c:when test="${pageBean.pageData} == null || ${pageBean.dataCountNum == 0}" >
+                                <span style="text-align: center" >暂无历史生产数据</span>
                             </c:when>
                             <c:otherwise>
-                                <tr class="c-table__row c-table__row-${status.index} c-table__child c-table__child-default hide">
+                                <tbody>
+                                <thead>
+                                <th>生产日期</th>
+                                <th>生产时间</th>
+                                <th>配比号</th>
+                                <th>产品盘号</th>
+                                <th >所在机组</th>
+                                <th>操作</th>
+                                </thead>
+                                <c:forEach items="${pageBean.pageData}" var="item">
+                                    <tr>
+                                        <td>${item.produce_date}</td>
+                                        <td>${item.produce_time}</td>
+                                        <td>${item.produce_ratio_id}</td>
+                                        <td>${item.produce_disc_num}</td>
+                                        <td>${item.produce_crewNum == 1 ?  "机组1":"机组2"} </td>
+                                        <td>
 
-                                    <td class="" >
-                                        <div class="cell">&nbsp;</div>
-                                    </td>
-                                    <td class="">
-                                        <div class="cell">${waringData.material_name}</div>
-                                    </td>
-                                    <td class="">
-                                        <div class="cell">${waringData.moudle_ratio}%</div>
-                                    </td>
-                                    <td>
-                                        <div class="cell">${waringData.actual_ratio}%</div>
-                                    </td>
-                                    <td>
-                                        <div class="cell">${waringData.deviation_ratio}%</div>
-                                    </td>
-                                    <td>
-                                        <div class="cell">${waringData.warning_level}级预警</div>
-                                    </td>
-                                </tr>
+                                            <a class="selected" id="add" href="${path}/getProductById.do?producedId=${item.id}&prodate=${item.produce_date}&discNum=${item.produce_disc_num}&crew=${item.produce_crewNum}" ><i class="toolico iconfont">&#xe970;</i>查看</a>
+
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
                             </c:otherwise>
                         </c:choose>
-                    </c:if>
-                 </c:forEach>
-            </c:forEach>
-            </tbody>
-        </table></div> </div>
-    </div>
 
-    <div class="my_pagination">
-        <ul class="my_pagelist">
-            <%--首页--%>
-            <c:choose>
-                <c:when test="${pageBean.currentPageNum == 1}">
-                    <li><a href="javascript:;" class="first">首页</a></li>
-                </c:when>
-                <c:otherwise>
-                    <li><a href="<c:url value="${pageBean.url}"></c:url> " >首页</a></li>
-                </c:otherwise>
-            </c:choose>
-
-            <%-- 上一页 --%>
-            <c:if test="${pageBean.currentPageNum > 1}">
-                <li><a href="<c:url value="${pageBean.url}currentPageNum=${pageBean.currentPageNum - 1 }"></c:url> "><i class="iconfont">&#xe68a;</i></a></li>
-            </c:if>
-
-            <c:choose>
-                <c:when test="${pageBean.pageCount <= 10 }">
-                    <c:set var="begin" value="1"></c:set>
-                    <c:set var="end" value="${pageBean.pageCount}"></c:set>
-                </c:when>
-                <c:otherwise>
-                    <c:set var="begin" value="${pageBean.currentPageNum - 4}"></c:set>
-                    <c:set var="end" value="${pageBean.currentPageNum + 5}"></c:set>
-                    <c:choose>
-
-                        <c:when test="${begin < 1}">
-                            <c:set var="begin" value="1"/>
-                            <c:set var="end" value="10"/>
-                        </c:when>
-
-                        <c:when test="${end > pageBean.pageCount}">
-                            <c:set var="begin" value="${pageBean.pageCount - 9}"></c:set>
-                            <c:set var="end" value="${pageBean.pageCount}"></c:set>
-                        </c:when>
-                    </c:choose>
-                </c:otherwise>
-            </c:choose>
-            <c:forEach begin="${begin}" end="${end}" var="i">
+                    </table>
+        </div>
+        <div class="data_manager_pagination">
+            <ul class="data_manager_pagelist">
+                <%--首页--%>
                 <c:choose>
-                    <c:when test="${i == pageBean.currentPageNum }">
-                        <li><a href="javascript:;" class="selected pageico" >${i}</a></li>
+                    <c:when test="${pageBean.currentPageNum == 1}">
+                        <li><a href="javascript:;" class="first">首页</a></li>
                     </c:when>
                     <c:otherwise>
-                        <li><a href="<c:url value="${pageBean.url}currentPageNum=${i}"></c:url>">${i}</a></li>
+                        <li><a href="<c:url value="${pageBean.url}"></c:url> " >首页</a></li>
                     </c:otherwise>
                 </c:choose>
-            </c:forEach>
 
-            <%--下一页--%>
-            <c:if test="${pageBean.currentPageNum < pageBean.pageCount}">
-                <li><a href="<c:url value="${pageBean.url}currentPageNum=${pageBean.currentPageNum + 1 }"></c:url> " class="pageico"><i class="iconfont">&#xe673;</i></a></li>
-            </c:if>
+                <%-- 上一页 --%>
+                <c:if test="${pageBean.currentPageNum > 1}">
+                    <li><a href="<c:url value="${pageBean.url}&currentPageNum=${pageBean.currentPageNum - 1 }"></c:url> "><i class="iconfont">&#xe68a;</i></a></li>
+                </c:if>
 
-            <%--尾页--%>
-            <c:choose>
-                <c:when test="${pageBean.currentPageNum == pageBean.pageCount}">
-                    <li><a href="javascript:;" class="first">尾页</a></li>
-                </c:when>
-                <c:otherwise>
-                    <li><a href="<c:url value="${pageBean.url}currentPageNum=${pageBean.pageCount}"></c:url>  " >尾页</a></li>
-                </c:otherwise>
-            </c:choose>
-        </ul>
+                <c:choose>
+                    <c:when test="${pageBean.pageCount <= 10 }">
+                        <c:set var="begin" value="1"></c:set>
+                        <c:set var="end" value="${pageBean.pageCount}"></c:set>
+                    </c:when>
+                    <c:otherwise>
+                        <c:set var="begin" value="${pageBean.currentPageNum - 4}"></c:set>
+                        <c:set var="end" value="${pageBean.currentPageNum + 5}"></c:set>
+                        <c:choose>
 
-        <span class="my_pageinfo">共 ${pageBean.dataCountNum} 条记录，每页 ${pageBean.eachPageDataNum} 条，当前第 ${pageBean.currentPageNum} 页，共 ${pageBean.pageCount} 页</span>
+                            <c:when test="${begin < 1}">
+                                <c:set var="begin" value="1"/>
+                                <c:set var="end" value="10"/>
+                            </c:when>
+
+                            <c:when test="${end > pageBean.pageCount}">
+                                <c:set var="begin" value="${pageBean.pageCount - 9}"></c:set>
+                                <c:set var="end" value="${pageBean.pageCount}"></c:set>
+                            </c:when>
+                        </c:choose>
+                    </c:otherwise>
+                </c:choose>
+                <c:forEach begin="${begin}" end="${end}" var="i">
+                    <c:choose>
+                        <c:when test="${i == pageBean.currentPageNum }">
+                            <li><a href="javascript:;" class="selected pageico" >${i}</a></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li><a href="<c:url value="${pageBean.url}&currentPageNum=${i}"></c:url>">${i}</a></li>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+
+                <%--下一页--%>
+                <c:if test="${pageBean.currentPageNum < pageBean.pageCount}">
+                    <li><a href="<c:url value="${pageBean.url}&currentPageNum=${pageBean.currentPageNum + 1 }"></c:url> " class="pageico"><i class="iconfont">&#xe673;</i></a></li>
+                </c:if>
+
+                <%--尾页--%>
+                <c:choose>
+                    <c:when test="${pageBean.currentPageNum == pageBean.pageCount}">
+                        <li><a href="javascript:;" class="first">尾页</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li><a href="<c:url value="${pageBean.url}&currentPageNum=${pageBean.pageCount}"></c:url>  " >尾页</a></li>
+                    </c:otherwise>
+                </c:choose>
+            </ul>
+
+            <span class="data_manager_pageinfo">共 ${pageBean.dataCountNum} 条记录，每页 ${pageBean.eachPageDataNum} 条，当前第 ${pageBean.currentPageNum} 页，共 ${pageBean.pageCount} 页</span>
+        </div>
     </div>
+
 </div>
 
     <div class="popup_back" style="display:none;">
@@ -270,19 +191,50 @@
         <a href="javascript:void(0)" class="popup_btn" onclick="closeWindow();">确定</a>
         <a href="javascript:void(0)" class="popup_btn" onclick="closeWindow();">取消</a>
     </div>
-
+<input  id="path" value="${path}" type="hidden" >
+<input  id="temcrew" value="${crew}" type="hidden" >
+<input  id="temRatioNum" value="${rationId}" type="hidden" >
+<input  id="temWaring" value="${warningLive}" type="hidden" >
+<input  id="temDate" value="${proData}" type="hidden" >
 </body>
 
 <script type="text/javascript" src="/static/js/jquery.js"></script>
-<script src="/static/js/qc/zipJs/jquery.mousewheel.min.js"></script>
 <script type="text/javascript" src="/static/js/qc/zipJs/jqTable.all.min.js"></script>
-<script type="text/javascript" src="/static/js/qc/zipJs/artTemplate.js"></script>
-<script type="text/javascript" src="/static/js/qc/zipJs/message.js"></script>
+<script type="text/javascript" src="/static/js/qc/auxiliary.js"></script>
 <script type="text/javascript">
-    (function(){
+    //回显方法
+    (function () {
+        debugger
+        var crew = $("#temcrew").val();
+        var ratioNum = $("#temRatioNum").val();
+        var waring = $("#temWaring").val();
+        var dates = $("#temDate").val();
 
-    })(jQuery)
-    
+        var numbers = $("#crew_num").find("option"); //获取select下拉框的所有值
+        var warings = $("#waring_leve").find("option");
+
+        //添加一个选项
+        if (crew != ""){
+
+            for (var j = 1; j < numbers.length; j++) {
+                if ($(numbers[j]).val() == crew) {
+                    $(numbers[j]).attr("selected", "selected");
+                }
+            }
+        }
+
+        if (ratioNum != "") {
+            getModelByDateAndCrew(ratioNum);
+        }
+
+        if (waring != "") {
+            for (var j = 1; j < warings.length; j++) {
+                if ($(warings[j]).val() == waring) {
+                    $(warings[j]).attr("selected", "selected");
+                }
+            }
+        }
+    })();
     $("#checkAll").click(function(){
         $("input:checkbox").each(function () {
             this.checked = $("#checkAll").get(0).checked;
@@ -296,6 +248,9 @@
     $('#delect').click(function() {
         $('.popup_window_first,.popup_back').show();
     });
+
+
+
 
 </script>
 </html>

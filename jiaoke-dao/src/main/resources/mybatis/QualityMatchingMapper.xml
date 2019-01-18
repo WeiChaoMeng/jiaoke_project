@@ -146,4 +146,35 @@
                 t1.id = #{idStr}
     </select>
 
+    <insert id="insetGrading" parameterType="java.util.Map">
+        INSERT INTO quality_proportioning_grading (
+                crew1_id,
+                crew2_id,
+                sieve_diameter_grading,
+                repertory_six_grading,
+                repertory_five_grading,
+                repertory_four_grading,
+                repertory_three_grading,
+                repertory_two_grading,
+                repertory_one_grading,
+                breeze_grading,
+                rough_regenerate_grading,
+                thin_regenerate_grading,
+                additive_grading,
+                synthesis_grading,
+                mid_value,
+                up_value,
+                down_value
+                )
+        values
+                  <foreach collection ="list" item="list" index= "index" separator =",">
+                       (
+                        #{list.crew1_id}, #{list.crew2_id},#{list.sieve_pore}, #{list.six_warehouse},
+                      #{list.five_warehouse}, #{list.four_warehouse},#{list.three_warehouse}, #{list.two_warehouse},
+                      #{list.one_warehouse}, #{list.breeze_grading},#{list.rough_regenerate}, #{list.thin_regenerate},
+                      #{list.additive_aggregate}, #{list.compound_grading},#{list.mid_value}, #{list.up_value}, #{list.down_value}
+                        )
+                  </foreach >
+    </insert>
+
 </mapper>

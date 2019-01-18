@@ -8,4 +8,6 @@ public interface QualityTimelyDataFalseService {
     List<Map<String,String>> getTimeSurveillanceFalseData();
 
     String selectFalseDataToChars();
+
+    String selectFalseDataEcharsTemp();
 }

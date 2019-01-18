@@ -77,4 +77,10 @@ public interface QualityMatchingDao {
      * @return
      */
     QualityRatioTemplate selectRationById(@Param("idStr") String idStr);
+
+    /**
+     * 插入级配
+     * @param list
+     */
+    void insetGrading( @Param("list") List<Map<String, String>> list);
 }

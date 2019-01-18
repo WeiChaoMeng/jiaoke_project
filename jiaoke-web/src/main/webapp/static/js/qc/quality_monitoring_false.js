@@ -3,6 +3,7 @@ var basePath  = "";
 // 初始化
 $(function(){
     basePath  = $("#path").val();
+    console.log("路径为"+basePath)
     getRealTimeData();
 });
 
@@ -20,13 +21,21 @@ function  getRealTimeData() {
 
 //获取实时数据
 function renderDataToPage(){
-    debugger
+
     $.ajax({
         url:basePath +"/getRealTimeSurveillanceFalse.do",
         type:"post",
-        success:function (res) {
+        dataType:"json",
+        success:function (listStr) {
+            debugger
             if (listStr){
                 for (var i=0;i<listStr.length;i++){
+
+                    var arg1 = listStr[i].material_aggregate_1 - listStr[i].material_aggregate_2;
+                    var arg2 = listStr[i].material_aggregate_2 - listStr[i].material_aggregate_3;
+                    var arg3 = listStr[i].material_aggregate_3 - listStr[i].material_aggregate_4;
+                    var arg4 = listStr[i].material_aggregate_4 - listStr[i].material_aggregate_5;
+                    var arg5 = listStr[i].material_aggregate_5 - listStr[i].material_aggregate_6 ;
 
                     if ( listStr[i].crewNum == 'crew1' ){
 
@@ -36,20 +45,20 @@ function renderDataToPage(){
                         $("#crew1_basic_carNum").html(listStr[i].produce_car_num);
                         $("#crew1_basic_discNum").html(listStr[i].produce_disc_num);
                         $("#crew1_basic_userNum").html(listStr[i].produce_custom_num);
-                        $("#crew1_data_Aggregate1").html(listStr[i].material_aggregate_1 + "<i>%</i>");
-                        $("#crew1_data_Aggregate2").html(listStr[i].material_aggregate_2 + "<i>%</i>");
-                        $("#crew1_data_Aggregate3").html(listStr[i].material_aggregate_3 + "<i>%</i>");
-                        $("#crew1_data_Aggregate4").html(listStr[i].material_aggregate_4 + "<i>%</i>");
-                        $("#crew1_data_Aggregate5").html(listStr[i].material_aggregate_5 + "<i>%</i>");
-                        $("#crew1_data_Aggregate6").html(listStr[i].material_aggregate_6 + "<i>%</i>");
+                        $("#crew1_data_Aggregate1").html(arg1 + "<i>kg</i>");
+                        $("#crew1_data_Aggregate2").html(arg2 + "<i>kg</i>");
+                        $("#crew1_data_Aggregate3").html(arg3 + "<i>kg</i>");
+                        $("#crew1_data_Aggregate4").html(arg4 + "<i>kg</i>");
+                        $("#crew1_data_Aggregate5").html(arg5 + "<i>kg</i>");
+                        $("#crew1_data_Aggregate6").html(listStr[i].material_aggregate_6 + "<i>kg</i>");
                         $("#crew1_data_warehouse1").html(listStr[i].temperature_warehouse_1 + " <i>℃</i>");
                         $("#crew1_data_duster").html(listStr[i].temperature_duster+ " <i>℃</i>");
 
-                        $("#crew1_data_stone1").html(listStr[i].material_stone_1+ "<i>%</i>");
-                        $("#crew1_data_stone2").html(listStr[i].material_stone_2+ "<i>%</i>");
-                        $("#crew1_data_asphalt").html(listStr[i].material_asphalt+ "<i>%</i>");
-                        $("#crew1_data_regenerate").html(listStr[i].material_regenerate+ "<i>%</i>");
-                        $("#crew1_data_additive").html(listStr[i].material_additive+ "<i>%</i>");
+                        $("#crew1_data_stone1").html(listStr[i].material_stone_1+ "<i>kg</i>");
+                        $("#crew1_data_stone2").html(listStr[i].material_stone_2+ "<i>kg</i>");
+                        $("#crew1_data_asphalt").html(listStr[i].material_asphalt+ "<i>kg</i>");
+                        $("#crew1_data_regenerate").html(listStr[i].material_regenerate+ "<i>kg</i>");
+                        $("#crew1_data_additive").html(listStr[i].material_additive+ "<i>kg</i>");
                         $("#crew1_data_total").html(listStr[i].material_total+ "<i>Kg</i>");
                         $("#crew1_data_temasphalt").html(listStr[i].temperature_asphalt+ " <i>℃</i>");
                         $("#crew1_data_aggregate").html(listStr[i].temperature_aggregate+ " <i>℃</i>");
@@ -62,19 +71,19 @@ function renderDataToPage(){
                         $("#crew2_basic_carNum").html(listStr[i].produce_car_num);
                         $("#crew2_basic_discNum").html(listStr[i].produce_disc_num);
                         $("#crew2_basic_userNum").html(listStr[i].produce_custom_num);
-                        $("#crew2_data_Aggregate1").html(listStr[i].material_aggregate_1 + "<i>%</i>");
-                        $("#crew2_data_Aggregate2").html(listStr[i].material_aggregate_2 + "<i>%</i>");
-                        $("#crew2_data_Aggregate3").html(listStr[i].material_aggregate_3 + "<i>%</i>");
-                        $("#crew2_data_Aggregate4").html(listStr[i].material_aggregate_4 + "<i>%</i>");
-                        $("#crew2_data_Aggregate5").html(listStr[i].material_aggregate_5 + "<i>%</i>");
-                        $("#crew2_data_Aggregate6").html(listStr[i].material_aggregate_6 + "<i>%</i>");
+                        $("#crew2_data_Aggregate1").html(arg1 + "<i>kg</i>");
+                        $("#crew2_data_Aggregate2").html(arg2 + "<i>kg</i>");
+                        $("#crew2_data_Aggregate3").html(arg3 + "<i>kg</i>");
+                        $("#crew2_data_Aggregate4").html(arg4 + "<i>kg</i>");
+                        $("#crew2_data_Aggregate5").html(arg5 + "<i>kg</i>");
+                        $("#crew2_data_Aggregate6").html(listStr[i].material_aggregate_6 + "<i>kg</i>");
                         $("#crew2_data_warehouse1").html(listStr[i].temperature_warehouse_1 + " <i>℃</i>");
                         $("#crew2_data_duster").html(listStr[i].temperature_duster+ " <i>℃</i>");
-                        $("#crew2_data_stone1").html(listStr[i].material_stone_1+ "<i>%</i>");
-                        $("#crew2_data_stone2").html(listStr[i].material_stone_2+ "<i>%</i>");
-                        $("#crew2_data_asphalt").html(listStr[i].material_asphalt+ "<i>%</i>");
-                        $("#crew2_data_regenerate").html(listStr[i].material_regenerate+ "<i>%</i>");
-                        $("#crew2_data_additive").html(listStr[i].material_additive+ "<i>%</i>");
+                        $("#crew2_data_stone1").html(listStr[i].material_stone_1+ "<i>kg</i>");
+                        $("#crew2_data_stone2").html(listStr[i].material_stone_2+ "<i>kg</i>");
+                        $("#crew2_data_asphalt").html(listStr[i].material_asphalt+ "<i>kg</i>");
+                        $("#crew2_data_regenerate").html(listStr[i].material_regenerate+ "<i>kg</i>");
+                        $("#crew2_data_additive").html(listStr[i].material_additive+ "<i>kg</i>");
                         $("#crew2_data_total").html(listStr[i].material_total+ "<i>Kg</i>");
                         $("#crew2_data_temasphalt").html(listStr[i].temperature_asphalt+ " <i>℃</i>");
                         $("#crew2_data_aggregate").html(listStr[i].temperature_aggregate+ " <i>℃</i>");
@@ -284,7 +293,7 @@ window.addEventListener("resize", function () {
 /******************************** Echart温度图表渲染Start********************************************/
 function getRealTimeDataEcharsTemp(){
     $.ajax({
-        url:basePath + "/getRealTimeDataEcharsTemp.do",
+        url:basePath + "/getFalseDataEcharsTemp.do",
         // url:"http://47.105.114.70/getRealTimeDataEcharsTemp.do",
         type:"post",
         dataType:"json",

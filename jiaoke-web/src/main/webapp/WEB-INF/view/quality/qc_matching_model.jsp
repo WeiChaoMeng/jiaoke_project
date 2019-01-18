@@ -21,7 +21,8 @@
 
 
     <ul class="toolbar">
-        <li><a href="#" id="from_click" ><i class="toolico iconfont">&#xe7e9;</i>新建</a></li>
+        <li><a href="#" id="from_click" ><i class="toolico iconfont">&#xe7e9;</i>新建通知</a></li>
+        <li><a href="#" id="showBrk" ><i class="toolico iconfont">&#xe7e9;</i>新建机配</a></li>
         <li><a href="#" id="btn_click"><i class="toolico iconfont">&#xe7ea;</i>删除</a></li>
 
     </ul>
@@ -230,7 +231,7 @@
                     <td class="tlabels">再生料：</td>
                     <td>
                         <select class="form_swidth" name="regenerate" data-value="0">
-                            <c:forEach items="${listAdditive}" var="item">
+                            <c:forEach items="${listRegenerate}" var="item">
                                 <option value="${item.id}">${item.name}</option>
                             </c:forEach>
                         </select>
@@ -244,15 +245,15 @@
 
 
                 <tr>
-                    <td class="tlabels">盐沥青：</td>
+                    <td class="tlabels">添加剂：</td>
                     <td>
-                        <select class="form_swidth"  name="additive" data-value="0">
-                            <c:forEach items="${listRegenerate}" var="item">
+                        <select class="form_swidth" name="additive" data-value="0">
+                            <c:forEach items="${listAdditive}" var="item">
                                 <option value="${item.id}">${item.name}</option>
                             </c:forEach>
                         </select>
                     </td>
-                    <td class="tlabels">盐沥青：</td>
+                    <td class="tlabels">添加剂含量：</td>
                     <td>
                         <input type="number" min="0.0" step="0.01" name="ratioAdditive" class="forminput inputstyle" value="0.0">
                     </td>
@@ -416,6 +417,44 @@
 
         </form>
     </div>
+
+    <!--查看模板弹出-->
+    <div id="showGradingBrk" class="form_background"  style="display:none;" ></div>
+    <div id="showGrading" class="ration_form_model" style="display:none;" >
+        <table class="my_form_table">
+            <tbody>
+            <tr>
+                <td class="ration_tlabels">一号机组模板号：</td>
+                <td>
+                    <input type="number" id="crew1_num" class="forminput inputstyle">
+
+                </td>
+                <td class="ration_tlabels">二号机组模板号：</td>
+                <td>
+                    <input type="number" id="crew2_num" class="forminput inputstyle">
+                </td>
+            </tr>
+            <tr>
+                <td class="ration_tlabels">级配Excell</td>
+                <td>
+                    <input type="file" id="excel-file"  class="ration_forminput ration_inputstyle">
+                </td>
+            </tr>
+
+            </tbody>
+
+        </table>
+        <div id="result"></div>
+        <div class="form_btn">
+            <input type="button" onclick="sendGrading()" value="上传" class="ration_btn_cancel">
+            <input type="button" onclick="closeGrading()" value="关闭" class="ration_btn_cancel">
+        </div>
+
+        </form>
+
+    </div>
+
+    <input type="text" value="${path}" id="path" style="display: none" >
 </body>
 
 <script type="text/javascript" src="/static/js/jquery.js"></script>
@@ -427,129 +466,7 @@
 
 <script type="text/javascript" src="/static/js/datepicker/js/bootstrap-datepicker.js"></script>
 <script type="text/javascript" src="/static/js/datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
-
-<script type="text/javascript">
-
-    $("#start").datepicker({
-        "language": "zh-CN",
-        "format": 'yyyy-mm-dd'
-    })
-    $("#end").datepicker({
-        "language": "zh-CN",
-        "format": 'yyyy-mm-dd'
-    })
-    $(".date .iconfont").click(function() {
-        $(this).prev().trigger("focus");
-    });
-
-    $('select.select').select();
-
-    //点击弹出删除按钮
-    function closeWindow() {
-        $('.popup_back,.popup_window_first').hide();
-    }
-    $('#btn_click').click(function() {
-        $('.popup_window_first,.popup_back').show();
-    });
-
-
-
-    //点击弹出添加模板
-    function closefrom() {
-        $('#addRatioBrk,#addRatio').hide();
-    }
-
-    $('#from_click').click(function () {
-        $('#addRatioBrk,#addRatio').show();
-    });
-
-    //点击查看模板
-    function closeShowRatio() {
-        $('#showRatioBrk,#showRatio').hide();
-    }
-
-
-    function delectRatio() {
-
-            var spCodesTemp = "";
-            $('input:checkbox[name=spCodeId]:checked').each(function(i){
-                if(0==i){
-                    spCodesTemp = $(this).val();
-                }else{
-                    spCodesTemp += (","+$(this).val());
-                }
-
-            });
-
-            if(spCodesTemp == null || spCodesTemp == ""){
-                closeWindow()
-            }else {
-                $.ajax({
-                    url: "http://47.105.114.70/delectRation.do",
-                    type: "post",
-                    data:{
-                        "idStr" : spCodesTemp
-                    },
-                    dataType:"json",
-                    success:function (res) {
-                        if(res.messages == "success"){
-                            location.reload();
-                        }else {
-                            layer.msg('删除失败');
-                            closeWindow()
-                        }
-                    }
-                    
-
-                })
-            }
-    }
-
-    function showRatio( ratioId ) {
-
-        $.ajax({
-            url:"${path}/showRatioById.do",
-            type: "post",
-            data:{
-                "idStr" : ratioId
-            },
-            dataType:"json",
-            success:function (res) {
-
-                if (res == null || res == "") {
-                    layer.msg('获取模板失败');
-
-                }
-
-                for (var k in res){
-                    $("input[data-value='" +k + "']").val(res[k])
-                }
-            }
-        })
-        $('#showRatioBrk,#showRatio').show();
-    }
-</script>
-
-<%--<script>
-    ;
-    ! function() {
-        //关于
-            debugger
-            if((${messages}) == 'success'){
-                layer.open({
-                    title: '添加成功',
-                    type: 2,
-                    area: ['600px', '450px'],
-                    fixed: false, //不固定
-                    maxmin: true,
-                    content: '信息添加成功',
-                    btn: ['火速围观', '残忍拒绝'],
-                    btnAlign: 'c'
-
-                });
-            }
-
-    }();
-</script>--%>
+<script type="text/javascript" src="/static/js/qc/ration_moudel.js"></script>
+<script type="text/javascript" src="/static/js/qc/xlsx.core.min.js"></script>
 
 </html>

@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 
 <head>
@@ -19,9 +20,7 @@
 
 <body style="padding:15px 8px 1000px 8px;background: #ffffff;">
 
-<%
-    request.setAttribute("path",request.getContextPath());
-%>
+
 
     <div class="infolist_realtime">
 
@@ -647,11 +646,4 @@
 <script type="text/javascript" src="/static/js/skin.js"></script>
 <script type="text/javascript" src="/static/js/qc/quality_monitoring_false.js"></script>
 
-<%--<script>--%>
-    <%--$(function () {--%>
-
-    <%--});--%>
-
-
-<%--</script>--%>
 </html>

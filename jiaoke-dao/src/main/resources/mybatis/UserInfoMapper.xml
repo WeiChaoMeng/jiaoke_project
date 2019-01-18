@@ -161,7 +161,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-    <select id="getUserInfoByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <select id="getUserInfoByUserName" parameterType="java.lang.String" resultType="com.jiaoke.oa.bean.UserInfo">
         SELECT
             user_info.id,
             user_info.usename,
@@ -177,7 +177,7 @@
         FROM
             user_info
             LEFT JOIN department ON department.department_key = user_info.department_key
-        WHERE usename = #{userName,jdbcType=VARCHAR}
+        WHERE usename = #{userName}
     </select>
 
     <select id="getUserByDepartmentKey" parameterType="java.lang.String" resultMap="BaseResultMap">

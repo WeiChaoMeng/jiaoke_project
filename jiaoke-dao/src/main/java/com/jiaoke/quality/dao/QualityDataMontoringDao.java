@@ -8,6 +8,8 @@
  **/
 package com.jiaoke.quality.dao;
 
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 import java.util.Map;
 
@@ -38,4 +40,21 @@ public interface QualityDataMontoringDao {
      * @return
      */
     List<Map<String, String>> selectRealTimeDataEcharsMaterial();
+
+
+    /**
+     * 根据机组与模板号查询级配相关数据
+     * @param crewNum
+     * @param rationNum
+     * @return
+     */
+    List<Map<String, String>> selectGradingBycrewNumAndRationNum(@Param("crewNum") String crewNum, @Param("rationNum") String rationNum);
+
+    /**
+     * 根据机组与配比号获取配比通知单相关数据
+     * @param crewNum
+     * @param rationNum
+     * @return
+     */
+    List<Map<String, String>> selectRationByCrewAndRotinNum(@Param("crewNum")  String crewNum, @Param("rationNum") String rationNum);
 }
