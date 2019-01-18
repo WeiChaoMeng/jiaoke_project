@@ -79,80 +79,129 @@
                 <div>
 
                     <div class="boxtitle">
-                        <span>当前产品材料构成曲线图</span>
+                        <span>一号机组产品级配曲线图</span>
                     </div>
-                    <div id="chart" class="charts1"></div>
+                    <div id="chart7" class="charts_2"></div>
 
                 </div>
 
                 <script type="text/javascript">
-                    var myChart = echarts.init(document.getElementById('chart'));
+                    var myChart7= echarts.init(document.getElementById('chart7'));
                     // 指定图表的配置项和数据
                     var colors = ['#5793f3', '#d14a61', '#675bba'];
-                    var option = {
-                        title: {
-                            text: '',
-                            subtext: ''
+                    var option7= {
+                        legend: {
+                            data:['合成级配','实际级配','上限','中值','下限']
+                        },
+                        grid: {
+
                         },
                         tooltip: {
-                            trigger: 'axis'
+                            trigger: 'item'
                         },
-                        legend: {
-                            data: ['模板占比', '实际占比'],
-                            x: 'left'
-                        },
-                        toolbox: {
-                            show: true,
-                            feature: {
-                                dataZoom: {
-                                    yAxisIndex: 'none'
-                                },
-                                dataView: { readOnly: false },
-                                magicType: { type: ['line', 'bar'] },
-                                restore: {},
-                                saveAsImage: {}
+                        xAxis: {
+                            type: 'value',
+                            name: '筛孔',
+                            nameGap: 16,
+                            nameTextStyle: {
+                                color: '#000',
+                                fontSize: 14
+                            },
+                            min:0,
+                            max:7,
+                            splitLine: {
+                                show: false
+                            },
+                            axisLabel: { //轴标签
+                                show: false //不显示
+                            },
+                            axisTick: { //轴刻度
+                                show: false //不显示
+                            },
+                            axisLine: { //轴线
+                                lineStyle: { //样式
+                                    color: '#000' //颜色
+                                }
                             }
                         },
-                        xAxis: [{
-                            axisLabel: {
-                                rotate: 70,
-                                interval: 0
-                            },
-                            type: 'category',
-                            boundaryGap: false,
-                            data: ['矿粉','沥青', '再生料', '添加剂', '骨料1', '骨料2', '骨料3', '骨料4', '骨料5', '骨料6', '骨料一']
-                        }],
                         yAxis: {
                             type: 'value',
-                            axisLabel: {
-                                formatter: '{value} %'
+                            name: '占比 %',
+                            nameLocation: 'end',
+                            nameGap: 20,
+                            position: 'left',
+                            offset: 3,
+                            max:100,
+                            min:0,
+                            scale: true,
+                            nameTextStyle: {
+                                color: '#fff',
+                                fontSize: 16
+                            },
+                            axisLine: {
+                                onZero: false,
+                                lineStyle: {
+                                    color: '#000'
+                                }
+                            },
+                            splitLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: '#000'
+                                }
                             }
                         },
                         series: [
                             {
-                                name: '上限占比',
                                 type: 'line',
-                                data: [11, 11, 15, 13, 12, 13, 10, 11, 11, 15, 13, 12, 13, 10],
-                                formatter: '{value} %',
-
-                            }, {
-                                name: '实际占比',
-                                type: 'line',
-                                data: [7, 8, 9, 10, 8, 13, 7, 9, 7, 9, 6, 8, 7, 5],
-                                formatter: '{value} %',
-                                markPoint: {
-
-                                    data: [
-                                        { type: 'max', name: '最大值' },
-                                        { type: 'min', name: '最小值' }
-                                    ]
+                                markLine: {
+                                    symbol: ['none', 'none'],
+                                    silent: true,
+                                    label: {
+                                        normal: {
+                                            position: "start"
+                                        }
+                                    },
+                                    lineStyle:{
+                                        color: '#000'
+                                    },
+                                    data: []
                                 }
                             },
                             {
-                                name: '下线占比',
+                                id: 'a',
                                 type: 'line',
-                                data: [1, 2, 2, 5, 3, 2, 0, 1, 2, 2, 5, 3, 2, 0],
-
+                                name:'合成级配',
+                                symbolSize:6,
+                                data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                            },
+                            {
+                                id: 'b',
+                                type: 'line',
+                                name:'实际级配',
+                                symbolSize:6,
+                                data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                            },
+                            {
+                                id: 'c',
+                                type: 'line',
+                                name:'上限',
+                                symbolSize:6,
+                                data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                            },
+                            {
+                                id: 'd',
+                                type: 'line',
+                                name:'中值',
+                                symbolSize:6,
+                                data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                            },
+                            {
+                                id: 'e',
+                                type: 'line',
+                                name:'下限',
+                                symbolSize:6,
+                                data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
                             }
                         ]
                     };
@@ -223,84 +272,132 @@
                 <div>
 
                     <div class="boxtitle">
-                        <span>当前产品材料构成曲线图</span>
+                        <span>二号机组产品级配曲线图</span>
                     </div>
-                    <div id="chart2" class="charts1"></div>
+                    <div id="chart4" class="charts_2"></div>
 
                 </div>
 
                 <script type="text/javascript">
-                    var myChart2 = echarts.init(document.getElementById('chart2'));
+                    var myChart4 = echarts.init(document.getElementById('chart4'));
                     // 指定图表的配置项和数据
                     var colors = ['#5793f3', '#d14a61', '#675bba'];
-                    var option2 = {
-                        title: {
-                            text: '',
-                            subtext: ''
+                    var option4 ={
+                        legend: {
+                            data:['合成级配','实际级配','上限','中值','下限']
+                        },
+                        grid: {
+
                         },
                         tooltip: {
-                            trigger: 'axis'
+                            trigger: 'item'
                         },
-                        legend: {
-                            data: ['模板占比', '实际占比'],
-                            x: 'left'
-                        },
-                        toolbox: {
-                            show: true,
-                            feature: {
-                                dataZoom: {
-                                    yAxisIndex: 'none'
-                                },
-                                dataView: { readOnly: false },
-                                magicType: { type: ['line', 'bar'] },
-                                restore: {},
-                                saveAsImage: {}
+                        xAxis: {
+                            type: 'value',
+                            name: '筛孔',
+                            nameGap: 16,
+                            nameTextStyle: {
+                                color: '#000',
+                                fontSize: 14
+                            },
+                            min:0,
+                            max:7,
+                            splitLine: {
+                                show: false
+                            },
+                            axisLabel: { //轴标签
+                                show: false //不显示
+                            },
+                            axisTick: { //轴刻度
+                                show: false //不显示
+                            },
+                            axisLine: { //轴线
+                                lineStyle: { //样式
+                                    color: '#000' //颜色
+                                }
                             }
                         },
-                        xAxis: [{
-                            axisLabel: {
-                                rotate: 70,
-                                interval: 0
-                            },
-                            type: 'category',
-                            boundaryGap: false,
-                            data: ['石料', '石料1', '石料2', '粉料', '沥青', '骨料', '骨料一', '石料', '石料1', '石料2', '粉料', '沥青', '骨料', '骨料一']
-                        }],
                         yAxis: {
                             type: 'value',
-                            axisLabel: {
-                                formatter: '{value} %'
+                            name: '占比 %',
+                            nameLocation: 'end',
+                            nameGap: 20,
+                            position: 'left',
+                            offset: 3,
+                            max:100,
+                            min:0,
+                            scale: true,
+                            nameTextStyle: {
+                                color: '#fff',
+                                fontSize: 16
+                            },
+                            axisLine: {
+                                onZero: false,
+                                lineStyle: {
+                                    color: '#000'
+                                }
+                            },
+                            splitLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: '#000'
+                                }
                             }
                         },
                         series: [
                             {
-                                name: '上限占比',
                                 type: 'line',
-                                data: [11, 11, 15, 13, 12, 13, 10, 11, 11, 15, 13, 12, 13, 10],
-                                formatter: '{value} %',
-
-                            }, {
-                                name: '实际占比',
-                                type: 'line',
-                                data: [7, 8, 9, 10, 8, 13, 7, 9, 7, 9, 6, 8, 7, 5],
-                                formatter: '{value} %',
-                                markPoint: {
-                                    data: [
-                                        { type: 'max', name: '最大值' },
-                                        { type: 'min', name: '最小值' }
-                                    ]
+                                markLine: {
+                                    symbol: ['none', 'none'],
+                                    silent: true,
+                                    label: {
+                                        normal: {
+                                            position: "start"
+                                        }
+                                    },
+                                    lineStyle:{
+                                        color: '#000'
+                                    },
+                                    data: []
                                 }
                             },
                             {
-                                name: '下线占比',
+                                id: 'a',
                                 type: 'line',
-                                data: [1, 2, 2, 5, 3, 2, 0, 1, 2, 2, 5, 3, 2, 0],
-
+                                name:'合成级配',
+                                symbolSize:6,
+                                data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                            },
+                            {
+                                id: 'b',
+                                type: 'line',
+                                name:'实际级配',
+                                symbolSize:6,
+                                data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                            },
+                            {
+                                id: 'c',
+                                type: 'line',
+                                name:'上限',
+                                symbolSize:6,
+                                data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                            },
+                            {
+                                id: 'd',
+                                type: 'line',
+                                name:'中值',
+                                symbolSize:6,
+                                data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                            },
+                            {
+                                id: 'e',
+                                type: 'line',
+                                name:'下限',
+                                symbolSize:6,
+                                data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
                             }
                         ]
                     };
-
-
 
                 </script>
             </li>

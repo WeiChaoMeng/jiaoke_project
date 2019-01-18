@@ -21,4 +21,7 @@ public interface QualityDynamicInf {
 
     void getLastDayToChars( HttpServletRequest request);
 
+    String getRatioListByDate(String proData,String crew);
+
+    void getEcharsDataByMaterialAndDate(String date, String material, String ratioNum, String crew,HttpServletRequest request);
 }

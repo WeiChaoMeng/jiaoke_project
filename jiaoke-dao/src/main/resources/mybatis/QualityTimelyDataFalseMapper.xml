@@ -29,11 +29,11 @@
         <result column="crew_num" jdbcType="INTEGER" property="crewNum"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, produce_date, product_time, produce_disc_num, produce_proportioning_num, produce_car_num, 
-    produce_custom_num, material_aggregate_6, material_aggregate_5, material_aggregate_4, 
-    material_aggregate_3, material_aggregate_2, material_aggregate_1, material_stone_1, 
-    material_stone_2, material_asphalt, material_regenerate, material_additive, material_total, 
-    temperature_warehouse_1, temperature_mixture, temperature_duster, temperature_asphalt, 
+    id, produce_date, product_time, produce_disc_num, produce_proportioning_num, produce_car_num,
+    produce_custom_num, material_aggregate_6, material_aggregate_5, material_aggregate_4,
+    material_aggregate_3, material_aggregate_2, material_aggregate_1, material_stone_1,
+    material_stone_2, material_asphalt, material_regenerate, material_additive, material_total,
+    temperature_warehouse_1, temperature_mixture, temperature_duster, temperature_asphalt,
     temperature_aggregate, crew_num
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -47,25 +47,25 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
     <insert id="insert" parameterType="com.jiaoke.quality.bean.QualityTimelyDataFalse">
-    insert into quality_timely_data_false (id, produce_date, product_time, 
-      produce_disc_num, produce_proportioning_num, 
-      produce_car_num, produce_custom_num, material_aggregate_6, 
-      material_aggregate_5, material_aggregate_4, 
-      material_aggregate_3, material_aggregate_2, 
-      material_aggregate_1, material_stone_1, material_stone_2, 
-      material_asphalt, material_regenerate, material_additive, 
-      material_total, temperature_warehouse_1, temperature_mixture, 
-      temperature_duster, temperature_asphalt, 
+    insert into quality_timely_data_false (id, produce_date, product_time,
+      produce_disc_num, produce_proportioning_num,
+      produce_car_num, produce_custom_num, material_aggregate_6,
+      material_aggregate_5, material_aggregate_4,
+      material_aggregate_3, material_aggregate_2,
+      material_aggregate_1, material_stone_1, material_stone_2,
+      material_asphalt, material_regenerate, material_additive,
+      material_total, temperature_warehouse_1, temperature_mixture,
+      temperature_duster, temperature_asphalt,
       temperature_aggregate, crew_num)
-    values (#{id,jdbcType=INTEGER}, #{produceDate,jdbcType=DATE}, #{productTime,jdbcType=TIME}, 
-      #{produceDiscNum,jdbcType=VARCHAR}, #{produceProportioningNum,jdbcType=VARCHAR}, 
-      #{produceCarNum,jdbcType=VARCHAR}, #{produceCustomNum,jdbcType=VARCHAR}, #{materialAggregate6,jdbcType=INTEGER}, 
-      #{materialAggregate5,jdbcType=INTEGER}, #{materialAggregate4,jdbcType=INTEGER}, 
-      #{materialAggregate3,jdbcType=INTEGER}, #{materialAggregate2,jdbcType=INTEGER}, 
-      #{materialAggregate1,jdbcType=INTEGER}, #{materialStone1,jdbcType=DOUBLE}, #{materialStone2,jdbcType=DOUBLE}, 
-      #{materialAsphalt,jdbcType=DOUBLE}, #{materialRegenerate,jdbcType=DOUBLE}, #{materialAdditive,jdbcType=DOUBLE}, 
-      #{materialTotal,jdbcType=DOUBLE}, #{temperatureWarehouse1,jdbcType=INTEGER}, #{temperatureMixture,jdbcType=INTEGER}, 
-      #{temperatureDuster,jdbcType=INTEGER}, #{temperatureAsphalt,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=INTEGER}, #{produceDate,jdbcType=DATE}, #{productTime,jdbcType=TIME},
+      #{produceDiscNum,jdbcType=VARCHAR}, #{produceProportioningNum,jdbcType=VARCHAR},
+      #{produceCarNum,jdbcType=VARCHAR}, #{produceCustomNum,jdbcType=VARCHAR}, #{materialAggregate6,jdbcType=INTEGER},
+      #{materialAggregate5,jdbcType=INTEGER}, #{materialAggregate4,jdbcType=INTEGER},
+      #{materialAggregate3,jdbcType=INTEGER}, #{materialAggregate2,jdbcType=INTEGER},
+      #{materialAggregate1,jdbcType=INTEGER}, #{materialStone1,jdbcType=DOUBLE}, #{materialStone2,jdbcType=DOUBLE},
+      #{materialAsphalt,jdbcType=DOUBLE}, #{materialRegenerate,jdbcType=DOUBLE}, #{materialAdditive,jdbcType=DOUBLE},
+      #{materialTotal,jdbcType=DOUBLE}, #{temperatureWarehouse1,jdbcType=INTEGER}, #{temperatureMixture,jdbcType=INTEGER},
+      #{temperatureDuster,jdbcType=INTEGER}, #{temperatureAsphalt,jdbcType=INTEGER},
       #{temperatureAggregate,jdbcType=INTEGER}, #{crewNum,jdbcType=INTEGER})
   </insert>
     <insert id="insertSelective" parameterType="com.jiaoke.quality.bean.QualityTimelyDataFalse">
@@ -228,119 +228,14 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.jiaoke.quality.bean.QualityTimelyDataFalse">
-        update quality_timely_data_false
-        <set>
-            <if test="produceDate != null">
-                produce_date = #{produceDate,jdbcType=DATE},
-            </if>
-            <if test="productTime != null">
-                product_time = #{productTime,jdbcType=TIME},
-            </if>
-            <if test="produceDiscNum != null">
-                produce_disc_num = #{produceDiscNum,jdbcType=VARCHAR},
-            </if>
-            <if test="produceProportioningNum != null">
-                produce_proportioning_num = #{produceProportioningNum,jdbcType=VARCHAR},
-            </if>
-            <if test="produceCarNum != null">
-                produce_car_num = #{produceCarNum,jdbcType=VARCHAR},
-            </if>
-            <if test="produceCustomNum != null">
-                produce_custom_num = #{produceCustomNum,jdbcType=VARCHAR},
-            </if>
-            <if test="materialAggregate6 != null">
-                material_aggregate_6 = #{materialAggregate6,jdbcType=INTEGER},
-            </if>
-            <if test="materialAggregate5 != null">
-                material_aggregate_5 = #{materialAggregate5,jdbcType=INTEGER},
-            </if>
-            <if test="materialAggregate4 != null">
-                material_aggregate_4 = #{materialAggregate4,jdbcType=INTEGER},
-            </if>
-            <if test="materialAggregate3 != null">
-                material_aggregate_3 = #{materialAggregate3,jdbcType=INTEGER},
-            </if>
-            <if test="materialAggregate2 != null">
-                material_aggregate_2 = #{materialAggregate2,jdbcType=INTEGER},
-            </if>
-            <if test="materialAggregate1 != null">
-                material_aggregate_1 = #{materialAggregate1,jdbcType=INTEGER},
-            </if>
-            <if test="materialStone1 != null">
-                material_stone_1 = #{materialStone1,jdbcType=DOUBLE},
-            </if>
-            <if test="materialStone2 != null">
-                material_stone_2 = #{materialStone2,jdbcType=DOUBLE},
-            </if>
-            <if test="materialAsphalt != null">
-                material_asphalt = #{materialAsphalt,jdbcType=DOUBLE},
-            </if>
-            <if test="materialRegenerate != null">
-                material_regenerate = #{materialRegenerate,jdbcType=DOUBLE},
-            </if>
-            <if test="materialAdditive != null">
-                material_additive = #{materialAdditive,jdbcType=DOUBLE},
-            </if>
-            <if test="materialTotal != null">
-                material_total = #{materialTotal,jdbcType=DOUBLE},
-            </if>
-            <if test="temperatureWarehouse1 != null">
-                temperature_warehouse_1 = #{temperatureWarehouse1,jdbcType=INTEGER},
-            </if>
-            <if test="temperatureMixture != null">
-                temperature_mixture = #{temperatureMixture,jdbcType=INTEGER},
-            </if>
-            <if test="temperatureDuster != null">
-                temperature_duster = #{temperatureDuster,jdbcType=INTEGER},
-            </if>
-            <if test="temperatureAsphalt != null">
-                temperature_asphalt = #{temperatureAsphalt,jdbcType=INTEGER},
-            </if>
-            <if test="temperatureAggregate != null">
-                temperature_aggregate = #{temperatureAggregate,jdbcType=INTEGER},
-            </if>
-            <if test="crewNum != null">
-                crew_num = #{crewNum,jdbcType=INTEGER},
-            </if>
-        </set>
-        where id = #{id,jdbcType=INTEGER}
-    </update>
-    <update id="updateByPrimaryKey" parameterType="com.jiaoke.quality.bean.QualityTimelyDataFalse">
-    update quality_timely_data_false
-    set produce_date = #{produceDate,jdbcType=DATE},
-      product_time = #{productTime,jdbcType=TIME},
-      produce_disc_num = #{produceDiscNum,jdbcType=VARCHAR},
-      produce_proportioning_num = #{produceProportioningNum,jdbcType=VARCHAR},
-      produce_car_num = #{produceCarNum,jdbcType=VARCHAR},
-      produce_custom_num = #{produceCustomNum,jdbcType=VARCHAR},
-      material_aggregate_6 = #{materialAggregate6,jdbcType=INTEGER},
-      material_aggregate_5 = #{materialAggregate5,jdbcType=INTEGER},
-      material_aggregate_4 = #{materialAggregate4,jdbcType=INTEGER},
-      material_aggregate_3 = #{materialAggregate3,jdbcType=INTEGER},
-      material_aggregate_2 = #{materialAggregate2,jdbcType=INTEGER},
-      material_aggregate_1 = #{materialAggregate1,jdbcType=INTEGER},
-      material_stone_1 = #{materialStone1,jdbcType=DOUBLE},
-      material_stone_2 = #{materialStone2,jdbcType=DOUBLE},
-      material_asphalt = #{materialAsphalt,jdbcType=DOUBLE},
-      material_regenerate = #{materialRegenerate,jdbcType=DOUBLE},
-      material_additive = #{materialAdditive,jdbcType=DOUBLE},
-      material_total = #{materialTotal,jdbcType=DOUBLE},
-      temperature_warehouse_1 = #{temperatureWarehouse1,jdbcType=INTEGER},
-      temperature_mixture = #{temperatureMixture,jdbcType=INTEGER},
-      temperature_duster = #{temperatureDuster,jdbcType=INTEGER},
-      temperature_asphalt = #{temperatureAsphalt,jdbcType=INTEGER},
-      temperature_aggregate = #{temperatureAggregate,jdbcType=INTEGER},
-      crew_num = #{crewNum,jdbcType=INTEGER}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+
 
     <select id="getTimeSurveillanceFalseData" resultType="java.util.HashMap">
         (
         SELECT
                'crew1' AS 'crewNum',
                date_format(produce_date, '%Y-%m-%d') AS produce_date,
-               date_format(produce_time, '%T') AS produce_time,
+               date_format(product_time, '%T') AS produce_time,
                produce_disc_num,
                produce_proportioning_num,
                produce_car_num,
@@ -374,7 +269,7 @@
                 SELECT
                        'crew2' AS 'crewNum',
                        date_format(produce_date, '%Y-%m-%d') AS produce_date,
-                       date_format(produce_time, '%T') AS produce_time,
+                       date_format(product_time, '%T') AS produce_time,
                        produce_disc_num,
                        produce_proportioning_num,
                        produce_car_num,
@@ -418,15 +313,15 @@
         FROM
             (
             SELECT
-                crew_num AS crewNum,
-                date_format( produce_date, '%Y-%m-%d' ) AS produceDate,
-                SUM( material_total ) DIV 100 AS materialTotal,
-                date_format( MIN( product_time ), '%T' ) AS startTime,
-                date_format( MAX( product_time ), '%T' ) AS endTime
+                   crew_num AS crewNum,
+                   date_format( produce_date, '%Y-%m-%d' ) AS produceDate,
+                   SUM( material_total ) DIV 100 AS materialTotal,
+                   date_format( MIN( product_time ), '%T' ) AS startTime,
+                   date_format( MAX( product_time ), '%T' ) AS endTime
             FROM
-                quality_timely_data_false
+                 quality_timely_data_false
             GROUP BY
-                produceDate
+                     produceDate,crew_num
             ) AS t
         ORDER BY
             t.produceDate DESC
@@ -557,6 +452,54 @@
                                      LIMIT 1
                                      ) as t2
                               on t1.crew1_modele_id = t2.produce_proportioning_num)
+    </select>
+
+    <select id="selectFalseDataEcharsTemp" resultType="java.util.Map">
+        (
+        SELECT
+               produce_disc_num,
+               temperature_warehouse_1,
+               temperature_mixture,
+               temperature_duster,
+               temperature_asphalt,
+               temperature_aggregate,
+               'crew1' AS crewNum
+        FROM
+             `quality_timely_data_false`
+        WHERE
+                crew_num = 1
+        ORDER BY
+                 id DESC
+        LIMIT 7
+        )
+        UNION ALL
+                (
+                SELECT
+                       produce_disc_num,
+                       temperature_warehouse_1,
+                       temperature_mixture,
+                       temperature_duster,
+                       temperature_asphalt,
+                       temperature_aggregate,
+                       'crew2' AS crewNum
+                FROM
+                     `quality_timely_data_false`
+                WHERE
+                        crew_num = 2
+                ORDER BY
+                         id DESC
+                LIMIT 7
+                );
+    </select>
+
+    <select id="selectHistoryByDateAndcrewNum" resultType="java.util.Map">
+        SELECT
+                *
+        FROM
+             quality_timely_data_false
+        WHERE
+                crew_num = #{crewNum}
+          AND produce_date = #{producedDate}
     </select>
 
 </mapper>

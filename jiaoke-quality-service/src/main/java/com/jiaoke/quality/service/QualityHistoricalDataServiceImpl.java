@@ -6,6 +6,8 @@ import com.jiaoke.quality.dao.QualityTimelyDataFalseMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author lihui
@@ -33,5 +35,13 @@ public class QualityHistoricalDataServiceImpl implements QualityHistoricalDataSe
         pageBean.setUrl(url);
 
         return pageBean;
+    }
+
+    @Override
+    public List<Map<String, String>> selectHistoryByDateAndcrewNum(String producedDate, String crewNum) {
+
+
+        List<Map<String, String>> list =  qualityTimelyDataFalseMapper.selectHistoryByDateAndcrewNum(producedDate,crewNum);
+        return list;
     }
 }

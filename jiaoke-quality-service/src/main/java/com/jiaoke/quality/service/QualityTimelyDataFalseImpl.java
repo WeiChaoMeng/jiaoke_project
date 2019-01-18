@@ -38,4 +38,16 @@ public class QualityTimelyDataFalseImpl implements QualityTimelyDataFalseService
         return jsonStr;
 
     }
+
+    @Override
+    public String selectFalseDataEcharsTemp() {
+
+        List<Map<String, String>> list = qualityTimelyDataFalseMapper.selectFalseDataEcharsTemp();
+
+        if (null == list) {return null;}
+
+        String jsonStr = JSONArray.parseArray(JSONObject.toJSONString(list)).toString();
+
+        return jsonStr;
+    }
 }

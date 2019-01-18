@@ -11,6 +11,7 @@ package com.jiaoke.quality.service;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jiake.utils.QualityDataMontoringUtil;
+import com.jiake.utils.QualityGradingUtil;
 import com.jiaoke.quality.dao.QualityDataMontoringDao;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
@@ -38,7 +39,7 @@ public class QualityDataMontoringImpl implements QualityDataMontoringInf {
      * 功能描述: <br>
      * <返回机组实时数据>
      *
-     * @param []
+     * @param
      * @return java.lang.String
      * @auther Melone
      * @date 2018/10/16 14:52
@@ -156,7 +157,7 @@ public class QualityDataMontoringImpl implements QualityDataMontoringInf {
      * 功能描述: <br>
      * <返回echars图表温度>
      *
-     * @param []
+     * @param
      * @return java.lang.String
      * @auther Melone
      * @date 2018/10/16 14:52
@@ -179,7 +180,7 @@ public class QualityDataMontoringImpl implements QualityDataMontoringInf {
      * 功能描述: <br>
      * <返回最新产品的材料数据，用于质量实时监控echars>
      *
-     * @param []
+     * @param
      * @return java.lang.String
      * @auther Melone
      * @date 2018/10/16 17:48
@@ -188,13 +189,14 @@ public class QualityDataMontoringImpl implements QualityDataMontoringInf {
     public String getRealTimeDataEcharsMaterial() {
 
         List<Map<String, String>> list = qualityDataMontoringDao.selectRealTimeDataEcharsMaterial();
+        //获取所有级配
+        Map<String,List<Map<String,String>>> gradingMap = new HashMap<>();
+        //返回的结果集 一层Key为机组 二层为模板级配等 三层Key为筛孔
+        List<Map<String,Map<String,List<Map<String,String>>>>> result = new ArrayList<>();
 
+        String resoult = QualityGradingUtil.getGradingResultJson(list,qualityDataMontoringDao,result);
 
-        if (null == list) {return null;}
-
-        String jsonStr = JSONArray.parseArray(JSONObject.toJSONString(list)).toString();
-
-        return jsonStr;
+        return resoult;
 
     }
 }

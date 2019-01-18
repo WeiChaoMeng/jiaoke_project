@@ -9,14 +9,17 @@
 package com.jiaoke.controller;
 
 import com.alibaba.druid.util.StringUtils;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.QualityMatchingUtil;
 import com.jiaoke.common.bean.PageBean;
 import com.jiaoke.quality.bean.QualityDataManagerDay;
 import com.jiaoke.quality.bean.QualityRatioModel;
 import com.jiaoke.quality.bean.QualityRatioTemplate;
-import com.jiaoke.quality.bean.QualityTimelyDataFalse;
 import com.jiaoke.quality.service.*;
+import org.apache.ibatis.annotations.Param;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,7 +30,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -205,7 +209,14 @@ public class QualityController {
     }
 
 
+    @ResponseBody
+    @RequestMapping(value ={"/addGrading.do"} , method = RequestMethod.POST)
+    public String addGrading(String jsonData,String crew1Id,String crew2Id){
 
+        String jsonMessage = qualityMatchingInf.insetGrading(jsonData,crew1Id,crew2Id);
+
+        return jsonMessage;
+    }
     /************************************  配比管理 end **********************************************/
 
 
@@ -387,24 +398,60 @@ public class QualityController {
 
         String temp = request.getParameter("currentPageNum");
         String warningLive = request.getParameter("warningLive");
+        String proData = request.getParameter("proData");
+        String crew = request.getParameter("crew");
+        String rationId = request.getParameter("rationId");
         String url = QualityMatchingUtil.getUrl(request);
 
         if ("" == warningLive || warningLive == null)  warningLive = "0";
 
         PageBean<Map<String,String>> pageBean = new PageBean<Map<String,String>>();
         if ( temp == null || temp.trim().isEmpty() ){
-            pageBean = qualityAuxiliaryAnalysisInf.selelectWarningLiveData(1,url,warningLive);
+            pageBean = qualityAuxiliaryAnalysisInf.selelectWarningLiveData(1,url,warningLive,proData,crew, rationId );
         }else {
-            pageBean = qualityAuxiliaryAnalysisInf.selelectWarningLiveData(Integer.parseInt(temp),url,warningLive);
+            pageBean = qualityAuxiliaryAnalysisInf.selelectWarningLiveData(Integer.parseInt(temp),url,warningLive,proData,crew, rationId );
         }
-        List<Map<String,String>> list = qualityAuxiliaryAnalysisInf.selectWaringData(pageBean);
+
+        List<Map<String,String>> list = new ArrayList<>();
+
+//        if (pageBean.getPageData().size() != 0){
+//            list = qualityAuxiliaryAnalysisInf.selectWaringData(pageBean);
+//        }
+
 
         request.setAttribute("pageBean",pageBean);
-        request.setAttribute("waringList",list);
+//        request.setAttribute("waringList",list);
+        request.setAttribute("proData",proData);
+        request.setAttribute("crew",crew);
+        request.setAttribute("rationId",rationId);
+        request.setAttribute("warningLive",warningLive);
 
         return "quality/qc_auxiliary_analysis";
     }
 
+    /**
+     * 查询基本信息
+     * @param producedId
+     * @param prodate
+     * @param discNum
+     * @param request
+     * @return
+     */
+    @RequestMapping("/getProductById.do")
+    public String getPageByProductId(@RequestParam("producedId") String producedId,@RequestParam("prodate") String prodate,@RequestParam("discNum") String discNum,@RequestParam("crew") String crew,HttpServletRequest request){
+
+       qualityAuxiliaryAnalysisInf.getPageByProductIdAndProdate(producedId,prodate,discNum,crew,request);
+
+        return "quality/qc_auxiliary_message";
+    }
+
+    @ResponseBody
+    @RequestMapping("/getProductMessageById.do")
+    public String getProductMessageById(@RequestParam("id") String id,@RequestParam("crewNum") String crewNum){
+        String result = qualityAuxiliaryAnalysisInf.getRealTimeDataEcharsMaterial(id,crewNum);
+
+        return result;
+    }
     /********************************  辅助分析 end *****************************************/
 
 
@@ -506,6 +553,13 @@ public class QualityController {
         return  resoure;
     }
 
+    @RequestMapping("/getFalseDataEcharsTemp.do")
+    @ResponseBody
+    public String getFalseDataEcharsTemp(){
+        String  resoure = qualityTimelyDataFalseService.selectFalseDataEcharsTemp();
+        return  resoure;
+    }
+
 
     /********************************  实时监测（假） end *****************************************/
 
@@ -534,6 +588,12 @@ public class QualityController {
     }
 
 
+    @RequestMapping(value = "/getFalseDataByDate.do")
+    public String getFalseDataByDate( HttpServletRequest request,String producedDate,String crewNum ){
+        List<Map<String,String>> list = qualityHistoricalDataService.selectHistoryByDateAndcrewNum(producedDate,crewNum);
+        request.setAttribute("prolist",list);
+        return "quality/qc_false_data_list";
+    }
 
 
     /********************************  历史数据（假） end *****************************************/
@@ -548,10 +608,17 @@ public class QualityController {
 
 
     @RequestMapping(value = "/getEcharsDataByMaterialAndDate.do")
-    public String dayToChars(String date,String material,HttpServletRequest request){
-        System.out.println(date);
-        System.out.println(material);
+    public String dayToChars(String date,String material,String ratioNum ,String crew,HttpServletRequest request){
+
+        qualityDynamicInf.getEcharsDataByMaterialAndDate(date,material,ratioNum,crew,request);
         return "quality/qc_dynamic_management";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getRatioListByDate.do" , method = RequestMethod.POST)
+    public  String getRatioListByDate(String proData,String crew){
+        String res =  qualityDynamicInf.getRatioListByDate(proData,crew);
+        return res;
     }
 
     /********************************  动态管理 end *****************************************/

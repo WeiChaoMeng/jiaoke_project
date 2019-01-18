@@ -11,7 +11,7 @@
     url('../../css/qc/jedatefont.ttf') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
     url('../../css/qc/jedatefont.svg') format('svg'); /* iOS 4.1- */
 }
-  
+
 .jedatefont {font-family:"jedatefont" !important;font-style:normal;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;}
 .jedate{height:auto; font-family:'PingFangSC-Light','PingFang SC','Segoe UI','Lucida Grande','NotoSansHans-Light','Microsoft YaHei', '\5FAE\8F6F\96C5\9ED1', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif;font-size:12px; cursor:default;margin: 0;padding: 0;overflow: hidden;position: relative;border-radius:4px;display: inline-block;border: 1px solid #e2e2e2;box-shadow: 0 1px 6px rgba(0,0,0,.15);background-color:#fff;}
 .jedate *{margin: 0;padding: 0;list-style-type:none;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;font-style:normal;font-family:'PingFangSC-Light','PingFang SC','Segoe UI','Lucida Grande','NotoSansHans-Light','Microsoft YaHei', '\5FAE\8F6F\96C5\9ED1', STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif;}
@@ -82,7 +82,7 @@
 .jedate .jedate-time .timeheader{width: 100%;float:left;height: 36px;line-height: 36px;background-color: #f2f2f2;text-align: center;font-size: 14px;position: relative;}
 .jedate .jedate-time .timecontent{width: 100%;float:left;}
 .jedate .jedate-time .hmstitle{width: 211px;margin: 0 auto;overflow: hidden;padding-top: 4px;text-align: center;}
-.jedate .jedate-time .hmstitle p{width: 33.33%;float:left;height: 30px;line-height: 30px;font-size: 13px;}
+.jedate .jedate-time .hmstitle p{width: 100%;float:left;height: 30px;line-height: 30px;font-size: 13px;}
 .jedate .jedate-time .hmslist{width: 211px;margin: 0 auto 6px auto;border: 1px solid #ddd;border-right: none;overflow: hidden;}
 .jedate .jedate-time .hmslist .hmsauto{height: 100%;margin: 0;text-align: center;}
 .jedate .jedate-time .hmslist ul {width: 70px;height: 174px;float: left;border-right: 1px solid #ddd;overflow: hidden;}

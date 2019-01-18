@@ -82,6 +82,7 @@
         (SELECT
                 t1.*,
                 'crew1' AS 'crewNum',
+                t2.produce_proportioning_num,
                 t2.material_aggregate_1,
                 t2.material_aggregate_2,
                 t2.material_aggregate_3,
@@ -132,6 +133,7 @@
                 (SELECT
                         t1.*,
                         'crew2' AS 'crewNum',
+                        t2.produce_proportioning_num,
                         t2.material_aggregate_1,
                         t2.material_aggregate_2,
                         t2.material_aggregate_3,
@@ -180,6 +182,26 @@
                               on t1.crew1_modele_id = t2.produce_proportioning_num)
 
 
+    </select>
+
+    <select id="selectGradingBycrewNumAndRationNum" resultType="java.util.Map">
+        SELECT
+                *
+        FROM
+             quality_proportioning_grading
+        WHERE
+                ${crewNum}_id = ${rationNum};
+    </select>
+
+    <select id="selectRationByCrewAndRotinNum" resultType="java.util.Map">
+        SELECT
+               ratio_regenerate1,
+               ratio_regenerate2,
+               ratio_additive
+        FROM
+             quality_proportioning_message
+        WHERE
+                ${crewNum}_modele_id = ${rationNum}
     </select>
 
 </mapper>

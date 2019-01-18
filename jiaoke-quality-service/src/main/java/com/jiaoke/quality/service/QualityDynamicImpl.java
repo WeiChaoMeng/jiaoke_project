@@ -8,13 +8,15 @@
  **/
 package com.jiaoke.quality.service;
 
+import com.alibaba.fastjson.JSON;
+import com.jiake.utils.QualityDynamicUtil;
 import com.jiaoke.quality.dao.QualityDynamicDao;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.text.DecimalFormat;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 /**
  *  <一句话功能描述>
@@ -35,137 +37,104 @@ public class QualityDynamicImpl implements QualityDynamicInf {
 
         List<Map<String,String>> list = qualityDynamicDao.getLastDayToChars();
 
+        if (list.size() == 0) return;
 
-        Map<String,List<String>> content = new HashMap<>();
-        Map<String,List<String>> maxMin = new HashMap<>();
-        Map<String,List<String>> svg3 = new HashMap<>();
-        Map<String,List<String>> svg5up = new HashMap<>();
-        Map<String,List<String>> svg5down = new HashMap<>();
-        Map<String,List<String>> maxMinUp = new HashMap<>();
-        Map<String,String> moudelRatio = new HashMap<>();
-        Set ratios = new HashSet();
-
-
-        DecimalFormat df = new DecimalFormat("0.00");
-        for (int i= 0; i < list.size();i++){
-            String key = list.get(i).get("produce_proportioning_num");
-            ratios.add(key);
-            content.put(key,new ArrayList<>());
-            maxMin.put(key,new ArrayList<>());
-            svg3.put(key,new ArrayList<>());
-            svg5up.put(key,new ArrayList<>());
-            svg5down.put(key,new ArrayList<>());
-            maxMinUp.put(key,new ArrayList<>());
-        }
-
-
-
-        List<Map<String,Object>> ratioMap =  qualityDynamicDao.getAggregateRatioByMoudelId(ratios);
-
-        for (int i = 0; i < ratioMap.size();i++){
-            String ratio_stone = ratioMap.get(i).get("ratio_stone").toString();
-            double asphalt_ratio_moudle =Double.parseDouble(ratio_stone) /(100 - Double.parseDouble(ratio_stone)) * 100;
-            moudelRatio.put(ratioMap.get(i).get("crew1_modele_id").toString(),String.valueOf(df.format(asphalt_ratio_moudle/(100 - asphalt_ratio_moudle) * 100)));
-        }
-
-
-
-        //计算油石比
-        for (int i = 0; i < list.size();i++){
-
-            String asphalt = String.valueOf(list.get(i).get("material_asphalt"));
-            String total = String.valueOf(list.get(i).get("material_total"));
-            String key = list.get(i).get("produce_proportioning_num");
-
-            //计算沥青含量
-            Float asphalt_content = Float.parseFloat(asphalt)/Float.parseFloat(total) * 100;
-            //计算油石比
-            Float asphalt_ratio = (asphalt_content/(100 - asphalt_content)) * 100;
-
-            content.get(key).add(df.format(asphalt_ratio));
-
-        }
-
-        //计算极差及三个数据平均值
-        for (Map.Entry<String, List<String>> entry : content.entrySet()) {
-
-            //删除少于二十盘的配比号，使用Set集合做控制
-            if(entry.getValue().size() <= 20 ) {
-                ratios.remove(entry.getKey());
-                continue;
-            }
-            for (int i = 0; i < entry.getValue().size();i++){
-
-                if (i > 1){
-                    double first = Double.parseDouble(entry.getValue().get(i - 2));
-                    double second = Double.parseDouble(entry.getValue().get(i - 1));
-                    double third = Double.parseDouble(entry.getValue().get(i));
-
-                    double maxtem = first > second ? first:second;
-                    double max = maxtem > third ? second:third;
-
-                    double mintem = first < second ? first:second;
-                    double min = mintem < third ?  mintem : third;
-
-                    maxMin.get(entry.getKey()).add(df.format(max - min));
-                    svg3.get(entry.getKey()).add(df.format((first+second+third)/3));
-                }
-            }
-        }
-
-        //计算极差上限
-        for (Map.Entry<String, List<String>> maxMinentry : maxMin.entrySet()) {
-            for (int i = 1; i < maxMinentry.getValue().size(); i++) {
-                if(i%5 == 0) {
-                    double a1 = Double.parseDouble(maxMinentry.getValue().get(i - 5));
-                    double b2 = Double.parseDouble(maxMinentry.getValue().get(i - 4));
-                    double c3 = Double.parseDouble(maxMinentry.getValue().get(i - 3));
-                    double d4 = Double.parseDouble(maxMinentry.getValue().get(i - 2));
-                    double e5 = Double.parseDouble(maxMinentry.getValue().get(i - 1));
-
-                    //极差平均值
-                    double maxMinX = (a1 + b2 + c3 + d4 + e5)/5;
-                    //添加极差上限
-                    maxMinUp.get(maxMinentry.getKey()).add(df.format(2.115*maxMinX));
-                }
-            }
-        }
-
-            //计算平均值上下限
-            for (Map.Entry<String, List<String>> svgentry : svg3.entrySet()){
-                for (int i = 1 ; i < svgentry.getValue().size(); i++){
-                    if(i%5 == 0){
-                        double a1 = Double.parseDouble(svgentry.getValue().get(i - 5));
-                        double b2 = Double.parseDouble(svgentry.getValue().get(i - 4));
-                        double c3 = Double.parseDouble(svgentry.getValue().get(i - 3));
-                        double d4 = Double.parseDouble(svgentry.getValue().get(i - 2));
-                        double e5 = Double.parseDouble(svgentry.getValue().get(i - 1));
-
-                        //平均值
-                        double svgX = (a1 + b2 + c3 + d4 + e5)/5;
-                        //此处逻辑，获得5个三次平均后的值，再次平均。获得已经获得的极差上限除以固定值获得5个三次极差的平均值后套用公式
-                        //极差
-                        double svgR =  i/5 ==1? Double.parseDouble(maxMinUp.get(svgentry.getKey()).get(0))/2.115 : Double.parseDouble(maxMinUp.get(svgentry.getKey()).get(i/5 - 1))/2.115;
-
-                        //添加平均值上限
-                        svg5up.get(svgentry.getKey()).add(df.format(svgX + 0.577 * svgR));
-                        //添加平均值下限
-                        svg5down.get(svgentry.getKey()).add(df.format(svgX - 0.577 * svgR));
-
-                    }
-                }
-            }
-
-
-        request.setAttribute("rationList",ratios);
-        request.setAttribute("allItem",content);
-        request.setAttribute("maxMin",maxMin);
-        request.setAttribute("svg3",svg3);
-        request.setAttribute("moudelRatio",moudelRatio);
-        request.setAttribute("svg5up",svg5up);
-        request.setAttribute("svg5down",svg5down);
-        request.setAttribute("maxMinUp",maxMinUp);
+        QualityDynamicUtil.setRequestAttributeUtil(list,qualityDynamicDao,"ratio_stone","material_asphalt","crew1",request);
 
     }
+
+
+    @Override
+    public String getRatioListByDate(String proData,String crew) {
+
+        if (proData.isEmpty() || crew.isEmpty()) return null;
+        String[] array = proData.split("to");
+
+        //处理 一、二机组区别
+        String crewNum;
+        switch (crew){
+            case "data1":
+                crewNum = "crew1";
+                break;
+            case "data2":
+                crewNum = "crew2";
+                break;
+                default:
+                    crewNum = "crew1";
+        }
+
+        List<Map<String,String>> map = qualityDynamicDao.selectRatioListByDate(array[0], array[1],crew,crewNum);
+
+        return JSON.toJSONString(map);
+    }
+
+    @Override
+    public void getEcharsDataByMaterialAndDate(String date, String material, String ratioNum, String crew,HttpServletRequest request) {
+
+        String[] strArray = date.split("to");
+        List<Map<String,String>> list = qualityDynamicDao.selectProductByMaterialAndDate(strArray[0],strArray[1],material,ratioNum,crew);
+        String ratioName;
+        String crewName = "crew1";
+        if (list.size() == 0) return;
+
+        switch (crew){
+            case "data1":
+                crewName = "crew1";
+                request.setAttribute("crewNum","一号");
+                break;
+            case "data2":
+                crewName = "crew2";
+                request.setAttribute("crewNum","二号");
+                break;
+        }
+
+        switch (material){
+            case "material_aggregate_6":
+                ratioName = "repertory_six";
+                request.setAttribute("material","六仓材料");
+                break;
+            case "material_aggregate_5":
+                ratioName = "repertory_five";
+                request.setAttribute("material","五仓材料");
+                break;
+            case "material_aggregate_4":
+                ratioName = "repertory_four";
+                request.setAttribute("material","四仓材料");
+                break;
+            case "material_aggregate_3":
+                ratioName = "repertory_three";
+                request.setAttribute("material","三仓材料");
+                break;
+            case "material_aggregate_2":
+                ratioName = "repertory_two";
+                request.setAttribute("material","二仓材料");
+                break;
+            case "material_aggregate_1":
+                ratioName = "repertory_one";
+                request.setAttribute("material","一仓材料");
+                break;
+            case "material_asphalt":
+                ratioName = "ratio_stone";
+                break;
+            case "material_stone":
+                ratioName = "breeze";
+                request.setAttribute("material","石粉比");
+                break;
+                default:
+                    ratioName = "ratio_stone";
+        }
+
+
+        QualityDynamicUtil.setRequestAttributeUtil(list,qualityDynamicDao,ratioName,material,crewName,request);
+
+        //回显
+        request.setAttribute("proDate",date);
+        request.setAttribute("crew",crew);
+        request.setAttribute("ratioNum",ratioNum);
+
+    }
+
+
+
 
 }

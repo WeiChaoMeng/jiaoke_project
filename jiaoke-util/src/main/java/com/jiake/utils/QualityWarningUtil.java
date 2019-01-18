@@ -241,7 +241,7 @@ public class QualityWarningUtil {
                 ratioTemplate.getBreeze(),
                 ratioTemplate.getRatioStone(),
                 ratioTemplate.getRatioRegenerate1() + ratioTemplate.getRatioRegenerate2(),
-                ratioTemplate.getAdditive()};
+                ratioTemplate.getRatioAdditive()};
 
 
         for (int i = 0; i < array.length; i++) {

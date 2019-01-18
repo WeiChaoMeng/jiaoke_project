@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 
 <head>
@@ -275,80 +276,120 @@
         var colors = ['#5793f3', '#d14a61', '#675bba'];
         var option7= {
             title: {
-                text: '一号机组配比图',
-                x: 'center'
-            },
-            tooltip: {
-                trigger: 'axis'
+                text: '二号机组产品级配曲线图'
             },
             legend: {
-                data: ['上限占比', '实际占比', '下限占比'],
-                x: 'left'
+                data:['合成级配','实际级配','上限','中值','下限']
             },
-            toolbox: {
-                show: true,
-                feature: {
-                    dataZoom: {
-                        yAxisIndex: 'none'
-                    },
-                    dataView: { readOnly: false },
-                    magicType: { type: ['line', 'bar'] },
-                    restore: {},
-                    saveAsImage: {}
+            grid: {
+
+            },
+            tooltip: {
+                trigger: 'item'
+            },
+            xAxis: {
+                type: 'value',
+                name: '筛孔',
+                nameGap: 16,
+                nameTextStyle: {
+                    color: '#000',
+                    fontSize: 14
+                },
+                min:0,
+                max:7,
+                splitLine: {
+                    show: false
+                },
+                axisLabel: { //轴标签
+                    show: false //不显示
+                },
+                axisTick: { //轴刻度
+                    show: false //不显示
+                },
+                axisLine: { //轴线
+                    lineStyle: { //样式
+                        color: '#000' //颜色
+                    }
                 }
             },
-            xAxis: [{
-                axisLabel: {
-                    rotate: 70,
-                    interval: 0
-                },
-                type: 'category',
-                boundaryGap: false,
-                data: ['骨料1', '骨料2', '骨料3', '骨料4', '骨料5', '骨料6', '石粉', '沥青', '再生料', '添加剂']
-            }],
             yAxis: {
                 type: 'value',
-                axisLabel: {
-                    formatter: '{value} %'
+                name: '占比 %',
+                nameLocation: 'end',
+                nameGap: 20,
+                position: 'left',
+                offset: 3,
+                max:100,
+                min:0,
+                scale: true,
+                nameTextStyle: {
+                    color: '#fff',
+                    fontSize: 16
+                },
+                axisLine: {
+                    onZero: false,
+                    lineStyle: {
+                        color: '#000'
+                    }
+                },
+                splitLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#000'
+                    }
                 }
             },
             series: [
                 {
-                    name: '上限占比',
                     type: 'line',
-                    data: [11, 11, 15, 13, 12, 13, 10, 11, 11, 15, 13, 12, 13, 10],
-                    formatter: '{value} %',
-                    markPoint: {
-
-                        data: [
-                            { type: 'max', name: '最大值' },
-                            { type: 'min', name: '最小值' }
-                        ]
-                    }
-                }, {
-                    name: '实际占比',
-                    type: 'line',
-                    data: [7, 8, 9, 10, 8, 13, 7, 9, 7, 9, 6, 8, 7, 5],
-                    formatter: '{value} %',
-                    markPoint: {
-
-                        data: [
-                            { type: 'max', name: '最大值' },
-                            { type: 'min', name: '最小值' }
-                        ]
+                    markLine: {
+                        symbol: ['none', 'none'],
+                        silent: true,
+                        label: {
+                            normal: {
+                                position: "start"
+                            }
+                        },
+                        lineStyle:{
+                            color: '#000'
+                        },
+                        data: []
                     }
                 },
                 {
-                    name: '下限占比',
+                    id: 'a',
                     type: 'line',
-                    data: [1, 2, 2, 5, 3, 2, 0, 1, 2, 2, 5, 3, 2, 0],
-                    formatter: '{value} %',
-                    markPoint: {
-                        data: [
-                            { type: 'max', name: '最大值' },
-                            { type: 'min', name: '最小值' }
-                        ]
-                    }
+                    name:'合成级配',
+                    symbolSize:6,
+                    data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                },
+                {
+                    id: 'b',
+                    type: 'line',
+                    name:'实际级配',
+                    symbolSize:6,
+                    data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                },
+                {
+                    id: 'c',
+                    type: 'line',
+                    name:'上限',
+                    symbolSize:6,
+                    data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                },
+                {
+                    id: 'd',
+                    type: 'line',
+                    name:'中值',
+                    symbolSize:6,
+                    data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                },
+                {
+                    id: 'e',
+                    type: 'line',
+                    name:'下限',
+                    symbolSize:6,
+                    data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
                 }
             ]
         };
@@ -369,75 +410,125 @@
         var myChart4 = echarts.init(document.getElementById('chart4'));
         // 指定图表的配置项和数据
         var colors = ['#5793f3', '#d14a61', '#675bba'];
-        var option4 = {
+        var option4 ={
             title: {
-                text: '二号机组配比图',
-                x: 'center'
-            },
-            tooltip: {
-                trigger: 'axis'
+                text: '二号机组产品级配曲线图'
             },
             legend: {
-                data: ['上限占比', '实际占比', '下限占比'],
-                x: 'left'
+                data:['合成级配','实际级配','上限','中值','下限']
             },
-            toolbox: {
-                show: true,
-                feature: {
-                    dataZoom: {
-                        yAxisIndex: 'none'
-                    },
-                    dataView: { readOnly: false },
-                    magicType: { type: ['line', 'bar'] },
-                    restore: {},
-                    saveAsImage: {}
+            grid: {
+
+            },
+            tooltip: {
+                trigger: 'item'
+            },
+            xAxis: {
+                type: 'value',
+                name: '筛孔',
+                nameGap: 16,
+                nameTextStyle: {
+                    color: '#000',
+                    fontSize: 14
+                },
+                min:0,
+                max:7,
+                splitLine: {
+                    show: false
+                },
+                axisLabel: { //轴标签
+                    show: false //不显示
+                },
+                axisTick: { //轴刻度
+                    show: false //不显示
+                },
+                axisLine: { //轴线
+                    lineStyle: { //样式
+                        color: '#000' //颜色
+                    }
                 }
             },
-            xAxis: [{
-                axisLabel: {
-                    rotate: 70,
-                    interval: 0
-                },
-                type: 'category',
-                boundaryGap: false,
-                data: ['骨料1', '骨料2', '骨料3', '骨料4', '骨料5', '骨料6', '石粉', '沥青', '再生料', '添加剂']
-            }],
             yAxis: {
                 type: 'value',
-                axisLabel: {
-                    formatter: '{value} %'
+                name: '占比 %',
+                nameLocation: 'end',
+                nameGap: 20,
+                position: 'left',
+                offset: 3,
+                max:100,
+                min:0,
+                scale: true,
+                nameTextStyle: {
+                    color: '#fff',
+                    fontSize: 16
+                },
+                axisLine: {
+                    onZero: false,
+                    lineStyle: {
+                        color: '#000'
+                    }
+                },
+                splitLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#000'
+                    }
                 }
             },
             series: [
                 {
-                    name: '上限占比',
                     type: 'line',
-                    data: [11, 11, 15, 13, 12, 13, 10, 11, 11, 15, 13, 12, 13, 10],
-                    formatter: '{value} %',
-                }, {
-                    name: '实际占比',
-                    type: 'line',
-                    data: [7, 8, 9, 10, 8, 13, 7, 9, 7, 9, 6, 8, 7, 5],
-                    formatter: '{value} %',
-                    markPoint: {
-
-                        data: [
-                            { type: 'max', name: '最大值' },
-                            { type: 'min', name: '最小值' }
-                        ]
+                    markLine: {
+                        symbol: ['none', 'none'],
+                        silent: true,
+                        label: {
+                            normal: {
+                                position: "start"
+                            }
+                        },
+                        lineStyle:{
+                            color: '#000'
+                        },
+                        data: []
                     }
                 },
                 {
-                    name: '下限占比',
+                    id: 'a',
                     type: 'line',
-                    data: [1, 2, 2, 5, 3, 2, 0, 1, 2, 2, 5, 3, 2, 0],
-                    formatter: '{value} %',
-
+                    name:'合成级配',
+                    symbolSize:6,
+                    data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                },
+                {
+                    id: 'b',
+                    type: 'line',
+                    name:'实际级配',
+                    symbolSize:6,
+                    data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                },
+                {
+                    id: 'c',
+                    type: 'line',
+                    name:'上限',
+                    symbolSize:6,
+                    data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                },
+                {
+                    id: 'd',
+                    type: 'line',
+                    name:'中值',
+                    symbolSize:6,
+                    data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                },
+                {
+                    id: 'e',
+                    type: 'line',
+                    name:'下限',
+                    symbolSize:6,
+                    data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
                 }
             ]
         };
-
-
 
     </script>
 </div>

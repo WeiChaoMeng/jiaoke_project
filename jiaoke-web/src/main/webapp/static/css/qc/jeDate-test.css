@@ -25,7 +25,7 @@ a:hover{color:#777}
 .jewarp{width:100%;margin: 15px 0; }
 .jewarp h3{position: relative;left: 0;height: 40px;line-height:40px;padding-left:10px;white-space: nowrap;border-radius: 4px 4px 0 0;font-size: 16px;color:#00A080;text-align: left;border: 1px solid #ededed;border-bottom: none;}
 .jewarp .content{border: 1px solid #ededed;border-radius:0 0 4px 4px;padding: 25px 10px 10px 10px;overflow: hidden;}
-.jeitem{width:33.33%;margin:0 0px 15px 0;position: relative;float: left;padding-top: 20px;}
+.jeitem{width:100%;margin:0 0px 15px 0;position: relative;float: left;padding-top: 20px;}
 .jelabel{width: 120px;float: left;display: block;padding: 9px 10px;font-weight: 400;text-align: right; color:#555;}
 .jeinpbox{width: 230px;margin-right: 10px;float: left;vertical-align: middle;position: relative;}
 .jeinput{display: block;width: 100%;padding-left: 10px; height: 36px;line-height: 34px\9;border: 1px solid #e6e6e6;background-color: #fff;border-radius: 3px;background-color: #fcfcfc;}

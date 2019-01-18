@@ -18,17 +18,9 @@ import java.util.Map;
  */
 @Repository
 public interface QualityTimelyDataFalseMapper {
-    int deleteByPrimaryKey(Integer id);
-
-    int insert(QualityTimelyDataFalse record);
 
     int insertSelective(QualityTimelyDataFalse record);
 
-    QualityTimelyDataFalse selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(QualityTimelyDataFalse record);
-
-    int updateByPrimaryKey(QualityTimelyDataFalse record);
 
     List<Map<String,String>> getTimeSurveillanceFalseData();
 
@@ -39,4 +31,8 @@ public interface QualityTimelyDataFalseMapper {
     void insertWarningPromessage(List<QualityWaringDataFalse> myWaringDataList);
 
     List<Map<String, String>> selectFalseDataToChars();
+
+    List<Map<String, String>> selectFalseDataEcharsTemp();
+
+    List<Map<String, String>> selectHistoryByDateAndcrewNum(@Param("producedDate")String producedDate, @Param("crewNum")String crewNum);
 }

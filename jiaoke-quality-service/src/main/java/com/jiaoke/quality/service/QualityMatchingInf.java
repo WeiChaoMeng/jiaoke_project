@@ -62,4 +62,6 @@ public interface QualityMatchingInf {
      * @return
      */
     String selectRationById(String idStr);
+
+    String insetGrading(String jsonData, String crew1Id, String crew2Id);
 }
