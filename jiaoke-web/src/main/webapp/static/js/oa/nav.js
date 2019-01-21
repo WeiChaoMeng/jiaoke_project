@@ -270,7 +270,7 @@ $(function () {
     $("#news").on("click", function () {
         removeOwnName();
         cultural_construction(this);
-        $('#oa-iframe').attr("src", "OANewsCenter.do");
+        $('#oa-iframe').attr("src", "newsCenter/toNewsCenter");
     });
 
     /*当前位置*/

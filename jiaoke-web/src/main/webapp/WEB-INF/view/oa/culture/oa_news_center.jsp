@@ -157,7 +157,7 @@
 
                     </div>
                     <div class="unit_news_foot_right">
-                        <input type="button" value="新闻发布" class="press_release_button">
+                        <input type="button" value="新闻发布" class="press_release_button" id="newsRelease">
                         <a>更多</a>
                     </div>
                 </div>
@@ -257,4 +257,9 @@
 </body>
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
 <script type="text/javascript" src="../../../../static/js/oa/oa_common.js"></script>
+<script>
+    $('#newsRelease').on('click',function () {
+       window.location.href = '/newsCenter/toNewsRelease';
+    });
+</script>
 </html>

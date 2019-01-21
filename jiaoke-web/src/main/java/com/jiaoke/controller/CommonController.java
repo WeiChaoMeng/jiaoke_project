@@ -303,16 +303,6 @@ public class CommonController {
     }
 
     /**
-     * 新闻管理
-     *
-     * @return  oa_schedule_planning.jsp
-     */
-    @RequestMapping("/OANewsCenter.do")
-    public String newsCenter() {
-        return "oa/culture/oa_news_center";
-    }
-
-    /**
      *  跳转正在建设提示页面
      *
      * @return construction.jsp

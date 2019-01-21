@@ -164,12 +164,12 @@
                                     <img src="../../../static/images/icon/table.png">请假申请单</a>
                             </td>
 
-                            <td class="template" valign="middle">
-                                <a class="check_color" title="费用报销单"><img src="/static/images/icon/table.png">费用报销单</a>
+                            <td class="template" valign="middle" id="conferenceRoom">
+                                <a class="check_color" title="会议室申请单"><img src="/static/images/icon/table.png">会议室申请单</a>
                             </td>
 
                             <td class="template" valign="middle" id="assetUse">
-                                <a class="check_color" title="资产领用申请单"><img src="/static/images/icon/table.png">合同付款申请单</a>
+                                <a class="check_color" title="资产领用申请单"><img src="/static/images/icon/table.png">资产领用申请单</a>
                             </td>
                         </tr>
                         </tbody>
@@ -378,8 +378,19 @@
 <script type="text/javascript" src="../../../static/js/oa/oa_common.js"></script>
 
 <script>
+    //请假申请单
     $('#leaveRequest').on('click', function () {
-        window.location.href = "${path}/activitiForm/actLeaveRequest";
-    })
+        window.location.href = "${path}/activitiForm/toLeaveRequest";
+    });
+
+    //资产领用申请单
+    $('#assetUse').on('click', function () {
+        window.location.href = "${path}/activitiForm/toAssetUse";
+    });
+
+    //会议室申请单
+    $('#conferenceRoom').on('click', function () {
+        window.location.href = "${path}/activitiForm/toConferenceRoom";
+    });
 </script>
 </html>
