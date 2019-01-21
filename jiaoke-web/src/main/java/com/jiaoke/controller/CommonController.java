@@ -363,11 +363,4 @@ public class CommonController {
     public String weatherIndex(){
         return "milieu/index";
     }
-
-    @RequestMapping("/leaveRequest.do")
-    public String leave(){
-        return "oa/activiti/act_leave_request";
-    }
-
-
 }

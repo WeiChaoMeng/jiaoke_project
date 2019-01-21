@@ -168,8 +168,8 @@
                                 <a class="check_color" title="费用报销单"><img src="/static/images/icon/table.png">费用报销单</a>
                             </td>
 
-                            <td class="template" valign="middle">
-                                <a class="check_color" title="合同付款申请单"><img src="/static/images/icon/table.png">合同付款申请单</a>
+                            <td class="template" valign="middle" id="assetUse">
+                                <a class="check_color" title="资产领用申请单"><img src="/static/images/icon/table.png">合同付款申请单</a>
                             </td>
                         </tr>
                         </tbody>
@@ -379,7 +379,7 @@
 
 <script>
     $('#leaveRequest').on('click', function () {
-        window.location.href = "${path}/leaveRequest.do";
+        window.location.href = "${path}/activitiForm/actLeaveRequest";
     })
 </script>
 </html>
