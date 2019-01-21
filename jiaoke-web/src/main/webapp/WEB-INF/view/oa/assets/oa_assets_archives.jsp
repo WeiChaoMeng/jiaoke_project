@@ -16,8 +16,7 @@
     <title>资产档案</title>
     <link href="../../../../static/css/oa/resource_management.css" rel="stylesheet" type="text/css">
     <link href="../../../../static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
-    <link href="../../../../static/js/date_pickers/date_picker.css" rel="stylesheet">
-    <link href="../../../../../../static/css/paging/htmleaf-demo.css" rel="stylesheet" type="text/css">
+    <link href="../../../../static/css/paging/htmleaf-demo.css" rel="stylesheet" type="text/css">
     <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
@@ -43,21 +42,27 @@
                         &#xe7e9; 补货
                     </div>
 
+                    <div class="separation_line">
+
+                    </div>
+
+                    <div class="head_left_button" id="replenishmentRecord" onmousemove="select_color(this)"
+                         onmouseout="unselected_color(this)" style="width: 70px;">
+                        &#xe7e9; 补货记录
+                    </div>
+
                 </td>
                 <td>
                     <div class="conditional_query">
+                        <%--刷新--%>
+                        <i class="iconfont search" id="refresh" onmousemove="select_color(this)"
+                           onmouseout="unselected_color(this)" onclick="refresh()">&#xe69d;</i>
                         <!--搜索按钮-->
                         <i class="iconfont search" id="conditional_search" onmousemove="select_color(this)"
-                           onmouseout="unselected_color(this)" onclick="searchButton(1,0)">&#xe7e7;</i>
+                           onmouseout="unselected_color(this)" onclick="searchButton(1,3)">&#xe7e7;</i>
                         <!--标题-->
                         <div id="div2" class="head_right_side_input matter_title">
                             <input type="text" id="titleName" value="">
-                        </div>
-
-                        <!--日期选择-->
-                        <div id="div3" class="head_right_side_input matter_importance" style="height: 30px;">
-                            <input type="text" id="datePicker" name="datePicker" value=""
-                                   onfocus="this.blur()" style="width: 200px">
                         </div>
 
                         <!--条件查询-->
@@ -65,7 +70,6 @@
                             <select id="condition">
                                 <option value="0">- -查询条件- -</option>
                                 <option value="1">文件名称</option>
-                                <option value="2">访问日期</option>
                             </select>
                         </div>
                     </div>
@@ -140,23 +144,6 @@
 <script type="text/javascript" src="../../../../static/js/date_pickers/jquery.date_input.pack.js"></script>
 <script type="text/javascript" src="../../../../static/js/paging/jqPaginator.js"></script>
 <script>
-    //搜索
-    $("#condition").on("change", function () {
-        var opt = $("#condition").val();
-        if (opt == 1) {
-            $(".matter_title").css("display", "block");
-            $(".matter_importance").css("display", "none");
-            $(".matter_importance").children('input').val('');
-        } else if (opt == 2) {
-            $(".matter_importance").css("display", "block");
-            $(".matter_title").css("display", "none");
-            $(".matter_title").children('input').val('');
-        } else {
-            $(".head_right_side_input").css("display", "none");
-            $(".head_right_side_select").css("display", "none");
-        }
-    });
-
     //功能选中颜色
     function select_color(itself) {
         itself.style.background = "#fff";
@@ -167,11 +154,78 @@
         itself.style.background = "#f1f1f1";
     }
 
-    //日期选择器
-    $('#datePicker').on('click', function () {
-        $('#datePicker').date_input();
+    //新增
+    $('#newContractAgreement').on('click', function () {
+        window.location.href = '${path}/assetsManagement/toAssetsManagement';
     });
 
+    //补货
+    $('#replenishment').on('click', function () {
+        let length = $("tbody input:checked").length;
+        if (length != 1) {
+            alert("请选择一条数据！");
+            return false;
+        } else {
+            var id = $("tbody input:checked").val();
+            window.location.href = "${path}/assetsManagement/toAssetReplenishmentPage?id=" + id;
+        }
+    });
+
+    //补货记录
+    $('#replenishmentRecord').on('click', function () {
+        let length = $("tbody input:checked").length;
+        if (length != 1) {
+            alert("请选择一条数据！");
+            return false;
+        } else {
+            var assetManagementId = $("tbody input:checked").val();
+            window.location.href = "${path}/assetsManagement/toAssetReplenishmentRecordPage?assetManagementId=" + assetManagementId;
+        }
+    });
+
+    //刷新
+    function refresh(){
+        location.reload();
+    }
+
+    //搜索
+    $("#condition").on("change", function () {
+        var opt = $("#condition").val();
+        if (opt == 1) {
+            $(".matter_title").css("display", "block");
+        } else {
+            $(".head_right_side_input").css("display", "none");
+        }
+    });
+
+    //名字搜索
+    function searchButton(page,parameter) {
+        var assetsName = $('#titleName').val();
+        $.ajax({
+            type: "post",
+            url: '/assetsManagement/assetsNameFilter',
+            data: {'page': page, 'assetsName': assetsName},
+            success: function (data) {
+                var oaAssetsManagements = JSON.parse(data);
+                //总数
+                $("#PageCount").val(oaAssetsManagements.total);
+                //每页显示条数
+                $("#PageSize").val("15");
+                parseResult(oaAssetsManagements);
+                loadPage(parameter);
+            },
+            error: function (result) {
+                alert("出错！");
+            }
+        })
+    }
+
+
+    //分页
+    $(function () {
+        loadData(1);
+        loadPage(1);
+    });
 
     //分页
     function exeData(page, type, parameter) {
@@ -186,7 +240,7 @@
             loadPage(parameter);
 
             //搜索
-        } else if (parameter === 3 || parameter === 4) {
+        } else if (parameter === 3) {
             searchButton(page);
             loadPage(parameter);
         }
@@ -216,11 +270,7 @@
         });
     }
 
-    $(function () {
-        loadData(1);
-        loadPage(1);
-    });
-
+    //加载数据
     function loadData(page) {
         $.ajax({
             type: "post",
@@ -233,42 +283,7 @@
                 $("#PageCount").val(oaAssetsManagements.total);
                 //每页显示条数
                 $("#PageSize").val("15");
-                //结果集
-                var oaAssetsManagementList = oaAssetsManagements.list;
-                //当前页
-                var pageNum = oaAssetsManagements.pageNum;
-                //插入tbody
-                var oaAssetsManagement = '';
-                if (oaAssetsManagementList.length === 0) {
-                    oaAssetsManagement += '<tr>';
-                    oaAssetsManagement += '<td colspan="10">' + '暂无数据' + '</td>';
-                    oaAssetsManagement += '</tr>';
-                } else {
-                    for (let i = 0; i < oaAssetsManagementList.length; i++) {
-                        oaAssetsManagement += '<tr onclick="particulars(' + oaAssetsManagementList[i].id + ')">';
-                        oaAssetsManagement += '<td><input type="checkbox" value="' + oaAssetsManagementList[i].id + '" onclick="window.event.cancelBubble=true;"></td>';
-                        oaAssetsManagement += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 15 + i + 1) + '</td>';
-                        oaAssetsManagement += '<td>' + oaAssetsManagementList[i].assetsName + '</td>';
-                        if (oaAssetsManagementList[i].assetsCategory === 0) {
-                            oaAssetsManagement += '<td>' + '办公用品' + '</td>';
-                        }else if(oaAssetsManagementList[i].assetsCategory === 1){
-                            oaAssetsManagement += '<td>' + '生产设备' + '</td>';
-                        }
-                        oaAssetsManagement += '<td>' + oaAssetsManagementList[i].productSpecification + '</td>';
-                        oaAssetsManagement += '<td>' + oaAssetsManagementList[i].productQuantity + '</td>';
-                        if (oaAssetsManagementList[i].productSource === 0){
-                            oaAssetsManagement += '<td>' + '行政购置' + '</td>';
-                        }else if (oaAssetsManagementList[i].productSource === 1){
-                            oaAssetsManagement += '<td>' + '设备购置' + '</td>';
-                        }
-                        oaAssetsManagement += '<td>' + oaAssetsManagementList[i].entryPerson + '</td>';
-                        oaAssetsManagement += '<td>' + oaAssetsManagementList[i].storageLocation + '</td>';
-                        oaAssetsManagement += '<td>' + oaAssetsManagementList[i].custodian + '</td>';
-                        oaAssetsManagement += '</tr>';
-                    }
-                }
-
-                $('#tbody').html(oaAssetsManagement);
+                parseResult(oaAssetsManagements);
             },
             error: function (result) {
                 alert("出错！");
@@ -276,22 +291,44 @@
         })
     }
 
-    //新增
-    $('#newContractAgreement').on('click',function () {
-        window.location.href = '${path}/assetsManagement/toAssetsManagement';
-    })
-
-    //补货
-    $('#replenishment').on('click',function () {
-        let length = $("tbody input:checked").length;
-        if (length != 1) {
-            alert("一次只能选择一条数据");
-            return false;
+    //解析list
+    function parseResult(oaAssetsManagements) {
+        //结果集
+        var oaAssetsManagementList = oaAssetsManagements.list;
+        //当前页
+        var pageNum = oaAssetsManagements.pageNum;
+        //插入tbody
+        var oaAssetsManagement = '';
+        if (oaAssetsManagementList.length === 0) {
+            oaAssetsManagement += '<tr>';
+            oaAssetsManagement += '<td colspan="10">' + '暂无数据' + '</td>';
+            oaAssetsManagement += '</tr>';
         } else {
-            var id = $("tbody input:checked").val();
-            window.location.href = "${path}/assetsManagement/toAssetReplenishmentPage?id=" + id;
+            for (let i = 0; i < oaAssetsManagementList.length; i++) {
+                oaAssetsManagement += '<tr>';
+                oaAssetsManagement += '<td><input type="checkbox" value="' + oaAssetsManagementList[i].id + '" onclick="window.event.cancelBubble=true;"></td>';
+                oaAssetsManagement += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 15 + i + 1) + '</td>';
+                oaAssetsManagement += '<td>' + oaAssetsManagementList[i].assetsName + '</td>';
+                if (oaAssetsManagementList[i].assetsCategory === 0) {
+                    oaAssetsManagement += '<td>' + '办公用品' + '</td>';
+                } else if (oaAssetsManagementList[i].assetsCategory === 1) {
+                    oaAssetsManagement += '<td>' + '生产设备' + '</td>';
+                }
+                oaAssetsManagement += '<td>' + oaAssetsManagementList[i].productSpecification + '</td>';
+                oaAssetsManagement += '<td>' + oaAssetsManagementList[i].productQuantity + '</td>';
+                if (oaAssetsManagementList[i].productSource === 0) {
+                    oaAssetsManagement += '<td>' + '行政购置' + '</td>';
+                } else if (oaAssetsManagementList[i].productSource === 1) {
+                    oaAssetsManagement += '<td>' + '设备购置' + '</td>';
+                }
+                oaAssetsManagement += '<td>' + oaAssetsManagementList[i].entryPerson + '</td>';
+                oaAssetsManagement += '<td>' + oaAssetsManagementList[i].storageLocation + '</td>';
+                oaAssetsManagement += '<td>' + oaAssetsManagementList[i].custodian + '</td>';
+                oaAssetsManagement += '</tr>';
+            }
         }
-    });
 
+        $('#tbody').html(oaAssetsManagement);
+    }
 </script>
 </html>

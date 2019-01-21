@@ -4,7 +4,6 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.xml.crypto.Data;
 import java.util.Date;
 
 /**
@@ -78,7 +77,7 @@ public class OaAssetManagement {
     /**
      * 创建时间
      */
-    private Date createDate;
+    private Date createTime;
 
     public Integer getId() {
         return id;
@@ -168,11 +167,11 @@ public class OaAssetManagement {
         this.remarks = remarks;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }

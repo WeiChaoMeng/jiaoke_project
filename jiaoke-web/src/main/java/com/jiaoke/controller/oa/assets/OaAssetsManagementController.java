@@ -4,7 +4,9 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jiake.utils.JsonHelper;
 import com.jiaoke.oa.bean.OaAssetManagement;
+import com.jiaoke.oa.bean.OaAssetReplenishment;
 import com.jiaoke.oa.service.OaAssetsManagementService;
+import com.jiaoke.oa.service.OaAssetsReplenishmentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +28,9 @@ public class OaAssetsManagementController {
 
     @Resource
     private OaAssetsManagementService oaAssetsManagementService;
+
+    @Resource
+    private OaAssetsReplenishmentService oaAssetsReplenishmentService;
 
     /**
      * 跳转资产入库
@@ -95,6 +100,22 @@ public class OaAssetsManagementController {
     }
 
     /**
+     * 根据名字筛选
+     *
+     * @param page       page
+     * @param assetsName 资产名称
+     * @return list
+     */
+    @RequestMapping(value = "/assetsNameFilter")
+    @ResponseBody
+    public String assetsNameFilter(int page, String assetsName) {
+        PageHelper.startPage(page, 15);
+        List<OaAssetManagement> assetManagementList = oaAssetsManagementService.fuzzyQueryByName(assetsName);
+        PageInfo<OaAssetManagement> pageInfo = new PageInfo<>(assetManagementList);
+        return JsonHelper.toJSONString(pageInfo);
+    }
+
+    /**
      * 跳转补货页面
      *
      * @param id id
@@ -109,22 +130,62 @@ public class OaAssetsManagementController {
 
     /**
      * 提交补货
-     * @return 
+     *
+     * @return 影响行数
      */
     @RequestMapping(value = "/commitAssetReplenishment")
-    public String commitAssetReplenishment(){
-
-        return "";
+    @ResponseBody
+    public String commitAssetReplenishment(OaAssetReplenishment oaAssetReplenishment) {
+        if (oaAssetsReplenishmentService.insertSelective(oaAssetReplenishment) != 1) {
+            return JsonHelper.toJSONString("error");
+        }
+        return JsonHelper.toJSONString("success");
     }
 
     /**
-     * 申领资源
+     * 跳转补货记录
      *
-     * @return oa_schedule_planning.jsp
+     * @param model             model
+     * @param assetManagementId 资产id
+     * @return jsp
      */
-    @RequestMapping("/OAResourceApply.do")
-    public String resourceApply() {
-        return "oa/assets/oa_resource_apply";
+    @RequestMapping(value = "/toAssetReplenishmentRecordPage")
+    public String toAssetReplenishmentRecordPage(Model model, Integer assetManagementId) {
+        model.addAttribute("assetManagementId", assetManagementId);
+        return "oa/assets/oa_assets_replenishment_record";
+    }
+
+    /**
+     * 补货记录数据
+     *
+     * @param page              page
+     * @param assetManagementId 资产id
+     * @return 分页数据
+     */
+    @RequestMapping(value = "/assetReplenishmentRecord")
+    @ResponseBody
+    public String assetReplenishmentRecord(int page, Integer assetManagementId) {
+        PageHelper.startPage(page, 14);
+        List<OaAssetReplenishment> assetReplenishmentList = oaAssetsReplenishmentService.select(assetManagementId);
+        PageInfo<OaAssetReplenishment> pageInfo = new PageInfo<>(assetReplenishmentList);
+        return JsonHelper.toJSONString(pageInfo);
+    }
+
+    /**
+     * 补货时间筛选
+     *
+     * @param page              page
+     * @param createTime        补货时间
+     * @param assetManagementId 资产id
+     * @return list
+     */
+    @RequestMapping(value = "/replenishmentTimeFilter")
+    @ResponseBody
+    public String replenishmentTimeFilter(int page, String createTime, Integer assetManagementId) {
+        PageHelper.startPage(page, 14);
+        List<OaAssetReplenishment> assetReplenishmentList = oaAssetsReplenishmentService.replenishmentTimeFilter(createTime, assetManagementId);
+        PageInfo<OaAssetReplenishment> pageInfo = new PageInfo<>(assetReplenishmentList);
+        return JsonHelper.toJSONString(pageInfo);
     }
 
     /**

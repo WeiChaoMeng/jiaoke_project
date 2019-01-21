@@ -314,7 +314,6 @@
             <ul>
                 <li><a id="resource_storage"><span>资源入库</span></a></li>
                 <li><a id="resources_archives"><span>资源档案</span></a></li>
-                <li><a id="apply_resource"><span>申领资源</span></a></li>
                 <li><a id="receive_record"><span>领用记录</span></a></li>
             </ul>
         </li>

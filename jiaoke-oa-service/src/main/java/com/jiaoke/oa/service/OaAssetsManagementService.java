@@ -43,4 +43,12 @@ public interface OaAssetsManagementService {
      * @return OaAssetManagement
      */
     OaAssetManagement selectByPrimaryKey(Integer id);
+
+    /**
+     * 更具名字模糊查询
+     *
+     * @param assetsName 资产名称
+     * @return list
+     */
+    List<OaAssetManagement> fuzzyQueryByName(String assetsName);
 }

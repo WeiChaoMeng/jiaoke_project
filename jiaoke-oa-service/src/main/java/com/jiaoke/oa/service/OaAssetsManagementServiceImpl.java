@@ -23,7 +23,7 @@ public class OaAssetsManagementServiceImpl implements OaAssetsManagementService 
 
     @Override
     public int insertSelective(OaAssetManagement oaAssetManagement) {
-        oaAssetManagement.setCreateDate(new Date());
+        oaAssetManagement.setCreateTime(new Date());
         return oaAssetsManagementMapper.insertSelective(oaAssetManagement);
     }
 
@@ -42,5 +42,10 @@ public class OaAssetsManagementServiceImpl implements OaAssetsManagementService 
     @Override
     public OaAssetManagement selectByPrimaryKey(Integer id) {
         return oaAssetsManagementMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<OaAssetManagement> fuzzyQueryByName(String assetsName) {
+        return oaAssetsManagementMapper.fuzzyQueryByName(assetsName);
     }
 }

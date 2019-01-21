@@ -129,9 +129,9 @@
             success: function (data) {
                 var result = JSON.parse(data);
                 if (result === "success") {
-                    alert('成功');
+                    alert('添加成功');
                 } else {
-                    alert('错误');
+                    alert('添加失败');
                 }
                 location.reload();
             }

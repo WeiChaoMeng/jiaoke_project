@@ -251,13 +251,6 @@ $(function () {
         $('#oa-iframe').attr("src", "assetsManagement/toAssetsArchives");
     });
 
-    //申领资源
-    $("#apply_resource").on("click", function () {
-        removeOwnName();
-        resources(this);
-        $('#oa-iframe').attr("src", "assetsManagement/OAResourceApply.do");
-    });
-
     //申领记录
     $("#receive_record").on("click", function () {
         removeOwnName();

@@ -4,6 +4,8 @@ import com.jiaoke.oa.bean.OaAssetManagement;
 import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
 
+import java.util.List;
+
 /**
  * oa-资产管理
  *
@@ -13,4 +15,12 @@ import tk.mybatis.mapper.common.Mapper;
  */
 @Repository
 public interface OaAssetsManagementMapper extends Mapper<OaAssetManagement> {
+
+    /**
+     * 更具名字模糊查询
+     *
+     * @param assetsName 资产名称
+     * @return list
+     */
+    List<OaAssetManagement> fuzzyQueryByName(String assetsName);
 }
