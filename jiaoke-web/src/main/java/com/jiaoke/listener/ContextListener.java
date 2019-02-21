@@ -29,7 +29,7 @@ public class ContextListener implements ServletContextListener {
         String path = getContextPath(sc);
 
         sc.setAttribute("path","http://localhost:8080" );
-//        sc.setAttribute("path","http://47.105.114.70" );
+//        sc.setAttribute("path","http://47.94.248.16" );
     }
 
     @Override

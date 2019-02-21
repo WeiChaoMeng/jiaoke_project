@@ -19,8 +19,8 @@
 <head>
     <meta charset="utf-8">
     <title>路驰公司企业综合管理平台</title>
-    <link href="../../static/css/login.css" rel="stylesheet" type="text/css">
-    <link rel="icon" href="../../static/images/favicon.ico" type="image/x-icon"/>
+    <link href="/static/css/login.css" rel="stylesheet" type="text/css">
+    <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon"/>
 </head>
 
 <body>
@@ -29,7 +29,7 @@
 <div class="login-title" style="width: 100%;height: 80px;">
     <div class="login-title-content" style="height: 80px;width: 80%;margin: 0 auto">
         <div>
-            <img src="../../static/images/login-logo.jpg" alt="" style="height: 60px;padding: 10px 0">
+            <img src="/static/images/login-logo.jpg" alt="" style="height: 60px;padding: 10px 0">
             <span style="height: 50px;font-size: 17px;line-height:  80px;position: absolute;margin-left: 20px">路驰公司企业综合管理平台</span>
         </div>
     </div>
@@ -43,12 +43,12 @@
 
             <div class="login-form">
                 <div class="login_input_content">
-                    <div class="left-icon"><img src="../../static/images/icon/username.png" alt=""></div>
+                    <div class="left-icon"><img src="/static/images/icon/username.png" alt=""></div>
                     <input type="text" placeholder="账号" name="username" id="username" value="" class="right-input"
                            onkeyup="this.value=this.value.replace(/\s+/g,'')">
                 </div>
                 <div class="login_input_content">
-                    <div class="left-icon"><img src="../../static/images/icon/password.png" alt=""></div>
+                    <div class="left-icon"><img src="/static/images/icon/password.png" alt=""></div>
                     <input type="password" placeholder="密码" name="password" id="password" value=""
                            class="right-input" onkeyup="this.value=this.value.replace(/\s+/g,'')">
                 </div>
@@ -67,9 +67,9 @@
 <!--loginbox end-->
 
 </body>
-<script type="text/javascript" src="../../static/js/jquery.js"></script>
-<script type="text/javascript" src="../../static/js/common.js"></script>
-<script type="text/javascript" src="../../static/js/skin.js"></script>
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/js/common.js"></script>
+<script type="text/javascript" src="/static/js/skin.js"></script>
 <script type="text/javascript">
     var height = $(window).height();
     $(".login").css("padding-top", height / 2 - $(".login").height() / 2);

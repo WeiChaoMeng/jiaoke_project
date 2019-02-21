@@ -17,7 +17,6 @@
 
     <link type="text/css" rel="stylesheet" href="/static/css/qc/jeDate-test.css">
     <link type="text/css" rel="stylesheet" href="/static/css/qc/jedate.css">
-    <script type="text/javascript" src="/static/js/qc/jedate.js"></script>
     <link type="text/css" rel="stylesheet" href="/static/css/qc/qc_select.css">
     <link href="/static/css/qc/jqTable.css" rel="stylesheet" type="text/css">
     <style>
@@ -35,14 +34,20 @@
                 <div class="main-info">
                     <div style="width: 100%;height: 10%;" >
                             <div class="jeitem">
-                                <label class="jelabel">日期范围选择</label>
-                                <div class="jeinpbox">
-                                    <input type="text" class="jeinput" id="test11" placeholder="YYYY-MM-DD" value="${proData}" onchange="getModelByDateAndCrew()" >
-                                </div>
+                                <div class="jeitem">
+                                    <label class="jelabel">开始日期：</label>
+                                    <div class="dy_select_div"   >
+                                        <input type="date" class="dy_select" id="inpstart"  placeholder="选择开始日期" >
+                                    </div>
+                                    <label class="jelabel">结束日期：</label>
+                                    <div class="dy_select_div"   >
+                                        <input type="date" class="dy_select" id="inpend" placeholder="选择开始日期" >
+                                    </div>
 
                                 <label class="jelabel">机组选择</label>
                                 <div class="dy_select_div"   >
                                     <select id="crew_num" class="dy_select" onchange="getModelByDateAndCrew()" >
+                                        <option value="sect">请选择</option>
                                         <option value="data1">机组一</option>
                                         <option value="data2">机组二</option>
                                     </select>
@@ -200,18 +205,19 @@
 
 <script type="text/javascript" src="/static/js/jquery.js"></script>
 <script type="text/javascript" src="/static/js/qc/zipJs/jqTable.all.min.js"></script>
+<script type="text/javascript" src="/static/js/layer/layer.js"></script>
 <script type="text/javascript" src="/static/js/qc/auxiliary.js"></script>
 <script type="text/javascript">
     //回显方法
     (function () {
-        debugger
+
         var crew = $("#temcrew").val();
         var ratioNum = $("#temRatioNum").val();
         var waring = $("#temWaring").val();
         var dates = $("#temDate").val();
-
         var numbers = $("#crew_num").find("option"); //获取select下拉框的所有值
         var warings = $("#waring_leve").find("option");
+        var arry = dates.split("to");
 
         //添加一个选项
         if (crew != ""){
@@ -221,6 +227,12 @@
                     $(numbers[j]).attr("selected", "selected");
                 }
             }
+        }
+
+        //回显日期
+        if (arry[0]){
+            $("#inpstart").val(arry[0]);
+            $("#inpend").val(arry[1]);
         }
 
         if (ratioNum != "") {
@@ -234,6 +246,7 @@
                 }
             }
         }
+
     })();
     $("#checkAll").click(function(){
         $("input:checkbox").each(function () {

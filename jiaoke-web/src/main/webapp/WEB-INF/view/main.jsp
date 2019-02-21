@@ -19,7 +19,7 @@
     <meta charset="utf-8">
     <title>路驰办公系统</title>
     <link href="/static/css/default.css" rel="stylesheet" type="text/css">
-    <link href="../../static/css/style/green.css" rel="stylesheet" type="text/css">
+    <link href="/static/css/style/green.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="/static/images/favicon.ico" type="image/ico"/>
     <style>
         html {

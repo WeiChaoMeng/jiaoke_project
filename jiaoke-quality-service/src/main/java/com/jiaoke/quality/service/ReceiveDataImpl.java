@@ -379,7 +379,8 @@ public class ReceiveDataImpl implements ReceiveDataInf {
         qualityTimelyDataFalseMapper.insertSelective(qualityTimelyDataFalse);
         int id = qualityTimelyDataFalse.getId();
 
-        //处理预警相关数据
+        //多线程执行生产Excel同时写入指定Ip电脑
+
 
         //为所有的预警数据对象添加id
         for (int i = 0; i < myWaringDataList.size(); i ++){
