@@ -17,7 +17,7 @@
     <select id="getAggregateRatioByMoudelId" resultType="java.util.Map">
 
         SELECT
-               crew1_modele_id,
+              ${crew}_modele_id,
                ${ratioName}
         FROM
              quality_proportioning_message

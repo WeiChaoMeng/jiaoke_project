@@ -1632,7 +1632,7 @@ my_echars_div_block{
 /*data_manager_pagination*/
 .data_manager_pagination {
     position: absolute;
-    top: 94%;
+    top: 100%;
 }
 
 .data_manager_pagelist {

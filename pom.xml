@@ -317,18 +317,17 @@
             <version>5.1.8</version>
         </dependency>
 
-        <!--钉钉-->
         <dependency>
             <groupId>com.taobao.dingding</groupId>
             <artifactId>taobao-dingding-sdk</artifactId>
             <version>1.0</version>
         </dependency>
-
         <dependency>
             <groupId>com.taobao.dingding-source</groupId>
             <artifactId>taobao-dingding-sdk-source</artifactId>
             <version>1.0</version>
         </dependency>
+
 
     </dependencies>
 

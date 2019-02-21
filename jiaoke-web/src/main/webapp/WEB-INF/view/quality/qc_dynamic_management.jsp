@@ -17,7 +17,6 @@
     <link type="text/css" rel="stylesheet" href="/static/css/qc/jeDate-test.css">
     <link type="text/css" rel="stylesheet" href="/static/css/qc/jedate.css">
     <link type="text/css" rel="stylesheet" href="/static/css/qc/qc_select.css">
-    <script type="text/javascript" src="/static/js/qc/jedate.js"></script>
     <script  src="/static/js/jquery.js"></script>
     <script src="/static/js/echarts/echarts.js"></script>
 </head>
@@ -50,9 +49,13 @@
                         <div style="float: left" >
 
                             <div class="jeitem">
-                                <label class="jelabel">日范围选择</label>
-                                <div class="jeinpbox">
-                                    <input type="text" class="jeinput" id="test11" placeholder="YYYY-MM-DD" value="${proDate}" >
+                                <label class="jelabel">开始日期：</label>
+                                <div class="dy_select_div"   >
+                                    <input type="date" class="jeinput moredate" id="inpstart"  placeholder="选择开始日期" >
+                                </div>
+                                <label class="jelabel">结束日期：</label>
+                                <div class="dy_select_div"   >
+                                   <input type="date" class="jeinput moredate" id="inpend" placeholder="选择开始日期" >
                                 </div>
 
                                 <label class="jelabel">机组选择</label>
@@ -600,16 +603,23 @@
 <input id="path" type="hidden" value="${path}"/>
 <input id="temRatioNum" type="hidden" value="${ratioNum}"/>
 <input id="temcrew" type="hidden" value="${crew}"/>
+<input id="proDate" type="hidden" value="${proDate}"/>
 </body>
 <script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/js/layer/layer.js"></script>
 <script type="text/javascript" src="/static/js/qc/qc_dynamic.js"></script>
-
 <script type="text/javascript">
     //回显方法
     (function () {
         var crew = $("#temcrew").val();
         var ratioNum = $("#temRatioNum").val();
         var numbers = $("#crew_num").find("option"); //获取select下拉框的所有值
+        var proDate = $("#proDate").val();
+        var arr = proDate.split("to");
+        if (arr[0]){
+            $("#inpstart").val(arr[0]);
+            $("#inpend").val(arr[1]);
+        }
 
 
         //添加一个选项
@@ -625,5 +635,8 @@
         }
 
     })();
+
+
+
 </script>
 </html>
