@@ -103,7 +103,7 @@ public class OaWageStatisticsController {
     @RequestMapping("/toPersonalSalary")
     public String personalSalary(Model model) {
         UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
-        OaPersonalWages personalWages = oaWageStatisticsService.getPersonalWagesByNickName(userInfo.getNickName());
+        OaPersonalWages personalWages = oaWageStatisticsService.getPersonalWagesByNickName(userInfo.getNickname());
         model.addAttribute("personalWages",personalWages);
         return "oa/personal/oa_personal_salary";
     }

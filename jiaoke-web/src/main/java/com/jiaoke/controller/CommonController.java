@@ -153,16 +153,6 @@ public class CommonController {
     }
 
     /**
-     * 个人考勤
-     *
-     * @return  oa_personal_attendance.jsp
-     */
-    @RequestMapping("/OAPersonalAttendance.do")
-    public String personalAttendance() {
-        return "oa/personal/oa_personal_attendance";
-    }
-
-    /**
      * 日程计划
      *
      * @return  oa_schedule_planning.jsp

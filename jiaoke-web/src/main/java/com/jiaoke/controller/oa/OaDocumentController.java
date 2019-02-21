@@ -73,8 +73,8 @@ public class OaDocumentController {
     public String releaseDocument(Model model) {
         //获取当前登录人的名称
         UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
-        model.addAttribute("nickName", userInfo.getNickName());
-        model.addAttribute("departmentName", userInfo.getDepartmentKey());
+        model.addAttribute("nickName", userInfo.getNickname());
+        model.addAttribute("departmentName", userInfo.getDepartment());
         return "oa/document/oa_release_document";
     }
 
@@ -276,13 +276,13 @@ public class OaDocumentController {
     /**
      * 获取部门成员
      *
-     * @param departmentKey 部门id
+     * @param department 部门id
      * @return 成员列表
      */
     @RequestMapping(value = "/departmentMember")
     @ResponseBody
-    public String departmentMember(String departmentKey) {
-        List<UserInfo> userInfoList = userInfoService.getUserByDepartmentKey(departmentKey);
+    public String departmentMember(String department) {
+        List<UserInfo> userInfoList = userInfoService.getUserByDepartmentKey(department);
         return JsonHelper.toJSONString(userInfoList);
     }
 }

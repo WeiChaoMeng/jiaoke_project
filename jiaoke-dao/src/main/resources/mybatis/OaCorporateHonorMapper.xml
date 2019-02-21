@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.oa.dao.OaCorporateHonorMapper">
+
+    <select id="selectLatestData" resultType="com.jiaoke.oa.bean.OaCorporateHonor">
+        SELECT
+            id as id,
+            title as title,
+            publisher as publisher,
+            release_department as releaseDepartment,
+            release_date as releaseDate,
+            keyword as keyword,
+            summary as summary,
+            rich_text as richText,
+            create_time as createTime
+        FROM oa_corporate_honor
+        ORDER BY
+            create_time DESC
+        LIMIT 5
+    </select>
+</mapper>

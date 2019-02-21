@@ -172,8 +172,8 @@
                 <i class="my-icon nav-more"></i>
             </a>
             <ul>
-                <li><a id="persional_attendance"><span>个人考勤</span></a></li>
-                <li><a id="persional_salary"><span>个人工资</span></a></li>
+                <li><a id="personal_attendance"><span>个人考勤</span></a></li>
+                <li><a id="personal_salary"><span>个人工资</span></a></li>
                 <li><a id="wage_statistics"><span>工资统计</span></a></li>
                 <li><a id="schedule_planning"><span>日程计划</span></a></li>
                 <li><a id="notepad"><span>待办记事</span></a></li>
@@ -326,6 +326,21 @@
                 <li><a id="news"><span>新闻</span></a></li>
             </ul>
         </li>
+        
+        <shiro:hasPermission name="userManage/view">
+            <li class="nav-item">
+                <a>
+                    <img src="../../../static/images/backstage-manage.png" style="width: 25px;margin-top: 8px">
+                    <span class="parent-menu-span" style="position: absolute;">后台管理</span>
+                    <i class="my-icon nav-more"></i></a>
+                <ul>
+                    <li><a id="userManager"><span>用户管理</span></a></li>
+                    <li><a id="roleManager"><span>角色管理</span></a></li>
+                    <li><a id="permissionsManager"><span>权限管理</span></a></li>
+                </ul>
+                </a>
+            </li>
+        </shiro:hasPermission>
     </ul>
 </div>
 

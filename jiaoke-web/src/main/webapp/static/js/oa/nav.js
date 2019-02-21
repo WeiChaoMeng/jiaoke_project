@@ -28,7 +28,14 @@ $(function () {
     });
 
     /*--- 个人事务 ---*/
-    //日程计划
+    //个人考勤
+    $("#personal_attendance").on("click", function () {
+        removeOwnName();
+        personal(this);
+        $('#oa-iframe').attr("src", "personalAttendance/attendanceDetails");
+    });
+
+ //日程计划
     $("#schedule_planning").on("click", function () {
         removeOwnName();
         personal(this);
@@ -36,7 +43,7 @@ $(function () {
     });
 
     //个人工资
-    $("#persional_salary").on("click", function () {
+    $("#personal_salary").on("click", function () {
         removeOwnName();
         personal(this);
         $('#oa-iframe').attr("src", "wageStatistics/toPersonalSalary");
@@ -271,6 +278,28 @@ $(function () {
         removeOwnName();
         cultural_construction(this);
         $('#oa-iframe').attr("src", "newsCenter/toNewsCenter");
+    });
+
+    /*--- 后台管理 ---*/
+    //用户管理
+    $("#userManager").on("click", function () {
+        removeOwnName();
+        cultural_construction(this);
+        $('#oa-iframe').attr("src", "backstageManagement/toUserManager");
+    });
+
+    //角色管理
+    $("#roleManager").on("click", function () {
+        removeOwnName();
+        cultural_construction(this);
+        $('#oa-iframe').attr("src", "backstageManagement/toRoleManager");
+    });
+
+    //权限管理
+    $("#permissionsManager").on("click", function () {
+        removeOwnName();
+        cultural_construction(this);
+        $('#oa-iframe').attr("src", "backstageManagement/toPermissionManager");
     });
 
     /*当前位置*/

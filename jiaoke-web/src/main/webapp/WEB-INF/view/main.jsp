@@ -86,11 +86,11 @@
 
         <div class="topright">
             <div class="user">
-                <span><a href="#"><i class="userico iconfont">&#xe6cb;</i>${userInfo.getNickName()}<i class="userdown iconfont">&#xe920;</i></a></span>
+                <span><a href="#"><i class="userico iconfont">&#xe6cb;</i>${userInfo.nickname}<i class="userdown iconfont">&#xe920;</i></a></span>
                 <ul class="userlist">
                     <li><a href="#"><i class="userxl iconfont">&#xe666;</i>用户信息</a></li>
                     <li><a href="#" id="about"><i class="userxl iconfont">&#xe7e9;</i>修改密码</a></li>
-                    <li><a href="/"><i class="userxl iconfont">&#xeae2;</i>退出</a></li>
+                    <li><a href="/logout"><i class="userxl iconfont">&#xeae2;</i>退出</a></li>
                 </ul>
             </div>
 

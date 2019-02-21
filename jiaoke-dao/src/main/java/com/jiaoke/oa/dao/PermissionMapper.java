@@ -2,7 +2,6 @@ package com.jiaoke.oa.dao;
 
 import com.jiaoke.oa.bean.Permission;
 
-
 import java.util.List;
 
 
@@ -15,18 +14,6 @@ import java.util.List;
  */
 
 public interface PermissionMapper {
-    int deleteByPrimaryKey(Integer id);
-
-    int insert(Permission record);
-
-    int insertSelective(Permission record);
-
-    Permission selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(Permission record);
-
-    int updateByPrimaryKey(Permission record);
-
 
     /**
      * 获取权限根据用户id
@@ -35,4 +22,27 @@ public interface PermissionMapper {
      * @return permission
      */
     List<Permission> getPermissionsByUserInfoId(Integer userInfoId);
+
+    /**
+     * 获取全部
+     *
+     * @return list
+     */
+    List<Permission> selectAll();
+
+    /**
+     * 查询已有权限
+     *
+     * @param id id
+     * @return list
+     */
+    List<Permission> selectExistingPermission(Integer id);
+
+    /**
+     * 根据名字搜索
+     *
+     * @param permissionName 权限名称
+     * @return list
+     */
+    List<Permission> permissionNameFilter(String permissionName);
 }

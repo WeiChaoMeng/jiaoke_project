@@ -1,7 +1,5 @@
 package com.jiaoke.oa.bean;
 
-import org.springframework.stereotype.Service;
-
 import java.io.Serializable;
 import java.util.Date;
 
@@ -12,7 +10,6 @@ import java.util.Date;
  * @version 1.0
  * @date 2018/10/10 11:00
  */
-
 public class UserInfo implements Serializable {
     /**
      * 用户信息id
@@ -22,7 +19,7 @@ public class UserInfo implements Serializable {
     /**
      * 账号
      */
-    private String usename;
+    private String username;
 
     /**
      * 密码
@@ -32,7 +29,7 @@ public class UserInfo implements Serializable {
     /**
      * 昵称
      */
-    private String nickName;
+    private String nickname;
 
     /**
      * 手机号
@@ -62,7 +59,7 @@ public class UserInfo implements Serializable {
     /**
      * 部门编码
      */
-    private String departmentKey;
+    private String department;
 
     /**
      * 部门负责人
@@ -79,12 +76,12 @@ public class UserInfo implements Serializable {
         this.id = id;
     }
 
-    public String getUsename() {
-        return usename;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUsename(String usename) {
-        this.usename = usename;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -95,12 +92,12 @@ public class UserInfo implements Serializable {
         this.password = password;
     }
 
-    public String getNickName() {
-        return nickName;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getPhone() {
@@ -143,12 +140,12 @@ public class UserInfo implements Serializable {
         this.registerTime = registerTime;
     }
 
-    public String getDepartmentKey() {
-        return departmentKey;
+    public String getDepartment() {
+        return department;
     }
 
-    public void setDepartmentKey(String departmentKey) {
-        this.departmentKey = departmentKey;
+    public void setDepartment(String department) {
+        this.department = department;
     }
 
     public String getDeptPrincipal() {

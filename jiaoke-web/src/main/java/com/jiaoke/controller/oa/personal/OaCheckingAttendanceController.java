@@ -21,8 +21,19 @@ import java.util.*;
  * @date 2018/12/29 14:43
  */
 @Controller
-@RequestMapping(value = "/OaCheckingAttendance")
+@RequestMapping(value = "/personalAttendance")
 public class OaCheckingAttendanceController {
+
+
+    /**
+     * 个人考勤
+     *
+     * @return  oa_personal_attendance.jsp
+     */
+    @RequestMapping("/toPersonalAttendance")
+    public String toPersonalAttendance() {
+        return "oa/personal/oa_personal_attendance";
+    }
 
     /**
      * 获取打卡详情(POST)
@@ -32,7 +43,7 @@ public class OaCheckingAttendanceController {
     @RequestMapping(value = "/attendanceDetails")
     @ResponseBody
     public String attendanceDetails() throws Exception {
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>(16);
         List<OaCheckingAttendance> list = new ArrayList<>();
         //获取部门列表
         List<OapiDepartmentListResponse.Department> departmentList = DingDingUtil.getDepartmentList();

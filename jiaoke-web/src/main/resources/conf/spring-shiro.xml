@@ -13,6 +13,11 @@
         <property name="successUrl" value="/oaIndex.do"/>
         <!--没有权限跳转url-->
         <property name="unauthorizedUrl" value="/index.do"/>
+        <property name="filters">
+            <map>
+                <entry key="logout" value-ref="systemLogoutFilter"/>
+            </map>
+        </property>
         <property name="filterChainDefinitions">
             <value>
                 <!--
@@ -23,26 +28,9 @@
                 /favicon.ico = anon
                 /static/** = anon
                 /login/login.do = anon
-                /qualityData.do = anon
-                <!--/*.do = anon-->
-                <!--公文跳转、发布、保存待发、待发公文跳转、已发公文跳转-->
-                /document/releaseDocument.do = perms[createDocument]
-                /document/add = perms[createDocument]
-                /document/preservationPending = perms[createDocument]
-                /document/primedDocument.do = perms[createDocument]
-                /document/issuedDocument.do = perms[createDocument]
-                /comprehensiveOffice/* = perms[comprehensiveOffice]
-
-                /OAWageStatisticsInner.do = perms[/test]
-                <!--质量监控-->
-                /qc_real_time_monitoring.do = perms[qualityDataView]
-                /getRealTimeData.do = perms[qualityDataView]
-                /getRealTimeDataEcharsTemp.do = perms[qualityDataView]
-                /getRealTimeDataEcharsMaterial.do = perms[qualityDataView]
-
                 /login/*.do = authc
-                /oa/*.do = authc
-                /*.do = authc
+                /logout=logout
+                /** = authc
             </value>
         </property>
     </bean>

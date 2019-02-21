@@ -1,4 +1,5 @@
-<%--
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %><%--
   Created by IntelliJ IDEA.
   User: lihui
   Date: 2018/9/26
@@ -7,217 +8,84 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
     request.setAttribute("path", basePath);
 %>
+
 <html>
 <head>
     <meta charset="UTF-8">
     <title>新闻发布</title>
-    <link href="../../../../../../static/js/datepicker/css/bootstrap-datepicker.css" rel="stylesheet">
-    <link href="../../../../../../static/js/date_pickers/date_picker.css" rel="stylesheet">
-    <style>
-        * {
-            font-size: 12px;
-            border: 0;
-            margin: 0;
-            padding: 0;
-        }
+    <!-- 引用控制层插件样式 -->
+    <link href="../../../../static/css/oa/oa_news_center.css" rel="stylesheet" type="text/css">
 
-        body {
-            font-family: '微软雅黑';
-            margin: 0 auto;
-            /*min-width: 980px;*/
-        }
-
-        .contract-new-page {
-            width: 735px;
-            margin: 0 auto;
-            height: auto;
-            margin-top: 20px;
-        }
-
-        .contract-block-title {
-            text-align: left;
-            font-size: 17px;
-            font-weight: 500;
-            margin-bottom: 10px;
-            text-decoration: none;
-        }
-
-        .contract-form {
-            width: 100%;
-            padding: 0;
-            border: 0;
-            float: left;
-            margin-bottom: 30px;
-        }
-
-        .contract-form-title {
-            text-align: right;
-            float: left;
-            font-size: 14px;
-            width: 20%;
-            padding-top: 9px;
-        }
-
-        .contract-form-title i {
-            color: red;
-            font-style: normal;
-            float: right;
-            margin-right: 3px;
-        }
-
-        .contract-form-title span {
-            float: right;
-            margin-right: 3px;
-        }
-
-        .contract-form-input {
-            padding-left: 10px;
-            width: 70%;
-            float: left;
-        }
-
-        .contract-form-input input, select {
-            width: 60%;
-            height: 30px;
-            padding: 6px 12px;
-            font-size: 12px;
-            color: #555;
-            background-color: #fff;
-            background-image: none;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            overflow: auto;
-            line-height: 20px;
-            outline: none;
-        }
-    </style>
 </head>
 <body>
-<form action="${path}/contractAgreement/addContractAgreement" name="oaContractAgreement" method="post">
-    <!-- 表单内容 -->
-    <div class="contract-new-page">
-        <div class="contract-block-title">
-            <span>表单内容:</span>
-        </div>
-
-        <div class="contract-form">
-            <label class="contract-form-title">
-                <span>:</span>
-                <span>日期</span>
-                <i>*</i>
-            </label>
-            <div class="contract-form-input">
-                <input type="text" name="dateStr" value="" class="forminput" id="datePicker" readonly="readonly"
-                       required>
-            </div>
-        </div>
-
-        <div class="contract-form">
-            <label class="contract-form-title">
-                <span>:</span>
-                <span>合同标号</span>
-                <i>*</i>
-            </label>
-            <div class="contract-form-input">
-                <input type="text" name="contractLabel" value="" required>
-            </div>
-        </div>
-
-        <div class="contract-form">
-            <label class="contract-form-title">
-                <span>:</span>
-                <span>合同/协议名称</span>
-                <i>*</i>
-            </label>
-            <div class="contract-form-input">
-                <input type="text" name="contractAgreementName" value="" required>
-            </div>
-        </div>
-
-        <div class="contract-form">
-            <label class="contract-form-title">
-                <span>:</span>
-                <span>类型</span>
-                <i>*</i>
-            </label>
-            <div class="contract-form-input">
-                <input type="text" name="type" value="" required>
-            </div>
-        </div>
-
-        <div class="contract-form">
-            <label class="contract-form-title">
-                <span>:</span>
-                <span>年限</span>
-                <i>*</i>
-            </label>
-            <div class="contract-form-input">
-                <input type="text" name="years" value="" required>
-            </div>
-        </div>
-
-        <div class="contract-form">
-            <label class="contract-form-title">
-                <span>:</span>
-                <span>备注</span>
-                <i>*</i>
-            </label>
-            <div class="contract-form-input">
-                <input type="text" name="remarks" value="" required>
-            </div>
-        </div>
-
-        <%--<div class="contract-form">
-            <label class="contract-form-title">
-                <span>:</span>
-                <span>发文部室</span>
-                <i>*</i>
-            </label>
-            <div class="contract-form-input">
-                <select name="publishingDepartment">
-                    <option value="888">发文部室</option>
-                    <option value="0">安全管理部</option>
-                    <option value="1">办公室</option>
-                    <option value="2">财务管理部</option>
-                    <option value="3">纪检监察部</option>
-                    <option value="4">企业管理部</option>
-                    <option value="5">生产经营部</option>
-                    <option value="6">组织人事部</option>
-                    <option value="7">建材集团党发</option>
-                    <option value="8">建材集团工会发</option>
-                    <option value="9">共青团发</option>
-                    <option value="10">市政路桥集团发</option>
-                    <option value="11">其他收文</option>
-                </select>
-            </div>
-        </div>--%>
-
-        <div id="editor">
-            <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
-        </div>
-        <div style="text-align: center;padding-top: 20px;">
-            <input type="hidden" name="richText" value="" id="editorHTNL">
-            <input type="submit" value="提交" id="submit"
-                   style="padding: 7px 20px; background: #92ebff;border: 1px #a5a5a5 solid;">
-            <input type="button" value="返回"
-                   style="margin-left:20px;padding: 7px 20px; background: #92ebff;border: 1px #a5a5a5 solid;"
-                   onclick="javascript:history.back()">
-        </div>
-
+<form id="oaNewsCenter">
+    <div style="width: 70%;margin: 0 auto;height: 40px;text-align: center;line-height: 40px;">
+        <span style="font-size: 18px;border: 1px solid #d8d4d4;border-bottom: none;border-radius:10px 10px 0 0;">新建新闻</span>
     </div>
+    <table class="form_table">
+
+        <tbody>
+
+        <tr>
+            <td class="table_td">新闻标题：</td>
+            <td colspan="5" class="table_content">
+                <input type="text" class="form_input" name="newsHeadlines" value="">
+            </td>
+        </tr>
+
+        <tr>
+            <td class="table_td">发布人：</td>
+            <td class="table_content">
+                <input type="text" class="form_input" name="publisher" value="${userInfo.nickname}" readonly="readonly">
+            </td>
+
+            <td class="table_td">发布部门：</td>
+            <td class="table_content">
+                <input type="text" class="form_input" name="releaseDepartment" value="${userInfo.department}" readonly="readonly">
+            </td>
+
+            <td class="table_td">发布日期：</td>
+            <td class="table_content">
+                <input type="text" class="form_input" name="releaseDateStr" value="<%=new SimpleDateFormat("yyyy-MM-dd").format(new Date())%>" readonly="readonly">
+            </td>
+        </tr>
+
+        <tr>
+            <td class="table_td">关键字：</td>
+            <td class="table_content">
+                <input type="text" class="form_input" name="keyword" value="">
+            </td>
+
+            <td class="table_td">摘要：</td>
+            <td colspan="3" class="table_content">
+                <input type="text" class="form_input" name="summary" value="">
+            </td>
+        </tr>
+
+    </table>
+
+    <div id="editor" style="width: 70%;margin: 20px auto">
+        <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
+    </div>
+
+    <div class="form_but">
+        <input type="hidden" name="richText" value="" id="editorHTNL">
+        <input type="button" value="提交" onclick="commit()">
+        <input type="button" value="返回" onclick="previousPage()" style="margin-left: 10px">
+    </div>
+
+    </tbody>
 </form>
+
 </body>
 
-<script type="text/javascript" src="../../../../../../static/js/jquery.js"></script>
-<script type="text/javascript" src="../../../../../../static/js/date_pickers/jquery.date_input.pack.js"></script>
-<!-- 注意， 只需要引用 JS，无需引用任何 CSS ！！！-->
-<script type="text/javascript" src="../../../../../../static/editor/release/wangEditor.min.js"></script>
+<script type="text/javascript" src="../../../../static/js/jquery.js"></script>
+<script type="text/javascript" src="../../../../static/editor/release/wangEditor.min.js"></script>
 <script type="text/javascript">
     var E = window.wangEditor;
     var editor = new E('#editor');
@@ -280,15 +148,36 @@
         });
     };
 
-    $("#submit").on('click', function () {
-        $("#editorHTNL").val(editor.txt.html());
-    });
-
     editor.create();
 
-    //日期选择器
-    $(function () {
-        $('#datePicker').date_input();
-    });
+    //返回上一页
+    function previousPage() {
+        window.history.back();
+    }
+
+    //提交from
+    function commit() {
+        $("#editorHTNL").val(editor.txt.html());
+
+        $.ajax({
+            type: "POST",
+            url: '${path}/newsCenter/add',
+            data: $('#oaNewsCenter').serialize(),
+            async: false,
+            error: function (request) {
+                alert("Connection error");
+            },
+            success: function (data) {
+                var result = JSON.parse(data);
+                if (result === "success") {
+                    alert("成功");
+                    window.location.href = "${path}/newsCenter/toNewsCenter";
+                } else {
+                    alert('失败');
+                }
+            }
+        })
+    }
+
 </script>
 </html>

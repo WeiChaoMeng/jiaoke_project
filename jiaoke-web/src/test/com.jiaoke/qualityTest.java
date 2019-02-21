@@ -1,9 +1,10 @@
 package com.jiaoke;
 
 import com.jiaoke.controller.SpringHelper;
-import com.jiaoke.oa.bean.OaAssetManagement;
-import com.jiaoke.oa.bean.OaReleaseDocument;
-import com.jiaoke.oa.dao.OaAssetsManagementMapper;
+import com.jiaoke.oa.bean.Permission;
+import com.jiaoke.oa.bean.RoleInfo;
+import com.jiaoke.oa.dao.PermissionMapper;
+import com.jiaoke.oa.dao.RoleInfoMapper;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,19 +17,20 @@ import java.util.List;
  */
 public class qualityTest {
 
-    private OaAssetsManagementMapper oaAssetsManagementMapper;
+    private RoleInfoMapper roleInfoMapper;
 
     @Before
     public void setUp() {
-        oaAssetsManagementMapper = SpringHelper.getBean("oaAssetsManagementMapper");
+        roleInfoMapper = SpringHelper.getBean("roleInfoMapper");
     }
 
     @Test
     public void testUser() {
-        OaAssetManagement assetManagement = new OaAssetManagement();
-        assetManagement.setId(1);
-        OaAssetManagement oaAssetManagement = oaAssetsManagementMapper.selectByPrimaryKey(1);
-        System.out.println(oaAssetManagement);
+        List<RoleInfo> roleInfoList = roleInfoMapper.roleNameFilter("测试");
+        for (RoleInfo roleInfo : roleInfoList) {
+            System.out.println(roleInfo.getName());
+        }
+
     }
 
 }

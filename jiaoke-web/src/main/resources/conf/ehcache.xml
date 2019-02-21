@@ -6,8 +6,8 @@
     <defaultCache name="defaultCache"
                   maxElementsInMemory="2000"
                   eternal="false"
-                  timeToIdleSeconds="18000"
-                  timeToLiveSeconds="36000"
+                  timeToIdleSeconds="600"
+                  timeToLiveSeconds="600"
                   overflowToDisk="false"
                   maxElementsOnDisk="100000"
                   diskPersistent="false"
@@ -18,8 +18,8 @@
     <cache name="authorizationCache"
            maxEntriesLocalHeap="2000"
            eternal="false"
-           timeToIdleSeconds="18000"
-           timeToLiveSeconds="36000"
+           timeToIdleSeconds="600"
+           timeToLiveSeconds="600"
            overflowToDisk="false"
            statistics="true">
     </cache>
@@ -28,8 +28,8 @@
     <cache name="authenticationCache"
            maxEntriesLocalHeap="2000"
            eternal="false"
-           timeToIdleSeconds="18000"
-           timeToLiveSeconds="36000"
+           timeToIdleSeconds="300"
+           timeToLiveSeconds="300"
            overflowToDisk="false"
            statistics="true">
     </cache>
@@ -38,8 +38,8 @@
     <cache name="activeSessionCache"
            maxEntriesLocalHeap="2000"
            eternal="false"
-           timeToIdleSeconds="18000"
-           timeToLiveSeconds="36000"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="2400"
            overflowToDisk="false"
            statistics="true">
     </cache>

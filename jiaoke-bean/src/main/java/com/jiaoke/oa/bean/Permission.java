@@ -1,8 +1,8 @@
 package com.jiaoke.oa.bean;
 
-import org.springframework.stereotype.Service;
-
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 权限
@@ -11,11 +11,13 @@ import java.io.Serializable;
  * @version 1.0
  * @date 2018/10/10 11:00
  */
-
 public class Permission implements Serializable {
     /**
      * 权限id
      */
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     /**
@@ -28,7 +30,12 @@ public class Permission implements Serializable {
      */
     private String description;
 
-    private static final long serialVersionUID = 1L;
+    /**
+     * 创建时间
+     */
+    private Date createTime;
+
+    private String createTimeStr;
 
     public Integer getId() {
         return id;
@@ -52,5 +59,21 @@ public class Permission implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getCreateTimeStr() {
+        return createTimeStr;
+    }
+
+    public void setCreateTimeStr(String createTimeStr) {
+        this.createTimeStr = createTimeStr;
     }
 }

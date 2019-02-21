@@ -271,9 +271,9 @@
             "</span>" +
             "</th>");
         $.ajax({
-            cache: true,
             type: "POST",
-            url: '${path}/OaCheckingAttendance/attendanceDetails',
+            url: '${path}/personalAttendance/attendanceDetails',
+            async: false,
             error: function (request) {
                 alert("Connection error");
             },
@@ -302,7 +302,7 @@
                             attendanceName += '</td>';
                             attendanceName += '</tr>';
                         }
-                    }else {
+                    } else {
                         for (var j = 0; j < result[key].length; j++) {
 
                         }

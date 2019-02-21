@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.oa.dao.OaNewsCenterMapper">
+
+    <select id="selectLatestData" resultType="com.jiaoke.oa.bean.OaNewsCenter">
+        SELECT
+            id as id,
+            news_headlines as newsHeadlines,
+            publisher as publisher,
+            release_department as releaseDepartment,
+            release_date as releaseDate,
+            keyword as keyword,
+            summary as summary,
+            rich_text as richText,
+            create_time as createTime
+        FROM oa_news_center
+        ORDER BY
+            create_time DESC
+        LIMIT 5
+    </select>
+</mapper>

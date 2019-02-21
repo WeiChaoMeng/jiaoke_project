@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -31,7 +32,7 @@
             </table>
         </td>
 
-        <td width="50%">
+        <%--<td width="50%">
             <div class="news_headlines_right">
 
                 <!--标题-->
@@ -71,80 +72,47 @@
                     </select>
                 </div>
             </div>
-        </td>
+        </td>--%>
 
     </tr>
     <tr>
         <td colspan="2">
             <div style="width: 100%">
                 <div>
-                    <div class="unit_news_title">单位新闻</div>
+                    <div class="unit_news_title" style="font-size: 13px">单位新闻</div>
                 </div>
-                <div>
+                <div style="min-height: 180px">
                     <table class="simpletable simpletable_color">
 
                         <thead>
-                        <th width="40%">标题</th>
-                        <th>发布部门</th>
-                        <th>发布人</th>
-                        <th>发布时间</th>
-                        <th>关键字</th>
-                        <th>摘要</th>
-                        <th>点击数</th>
+                        <th style="width: 5%">序号</th>
+                        <th style="width: 30%">标题</th>
+                        <th style="width: 10%">发布部门</th>
+                        <th style="width: 10%">发布人</th>
+                        <th style="width: 10%">发布时间</th>
+                        <th style="width: 15%">关键字</th>
+                        <th style="width: 20%">摘要</th>
                         </thead>
 
                         <tbody>
-
-                        <tr></tr>
-                        <tr class="even">
-                            <td>顺义沥青厂为一线职工送清凉</td>
-                            <td>办公室</td>
-                            <td>张三</td>
-                            <td>2018-06-22 10:55</td>
-                            <td>顺义</td>
-                            <td>烈日酷暑为职工送清凉</td>
-                            <td>12</td>
-                        </tr>
-
-                        <tr class="even">
-                            <td>党建结对凝聚发展合力，精准帮扶贡献国企力量</td>
-                            <td>办公室</td>
-                            <td>李四</td>
-                            <td>2018-06-11 14:19</td>
-                            <td>发展,贡献</td>
-                            <td>落实北京市精准帮扶工作和党员双报到工作</td>
-                            <td>20</td>
-                        </tr>
-
-                        <tr class="even">
-                            <td>通州沥青厂为京秦高速供料</td>
-                            <td>办公室</td>
-                            <td>赵武</td>
-                            <td>2018-06-07 14:42</td>
-                            <td>京秦</td>
-                            <td>京秦告诉</td>
-                            <td>14</td>
-                        </tr>
-
-                        <tr class="even">
-                            <td>长安街改造工程荣获第十三届中国土木工程詹天佑奖</td>
-                            <td>办公室</td>
-                            <td>马六</td>
-                            <td>2016-05-03 14:34</td>
-                            <td>长安街改造</td>
-                            <td>第十三届中国土木工程詹天佑奖</td>
-                            <td>23</td>
-                        </tr>
-
-                        <tr class="even">
-                            <td>怀柔厂党支部组织参观焦庄户地道战遗址纪念馆</td>
-                            <td>办公室</td>
-                            <td>老七</td>
-                            <td>2018-06-07 09:00:00</td>
-                            <td>怀柔</td>
-                            <td>参观学习焦庄户地道战遗址纪念馆</td>
-                            <td>43</td>
-                        </tr>
+                        <c:choose>
+                            <c:when test="${oaNewsCenterList.size() <= 0}">
+                                <td colspan="7">' + '暂无数据' + '</td>
+                            </c:when>
+                            <c:otherwise>
+                                <c:forEach var="newsCenter" items="${oaNewsCenterList}" varStatus="status">
+                                    <tr onclick="particulars(${newsCenter.id})">
+                                        <td>${status.count}</td>
+                                        <td>${newsCenter.newsHeadlines}</td>
+                                        <td>${newsCenter.releaseDepartment}</td>
+                                        <td>${newsCenter.publisher}</td>
+                                        <td>${newsCenter.releaseDateStr}</td>
+                                        <td>${newsCenter.keyword}</td>
+                                        <td>${newsCenter.summary}</td>
+                                    </tr>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
 
                         </tbody>
 
@@ -157,82 +125,43 @@
 
                     </div>
                     <div class="unit_news_foot_right">
-                        <input type="button" value="新闻发布" class="press_release_button" id="newsRelease">
-                        <a>更多</a>
+                        <input type="button" value="新闻发布" class="press_release_button"
+                               style="padding: 3px 5px;background: #f3f3f3;border: 1px #000000 solid;margin-right: 10px;border-radius: 3px;"
+                               id="newsRelease">
+                        <a onclick="moreNewsData()" style="color: #00b8ff">更多</a>
                     </div>
                 </div>
 
                 <div style="clear: both"></div>
 
                 <div>
-                    <div class="unit_news_title">企业荣誉</div>
+                    <div class="unit_news_title" style="font-size: 13px">企业荣誉</div>
                 </div>
-                <div>
+                <div style="min-height: 180px">
                     <table class="simpletable">
 
                         <thead>
-                        <th width="40%">标题</th>
-                        <th>发布部门</th>
-                        <th>发布人</th>
-                        <th>发布时间</th>
-                        <th>关键字</th>
-                        <th>摘要</th>
-                        <th>点击数</th>
+                        <th style="width: 5%">序号</th>
+                        <th style="width: 30%">标题</th>
+                        <th style="width: 10%">发布部门</th>
+                        <th style="width: 10%">发布人</th>
+                        <th style="width: 10%">发布时间</th>
+                        <th style="width: 15%">关键字</th>
+                        <th style="width: 20%">摘要</th>
                         </thead>
 
                         <tbody>
-
-                        <tr></tr>
-                        <tr class="even">
-                            <td>顺义沥青厂为一线职工送清凉</td>
-                            <td>办公室</td>
-                            <td>张三</td>
-                            <td>2018-06-22 10:55</td>
-                            <td>顺义</td>
-                            <td>烈日酷暑为职工送清凉</td>
-                            <td>12</td>
-                        </tr>
-
-                        <tr class="even">
-                            <td>党建结对凝聚发展合力，精准帮扶贡献国企力量</td>
-                            <td>办公室</td>
-                            <td>李四</td>
-                            <td>2018-06-11 14:19</td>
-                            <td>发展,贡献</td>
-                            <td>落实北京市精准帮扶工作和党员双报到工作</td>
-                            <td>20</td>
-                        </tr>
-
-                        <tr class="even">
-                            <td>通州沥青厂为京秦高速供料</td>
-                            <td>办公室</td>
-                            <td>赵武</td>
-                            <td>2018-06-07 14:42</td>
-                            <td>京秦</td>
-                            <td>京秦告诉</td>
-                            <td>14</td>
-                        </tr>
-
-                        <tr class="even">
-                            <td>长安街改造工程荣获第十三届中国土木工程詹天佑奖</td>
-                            <td>办公室</td>
-                            <td>马六</td>
-                            <td>2016-05-03 14:34</td>
-                            <td>长安街改造</td>
-                            <td>第十三届中国土木工程詹天佑奖</td>
-                            <td>23</td>
-                        </tr>
-
-                        <tr class="even">
-                            <td>怀柔厂党支部组织参观焦庄户地道战遗址纪念馆</td>
-                            <td>办公室</td>
-                            <td>老七</td>
-                            <td>2018-06-07 09:00:00</td>
-                            <td>怀柔</td>
-                            <td>参观学习焦庄户地道战遗址纪念馆</td>
-                            <td>43</td>
-                        </tr>
-
+                        <c:forEach var="corporateHonor" items="${oaCorporateHonorList}" varStatus="status">
+                            <tr onclick="corporateHonorParticulars(${corporateHonor.id})">
+                                <td>${status.count}</td>
+                                <td>${corporateHonor.title}</td>
+                                <td>${corporateHonor.releaseDepartment}</td>
+                                <td>${corporateHonor.publisher}</td>
+                                <td>${corporateHonor.releaseDateStr}</td>
+                                <td>${corporateHonor.keyword}</td>
+                                <td>${corporateHonor.summary}</td>
+                            </tr>
+                        </c:forEach>
                         </tbody>
 
                     </table>
@@ -243,8 +172,12 @@
                         <span class="unit_news_margin_content">管理员:系统管理员</span>
 
                     </div>
+
                     <div class="unit_news_foot_right">
-                        <a>更多</a>
+                        <input type="button" value="荣誉发布" class="press_release_button"
+                               style="padding: 3px 5px;background: #f3f3f3;border: 1px #000000 solid;margin-right: 10px;border-radius: 3px;"
+                               onclick="corporateHonorRelease()">
+                        <a onclick="moreCorporateHonorData()" style="color: #00b8ff">更多</a>
                     </div>
                 </div>
 
@@ -258,8 +191,37 @@
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
 <script type="text/javascript" src="../../../../static/js/oa/oa_common.js"></script>
 <script>
-    $('#newsRelease').on('click',function () {
-       window.location.href = '/newsCenter/toNewsRelease';
+    //新闻发布
+    $('#newsRelease').on('click', function () {
+        window.location.href = '/newsCenter/toNewsRelease';
     });
+
+    //更多新闻
+    function moreNewsData() {
+        window.location.href = '/newsCenter/toNewsList';
+    }
+
+    //新闻详情
+    function particulars(id) {
+        window.location.href = '${path}/newsCenter/newsDetails?id=' + id;
+    }
+
+    /*-------企业荣誉----------*/
+
+    //企业荣誉发布
+    function corporateHonorRelease(){
+        window.location.href = '/newsCenter/toCorporateHonor';
+    }
+
+    //更多企业荣誉
+    function moreCorporateHonorData() {
+        window.location.href = '/newsCenter/toCorporateHonorList';
+    }
+
+    //企业荣誉详情
+    function corporateHonorParticulars(id) {
+        window.location.href = '${path}/newsCenter/corporateHonorDetails?id=' + id;
+    }
+
 </script>
 </html>

@@ -132,15 +132,15 @@ public class OaDocumentServiceImpl implements OaDocumentService {
         Integer userInfoId = userInfoMapper.getIdByNickName(draftedPerson);
         if (userInfo.getId().equals(bossId)) {
             if (userInfo.getId().equals(userInfoId)) {
-                return oaDocumentMapper.updateSignatureIssuanceAndReviewer(userInfo.getNickName(), id);
+                return oaDocumentMapper.updateSignatureIssuanceAndReviewer(userInfo.getNickname(), id);
             } else {
-                return oaDocumentMapper.updateSignatureIssuance(userInfo.getNickName(), id);
+                return oaDocumentMapper.updateSignatureIssuance(userInfo.getNickname(), id);
             }
         } else {
             if(userInfo.getId().equals(userInfoId)){
-                return oaDocumentMapper.updateCountersignatureAndReviewer(userInfo.getNickName(), id);
+                return oaDocumentMapper.updateCountersignatureAndReviewer(userInfo.getNickname(), id);
             }else {
-                return oaDocumentMapper.updateCountersignature(userInfo.getNickName(), id);
+                return oaDocumentMapper.updateCountersignature(userInfo.getNickname(), id);
             }
         }
     }
