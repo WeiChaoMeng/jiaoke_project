@@ -63,7 +63,7 @@
             <if test="department != null">
                 department,
             </if>
-            <if test="department != null">
+            <if test="deptPrincipal != null">
                 dept_principal,
             </if>
         </trim>
@@ -98,7 +98,7 @@
             <if test="department != null">
                 #{department,jdbcType=VARCHAR},
             </if>
-            <if test="department != null">
+            <if test="deptPrincipal != null">
                 #{deptPrincipal,jdbcType=VARCHAR},
             </if>
         </trim>
@@ -135,7 +135,7 @@
         FROM
             user_info
             LEFT JOIN department ON department.department_key = user_info.department
-        WHERE username = #{userName}
+        WHERE username = #{username}
     </select>
 
     <select id="getUserByDepartmentKey" parameterType="java.lang.String" resultMap="BaseResultMap">

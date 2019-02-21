@@ -17,10 +17,10 @@ public interface UserInfoService {
     /**
      * 获取用户信息根据用户名称
      *
-     * @param userName userName
+     * @param username username
      * @return UserInfo
      */
-    UserInfo getUserInfoByUserName(String userName);
+    UserInfo getUserInfoByUserName(String username);
 
     /**
      * 获取权限根据用户id
