@@ -75,7 +75,7 @@
             oa_document.create_time,
             oa_document.process_state,
             oa_document.form_state,
-            user_info.nick_name AS user_info_id ,
+            user_info.nickname AS user_info_id ,
             oa_document.processing_state
         from oa_document
         LEFT JOIN user_info ON oa_document.user_info_id = user_info.id
@@ -490,7 +490,7 @@
             oa_document.create_time,
             oa_document.process_state,
             oa_document.form_state,
-            user_info.nick_name AS user_info_id,
+            user_info.nickname AS user_info_id,
             oa_document.processing_state
         FROM
             oa_document
@@ -538,7 +538,7 @@
             oa_document.create_time,
             oa_document.process_state,
             oa_document.form_state,
-            user_info.nick_name AS user_info_id,
+            user_info.nickname AS user_info_id,
             oa_document.processing_state
         from oa_document
             LEFT JOIN user_info ON oa_document.user_info_id = user_info.id
