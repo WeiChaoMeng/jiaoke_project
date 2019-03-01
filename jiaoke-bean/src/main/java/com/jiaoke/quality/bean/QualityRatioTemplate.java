@@ -54,9 +54,9 @@ public class QualityRatioTemplate {
     private int temperatureMixture;
     //混合料温度上限
     private int temperatureMixtureUp;
-    //一仓温度
+    //再生料温度
     private int temperatureMilling;
-    //一仓温度上限
+    //再生料温度上限
     private int temperatureMillingUp;
     //机组一对应的模板ID
     private int crew1ModeleId;

@@ -29,15 +29,15 @@
 
                 <tr>
                     <td class="tlabel">1#仓：</td>
-                    <td><input type="text" class="forminput inputstyle" value="孙中山"></td>
+                    <td><input type="text" class="forminput inputstyle" ></td>
                     <td class="tlabel">2#仓：</td>
-                    <td><input type="text" class="forminput inputstyle" value="孙中山"></td>
+                    <td><input type="text" class="forminput inputstyle" ></td>
                 </tr>
 
                 <tr>
                     <td class="tlabel">3#仓：</td>
                     <td>
-                        <input type="text" class="forminput inputstyle" value="孙中山">
+                        <input type="text" class="forminput inputstyle" value="">
                     </td>
                     <td class="tlabel">4#仓：</td>
                     <td>

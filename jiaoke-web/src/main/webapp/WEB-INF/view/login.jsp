@@ -49,7 +49,7 @@
                 </div>
                 <div class="login_input_content">
                     <div class="left-icon"><img src="/static/images/icon/password.png" alt=""></div>
-                    <input type="password" placeholder="密码" name="password" id="password" value=""
+                    <input type="password" placeholder="密码" autocomplete="new-password"  name="password" id="password" value=""
                            class="right-input" onkeyup="this.value=this.value.replace(/\s+/g,'')">
                 </div>
                 <div class="login_input_content">

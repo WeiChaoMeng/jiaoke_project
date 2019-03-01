@@ -121,4 +121,6 @@ public interface QualityDataManagerDao {
      * @return
      */
     QualityRatioTemplate selectRationById(@Param("ratioNum") String ratioNum,@Param("crewNum") String crewNum);
+
+
 }

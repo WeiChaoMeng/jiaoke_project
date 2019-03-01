@@ -4,7 +4,15 @@
 
     <select id="selelectWarningLiveDataToList" resultType="java.util.Map">
         SELECT
-               t1.id,t1.*
+            t1.id,
+        t1.produce_date,
+        t1.produce_time,
+        t1.produce_ratio_id,
+        t1.produce_car_num,
+        t1.produce_disc_num,
+        t1.produce_user,
+        t1.produce_custom_num,
+        t1.produce_crewNum
         FROM
              quality_warning_promessage_crew t1
                  JOIN quality_warning_data t2 ON t1.id = t2.crew_id

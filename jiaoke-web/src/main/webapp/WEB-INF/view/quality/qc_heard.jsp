@@ -28,10 +28,6 @@
 
 <div style="height: 10%">
     <ul class="menu">
-        <li>
-            <a href="#" id="matching_manager" onclick="matching_model()" class="menu_selected">
-                <i class="menuico iconfont1">&#xe636;</i>配比管理</a>
-        </li>
 
         <li>
             <a href="#" id="real_time_monitor" onclick="real_time_monitor()" class="menu_selected">
@@ -42,23 +38,27 @@
             <a href="#" id="historical_data" onclick="historical_data()" class="menu_selected">
                 <i class="menuico iconfont1">&#xe8bc;</i>历史数据</a>
         </li>
+
+        <li>
+            <a href="#" id="matching_manager" onclick="matching_model()" class="menu_selected">
+                <i class="menuico iconfont1">&#xe636;</i>配比管理</a>
+        </li>
+
+        <li>
+            <a href="#" id="dynamic_management" class="menu_selected" onclick="dynamic_management()">
+                <i class="menuico iconfont1">&#xe813;</i>动态管理</a>
+        </li>
     </ul>
 
     <ul class="menu">
-        <li>
-            <a href="#" id="auxiliary_analysis" onclick="auxiliary_analysis()" class="menu_selected">
-                <i class="menuico iconfont1">&#xe68c;</i>辅助分析</a>
-        </li>
 
-        <li>
-            <a href="#" id="prodoct_list" onclick="prodoct_list()" class="menu_selected">
-                <i class="menuico iconfont1">&#xebdc;</i>产品报表</a>
-        </li>
 
-        <li>
-            <a href="#" id="testing" onclick="testing()" class="menu_selected">
-                <i class="menuico iconfont1">&#xe6e2;</i>实验检测</a>
-        </li>
+
+
+        <%--<li>--%>
+            <%--<a href="#" id="testing" onclick="testing()" class="menu_selected">--%>
+                <%--<i class="menuico iconfont1">&#xe6e2;</i>实验检测</a>--%>
+        <%--</li>--%>
     </ul>
 
     <ul class="menu">
@@ -68,24 +68,30 @@
             <a href="#" id="real_time_protection" class="menu_selected" onclick="real_time_protection()"><i
                     class="menuico iconfont1">&#xeba7;</i>实时监控</a>
         </li>
+            <li>
+                <a href="#" id="quality_warning" onclick="quality_warning()" class="menu_selected">
+                    <i class="menuico iconfont1">&#xe6a8;</i>质量预警</a>
+            </li>
+
+            <li>
+                <a href="#" id="data_manager" onclick="data_manager()" class="menu_selected">
+                    <i class="menuico iconfont1">&#xe843;</i>数据管理</a>
+            </li>
         </shiro:hasPermission>
 
         <li>
-            <a href="#" id="data_manager" onclick="data_manager()" class="menu_selected">
-                <i class="menuico iconfont1">&#xe843;</i>数据管理</a>
+            <a href="#" id="auxiliary_analysis" onclick="auxiliary_analysis()" class="menu_selected">
+                <i class="menuico iconfont1">&#xe68c;</i>辅助分析</a>
         </li>
 
-        <li>
-            <a href="#" id="quality_warning" onclick="quality_warning()" class="menu_selected">
-                <i class="menuico iconfont1">&#xe6a8;</i>质量预警</a>
-        </li>
+        <%--<li>--%>
+            <%--<a href="#" id="prodoct_list" onclick="prodoct_list()" class="menu_selected">--%>
+                <%--<i class="menuico iconfont1">&#xebdc;</i>产品报表</a>--%>
+        <%--</li>--%>
     </ul>
 
     <ul class="menu">
-        <li>
-            <a href="#" id="dynamic_management" class="menu_selected" onclick="dynamic_management()">
-                <i class="menuico iconfont1">&#xe813;</i>动态管理</a>
-        </li>
+
     </ul>
 </div>
 
