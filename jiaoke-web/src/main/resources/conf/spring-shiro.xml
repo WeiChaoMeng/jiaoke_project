@@ -27,9 +27,12 @@
                 -->
                 /favicon.ico = anon
                 /static/** = anon
+                <!--质量数据写入-->
                 /qualityData.do = anon
+                <!--登录-->
                 /login/login.do = anon
                 /login/*.do = authc
+                <!--登出-->
                 /logout=logout
                 /** = authc
             </value>
