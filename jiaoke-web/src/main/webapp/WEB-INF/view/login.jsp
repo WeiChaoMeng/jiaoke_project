@@ -45,12 +45,12 @@
                 <div class="login_input_content">
                     <div class="left-icon"><img src="/static/images/icon/username.png" alt=""></div>
                     <input type="text" placeholder="账号" name="username" id="username" value="" class="right-input"
-                           onkeyup="this.value=this.value.replace(/\s+/g,'')">
+                           onkeyup="this.value=this.value.replace(/\s+/g,'')" autocomplete="off">
                 </div>
                 <div class="login_input_content">
                     <div class="left-icon"><img src="/static/images/icon/password.png" alt=""></div>
                     <input type="password" placeholder="密码" name="password" id="password" value=""
-                           class="right-input" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+                           class="right-input" onkeyup="this.value=this.value.replace(/\s+/g,'')" autocomplete="off">
                 </div>
                 <div class="login_input_content">
                     <button type="submit" class="login-but" id="submit">登录</button>

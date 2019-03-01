@@ -179,7 +179,7 @@
                 <li><a id="notepad"><span>待办记事</span></a></li>
             </ul>
         </li>
-        <li class="nav-item">
+        <%--<li class="nav-item">
             <a><i class="iconfont icon-m3-newCoordination-copy"></i>
                 <span class="parent-menu-span">协同工作</span>
                 <i class="my-icon nav-more"></i>
@@ -192,7 +192,7 @@
                 <li><a id="managed_matter"><span>已办事项</span></a></li>
                 <li><a id="supervision_matters"><span>督办事项</span></a></li>
             </ul>
-        </li>
+        </li>--%>
         <li class="nav-item">
             <a><i class="iconfont icon-gongwen"></i>
                 <span class="parent-menu-span">公文管理</span>
@@ -244,15 +244,15 @@
                             <span>公司收文</span>
                         </a>
                     </li>
-                    <li>
+                    <%--<li>
                         <a id="office_meeting_summary"
                            onclick="IFrame(this,$('#office').text(),'comprehensiveOffice/officeMeetingSummary')">
                             <span>会议纪要</span>
                         </a>
-                    </li>
+                    </li>--%>
                     <li>
                         <a id="office_management_system"
-                           onclick="IFrame(this,$('#office').text(),'comprehensiveOffice/officeManagementSystem')">
+                           onclick="IFrame(this,$('#office').text(),'managementSystem/toManagementSystem')">
                             <span>管理体系相关</span>
                         </a>
                     </li>
@@ -264,19 +264,20 @@
                     </li>
                     <li>
                         <a id="office_eia_monitoring"
-                           onclick="IFrame(this,$('#office').text(),'comprehensiveOffice/officeEiaMonitor')">
+                           onclick="IFrame(this,$('#office').text(),'eiaMonitor/toEiaMonitor')">
                             <span>环评监测报告</span>
                         </a>
                     </li>
                     <li>
                         <a id="office_other_documents"
-                           onclick="IFrame(this,$('#office').text(),'comprehensiveOffice/officeOtherDocuments')">
+                           onclick="IFrame(this,$('#office').text(),'officeOther/toOfficeOther')">
                             <span>其他文件</span>
                         </a>
                     </li>
                 </ul>
             </li>
         </shiro:hasPermission>
+<%--
 
         <shiro:hasPermission name="financialManagement">
             <li class="nav-item">
@@ -294,6 +295,7 @@
                 </ul>
             </li>
         </shiro:hasPermission>
+--%>
 
         <li class="nav-item">
             <a><i class="iconfont icon-huiyiguanli"></i>

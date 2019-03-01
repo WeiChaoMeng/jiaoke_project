@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.oa.dao.OaManagementSystemMapper">
+
+    <select id="getSelectByFileName" parameterType="java.lang.String" resultType="com.jiaoke.oa.bean.OaManagementSystem">
+        SELECT
+            id as id,
+            file_name as fileName,
+            `date` as `date`,
+            remarks as remarks,
+            rich_text as richText,
+            create_time as createTime
+        FROM oa_management_system
+        WHERE
+            file_name LIKE "%"#{fileName}"%"
+    </select>
+
+    <select id="getSelectByDate" parameterType="java.util.Date" resultType="com.jiaoke.oa.bean.OaManagementSystem">
+        SELECT
+            id as id,
+            file_name as fileName,
+            `date` as `date`,
+            remarks as remarks,
+            rich_text as richText,
+            create_time as createTime
+        FROM oa_management_system
+        WHERE
+            `date` = #{date}
+    </select>
+</mapper>

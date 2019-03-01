@@ -15,8 +15,10 @@ public class OaCheckingAttendance implements Serializable {
     private String department;
     private String jobnumber;
     private String position;
+    private String day;
+    private String week;
     private Date workDate;
-    private List<Date> recordresult;
+    private List<String> recordresult;
 
     public Date getWorkDate() {
         return workDate;
@@ -26,11 +28,11 @@ public class OaCheckingAttendance implements Serializable {
         this.workDate = workDate;
     }
 
-    public List<Date> getRecordresult() {
+    public List<String> getRecordresult() {
         return recordresult;
     }
 
-    public void setRecordresult(List<Date> recordresult) {
+    public void setRecordresult(List<String> recordresult) {
         this.recordresult = recordresult;
     }
 
@@ -72,5 +74,21 @@ public class OaCheckingAttendance implements Serializable {
 
     public void setPosition(String position) {
         this.position = position;
+    }
+
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
+    }
+
+    public String getWeek() {
+        return week;
+    }
+
+    public void setWeek(String week) {
+        this.week = week;
     }
 }

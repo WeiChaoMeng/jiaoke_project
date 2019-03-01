@@ -22,7 +22,7 @@
                 <li id="upcoming" class="upper_left_head_a head_option">
                     <a>
                         <span>待办工作</span>
-                        <span>(2)</span>
+                        <span>(0)</span>
                     </a>
                 </li>
 
@@ -31,7 +31,7 @@
                 <li id="form_approval" class="upper_left_head_b head_option">
                     <a>
                         <span>表单审批</span>
-                        <span>(2)</span>
+                        <span>(0)</span>
                     </a>
                 </li>
             </ul>
@@ -40,7 +40,7 @@
         <div id="menu1" class="menu1_style">
             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tbody>
-                <tr>
+                <%--<tr>
                     <td class="list_content">
                         <li>
                             <span class="list_content_name">
@@ -78,7 +78,7 @@
                             </span>
                         </li>
                     </td>
-                </tr>
+                </tr>--%>
                 </tbody>
             </table>
         </div>
@@ -86,7 +86,7 @@
         <div id="menu2" class="menu2_style">
             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tbody>
-                <tr>
+                <%--<tr>
                     <td class="list_content">
                         <li>
                             <span class="list_content_name">
@@ -124,7 +124,7 @@
                             </span>
                         </li>
                     </td>
-                </tr>
+                </tr>--%>
                 </tbody>
             </table>
         </div>
@@ -264,7 +264,7 @@
                 <li id="tracking_items" class="upper_left_head_a head_option">
                     <a>
                         <span>跟踪事项</span>
-                        <span>(2)</span>
+                        <span>(0)</span>
                     </a>
                 </li>
 
@@ -273,7 +273,7 @@
                 <li id="schedule" class="upper_left_head_b head_option">
                     <a style="font-size: 13px;">
                         <span>日程时间</span>
-                        <span>(2)</span>
+                        <span>(0)</span>
                     </a>
                 </li>
             </ul>
@@ -282,7 +282,7 @@
         <div id="menu3" class="menu1_style">
             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tbody>
-                <tr>
+                <%--<tr>
                     <td class="list_content">
                         <li>
                             <span class="list_content_name">
@@ -320,7 +320,7 @@
                             </span>
                         </li>
                     </td>
-                </tr>
+                </tr>--%>
                 </tbody>
             </table>
         </div>
@@ -328,7 +328,7 @@
         <div id="menu4" class="menu2_style">
             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tbody>
-                <tr>
+                <%--<tr>
                     <td class="list_content">
                         <li>
                             <span class="list_content_name ">
@@ -366,7 +366,7 @@
                             </span>
                         </li>
                     </td>
-                </tr>
+                </tr>--%>
                 </tbody>
             </table>
         </div>

@@ -35,7 +35,7 @@
                     <li>
                         <div class="listbox">
                             <i class="iconfont">&#xe64c;</i>
-                            <em>25
+                            <em>0
                                 <p>待办事项</p>
                             </em>
                         </div>
@@ -43,7 +43,7 @@
                     <li>
                         <div class="listbox">
                             <i class="iconfont">&#xe6f3;</i>
-                            <em>16
+                            <em>0
                                 <p>待签公文</p>
                             </em>
                         </div>
@@ -52,7 +52,7 @@
                     <li>
                         <div class="listbox">
                             <i class="iconfont">&#xe672;</i>
-                            <em>198
+                            <em>0
                                 <p>本月会议</p>
                             </em>
                         </div>
@@ -60,7 +60,7 @@
                     <li>
                         <div class="listbox">
                             <i class="iconfont">&#xe70f;</i>
-                            <em>10
+                            <em>0
                                 <p>公告信息</p>
                             </em>
                         </div>
@@ -69,7 +69,7 @@
                     <li>
                         <div class="listbox">
                             <i class="iconfont">&#xe974;</i>
-                            <em>15
+                            <em>0
                                 <p>日程计划</p>
                             </em>
                         </div>
@@ -77,7 +77,7 @@
                     <li>
                         <div class="listbox" style="margin-right: 0">
                             <i class="iconfont">&#xe76c;</i>
-                            <em>7
+                            <em>0
                                 <p>行业动态</p>
                             </em>
                         </div>
@@ -90,7 +90,7 @@
                 <div class="infoboxleft">
                     <div class="boxtitle"><span>党建学习</span><a href="#">更多<i class="iconfont">&#xeba8;</i></a></div>
 
-                    <div class="boxdown">
+                    <%--<div class="boxdown">
                         <ul class="textlist">
                             <li style="height: 55px;">
                                 <strong><a href="#"></a>习近平向各国共产党赴华参加纪念马克思诞辰200周年专题研讨会致贺信</strong>
@@ -107,7 +107,7 @@
                                 <i>11-10</i>
                             </li>
                         </ul>
-                    </div>
+                    </div>--%>
 
                 </div>
             </div>
@@ -115,7 +115,7 @@
             <div class="inforight">
                 <div class="infoboxright">
                     <div class="boxtitle"><span>行业新闻</span><a href="#">更多<i class="iconfont">&#xeba8;</i></a></div>
-                    <ul class="textlist">
+                    <%--<ul class="textlist">
                         <li><span></span><a href="#">海口一沥青搅拌站占用林地 秀英检察院督促整改</a><i>11-10</i></li>
                         <li><span></span><a href="#">国道228线石井段“白改黑”工程实验段完成沥青摊铺</a><i>11-09</i></li>
                         <li><span></span><a href="#">預計8月31日機場至吉林方向高速施工提前一個月結束</a><i>11-08</i></li>
@@ -125,7 +125,7 @@
                         <li><span></span><a href="#">市交通运输局组织召开绵西高速公路建设推进会</a><i>11-04</i></li>
                         <li><span></span><a href="#">关于征集第四届全国绿色公路技术交流会论文的通知</a><i>11-03</i></li>
                         <li><span></span><a href="#">六盘水：积极推进六枝至安龙高速公路建设</a><i>11-02</i></li>
-                    </ul>
+                    </ul>--%>
                 </div>
             </div>
 

@@ -1,6 +1,10 @@
 package com.jiaoke.controller.oa.personal;
 
+import com.dingtalk.api.DefaultDingTalkClient;
+import com.dingtalk.api.DingTalkClient;
+import com.dingtalk.api.request.OapiUserListbypageRequest;
 import com.dingtalk.api.response.OapiAttendanceListRecordResponse;
+import com.dingtalk.api.response.OapiAttendanceListResponse;
 import com.dingtalk.api.response.OapiDepartmentListResponse;
 import com.dingtalk.api.response.OapiUserListbypageResponse;
 import com.jiake.utils.DingDingUtil;
@@ -11,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -28,79 +33,49 @@ public class OaCheckingAttendanceController {
     /**
      * 个人考勤
      *
-     * @return  oa_personal_attendance.jsp
+     * @return oa_personal_attendance.jsp
      */
     @RequestMapping("/toPersonalAttendance")
-    public String toPersonalAttendance() {
-        return "oa/personal/oa_personal_attendance";
-    }
+    public String toPersonalAttendances(Model model) throws Exception {
+        Date date = new Date();
+        List<OaCheckingAttendance> oaCheckingAttendanceList = new ArrayList<>();
 
-    /**
-     * 获取打卡详情(POST)
-     *
-     * @throws Exception e
-     */
-    @RequestMapping(value = "/attendanceDetails")
-    @ResponseBody
-    public String attendanceDetails() throws Exception {
-        Map<String, Object> map = new HashMap<>(16);
-        List<OaCheckingAttendance> list = new ArrayList<>();
         //获取部门列表
         List<OapiDepartmentListResponse.Department> departmentList = DingDingUtil.getDepartmentList();
         for (OapiDepartmentListResponse.Department department : departmentList) {
-            OaCheckingAttendance oaCheckingAttendance = new OaCheckingAttendance();
-            //获取部门用户详细信息
-            List<OapiUserListbypageResponse.Userlist> departmentalUserDetails = DingDingUtil.getDepartmentalUserDetails(department.getId());
-            for (OapiUserListbypageResponse.Userlist userList : departmentalUserDetails) {
-                oaCheckingAttendance.setUserId(userList.getUserid());
-                oaCheckingAttendance.setUserName(userList.getName());
-                //根据部门id获取部门name
-                String departmentId = userList.getDepartment().replace("[", "").replace("]", "");
-                oaCheckingAttendance.setDepartment(DingDingUtil.getDepartmentName(departmentId));
-                oaCheckingAttendance.setJobnumber(userList.getJobnumber());
-                oaCheckingAttendance.setPosition(userList.getPosition());
+            DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/user/listbypage");
+            OapiUserListbypageRequest request = new OapiUserListbypageRequest();
+            request.setDepartmentId(department.getId());
+            request.setOffset(0L);
+            request.setSize(100L);
+            request.setOrder("entry_desc");
+            request.setHttpMethod("GET");
+            OapiUserListbypageResponse execute = client.execute(request, DingDingUtil.getAccessToken());
+            List<OapiUserListbypageResponse.Userlist> userList = execute.getUserlist();
+
+            //日期格式
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+
+            for (OapiUserListbypageResponse.Userlist list : userList) {
+                OaCheckingAttendance oaCheckingAttendance = new OaCheckingAttendance();
+                oaCheckingAttendance.setUserId(list.getUserid());
+                oaCheckingAttendance.setUserName(list.getName());
+                oaCheckingAttendance.setDepartment(department.getName());
+                oaCheckingAttendance.setJobnumber(list.getJobnumber());
+                oaCheckingAttendance.setPosition(list.getPosition());
+                oaCheckingAttendance.setDay(DingDingUtil.dateConvertDay(date));
+                oaCheckingAttendance.setWeek(DingDingUtil.getWeekOfDate(date));
+
+                List<String> arrayList = new ArrayList<>();
+                List<OapiAttendanceListResponse.Recordresult> recordResultList = DingDingUtil.getAttendanceListRequest(list.getUserid());
+                for (OapiAttendanceListResponse.Recordresult recordResult : recordResultList) {
+                    arrayList.add(simpleDateFormat.format(recordResult.getUserCheckTime()));
+                }
+                oaCheckingAttendance.setRecordresult(arrayList);
+                oaCheckingAttendanceList.add(oaCheckingAttendance);
             }
-            list.add(oaCheckingAttendance);
         }
-
-        //获取打卡时间
-        List<OapiAttendanceListRecordResponse.Recordresult> recordResultList = DingDingUtil.getPunchTheClockDetails();
-        map.put("list",list);
-        map.put("recordResultList",recordResultList);
-
-        return JsonHelper.toJSONString(map);
-    }
-
-    /**
-     * 获取打卡详情(GET)
-     *
-     * @throws Exception e
-     */
-    @RequestMapping(value = "/toAttendance")
-    public String attendanceDetails(Model model) throws Exception {
-        /*List<OaCheckingAttendance> oaCheckingAttendanceList = new ArrayList<>();
-        //获取部门列表
-        List<OapiDepartmentListResponse.Department> departmentList = DingDingUtil.getDepartmentList();
-        for (OapiDepartmentListResponse.Department department : departmentList) {
-            OaCheckingAttendance oaCheckingAttendance = new OaCheckingAttendance();
-            //获取部门用户详细信息
-            List<OapiUserListbypageResponse.Userlist> departmentalUserDetails = DingDingUtil.getDepartmentalUserDetails(department.getId());
-            for (OapiUserListbypageResponse.Userlist userList : departmentalUserDetails) {
-                oaCheckingAttendance.setUserId(userList.getUserid());
-                oaCheckingAttendance.setUserName(userList.getName());
-                //根据部门id获取部门name
-                String departmentId = userList.getDepartment().replace("[", "").replace("]", "");
-                oaCheckingAttendance.setDepartment(DingDingUtil.getDepartmentName(departmentId));
-                oaCheckingAttendance.setJobnumber(userList.getJobnumber());
-                oaCheckingAttendance.setPosition(userList.getPosition());
-            }
-            oaCheckingAttendanceList.add(oaCheckingAttendance);
-        }
-
-        //获取打卡时间
-        List<OapiAttendanceListRecordResponse.Recordresult> recordResultList = DingDingUtil.getPunchTheClockDetails();
-        model.addAttribute("oaCheckingAttendanceList",oaCheckingAttendanceList);
-        model.addAttribute("recordResultList",recordResultList);*/
+        model.addAttribute("oaCheckingAttendanceList", oaCheckingAttendanceList);
         return "oa/personal/oa_personal_attendance";
     }
 }

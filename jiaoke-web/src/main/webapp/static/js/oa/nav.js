@@ -32,7 +32,7 @@ $(function () {
     $("#personal_attendance").on("click", function () {
         removeOwnName();
         personal(this);
-        $('#oa-iframe').attr("src", "personalAttendance/attendanceDetails");
+        $('#oa-iframe').attr("src", "personalAttendance/toPersonalAttendance");
     });
 
  //日程计划

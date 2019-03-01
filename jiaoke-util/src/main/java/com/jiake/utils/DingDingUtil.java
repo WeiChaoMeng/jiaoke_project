@@ -4,11 +4,10 @@ import com.dingtalk.api.DefaultDingTalkClient;
 import com.dingtalk.api.DingTalkClient;
 import com.dingtalk.api.request.*;
 import com.dingtalk.api.response.*;
+import com.taobao.api.ApiException;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * 钉钉
@@ -25,9 +24,11 @@ public class DingDingUtil {
      * @return AccessToken
      * @throws Exception api
      */
-    private static String getAccessToken() throws Exception {
-        String appkey = "ding65fmltgg5v96gdrj";
-        String corpSecret = "dLAhYyB-MdxVU6tKzMILWMiZDlo6QpkDdFA_IhASGPbPWGopF3Xa_pXjPSeJH4KK";
+    public static String getAccessToken() throws Exception {
+        /*String appkey = "ding65fmltgg5v96gdrj";
+        String corpSecret = "dLAhYyB-MdxVU6tKzMILWMiZDlo6QpkDdFA_IhASGPbPWGopF3Xa_pXjPSeJH4KK";*/
+        String appkey = "dingd5hzdp7s6jutu6vm";
+        String corpSecret = "QUZhGHzC7c-lpGK381TeC8kokm09OPruGMePRCuvucjl0KtBJs49SFg1OXtZ7N3p";
         DefaultDingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/gettoken");
         OapiGettokenRequest request = new OapiGettokenRequest();
         request.setAppkey(appkey);
@@ -50,7 +51,11 @@ public class DingDingUtil {
         request.setId("1");
         request.setHttpMethod("GET");
         OapiDepartmentListResponse response = client.execute(request, getAccessToken());
-        return response.getDepartment();
+        List<OapiDepartmentListResponse.Department> departmentList = response.getDepartment();
+        OapiDepartmentListResponse.Department department = new OapiDepartmentListResponse.Department();
+        department.setId(1L);
+        departmentList.add(department);
+        return departmentList;
     }
 
     /**
@@ -134,6 +139,27 @@ public class DingDingUtil {
     }
 
     /**
+     * 获取打卡结果
+     *
+     * @param str userId
+     * @return recordResultList
+     * @throws ApiException e
+     */
+    public static List<OapiAttendanceListResponse.Recordresult> getAttendanceListRequest(String str) throws Exception {
+        String dateFrom = dateConvertYYYYMMDD(new Date()) + " 00:00:00";
+        String dateTo = dateConvertYYYYMMDD(new Date()) + " 23:59:59";
+        DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/attendance/list");
+        OapiAttendanceListRequest request = new OapiAttendanceListRequest();
+        request.setWorkDateFrom(dateFrom);
+        request.setWorkDateTo(dateTo);
+        request.setUserIdList(Arrays.asList(str));
+        request.setOffset(0L);
+        request.setLimit(50L);
+        OapiAttendanceListResponse response = client.execute(request, getAccessToken());
+        return response.getRecordresult();
+    }
+
+    /**
      * 日期转换
      *
      * @param date data
@@ -141,6 +167,34 @@ public class DingDingUtil {
      */
     private static String dateConvertYYYYMMDD(Date date) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return simpleDateFormat.format(date);
+    }
+
+    /**
+     * 获取当前日期是星期几
+     *
+     * @param dt date
+     * @return 当前日期是星期几
+     */
+    public static String getWeekOfDate(Date dt) {
+        String[] weekDays = {"日", "一", "二", "三", "四", "五", "六"};
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(dt);
+        int w = cal.get(Calendar.DAY_OF_WEEK) - 1;
+        if (w < 0) {
+            w = 0;
+        }
+        return weekDays[w];
+    }
+
+    /**
+     * 获取日期
+     *
+     * @param date date
+     * @return day
+     */
+    public static String dateConvertDay(Date date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("d");
         return simpleDateFormat.format(date);
     }
 }

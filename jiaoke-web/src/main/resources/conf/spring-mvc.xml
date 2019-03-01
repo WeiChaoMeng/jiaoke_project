@@ -59,4 +59,7 @@
     <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
         <property name="securityManager" ref="securityManager"/>
     </bean>
+
+    <!--权限不足异常处理-->
+    <bean id="exceptionResolver" class="com.jiaoke.controller.MyExceptionResolver"/>
 </beans>
