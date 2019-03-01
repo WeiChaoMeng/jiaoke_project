@@ -88,20 +88,17 @@
                                 legend: {
                                     data:['上限配比','实际配比','下限配比']
                                 },
-                                grid: {
-                                    left: '3%',
-                                    right: '4%',
-                                    bottom: '3%',
-                                    containLabel: true
-                                },
                                 toolbox: {
+                                    show: true,
                                     feature: {
+                                        magicType: {type: ['bar', 'line']},
+                                        restore: {},
                                         saveAsImage: {}
                                     }
                                 },
                                 xAxis: {
                                     type: 'category',
-                                    boundaryGap: false,
+                                    // boundaryGap: false,
                                     data:  ['骨料1', '骨料2', '骨料3', '骨料4', '骨料5', '骨料6', '石粉', '沥青', '再生料', '添加剂']
                                 },
                                 yAxis: {
@@ -113,48 +110,43 @@
                                     bottom: '3%',
                                     containLabel: true
                                 },
-                                yAxis: {
-                                    type: 'log',
-                                    name: 'y'
-                                },
                                 <c:forEach items="${rationMessageList}" var="ration">
                                     <c:if test="${producedSVG.rationNum == ration.crew1ModeleId || producedSVG.rationNum == ration.crew2ModeleId }" >
                                         series: [
                                             {
-                                                name:'上线配比',
-                                                type:'line',
+                                                name:'上限配比',
+                                                type:'bar',
 
 
-
-                                                data: [     <fmt:formatNumber value="${ration.repertoryOne + 2 }" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.repertoryTwo + 2 }" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.repertoryThree + 2 }" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.repertoryFour + 2 }" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.repertoryFive + 2 }" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.repertorySix + 2}" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.breeze + 1}" pattern="#.00"/>,
-                                                    <fmt:formatNumber value=" ${ration.ratioStone + 2 }" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.ratioRegenerate1 + ration.ratioRegenerate2+ 2 }" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.ratioAdditive+2 }" pattern="#.00"/>]
+                                                data: [     <fmt:formatNumber value="${ration.repertoryOne == '0'? 0:ration.repertoryOne+ 2  }" pattern="#.00"/>,
+                                                    <fmt:formatNumber value="${ration.repertoryTwo == '0'? 0:ration.repertoryTwo+ 2 }" pattern="#.00"/>,
+                                                    <fmt:formatNumber value="${ration.repertoryThree == '0'? 0:ration.repertoryThree+ 2 }" pattern="#.00"/>,
+                                                    <fmt:formatNumber value="${ration.repertoryFour == '0'? 0:ration.repertoryFour+ 2 }" pattern="#.00"/>,
+                                                    <fmt:formatNumber value="${ration.repertoryFive == '0'? 0:ration.repertoryFive+ 2  }" pattern="#.00"/>,
+                                                    <fmt:formatNumber value="${ration.repertorySix == '0'? 0:ration.repertorySix+ 2 }" pattern="#.00"/>,
+                                                    <fmt:formatNumber value="${ration.breeze == '0'? 0:ration.breeze+ 1}" pattern="#.00"/>,
+                                                    <fmt:formatNumber value=" ${ration.ratioStone == '0'? 0:ration.ratioStone+ 2 }" pattern="#.00"/>,
+                                                    <fmt:formatNumber value="${ration.ratioRegenerate1 + ration.ratioRegenerate2 == '0'? 0:ration.ratioRegenerate1 + ration.ratioRegenerate2+ 2 }" pattern="#.00"/>,
+                                                    <fmt:formatNumber value="${ration.ratioAdditive == '0'? 0:ration.ratioAdditive+ 2 }" pattern="#.00"/>]
                                             },
                                             {
                                                 name:'实际配比',
-                                                type:'line',
+                                                type:'bar',
                                                 data: [${producedSVG.aggregate_1}, ${producedSVG.aggregate_2}, ${producedSVG.aggregate_3}, ${producedSVG.aggregate_4}, ${producedSVG.aggregate_5}, ${producedSVG.aggregate_6}, ${producedSVG.stone_1 > producedSVG.stone_2 ? producedSVG.stone_1:producedSVG.stone_2 }, ${producedSVG.asphalt}, ${producedSVG.regenerate}, ${producedSVG.additive}]
                                             },
                                             {
                                                 name:'下限配比',
-                                                type:'line',
-                                                data: [<fmt:formatNumber value="${ration.repertoryOne - 2 }" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.repertoryTwo - 2 }" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.repertoryThree - 2 }" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.repertoryFour - 2 }" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.repertoryFive - 2 }" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.repertorySix - 2}" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.breeze - 1}" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.ratioStone - 2 }" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.ratioRegenerate1 + ration.ratioRegenerate2 - 2 }" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.ratioAdditive - 2 }" pattern="#.00"/>]
+                                                type:'bar',
+                                                data: [<fmt:formatNumber value="${ration.repertoryOne == '0'? 0:ration.repertoryOne -2}" pattern="#.00"/>,
+                                                    <fmt:formatNumber value="${ration.repertoryTwo == '0'? 0:ration.repertoryTwo -2 }" pattern="#.00"/>,
+                                                    <fmt:formatNumber value="${ration.repertoryThree == '0'? 0:ration.repertoryThree -2}" pattern="#.00"/>,
+                                                    <fmt:formatNumber value="${ration.repertoryFour == '0'? 0:ration.repertoryFour -2 }" pattern="#.00"/>,
+                                                    <fmt:formatNumber value="${ration.repertoryFive == '0'? 0:ration.repertoryFive -2 }" pattern="#.00"/>,
+                                                    <fmt:formatNumber value="${ration.repertorySix == '0'? 0:ration.repertorySix -2}" pattern="#.00"/>,
+                                                    <fmt:formatNumber value="${ration.breeze == '0'? 0:ration.breeze - 1}" pattern="#.00"/>,
+                                                    <fmt:formatNumber value="${ration.ratioStone == '0'? 0:ration.ratioStone - 2 }" pattern="#.00"/>,
+                                                    <fmt:formatNumber value="${ration.ratioRegenerate1 + ration.ratioRegenerate2 == '0'? 0:ration.ratioRegenerate1 + ration.ratioRegenerate2  - 2  }" pattern="#.00"/>,
+                                                    <fmt:formatNumber value="${ration.ratioAdditive == '0'? 0:ration.ratioAdditive - 2  }" pattern="#.00"/>]
                                             }]
                                     </c:if>
 

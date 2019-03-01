@@ -27,6 +27,7 @@
                 -->
                 /favicon.ico = anon
                 /static/** = anon
+                /qualityData.do = anon
                 /login/login.do = anon
                 /login/*.do = authc
                 /logout=logout

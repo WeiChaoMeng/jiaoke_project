@@ -155,38 +155,38 @@
                 <form>
                     <div class="parcel_div">
                         <span>开始日期 :</span>
-                        <input type="text" id="crew1_month_start_date" value="2018-10-1">
+                        <input type="text" id="crew1_month_start_date" >
                     </div>
 
                     <div class="parcel_div">
                         <span>截至日期 :</span>
-                        <input type="text" id="crew1_month_end_date" value="2018-10-30">
+                        <input type="text" id="crew1_month_end_date" >
                     </div>
                     <div class="parcel_div">
                         <span>生产总数(盘) :</span>
-                        <input type="text" id="crew1_month_prototal" value="150320">
+                        <input type="text" id="crew1_month_prototal" >
                     </div>
                     <div class="parcel_div">
                         <span>材料使用总量(吨) :</span>
-                        <input type="text" id="crew1_month_total" value="135000">
+                        <input type="text" id="crew1_month_total" >
                     </div>
                     <div class="parcel_div">
                         <span>三级报警最多材料 :</span>
-                        <input type="text" id="crew1_month_material_name" value="骨料一">
+                        <input type="text" id="crew1_month_material_name" >
                     </div>
                     <div class="parcel_div">
                         <span>最大误差 :</span>
-                        <input type="text" id="crew1_month_maxDeviation" value="10%">
+                        <input type="text" id="crew1_month_maxDeviation" >
                     </div>
 
                     <div class="parcel_div">
                         <span>使用最多配比 :</span>
-                        <input type="text" id="crew1_month_ration_name" value="55号配比">
+                        <input type="text" id="crew1_month_ration_name" >
                     </div>
 
                     <div class="parcel_div">
                         <span>生产数量(盘) :</span>
-                        <input type="text" id="crew1_month_count" value="45300">
+                        <input type="text" id="crew1_month_count" >
                     </div>
 
                 </form>
@@ -198,36 +198,36 @@
                 <form>
                     <div class="parcel_div">
                         <span>开始日期 :</span>
-                        <input type="text" id="crew2_month_start_date" value="2018-10-1">
+                        <input type="text" id="crew2_month_start_date" >
                     </div>
 
                     <div class="parcel_div">
                         <span>截至日期 :</span>
-                        <input type="text" id="crew2_month_end_date" value="2018-10-30">
+                        <input type="text" id="crew2_month_end_date" >
                     </div>
                     <div class="parcel_div">
                         <span>生产总数(盘) :</span>
-                        <input type="text" id="crew2_month_prototal"  value="125000">
+                        <input type="text" id="crew2_month_prototal"  >
                     </div>
                     <div class="parcel_div">
                         <span>材料使用总量 :</span>
-                        <input type="text" id="crew2_month_total" value="105000">
+                        <input type="text" id="crew2_month_total" >
                     </div>
                     <div class="parcel_div">
                         <span>三级报警最多材料 :</span>
-                        <input type="text" id="crew2_month_material_name" value="骨料2">
+                        <input type="text" id="crew2_month_material_name" >
                     </div>
                     <div class="parcel_div">
                         <span>最大误差 :</span>
-                        <input type="text" id="crew2_month_maxDeviation" value="8%">
+                        <input type="text" id="crew2_month_maxDeviation" >
                     </div>
                     <div class="parcel_div">
                         <span>使用最多配比 :</span>
-                        <input type="text" id="crew2_month_ration_name" value="4号配比">
+                        <input type="text" id="crew2_month_ration_name" >
                     </div>
                     <div class="parcel_div">
                         <span>生产数量(盘) :</span>
-                        <input type="text" id="crew2_month_count" value="35410">
+                        <input type="text" id="crew2_month_count" >
                     </div>
 
                 </form>
@@ -373,38 +373,38 @@
                         <form>
                             <div class="parcel_div">
                                 <span>开始日期 :</span>
-                                <input type="text" id="year1_start_date" value="2018-01">
+                                <input type="text" id="year1_start_date" >
                             </div>
 
                             <div class="parcel_div">
                                 <span>截至日期 :</span>
-                                <input type="text" id="year1_end_date" value="2019-02">
+                                <input type="text" id="year1_end_date" >
                             </div>
                             <div class="parcel_div">
                                 <span>生产总数(盘) :</span>
-                                <input type="text" id="year1_product_count" value="182500">
+                                <input type="text" id="year1_product_count" >
                             </div>
                             <div class="parcel_div">
                                 <span>材料使用总量(万吨) :</span>
-                                <input type="text" id="year1_material_total" value="164.25">
+                                <input type="text" id="year1_material_total" >
                             </div>
                             <div class="parcel_div">
                                 <span>三级报警最多材料 :</span>
-                                <input type="text" id="year1_material_name" value="">
+                                <input type="text" id="year1_material_name" >
                             </div>
                             <div class="parcel_div">
                                 <span>最大误差 :</span>
-                                <input type="text" id="year1_maxDeviation" value="">%
+                                <input type="text" id="year1_maxDeviation" >%
                             </div>
 
                             <div class="parcel_div">
                                 <span>使用最多配比 :</span>
-                                <input type="text" id="year1_ration_name" value="4号配比">
+                                <input type="text" id="year1_ration_name" >
                             </div>
 
                             <div class="parcel_div">
                                 <span>生产数量(盘) :</span>
-                                <input type="text" id="year1_count" value="36521">
+                                <input type="text" id="year1_count" >
                             </div>
 
                         </form>
@@ -416,36 +416,36 @@
                         <form>
                             <div class="parcel_div">
                                 <span>开始日期 :</span>
-                                <input type="text" id="year2_start_date" value="2018-01">
+                                <input type="text" id="year2_start_date" >
                             </div>
 
                             <div class="parcel_div">
                                 <span>截至日期 :</span>
-                                <input type="text" id="year2_end_date" value="2019-02">
+                                <input type="text" id="year2_end_date" >
                             </div>
                             <div class="parcel_div">
                                 <span>生产总数(盘) :</span>
-                                <input type="text" id="year2_product_count"  value="162900">
+                                <input type="text" id="year2_product_count"  >
                             </div>
                             <div class="parcel_div">
                                 <span>材料使用总量(万吨) :</span>
-                                <input type="text" id="year2_material_total" value="134.7">
+                                <input type="text" id="year2_material_total" >
                             </div>
                             <div class="parcel_div">
                                 <span>三级报警最多材料 :</span>
-                                <input type="text" id="year2_material_name" value="骨料2">
+                                <input type="text" id="year2_material_name" >
                             </div>
                             <div class="parcel_div">
                                 <span>最大误差 :</span>
-                                <input type="text" id="year2_maxDeviation" value="7%">
+                                <input type="text" id="year2_maxDeviation" >
                             </div>
                             <div class="parcel_div">
                                 <span>使用最多配比 :</span>
-                                <input type="text" id="year2_ration_name" value="4号配比">
+                                <input type="text" id="year2_ration_name" >
                             </div>
                             <div class="parcel_div">
                                 <span>生产数量(盘) :</span>
-                                <input type="text" id="year2_count" value="71423">
+                                <input type="text" id="year2_count" >
                             </div>
 
                         </form>
@@ -586,38 +586,38 @@
                         <form>
                             <div class="parcel_div">
                                 <span>开始日期 :</span>
-                                <input type="text" value="2018-1-01">
+                                <input type="text" >
                             </div>
 
                             <div class="parcel_div">
                                 <span>截至日期 :</span>
-                                <input type="text" value="2018-4-01">
+                                <input type="text" >
                             </div>
                             <div class="parcel_div">
                                 <span>生产总数(盘) :</span>
-                                <input type="text" value="13923">
+                                <input type="text" >
                             </div>
                             <div class="parcel_div">
                                 <span>材料使用总量(吨):</span>
-                                <input type="text" value="120000">
+                                <input type="text" >
                             </div>
                             <div class="parcel_div">
                                 <span>三级报警最多材料 :</span>
-                                <input type="text" value="再生料">
+                                <input type="text" >
                             </div>
                             <div class="parcel_div">
                                 <span>最大误差 :</span>
-                                <input type="text" value="3%">
+                                <input type="text" >
                             </div>
 
                             <div class="parcel_div">
                                 <span>使用最多配比 :</span>
-                                <input type="text" value="55号">
+                                <input type="text" >
                             </div>
 
                             <div class="parcel_div">
                                 <span>生产数量(盘) :</span>
-                                <input type="text" value="4700">
+                                <input type="text" >
                             </div>
 
                         </form>
@@ -629,27 +629,27 @@
                         <form>
                             <div class="parcel_div">
                                 <span>生产总数(盘) :</span>
-                                <input type="text" value="17134">
+                                <input type="text" >
                             </div>
                             <div class="parcel_div">
                                 <span>材料使用总量(吨) :</span>
-                                <input type="text" value="98341">
+                                <input type="text" >
                             </div>
                             <div class="parcel_div">
                                 <span>三级报警最多材料 :</span>
-                                <input type="text" value="骨料1">
+                                <input type="text" >
                             </div>
                             <div class="parcel_div">
                                 <span>最大误差 :</span>
-                                <input type="text" value="6%">
+                                <input type="text" >
                             </div>
                             <div class="parcel_div">
                                 <span>使用最多配比 :</span>
-                                <input type="text" value="4号配比">
+                                <input type="text" >
                             </div>
                             <div class="parcel_div">
                                 <span>生产数量(盘) :</span>
-                                <input type="text" value="5400">
+                                <input type="text" >
                             </div>
 
                         </form>
@@ -790,38 +790,38 @@
                         <form>
                             <div class="parcel_div">
                                 <span>开始日期 :</span>
-                                <input type="text" value="2018-9-01" id="crew1_LastMonth_start_date">
+                                <input type="text"  id="crew1_LastMonth_start_date">
                             </div>
 
                             <div class="parcel_div">
                                 <span>截至日期 :</span>
-                                <input type="text" value="2018-10-01" id="crew1_LastMonth_end_date">
+                                <input type="text" id="crew1_LastMonth_end_date">
                             </div>
                             <div class="parcel_div">
                                 <span>生产总数(盘) :</span>
-                                <input type="text" value="15872" id="crew1_LastMonth_prototal">
+                                <input type="text" id="crew1_LastMonth_prototal">
                             </div>
                             <div class="parcel_div">
                                 <span>材料使用总量(吨) :</span>
-                                <input type="text" value="15764" id="crew1_LastMonth_total">
+                                <input type="text"  id="crew1_LastMonth_total">
                             </div>
                             <div class="parcel_div">
                                 <span>三级报警最多材料 :</span>
-                                <input type="text" value="骨料2" id="crew1_LastMonth_material_name">
+                                <input type="text"  id="crew1_LastMonth_material_name">
                             </div>
                             <div class="parcel_div">
                                 <span>最大误差 :</span>
-                                <input type="text" value="5%" id="crew1_LastMonth_maxDeviation">
+                                <input type="text" id="crew1_LastMonth_maxDeviation">
                             </div>
 
                             <div class="parcel_div">
                                 <span>使用最多配比 :</span>
-                                <input type="text" value="4号配比" id="crew1_LastMonth_ration_name">
+                                <input type="text"  id="crew1_LastMonth_ration_name">
                             </div>
 
                             <div class="parcel_div">
                                 <span>生产数量(盘) :</span>
-                                <input type="text" value="4576" id="crew1_LastMonth_count">
+                                <input type="text"  id="crew1_LastMonth_count">
                             </div>
 
                         </form>
@@ -833,36 +833,36 @@
                         <form>
                             <div class="parcel_div">
                                 <span>开始日期 :</span>
-                                <input type="text" value="2018-9-01" id="crew2_LastMonth_start_date">
+                                <input type="text"  id="crew2_LastMonth_start_date">
                             </div>
 
                             <div class="parcel_div">
                                 <span>截至日期 :</span>
-                                <input type="text" value="2018-10-01" id="crew2_LastMonth_end_date">
+                                <input type="text"  id="crew2_LastMonth_end_date">
                             </div>
                             <div class="parcel_div">
                                 <span>生产总数(盘) :</span>
-                                <input type="text" value="12642" id="crew2_LastMonth_prototal">
+                                <input type="text"  id="crew2_LastMonth_prototal">
                             </div>
                             <div class="parcel_div">
                                 <span>材料使用总量(吨) :</span>
-                                <input type="text" value="13690" id="crew2_LastMonth_total">
+                                <input type="text"  id="crew2_LastMonth_total">
                             </div>
                             <div class="parcel_div">
                                 <span>三级报警最多材料 :</span>
-                                <input type="text" value="再生料" id="crew2_LastMonth_material_name">
+                                <input type="text"  id="crew2_LastMonth_material_name">
                             </div>
                             <div class="parcel_div">
                                 <span>最大误差 :</span>
-                                <input type="text" value="5%" id="crew2_LastMonth_maxDeviation" >
+                                <input type="text"  id="crew2_LastMonth_maxDeviation" >
                             </div>
                             <div class="parcel_div">
                                 <span>使用最多配比 :</span>
-                                <input type="text" value="60号配比" id="crew2_LastMonth_ration_name">
+                                <input type="text"  id="crew2_LastMonth_ration_name">
                             </div>
                             <div class="parcel_div">
                                 <span>生产数量(盘) :</span>
-                                <input type="text" value="4512" id="crew2_LastMonth_count">
+                                <input type="text"  id="crew2_LastMonth_count">
                             </div>
 
                         </form>

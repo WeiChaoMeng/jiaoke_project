@@ -167,6 +167,74 @@
                             </script>
                     </c:forEach>
                 </tbody>
+                <thead>
+                <th style="width: 100px ">1仓模板温度</th>
+                <th style="width: 100px ">混合料模板温度</th>
+                <th style="width: 100px ">除尘器模板温度</th>
+                <th style="width: 100px ">沥青模板温度</th>
+                <th style="width: 100px ">再生料模板温度</th>
+                <th style="width: 100px ">骨料1模板比例</th>
+                <th style="width: 100px ">骨料2模板比例</th>
+                <th style="width: 100px ">骨料3模板比例</th>
+                <th style="width: 100px ">骨料4模板比例</th>
+                <th style="width: 100px ">骨料5模板比例</th>
+                <th style="width: 100px ">骨料6模板比例</th>
+                <th style="width: 100px ">矿料1模板比例</th>
+                <th style="width: 100px ">沥青模板占比</th>
+                <th style="width: 100px ">再生料模板占比</th>
+                </thead>
+                <tbody>
+                <td id="1cModel">${product.modelMessage.temperatureAggregate} - ${product.modelMessage.temperatureAggregateUp}</td>
+                <td id="hhModel">${product.modelMessage.temperatureMixture} - ${product.modelMessage.temperatureMixtureUp}</td>
+                <td id="ccqModel">${product.modelMessage.temperatureMilling} - ${product.modelMessage.temperatureMillingUp}</td>
+                <td id="lqModel">${product.modelMessage.temperatureAsphalt} - ${product.modelMessage.temperatureAsphaltUp}</td>
+                <td id="zslModel">${product.modelMessage.temperatureMilling} - ${product.modelMessage.temperatureMillingUp}</td>
+                <td id="oneModel">0</td>
+                <td id="twoModel" >0</td>
+                <td id="threeModel" >0</td>
+                <td id="fourModel" >0</td>
+                <td id="fiveModel" >0</td>
+                <td id="sixModel" >0</td>
+                <td id="kModel" >0</td>
+                <td id="lModel" >0</td>
+                <td id="zModel" >0</td>
+
+
+                <c:forEach items="${product.proMessage}" var="items">
+                    <script type="text/javascript">
+
+                        switch ('${items.material_name}') {
+                            case '骨料1' :
+                                $('#oneModel').text(${items.moudle_ratio});
+                                break;
+                            case '骨料2' :
+                                $('#twoModel').text(${items.moudle_ratio});
+                                break;
+                            case '骨料3' :
+                                $('#threeModel').text(${items.moudle_ratio});
+                                break;
+                            case '骨料4' :
+                                $('#fourModel').text(${items.moudle_ratio});
+                                break;
+                            case '骨料5' :
+                                $('#fiveModel').text(${items.moudle_ratio});
+                                break;
+                            case '骨料6' :
+                                $('#sixModel').text(${items.moudle_ratio});
+                                break;
+                            case '矿粉' :
+                                $('#kModel').text(${items.moudle_ratio});
+                                break;
+                            case '沥青' :
+                                $('#lModel').text(${items.moudle_ratio});
+                                break;
+                            case '再生料' :
+                                $('#zModel').text(${items.moudle_ratio});
+                                break;
+                        }
+                    </script>
+                </c:forEach>
+                </tbody>
             </table>
         </div>
 
@@ -265,15 +333,11 @@
                     trigger: 'axis'
                 },
                 legend: {
-                    data: ['模板占比', '实际占比']
+                    data:['上限占比','实际占比','下限占比']
                 },
                 toolbox: {
                     show: true,
                     feature: {
-                        dataZoom: {
-                            yAxisIndex: 'none'
-                        },
-                        dataView: { readOnly: false },
                         magicType: { type: ['line', 'bar'] },
                         restore: {},
                         saveAsImage: {}
@@ -281,7 +345,7 @@
                 },
                 xAxis: {
                     type: 'category',
-                    boundaryGap: false,
+                    // boundaryGap: false,
                     data: ['骨料1','骨料2','骨料3','骨料4','骨料5','骨料6','矿粉','沥青','再生料']
                 },
                 yAxis: {
@@ -293,19 +357,19 @@
                 series: [
                     {
                         name: '上限占比',
-                        type: 'line',
+                        type: 'bar',
                         data:getUpData('up'),
                         formatter: '{value} %'
                     },
                     {
                         name: '实际占比',
-                        type: 'line',
+                        type: 'bar',
                         data: getUpData('real'),
                         formatter: '{value} %'
                     },
                     {
                         name: '下限占比',
-                        type: 'line',
+                        type: 'bar',
                         data: getUpData('down'),
                         formatter: '{value} %'
                     }
@@ -322,58 +386,58 @@
                 <c:forEach items="${product.proMessage}" var="item" varStatus="sta">
                 <c:choose>
                 <c:when test="${item.material_name == '骨料1'}">
-                    upArray[0] = ${item.moudle_ratio + 2};
+                    upArray[0] = ${item.moudle_ratio == '0'? '0':item.moudle_ratio + 2};
                 realArray[0] = ${item.actual_ratio};
-                downArray[0] = ${item.moudle_ratio - 2};
+                downArray[0] = ${item.moudle_ratio  == '0'? '0':item.moudle_ratio - 2};
 
                 </c:when>
                 <c:when test="${item.material_name == '骨料2'}">
-                upArray[1] = ${item.moudle_ratio + 2};
+                upArray[1] = ${item.moudle_ratio == '0'? '0':item.moudle_ratio + 2};
                 realArray[1] = ${item.actual_ratio};
-                downArray[1] = ${item.moudle_ratio - 2};
+                downArray[1] = ${item.moudle_ratio == '0'? '0':item.moudle_ratio - 2};
 
                 </c:when>
                 <c:when test="${item.material_name == '骨料3'}">
-                upArray[2] = ${item.moudle_ratio + 4};
+                upArray[2] = ${item.moudle_ratio == '0'? '0':item.moudle_ratio + 4};
                 realArray[2] = ${item.actual_ratio};
-                downArray[2] = ${item.moudle_ratio - 4};
+                downArray[2] = ${item.moudle_ratio == '0'? '0':item.moudle_ratio - 4};
 
                 </c:when>
                 <c:when test="${item.material_name == '骨料4'}">
-                upArray[3] = ${item.moudle_ratio + 4};
+                upArray[3] = ${item.moudle_ratio == '0'? '0':item.moudle_ratio + 4};
                 realArray[3] = ${item.actual_ratio};
-                downArray[3] = ${item.moudle_ratio - 4};
+                downArray[3] = ${item.moudle_ratio == '0'? '0':item.moudle_ratio - 4};
 
                 </c:when>
                 <c:when test="${item.material_name == '骨料5'}">
-                upArray[4] = ${item.moudle_ratio + 4};
+                upArray[4] = ${item.moudle_ratio == '0'? '0':item.moudle_ratio + 4};
                 realArray[4] = ${item.actual_ratio};
-                downArray[4] = ${item.moudle_ratio - 4};
+                downArray[4] = ${item.moudle_ratio == '0'? '0':item.moudle_ratio - 4};
 
                 </c:when>
                 <c:when test="${item.material_name == '骨料6'}">
 
-                upArray[5] = ${item.moudle_ratio + 4};
+                upArray[5] = ${item.moudle_ratio == '0'? '0':item.moudle_ratio + 4};
                 realArray[5] = ${item.actual_ratio};
-                downArray[5] = ${item.moudle_ratio - 4};
+                downArray[5] = ${item.moudle_ratio == '0'? '0':item.moudle_ratio - 4};
 
                 </c:when>
                 <c:when test="${item.material_name == '矿粉'}">
-                upArray[6] = ${item.moudle_ratio +1};
+                upArray[6] = ${item.moudle_ratio == '0'? '0':item.moudle_ratio + 1};
                 realArray[6] = ${item.actual_ratio};
-                downArray[6] = ${item.moudle_ratio - 1};
+                downArray[6] = ${item.moudle_ratio == '0'? '0':item.moudle_ratio - 1};
 
                 </c:when>
                 <c:when test="${item.material_name == '沥青'}">
-                upArray[7] = ${item.moudle_ratio + 1};
+                upArray[7] = ${item.moudle_ratio == '0'? '0':item.moudle_ratio + 1};
                 realArray[7] = ${item.actual_ratio};
-                downArray[7] = ${item.moudle_ratio - 1};
+                downArray[7] = ${item.moudle_ratio == '0'? '0':item.moudle_ratio - 1};
 
                 </c:when>
                 <c:when test="${item.material_name == '再生料'}">
-                upArray[8] = ${item.moudle_ratio + 1};
+                upArray[8] = ${item.moudle_ratio == '0'? '0':item.moudle_ratio + 1};
                 realArray[8] = ${item.actual_ratio};
-                downArray[8] = ${item.moudle_ratio - 1};
+                downArray[8] = ${item.moudle_ratio == '0'? '0':item.moudle_ratio - 1 };
                 </c:when>
                 </c:choose>
                 </c:forEach>

@@ -220,7 +220,7 @@
                         <input type="number" name="temperatureMixture" class="my_form_input" value="0">
                         <input type="number" name="temperatureMixtureUp" class="my_form_input" value="0">
                     </td>
-                    <td class="tlabels">一仓温度 上/下限：</td>
+                    <td class="tlabels">再生料温度 上/下限：</td>
                     <td>
                         <input type="number" name="temperatureMilling" class="my_form_input" value="0">
                         <input type="number" name="temperatureMillingUp" class="my_form_input" value="0">

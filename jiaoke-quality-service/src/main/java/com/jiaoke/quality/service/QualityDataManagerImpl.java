@@ -231,8 +231,11 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
         }
        List<Map<String,String>>  waringData =  qualityDataManagerDao.selectProduceByDateAndDiscNum(String.valueOf(date),discNum,crew);
 
+        QualityRatioTemplate ratioMap = qualityDataManagerDao.selectRationById(map.get("produce_proportioning_num"),crewNum);
+
         modelMap.put("proBase",map);
         modelMap.put("proMessage",waringData);
+        modelMap.put("modelMessage",ratioMap);
 
         return modelMap;
     }

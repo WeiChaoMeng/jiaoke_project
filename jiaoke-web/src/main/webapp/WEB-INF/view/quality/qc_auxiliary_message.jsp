@@ -205,14 +205,14 @@
         var colors = ['#5793f3', '#d14a61', '#675bba'];
         var option2 =  {
                 title: {
-                    text: '产品材料构成曲线图',
+                    text: '产品材料构成图',
                     subtext: ''
                 },
                 tooltip: {
                     trigger: 'axis'
                 },
                 legend: {
-                    data: ['模板占比', '实际占比']
+                    data: ['上限占比','实际占比', '下限占比']
                 },
                 toolbox: {
                     show: true,
@@ -228,7 +228,7 @@
                 },
                 xAxis: {
                     type: 'category',
-                    boundaryGap: false,
+                    // boundaryGap: false,
                     data: ['骨料1','骨料2','骨料3','骨料4','骨料5','骨料6','矿粉','沥青','再生料']
                 },
                 yAxis: {
@@ -240,19 +240,19 @@
                 series: [
                     {
                         name: '上限占比',
-                        type: 'line',
+                        type: 'bar',
                         data:getUpData('up'),
                         formatter: '{value} %'
                     },
                     {
                         name: '实际占比',
-                        type: 'line',
+                        type: 'bar',
                         data: getUpData('real'),
                         formatter: '{value} %'
                     },
                     {
                         name: '下限占比',
-                        type: 'line',
+                        type: 'bar',
                         data: getUpData('down'),
                         formatter: '{value} %'
                     }
