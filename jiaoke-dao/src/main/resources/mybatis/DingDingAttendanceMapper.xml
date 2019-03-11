@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.oa.dao.DingDingAttendanceMapper">
+
+    <insert id="batchInsertion" parameterType="java.util.List">
+        insert into ding_ding_attendance
+        (id, user_id, `name`, department_name, jobnumber, position)
+        values
+        <foreach collection="list" item="attendance" index="index" separator="," open="" close="">
+            (#{attendance.id}, #{attendance.userId}, #{attendance.name}, #{attendance.departmentName},
+            #{attendance.jobnumber}, #{attendance.position})
+        </foreach>
+    </insert>
+
+    <update id="emptyTable">
+        TRUNCATE TABLE ding_ding_attendance
+    </update>
+</mapper>

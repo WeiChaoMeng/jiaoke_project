@@ -3,6 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:task="http://www.springframework.org/schema/task"
        xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring
         http://mybatis.org/schema/mybatis-spring-1.2.xsd
         http://www.springframework.org/schema/beans
@@ -11,6 +12,8 @@
         http://www.springframework.org/schema/context/spring-context-4.0.xsd
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+        http://www.springframework.org/schema/task
+        http://www.springframework.org/schema/task/spring-task-3.2.xsd
         http://www.springframework.org/schema/tx
         http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
@@ -62,4 +65,8 @@
 
     <!--权限不足异常处理-->
     <bean id="exceptionResolver" class="com.jiaoke.controller.MyExceptionResolver"/>
+
+    <!--定时任务-->
+    <task:annotation-driven/>
+    <context:component-scan base-package="com.jiaoke.controller"/>
 </beans>

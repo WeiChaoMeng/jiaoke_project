@@ -14,7 +14,7 @@
             padding: 5px 0
         }
 
-        .nav a{
+        .nav a {
             padding-left: 16px;
         }
     </style>
@@ -54,7 +54,7 @@
 <div class="rightdown"
      style="float: right;width: 100%;transition: width 2s;-moz-transition: width 2s; -webkit-transition: width 0.3s;-o-transition: width 2s;">
     <iframe src="weatherIndex.do" id="iframe" name="right" width="100%" height="100%" frameborder="0"
-            scrolling="auto" style="min-height: 750px;"></iframe>
+            scrolling="auto"></iframe>
 </div>
 </body>
 <script src="../../../static/js/jquery.min.js"></script>
