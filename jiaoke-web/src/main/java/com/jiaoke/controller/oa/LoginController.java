@@ -3,11 +3,11 @@ package com.jiaoke.controller.oa;
 import com.jiaoke.oa.bean.UserInfo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -28,7 +28,7 @@ public class LoginController {
      * @param password password
      * @return result
      */
-    @RequestMapping(value = "/login.do")
+    @RequestMapping(value = "/login.do",method = RequestMethod.POST)
     @ResponseBody
     public String login(String username, String password) {
         if ("".equals(username) && "".equals(password)) {
