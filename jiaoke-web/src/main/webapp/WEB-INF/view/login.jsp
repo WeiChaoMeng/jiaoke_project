@@ -95,7 +95,7 @@
                         alert("Connection error");
                     },
                     success: function (result) {
-                        if (result === "success") {
+                        if (result.messages === "success") {
                             window.location.href = '${path}/login/homePage.do';
                         } else {
                             alert("您输入的账号密码不匹配");
@@ -108,6 +108,7 @@
 
     //Cookie失效后跳转的登录页
     if (top != window)
+
         top.location.href = window.location.href;
 </script>
 </html>
