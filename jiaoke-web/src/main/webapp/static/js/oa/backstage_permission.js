@@ -44,7 +44,7 @@ function exeData(page, type, parameter) {
 function loadPage(parameter) {
     var myPageCount = parseInt($("#PageCount").val());
     var myPageSize = parseInt($("#PageSize").val());
-    var countindex = Math.ceil(myPageCount / myPageSize);
+    var countindex = myPageCount === 0 ? 1 : Math.ceil(myPageCount / myPageSize);
     $("#countindex").val(countindex);
 
     $.jqPaginator('#pagination', {

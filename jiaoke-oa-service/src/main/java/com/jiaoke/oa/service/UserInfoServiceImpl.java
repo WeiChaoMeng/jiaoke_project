@@ -1,15 +1,19 @@
 package com.jiaoke.oa.service;
 
 import com.jiaoke.oa.bean.Permission;
+import com.jiaoke.oa.bean.RoleInfo;
 import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.dao.PermissionMapper;
+import com.jiaoke.oa.dao.RoleInfoMapper;
 import com.jiaoke.oa.dao.UserInfoMapper;
 import com.jiaoke.oa.dao.UserRoleMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 用户信息
@@ -29,6 +33,9 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Resource
     private UserRoleMapper userRoleMapper;
+
+    @Resource
+    private RoleInfoMapper roleInfoMapper;
 
     /**
      * 获取用户信息根据用户名称
@@ -94,29 +101,21 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public int updateRolePermission(UserInfo userInfo, String[] array) {
+    public int updateRolePermission(Integer userId, String[] array) {
         if (array == null || array.length == 0) {
-            if (userRoleMapper.delete(userInfo.getId()) < 0) {
+            if (userRoleMapper.delete(userId) < 0) {
                 return -1;
             } else {
-                if (userInfoMapper.updateByPrimaryKeySelective(userInfo) < 0) {
+                return 1;
+            }
+        } else {
+            if (userRoleMapper.delete(userId) < 0) {
+                return -1;
+            } else {
+                if (userRoleMapper.insert(userId, array) < 0) {
                     return -1;
                 } else {
                     return 1;
-                }
-            }
-        } else {
-            if (userRoleMapper.delete(userInfo.getId()) < 0) {
-                return -1;
-            } else {
-                if (userRoleMapper.insert(userInfo.getId(), array) < 0) {
-                    return -1;
-                } else {
-                    if (userInfoMapper.updateByPrimaryKeySelective(userInfo) < 0) {
-                        return -1;
-                    } else {
-                        return 1;
-                    }
                 }
             }
         }
@@ -124,7 +123,32 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
+    public int updateUserInfo(UserInfo userInfo) {
+        return userInfoMapper.updateByPrimaryKeySelective(userInfo);
+    }
+
+    @Override
     public int deleteByPrimaryKey(Integer id) {
-        return userInfoMapper.deleteByPrimaryKey(id);
+        if (userInfoMapper.deleteByPrimaryKey(id) < 0) {
+            return -1;
+        } else {
+            if (userRoleMapper.delete(id) < 0) {
+                return -1;
+            } else {
+                return 1;
+            }
+        }
+    }
+
+    @Override
+    public Map<String, Object> bindingInfo(Integer id) {
+        HashMap<String, Object> map = new HashMap<>();
+        //查询全部角色
+        List<RoleInfo> roleInfoList = roleInfoMapper.selectAll();
+        //已绑定角色
+        List<RoleInfo> existingRoleInfo = roleInfoMapper.selectExistingRoleInfo(id);
+        map.put("roleInfoList", roleInfoList);
+        map.put("existingRoleInfo", existingRoleInfo);
+        return map;
     }
 }

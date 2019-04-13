@@ -1,0 +1,220 @@
+@charset "utf-8";
+
+* {
+    font-size: 12px;
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: '微软雅黑';
+    margin: 0 auto;
+    width: 80%;
+    height: 100%;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+ul {
+    display: block;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+li {
+    display: block;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+img {
+    border: 0;
+}
+
+dl, dt, dd, span {
+    margin: 0;
+    padding: 0;
+    display: block;
+}
+
+.top_toolbar {
+    background: #f7f6f6;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.top_toolbar_inside{
+    border: solid 1px #d4d4d4;
+}
+
+.top_toolbar_inside a {
+    display: inline-block;
+    padding: 0 10px;
+    color: #000000;
+    height: auto;
+    line-height: 28px;
+    border: 1px solid #f7f6f6;
+    cursor: pointer;
+}
+
+.top_toolbar_em {
+    background: #010101;
+    width: 1px;
+    height: 12px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.form_area {
+    padding-top: 10px;
+    background: #f7f6f6;
+    border: solid 1px #d4d4d4;
+    border-top: none;
+}
+
+.form_area table tbody tr {
+    height: 30px;
+    background: #f7f6f6;
+}
+
+.th_title {
+    width: 3%;
+    text-align: right;
+    padding-right: 5px;
+}
+
+.common_input_frame {
+    border: solid 1px #aba9a9;
+    padding: 0 5px;
+    background: #fff;
+}
+
+.common_input_frame input {
+    width: 100%;
+    height: 20px;
+    outline: none;
+}
+
+.condition_select_frame {
+    padding-left: 10px;
+    width: 8%;
+}
+
+.common_select_frame {
+    border: solid 1px #aba9a9;
+    height: 20px;
+}
+
+.common_select_frame select {
+    height: 100%;
+    width: 100%;
+}
+
+.common_select_frame input {
+    width: 100%;
+    height: 100%;
+}
+
+.common_condition_select_frame {
+    width: 13%;
+}
+
+.common_th {
+    width: 6%;
+    text-align: right;
+    padding-right: 5px;
+}
+
+.common_radio {
+    padding-left: 10px;
+}
+
+.tlabel {
+    background: #f6f6f6;
+    text-align: right;
+    white-space: nowrap;
+    width: 11%;
+    padding-right: 5px;
+}
+
+.forminput {
+    border: solid 1px #c6c6c6;
+    color: #585858;
+    outline: none;
+    width: 90%;
+    height: 25px;
+    margin: 0 5%;
+    text-indent: 10px;
+}
+
+.select {
+    height: 27px;
+    border: 1px solid #c6c6c6;
+    cursor: pointer;
+    color: #585858;
+    outline: none;
+    width: 90%;
+    margin: 0 5%;
+    text-indent: 10px;
+}
+
+.swidth {
+    width: 265px;
+    height: 30px;
+    margin: 0 5px;
+    outline: none;
+}
+
+.opinion-column {
+    resize: none;
+    width: 100%;
+    font-size: 15px;
+    height: 100%;
+    border: none;
+    outline: none;
+    display: block;
+    color: #000;
+}
+
+.read-write-permission {
+    resize: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    height: 100px;
+    border: none;
+    outline: none;
+    display: block;
+    background: #f6f6f6;
+}
+
+.formtable {
+    border: solid 1px #d4d4d4;
+    width: 100%;
+    margin: 30px auto 0;
+}
+
+.formtable td {
+    line-height: 40px;
+    border: solid 1px #e5e5e5;
+}
+
+.formtable td a:hover {
+    text-decoration: underline;
+}
+
+.formtable td em {
+    font-style: normal;
+    color: #8d8d8d;
+    font-size: 12px;
+}

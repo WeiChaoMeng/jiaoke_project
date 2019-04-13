@@ -163,8 +163,4 @@
 <script type="text/javascript" src="/static/slider/js/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="/static/slider/js/jquery.carousel.js"></script>
 <script type="text/javascript" src="/static/js/skin.js"></script>
-<script>
-</script>
-
-
 </html>

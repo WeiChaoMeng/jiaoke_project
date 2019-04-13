@@ -101,7 +101,7 @@
     <select id="selectExistingRoleInfo" parameterType="java.lang.Integer" resultMap="RoleInfoMap">
         SELECT
             ri.id,
-            ri.NAME
+            ri.name
         FROM
             `role_info` AS ri
             LEFT JOIN user_role AS ur ON ri.id = ur.role_info_id

@@ -16,7 +16,6 @@
     <meta charset="utf-8">
     <title>权限管理</title>
     <link href="../../../../static/css/oa/backstage_permission.css" rel="stylesheet" type="text/css">
-    <link href="../../../../static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
     <link href="../../../../static/css/paging/htmleaf-demo.css" rel="stylesheet" type="text/css">
     <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -31,9 +30,8 @@
                 <td>
                     <div class="conditional_query">
                         <div class="search-bar-div">
-                            <input type="text" id="permissionName" class="search-bar" placeholder="权限名称">
+                            <input type="text" id="permissionName" class="search-bar" placeholder="权限名称" autocomplete="off">
                             <i onclick="searchButton(1,2)" class="iconfont search-icon-size" id="conditional_search">&#xe7e7;</i>
-                            <i onclick="resetButton()" class="iconfont reset-icon-size" id="resetButton">&#xe69d;</i>
                         </div>
                     </div>
                 </td>

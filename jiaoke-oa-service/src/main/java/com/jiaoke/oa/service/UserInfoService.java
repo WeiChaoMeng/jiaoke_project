@@ -4,6 +4,7 @@ import com.jiaoke.oa.bean.Permission;
 import com.jiaoke.oa.bean.UserInfo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 用户信息
@@ -80,11 +81,13 @@ public interface UserInfoService {
     /**
      * 选择性修改
      *
-     * @param userInfo UserInfo
-     * @param array    角色列表
+     * @param userId UserInfo
+     * @param array  角色列表
      * @return 影响行数
      */
-    int updateRolePermission(UserInfo userInfo, String[] array);
+    int updateRolePermission(Integer userId, String[] array);
+
+    int updateUserInfo(UserInfo userInfo);
 
     /**
      * 根据主键删除
@@ -93,4 +96,6 @@ public interface UserInfoService {
      * @return 影响行数
      */
     int deleteByPrimaryKey(Integer id);
+
+    Map<String, Object> bindingInfo(Integer id);
 }

@@ -9,10 +9,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
     String path = request.getContextPath();
-
-    String basePath = request.getScheme()+ "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
-
-    request.setAttribute("path",basePath);
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+    request.setAttribute("path", basePath);
 %>
 <html>
 <head>
@@ -20,6 +18,7 @@
     <title>路驰办公系统</title>
     <link href="/static/css/default.css" rel="stylesheet" type="text/css">
     <link href="/static/css/style/green.css" rel="stylesheet" type="text/css">
+    <link href="/static/css/oa/user_style.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="/static/images/favicon.ico" type="image/ico"/>
     <style>
         html {
@@ -57,7 +56,7 @@
         <span class="logo" id="logo"><img src="/static/images/logo/logo-2.png"></span>
         <ul class="nav">
             <li>
-                <a href="#" class="manu" id="index"  >首页</a>
+                <a href="#" class="manu" id="index">首页</a>
             </li>
             <li>
                 <a href="#" class="manu" id="OA">OA系统</a>
@@ -86,7 +85,8 @@
 
         <div class="topright">
             <div class="user">
-                <span><a href="#"><i class="userico iconfont">&#xe6cb;</i>${userInfo.nickname}<i class="userdown iconfont">&#xe920;</i></a></span>
+                <span><a href="#"><i class="userico iconfont">&#xe6cb;</i>${userInfo.nickname}<i
+                        class="userdown iconfont">&#xe920;</i></a></span>
                 <ul class="userlist">
                     <li><a href="#"><i class="userxl iconfont">&#xe666;</i>用户信息</a></li>
                     <li><a href="#" id="about"><i class="userxl iconfont">&#xe7e9;</i>修改密码</a></li>
@@ -114,8 +114,8 @@
 </div>
 
 <div class="rightdown">
-    <iframe src="/default.do" id="iframe" name="right" width="100%" height="100%" frameborder="0"
-            scrolling="auto" ></iframe>
+    <iframe src="/default.do" id="iframe" name="frame" width="100%" height="100%" frameborder="0"
+            scrolling="auto"></iframe>
 </div>
 
 <div class="footer">
@@ -123,39 +123,131 @@
     <span class="fright">路驰版权所有<i class="infoicon iconfont">&#xe620;</i></span>
 </div>
 
+<%--模态窗-添加用户--%>
+<div id="addUser" class="window-body-add" style="display: none">
+    <form id="userInfo">
+        <table class="window-table">
+            <tbody>
+            <tr>
+                <td class="form_title_check"><i class="required_mark">*</i>用户名:</td>
+                <td class="form_content_check">
+                    <input type="hidden" id="currentPage">
+                    <input class="font_input" name="username" id="username" value="" type="text"
+                           placeholder="请输入用户名" maxlength="16" onblur="checkUsername(this)"
+                           onclick="clickPrompt(this)"
+                           autocomplete="off">
+                    <span class="prompt-span"></span>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="form_title_check"><i class="required_mark">*</i>密&nbsp;&nbsp;&nbsp;码:</td>
+                <td class="form_content_check">
+                    <input class="font_input" name="password" id="password" value=""
+                           placeholder="请输入密码" maxlength="16" onblur="checkPassword(this)"
+                           onclick="clickPrompt(this)"
+                           autocomplete="off">
+                    <span class="prompt-span"></span>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="form_title_check"><i class="required_mark">*</i>昵&nbsp;&nbsp;&nbsp;称:</td>
+                <td class="form_content_check">
+                    <input class="font_input" id="nickname" value="" name="nickname" type="text"
+                           placeholder="请输入昵称" maxlength="16" onblur="checkNickname(this)"
+                           onclick="nicknameClickPrompt(this)" autocomplete="off">
+                    <span class="prompt-span"></span>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="form_title_check">部&nbsp;&nbsp;&nbsp;门:</td>
+                <td class="form_content_check">
+                    <select name="department" class="font_input" id="department">
+                    </select>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+
+    <div style="padding-top: 30px">
+        <input type="button" value="确认" onclick="confirm()" class="body-bottom-button">
+        <input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">
+    </div>
+</div>
+
+<%--模态窗-修改用户--%>
+<div id="modifyUser" class="window-body-add" style="display: none">
+    <form id="userInformation"></form>
+
+    <div style="padding-top: 30px">
+        <input type="button" value="确认" onclick="submissionEdit()" class="body-bottom-button">
+        <input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">
+    </div>
+</div>
+
+<%--模态窗-用户绑定角色--%>
+<div id="bindingRole" class="tab-right-div" style="display: none"></div>
+
+<%--模态窗-添加角色--%>
+<div id="addRole" class="window-body-add" style="display: none">
+    <form id="roleInfo">
+        <table class="window-table">
+            <tbody>
+            <tr>
+                <td class="form_title_check"><i class="required_mark">*</i>角色名称:</td>
+                <td class="form_content_check">
+                    <input type="hidden" id="rolePage">
+                    <input class="font_input" name="name" id="name" value="" type="text"
+                           placeholder="请输入角色名称" maxlength="16" onblur="checkRoleName(this)"
+                           onclick="clickPromptRole(this)"
+                           autocomplete="off">
+                    <span class="prompt-span"></span>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="form_title_check">角色说明:</td>
+                <td class="form_content_check">
+                        <textarea class="description-text" placeholder="请输入角色说明" name="description"
+                                  id="description"></textarea>
+                    <span class="prompt-span"></span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+
+    <div style="padding-top: 20px">
+        <input type="button" value="确认" onclick="commitRole()" class="body-bottom-button">
+        <input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">
+    </div>
+</div>
+
+<%--模态窗-修改角色--%>
+<div id="modifyRole" class="window-body-add" style="display: none">
+    <form id="roleInformation"></form>
+
+    <div style="padding-top: 20px">
+        <input type="button" value="确认" onclick="commitRoleEdit()" class="body-bottom-button">
+        <input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">
+    </div>
+</div>
+
+<%--模态窗-角色绑定权限--%>
+<div id="bindingPermission" class="tab-right-div" style="display: none"></div>
+
+
 </body>
 <script type="text/javascript" src="/static/js/jquery.js"></script>
 <script type="text/javascript" src="/static/js/common.js"></script>
 <script type="text/javascript" src="/static/js/skin.js"></script>
-<script src="/static/js/layer/layer.js"></script>
+<script src="../../static/js/oa/layer/layer.js"></script>
 <script>
-
-    ;!function () {
-//关于
-        $('#about').on('click', function () {
-            layer.alert('你确定要修改吗？', {icon: 0});
-        });
-
-        $('#logo').on('click', function () {
-            layer.tips('官方网站：http://www.bmrb.com.cn', '#logo', {tips: 3});
-        });
-
-    }();
+    //菜单
     $(function () {
-        //关于
-
-        //$("#index").attr("class","selected");
-
-        $('.manu').first().attr("class", "selected");
-        $('#about').on('click', function () {
-            layer.alert('你确定要修改吗？', {icon: 0});
-        });
-
-        $('#logo').on('click', function () {
-            layer.tips('http://www.bmrb.com.cn', '#logo', {tips: 3});
-
-        });
-
         $('.manu').click(function () {
 
             $('.selected').attr('class', 'manu');
@@ -202,17 +294,717 @@
 
                     $("#iframe").attr("src", "/security.do");
                     break;
-
             }
 
         })
     });
-    //选中主页状态下点击效果
-    $('#index').click(function () {
-        $('.selected').attr('class', 'manu');
-        $(this).attr('class', 'selected');
-        $('#iframe').attr('src', '/default.do');
 
-    });
+    /**-------------------------角色管理-------------------------*/
+    //新增角色
+    function addRole(currentPage) {
+        window.lar = layer.open({
+            title: '添加角色',
+            type: 1,
+            area: ['25%', '40%'],
+            shadeClose: true, //点击遮罩关闭
+            content: $("#addRole"),
+            offset: "20%"
+        });
+
+        //记录用户页面选择的页数
+        $('#rolePage').val(currentPage);
+    }
+
+    //提交新增角色
+    function commitRole() {
+        if ($('#name').val() === '') {
+            $('#name').next().html("请输入角色名称");
+            $('#name').next().css("color", "#ff0202");
+        } else {
+            var name = checkRoleName($('#name'));
+            if (!name) {
+                return;
+            } else {
+                $.ajax({
+                    type: "post",
+                    url: '/backstageManagement/addRoleInfo',
+                    data: $('#roleInfo').serialize(),
+                    success: function (data) {
+                        if (data === 'success') {
+                            //清除from
+                            document.getElementById("roleInfo").reset();
+                            layer.close(window.lar);
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.roleInfoPageReload($('#rolePage').val());
+                            layer.msg("添加角色成功!");
+                        } else {
+                            layer.msg("添加角色失败!");
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                })
+            }
+        }
+    }
+
+    //校验角色名输入内容
+    function checkRoleName(own) {
+        var name = $(own).val();
+        var len = /^.{2,16}$/;
+        var check = /^[\u4e00-\u9fa5a-zA-Z0-9]+$/;
+        if (name === "") {
+            $(own).next().html("");
+            return false;
+        } else if (!name.match(len)) {
+            $(own).next().html("长度只能在2-16个字符之间");
+            $(own).next().css("color", "#ff0202");
+            return false;
+        } else if (!name.match(check)) {
+            $(own).next().html("只支持汉字、英文、数字的组合");
+            $(own).next().css("color", "#ff0202");
+            return false;
+        } else if (roleWhetherRegister(name)) {
+            $(own).next().html("角色被占用");
+            $(own).next().css("color", "#ff0202");
+            return false;
+        } else {
+            $(own).next().html("");
+            return true;
+        }
+    }
+
+    //检查角色名是否被注册
+    function roleWhetherRegister(name) {
+        var res = false;
+        $.ajax({
+            type: "post",
+            url: '/backstageManagement/checkRoleName',
+            data: {'name': name},
+            async: false,
+            success: function (data) {
+                if (data === "true") {
+                    res = true;
+                } else {
+                    res = false;
+                }
+            },
+            error: function (result) {
+                alert("出错！");
+            }
+        });
+        return res;
+    }
+
+    //角色输入提示
+    function clickPromptRole(owm) {
+        var name = $(owm).val();
+        if (name === "") {
+            $(owm).next().html("支持英文、数字的组合，2-16个字符");
+            $(owm).next().css("color", "#737373");
+        }
+    }
+
+    //编辑角色
+    function editRole(roleInfo, currentPage) {
+        window.lar = layer.open({
+            title: '编辑角色',
+            type: 1,
+            area: ['25%', '40%'],
+            shadeClose: true, //点击遮罩关闭
+            content: $("#modifyRole"),
+            offset: "20%"
+        });
+
+        //记录用户页面选择的页数
+        $('#rolePage').val(currentPage);
+
+        var resultRoleInfo = '';
+        resultRoleInfo += '<table class="window-table">';
+        resultRoleInfo += '<tbody>';
+        resultRoleInfo += '<tr>';
+        resultRoleInfo += '<td class="form_title">角色名称:</td>';
+        resultRoleInfo += '<td class="form_content">';
+        resultRoleInfo += '<input id="roleIdEdit" value="' + roleInfo.id + '" type="hidden">';
+        resultRoleInfo += '<input class="font_input" name="name" id="nameEdit" value="' + roleInfo.name + '" type="text" style="background: #e8e8e8" readonly>';
+        resultRoleInfo += '</td>';
+        resultRoleInfo += '</tr>';
+        resultRoleInfo += '<tr>';
+        resultRoleInfo += '<td class="form_title">角色说明:</td>';
+        resultRoleInfo += '<td class="form_content">';
+        resultRoleInfo += '<textarea class="description-text" name="description" id="descriptionEdit" placeholder="请输入角色说明">';
+        resultRoleInfo += roleInfo.description;
+        resultRoleInfo += '</textarea>';
+        resultRoleInfo += '</td>';
+        resultRoleInfo += '</tr>';
+        resultRoleInfo += '</tbody>';
+        resultRoleInfo += '</table>';
+
+        $('#roleInformation').html(resultRoleInfo);
+    }
+
+    //提交编辑后的用户
+    function commitRoleEdit() {
+        //角色id
+        var description = $('#descriptionEdit').val();
+        var roleId = $("#roleIdEdit").val();
+
+        $.ajax({
+            type: "post",
+            url: '/backstageManagement/roleEdit',
+            data: {roleId: roleId, description: description},
+            async: false,
+            cache: false,
+            traditional: true,
+            success: function (data) {
+                if (data === 'success') {
+                    layer.close(window.lar);
+                    $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.roleInfoPageReload($('#rolePage').val());
+                    layer.msg('修改角色成功！');
+                } else {
+                    layer.msg('修改角色失败！');
+                }
+            },
+            error: function (result) {
+                layer.msg("出错！");
+            }
+        });
+    }
+
+    //删除角色
+    function deleteRole(id, currentPage) {
+        //记录用户页面选择的页数
+        $('#rolePage').val(currentPage);
+
+        //提示窗
+        layer.confirm('确定要删除吗？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $.ajax({
+                    type: "post",
+                    url: '/backstageManagement/deleteRole',
+                    data: {'id': id},
+                    async: false,
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.msg('删除成功！')
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.roleInfoPageReload($('#rolePage').val());
+                        } else {
+                            layer.msg('删除失败！')
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                })
+            }
+        );
+    }
+
+    //绑定权限
+    function bindingPower(permissionInfo, id, currentPage) {
+        window.lar = layer.open({
+            title: '绑定权限',
+            type: 1,
+            area: ['25%', '55%'],
+            shadeClose: true, //点击遮罩关闭
+            content: $("#bindingPermission"),
+            offset: "20%"
+        });
+
+        //记录用户页面选择的页数
+        $('#rolePage').val(currentPage);
+
+        //角色信息
+        var permissionList = permissionInfo.permissionList;
+        //已绑定角色信息
+        var possessPermissionList = permissionInfo.existingPermission;
+
+        var permissionInfoList = '';
+        permissionInfoList += '<div id="RoleInformationTab" style="height: 80%;overflow: auto">';
+        permissionInfoList += '<table id="permissionList" class="table-list">';
+        permissionInfoList += '<tbody id="powerListTbody">';
+        permissionInfoList += '<input id="bindingPermissionId" type="hidden" value="' + id + '">';
+        for (var i = 0; i < permissionList.length; i++) {
+            permissionInfoList += '<tr onclick="checkboxEvent(this)" style="height: 18px">';
+            permissionInfoList += '<td class="table-list-td-checkbox">';
+            permissionInfoList += '<input type="checkbox" value="' + permissionList[i].id + '" onclick="window.event.cancelBubble=true;">';
+            permissionInfoList += '</td>';
+            permissionInfoList += '<td class="per-list-td">' + permissionList[i].description + '</td>';
+            permissionInfoList += '</tr>';
+        }
+        permissionInfoList += '</tbody>';
+        permissionInfoList += '</table>';
+        permissionInfoList += '</div>';
+        permissionInfoList += '<div style="padding-top: 20px;text-align: center">';
+        permissionInfoList += '<input type="button" value="确认" onclick="submissionBindingPower()" class="body-bottom-button">';
+        permissionInfoList += '<input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">';
+        permissionInfoList += '</div>';
+
+        $('#bindingPermission').html(permissionInfoList);
+
+        //勾选已有角色
+        for (var j = 0; j < possessPermissionList.length; j++) {
+            $('#powerListTbody').children('tr').find('input').each(function () {
+                if ($(this).val() == possessPermissionList[j].id) {
+                    this.checked = true;
+                }
+            });
+        }
+    }
+
+    //提交绑定
+    function submissionBindingPower() {
+        //用户id
+        var roleId = $('#bindingPermissionId').val();
+        //选中的角色列表
+        var array = [];
+        var list = $("#powerListTbody input:checked");
+        for (var i = 0; i < list.length; i++) {
+            array.push(list[i].value);
+        }
+        $.ajax({
+            type: "post",
+            url: '/backstageManagement/bindingPower',
+            data: 'roleId=' + roleId + '&array=' + array,
+            success: function (data) {
+                if (data === 'success') {
+                    layer.close(window.lar);
+                    layer.msg('绑定角色成功！');
+                    $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.roleInfoPageReload($('#rolePage').val());
+                } else {
+                    layer.msg('绑定角色失败！');
+                }
+            },
+            error: function (result) {
+                layer.msg("出错！");
+            }
+        })
+    }
+
+    /**-----------------------用户管理---------------------------*/
+    //添加用户
+    function addUser(department, currentPage) {
+        window.lar = layer.open({
+            title: '添加用户',
+            type: 1,
+            area: ['25%', '55%'],
+            shadeClose: true, //点击遮罩关闭
+            content: $("#addUser"),
+            offset: "20%"
+        });
+
+        //记录用户页面选择的页数
+        $('#currentPage').val(currentPage);
+
+        //解析部门list
+        var dep = '';
+        for (var i = 0; i < department.length; i++) {
+            dep += '<option value="' + department[i].departmentKey + '">' + department[i].departmentName + '</option>';
+        }
+        $('#department').html(dep);
+    }
+
+    //提交新增用户
+    function confirm() {
+        if ($('#username').val() === '') {
+            $('#username').next().html("请输入用户名");
+            $('#username').next().css("color", "#ff0202");
+        } else {
+            var name = checkUsername($('#username'));
+            if (!name) {
+                return;
+            } else {
+                if ($('#password').val() === '') {
+                    $('#password').next().html("请输入密码");
+                    $('#password').next().css("color", "#ff0202");
+                } else {
+                    var pwd = checkPassword($('#password'));
+                    if (!pwd) {
+                        return;
+                    } else {
+                        if ($('#nickname').val() === '') {
+                            $('#nickname').next().html("请输入昵称");
+                            $('#nickname').next().css("color", "#ff0202");
+                        } else {
+                            var nick = checkNickname($('#nickname'));
+                            if (!nick) {
+                                return;
+                            } else {
+                                $.ajax({
+                                    type: "post",
+                                    url: '/backstageManagement/add',
+                                    data: $('#userInfo').serialize(),
+                                    success: function (data) {
+                                        if (data === 'success') {
+                                            //清除from
+                                            document.getElementById("userInfo").reset();
+                                            layer.close(window.lar);
+                                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.reloadPage($('#currentPage').val());
+                                            layer.msg("添加用户成功!");
+                                        } else {
+                                            layer.msg("添加用户失败!");
+                                        }
+                                    },
+                                    error: function (result) {
+                                        layer.msg("出错！");
+                                    }
+                                })
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    //编辑用户
+    function editUser(userInfo, department, currentPage) {
+        window.lar = layer.open({
+            title: '编辑用户',
+            type: 1,
+            area: ['25%', '55%'],
+            shadeClose: true, //点击遮罩关闭
+            content: $("#modifyUser"),
+            offset: "20%"
+        });
+
+        //记录用户页面选择的页数
+        $('#currentPage').val(currentPage);
+
+        var resultsInfo = '';
+
+        resultsInfo += '<table class="window-table">';
+        resultsInfo += '<tbody>';
+        resultsInfo += '<tr>';
+        resultsInfo += '<td class="form_title">用户名:</td>';
+        resultsInfo += '<td class="form_content">';
+        resultsInfo += '<input name="id" value="' + userInfo.id + '" type="hidden">';
+        resultsInfo += '<input class="font_input" name="username" id="usernameEdit" value="' + userInfo.username + '" type="text" style="background: #e8e8e8" readonly>';
+        resultsInfo += '</td>';
+        resultsInfo += '</tr>';
+        resultsInfo += '<tr>';
+        resultsInfo += '<td class="form_title_check" style="padding-top: 8px">密码:</td>';
+        resultsInfo += '<td class="form_content_check" style="padding-top: 8px">';
+        resultsInfo += '<input class="font_input" name="password" id="passwordEdit" value="' + userInfo.password + '" type="text" autocomplete="off" onblur="checkPassword(this)">';
+        resultsInfo += '<span class="prompt-span"></span>';
+        resultsInfo += '</td>';
+        resultsInfo += '</tr>';
+        resultsInfo += '<tr>';
+        resultsInfo += '<td class="form_title_check">昵称:</td>';
+        resultsInfo += '<td class="form_content_check">';
+        resultsInfo += '<input class="font_input" name="nickname" id="nicknameEdit" value="' + userInfo.nickname + '" type="text" autocomplete="off" onblur="checkNickname(this)">';
+        resultsInfo += '<span class="prompt-span"></span>';
+        resultsInfo += '</td>';
+        resultsInfo += '</tr>';
+        resultsInfo += '<tr>';
+        resultsInfo += '<td class="form_title" style="padding-top: 0">部门:</td>';
+        resultsInfo += '<td class="form_content" style="padding-top: 0">';
+        resultsInfo += '<select name="department" class="font_input">';
+        for (var i = 0; i < department.length; i++) {
+            if (userInfo.department === department[i].departmentKey) {
+                resultsInfo += '<option value="' + department[i].departmentKey + '" selected>' + department[i].departmentName + '</option>';
+            } else {
+                resultsInfo += '<option value="' + department[i].departmentKey + '">' + department[i].departmentName + '</option>';
+            }
+        }
+        resultsInfo += '</select>';
+        resultsInfo += '</td>';
+        resultsInfo += '</tr>';
+        resultsInfo += '</tbody>';
+        resultsInfo += '</table>';
+
+        $('#userInformation').html(resultsInfo);
+    }
+
+    //提交编辑后的用户
+    function submissionEdit() {
+
+        if ($('#passwordEdit').val() === '') {
+            $('#passwordEdit').next().html("请输入密码");
+            $('#passwordEdit').next().css("color", "#ff0202");
+        } else {
+            var pwd = checkPassword($('#passwordEdit'));
+            if (!pwd) {
+                return;
+            } else {
+                if ($('#nicknameEdit').val() === '') {
+                    $('#nicknameEdit').next().html("请输入昵称");
+                    $('#nicknameEdit').next().css("color", "#ff0202");
+                } else {
+                    var nick = checkNickname($('#nicknameEdit'));
+                    if (!nick) {
+                        return;
+                    } else {
+                        $.ajax({
+                            type: "post",
+                            url: '/backstageManagement/edit',
+                            data: $('#userInformation').serialize(),
+                            success: function (data) {
+                                if (data === 'success') {
+                                    layer.close(window.lar);
+                                    $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.reloadPage($('#currentPage').val());
+                                    layer.msg('修改用户成功！');
+                                } else {
+                                    layer.msg('修改用户失败！');
+                                }
+                            },
+                            error: function (result) {
+                                layer.msg("出错！");
+                            }
+                        })
+                    }
+                }
+            }
+        }
+    }
+
+    //绑定角色
+    function bindingRole(roleInfo, id, currentPage) {
+        window.lar = layer.open({
+            title: '绑定角色',
+            type: 1,
+            area: ['25%', '55%'],
+            shadeClose: true, //点击遮罩关闭
+            content: $("#bindingRole"),
+            offset: "20%"
+        });
+
+        //记录用户页面选择的页数
+        $('#currentPage').val(currentPage);
+
+        //角色信息
+        var roleList = roleInfo.roleInfoList;
+        //已绑定角色信息
+        var possessRoleList = roleInfo.existingRoleInfo;
+
+        var roleInfoList = '';
+        roleInfoList += '<div id="RoleInformationTab" style="height: 80%;overflow: auto">';
+        roleInfoList += '<table id="permissionList" class="table-list">';
+        roleInfoList += '<tbody id="perListTbody">';
+        roleInfoList += '<input id="bindingUserId" type="hidden" value="' + id + '">';
+        for (var i = 0; i < roleList.length; i++) {
+            roleInfoList += '<tr onclick="checkboxEvent(this)" style="height: 18px">';
+            roleInfoList += '<td class="table-list-td-checkbox">';
+            roleInfoList += '<input type="checkbox" value="' + roleList[i].id + '" onclick="window.event.cancelBubble=true;">';
+            roleInfoList += '</td>';
+            roleInfoList += '<td class="per-list-td">' + roleList[i].name + '</td>';
+            roleInfoList += '</tr>';
+        }
+        roleInfoList += '</tbody>';
+        roleInfoList += '</table>';
+        roleInfoList += '</div>';
+        roleInfoList += '<div style="padding-top: 20px;text-align: center">';
+        roleInfoList += '<input type="button" value="确认" onclick="submissionBinding()" class="body-bottom-button">';
+        roleInfoList += '<input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">';
+        roleInfoList += '</div>';
+
+        $('#bindingRole').html(roleInfoList);
+
+        //勾选已有角色
+        for (var j = 0; j < possessRoleList.length; j++) {
+            $('#perListTbody').children('tr').find('input').each(function () {
+                if ($(this).val() == possessRoleList[j].id) {
+                    this.checked = true;
+                }
+            });
+        }
+    }
+
+    //提交绑定
+    function submissionBinding() {
+        //用户id
+        var userId = $('#bindingUserId').val();
+        //选中的角色列表
+        var array = [];
+        var list = $("#perListTbody input:checked");
+        for (var i = 0; i < list.length; i++) {
+            array.push(list[i].value);
+        }
+        $.ajax({
+            type: "post",
+            url: '/backstageManagement/binding',
+            data: 'userId=' + userId + '&array=' + array,
+            success: function (data) {
+                if (data === 'success') {
+                    layer.close(window.lar);
+                    $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.reloadPage($('#currentPage').val());
+                    layer.msg('绑定角色成功！');
+                } else {
+                    layer.msg('绑定角色失败！');
+                }
+            },
+            error: function (result) {
+                layer.msg("出错！");
+            }
+        })
+    }
+
+    //删除用户
+    function deleteUser(id, currentPage) {
+
+        //记录用户页面选择的页数
+        $('#currentPage').val(currentPage);
+
+        //提示窗
+        layer.confirm('确定要删除吗？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $.ajax({
+                    type: "post",
+                    url: '/backstageManagement/delete',
+                    data: {'id': id},
+                    async: false,
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.msg('删除成功！')
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.reloadPage($('#currentPage').val());
+                        } else {
+                            layer.msg('删除失败！')
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                });
+            }
+        );
+    }
+
+    //用户名密码输入提示
+    function clickPrompt(owm) {
+        var username = $(owm).val();
+        if (username === "") {
+            $(owm).next().html("支持英文、数字的组合，4-16个字符");
+            $(owm).next().css("color", "#737373");
+        }
+    }
+
+    //校验密码输入内容
+    function checkPassword(own) {
+        var pwd = $(own).val();
+        var len = /^.{4,16}$/;
+        var reg = /^[a-zA-Z0-9]{4,16}$/;
+        var han = "^[\u4e00-\u9fa5]{0,}$";
+        if (pwd === "") {
+            $(own).next().html("");
+            return false;
+        } else if (pwd.match(han)) {
+            $(own).next().html("只支持英文、数字的组合");
+            $(own).next().css("color", "#ff0202");
+            return false;
+        } else if (!pwd.match(len)) {
+            $(own).next().html("长度只能在4-16个字符之间");
+            $(own).next().css("color", "#ff0202");
+            return false;
+        } else if (!pwd.match(reg)) {
+            $(own).next().html("只支持英文、数字的组合");
+            $(own).next().css("color", "#ff0202");
+            return false;
+        } else {
+            $(own).next().html("");
+            return true;
+        }
+    }
+
+    //校验用户名输入内容
+    function checkUsername(own) {
+        var username = $(own).val();
+        var len = /^.{4,16}$/;
+        var reg = /^[a-zA-Z0-9]{4,16}$/;
+        var han = "^[\u4e00-\u9fa5]{0,}$";
+        if (username === "") {
+            $(own).next().html("");
+            return false;
+        } else if (username.match(han)) {
+            $(own).next().html("只支持英文、数字的组合");
+            $(own).next().css("color", "#ff0202");
+            return false;
+        } else if (!username.match(len)) {
+            $(own).next().html("长度只能在4-16个字符之间");
+            $(own).next().css("color", "#ff0202");
+            return false;
+        } else if (!username.match(reg)) {
+            $(own).next().html("只支持英文、数字的组合");
+            $(own).next().css("color", "#ff0202");
+            return false;
+        } else if (whetherRegister(username)) {
+            $(own).next().html("用户已存在");
+            $(own).next().css("color", "#ff0202");
+            return false;
+        } else {
+            $(own).next().html("");
+            return true;
+        }
+    }
+
+    //检查用户名是否被注册
+    function whetherRegister(username) {
+        var res = false;
+        $.ajax({
+            type: "post",
+            url: '/backstageManagement/checkUsername',
+            data: {'username': username},
+            async: false,
+            success: function (data) {
+                if (data === "true") {
+                    res = true;
+                } else {
+                    res = false;
+                }
+            },
+            error: function (result) {
+                alert("出错！");
+            }
+        });
+        return res;
+    }
+
+    //显示昵称输入提示
+    function nicknameClickPrompt(owm) {
+        var username = $(owm).val();
+        if (username === "") {
+            $(owm).next().html("支持中文、英文、数字的组合，2-16个字符");
+            $(owm).next().css("color", "#737373");
+        }
+    }
+
+    //校验昵称输入内容
+    function checkNickname(own) {
+        var nick = $(own).val();
+        var len = /^.{2,16}$/;
+        var reg = /^[\u4e00-\u9fa5a-zA-Z0-9]+$/;
+        if (nick === "") {
+            $(own).next().html("");
+            return false;
+        } else if (!nick.match(len)) {
+            $(own).next().html("长度只能在2-16个字符之间");
+            $(own).next().css("color", "#ff0202");
+            return false;
+        } else if (!nick.match(reg)) {
+            $(own).next().html("只支持中文、英文、数字的组合");
+            $(own).next().css("color", "#ff0202");
+            return false;
+        } else {
+            $(own).next().html("");
+            return true;
+        }
+    }
+
+    //checkbox选中事件
+    function checkboxEvent(own) {
+        var checkbox = $(own).children('td').children('input').prop('checked');
+        if (checkbox) {
+            $(own).children('td').children('input').attr("checked", false);
+        } else {
+            $(own).children('td').children('input').attr("checked", true);
+        }
+    }
+
+    //关闭弹窗
+    function cancel() {
+        layer.close(window.lar);
+    }
+
 </script>
 </html>

@@ -5,70 +5,15 @@
 <head>
     <meta charset="utf-8">
     <title>请假流程表</title>
-    <link href="../../../../static/css/oa/oa_common.css" rel="stylesheet" type="text/css">
-    <link href="../../../../static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
-    <link href="../../../../static/js/datepicker/css/bootstrap-datepicker.css" rel="stylesheet">
+    <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
+    <link href="../../../../static/js/date_pickers/date_picker.css" rel="stylesheet">
 </head>
-<style>
-    .forminput, .search {
-        text-align: left;
-    }
-
-    .tlabel {
-        text-align: center;
-        width: 120px;
-        padding: 0;
-    }
-
-    .formtable td {
-        text-indent: 0;
-    }
-
-    .swidth {
-        height: 30px;
-        margin: 0 5px;
-        outline: none;
-    }
-
-    .formtable {
-        width: 70%;
-        margin: 30px auto 0;
-    }
-
-    .forminput, .search {
-        width: 150px;
-        height: 25px;
-        margin: 0 5px;
-        outline: none;
-    }
-
-    .opinion-column {
-        resize: none;
-        width: 95%;
-        margin: 10px 0 0;
-        padding: 0 8px;
-        font-size: 14px;
-        height: 76px;
-        border: none;
-        outline: none
-    }
-
-    .read-write-permission {
-        resize: none;
-        width: 100%;
-        margin: 0;
-        padding: 0;
-        font-size: 14px;
-        height: 100px;
-        border: none;
-        outline: none;
-        display: block;
-        background: #f6f6f6;
-    }
-</style>
 
 <body>
-<div class="top_toolbar" style="padding: 0;margin: 0 auto;width: 70%;">
+<div style="width:100%;margin: 20px auto;text-align: center">
+    <span style="font-size: 17px;">请假申请表</span>
+</div>
+<div class="top_toolbar">
     <div class="top_toolbar_inside">
         <a onmousemove="select_color(this)" onmouseout="unselected_color(this)">
             <i></i>
@@ -103,7 +48,7 @@
 <!--  -->
 <form id="oaDocumentProcessing" action="http://127.0.0.1:8080/document/add" method="post">
 
-    <div class="form_area" style="width: 70%;margin: 0 auto">
+    <div class="form_area">
         <table style="width: 100%">
             <tbody>
             <tr>
@@ -213,23 +158,23 @@
 
         <tr>
             <td class="tlabel">申请人：</td>
-            <td>
-                <input type="text" class="forminput inputstyle" value="" style="width: 180px" readonly="readonly">
+            <td style="width: 27%;">
+                <input type="text" class="forminput" value="" readonly="readonly">
             </td>
             <td class="tlabel">申请部门：</td>
-            <td>
-                <input type="text" class="forminput inputstyle" value="" readonly="readonly">
+            <td style="width: 20%;">
+                <input type="text" class="forminput" value="" readonly="readonly">
             </td>
             <td class="tlabel">申请时间：</td>
-            <td>
-                <input type="text" class="forminput inputstyle" value="" id="applyTime" readonly="readonly">
+            <td style="width: 20%;">
+                <input type="text" class="forminput" value="" id="applyTime" readonly="readonly">
             </td>
         </tr>
 
         <tr>
             <td class="tlabel">请假类型：</td>
             <td>
-                <select class="select swidth" name="state" data-value="0" required>
+                <select class="select" name="state" data-value="0" required>
                     <option value="0">请选择</option>
                     <option value="1">年假</option>
                     <option value="2">事假</option>
@@ -258,23 +203,23 @@
 
         <tr>
             <td class="tlabel">请假事由：</td>
-            <td colspan="5">
-                <textarea rows="10" class="opinion-column"></textarea>
+            <td colspan="5" style="height: 100px;padding: 10px;">
+                <textarea class="opinion-column"></textarea>
             </td>
         </tr>
 
         <tr>
             <td class="tlabel">部门领导意见：</td>
-            <td colspan="5">
-                <textarea rows="10" class="opinion-column"></textarea>
+            <td colspan="5" style="height: 100px;padding: 10px;">
+                <textarea class="opinion-column"></textarea>
             </td>
         </tr>
 
         <shiro:lacksPermission name="createDocument">
             <tr>
                 <td class="tlabel">人事部门意见：</td>
-                <td colspan="5">
-                    <textarea disabled="disabled" class="read-write-permission" rows="10"></textarea>
+                <td colspan="5" style="height: 100px;padding: 10px;">
+                    <textarea disabled="disabled" class="read-write-permission"></textarea>
                 </td>
             </tr>
         </shiro:lacksPermission>
@@ -282,8 +227,8 @@
         <shiro:hasPermission name="createDocument">
             <tr>
                 <td class="tlabel">人事部门意见：</td>
-                <td colspan="5">
-                    <textarea class="opinion-column" rows="10"></textarea>
+                <td colspan="5" style="height: 100px;padding: 10px;">
+                    <textarea class="opinion-column"></textarea>
                 </td>
             </tr>
         </shiro:hasPermission>
@@ -293,12 +238,7 @@
 </form>
 </body>
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
-<script type="text/javascript" src="../../../../static/js/common.js"></script>
-<script type="text/javascript" src="../../../../static/js/skin.js"></script>
-<script type="text/javascript" src="../../../../static/js/oa/oa_common.js"></script>
-<script type="text/javascript" src="../../../../static/js/datepicker/js/bootstrap-datepicker.js"></script>
-<script type="text/javascript"
-        src="../../../../static/js/datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+<script type="text/javascript" src="../../../../static/js/date_pickers/jquery.date_input.pack.js"></script>
 <script>
 
     var flag = false;
@@ -308,20 +248,8 @@
         flag = !flag;
     }
 
-    $("#start").datepicker({
-        "language": "zh-CN",
-        "format": 'yyyy-mm-dd'
-    });
-    $("#end").datepicker({
-        "language": "zh-CN",
-        "format": 'yyyy-mm-dd'
-    });
-    $(".date .iconfont").click(function () {
-        $(this).prev().trigger("focus");
-    });
-
-    $('select.select').select();
-
+    $('#start').date_input();
+    $('#end').date_input();
 
     $(function () {
         //当前年月日
