@@ -1,14 +1,18 @@
 package com.jiaoke.oa.service;
 
 import com.jiake.utils.DateUtil;
+import com.jiaoke.oa.bean.Permission;
 import com.jiaoke.oa.bean.RoleInfo;
+import com.jiaoke.oa.dao.PermissionMapper;
 import com.jiaoke.oa.dao.RoleInfoMapper;
 import com.jiaoke.oa.dao.RolePermissionMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 权限信息
@@ -26,6 +30,9 @@ public class RoleInfoServiceImpl implements RoleInfoService {
     @Resource
     private RolePermissionMapper rolePermissionMapper;
 
+    @Resource
+    private PermissionMapper permissionMapper;
+
     @Override
     public List<RoleInfo> selectAll() {
         List<RoleInfo> roleInfoList = roleInfoMapper.selectAll();
@@ -41,20 +48,12 @@ public class RoleInfoServiceImpl implements RoleInfoService {
     }
 
     @Override
-    public int updateRolePermission(String[] array, Integer roleId, String description) {
-        RoleInfo roleInfo = new RoleInfo();
-        roleInfo.setId(roleId);
-        roleInfo.setDescription(description);
-
+    public int updateRolePermission(Integer roleId, String[] array) {
         if (array == null || array.length == 0) {
             if (rolePermissionMapper.delete(roleId) < 0) {
                 return -1;
             } else {
-                //更新权限信息
-                if (roleInfoMapper.updateByPrimaryKeySelective(roleInfo) < 0) {
-                    return -1;
-                }
-                return 0;
+                return 2;
             }
         } else {
             //删除现有权限
@@ -65,13 +64,21 @@ public class RoleInfoServiceImpl implements RoleInfoService {
                 if (rolePermissionMapper.insert(roleId, array) < 0) {
                     return -1;
                 } else {
-                    if (roleInfoMapper.updateByPrimaryKeySelective(roleInfo) < 0) {
-                        return -1;
-                    }
-                    return 0;
+                    return 2;
                 }
             }
         }
+    }
+
+    @Override
+    public int updateRole(Integer roleId, String description) {
+        RoleInfo roleInfo = new RoleInfo();
+        roleInfo.setId(roleId);
+        roleInfo.setDescription(description);
+        if (roleInfoMapper.updateByPrimaryKeySelective(roleInfo) < 0) {
+            return -1;
+        }
+        return 0;
     }
 
     @Override
@@ -104,4 +111,15 @@ public class RoleInfoServiceImpl implements RoleInfoService {
         return roleInfoMapper.selectExistingRoleInfo(id);
     }
 
+    @Override
+    public Map<String, Object> bindingInfo(Integer id) {
+        HashMap<String, Object> map = new HashMap<>();
+        //查询全部角色
+        List<Permission> permissionList = permissionMapper.selectAll();
+        //已绑定角色
+        List<Permission> existingPermission = permissionMapper.selectExistingPermission(id);
+        map.put("permissionList", permissionList);
+        map.put("existingPermission", existingPermission);
+        return map;
+    }
 }

@@ -28,4 +28,59 @@ public class QualityWaringDataFalse {
     private double deviationRatio;
     private int warningLevel;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getRealtimeDataShamId() {
+        return realtimeDataShamId;
+    }
+
+    public void setRealtimeDataShamId(int realtimeDataShamId) {
+        this.realtimeDataShamId = realtimeDataShamId;
+    }
+
+    public String getMaterialName() {
+        return materialName;
+    }
+
+    public void setMaterialName(String materialName) {
+        this.materialName = materialName;
+    }
+
+    public double getActualRatio() {
+        return actualRatio;
+    }
+
+    public void setActualRatio(double actualRatio) {
+        this.actualRatio = actualRatio;
+    }
+
+    public double getMoudleRatio() {
+        return moudleRatio;
+    }
+
+    public void setMoudleRatio(double moudleRatio) {
+        this.moudleRatio = moudleRatio;
+    }
+
+    public double getDeviationRatio() {
+        return deviationRatio;
+    }
+
+    public void setDeviationRatio(double deviationRatio) {
+        this.deviationRatio = deviationRatio;
+    }
+
+    public int getWarningLevel() {
+        return warningLevel;
+    }
+
+    public void setWarningLevel(int warningLevel) {
+        this.warningLevel = warningLevel;
+    }
 }

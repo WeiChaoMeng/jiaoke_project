@@ -3,6 +3,7 @@ package com.jiaoke.oa.service;
 import com.jiaoke.oa.bean.RoleInfo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 角色信息
@@ -33,11 +34,12 @@ public interface RoleInfoService {
      *
      * @param array       权限id集合
      * @param roleId      角色id
-     * @param description 角色说明
      * @return 影响行数
      */
-    int updateRolePermission(String[] array, Integer roleId, String description);
+    int updateRolePermission(Integer roleId, String[] array);
 
+
+    int updateRole(Integer roleId, String description);
     /**
      * 选择性插入
      *
@@ -77,4 +79,6 @@ public interface RoleInfoService {
      * @return list
      */
     List<RoleInfo> selectExistingRoleInfo(Integer id);
+
+    Map<String, Object> bindingInfo(Integer id);
 }

@@ -219,7 +219,7 @@ table {
 
 /*oa首页*/
 .oa_homepage_upper_left {
-    width: 60%;
+    width: 53%;
     float: left;
     margin-right: 2%;
 }
@@ -316,17 +316,14 @@ table {
 }
 
 .oa_homepage_upper_right {
+    width: 45%;
     float: left;
-    width: 38%;
-    height: 297px;
 }
 
-.oa_homepage_bottom_left {
-    width: 48%;
+.oa_homepage_bottom {
+    width: 100%;
     float: left;
-    margin-right: 1%;
     margin-top: 20px;
-    margin-bottom: 10px;
 }
 
 .template_content {

@@ -100,11 +100,13 @@ public class BackstageManagementController {
      */
     @RequestMapping(value = "/toUserManager")
     @RequiresPermissions(value = "userManage/view")
-    public String toUserManager(Model model) {
+    public String toUserManager(Model model, int page) {
         List<Department> departmentList = departmentService.selectAll();
         List<RoleInfo> roleInfoList = roleInfoService.selectAll();
         model.addAttribute("roleInfoList", roleInfoList);
-        model.addAttribute("departmentList", departmentList);
+        model.addAttribute("departmentList", JsonHelper.toJSONString(departmentList));
+        //当前页（默认为1）
+        model.addAttribute("currentPage", JsonHelper.toJSONString(page));
         return "oa/backstage/oa_user_management";
     }
 
@@ -132,12 +134,36 @@ public class BackstageManagementController {
     @RequestMapping(value = "/toEdit")
     @ResponseBody
     public String toEdit(Integer id) {
-        Map<String, Object> map = new HashMap<>(16);
-        List<RoleInfo> roleInfoList = roleInfoService.selectExistingRoleInfo(id);
         UserInfo userInfo = userInfoService.selectByPrimaryKey(id);
-        map.put("roleInfoList", roleInfoList);
-        map.put("userInfo", userInfo);
+        return JsonHelper.toJSONString(userInfo);
+    }
+
+    /**
+     * 绑定角色
+     *
+     * @param id id
+     * @return userInfo
+     */
+    @RequestMapping(value = "/toBinding")
+    @ResponseBody
+    public String toBinding(Integer id) {
+        Map<String, Object> map = userInfoService.bindingInfo(id);
         return JsonHelper.toJSONString(map);
+    }
+
+    /**
+     * 提交绑定角色
+     *
+     * @param array 角色
+     * @return userInfo
+     */
+    @RequestMapping(value = "/binding")
+    @ResponseBody
+    public String binding(Integer userId, String[] array) {
+        if (userInfoService.updateRolePermission(userId, array) < 0) {
+            return "error";
+        }
+        return "success";
     }
 
     /**
@@ -148,8 +174,8 @@ public class BackstageManagementController {
      */
     @RequestMapping(value = "/edit")
     @ResponseBody
-    public String edit(UserInfo userInfo,String[] array) {
-        if (userInfoService.updateRolePermission(userInfo,array) < 0) {
+    public String edit(UserInfo userInfo) {
+        if (userInfoService.updateUserInfo(userInfo) < 0) {
             return "error";
         }
         return "success";
@@ -178,9 +204,12 @@ public class BackstageManagementController {
      * @return jsp
      */
     @RequestMapping(value = "/toRoleManager")
-    public String toRoleManager(Model model) {
+    public String toRoleManager(Model model, int page) {
         List<Permission> permissionList = permissionService.selectAll();
-        model.addAttribute("permissionList", permissionList);
+        //权限列表
+        model.addAttribute("permissionList", JsonHelper.toJSONString(permissionList));
+        //当前页（默认为1）
+        model.addAttribute("currentPage", JsonHelper.toJSONString(page));
         return "oa/backstage/oa_role_management";
     }
 
@@ -248,6 +277,34 @@ public class BackstageManagementController {
     }
 
     /**
+     * 绑定权限
+     *
+     * @param id id
+     * @return roleInfo
+     */
+    @RequestMapping(value = "/toBindingPower")
+    @ResponseBody
+    public String toBindingPower(Integer id) {
+        Map<String, Object> map = roleInfoService.bindingInfo(id);
+        return JsonHelper.toJSONString(map);
+    }
+
+    /**
+     * 提交绑定角色
+     *
+     * @param array 角色
+     * @return userInfo
+     */
+    @RequestMapping(value = "/bindingPower")
+    @ResponseBody
+    public String bindingPower(Integer roleId, String[] array) {
+        if (roleInfoService.updateRolePermission(roleId, array) < 0) {
+            return "error";
+        }
+        return "success";
+    }
+
+    /**
      * 删除角色
      *
      * @param id id
@@ -271,25 +328,20 @@ public class BackstageManagementController {
     @RequestMapping(value = "/toRoleEdit")
     @ResponseBody
     public String toRoleEdit(Integer id) {
-        Map<String, Object> map = new HashMap<>(16);
         RoleInfo roleInfo = roleInfoService.selectByPrimaryKey(id);
-        List<Permission> permissionList = permissionService.selectExistingPermission(id);
-        map.put("roleInfo", roleInfo);
-        map.put("permissionList", permissionList);
-        return JsonHelper.toJSONString(map);
+        return JsonHelper.toJSONString(roleInfo);
     }
 
     /**
      * 更新角色信息及权限
      *
-     * @param array  权限列表
      * @param roleId 角色id
      * @return success/error
      */
     @RequestMapping(value = "/roleEdit")
     @ResponseBody
-    public String roleEdit(String[] array, Integer roleId, String description) {
-        if (roleInfoService.updateRolePermission(array, roleId, description) < 0) {
+    public String roleEdit(Integer roleId, String description) {
+        if (roleInfoService.updateRole(roleId, description) < 0) {
             return "error";
         }
         return "success";

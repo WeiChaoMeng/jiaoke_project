@@ -18,7 +18,7 @@
 body {
     font-family: '微软雅黑';
     margin: 0 auto;
-    min-width: 980px;
+    min-width: 1200px;
 }
 
 ul {
@@ -597,9 +597,9 @@ table {
 .listbox {
     border: solid 1px #d6d6d6;
     height: 70px;
-    width: 190px;
+    width: 15.6%;
     float: left;
-    margin-right: 14px;
+    margin-right: 1%;
 }
 
 .listbox:hover {

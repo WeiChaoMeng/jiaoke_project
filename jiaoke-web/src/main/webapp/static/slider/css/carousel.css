@@ -391,20 +391,20 @@ li {
 }
 
 li.mainPic {
-    width: 555px;
+    width: 46%;
     height: 251px;
 }
 
 li.smallPic {
-    width: 162px;
+    width: 13%;
     height: 123px;
-    margin: 0 0 5px 5px;
+    margin-left: .5%;
 }
 
 li.middlePic {
-    width: 330px;
+    width: 26.5%;
     height: 123px;
-    margin: 0 0 5px 5px;
+    margin: 0 0 0.5% 0.5%;
 }
 
 .achievement li span {

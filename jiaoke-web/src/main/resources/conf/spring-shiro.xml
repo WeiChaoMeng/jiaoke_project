@@ -99,7 +99,8 @@
     <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
         <constructor-arg value="sessionIdCookie"/>
         <property name="httpOnly" value="true"/>
-        <property name="maxAge" value="1800"/>
+        <!--定义Cookie的过期时间，单位为秒，如果设置为-1表示浏览器关闭，则Cookie消失-->
+        <property name="maxAge" value="-1"/>
     </bean>
 
     <!-- 会话验证调度器 -->

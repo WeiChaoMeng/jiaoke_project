@@ -35,7 +35,7 @@ $(function () {
         $('#oa-iframe').attr("src", "personalAttendance/toPersonalAttendance");
     });
 
- //日程计划
+    //日程计划
     $("#schedule_planning").on("click", function () {
         removeOwnName();
         personal(this);
@@ -199,7 +199,7 @@ $(function () {
         $('#oa-iframe').attr("src", "comprehensiveOffice/officeReleaseDocument");
     });*/
 
-    function office(id,url){
+    function office(id, url) {
         $(id).on("click", function () {
             removeOwnName();
             archives(this);
@@ -285,14 +285,14 @@ $(function () {
     $("#userManager").on("click", function () {
         removeOwnName();
         cultural_construction(this);
-        $('#oa-iframe').attr("src", "backstageManagement/toUserManager");
+        $('#oa-iframe').attr("src", "backstageManagement/toUserManager?page=1");
     });
 
     //角色管理
     $("#roleManager").on("click", function () {
         removeOwnName();
         cultural_construction(this);
-        $('#oa-iframe').attr("src", "backstageManagement/toRoleManager");
+        $('#oa-iframe').attr("src", "backstageManagement/toRoleManager?page=1");
     });
 
     //权限管理
