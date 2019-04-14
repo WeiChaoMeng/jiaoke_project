@@ -24,7 +24,7 @@
 
                 <tr>
                     <td class="tlabel">配比名称：</td>
-                    <td colspan="3"><input type="text" class="forminput inputstyle" style="width: 72%;" value="孙中山"></td>
+                    <td colspan="3"><input type="text" class="forminput inputstyle" style="width: 72%;" value=""></td>
                 </tr>
 
                 <tr>

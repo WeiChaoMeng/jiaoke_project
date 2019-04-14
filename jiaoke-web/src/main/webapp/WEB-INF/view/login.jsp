@@ -95,6 +95,7 @@
                         alert("Connection error");
                     },
                     success: function (result) {
+                        result = JSON.parse(result);
                         if (result.messages === "success") {
                             window.location.href = '${path}/login/homePage.do';
                         } else {

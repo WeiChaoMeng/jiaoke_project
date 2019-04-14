@@ -66,7 +66,7 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
     }
 
     /**
-     *
+     *当前模块有错误（总量计算未累减）
      * 功能描述: <br>
      *  <查询所选日期各模板生产情况>
      * @param [producedDate, crewNum]
@@ -110,7 +110,6 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
             SVGList.add(new HashMap<>());
             String total = String.valueOf(list.get(i).get("total"));
             String count = String.valueOf(list.get(i).get("procount"));
-
             Iterator<Map.Entry<String, String>> entries = list.get(i).entrySet().iterator();
             while (entries.hasNext()){
                 Map.Entry entry = (Map.Entry) entries.next();
@@ -165,9 +164,33 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
                             break;
                     }
 
+
                 }
 
             }
+
+        }
+
+        //修改总量数据累减
+        for (int i = 0; i < list.size();i++){
+            Object arrg1 =  list.get(i).get("aggregate_1");
+            Object arrg2 =  list.get(i).get("aggregate_2");
+            Object arrg3 =  list.get(i).get("aggregate_3");
+            Object arrg4 =  list.get(i).get("aggregate_4");
+            Object arrg5 =  list.get(i).get("aggregate_5");
+            Object arrg6 =  list.get(i).get("aggregate_6");
+
+           double aggregate_1 =  Double.parseDouble(arrg1.toString()) - Double.parseDouble(arrg2.toString());
+            double aggregate_2 =  Double.parseDouble(arrg2.toString()) - Double.parseDouble(arrg3.toString());
+            double aggregate_3 =  Double.parseDouble(arrg3.toString()) - Double.parseDouble(arrg4.toString());
+            double aggregate_4 =  Double.parseDouble(arrg4.toString()) - Double.parseDouble(arrg5.toString());
+            double aggregate_5 =  Double.parseDouble(arrg5.toString()) - Double.parseDouble(arrg6.toString());
+
+            list.get(i).put("aggregate_1",String.valueOf(aggregate_1));
+            list.get(i).put("aggregate_2",String.valueOf(aggregate_2));
+            list.get(i).put("aggregate_3",String.valueOf(aggregate_3));
+            list.get(i).put("aggregate_4",String.valueOf(aggregate_4));
+            list.get(i).put("aggregate_5",String.valueOf(aggregate_5));
 
         }
 
