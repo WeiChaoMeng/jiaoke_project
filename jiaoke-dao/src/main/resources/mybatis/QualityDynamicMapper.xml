@@ -4,6 +4,7 @@
 
     <select id="getLastDayToChars" resultType="java.util.Map">
         SELECT
+               produce_disc_num,
                material_asphalt,
                material_total,
                produce_proportioning_num
