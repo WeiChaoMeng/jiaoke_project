@@ -172,7 +172,6 @@ function getRealTimeDataEcharsMaterial() {
         type:"post",
         dataType:"json",
         success:function (res) {
-            debugger
             eachMaterialList(res);
         }
     })

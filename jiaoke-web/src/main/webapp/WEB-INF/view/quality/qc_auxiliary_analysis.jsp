@@ -93,6 +93,7 @@
                                 <th>生产日期</th>
                                 <th>生产时间</th>
                                 <th>配比号</th>
+                                <th>配比名称</th>
                                 <th>产品盘号</th>
                                 <th >所在机组</th>
                                 <th>操作</th>
@@ -102,6 +103,7 @@
                                         <td>${item.produce_date}</td>
                                         <td>${item.produce_time}</td>
                                         <td>${item.produce_ratio_id}</td>
+                                        <td>${item.pro_name}</td>
                                         <td>${item.produce_disc_num}</td>
                                         <td>${item.produce_crewNum == 1 ?  "机组1":"机组2"} </td>
                                         <td>

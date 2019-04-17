@@ -56605,9 +56605,9 @@
                 }
 
                 if (__DEV__) {
-                    if (!legendDrawnMap.get(name)) {
-                        console.warn(name + ' series not exists. Legend data should be same with series name or data name.');
-                    }
+                    // if (!legendDrawnMap.get(name)) {
+                    //     console.warn(name + ' series not exists. Legend data should be same with series name or data name.');
+                    // }
                 }
             }, this);
         },

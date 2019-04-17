@@ -48,7 +48,7 @@ public interface QualityDataManagerDao {
      * @auther Melone
      * @date 2018/10/26 16:16
      */
-    List<String> selectRatioNumListByDate(@Param("producedDate") String producedDate,  @Param("crewNum") String crewNum);
+    List<Map<String,Object>> selectRatioNumListByDate(@Param("producedDate") String producedDate,  @Param("crewNum") String crewNum);
 
     /**
      * 返回指定日期每种配比的总值
@@ -64,7 +64,7 @@ public interface QualityDataManagerDao {
      * @param ratioNumList
      * @return
      */
-    List<QualityRatioTemplate> selectRatioMessageById(@Param("crewNum") String crewNum, @Param("ratioNumList") List<String> ratioNumList);
+    List<QualityRatioTemplate> selectRatioMessageById(@Param("crewNum") String crewNum, @Param("ratioNumList") List<Map<String,Object>> ratioNumList);
 
     /**
      *  根据传入日期返回当天所有项目

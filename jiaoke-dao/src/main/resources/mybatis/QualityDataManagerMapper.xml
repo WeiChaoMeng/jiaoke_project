@@ -61,14 +61,28 @@
     </select>
 
 
-    <select id="selectRatioNumListByDate" resultType="java.lang.String">
+    <select id="selectRatioNumListByDate" resultType="java.util.Map">
+
         SELECT
-                produce_proportioning_num
-                FROM
-                     quality_monitoring_realtime_${crewNum}
-                WHERE
-                produce_date = ${producedDate}
-                GROUP BY produce_proportioning_num
+               QR.produce_proportioning_num,
+               QM.pro_name
+        FROM
+             quality_monitoring_realtime_${crewNum} AS QR
+                 INNER JOIN
+                     quality_proportioning_message AS QM
+                     <choose>
+                         <when test="producedDate == 'data1'">
+                             ON QR.produce_proportioning_num = QM.crew1_modele_id
+                         </when>
+                          <otherwise>
+                              ON QR.produce_proportioning_num = QM.crew2_modele_id
+                          </otherwise>
+                     </choose>
+
+        WHERE
+                QR.produce_date = ${producedDate}
+        GROUP BY QR.produce_proportioning_num;
+
     </select>
 
     <select id="selectProducedSVG" resultType="java.util.Map">
@@ -126,7 +140,7 @@
         ${crewNum}_modele_id IN
 
         <foreach collection="ratioNumList" item="item" open="(" close=")" separator=",">
-            ${item}
+            ${item.produce_proportioning_num}
         </foreach>
     </select>
 

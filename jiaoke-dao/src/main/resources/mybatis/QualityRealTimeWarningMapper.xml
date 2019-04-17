@@ -9,6 +9,7 @@
                t1.moudle_ratio,
                t1.deviation_ratio,
                t1.warning_level,
+               t2.pro_name,
                DATE_FORMAT(t2.produce_date, '%Y-%m-%d') AS produce_date,
                DATE_FORMAT(t2.produce_time, '%H:%i:%s') AS produce_time,
                t2.produce_ratio_id,
@@ -22,28 +23,37 @@
                  INNER JOIN (
                             (
                             SELECT
-                                    *
+                                   QC.*,
+                                   QM.pro_name
                             FROM
-                                 quality_warning_promessage_crew
+                                 quality_warning_promessage_crew AS QC
+                                     INNER JOIN
+                                         quality_proportioning_message AS QM
+                                         ON QC.produce_ratio_id = QM.crew1_modele_id
                             WHERE
-                                    produce_crewNum = 1
+                                    QC.produce_crewNum = 1
                             ORDER BY
-                                     id DESC
+                                     QC.id DESC
                             LIMIT 1
                             )
                             UNION ALL
                             (
                             SELECT
-                                    *
+                                   QC.*,
+                                   QM.pro_name
                             FROM
-                                 quality_warning_promessage_crew
+                                 quality_warning_promessage_crew AS QC
+                                     INNER JOIN
+                                         quality_proportioning_message AS QM
+                                         ON QC.produce_ratio_id = QM.crew2_modele_id
                             WHERE
-                                    produce_crewNum = 2
+                                    QC.produce_crewNum = 2
                             ORDER BY
-                                     id DESC
+                                     QC.id DESC
                             LIMIT 1
                             )
-                            ) AS t2 ON t1.crew_id = t2.id
+                            ) AS t2
+                     ON t1.crew_id = t2.id
     </select>
 
     <select id="selectWarningEcharsData" resultType="java.util.Map">

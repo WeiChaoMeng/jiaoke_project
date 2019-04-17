@@ -36,6 +36,7 @@
                     <th>生产日期</th>
                     <th>生产时间</th>
                     <th>配比号</th>
+                    <th>配比名称</th>
                     <th>车号</th>
                     <th>盘号</th>
                     <th>客户号</th>
@@ -44,12 +45,13 @@
                 <tbody>
 
                     <tr>
-                        <td id="crew1_basic_date" >20171101</td>
-                        <td id="crew1_basic_time" >8:35</td>
-                        <td id="crew1_basic_ratio" >256</td>
-                        <td id="crew1_basic_carNum" >京C66666</td>
-                        <td id="crew1_basic_discNum" >A16</td>
-                        <td  id="crew1_basic_userNum" >1554568791</td>
+                        <td id="crew1_basic_date" ></td>
+                        <td id="crew1_basic_time" ></td>
+                        <td id="crew1_basic_ratio" ></td>
+                        <td id="crew1_basic_ratio_name" ></td>
+                        <td id="crew1_basic_carNum" ></td>
+                        <td id="crew1_basic_discNum" ></td>
+                        <td  id="crew1_basic_userNum" ></td>
                     </tr>
                 </tbody>
             </table>
@@ -75,26 +77,26 @@
                 <tbody>
 
                     <tr>
-                        <td id="crew1_data_Aggregate1" >8:30:44</td>
-                        <td  id="crew1_data_Aggregate2" >75
+                        <td id="crew1_data_Aggregate1" ></td>
+                        <td  id="crew1_data_Aggregate2" >
                             <i>%</i>
                         </td>
-                        <td id="crew1_data_Aggregate3" >256
+                        <td id="crew1_data_Aggregate3" >
                             <i>℃</i>
                         </td>
-                        <td id="crew1_data_Aggregate4" >16
+                        <td id="crew1_data_Aggregate4" >
                             <i>%</i>
                         </td>
-                        <td id="crew1_data_Aggregate5" >16
+                        <td id="crew1_data_Aggregate5" >
                             <i>%</i>
                         </td >
-                        <td  id="crew1_data_Aggregate6"  >16
+                        <td  id="crew1_data_Aggregate6"  >
                             <i>%</i>
                         </td>
-                        <td id="crew1_data_warehouse1" >16
+                        <td id="crew1_data_warehouse1" >
                             <i>℃</i>
                         </td>
-                        <td id="crew1_data_duster" >16
+                        <td id="crew1_data_duster" >
                             <i>℃</i>
                         </td>
                     </tr>
@@ -114,26 +116,26 @@
                 <tbody>
 
                     <tr>
-                        <td id="crew1_data_stone1"  >8<i>%</i></td>
-                        <td id="crew1_data_stone2"  >75
+                        <td id="crew1_data_stone1"  ><i>%</i></td>
+                        <td id="crew1_data_stone2"  >
                             <i>%</i>
                         </td>
-                        <td id="crew1_data_asphalt" >256
+                        <td id="crew1_data_asphalt" >
                             <i>%</i>
                         </td>
-                        <td id="crew1_data_regenerate" >16
+                        <td id="crew1_data_regenerate" >
                             <i>%</i>
                         </td>
-                        <td  id="crew1_data_additive" >16
+                        <td  id="crew1_data_additive" >
                             <i>%</i>
                         </td>
-                        <td  id="crew1_data_total" >16
+                        <td  id="crew1_data_total" >
                             <i>kg</i>
                         </td>
-                        <td id="crew1_data_temasphalt" >16
+                        <td id="crew1_data_temasphalt" >
                             <i>℃</i>
                         </td>
-                        <td id="crew1_data_aggregate" >16
+                        <td id="crew1_data_aggregate" >
                             <i>℃</i>
                         </td>
                     </tr>
@@ -155,6 +157,7 @@
             <th>生产日期</th>
             <th>生产时间</th>
             <th>配比号</th>
+            <th>配比名称</th>
             <th>车号</th>
             <th>盘号</th>
             <th>客户号</th>
@@ -163,12 +166,13 @@
             <tbody>
 
             <tr>
-                <td id="crew2_basic_date" >20171101</td>
-                <td id="crew2_basic_time" >8:35</td>
-                <td id="crew2_basic_ratio" >256</td>
-                <td id="crew2_basic_carNum" >京C66666</td>
-                <td id="crew2_basic_discNum" >A16</td>
-                <td  id="crew2_basic_userNum" >1554568791</td>
+                <td id="crew2_basic_date" ></td>
+                <td id="crew2_basic_time" ></td>
+                <td id="crew2_basic_ratio" ></td>
+                <td id="crew2_basic_ratio_name" ></td>
+                <td id="crew2_basic_carNum" ></td>
+                <td id="crew2_basic_discNum" ></td>
+                <td  id="crew2_basic_userNum" ></td>
             </tr>
             </tbody>
         </table>
@@ -194,26 +198,26 @@
             <tbody>
 
             <tr>
-                <td id="crew2_data_Aggregate1" >8<i>%</i></td>
-                <td  id="crew2_data_Aggregate2" >75
+                <td id="crew2_data_Aggregate1" ><i>%</i></td>
+                <td  id="crew2_data_Aggregate2" >
                     <i>%</i>
                 </td>
-                <td id="crew2_data_Aggregate3" >256
+                <td id="crew2_data_Aggregate3" >
                     <i>℃</i>
                 </td>
-                <td id="crew2_data_Aggregate4" >16
+                <td id="crew2_data_Aggregate4" >
                     <i>%</i>
                 </td>
-                <td id="crew2_data_Aggregate5" >16
+                <td id="crew2_data_Aggregate5" >
                     <i>%</i>
                 </td >
-                <td  id="crew2_data_Aggregate6"  >16
+                <td  id="crew2_data_Aggregate6"  >
                     <i>%</i>
                 </td>
-                <td id="crew2_data_warehouse1" >16
+                <td id="crew2_data_warehouse1" >
                     <i>℃</i>
                 </td>
-                <td id="crew2_data_duster" >16
+                <td id="crew2_data_duster" >
                     <i>℃</i>
                 </td>
             </tr>
@@ -233,26 +237,26 @@
             <tbody>
 
             <tr>
-                <td id="crew2_data_stone1"  >8<i>%</i></td>
-                <td id="crew2_data_stone2"  >75
+                <td id="crew2_data_stone1"  ><i>%</i></td>
+                <td id="crew2_data_stone2"  >
                     <i>%</i>
                 </td>
-                <td id="crew2_data_asphalt" >256
+                <td id="crew2_data_asphalt" >
                     <i>%</i>
                 </td>
-                <td id="crew2_data_regenerate" >16
+                <td id="crew2_data_regenerate" >
                     <i>%</i>
                 </td>
-                <td  id="crew2_data_additive" >16
+                <td  id="crew2_data_additive" >
                     <i>%</i>
                 </td>
-                <td  id="crew2_data_total" >16
+                <td  id="crew2_data_total" >
                     <i>kg</i>
                 </td>
-                <td id="crew2_data_temasphalt" >16
+                <td id="crew2_data_temasphalt" >
                     <i>℃</i>
                 </td>
-                <td id="crew2_data_aggregate" >16
+                <td id="crew2_data_aggregate" >
                     <i>℃</i>
                 </td>
             </tr>
