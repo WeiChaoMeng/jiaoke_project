@@ -4,10 +4,11 @@
 
     <select id="selelectWarningLiveDataToList" resultType="java.util.Map">
         SELECT
-            t1.id,
+        t1.id,
         t1.produce_date,
         t1.produce_time,
         t1.produce_ratio_id,
+        t3.pro_name,
         t1.produce_car_num,
         t1.produce_disc_num,
         t1.produce_user,
@@ -15,8 +16,16 @@
         t1.produce_crewNum
         FROM
              quality_warning_promessage_crew t1
-                 JOIN quality_warning_data t2 ON t1.id = t2.crew_id
-
+        INNER JOIN quality_warning_data t2 ON t1.id = t2.crew_id
+        INNER JOIN quality_proportioning_message t3
+        <choose>
+            <when test="crew == 'data1'">
+                ON t1.produce_ratio_id = t3.crew1_modele_id
+            </when>
+            <otherwise>
+                ON t1.produce_ratio_id = t3.crew2_modele_id
+            </otherwise>
+        </choose>
         WHERE
           warning_level >= #{warningLive}
 
@@ -81,7 +90,24 @@
     </select>
 
     <select id="getProMessageByDate" resultType="java.util.Map">
-        SELECT * from quality_monitoring_realtime_${crewNum} WHERE produce_date = DATE  &apos;${prodate}&apos; AND produce_disc_num = ${discNum}
+        SELECT
+               QD.*,
+               QM.pro_name
+        FROM
+             quality_monitoring_realtime_${crewNum} AS QD
+                INNER JOIN
+                quality_proportioning_message AS QM
+                <choose>
+                    <when test="crewNum == 'data1'">
+                        ON QD.produce_proportioning_num = QM.crew1_modele_id
+                    </when>
+                    <otherwise>
+                        ON QD.produce_proportioning_num = QM.crew2_modele_id
+                    </otherwise>
+                </choose>
+                WHERE
+              QD.produce_date = DATE  &apos;${prodate}&apos;
+        AND QD.produce_disc_num = ${discNum}
     </select>
 
     <select id="getWaringList" resultType="java.util.Map">

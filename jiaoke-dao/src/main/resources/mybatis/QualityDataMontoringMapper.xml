@@ -6,66 +6,74 @@
         (
         SELECT
                'crew1' AS 'crewNum',
-               date_format(produce_date, '%Y-%m-%d') AS produce_date,
-               date_format(produce_time, '%T') AS produce_time,
-               produce_disc_num,
-               produce_proportioning_num,
-               produce_car_num,
-               produce_custom_num,
-               material_aggregate_1,
-               material_aggregate_2,
-               material_aggregate_3,
-               material_aggregate_4,
-               material_aggregate_5,
-               material_aggregate_6,
-               material_stone_1,
-               material_stone_2,
-               material_asphalt,
-               material_regenerate,
-               material_additive,
-               material_total,
-               temperature_warehouse_1 ,
-               temperature_mixture ,
-               temperature_duster ,
-               temperature_asphalt ,
-               temperature_aggregate
+               date_format(QR.produce_date, '%Y-%m-%d') AS produce_date,
+               date_format(QR.produce_time, '%T') AS produce_time,
+               QR.produce_disc_num,
+               QM.pro_name,
+               QR.produce_proportioning_num,
+               QR.produce_car_num,
+               QR.produce_custom_num,
+               QR.material_aggregate_1,
+               QR.material_aggregate_2,
+               QR.material_aggregate_3,
+               QR.material_aggregate_4,
+               QR.material_aggregate_5,
+               QR.material_aggregate_6,
+               QR.material_stone_1,
+               QR.material_stone_2,
+               QR.material_asphalt,
+               QR.material_regenerate,
+               QR.material_additive,
+               QR.material_total,
+               QR.temperature_warehouse_1 ,
+               QR.temperature_mixture ,
+               QR.temperature_duster ,
+               QR.temperature_asphalt ,
+               QR.temperature_aggregate
         FROM
-             quality_monitoring_realtime_data1
+             quality_monitoring_realtime_data1 AS QR
+                 INNER JOIN
+                     quality_proportioning_message AS QM
+                     ON QR.produce_proportioning_num = QM.crew1_modele_id
         ORDER BY
-                 id DESC
+                 QR.id DESC
         LIMIT 1
         )
         UNION ALL
                 (
                 SELECT
                        'crew2' AS 'crewNum',
-                       date_format(produce_date, '%Y-%m-%d') AS produce_date,
-                       date_format(produce_time, '%T') AS produce_time,
-                       produce_disc_num,
-                       produce_proportioning_num,
-                       produce_car_num,
-                       produce_custom_num,
-                       material_aggregate_1,
-                       material_aggregate_2,
-                       material_aggregate_3,
-                       material_aggregate_4,
-                       material_aggregate_5,
-                       material_aggregate_6,
-                       material_stone_1,
-                       material_stone_2,
-                       material_asphalt,
-                       material_regenerate,
-                       material_additive,
-                       material_total,
-                       temperature_warehouse_1 ,
-                       temperature_mixture,
-                       temperature_duster,
-                       temperature_asphalt ,
-                       temperature_aggregate
+                       date_format(QR.produce_date, '%Y-%m-%d') AS produce_date,
+                       date_format(QR.produce_time, '%T') AS produce_time,
+                       QR.produce_disc_num,
+                       QM.pro_name,
+                       QR.produce_proportioning_num,
+                       QR.produce_car_num,
+                       QR.produce_custom_num,
+                       QR.material_aggregate_1,
+                       QR.material_aggregate_2,
+                       QR.material_aggregate_3,
+                       QR.material_aggregate_4,
+                       QR.material_aggregate_5,
+                       QR.material_aggregate_6,
+                       QR.material_stone_1,
+                       QR.material_stone_2,
+                       QR.material_asphalt,
+                       QR.material_regenerate,
+                       QR.material_additive,
+                       QR.material_total,
+                       QR.temperature_warehouse_1 ,
+                       QR.temperature_mixture,
+                       QR.temperature_duster,
+                       QR.temperature_asphalt ,
+                       QR.temperature_aggregate
                 FROM
-                     quality_monitoring_realtime_data2
+                     quality_monitoring_realtime_data2 AS QR
+                         INNER JOIN
+                             quality_proportioning_message AS QM
+                             ON QR.produce_proportioning_num = QM.crew2_modele_id
                 ORDER BY
-                         id DESC
+                         QR.id DESC
                 LIMIT 1
                 )
     </select>

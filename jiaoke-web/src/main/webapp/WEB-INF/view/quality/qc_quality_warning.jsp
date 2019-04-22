@@ -33,6 +33,7 @@
                     <th>生产日期</th>
                     <th>生产时间</th>
                     <th>配比号</th>
+                    <th>配比名称</th>
                     <th>车号</th>
                     <th>盘号</th>
                     <th>生产人</th>
@@ -42,13 +43,14 @@
                 <tbody>
 
                     <tr class="warning_table_even">
-                        <td id="crew1_produce_date">20171101</td>
-                        <td id="crew1_produce_time">8:35</td>
-                        <td id="crew1_produce_ratio_id">256</td>
-                        <td id="crew1_produce_car_num">京C66666</td>
-                        <td id="crew1_produce_disc_num">A16</td>
+                        <td id="crew1_produce_date"></td>
+                        <td id="crew1_produce_time"></td>
+                        <td id="crew1_produce_ratio_id"></td>
+                        <td id="crew1_pro_name"></td>
+                        <td id="crew1_produce_car_num"></td>
+                        <td id="crew1_produce_disc_num"></td>
                         <td id="crew1_produce_user"></td>
-                        <td id="crew1_produce_custom_num">1554568791</td>
+                        <td id="crew1_produce_custom_num"></td>
 
                     </tr>
                 </tbody>
@@ -228,6 +230,7 @@
                     <th>生产日期</th>
                     <th>生产时间</th>
                     <th>配比号</th>
+                    <th>配比名称</th>
                     <th>车号</th>
                     <th>盘号</th>
                     <th>生产人</th>
@@ -237,13 +240,14 @@
                 <tbody  id="crew2_message" >
 
                 <tr class="warning_table_even">
-                    <td id="crew2_produce_date">20171101</td>
-                    <td id="crew2_produce_time">8:35</td>
-                    <td id="crew2_produce_ratio_id">256</td>
-                    <td id="crew2_produce_car_num">京C66666</td>
-                    <td id="crew2_produce_disc_num">A16</td>
+                    <td id="crew2_produce_date"></td>
+                    <td id="crew2_produce_time"></td>
+                    <td id="crew2_produce_ratio_id"></td>
+                    <td id="crew2_pro_name"></td>
+                    <td id="crew2_produce_car_num"></td>
+                    <td id="crew2_produce_disc_num"></td>
                     <td id="crew2_produce_user"></td>
-                    <td id="crew2_produce_custom_num">1554568791</td>
+                    <td id="crew2_produce_custom_num"></td>
                 </tr>
                 </tbody>
             </table>

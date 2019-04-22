@@ -27,8 +27,8 @@
             <div class="infolist1">
                 <div class="infoboxleft">
                     <div class="boxtitle">
-                        <span>${ratioNum}号配比</span>
-                        <a href="${path}/getProListByRatioNumAndDate.do?ratioNum=${ratioNum}&date=${date}&crewNum=${crewNum}" target="_self">更多
+                        <span>${ratioNum.pro_name}</span>
+                        <a href="${path}/getProListByRatioNumAndDate.do?ratioNum=${ratioNum.produce_proportioning_num}&date=${date}&crewNum=${crewNum}" target="_self">更多
                             <i class="iconfont">&#xeba8;</i>
                         </a>
                     </div>
@@ -45,7 +45,7 @@
                             <tbody>
                             <c:forEach items="${producedList}"  varStatus="status" var="produced">
 
-                                <c:if test="${produced.produce_proportioning_num  ==  ratioNum}">
+                                <c:if test="${produced.produce_proportioning_num  ==  ratioNum.produce_proportioning_num}">
 
                                     <tr>
                                         <td>${produced.produce_disc_num}</td>
@@ -67,11 +67,11 @@
             </div>
 
             <c:forEach items="${rationProSVG}" var="producedSVG" varStatus="i">
-                <c:if test="${producedSVG.rationNum == ratioNum}" >
+                <c:if test="${producedSVG.rationNum == ratioNum.produce_proportioning_num}" >
                     <div class="chartbox4">
                         <div class="my_echars_title">
-                            <span  >${ratioNum}号配比产品平均图</span>
-                            <a href="javascript:;" name="${ratioNum}" class="proSVG" >更多
+                            <span  >${ratioNum.pro_name}产品平均图</span>
+                            <a href="javascript:;" name="${ratioNum.produce_proportioning_num}" id="${ratioNum.pro_name}" class="proSVG" >更多
                                 <i class="iconfont">&#xeba8;</i>
                             </a>
                         </div>
@@ -449,12 +449,13 @@
     $(".proSVG").click(function () {
         that_ = this;
         var raionNum = this.name;
+        var raionName = this.id;
         //获取当天各模板总数
         var proTotalList = ${produceTotal};
         //获取当天各模板实际配比
         var proSVGList = ${ProSVG};
         $("#proNam").empty();
-        $("#proNam").append("今日"+raionNum + "号配比生产信息");
+        $("#proNam").append("今日"+raionName + "生产信息");
         // var objArr = eval("(" + proTotalList + ")");
         for (var i in proTotalList) {
             for (var k in proTotalList[i]){

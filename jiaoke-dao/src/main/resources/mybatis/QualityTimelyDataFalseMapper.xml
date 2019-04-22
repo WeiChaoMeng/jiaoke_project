@@ -46,7 +46,7 @@
     delete from quality_timely_data_false
     where id = #{id,jdbcType=INTEGER}
   </delete>
-    <insert id="insert" parameterType="com.jiaoke.quality.bean.QualityTimelyDataFalse">
+    <insert id="insert"   parameterType="com.jiaoke.quality.bean.QualityTimelyDataFalse">
     insert into quality_timely_data_false (id, produce_date, product_time,
       produce_disc_num, produce_proportioning_num,
       produce_car_num, produce_custom_num, material_aggregate_6,
@@ -328,7 +328,7 @@
         LIMIT #{pageFirstNum},#{eachPageDataNum}
     </select>
 
-    <insert id="insertWarningPromessage" parameterType="com.jiaoke.quality.bean.QualityWaringDataFalse">
+    <insert id="insertWarningPromessage"  parameterType="com.jiaoke.quality.bean.QualityWaringDataFalse">
         INSERT INTO quality_warning_data_false (
         realtime_data_sham_id,
         material_name,

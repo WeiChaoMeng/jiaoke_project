@@ -35,6 +35,7 @@
                 <th style="width: 70px">生产时间</th>
                 <th style="width: 70px">盘号</th>
                 <th style="width: 70px ">配比号</th>
+                <th style="width: 70px ">配比名称</th>
                 <th style="width: 70px">骨料1</th>
                 <th style="width: 70px">骨料2</th>
                 <th style="width: 70px">骨料3</th>
@@ -57,6 +58,7 @@
                     <td>${proBase.produce_time}</td>
                     <td>${proBase.produce_disc_num}</td>
                     <td>${proBase.produce_proportioning_num}</td>
+                    <td>${proBase.pro_name}</td>
                     <td>${proBase.material_aggregate_1 - proBase.material_aggregate_2}</td>
                     <td>${proBase.material_aggregate_2 - proBase.material_aggregate_3}</td>
                     <td>${proBase.material_aggregate_3 - proBase.material_aggregate_4}</td>

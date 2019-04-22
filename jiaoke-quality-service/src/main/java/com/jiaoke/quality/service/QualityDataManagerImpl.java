@@ -39,7 +39,7 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
      *
      * 功能描述: <br>
      *  <返回数据管理首页相关信息>
-     * @param [currentPageNum, url]
+     * @param currentPageNum, url]
      * @return com.jiaoke.common.bean.PageBean<com.jiaoke.quality.bean.QualityDataManagerDay>
      * @auther Melone
      * @date 2018/10/26 16:03
@@ -66,16 +66,18 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
     }
 
     /**
-     *
+     *当前模块有错误（总量计算未累减）
      * 功能描述: <br>
      *  <查询所选日期各模板生产情况>
-     * @param [producedDate, crewNum]
+     * @param producedDate, crewNum]
      * @return java.util.Map<java.lang.String,java.lang.Object>
      * @auther Melone
      * @date 2018/10/26 16:03
      */
     @Override
     public Map<String, Object> selectProducttionByDate(String producedDate, String crewNum, HttpServletRequest request) {
+
+        long startTime = System.currentTimeMillis();
 
         if (Strings.isBlank(producedDate) || Strings.isBlank(crewNum) ) {return null;}
 
@@ -84,14 +86,19 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
 
         //待返回集合
         Map<String,Object> map = new HashMap<>();
+
+        long DBstartTime = System.currentTimeMillis();
         //当天使用的模板集合
-        List<String> ratioNumList  = qualityDataManagerDao.selectRatioNumListByDate(date,crew);
+        List<Map<String,Object>> ratioNumList  = qualityDataManagerDao.selectRatioNumListByDate(date,crew);
         //获取当天使用模板的模板数据
         List<QualityRatioTemplate> rationMessageList =  qualityDataManagerDao.selectRatioMessageById(crewNum,ratioNumList);
         //当天每种模板产品各材料总和
         List<Map<String,String>> list =  qualityDataManagerDao.selectProducedSVG(date,crew);
+        long SEstartTime = System.currentTimeMillis();
         //获取当天所有产品
         List<Map<String,String>> producedList = qualityDataManagerDao.selectProduceByDate(date,crew);
+        long SEendTime = System.currentTimeMillis();
+        System.out.println("程序运行时间：" + (SEendTime - SEstartTime) + "ms");
         //获取每种模板下所有产品平均的实际百分比
         List<Map<String,String>> SVGList = new ArrayList<Map<String, String>>();
 
@@ -99,8 +106,8 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
         List<Map<String,String>> userProList = qualityDataManagerDao.selectProduceMessageByDate(date,crew);
         //根据日期获取客户各客户生产总量
         List<Map<String,String>> userProTotal =qualityDataManagerDao.selectUserProTotalByDate(date,crew);
-
-
+        long DBendTime = System.currentTimeMillis();
+        System.out.println("数据库查询运行时间：" + (DBendTime - DBstartTime) + "ms");
         //计算平均值
         String[] array1 = {"rationNum","procount"};
         String[] array2 = {"total","warehouse_1","mixture","duster","temAsphalt","aggregate"};
@@ -110,7 +117,6 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
             SVGList.add(new HashMap<>());
             String total = String.valueOf(list.get(i).get("total"));
             String count = String.valueOf(list.get(i).get("procount"));
-
             Iterator<Map.Entry<String, String>> entries = list.get(i).entrySet().iterator();
             while (entries.hasNext()){
                 Map.Entry entry = (Map.Entry) entries.next();
@@ -165,9 +171,33 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
                             break;
                     }
 
+
                 }
 
             }
+
+        }
+
+        //修改总量数据累减
+        for (int i = 0; i < list.size();i++){
+            Object arrg1 =  list.get(i).get("aggregate_1");
+            Object arrg2 =  list.get(i).get("aggregate_2");
+            Object arrg3 =  list.get(i).get("aggregate_3");
+            Object arrg4 =  list.get(i).get("aggregate_4");
+            Object arrg5 =  list.get(i).get("aggregate_5");
+            Object arrg6 =  list.get(i).get("aggregate_6");
+
+           double aggregate_1 =  Double.parseDouble(arrg1.toString()) - Double.parseDouble(arrg2.toString());
+            double aggregate_2 =  Double.parseDouble(arrg2.toString()) - Double.parseDouble(arrg3.toString());
+            double aggregate_3 =  Double.parseDouble(arrg3.toString()) - Double.parseDouble(arrg4.toString());
+            double aggregate_4 =  Double.parseDouble(arrg4.toString()) - Double.parseDouble(arrg5.toString());
+            double aggregate_5 =  Double.parseDouble(arrg5.toString()) - Double.parseDouble(arrg6.toString());
+
+            list.get(i).put("aggregate_1",String.valueOf(aggregate_1));
+            list.get(i).put("aggregate_2",String.valueOf(aggregate_2));
+            list.get(i).put("aggregate_3",String.valueOf(aggregate_3));
+            list.get(i).put("aggregate_4",String.valueOf(aggregate_4));
+            list.get(i).put("aggregate_5",String.valueOf(aggregate_5));
 
         }
 
@@ -189,6 +219,11 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
         //保存日期，点击更多时查询用
         request.setAttribute("date",producedDate);
         request.setAttribute("crewNum",crewNum);
+
+        long endTime = System.currentTimeMillis();
+
+        System.out.println("程序运行时间：" + (endTime - startTime) + "ms");
+
         return map;
     }
 

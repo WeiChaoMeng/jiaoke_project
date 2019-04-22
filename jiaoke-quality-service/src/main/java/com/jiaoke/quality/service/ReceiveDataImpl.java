@@ -66,8 +66,8 @@ public class ReceiveDataImpl implements ReceiveDataInf {
         //分解出机组号
         String crewNum = messageArray[messageArray.length - 1];
 
-        //临时逻辑把机组二改为1
-        crewNum = "1";
+//        //临时逻辑把机组二改为1
+//        crewNum = "1";
 
         //获取相关数据后放入map中
         map.put("produce_date",messageArray[0]);
@@ -145,9 +145,9 @@ public class ReceiveDataImpl implements ReceiveDataInf {
 
         //分解出机组号
         String crewNum = messageArray[messageArray.length - 1];
-
-        //临时逻辑
-        crewNum = "1";
+//
+//        //临时逻辑
+//        crewNum = "1";
 
         //分解出总重量
         String materialTotal = messageArray[17];
