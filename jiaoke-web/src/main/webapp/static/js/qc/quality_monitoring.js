@@ -59,7 +59,6 @@ function renderDataToPage(listStr) {
                 $("#crew1_data_aggregate").html(listStr[i].temperature_aggregate+ " <i>℃</i>");
 
             }else {
-                debugger
                 $("#crew2_basic_date").html(listStr[i].produce_date);
                 $("#crew2_basic_time").html(listStr[i].produce_time);
                 $("#crew2_basic_ratio").html(listStr[i].produce_proportioning_num);
