@@ -90,4 +90,11 @@ public interface UserInfoMapper {
      * @return 影响行数
      */
     int deleteByPrimaryKey(Integer id);
+
+    /**
+     * 查询所有id和name
+     *
+     * @return list
+     */
+    List<UserInfo> selectIdAndNicknameAndDepartment();
 }

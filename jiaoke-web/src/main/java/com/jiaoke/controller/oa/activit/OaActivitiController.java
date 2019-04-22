@@ -34,7 +34,7 @@ public class OaActivitiController {
         return "oa/activiti/act_asset_use";
     }
 
-     /**
+    /**
      * 跳转会议室申请单
      *
      * @return jsp
@@ -42,6 +42,16 @@ public class OaActivitiController {
     @RequestMapping("/toConferenceRoom")
     public String toConferenceRoom() {
         return "oa/activiti/act_conference_room";
+    }
+
+    /**
+     * 跳转用车申请单
+     *
+     * @return jsp
+     */
+    @RequestMapping("/toCarApply")
+    public String toCarApply() {
+        return "oa/activiti/act_car_apply";
     }
 
 

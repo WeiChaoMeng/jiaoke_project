@@ -46,7 +46,7 @@
                 <div class="separation_line"></div>
 
                 <div class="head_left_button">
-                    <button type="button" class="cursor_hand" onclick="binding()">&#xeb14; 绑定角色</button>
+                    <button type="button" class="cursor_hand" onclick="binding()">&#xeb14; 绑定权限</button>
                 </div>
 
             </td>

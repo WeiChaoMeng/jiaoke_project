@@ -98,4 +98,11 @@ public interface UserInfoService {
     int deleteByPrimaryKey(Integer id);
 
     Map<String, Object> bindingInfo(Integer id);
+
+    /**
+     * 查询所有id和name
+     *
+     * @return list
+     */
+    List<UserInfo> selectIdAndNicknameAndDepartment();
 }

@@ -24,4 +24,9 @@ public class DepartmentServiceImpl implements DepartmentService {
     public List<Department> selectAll() {
         return departmentMapper.selectAll();
     }
+
+    @Override
+    public List<Department> selectKeyAndName() {
+        return departmentMapper.selectKeyAndName();
+    }
 }

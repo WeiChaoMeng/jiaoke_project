@@ -103,7 +103,19 @@ table {
     vertical-align: middle;
     text-align: center;
     float: left;
-    padding-top: 2px;
+}
+
+.head_left_button button {
+    border: 0;
+    height: 100%;
+    background: none;
+    padding: 0;
+    margin: 0;
+    outline: none;
+}
+
+.head_left_button button:hover{
+    color: #2196F3;
 }
 
 .head_left_button_width {
@@ -199,6 +211,10 @@ table {
     padding: 0 5px;
     margin: 4px 10px 2px 0;
     border-radius: 5px;
+    height: 21px;
+    border: solid 1px #c6c6c6;
+    color: #585858;
+    text-align: left;
 }
 
 /*手型光标*/
@@ -423,7 +439,7 @@ table {
     background: #f7f6f6;
 }
 
-.top_toolbar_inside a {
+.top_toolbar_inside div {
     display: inline-block;
     padding: 0 10px;
     color: #000000;
@@ -431,6 +447,10 @@ table {
     line-height: 28px;
     border: 1px solid #f7f6f6;
     cursor: pointer;
+}
+
+.top_toolbar_inside div span:hover {
+    color: #2196F3;
 }
 
 .top_toolbar_em {
@@ -444,7 +464,7 @@ table {
 }
 
 .form_area {
-    padding-top: 10px;
+    padding: 8px 0;
     margin-bottom: 10px;
     background: #f7f6f6;
     border: solid 1px #d4d4d4;
@@ -452,7 +472,7 @@ table {
 }
 
 .form_area table tbody tr {
-    height: 30px;
+    height: 33px;
     background: #f7f6f6;
 }
 
@@ -476,18 +496,18 @@ table {
 
 .common_input_frame input {
     width: 100%;
-    height: 20px;
+    height: 25px;
     outline: none;
 }
 
 .common_select_frame {
     border: solid 1px #aba9a9;
-    height: 20px;
+    height: 25px;
 }
 
 .common_select_frame select {
     height: 100%;
-    width: 100%;
+    width: 99.9%;
 }
 
 .common_select_frame input {
@@ -610,11 +630,17 @@ table {
 }
 
 /*form*/
-.forminput, .search {
-    height: 21px;
+.forminput {
+    height: 30px;
     border: solid 1px #c6c6c6;
     color: #585858;
     text-align: left;
+    width: 90%;
+    text-indent: 5px;
+}
+
+.input-outline{
+    outline: none;
 }
 
 .nforminput {
@@ -706,29 +732,28 @@ table {
     white-space: nowrap;
 }
 
-.inputstyle {
+/*.inputstyle {
     width: 265px;
     color: #000;
-}
+}*/
 
 .inputadress {
-    width: 95.2%;
+    width: 97.5%;
 }
 
-.swidth {
+/*.swidth {
     width: 265px;
     margin: 0;
-}
+}*/
 
 /*select*/
 .select {
     position: relative;
-    min-width: 134px;
-    height: 26px;
+    height: 30px;
     border: 1px solid #c6c6c6;
     cursor: pointer;
-    text-indent: 0;
-    *background: url(../../images/xl.png) no-repeat 94% 50%;
+    width: 90%;
+    text-indent: 5px;
 }
 
 .select:after {
@@ -1223,6 +1248,7 @@ table {
     padding: 15px;
     margin: 5px 10px;
     background-color: #00a6f570;
+    cursor: pointer;
 }
 
 .permissions_color {
@@ -1231,7 +1257,7 @@ table {
 
 .textarea_style {
     resize: none;
-    width: 87%;
+    width: 93.5%;
     margin: 10px 0;
     border: 1px #bdbdbd solid;
     padding: 5px;
@@ -1242,7 +1268,7 @@ table {
 
 .content_textarea_style {
     resize: none;
-    width: 95%;
+    width: 97.5%;
     margin: 10px 0;
     border: 1px #bdbdbd solid;
     padding: 5px;

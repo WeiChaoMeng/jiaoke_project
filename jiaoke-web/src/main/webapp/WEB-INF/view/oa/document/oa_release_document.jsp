@@ -20,43 +20,41 @@
 
 <body style="padding: 20px">
 
-
 <div class="top_toolbar">
     <div class="top_toolbar_inside">
-        <a onmousemove="select_color(this)" onmouseout="unselected_color(this)">
-            <i></i>
+        <div>
             <span id="preservationPending">保存待发</span>
-        </a>
+        </div>
+
         <em class="top_toolbar_em"></em>
 
-        <a onmousemove="select_color(this)" onmouseout="unselected_color(this)">
-            <i></i>
+        <div>
             <span>调用模板</span>
-        </a>
+        </div>
+
         <em class="top_toolbar_em"></em>
 
-        <a onmousemove="select_color(this)" onmouseout="unselected_color(this)">
-            <i></i>
+        <div>
             <span>插入</span>
-        </a>
+        </div>
+
         <em class="top_toolbar_em"></em>
 
-        <a onmousemove="select_color(this)" onmouseout="unselected_color(this)">
-            <i></i>
+        <div>
             <span>正文类型</span>
-        </a>
+        </div>
+
         <em class="top_toolbar_em"></em>
 
-        <a onmousemove="select_color(this)" onmouseout="unselected_color(this)">
-            <i></i>
+        <div>
             <span>存为模板</span>
-        </a>
+        </div>
+
         <em class="top_toolbar_em"></em>
 
-        <a onmousemove="select_color(this)" onmouseout="unselected_color(this)">
-            <i></i>
+        <div>
             <span>打印</span>
-        </a>
+        </div>
     </div>
 </div>
 <!-- 公文form -->
@@ -74,7 +72,8 @@
                 <td>
                     <div class="common_input_frame">
                         <input type="hidden" name="formState" id="formState" value="">
-                        <input type="text" name="formTitle" id="formTitle" value="" placeholder="<点击此处填写标题>" required>
+                        <input type="text" name="formTitle" id="formTitle" value="" placeholder="<点击此处填写标题>"
+                               autocomplete="off" required>
                     </div>
                 </td>
 
@@ -114,7 +113,8 @@
 
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" value="" name="flow" placeholder="公文、[张三、李四、王五]、总经理" readonly="readonly">
+                        <input type="text" value="" name="flow" placeholder="发起者、[王玉秋,李宝琦,杨德秀]（会签）、总经理（审批）"
+                               readonly="readonly">
                     </div>
                 </td>
 
@@ -176,7 +176,8 @@
             <td class="tlabel">标题：</td>
 
             <td colspan="5">
-                <input class="forminput inputstyle inputadress" type="text" name="textTitle" value="" required>
+                <input class="forminput inputstyle inputadress" type="text" name="textTitle" value="" autocomplete="off"
+                       required>
             </td>
         </tr>
 
@@ -184,7 +185,7 @@
             <td class="tlabel">文号：</td>
 
             <td>
-                <input class="forminput inputstyle" type="text" name="textNumber" value="" required>
+                <input class="forminput inputstyle" type="text" name="textNumber" value="" autocomplete="off" required>
             </td>
 
             <td class="tlabel">密级：</td>
@@ -291,13 +292,6 @@
         </tr>
 
         <tr>
-            <td class="tlabel">主送：</td>
-            <td colspan="5">
-                <input type="text" class="forminput inputstyle inputadress" name="mainGive" value="">
-            </td>
-        </tr>
-
-        <tr>
             <td class="tlabel">抄送：</td>
             <td colspan="5">
                 <input type="text" class="forminput inputstyle inputadress" name="copyGive" id="copyGive" value=""
@@ -315,18 +309,19 @@
         <tr>
             <td class="tlabel">印制：</td>
             <td>
-                <input type="text" class="forminput inputstyle" value="${departmentName}" name="print" id="print" readonly>
+                <input type="text" class="forminput inputstyle input-outline" value="${departmentName}" name="print" id="print"
+                       readonly>
             </td>
 
             <td class="tlabel">校对：</td>
             <td>
-                <input type="text" class="forminput inputstyle" value="${nickName}" name="proofreading"
+                <input type="text" class="forminput inputstyle input-outline" value="${nickName}" name="proofreading"
                        id="proofreading" readonly>
             </td>
 
             <td class="tlabel">份数：</td>
             <td>
-                <input readonly="readonly" value="" name="attachmentNumber">
+                <input readonly="readonly" value="" name="attachmentNumber" class="forminput inputstyle input-outline">
             </td>
         </tr>
 
@@ -347,18 +342,21 @@
 <script type="text/javascript" src="../../../../static/js/skin.js"></script>
 <script type="text/javascript" src="../../../../static/js/oa/oa_common.js"></script>
 <script type="text/javascript" src="../../../../static/js/date_pickers/jquery.date_input.pack.js"></script>
+<script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
 
     //日期选择器
     $(function () {
         $('.date_picker').date_input();
+        console.log(JSON.parse('${userInfoList}'))
+        console.log(JSON.parse('${departmentList}'))
     });
 
     //保存待发
     $("#preservationPending").on("click", function () {
         var formTitle = $("#formTitle").val();
         if ($.trim(formTitle) == '') {
-            alert("标题不能为空！")
+            layer.msg("标题不能为空！")
         } else {
             $("#formState").val("1");
             $.ajax({
@@ -373,7 +371,7 @@
                     if (result == "success") {
                         window.location.href = "primedDocument.do";
                     } else {
-                        alert("保存失败")
+                        layer.msg("保存失败")
                     }
                 }
             })
@@ -382,6 +380,7 @@
 
     //跟踪选择切换
     var flag = false;
+
     function choice() {
         $("#radioall").attr("checked", flag);
         flag = !flag;
@@ -396,19 +395,20 @@
     function selectReviewer() {
         var departmentKey = $('#draftingDepartment').val();
         if (departmentKey === "") {
-            alert("请先选择部门！")
+            layer.msg("请先选择部门！")
         } else {
+            var draftedPerson = $('#draftedPerson').val();
             $.ajax({
                 cache: true,
                 type: "POST",
                 url: '${path}/document/departmentMember',
                 data: {"departmentKey": departmentKey},
                 error: function (request) {
-                    alert("Connection error");
+                    layer.msg("连接错误！");
                 },
                 success: function (result) {
-                    console.log(JSON.parse(result));
-                    parent.openBack(JSON.parse(result));
+                    // parent.openBack(JSON.parse(result));
+                    top.window.selectReviewers(JSON.parse(result),draftedPerson);
                 }
             });
         }

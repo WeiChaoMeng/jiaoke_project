@@ -9,13 +9,13 @@
         <result column="phone" jdbcType="VARCHAR" property="phone"/>
         <result column="sex" jdbcType="INTEGER" property="sex"/>
         <result column="email" jdbcType="VARCHAR" property="email"/>
-        <result column="birthday" jdbcType="DATE" property="birthday"/>
+        <result column="position" jdbcType="VARCHAR" property="position"/>
         <result column="register_time" jdbcType="TIMESTAMP" property="registerTime"/>
         <result column="department" jdbcType="VARCHAR" property="department"/>
         <result column="dept_principal" jdbcType="VARCHAR" property="deptPrincipal"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, username, `password`, nickname, phone, sex, email, birthday, register_time, department, dept_principal
+    id, username, `password`, nickname, phone, sex, email, `position`, register_time, department, dept_principal
   </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -54,8 +54,8 @@
             <if test="email != null">
                 email,
             </if>
-            <if test="birthday != null">
-                birthday,
+            <if test="position != null">
+                position,
             </if>
             <if test="registerTime != null">
                 register_time,
@@ -89,8 +89,8 @@
             <if test="email != null">
                 #{email,jdbcType=VARCHAR},
             </if>
-            <if test="birthday != null">
-                #{birthday,jdbcType=DATE},
+            <if test="position != null">
+                #{position,jdbcType=VARCHAR},
             </if>
             <if test="registerTime != null">
                 #{registerTime,jdbcType=TIMESTAMP},
@@ -112,7 +112,7 @@
       phone = #{phone,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=INTEGER},
       email = #{email,jdbcType=VARCHAR},
-      birthday = #{birthday,jdbcType=DATE},
+      `position` = #{position,jdbcType=VARCHAR},
       register_time = #{registerTime,jdbcType=TIMESTAMP},
       department = #{department,jdbcType=VARCHAR},
       dept_principal = #{deptPrincipal,jdbcType=VARCHAR}
@@ -128,7 +128,7 @@
             user_info.phone,
             user_info.sex,
             user_info.email,
-            user_info.birthday,
+            user_info.position,
             user_info.register_time,
             department.department_name AS department ,
             user_info.dept_principal
@@ -147,7 +147,7 @@
         where department = #{department,jdbcType=VARCHAR}
     </select>
 
-    <select id="getIdBynickname" parameterType="java.lang.String" resultType="java.lang.Integer">
+    <select id="getIdByNickName" parameterType="java.lang.String" resultType="java.lang.Integer">
         select
           dept_principal
         from user_info
@@ -163,7 +163,7 @@
             user_info.phone,
             user_info.sex,
             user_info.email,
-            user_info.birthday,
+            user_info.position,
             user_info.register_time,
             department.department_name AS department ,
             user_info.dept_principal
@@ -183,7 +183,7 @@
             user_info.phone,
             user_info.sex,
             user_info.email,
-            user_info.birthday,
+            user_info.position,
             user_info.register_time,
             department.department_name AS department ,
             user_info.dept_principal
@@ -225,8 +225,8 @@
             <if test="email != null">
                 email = #{email,jdbcType=VARCHAR},
             </if>
-            <if test="birthday != null">
-                birthday = #{birthday,jdbcType=DATE},
+            <if test="position != null">
+                position = #{position,jdbcType=VARCHAR},
             </if>
             <if test="registerTime != null">
                 register_time = #{registerTime,jdbcType=TIMESTAMP},
@@ -240,4 +240,8 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
+
+    <select id="selectIdAndNicknameAndDepartment" resultType="com.jiaoke.oa.bean.UserInfo">
+        select id,nickname,department from user_info
+    </select>
 </mapper>

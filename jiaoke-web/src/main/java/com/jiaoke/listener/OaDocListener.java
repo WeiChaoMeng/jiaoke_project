@@ -52,8 +52,8 @@ public class OaDocListener implements ExecutionListener, ServletContextListener 
                     .processInstanceId(delegateExecution.getProcessInstanceId()).singleResult();
             String businessKey = historicProcessInstance.getBusinessKey();
             OaDocument document = oaDocumentService.getAllById(Integer.valueOf(businessKey));
-            String documentMainGive = document.getMainGive();
-            String[] split1 = documentMainGive.split(",");
+//            String documentMainGive = document.getMainGive();
+//            String[] split1 = documentMainGive.split(",");
 
 
             List<HistoricProcessInstance> list = ProcessEngines
@@ -66,22 +66,22 @@ public class OaDocListener implements ExecutionListener, ServletContextListener 
                 System.out.println("业务id:=============" + processInstance.getBusinessKey() + "==========");
                 //根据业务id查询公文详情
                 OaDocument oaDocument = oaDocumentService.getAllById(Integer.valueOf(processInstance.getBusinessKey()));
-                System.out.println("标题：" + oaDocument.getFormTitle() + "-----主送：" + oaDocument.getMainGive());
-                String mainGive = oaDocument.getMainGive();
-                if (mainGive.contains(",")) {
-                    String[] split = mainGive.split(",");
-                    for (String s : split) {
-                        arrayList.add(s);
-                    }
-                } else {
-                    arrayList.add(mainGive);
-                }
+//                System.out.println("标题：" + oaDocument.getFormTitle() + "-----主送：" + oaDocument.getMainGive());
+//                String mainGive = oaDocument.getMainGive();
+//                if (mainGive.contains(",")) {
+//                    String[] split = mainGive.split(",");
+//                    for (String s : split) {
+//                        arrayList.add(s);
             }
-
-            for (Object object : arrayList) {
-                System.out.println("看看" + object);
-            }
+        } else {
+//                    arrayList.add(mainGive);
         }
+    }
+
+//            for (Object object : arrayList) {
+//                System.out.println("看看" + object);
+//            }
+}
         /*
             1.监听流程结束
             2.获取当前流程实例id
@@ -90,6 +90,6 @@ public class OaDocListener implements ExecutionListener, ServletContextListener 
             5.根据主送列表查询相关人员
             6.给人员
         * */
-    }
-
-}
+//    }
+//
+//            }

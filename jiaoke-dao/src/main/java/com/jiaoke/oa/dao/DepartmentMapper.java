@@ -4,6 +4,8 @@ import com.jiaoke.oa.bean.Department;
 import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
 
+import java.util.List;
+
 /**
  * 部门
  *
@@ -14,4 +16,10 @@ import tk.mybatis.mapper.common.Mapper;
 @Repository
 public interface DepartmentMapper extends Mapper<Department> {
 
+    /**
+     * 部门key和name
+     *
+     * @return list
+     */
+    List<Department> selectKeyAndName();
 }

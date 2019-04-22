@@ -19,4 +19,11 @@ public interface DepartmentService {
      * @return list
      */
     List<Department> selectAll();
+
+    /**
+     * 部门key和name
+     *
+     * @return list
+     */
+    List<Department> selectKeyAndName();
 }

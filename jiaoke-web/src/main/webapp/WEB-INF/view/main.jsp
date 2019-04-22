@@ -18,7 +18,8 @@
     <title>路驰办公系统</title>
     <link href="/static/css/default.css" rel="stylesheet" type="text/css">
     <link href="/static/css/style/green.css" rel="stylesheet" type="text/css">
-    <link href="/static/css/oa/user_style.css" rel="stylesheet" type="text/css">
+    <link href="../../static/css/oa/backstage_style.css" rel="stylesheet" type="text/css">
+    <link href="../../static/css/oa/document.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="/static/images/favicon.ico" type="image/ico"/>
     <style>
         html {
@@ -168,11 +169,20 @@
                     </select>
                 </td>
             </tr>
+
+            <tr>
+                <td class="form_title_check"><i class="required_mark">*</i>岗&nbsp;&nbsp;&nbsp;位:</td>
+                <td class="form_content_check">
+                    <input class="font_input" id="position" value="" name="position" type="text"
+                           placeholder="请输入岗位" maxlength="16" autocomplete="off" onblur="checkPosition(this)">
+                    <span class="prompt-span"></span>
+                </td>
+            </tr>
             </tbody>
         </table>
     </form>
 
-    <div style="padding-top: 30px">
+    <div>
         <input type="button" value="确认" onclick="confirm()" class="body-bottom-button">
         <input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">
     </div>
@@ -239,13 +249,86 @@
 <%--模态窗-角色绑定权限--%>
 <div id="bindingPermission" class="tab-right-div" style="display: none"></div>
 
+<%-- 模态窗-选择拟稿人 --%>
+<div id="singleSelection" class="single-option-window" style="display: none">
 
+    <div class="option-window-body-head">
+
+        <ul id="singleSelectionContent">
+
+        </ul>
+    </div>
+
+    <div class="option-window-body-bottom">
+        <input type="button" value="确认" onclick="confirmReviewers()" class="body-bottom-button">
+        <input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">
+    </div>
+</div>
 </body>
 <script type="text/javascript" src="/static/js/jquery.js"></script>
 <script type="text/javascript" src="/static/js/common.js"></script>
 <script type="text/javascript" src="/static/js/skin.js"></script>
 <script src="../../static/js/oa/layer/layer.js"></script>
 <script>
+    function selectReviewers(userInfoList, draftedPerson) {
+        window.lar = layer.open({
+            title: '选择拟稿人',
+            type: 1,
+            area: ['25%', '55%'],
+            shadeClose: true, //点击遮罩关闭
+            content: $("#singleSelection"),
+            offset: "20%"
+        });
+
+        var content = '';
+        if (userInfoList.length <= 0) {
+            //当前部门没有人员
+            content += '<img style="padding: 28% 32%;" src="../../static/images/icon/empty.png">';
+        } else {
+            for (let i = 0; i < userInfoList.length; i++) {
+                if (draftedPerson === userInfoList[i].nickname) {
+                    content +=
+                        '<li class="single-election-box-li">' +
+                        '<img src="../../static/images/icon/personnel.png">' +
+                        '<span id="' + userInfoList[i].id + '">' + userInfoList[i].nickname + '</span>' +
+                        '<div class="selection"></div>' +
+                        '</li>';
+                }
+                content +=
+                    '<li class="single-election-box-li">' +
+                    '<img src="../../static/images/icon/personnel.png">' +
+                    '<span id="' + userInfoList[i].id + '">' + userInfoList[i].nickname + '</span>' +
+                    '<div></div>' +
+                    '</li>';
+            }
+        }
+        //添加到选择列表
+        $("#singleSelectionContent").html(content);
+    }
+
+    //单选弹窗 - li选择器
+    $("#singleSelectionContent").on('click', 'li', function () {
+        if ($(this).find("div").hasClass("selection")) {
+            $(this).find("div").removeClass("selection");
+        } else {
+            var trs = $(this).parent().find("li").find("div");
+            trs.removeClass("selection");
+            $(this).find("div").addClass("selection");
+        }
+    });
+
+    //单选弹窗 - 确认
+    function confirmReviewers() {
+        var lis = $("#singleSelectionContent").find("li").find("div");
+        //是否包含selection
+        if (lis.hasClass("selection")) {
+            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.insertReviewer($(".selection").prev().text());
+            cancel();
+        } else {
+            layer.msg('请选择拟稿人！')
+        }
+    }
+
     //菜单
     $(function () {
         $('.manu').click(function () {
@@ -631,25 +714,30 @@
                             if (!nick) {
                                 return;
                             } else {
-                                $.ajax({
-                                    type: "post",
-                                    url: '/backstageManagement/add',
-                                    data: $('#userInfo').serialize(),
-                                    success: function (data) {
-                                        if (data === 'success') {
-                                            //清除from
-                                            document.getElementById("userInfo").reset();
-                                            layer.close(window.lar);
-                                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.reloadPage($('#currentPage').val());
-                                            layer.msg("添加用户成功!");
-                                        } else {
-                                            layer.msg("添加用户失败!");
+                                if ($('#position').val() === '') {
+                                    $('#position').next().html("请输入岗位");
+                                    $('#position').next().css("color", "#ff0202");
+                                } else {
+                                    $.ajax({
+                                        type: "post",
+                                        url: '/backstageManagement/add',
+                                        data: $('#userInfo').serialize(),
+                                        success: function (data) {
+                                            if (data === 'success') {
+                                                //清除from
+                                                document.getElementById("userInfo").reset();
+                                                layer.close(window.lar);
+                                                $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.reloadPage($('#currentPage').val());
+                                                layer.msg("添加用户成功!");
+                                            } else {
+                                                layer.msg("添加用户失败!");
+                                            }
+                                        },
+                                        error: function (result) {
+                                            layer.msg("出错！");
                                         }
-                                    },
-                                    error: function (result) {
-                                        layer.msg("出错！");
-                                    }
-                                })
+                                    })
+                                }
                             }
                         }
                     }
@@ -711,6 +799,13 @@
         resultsInfo += '</select>';
         resultsInfo += '</td>';
         resultsInfo += '</tr>';
+        resultsInfo += '<tr>';
+        resultsInfo += '<td class="form_title_check">岗位:</td>';
+        resultsInfo += '<td class="form_content_check">';
+        resultsInfo += '<input class="font_input" name="position" id="positionEdit" value="' + userInfo.position + '" type="text" autocomplete="off" onblur="checkPosition(this)">';
+        resultsInfo += '<span class="prompt-span"></span>';
+        resultsInfo += '</td>';
+        resultsInfo += '</tr>';
         resultsInfo += '</tbody>';
         resultsInfo += '</table>';
 
@@ -736,23 +831,28 @@
                     if (!nick) {
                         return;
                     } else {
-                        $.ajax({
-                            type: "post",
-                            url: '/backstageManagement/edit',
-                            data: $('#userInformation').serialize(),
-                            success: function (data) {
-                                if (data === 'success') {
-                                    layer.close(window.lar);
-                                    $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.reloadPage($('#currentPage').val());
-                                    layer.msg('修改用户成功！');
-                                } else {
-                                    layer.msg('修改用户失败！');
+                        if ($('#position').val() === '') {
+                            $('#position').next().html("请输入岗位");
+                            $('#position').next().css("color", "#ff0202");
+                        } else {
+                            $.ajax({
+                                type: "post",
+                                url: '/backstageManagement/edit',
+                                data: $('#userInformation').serialize(),
+                                success: function (data) {
+                                    if (data === 'success') {
+                                        layer.close(window.lar);
+                                        $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.reloadPage($('#currentPage').val());
+                                        layer.msg('修改用户成功！');
+                                    } else {
+                                        layer.msg('修改用户失败！');
+                                    }
+                                },
+                                error: function (result) {
+                                    layer.msg("出错！");
                                 }
-                            },
-                            error: function (result) {
-                                layer.msg("出错！");
-                            }
-                        })
+                            })
+                        }
                     }
                 }
             }
@@ -983,6 +1083,19 @@
             return false;
         } else if (!nick.match(reg)) {
             $(own).next().html("只支持中文、英文、数字的组合");
+            $(own).next().css("color", "#ff0202");
+            return false;
+        } else {
+            $(own).next().html("");
+            return true;
+        }
+    }
+
+    //校验岗位
+    function checkPosition(own) {
+        var position = $(own).val();
+        if (position === "") {
+            $(own).next().html("请输入岗位");
             $(own).next().css("color", "#ff0202");
             return false;
         } else {

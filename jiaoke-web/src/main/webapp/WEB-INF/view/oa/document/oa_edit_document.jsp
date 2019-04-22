@@ -20,57 +20,40 @@
     <link href="../../../../static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
     <link href="../../../../static/js/datepicker/css/bootstrap-datepicker.css" rel="stylesheet">
 </head>
-<style>
-    .swidth {
-        width: 265px;
-        margin: 0;
-    }
-
-    .forminput, .search {
-        text-align: left;
-    }
-
-</style>
 
 <body style="padding: 20px">
 
 
 <div class="top_toolbar">
     <div class="top_toolbar_inside">
-        <a onmousemove="select_color(this)" onmouseout="unselected_color(this)">
-            <i></i>
+        <div>
             <span id="edit">保存待发</span>
-        </a>
+        </div>
         <em class="top_toolbar_em"></em>
 
-        <a onmousemove="select_color(this)" onmouseout="unselected_color(this)">
-            <i></i>
+        <div>
             <span>调用模板</span>
-        </a>
+        </div>
         <em class="top_toolbar_em"></em>
 
-        <a onmousemove="select_color(this)" onmouseout="unselected_color(this)">
-            <i></i>
+        <div>
             <span>插入</span>
-        </a>
+        </div>
         <em class="top_toolbar_em"></em>
 
-        <a onmousemove="select_color(this)" onmouseout="unselected_color(this)">
-            <i></i>
+        <div>
             <span>正文类型</span>
-        </a>
+        </div>
         <em class="top_toolbar_em"></em>
 
-        <a onmousemove="select_color(this)" onmouseout="unselected_color(this)">
-            <i></i>
+        <div>
             <span>存为模板</span>
-        </a>
+        </div>
         <em class="top_toolbar_em"></em>
 
-        <a onmousemove="select_color(this)" onmouseout="unselected_color(this)">
-            <i></i>
+        <div>
             <span>打印</span>
-        </a>
+        </div>
     </div>
 </div>
 <!--  -->

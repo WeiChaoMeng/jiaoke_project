@@ -166,11 +166,6 @@
     </tr>
 
     <tr>
-        <td class="tlabel">主送：</td>
-        <td colspan="5">${oaDocument.mainGive}</td>
-    </tr>
-
-    <tr>
         <td class="tlabel">抄送：</td>
         <td colspan="5">${oaDocument.copyGive}</td>
     </tr>
@@ -199,8 +194,8 @@
     <input type="button" value="同意" onclick="consent()"
            style="padding: 7px 20px; background: #92ebff;border: 1px #a5a5a5 solid;">
 
-    <input type="button" value="不同意" onclick="noConsent()"
-           style="padding: 7px 20px; background: #92ebff;border: 1px #a5a5a5 solid;">
+    <%--<input type="button" value="不同意" onclick="noConsent()"
+           style="padding: 7px 20px; background: #92ebff;border: 1px #a5a5a5 solid;">--%>
 </div>
 
 </body>
@@ -215,7 +210,7 @@
     }
 
     var taskId = $("#taskId").val();
-    var variableName = "flag";
+    // var variableName = "flag";
     var variableValue;
 
     //同意
@@ -223,7 +218,7 @@
         var id = $("#id").val();
         var draftedPerson = $("#draftedPerson").val();
         variableValue = "1";
-        window.location.href = "${path}/document/documentApproval?taskId=" + taskId + "&variableName=" + variableName + "&variableValue=" + variableValue + "&id=" + id + "&draftedPerson=" + draftedPerson;
+        window.location.href = "${path}/document/documentApproval?taskId=" + taskId + "&variableValue=" + variableValue + "&id=" + id + "&draftedPerson=" + draftedPerson;
     }
 
     //不同意
