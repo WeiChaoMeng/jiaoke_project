@@ -10,7 +10,7 @@
 body {
     font-family: '微软雅黑';
     margin: 0 auto;
-    width: 80%;
+    width: 90%;
     height: 100%;
 }
 
@@ -50,7 +50,7 @@ dl, dt, dd, span {
     width: 100%;
 }
 
-.top_toolbar_inside{
+.top_toolbar_inside {
     border: solid 1px #d4d4d4;
 }
 
@@ -64,6 +64,10 @@ dl, dt, dd, span {
     cursor: pointer;
 }
 
+.top_toolbar_inside a span:hover {
+    background: #2196F3;
+}
+
 .top_toolbar_em {
     background: #010101;
     width: 1px;
@@ -75,14 +79,15 @@ dl, dt, dd, span {
 }
 
 .form_area {
-    padding-top: 10px;
+    padding: 8px;
+    margin-bottom: 10px;
     background: #f7f6f6;
     border: solid 1px #d4d4d4;
     border-top: none;
 }
 
 .form_area table tbody tr {
-    height: 30px;
+    height: 33px;
     background: #f7f6f6;
 }
 
@@ -100,7 +105,7 @@ dl, dt, dd, span {
 
 .common_input_frame input {
     width: 100%;
-    height: 20px;
+    height: 25px;
     outline: none;
 }
 
@@ -111,12 +116,12 @@ dl, dt, dd, span {
 
 .common_select_frame {
     border: solid 1px #aba9a9;
-    height: 20px;
+    height: 25px;
 }
 
 .common_select_frame select {
     height: 100%;
-    width: 100%;
+    width: 99.9%;
 }
 
 .common_select_frame input {
@@ -142,8 +147,8 @@ dl, dt, dd, span {
     background: #f6f6f6;
     text-align: right;
     white-space: nowrap;
-    width: 11%;
-    padding-right: 5px;
+    width: 10%;
+    padding-right: 10px;
 }
 
 .forminput {
@@ -151,13 +156,13 @@ dl, dt, dd, span {
     color: #585858;
     outline: none;
     width: 90%;
-    height: 25px;
+    height: 28px;
     margin: 0 5%;
     text-indent: 10px;
 }
 
 .select {
-    height: 27px;
+    height: 30px;
     border: 1px solid #c6c6c6;
     cursor: pointer;
     color: #585858;
@@ -217,4 +222,30 @@ dl, dt, dd, span {
     font-style: normal;
     color: #8d8d8d;
     font-size: 12px;
+}
+
+.reason-td {
+    height: 58px;
+    padding: 10px 16px;
+}
+
+.reason-td > textarea {
+    resize: none;
+    width: 99%;
+    margin: 0;
+    font-size: 14px;
+    height: 100%;
+    outline: none;
+    display: block;
+    border: 1px #d7d7d7 solid;
+    padding: 5px;
+}
+
+.tab_send_but{
+    width: 4%
+}
+
+.tab_send_but>input{
+    padding: 15px;
+    background-color: #00a6f570;
 }

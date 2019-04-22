@@ -38,9 +38,9 @@
                     <div id="selectDiv" class="selection-content-inside">
 
                         <ul id="selectContent">
-                            <li onclick="add(this)" class="selection-box-li">
-                                <img class="department" src="../../../static/images/icon/department.png">
-                                <span id="123">综合办公室</span>
+                            <li class="selection-box-li">
+                                <img src="../../../static/images/icon/department.png">
+                                <span id="123" class="department cursor_hand">综合办公室</span>
                                 <div></div>
 
                                 <ul class="submenu-ul">
@@ -60,7 +60,7 @@
 
                             </li>
 
-                            <li onclick="add(this)" class="selection-box-li">
+                            <li class="selection-box-li">
                                 <img class="department" src="../../../static/images/icon/department.png">
                                 <span id="124">经营开发部</span>
                                 <div></div>
@@ -82,7 +82,7 @@
 
                             </li>
 
-                            <li onclick="add(this)" class="selection-box-li">
+                            <li class="selection-box-li">
                                 <img class="department" src="../../../static/images/icon/department.png">
                                 <span id="125">生产管理部</span>
                                 <div></div>
@@ -361,8 +361,8 @@
             </span>
         </div>
 
-        <iframe src="oaIndex.do" id="oa-iframe" name="ifr" width="99%" height="92%" frameborder="0"
-                scrolling="auto" style="padding-left:10px;"></iframe>
+        <iframe src="oaIndex.do" id="oa-iframe" name="ifr" width="100%" height="92%" frameborder="0"
+                scrolling="auto"></iframe>
     </div>
 </div>
 </body>
@@ -499,7 +499,7 @@
                 content +=
                     '<li class="single-election-box-li">' +
                     '<img src="../../../static/images/icon/personnel.png">' +
-                    '<span id="' + userInfoList[i].id + '">' + userInfoList[i].nickName + '</span>' +
+                    '<span id="' + userInfoList[i].id + '">' + userInfoList[i].nickname + '</span>' +
                     '<div></div>' +
                     '</li>';
             }

@@ -2,10 +2,13 @@ package com.jiaoke.controller.oa;
 
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
+import com.jiaoke.oa.bean.Department;
 import com.jiaoke.oa.bean.OaDocument;
 import com.jiaoke.oa.bean.UserInfo;
+import com.jiaoke.oa.service.DepartmentService;
 import com.jiaoke.oa.service.OaDocumentService;
 import com.jiaoke.oa.service.UserInfoService;
+import org.activiti.bpmn.model.SequenceFlow;
 import org.activiti.engine.task.Task;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
@@ -40,6 +43,9 @@ public class OaDocumentController {
     @Resource
     private UserInfoService userInfoService;
 
+    @Resource
+    private DepartmentService departmentService;
+
     /**
      * 待办公文跳转
      *
@@ -73,8 +79,13 @@ public class OaDocumentController {
     public String releaseDocument(Model model) {
         //获取当前登录人的名称
         UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
+        //所有用户
+        List<UserInfo> userInfoList = userInfoService.selectIdAndNicknameAndDepartment();
+        List<Department> departmentList = departmentService.selectKeyAndName();
         model.addAttribute("nickName", userInfo.getNickname());
         model.addAttribute("departmentName", userInfo.getDepartment());
+        model.addAttribute("userInfoList", JsonHelper.toJSONString(userInfoList));
+        model.addAttribute("departmentList", JsonHelper.toJSONString(departmentList));
         return "oa/document/oa_release_document";
     }
 
@@ -93,18 +104,18 @@ public class OaDocumentController {
             //获取当前登录人的id
             UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
             Map<String, Object> map = new HashMap<>(16);
-            map.put("assignee", userInfo.getId());
+            map.put("user", userInfo.getId());
             //启动流程实例
-            String document = activitiUtil.startProceesInstance("document", random.toString(), map);
+            String document = activitiUtil.startProceesInstance("oa_doc", random.toString(), map);
             //获取任务id
             Task taskId = activitiUtil.getTaskIdByProcessInstanceId(document);
             //指定会签人员
             Map<String, Object> assigneeListMap = new HashMap<>(16);
             List<Object> assigneeList = new ArrayList<>();
-            assigneeList.add("1003");
-            assigneeList.add("1004");
-            assigneeList.add("1005");
-            assigneeListMap.put("assigneeList", assigneeList);
+            assigneeList.add("2");
+            assigneeList.add("3");
+            assigneeList.add("4");
+            assigneeListMap.put("userList", assigneeList);
             activitiUtil.designatedCountersignPersonnel(taskId.getId(), assigneeListMap);
 
             return "redirect:/document/issuedDocument.do";
@@ -258,15 +269,31 @@ public class OaDocumentController {
      * 公文审批结果
      *
      * @param taskId        任务id
-     * @param variableName  变量名
      * @param variableValue 变量值
      * @param draftedPerson 拟稿人
      * @return oa_pending_document
      */
     @RequestMapping(value = "/documentApproval")
-    public String documentApproval(String taskId, String variableName, String variableValue, int id, String draftedPerson) {
+    public String documentApproval(String taskId, String variableValue, int id, String draftedPerson) {
+        UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
+        if (userInfo.getId() == 1) {
+            //指定知会人员
+            Map<String, Object> usersListMap = new HashMap<>(16);
+            List<Object> usersList = new ArrayList<>();
+            usersList.add("5");
+            usersList.add("7");
+            usersListMap.put("usersList", usersList);
+            activitiUtil.completeTaskByTaskId(taskId, usersListMap);
+        } else if (userInfo.getId() == 2 || userInfo.getId() == 3 || userInfo.getId() == 4) {
+            //会签完毕，指定总经理
+            Map<String, Object> map = new HashMap<>(16);
+            map.put("president", 1);
+            activitiUtil.completeTaskByTaskId(taskId, map);
+        } else {
+            activitiUtil.finishNotifyTask(taskId);
+        }
+
         String value = "1";
-        activitiUtil.completeTaskByTaskId(taskId, variableName, variableValue);
         if (value.equals(variableValue)) {
             oaDocumentService.updateCountersignature(id, draftedPerson);
         }
@@ -276,13 +303,18 @@ public class OaDocumentController {
     /**
      * 获取部门成员
      *
-     * @param department 部门id
+     * @param departmentKey 部门id
      * @return 成员列表
      */
     @RequestMapping(value = "/departmentMember")
     @ResponseBody
-    public String departmentMember(String department) {
-        List<UserInfo> userInfoList = userInfoService.getUserByDepartmentKey(department);
+    public String departmentMember(String departmentKey) {
+        List<UserInfo> userInfoList = userInfoService.getUserByDepartmentKey(departmentKey);
         return JsonHelper.toJSONString(userInfoList);
+    }
+
+    @RequestMapping(value = "/testFlow")
+    public List<SequenceFlow> test(String abc) {
+        return activitiUtil.reject(abc);
     }
 }

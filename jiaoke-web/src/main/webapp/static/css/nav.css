@@ -383,14 +383,23 @@ a {
 .selection-content-inside {
     padding: 0 10px;
     height: 100%;
+    overflow: auto;
 }
 
 .selection-content-inside>ul {
     padding: 10px 0;
 }
 
-.selection-box-li span:hover {
+.selection-box-li ul span:hover {
     border-bottom: 1.5px solid #000;
+}
+
+.cursor_hand{
+    cursor: pointer;
+}
+
+.selection-box-li>span:hover {
+    color: #2196F3;
 }
 
 .selection-box-li {

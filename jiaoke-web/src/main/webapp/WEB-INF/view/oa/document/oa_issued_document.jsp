@@ -35,39 +35,33 @@
 </style>
 <body style="padding:15px 8px 0px 8px;">
 
-<div class="">
+<div>
     <input type="hidden" id="total" value="${total}">
     <div class="page_head">
-        <table width="100%" height="100%">
+        <table width="100%">
             <tbody>
             <tr>
                 <td>
-                    <div class="head_left_button" onmousemove="select_color(this)" onmouseout="unselected_color(this)">
-                        &#xe8e5; 转发
+                    <div class="head_left_button">
+                        <button type="button" class="cursor_hand">&#xe8e5; 转发</button>
                     </div>
 
-                    <div class="separation_line">
+                    <div class="separation_line"></div>
 
+                    <div class="head_left_button">
+                        <button type="button" class="cursor_hand">&#xe990; 归档</button>
                     </div>
 
-                    <div class="head_left_button" onmousemove="select_color(this)" onmouseout="unselected_color(this)">
-                        &#xe990; 归档
+                    <div class="separation_line"></div>
+
+                    <div class="head_left_button">
+                        <button type="button" class="cursor_hand">&#xeaa5; 删除</button>
                     </div>
 
-                    <div class="separation_line">
+                    <div class="separation_line"></div>
 
-                    </div>
-
-                    <div class="head_left_button" onmousemove="select_color(this)" onmouseout="unselected_color(this)">
-                        &#xeaa5; 删除
-                    </div>
-
-                    <div class="separation_line">
-
-                    </div>
-
-                    <div class="head_left_button" onmousemove="select_color(this)" onmouseout="unselected_color(this)">
-                        &#xe90f; 取回
+                    <div class="head_left_button">
+                        <button type="button" class="cursor_hand">&#xe90f; 取回</button>
                     </div>
                 </td>
                 <td>

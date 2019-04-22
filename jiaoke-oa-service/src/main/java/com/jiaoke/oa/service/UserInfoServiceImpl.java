@@ -151,4 +151,9 @@ public class UserInfoServiceImpl implements UserInfoService {
         map.put("existingRoleInfo", existingRoleInfo);
         return map;
     }
+
+    @Override
+    public List<UserInfo> selectIdAndNicknameAndDepartment() {
+        return userInfoMapper.selectIdAndNicknameAndDepartment();
+    }
 }

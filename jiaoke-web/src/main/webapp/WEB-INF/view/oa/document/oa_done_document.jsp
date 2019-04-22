@@ -17,7 +17,9 @@
     <meta charset="utf-8">
     <title>已办公文</title>
     <link href="../../../../static/css/oa/oa_common.css" rel="stylesheet" type="text/css">
+    <link href="../../../../static/css/paging/htmleaf-demo.css" rel="stylesheet" type="text/css">
     <link href="../../../../static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <style>
@@ -41,32 +43,26 @@
             <tbody>
             <tr>
                 <td>
-                    <div class="head_left_button" onmousemove="select_color(this)" onmouseout="unselected_color(this)">
-                        &#xe8e5; 转发
+                    <div class="head_left_button">
+                        <button type="button" class="cursor_hand">&#xe8e5; 转发</button>
                     </div>
 
-                    <div class="separation_line">
+                    <div class="separation_line"></div>
 
+                    <div class="head_left_button">
+                        <button type="button" class="cursor_hand">&#xe990; 归档</button>
                     </div>
 
-                    <div class="head_left_button" onmousemove="select_color(this)" onmouseout="unselected_color(this)">
-                        &#xe990; 归档
+                    <div class="separation_line"></div>
+
+                    <div class="head_left_button">
+                        <button type="button" class="cursor_hand">&#xeaa5; 删除</button>
                     </div>
 
-                    <div class="separation_line">
+                    <div class="separation_line"></div>
 
-                    </div>
-
-                    <div class="head_left_button" onmousemove="select_color(this)" onmouseout="unselected_color(this)">
-                        &#xeaa5; 删除
-                    </div>
-
-                    <div class="separation_line">
-
-                    </div>
-
-                    <div class="head_left_button" onmousemove="select_color(this)" onmouseout="unselected_color(this)">
-                        &#xe90f; 取回
+                    <div class="head_left_button">
+                        <button type="button" class="cursor_hand">&#xe90f; 取回</button>
                     </div>
                 </td>
                 <td>

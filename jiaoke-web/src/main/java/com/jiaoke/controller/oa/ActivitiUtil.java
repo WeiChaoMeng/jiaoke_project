@@ -1,8 +1,15 @@
 package com.jiaoke.controller.oa;
 
+import org.activiti.bpmn.model.FlowElement;
+import org.activiti.bpmn.model.FlowNode;
+import org.activiti.bpmn.model.Process;
+import org.activiti.bpmn.model.SequenceFlow;
 import org.activiti.engine.*;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricTaskInstance;
+import org.activiti.engine.impl.RepositoryServiceImpl;
+import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
+import org.activiti.engine.impl.util.ProcessDefinitionUtil;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
@@ -109,12 +116,18 @@ public class ActivitiUtil {
     /**
      * 完成任务
      *
-     * @param taskId        任务id
-     * @param variableName  变量名
-     * @param variableValue 变量值
+     * @param taskId 任务id
      */
-    public void completeTaskByTaskId(String taskId, String variableName, Object variableValue) {
-        taskService.setVariable(taskId, variableName, variableValue);
+    public void completeTaskByTaskId(String taskId, Map<String, Object> map) {
+        taskService.complete(taskId, map);
+    }
+
+    /**
+     * 完成会签
+     *
+     * @param taskId 任务id
+     */
+    public void finishNotifyTask(String taskId) {
         taskService.complete(taskId);
     }
 
@@ -147,5 +160,36 @@ public class ActivitiUtil {
             return list;
         }
 
+    }
+
+    public List<SequenceFlow> reject(String abc) {
+        // 取得当前任务
+        HistoricTaskInstance currTask = historyService
+                .createHistoricTaskInstanceQuery().taskId(abc)
+                .singleResult();
+
+
+        // 取得流程实例(act_hi_procinst)
+        ProcessInstance instance = runtimeService
+                .createProcessInstanceQuery()
+                .processInstanceId(currTask.getProcessInstanceId())
+                .singleResult();
+
+        // 取得流程定义(act_re_procdef)
+        ProcessDefinitionEntity definition = (ProcessDefinitionEntity) ((RepositoryServiceImpl) repositoryService)
+                .getDeployedProcessDefinition(currTask
+                        .getProcessDefinitionId());
+
+        System.out.println("哦哦哦" + currTask.getProcessDefinitionId());
+        Process process = ProcessDefinitionUtil.getProcess(currTask.getProcessDefinitionId());
+        FlowElement flowElement = process.getInitialFlowElement();
+        FlowNode startActivity = (FlowNode) flowElement;
+        System.out.println("坎坎坷坷" + startActivity.getOutgoingFlows());
+
+        // 取得上一步活动
+//        ActivityImpl currActivity = ((ProcessDefinitionImpl) definition)
+//                .findActivity(currTask.getTaskDefinitionKey());
+
+        return startActivity.getOutgoingFlows();
     }
 }

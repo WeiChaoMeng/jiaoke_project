@@ -1,0 +1,60 @@
+.single-option-window {
+    height: 94%;
+    padding: 10px 20px;
+}
+
+.option-window-body-head {
+    overflow: auto;
+    height: 85%;
+}
+
+.option-window-body-bottom {
+    text-align: center;
+    padding-top: 15px;
+    top: 0;
+    left: 0;
+}
+
+.left-spacing{
+    margin-left: 30px;
+}
+
+.body-bottom-button {
+    border-radius: 5px;
+    padding: 7px 20px;
+    background: #92ebff;
+    border: 1px #a5a5a5 solid;
+    outline: none
+}
+
+.left-spacing {
+    margin-left: 30px;
+}
+
+.single-election-box-li:hover {
+    background: #e6e6e6;
+}
+
+.single-election-box-li {
+    padding: 5px 20px;
+}
+
+.single-election-box-li img {
+    vertical-align: middle;
+}
+
+.single-election-box-li span {
+    margin-left: 10px;
+    display: inline-block;
+}
+
+.selection {
+    background: url("../../../static/images/icon/select1.png") no-repeat;
+    width: 16px;
+    height: 16px;
+    position: relative;
+    display: inline-block;
+    float: right;
+    background-size: 15px 15px;
+    margin-top: 3px;
+}

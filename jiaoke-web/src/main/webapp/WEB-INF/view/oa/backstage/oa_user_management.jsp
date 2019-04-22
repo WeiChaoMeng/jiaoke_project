@@ -73,10 +73,11 @@
     <thead>
     <th style="width: 3%;"><input type="checkbox"></th>
     <th style="width: 3%;">序号</th>
-    <th style="width: 25%;">显示名称</th>
-    <th style="width: 23%;">登录名</th>
-    <th style="width: 23%;">密码</th>
-    <th style="width: 23%;">部门</th>
+    <th style="width: 19%;">姓名</th>
+    <th style="width: 19%;">登录名</th>
+    <th style="width: 19%;">密码</th>
+    <th style="width: 20%;">部门</th>
+    <th style="width: 17%;">岗位</th>
     </thead>
 
     <tbody id="tbody">
@@ -228,6 +229,7 @@
                 userInfo += '<td>' + userInfoList[i].username + '</td>';
                 userInfo += '<td>' + userInfoList[i].password + '</td>';
                 userInfo += '<td>' + userInfoList[i].department + '</td>';
+                userInfo += '<td>' + userInfoList[i].position + '</td>';
                 userInfo += '</tr>';
             }
         }

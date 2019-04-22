@@ -22,7 +22,6 @@
         <result column="storage_life" jdbcType="INTEGER" property="storageLife"/>
         <result column="doc_type" jdbcType="VARCHAR" property="docType"/>
         <result column="writing_time" jdbcType="VARCHAR" property="writingTime"/>
-        <result column="main_give" jdbcType="VARCHAR" property="mainGive"/>
         <result column="copy_give" jdbcType="VARCHAR" property="copyGive"/>
         <result column="content" jdbcType="VARCHAR" property="content"/>
         <result column="print" jdbcType="VARCHAR" property="print"/>
@@ -39,7 +38,7 @@
     <sql id="Base_Column_List">
     id, form_title, Importance, associated_project, pre_archiving, flow, process_deadline, track, `text_title`,
     text_number, `rank`, Identification, drafting_department, drafted_person, nuclear_drafts, 
-    Issue, countersign, storage_life, doc_type, writing_time, main_give, copy_give, content,
+    Issue, countersign, storage_life, doc_type, writing_time, copy_give, content,
     `print`, proofreading, attachment_number, attachment, create_time, process_state, 
     form_state, user_info_id, processing_state, urging_number
   </sql>
@@ -65,7 +64,6 @@
             oa_document.storage_life,
             oa_document.doc_type,
             oa_document.writing_time,
-            oa_document.main_give,
             oa_document.copy_give,
             oa_document.content,
             oa_document.`print`,
@@ -92,7 +90,7 @@
       `rank`, Identification, drafting_department, 
       drafted_person, nuclear_drafts, Issue, 
       countersign, storage_life, doc_type, writing_time,
-      main_give, copy_give, content, 
+      copy_give, content,
       `print`, proofreading, attachment_number, 
       attachment, create_time, process_state, 
       form_state, user_info_id, processing_state, urging_number)
@@ -102,7 +100,7 @@
       #{rank,jdbcType=INTEGER}, #{identification,jdbcType=INTEGER}, #{draftingDepartment,jdbcType=VARCHAR}, 
       #{draftedPerson,jdbcType=VARCHAR}, #{nuclearDrafts,jdbcType=VARCHAR}, #{issue,jdbcType=VARCHAR}, 
       #{countersign,jdbcType=VARCHAR}, #{storageLife,jdbcType=INTEGER}, #{docType,jdbcType=VARCHAR}, #{writingTime,jdbcType=VARCHAR},
-      #{mainGive,jdbcType=VARCHAR}, #{copyGive,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{copyGive,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR},
       #{print,jdbcType=VARCHAR}, #{proofreading,jdbcType=VARCHAR}, #{attachmentNumber,jdbcType=INTEGER}, 
       #{attachment,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{processState,jdbcType=VARCHAR}, 
       #{formState,jdbcType=INTEGER}, #{userInfoId,jdbcType=VARCHAR}, #{processingState,jdbcType=INTEGER}, #{urgingNumber,jdbcType=INTEGER})
@@ -169,9 +167,6 @@
             </if>
             <if test="writingTime != null">
                 writing_time,
-            </if>
-            <if test="mainGive != null">
-                main_give,
             </if>
             <if test="copyGive != null">
                 copy_give,
@@ -271,9 +266,6 @@
             <if test="writingTime != null">
                 #{writingTime,jdbcType=VARCHAR},
             </if>
-            <if test="mainGive != null">
-                #{mainGive,jdbcType=VARCHAR},
-            </if>
             <if test="copyGive != null">
                 #{copyGive,jdbcType=VARCHAR},
             </if>
@@ -372,9 +364,6 @@
             <if test="writingTime != null">
                 writing_time = #{writingTime,jdbcType=VARCHAR},
             </if>
-            <if test="mainGive != null">
-                main_give = #{mainGive,jdbcType=VARCHAR},
-            </if>
             <if test="copyGive != null">
                 copy_give = #{copyGive,jdbcType=VARCHAR},
             </if>
@@ -435,7 +424,6 @@
       storage_life = #{storageLife,jdbcType=INTEGER},
       doc_type = #{docType,jdbcType=VARCHAR},
       writing_time = #{writingTime,jdbcType=VARCHAR},
-      main_give = #{mainGive,jdbcType=VARCHAR},
       copy_give = #{copyGive,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},
       `print` = #{print,jdbcType=VARCHAR},
@@ -480,7 +468,6 @@
             oa_document.storage_life,
             oa_document.doc_type,
             oa_document.writing_time,
-            oa_document.main_give,
             oa_document.copy_give,
             oa_document.content,
             oa_document.`print`,
@@ -528,7 +515,6 @@
             oa_document.storage_life,
             oa_document.doc_type,
             oa_document.writing_time,
-            oa_document.main_give,
             oa_document.copy_give,
             oa_document.content,
             oa_document.`print`,

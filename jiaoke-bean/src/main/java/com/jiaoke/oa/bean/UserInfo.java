@@ -27,14 +27,19 @@ public class UserInfo implements Serializable {
     private String password;
 
     /**
-     * 昵称
+     * 姓名
      */
     private String nickname;
 
     /**
-     * 手机号
+     * 部门编码
      */
-    private String phone;
+    private String department;
+
+    /**
+     * 岗位
+     */
+    private String position;
 
     /**
      * 性别：0男，1女
@@ -42,24 +47,19 @@ public class UserInfo implements Serializable {
     private Integer sex;
 
     /**
+     * 手机号
+     */
+    private String phone;
+
+    /**
      * 邮箱
      */
     private String email;
 
     /**
-     * 生日
-     */
-    private Date birthday;
-
-    /**
      * 注册时间
      */
     private Date registerTime;
-
-    /**
-     * 部门编码
-     */
-    private String department;
 
     /**
      * 部门负责人
@@ -100,12 +100,20 @@ public class UserInfo implements Serializable {
         this.nickname = nickname;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getDepartment() {
+        return department;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
     }
 
     public Integer getSex() {
@@ -116,20 +124,20 @@ public class UserInfo implements Serializable {
         this.sex = sex;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
     }
 
     public Date getRegisterTime() {
@@ -140,19 +148,15 @@ public class UserInfo implements Serializable {
         this.registerTime = registerTime;
     }
 
-    public String getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department;
-    }
-
     public String getDeptPrincipal() {
         return deptPrincipal;
     }
 
     public void setDeptPrincipal(String deptPrincipal) {
         this.deptPrincipal = deptPrincipal;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 }

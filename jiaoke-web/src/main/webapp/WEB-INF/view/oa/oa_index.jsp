@@ -261,22 +261,20 @@
                             </td>
 
                             <td class="template" valign="middle" id="conferenceRoom">
-                                <a class="check_color" title="会议室申请单"><img src="/static/images/icon/table.png">会议室申请单</a>
+                                <a class="check_color" title="会议室申请单"><img
+                                        src="/static/images/icon/table.png">会议室申请单</a>
                             </td>
 
                             <td class="template" valign="middle" id="assetUse">
                                 <a class="check_color" title="资产领用申请单"><img src="/static/images/icon/table.png">资产领用申请单</a>
                             </td>
                         </tr>
-                        </tbody>
-                    </table>
 
-                    <!---->
-                    <table border="0" cellspacing="0" cellpadding="0" width="100%">
-                        <tbody>
                         <tr>
                             <td class="template" valign="middle">
-                                <a class="check_color" title="借款单"><img src="/static/images/icon/table.png">借款单</a>
+                                <a class="check_color" onclick="carApplication()" title="用车申请单">
+                                    <img src="../../../static/images/icon/table.png">用车申请单
+                                </a>
                             </td>
 
                             <td class="template" valign="middle">
@@ -287,11 +285,7 @@
                                 <a class="check_color" title="合同审批单"><img src="/static/images/icon/table.png">合同审批单</a>
                             </td>
                         </tr>
-                        </tbody>
-                    </table>
 
-                    <table border="0" cellspacing="0" cellpadding="0" width="100%">
-                        <tbody>
                         <tr>
                             <td class="template" valign="middle">
                                 <a class="check_color" title="离职审批单"><img src="/static/images/icon/table.png">离职审批单</a>
@@ -305,12 +299,7 @@
                                 <a class="check_color" title="员工转正审批单"><img src="/static/images/icon/table.png">员工转正审批单</a>
                             </td>
                         </tr>
-                        </tbody>
-                    </table>
-                    <!---->
 
-                    <table border="0" cellspacing="0" cellpadding="0" width="100%">
-                        <tbody>
                         <tr>
                             <td class="template" valign="middle">
                                 <a class="check_color" title="资产采购申请单"><img src="/static/images/icon/table.png">资产采购申请单</a>
@@ -324,11 +313,7 @@
                                 <a class="check_color" title="公务用车申请单"><img src="/static/images/icon/table.png">公务用车申请单</a>
                             </td>
                         </tr>
-                        </tbody>
-                    </table>
 
-                    <table border="0" cellspacing="0" cellpadding="0" width="100%">
-                        <tbody>
                         <tr>
                             <td class="template" valign="middle">
                                 <a class="check_color" title="油补申请审批表"><img src="/static/images/icon/table.png">油补申请审批表</a>
@@ -373,5 +358,10 @@
     $('#conferenceRoom').on('click', function () {
         window.location.href = "${path}/activitiForm/toConferenceRoom";
     });
+
+    //用车申请
+    function carApplication(){
+        window.location.href = "${path}/activitiForm/toCarApply";
+    }
 </script>
 </html>
