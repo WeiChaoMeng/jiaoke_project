@@ -35,6 +35,7 @@ public class OaDocumentServiceImpl implements OaDocumentService {
      * @param oaDocument oaDocument
      * @return NumberOfAffectedRows
      */
+    @Override
     public int add(OaDocument oaDocument) {
 
         //创建时间
@@ -42,7 +43,7 @@ public class OaDocumentServiceImpl implements OaDocumentService {
 
         //表单状态：0发送
         if (oaDocument.getFormState() == null) {
-            oaDocument.setFormState(0);
+            oaDocument.setFormState(1);
         }
 
         UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
@@ -57,8 +58,20 @@ public class OaDocumentServiceImpl implements OaDocumentService {
      * @param formState formState
      * @return list
      */
+    @Override
     public List<OaDocument> getAllByFormState(Integer formState) {
-        List<OaDocument> oaDocumentList = oaDocumentMapper.getAllByFormState(formState);
+        UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
+        List<OaDocument> oaDocumentList = oaDocumentMapper.getAllByFormState(formState, String.valueOf(userInfo.getId()));
+        for (OaDocument oaDocument : oaDocumentList) {
+            oaDocument.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaDocument.getCreateTime()));
+        }
+        return oaDocumentList;
+    }
+
+    @Override
+    public List<OaDocument> textTitleFilter(String textTitle, int formState) {
+        UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
+        List<OaDocument> oaDocumentList = oaDocumentMapper.textTitleFilter(textTitle, formState, String.valueOf(userInfo.getId()));
         for (OaDocument oaDocument : oaDocumentList) {
             oaDocument.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaDocument.getCreateTime()));
         }
@@ -66,25 +79,16 @@ public class OaDocumentServiceImpl implements OaDocumentService {
     }
 
     /**
-     * 根据id获取列表
+     * 根据id获取
      *
      * @param id id
      * @return list
      */
+    @Override
     public OaDocument getAllById(Integer id) {
         OaDocument oaDocument = oaDocumentMapper.getAllById(id);
         oaDocument.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaDocument.getCreateTime()));
         return oaDocument;
-    }
-
-    /**
-     * 根据表单状态获取总数
-     *
-     * @param formState formState
-     * @return total
-     */
-    public int getTotalByFormState(Integer formState) {
-        return oaDocumentMapper.getTotalByFormState(formState);
     }
 
     /**
@@ -93,28 +97,11 @@ public class OaDocumentServiceImpl implements OaDocumentService {
      * @param id id
      * @return OaDocument
      */
+    @Override
     public OaDocument getDocumentDetailsById(Integer id) {
         OaDocument oaDocument = oaDocumentMapper.selectByPrimaryKey(id);
         oaDocument.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaDocument.getCreateTime()));
         return oaDocument;
-    }
-
-    /**
-     * 根据表单状态分页查询
-     *
-     * @param formState 表单状态
-     * @param page      页
-     * @param rows      条数
-     * @return OaDocumentList
-     */
-    public List<OaDocument> getPagingByFormState(Integer formState, Integer page, Integer rows) {
-        Integer one = 1;
-        Integer start = (page - one) * rows;
-        List<OaDocument> oaDocumentList = oaDocumentMapper.getPagingByFormState(formState, start, rows);
-        for (OaDocument oaDocument : oaDocumentList) {
-            oaDocument.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaDocument.getCreateTime()));
-        }
-        return oaDocumentList;
     }
 
     /**
@@ -137,9 +124,9 @@ public class OaDocumentServiceImpl implements OaDocumentService {
                 return oaDocumentMapper.updateSignatureIssuance(userInfo.getNickname(), id);
             }
         } else {
-            if(userInfo.getId().equals(userInfoId)){
+            if (userInfo.getId().equals(userInfoId)) {
                 return oaDocumentMapper.updateCountersignatureAndReviewer(userInfo.getNickname(), id);
-            }else {
+            } else {
                 return oaDocumentMapper.updateCountersignature(userInfo.getNickname(), id);
             }
         }
@@ -159,5 +146,24 @@ public class OaDocumentServiceImpl implements OaDocumentService {
     @Override
     public int edit(OaDocument oaDocument) {
         return oaDocumentMapper.updateByPrimaryKeySelective(oaDocument);
+    }
+
+    @Override
+    public int deleteById(int id) {
+        return oaDocumentMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public int updatePendingDocument(OaDocument oaDocument) {
+        return oaDocumentMapper.updateByPrimaryKeySelective(oaDocument);
+    }
+
+    @Override
+    public List<OaDocument> selectByBusinessId(List<Integer> ids, String textTitle) {
+        List<OaDocument> oaDocumentList = oaDocumentMapper.selectByBusinessId(ids, textTitle);
+        for (OaDocument oaDocument : oaDocumentList) {
+            oaDocument.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaDocument.getCreateTime()));
+        }
+        return oaDocumentList;
     }
 }

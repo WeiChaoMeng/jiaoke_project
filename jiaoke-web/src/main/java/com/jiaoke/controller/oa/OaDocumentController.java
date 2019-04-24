@@ -1,5 +1,8 @@
 package com.jiaoke.controller.oa;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.jiake.utils.DateUtil;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.oa.bean.Department;
@@ -9,6 +12,9 @@ import com.jiaoke.oa.service.DepartmentService;
 import com.jiaoke.oa.service.OaDocumentService;
 import com.jiaoke.oa.service.UserInfoService;
 import org.activiti.bpmn.model.SequenceFlow;
+import org.activiti.engine.ProcessEngine;
+import org.activiti.engine.ProcessEngines;
+import org.activiti.engine.TaskService;
 import org.activiti.engine.task.Task;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
@@ -18,10 +24,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.UnsupportedEncodingException;
+import java.util.*;
 
 /**
  * 公文管理
@@ -46,32 +50,9 @@ public class OaDocumentController {
     @Resource
     private DepartmentService departmentService;
 
+    /**------------发送公文--------------*/
     /**
-     * 待办公文跳转
-     *
-     * @return oa_pending_document.jsp
-     */
-    @RequestMapping(value = "/pendingDocument.do")
-    public String pendingDocument(Model model) {
-        //获取当前登录人的名称
-        UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
-        //根据登录人的名称查询任务
-        List<Task> taskList = activitiUtil.getTaskByAssignee(userInfo.getId());
-
-        List<OaDocument> oaDocumentList = new ArrayList<>();
-        for (Task task : taskList) {
-            //根据taskId查询businessId
-            String businessId = activitiUtil.getBusinessByTaskId(task.getId());
-            OaDocument document = oaDocumentService.getAllById(Integer.valueOf(businessId));
-            document.setTaskId(task.getId());
-            oaDocumentList.add(document);
-        }
-        model.addAttribute("oaDocumentList", oaDocumentList);
-        return "oa/document/oa_pending_document";
-    }
-
-    /**
-     * 发布公文跳转
+     * 跳转发布公文
      *
      * @return oa_release_document.jsp
      */
@@ -90,7 +71,7 @@ public class OaDocumentController {
     }
 
     /**
-     * 添加公文
+     * 发送公文
      *
      * @param oaDocument oaDocument
      * @return oa_release_document.jsp
@@ -117,8 +98,7 @@ public class OaDocumentController {
             assigneeList.add("4");
             assigneeListMap.put("userList", assigneeList);
             activitiUtil.designatedCountersignPersonnel(taskId.getId(), assigneeListMap);
-
-            return "redirect:/document/issuedDocument.do";
+            return "redirect:/document/toIssuedDocument.do?page=1";
         } else {
             return null;
         }
@@ -141,6 +121,172 @@ public class OaDocumentController {
         }
     }
 
+    /**------------待发公文--------------*/
+
+    /**
+     * 跳转待发公文
+     *
+     * @param model model
+     * @return oa_primed_document.jsp
+     */
+    @RequestMapping(value = "/toPrimedDocument.do")
+    public String toPrimedDocument(int page, Model model) {
+        model.addAttribute("page", JsonHelper.toJSONString(page));
+        return "oa/document/oa_primed_document";
+    }
+
+    /**
+     * 加载待发公文
+     *
+     * @param page      page
+     * @param formState formState
+     * @return oa_primed_document.jsp
+     */
+    @RequestMapping(value = "/primedDocument")
+    @ResponseBody
+    public String primedDocument(int page, int formState) {
+        PageHelper.startPage(page, 15);
+        List<OaDocument> oaDocumentList = oaDocumentService.getAllByFormState(formState);
+        PageInfo<OaDocument> pageInfo = new PageInfo<>(oaDocumentList);
+        return JsonHelper.toJSONString(pageInfo);
+    }
+
+    /**
+     * 跳转公文编辑页面
+     *
+     * @param id    id
+     * @param model model
+     * @return oa_edit_document.jsp
+     */
+    @RequestMapping(value = "/toEdit")
+    public String toEdit(Integer id, Model model) {
+        OaDocument oaDocument = oaDocumentService.getDocumentDetailsById(id);
+        //所有用户
+        List<UserInfo> userInfoList = userInfoService.selectIdAndNicknameAndDepartment();
+        List<Department> departmentList = departmentService.selectKeyAndName();
+        model.addAttribute("oaDocument", oaDocument);
+        model.addAttribute("userInfoList", JsonHelper.toJSONString(userInfoList));
+        model.addAttribute("departmentList", JsonHelper.toJSONString(departmentList));
+        return "oa/document/oa_edit_document";
+    }
+
+    /**
+     * 更新待发文档
+     *
+     * @param oaDocument oaDocument
+     * @return s/e
+     */
+    @RequestMapping(value = "/updatePendingDocument")
+    @ResponseBody
+    public String updatePendingDocument(OaDocument oaDocument) {
+        if (oaDocumentService.updatePendingDocument(oaDocument) < 0) {
+            return "error";
+        }
+        return "success";
+    }
+
+    /**
+     * 根据主键删除
+     *
+     * @param id 主键
+     * @return s/e
+     */
+    @RequestMapping(value = "/delete")
+    @ResponseBody
+    public String deleteById(int id) {
+        if (oaDocumentService.deleteById(id) < 0) {
+            return "error";
+        }
+        return "success";
+    }
+
+    /**-------------已发公文--------------*/
+    /**
+     * 跳转已发公文
+     *
+     * @return oa_issued_document.jsp
+     */
+    @RequestMapping(value = "/toIssuedDocument.do")
+    public String toIssuedDocument(int page, Model model) {
+        model.addAttribute("page", JsonHelper.toJSONString(page));
+        return "oa/document/oa_issued_document";
+    }
+
+    /**
+     * 加载已发公文数据
+     *
+     * @return json
+     */
+    @RequestMapping(value = "/issuedDocument")
+    @ResponseBody
+    public String issuedDocument(int page, int formState) {
+        PageHelper.startPage(page, 15);
+        List<OaDocument> oaDocumentList = oaDocumentService.getAllByFormState(formState);
+        PageInfo<OaDocument> pageInfo = new PageInfo<>(oaDocumentList);
+        return JsonHelper.toJSONString(pageInfo);
+    }
+
+
+    /**-------------待办公文--------------*/
+    /**
+     * 跳转待办公文
+     *
+     * @return oa_pending_document.jsp
+     */
+    @RequestMapping(value = "/toPendingDocument.do")
+    public String toPendingDocument(int page, Model model) {
+        model.addAttribute("page", JsonHelper.toJSONString(page));
+        return "oa/document/oa_pending_document";
+    }
+
+    /**
+     * 加载待办公文数据
+     *
+     * @return json
+     */
+    @RequestMapping(value = "/pendingDocument")
+    @ResponseBody
+    public String pendingDocument(int page, String textTitle) {
+        List<Integer> businessIdList = new ArrayList<>();
+        Map<String, List<String>> map = new HashMap<>(16);
+
+        //获取当前登录人的名称
+        UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
+        //根据登录人的名称查询任务
+        List<Task> taskList = activitiUtil.getTaskByAssignee(userInfo.getId());
+        if (taskList.size() < 1) {
+            return JsonHelper.toJSONString("noData");
+        }
+
+        //根据taskId查询businessId
+        for (Task task : taskList) {
+            List<String> taskInfoList = new ArrayList<>();
+            String businessId = activitiUtil.getBusinessByTaskId(task.getId());
+            businessIdList.add(Integer.valueOf(businessId));
+            taskInfoList.add(task.getId());
+            taskInfoList.add(DateUtil.dateConvertYYYYMMDDHHMMSS(task.getCreateTime()));
+            map.put(businessId, taskInfoList);
+        }
+
+        PageHelper.startPage(page, 15);
+        List<OaDocument> oaDocumentList = oaDocumentService.selectByBusinessId(businessIdList, textTitle);
+
+        for (Map.Entry<String, List<String>> entry : map.entrySet()) {
+            for (OaDocument oaDocument : oaDocumentList) {
+                if (oaDocument.getId().equals(Integer.parseInt(entry.getKey()))) {
+                    oaDocument.setTaskId(entry.getValue().get(0));
+                    oaDocument.setReceiveTime(entry.getValue().get(1));
+                }
+            }
+        }
+
+        PageInfo<OaDocument> pageInfo = new PageInfo<>(oaDocumentList);
+        return JsonHelper.toJSONString(pageInfo);
+    }
+
+
+    /**-------------已办公文--------------*/
+
     /**
      * 已办公文跳转
      *
@@ -161,6 +307,8 @@ public class OaDocumentController {
         }
     }
 
+    /**------------communal---------------------*/
+
     /**
      * 根据id获取已办公文详情
      *
@@ -169,66 +317,26 @@ public class OaDocumentController {
      * @return oa_details_document.jsp
      */
     @RequestMapping(value = "/completeDetails")
-    public String completeDetails(Integer id, Model model) {
+    public String completeDetails(Integer id, int page, Model model) {
         OaDocument oaDocument = oaDocumentService.getDocumentDetailsById(id);
         model.addAttribute("oaDocument", oaDocument);
+        model.addAttribute("page", JsonHelper.toJSONString(page));
         return "oa/document/oa_complete_details";
     }
 
-    /**
-     * 待发公文跳转
-     *
-     * @param model model
-     * @return oa_primed_document.jsp
-     */
-    @RequestMapping(value = "/primedDocument.do")
-    public String primedDocument(Model model) {
-        int total = oaDocumentService.getTotalByFormState(1);
-        model.addAttribute("total", total);
-        return "oa/document/oa_primed_document";
-    }
 
     /**
-     * 跳转公文编辑页面
+     * 标题搜索
      *
-     * @param id    id
-     * @param model model
-     * @return oa_edit_document.jsp
+     * @return json
      */
-    @RequestMapping(value = "/toEdit")
-    public String toEdit(Integer id, Model model) {
-        OaDocument oaDocument = oaDocumentService.getDocumentDetailsById(id);
-        model.addAttribute("oaDocument", oaDocument);
-        return "oa/document/oa_edit_document";
-    }
-
-    /**
-     * 修改
-     *
-     * @param oaDocument oaDocument
-     * @return result
-     */
-    @RequestMapping(value = "/edit")
+    @RequestMapping(value = "/textTitleFilter")
     @ResponseBody
-    public String edit(OaDocument oaDocument) {
-        if (oaDocumentService.edit(oaDocument) == 1) {
-            return "success";
-        }
-        return "error";
-    }
-
-
-    /**
-     * 已发公文跳转
-     *
-     * @param model model
-     * @return oa_issued_document.jsp
-     */
-    @RequestMapping(value = "/issuedDocument.do")
-    public String issuedDocument(Model model) {
-        int total = oaDocumentService.getTotalByFormState(0);
-        model.addAttribute("total", total);
-        return "oa/document/oa_issued_document";
+    public String titleFilter(int page, String textTitle, int formState) {
+        PageHelper.startPage(page, 15);
+        List<OaDocument> oaDocumentList = oaDocumentService.textTitleFilter(textTitle, formState);
+        PageInfo<OaDocument> pageInfo = new PageInfo<>(oaDocumentList);
+        return JsonHelper.toJSONString(pageInfo);
     }
 
     /**
@@ -247,35 +355,23 @@ public class OaDocumentController {
     }
 
     /**
-     * 分页
-     *
-     * @param formState formState
-     * @param page      page
-     * @param rows      rows
-     * @return list
-     */
-    @RequestMapping(value = "/pagingList")
-    @ResponseBody
-    public Object getPagingByFormState(Integer formState, Integer page, Integer rows) {
-        List<OaDocument> oaDocumentList = oaDocumentService.getPagingByFormState(formState, page, rows);
-        if (oaDocumentList != null) {
-            return oaDocumentList;
-        } else {
-            return "error";
-        }
-    }
-
-    /**
      * 公文审批结果
      *
-     * @param taskId        任务id
-     * @param variableValue 变量值
-     * @param draftedPerson 拟稿人
+     * @param taskId     任务id
+     * @param taskId     表单id
+     * @param annotation 处理人意见
      * @return oa_pending_document
      */
     @RequestMapping(value = "/documentApproval")
-    public String documentApproval(String taskId, String variableValue, int id, String draftedPerson) {
-        UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
+    public String documentApproval(String taskId, int id, String annotation) throws UnsupportedEncodingException {
+        //解决textarea乱码问题
+        String annotationText = new String(annotation.getBytes("iso-8859-1"), "utf-8");
+        //完成会签
+        Map<String, Object> map = new HashMap<>(16);
+        map.put("president", 1);
+        activitiUtil.finishCountersignTask(taskId, map, annotationText);
+
+        /*UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
         if (userInfo.getId() == 1) {
             //指定知会人员
             Map<String, Object> usersListMap = new HashMap<>(16);
@@ -296,8 +392,8 @@ public class OaDocumentController {
         String value = "1";
         if (value.equals(variableValue)) {
             oaDocumentService.updateCountersignature(id, draftedPerson);
-        }
-        return "redirect:/document/pendingDocument.do";
+        }*/
+        return "redirect:/document/toPendingDocument.do?page=1";
     }
 
     /**
@@ -317,4 +413,6 @@ public class OaDocumentController {
     public List<SequenceFlow> test(String abc) {
         return activitiUtil.reject(abc);
     }
+
+
 }

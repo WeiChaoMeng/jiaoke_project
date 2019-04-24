@@ -117,7 +117,7 @@ $(function () {
     $("#pending_document").on("click", function () {
         removeOwnName();
         document(this);
-        $("#oa-iframe").attr("src", "document/pendingDocument.do")
+        $("#oa-iframe").attr("src", "document/toPendingDocument.do?page=1")
     });
 
     //已办公文
@@ -131,14 +131,14 @@ $(function () {
     $("#primed_document").on("click", function () {
         removeOwnName();
         document(this);
-        $("#oa-iframe").attr("src", "document/primedDocument.do")
+        $("#oa-iframe").attr("src", "document/toPrimedDocument.do?page=1")
     });
 
     //已发公文
     $("#issued_document").on("click", function () {
         removeOwnName();
         document(this);
-        $("#oa-iframe").attr("src", "document/issuedDocument.do")
+        $("#oa-iframe").attr("src", "document/toIssuedDocument.do?page=1")
     });
 
     /*--- 档案管理 ---*/

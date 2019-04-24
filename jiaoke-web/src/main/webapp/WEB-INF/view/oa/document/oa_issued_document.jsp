@@ -36,9 +36,8 @@
 <body style="padding:15px 8px 0px 8px;">
 
 <div>
-    <input type="hidden" id="total" value="${total}">
     <div class="page_head">
-        <table width="100%">
+        <table style="width:100%;height: 30px;">
             <tbody>
             <tr>
                 <td>
@@ -49,60 +48,17 @@
                     <div class="separation_line"></div>
 
                     <div class="head_left_button">
-                        <button type="button" class="cursor_hand">&#xe990; 归档</button>
-                    </div>
-
-                    <div class="separation_line"></div>
-
-                    <div class="head_left_button">
-                        <button type="button" class="cursor_hand">&#xeaa5; 删除</button>
-                    </div>
-
-                    <div class="separation_line"></div>
-
-                    <div class="head_left_button">
                         <button type="button" class="cursor_hand">&#xe90f; 取回</button>
                     </div>
                 </td>
+
                 <td>
-                    <div class="conditional_query">
-                        <!--搜索按钮-->
-                        <i class="iconfont search" id="conditional_search" onmousemove="select_color(this)"
-                           onmouseout="unselected_color(this)">&#xe7e7;</i>
-                        <!--标题-->
-                        <div id="div2" class="head_right_side_input matter_title">
-                            <input type="text">
-                        </div>
-
-                        <!--重要程度-->
-                        <div id="div3" class="head_right_side_select matter_importance">
-                            <select>
-                                <option value="1">普通</option>
-                                <option value="2">重要</option>
-                                <option value="3">非常重要</option>
-                            </select>
-                        </div>
-
-                        <!--状态-->
-                        <div id="div4" class="head_right_side_select matter_status">
-                            <select>
-                                <option value="1">未结束</option>
-                                <option value="2">已结束</option>
-                                <option value="3">已终止</option>
-                            </select>
-                        </div>
-
-                        <!--条件查询-->
-                        <div id="div1" class="head_right_side">
-                            <select id="condition1">
-                                <option value="0">- -查询条件- -</option>
-                                <option value="1">标题</option>
-                                <option value="2">重要程度</option>
-                                <option value="3">流程状态</option>
-                            </select>
+                    <div>
+                        <div class="conditional-query cursor_hand">
+                            <input type="text" id="textTitle" class="search-bar" placeholder="标题" autocomplete="off">
+                            <i onclick="searchButton(1,2)" class="iconfont search-icon-size" id="conditional_search">&#xe7e7;</i>
                         </div>
                     </div>
-
                 </td>
             </tr>
             </tbody>
@@ -113,18 +69,16 @@
 
         <thead>
         <th style="width: 3%"><input type="checkbox"></th>
-        <th style="width: 6%">密级</th>
-        <th style="width: 36%">标题</th>
-        <th style="width: 12%">公文文号</th>
-        <th style="width: 12%">发起时间</th>
-        <th style="width: 6%">当前待办人</th>
-        <th style="width: 6%">重要程度</th>
-        <th style="width: 6%">处理期限</th>
-        <th style="width: 6%">跟踪状态</th>
-        <th style="width: 6%">流程日志</th>
+        <th style="width: 8%">密级</th>
+        <th style="width: 35%">标题</th>
+        <th style="width: 15%">公文文号</th>
+        <th style="width: 15%">发起时间</th>
+        <th style="width: 8%">发布人</th>
+        <th style="width: 8%">公文类型</th>
+        <th style="width: 8%">处理期限</th>
         </thead>
 
-        <tbody class="tbodys">
+        <tbody id="tbodys">
 
         </tbody>
 
@@ -132,10 +86,16 @@
 
 </div>
 
-<div id="fenye" style="right: 10px;height: 35px;position: absolute;bottom: 10px;">
-    <div class="">
+<div id="paging" class="paging-div">
+    <div>
         <div class="" style="float: right;">
             <ul class="pagination" id="pagination" style="margin: 0"></ul>
+            <input type="hidden" id="PageCount" runat="server"/>
+            <input type="hidden" id="PageSize" runat="server"/>
+            <input type="hidden" id="countindex" runat="server"/>
+            <!--设置最多显示的页码数 可以手动设置 默认为10-->
+            <input type="hidden" id="visiblePages" runat="server" value="10"/>
+            <input type="hidden" id="page" value="1"/>
         </div>
     </div>
 </div>
@@ -145,118 +105,193 @@
 <script type="text/javascript" src="../../../../static/js/oa/oa_common.js"></script>
 <script type="text/javascript" src="../../../../static/js/common.js"></script>
 <script type="text/javascript" src="../../../../static/js/paging/jqPaginator.js"></script>
+<script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
-    //获取总数
-    let total = $("#total").val();
+    //设置当前页
+    var currentPage = '${page}';
+    var currentPageNum = JSON.parse(currentPage);
 
-    $.jqPaginator('#pagination', {
-        totalPages: Math.ceil(total / 10), //(10 + 5 -1) / 5,// 总页数 = （当前页 + 每页大小 - 1） / 每页大小
-        visiblePages: 10,
-        currentPage: 1,
-        prev: '<li class="prev"><a href="javascript:;">前一页</a></li>',
-        next: '<li class="next"><a href="javascript:void(0);">下一页</a></li>',
-        page: '<li class="page"><a href="javascript:;">{{page}}</a></li>',
-        onPageChange: function (page) {
-            let rows = 10;
-
-            $.ajax({
-                type: "post",
-                url: '${path}/document/pagingList',
-                data: {"formState": 0, "page": page, "rows": rows},
-                success: function (data) {
-                    if (data == "error") {
-                        alert("没有数据")
-                    } else {
-                        var pagingHtml = "";
-                        for (let i = 0; i < data.length; i++) {
-                            pagingHtml += '<tr onclick="particulars(' + data[i].id + ')">';
-                            pagingHtml += '<td class="tdnum">';
-                            pagingHtml += '<input type="checkbox" onclick="window.event.cancelBubble=true;">';
-                            pagingHtml += '</td>';
-                            pagingHtml += '<td>';
-                            if (data[i].rank === 1) {
-                                pagingHtml += '普通公文';
-                            } else if (data[i].rank === 2) {
-                                pagingHtml += '秘密公文';
-                            } else if (data[i].rank === 3) {
-                                pagingHtml += '机密公文';
-                            } else if (data[i].rank === 4) {
-                                pagingHtml += '绝密公文';
-                            }
-                            pagingHtml += '</td>';
-                            pagingHtml += '<td class="text_style" title="' + data[i].formTitle + '"> ' + data[i].formTitle + ' </td>';
-                            pagingHtml += '<td>' + data[i].textNumber + '</td>';
-                            pagingHtml += '<td>' + data[i].createTimeStr + '</td>';
-
-                            pagingHtml += '<td>';
-                            if (data[i].userInfoId != null && data[i].userInfoId != "") {
-                                pagingHtml += data[i].userInfoId;
-                            } else {
-                                pagingHtml += '无';
-                            }
-                            pagingHtml += '</td>';
-                            pagingHtml += '<td>';
-                            if (data[i].importance === 0) {
-                                pagingHtml += '普通';
-                            } else if (data[i].importance === 1) {
-                                pagingHtml += '重要';
-                            } else if (data[i].importance === 2) {
-                                pagingHtml += '非常重要';
-                            }
-                            pagingHtml += '</td>';
-                            pagingHtml += '<td>';
-                            if (data[i].processDeadline === "0") {
-                                pagingHtml += '无';
-                            } else if (data[i].processDeadline === "60") {
-                                pagingHtml += '1小时';
-                            } else if (data[i].processDeadline === "120") {
-                                pagingHtml += '2小时';
-                            } else if (data[i].processDeadline === "240") {
-                                pagingHtml += '4小时';
-                            } else if (data[i].processDeadline === "1440") {
-                                pagingHtml += '1天';
-                            } else if (data[i].processDeadline === "2880") {
-                                pagingHtml += '2天';
-                            } else if (data[i].processDeadline === "4320") {
-                                pagingHtml += '3天';
-                            } else if (data[i].processDeadline === "7200") {
-                                pagingHtml += '5天';
-                            } else if (data[i].processDeadline === "10080") {
-                                pagingHtml += '1周';
-                            } else if (data[i].processDeadline === "21600") {
-                                pagingHtml += '15天';
-                            } else if (data[i].processDeadline === "43200") {
-                                pagingHtml += '1个月';
-                            } else if (data[i].processDeadline === "129600") {
-                                pagingHtml += '3个月';
-                            }
-                            pagingHtml += '</td>';
-                            pagingHtml += '<td>';
-                            if (data[i].track === 0) {
-                                pagingHtml += '无';
-                            } else if (data[i].track === 1) {
-                                pagingHtml += '全部';
-                            } else if (data[i].track === 2) {
-                                pagingHtml += '指定';
-                            }
-                            pagingHtml += '</td>';
-                            pagingHtml += '<td style="text-align: center"><i class="iconfont">&#xe64c;</i></td>';
-                            pagingHtml += '</tr>';
-                        }
-                        $(".tbodys").html(pagingHtml);
-                    }
-                },
-                error: function (msg) {
-                    alert("出错了！");
-                }
-            });
-
-        }
+    //初始化分页
+    $(function () {
+        //设置当前页
+        $('#page').val(currentPageNum);
+        loadData(currentPageNum);
+        loadPage(1);
     });
+
+    //加载数据
+    function loadData(page) {
+        //已发
+        var formState = 0;
+        $.ajax({
+            type: "post",
+            url: '/document/issuedDocument',
+            data: {'page': page, 'formState': formState},
+            async: false,
+            success: function (data) {
+                var lists = JSON.parse(data);
+                //总数
+                $("#PageCount").val(lists.total);
+                //每页显示条数
+                $("#PageSize").val("15");
+                parseResult(lists);
+            },
+            error: function (result) {
+                layer.msg("出错！");
+            }
+        })
+    }
+
+    //标题搜索
+    function searchButton(page, parameter) {
+        var textTitle = $('#textTitle').val();
+        var formState = 0;
+        $.ajax({
+            type: "post",
+            url: '/document/textTitleFilter',
+            data: {'page': page, 'textTitle': textTitle, 'formState': formState},
+            async: false,
+            success: function (data) {
+                var lists = JSON.parse(data);
+                $('#currentPage').val(1);
+                //总数
+                $("#PageCount").val(lists.total);
+                //每页显示条数
+                $("#PageSize").val("15");
+                parseResult(lists);
+                loadPage(parameter);
+            },
+            error: function (result) {
+                layer.msg("出错！");
+            }
+        })
+    }
+
+    function exeData(page, type, parameter) {
+        //全部
+        if (parameter === 1) {
+            loadData(page);
+            loadPage(parameter);
+
+            //名字搜索
+        } else if (parameter === 2) {
+            searchButton(page);
+            loadPage(parameter);
+        }
+    }
+
+    function loadPage(parameter) {
+        var myPageCount = parseInt($("#PageCount").val());
+        var myPageSize = parseInt($("#PageSize").val());
+        var countindex = myPageCount === 0 ? 1 : Math.ceil(myPageCount / myPageSize);
+        $("#countindex").val(countindex);
+
+        $.jqPaginator('#pagination', {
+            totalPages: parseInt($("#countindex").val()),
+            visiblePages: parseInt($("#visiblePages").val()),
+            currentPage: currentPageNum,
+            first: '<li class="first"><a href="javascript:;">首页</a></li>',
+            prev: '<li class="prev"><a href="javascript:;"><i class="arrow arrow2"></i>上一页</a></li>',
+            next: '<li class="next"><a href="javascript:;">下一页<i class="arrow arrow3"></i></a></li>',
+            last: '<li class="last"><a href="javascript:;">末页</a></li>',
+            page: '<li class="page"><a href="javascript:;">{{page}}</a></li>',
+            onPageChange: function (page, type) {
+                if (type == "change") {
+                    $('#page').val(page);
+                    exeData(page, type, parameter);
+                }
+            }
+        });
+    }
+
+    //解析list
+    function parseResult(lists) {
+        //结果集
+        var objList = lists.list;
+        //插入tbody
+        var resultList = '';
+        if (objList.length === 0) {
+            resultList += '<tr>';
+            resultList += '<td colspan="8">' + '暂无数据' + '</td>';
+            resultList += '</tr>';
+        } else {
+            for (let i = 0; i < objList.length; i++) {
+                resultList += '<tr onclick="particulars(' + objList[i].id + ')">';
+                resultList += '<td><input type="checkbox" value="' + objList[i].id + '" onclick="window.event.cancelBubble=true;"></td>';
+                resultList += '<td>';
+                if (objList[i].rank === 1) {
+                    resultList += '普通公文';
+                } else if (objList[i].rank === 2) {
+                    resultList += '秘密公文';
+                } else if (objList[i].rank === 3) {
+                    resultList += '机密公文';
+                } else if (objList[i].rank === 4) {
+                    resultList += '绝密公文';
+                }
+                resultList += '</td>';
+                resultList += '<td class="text_style" title="' + objList[i].textTitle + '"> ' + objList[i].textTitle + ' </td>';
+                resultList += '<td>' + objList[i].textNumber + '</td>';
+                resultList += '<td>' + objList[i].createTimeStr + '</td>';
+
+                resultList += '<td>';
+                if (objList[i].userInfoId != null && objList[i].userInfoId != "") {
+                    resultList += objList[i].userInfoId;
+                } else {
+                    resultList += '无';
+                }
+                resultList += '</td>';
+                resultList += '<td>';
+                if (objList[i].docType === 0) {
+                    resultList += '公文';
+                } else if (objList[i].docType === 1) {
+                    resultList += '会议纪要';
+                } else if (objList[i].docType === 2) {
+                    resultList += '请示';
+                } else if (objList[i].docType === 3) {
+                    resultList += '通知';
+                } else if (objList[i].docType === 4) {
+                    resultList += '通告';
+                } else if (objList[i].docType === 5) {
+                    resultList += '函';
+                }
+                resultList += '</td>';
+                resultList += '<td>';
+                if (objList[i].processDeadline === "0") {
+                    resultList += '无';
+                } else if (objList[i].processDeadline === "60") {
+                    resultList += '1小时';
+                } else if (objList[i].processDeadline === "120") {
+                    resultList += '2小时';
+                } else if (objList[i].processDeadline === "240") {
+                    resultList += '4小时';
+                } else if (objList[i].processDeadline === "1440") {
+                    resultList += '1天';
+                } else if (objList[i].processDeadline === "2880") {
+                    resultList += '2天';
+                } else if (objList[i].processDeadline === "4320") {
+                    resultList += '3天';
+                } else if (objList[i].processDeadline === "7200") {
+                    resultList += '5天';
+                } else if (objList[i].processDeadline === "10080") {
+                    resultList += '1周';
+                } else if (objList[i].processDeadline === "21600") {
+                    resultList += '15天';
+                } else if (objList[i].processDeadline === "43200") {
+                    resultList += '1个月';
+                } else if (objList[i].processDeadline === "129600") {
+                    resultList += '3个月';
+                }
+                resultList += '</td>';
+                resultList += '</tr>';
+            }
+        }
+        $('#tbodys').html(resultList);
+    }
 
     //查看详情
     function particulars(id) {
-        window.location.href = "${path}/document/completeDetails?id=" + id;
+        var page = $('#page').val();
+        window.location.href = "${path}/document/completeDetails?id=" + id + "&page=" + page;
     }
 </script>
 </html>

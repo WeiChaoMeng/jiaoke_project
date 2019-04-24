@@ -8,6 +8,11 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+    request.setAttribute("path", basePath);
+%>
 <html>
 <head>
     <meta charset="utf-8">
@@ -34,8 +39,10 @@
     <table style="width: 90%;margin: auto">
         <tbody>
         <tr>
-            <th nowrap="nowrap" class="th_title">标&nbsp;&nbsp;&nbsp;题:</th>
-            <td style="padding-left: 5px">${oaDocument.formTitle}</td>
+            <th class="th_title" nowrap="nowrap">发起人:</th>
+            <td style="padding-left: 5px">
+                ${oaDocument.userInfoId}
+            </td>
 
             <th class="common_th">流程期限:</th>
             <td class="common_condition_select_frame" style="padding-left: 5px">
@@ -53,27 +60,6 @@
                 <c:if test="${oaDocument.processDeadline == 129600}">3个月</c:if>
             </td>
 
-            <th class="common_th">归档到:</th>
-            <td class="common_condition_select_frame" style="padding-left: 5px">
-                <c:choose>
-                    <c:when test="${oaDocument.preArchiving == 0}">
-                        无
-                    </c:when>
-                    <c:otherwise>
-                        ${oaDocument.preArchiving}
-                    </c:otherwise>
-                </c:choose>
-            </td>
-        </tr>
-
-        <tr>
-            <th class="th_title" nowrap="nowrap">发起人:</th>
-            <td style="padding-left: 5px">
-                ${oaDocument.userInfoId}
-            </td>
-        </tr>
-
-        <tr>
             <th class="th_title" nowrap="nowrap">附&nbsp;&nbsp;&nbsp;件:</th>
             <td style="padding-left: 5px">
                 ${oaDocument.attachment}
@@ -160,11 +146,6 @@
     </tr>
 
     <tr>
-        <td class="tlabel">主送：</td>
-        <td colspan="5">${oaDocument.mainGive}</td>
-    </tr>
-
-    <tr>
         <td class="tlabel">抄送：</td>
         <td colspan="5">${oaDocument.copyGive}</td>
     </tr>
@@ -198,9 +179,11 @@
 <script type="text/javascript" src="../../../../static/js/skin.js"></script>
 <script type="text/javascript" src="../../../../static/js/oa/oa_common.js"></script>
 <script>
+    var page = '${page}';
+
     //返回上一页
     function previousPage() {
-        window.history.back();
+        window.location.href = "${path}/document/toIssuedDocument.do?page=" + page;
     }
 </script>
 </html>

@@ -97,7 +97,7 @@
                         <tbody>
                         <c:choose>
                             <c:when test="${oaNewsCenterList.size() <= 0}">
-                                <td colspan="7">' + '暂无数据' + '</td>
+                                <td colspan="7">暂无数据</td>
                             </c:when>
                             <c:otherwise>
                                 <c:forEach var="newsCenter" items="${oaNewsCenterList}" varStatus="status">
@@ -151,17 +151,26 @@
                         </thead>
 
                         <tbody>
-                        <c:forEach var="corporateHonor" items="${oaCorporateHonorList}" varStatus="status">
-                            <tr onclick="corporateHonorParticulars(${corporateHonor.id})">
-                                <td>${status.count}</td>
-                                <td>${corporateHonor.title}</td>
-                                <td>${corporateHonor.releaseDepartment}</td>
-                                <td>${corporateHonor.publisher}</td>
-                                <td>${corporateHonor.releaseDateStr}</td>
-                                <td>${corporateHonor.keyword}</td>
-                                <td>${corporateHonor.summary}</td>
-                            </tr>
-                        </c:forEach>
+
+                        <c:choose>
+                            <c:when test="${oaCorporateHonorList.size() <= 0}">
+                                <td colspan="7">暂无数据</td>
+                            </c:when>
+                            <c:otherwise>
+                                <c:forEach var="corporateHonor" items="${oaCorporateHonorList}" varStatus="status">
+                                    <tr onclick="corporateHonorParticulars(${corporateHonor.id})">
+                                        <td>${status.count}</td>
+                                        <td>${corporateHonor.title}</td>
+                                        <td>${corporateHonor.releaseDepartment}</td>
+                                        <td>${corporateHonor.publisher}</td>
+                                        <td>${corporateHonor.releaseDateStr}</td>
+                                        <td>${corporateHonor.keyword}</td>
+                                        <td>${corporateHonor.summary}</td>
+                                    </tr>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
+
                         </tbody>
 
                     </table>

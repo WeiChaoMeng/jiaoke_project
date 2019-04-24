@@ -64,20 +64,14 @@ public interface OaDocumentMapper {
     OaDocument selectByPrimaryKey(Integer id);
 
     /**
-     * 根据表单状态获取总数
+     * 搜索
      *
-     * @param formState formState
-     * @return total
-     */
-    int getTotalByFormState(Integer formState);
-
-    /**
-     * 根据表单状态获取列表
-     *
-     * @param formState formState
+     * @param textTitle  标题
+     * @param formState  表单状态
+     * @param userInfoId 当前登录用户id
      * @return list
      */
-    List<OaDocument> getAllByFormState(Integer formState);
+    List<OaDocument> textTitleFilter(@Param("textTitle") String textTitle, @Param("formState") int formState, @Param("userInfoId") String userInfoId);
 
     /**
      * 根据id获取列表
@@ -87,7 +81,14 @@ public interface OaDocumentMapper {
      */
     OaDocument getAllById(Integer id);
 
-    List<OaDocument> getPagingByFormState(@Param("formState") Integer formState, @Param("start") Integer start, @Param("rows") Integer rows);
+    /**
+     * 根据表单状态获取列表
+     *
+     * @param formState  formState
+     * @param userInfoId userInfoId
+     * @return list
+     */
+    List<OaDocument> getAllByFormState(@Param("formState") Integer formState, @Param("userInfoId") String userInfoId);
 
     /**
      * 更新会签
@@ -133,4 +134,13 @@ public interface OaDocumentMapper {
      * @return NumberOfAffectedRows
      */
     int updateCountersignatureAndReviewer(@Param("nickName") String nickName, @Param("id") int id);
+
+    /**
+     * 根据BusinessId获取
+     *
+     * @param ids       businessIdList
+     * @param textTitle textTitle
+     * @return list
+     */
+    List<OaDocument> selectByBusinessId(@Param("ids") List<Integer> ids, @Param("textTitle") String textTitle);
 }

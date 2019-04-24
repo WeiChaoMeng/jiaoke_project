@@ -114,14 +114,12 @@
 
         <thead>
         <th style="width: 3%"><input type="checkbox"></th>
-        <th style="width: 6%">密级</th>
-        <th style="width: 36%">标题</th>
-        <th style="width: 12%">公文文号</th>
-        <th style="width: 6%">发起人</th>
+        <th style="width: 8%">密级</th>
+        <th style="width: 44%">标题</th>
+        <th style="width: 13%">公文文号</th>
+        <th style="width: 8%">发起人</th>
         <th style="width: 12%">发起时间</th>
         <th style="width: 12%">结束时间</th>
-        <th style="width: 6%">跟踪状态</th>
-        <th style="width: 6%">流程日志</th>
         </thead>
 
         <tbody class="tbodys">
@@ -147,18 +145,12 @@
                             <c:if test="${oaDocument.rank == 3}">绝密公文</c:if>
                         </td>
                         <td class="text_style"
-                            title="${oaDocument.formTitle}">${oaDocument.formTitle}
+                            title="${oaDocument.textTitle}">${oaDocument.textTitle}
                         </td>
                         <td>${oaDocument.textNumber}</td>
                         <td>${oaDocument.userInfoId}</td>
                         <td>${oaDocument.createTimeStr}</td>
                         <td>${oaDocument.createTimeStr}</td>
-                        <td>
-                            <c:if test="${oaDocument.track == 0}">无</c:if>
-                            <c:if test="${oaDocument.track == 1}">全部</c:if>
-                            <c:if test="${oaDocument.track == 2}">指定</c:if>
-                        </td>
-                        <td style="text-align: center"><i class="iconfont">&#xe64c;</i></td>
                     </tr>
                 </c:forEach>
             </c:otherwise>

@@ -19,77 +19,10 @@
     <title>待办公文详情</title>
     <link href="../../../../static/css/oa/oa_common.css" rel="stylesheet" type="text/css">
     <link href="../../../../static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
-
-    <style>
-        .textarea-opinion {
-            resize: none;
-            width: 95%;
-            margin: 10px 0 0;
-            border: 1px #bdbdbd solid;
-            padding: 5px;
-            font-size: 14px;
-            height: 74px;
-            outline: none;
-        }
-    </style>
 </head>
 
 <body>
-<div class="form_area" style="margin:20px auto 30px;width: 80%;padding: 10px 0">
-    <table style="width: 90%;margin: auto">
-        <tbody>
-        <tr>
-            <th nowrap="nowrap" class="th_title">标&nbsp;&nbsp;&nbsp;题:</th>
-            <td style="padding-left: 5px">${oaDocument.formTitle}</td>
-
-            <th class="common_th">流程期限:</th>
-            <td class="common_condition_select_frame" style="padding-left: 5px">
-                <c:if test="${oaDocument.processDeadline == 0}">无</c:if>
-                <c:if test="${oaDocument.processDeadline == 60}">1小时</c:if>
-                <c:if test="${oaDocument.processDeadline == 120}">2小时</c:if>
-                <c:if test="${oaDocument.processDeadline == 240}">4小时</c:if>
-                <c:if test="${oaDocument.processDeadline == 1440}">1天</c:if>
-                <c:if test="${oaDocument.processDeadline == 2880}">2天</c:if>
-                <c:if test="${oaDocument.processDeadline == 4320}">3天</c:if>
-                <c:if test="${oaDocument.processDeadline == 7200}">5天</c:if>
-                <c:if test="${oaDocument.processDeadline == 10080}">1周</c:if>
-                <c:if test="${oaDocument.processDeadline == 21600}">15天</c:if>
-                <c:if test="${oaDocument.processDeadline == 43200}">1个月</c:if>
-                <c:if test="${oaDocument.processDeadline == 129600}">3个月</c:if>
-            </td>
-
-            <th class="common_th">归档到:</th>
-            <td class="common_condition_select_frame" style="padding-left: 5px">
-                <c:choose>
-                    <c:when test="${oaDocument.preArchiving == 0}">
-                        无
-                    </c:when>
-                    <c:otherwise>
-                        ${oaDocument.preArchiving}
-                    </c:otherwise>
-                </c:choose>
-            </td>
-        </tr>
-
-        <tr>
-            <th class="th_title" nowrap="nowrap">发起人:</th>
-            <td style="padding-left: 5px">
-                ${oaDocument.userInfoId}
-            </td>
-        </tr>
-
-        <tr>
-            <th class="th_title" nowrap="nowrap">附&nbsp;&nbsp;&nbsp;件:</th>
-            <td style="padding-left: 5px">
-                ${oaDocument.attachment}
-            </td>
-        </tr>
-        </tbody>
-
-    </table>
-</div>
-
-<table class="formtable" style="width: 80%;margin: auto">
+<table class="formtable" style="width: 90%;margin: 40px auto 0;">
 
     <tbody>
     <input type="hidden" id="taskId" value="${oaDocument.taskId}">
@@ -160,9 +93,9 @@
 
     <tr>
         <td class="tlabel">签发：</td>
-        <td colspan="2.5" style="height: 70px">${oaDocument.issue}</td>
+        <td colspan="2.5">${oaDocument.issue}</td>
         <td class="tlabel">会签：</td>
-        <td colspan="2.5" style="height: 70px">${oaDocument.countersign}</td>
+        <td colspan="2.5">${oaDocument.countersign}</td>
     </tr>
 
     <tr>
@@ -184,13 +117,26 @@
         <td>${oaDocument.attachmentNumber}</td>
     </tr>
 
+    <tr>
+        <td class="tlabel">发起人：</td>
+        <td>${oaDocument.userInfoId}</td>
+        <td class="tlabel">附件：</td>
+        <td colspan="3">${oaDocument.attachment}</td>
+    </tr>
+
+    <tr>
+        <td class="tlabel">处理人意见：</td>
+        <td colspan="5" style="height: 68px;padding: 10px;">
+            <textarea id="endorse" class="opinion-column"></textarea>
+        </td>
+    </tr>
     </tbody>
 
 </table>
 
 <div style="text-align: center;padding-top: 20px;">
-    <%--<input type="button" value="返回" onclick="previousPage()"
-           style="padding: 7px 20px; background: #92ebff;border: 1px #a5a5a5 solid;">--%>
+    <input type="button" value="返回" onclick="previousPage()"
+           style="padding: 7px 20px; background: #92ebff;border: 1px #a5a5a5 solid;">
     <input type="button" value="同意" onclick="consent()"
            style="padding: 7px 20px; background: #92ebff;border: 1px #a5a5a5 solid;">
 
@@ -209,23 +155,19 @@
         window.history.back();
     }
 
-    var taskId = $("#taskId").val();
-    // var variableName = "flag";
-    var variableValue;
-
     //同意
     function consent() {
+        //任务id
+        var taskId = $("#taskId").val();
+        //表单id
         var id = $("#id").val();
-        var draftedPerson = $("#draftedPerson").val();
-        variableValue = "1";
-        window.location.href = "${path}/document/documentApproval?taskId=" + taskId + "&variableValue=" + variableValue + "&id=" + id + "&draftedPerson=" + draftedPerson;
+        //处理人意见
+        var annotation = $("#endorse").val();
+
+        window.location.href = "${path}/document/documentApproval?taskId=" + taskId + "&id=" + id + "&annotation=" + annotation;
     }
 
     //不同意
-    function noConsent() {
-        variableValue = "2";
-        window.location.href = "${path}/document/documentApproval?taskId=" + taskId + "&variableName=" + variableName + "&variableValue=" + variableValue;
-    }
 </script>
 </html>
 

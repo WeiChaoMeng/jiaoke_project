@@ -84,80 +84,22 @@
     <table class="simpletable">
 
         <thead>
-        <th><input type="checkbox"></th>
+        <th width="3%"><input type="checkbox"></th>
         <th width="40%">会议名称</th>
-        <th>发起人</th>
-        <th>发起部门</th>
-        <th>会议地点</th>
-        <th>开始时间</th>
-        <th>结束时间</th>
-        <th>会议类型</th>
-        <th>归档</th>
+        <th width="7%">发起人</th>
+        <th width="12%">发起部门</th>
+        <th width="7%">会议地点</th>
+        <th width="12%">开始时间</th>
+        <th width="12%">结束时间</th>
+        <th width="7%">会议类型</th>
         </thead>
 
         <tbody>
 
         <tr></tr>
         <tr>
-            <td><input type="checkbox"></td>
-            <td>学习调研会</td>
-            <td>张三</td>
-            <td>办公室</td>
-            <td>201</td>
-            <td>2018-06-03 14:00:00</td>
-            <td>2018-06-03 15:00:00</td>
-            <td>周期会议</td>
-            <td>部门会议</td>
+            <td colspan="8">暂无数据</td>
         </tr>
-
-        <tr>
-            <td><input type="checkbox"></td>
-            <td>中心组第十四次扩大学习</td>
-            <td>赵武</td>
-            <td>生产经营部</td>
-            <td>201</td>
-            <td>2018-06-04 09:00:00</td>
-            <td>2018-06-04 10:00:00</td>
-            <td>单次会议</td>
-            <td>单位会议</td>
-        </tr>
-
-        <tr>
-            <td><input type="checkbox"></td>
-            <td>2018年中心组第十四次扩大学习的通知</td>
-            <td>黄岐</td>
-            <td>安全管理部</td>
-            <td>201</td>
-            <td>2018-06-06 10:00:00</td>
-            <td>2018-06-06 11:00:00</td>
-            <td>单次会议</td>
-            <td>单位会议</td>
-        </tr>
-
-        <tr>
-            <td><input type="checkbox"></td>
-            <td>继续开展机关党总支学习活动的通知</td>
-            <td>王英</td>
-            <td>企业管理部</td>
-            <td>201</td>
-            <td>2018-06-06 15:00:00</td>
-            <td>2018-06-06 17:00:00</td>
-            <td>单次会议</td>
-            <td>单位会议</td>
-        </tr>
-
-        <tr>
-            <td><input type="checkbox"></td>
-            <td>关于进行内部控制专题讲座的通知</td>
-            <td>高希</td>
-            <td>生产经营部</td>
-            <td>201</td>
-            <td>2018-06-07 09:00:00</td>
-            <td>2018-06-07 10:00:00</td>
-            <td>单次会议</td>
-            <td>单位会议</td>
-        </tr>
-
         </tbody>
 
     </table>
