@@ -112,54 +112,8 @@
         </thead>
 
         <tbody>
-
-        <tr></tr>
         <tr>
-            <td><input type="checkbox"></td>
-            <td>学习调研会</td>
-            <td>张三</td>
-            <td>2018-06-03 14:00:00</td>
-            <td>2018-06-04 11:00:00</td>
-            <td>科世</td>
-            <td>无</td>
-            <td>全部人员</td>
-            <td><i class="iconfont">&#xe64c;</i></td>
-        </tr>
-
-        <tr>
-            <td><input type="checkbox"></td>
-            <td>中心组第十四次扩大学习</td>
-            <td>王曦</td>
-            <td>2018-06-06 08:30:00</td>
-            <td>2018-06-07 10:20:00</td>
-            <td>如果</td>
-            <td>无</td>
-            <td>全部人员</td>
-            <td>&#xe64c;</i></td>
-        </tr>
-
-        <tr>
-            <td><input type="checkbox"></td>
-            <td>2018年中心组第十四次扩大学习的通知</td>
-            <td>高数</td>
-            <td>2018-06-03 15:12:00</td>
-            <td>2018-06-05 10:05:00</td>
-            <td>亥由</td>
-            <td>无</td>
-            <td>全部人员</td>
-            <td>&#xe64c;</i></td>
-        </tr>
-
-        <tr>
-            <td><input type="checkbox"></td>
-            <td>继续开展机关党总支学习活动的通知</td>
-            <td>赵四</td>
-            <td>2018-06-10 10:22:00</td>
-            <td>2018-06-10 10:30:00</td>
-            <td>鸣天</td>
-            <td>无</td>
-            <td>全部人员</td>
-            <td><i class="iconfont">&#xe64c;</i></td>
+            <td colspan="9">暂无数据</td>
         </tr>
         </tbody>
     </table>

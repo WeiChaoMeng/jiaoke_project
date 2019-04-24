@@ -58,3 +58,104 @@
     background-size: 15px 15px;
     margin-top: 3px;
 }
+
+.selectedDrafter {
+    background: url("../../../static/images/icon/select1.png") no-repeat;
+    width: 16px;
+    height: 16px;
+    position: relative;
+    display: inline-block;
+    float: right;
+    background-size: 15px 15px;
+    margin-top: 3px;
+}
+
+/*抄送人员选择*/
+.option-window {
+    padding: 0 2%;
+    width: 96%;
+}
+
+.selection-box {
+    width: 49%;
+    float: left;
+    padding-right: 1%;
+}
+
+.selection-box-title {
+    padding: 3% 0;
+    height: 5%;
+}
+
+.selection-box-title>span{
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.selection-content-outer {
+    width: 99%;
+    border: 1px solid #dedede;
+    border-radius: 4px;
+    background: #f4f6f8;
+    height: 88%;
+    padding: 0;
+    margin: 0;
+}
+
+.selection-content-inside {
+    padding: 0 10px;
+    height: 100%;
+    overflow: auto;
+}
+
+.selection-content-inside>ul {
+    padding: 10px 0;
+}
+
+.selection-box-li ul span:hover {
+    border-bottom: 1.5px solid #000;
+}
+
+.cursor_hand{
+    cursor: pointer;
+}
+
+.selection-box-li>span:hover {
+    color: #2196F3;
+}
+
+.selection-box-li {
+    margin: 5px 20px;
+}
+
+.selection-box-li img {
+    vertical-align: middle;
+}
+
+.selection-box-li span {
+    margin-left: 5px
+}
+
+.submenu-ul {
+    display: none;
+    padding: 0;
+    font-size: 13px;
+}
+
+.submenu-ul li {
+    margin: 5px 0 5px 20px;
+}
+
+.selected-box {
+    width: 49%;
+    float: left;
+    padding-left: 1%;
+}
+
+.selected-box-content ul {
+    padding: 10px 0;
+}
+
+.selected-box-content ul li:hover {
+    background: #e6e6e6;
+}

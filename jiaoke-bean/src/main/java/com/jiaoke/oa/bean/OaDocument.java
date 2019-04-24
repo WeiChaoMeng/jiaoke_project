@@ -1,7 +1,5 @@
 package com.jiaoke.oa.bean;
 
-import org.springframework.stereotype.Service;
-
 import java.io.Serializable;
 import java.util.Date;
 
@@ -20,26 +18,6 @@ public class OaDocument implements Serializable {
     private Integer id;
 
     /**
-     * 表单标题
-     */
-    private String formTitle;
-
-    /**
-     * 重要级别：0普通，1重要，2非常重要
-     */
-    private Integer importance;
-
-    /**
-     * 关联项目
-     */
-    private String associatedProject;
-
-    /**
-     * 预归档
-     */
-    private String preArchiving;
-
-    /**
      * 表单流程
      */
     private String flow;
@@ -48,10 +26,6 @@ public class OaDocument implements Serializable {
      * 流程期限
      */
     private String processDeadline;
-    /**
-     * 跟踪：1全部，2指定
-     */
-    private Integer track;
 
     /**
      * 文本标题
@@ -180,6 +154,11 @@ public class OaDocument implements Serializable {
      */
     private String taskId;
 
+    /**
+     * 接收任务时间
+     */
+    private String receiveTime;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -188,38 +167,6 @@ public class OaDocument implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getFormTitle() {
-        return formTitle;
-    }
-
-    public void setFormTitle(String formTitle) {
-        this.formTitle = formTitle;
-    }
-
-    public Integer getImportance() {
-        return importance;
-    }
-
-    public void setImportance(Integer importance) {
-        this.importance = importance;
-    }
-
-    public String getAssociatedProject() {
-        return associatedProject;
-    }
-
-    public void setAssociatedProject(String associatedProject) {
-        this.associatedProject = associatedProject;
-    }
-
-    public String getPreArchiving() {
-        return preArchiving;
-    }
-
-    public void setPreArchiving(String preArchiving) {
-        this.preArchiving = preArchiving;
     }
 
     public String getFlow() {
@@ -236,14 +183,6 @@ public class OaDocument implements Serializable {
 
     public void setProcessDeadline(String processDeadline) {
         this.processDeadline = processDeadline;
-    }
-
-    public Integer getTrack() {
-        return track;
-    }
-
-    public void setTrack(Integer track) {
-        this.track = track;
     }
 
     public String getTextTitle() {
@@ -452,5 +391,13 @@ public class OaDocument implements Serializable {
 
     public void setTaskId(String taskId) {
         this.taskId = taskId;
+    }
+
+    public String getReceiveTime() {
+        return receiveTime;
+    }
+
+    public void setReceiveTime(String receiveTime) {
+        this.receiveTime = receiveTime;
     }
 }

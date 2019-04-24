@@ -39,12 +39,6 @@ img {
     border: 0;
 }
 
-dl, dt, dd, span {
-    margin: 0;
-    padding: 0;
-    display: block;
-}
-
 a, a:focus {
     text-decoration: none;
     color: #000;

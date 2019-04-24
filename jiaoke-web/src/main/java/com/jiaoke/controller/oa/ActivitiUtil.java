@@ -192,4 +192,9 @@ public class ActivitiUtil {
 
         return startActivity.getOutgoingFlows();
     }
+
+    public void finishCountersignTask(String taskId, Map<String, Object> map, String annotationText) {
+        taskService.addComment(taskId, null, annotationText);
+        taskService.complete(taskId, map);
+    }
 }

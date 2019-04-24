@@ -12,7 +12,6 @@
 body {
     font-family: '微软雅黑';
     margin: 0 auto;
-    /*min-width: 980px;*/
 }
 
 ul {
@@ -114,7 +113,7 @@ table {
     outline: none;
 }
 
-.head_left_button button:hover{
+.head_left_button button:hover {
     color: #2196F3;
 }
 
@@ -484,8 +483,8 @@ table {
 }
 
 .condition_select_frame {
-    padding-left: 10px;
-    width: 8%;
+    width: 11%;
+    padding-right: 1%;
 }
 
 .common_input_frame {
@@ -577,17 +576,14 @@ table {
 }
 
 .common_condition_select_frame {
-    width: 13%;
-}
-
-.td_right_padding {
-    padding-right: 10px;
+    padding-right: 1%;
+    width: 15%;
 }
 
 .common_th {
-    width: 6%;
+    width: 5%;
     text-align: right;
-    padding-right: 5px;
+    padding-right: 0.5%;
 }
 
 .common_radio {
@@ -639,7 +635,7 @@ table {
     text-indent: 5px;
 }
 
-.input-outline{
+.input-outline {
     outline: none;
 }
 
@@ -721,7 +717,7 @@ table {
 .th_title {
     width: 3%;
     text-align: right;
-    padding-right: 5px;
+    padding-right: 0.5%;
 }
 
 .tlabel {
@@ -1251,6 +1247,13 @@ table {
     cursor: pointer;
 }
 
+.send_button_inpt{
+    padding: 5px 15px;
+    margin: 5px 10px;
+    background-color: #00a6f570;
+    cursor: pointer;
+}
+
 .permissions_color {
     background: #f4f4f4;
 }
@@ -1286,4 +1289,54 @@ table {
 
 .simpletable tbody tr:hover {
     background: #bdbdbd80;
+}
+
+.conditional-query {
+    float: right;
+    margin-right: 20px;
+    height: 23px;
+    border: 1px #000 solid;
+    border-radius: 10px;
+    padding: 0 10px;
+    background: #fff
+}
+
+.search-bar {
+    outline: none;
+    height: 100%;
+}
+
+.search-icon-size {
+    font-size: 18px
+}
+
+.paging-div {
+    right: 10px;
+    height: 35px;
+    position: absolute;
+    bottom: 10px;
+}
+
+.read-write-permission {
+    resize: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    height: 100px;
+    border: none;
+    outline: none;
+    display: block;
+    background: #f6f6f6;
+}
+
+.opinion-column {
+    resize: none;
+    width: 100%;
+    font-size: 15px;
+    height: 100%;
+    border: none;
+    outline: none;
+    display: block;
+    color: #000;
 }

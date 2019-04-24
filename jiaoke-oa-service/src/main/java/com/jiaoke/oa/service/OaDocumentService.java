@@ -3,7 +3,6 @@ package com.jiaoke.oa.service;
 import com.jiaoke.oa.bean.OaDocument;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * OA-公文
@@ -31,6 +30,15 @@ public interface OaDocumentService {
     List<OaDocument> getAllByFormState(Integer formState);
 
     /**
+     * 搜索
+     *
+     * @param textTitle 标题
+     * @param formState 表单状态
+     * @return list
+     */
+    List<OaDocument> textTitleFilter(String textTitle, int formState);
+
+    /**
      * 根据id获取列表
      *
      * @param id id
@@ -39,12 +47,13 @@ public interface OaDocumentService {
     OaDocument getAllById(Integer id);
 
     /**
-     * 根据表单状态获取总数
+     * 根据BusinessId获取
      *
-     * @param formState formState
-     * @return total
+     * @param ids       businessIdList
+     * @param textTitle textTitle
+     * @return list
      */
-    int getTotalByFormState(Integer formState);
+    List<OaDocument> selectByBusinessId(List<Integer> ids, String textTitle);
 
     /**
      * 根据id获取公文详情
@@ -55,19 +64,9 @@ public interface OaDocumentService {
     OaDocument getDocumentDetailsById(Integer id);
 
     /**
-     * 根据表单状态分页查询
-     *
-     * @param formState 表单状态
-     * @param page      页
-     * @param rows      条数
-     * @return OaDocumentList
-     */
-    List<OaDocument> getPagingByFormState(Integer formState, Integer page, Integer rows);
-
-    /**
      * 更新会签
      *
-     * @param id id
+     * @param id            id
      * @param draftedPerson 拟稿人
      * @return NumberOfAffectedRows
      */
@@ -88,4 +87,20 @@ public interface OaDocumentService {
      * @return NumberOfAffectedRows
      */
     int edit(OaDocument oaDocument);
+
+    /**
+     * 根据主键删除
+     *
+     * @param id 主键
+     * @return
+     */
+    int deleteById(int id);
+
+    /**
+     * 更新待发文档
+     *
+     * @param oaDocument oaDocument
+     * @return int
+     */
+    int updatePendingDocument(OaDocument oaDocument);
 }

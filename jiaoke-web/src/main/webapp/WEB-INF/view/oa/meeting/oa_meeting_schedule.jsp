@@ -101,63 +101,9 @@
         </thead>
 
         <tbody>
-
-        <tr></tr>
         <tr>
-            <td><input type="checkbox"></td>
-            <td>学习调研会</td>
-            <td>2018-06-03 14:00:00</td>
-            <td>2018-06-03 15:00:00</td>
-            <td>201</td>
-            <td>正常</td>
-            <td>周期会议</td>
-            <td>审核中</td>
+            <td colspan="8">暂无数据</td>
         </tr>
-
-        <tr>
-            <td><input type="checkbox"></td>
-            <td>中心组第十四次扩大学习</td>
-            <td>2018-06-04 09:00:00</td>
-            <td>2018-06-04 10:00:00</td>
-            <td>201</td>
-            <td>正常</td>
-            <td>单次会议</td>
-            <td>审核中</td>
-        </tr>
-
-        <tr>
-            <td><input type="checkbox"></td>
-            <td>2018年中心组第十四次扩大学习的通知</td>
-            <td>2018-06-06 10:00:00</td>
-            <td>2018-06-06 11:00:00</td>
-            <td>201</td>
-            <td>正常</td>
-            <td>单次会议</td>
-            <td>审核中</td>
-        </tr>
-
-        <tr>
-            <td><input type="checkbox"></td>
-            <td>继续开展机关党总支学习活动的通知</td>
-            <td>2018-06-06 15:00:00</td>
-            <td>2018-06-06 17:00:00</td>
-            <td>201</td>
-            <td>正常</td>
-            <td>单次会议</td>
-            <td>审核中</td>
-        </tr>
-
-        <tr>
-            <td><input type="checkbox"></td>
-            <td>关于进行内部控制专题讲座的通知</td>
-            <td>2018-06-07 09:00:00</td>
-            <td>2018-06-07 10:00:00</td>
-            <td>201</td>
-            <td>正常</td>
-            <td>单次会议</td>
-            <td>审核中</td>
-        </tr>
-
         </tbody>
 
     </table>

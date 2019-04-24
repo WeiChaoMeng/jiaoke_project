@@ -74,17 +74,8 @@
         </thead>
 
         <tbody id="tbody">
-
         <tr>
-            <td>1</td>
-            <td>得力打印纸</td>
-            <td>张三</td>
-            <td>12</td>
-            <td>7</td>
-            <td>5</td>
-            <td>李四</td>
-            <td>无</td>
-            <td>2019-01-21 12:12:10</td>
+            <td colspan="9">暂无数据</td>
         </tr>
         </tbody>
 

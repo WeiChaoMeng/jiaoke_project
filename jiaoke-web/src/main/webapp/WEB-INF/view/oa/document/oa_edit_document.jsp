@@ -27,28 +27,15 @@
 <div class="top_toolbar">
     <div class="top_toolbar_inside">
         <div>
-            <span id="edit">保存待发</span>
+            <span onclick="preservationPending()">保存待发</span>
         </div>
-        <em class="top_toolbar_em"></em>
 
-        <div>
-            <span>调用模板</span>
-        </div>
         <em class="top_toolbar_em"></em>
 
         <div>
             <span>插入</span>
         </div>
-        <em class="top_toolbar_em"></em>
 
-        <div>
-            <span>正文类型</span>
-        </div>
-        <em class="top_toolbar_em"></em>
-
-        <div>
-            <span>存为模板</span>
-        </div>
         <em class="top_toolbar_em"></em>
 
         <div>
@@ -62,206 +49,43 @@
         <table style="width: 100%">
             <tbody>
             <tr>
-                <td rowspan="2" nowrap="nowrap" style="width: 1px">
-                    <input type="submit" value="发送" style="padding: 15px;margin: 5px 10px;background-color: #00a6f570">
+                <td nowrap="nowrap" class="send_button_td">
+                    <input class="send_button_inpt" type="submit" value="发送">
                 </td>
+                <td class="th_title" nowrap="nowrap">流程:</td>
 
-                <th nowrap="nowrap" class="th_title">标题:</th>
-
-                <td>
+                <td style="padding-right: 1%;">
                     <div class="common_input_frame">
                         <input type="hidden" name="id" id="id" value="${oaDocument.id}">
-                        <input type="text" name="formTitle" id="formTitle" value="${oaDocument.formTitle}"
-                               placeholder="<点击此处填写标题>" required>
+                        <input type="text" value="" name="flow" placeholder="发起者、[王玉秋,李宝琦,杨德秀]（会签）、总经理（审批）"
+                               readonly="readonly">
                     </div>
                 </td>
 
-                <td class="condition_select_frame">
-                    <div class="common_select_frame">
-                        <select name="importance">
-                            <c:choose>
-                                <c:when test="${oaDocument.importance == 0}">
-                                    <option value="0" selected="selected">普通</option>
-                                </c:when>
-                                <c:otherwise>
-                                    <option value="0">普通</option>
-                                </c:otherwise>
-                            </c:choose>
-                            <c:choose>
-                                <c:when test="${oaDocument.importance == 1}">
-                                    <option value="1" selected="selected">重要</option>
-                                </c:when>
-                                <c:otherwise>
-                                    <option value="1">重要</option>
-                                </c:otherwise>
-                            </c:choose>
-                            <c:choose>
-                                <c:when test="${oaDocument.importance == 2}">
-                                    <option value="2" selected="selected">非常重要</option>
-                                </c:when>
-                                <c:otherwise>
-                                    <option value="2">非常重要</option>
-                                </c:otherwise>
-                            </c:choose>
-                        </select>
-                    </div>
-                </td>
-
-                <th class="common_th">关联项目:</th>
-
-                <td class="common_condition_select_frame">
-                    <div class="common_select_frame">
-                        <select name="associatedProject" id="">
-                            <option value="0">无</option>
-                        </select>
-                    </div>
-                </td>
-
-                <th class="common_th">预归档到:</th>
-
-                <td class="common_condition_select_frame">
-                    <div class="common_select_frame">
-                        <select name="preArchiving">
-                            <option value="0">无</option>
-                        </select>
-                    </div>
-                </td>
-            </tr>
-
-            <tr>
-                <th class="th_title" nowrap="nowrap">流程:</th>
-                <td>
-                    <div class="common_input_frame">
-                        <input type="text" value="" name="flow" placeholder="公文、[张三、李四、王五]、总经理" readonly="readonly">
-                    </div>
-                </td>
                 <td class="condition_select_frame">
                     <div class="common_select_frame">
                         <input type="button" value="编辑流程">
                     </div>
                 </td>
 
-                <th class="common_th">流程期限:</th>
+                <td class="common_th">流程期限:</td>
 
                 <td class="common_condition_select_frame">
                     <div class="common_select_frame">
                         <select name="processDeadline" id="deadline">
-                            <c:choose>
-                                <c:when test="${oaDocument.processDeadline == 0}">
-                                    <option value="0" selected="selected">无</option>
-                                </c:when>
-                                <c:otherwise>
-                                    <option value="0">无</option>
-                                </c:otherwise>
-                            </c:choose>
-                            <c:choose>
-                                <c:when test="${oaDocument.processDeadline == 60}">
-                                    <option value="60" selected="selected">1小时</option>
-                                </c:when>
-                                <c:otherwise>
-                                    <option value="60">1小时</option>
-                                </c:otherwise>
-                            </c:choose>
-                            <c:choose>
-                                <c:when test="${oaDocument.processDeadline == 120}">
-                                    <option value="120" selected>2小时</option>
-                                </c:when>
-                                <c:otherwise>
-                                    <option value="120">2小时</option>
-                                </c:otherwise>
-                            </c:choose>
-                            <c:choose>
-                                <c:when test="${oaDocument.processDeadline == 240}">
-                                    <option value="240" selected="selected">4小时</option>
-                                </c:when>
-                                <c:otherwise>
-                                    <option value="240">4小时</option>
-                                </c:otherwise>
-                            </c:choose>
-                            <c:choose>
-                                <c:when test="${oaDocument.processDeadline == 1440}">
-                                    <option value="1440" selected="selected">1天</option>
-                                </c:when>
-                                <c:otherwise>
-                                    <option value="1440">1天</option>
-                                </c:otherwise>
-                            </c:choose>
-                            <c:choose>
-                                <c:when test="${oaDocument.processDeadline == 2880}">
-                                    <option value="2880" selected="selected">2天</option>
-                                </c:when>
-                                <c:otherwise>
-                                    <option value="2880">2天</option>
-                                </c:otherwise>
-                            </c:choose>
-                            <c:choose>
-                                <c:when test="${oaDocument.processDeadline == 4320}">
-                                    <option value="4320" selected="selected">3天</option>
-                                </c:when>
-                                <c:otherwise>
-                                    <option value="4320">3天</option>
-                                </c:otherwise>
-                            </c:choose>
-                            <c:choose>
-                                <c:when test="${oaDocument.processDeadline == 7200}">
-                                    <option value="7200" selected="selected">5天</option>
-                                </c:when>
-                                <c:otherwise>
-                                    <option value="7200">5天</option>
-                                </c:otherwise>
-                            </c:choose>
-                            <c:choose>
-                                <c:when test="${oaDocument.processDeadline == 10080}">
-                                    <option value="10080" selected="selected">1周</option>
-                                </c:when>
-                                <c:otherwise>
-                                    <option value="10080">1周</option>
-                                </c:otherwise>
-                            </c:choose>
-                            <c:choose>
-                                <c:when test="${oaDocument.processDeadline == 21600}">
-                                    <option value="21600" selected="selected">15天</option>
-                                </c:when>
-                                <c:otherwise>
-                                    <option value="21600">15天</option>
-                                </c:otherwise>
-                            </c:choose>
-                            <c:choose>
-                                <c:when test="${oaDocument.processDeadline == 43200}">
-                                    <option value="43200" selected="selected">1个月</option>
-                                </c:when>
-                                <c:otherwise>
-                                    <option value="43200">1个月</option>
-                                </c:otherwise>
-                            </c:choose>
-                            <c:choose>
-                                <c:when test="${oaDocument.processDeadline == 129600}">
-                                    <option value="129600" selected="selected">3个月</option>
-                                </c:when>
-                                <c:otherwise>
-                                    <option value="129600">3个月</option>
-                                </c:otherwise>
-                            </c:choose>
-
+                            <option value="0">无</option>
+                            <option value="60">1小时</option>
+                            <option value="120">2小时</option>
+                            <option value="240">4小时</option>
+                            <option value="1440">1天</option>
+                            <option value="2880">2天</option>
+                            <option value="4320">3天</option>
+                            <option value="7200">5天</option>
+                            <option value="10080">1周</option>
+                            <option value="21600">15天</option>
+                            <option value="43200">1个月</option>
+                            <option value="129600">3个月</option>
                         </select>
-                    </div>
-                </td>
-
-                <th class="common_th">
-                    <div>
-                        <label for="canTrack">
-                            <input id="canTrack" type="checkbox" checked="checked" onclick="choice()">跟踪
-                        </label>
-                    </div>
-                </th>
-                <td colspan="3">
-                    <div class="common_radio">
-                        <label for="radioall">
-                            <input type="radio" id="radioall" name="track" value="1" checked="checked">全部人员
-                        </label>
-                        <label for="radiopart">
-                            <input type="radio" id="radiopart" name="track" value="2">指定人员
-                        </label>
                     </div>
                 </td>
             </tr>
@@ -275,7 +99,7 @@
         <tr>
             <td class="tlabel">标题：</td>
             <td colspan="5">
-                <input class="forminput inputstyle inputadress" type="text" name="textTitle"
+                <input class="forminput inputstyle inputadress" type="text" id="textTitle" name="textTitle"
                        value="${oaDocument.textTitle}" required>
             </td>
         </tr>
@@ -539,15 +363,11 @@
         </tr>
 
         <tr>
-            <td class="tlabel">主送：</td>
-            <td colspan="5"><input type="text" class="forminput inputstyle inputadress" name="mainGive"
-                                   value="${oaDocument.mainGive}"></td>
-        </tr>
-
-        <tr>
             <td class="tlabel">抄送：</td>
-            <td colspan="5"><input type="text" class="forminput inputstyle inputadress" id="copyGive" name="copyGive"
-                                   value="${oaDocument.copyGive}" onfocus="this.blur()"></td>
+            <td colspan="5">
+                <input type="text" class="forminput inputstyle inputadress" id="copyGive" name="copyGive"
+                       onclick="carbonCopy()" value="${oaDocument.copyGive}" onfocus="this.blur()">
+            </td>
         </tr>
 
         <tr>
@@ -588,41 +408,34 @@
 <script type="text/javascript" src="../../../../static/js/datepicker/js/bootstrap-datepicker.js"></script>
 <script type="text/javascript"
         src="../../../../static/js/datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+<script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
     //保存待发
-    $("#edit").on("click", function () {
-        var formTitle = $("#formTitle").val();
-        if ($.trim(formTitle) == '') {
-            alert("标题不能为空！")
+    function preservationPending() {
+        var textTitle = $("#textTitle").val();
+        if ($.trim(textTitle) == '') {
+            layer.msg("标题不能为空！")
         } else {
             $("#formState").val("1");
             $.ajax({
                 cache: true,
                 type: "POST",
-                url: '${path}/document/edit',
+                url: '${path}/document/updatePendingDocument',
                 data: $("#oaDocumentProcessing").serialize(),
                 error: function (request) {
-                    alert("Connection error");
+                    layer.msg("出错！");
                 },
                 success: function (result) {
-                    if (result == "success") {
-                        window.location.href = "primedDocument.do";
+                    if (result === "success") {
+                        window.location.href = "${path}/document/toPrimedDocument.do?page=1";
                     } else {
-                        alert("保存失败")
+                        layer.msg("保存失败")
                     }
                 }
             })
         }
-
-    });
-
-    //跟踪选择切换
-    var flag = false;
-
-    function choice() {
-        $("#radioall").attr("checked", flag);
-        flag = !flag;
     }
+
 
     //日期选择器
     $("#writingTime").datepicker({
@@ -641,6 +454,7 @@
         if (departmentKey === "") {
             alert("请先选择部门！")
         } else {
+            var draftedPerson = $('#draftedPerson').val();
             $.ajax({
                 cache: true,
                 type: "POST",
@@ -650,8 +464,9 @@
                     alert("Connection error");
                 },
                 success: function (result) {
-                    console.log(JSON.parse(result))
-                    parent.openBack(JSON.parse(result));
+                    /*console.log(JSON.parse(result))
+                    parent.openBack(JSON.parse(result));*/
+                    top.window.selectReviewers(JSON.parse(result), draftedPerson);
                 }
             });
         }
@@ -660,6 +475,15 @@
     //插入选择的核稿人
     function insertReviewer(parameter) {
         $('#draftedPerson').val(parameter);
+    }
+
+    //选择抄送人员
+    function carbonCopy() {
+        //用户
+        var userInfoList = JSON.parse('${userInfoList}');
+        //部门
+        var departmentList = JSON.parse('${departmentList}')
+        top.selectNotifyPerson(userInfoList, departmentList);
     }
 
     function insertCopyGive(array) {
