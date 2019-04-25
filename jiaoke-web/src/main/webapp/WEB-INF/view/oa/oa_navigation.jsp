@@ -175,8 +175,8 @@
                 <li><a id="personal_attendance"><span>个人考勤</span></a></li>
                 <li><a id="personal_salary"><span>个人工资</span></a></li>
                 <li><a id="wage_statistics"><span>工资统计</span></a></li>
-                <li><a id="schedule_planning"><span>日程计划</span></a></li>
-                <li><a id="notepad"><span>待办记事</span></a></li>
+               <%-- <li><a id="schedule_planning"><span>日程计划</span></a></li>
+                <li><a id="notepad"><span>待办记事</span></a></li>--%>
             </ul>
         </li>
         <%--<li class="nav-item">

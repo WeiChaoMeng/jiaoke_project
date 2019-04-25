@@ -88,7 +88,27 @@ public class QualityController {
 
         receiveDataInf.receiveDataToDB(messageStr);
 
-        receiveDataInf.receiveDataToDBSham(messageStr);
+        class MyThread implements Runnable{
+            private  String messageStr;
+            private  ReceiveDataInf receiveDataInf;
+            public void setMessageStr(String messageStr)
+            {
+                this.messageStr = messageStr;
+            }
+            public void setReceiveDataInf(ReceiveDataInf receiveDataInf)
+            {
+                this.receiveDataInf = receiveDataInf;
+            }
+            @Override
+            public void run() {
+                receiveDataInf.receiveDataToDBSham(messageStr);
+            }
+        }
+        MyThread myThread = new MyThread();
+        myThread.setMessageStr(messageStr);
+        myThread.setReceiveDataInf(receiveDataInf);
+        Thread thread = new Thread(myThread);
+        thread.start();
 
         long endTime = System.currentTimeMillis();
 
