@@ -15,7 +15,6 @@ setInterval(getWarningData, 3000);
 function getWarningData() {
     $.ajax({
         url: basePath + "/getQualityWarningData.do",
-        // url: "http://47.105.114.70/getQualityWarningData.do",
         type: "post",
         dataType: "json",
         success: function (res) {
@@ -64,6 +63,7 @@ function getWarningData() {
                             + '<td>' + res[i].actual_ratio + '<i>℃</i></td>'
                             + '<td>' + res[i].deviation_ratio + '<i>℃</i></td>'
                             + '<td>' + warningLeve + '</td>'
+                            + '<td>' + res[i].avg_real_ration + '<i>℃</i></td>'
                             + '</tr>'
                         )
                     } else {
@@ -74,6 +74,7 @@ function getWarningData() {
                             + '<td>' + res[i].actual_ratio + '<i>%</i></td>'
                             + '<td>' + res[i].deviation_ratio + '<i>%</i></td>'
                             + '<td>' + warningLeve + '</td>'
+                            + '<td>' + res[i].avg_real_ration + '<i>%</i></td>'
                             + '</tr>'
                         )
                     }
@@ -95,7 +96,7 @@ function getWarningData() {
 //         type: "post",
 //         dataType: "json",
 //         success:function (res) {
-//             debugger
+//
 //             var crew1nameArray = new Array();
 //             var crew1topArray = new Array();
 //             var crew1downArray = new Array();
@@ -167,11 +168,11 @@ function getWarningData() {
 /******************************** Echart材料比渲染Start********************************************/
 function getRealTimeDataEcharsMaterial() {
     $.ajax({
-        url:basePath + "/getRealTimeDataEcharsMaterial.do",
-        // url:"http://47.105.114.70/getRealTimeDataEcharsMaterial.do",
+        url:basePath + "/getWarningEcharsData.do",
         type:"post",
         dataType:"json",
         success:function (res) {
+
             eachMaterialList(res);
         }
     })

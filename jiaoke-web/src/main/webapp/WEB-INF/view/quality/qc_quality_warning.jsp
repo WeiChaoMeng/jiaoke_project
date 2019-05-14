@@ -12,9 +12,7 @@
     <meta charset="utf-8">
     <title>数据预警</title>
     <link href="/static/css/default.css" rel="stylesheet" type="text/css">
-    <link href="/static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
     <script src="/static/js/echarts/echarts.js"></script>
-    <script src="/static/js/echarts/uimaker.js"></script>
 </head>
 
 <body style="padding:15px 8px 500px 8px;">
@@ -65,6 +63,7 @@
                     <th>实际配比</th>
                     <th>偏差比</th>
                     <th>预警级别</th>
+                    <th>三盘平均配比</th>
                 </thead>
 
                 <tbody id="crew1_material" >
@@ -81,7 +80,7 @@
                 <div>
 
                     <div class="boxtitle">
-                        <span>一号机组产品级配曲线图</span>
+                        <span>一号机组三盘产品平均级配曲线图</span>
                     </div>
                     <div id="chart7" class="charts_2"></div>
 
@@ -261,6 +260,7 @@
                     <th>实际配比</th>
                     <th>偏差比</th>
                     <th>预警级别</th>
+                    <th>三盘平均配比</th>
                 </thead>
 
                 <tbody id="crew2_material" >
@@ -276,7 +276,7 @@
                 <div>
 
                     <div class="boxtitle">
-                        <span>二号机组产品级配曲线图</span>
+                        <span>二号机组三盘产品平均级配曲线图</span>
                     </div>
                     <div id="chart4" class="charts_2"></div>
 
@@ -414,8 +414,6 @@
     <input id="path" type="hidden" value="${path}"/>
 </body>
 <script type="text/javascript" src="/static/js/jquery.js"></script>
-<%--<script type="text/javascript" src="/static/js/common.js"></script>--%>
-<%--<script type="text/javascript" src="/static/js/skin.js"></script>--%>
 <script type="text/javascript" src="/static/js/qc/quality_warning.js"></script>
 
 </html>

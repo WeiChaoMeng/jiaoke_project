@@ -238,7 +238,49 @@
                             ) AS T2 ON T1.crew_id = T2.id
     </select>
     <select id="selectProListByRatioNumAndDate" resultType="java.util.Map">
-        SELECT * from quality_monitoring_realtime_${crewNum} WHERE produce_proportioning_num = ${ratioNum} and  produce_date = date ${date}
+        SELECT
+        &apos;${crewNum}&apos; as crewNums,
+        date_format(QMRD.produce_date,'%Y-%m-%d') as  produce_date,
+        date_format(QMRD.produce_time,'%H:%I:%S') as produce_time,
+        QMRD.produce_disc_num,
+        QPM.pro_name,
+        QMRD.produce_proportioning_num,
+        QMRD.produce_car_num,
+        QMRD.produce_custom_num,
+        QMRD.material_aggregate_6,
+        QMRD.material_aggregate_5,
+        QMRD.material_aggregate_4,
+        QMRD.material_aggregate_3,
+        QMRD.material_aggregate_2,
+        QMRD.material_aggregate_1,
+        QMRD.material_stone_1,
+        QMRD.material_stone_2,
+        QMRD.material_asphalt,
+        QMRD.material_regenerate,
+        QMRD.material_additive,
+        QMRD.material_total,
+        QMRD.temperature_warehouse_1,
+        QMRD.temperature_mixture,
+        QMRD.temperature_duster,
+        QMRD.temperature_asphalt,
+        QMRD.temperature_aggregate
+        FROM
+        quality_monitoring_realtime_${crewNum} AS QMRD
+        INNER JOIN
+        quality_proportioning_message AS QPM
+
+        <choose>
+            <when test="crewNum=='data1'.toString()">
+                ON QMRD.produce_proportioning_num = QPM.crew1_modele_id
+            </when>
+            <otherwise>
+                ON QMRD.produce_proportioning_num = QPM.crew2_modele_id
+            </otherwise>
+        </choose>
+        WHERE
+        QMRD.produce_proportioning_num = ${ratioNum}
+        AND
+        QMRD.produce_date = date ${date};
     </select>
     <select id="selectRationById" resultType="com.jiaoke.quality.bean.QualityRatioTemplate">
         select

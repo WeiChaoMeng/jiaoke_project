@@ -424,21 +424,22 @@
         <table class="my_form_table">
             <tbody>
             <tr>
-                <td class="ration_tlabels">一号机组模板号：</td>
+                <td class="my_grading_tlables">一号机组模板号：</td>
                 <td>
-                    <input type="number" id="crew1_num" class="forminput inputstyle">
+                    <input type="number" id="crew1_num" class="my_grading_input">
 
                 </td>
-                <td class="ration_tlabels">二号机组模板号：</td>
+                <td class="my_grading_tlables">二号机组模板号：</td>
                 <td>
-                    <input type="number" id="crew2_num" class="forminput inputstyle">
+                    <input type="number" id="crew2_num" class="my_grading_input">
                 </td>
-            </tr>
-            <tr>
-                <td class="ration_tlabels">级配Excell</td>
+                <td class="my_grading_tlables">级配Excell</td>
                 <td>
                     <input type="file" id="excel-file"  class="ration_forminput ration_inputstyle">
                 </td>
+            </tr>
+            <tr>
+
             </tr>
 
             </tbody>
@@ -446,7 +447,7 @@
         </table>
         <div id="result"></div>
         <div class="form_btn">
-            <input type="button" onclick="sendGrading()" value="上传" class="ration_btn_cancel">
+            <input type="button" onclick="sendGrading()" value="上传" class="ration_btn_cancel" style="padding-top: 0px">
             <input type="button" onclick="closeGrading()" value="关闭" class="ration_btn_cancel">
         </div>
 
@@ -459,7 +460,6 @@
 
 <script type="text/javascript" src="/static/js/jquery.js"></script>
 <script type="text/javascript" src="/static/js/common.js"></script>
-<script type="text/javascript" src="/static/js/skin.js"></script>
 <script type="text/javascript" src="/static/js/jquery.select.js"></script>
 <script src="/static/js/layer/layer.js"></script>
 

@@ -1,6 +1,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: lihui
@@ -13,76 +14,25 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>产品信息</title>
+    <title>产品平均信息</title>
     <link href="/static/css/default.css" rel="stylesheet" type="text/css">
     <link href="/static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
-    <script src="/static/js/echarts/echarts.js"></script>
     <script type="text/javascript" src="/static/js/jquery.js"></script>
-</head>
-<style>
-    .leftMenuDiv{
-        position: fixed;
-        right:94%;
-        top:35%;
-        border-radius: 5px;
-        width: 80px;
-        height: 200px;
-        background-color: #d3d7dc;
-        -webkit-transition: opacity .5s,width .1s,margin .5s;
-    }
+    <script src="/static/js/echarts/echarts.js"></script>
 
-    .leftMenuImage{
-        position: fixed;
-        right:94%;
-        top:35%;
-        background-image: url(/static/images/qc/leftMenu.png);
-        width: 80px;
-        height: 80px;
-        display: block;
-        margin: 60px auto;
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        -moz-background-size: 100% 100%;
-    }
-    .rightMenuDiv{
-        position: fixed;
-        left:94%;
-        top:35%;
-        border-radius: 5px;
-        width: 80px;
-        height: 200px;
-        background-color: #d3d7dc;
-        -webkit-transition: opacity .5s,width .1s,margin .5s;
-    }
-    .rightMenuImage{
-        position: fixed;
-        left:94%;
-        top:35%;
-        background-image: url(/static/images/qc/rightMenu.png);
-        width: 80px;
-        height: 80px;
-        display: block;
-        margin: 60px auto;
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        -moz-background-size: 100% 100%;
-    }
-</style>
+</head>
 
 <body style="padding:15px 8px 500px 8px;">
 
 <div class="">
     <div class="">
         <div class="boxtitle">
-            <span>产品详细数据信息</span>
+            <span>产品平均数据</span>
         </div>
 
         <div class="boxdown">
             <table class="simpletable">
                 <thead>
-                <th style="width: 70px">生产日期</th>
-                <th style="width: 70px">生产时间</th>
-                <th style="width: 70px">盘号</th>
                 <th style="width: 70px ">配比名称</th>
                 <th style="width: 70px">骨料1</th>
                 <th style="width: 70px">骨料2</th>
@@ -96,28 +46,24 @@
                 <th style="width: 70px ">再生料</th>
                 <th style="width: 70px ">添加剂</th>
                 <th style="width: 100px">合计(kg)</th>
-
                 </thead>
 
                 <tbody>
                 <tr></tr>
                 <tr>
-                    <td>${proBase.produce_date}</td>
-                    <td>${proBase.produce_time}</td>
-                    <td>${proBase.produce_disc_num}</td>
-                    <td>${proBase.pro_name}</td>
-                    <td>${proBase.material_aggregate_1 - proBase.material_aggregate_2}</td>
-                    <td>${proBase.material_aggregate_2 - proBase.material_aggregate_3}</td>
-                    <td>${proBase.material_aggregate_3 - proBase.material_aggregate_4}</td>
-                    <td>${proBase.material_aggregate_4 - proBase.material_aggregate_5}</td>
-                    <td>${proBase.material_aggregate_5 - proBase.material_aggregate_6}</td>
-                    <td>${proBase.material_aggregate_6}</td>
-                    <td>${proBase.material_stone_1}</td>
-                    <td>${proBase.material_stone_2}</td>
-                    <td>${proBase.material_asphalt}</td>
-                    <td>${proBase.material_regenerate}</td>
-                    <td>${proBase.material_additive}</td>
-                    <td>${proBase.material_total}</td>
+                    <td>${productModelRationSVG.pro_name}</td>
+                    <td><fmt:formatNumber value="${productSVG.material_aggregate_1 - productSVG.material_aggregate_2}" pattern="0.00"/><em></em>kg</td></td>
+                    <td><fmt:formatNumber value="${productSVG.material_aggregate_2 - productSVG.material_aggregate_3}" pattern="0.00"/><em></em>kg</td></td>
+                    <td><fmt:formatNumber value="${productSVG.material_aggregate_3 - productSVG.material_aggregate_4}" pattern="0.00"/><em></em>kg</td></td>
+                    <td><fmt:formatNumber value="${productSVG.material_aggregate_4 - productSVG.material_aggregate_5}" pattern="0.00"/><em></em>kg</td></td>
+                    <td><fmt:formatNumber value="${productSVG.material_aggregate_5 - productSVG.material_aggregate_6}" pattern="0.00"/><em></em>kg</td></td>
+                    <td>${productSVG.material_aggregate_6}<em>kg</em></td>
+                    <td>${productSVG.material_stone_1}<em>kg</em></td>
+                    <td>${productSVG.material_stone_2}<em>kg</em></td>
+                    <td>${productSVG.material_asphalt}<em>kg</em></td>
+                    <td>${productSVG.material_regenerate}<em>kg</em></td>
+                    <td>${productSVG.material_additive}<em>kg</em></td>
+                    <td>${productSVG.material_total}<em>kg</em></td>
                 </tr>
 
                 </tbody>
@@ -126,7 +72,7 @@
                 <th style="width: 100px ">混合料温度</th>
                 <th style="width: 100px ">除尘器入口温度</th>
                 <th style="width: 100px ">沥青温度</th>
-                <th style="width: 100px ">再生料温度</th>
+                <th style="width: 100px ">骨料温度</th>
                 <th style="width: 100px ">骨料1比例</th>
                 <th style="width: 100px ">骨料2比例</th>
                 <th style="width: 100px ">骨料3比例</th>
@@ -138,54 +84,20 @@
                 <th style="width: 100px ">再生料占比</th>
                 </thead>
                 <tbody>
-                <td>${proBase.temperature_warehouse_1}</td>
-                <td>${proBase.temperature_mixture}</td>
-                <td>${proBase.temperature_duster}</td>
-                <td>${proBase.temperature_asphalt}</td>
-                <td>${proBase.temperature_aggregate}</td>
-                <td id="one">0</td>
-                <td id="two" >0</td>
-                <td id="three" >0</td>
-                <td id="four" >0</td>
-                <td id="five" >0</td>
-                <td id="six" >0</td>
-                <td id="k" >0</td>
-                <td id="l" >0</td>
-                <td id="z" >0</td>
-                <c:forEach items="${proMessage}" var="item">
-                    <script type="text/javascript">
-
-                        switch ('${item.material_name}') {
-                            case '骨料1' :
-                                $('#one').text(${item.actual_ratio});
-                                break;
-                            case '骨料2' :
-                                $('#two').text(${item.actual_ratio});
-                                break;
-                            case '骨料3' :
-                                $('#three').text(${item.actual_ratio});
-                                break;
-                            case '骨料4' :
-                                $('#four').text(${item.actual_ratio});
-                                break;
-                            case '骨料5' :
-                                $('#five').text(${item.actual_ratio});
-                                break;
-                            case '骨料6' :
-                                $('#six').text(${item.actual_ratio});
-                                break;
-                            case '矿粉' :
-                                $('#k').text(${item.actual_ratio});
-                                break;
-                            case '沥青' :
-                                $('#l').text(${item.actual_ratio});
-                                break;
-                            case '再生料' :
-                                $('#z').text(${item.actual_ratio});
-                                break;
-                        }
-                    </script>
-                </c:forEach>
+                <td>${productSVG.temperature_warehouse_1}<em>℃</em></td>
+                <td>${productSVG.temperature_mixture}<em>℃</em></td>
+                <td>${productSVG.temperature_duster}<em>℃</em></td>
+                <td>${productSVG.temperature_asphalt}<em>℃</em></td>
+                <td>${productSVG.temperature_aggregate}<em>℃</em></td>
+                <td id="one">${productRationSVG.material_aggregate_1}<em>%</em></td>
+                <td id="two" >${productRationSVG.material_aggregate_2}<em>%</em></td>
+                <td id="three" >${productRationSVG.material_aggregate_3}<em>%</em></td>
+                <td id="four" >${productRationSVG.material_aggregate_4}<em>%</em></td>
+                <td id="five" >${productRationSVG.material_aggregate_5}<em>%</em></td>
+                <td id="six" >${productRationSVG.material_aggregate_6}<em>%</em></td>
+                <td id="k" >${productRationSVG.material_stone_1 == '0'? productRationSVG.material_stone_2:productRationSVG.material_stone_1}<em>%</em></td>
+                <td id="l" >${productRationSVG.material_asphalt}<em>%</em></td>
+                <td id="z" >${productRationSVG.material_regenerate}<em>%</em></td>
                 </tbody>
             </table>
         </div>
@@ -196,7 +108,7 @@
 <div class="divbox">
 
     <div class="">
-        <div class="boxtitle"><span>产品预警信息</span></div>
+        <div class="boxtitle"><span>产品平均占比与模板对比</span></div>
         <div class="boxdown">
             <table class="simpletable">
                 <thead>
@@ -204,32 +116,112 @@
                 <th>实际占比</th>
                 <th>模板占比</th>
                 <th>占比差</th>
-                <th>预警级别</th>
                 </thead>
 
                 <tbody>
-                <c:forEach items="${proMessage}" var="item" varStatus="sta">
-                    <c:choose>
-                        <c:when test="${fn:contains(item.material_name,'温度')}">
-                            <tr>
-                                <td>${item.material_name}</td>
-                                <td>${item.actual_ratio}<i>℃</i></td>
-                                <td>${item.moudle_ratio}<i>℃</i></td>
-                                <td>${item.deviation_ratio}<i>℃</i></td>
-                                <td>${item.warning_level == 0? '无预警':item.warning_level}${item.warning_level == 0? "":"级预警"}</td>
-                            </tr>
-                        </c:when>
-                        <c:otherwise>
-                            <tr>
-                                <td>${item.material_name}</td>
-                                <td>${item.actual_ratio}<i>%</i></td>
-                                <td>${item.moudle_ratio}<i>%</i></td>
-                                <td>${item.deviation_ratio}<i>%</i></td>
-                                <td>${item.warning_level == 0? '无预警':item.warning_level}${item.warning_level == 0? "":"级预警"}</td>
-                            </tr>
-                        </c:otherwise>
-                    </c:choose>
-                </c:forEach>
+                    <tr>
+                        <td>骨料1</td>
+                        <td>${productRationSVG.material_aggregate_1}<i>%</i></td>
+                        <td>${productModelRationSVG.repertory_one}<i>%</i></td>
+                        <td><fmt:formatNumber value="${productRationSVG.material_aggregate_1 - productModelRationSVG.repertory_one}" pattern="0.00"/><i>%</i></td>
+                    </tr>
+                    <tr>
+                        <td>骨料2</td>
+                        <td>${productRationSVG.material_aggregate_2}<i>%</i></td>
+                        <td>${productModelRationSVG.repertory_two}<i>%</i></td>
+                        <td><fmt:formatNumber value="${productRationSVG.material_aggregate_2 - productModelRationSVG.repertory_two}" pattern="0.00"/><i>%</i></td>
+                    </tr>
+                    <tr>
+                        <td>骨料3</td>
+                        <td>${productRationSVG.material_aggregate_3}<i>%</i></td>
+                        <td>${productModelRationSVG.repertory_three}<i>%</i></td>
+                        <td><fmt:formatNumber value="${productRationSVG.material_aggregate_3 - productModelRationSVG.repertory_three}" pattern="0.00"/><i>%</i></td>
+                    </tr>
+                    <tr>
+                        <td>骨料4</td>
+                        <td>${productRationSVG.material_aggregate_4}<i>%</i></td>
+                        <td>${productModelRationSVG.repertory_four}<i>%</i></td>
+                        <td><fmt:formatNumber value="${productRationSVG.material_aggregate_4 - productModelRationSVG.repertory_four}" pattern="0.00"/><i>%</i></td>
+                    </tr>
+                    <tr>
+                        <td>骨料5</td>
+                        <td>${productRationSVG.material_aggregate_5}<i>%</i></td>
+                        <td>${productModelRationSVG.repertory_five}<i>%</i></td>
+                        <td><fmt:formatNumber value="${productRationSVG.material_aggregate_5 - productModelRationSVG.repertory_five}" pattern="0.00"/><i>%</i></td>
+                    </tr>
+                    <tr>
+                        <td>骨料6</td>
+                        <td>${productRationSVG.material_aggregate_6}<i>%</i></td>
+                        <td>${productModelRationSVG.repertory_six}<i>%</i></td>
+                        <td><fmt:formatNumber value="${productRationSVG.material_aggregate_6 - productModelRationSVG.repertory_six}" pattern="0.00"/><i>%</i></td>
+                    </tr>
+                    <tr>
+                        <td>矿粉</td>
+                        <td>${productRationSVG.material_stone_1 >= productRationSVG.material_stone_2?  productRationSVG.material_stone_1:productRationSVG.material_stone_2}<i>%</i></td>
+                        <td>${productModelRationSVG.breeze}<i>%</i></td>
+                        <td><fmt:formatNumber value="${productRationSVG.material_stone_1 >= productRationSVG.material_stone_2?  productRationSVG.material_stone_1 - productModelRationSVG.breeze:productRationSVG.material_stone_2 - productModelRationSVG.breeze}" pattern="0.00"/><i>%</i></td>
+                    </tr>
+                    <tr>
+                        <td>沥青</td>
+                        <td>${productRationSVG.material_asphalt}<i>%</i></td>
+                        <td>${productModelRationSVG.ratio_stone}<i>%</i></td>
+                        <td><fmt:formatNumber value="${productRationSVG.material_asphalt - productModelRationSVG.ratio_stone}" pattern="0.00"/><i>%</i></td>
+                    </tr>
+                    <tr>
+                        <td>再生料</td>
+                        <td>${productRationSVG.material_regenerate}<i>%</i></td>
+                        <td>${productModelRationSVG.ratio_regenerate1 + productModelRationSVG.ratio_regenerate2}<i>%</i></td>
+                        <td><fmt:formatNumber value="${productRationSVG.material_regenerate - productModelRationSVG.ratio_regenerate1 - productModelRationSVG.ratio_regenerate2}" pattern="0.00"/><i>%</i></td>
+                    </tr>
+                    <tr>
+                        <td>骨料温度</td>
+                        <td>${productSVG.temperature_aggregate}<i>℃</i></td>
+                        <td>${productModelRationSVG.temperature_aggregate } - ${productModelRationSVG.temperature_aggregate_up }<i>℃</i></td>
+                        <c:choose>
+                            <c:when test="${fn:trim(productSVG.temperature_aggregate) ge fn:trim(productModelRationSVG.temperature_aggregate_up)}">
+                                <td><fmt:formatNumber value="${fn:trim(productSVG.temperature_aggregate) - fn:trim(productModelRationSVG.temperature_aggregate_up)}" pattern="0.00"/><i>℃</i></td>
+                            </c:when>
+                            <c:when test="${fn:trim(productSVG.temperature_aggregate) le fn:trim(productModelRationSVG.temperature_aggregate)}">
+                                <td><fmt:formatNumber value="${fn:trim(productSVG.temperature_aggregate) - fn:trim(productModelRationSVG.temperature_aggregate)}" pattern="0.00"/><i>℃</i></td>
+                            </c:when>
+                            <c:otherwise>
+                                <td>正常</td>
+                            </c:otherwise>
+                        </c:choose>
+                    </tr>
+                    <tr>
+                        <td>混合料温度</td>
+                        <td>${productSVG.temperature_mixture}<i>℃</i></td>
+                        <td>${productModelRationSVG.temperature_mixture } - ${productModelRationSVG.temperature_mixture_up }<i>℃</i></td>
+
+                        <c:choose>
+                            <c:when test="${fn:trim(productSVG.temperature_mixture) ge fn:trim(productModelRationSVG.temperature_mixture_up)}">
+                                <td><fmt:formatNumber value="${fn:trim(productSVG.temperature_mixture ) - fn:trim(productModelRationSVG.temperature_mixture_up)}" pattern="0.00"/><i>℃</i></td>
+                            </c:when>
+                            <c:when test="${fn:trim(productSVG.temperature_mixture) le fn:trim(productModelRationSVG.temperature_mixture)}">
+                                <td><fmt:formatNumber value="${fn:trim(productSVG.temperature_mixture) - fn:trim(productModelRationSVG.temperature_mixture)}" pattern="0.00"/><i>℃</i></td>
+                            </c:when>
+                            <c:otherwise>
+                                <td>正常</td>
+                            </c:otherwise>
+                        </c:choose>
+                    </tr>
+                    <tr>
+                        <td>沥青温度</td>
+                        <td>${productSVG.temperature_asphalt}<i>℃</i></td>
+                        <td>${productModelRationSVG.temperature_asphalt } - ${productModelRationSVG.temperature_asphalt_up }<i>℃</i></td>
+                        <c:choose>
+                            <c:when test="${fn:trim(productSVG.temperature_asphalt) ge fn:trim(productModelRationSVG.temperature_asphalt_up)}">
+                                <td><fmt:formatNumber value="${fn:trim(productSVG.temperature_asphalt) - fn:trim(productModelRationSVG.temperature_asphalt_up)}" pattern="0.00"/><i>℃</i></td>
+                            </c:when>
+                            <c:when test="${fn:trim(productSVG.temperature_asphalt) le fn:trim(productModelRationSVG.temperature_asphalt)}">
+                                <td><fmt:formatNumber value="${fn:trim(productSVG.temperature_asphalt) - productModelRationSVG.temperature_asphalt}" pattern="0.00"/><i>℃</i></td>
+                            </c:when>
+                            <c:otherwise>
+                                <td>正常</td>
+                            </c:otherwise>
+                        </c:choose>
+                    </tr>
                 </tbody>
 
             </table>
@@ -254,7 +246,7 @@
         var colors = ['#5793f3', '#d14a61', '#675bba'];
         var option2 =  {
                 title: {
-                    text: '产品材料构成图',
+                    text: '产品平均材料构成图',
                     subtext: ''
                 },
                 tooltip: {
@@ -314,65 +306,43 @@
                 var downArray = new Array(9);
 
 
+                upArray[0] = ${productModelRationSVG.repertory_one == 0? 0:productModelRationSVG.repertory_one + 2};
+                realArray[0] = ${productRationSVG.material_aggregate_1};
+                downArray[0] = ${productModelRationSVG.repertory_one == 0? 0:productModelRationSVG.repertory_one- 2};
 
-                <c:forEach items="${proMessage}" var="item" varStatus="sta">
-                <c:choose>
-                <c:when test="${item.material_name == '骨料1'}">
-                    upArray[0] = ${item.moudle_ratio + 2};
-                realArray[0] = ${item.actual_ratio};
-                downArray[0] = ${item.moudle_ratio - 2};
 
-                </c:when>
-                <c:when test="${item.material_name == '骨料2'}">
-                upArray[1] = ${item.moudle_ratio + 2};
-                realArray[1] = ${item.actual_ratio};
-                downArray[1] = ${item.moudle_ratio - 2};
+                upArray[1] = ${productModelRationSVG.repertory_two == 0? 0:productModelRationSVG.repertory_two + 2};
+                realArray[1] = ${productRationSVG.material_aggregate_2};
+                downArray[1] = ${productModelRationSVG.repertory_two == 0? 0:productModelRationSVG.repertory_two- 2};
 
-                </c:when>
-                <c:when test="${item.material_name == '骨料3'}">
-                upArray[2] = ${item.moudle_ratio + 4};
-                realArray[2] = ${item.actual_ratio};
-                downArray[2] = ${item.moudle_ratio - 4};
+                upArray[2] = ${productModelRationSVG.repertory_three == 0? 0:productModelRationSVG.repertory_three + 4};
+                realArray[2] = ${productRationSVG.material_aggregate_3};
+                downArray[2] = ${productModelRationSVG.repertory_three == 0? 0:productModelRationSVG.repertory_three - 4};
 
-                </c:when>
-                <c:when test="${item.material_name == '骨料4'}">
-                upArray[3] = ${item.moudle_ratio + 4};
-                realArray[3] = ${item.actual_ratio};
-                downArray[3] = ${item.moudle_ratio - 4};
+                upArray[3] = ${productModelRationSVG.repertory_four == 0? 0:productModelRationSVG.repertory_four + 4};
+                realArray[3] = ${productRationSVG.material_aggregate_4};
+                downArray[3] = ${productModelRationSVG.repertory_four == 0? 0:productModelRationSVG.repertory_four - 4};
 
-                </c:when>
-                <c:when test="${item.material_name == '骨料5'}">
-                upArray[4] = ${item.moudle_ratio + 4};
-                realArray[4] = ${item.actual_ratio};
-                downArray[4] = ${item.moudle_ratio - 4};
+                upArray[4] = ${productModelRationSVG.repertory_five == 0? 0:productModelRationSVG.repertory_five + 4};
+                realArray[4] = ${productRationSVG.material_aggregate_5};
+                downArray[4] = ${productModelRationSVG.repertory_five == 0? 0:productModelRationSVG.repertory_five - 4};
 
-                </c:when>
-                <c:when test="${item.material_name == '骨料6'}">
 
-                upArray[5] = ${item.moudle_ratio + 4};
-                realArray[5] = ${item.actual_ratio};
-                downArray[5] = ${item.moudle_ratio - 4};
+                upArray[5] = ${productModelRationSVG.repertory_six == 0? 0:productModelRationSVG.repertory_six + 4};
+                realArray[5] = ${productRationSVG.material_aggregate_6};
+                downArray[5] = ${productModelRationSVG.repertory_six == 0? 0:productModelRationSVG.repertory_six - 4};
 
-                </c:when>
-                <c:when test="${item.material_name == '矿粉'}">
-                upArray[6] = ${item.moudle_ratio +1};
-                realArray[6] = ${item.actual_ratio};
-                downArray[6] = ${item.moudle_ratio - 1};
+                upArray[6] = ${productModelRationSVG.breeze == 0? 0:productModelRationSVG.breeze + 1};
+                realArray[6] = ${productRationSVG.material_stone_1 >= productRationSVG.material_stone_2?  productRationSVG.material_stone_1:productRationSVG.material_stone_2};
+                downArray[6] = ${productModelRationSVG.breeze == 0? 0:productModelRationSVG.breeze - 1};
 
-                </c:when>
-                <c:when test="${item.material_name == '沥青'}">
-                upArray[7] = ${item.moudle_ratio + 1};
-                realArray[7] = ${item.actual_ratio};
-                downArray[7] = ${item.moudle_ratio - 1};
+                upArray[7] = ${productModelRationSVG.ratio_stone == 0? 0:productModelRationSVG.ratio_stone + 1};
+                realArray[7] = ${productRationSVG.material_asphalt};
+                downArray[7] = ${productModelRationSVG.ratio_stone  == 0? 0:productModelRationSVG.ratio_stone - 1};
 
-                </c:when>
-                <c:when test="${item.material_name == '再生料'}">
-                upArray[8] = ${item.moudle_ratio + 1};
-                realArray[8] = ${item.actual_ratio};
-                downArray[8] = ${item.moudle_ratio - 1};
-                </c:when>
-                </c:choose>
-                </c:forEach>
+                upArray[8] = ${(productModelRationSVG.ratio_regenerate1 + productModelRationSVG.ratio_regenerate2) == 0? 0:productModelRationSVG.ratio_regenerate1 + productModelRationSVG.ratio_regenerate2 + 1};
+                realArray[8] = ${productRationSVG.material_regenerate};
+                downArray[8] = ${(productModelRationSVG.ratio_regenerate1 + productModelRationSVG.ratio_regenerate2) == 0? 0:productModelRationSVG.ratio_regenerate1 + productModelRationSVG.ratio_regenerate2 - 1};
 
                 for (var i = 0; i < upArray.length ; i ++){
                     upArray[i] =  isNaN(upArray[i]) ? 0:upArray[i];
@@ -400,6 +370,8 @@
     </script>
 </div>
 
+
+
 <div class="divbox_realtime">
     <div>
         <div class="boxtitle">
@@ -413,7 +385,7 @@
         var colors = ['#5793f3', '#d14a61', '#675bba'];
         var option7= {
             title: {
-                text: '产品级配曲线图'
+                text: '平均级配曲线图'
             },
             legend: {
                 data:['合成级配','实际级配','上限','中值','下限']
@@ -534,24 +506,8 @@
 
     </script>
 </div>
-<%--左右按钮逻辑--%>
-<div id="menuDiv" style="opacity: 0;" onmouseover="showMenu();" onmouseout="closeMenu();">
-    <a href="javascript:;" onclick="chagePage('up');">
-        <div class="leftMenuDiv"></div>
-        <i class="leftMenuImage" ></i>
-    </a>
-    <a href="javascript:;" onclick="chagePage('down');">
-        <div class="rightMenuDiv"></div>
-        <i class="rightMenuImage" ></i>
-    </a>
-</div>
-<div>
-    <input  type="hidden"  id="path" value="${path}" >
-    <input  type="hidden"  id="crewNum" value="${crewNum}" >
-    <input  type="hidden"  id="id" value="${proBase.Id}" >
-</div>
-
 </li>
+
 
 </body>
 
@@ -559,42 +515,12 @@
 
 <script type="text/javascript">
     $(function(){
-        getRealTimeDataEcharsMaterial();
+        var result = ${productGrading};
+        eachMaterialList(result);
     });
-
-    /******************************** 上一条下一条逻辑Start********************************************/
-    function showMenu(){
-        var box = document.getElementById("menuDiv");
-        box.style.opacity = 1;
-    };
-    function closeMenu(){
-        var box = document.getElementById("menuDiv");
-        box.style.opacity = 0;
-    }
-    function chagePage(condition){
-        parent.showProductByCondition(condition);
-    }
-    /******************************** 上一条下一条逻辑End********************************************/
 
 
     /******************************** Echart材料比渲染Start********************************************/
-    function getRealTimeDataEcharsMaterial() {
-
-        var basePath = $("#path").val();
-        var crewNum =$("#crewNum").val() ;
-        var id =$("#id").val() ;
-
-        $.ajax({
-            url:basePath + "/getProductMessageById.do",
-            // url:"http://47.105.114.70/getRealTimeDataEcharsMaterial.do",
-            type:"post",
-            data:{"crewNum":crewNum,"id":id},
-            dataType:"json",
-            success:function (res) {
-                eachMaterialList(res);
-            }
-        })
-    }
 
     function eachMaterialList(res) {
 

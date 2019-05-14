@@ -203,9 +203,7 @@
 
     <select id="selectRationByCrewAndRotinNum" resultType="java.util.Map">
         SELECT
-               ratio_regenerate1,
-               ratio_regenerate2,
-               ratio_additive
+                *
         FROM
              quality_proportioning_message
         WHERE

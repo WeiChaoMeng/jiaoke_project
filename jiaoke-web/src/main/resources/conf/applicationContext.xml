@@ -111,6 +111,7 @@
         <property name="databaseSchemaUpdate" value="true"/>
         <!--自动部署流程图-->
         <property name="deploymentResources" value="classpath*:/diagrams/*"/>
+
     </bean>
 
     <!--activiti主要的service-->

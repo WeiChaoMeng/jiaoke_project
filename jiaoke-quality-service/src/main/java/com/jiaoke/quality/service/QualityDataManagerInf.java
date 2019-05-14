@@ -53,5 +53,25 @@ public interface QualityDataManagerInf {
      */
     Map<String,Object> selectProListByRatioNumAndDate(String ratioNum, String crewNum, String date);
 
+    /**
+     *
+     * 功能描述: <br>
+     *  <获取20盘产品平均值>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/5/13 18:07
+     */
+    String getProSVGRationAndModelRation(String productSVG);
 
+    /**
+     *
+     * 功能描述: <br>
+     *  <获取级配图产品相关数据>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/5/13 18:08
+     */
+    String getProductSvgGrading(String productSVG);
 }

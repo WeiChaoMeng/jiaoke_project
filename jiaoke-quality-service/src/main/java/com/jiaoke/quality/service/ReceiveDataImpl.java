@@ -315,7 +315,7 @@ public class ReceiveDataImpl implements ReceiveDataInf {
         QualityTimelyDataFalse qualityTimelyDataFalse = new QualityTimelyDataFalse();
 
         try {
-            qualityTimelyDataFalse.setProduceDate(new SimpleDateFormat("yyyy-MM-dd").parse(messageArray[0]));
+            qualityTimelyDataFalse.setProduceDate(new SimpleDateFormat("yyyy-MM-dd").parse(messageArray[0]) );
             qualityTimelyDataFalse.setProductTime(new SimpleDateFormat("HH:mm:ss").parse(messageArray[1]));
         }catch (Exception e){
             e.printStackTrace();
