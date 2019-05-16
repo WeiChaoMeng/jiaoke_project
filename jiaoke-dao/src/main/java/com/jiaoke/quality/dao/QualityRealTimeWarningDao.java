@@ -30,5 +30,16 @@ public interface QualityRealTimeWarningDao {
      * 查询最后的预警信息展现echars
      * @return
      */
-    List<Map<String, String>> selectWarningEcharsData();
+    List<Map<String, Object>> selectWarningEcharsData();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询每个机组最后三盘数据平均值>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/5/14 18:06
+     */
+    List<Map<String, String>> selectThreeWarningData();
 }

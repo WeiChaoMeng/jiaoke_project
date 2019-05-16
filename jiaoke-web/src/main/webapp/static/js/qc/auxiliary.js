@@ -2,7 +2,7 @@
 
 
 
-function  getModelByDateAndCrew(rationNum) {
+function  getModelByDateTimeAndCrew(rationNum) {
     var path = $("#path").val();
     var start = $("#inpstart").val();
     var end = $("#inpend").val();
@@ -84,5 +84,35 @@ function selectProductMessage(){
             window.location.href = path + "/qc_auxiliary_analysis.do?proData=" + proDate + "&crew=" + crew + "&rationId=" + rationId + "&warningLive=" + waringLeve;
         }
     }
+
+}
+//记录当前点击的标签的Id
+var tagId;
+//点击查看按钮时弹出详细页面
+function getProductById(producedId,prodate,discNum,crew,tagID) {
+    debugger
+    layer.close(layer.index);
+    var path = $("#path").val();
+    tagId = tagID;
+    layer.open({
+        type: 2,
+        title: '产品详细信息',
+        shadeClose: true,
+        shade: false,
+        maxmin: true, //开启最大化最小化按钮
+        area: ['90%', '99%'],
+        content: path + '/getProductById.do?producedId=' +producedId + '&prodate= ' + prodate +'&discNum=' + discNum + '&crew=' + crew
+    });
+}
+
+function showProductByCondition(condition) {
+    var proIndex;
+    if (condition === 'up'){
+        proIndex = --tagId;
+    }else {
+        proIndex = ++tagId;
+    }
+
+    $("#" + proIndex).click();
 
 }

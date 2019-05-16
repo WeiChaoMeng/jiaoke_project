@@ -8,14 +8,16 @@
  **/
 package com.jiaoke.quality.service;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.jiake.utils.QualityGradingUtil;
+import com.jiake.utils.QualityProsvg;
+import com.jiaoke.quality.dao.QualityDataMontoringDao;
 import com.jiaoke.quality.dao.QualityRealTimeWarningDao;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +33,8 @@ public class QualityRealTimeWarningImpl implements  QualityRealTimeWarningInf {
 
     @Resource
     QualityRealTimeWarningDao qualityRealTimeWarningDao;
-
+    @Resource
+    QualityDataMontoringDao qualityDataMontoringDao;
     /**
      *
      * 功能描述: <br>
@@ -44,11 +47,35 @@ public class QualityRealTimeWarningImpl implements  QualityRealTimeWarningInf {
     @Override
     public String selectLastWarningData() {
 
+        long startTime = System.currentTimeMillis();
         List<Map<String,String>> list = qualityRealTimeWarningDao.selectLastWarningData();
+
+        List<Map<String,String>> avgList = qualityRealTimeWarningDao.selectThreeWarningData();
+        if (!list.isEmpty() || !avgList.isEmpty()){
+            for (int i = 0; i < list.size(); i++){
+                for (int j = 0; j < avgList.size(); j++){
+                    if (list.get(i).get("produce_crewNum") == avgList.get(j).get("produce_crewNum")){
+                        if (list.get(i).get("material_name").equals(avgList.get(j).get("material_name"))){
+                            list.get(i).putAll(avgList.get(j));
+                            break;
+                        }else {
+                            continue;
+                        }
+                    }else {
+                        continue;
+                    }
+                }
+            }
+        }
+
+
         String str = "";
         if (list != null){
              str = JSONArray.parseArray(JSONObject.toJSONString(list)).toString();
         }
+        long endTime = System.currentTimeMillis();
+
+        System.out.println("程序运行时间：" + (endTime - startTime) + "ms");
 
         return str;
     }
@@ -65,114 +92,33 @@ public class QualityRealTimeWarningImpl implements  QualityRealTimeWarningInf {
     @Override
     public String getWarningEcharsData() {
 
-        List<Map<String,String>> list = qualityRealTimeWarningDao.selectWarningEcharsData();
+        List<Map<String,Object>> list = qualityRealTimeWarningDao.selectWarningEcharsData();
 
+        //分解出两个机组的数据
+        List<Map<String,Object>> crew1List = new ArrayList<>();
+        List<Map<String,Object>> crew2List = new ArrayList<>();
 
-        List<Float> crew1topList = new ArrayList<Float>();
-        List<Float> crew1realList = new ArrayList<Float>();
-        List<Float> crew1downList = new ArrayList<Float>();
-        List<String> crew1nameList = new ArrayList<String>();
-
-        List<Float> crew2topList = new ArrayList<Float>();
-        List<Float> crew2realList = new ArrayList<Float>();
-        List<Float> crew2downList = new ArrayList<Float>();
-        List<String> crew2nameList = new ArrayList<String>();
-
-        Map<String,Object> map = new HashMap<String,Object>(16);
-
-        float upRatio = 0;
-        float downRatio = 0;
-
-
-        for(int i = 0; i < list.size(); i++){
-            String  crewNum = String.valueOf(list.get(i).get("produce_crewNum")) ;
-            String moudle = list.get(i).get("moudle_ratio");
-            String name = list.get(i).get("material_name");
-            float total = 0 ;
-
-            switch (name){
-                case "骨料6":
-                    total = Float.parseFloat(moudle);
-                    upRatio = total == 0? 0: total + 5;
-                     downRatio = total == 0? 0: total - 5;
-                    break;
-                case "骨料5":
-                    total = Float.parseFloat(moudle);
-                    upRatio = total == 0? 0: total + 5;
-                    downRatio = total == 0? 0: total - 5;
-                    break;
-                case "骨料4":
-                    total = Float.parseFloat(moudle);
-                    upRatio = total == 0? 0: total + 5;
-                    downRatio = total == 0? 0: total - 5;
-                    break;
-                case "骨料3":
-                    total = Float.parseFloat(moudle);
-                    upRatio = total == 0? 0: total + 5;
-                    downRatio = total == 0? 0: total - 5;
-                    break;
-                case "骨料2":
-                    total = Float.parseFloat(moudle);
-                    upRatio = total == 0? 0: total + 2;
-                    downRatio = total == 0? 0: total - 2;
-                    break;
-                case "骨料1":
-                    total = Float.parseFloat(moudle);
-                    upRatio = total == 0? 0: total + 2;
-                    downRatio = total == 0? 0: total - 2;
-                    break;
-                case "矿粉":
-                    total = Float.parseFloat(moudle);
-                    upRatio = total == 0? 0: total + 1;
-                    downRatio = total == 0? 0: total - 2;
-                    break;
-                case "沥青":
-                    total = Float.parseFloat(moudle);
-                    upRatio = total == 0? 0: total + 2;
-                    downRatio = total == 0? 0: total - 2;
-                    break;
-                case "再生料":
-                    total = Float.parseFloat(moudle);
-                    upRatio = total == 0? 0: total + 2;
-                    downRatio = total == 0? 0: total - 2;
-                    break;
-            }
-
-            if ("沥青温度".equals(name) || "混合料温度".equals(name) || "骨料温度".equals(name)){
-                continue;
+        for (int i = 0; i < list.size();i++){
+            if ("crew1".equals(list.get(i).get("crewNum"))){
+                crew1List.add(list.get(i));
             }else {
-
-                if ( "1".equals(crewNum) ){
-
-                    crew1nameList.add(list.get(i).get("material_name") );
-                    crew1topList.add(upRatio);
-                    crew1realList.add(Float.parseFloat(list.get(i).get("actual_ratio")));
-                    crew1downList.add(downRatio);
-
-                }else {
-                    crew2nameList.add(list.get(i).get("material_name") );
-                    crew2topList.add(upRatio);
-                    crew2realList.add(Float.parseFloat(list.get(i).get("actual_ratio")));
-                    crew2downList.add(downRatio);
-                }
-
+                crew2List.add(list.get(i));
             }
-
         }
 
-        map.put("crew1topList",crew1topList);
-        map.put("crew1realList",crew1realList);
-        map.put("crew1downList",crew1downList);
-        map.put("crew1nameList",crew1nameList);
+        Map<String, String> crew1SvgList = QualityProsvg.getProsvgByProList(crew1List);
+        Map<String, String> crew2SvgList = QualityProsvg.getProsvgByProList(crew2List);
 
-        map.put("crew2topList",crew2topList);
-        map.put("crew2realList",crew2realList);
-        map.put("crew2downList",crew2downList);
-        map.put("crew2nameList",crew2nameList);
+        List<Map<String,String>> list1 = new ArrayList<>();
+        list1.add(crew1SvgList);
+        list1.add(crew2SvgList);
 
-        String  jsonStr = JSON.toJSONString(map);
+        //返回的结果集 一层Key为机组 二层为模板级配等 三层Key为筛孔
+        List<Map<String,Map<String,List<Map<String,String>>>>> result = new ArrayList<>();
 
-        return jsonStr ;
+        String resoult = QualityGradingUtil.getGradingResultJson(list1,qualityDataMontoringDao,result);
+
+        return  resoult ;
 
     }
 }

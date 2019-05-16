@@ -137,11 +137,6 @@
                                 borderColor: '#aaa',
                                 borderWidth: 1,
                                 borderRadius: 5,
-                                // shadowBlur:3,
-                                // shadowOffsetX: 2,
-                                // shadowOffsetY: 2,
-                                // shadowColor: '#999',
-                                // padding: [0, 7],
 
                                 rich: {
                                     a: {
@@ -184,14 +179,29 @@
                             }
                         },
 
-                        data: [
-                            {value: 348, name: '基本工资'},
-                            {value: 251, name: '出勤'},
-                            {value: 147, name: '餐补'},
-                            {value: 102, name: '加班费用'},
-                            {value: 102, name: '交通补助'},
-                            {value: 200, name: '其他'}
-                        ]
+                        <c:choose>
+                            <c:when test="${personalWages == null}">
+                                data: [
+                                    {value: 348, name: '基本工资'},
+                                    {value: 251, name: '出勤'},
+                                    {value: 147, name: '餐补'},
+                                    {value: 102, name: '加班费用'},
+                                    {value: 102, name: '交通补助'},
+                                    {value: 200, name: '其他'}
+                                ]
+                            </c:when>
+                            <c:otherwise>
+                                data: [
+                                    {value: ${personalWages.positionSalary}, name: '岗位工资'},
+                                    {value: ${personalWages.overtimePay}, name: '加班'},
+                                    {value: ${personalWages.technicalTitleAllowance + personalWages.specialWorkAllowance + personalWages.megathermalAllowance}, name: '各类津贴'},
+                                    {value: ${personalWages.bonus + personalWages.monthlyAward}, name: '各类奖金'},
+                                    {value: ${personalWages.subsidy}, name: '补助'},
+                                    {value: ${personalWages.reissueWages}, name: '补发工资'}
+                                ]
+                            </c:otherwise>
+                        </c:choose>
+
                     }
                 ]
             };

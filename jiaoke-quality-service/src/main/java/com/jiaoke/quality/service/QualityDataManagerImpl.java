@@ -9,11 +9,15 @@
 package com.jiaoke.quality.service;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.jiake.utils.QualityDataMontoringUtil;
+import com.jiake.utils.QualityGradingUtil;
 import com.jiaoke.common.bean.PageBean;
 import com.jiaoke.quality.bean.QualityDataManagerDay;
 import com.jiaoke.quality.bean.QualityRatioTemplate;
 import com.jiaoke.quality.dao.QualityDataManagerDao;
+import com.jiaoke.quality.dao.QualityDataMontoringDao;
+import com.jiaoke.quality.dao.QualityDataSummaryDao;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +39,11 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
     @Resource
     QualityDataManagerDao qualityDataManagerDao;
 
+    @Resource
+    QualityDataSummaryDao qualityDataSummaryDao;
+
+    @Resource
+    QualityDataMontoringDao qualityDataMontoringDao;
     /**
      *
      * 功能描述: <br>
@@ -66,7 +75,7 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
     }
 
     /**
-     *当前模块有错误（总量计算未累减）
+     *
      * 功能描述: <br>
      *  <查询所选日期各模板生产情况>
      * @param producedDate, crewNum]
@@ -329,9 +338,54 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
         map.put("warehouse1",warehouse1);
         map.put("dateList",dateList);
         map.put("prolist",list);
+        map.put("proListJson",JSON.toJSONString(list));
         map.put("template",template);
         map.put("asphaltRatio",asphaltRatio);
 
         return map;
+    }
+
+    @Override
+    public String getProSVGRationAndModelRation(String productSVG) {
+
+        JSONObject jsStr = JSONObject.parseObject(productSVG);
+
+        Map<String, Object> itemMap = JSONObject.toJavaObject(jsStr, Map.class);
+
+        String crew = itemMap.get("crewNum").toString();
+
+        String crewNum = "data1".equals(crew)? "crew1":"crew2";
+        //获取配比占比信息
+        Map<String,String> modelRationMap = qualityDataSummaryDao.selectRaionModelById(crewNum, itemMap.get("produce_proportioning_num").toString());
+
+        return JSON.toJSONString(modelRationMap);
+    }
+
+    @Override
+    public String getProductSvgGrading(String productSVG) {
+
+        JSONObject jsStr = JSONObject.parseObject(productSVG);
+
+        Map<String, String> itemMap = JSONObject.toJavaObject(jsStr, Map.class);
+
+        String crew = itemMap.get("crewNum").toString();
+
+        String crewNum = "data1".equals(crew)? "crew1":"crew2";
+        //获取配比占比信息
+        Map<String,String> modelRationMap = qualityDataSummaryDao.selectRaionModelById(crewNum, itemMap.get("produce_proportioning_num").toString());
+        Map<String,String> map = new HashMap<>();
+        map.putAll(modelRationMap);
+        map.putAll(itemMap);
+        List<Map<String,String>> list = new ArrayList<>();
+        list.add(map);
+
+
+        //返回的结果集 一层Key为机组 二层为模板级配等 三层Key为筛孔
+        List<Map<String,Map<String,List<Map<String,String>>>>> result = new ArrayList<>();
+
+        //获取级配信息
+        String gradingStr = QualityGradingUtil.getGradingResultJson(list,qualityDataMontoringDao,result);
+
+        return gradingStr;
     }
 }

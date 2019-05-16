@@ -37,6 +37,7 @@ public class QualityGradingUtil {
             List<Map<String,String>> midList  = new ArrayList<>();
             List<Map<String,String>> realList  = new ArrayList<>();
             String crewNum = list.get(i).get("crewNum");
+
             crewMap.put(crewNum,moudelMap);
 
             crewMap.get(crewNum).put("moudleList",moudleList);

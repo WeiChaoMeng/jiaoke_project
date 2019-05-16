@@ -50,16 +50,13 @@
         </li>
     </ul>
 
-    <ul class="menu">
-
-
-
+    <%--<ul class="menu">--%>
 
         <%--<li>--%>
             <%--<a href="#" id="testing" onclick="testing()" class="menu_selected">--%>
                 <%--<i class="menuico iconfont1">&#xe6e2;</i>实验检测</a>--%>
         <%--</li>--%>
-    </ul>
+    <%--</ul>--%>
 
     <ul class="menu">
 
@@ -84,7 +81,11 @@
                 <i class="menuico iconfont1">&#xe68c;</i>辅助分析</a>
         </li>
 
-        <%--<li>--%>
+        <li>
+            <a href="#" id="data_summary" onclick="data_summary()" class="menu_selected">
+                <i class="menuico iconfont1">&#xe94d;</i>数据汇总</a>
+        </li>
+    <%--<li>--%>
             <%--<a href="#" id="prodoct_list" onclick="prodoct_list()" class="menu_selected">--%>
                 <%--<i class="menuico iconfont1">&#xebdc;</i>产品报表</a>--%>
         <%--</li>--%>
@@ -108,24 +109,8 @@
 <!--footer start-->
 <!--footer end-->
 <script type="text/javascript" src="/static/js/jquery.js"></script>
-<script type="text/javascript" src="/static/js/skin.js"></script>
-<script src="/static/js/layer/layer.js"></script>
 <script type="text/javascript">
     $(function () {
-//关于
-
-//$("#index").attr("class","selected");
-
-        $('.manu').first().attr("class", "selected");
-        $('#about').on('click', function () {
-            layer.alert('你确定要修改吗？', {icon: 0});
-        });
-
-        $('#logo').on('click', function () {
-            layer.tips('官方网站：uimaker.com', '#logo', {tips: 3});
-
-        });
-
 
     });
 
@@ -177,6 +162,9 @@
         $('iframe').attr("src", "qc_dynamic_management.do");
     }
 
+    function data_summary() {
+        $('iframe').attr("src", "qc_data_summary.do");
+    }
     //二级菜单选中时添加背景色
     $('.menu_selected').click(function () {
 

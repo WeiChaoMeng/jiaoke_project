@@ -14,7 +14,6 @@
     <title>辅助分析</title>
     <link href="/static/css/default.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
-
     <link type="text/css" rel="stylesheet" href="/static/css/qc/jeDate-test.css">
     <link type="text/css" rel="stylesheet" href="/static/css/qc/jedate.css">
     <link type="text/css" rel="stylesheet" href="/static/css/qc/qc_select.css">
@@ -37,16 +36,16 @@
                                 <div class="jeitem">
                                     <label class="jelabel">开始日期：</label>
                                     <div class="dy_select_div"   >
-                                        <input type="date" class="dy_select" id="inpstart"  placeholder="选择开始日期" >
+                                        <input type="text" class="dy_select_date" id="inpstart"  placeholder="选择开始日期" >
                                     </div>
                                     <label class="jelabel">结束日期：</label>
                                     <div class="dy_select_div"   >
-                                        <input type="date" class="dy_select" id="inpend" placeholder="选择开始日期" >
+                                        <input type="text" class="dy_select_date" id="inpend" placeholder="选择开始日期" >
                                     </div>
 
                                 <label class="jelabel">机组选择</label>
                                 <div class="dy_select_div"   >
-                                    <select id="crew_num" class="dy_select" onchange="getModelByDateAndCrew()" >
+                                    <select id="crew_num" class="dy_select" onchange="getModelByDateTimeAndCrew()" >
                                         <option value="sect">请选择</option>
                                         <option value="data1">机组一</option>
                                         <option value="data2">机组二</option>
@@ -98,7 +97,7 @@
                                 <th >所在机组</th>
                                 <th>操作</th>
                                 </thead>
-                                <c:forEach items="${pageBean.pageData}" var="item">
+                                <c:forEach items="${pageBean.pageData}" var="item" varStatus="itemIndex">
                                     <tr>
                                         <td>${item.produce_date}</td>
                                         <td>${item.produce_time}</td>
@@ -108,7 +107,7 @@
                                         <td>${item.produce_crewNum == 1 ?  "机组1":"机组2"} </td>
                                         <td>
 
-                                            <a class="selected" id="add" href="${path}/getProductById.do?producedId=${item.id}&prodate=${item.produce_date}&discNum=${item.produce_disc_num}&crew=${item.produce_crewNum}" ><i class="toolico iconfont">&#xe970;</i>查看</a>
+                                            <a class="selected" href="#" id="${itemIndex.index}"  onclick="getProductById('${item.id}', '${item.produce_date}','${item.produce_disc_num}','${item.produce_crewNum}','${itemIndex.index}')"  ><i class="toolico iconfont">&#xe970;</i>查看</a>
 
                                         </td>
                                     </tr>
@@ -207,6 +206,7 @@
 
 <script type="text/javascript" src="/static/js/jquery.js"></script>
 <script type="text/javascript" src="/static/js/qc/zipJs/jqTable.all.min.js"></script>
+<script type="text/javascript" src="/static/js/qc/datetime.js"></script>
 <script type="text/javascript" src="/static/js/layer/layer.js"></script>
 <script type="text/javascript" src="/static/js/qc/auxiliary.js"></script>
 <script type="text/javascript">

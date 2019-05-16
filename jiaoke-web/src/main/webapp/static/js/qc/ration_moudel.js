@@ -124,7 +124,9 @@ $('#excel-file').change(function (e) {
                     }), // 以二进制流方式读取得到整份excel表格对象
                     persons = []; // 存储获取到的数据
             } catch (e) {
-                console.log('文件类型不正确');
+                layer.msg('文件类型不正确', {
+                    time: 5000//20s后自动关闭
+                });
                 return;
             }
 
@@ -136,17 +138,30 @@ $('#excel-file').change(function (e) {
                     fromTo = workbook.Sheets[sheet]['!ref'];
                     console.log(fromTo);
                     persons = persons.concat(XLSX.utils.sheet_to_json(workbook.Sheets[sheet]));
-                    // break; // 如果只取第一张表，就取消注释这行
+                    break; // 如果只取第一张表，就取消注释这行
                 }
             }
+
             readWorkbook(workbook);
 
             if(getCharts(workbook,0) != 'A'  || getCharts(workbook,3) != 'O' ){
-                alert("Excell格式不对")
-            }else{
-                jsonData = getjsonList(workbook);
+                layer.alert('Excell格式不对', {
+                    skin: 'layui-layer-lan'
+                    ,closeBtn: 0
+                    ,anim: 4 //动画类型
+                });
+                return ;
             }
-            console.log(persons);
+            if(isAllJsonData(getjsonList(workbook))){
+                layer.alert('Excell中存在空值', {
+                    skin: 'layui-layer-lan'
+                    ,closeBtn: 0
+                    ,anim: 4 //动画类型
+                });
+                return ;
+            }else {
+                jsonData =  getjsonList(workbook);
+            }
 
         };
         // 以二进制方式打开文件
@@ -154,7 +169,7 @@ $('#excel-file').change(function (e) {
 
 
     } else {
-        alert("请放入Excel文件")
+        layer.msg('请放入Excel文件');
     }
 
 });
@@ -166,7 +181,6 @@ function readWorkbook(workbook) {
     var worksheet = workbook.Sheets[sheetNames[0]]; // 这里我们只读取第一张sheet
     var csv = XLSX.utils.sheet_to_csv(worksheet);
     var json = XLSX.utils.sheet_to_json(worksheet);
-    console.log(json)
     document.getElementById('result').innerHTML = csv2table(csv);
 }
 
@@ -217,19 +231,41 @@ function getjsonList(workbook){
     var json = XLSX.utils.sheet_to_json(worksheet);
     return json;
 }
+//判断json中是否存在空对象
+function isAllJsonData(jsonStr) {
 
+    var resBoole = false;
+    for (var i = 0; i < jsonStr.length;i++) {
+        var array = [];
+        for (var i in jsonStr[i]) {
+            array.push(i);
+        }
+       if(array.length != 15){
+           resBoole = true;
+           break;
+       }
+    }
+
+    return resBoole;
+}
 //发送数据到后台
 function sendGrading(){
     var crew2Id = $("#crew2_num").val();
     var crew1Id = $("#crew1_num").val();
 
     if(crew2Id == "" || crew1Id == ""){
-        alert("请添加配比在机组上的编号")
+        layer.alert('请添加配比在机组上的编号', {
+            skin: 'layui-layer-lan'
+            ,closeBtn: 0
+            ,anim: 4 //动画类型
+        });
         return
     }
-    debugger
+
     if($.isEmptyObject(jsonData)){
-        alert("上传错误")
+        layer.msg('上传错误', {
+            time: 5000
+        });
     }else{
         $.ajax({
             url:path + "/addGrading.do",
@@ -243,9 +279,17 @@ function sendGrading(){
             success:function (res) {
 
                 if (res.messages == 'success' ){
-                    alert("添加成功");
+                    layer.alert('添加成功', {
+                        skin: 'layui-layer-lan'
+                        ,closeBtn: 0
+                        ,anim: 4 //动画类型
+                    });
                 }else if (res.messages == 'error'){
-                    alert("添加失败");
+                    layer.alert('添加失败', {
+                        skin: 'layui-layer-lan'
+                        ,closeBtn: 0
+                        ,anim: 4 //动画类型
+                    });
                 }
                 closeGrading();
             }

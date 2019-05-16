@@ -10,8 +10,6 @@ package com.jiaoke.controller;
 
 import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.QualityMatchingUtil;
 import com.jiaoke.common.bean.PageBean;
@@ -19,7 +17,7 @@ import com.jiaoke.quality.bean.QualityDataManagerDay;
 import com.jiaoke.quality.bean.QualityRatioModel;
 import com.jiaoke.quality.bean.QualityRatioTemplate;
 import com.jiaoke.quality.service.*;
-import org.apache.ibatis.annotations.Param;
+import lombok.experimental.var;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,7 +29,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -67,7 +64,8 @@ public class QualityController {
     private QualityTimelyDataFalseService qualityTimelyDataFalseService;
     @Resource
     private QualityHistoricalDataService qualityHistoricalDataService;
-
+    @Autowired
+    private QualityDataSummaryInf qualityDataSummaryInf;
 
     /**
      *
@@ -88,7 +86,27 @@ public class QualityController {
 
         receiveDataInf.receiveDataToDB(messageStr);
 
-        receiveDataInf.receiveDataToDBSham(messageStr);
+        class MyThread implements Runnable{
+            private  String messageStr;
+            private  ReceiveDataInf receiveDataInf;
+            public void setMessageStr(String messageStr)
+            {
+                this.messageStr = messageStr;
+            }
+            public void setReceiveDataInf(ReceiveDataInf receiveDataInf)
+            {
+                this.receiveDataInf = receiveDataInf;
+            }
+            @Override
+            public void run() {
+                receiveDataInf.receiveDataToDBSham(messageStr);
+            }
+        }
+        MyThread myThread = new MyThread();
+        myThread.setMessageStr(messageStr);
+        myThread.setReceiveDataInf(receiveDataInf);
+        Thread thread = new Thread(myThread);
+        thread.start();
 
         long endTime = System.currentTimeMillis();
 
@@ -359,6 +377,25 @@ public class QualityController {
 
         return "quality/qc_data_message";
     }
+
+    @RequestMapping(value = "showTwentyProductSVG.do")
+    public String getTwentyProductSVG( ){
+        return "quality/qc_dm_data_message_svg";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "getProSVGRationAndModelRation.do",method = RequestMethod.POST)
+    public String getProSVGRationAndModelRation(String ProductSVG){
+       String res = qualityDataManagerInf.getProSVGRationAndModelRation(ProductSVG);
+       return res;
+    }
+
+    @ResponseBody
+    @RequestMapping(value ="/getProductSvgGrading.do",method = RequestMethod.POST)
+    public String getProductSvgGrading(String ProductSVG){
+        String res = qualityDataManagerInf.getProductSvgGrading(ProductSVG);
+        return res;
+    }
     /********************************  数据管理 end *****************************************/
 
 
@@ -622,4 +659,57 @@ public class QualityController {
     }
 
     /********************************  动态管理 end *****************************************/
+
+    /********************************  数据汇总 Start *****************************************/
+
+    @RequestMapping("qc_data_summary.do")
+    public String dataSummary(){
+        return "quality/qc_data_summary";
+    }
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <获取前三天生产数据用于展示>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/4/30 10:32
+     */
+    @ResponseBody
+    @RequestMapping("/getThreeDayData.do")
+    public String getThreeDayData(){
+        String res = qualityDataSummaryInf.getThreeDayData();
+        return res;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getRatioListByDateTime.do",method = RequestMethod.POST)
+    public String getRatioListByDateTime(@RequestParam("startDateTime") String startDate,@RequestParam("endDateTime") String endDate,@RequestParam("crew") String crew){
+        if (startDate.isEmpty() || endDate.isEmpty() || crew.isEmpty()) {
+            return null;
+        }
+
+        List<Map<String,Object>> res = qualityDataSummaryInf.getRatioListByDateTimeAndCrew(startDate,endDate,crew);
+
+
+        return  JSON.toJSONString(res);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "getPromessageByRaionModel.do",method = RequestMethod.POST)
+    public String getPromessageByRaionModel(String startDate,String endDate,String crew, String rationId){
+
+        List<Map<String,Object>> list =  qualityDataSummaryInf.getPromessageByRaionModel(startDate,endDate,crew,rationId);
+
+        return JSON.toJSONString(list);
+    }
+
+    @RequestMapping("/getProSvgmessage.do")
+    public String getProSvgmessage(String startDate,String endDate,String crew, String rationId,HttpServletRequest request){
+        qualityDataSummaryInf.getProSvgmessage(startDate,endDate,crew,rationId,request);
+        return "quality/qc_ds_message";
+    }
+
+    /********************************  数据汇总 end *****************************************/
 }

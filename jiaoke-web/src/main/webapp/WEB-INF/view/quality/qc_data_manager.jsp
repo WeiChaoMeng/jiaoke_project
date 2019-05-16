@@ -27,8 +27,8 @@
         <div class="">
             <div class="">
                 <div class="boxtitle">
-                    <span>历史产品数据</span>
-                </div>
+                <span>历史产品数据</span>
+            </div>
 
                 <div class="boxdown">
                     <table class="simpletable">

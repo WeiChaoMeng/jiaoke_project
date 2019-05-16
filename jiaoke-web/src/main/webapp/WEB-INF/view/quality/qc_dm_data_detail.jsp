@@ -10,7 +10,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>模板更新</title>
+    <title>详细信息</title>
     <link href="/static/css/default.css" rel="stylesheet" type="text/css">
     <link href="/static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
     <script src="/static/js/echarts/echarts.js"></script>

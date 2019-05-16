@@ -6,11 +6,9 @@
 
 <head>
     <meta charset="utf-8">
-    <title>打卡记录</title>
+    <title>数据管理-汇总</title>
     <link href="/static/css/default.css" rel="stylesheet" type="text/css">
-    <link href="/static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
     <script src="/static/js/echarts/echarts.js"></script>
-    <script src="/static/js/echarts/uimaker.js"></script>
 </head>
 
 <body style="padding:10px 8px 100px 8px;">
@@ -380,6 +378,7 @@
             <div class="">
                 <div class="boxtitle">
                     <span>历史产品数据</span>
+                    <a href="#"  onclick="showTwentyProductSVG('1')" >二十盘平均数据<i class="iconfont"></i></a>
                     <a href="#"  onclick="print()" >打印<i class="iconfont"></i></a>
                 </div>
 
@@ -387,11 +386,10 @@
                     <table class="simpletable">
 
                         <thead>
-                        <th>产品编号</th>
                         <th>生产日期</th>
                         <th>生产时间</th>
+                        <th>产品名称</th>
                         <th>盘号</th>
-                        <th>配比号</th>
                         <th>骨料6</th>
                         <th>骨料5</th>
                         <th>骨料4</th>
@@ -414,11 +412,10 @@
                         <tbody>
                         <c:forEach items="${baseMap.prolist}" var="item">
                             <tr>
-                                <td>${item.Id}</td>
                                 <td>${item.produce_date}</td>
                                 <td>${item.produce_time}</td>
+                                <td>${item.pro_name}</td>
                                 <td>${item.produce_disc_num}</td>
-                                <td>${item.produce_proportioning_num}</td>
                                 <td>${item.material_aggregate_6}</td>
                                 <td>${item.material_aggregate_5}</td>
                                 <td>${item.material_aggregate_4}</td>
@@ -446,10 +443,12 @@
         </div>
 
     </div>
+    <input  id="path" value="${path}" type="hidden" >
 </body>
-<script language="javascript" src="/static/js/qc/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.js"></script>
 <script language="javascript" src="/static/js/qc/jquery.jqprint-0.3.js"></script>
 <script src="http://www.jq22.com/jquery/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/static/js/layer/layer.js"></script>
 <script language="javascript">
     function  print(){
         $("#promessage").jqprint({
@@ -458,6 +457,111 @@
             printContainer: true, //表示如果原来选择的对象必须被纳入打印（注意：设置为false可能会打破你的CSS规则）。
             operaSupport: true//表示如果插件也必须支持歌opera浏览器，在这种情况下，它提供了建立一个临时的打印选项卡。默认是true
         });
+    }
+
+    /**
+     *
+     * @param list 产品盘数数组
+     * @param index 当前第几组
+     */
+    function showTwentyProductSVG(index) {
+        var path = $("#path").val();
+        var jsonList = ${baseMap.proListJson};
+        var res = getSvgByList(jsonList,index);
+        //将数据存入前端内存，方便弹出逻辑
+        localStorage.setItem("countIndex",Math.ceil(jsonList.length/20) );
+        localStorage.setItem("ProductSVG",res);
+        localStorage.setItem("index",index);
+
+        layer.closeAll();
+        layer.open({
+            type: 2,
+            title: '20盘产品均值信息',
+            shadeClose: true,
+            maxmin: true,
+            shade: 0.8,
+            area: ['90%', '90%'],
+            content: path + '/showTwentyProductSVG.do'
+        });
+    }
+    
+    function getSvgByList(jsonList,index) {
+        var endArrIndex = Number(index) * 20;
+        var strtArrIndex = (Number(index) - 1) * 20;
+        //循环次数
+        var forCount = 0;
+        //各材料参数
+        var crewNum;
+        var pro_name;
+        var produce_proportioning_num ;
+        var material_aggregate_6_total = 0;
+        var material_aggregate_5_total = 0;
+        var material_aggregate_4_total = 0;
+        var material_aggregate_3_total = 0;
+        var material_aggregate_2_total = 0;
+        var material_aggregate_1_total = 0;
+        var material_stone_1_total = 0;
+        var material_stone_2_total = 0;
+        var material_asphalt_total = 0;
+        var material_regenerate_total = 0;
+        var material_additive_total = 0;
+        var material_total_total = 0;
+        var temperature_warehouse_1_total = 0;
+        var temperature_mixture_total = 0;
+        var temperature_duster_total = 0;
+        var temperature_asphalt_total = 0;
+        var temperature_aggregate_total = 0;
+
+        for (var i = strtArrIndex; i < endArrIndex;i++ ){
+            if (typeof(jsonList[i]) == 'undefined') {
+                break;
+            }
+            forCount ++;
+            crewNum = jsonList[i].crewNums;
+            pro_name = jsonList[i].pro_name;
+            produce_proportioning_num = jsonList[i].produce_proportioning_num;
+            material_aggregate_6_total += Number(jsonList[i].material_aggregate_6);
+            material_aggregate_5_total += Number(jsonList[i].material_aggregate_5);
+            material_aggregate_4_total+= Number(jsonList[i].material_aggregate_4);
+            material_aggregate_3_total += Number(jsonList[i].material_aggregate_3);
+            material_aggregate_2_total += Number(jsonList[i].material_aggregate_2);
+            material_aggregate_1_total += Number(jsonList[i].material_aggregate_1);
+            material_stone_1_total += Number(jsonList[i].material_stone_1);
+            material_stone_2_total += Number(jsonList[i].material_stone_2);
+            material_asphalt_total += Number(jsonList[i].material_asphalt);
+            material_regenerate_total += Number(jsonList[i].material_regenerate);
+            material_additive_total += Number(jsonList[i].material_additive);
+            material_total_total += Number(jsonList[i].material_total);
+            temperature_warehouse_1_total += Number(jsonList[i].temperature_warehouse_1);
+            temperature_mixture_total += Number(jsonList[i].temperature_mixture);
+            temperature_duster_total += Number(jsonList[i].temperature_duster);
+            temperature_asphalt_total += Number(jsonList[i].temperature_asphalt);
+            temperature_aggregate_total += Number(jsonList[i].temperature_aggregate);
+        }
+        var svgPro = { };
+
+        svgPro.crewNum = crewNum;
+        svgPro.pro_name = pro_name;
+        svgPro.produce_proportioning_num = produce_proportioning_num;
+        svgPro.material_aggregate_6 = material_aggregate_6_total/forCount;
+        svgPro.material_aggregate_5 = material_aggregate_5_total/forCount;
+        svgPro.material_aggregate_4 = material_aggregate_4_total/forCount;
+        svgPro.material_aggregate_3 = material_aggregate_3_total/forCount;
+        svgPro.material_aggregate_2 = material_aggregate_2_total/forCount;
+        svgPro.material_aggregate_1 = material_aggregate_1_total/forCount;
+        svgPro.material_stone_1 = material_stone_1_total/forCount;
+        svgPro.material_stone_2 = material_stone_2_total/forCount;
+        svgPro.material_asphalt = material_asphalt_total/forCount;
+        svgPro.material_regenerate = material_regenerate_total/forCount;
+        svgPro.material_additive = material_additive_total/forCount;
+        svgPro.material_total = material_total_total/forCount;
+        svgPro.temperature_warehouse_1 = temperature_warehouse_1_total/forCount;
+        svgPro.temperature_mixture = temperature_mixture_total/forCount;
+        svgPro.temperature_duster = temperature_duster_total/forCount;
+        svgPro.temperature_asphalt = temperature_asphalt_total/forCount;
+        svgPro.temperature_aggregate = temperature_aggregate_total/forCount;
+
+        return JSON.stringify(svgPro);
     }
 </script>
 </html>
