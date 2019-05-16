@@ -27,7 +27,7 @@ a {
 
 /* nav */
 .nav {
-    width: 180px;
+    width: 12%;
     min-height: 100%;
     height: auto;
     /*background: #367448;*/
@@ -133,7 +133,7 @@ a {
 
 /* nav-mini */
 .nav-mini.nav {
-    width: 60px;
+    width: 4%;
 }
 
 .nav-mini.nav .nav-icon { /* margin-left:-2px; */

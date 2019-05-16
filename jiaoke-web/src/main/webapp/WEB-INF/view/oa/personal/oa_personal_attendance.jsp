@@ -16,7 +16,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>个人考勤</title>
+    <title>考勤统计</title>
     <link href="../../../../static/css/oa/oa_common.css" rel="stylesheet" type="text/css">
 </head>
 

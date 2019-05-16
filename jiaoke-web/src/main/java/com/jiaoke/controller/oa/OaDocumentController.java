@@ -12,9 +12,6 @@ import com.jiaoke.oa.service.DepartmentService;
 import com.jiaoke.oa.service.OaDocumentService;
 import com.jiaoke.oa.service.UserInfoService;
 import org.activiti.bpmn.model.SequenceFlow;
-import org.activiti.engine.ProcessEngine;
-import org.activiti.engine.ProcessEngines;
-import org.activiti.engine.TaskService;
 import org.activiti.engine.task.Task;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
@@ -25,7 +22,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.io.UnsupportedEncodingException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 公文管理
@@ -293,18 +293,28 @@ public class OaDocumentController {
      * @param model model
      * @return oa_complete_details.jsp
      */
-    @RequestMapping(value = "/doneDocument.do")
-    public String doneDocument(Model model) {
+    @RequestMapping(value = "/toDoneDocument.do")
+    public String toDoneDocument(int page, Model model) {
+        model.addAttribute("page", JsonHelper.toJSONString(page));
+        return "oa/document/oa_done_document";
+    }
+
+    /**
+     * 加载已办公文
+     *
+     * @param page      page
+     * @param textTitle textTitle
+     * @return json
+     */
+    @RequestMapping(value = "/doneDocument")
+    @ResponseBody
+    public String doneDocument(int page, String textTitle) {
         UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
         List<String> businessKeyList = activitiUtil.historicTask(userInfo.getId().toString());
-        if (businessKeyList.size() == 0) {
-            model.addAttribute("oaDocumentList", businessKeyList);
-            return "oa/document/oa_done_document";
-        } else {
-            List<OaDocument> oaDocumentList = oaDocumentService.getListById(businessKeyList);
-            model.addAttribute("oaDocumentList", oaDocumentList);
-            return "oa/document/oa_done_document";
-        }
+        PageHelper.startPage(page, 15);
+        List<OaDocument> oaDocumentList = oaDocumentService.getListById(businessKeyList);
+        PageInfo<OaDocument> pageInfo = new PageInfo<>(oaDocumentList);
+        return JsonHelper.toJSONString(pageInfo);
     }
 
     /**------------communal---------------------*/

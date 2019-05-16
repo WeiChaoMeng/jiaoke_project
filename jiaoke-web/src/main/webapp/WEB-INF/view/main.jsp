@@ -249,6 +249,69 @@
 <%--模态窗-角色绑定权限--%>
 <div id="bindingPermission" class="tab-right-div" style="display: none"></div>
 
+<%--模态窗-添加部门--%>
+<div id="addDepartment" class="window-body-add" style="display: none">
+    <table class="window-table">
+        <tbody>
+        <tr>
+            <td class="form_title_check"><i class="required_mark">*</i>部门名称:</td>
+            <td class="form_content_check">
+                <input type="hidden" id="departmentPage">
+                <input class="font_input" id="departmentName" type="text"
+                       placeholder="请输入部门名称" maxlength="16" onkeyup="this.value=this.value.replace(/^\s+|\s+$/g,'')"
+                       autocomplete="off">
+                <span class="prompt-span"></span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div style="padding-top: 20px">
+        <input type="button" value="确认" onclick="commitDepartment()" class="body-bottom-button">
+        <input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">
+    </div>
+</div>
+
+<%--模态窗-编辑部门--%>
+<div id="editDepartment" class="window-body-add" style="display: none">
+    <table class="window-table">
+        <tbody>
+        <tr>
+            <td class="form_title_check"><i class="required_mark">*</i>部门名称:</td>
+            <td class="form_content_check">
+                <input type="hidden" id="editDepartmentId">
+                <input class="font_input" id="editDepartmentName" type="text"
+                       placeholder="请输入部门名称" maxlength="16" onkeyup="this.value=this.value.replace(/^\s+|\s+$/g,'')"
+                       autocomplete="off">
+                <span class="prompt-span"></span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div style="padding-top: 20px">
+        <input type="button" value="确认" onclick="commitEditDepartment()" class="body-bottom-button">
+        <input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">
+    </div>
+</div>
+
+<%--模态窗-绑定部门主管--%>
+<div id="bindingDepartment" style="display: none;width: 96%;height: 96%;padding: 2%">
+    <div class="option-window-body-head cursor_hand">
+        <input type="hidden" id="departmentId">
+        <div id="selectDepartment" class="selection-content-inside">
+            <ul id="departmentAndUser">
+
+            </ul>
+        </div>
+    </div>
+
+    <div class="option-window-body-bottom">
+        <input type="button" value="确认" onclick="confirmDepartmentHead()" class="body-bottom-button">
+        <input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">
+    </div>
+</div>
+
 <%-- 模态窗-选择拟稿人 --%>
 <div id="singleSelection" class="single-option-window" style="display: none">
     <input type="hidden" id="pendingDocumentPage">
@@ -360,7 +423,7 @@
         );
     }
 
-    //公文-选择拟稿人
+    //公文-选择抄送人员
     function selectNotifyPerson(userInfoList, departmentList) {
         window.lar = layer.open({
             title: '选择抄送人员',
@@ -506,13 +569,15 @@
                         '<span id="' + userInfoList[i].id + '">' + userInfoList[i].nickname + '</span>' +
                         '<div class="selectedDrafter"></div>' +
                         '</li>';
+                } else {
+                    content +=
+                        '<li class="single-election-box-li">' +
+                        '<img src="../../static/images/icon/personnel.png">' +
+                        '<span id="' + userInfoList[i].id + '">' + userInfoList[i].nickname + '</span>' +
+                        '<div></div>' +
+                        '</li>';
                 }
-                content +=
-                    '<li class="single-election-box-li">' +
-                    '<img src="../../static/images/icon/personnel.png">' +
-                    '<span id="' + userInfoList[i].id + '">' + userInfoList[i].nickname + '</span>' +
-                    '<div></div>' +
-                    '</li>';
+
             }
         }
         //添加到选择列表
@@ -595,13 +660,242 @@
         })
     });
 
+    /**-----------------------部门管理---------------------------*/
+    //添加部门
+    function addDepartment(currentPage) {
+        window.lar = layer.open({
+            title: '添加部门',
+            type: 1,
+            area: ['25%', '35%'],
+            shadeClose: true, //点击遮罩关闭
+            content: $("#addDepartment"),
+            offset: "20%"
+        });
+
+        //记录用户页面选择的页数
+        $('#departmentPage').val(currentPage);
+    }
+
+    //提交新增部门
+    function commitDepartment() {
+        var departmentName = $('#departmentName').val();
+        if (departmentName !== "") {
+            if (departmentWhetherRegister(departmentName)) {
+                layer.msg('该部门已被注册');
+            } else {
+                $.ajax({
+                    type: "post",
+                    url: '/backstageManagement/addDepartment',
+                    data: {'departmentName': departmentName},
+                    success: function (data) {
+                        if (data === 'success') {
+                            $('#departmentName').val('');
+                            layer.close(window.lar);
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.departmentInfoPageReload($('#departmentPage').val());
+                            layer.msg("添加部门成功!");
+                        } else {
+                            layer.msg("添加部门失败!");
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                })
+            }
+        } else {
+            layer.msg("部门名称不可以为空！");
+        }
+    }
+
+    //检查部门名称是否被注册
+    function departmentWhetherRegister(departmentName) {
+        var res = false;
+        $.ajax({
+            type: "post",
+            url: '/backstageManagement/checkDepartmentName',
+            data: {'departmentName': departmentName},
+            async: false,
+            success: function (data) {
+                if (data === "true") {
+                    res = true;
+                } else {
+                    res = false;
+                }
+            },
+            error: function (result) {
+                alert("出错！");
+            }
+        });
+        return res;
+    }
+
+    //删除部门
+    function deleteDepartment(id, currentPage) {
+        //记录选择的页数
+        $('#departmentPage').val(currentPage);
+
+        //提示窗
+        layer.confirm('确定要删除吗？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $.ajax({
+                    type: "post",
+                    url: '/backstageManagement/deleteDepartment',
+                    data: {'id': id},
+                    async: false,
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.msg('删除成功！')
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.departmentInfoPageReload($('#departmentPage').val());
+                        } else {
+                            layer.msg('删除失败！')
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                })
+            }
+        );
+    }
+
+    //部门绑定主管
+    function bindingDepartmentHead(userInfoList, departmentList, id, page) {
+        window.lar = layer.open({
+            title: '绑定部门主管',
+            type: 1,
+            area: ['20%', '50%'],
+            shadeClose: true, //点击遮罩关闭
+            content: $("#bindingDepartment"),
+            offset: "20%"
+        });
+
+        //记录选择的页数
+        $('#departmentPage').val(page);
+        //部门id
+        $('#departmentId').val(id);
+        //加载部门和员工
+        var department = "";
+        for (let i = 0; i < departmentList.length; i++) {
+            department += '<li class="selection-box-li">';
+            department += '<img src="../../static/images/icon/department.png">';
+            department += '<span onclick="departmentSelect(this)" id="' + departmentList[i].departmentKey + '">' + departmentList[i].departmentName + '</span>';
+            department += '<div></div>';
+
+            for (let j = 0; j < userInfoList.length; j++) {
+                if (userInfoList[j].department === departmentList[i].departmentKey) {
+                    department += '<ul class="submenu-ul">';
+                    department += '<li onclick="addSelectionUser(this)">';
+                    department += '<img src="../../static/images/icon/personnel.png">';
+                    department += '<span id="' + userInfoList[j].id + '">' + userInfoList[j].nickname + '</span>';
+                    department += '<div></div>';
+                    department += '</li>';
+                    department += '</ul>';
+                }
+            }
+            department += '</li>';
+        }
+
+        $("#departmentAndUser").html(department);
+    }
+
+    //用户选择器
+    function addSelectionUser(own) {
+        if ($(own).children('div').hasClass("selection")) {
+            $(own).children('div').removeClass("selection");
+        } else {
+            $('#selectDepartment').find('div').removeClass("selection");
+            $(own).find("div").addClass("selection");
+        }
+    }
+
+    //提交绑定
+    function confirmDepartmentHead() {
+        var lis = $("#selectDepartment").find("div");
+        //是否包含selectedDrafter
+        if (lis.hasClass("selection")) {
+            //选择的用户id
+            var principal = $(".selection").prev().attr('id')
+            //部门id
+            var id = $('#departmentId').val();
+
+            $.ajax({
+                type: "post",
+                url: '/backstageManagement/bindingDepartmentHead',
+                data: {'id': id, 'principal': principal},
+                success: function (data) {
+                    if (data === 'success') {
+                        layer.close(window.lar);
+                        layer.msg("绑定部门主管成功!");
+                        $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.departmentInfoPageReload($('#departmentPage').val());
+                    } else {
+                        layer.msg("绑定部门主管失败!");
+                    }
+                },
+                error: function (result) {
+                    layer.msg("出错！");
+                }
+            })
+        } else {
+            layer.msg('请选择拟稿人！')
+        }
+    }
+
+    //编辑部门
+    function editDepartment(department, currentPage) {
+        window.lar = layer.open({
+            title: '编辑部门',
+            type: 1,
+            area: ['25%', '35%'],
+            shadeClose: true, //点击遮罩关闭
+            content: $("#editDepartment"),
+            offset: "20%"
+        });
+
+        //记录用户页面选择的页数
+        $('#departmentPage').val(currentPage);
+        $('#editDepartmentName').val(department.departmentName);
+        $('#editDepartmentId').val(department.id);
+    }
+
+    //提交编辑后的部门
+    function commitEditDepartment() {
+        var id = $('#editDepartmentId').val();
+        var departmentName = $('#editDepartmentName').val();
+        if (departmentName !== "") {
+            if (departmentWhetherRegister(departmentName)) {
+                layer.msg('该部门已被注册');
+            } else {
+                $.ajax({
+                    type: "post",
+                    url: '/backstageManagement/departmentEdit',
+                    data: {'id': id, 'departmentName': departmentName},
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.close(window.lar);
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.departmentInfoPageReload($('#departmentPage').val());
+                            layer.msg("编辑部门成功!");
+                        } else {
+                            layer.msg("编辑部门失败!");
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                })
+            }
+        } else {
+            layer.msg("部门名称不可以为空！");
+        }
+    }
+
     /**-------------------------角色管理-------------------------*/
     //新增角色
     function addRole(currentPage) {
         window.lar = layer.open({
             title: '添加角色',
             type: 1,
-            area: ['25%', '40%'],
+            area: ['25%', '41%'],
             shadeClose: true, //点击遮罩关闭
             content: $("#addRole"),
             offset: "20%"
@@ -1315,6 +1609,703 @@
             $(own).next().html("");
             return true;
         }
+    }
+
+    /*---------------档案----------------*/
+    //删除合同
+    function deleteOperateContract(id, currentPage) {
+        //记录用户页面选择的页数
+        $('#currentPage').val(currentPage);
+        //提示窗
+        layer.confirm('确定要删除吗？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $.ajax({
+                    type: "post",
+                    url: '/operateSign/delete',
+                    data: {'id': id},
+                    async: false,
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.msg('删除成功！');
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.operateContractPageReload($('#currentPage').val());
+                        } else {
+                            layer.msg('删除失败！');
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                });
+            }
+        );
+    }
+
+    //删除签认
+    function deleteOperateSign(id, currentPage) {
+        //记录用户页面选择的页数
+        $('#currentPage').val(currentPage);
+        //提示窗
+        layer.confirm('确定要删除吗？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $.ajax({
+                    type: "post",
+                    url: '/operateSign/delete',
+                    data: {'id': id},
+                    async: false,
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.msg('删除成功！');
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.operateSignPageReload($('#currentPage').val());
+                        } else {
+                            layer.msg('删除失败！');
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                });
+            }
+        );
+    }
+
+    //删除签认
+    function deleteOperateBid(id, currentPage) {
+        //记录用户页面选择的页数
+        $('#currentPage').val(currentPage);
+        //提示窗
+        layer.confirm('确定要删除吗？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $.ajax({
+                    type: "post",
+                    url: '/operateBid/delete',
+                    data: {'id': id},
+                    async: false,
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.msg('删除成功！');
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.operatePidPageReload($('#currentPage').val());
+                        } else {
+                            layer.msg('删除失败！');
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                });
+            }
+        );
+    }
+
+    //删除签认
+    function deleteOperateCustomer(id, currentPage) {
+        //记录用户页面选择的页数
+        $('#currentPage').val(currentPage);
+        //提示窗
+        layer.confirm('确定要删除吗？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $.ajax({
+                    type: "post",
+                    url: '/operateCustomer/delete',
+                    data: {'id': id},
+                    async: false,
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.msg('删除成功！');
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.operateCustomerPageReload($('#currentPage').val());
+                        } else {
+                            layer.msg('删除失败！');
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                });
+            }
+        );
+    }
+
+    //删除报价
+    function deleteOperateOffer(id, currentPage) {
+        //记录用户页面选择的页数
+        $('#currentPage').val(currentPage);
+        //提示窗
+        layer.confirm('确定要删除吗？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $.ajax({
+                    type: "post",
+                    url: '/operateOffer/delete',
+                    data: {'id': id},
+                    async: false,
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.msg('删除成功！');
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.operateOfferPageReload($('#currentPage').val());
+                        } else {
+                            layer.msg('删除失败！');
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                });
+            }
+        );
+    }
+
+    //删除其他
+    function deleteOperateOther(id, currentPage) {
+        //记录用户页面选择的页数
+        $('#currentPage').val(currentPage);
+        //提示窗
+        layer.confirm('确定要删除吗？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $.ajax({
+                    type: "post",
+                    url: '/operateOther/delete',
+                    data: {'id': id},
+                    async: false,
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.msg('删除成功！');
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.operateOtherPageReload($('#currentPage').val());
+                        } else {
+                            layer.msg('删除失败！');
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                });
+            }
+        );
+    }
+
+    //删除其他
+    function deleteOperateMeeting(id, currentPage) {
+        //记录用户页面选择的页数
+        $('#currentPage').val(currentPage);
+        //提示窗
+        layer.confirm('确定要删除吗？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $.ajax({
+                    type: "post",
+                    url: '/operateMeeting/delete',
+                    data: {'id': id},
+                    async: false,
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.msg('删除成功！');
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.operateMeetingPageReload($('#currentPage').val());
+                        } else {
+                            layer.msg('删除失败！');
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                });
+            }
+        );
+    }
+
+    //删除诉讼
+    function deleteOperateLawsuit(id, currentPage) {
+        //记录用户页面选择的页数
+        $('#currentPage').val(currentPage);
+        //提示窗
+        layer.confirm('确定要删除吗？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $.ajax({
+                    type: "post",
+                    url: '/operateLawsuit/delete',
+                    data: {'id': id},
+                    async: false,
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.msg('删除成功！');
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.operateLawsuitPageReload($('#currentPage').val());
+                        } else {
+                            layer.msg('删除失败！');
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                });
+            }
+        );
+    }
+
+    //删除环保改造台账
+    function deleteProductionEnvironment(id, currentPage) {
+        //记录用户页面选择的页数
+        $('#currentPage').val(currentPage);
+        //提示窗
+        layer.confirm('确定要删除吗？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $.ajax({
+                    type: "post",
+                    url: '/productionEnvironment/delete',
+                    data: {'id': id},
+                    async: false,
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.msg('删除成功！');
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.productionEnvironmentPageReload($('#currentPage').val());
+                        } else {
+                            layer.msg('删除失败！');
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                });
+            }
+        );
+    }
+
+    //删除生产管理部-合同
+    function deleteProductionContract(id, currentPage) {
+        //记录用户页面选择的页数
+        $('#currentPage').val(currentPage);
+        //提示窗
+        layer.confirm('确定要删除吗？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $.ajax({
+                    type: "post",
+                    url: '/productionContract/delete',
+                    data: {'id': id},
+                    async: false,
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.msg('删除成功！');
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.productionContractPageReload($('#currentPage').val());
+                        } else {
+                            layer.msg('删除失败！');
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                });
+            }
+        );
+    }
+
+    //删除生产管理部-合同
+    function deleteProductionEnergy(id, currentPage) {
+        //记录用户页面选择的页数
+        $('#currentPage').val(currentPage);
+        //提示窗
+        layer.confirm('确定要删除吗？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $.ajax({
+                    type: "post",
+                    url: '/productionEnergy/delete',
+                    data: {'id': id},
+                    async: false,
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.msg('删除成功！');
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.productionEnergyPageReload($('#currentPage').val());
+                        } else {
+                            layer.msg('删除失败！');
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                });
+            }
+        );
+    }
+
+    //生产管理部-设备档案技术资料
+    function deleteProductionEquipment(id, currentPage) {
+        //记录用户页面选择的页数
+        $('#currentPage').val(currentPage);
+        //提示窗
+        layer.confirm('确定要删除吗？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $.ajax({
+                    type: "post",
+                    url: '/productionEquipment/delete',
+                    data: {'id': id},
+                    async: false,
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.msg('删除成功！');
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.ProductionEquipmentPageReload($('#currentPage').val());
+                        } else {
+                            layer.msg('删除失败！');
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                });
+            }
+        );
+    }
+
+    //生产管理部-工程基建类资料
+    function deleteProductionEngineering(id, currentPage) {
+        //记录用户页面选择的页数
+        $('#currentPage').val(currentPage);
+        //提示窗
+        layer.confirm('确定要删除吗？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $.ajax({
+                    type: "post",
+                    url: '/productionEngineering/delete',
+                    data: {'id': id},
+                    async: false,
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.msg('删除成功！');
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.productionEngineeringPageReload($('#currentPage').val());
+                        } else {
+                            layer.msg('删除失败！');
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                });
+            }
+        );
+    }
+
+    //财务管理部-凭证
+    function deleteFinanceVoucher(id, currentPage) {
+        //记录用户页面选择的页数
+        $('#currentPage').val(currentPage);
+        //提示窗
+        layer.confirm('确定要删除吗？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $.ajax({
+                    type: "post",
+                    url: '/financeVoucher/delete',
+                    data: {'id': id},
+                    async: false,
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.msg('删除成功！');
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.financeVoucherPageReload($('#currentPage').val());
+                        } else {
+                            layer.msg('删除失败！');
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                });
+            }
+        );
+    }
+
+    //财务管理部-报表及材料
+    function deleteFinanceMaterial(id, currentPage) {
+        //记录用户页面选择的页数
+        $('#currentPage').val(currentPage);
+        //提示窗
+        layer.confirm('确定要删除吗？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $.ajax({
+                    type: "post",
+                    url: '/financeMaterial/delete',
+                    data: {'id': id},
+                    async: false,
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.msg('删除成功！');
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.financeMaterialPageReload($('#currentPage').val());
+                        } else {
+                            layer.msg('删除失败！');
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                });
+            }
+        );
+    }
+
+    //财务管理部-凭证
+    function deleteFinanceBill(id, currentPage) {
+        //记录用户页面选择的页数
+        $('#currentPage').val(currentPage);
+        //提示窗
+        layer.confirm('确定要删除吗？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $.ajax({
+                    type: "post",
+                    url: '/financeBil/delete',
+                    data: {'id': id},
+                    async: false,
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.msg('删除成功！');
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.financeBillPageReload($('#currentPage').val());
+                        } else {
+                            layer.msg('删除失败！');
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                });
+            }
+        );
+    }
+
+    //财务管理部-凭证
+    function deleteFinanceOther(id, currentPage) {
+        //记录用户页面选择的页数
+        $('#currentPage').val(currentPage);
+        //提示窗
+        layer.confirm('确定要删除吗？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $.ajax({
+                    type: "post",
+                    url: '/financeOther/delete',
+                    data: {'id': id},
+                    async: false,
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.msg('删除成功！');
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.financeOtherPageReload($('#currentPage').val());
+                        } else {
+                            layer.msg('删除失败！');
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                });
+            }
+        );
+    }
+
+    //财务管理部-凭证
+    function deleteFinancePersonnel(id, currentPage) {
+        //记录用户页面选择的页数
+        $('#currentPage').val(currentPage);
+        //提示窗
+        layer.confirm('确定要删除吗？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $.ajax({
+                    type: "post",
+                    url: '/qualityPersonnel/delete',
+                    data: {'id': id},
+                    async: false,
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.msg('删除成功！');
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.financePersonnelPageReload($('#currentPage').val());
+                        } else {
+                            layer.msg('删除失败！');
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                });
+            }
+        );
+    }
+
+    //财务管理部-凭证
+    function deleteFinanceConfirm(id, currentPage) {
+        //记录用户页面选择的页数
+        $('#currentPage').val(currentPage);
+        //提示窗
+        layer.confirm('确定要删除吗？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $.ajax({
+                    type: "post",
+                    url: '/financeConfirm/delete',
+                    data: {'id': id},
+                    async: false,
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.msg('删除成功！');
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.financeConfirmPageReload($('#currentPage').val());
+                        } else {
+                            layer.msg('删除失败！');
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                });
+            }
+        );
+    }
+
+    //质量技术部-设计文件
+    function deleteQualityDevise(id, currentPage) {
+        //记录用户页面选择的页数
+        $('#currentPage').val(currentPage);
+        //提示窗
+        layer.confirm('确定要删除吗？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $.ajax({
+                    type: "post",
+                    url: '/qualityDevise/delete',
+                    data: {'id': id},
+                    async: false,
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.msg('删除成功！');
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.qualityDevisePageReload($('#currentPage').val());
+                        } else {
+                            layer.msg('删除失败！');
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                });
+            }
+        );
+    }
+
+    //物资管理部-其他
+    function deleteMaterialOther(id, currentPage) {
+        //记录用户页面选择的页数
+        $('#currentPage').val(currentPage);
+        //提示窗
+        layer.confirm('确定要删除吗？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $.ajax({
+                    type: "post",
+                    url: '/materialOther/delete',
+                    data: {'id': id},
+                    async: false,
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.msg('删除成功！');
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.materialOtherPageReload($('#currentPage').val());
+                        } else {
+                            layer.msg('删除失败！');
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                });
+            }
+        );
+    }
+
+    //物资管理部-其他
+    function deleteMaterialPurchase(id, currentPage) {
+        //记录用户页面选择的页数
+        $('#currentPage').val(currentPage);
+        //提示窗
+        layer.confirm('确定要删除吗？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $.ajax({
+                    type: "post",
+                    url: '/materialPurchase/delete',
+                    data: {'id': id},
+                    async: false,
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.msg('删除成功！');
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.materialPurchasePageReload($('#currentPage').val());
+                        } else {
+                            layer.msg('删除失败！');
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                });
+            }
+        );
+    }
+
+    //物资管理部-砂石料招投标资料
+    function deleteMaterialBidding(id, currentPage) {
+        //记录用户页面选择的页数
+        $('#currentPage').val(currentPage);
+        //提示窗
+        layer.confirm('确定要删除吗？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $.ajax({
+                    type: "post",
+                    url: '/materialBidding/delete',
+                    data: {'id': id},
+                    async: false,
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.msg('删除成功！');
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.materialBiddingPageReload($('#currentPage').val());
+                        } else {
+                            layer.msg('删除失败！');
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                });
+            }
+        );
+    }
+
+    //生产管理部-其他文件
+    function deleteProductionOther(id, currentPage) {
+        //记录用户页面选择的页数
+        $('#currentPage').val(currentPage);
+        //提示窗
+        layer.confirm('确定要删除吗？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $.ajax({
+                    type: "post",
+                    url: '/productionOther/delete',
+                    data: {'id': id},
+                    async: false,
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.msg('删除成功！');
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.productionOtherPageReload($('#currentPage').val());
+                        } else {
+                            layer.msg('删除失败！');
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                });
+            }
+        );
     }
 
     //checkbox选中事件

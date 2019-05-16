@@ -212,7 +212,7 @@
         var resultList = '';
         if (objList.length === 0) {
             resultList += '<tr>';
-            resultList += '<td colspan="8">' + '暂无数据' + '</td>';
+            resultList += '<td colspan="8">' + '没有查询到匹配记录' + '</td>';
             resultList += '</tr>';
         } else {
             for (let i = 0; i < objList.length; i++) {

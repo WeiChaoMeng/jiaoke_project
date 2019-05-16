@@ -1,5 +1,7 @@
 package com.jiake.utils;
 
+import com.jiaoke.oa.bean.DingDingPunchDate;
+
 import javax.swing.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -63,5 +65,66 @@ public class DateUtil {
         } catch (Exception e) {
             return new Date();
         }
+    }
+
+    /**
+     * date转string（HH:mm:ss）
+     *
+     * @param date date
+     * @return string
+     */
+    public static String dateConvertHHMMSS(Date date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+        return simpleDateFormat.format(date);
+    }
+
+
+    /**
+     * 获取日期（* / **）
+     *
+     * @param date date
+     * @return string
+     */
+    public static String getDay(Date date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("d");
+        return simpleDateFormat.format(date);
+    }
+
+    /**
+     * 获取日期（* / **）
+     *
+     * @param date date
+     * @return string
+     */
+    public static String getWeek(Date date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE");
+        String week = simpleDateFormat.format(date);
+        return week.substring(simpleDateFormat.format(date).length() - 1);
+    }
+
+    /**
+     * dateString转date（yyyy）
+     *
+     * @param dateString dateString
+     * @return date
+     */
+    public static Date stringConvertYYYY(String dateString) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy");
+        try {
+            return simpleDateFormat.parse(dateString);
+        } catch (Exception e) {
+            return new Date();
+        }
+    }
+
+    /**
+     * date转string（yyyy）
+     *
+     * @param date date
+     * @return string
+     */
+    public static String dateConvertYYYY(Date date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy");
+        return simpleDateFormat.format(date);
     }
 }

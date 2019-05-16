@@ -23,7 +23,7 @@ $(function () {
             $(".right_page").css("width", "96%");
         } else {
             $('.nav').removeClass('nav-mini');
-            $(".right_page").css("width", "87%");
+            $(".right_page").css("width", "88%");
         }
     });
 
@@ -33,6 +33,13 @@ $(function () {
         removeOwnName();
         personal(this);
         $('#oa-iframe').attr("src", "personalAttendance/toPersonalAttendance");
+    });
+
+    //考勤统计
+    $("#attendance_statistics").on("click", function () {
+        removeOwnName();
+        personal(this);
+        $('#oa-iframe').attr("src", "personalAttendance/toAttendanceStatistics");
     });
 
     //日程计划
@@ -124,7 +131,7 @@ $(function () {
     $("#done_document").on("click", function () {
         removeOwnName();
         document(this);
-        $("#oa-iframe").attr("src", "document/doneDocument.do")
+        $("#oa-iframe").attr("src", "document/toDoneDocument.do?page=1")
     });
 
     //待发公文
@@ -300,6 +307,13 @@ $(function () {
         removeOwnName();
         cultural_construction(this);
         $('#oa-iframe').attr("src", "backstageManagement/toPermissionManager");
+    });
+
+    //部门管理
+    $("#departmentManager").on("click", function () {
+        removeOwnName();
+        cultural_construction(this);
+        $('#oa-iframe').attr("src", "backstageManagement/toDepartmentManager?page=1");
     });
 
     /*当前位置*/

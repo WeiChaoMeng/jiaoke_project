@@ -301,7 +301,7 @@
         $('#draftedPerson').val('');
     });
 
-    //选择核稿人
+    //选择拟稿人
     function selectReviewer() {
         var departmentKey = $('#draftingDepartment').val();
         if (departmentKey === "") {
