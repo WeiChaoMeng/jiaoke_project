@@ -18,6 +18,7 @@
     <title>已办公文</title>
     <link href="../../../../static/css/oa/oa_common.css" rel="stylesheet" type="text/css">
     <link href="../../../../static/css/paging/htmleaf-demo.css" rel="stylesheet" type="text/css">
+    <link href="../../../../static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
     <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
@@ -42,13 +43,67 @@
             <tbody>
             <tr>
                 <td>
-                    <div>
-                        <div class="conditional-query cursor_hand">
-                            <input type="text" id="textTitle" class="search-bar" placeholder="标题" autocomplete="off">
-                            <i onclick="loadData(1)" class="iconfont search-icon-size"
-                               id="conditional_search">&#xe7e7;</i>
+                    <div class="head_left_button">
+                        <button type="button" class="cursor_hand">&#xe8e5; 转发</button>
+                    </div>
+
+                    <div class="separation_line"></div>
+
+                    <div class="head_left_button">
+                        <button type="button" class="cursor_hand">&#xe990; 归档</button>
+                    </div>
+
+                    <div class="separation_line"></div>
+
+                    <div class="head_left_button">
+                        <button type="button" class="cursor_hand">&#xeaa5; 删除</button>
+                    </div>
+
+                    <div class="separation_line"></div>
+
+                    <div class="head_left_button">
+                        <button type="button" class="cursor_hand">&#xe90f; 取回</button>
+                    </div>
+                </td>
+                <td>
+                    <div class="conditional_query">
+                        <!--搜索按钮-->
+                        <i class="iconfont search" id="conditional_search" onmousemove="select_color(this)"
+                           onmouseout="unselected_color(this)">&#xe7e7;</i>
+                        <!--标题-->
+                        <div id="div2" class="head_right_side_input matter_title">
+                            <input type="text">
+                        </div>
+
+                        <!--重要程度-->
+                        <div id="div3" class="head_right_side_select matter_importance">
+                            <select>
+                                <option value="1">普通</option>
+                                <option value="2">重要</option>
+                                <option value="3">非常重要</option>
+                            </select>
+                        </div>
+
+                        <!--状态-->
+                        <div id="div4" class="head_right_side_select matter_status">
+                            <select>
+                                <option value="1">未结束</option>
+                                <option value="2">已结束</option>
+                                <option value="3">已终止</option>
+                            </select>
+                        </div>
+
+                        <!--条件查询-->
+                        <div id="div1" class="head_right_side">
+                            <select id="condition1">
+                                <option value="0">- -查询条件- -</option>
+                                <option value="1">标题</option>
+                                <option value="2">重要程度</option>
+                                <option value="3">流程状态</option>
+                            </select>
                         </div>
                     </div>
+
                 </td>
             </tr>
             </tbody>
@@ -58,20 +113,19 @@
     <table class="simpletable simpletable_color" style="table-layout: fixed">
 
         <thead>
-        <th style="width: 3%;"><input type="checkbox"></th>
-        <th style="width: 8%;">密级</th>
-        <th style="width: 36%;">标题</th>
-        <th style="width: 15%;">公文文号</th>
-        <th style="width: 8%;">发起人</th>
-        <th style="width: 15%">发起时间</th>
-        <th style="width: 15%;">接收时间</th>
+        <th style="width: 3%"><input type="checkbox"></th>
+        <th style="width: 8%">密级</th>
+        <th style="width: 44%">标题</th>
+        <th style="width: 13%">公文文号</th>
+        <th style="width: 8%">发起人</th>
+        <th style="width: 12%">发起时间</th>
+        <th style="width: 12%">结束时间</th>
         </thead>
 
         <tbody class="tbodys">
 
         <c:choose>
             <c:when test="${oaDocumentList.size() == 0}">
-                <tr></tr>
                 <tr>
                     <td colspan="9">没有查询到匹配记录</td>
                 </tr>
@@ -108,139 +162,15 @@
 
 </div>
 
-<div id="paging" class="paging-div">
-    <div>
-        <div class="" style="float: right;">
-            <ul class="pagination" id="pagination" style="margin: 0"></ul>
-            <input type="hidden" id="PageCount" runat="server"/>
-            <input type="hidden" id="PageSize" runat="server"/>
-            <input type="hidden" id="countindex" runat="server"/>
-            <!--设置最多显示的页码数 可以手动设置 默认为10-->
-            <input type="hidden" id="visiblePages" runat="server" value="10"/>
-            <input type="hidden" id="page" value="1"/>
-        </div>
-    </div>
-</div>
+
 </body>
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
 <script type="text/javascript" src="../../../../static/js/oa/oa_common.js"></script>
 <script type="text/javascript" src="../../../../static/js/common.js"></script>
-<script type="text/javascript" src="../../../../static/js/paging/jqPaginator.js"></script>
-<script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
-
-    //设置当前页
-    var currentPage = '${page}';
-    var currentPageNum = JSON.parse(currentPage);
-
-    //初始化分页
-    $(function () {
-        //设置当前页
-        $('#page').val(currentPageNum);
-        loadData(currentPageNum);
-    });
-
-    //加载数据
-    function loadData(page) {
-        var textTitle = $('#textTitle').val();
-        $.ajax({
-            type: "post",
-            url: '/document/doneDocument',
-            data: {'page': page, 'textTitle': textTitle},
-            async: false,
-            success: function (data) {
-                var lists = JSON.parse(data);
-                parseResult(lists);
-                loadPage();
-            },
-            error: function (result) {
-                layer.msg("出错！");
-            }
-        })
-    }
-
-    function loadPage() {
-        var myPageCount = parseInt($("#PageCount").val());
-        var myPageSize = parseInt($("#PageSize").val());
-        var countindex = myPageCount === 0 ? 1 : Math.ceil(myPageCount / myPageSize);
-        $("#countindex").val(countindex);
-
-        $.jqPaginator('#pagination', {
-            totalPages: parseInt($("#countindex").val()),
-            visiblePages: parseInt($("#visiblePages").val()),
-            currentPage: currentPageNum,
-            first: '<li class="first"><a href="javascript:;">首页</a></li>',
-            prev: '<li class="prev"><a href="javascript:;"><i class="arrow arrow2"></i>上一页</a></li>',
-            next: '<li class="next"><a href="javascript:;">下一页<i class="arrow arrow3"></i></a></li>',
-            last: '<li class="last"><a href="javascript:;">末页</a></li>',
-            page: '<li class="page"><a href="javascript:;">{{page}}</a></li>',
-            onPageChange: function (page, type) {
-                if (type == "change") {
-                    $('#page').val(page);
-                    exeData(page, type);
-                }
-            }
-        });
-    }
-
-    function exeData(page, type) {
-        loadData(page);
-    }
-
-    //解析list
-    function parseResult(lists) {
-        var resultList = '';
-        if (lists === 'noData') {
-            resultList += '<tr>';
-            resultList += '<td colspan="7">' + '没有查询到匹配记录' + '</td>';
-            resultList += '</tr>';
-            $("#PageCount").val(0);
-            //每页显示条数
-            $("#PageSize").val("15");
-        } else {
-            //总数
-            $("#PageCount").val(lists.total);
-            //每页显示条数
-            $("#PageSize").val("15");
-            //结果集
-            var objList = lists.list;
-            //插入tbody
-            for (let i = 0; i < objList.length; i++) {
-                resultList += '<tr onclick="particulars(' + objList[i].id + ')">';
-                resultList += '<input type="hidden" id="taskId" value="' + objList[i].taskId + '">';
-                resultList += '<td><input type="checkbox" value="' + objList[i].id + '" onclick="window.event.cancelBubble=true;"></td>';
-                resultList += '<td>';
-                if (objList[i].rank === 1) {
-                    resultList += '普通公文';
-                } else if (objList[i].rank === 2) {
-                    resultList += '秘密公文';
-                } else if (objList[i].rank === 3) {
-                    resultList += '机密公文';
-                } else if (objList[i].rank === 4) {
-                    resultList += '绝密公文';
-                }
-                resultList += '</td>';
-                resultList += '<td style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align: left;text-indent:10px;" title="' + objList[i].textTitle + '"> ' + objList[i].textTitle + ' </td>';
-                resultList += '<td>' + objList[i].textNumber + '</td>';
-                resultList += '<td>';
-                if (objList[i].userInfoId != null && objList[i].userInfoId != "") {
-                    resultList += objList[i].userInfoId;
-                } else {
-                    resultList += '无';
-                }
-                resultList += '</td>';
-                resultList += '<td>' + objList[i].createTimeStr + '</td>';
-                resultList += '<td>' + objList[i].receiveTime + '</td>';
-                resultList += '</tr>';
-            }
-        }
-        $('#tbodys').html(resultList);
-    }
-
     //查看详情
     function particulars(id) {
-        var taskId = $("#taskId").val();
-        window.location.href = "${path}/document/documentDetails?id=" + id + "&taskId=" + taskId;
+        window.location.href = "${path}/document/completeDetails?id=" + id;
     }
 </script>
 </html>

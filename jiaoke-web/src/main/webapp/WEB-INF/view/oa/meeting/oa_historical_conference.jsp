@@ -9,7 +9,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>待开会议</title>
+    <title>已开会议</title>
     <link href="../../../../static/css/oa/oa_common.css" rel="stylesheet" type="text/css">
     <link href="../../../../static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
 </head>
@@ -24,7 +24,7 @@
             <tr>
                 <td>
                     <div class="head_left_button" onmousemove="select_color(this)" onmouseout="unselected_color(this)">
-                        &#xe7e9; 编辑
+                        &#xe650; 归档
                     </div>
 
                     <div class="separation_line">
@@ -32,7 +32,7 @@
                     </div>
 
                     <div class="head_left_button" onmousemove="select_color(this)" onmouseout="unselected_color(this)">
-                        &#xeaa0; 撤销
+                        &#xe690; 删除
                     </div>
                 </td>
                 <td>
@@ -63,23 +63,14 @@
                             <input type="text">
                         </div>
 
-                        <!--会议状态-->
-                        <div id="div6" class="head_right_side_select meeting_state">
-                            <select>
-                                <option value="1">未开始</option>
-                                <option value="2">召开中</option>
-                            </select>
-                        </div>
-
                         <!--条件查询-->
                         <div id="div1" class="head_right_side">
-                            <select id="condition7">
+                            <select id="condition5">
                                 <option value="0">- -查询条件- -</option>
                                 <option value="1">会议名称</option>
                                 <option value="2">会议类型</option>
                                 <option value="3">发起人</option>
                                 <option value="4">发起部门</option>
-                                <option value="5">状态</option>
                             </select>
                         </div>
                     </div>
@@ -94,26 +85,26 @@
 
         <thead>
         <th width="3%"><input type="checkbox"></th>
-        <th width="39%">会议名称</th>
+        <th width="40%">会议名称</th>
         <th width="7%">发起人</th>
-        <th width="10%">发起部门</th>
+        <th width="12%">发起部门</th>
         <th width="7%">会议地点</th>
-        <th width="10%">开始时间</th>
-        <th width="10%">结束时间</th>
+        <th width="12%">开始时间</th>
+        <th width="12%">结束时间</th>
         <th width="7%">会议类型</th>
-        <th width="7%">状态</th>
         </thead>
 
         <tbody>
+
+        <tr></tr>
         <tr>
-            <td colspan="9">暂无数据</td>
+            <td colspan="8">暂无数据</td>
         </tr>
         </tbody>
 
     </table>
 
 </div>
-
 
 </body>
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>

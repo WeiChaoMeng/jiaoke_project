@@ -61,6 +61,12 @@ table {
     background: #f1f1f1;
 }
 
+.page_head {
+    height: 30px;
+    width: 100%;
+    background: #f1f1f1;
+}
+
 .page_head table {
     width: 100%;
     height: 100%;

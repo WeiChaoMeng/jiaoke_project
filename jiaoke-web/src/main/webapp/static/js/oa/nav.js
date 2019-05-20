@@ -23,7 +23,7 @@ $(function () {
             $(".right_page").css("width", "96%");
         } else {
             $('.nav').removeClass('nav-mini');
-            $(".right_page").css("width", "88%");
+            $(".right_page").css("width", "87%");
         }
     });
 
@@ -33,13 +33,6 @@ $(function () {
         removeOwnName();
         personal(this);
         $('#oa-iframe').attr("src", "personalAttendance/toPersonalAttendance");
-    });
-
-    //考勤统计
-    $("#attendance_statistics").on("click", function () {
-        removeOwnName();
-        personal(this);
-        $('#oa-iframe').attr("src", "personalAttendance/toAttendanceStatistics");
     });
 
     //日程计划
@@ -131,7 +124,7 @@ $(function () {
     $("#done_document").on("click", function () {
         removeOwnName();
         document(this);
-        $("#oa-iframe").attr("src", "document/toDoneDocument.do?page=1")
+        $("#oa-iframe").attr("src", "document/doneDocument.do")
     });
 
     //待发公文
@@ -215,11 +208,11 @@ $(function () {
     }
 
     /*--- 会议管理 ---*/
-    //新建会议
-    $("#new_meeting").on("click", function () {
+    //会议安排
+    $("#meeting_schedule").on("click", function () {
         removeOwnName();
         meeting(this);
-        $("#oa-iframe").attr("src", "meeting/toAdd");
+        $("#oa-iframe").attr("src", "OAMeetingSchedule.do");
     });
 
     //会议日历
@@ -233,14 +226,14 @@ $(function () {
     $("#not_open_meeting").on("click", function () {
         removeOwnName();
         meeting(this);
-        $("#oa-iframe").attr("src", "meeting/toPendingMeeting?page=1")
+        $("#oa-iframe").attr("src", "OAPendingMeeting.do")
     });
 
     //已开会议
-    $("#history_meeting").on("click", function () {
+    $("#historical_conference").on("click", function () {
         removeOwnName();
         meeting(this);
-        $("#oa-iframe").attr("src", "meeting/toHistoryMeeting?page=1")
+        $("#oa-iframe").attr("src", "OAHistoricalConference.do")
     });
 
     //会议资源
@@ -307,13 +300,6 @@ $(function () {
         removeOwnName();
         cultural_construction(this);
         $('#oa-iframe').attr("src", "backstageManagement/toPermissionManager");
-    });
-
-    //部门管理
-    $("#departmentManager").on("click", function () {
-        removeOwnName();
-        cultural_construction(this);
-        $('#oa-iframe').attr("src", "backstageManagement/toDepartmentManager?page=1");
     });
 
     /*当前位置*/

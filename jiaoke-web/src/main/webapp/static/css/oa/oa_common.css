@@ -1340,25 +1340,3 @@ table {
     display: block;
     color: #000;
 }
-
-.attendance-user-content{
-    margin-top: 20px;
-}
-
-.attendance-user-content thead tr th {
-    text-align: center;
-    border: solid 1px #bdbdbd;
-    height: 50px;
-}
-
-.attendance-user-content tbody tr td {
-    text-align: center;
-    border: solid 1px #bdbdbd;
-    height: 50px;
-    padding: 10px 0;
-}
-
-.date_header {
-    position: relative;
-    height: 52px;
-}

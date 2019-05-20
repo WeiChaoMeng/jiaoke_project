@@ -12,6 +12,9 @@ import com.jiaoke.oa.service.DepartmentService;
 import com.jiaoke.oa.service.OaDocumentService;
 import com.jiaoke.oa.service.UserInfoService;
 import org.activiti.bpmn.model.SequenceFlow;
+import org.activiti.engine.ProcessEngine;
+import org.activiti.engine.ProcessEngines;
+import org.activiti.engine.TaskService;
 import org.activiti.engine.task.Task;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
@@ -22,10 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 公文管理
@@ -253,7 +253,7 @@ public class OaDocumentController {
         //获取当前登录人的名称
         UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
         //根据登录人的名称查询任务
-        List<Task> taskList = activitiUtil.getTaskByAssignee(userInfo.getId(), "oa_doc");
+        List<Task> taskList = activitiUtil.getTaskByAssignee(userInfo.getId());
         if (taskList.size() < 1) {
             return JsonHelper.toJSONString("noData");
         }
@@ -293,28 +293,18 @@ public class OaDocumentController {
      * @param model model
      * @return oa_complete_details.jsp
      */
-    @RequestMapping(value = "/toDoneDocument.do")
-    public String toDoneDocument(int page, Model model) {
-        model.addAttribute("page", JsonHelper.toJSONString(page));
-        return "oa/document/oa_done_document";
-    }
-
-    /**
-     * 加载已办公文
-     *
-     * @param page      page
-     * @param textTitle textTitle
-     * @return json
-     */
-    @RequestMapping(value = "/doneDocument")
-    @ResponseBody
-    public String doneDocument(int page, String textTitle) {
+    @RequestMapping(value = "/doneDocument.do")
+    public String doneDocument(Model model) {
         UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
         List<String> businessKeyList = activitiUtil.historicTask(userInfo.getId().toString());
-        PageHelper.startPage(page, 15);
-        List<OaDocument> oaDocumentList = oaDocumentService.getListById(businessKeyList);
-        PageInfo<OaDocument> pageInfo = new PageInfo<>(oaDocumentList);
-        return JsonHelper.toJSONString(pageInfo);
+        if (businessKeyList.size() == 0) {
+            model.addAttribute("oaDocumentList", businessKeyList);
+            return "oa/document/oa_done_document";
+        } else {
+            List<OaDocument> oaDocumentList = oaDocumentService.getListById(businessKeyList);
+            model.addAttribute("oaDocumentList", oaDocumentList);
+            return "oa/document/oa_done_document";
+        }
     }
 
     /**------------communal---------------------*/

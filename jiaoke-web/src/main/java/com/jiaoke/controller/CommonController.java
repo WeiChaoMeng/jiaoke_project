@@ -233,6 +233,56 @@ public class CommonController {
     }
 
     /**
+     * 会议安排
+     *
+     * @return  oa_schedule_planning.jsp
+     */
+    @RequestMapping("/OAMeetingSchedule.do")
+    public String meetingSchedule() {
+        return "oa/meeting/oa_meeting_schedule";
+    }
+
+    /**
+     * 会议日历
+     *
+     * @return  oa_schedule_planning.jsp
+     */
+    @RequestMapping("/OAConferenceCalendar.do")
+    public String conferenceCalendar() {
+        return "oa/meeting/oa_conference_calendar";
+    }
+
+    /**
+     * 待开会议
+     *
+     * @return  oa_schedule_planning.jsp
+     */
+    @RequestMapping("/OAPendingMeeting.do")
+    public String pendingMeeting() {
+        return "oa/meeting/oa_pending_meeting";
+    }
+
+    /**
+     * 已开会议
+     *
+     * @return  oa_schedule_planning.jsp
+     */
+    @RequestMapping("/OAHistoricalConference.do")
+    public String historicalConference() {
+        return "oa/meeting/oa_historical_conference";
+    }
+
+    /**
+     * 会议资源
+     *
+     * @return  oa_schedule_planning.jsp
+     */
+    @RequestMapping("/OAConferenceResources.do")
+    public String conferenceResources() {
+        return "oa/meeting/oa_conference_resources";
+    }
+
+    /**
      * 公告管理
      *
      * @return  oa_schedule_planning.jsp

@@ -115,7 +115,7 @@
                                     </C:when>
                                     <c:otherwise>
                                         <c:forEach items="${ratioMap}" var="rationMess" >
-                                            <c:if test="${rationMess.crew1_modele_id eq    keys || rationMess.crew2_modele_id eq   keys}">
+                                            <c:if test="${rationMess.crew1_modele_id == keys || rationMess.crew2_modele_id == keys}">
                                                 <h1>${rationMess.pro_name}产品${material}走势图</h1>
                                                 <c:set var="rationName" value="${rationMess.pro_name}"></c:set>
                                             </c:if>

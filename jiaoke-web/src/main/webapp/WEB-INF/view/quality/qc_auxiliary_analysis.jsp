@@ -86,7 +86,7 @@
                             <c:when test="${pageBean.pageData} == null || ${pageBean.dataCountNum == 0}" >
                                 <span style="text-align: center" >暂无历史生产数据</span>
                             </c:when>
-                            <c:otherwise>
+                            <c:otherwise>x
                                 <tbody>
                                 <thead>
                                 <th>生产日期</th>

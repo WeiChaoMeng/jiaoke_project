@@ -505,13 +505,14 @@
         FROM
              quality_timely_data_false AS QT
                  INNER JOIN quality_proportioning_message AS QP
-                     <if test="crewNum == 1">
+                     <if test="crewNum == 1" >
                          ON QT.produce_proportioning_num = QP.crew1_modele_id
                      </if>
-                    <if test="crewNum == 2">
-                        ON QT.produce_proportioning_num = QP.crew2_modele_id
-                    </if>
-                WHERE
+        <if test="crewNum == 2" >
+            ON QT.produce_proportioning_num = QP.crew2_modele_id
+        </if>
+
+        WHERE
                 QT.crew_num = #{crewNum}
                 AND QT.produce_date = #{producedDate}
     </select>

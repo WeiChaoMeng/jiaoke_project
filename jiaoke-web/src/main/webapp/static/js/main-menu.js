@@ -434,7 +434,7 @@ function right_change(id) {
 
         //已开会议
         case 'historical_conference':
-            $("#oa-iframe").attr("src", "oa_history_meeting.jsp")
+            $("#oa-iframe").attr("src", "oa_historical_conference.jsp")
             $('#historical_conference').attr("class", "selected");
             if ($("#historical_conference_menu").attr("id") == null) {
                 $('.menutab').last().after(right_top_str);

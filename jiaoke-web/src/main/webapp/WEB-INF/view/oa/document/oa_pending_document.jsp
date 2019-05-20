@@ -155,7 +155,7 @@
         var resultList = '';
         if (lists === 'noData') {
             resultList += '<tr>';
-            resultList += '<td colspan="8">' + '没有查询到匹配记录' + '</td>';
+            resultList += '<td colspan="8">' + '暂无数据' + '</td>';
             resultList += '</tr>';
             $("#PageCount").val(0);
             //每页显示条数

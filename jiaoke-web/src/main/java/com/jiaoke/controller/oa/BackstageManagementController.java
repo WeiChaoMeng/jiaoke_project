@@ -99,6 +99,7 @@ public class BackstageManagementController {
      * @return jsp
      */
     @RequestMapping(value = "/toUserManager")
+    @RequiresPermissions(value = "userManage/view")
     public String toUserManager(Model model, int page) {
         List<Department> departmentList = departmentService.selectAll();
         List<RoleInfo> roleInfoList = roleInfoService.selectAll();
@@ -213,7 +214,7 @@ public class BackstageManagementController {
     }
 
     /**
-     * 加载角色数据
+     * 加载用户数据
      *
      * @param page page
      * @return list
@@ -388,144 +389,5 @@ public class BackstageManagementController {
         List<Permission> permissionList = permissionService.permissionNameFilter(permissionName);
         PageInfo<Permission> pageInfo = new PageInfo<>(permissionList);
         return JsonHelper.toJSONString(pageInfo);
-    }
-
-
-    /**--------------部门管理------------------*/
-    /**
-     * 跳转部门管理页面
-     *
-     * @return jsp
-     */
-    @RequestMapping(value = "/toDepartmentManager")
-    public String toDepartmentManager(Model model, int page) {
-        List<UserInfo> userInfoList = userInfoService.selectIdAndNicknameAndDepartment();
-        List<Department> departmentList = departmentService.selectKeyAndName();
-        model.addAttribute("userInfoList", JsonHelper.toJSONString(userInfoList));
-        model.addAttribute("departmentList", JsonHelper.toJSONString(departmentList));
-        model.addAttribute("currentPage", JsonHelper.toJSONString(page));
-        return "oa/backstage/oa_department_management";
-    }
-
-    /**
-     * 加载部门数据
-     *
-     * @param page page
-     * @return list
-     */
-    @RequestMapping(value = "/departmentManager")
-    @ResponseBody
-    public String departmentManager(int page) {
-        PageHelper.startPage(page, 15);
-        List<Department> departmentList = departmentService.selectAll();
-        PageInfo<Department> pageInfo = new PageInfo<>(departmentList);
-        return JsonHelper.toJSONString(pageInfo);
-    }
-
-    /**
-     * 部门名字筛选
-     *
-     * @param page           page
-     * @param departmentName 部门名称
-     * @return list
-     */
-    @RequestMapping(value = "/departmentFilter")
-    @ResponseBody
-    public String departmentFilter(int page, String departmentName) {
-        PageHelper.startPage(page, 15);
-        List<Department> departmentList = departmentService.departmentNameFilter(departmentName);
-        PageInfo<Department> pageInfo = new PageInfo<>(departmentList);
-        return JsonHelper.toJSONString(pageInfo);
-    }
-
-    /**
-     * 添加部门
-     *
-     * @param departmentName departmentName
-     * @return s/e
-     */
-    @RequestMapping(value = "/addDepartment")
-    @ResponseBody
-    public String addDepartment(String departmentName) {
-        if (departmentService.insertSelective(departmentName) > 0) {
-            return "success";
-        }
-        return "error";
-    }
-
-    /**
-     * 检查部门名是否被占用
-     *
-     * @param departmentName departmentName
-     * @return t/f
-     */
-    @RequestMapping(value = "/checkDepartmentName")
-    @ResponseBody
-    public String checkDepartmentName(String departmentName) {
-        Department department = departmentService.checkDepartmentName(departmentName);
-        if (null == department) {
-            return "false";
-        } else {
-            return "true";
-        }
-    }
-
-    /**
-     * 删除部门
-     *
-     * @param id id
-     * @return 影响行数
-     */
-    @RequestMapping(value = "/deleteDepartment")
-    @ResponseBody
-    public String deleteDepartment(Integer id) {
-        if (departmentService.deleteByPrimaryKey(id) >= 0) {
-            return "success";
-        }
-        return "error";
-    }
-
-    /**
-     * 修改-获取部门信息
-     *
-     * @param id id
-     * @return userInfo
-     */
-    @RequestMapping(value = "/toDepartmentEdit")
-    @ResponseBody
-    public String toDepartmentEdit(Integer id) {
-        Department department = departmentService.selectByPrimaryKey(id);
-        return JsonHelper.toJSONString(department);
-    }
-
-    /**
-     * 更新角色信息及权限
-     *
-     * @param id             id
-     * @param departmentName departmentName
-     * @return success/error
-     */
-    @RequestMapping(value = "/departmentEdit")
-    @ResponseBody
-    public String departmentEdit(Integer id, String departmentName) {
-        if (departmentService.updateDepartmentName(id, departmentName) < 0) {
-            return "error";
-        }
-        return "success";
-    }
-
-    /**
-     * 绑定部门主管
-     *
-     * @param id id
-     * @return success/error
-     */
-    @RequestMapping(value = "/bindingDepartmentHead")
-    @ResponseBody
-    public String bindingDepartmentHead(Integer id, String principal) {
-        if (departmentService.bindingDepartmentHead(id, principal) < 0) {
-            return "error";
-        }
-        return "success";
     }
 }

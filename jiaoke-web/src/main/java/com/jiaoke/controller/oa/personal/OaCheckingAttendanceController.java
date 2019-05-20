@@ -7,19 +7,16 @@ import com.dingtalk.api.response.OapiAttendanceListRecordResponse;
 import com.dingtalk.api.response.OapiAttendanceListResponse;
 import com.dingtalk.api.response.OapiDepartmentListResponse;
 import com.dingtalk.api.response.OapiUserListbypageResponse;
-import com.jiake.utils.DateUtil;
 import com.jiake.utils.DingDingUtil;
-import com.jiaoke.oa.bean.*;
-import com.jiaoke.oa.service.DingDingAttendanceService;
-import org.apache.shiro.SecurityUtils;
+import com.jiake.utils.JsonHelper;
+import com.jiaoke.oa.bean.OaCheckingAttendance;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * OA-个人事务-考勤
@@ -32,16 +29,14 @@ import java.util.List;
 @RequestMapping(value = "/personalAttendance")
 public class OaCheckingAttendanceController {
 
-    @Resource
-    private DingDingAttendanceService dingDingAttendanceService;
 
     /**
-     * 跳转考勤统计
+     * 个人考勤
      *
      * @return oa_personal_attendance.jsp
      */
-    @RequestMapping(value = "/toAttendanceStatistics")
-    public String toAttendanceStatistics(Model model) throws Exception {
+    @RequestMapping("/toPersonalAttendance")
+    public String toPersonalAttendances(Model model) throws Exception {
         Date date = new Date();
         List<OaCheckingAttendance> oaCheckingAttendanceList = new ArrayList<>();
 
@@ -53,10 +48,13 @@ public class OaCheckingAttendanceController {
             request.setDepartmentId(department.getId());
             request.setOffset(0L);
             request.setSize(100L);
-            request.setOrder("entry_asc");
+            request.setOrder("entry_desc");
             request.setHttpMethod("GET");
             OapiUserListbypageResponse execute = client.execute(request, DingDingUtil.getAccessToken());
             List<OapiUserListbypageResponse.Userlist> userList = execute.getUserlist();
+
+            //日期格式
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
 
             for (OapiUserListbypageResponse.Userlist list : userList) {
                 OaCheckingAttendance oaCheckingAttendance = new OaCheckingAttendance();
@@ -68,11 +66,10 @@ public class OaCheckingAttendanceController {
                 oaCheckingAttendance.setDay(DingDingUtil.dateConvertDay(date));
                 oaCheckingAttendance.setWeek(DingDingUtil.getWeekOfDate(date));
 
-                //根据用户id查询打卡详情
                 List<String> arrayList = new ArrayList<>();
-                List<OapiAttendanceListRecordResponse.Recordresult> recordresultList = DingDingUtil.getPunchTheClockDetails(list.getUserid());
-                for (OapiAttendanceListRecordResponse.Recordresult recordresult : recordresultList) {
-                    arrayList.add(DateUtil.dateConvertHHMMSS(recordresult.getUserCheckTime()));
+                List<OapiAttendanceListResponse.Recordresult> recordResultList = DingDingUtil.getAttendanceListRequest(list.getUserid());
+                for (OapiAttendanceListResponse.Recordresult recordResult : recordResultList) {
+                    arrayList.add(simpleDateFormat.format(recordResult.getUserCheckTime()));
                 }
                 oaCheckingAttendance.setRecordresult(arrayList);
                 oaCheckingAttendanceList.add(oaCheckingAttendance);
@@ -80,31 +77,5 @@ public class OaCheckingAttendanceController {
         }
         model.addAttribute("oaCheckingAttendanceList", oaCheckingAttendanceList);
         return "oa/personal/oa_personal_attendance";
-    }
-
-    /**---------------个人考勤-----------------*/
-
-    /**
-     * 跳转个人考勤
-     *
-     * @return jsp
-     */
-    @RequestMapping("/toPersonalAttendance")
-    public String toPersonalAttendances(Model model) {
-
-        //获取当前用户
-        UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
-        //根据当前用户名称查询考勤信息
-        DingDingAttendance dingDingAttendance = dingDingAttendanceService.selectByName(userInfo.getNickname());
-        model.addAttribute("dingDingAttendance", dingDingAttendance);
-        if (dingDingAttendance != null) {
-            //获取考勤日期表
-            List<DingDingPunchDate> punchRecordList = dingDingAttendanceService.selectPunchDate();
-            model.addAttribute("punchRecordList", punchRecordList);
-            //获取当前用户打卡详情
-            List<DingDingPunchTime> punchTimeList = dingDingAttendanceService.selectPunchTime(dingDingAttendance.getUserId());
-            model.addAttribute("punchTimeList", punchTimeList);
-        }
-        return "oa/personal/oa_attendance_statistics";
     }
 }
