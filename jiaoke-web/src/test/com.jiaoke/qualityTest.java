@@ -1,20 +1,12 @@
 package com.jiaoke;
 
 import com.jiaoke.controller.SpringHelper;
-import com.jiaoke.oa.bean.Permission;
-import com.jiaoke.oa.bean.RoleInfo;
-import com.jiaoke.oa.dao.PermissionMapper;
-import com.jiaoke.oa.dao.RoleInfoMapper;
-import com.jiaoke.quality.bean.QualityTimelyDataFalse;
 import com.jiaoke.quality.bean.QualityWaringDataFalse;
-import com.jiaoke.quality.bean.QualityWarningData;
 import com.jiaoke.quality.dao.QualityTimelyDataFalseMapper;
-import com.jiaoke.quality.dao.QualityWarningDataFalseMapper;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author lihui
