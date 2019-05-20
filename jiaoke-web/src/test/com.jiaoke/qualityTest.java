@@ -1,20 +1,15 @@
 package com.jiaoke;
 
 import com.jiaoke.controller.SpringHelper;
-<<<<<<< HEAD
-import com.jiaoke.quality.bean.QualityWaringDataFalse;
-import com.jiaoke.quality.dao.QualityTimelyDataFalseMapper;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.ArrayList;
-=======
 import com.jiaoke.oa.bean.DingDingPunchTime;
 import com.jiaoke.oa.dao.DingDingPunchTimeMapper;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
+
+<<<<<<<HEAD
+=======
 >>>>>>> 11ada14399558a7fef64c82284ee6e997e702f64
 
 /**
