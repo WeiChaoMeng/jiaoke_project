@@ -42,4 +42,15 @@ public interface QualityRealTimeWarningDao {
      * @date 2019/5/14 18:06
      */
     List<Map<String, String>> selectThreeWarningData();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询机组需要全局预警的数据>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/5/15 11:20
+     */
+    List<Map<String, Object>> selectGlobalWarningData();
 }

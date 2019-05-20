@@ -101,7 +101,7 @@ public class QualityWarningUtil {
 
         QualityWarningData qualityWarningData = new QualityWarningData();
 
-        if (obj[1].toString().equals("沥青温度") || obj[1].toString().equals("混合料温度") || obj[1].toString().equals("骨料温度")) {
+        if (obj[1].toString().equals("沥青温度") || obj[1].toString().equals("混合料温度") || obj[1].toString().equals("骨料温度") ||obj[1].toString().equals("一仓温度")) {
             qualityWarningData.setCrewId(obj[0].toString());
             qualityWarningData.setMaterialName(obj[1].toString());
             qualityWarningData.setActualRatio(obj[2].toString());

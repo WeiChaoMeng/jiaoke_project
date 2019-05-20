@@ -15,4 +15,10 @@
     <update id="emptyTable">
         TRUNCATE TABLE ding_ding_attendance
     </update>
+
+    <select id="selectByName" parameterType="java.lang.String" resultType="com.jiaoke.oa.bean.DingDingAttendance">
+        SELECT id, user_id as userId, `name`, department_name as departmentName, jobnumber, `position`
+        FROM `ding_ding_attendance`
+        WHERE `name` = #{nickName};
+    </select>
 </mapper>

@@ -301,6 +301,14 @@ public class QualityController {
         return jsonStr;
     }
 
+    @ResponseBody
+    @RequestMapping("/getRealTimeThreeProductSVG.do")
+    public String getRealTimeThreeProductSVG(){
+       String res =  qualityDataMontoringInf.getRealTimeThreeProductSVG();
+       return res;
+    }
+
+
     /********************************  实时监控 end *****************************************/
 
 
@@ -425,6 +433,18 @@ public class QualityController {
         return jsonStr;
     }
 
+    @ResponseBody
+    @RequestMapping("/getGlobalWarningData.do")
+    public String getGlobalWarningData(){
+        String res = qualityRealTimeWarningInf.getGlobalWarningData();
+
+        return res;
+    }
+
+    @RequestMapping("/getWarningPage.do")
+    public String getWarningPage(){
+        return "quality/qc_warning_page";
+    }
     /********************************  质量预警 end *****************************************/
 
 

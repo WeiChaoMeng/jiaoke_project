@@ -35,4 +35,15 @@ public interface QualityDataMontoringInf {
      * @return
      */
     String getRealTimeDataEcharsMaterial();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <返回最近三盘数据平均值>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/5/16 17:36
+     */
+    String getRealTimeThreeProductSVG();
 }

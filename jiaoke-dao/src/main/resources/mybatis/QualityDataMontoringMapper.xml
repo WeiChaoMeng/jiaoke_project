@@ -210,4 +210,173 @@
                 ${crewNum}_modele_id = ${rationNum}
     </select>
 
+    <select id="selectRealTimeThreeProductSVG" resultType="java.util.Map">
+        (SELECT
+                'crew1' AS 'crewNum',
+                date_format(produce_date, '%Y-%m-%d') AS produce_date,
+                TRUNCATE (
+                    AVG(T1.material_aggregate_1),
+                    2
+                        ) AS material_aggregate_1,
+                TRUNCATE (
+                    AVG(T1.material_aggregate_2),
+                    2
+                        ) AS material_aggregate_2,
+                TRUNCATE (
+                    AVG(T1.material_aggregate_3),
+                    2
+                        ) AS material_aggregate_3,
+                TRUNCATE (
+                    AVG(T1.material_aggregate_4),
+                    2
+                        ) AS material_aggregate_4,
+                TRUNCATE (
+                    AVG(T1.material_aggregate_5),
+                    2
+                        ) AS material_aggregate_5,
+                TRUNCATE (
+                    AVG(T1.material_aggregate_6),
+                    2
+                        ) AS material_aggregate_6,
+                TRUNCATE (AVG(T1.material_stone_1), 2) AS material_stone_1,
+                TRUNCATE (AVG(T1.material_stone_2), 2) AS material_stone_2,
+                TRUNCATE (AVG(T1.material_asphalt), 2) AS material_asphalt,
+                TRUNCATE (
+                    AVG(T1.material_regenerate),
+                    2
+                        ) AS material_regenerate,
+                TRUNCATE (
+                    AVG(T1.material_additive),
+                    2
+                        ) AS material_additive,
+                TRUNCATE (AVG(T1.material_total), 2) AS material_total,
+                TRUNCATE (
+                    AVG(T1.temperature_warehouse_1),
+                    2
+                        ) AS temperature_warehouse_1,
+                TRUNCATE (
+                    AVG(T1.temperature_mixture),
+                    2
+                        ) AS temperature_mixture,
+                TRUNCATE (
+                    AVG(T1.temperature_duster),
+                    2
+                        ) AS temperature_duster,
+                TRUNCATE (
+                    AVG(T1.temperature_asphalt),
+                    2
+                        ) AS temperature_asphalt,
+                TRUNCATE (
+                    AVG(T1.temperature_aggregate),
+                    2
+                        ) AS temperature_aggregate
+         FROM
+              (
+              SELECT
+                      *
+              FROM
+                   quality_monitoring_realtime_data1
+              WHERE
+                      produce_proportioning_num = (
+                                                  SELECT
+                                                         produce_proportioning_num
+                                                  FROM
+                                                       quality_monitoring_realtime_data1
+                                                  ORDER BY
+                                                           id DESC
+                                                  LIMIT 1
+                                                  )
+              ORDER BY
+                       id DESC
+              LIMIT 3
+              ) AS T1
+         GROUP BY
+                  crewNum,
+                  T1.produce_proportioning_num)
+        UNION ALL
+
+                (SELECT
+                        'crew2' AS 'crewNum',
+                        date_format(produce_date, '%Y-%m-%d') AS produce_date,
+                        TRUNCATE (
+                            AVG(T1.material_aggregate_1),
+                            2
+                                ) AS material_aggregate_1,
+                        TRUNCATE (
+                            AVG(T1.material_aggregate_2),
+                            2
+                                ) AS material_aggregate_2,
+                        TRUNCATE (
+                            AVG(T1.material_aggregate_3),
+                            2
+                                ) AS material_aggregate_3,
+                        TRUNCATE (
+                            AVG(T1.material_aggregate_4),
+                            2
+                                ) AS material_aggregate_4,
+                        TRUNCATE (
+                            AVG(T1.material_aggregate_5),
+                            2
+                                ) AS material_aggregate_5,
+                        TRUNCATE (
+                            AVG(T1.material_aggregate_6),
+                            2
+                                ) AS material_aggregate_6,
+                        TRUNCATE (AVG(T1.material_stone_1), 2) AS material_stone_1,
+                        TRUNCATE (AVG(T1.material_stone_2), 2) AS material_stone_2,
+                        TRUNCATE (AVG(T1.material_asphalt), 2) AS material_asphalt,
+                        TRUNCATE (
+                            AVG(T1.material_regenerate),
+                            2
+                                ) AS material_regenerate,
+                        TRUNCATE (
+                            AVG(T1.material_additive),
+                            2
+                                ) AS material_additive,
+                        TRUNCATE (AVG(T1.material_total), 2) AS material_total,
+                        TRUNCATE (
+                            AVG(T1.temperature_warehouse_1),
+                            2
+                                ) AS temperature_warehouse_1,
+                        TRUNCATE (
+                            AVG(T1.temperature_mixture),
+                            2
+                                ) AS temperature_mixture,
+                        TRUNCATE (
+                            AVG(T1.temperature_duster),
+                            2
+                                ) AS temperature_duster,
+                        TRUNCATE (
+                            AVG(T1.temperature_asphalt),
+                            2
+                                ) AS temperature_asphalt,
+                        TRUNCATE (
+                            AVG(T1.temperature_aggregate),
+                            2
+                                ) AS temperature_aggregate
+                 FROM
+                      (
+                      SELECT
+                              *
+                      FROM
+                           quality_monitoring_realtime_data2
+                      WHERE
+                              produce_proportioning_num = (
+                                                          SELECT
+                                                                 produce_proportioning_num
+                                                          FROM
+                                                               quality_monitoring_realtime_data2
+                                                          ORDER BY
+                                                                   id DESC
+                                                          LIMIT 1
+                                                          )
+                      ORDER BY
+                               id DESC
+                      LIMIT 3
+                      ) AS T1
+                 GROUP BY
+                          crewNum,
+                          T1.produce_proportioning_num)
+    </select>
+
 </mapper>

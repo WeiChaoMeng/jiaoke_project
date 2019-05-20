@@ -203,6 +203,7 @@ public class QualityDynamicUtil {
         maxMinY =  getMaxAndMinByList(maxMin,maxMinY);
         svg3Y =  getMaxAndMinByList(svg3,svg3Y);
 
+        request.setAttribute("ratioMap",ratioMap);
         request.setAttribute("rationList",ratios);
         request.setAttribute("allItem",content);
         request.setAttribute("maxMin",maxMin);

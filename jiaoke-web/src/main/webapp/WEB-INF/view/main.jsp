@@ -25,6 +25,33 @@
         html {
             overflow: hidden;
         }
+        /* Border styles */
+        .altrowstable thead, .altrowstable tr {
+            border-top-width: 1px;
+            border-top-style: solid;
+            border-top-color: rgb(230, 189, 189);
+        }
+        .altrowstable {
+            border-bottom-width: 1px;
+            border-bottom-style: solid;
+            border-bottom-color: rgb(230, 189, 189);
+        }
+
+        /* Padding and font style */
+        .altrowstable td, .altrowstable th {
+            padding: 8px 5px;
+            font-size: 7px;
+            font-family: Verdana;
+            color: rgb(177, 106, 104);
+        }
+
+        /* Alternating background colors */
+        /*.altrowstable tr:nth-child(even) {*/
+            /*background: rgb(238, 211, 210)*/
+        /*}*/
+        .altrowstable tr:nth-child(odd) {
+            background: #FFF
+        }
     </style>
 </head>
 <body style="background:url(../../static/images/line.gif) repeat-y 0 0;">

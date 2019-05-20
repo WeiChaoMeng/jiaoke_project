@@ -28,4 +28,15 @@ public interface QualityRealTimeWarningInf {
      * @return
      */
     String getWarningEcharsData();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询质量监控全局报警数据>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/5/15 11:16
+     */
+    String getGlobalWarningData();
 }

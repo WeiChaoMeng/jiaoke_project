@@ -13,9 +13,7 @@
     <meta charset="utf-8">
     <title>实时监测</title>
     <link href="/static/css/default.css" rel="stylesheet" type="text/css">
-    <link href="/static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
     <script src="/static/js/echarts/echarts.js"></script>
-    <script src="/static/js/echarts/uimaker.js"></script>
 </head>
 
 <body style="padding:15px 8px 1000px 8px;background: #ffffff;">
@@ -34,6 +32,7 @@
                     <th>生产日期</th>
                     <th>生产时间</th>
                     <th>配比号</th>
+                    <th>产品名称</th>
                     <th>车号</th>
                     <th>盘号</th>
                     <th>客户号</th>
@@ -42,12 +41,13 @@
                 <tbody>
 
                     <tr>
-                        <td id="crew1_basic_date" >20171101</td>
-                        <td id="crew1_basic_time" >8:35</td>
-                        <td id="crew1_basic_ratio" >256</td>
-                        <td id="crew1_basic_carNum" >京C66666</td>
-                        <td id="crew1_basic_discNum" >A16</td>
-                        <td  id="crew1_basic_userNum" >1554568791</td>
+                        <td id="crew1_basic_date" ></td>
+                        <td id="crew1_basic_time" ></td>
+                        <td id="crew1_basic_ratio" ></td>
+                        <td id="crew1_basic_ratioName" ></td>
+                        <td id="crew1_basic_carNum" ></td>
+                        <td id="crew1_basic_discNum" ></td>
+                        <td  id="crew1_basic_userNum" ></td>
                     </tr>
                 </tbody>
             </table>
@@ -153,6 +153,7 @@
             <th>生产日期</th>
             <th>生产时间</th>
             <th>配比号</th>
+            <th>产品名称</th>
             <th>车号</th>
             <th>盘号</th>
             <th>客户号</th>
@@ -161,12 +162,13 @@
             <tbody>
 
             <tr>
-                <td id="crew2_basic_date" >20171101</td>
-                <td id="crew2_basic_time" >8:35</td>
-                <td id="crew2_basic_ratio" >256</td>
-                <td id="crew2_basic_carNum" >京C66666</td>
-                <td id="crew2_basic_discNum" >A16</td>
-                <td  id="crew2_basic_userNum" >1554568791</td>
+                <td id="crew2_basic_date" ></td>
+                <td id="crew2_basic_time" ></td>
+                <td id="crew2_basic_ratio" ></td>
+                <td id="crew2_basic_ratioName" ></td>
+                <td id="crew2_basic_carNum" ></td>
+                <td id="crew2_basic_discNum" ></td>
+                <td  id="crew2_basic_userNum" ></td>
             </tr>
             </tbody>
         </table>
@@ -642,8 +644,6 @@
 </body>
 
 <script type="text/javascript" src="/static/js/jquery.js"></script>
-<script type="text/javascript" src="/static/js/common.js"></script>
-<script type="text/javascript" src="/static/js/skin.js"></script>
 <script type="text/javascript" src="/static/js/qc/quality_monitoring_false.js"></script>
 
 </html>

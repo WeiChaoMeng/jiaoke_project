@@ -11,7 +11,6 @@
     <meta charset="utf-8">
     <title>动态管理</title>
     <link href="/static/css/default.css" rel="stylesheet" type="text/css">
-    <link href="/static/css/style/green.css" rel="stylesheet" type="text/css" id = 'link'>
     <!--基本样式-->
 
     <link type="text/css" rel="stylesheet" href="/static/css/qc/jeDate-test.css">
@@ -112,10 +111,15 @@
                                 </div>
                                 <c:choose>
                                     <C:when test="${empty material}">
-                                        <h1>${keys}号配比油石比走势图</h1>
+                                        <h1>${rationName}产品油石比走势图</h1>
                                     </C:when>
                                     <c:otherwise>
-                                        <h1>${keys}号配比${material}走势图</h1>
+                                        <c:forEach items="${ratioMap}" var="rationMess" >
+                                            <c:if test="${rationMess.crew1_modele_id eq    keys || rationMess.crew2_modele_id eq   keys}">
+                                                <h1>${rationMess.pro_name}产品${material}走势图</h1>
+                                                <c:set var="rationName" value="${rationMess.pro_name}"></c:set>
+                                            </c:if>
+                                        </c:forEach>
                                     </c:otherwise>
                                 </c:choose>
                                 <p class="short-info">直观显示 一键生成</p>
@@ -264,10 +268,10 @@
 
                                 <c:choose>
                                     <C:when test="${empty material}">
-                                        <h1>${keys}号配比油石比极差走势图</h1>
+                                        <h1>${rationName}产品油石比极差走势图</h1>
                                     </C:when>
                                     <c:otherwise>
-                                        <h1>${keys}号配比${material}极差走势图</h1>
+                                        <h1>${rationName}产品${material}极差走势图</h1>
                                     </c:otherwise>
                                 </c:choose>
 
@@ -424,10 +428,10 @@
 
                                 <c:choose>
                                     <C:when test="${empty material}">
-                                        <h1>${keys}号配比平均油石比走势图</h1>
+                                        <h1>${rationName}产品平均油石比走势图</h1>
                                     </C:when>
                                     <c:otherwise>
-                                        <h1>${keys}号配比平均${material}走势图</h1>
+                                        <h1>${rationName}产品平均${material}走势图</h1>
                                     </c:otherwise>
                                 </c:choose>
 
@@ -472,7 +476,7 @@
                                                 var value = params[0].value;
                                                 var times = params[0].name;
                                                 //  var times = "2017-11-23 11:00:18";
-                                                res = "<div style='border-top:5px solid #0066cc;background:#010204;padding:0 30px 10px 20px;font-weight:700;font-size:14;'><p>时间："
+                                                res = "<div style='border-top:5px solid #0066cc;background:#010204;padding:0 30px 10px 20px;font-weight:700;font-size:14;'><p>序号："
                                                     + times+ "</p><p>数量："
                                                     + value+ "</p></div>";
                                                 return res;

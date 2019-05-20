@@ -75,7 +75,7 @@
                 <tbody>
 
                     <tr>
-                        <td id="crew1_data_Aggregate1" ></td>
+                        <td id="crew1_data_Aggregate1" ><i>%</i></td>
                         <td  id="crew1_data_Aggregate2" >
                             <i>%</i>
                         </td>
@@ -137,6 +137,93 @@
                             <i>℃</i>
                         </td>
                     </tr>
+                </tbody>
+
+            </table>
+        </div>
+
+        <div class="boxtitle">
+            <span class="span_realtime">一号机组三组产品平均数据</span>
+        </div>
+        <div>
+            <table class="realtime_table">
+
+                <thead>
+                <th>骨料1</th>
+                <th>骨料2</th>
+                <th>骨料3</th>
+                <th>骨料4</th>
+                <th>骨料5</th>
+                <th>骨料6</th>
+                <th>1仓温度</th>
+                <th> 除尘器入口温度</th>
+                </thead>
+
+                <tbody>
+
+                <tr>
+                    <td id="crew1_data_Aggregate1_svg" ><i>kg</i></td>
+                    <td  id="crew1_data_Aggregate2_svg" >
+                        <i>kg</i>
+                    </td>
+                    <td id="crew1_data_Aggregate3_svg" >
+                        <i>kg</i>
+                    </td>
+                    <td id="crew1_data_Aggregate4_svg" >
+                        <i>kg</i>
+                    </td>
+                    <td id="crew1_data_Aggregate5_svg" >
+                        <i>kg</i>
+                    </td >
+                    <td  id="crew1_data_Aggregate6_svg"  >
+                        <i>kg</i>
+                    </td>
+                    <td id="crew1_data_warehouse1_svg" >
+                        <i>℃</i>
+                    </td>
+                    <td id="crew1_data_duster_svg" >
+                        <i>℃</i>
+                    </td>
+                </tr>
+                </tbody>
+
+                <thead>
+                <th>石粉1</th>
+                <th>石粉2</th>
+                <th>沥青</th>
+                <th>再生料</th>
+                <th>添加剂</th>
+                <th>合计kg</th>
+                <th>沥青温度</th>
+                <th>混合料温度</th>
+                </thead>
+
+                <tbody>
+
+                <tr>
+                    <td id="crew1_data_stone1_svg"  ><i>kg</i></td>
+                    <td id="crew1_data_stone2_svg"  >
+                        <i>kg</i>
+                    </td>
+                    <td id="crew1_data_asphalt_svg" >
+                        <i>kg</i>
+                    </td>
+                    <td id="crew1_data_regenerate_svg" >
+                        <i>kg</i>
+                    </td>
+                    <td  id="crew1_data_additive_svg" >
+                        <i>kg</i>
+                    </td>
+                    <td  id="crew1_data_total_svg" >
+                        <i>kg</i>
+                    </td>
+                    <td id="crew1_data_temasphalt_svg" >
+                        <i>℃</i>
+                    </td>
+                    <td id="crew1_data_aggregate_svg" >
+                        <i>℃</i>
+                    </td>
+                </tr>
                 </tbody>
 
             </table>
@@ -262,6 +349,93 @@
 
         </table>
     </div>
+
+        <div class="boxtitle">
+            <span class="span_realtime">二号机组三盘产品平均数据</span>
+        </div>
+        <div>
+            <table class="realtime_table">
+
+                <thead>
+                <th>骨料1</th>
+                <th>骨料2</th>
+                <th>骨料3</th>
+                <th>骨料4</th>
+                <th>骨料5</th>
+                <th>骨料6</th>
+                <th>1仓温度</th>
+                <th> 除尘器入口温度</th>
+                </thead>
+
+                <tbody>
+
+                <tr>
+                    <td id="crew2_data_Aggregate1_svg" ><i>kg</i></td>
+                    <td  id="crew2_data_Aggregate2_svg" >
+                        <i>kg</i>
+                    </td>
+                    <td id="crew2_data_Aggregate3_svg" >
+                        <i>kg</i>
+                    </td>
+                    <td id="crew2_data_Aggregate4_svg" >
+                        <i>kg</i>
+                    </td>
+                    <td id="crew2_data_Aggregate5_svg" >
+                        <i>kg</i>
+                    </td >
+                    <td  id="crew2_data_Aggregate6_svg"  >
+                        <i>kg</i>
+                    </td>
+                    <td id="crew2_data_warehouse1_svg" >
+                        <i>℃</i>
+                    </td>
+                    <td id="crew2_data_duster_svg" >
+                        <i>℃</i>
+                    </td>
+                </tr>
+                </tbody>
+
+                <thead>
+                <th>石粉1</th>
+                <th>石粉2</th>
+                <th>沥青</th>
+                <th>再生料</th>
+                <th>添加剂</th>
+                <th>合计kg</th>
+                <th>沥青温度</th>
+                <th>混合料温度</th>
+                </thead>
+
+                <tbody>
+
+                <tr>
+                    <td id="crew2_data_stone1_svg"  ><i>kg</i></td>
+                    <td id="crew2_data_stone2_svg"  >
+                        <i>kg</i>
+                    </td>
+                    <td id="crew2_data_asphalt_svg" >
+                        <i>kg</i>
+                    </td>
+                    <td id="crew2_data_regenerate_svg" >
+                        <i>kg</i>
+                    </td>
+                    <td  id="crew2_data_additive_svg" >
+                        <i>kg</i>
+                    </td>
+                    <td  id="crew2_data_total_svg" >
+                        <i>kg</i>
+                    </td>
+                    <td id="crew2_data_temasphalt_svg" >
+                        <i>℃</i>
+                    </td>
+                    <td id="crew2_data_aggregate_svg" >
+                        <i>℃</i>
+                    </td>
+                </tr>
+                </tbody>
+
+            </table>
+        </div>
 </div>
 
     <div class="divbox_realtime_2">

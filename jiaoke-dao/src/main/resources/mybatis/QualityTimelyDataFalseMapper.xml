@@ -234,68 +234,74 @@
         (
         SELECT
                'crew1' AS 'crewNum',
-               date_format(produce_date, '%Y-%m-%d') AS produce_date,
-               date_format(product_time, '%T') AS produce_time,
-               produce_disc_num,
-               produce_proportioning_num,
-               produce_car_num,
-               produce_custom_num,
-               material_aggregate_1,
-               material_aggregate_2,
-               material_aggregate_3,
-               material_aggregate_4,
-               material_aggregate_5,
-               material_aggregate_6,
-               material_stone_1,
-               material_stone_2,
-               material_asphalt,
-               material_regenerate,
-               material_additive,
-               material_total,
-               temperature_warehouse_1 ,
-               temperature_mixture ,
-               temperature_duster ,
-               temperature_asphalt ,
-               temperature_aggregate
+               QP.pro_name,
+               date_format(QT.produce_date, '%Y-%m-%d') AS produce_date,
+               date_format(QT.product_time, '%T') AS produce_time,
+               QT.produce_disc_num,
+               QT.produce_proportioning_num,
+               QT.produce_car_num,
+               QT.produce_custom_num,
+               QT.material_aggregate_1,
+               QT.material_aggregate_2,
+               QT.material_aggregate_3,
+               QT.material_aggregate_4,
+               QT.material_aggregate_5,
+               QT.material_aggregate_6,
+               QT.material_stone_1,
+               QT.material_stone_2,
+               QT.material_asphalt,
+               QT.material_regenerate,
+               QT.material_additive,
+               QT.material_total,
+               QT.temperature_warehouse_1,
+               QT.temperature_mixture,
+               QT.temperature_duster,
+               QT.temperature_asphalt,
+               QT.temperature_aggregate
         FROM
-             quality_timely_data_false
-        WHERE crew_num = 1
+             quality_timely_data_false AS QT
+                 INNER JOIN quality_proportioning_message AS QP ON QT.produce_proportioning_num = QP.crew1_modele_id
+        WHERE
+                QT.crew_num = 1
         ORDER BY
-                 id DESC
+                 QP.id DESC
         LIMIT 1
         )
         UNION ALL
                 (
                 SELECT
                        'crew2' AS 'crewNum',
-                       date_format(produce_date, '%Y-%m-%d') AS produce_date,
-                       date_format(product_time, '%T') AS produce_time,
-                       produce_disc_num,
-                       produce_proportioning_num,
-                       produce_car_num,
-                       produce_custom_num,
-                       material_aggregate_1,
-                       material_aggregate_2,
-                       material_aggregate_3,
-                       material_aggregate_4,
-                       material_aggregate_5,
-                       material_aggregate_6,
-                       material_stone_1,
-                       material_stone_2,
-                       material_asphalt,
-                       material_regenerate,
-                       material_additive,
-                       material_total,
-                       temperature_warehouse_1 ,
-                       temperature_mixture,
-                       temperature_duster,
-                       temperature_asphalt ,
-                       temperature_aggregate
+                       QP.pro_name,
+                       date_format(QT.produce_date, '%Y-%m-%d') AS produce_date,
+                       date_format(QT.product_time, '%T') AS produce_time,
+                       QT.produce_disc_num,
+                       QT.produce_proportioning_num,
+                       QT.produce_car_num,
+                       QT.produce_custom_num,
+                       QT.material_aggregate_1,
+                       QT.material_aggregate_2,
+                       QT.material_aggregate_3,
+                       QT.material_aggregate_4,
+                       QT.material_aggregate_5,
+                       QT.material_aggregate_6,
+                       QT.material_stone_1,
+                       QT.material_stone_2,
+                       QT.material_asphalt,
+                       QT.material_regenerate,
+                       QT.material_additive,
+                       QT.material_total,
+                       QT.temperature_warehouse_1,
+                       QT.temperature_mixture,
+                       QT.temperature_duster,
+                       QT.temperature_asphalt,
+                       QT.temperature_aggregate
                 FROM
-                     quality_timely_data_false
-                WHERE crew_num = 2
+                     quality_timely_data_false AS QT
+                         INNER JOIN quality_proportioning_message AS QP ON QT.produce_proportioning_num = QP.crew2_modele_id
+                WHERE
+                        QT.crew_num = 2
                 ORDER BY
-                         id DESC
+                         QP.id DESC
                 LIMIT 1
                 )
     </select>
@@ -494,12 +500,20 @@
 
     <select id="selectHistoryByDateAndcrewNum" resultType="java.util.Map">
         SELECT
-                *
+               QT.*,
+               QP.pro_name
         FROM
-             quality_timely_data_false
-        WHERE
-                crew_num = #{crewNum}
-          AND produce_date = #{producedDate}
+             quality_timely_data_false AS QT
+                 INNER JOIN quality_proportioning_message AS QP
+                     <if test="crewNum == 1">
+                         ON QT.produce_proportioning_num = QP.crew1_modele_id
+                     </if>
+                    <if test="crewNum == 2">
+                        ON QT.produce_proportioning_num = QP.crew2_modele_id
+                    </if>
+                WHERE
+                QT.crew_num = #{crewNum}
+                AND QT.produce_date = #{producedDate}
     </select>
 
 </mapper>

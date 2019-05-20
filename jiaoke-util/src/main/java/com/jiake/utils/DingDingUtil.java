@@ -45,16 +45,19 @@ public class DingDingUtil {
      * @throws Exception api
      */
     public static List<OapiDepartmentListResponse.Department> getDepartmentList() throws Exception {
+        List<OapiDepartmentListResponse.Department> departmentList = new ArrayList<>();
+        //添加根目录
+        OapiDepartmentListResponse.Department department = new OapiDepartmentListResponse.Department();
+        department.setId(1L);
+        departmentList.add(department);
+        //获取根目录下的所有子目录
         DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/department/list");
         OapiDepartmentListRequest request = new OapiDepartmentListRequest();
         //父部门id（如果不传，默认部门为根部门，根部门ID为1）
         request.setId("1");
         request.setHttpMethod("GET");
         OapiDepartmentListResponse response = client.execute(request, getAccessToken());
-        List<OapiDepartmentListResponse.Department> departmentList = response.getDepartment();
-        OapiDepartmentListResponse.Department department = new OapiDepartmentListResponse.Department();
-        department.setId(1L);
-        departmentList.add(department);
+        departmentList.addAll(response.getDepartment());
         return departmentList;
     }
 
@@ -125,15 +128,15 @@ public class DingDingUtil {
      * @return list
      * @throws Exception api
      */
-    public static List<OapiAttendanceListRecordResponse.Recordresult> getPunchTheClockDetails() throws Exception {
+    public static List<OapiAttendanceListRecordResponse.Recordresult> getPunchTheClockDetails(String str) throws Exception {
         Date date = new Date();
-        String dateFrom = dateConvertYYYYMMDD(new Date(date.getTime() - 7 * 24 * 60 * 60 * 1000)) + " 23:59:59";
-        String dateTo = dateConvertYYYYMMDD(new Date()) + " 23:59:59";
+        String dateFrom = dateConvertYYYYMMDD(date) + " 00:00:00";
+        String dateTo = dateConvertYYYYMMDD(date) + " 23:59:59";
         DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/attendance/listRecord");
         OapiAttendanceListRecordRequest request = new OapiAttendanceListRecordRequest();
         request.setCheckDateFrom(dateFrom);
         request.setCheckDateTo(dateTo);
-        request.setUserIds(getDepartmentUsers());
+        request.setUserIds(Arrays.asList(str));
         OapiAttendanceListRecordResponse execute = client.execute(request, getAccessToken());
         return execute.getRecordresult();
     }

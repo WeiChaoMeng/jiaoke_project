@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.oa.dao.OaProductionContractMapper">
+
+    <select id="searchFilter" parameterType="java.lang.String" resultType="com.jiaoke.oa.bean.OaProductionContract">
+        SELECT
+            id,
+            numbering,
+            `name`,
+            relative_person as relativePerson,
+            content,
+            amount,
+            storage_location as storageLocation,
+            remark,
+            rich_text as richText,
+            create_date as createDate
+        FROM oa_production_contract
+        WHERE
+            `name` LIKE "%"#{projectName}"%"
+    </select>
+
+    <select id="selectAllData" resultType="com.jiaoke.oa.bean.OaProductionContract">
+        SELECT
+            id,
+            numbering,
+            `name`,
+            relative_person as relativePerson,
+            content,
+            amount,
+            storage_location as storageLocation,
+            remark,
+            rich_text as richText,
+            create_date as createDate
+        FROM oa_production_contract
+        order by
+        create_date desc
+    </select>
+</mapper>
