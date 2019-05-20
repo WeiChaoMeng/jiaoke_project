@@ -8,7 +8,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>待办会议</title>
+    <title>已开会议</title>
     <link href="../../../../static/css/oa/oa_meeting.css" rel="stylesheet" type="text/css">
     <link href="../../../../static/css/paging/htmleaf-demo.css" rel="stylesheet" type="text/css">
     <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -83,7 +83,7 @@
     function loadData(page) {
         $.ajax({
             type: "post",
-            url: '/meeting/loadingPendingMeetingData',
+            url: '/meeting/loadingHistoryMeetingData',
             data: {'page': page},
             async: false,
             success: function (data) {
@@ -101,7 +101,7 @@
         var projectName = $('#purchaser').val();
         $.ajax({
             type: "post",
-            url: '/productionContract/searchFilter',
+            url: '/meeting/searchFilter',
             data: {'page': page, 'projectName': projectName},
             async: false,
             success: function (data) {
@@ -179,8 +179,7 @@
             var resultList = resultLists.list;
 
             for (let i = 0; i < resultList.length; i++) {
-                result += '<tr onclick="particulars(' + resultList[i].id + ' , ' + resultList[i].taskId + ', ' + resultList[i].processInstanceId + ')">';
-                result += '<input type="hidden" id="taskId" value="' + resultList[i].taskId + '">';
+                result += '<tr onclick="particulars(' + resultList[i].id + ' , ' + resultList[i].processInstanceId + ')">';
                 result += '<td><input type="checkbox" value="' + resultList[i].id + '" onclick="window.event.cancelBubble=true;"></td>';
                 result += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 15 + i + 1) + '</td>';
                 result += '<td style="text-align:left;text-indent:10px" title="' + resultList[i].name + '">' + resultList[i].name + '</td>';
@@ -203,8 +202,8 @@
     }
 
     //详情
-    function particulars(id, taskId, processInstanceId) {
-        window.location.href = "${path}/meeting/meetingDetails?id=" + id + "&taskId=" + taskId + "&processInstanceId=" + processInstanceId + "&page=" + $('#page').val();
+    function particulars(id, processInstanceId) {
+        window.location.href = "${path}/meeting/historicMeetingDetails?id=" + id + "&processInstanceId=" + processInstanceId + "&page=" + $('#page').val();
     }
 </script>
 </html>

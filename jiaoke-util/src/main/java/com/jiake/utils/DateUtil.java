@@ -127,4 +127,30 @@ public class DateUtil {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy");
         return simpleDateFormat.format(date);
     }
+
+    /**
+     * date转string（yyyy-MM-dd HH:mm）
+     *
+     * @param date date
+     * @return string
+     */
+    public static String dateConvertYYYYMMDDHHMM(Date date) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        return formatter.format(date);
+    }
+
+    /**
+     * dateString转date（yyyy-MM-dd HH:mm）
+     *
+     * @param dateString dateString
+     * @return date
+     */
+    public static Date stringConvertYYYYMMDDHHMM(String dateString) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        try {
+            return simpleDateFormat.parse(dateString);
+        } catch (Exception e) {
+            return new Date();
+        }
+    }
 }

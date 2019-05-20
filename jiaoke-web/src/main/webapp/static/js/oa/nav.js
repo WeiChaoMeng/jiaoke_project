@@ -215,11 +215,11 @@ $(function () {
     }
 
     /*--- 会议管理 ---*/
-    //会议安排
-    $("#meeting_schedule").on("click", function () {
+    //新建会议
+    $("#new_meeting").on("click", function () {
         removeOwnName();
         meeting(this);
-        $("#oa-iframe").attr("src", "OAMeetingSchedule.do");
+        $("#oa-iframe").attr("src", "meeting/toAdd");
     });
 
     //会议日历
@@ -233,14 +233,14 @@ $(function () {
     $("#not_open_meeting").on("click", function () {
         removeOwnName();
         meeting(this);
-        $("#oa-iframe").attr("src", "OAPendingMeeting.do")
+        $("#oa-iframe").attr("src", "meeting/toPendingMeeting?page=1")
     });
 
     //已开会议
-    $("#historical_conference").on("click", function () {
+    $("#history_meeting").on("click", function () {
         removeOwnName();
         meeting(this);
-        $("#oa-iframe").attr("src", "OAHistoricalConference.do")
+        $("#oa-iframe").attr("src", "meeting/toHistoryMeeting?page=1")
     });
 
     //会议资源

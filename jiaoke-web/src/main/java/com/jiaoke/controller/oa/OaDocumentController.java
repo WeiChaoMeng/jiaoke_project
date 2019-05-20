@@ -253,7 +253,7 @@ public class OaDocumentController {
         //获取当前登录人的名称
         UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
         //根据登录人的名称查询任务
-        List<Task> taskList = activitiUtil.getTaskByAssignee(userInfo.getId());
+        List<Task> taskList = activitiUtil.getTaskByAssignee(userInfo.getId(), "oa_doc");
         if (taskList.size() < 1) {
             return JsonHelper.toJSONString("noData");
         }

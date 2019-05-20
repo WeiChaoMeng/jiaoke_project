@@ -99,7 +99,6 @@ public class BackstageManagementController {
      * @return jsp
      */
     @RequestMapping(value = "/toUserManager")
-    @RequiresPermissions(value = "userManage/view")
     public String toUserManager(Model model, int page) {
         List<Department> departmentList = departmentService.selectAll();
         List<RoleInfo> roleInfoList = roleInfoService.selectAll();
