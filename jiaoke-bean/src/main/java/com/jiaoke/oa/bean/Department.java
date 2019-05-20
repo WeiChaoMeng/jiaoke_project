@@ -35,19 +35,9 @@ public class Department implements Serializable {
     private String departmentName;
 
     /**
-     * 负责人
+     * 部门主管
      */
     private String principal;
-
-    /**
-     * 描述
-     */
-    private String description;
-
-    /**
-     * 上级部门编码
-     */
-    private String parentDepartment;
 
     /**
      * 创建时间
@@ -84,22 +74,6 @@ public class Department implements Serializable {
 
     public void setPrincipal(String principal) {
         this.principal = principal;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getParentDepartment() {
-        return parentDepartment;
-    }
-
-    public void setParentDepartment(String parentDepartment) {
-        this.parentDepartment = parentDepartment;
     }
 
     public Date getCreateTime() {

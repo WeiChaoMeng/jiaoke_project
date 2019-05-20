@@ -29,4 +29,12 @@ public interface DingDingAttendanceMapper {
      * @return 影响行数
      */
     int emptyTable();
+
+    /**
+     * 根据当前登录用户查询考勤
+     *
+     * @param nickName 用户名
+     * @return dingDingAttendance
+     */
+    DingDingAttendance selectByName(String nickName);
 }

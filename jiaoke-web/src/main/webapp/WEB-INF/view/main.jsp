@@ -86,12 +86,18 @@
             <li>
                 <a href="#" class="manu" id="index">首页</a>
             </li>
-            <li>
-                <a href="#" class="manu" id="OA">OA系统</a>
-            </li>
-            <li>
-                <a href="#" class="manu" id="quality_control">质量管控</a>
-            </li>
+            <shiro:hasPermission name="oa">
+                <li>
+                    <a href="#" class="manu" id="OA">OA系统</a>
+                </li>
+            </shiro:hasPermission>
+
+            <shiro:hasPermission name="qualityControl">
+                <li>
+                    <a href="#" class="manu" id="quality_control">质量管控</a>
+                </li>
+            </shiro:hasPermission>
+
             <li>
                 <a href="#" class="manu" id="HR">人事管理</a>
             </li>
@@ -276,6 +282,69 @@
 <%--模态窗-角色绑定权限--%>
 <div id="bindingPermission" class="tab-right-div" style="display: none"></div>
 
+<%--模态窗-添加部门--%>
+<div id="addDepartment" class="window-body-add" style="display: none">
+    <table class="window-table">
+        <tbody>
+        <tr>
+            <td class="form_title_check"><i class="required_mark">*</i>部门名称:</td>
+            <td class="form_content_check">
+                <input type="hidden" id="departmentPage">
+                <input class="font_input" id="departmentName" type="text"
+                       placeholder="请输入部门名称" maxlength="16" onkeyup="this.value=this.value.replace(/^\s+|\s+$/g,'')"
+                       autocomplete="off">
+                <span class="prompt-span"></span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div style="padding-top: 20px">
+        <input type="button" value="确认" onclick="commitDepartment()" class="body-bottom-button">
+        <input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">
+    </div>
+</div>
+
+<%--模态窗-编辑部门--%>
+<div id="editDepartment" class="window-body-add" style="display: none">
+    <table class="window-table">
+        <tbody>
+        <tr>
+            <td class="form_title_check"><i class="required_mark">*</i>部门名称:</td>
+            <td class="form_content_check">
+                <input type="hidden" id="editDepartmentId">
+                <input class="font_input" id="editDepartmentName" type="text"
+                       placeholder="请输入部门名称" maxlength="16" onkeyup="this.value=this.value.replace(/^\s+|\s+$/g,'')"
+                       autocomplete="off">
+                <span class="prompt-span"></span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div style="padding-top: 20px">
+        <input type="button" value="确认" onclick="commitEditDepartment()" class="body-bottom-button">
+        <input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">
+    </div>
+</div>
+
+<%--模态窗-绑定部门主管--%>
+<div id="bindingDepartment" style="display: none;width: 96%;height: 96%;padding: 2%">
+    <div class="option-window-body-head cursor_hand">
+        <input type="hidden" id="departmentId">
+        <div id="selectDepartment" class="selection-content-inside">
+            <ul id="departmentAndUser">
+
+            </ul>
+        </div>
+    </div>
+
+    <div class="option-window-body-bottom">
+        <input type="button" value="确认" onclick="confirmDepartmentHead()" class="body-bottom-button">
+        <input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">
+    </div>
+</div>
+
 <%-- 模态窗-选择拟稿人 --%>
 <div id="singleSelection" class="single-option-window" style="display: none">
     <input type="hidden" id="pendingDocumentPage">
@@ -296,6 +365,7 @@
 <div id="selectWindow" class="option-window" style="display: none">
 
     <div class="option-window-body-head cursor_hand">
+        <input type="hidden" id="multiFlag">
         <div class="selection-box">
             <div class="selection-box-title">
                 <span>选择</span>
@@ -404,6 +474,58 @@
 <script src="../../static/js/oa/layer/layer.js"></script>
 <script>
 
+    //菜单
+    $(function () {
+        $('.manu').click(function () {
+
+            $('.selected').attr('class', 'manu');
+            $(this).attr('class', 'selected');
+
+            switch ($(this).attr('id')) {
+
+                case 'index':
+
+                    $("#iframe").attr("src", "/default.do");
+                    break;
+
+                case 'OA':
+
+                    $("#iframe").attr("src", "/oaNavigation.do");
+                    break;
+
+                case 'quality_control':
+
+                    $("#iframe").attr("src", "/qualityIndex.do");
+                    break;
+
+                case 'HR':
+
+                    $("#iframe").attr("src", "/construction.do");
+                    break;
+
+                case 'DJ':
+
+                    $("#iframe").attr("src", "/construction.do");
+                    break;
+
+                case 'JY':
+
+                    $("#iframe").attr("src", "/construction.do");
+                    break;
+
+                case 'HB':
+
+                    $("#iframe").attr("src", "/milieuIndex.do");
+                    break;
+
+                case 'AQ':
+
+                    $("#iframe").attr("src", "/security.do");
+                    break;
+            }
+
+        })
+    });
 
     //删除待发公文
     function deleteDocument(id, currentPage) {
@@ -446,6 +568,8 @@
             offset: "20%"
         });
 
+        $('#multiFlag').val(flag);
+
         //清空已选列表
         $('#selectedNotifyPerson li').remove();
 
@@ -476,19 +600,27 @@
 
     //确认
     function consentNotifyPerson() {
+        var flag = $('#multiFlag').val();
+        //存储名字
+        var array = new Array();
+        //存储id
+        var arrayId = new Array();
         $("#selectedNotifyPerson").each(function () {
-            var size = $(this).find('li').size();
-            var array = new Array();
-            $(this).find('li').each(function () {
-                //调用子页面方式
+            $(this).find('li').find("span").each(function () {
                 array.push($(this).text());
+                arrayId.push($(this).attr('id'));
             });
-            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.insertCopyGive(array);
+
+            if (flag === 'meetingParticipants') {
+                $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.insertParticipants(array, arrayId);
+            } else {
+                $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.insertCopyGive(array);
+            }
             cancel();
         });
     }
 
-    //知会人选择框
+    //选择框中的展开与收缩
     function departmentSelect(own) {
         if ($(own).siblings('ul').css('display') == "none") {
             //展开未展开
@@ -558,7 +690,7 @@
     }
 
     //公文-选择拟稿人
-    function selectReviewers(userInfoList, draftedPerson) {
+    function selectReviewers(userInfoList, draftedPerson, flag) {
         window.lar = layer.open({
             title: '选择拟稿人',
             type: 1,
@@ -567,6 +699,8 @@
             content: $("#singleSelection"),
             offset: "20%"
         });
+
+        $('#singleFlag').val(flag);
 
         var content = '';
         if (userInfoList.length <= 0) {
@@ -581,13 +715,15 @@
                         '<span id="' + userInfoList[i].id + '">' + userInfoList[i].nickname + '</span>' +
                         '<div class="selectedDrafter"></div>' +
                         '</li>';
+                } else {
+                    content +=
+                        '<li class="single-election-box-li">' +
+                        '<img src="../../static/images/icon/personnel.png">' +
+                        '<span id="' + userInfoList[i].id + '">' + userInfoList[i].nickname + '</span>' +
+                        '<div></div>' +
+                        '</li>';
                 }
-                content +=
-                    '<li class="single-election-box-li">' +
-                    '<img src="../../static/images/icon/personnel.png">' +
-                    '<span id="' + userInfoList[i].id + '">' + userInfoList[i].nickname + '</span>' +
-                    '<div></div>' +
-                    '</li>';
+
             }
         }
         //添加到选择列表
@@ -607,68 +743,40 @@
 
     //单选弹窗 - 确认
     function confirmReviewers() {
+        var flag = $('#singleFlag').val();
         var lis = $("#singleSelectionContent").find("li").find("div");
         //是否包含selectedDrafter
         if (lis.hasClass("selectedDrafter")) {
-            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.insertReviewer($(".selectedDrafter").prev().text());
+            if (flag === "meetingCompere") {
+                $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.insertMeetingCompere($(".selectedDrafter").prev().text());
+            } else if (flag === "meetingRecorder") {
+                $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.insertMeetingRecorder($(".selectedDrafter").prev().text());
+            } else {
+                $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.insertReviewer($(".selectedDrafter").prev().text());
+            }
             cancel();
         } else {
             layer.msg('请选择拟稿人！')
         }
     }
 
-    //菜单
-    $(function () {
-        $('.manu').click(function () {
+    /**-----------------------部门管理---------------------------*/
+    //添加部门
+    function addDepartment(currentPage) {
+        window.lar = layer.open({
+            title: '添加部门',
+            type: 1,
+            area: ['25%', '35%'],
+            shadeClose: true, //点击遮罩关闭
+            content: $("#addDepartment"),
+            offset: "20%"
+        });
 
-            $('.selected').attr('class', 'manu');
-            $(this).attr('class', 'selected');
+        //记录用户页面选择的页数
+        $('#departmentPage').val(currentPage);
+    }
 
-            switch ($(this).attr('id')) {
 
-                case 'index':
-
-                    $("#iframe").attr("src", "/default.do");
-                    break;
-
-                case 'OA':
-
-                    $("#iframe").attr("src", "/oaNavigation.do");
-                    break;
-
-                case 'quality_control':
-
-                    $("#iframe").attr("src", "/qualityIndex.do");
-                    break;
-
-                case 'HR':
-
-                    $("#iframe").attr("src", "/construction.do");
-                    break;
-
-                case 'DJ':
-
-                    $("#iframe").attr("src", "/construction.do");
-                    break;
-
-                case 'JY':
-
-                    $("#iframe").attr("src", "/construction.do");
-                    break;
-
-                case 'HB':
-
-                    $("#iframe").attr("src", "/milieuIndex.do");
-                    break;
-
-                case 'AQ':
-
-                    $("#iframe").attr("src", "/security.do");
-                    break;
-            }
-
-        })
-    });
 
     /**-------------------------角色管理-------------------------*/
     //新增角色
@@ -1406,7 +1514,7 @@
     function cancel() {
         layer.close(window.lar);
     }
-    
+
     //全局质量报警
     window.setInterval("showGlobalWarningData()",3000);
 
@@ -1496,7 +1604,7 @@
         var crew2LastDiscNum = sessionStorage.getItem("crew2LastDiscNum");
 
         if (crew1LastDiscNum  == "undefined" || crew2LastDiscNum  == "undefined"){
-             layer.open({
+            layer.open({
                 type: 1,
                 title: ['生产预警', 'height:auto;line-height: 27px;font-size:11px;'],
                 closeBtn: 0, //不显示关闭按钮
@@ -1513,7 +1621,7 @@
             return;
         }
 
-         layer.open({
+        layer.open({
             type: 1,
             title: ['生产预警', 'height:auto;line-height: 27px;font-size:11px;'],
             closeBtn: 0, //不显示关闭按钮

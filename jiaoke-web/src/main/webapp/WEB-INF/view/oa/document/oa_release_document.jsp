@@ -213,7 +213,7 @@
         <tr>
             <td class="tlabel">抄送：</td>
             <td colspan="5">
-                <input type="text" class="forminput inputstyle inputadress" name="copyGive" id="copyGive" value=""
+                <input type="text" class="forminput inputstyle inputadress" name="copyGive" id="copyGive"
                        onclick="carbonCopy()" onfocus="this.blur()" required>
             </td>
         </tr>
@@ -301,7 +301,7 @@
         $('#draftedPerson').val('');
     });
 
-    //选择核稿人
+    //选择拟稿人
     function selectReviewer() {
         var departmentKey = $('#draftingDepartment').val();
         if (departmentKey === "") {

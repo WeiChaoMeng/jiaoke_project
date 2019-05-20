@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.oa.dao.OaOperateBidMapper">
+
+    <select id="searchFilter" parameterType="java.lang.String" resultType="com.jiaoke.oa.bean.OaOperateBid">
+        SELECT
+            id,
+            tenderee,
+            project_name as projectName,
+            bidding_unit as biddingUnit,
+            tender_price as tenderPrice,
+            proprietor,
+            `year`,
+            rich_text as richText,
+            create_date as createDate
+        FROM oa_operate_bid
+        WHERE
+            project_name LIKE "%"#{projectName}"%"
+    </select>
+
+    <select id="selectAllData" resultType="com.jiaoke.oa.bean.OaOperateBid">
+        SELECT
+            id,
+            tenderee,
+            project_name as projectName,
+            bidding_unit as biddingUnit,
+            tender_price as tenderPrice,
+            proprietor,
+            `year`,
+            rich_text as richText,
+            create_date as createDate
+        FROM oa_operate_bid
+        order by
+        create_date desc
+    </select>
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.oa.dao.OaMaterialBiddingMapper">
+
+    <select id="searchFilter" parameterType="java.lang.String" resultType="com.jiaoke.oa.bean.OaMaterialBidding">
+        SELECT
+            id,
+            file,
+            issue,
+            registration_form as registrationForm,
+            quote,
+            tendering_score as tenderingScore,
+            bidding_fee as biddingFee,
+            score,
+            score_summary as scoreSummary,
+            review_opinion as reviewOpinion,
+            rich_text as richText,
+            create_date as createDate
+        FROM oa_material_bidding
+        WHERE
+            file LIKE "%"#{file}"%"
+        order by
+        create_date desc
+    </select>
+
+    <select id="selectAllData" resultType="com.jiaoke.oa.bean.OaMaterialBidding">
+        SELECT
+            id,
+            file,
+            issue,
+            registration_form as registrationForm,
+            quote,
+            tendering_score as tenderingScore,
+            bidding_fee as biddingFee,
+            score,
+            score_summary as scoreSummary,
+            review_opinion as reviewOpinion,
+            rich_text as richText,
+            create_date as createDate
+        FROM oa_material_bidding
+        order by
+        create_date desc
+    </select>
+</mapper>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.oa.dao.DingDingPunchTimeMapper">
+
+    <insert id="insert" parameterType="com.jiaoke.oa.bean.DingDingPunchTime">
+        insert into ding_ding_punch_time
+        (id, attendance_id, `time`, create_time)
+        values
+        (#{id}, #{attendanceId}, #{time}, #{createTime})
+    </insert>
+
+    <select id="selectByAttendanceId" parameterType="java.lang.String"
+            resultType="com.jiaoke.oa.bean.DingDingPunchTime">
+        SELECT id, attendance_id as attendanceId, `time`, create_time as createTime
+        FROM `ding_ding_punch_time`
+        WHERE attendance_id = #{attendanceId}
+    </select>
+
+    <select id="selectAllByAttendanceId" parameterType="java.lang.String"
+            resultType="com.jiaoke.oa.bean.DingDingPunchTime">
+        SELECT
+            id, attendance_id as attendanceId, `time`, create_time as createTime
+        FROM
+            `ding_ding_punch_time`
+        WHERE
+            DATE_FORMAT( create_time, '%Y%m' ) = DATE_FORMAT( CURDATE( ), '%Y%m' )
+            AND
+            attendance_id = #{attendanceId}
+        ORDER BY
+            create_time
+    </select>
+
+
+</mapper>
