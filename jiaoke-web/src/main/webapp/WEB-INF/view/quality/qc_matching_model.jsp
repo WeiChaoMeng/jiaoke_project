@@ -52,7 +52,10 @@
                     <td>${item.createTime}</td>
                     <td>${item.remaker}</td>
                     <td>${item.createUser}</td>
-                    <td><a   href="javascript:;"   name="${item.messageId}" onclick="showRatio(this.name)" style="color: rgb(114, 112, 209);" >查看</a></td>
+                    <td>
+                        <a   href="javascript:;"   name="${item.messageId}" onclick="showRatio(this.name)" style="color: rgb(114, 112, 209);" >查看</a>
+                        <a   href="javascript:;"   name="${item.messageId}" onclick="editRatio(this.name)" style="color: rgb(114, 112, 209);" >编辑</a>
+                    </td>
                 </tr>
             </c:forEach>
 
@@ -143,8 +146,8 @@
     </div>
     <!--新建模板弹出-->
     <div id="addRatioBrk" class="form_background"  style="display:none;" ></div>
-    <div id="addRatio" class="form_model" style="display:none;" >
-        <form  id="myForm" style="padding-top:3%;"  action="/addRation.do" method="post" >
+    <div id="addRatio" class="ration_form_model" style="display:none;" >
+        <form  id="myForm"   action="/addRation.do" method="post" >
             <table class="my_form_table">
 
                 <tbody>
@@ -152,7 +155,7 @@
                 <tr>
                     <td class="tlabels">配比名称：</td>
                     <td colspan="3">
-                        <input type="text" id="proName" name="proName"  required="required"  style="width: 97%;" class="forminput inputstyle" style="width: 72%;" value="cl-17沥青模板">
+                        <input type="text" id="proName" name="proName"  required="required"  style="width: 82%;" class="forminput inputstyle" style="width: 72%;" value="cl-17沥青模板">
                     </td>
                 </tr>
 
@@ -301,7 +304,7 @@
 
                 <tr>
                     <td colspan="3">
-                        <input type="text" data-value="proName" disabled="disabled"  style="width: 97%;font-size: 24px;padding-bottom: 13px;padding-left: 35%;" class="ration_forminput ration_inputstyle" style="width: 72%;" value="cl-17沥青模板">
+                        <input type="text" data-value="proName" disabled="disabled"  style="width: 97%;font-size: 24px;padding-bottom: 13px;padding-left: 35%;border: aliceblue;" class="ration_forminput ration_inputstyle" style="width: 72%;" value="cl-17沥青模板">
                     </td>
                 </tr>
 
@@ -412,13 +415,141 @@
             </table>
 
             <div class="form_btn">
-                <input type="button" onclick="closeShowRatio()" value="关闭" class="ration_btn_cancel">
+                <input type="button" style="margin-left: 10%;" onclick="closeShowRatio()" value="关闭" class="ration_btn_cancel">
             </div>
 
         </form>
     </div>
 
-    <!--查看模板弹出-->
+    <!--编辑机组模板弹出-->
+    <div id="editRatioBrk" class="form_background"  style="display:none;" ></div>
+    <div id="editRatio" class="ration_form_model" style="display:none;" >
+        <form  id="myEditForm"   action="/EditRation.do" method="post" >
+        <table class="my_form_table">
+            <tbody>
+
+            <tr>
+                <td colspan="3">
+                    <input type="text" data-value="proName"   style="width: 97%;font-size: 24px;padding-bottom: 13px;padding-left: 35%;border: aliceblue;" class="ration_forminput ration_inputstyle" style="width: 72%;">
+                </td>
+            </tr>
+
+            <tr>
+                <td class="ration_tlabels">1#仓：</td>
+                <td>
+                    <input type="number" step="0.01" data-value="repertoryOne" class="ration_forminput ration_inputstyle" value="">
+                </td>
+                <td class="ration_tlabels">2#仓：</td>
+                <td>
+                    <input type="number" step="0.01"  data-value="repertoryTwo" class="ration_forminput ration_inputstyle" value="">
+                </td>
+            </tr>
+
+            <tr>
+                <td class="ration_tlabels">3#仓：</td>
+                <td>
+                    <input type="number" step="0.01"  data-value="repertoryThree" class="ration_forminput ration_inputstyle" value="">
+                </td>
+                <td class="ration_tlabels">4#仓：</td>
+                <td>
+                    <input type="number" step="0.01"  data-value="repertoryFour" class="ration_forminput ration_inputstyle" value="">
+                </td>
+            </tr>
+
+            <tr>
+                <td class="ration_tlabels">5#仓：</td>
+                <td>
+                    <input type="number" step="0.01"  data-value="repertoryFive" class="ration_forminput ration_inputstyle" value="">
+                </td>
+                <td class="ration_tlabels">6#仓：</td>
+                <td>
+                    <input type="number" step="0.01" data-value="repertorySix" class="ration_forminput ration_inputstyle" value="">
+                </td>
+            </tr>
+
+            <tr>
+                <td class="ration_tlabels">矿粉：</td>
+                <td>
+                    <input type="number"  step="0.01" data-value="breeze" class="ration_forminput ration_inputstyle" value="">
+                </td>
+                <td class="ration_tlabels">油石比：</td>
+                <td>
+                    <input type="number"  step="0.01" data-value="ratioStone" class="ration_forminput ration_inputstyle" value="">
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="ration_tlabels">沥青加热温度：</td>
+                <td>
+                    <input type="number" step="0.1"  data-value="temperatureAsphalt" class="ration_forminput ration_inputstyle" value="">
+                </td>
+                <td class="ration_tlabels">骨料加热温度：</td>
+                <td>
+                    <input type="number" step="0.1"  data-value="temperatureAggregate" class="ration_forminput ration_inputstyle" value="">
+                </td>
+            </tr>
+
+            <tr>
+                <td class="ration_tlabels">混合料出厂温度：</td>
+                <td>
+                    <input type="number" step="0.1"  data-value="temperatureMixture" class="ration_forminput ration_inputstyle" value="">
+                </td>
+                <td class="tlabels">一仓温度：</td>
+                <td>
+                    <input type="number" step="0.1"  data-value="temperatureMilling" class="ration_forminput ration_inputstyle" value="">
+                </td>
+            </tr>
+
+            <tr>
+
+                <td class="ration_tlabels">再生料比1、2：</td>
+                <td>
+                    <input type="number" step="0.01" data-value="ratioRegenerate1" class="ration_form_input" value="">
+                    <input type="number" step="0.01" data-value="ratioRegenerate2" class="ration_form_input" value="">
+                </td>
+                <td class="ration_tlabels">添加剂比：</td>
+                <td>
+                    <input type="number" step="0.01"  data-value="ratioAdditive" class="ration_forminput ration_inputstyle" value="">
+                </td>
+            </tr>
+
+            <tr>
+                <td class="ration_tlabels">模板在机组一的编号：</td>
+                <td>
+                    <input type="number"   data-value="crew1ModeleId"    class="ration_forminput ration_inputstyle" value="">
+                </td>
+                <td class="ration_tlabels">模板在机组二的编号：</td>
+                <td>
+                    <input type="number"  data-value="crew2ModeleId"    class="ration_forminput ration_inputstyle" value="">
+                </td>
+            </tr>
+
+            <tr>
+                <td class="ration_tlabels">上传人：</td>
+                <td>
+                    <input type="text" data-value="upUser"   class="ration_forminput ration_inputstyle" value="">
+                </td>
+                <td class="ration_tlabels">备注：</td>
+                <td>
+                    <input type="text" data-value="remark"   class="ration_forminput ration_inputstyle" value="">
+                    <input type="text" data-value="id" style="display: none"   class="ration_forminput ration_inputstyle"  value="">
+                </td>
+            </tr>
+
+            </tbody>
+
+        </table>
+
+        <div class="form_btn">
+            <input type="submit"  id="edit"  value="修改" class="btn_save">
+            <input type="button" style="margin-left: 10px;" onclick="closeEditRatio()" value="关闭" class="ration_btn_cancel">
+        </div>
+
+        </form>
+    </div>
+
+    <!--级配模板弹出-->
     <div id="showGradingBrk" class="form_background"  style="display:none;" ></div>
     <div id="showGrading" class="ration_form_model" style="display:none;" >
         <table class="my_form_table">
@@ -435,7 +566,7 @@
                 </td>
                 <td class="my_grading_tlables">级配Excell</td>
                 <td>
-                    <input type="file" id="excel-file"  class="ration_forminput ration_inputstyle">
+                    <input type="file" id="excel-file" style="border: none;"  class="ration_forminput ration_inputstyle">
                 </td>
             </tr>
             <tr>
@@ -456,6 +587,7 @@
     </div>
 
     <input type="text" value="${path}" id="path" style="display: none" >
+
 </body>
 
 <script type="text/javascript" src="/static/js/jquery.js"></script>

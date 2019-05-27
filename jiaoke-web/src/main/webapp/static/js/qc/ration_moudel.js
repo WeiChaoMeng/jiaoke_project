@@ -47,7 +47,38 @@ $('#showBrk').click(function () {
     $('#showGradingBrk,#showGrading').show();
 });
 
+//点击编辑关闭
+function closeEditRatio() {
+    $('#editRatioBrk,#editRatio').hide();
+}
 
+
+//修改方法
+function editRatio(ratioId) {
+    $.ajax({
+        url:path + "/showRatioById.do",
+        type: "post",
+        data:{
+            "idStr" : ratioId
+        },
+        dataType:"json",
+        success:function (res) {
+
+            if (res == null || res == "") {
+                layer.msg('获取模板失败');
+
+            }
+
+            for (var k in res){
+                $("input[data-value='" +k + "']").val(res[k])
+            }
+
+            $('#editRatioBrk,#editRatio').show();
+        }
+    })
+}
+
+//删除方法
 function delectRatio() {
 
     var spCodesTemp = "";
@@ -105,6 +136,7 @@ function showRatio( ratioId ) {
             }
         }
     })
+
     $('#showRatioBrk,#showRatio').show();
 }
 

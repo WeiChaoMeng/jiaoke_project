@@ -119,6 +119,7 @@
 
     <select id="selectRationById" resultType="com.jiaoke.quality.bean.QualityRatioTemplate">
         SELECT
+               t1.id,
                t1.pro_name AS proName,
                t1.repertory_one AS repertoryOne,
                t1.repertory_two AS repertoryTwo,

@@ -1414,7 +1414,8 @@ table {
 
 .my_form_table {
     border-bottom: none;
-    margin-top: 22px;
+    margin-top: 5%;
+    margin-left: 5%;
     width: 100%;
 }
 .my_form_table td {
@@ -1536,9 +1537,12 @@ my_echars_div_block{
     width: 190px;
     color: #000;
     /*border-bottom: 1px solid #ccbbbbd4;*/
+    border: solid 1px #c6c6c6;
     text-align: center;
     outline: 0;
     background: #fff;
+    line-height: 26px;
+    text-indent: 8px;
 }
 .ration_form_table td {
     line-height: 40px;
@@ -1605,7 +1609,7 @@ my_echars_div_block{
 .ration_form_input{
     width: 88px;
     height: 26px;
-    /*border: solid 1px #c6c6c6;*/
+    border: solid 1px #c6c6c6;
     line-height: 26px;
     text-indent: 8px;
     font-family: '微软雅黑';

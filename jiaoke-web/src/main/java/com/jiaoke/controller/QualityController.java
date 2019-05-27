@@ -235,6 +235,13 @@ public class QualityController {
 
         return jsonMessage;
     }
+
+    @ResponseBody
+    @RequestMapping(value ={"/EditRation.do"} , method = RequestMethod.POST)
+    public String EditRation(QualityRatioTemplate qualityRatioTemplate){
+        System.out.println(qualityRatioTemplate);
+        return "";
+    }
     /************************************  配比管理 end **********************************************/
 
 
