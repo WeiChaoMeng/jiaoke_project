@@ -429,116 +429,139 @@
             <tbody>
 
             <tr>
+                <td class="tlabels">配比名称：</td>
                 <td colspan="3">
-                    <input type="text" data-value="proName"   style="width: 97%;font-size: 24px;padding-bottom: 13px;padding-left: 35%;border: aliceblue;" class="ration_forminput ration_inputstyle" style="width: 72%;">
+                    <input type="text" data-value="proName" name="proName"    style="width: 82%;" class="forminput inputstyle" style="width: 72%;">
                 </td>
             </tr>
 
             <tr>
-                <td class="ration_tlabels">1#仓：</td>
+                <td class="tlabels">1#仓：</td>
                 <td>
-                    <input type="number" step="0.01" data-value="repertoryOne" class="ration_forminput ration_inputstyle" value="">
+                    <input type="number" min="0.0" step="0.01" data-value="repertoryOne" name="repertoryOne" class="forminput inputstyle" >
                 </td>
-                <td class="ration_tlabels">2#仓：</td>
+                <td class="tlabels">2#仓：</td>
                 <td>
-                    <input type="number" step="0.01"  data-value="repertoryTwo" class="ration_forminput ration_inputstyle" value="">
-                </td>
-            </tr>
-
-            <tr>
-                <td class="ration_tlabels">3#仓：</td>
-                <td>
-                    <input type="number" step="0.01"  data-value="repertoryThree" class="ration_forminput ration_inputstyle" value="">
-                </td>
-                <td class="ration_tlabels">4#仓：</td>
-                <td>
-                    <input type="number" step="0.01"  data-value="repertoryFour" class="ration_forminput ration_inputstyle" value="">
+                    <input type="number" min="0.0" step="0.01" data-value="repertoryTwo"  name="repertoryTwo" class="forminput inputstyle" >
                 </td>
             </tr>
 
             <tr>
-                <td class="ration_tlabels">5#仓：</td>
+                <td class="tlabels">3#仓：</td>
                 <td>
-                    <input type="number" step="0.01"  data-value="repertoryFive" class="ration_forminput ration_inputstyle" value="">
+                    <input type="number" min="0.0" step="0.01" data-value="repertoryThree" name="repertoryThree" class="forminput inputstyle">
                 </td>
-                <td class="ration_tlabels">6#仓：</td>
+                <td class="tlabels">4#仓：</td>
                 <td>
-                    <input type="number" step="0.01" data-value="repertorySix" class="ration_forminput ration_inputstyle" value="">
-                </td>
-            </tr>
-
-            <tr>
-                <td class="ration_tlabels">矿粉：</td>
-                <td>
-                    <input type="number"  step="0.01" data-value="breeze" class="ration_forminput ration_inputstyle" value="">
-                </td>
-                <td class="ration_tlabels">油石比：</td>
-                <td>
-                    <input type="number"  step="0.01" data-value="ratioStone" class="ration_forminput ration_inputstyle" value="">
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="ration_tlabels">沥青加热温度：</td>
-                <td>
-                    <input type="number" step="0.1"  data-value="temperatureAsphalt" class="ration_forminput ration_inputstyle" value="">
-                </td>
-                <td class="ration_tlabels">骨料加热温度：</td>
-                <td>
-                    <input type="number" step="0.1"  data-value="temperatureAggregate" class="ration_forminput ration_inputstyle" value="">
+                    <input type="number" min="0.0" step="0.01" data-value="repertoryFour" name="repertoryFour" class="forminput inputstyle">
                 </td>
             </tr>
 
             <tr>
-                <td class="ration_tlabels">混合料出厂温度：</td>
+                <td class="tlabels">5#仓：</td>
                 <td>
-                    <input type="number" step="0.1"  data-value="temperatureMixture" class="ration_forminput ration_inputstyle" value="">
+                    <input type="number" min="0.0" step="0.01" data-value="repertoryFive" name="repertoryFive" class="forminput inputstyle" >
                 </td>
-                <td class="tlabels">一仓温度：</td>
+                <td class="tlabels">6#仓：</td>
                 <td>
-                    <input type="number" step="0.1"  data-value="temperatureMilling" class="ration_forminput ration_inputstyle" value="">
-                </td>
-            </tr>
-
-            <tr>
-
-                <td class="ration_tlabels">再生料比1、2：</td>
-                <td>
-                    <input type="number" step="0.01" data-value="ratioRegenerate1" class="ration_form_input" value="">
-                    <input type="number" step="0.01" data-value="ratioRegenerate2" class="ration_form_input" value="">
-                </td>
-                <td class="ration_tlabels">添加剂比：</td>
-                <td>
-                    <input type="number" step="0.01"  data-value="ratioAdditive" class="ration_forminput ration_inputstyle" value="">
+                    <input type="number" min="0.0" step="0.01" data-value="repertorySix" name="repertorySix" class="forminput inputstyle">
                 </td>
             </tr>
 
             <tr>
-                <td class="ration_tlabels">模板在机组一的编号：</td>
+                <td class="tlabels">矿粉：</td>
                 <td>
-                    <input type="number"   data-value="crew1ModeleId"    class="ration_forminput ration_inputstyle" value="">
+                    <input type="number" min="0.0" step="0.01" data-value="breeze" name="breeze" class="forminput inputstyle">
                 </td>
-                <td class="ration_tlabels">模板在机组二的编号：</td>
+                <td class="tlabels">沥青(含量)：</td>
                 <td>
-                    <input type="number"  data-value="crew2ModeleId"    class="ration_forminput ration_inputstyle" value="">
+                    <input type="number" min="0.0" step="0.01" data-value="ratioStone" name="ratioStone" class="forminput inputstyle" >
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="tlabels">沥青加热温度 上/下限：</td>
+                <td>
+                    <input type="number" data-value="temperatureAsphalt" name="temperatureAsphalt" class="my_form_input" >
+                    <input type="number" data-value="temperatureAsphaltUp" name="temperatureAsphaltUp" class="my_form_input">
+                </td>
+                <td class="tlabels">骨料加热温度 上/下限：</td>
+                <td>
+                    <input type="number" data-value="temperatureAggregate" name="temperatureAggregate" class="my_form_input">
+                    <input type="number" data-value="temperatureAggregateUp" name="temperatureAggregateUp" class="my_form_input">
                 </td>
             </tr>
 
             <tr>
-                <td class="ration_tlabels">上传人：</td>
+                <td class="tlabels">混合料出厂温度 上/下限：</td>
                 <td>
-                    <input type="text" data-value="upUser"   class="ration_forminput ration_inputstyle" value="">
+                    <input type="number" data-value="temperatureMixture" name="temperatureMixture" class="my_form_input" >
+                    <input type="number" data-value="temperatureMixtureUp" name="temperatureMixtureUp" class="my_form_input" >
                 </td>
-                <td class="ration_tlabels">备注：</td>
+                <td class="tlabels">一仓温度 上/下限：</td>
                 <td>
-                    <input type="text" data-value="remark"   class="ration_forminput ration_inputstyle" value="">
-                    <input type="text" data-value="id" style="display: none"   class="ration_forminput ration_inputstyle"  value="">
+                    <input type="number" data-value="temperatureMilling" name="temperatureMilling" class="my_form_input" >
+                    <input type="number" data-value="temperatureMillingUp" name="temperatureMillingUp" class="my_form_input" >
                 </td>
+            </tr>
+
+            <tr>
+                <td class="tlabels">再生料：</td>
+                <td>
+                    <select class="form_swidth" data-value="regenerate" name="regenerate" >
+                        <c:forEach items="${listRegenerate}" var="item">
+                            <option value="${item.id}">${item.name}</option>
+                        </c:forEach>
+                    </select>
+                </td>
+                <td class="tlabels">再生料比1、2：</td>
+                <td>
+                    <input type="number" min="0.0" step="0.01" data-value="ratioRegenerate1" name="ratioRegenerate1" class="my_form_input" value="0.0">
+                    <input type="number" min="0.0" step="0.01" data-value="ratioRegenerate2" name="ratioRegenerate2" class="my_form_input" value="0.0">
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="tlabels">添加剂：</td>
+                <td>
+                    <select class="form_swidth" data-value="additive" name="additive" >
+                        <c:forEach items="${listAdditive}" var="item">
+                            <option value="${item.id}">${item.name}</option>
+                        </c:forEach>
+                    </select>
+                </td>
+                <td class="tlabels">添加剂含量：</td>
+                <td>
+                    <input type="number" min="0.0" step="0.01" data-value="ratioAdditive" name="ratioAdditive" class="forminput inputstyle">
+                </td>
+            </tr>
+
+            <tr>
+                <td class="tlabels">模板在机组一的编号：</td>
+                <td>
+                    <input type="number" data-value="crew1ModeleId" name="crew1ModeleId"    class="forminput inputstyle" >
+                </td>
+                <td class="tlabels">模板在机组二的编号：</td>
+                <td>
+                    <input type="number"  data-value="crew2ModeleId" name="crew2ModeleId" class="forminput inputstyle" >
+                </td>
+            </tr>
+
+            <tr>
+                <td class="tlabels">上传人：</td>
+                <td>
+                    <input type="text" data-value="upUser" name="upUser"   class="forminput inputstyle" >
+                </td>
+                <td class="tlabels">备注：</td>
+                <td>
+                    <input type="text" data-value="remark" name="remark"   class="forminput inputstyle" >
+                </td>
+                <<input type="text" name="id" data-value="id" style="display: none">
             </tr>
 
             </tbody>
-
         </table>
 
         <div class="form_btn">

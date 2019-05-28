@@ -16,7 +16,6 @@ import com.jiaoke.quality.bean.QualityRatioModel;
 import com.jiaoke.quality.bean.QualityRatioTemplate;
 import com.jiaoke.quality.dao.QualityMatchingDao;
 import org.springframework.stereotype.Service;
-
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -200,5 +199,18 @@ public class QualityMatchingImpl implements QualityMatchingInf{
         }
 
         return JSON.toJSONString(result);
+    }
+
+    @Override
+    public Boolean EditRationById(QualityRatioTemplate qualityRatioTemplate) {
+        Map<String,String> map = new HashMap<>();
+        if ( null == qualityRatioTemplate){
+            map.put("res","error");
+            return false;
+        }
+
+        qualityMatchingDao.updateRatioById(qualityRatioTemplate);
+        map.put("res","success");
+        return true;
     }
 }

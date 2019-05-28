@@ -83,4 +83,15 @@ public interface QualityMatchingDao {
      * @param list
      */
     void insetGrading( @Param("list") List<Map<String, String>> list);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <修改模板>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/5/28 11:49
+     */
+    int updateRatioById(@Param("ratioTemplate") QualityRatioTemplate qualityRatioTemplate);
 }

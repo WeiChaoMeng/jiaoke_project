@@ -239,8 +239,9 @@ public class QualityController {
     @ResponseBody
     @RequestMapping(value ={"/EditRation.do"} , method = RequestMethod.POST)
     public String EditRation(QualityRatioTemplate qualityRatioTemplate){
-        System.out.println(qualityRatioTemplate);
-        return "";
+      Boolean res =   qualityMatchingInf.EditRationById(qualityRatioTemplate);
+
+        return "redirect:qc_index.do";
     }
     /************************************  配比管理 end **********************************************/
 

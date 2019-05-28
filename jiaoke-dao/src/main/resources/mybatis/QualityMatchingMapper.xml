@@ -133,9 +133,13 @@
                t1.ratio_regenerate2 AS ratioRegenerate2,
                t1.ratio_additive AS ratioAdditive,
                t1.temperature_asphalt AS temperatureAsphalt,
-               t1.temperature_asphalt AS temperatureAggregate,
+               t1.temperature_asphalt_up AS temperatureAsphaltUp,
+                t1.temperature_aggregate as temperatureAggregate,
+               t1.temperature_aggregate_up as temperatureAggregateUp,
                t1.temperature_mixture AS temperatureMixture,
+               t1.temperature_mixture_up as temperatureMixtureUp,
                t1.temperature_milling AS temperatureMilling,
+               t1.temperature_milling_up AS temperatureMillingUp,
                t1.crew1_modele_id AS crew1ModeleId,
                t1.crew2_modele_id AS crew2ModeleId,
                t2.create_user AS upUser,
@@ -177,5 +181,40 @@
                         )
                   </foreach >
     </insert>
+
+    <update id="updateRatioById" parameterType="com.jiaoke.quality.bean.QualityRatioTemplate" >
+        UPDATE quality_proportioning_message  AS QPM
+        LEFT JOIN quality_proportioning_model AS QPO
+        ON QPM.id = QPO.message_id
+        SET
+            QPO.model_name = #{ratioTemplate.proName},
+            QPO.remaker = #{ratioTemplate.remark},
+            QPO.create_user = #{ratioTemplate.upUser},
+            QPM.pro_name = #{ratioTemplate.proName},
+            QPM.repertory_one = #{ratioTemplate.repertoryOne},
+            QPM.repertory_two = #{ratioTemplate.repertoryTwo},
+            QPM.repertory_three =#{ratioTemplate.repertoryThree},
+            QPM.repertory_four = #{ratioTemplate.repertoryFour},
+            QPM.repertory_five = #{ratioTemplate.repertoryFive},
+            QPM.repertory_six = #{ratioTemplate.repertorySix},
+            QPM.breeze = #{ratioTemplate.breeze},
+            QPM.ratio_stone = #{ratioTemplate.ratioStone},
+            QPM.ratio_regenerate1 = #{ratioTemplate.ratioRegenerate1},
+            QPM.ratio_regenerate2 = #{ratioTemplate.ratioRegenerate2},
+            QPM.ratio_additive = #{ratioTemplate.ratioAdditive},
+            QPM.regenerate = #{ratioTemplate.regenerate},
+            QPM.additive = #{ratioTemplate.additive},
+            QPM.temperature_asphalt = #{ratioTemplate.temperatureAsphalt},
+            QPM.temperature_asphalt_up = #{ratioTemplate.temperatureAsphaltUp},
+            QPM.temperature_aggregate = #{ratioTemplate.temperatureAggregate},
+            QPM.temperature_aggregate_up = #{ratioTemplate.temperatureAggregateUp},
+            QPM.temperature_mixture = #{ratioTemplate.temperatureMixture},
+            QPM.temperature_mixture_up = #{ratioTemplate.temperatureMixtureUp},
+            QPM.temperature_milling = #{ratioTemplate.temperatureMilling},
+            QPM.temperature_milling_up = #{ratioTemplate.temperatureMillingUp},
+            QPM.crew1_modele_id =#{ratioTemplate.crew1ModeleId},
+            QPM.crew2_modele_id = #{ratioTemplate.crew2ModeleId}
+        WHERE QPM.id = #{ratioTemplate.id}
+    </update>
 
 </mapper>
