@@ -71,7 +71,7 @@ public interface QualityMatchingInf {
      * @auther Melone
      * @date 2019/5/28 11:26
      */
-    String insetGrading(String jsonData, String crew1Id, String crew2Id);
+    String insetGrading(String jsonData, String crew1Id, String crew2Id,String gradingName,String upUser,String gradingRemaker);
 
     /**
      *

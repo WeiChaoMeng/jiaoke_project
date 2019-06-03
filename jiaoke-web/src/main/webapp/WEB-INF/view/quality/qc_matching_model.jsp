@@ -22,7 +22,6 @@
 
     <ul class="toolbar">
         <li><a href="#" id="from_click" ><i class="toolico iconfont">&#xe7e9;</i>新建通知</a></li>
-        <li><a href="#" id="showBrk" ><i class="toolico iconfont">&#xe7e9;</i>新建级配</a></li>
         <li><a href="#" id="btn_click"><i class="toolico iconfont">&#xe7ea;</i>删除</a></li>
 
     </ul>

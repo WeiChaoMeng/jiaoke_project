@@ -169,7 +169,8 @@
                 synthesis_grading,
                 mid_value,
                 up_value,
-                down_value
+                down_value,
+                model_id
                 )
         values
                   <foreach collection ="list" item="list" index= "index" separator =",">
@@ -177,7 +178,7 @@
                         #{list.crew1_id}, #{list.crew2_id},#{list.sieve_pore}, #{list.six_warehouse},
                       #{list.five_warehouse}, #{list.four_warehouse},#{list.three_warehouse}, #{list.two_warehouse},
                       #{list.one_warehouse}, #{list.breeze_grading},#{list.rough_regenerate}, #{list.thin_regenerate},
-                      #{list.additive_aggregate}, #{list.compound_grading},#{list.mid_value}, #{list.up_value}, #{list.down_value}
+                      #{list.additive_aggregate}, #{list.compound_grading},#{list.mid_value}, #{list.up_value}, #{list.down_value},#{id}
                         )
                   </foreach >
     </insert>
@@ -217,4 +218,19 @@
         WHERE QPM.id = #{ratioTemplate.id}
     </update>
 
+    <insert id="insetGradingModel" parameterType="java.util.Map" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+
+        INSERT INTO quality_proportioning_grading_model (
+                grading_name,
+                create_time,
+                grading_remaker,
+                up_user
+                )
+        VALUES
+               (#{map.gradingName},#{map.date},#{map.gradingRemaker},#{map.upUser})
+
+        <selectKey  resultType="java.lang.Integer"  order="AFTER" keyProperty="map.id">
+            SELECT LAST_INSERT_ID() as id
+        </selectKey>
+    </insert>
 </mapper>
