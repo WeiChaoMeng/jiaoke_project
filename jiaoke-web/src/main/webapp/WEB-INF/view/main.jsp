@@ -659,7 +659,6 @@
         }
         preventBubble();
     }
-
     //删除已选列表选中的标签并且删除选择列表中选中的样式
     $('#selectedNotifyPerson').on("click", "li", function () {
         //获取选中li的id
@@ -680,17 +679,15 @@
             })
         });
     });
-
     //组织冒泡
     function preventBubble(event) {
-        var e = arguments.callee.caller.arguments[0] || event; //若省略此句，下面的e改为event，IE运行可以，但是其他浏览器就不兼容  
+        var e = arguments.callee.caller.arguments[0] || event; //若省略此句，下面的e改为event，IE运行可以，但是其他浏览器就不兼容
         if (e && e.stopPropagation) {
             e.stopPropagation();
         } else if (window.event) {
             window.event.cancelBubble = true;
         }
     }
-
     //公文-选择拟稿人
     function selectReviewers(userInfoList, draftedPerson, flag) {
         window.lar = layer.open({
@@ -701,9 +698,7 @@
             content: $("#singleSelection"),
             offset: "20%"
         });
-
         $('#singleFlag').val(flag);
-
         var content = '';
         if (userInfoList.length <= 0) {
             //当前部门没有人员
@@ -763,7 +758,6 @@
             layer.msg('请选择拟稿人！')
         }
     }
-
     /**-----------------------部门管理---------------------------*/
     //添加部门
     function addDepartment(currentPage) {
@@ -775,11 +769,9 @@
             content: $("#addDepartment"),
             offset: "20%"
         });
-
         //记录用户页面选择的页数
         $('#departmentPage').val(currentPage);
     }
-
     //提交新增部门
     function commitDepartment() {
         var departmentName = $('#departmentName').val();
@@ -832,12 +824,10 @@
         });
         return res;
     }
-
     //删除部门
     function deleteDepartment(id, currentPage) {
         //记录选择的页数
         $('#departmentPage').val(currentPage);
-
         //提示窗
         layer.confirm('确定要删除吗？', {
                 btn: ['确认', '取消']
@@ -862,7 +852,6 @@
             }
         );
     }
-
     //部门绑定主管
     function bindingDepartmentHead(userInfoList, departmentList, id, page) {
         window.lar = layer.open({
@@ -873,7 +862,6 @@
             content: $("#bindingDepartment"),
             offset: "20%"
         });
-
         //记录选择的页数
         $('#departmentPage').val(page);
         //部门id
@@ -885,7 +873,6 @@
             department += '<img src="../../static/images/icon/department.png">';
             department += '<span onclick="departmentSelect(this)" id="' + departmentList[i].departmentKey + '">' + departmentList[i].departmentName + '</span>';
             department += '<div></div>';
-
             for (let j = 0; j < userInfoList.length; j++) {
                 if (userInfoList[j].department === departmentList[i].departmentKey) {
                     department += '<ul class="submenu-ul">';
@@ -899,10 +886,8 @@
             }
             department += '</li>';
         }
-
         $("#departmentAndUser").html(department);
     }
-
     //用户选择器
     function addSelectionUser(own) {
         if ($(own).children('div').hasClass("selection")) {
@@ -912,7 +897,6 @@
             $(own).find("div").addClass("selection");
         }
     }
-
     //提交绑定
     function confirmDepartmentHead() {
         var lis = $("#selectDepartment").find("div");
@@ -922,7 +906,6 @@
             var principal = $(".selection").prev().attr('id')
             //部门id
             var id = $('#departmentId').val();
-
             $.ajax({
                 type: "post",
                 url: '/backstageManagement/bindingDepartmentHead',
@@ -944,7 +927,6 @@
             layer.msg('请选择拟稿人！')
         }
     }
-
     //编辑部门
     function editDepartment(department, currentPage) {
         window.lar = layer.open({
@@ -955,7 +937,6 @@
             content: $("#editDepartment"),
             offset: "20%"
         });
-
         //记录用户页面选择的页数
         $('#departmentPage').val(currentPage);
         $('#editDepartmentName').val(department.departmentName);
@@ -2382,7 +2363,6 @@
             }
         );
     }
-
     //生产管理部-其他文件
     function deleteProductionOther(id, currentPage) {
         //记录用户页面选择的页数

@@ -8,10 +8,6 @@ import org.junit.Test;
 
 import java.util.List;
 
-<<<<<<<HEAD
-=======
->>>>>>> 11ada14399558a7fef64c82284ee6e997e702f64
-
 /**
  * @author lihui
  * @version 1.0
