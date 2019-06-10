@@ -63,8 +63,9 @@
 
 
 
-    <!--编辑机组模板弹出-->
-    <!--级配模板弹出-->
+    <!--级配模板相关弹出-->
+
+    <!--展示级配模板弹出-->
     <div id="GradingBrk" class="form_background"  style="display:none;" ></div>
     <div id="Grading" class="ration_form_model" style="display:none;" >
         <table class="my_form_table">
@@ -125,7 +126,7 @@
 
     </div>
 
-    <!--级配模板弹出-->
+    <!--上传级配模板弹出-->
     <div id="showGradingBrk" class="form_background"  style="display:none;" ></div>
     <div id="showGrading" class="ration_form_model" style="display:none;" >
         <table class="my_form_table">
@@ -167,6 +168,71 @@
         <div class="form_btn">
             <input type="button" onclick="sendGrading()" value="上传" class="ration_btn_cancel" style="padding-top: 0px">
             <input type="button" onclick="closeGrading()" value="关闭" class="ration_btn_cancel">
+        </div>
+
+        </form>
+
+    </div>
+
+
+    <!--编辑机组模板弹出-->
+    <!--编辑级配模板弹出-->
+    <div id="editGradingBrk" class="form_background"  style="display:none;" ></div>
+    <div id="editGrading" class="ration_form_model" style="display:none;" >
+        <table class="my_form_table">
+            <tbody>
+            <tr>
+                <td class="my_grading_tlables">一号机组模板号：</td>
+                <td>
+                    <input type="number"   name="crew1_edit_num" class="my_grading_input">
+
+                </td>
+                <td class="my_grading_tlables">二号机组模板号：</td>
+                <td>
+                    <input type="number"  name="crew2_edit_num" class="my_grading_input">
+                </td>
+                <td class="my_grading_tlables">级配名称</td>
+                <td>
+                    <input type="text"  name="grading_edit_name"  class="my_grading_input">
+                </td>
+                <td class="my_grading_tlables">备注</td>
+                <td>
+                    <input type="text"   name="grading_edit_remaker"  class="my_grading_input_remaker">
+                    <input type="text"   name="id"  class="my_grading_input_remaker">
+                </td>
+            </tr>
+
+            </tbody>
+
+        </table>
+        <div id="editGradingMessage">
+            <table class="simpletable">
+                <tr class="even">
+                    <td>筛孔</td>
+                    <td>六仓</td>
+                    <td>五仓</td>
+                    <td>四仓</td>
+                    <td>三仓</td>
+                    <td>二仓</td>
+                    <td>一仓</td>
+                    <td>矿粉</td>
+                    <td>粗再生料</td>
+                    <td>细再生料</td>
+                    <td>添加剂矿料</td>
+                    <td>合成级配</td>
+                    <td>中值</td>
+                    <td>上限</td>
+                    <td>下限</td>
+                </tr>
+                <tbody id="editMessage">
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="form_btn">
+            <input type="button" onclick="editGrading()" value="修改" class="ration_btn_cancel" style="padding-top: 0px">
+            <input type="button" onclick="closeEditGrading()" value="关闭" class="ration_btn_cancel">
         </div>
 
         </form>

@@ -25,7 +25,11 @@
 
     <select id="selectGradingByModelId" resultType="java.util.Map">
         SELECT
-               t1.*,
+               t1.id AS grading_model_id,
+               t1.grading_name,
+               t1.create_time,
+               t1.grading_remaker,
+               t1.up_user,
                t2.*
         FROM
              quality_proportioning_grading_model AS t1

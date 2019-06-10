@@ -50,7 +50,7 @@ function getDateByPageNum(currentNum){
             + "<td>" + jsonList[i].up_user  + "</td>"
             + "<td>"
             + "<a   href='javascript:;'   name='" + jsonList[i].id  +"' onclick='showGrading(this.name)' style='color: rgb(114, 112, 209);' >查看</a>"
-            + "<a   href='javascript:;'   name='" + jsonList[i].id  +"' onclick='showGrading(this.name)' style='color: rgb(114, 112, 209);padding-left: 10px;' >编辑</a>"
+            + "<a   href='javascript:;'   name='" + jsonList[i].id  +"' onclick='showEditGrading(this.name)' style='color: rgb(114, 112, 209);padding-left: 10px;' >编辑</a>"
             + "</td>"
             + "</tr>"
 
@@ -142,7 +142,51 @@ function delectGrading(){
         })
     }
 }
+//修改级配模板
+function showEditGrading(id) {
+    var basePath = $("#path").val();
+    $("#editMessage").empty();
+    $.ajax({
+        url:basePath + "/getGrading.do",
+        type: "post",
+        data:{
+            "id" :id
+        },
+        dataType:"json",
+        success:function (res) {
 
+            for (var i = 0 ; i < res.length;i++){
+                $('input[name=crew1_edit_num]').val(res[i].crew1_id);
+                $('input[name=crew2_edit_num]').val(res[i].crew2_id);
+                $('input[name=grading_edit_name]').val(res[i].grading_name);
+                $('input[name=grading_edit_remaker]').val(res[i].grading_remaker);
+                $('input[name=id]').val(res[i].id);
+
+                var htmlStr ="<tr class='even'>"
+                    +"<td>" + res[i].sieve_diameter_grading + "</td>"
+                    +"<td><input type='number'  name='repertory_six_grading' class='my_grading_edit_input'  value='" + res[i].repertory_six_grading + "' ></td>"
+                    +" <td><input type='number'  name='repertory_five_grading' class='my_grading_edit_input'  value='" + res[i].repertory_five_grading + "' ></td>"
+                    +"<td><input type='number'  name='repertory_four_grading' class='my_grading_edit_input'  value='" + res[i].repertory_four_grading + "' ></td>"
+                    +"<td><input type='number'  name='repertory_three_grading' class='my_grading_edit_input'  value='" + res[i].repertory_three_grading + "' ></td>"
+                    +"<td><input type='number'  name='repertory_two_grading' class='my_grading_edit_input'  value='" + res[i].repertory_two_grading + "' ></td>"
+                    +"<td><input type='number'  name='repertory_one_grading' class='my_grading_edit_input'  value='" + res[i].repertory_one_grading + "' ></td>"
+                    +"<td><input type='number'  name='breeze_grading' class='my_grading_edit_input'  value='" + res[i].breeze_grading + "' ></td>"
+                    +"<td><input type='number'  name='rough_regenerate_grading' class='my_grading_edit_input'  value='" + res[i].rough_regenerate_grading + "' ></td>"
+                    +"<td><input type='number'  name='thin_regenerate_grading' class='my_grading_edit_input'  value='" + res[i].thin_regenerate_grading + "' ></td>"
+                    +"<td><input type='number'  name='additive_grading' class='my_grading_edit_input'  value='" + res[i].additive_grading + "' ></td>"
+                    +"<td><input type='number'  name='synthesis_grading' class='my_grading_edit_input'  value='" + res[i].synthesis_grading + "' ></td>"
+                    +"<td><input type='number'  name='mid_value' class='my_grading_edit_input'  value='" + res[i].mid_value + "' ></td>"
+                    +"<td><input type='number'  name='up_value' class='my_grading_edit_input'  value='" + res[i].up_value + "' ></td>"
+                    +"<td><input type='number'  name='down_value' class='my_grading_edit_input'  value='" + res[i].down_value + "' ></td>"
+                    +"</tr>";
+
+                $("#editMessage").append(htmlStr);
+            }
+
+            $('#editGradingBrk,#editGrading').show();
+        }
+    })
+}
 //点击 添加 级配图
 function closeGrading() {
     $('#showGradingBrk,#showGrading').hide();
@@ -153,8 +197,8 @@ $('#showBrk').click(function () {
 });
 
 //关闭展示
-function closeGradingModel() {
-    $('#GradingBrk,#Grading').hide();
+function closeEditGrading() {
+    $('#editGradingBrk,#editGrading').hide();
 }
 //点击弹出删除按钮
 function closeWindow() {
