@@ -16,8 +16,8 @@ import com.jiaoke.common.bean.PageBean;
 import com.jiaoke.quality.bean.QualityDataManagerDay;
 import com.jiaoke.quality.bean.QualityRatioModel;
 import com.jiaoke.quality.bean.QualityRatioTemplate;
+import com.jiaoke.quality.service.QualityGradingManagerInf;
 import com.jiaoke.quality.service.*;
-import lombok.experimental.var;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -66,6 +66,8 @@ public class QualityController {
     private QualityHistoricalDataService qualityHistoricalDataService;
     @Autowired
     private QualityDataSummaryInf qualityDataSummaryInf;
+    @Autowired
+    private QualityGradingManagerInf qualityGradingManagerInf;
 
     /**
      *
@@ -229,11 +231,19 @@ public class QualityController {
 
     @ResponseBody
     @RequestMapping(value ={"/addGrading.do"} , method = RequestMethod.POST)
-    public String addGrading(String jsonData,String crew1Id,String crew2Id){
+    public String addGrading(String jsonData,String crew1Id,String crew2Id,String gradingName,String upUser,String gradingRemaker){
 
-        String jsonMessage = qualityMatchingInf.insetGrading(jsonData,crew1Id,crew2Id);
+        String jsonMessage = qualityMatchingInf.insetGrading(jsonData,crew1Id,crew2Id,gradingName,upUser,gradingRemaker);
 
         return jsonMessage;
+    }
+
+
+    @RequestMapping(value ={"/EditRation.do"} , method = RequestMethod.POST)
+    public String EditRation(QualityRatioTemplate qualityRatioTemplate){
+      Boolean res =   qualityMatchingInf.EditRationById(qualityRatioTemplate);
+
+        return "redirect:qc_index.do";
     }
     /************************************  配比管理 end **********************************************/
 
@@ -300,6 +310,14 @@ public class QualityController {
         String  jsonStr = qualityDataMontoringInf.getRealTimeDataEcharsMaterial();
         return jsonStr;
     }
+
+    @ResponseBody
+    @RequestMapping("/getRealTimeThreeProductSVG.do")
+    public String getRealTimeThreeProductSVG(){
+       String res =  qualityDataMontoringInf.getRealTimeThreeProductSVG();
+       return res;
+    }
+
 
     /********************************  实时监控 end *****************************************/
 
@@ -425,6 +443,18 @@ public class QualityController {
         return jsonStr;
     }
 
+    @ResponseBody
+    @RequestMapping("/getGlobalWarningData.do")
+    public String getGlobalWarningData(){
+        String res = qualityRealTimeWarningInf.getGlobalWarningData();
+
+        return res;
+    }
+
+    @RequestMapping("/getWarningPage.do")
+    public String getWarningPage(){
+        return "quality/qc_warning_page";
+    }
     /********************************  质量预警 end *****************************************/
 
 
@@ -712,4 +742,35 @@ public class QualityController {
     }
 
     /********************************  数据汇总 end *****************************************/
+
+    /********************************  级配管理 start *****************************************/
+    @RequestMapping("/qc_grading_manager.do")
+    public String toGradingManagerPage(HttpServletRequest request){
+        return "quality/qc_grading_manager";
+    }
+
+    @ResponseBody
+    @RequestMapping("/getGradingList.do")
+    public String getGradingList(){
+        String res = qualityGradingManagerInf.getGradingModelList();
+        return res;
+    }
+
+    @ResponseBody
+    @RequestMapping("/delectGrading.do")
+    public String delectGrading(String idStr){
+
+        String res = qualityGradingManagerInf.delectGrading(idStr);
+
+        return res;
+    }
+
+    @ResponseBody
+    @RequestMapping("/getGrading.do")
+    public String getGrading(String id){
+        String res = qualityGradingManagerInf.getGrading(id);
+        return res;
+    }
+
+    /********************************  级配管理 end *****************************************/
 }

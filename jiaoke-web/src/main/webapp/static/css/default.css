@@ -1421,7 +1421,8 @@ table {
 
 .my_form_table {
     border-bottom: none;
-    margin-top: 22px;
+    margin-top: 5%;
+    margin-left: 5%;
     width: 100%;
 }
 .my_form_table td {
@@ -1439,7 +1440,21 @@ table {
     margin-left: 15px;
 }
 .my_grading_input{
-    width: 48px;
+    width: 60px;
+    color: #000;
+    height: 26px;
+    border-bottom: solid 1px #484242;
+    line-height: 26px;
+    text-indent: 8px;
+    text-indent: 0;
+    padding-left: 8px;
+    font-family: '微软雅黑';
+    color: #585858;
+    outline: none;
+}
+
+.my_grading_input_remaker{
+    width: 160px;
     color: #000;
     height: 26px;
     border-bottom: solid 1px #484242;
@@ -1456,7 +1471,7 @@ table {
     text-indent: 15px;
     background: #ffffff;
     width: 123px;
-    text-align: right;
+    /*text-align: right;*/
     white-space: nowrap;
 }
 /*my_pagination*/
@@ -1543,9 +1558,12 @@ my_echars_div_block{
     width: 190px;
     color: #000;
     /*border-bottom: 1px solid #ccbbbbd4;*/
+    border: solid 1px #c6c6c6;
     text-align: center;
     outline: 0;
     background: #fff;
+    line-height: 26px;
+    text-indent: 8px;
 }
 .ration_form_table td {
     line-height: 40px;
@@ -1612,7 +1630,7 @@ my_echars_div_block{
 .ration_form_input{
     width: 88px;
     height: 26px;
-    /*border: solid 1px #c6c6c6;*/
+    border: solid 1px #c6c6c6;
     line-height: 26px;
     text-indent: 8px;
     font-family: '微软雅黑';

@@ -119,6 +119,7 @@
 
     <select id="selectRationById" resultType="com.jiaoke.quality.bean.QualityRatioTemplate">
         SELECT
+               t1.id,
                t1.pro_name AS proName,
                t1.repertory_one AS repertoryOne,
                t1.repertory_two AS repertoryTwo,
@@ -132,9 +133,13 @@
                t1.ratio_regenerate2 AS ratioRegenerate2,
                t1.ratio_additive AS ratioAdditive,
                t1.temperature_asphalt AS temperatureAsphalt,
-               t1.temperature_asphalt AS temperatureAggregate,
+               t1.temperature_asphalt_up AS temperatureAsphaltUp,
+                t1.temperature_aggregate as temperatureAggregate,
+               t1.temperature_aggregate_up as temperatureAggregateUp,
                t1.temperature_mixture AS temperatureMixture,
+               t1.temperature_mixture_up as temperatureMixtureUp,
                t1.temperature_milling AS temperatureMilling,
+               t1.temperature_milling_up AS temperatureMillingUp,
                t1.crew1_modele_id AS crew1ModeleId,
                t1.crew2_modele_id AS crew2ModeleId,
                t2.create_user AS upUser,
@@ -164,7 +169,8 @@
                 synthesis_grading,
                 mid_value,
                 up_value,
-                down_value
+                down_value,
+                model_id
                 )
         values
                   <foreach collection ="list" item="list" index= "index" separator =",">
@@ -172,9 +178,59 @@
                         #{list.crew1_id}, #{list.crew2_id},#{list.sieve_pore}, #{list.six_warehouse},
                       #{list.five_warehouse}, #{list.four_warehouse},#{list.three_warehouse}, #{list.two_warehouse},
                       #{list.one_warehouse}, #{list.breeze_grading},#{list.rough_regenerate}, #{list.thin_regenerate},
-                      #{list.additive_aggregate}, #{list.compound_grading},#{list.mid_value}, #{list.up_value}, #{list.down_value}
+                      #{list.additive_aggregate}, #{list.compound_grading},#{list.mid_value}, #{list.up_value}, #{list.down_value},#{id}
                         )
                   </foreach >
     </insert>
 
+    <update id="updateRatioById" parameterType="com.jiaoke.quality.bean.QualityRatioTemplate" >
+        UPDATE quality_proportioning_message  AS QPM
+        LEFT JOIN quality_proportioning_model AS QPO
+        ON QPM.id = QPO.message_id
+        SET
+            QPO.model_name = #{ratioTemplate.proName},
+            QPO.remaker = #{ratioTemplate.remark},
+            QPO.create_user = #{ratioTemplate.upUser},
+            QPM.pro_name = #{ratioTemplate.proName},
+            QPM.repertory_one = #{ratioTemplate.repertoryOne},
+            QPM.repertory_two = #{ratioTemplate.repertoryTwo},
+            QPM.repertory_three =#{ratioTemplate.repertoryThree},
+            QPM.repertory_four = #{ratioTemplate.repertoryFour},
+            QPM.repertory_five = #{ratioTemplate.repertoryFive},
+            QPM.repertory_six = #{ratioTemplate.repertorySix},
+            QPM.breeze = #{ratioTemplate.breeze},
+            QPM.ratio_stone = #{ratioTemplate.ratioStone},
+            QPM.ratio_regenerate1 = #{ratioTemplate.ratioRegenerate1},
+            QPM.ratio_regenerate2 = #{ratioTemplate.ratioRegenerate2},
+            QPM.ratio_additive = #{ratioTemplate.ratioAdditive},
+            QPM.regenerate = #{ratioTemplate.regenerate},
+            QPM.additive = #{ratioTemplate.additive},
+            QPM.temperature_asphalt = #{ratioTemplate.temperatureAsphalt},
+            QPM.temperature_asphalt_up = #{ratioTemplate.temperatureAsphaltUp},
+            QPM.temperature_aggregate = #{ratioTemplate.temperatureAggregate},
+            QPM.temperature_aggregate_up = #{ratioTemplate.temperatureAggregateUp},
+            QPM.temperature_mixture = #{ratioTemplate.temperatureMixture},
+            QPM.temperature_mixture_up = #{ratioTemplate.temperatureMixtureUp},
+            QPM.temperature_milling = #{ratioTemplate.temperatureMilling},
+            QPM.temperature_milling_up = #{ratioTemplate.temperatureMillingUp},
+            QPM.crew1_modele_id =#{ratioTemplate.crew1ModeleId},
+            QPM.crew2_modele_id = #{ratioTemplate.crew2ModeleId}
+        WHERE QPM.id = #{ratioTemplate.id}
+    </update>
+
+    <insert id="insetGradingModel" parameterType="java.util.Map" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+
+        INSERT INTO quality_proportioning_grading_model (
+                grading_name,
+                create_time,
+                grading_remaker,
+                up_user
+                )
+        VALUES
+               (#{map.gradingName},#{map.date},#{map.gradingRemaker},#{map.upUser})
+
+        <selectKey  resultType="java.lang.Integer"  order="AFTER" keyProperty="map.id">
+            SELECT LAST_INSERT_ID() as id
+        </selectKey>
+    </insert>
 </mapper>

@@ -103,6 +103,8 @@ public class ReceiveDataImpl implements ReceiveDataInf {
 
         if (null == ratioTemplate) return;
 
+        //一仓温度
+        int warehouse = Integer.parseInt(messageArray[18]);
         //混合料温度
         int mixture = Integer.parseInt(messageArray[19]);
         //骨料温度
@@ -117,6 +119,7 @@ public class ReceiveDataImpl implements ReceiveDataInf {
         List<QualityWarningData>  warningDataList = QualityWarningUtil.materialWarningObj(id,temArray,ratioTemplate);
 
         //获取温度差值判断后插入
+        warningDataList.add(QualityWarningUtil.temperatureWarningLevel(ratioTemplate.getTemperatureMilling(), ratioTemplate.getTemperatureMillingUp(), warehouse, id, "一仓温度"));
         warningDataList.add(QualityWarningUtil.temperatureWarningLevel(ratioTemplate.getTemperatureAsphalt(), ratioTemplate.getTemperatureAsphaltUp(), temperatureAsphalt, id, "沥青温度"));
         warningDataList.add(QualityWarningUtil.temperatureWarningLevel(ratioTemplate.getTemperatureMixture(), ratioTemplate.getTemperatureMixtureUp(), mixture, id, "混合料温度"));
         warningDataList.add(QualityWarningUtil.temperatureWarningLevel(ratioTemplate.getTemperatureAggregate(), ratioTemplate.getTemperatureAggregateUp(), aggregate, id, "骨料温度"));

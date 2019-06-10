@@ -16,7 +16,6 @@ import com.jiaoke.quality.bean.QualityRatioModel;
 import com.jiaoke.quality.bean.QualityRatioTemplate;
 import com.jiaoke.quality.dao.QualityMatchingDao;
 import org.springframework.stereotype.Service;
-
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -127,7 +126,7 @@ public class QualityMatchingImpl implements QualityMatchingInf{
      *
      * 功能描述: <br>
      *  <根据ID返回json字符串>
-     * @param [idStr]
+     * @param
      * @return java.lang.String
      * @auther Melone
      * @date 2018/10/26 13:24
@@ -146,13 +145,23 @@ public class QualityMatchingImpl implements QualityMatchingInf{
 
 
     @Override
-    public String insetGrading(String jsonData, String crew1Id, String crew2Id) {
+    public String insetGrading(String jsonData, String crew1Id, String crew2Id,String gradingName,String upUser,String gradingRemaker) {
 
         JSONArray jsonArray = JSON.parseArray(jsonData);
 
         List<Map<String,String>> list = new ArrayList<>();
         Map<String,String> result = new HashMap<>();
 
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String date = df.format(new Date());
+
+        Map<String,Object> gradingMap = new HashMap<>();
+        gradingMap.put("gradingName",gradingName);
+        gradingMap.put("upUser",upUser);
+        gradingMap.put("gradingRemaker",gradingRemaker);
+        gradingMap.put("date",date);
+        qualityMatchingDao.insetGradingModel(gradingMap);
+        String id = gradingMap.get("id").toString();
 
         for (Object obj : jsonArray) {
             JSONObject jsonObject = (JSONObject) obj;
@@ -193,12 +202,25 @@ public class QualityMatchingImpl implements QualityMatchingInf{
         }
 
         if (list.size() != 0){
-            qualityMatchingDao.insetGrading(list);
+            qualityMatchingDao.insetGrading(list,String.valueOf(id));
             result.put("messages","success");
         }else {
             result.put("messages","error");
         }
 
         return JSON.toJSONString(result);
+    }
+
+    @Override
+    public Boolean EditRationById(QualityRatioTemplate qualityRatioTemplate) {
+        Map<String,String> map = new HashMap<>();
+        if ( null == qualityRatioTemplate){
+            map.put("res","error");
+            return false;
+        }
+
+        qualityMatchingDao.updateRatioById(qualityRatioTemplate);
+        map.put("res","success");
+        return true;
     }
 }

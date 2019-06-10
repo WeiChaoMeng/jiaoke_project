@@ -31,7 +31,7 @@
                     <th>生产日期</th>
                     <th>生产时间</th>
                     <th>盘号</th>
-                    <th>配比号</th>
+                    <th>产品名称</th>
                     <th>骨料6</th>
                     <th>骨料5</th>
                     <th>骨料4</th>
@@ -56,9 +56,9 @@
                         <tr>
                             <td>${item.id}</td>
                             <td>${item.produce_date}</td>
-                            <td>${item.produce_time}</td>
+                            <td>${item.product_time}</td>
                             <td>${item.produce_disc_num}</td>
-                            <td>${item.produce_proportioning_num}</td>
+                            <td>${item.pro_name}</td>
                             <td>${item.material_aggregate_6}</td>
                             <td>${item.material_aggregate_5}</td>
                             <td>${item.material_aggregate_4}</td>

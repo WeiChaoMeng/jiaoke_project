@@ -62,6 +62,25 @@ public interface QualityMatchingInf {
      * @return
      */
     String selectRationById(String idStr);
+    /**
+     *
+     * 功能描述: <br>
+     *  <插入新的配比>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/5/28 11:26
+     */
+    String insetGrading(String jsonData, String crew1Id, String crew2Id,String gradingName,String upUser,String gradingRemaker);
 
-    String insetGrading(String jsonData, String crew1Id, String crew2Id);
+    /**
+     *
+     * 功能描述: <br>
+     *  <更新配比>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/5/28 11:26
+     */
+    Boolean EditRationById(QualityRatioTemplate qualityRatioTemplate);
 }

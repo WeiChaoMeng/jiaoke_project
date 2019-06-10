@@ -50,6 +50,10 @@
             </li>
         </shiro:hasPermission>
 
+            <li>
+                <a href="#" id="grading_manager" onclick="grading_manager()" class="menu_selected">
+                    <i class="menuico iconfont1">&#xe636;</i>级配管理</a>
+            </li>
         <shiro:hasPermission name="dynamicManagement">
             <li>
                 <a href="#" id="dynamic_management" class="menu_selected" onclick="dynamic_management()">
@@ -177,6 +181,9 @@
 
     function dynamic_management() {
         $('iframe').attr("src", "qc_dynamic_management.do");
+    }
+    function grading_manager(){
+        $('iframe').attr("src", "qc_grading_manager.do");
     }
 
     function data_summary() {

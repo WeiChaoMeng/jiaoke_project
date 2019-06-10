@@ -18,6 +18,7 @@
     <select id="getAggregateRatioByMoudelId" resultType="java.util.Map">
 
         SELECT
+              pro_name,
               ${crew}_modele_id,
                ${ratioName}
         FROM

@@ -8,6 +8,7 @@
  **/
 package com.jiaoke.quality.service;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jiake.utils.QualityGradingUtil;
@@ -120,5 +121,13 @@ public class QualityRealTimeWarningImpl implements  QualityRealTimeWarningInf {
 
         return  resoult ;
 
+    }
+
+    @Override
+    public String getGlobalWarningData() {
+
+        List<Map<String,Object>> list = qualityRealTimeWarningDao.selectGlobalWarningData();
+
+        return JSON.toJSONString(list);
     }
 }

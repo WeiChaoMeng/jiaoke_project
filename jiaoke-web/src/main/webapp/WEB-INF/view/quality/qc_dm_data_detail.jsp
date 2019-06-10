@@ -12,9 +12,7 @@
     <meta charset="utf-8">
     <title>详细信息</title>
     <link href="/static/css/default.css" rel="stylesheet" type="text/css">
-    <link href="/static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
     <script src="/static/js/echarts/echarts.js"></script>
-    <script src="/static/js/echarts/uimaker.js"></script>
     <script type="text/javascript" src="/static/js/jquery.js"></script>
 </head>
 
@@ -474,5 +472,4 @@
 </body>
 
 <script type="text/javascript" src="/static/js/common.js"></script>
-<script type="text/javascript" src="/static/js/skin.js"></script>
 </html>

@@ -26,6 +26,33 @@
         html {
             overflow: hidden;
         }
+        /* Border styles */
+        .altrowstable thead, .altrowstable tr {
+            border-top-width: 1px;
+            border-top-style: solid;
+            border-top-color: rgb(230, 189, 189);
+        }
+        .altrowstable {
+            border-bottom-width: 1px;
+            border-bottom-style: solid;
+            border-bottom-color: rgb(230, 189, 189);
+        }
+
+        /* Padding and font style */
+        .altrowstable td, .altrowstable th {
+            padding: 8px 5px;
+            font-size: 7px;
+            font-family: Verdana;
+            color: rgb(177, 106, 104);
+        }
+
+        /* Alternating background colors */
+        /*.altrowstable tr:nth-child(even) {*/
+            /*background: rgb(238, 211, 210)*/
+        /*}*/
+        .altrowstable tr:nth-child(odd) {
+            background: #FFF
+        }
     </style>
 </head>
 <body style="background:url(../../static/images/line.gif) repeat-y 0 0;">
@@ -389,13 +416,60 @@
             </div>
         </div>
     </div>
-
+    <%--js获取路径--%>
+    <input id="path" type="hidden" value="${path}"/>
     <div class="option-window-body-bottom">
         <input type="button" value="确认" onclick="consentNotifyPerson()" class="body-bottom-button">
         <input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">
     </div>
 </div>
+
+<!-- Table goes in the document BODY -->
+<table class="altrowstable" id="showMessage" style="display: none">
+    <tr>
+        <th>机组:</th>
+        <th>盘号:</th>
+        <th>材料:</th>
+        <th>模板配比:</th>
+        <th>实际配比:</th>
+        <th>偏差比:</th>
+        <th>预警级别:</th>
+    </tr>
+    <tbody id="warningData">
+
+    </tbody>
+</table>
+
 </body>
+
+<!-- Javascript goes in the document HEAD -->
+<script type="text/javascript">
+    function altRows(id){
+        if(document.getElementsByTagName){
+
+            var table = document.getElementById(id);
+            var rows = table.getElementsByTagName("tr");
+
+            for(i = 0; i < rows.length; i++){
+                if(i % 2 == 0){
+                    rows[i].className = "evenrowcolor";
+                }else{
+                    rows[i].className = "oddrowcolor";
+                }
+            }
+        }
+    }
+
+    window.onload=function(){
+        altRows('alternatecolor');
+    }
+</script>
+
+
+
+
+
+
 <script type="text/javascript" src="/static/js/jquery.js"></script>
 <script type="text/javascript" src="/static/js/common.js"></script>
 <script type="text/javascript" src="/static/js/skin.js"></script>
@@ -2481,10 +2555,131 @@
             $(own).children('td').children('input').attr("checked", true);
         }
     }
-
     //关闭弹窗
     function cancel() {
         layer.close(window.lar);
+    }
+
+    //全局质量报警
+    window.setInterval("showGlobalWarningData()",3000);
+
+    function showGlobalWarningData() {
+        var path = $("#path").val();
+        $.ajax({
+            type: "GET",
+            url: path + "/getGlobalWarningData.do",
+            dataType: "json",
+            success: function (res) {
+
+                var crew1DiscNum = "";
+                var crew2DiscNum = "";
+                $("#warningData").empty();
+
+                if (res != "" || res != null) {
+
+                    /******************渲染基本信息**********************/
+                    for (var i = 0; i < res.length; i++) {
+                        var crewNum = res[i].produce_crewNum;
+                        var discNum = res[i].produce_disc_num;
+                        var materialName = res[i].material_name;
+                        var warningLevel = res[i].warning_level;
+                        var actualRatio = res[i].actual_ratio;
+                        var moudleRatio = res[i].moudle_ratio;
+                        var deviationRatio = res[i].deviation_ratio;
+
+
+                        if (materialName == "一仓温度" || materialName == "沥青" || materialName == "骨料1") {
+                            if (warningLevel >= 1) {
+
+                                if (crewNum == 1){
+                                    crew1DiscNum = discNum;
+                                }else {
+                                    crew2DiscNum = discNum;
+                                };
+
+                                var str ="";
+                                if (materialName == "一仓温度"){
+                                    str = "<tr>" +
+                                        "<td>机组" + crewNum + "</td>" +
+                                        "<td>" + discNum + "</td>" +
+                                        "<td>" + materialName + "</td>" +
+                                        "<td>" + moudleRatio + "℃</td>" +
+                                        "<td>" + actualRatio + "℃</td>" +
+                                        "<td>" + deviationRatio + "℃</td>" +
+                                        "<td>" + warningLevel + "</td>" +
+                                        "</tr>";
+                                }else {
+                                    str = "<tr>" +
+                                        "<td>机组" + crewNum + "</td>" +
+                                        "<td>" + discNum + "</td>" +
+                                        "<td>" + materialName + "</td>" +
+                                        "<td>" + moudleRatio + "%</td>" +
+                                        "<td>" + actualRatio + "%</td>" +
+                                        "<td>" + deviationRatio + "%</td>" +
+                                        "<td>" + warningLevel + "</td>" +
+                                        "</tr>";
+                                }
+
+
+                                $("#warningData").append(str);
+                            }else {
+                                continue;
+                            }
+                        } else {
+                            continue;
+                        }
+
+
+                    };
+
+
+                    var condition  = $("#warningData").find("tr").length;
+                    if (condition != 0){
+                        showWaringData(crew1DiscNum,crew2DiscNum);
+                    }
+
+                }
+            }
+        })
+    }
+
+    function showWaringData(crew1DiscNum,crew2DiscNum) {
+
+        var crew1LastDiscNum = sessionStorage.getItem("crew1LastDiscNum");
+        var crew2LastDiscNum = sessionStorage.getItem("crew2LastDiscNum");
+
+        if (crew1LastDiscNum  == "undefined" || crew2LastDiscNum  == "undefined"){
+            layer.open({
+                type: 1,
+                title: ['生产预警', 'height:auto;line-height: 27px;font-size:11px;'],
+                closeBtn: 0, //不显示关闭按钮
+                shade: 0,
+                area: ['340px', '215px'],
+                offset: 'rb', //右下角弹出
+                time: 5000, //5秒后自动关闭
+                anim: 2,
+                content: $('#showMessage')
+            })
+        }
+
+        if (crew1DiscNum == crew1LastDiscNum && crew2DiscNum == crew2LastDiscNum ) {
+            return;
+        }
+
+        layer.open({
+            type: 1,
+            title: ['生产预警', 'height:auto;line-height: 27px;font-size:11px;'],
+            closeBtn: 0, //不显示关闭按钮
+            shade: 0,
+            area: ['340px', '215px'],
+            offset: 'rb', //右下角弹出
+            time: 5000, //5秒后自动关闭
+            anim: 2,
+            content: $('#showMessage')
+        })
+
+        sessionStorage.setItem("crew1LastDiscNum", crew1DiscNum) ;
+        sessionStorage.setItem("crew2LastDiscNum", crew2DiscNum) ;
     }
 
 </script>

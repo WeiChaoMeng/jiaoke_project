@@ -8,6 +8,7 @@
  **/
 package com.jiaoke.quality.service;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jiake.utils.QualityDataMontoringUtil;
@@ -198,5 +199,13 @@ public class QualityDataMontoringImpl implements QualityDataMontoringInf {
 
         return resoult;
 
+    }
+
+    @Override
+    public String getRealTimeThreeProductSVG() {
+
+        List<Map<String,Object>> list =  qualityDataMontoringDao.selectRealTimeThreeProductSVG();
+
+        return JSON.toJSONString(list);
     }
 }

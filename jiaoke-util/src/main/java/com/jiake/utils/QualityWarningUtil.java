@@ -101,7 +101,7 @@ public class QualityWarningUtil {
 
         QualityWarningData qualityWarningData = new QualityWarningData();
 
-        if (obj[1].toString().equals("沥青温度") || obj[1].toString().equals("混合料温度") || obj[1].toString().equals("骨料温度")) {
+        if (obj[1].toString().equals("沥青温度") || obj[1].toString().equals("混合料温度") || obj[1].toString().equals("骨料温度") ||obj[1].toString().equals("一仓温度")) {
             qualityWarningData.setCrewId(obj[0].toString());
             qualityWarningData.setMaterialName(obj[1].toString());
             qualityWarningData.setActualRatio(obj[2].toString());
@@ -134,20 +134,37 @@ public class QualityWarningUtil {
 
         QualityWarningData qualityWarningData;
         //温度对比
-        int diffTemperature = temperatureReal - temperatureMoudel;
+        int diffTemperature = 0;
 
-        if (diffTemperature > 30 || diffTemperature < -30) {
-            qualityWarningData = QualityWarningUtil.pushMapByParam(id, name, temperatureReal, temperatureMoudel, temperatureMoudelUp, diffTemperature, "3");
-        } else if (diffTemperature > 15 || diffTemperature < -15) {
-            qualityWarningData = QualityWarningUtil.pushMapByParam(id, name, temperatureReal, temperatureMoudel, temperatureMoudelUp, diffTemperature, "2");
-        } else if (diffTemperature > 7 || diffTemperature < 7) {
-            qualityWarningData = QualityWarningUtil.pushMapByParam(id, name, temperatureReal, temperatureMoudel, temperatureMoudelUp, diffTemperature, "1");
-
-        } else {
-            qualityWarningData = QualityWarningUtil.pushMapByParam(id, name, temperatureReal, temperatureMoudel, temperatureMoudelUp, diffTemperature, "0");
+        //温度在区间时判断
+        if (temperatureReal <= temperatureMoudelUp && temperatureReal >= temperatureMoudel){
+            qualityWarningData = QualityWarningUtil.pushMapByParam(id, name, temperatureReal, temperatureMoudel, temperatureMoudelUp, 0, "0");
+            return qualityWarningData;
         }
 
-        return qualityWarningData;
+        //温度大于上限、小于下限时逻辑
+        if (temperatureReal > temperatureMoudelUp){
+            diffTemperature = temperatureReal - temperatureMoudelUp;
+
+        }else{
+            diffTemperature = temperatureMoudel - temperatureReal;
+        }
+
+        //返回相应数据
+        if (diffTemperature > 30){
+            qualityWarningData = QualityWarningUtil.pushMapByParam(id, name, temperatureReal, temperatureMoudel, temperatureMoudelUp, diffTemperature, "3");
+            return qualityWarningData;
+        }else if(diffTemperature > 15 ){
+            qualityWarningData = QualityWarningUtil.pushMapByParam(id, name, temperatureReal, temperatureMoudel, temperatureMoudelUp, diffTemperature, "2");
+            return qualityWarningData;
+        }else if (diffTemperature > 7 ){
+            qualityWarningData = QualityWarningUtil.pushMapByParam(id, name, temperatureReal, temperatureMoudel, temperatureMoudelUp, diffTemperature, "1");
+            return qualityWarningData;
+        }else {
+            qualityWarningData = QualityWarningUtil.pushMapByParam(id, name, temperatureReal, temperatureMoudel, temperatureMoudelUp, diffTemperature, "0");
+            return qualityWarningData;
+        }
+
     }
 
     /**

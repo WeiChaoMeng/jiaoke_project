@@ -408,8 +408,9 @@
         var jsonStr = localStorage.getItem("ProductSVG");
         showProMessage(jsonStr);
         getProSVGRationAndModelRation(jsonStr);
-        var obj = JSON.parse(localStorage.getItem("ProductSVGAndModel"));
+
         //查看平均及配图
+        var obj = JSON.parse(jsonStr);
         obj.crewNum = obj.crewNum == 'data1'? 'crew1':'crew2';
         getGrading(JSON.stringify(obj));
     });
@@ -516,8 +517,10 @@
                     $("#" + p).prepend(msg[p]);
 
                 }
+                debugger
                 //更新状态
-
+                // localStorage.getItem("ProductSVGAndModel");
+                // localStorage.setItem("ProductSVGAndModel",msg);
                 $("#ratio_regenerate").prepend(msg.ratio_regenerate1 + msg.ratio_regenerate2);
                 $("#temperature_asphalt").empty();
                 $("#temperature_asphalt").prepend(msg.temperature_asphalt + "-" + msg.temperature_asphalt_up);
