@@ -64,4 +64,13 @@ public interface DepartmentMapper extends Mapper<Department> {
      * @return int
      */
     int updateDepartmentName(@Param("id") Integer id, @Param("departmentName") String departmentName);
+
+    /**
+     * 获取执行人
+     *
+     * @param column        字段
+     * @param departmentKey 部门id
+     * @return 用户id
+     */
+    String selectEnforcer(@Param("column") String column, @Param("departmentKey") String departmentKey);
 }

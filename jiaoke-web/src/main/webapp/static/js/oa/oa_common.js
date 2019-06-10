@@ -58,37 +58,6 @@ function myFunction() {
     }
 }
 
-/*-------------------------------------------------------------------------------------*/
-/*oa首页菜单切换*/
-$("#upcoming").on('click', function () {
-    document.getElementById("upcoming").style.borderBottom = "3px solid #cae4fff0";
-    document.getElementById("form_approval").style.borderBottom = "3px solid #fff";
-    document.getElementById("menu1").style.display = "block";
-    document.getElementById("menu2").style.display = "none";
-});
-
-$("#form_approval").on('click', function () {
-    document.getElementById("upcoming").style.borderBottom = "3px solid #fff";
-    document.getElementById("form_approval").style.borderBottom = "3px solid #cae4fff0";
-    document.getElementById("menu1").style.display = "none";
-    document.getElementById("menu2").style.display = "block";
-});
-
-$("#tracking_items").on('click', function () {
-    document.getElementById("tracking_items").style.borderBottom = "3px solid #cae4fff0";
-    document.getElementById("schedule").style.borderBottom = "3px solid #fff";
-    document.getElementById("menu3").style.display = "block";
-    document.getElementById("menu4").style.display = "none";
-});
-
-$("#schedule").on('click', function () {
-    document.getElementById("tracking_items").style.borderBottom = "3px solid #fff";
-    document.getElementById("schedule").style.borderBottom = "3px solid #cae4fff0";
-    document.getElementById("menu4").style.display = "block";
-    document.getElementById("menu3").style.display = "none";
-})
-
-
 //查询条件 : 标题 重要程度 状态(待发送)
 $("#condition").on("change", function () {
     var opt = $("#condition").val();

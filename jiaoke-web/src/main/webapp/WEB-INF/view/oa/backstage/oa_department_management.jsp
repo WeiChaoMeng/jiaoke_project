@@ -52,7 +52,7 @@
                 </shiro:hasPermission>
 
                 <div class="head_left_button">
-                    <button type="button" class="cursor_hand" onclick="binding()" style="width: 100px">&#xeb14; 绑定部门主管
+                    <button type="button" class="cursor_hand" onclick="binding()" style="width: 100px">&#xeb14; 绑定负责人
                     </button>
                 </div>
 
@@ -75,8 +75,9 @@
     <thead>
     <th style="width: 3%;"><input type="checkbox"></th>
     <th style="width: 3%;">序号</th>
-    <th style="width: 47%;">部门名称</th>
-    <th style="width: 47%;">负责人</th>
+    <th style="width: 32%;">部门名称</th>
+    <th style="width: 31%;">负责人</th>
+    <th style="width: 31%;">主管领导</th>
     </thead>
 
     <tbody id="tbody">
@@ -228,6 +229,12 @@
                 } else {
                     department += '<td>' + departmentList[i].principal + '</td>';
                 }
+
+                if (typeof(departmentList[i].supervisor) == "undefined") {
+                    department += '<td></td>';
+                } else {
+                    department += '<td>' + departmentList[i].supervisor + '</td>';
+                }
                 department += '</tr>';
             }
         }
@@ -245,7 +252,7 @@
         window.location.href = "${path}/backstageManagement/toDepartmentManager?page=" + page;
     }
 
-    //编辑用户
+    //编辑
     function editDepartment() {
         let length = $("#tbody input:checked").length;
         if (length !== 1) {

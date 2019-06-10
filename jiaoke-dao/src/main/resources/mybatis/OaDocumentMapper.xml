@@ -3,7 +3,6 @@
 <mapper namespace="com.jiaoke.oa.dao.OaDocumentMapper">
     <resultMap id="BaseResultMap" type="com.jiaoke.oa.bean.OaDocument">
         <id column="id" jdbcType="INTEGER" property="id"/>
-        <result column="flow" jdbcType="VARCHAR" property="flow"/>
         <result column="process_deadline" jdbcType="VARCHAR" property="processDeadline"/>
         <result column="text_title" jdbcType="VARCHAR" property="textTitle"/>
         <result column="text_number" jdbcType="VARCHAR" property="textNumber"/>
@@ -24,23 +23,19 @@
         <result column="attachment_number" jdbcType="INTEGER" property="attachmentNumber"/>
         <result column="attachment" jdbcType="VARCHAR" property="attachment"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
-        <result column="process_state" jdbcType="VARCHAR" property="processState"/>
         <result column="form_state" jdbcType="INTEGER" property="formState"/>
         <result column="user_info_id" jdbcType="VARCHAR" property="userInfoId"/>
-        <result column="processing_state" jdbcType="INTEGER" property="processingState"/>
-        <result column="urging_number" jdbcType="INTEGER" property="urgingNumber"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, flow, process_deadline, `text_title`,
+    id, process_deadline, `text_title`,
     text_number, `rank`, Identification, drafting_department, drafted_person, nuclear_drafts, 
     Issue, countersign, storage_life, doc_type, writing_time, copy_give, content,
-    `print`, proofreading, attachment_number, attachment, create_time, process_state, 
-    form_state, user_info_id, processing_state, urging_number
+    `print`, proofreading, attachment_number, attachment, create_time,
+    form_state, user_info_id
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
             oa_document.id,
-            oa_document.flow,
             oa_document.process_deadline,
             oa_document.`text_title`,
             oa_document.text_number,
@@ -61,10 +56,8 @@
             oa_document.attachment_number,
             oa_document.attachment,
             oa_document.create_time,
-            oa_document.process_state,
             oa_document.form_state,
-            user_info.nickname AS user_info_id ,
-            oa_document.processing_state
+            user_info.nickname AS user_info_id
         from oa_document
         LEFT JOIN user_info ON oa_document.user_info_id = user_info.id
         where oa_document.id = #{id,jdbcType=INTEGER}
@@ -75,33 +68,30 @@
         where id = #{id,jdbcType=INTEGER}
       </delete>
     <insert id="insert" parameterType="com.jiaoke.oa.bean.OaDocument">
-    insert into oa_document (id, flow, process_deadline,
+    insert into oa_document (id, process_deadline,
       `text_title`, text_number,
       `rank`, Identification, drafting_department, 
       drafted_person, nuclear_drafts, Issue, 
       countersign, storage_life, doc_type, writing_time,
       copy_give, content,
       `print`, proofreading, attachment_number, 
-      attachment, create_time, process_state, 
-      form_state, user_info_id, processing_state, urging_number)
-    values (#{id,jdbcType=INTEGER}, #{flow,jdbcType=VARCHAR}, #{processDeadline,jdbcType=VARCHAR},
+      attachment, create_time,
+      form_state, user_info_id)
+    values (#{id,jdbcType=INTEGER}, #{processDeadline,jdbcType=VARCHAR},
       #{textTitle,jdbcType=VARCHAR}, #{textNumber,jdbcType=VARCHAR},
       #{rank,jdbcType=INTEGER}, #{identification,jdbcType=INTEGER}, #{draftingDepartment,jdbcType=VARCHAR}, 
       #{draftedPerson,jdbcType=VARCHAR}, #{nuclearDrafts,jdbcType=VARCHAR}, #{issue,jdbcType=VARCHAR}, 
       #{countersign,jdbcType=VARCHAR}, #{storageLife,jdbcType=INTEGER}, #{docType,jdbcType=VARCHAR}, #{writingTime,jdbcType=VARCHAR},
       #{copyGive,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR},
       #{print,jdbcType=VARCHAR}, #{proofreading,jdbcType=VARCHAR}, #{attachmentNumber,jdbcType=INTEGER}, 
-      #{attachment,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{processState,jdbcType=VARCHAR}, 
-      #{formState,jdbcType=INTEGER}, #{userInfoId,jdbcType=VARCHAR}, #{processingState,jdbcType=INTEGER}, #{urgingNumber,jdbcType=INTEGER})
+      #{attachment,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+      #{formState,jdbcType=INTEGER}, #{userInfoId,jdbcType=VARCHAR})
   </insert>
     <insert id="insertSelective" parameterType="com.jiaoke.oa.bean.OaDocument" useGeneratedKeys="true" keyProperty="id">
         insert into oa_document
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 id,
-            </if>
-            <if test="flow != null">
-                flow,
             </if>
             <if test="processDeadline != null">
                 process_deadline,
@@ -163,28 +153,16 @@
             <if test="createTime != null">
                 create_time,
             </if>
-            <if test="processState != null">
-                process_state,
-            </if>
             <if test="formState != null">
                 form_state,
             </if>
             <if test="userInfoId != null">
                 user_info_id,
             </if>
-            <if test="processingState != null">
-                processing_state,
-            </if>
-            <if test="urgingNumber != null">
-                urging_number,
-            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 #{id,jdbcType=INTEGER},
-            </if>
-            <if test="flow != null">
-                #{flow,jdbcType=VARCHAR},
             </if>
             <if test="processDeadline != null">
                 #{processDeadline,jdbcType=VARCHAR},
@@ -246,29 +224,17 @@
             <if test="createTime != null">
                 #{createTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="processState != null">
-                #{processState,jdbcType=VARCHAR},
-            </if>
             <if test="formState != null">
                 #{formState,jdbcType=INTEGER},
             </if>
             <if test="userInfoId != null">
                 #{userInfoId,jdbcType=VARCHAR},
             </if>
-            <if test="processingState != null">
-                #{processingState,jdbcType=INTEGER},
-            </if>
-            <if test="urgingNumber != null">
-                #{urgingNumber,jdbcType=INTEGER},
-            </if>
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.jiaoke.oa.bean.OaDocument">
         update oa_document
         <set>
-            <if test="flow != null">
-                flow = #{flow,jdbcType=VARCHAR},
-            </if>
             <if test="processDeadline != null">
                 process_deadline = #{processDeadline,jdbcType=VARCHAR},
             </if>
@@ -329,27 +295,18 @@
             <if test="createTime != null">
                 create_time = #{createTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="processState != null">
-                process_state = #{processState,jdbcType=VARCHAR},
-            </if>
             <if test="formState != null">
                 form_state = #{formState,jdbcType=INTEGER},
             </if>
             <if test="userInfoId != null">
                 user_info_id = #{userInfoId,jdbcType=VARCHAR},
             </if>
-            <if test="processingState != null">
-                processing_state = #{processingState,jdbcType=INTEGER},
-            </if>
-            <if test="urgingNumber != null">
-                urging_number = #{urgingNumber,jdbcType=INTEGER},
-            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.jiaoke.oa.bean.OaDocument">
     update oa_document
-    set flow = #{flow,jdbcType=VARCHAR},
+    set
       process_deadline = #{processDeadline,jdbcType=VARCHAR},
       `text_title` = #{textTitle,jdbcType=VARCHAR},
       text_number = #{textNumber,jdbcType=VARCHAR},
@@ -370,18 +327,14 @@
       attachment_number = #{attachmentNumber,jdbcType=INTEGER},
       attachment = #{attachment,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      process_state = #{processState,jdbcType=VARCHAR},
       form_state = #{formState,jdbcType=INTEGER},
-      user_info_id = #{userInfoId,jdbcType=VARCHAR},
-      processing_state = #{processingState,jdbcType=INTEGER},
-      urging_number = #{urgingNumber,jdbcType=INTEGER}
+      user_info_id = #{userInfoId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 
     <select id="textTitleFilter" parameterType="java.util.Map" resultMap="BaseResultMap">
         SELECT
             oa_document.id,
-            oa_document.flow,
             oa_document.process_deadline,
             oa_document.`text_title`,
             oa_document.text_number,
@@ -402,10 +355,8 @@
             oa_document.attachment_number,
             oa_document.attachment,
             oa_document.create_time,
-            oa_document.process_state,
             oa_document.form_state,
-            user_info.nickname AS user_info_id,
-            oa_document.processing_state
+            user_info.nickname AS user_info_id
         FROM
             oa_document
             LEFT JOIN user_info ON oa_document.user_info_id = user_info.id
@@ -418,7 +369,6 @@
     <select id="getAllById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         SELECT
             oa_document.id,
-            oa_document.flow,
             oa_document.process_deadline,
             oa_document.`text_title`,
             oa_document.text_number,
@@ -439,10 +389,8 @@
             oa_document.attachment_number,
             oa_document.attachment,
             oa_document.create_time,
-            oa_document.process_state,
             oa_document.form_state,
-            user_info.nickname AS user_info_id,
-            oa_document.processing_state
+            user_info.nickname AS user_info_id
         FROM
             oa_document
             LEFT JOIN user_info ON oa_document.user_info_id = user_info.id
@@ -453,7 +401,6 @@
     <select id="getAllByFormState" parameterType="map" resultMap="BaseResultMap">
         select
             oa_document.id,
-            oa_document.flow,
             oa_document.process_deadline,
             oa_document.`text_title`,
             oa_document.text_number,
@@ -474,10 +421,8 @@
             oa_document.attachment_number,
             oa_document.attachment,
             oa_document.create_time,
-            oa_document.process_state,
             oa_document.form_state,
-            user_info.nickname AS user_info_id,
-            oa_document.processing_state
+            user_info.nickname AS user_info_id
         from oa_document
             LEFT JOIN user_info ON oa_document.user_info_id = user_info.id
         where oa_document.form_state = #{formState,jdbcType=INTEGER}
@@ -529,7 +474,6 @@
     <select id="selectByBusinessId" parameterType="map" resultMap="BaseResultMap">
         SELECT
         oa_document.id,
-        oa_document.flow,
         oa_document.process_deadline,
         oa_document.`text_title`,
         oa_document.text_number,
@@ -550,10 +494,8 @@
         oa_document.attachment_number,
         oa_document.attachment,
         oa_document.create_time,
-        oa_document.process_state,
         oa_document.form_state,
-        user_info.nickname AS user_info_id,
-        oa_document.processing_state
+        user_info.nickname AS user_info_id
         FROM
         oa_document
         LEFT JOIN user_info ON oa_document.user_info_id = user_info.id

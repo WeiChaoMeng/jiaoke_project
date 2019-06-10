@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.oa.dao.OaNoticeMapper">
+
+    <select id="titleFilter" resultType="com.jiaoke.oa.bean.OaNotice">
+        SELECT
+            id,
+            title,
+            publisher as publisher,
+            release_department as releaseDepartment,
+            release_date as releaseDate,
+            summary,
+            rich_text as richText,
+            create_time as createTime
+        FROM oa_notice
+        where
+            title LIKE "%"#{title}"%"
+        ORDER BY
+            create_time DESC
+    </select>
+
+    <select id="selectAllData" resultType="com.jiaoke.oa.bean.OaNotice">
+        SELECT
+            id,
+            title,
+            publisher as publisher,
+            release_department as releaseDepartment,
+            release_date as releaseDate,
+            summary,
+            rich_text as richText,
+            create_time as createTime
+        FROM oa_notice
+        ORDER BY
+            create_time DESC
+    </select>
+
+    <select id="homePageData" resultType="com.jiaoke.oa.bean.OaNotice">
+        SELECT
+            id,
+            title,
+            release_date as releaseDate
+        FROM oa_notice
+        ORDER BY
+            create_time DESC
+        LIMIT 9
+    </select>
+</mapper>

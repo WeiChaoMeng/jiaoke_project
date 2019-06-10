@@ -1,6 +1,7 @@
 package com.jiaoke.oa.service;
 
 import com.jiaoke.oa.bean.OaNewsCenter;
+import io.swagger.models.auth.In;
 
 import java.util.List;
 
@@ -42,4 +43,19 @@ public interface OaNewsCenterService {
      * @return list
      */
     List<OaNewsCenter> selectLatestData();
+
+    /**
+     * 首页展示数据
+     *
+     * @return list
+     */
+    List<OaNewsCenter> homePageData();
+
+    /**
+     * 根据主键删除
+     *
+     * @param id id
+     * @return int
+     */
+    int deleteByPrimaryKey(Integer id);
 }

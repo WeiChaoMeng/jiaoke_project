@@ -24,7 +24,7 @@
 
     <div id="editor"
          style="width: 68%;margin: 0 auto;padding: 1%;border: 1px #c3c2c2 solid;overflow: auto;min-height: 450px">
-        <div style="height: 50px;border-bottom: 1px #000 solid;margin-bottom: 10px;">
+        <div style="height: 50px;border-bottom: 1px #cacaca solid;margin-bottom: 20px;">
             <span style="font-size:20px;text-align: center;">
                 ${oaNewsCenter.newsHeadlines}
             </span>
@@ -36,7 +36,7 @@
     </div>
 
     <div class="form_but" style="margin-top: 15px">
-        <input type="button" value="返回" onclick="previousPage()" style="margin-left: 10px">
+        <input type="button" class="return-but-inp" value="返回" onclick="previousPage()" style="margin-left: 10px">
     </div>
 
     </tbody>

@@ -21,12 +21,6 @@
     <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<style>
-    .tbodys tr:hover {
-        background-color: #d8d8d8;
-    }
-</style>
-
 <body style="padding:15px 8px 0px 8px;">
 
 <div class="">
@@ -209,20 +203,20 @@
             resultList += '</tr>';
         } else {
             for (let i = 0; i < objList.length; i++) {
-                resultList += '<tr onclick="particulars(' + objList[i].id + ')">';
+                resultList += '<tr onclick="checkboxEvent(this)">';
                 resultList += '<td><input type="checkbox" value="' + objList[i].id + '" onclick="window.event.cancelBubble=true;"></td>';
                 resultList += '<td>';
-                if (objList[i].rank === 1) {
+                if (objList[i].rank === 0) {
                     resultList += '普通公文';
-                } else if (objList[i].rank === 2) {
+                } else if (objList[i].rank === 1) {
                     resultList += '秘密公文';
-                } else if (objList[i].rank === 3) {
+                } else if (objList[i].rank === 2) {
                     resultList += '机密公文';
-                } else if (objList[i].rank === 4) {
+                } else if (objList[i].rank === 3) {
                     resultList += '绝密公文';
                 }
                 resultList += '</td>';
-                resultList += '<td style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align: left;text-indent:10px;" title="' + objList[i].textTitle + '"> ' + objList[i].textTitle + ' </td>';
+                resultList += '<td class="text_style" style="text-align:left;text-indent:10px;" title="' + objList[i].textTitle + '"> ' + objList[i].textTitle + ' </td>';
                 resultList += '<td>' + objList[i].textNumber + '</td>';
                 resultList += '<td>' + objList[i].createTimeStr + '</td>';
 
@@ -234,17 +228,17 @@
                 }
                 resultList += '</td>';
                 resultList += '<td>';
-                if (objList[i].docType === 0) {
+                if (objList[i].docType === '0') {
                     resultList += '公文';
-                } else if (objList[i].docType === 1) {
+                } else if (objList[i].docType === '1') {
                     resultList += '会议纪要';
-                } else if (objList[i].docType === 2) {
+                } else if (objList[i].docType === '2') {
                     resultList += '请示';
-                } else if (objList[i].docType === 3) {
+                } else if (objList[i].docType === '3') {
                     resultList += '通知';
-                } else if (objList[i].docType === 4) {
+                } else if (objList[i].docType === '4') {
                     resultList += '通告';
-                } else if (objList[i].docType === 5) {
+                } else if (objList[i].docType === '5') {
                     resultList += '函';
                 }
                 resultList += '</td>';
@@ -281,21 +275,16 @@
         $('#tbodys').html(resultList);
     }
 
-    //查看详情
-    function particulars(id) {
-        var page = $('#page').val();
-        window.location.href = "${path}/document/completeDetails?id=" + id + "&page=" + page;
-    }
-
     //编辑
     function edit() {
+        var page = $('#page').val();
         let length = $("#tbodys input:checked").length;
         if (length !== 1) {
             layer.msg("请选择一条数据！");
             return false;
         } else {
             var id = $("#tbodys input:checked").val();
-            window.location.href = "${path}/document/toEdit?id=" + id;
+            window.location.href = "${path}/document/toEdit?id=" + id + '&page=' + page;
         }
     }
 
@@ -315,6 +304,16 @@
     //重载页面
     function reloadPendingDocument(page) {
         window.location.href = "${path}/document/toPrimedDocument.do?page=" + page;
+    }
+
+    //checkbox选中事件
+    function checkboxEvent(own) {
+        var checkbox = $(own).children('td').children('input').prop('checked');
+        if (checkbox) {
+            $(own).children('td').children('input').attr("checked", false);
+        } else {
+            $(own).children('td').children('input').attr("checked", true);
+        }
     }
 </script>
 </html>

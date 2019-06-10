@@ -44,11 +44,6 @@ public class OaCorporateHonor {
     private String releaseDateStr;
 
     /**
-     * 关键字
-     */
-    private String keyword;
-
-    /**
      * 摘要
      */
     private String summary;
@@ -109,14 +104,6 @@ public class OaCorporateHonor {
 
     public void setReleaseDateStr(String releaseDateStr) {
         this.releaseDateStr = releaseDateStr;
-    }
-
-    public String getKeyword() {
-        return keyword;
-    }
-
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
     }
 
     public String getSummary() {

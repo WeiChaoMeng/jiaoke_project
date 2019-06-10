@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.oa.dao.OaActLicenceUseMapper">
+
+    <insert id="insertData" parameterType="com.jiaoke.oa.bean.OaActLicenceUse">
+        insert into oa_act_licence_use
+            (id,title,seal,receive_time,purpose,`user`,create_time,promoter,url)
+        values
+            (#{id},#{title},#{seal},#{receiveTime},#{purpose},#{user},#{createTime},#{promoter},#{url})
+    </insert>
+</mapper>

@@ -17,7 +17,7 @@
 
 <body style="padding:15px 8px 0px 8px;">
 
-<table width="100%" height="100%">
+<table style="width: 100%;height: 100%;">
     <tbody>
     <tr class="news_headlines_color">
         <td width="50%">
@@ -31,49 +31,6 @@
                 </tbody>
             </table>
         </td>
-
-        <%--<td width="50%">
-            <div class="news_headlines_right">
-
-                <!--标题-->
-                <div id="div2" class="head_right_side_input news_title">
-                    <input type="text">
-                </div>
-
-                <!--发布人-->
-                <div id="div3" class="head_right_side_input news_publisher">
-                    <input type="text">
-                </div>
-
-                <!--发布部门-->
-                <div id="div4" class="head_right_side_input news_department">
-                    <input type="text">
-                </div>
-
-                <!--关键字-->
-                <div id="div5" class="head_right_side_input news_keywords">
-                    <input type="text">
-                </div>
-
-                <!--摘要-->
-                <div id="div6" class="head_right_side_input news_summary">
-                    <input type="text">
-                </div>
-
-                <!--条件查询-->
-                <div id="div1" class="head_right_side">
-                    <select id="condition4">
-                        <option value="0">- -查询条件- -</option>
-                        <option value="1">标题</option>
-                        <option value="2">发布人</option>
-                        <option value="3">发布部门</option>
-                        <option value="4">关键字</option>
-                        <option value="5">摘要</option>
-                    </select>
-                </div>
-            </div>
-        </td>--%>
-
     </tr>
     <tr>
         <td colspan="2">
@@ -82,33 +39,31 @@
                     <div class="unit_news_title" style="font-size: 13px">单位新闻</div>
                 </div>
                 <div style="min-height: 180px">
-                    <table class="simpletable simpletable_color">
+                    <table class="simpletable">
 
                         <thead>
                         <th style="width: 5%">序号</th>
                         <th style="width: 30%">标题</th>
-                        <th style="width: 10%">发布部门</th>
+                        <th style="width: 15%">发布部门</th>
                         <th style="width: 10%">发布人</th>
-                        <th style="width: 10%">发布时间</th>
-                        <th style="width: 15%">关键字</th>
-                        <th style="width: 20%">摘要</th>
+                        <th style="width: 15%">发布时间</th>
+                        <th style="width: 25%">摘要</th>
                         </thead>
 
                         <tbody>
                         <c:choose>
                             <c:when test="${oaNewsCenterList.size() <= 0}">
-                                <td colspan="7">暂无数据</td>
+                                <td colspan="7">没有查询到匹配记录</td>
                             </c:when>
                             <c:otherwise>
                                 <c:forEach var="newsCenter" items="${oaNewsCenterList}" varStatus="status">
                                     <tr onclick="particulars(${newsCenter.id})">
                                         <td>${status.count}</td>
-                                        <td>${newsCenter.newsHeadlines}</td>
+                                        <td style="text-align: left;text-indent: 10px;">${newsCenter.newsHeadlines}</td>
                                         <td>${newsCenter.releaseDepartment}</td>
                                         <td>${newsCenter.publisher}</td>
                                         <td>${newsCenter.releaseDateStr}</td>
-                                        <td>${newsCenter.keyword}</td>
-                                        <td>${newsCenter.summary}</td>
+                                        <td style="text-align: left;text-indent: 10px;">${newsCenter.summary}</td>
                                     </tr>
                                 </c:forEach>
                             </c:otherwise>
@@ -126,9 +81,9 @@
                     </div>
                     <div class="unit_news_foot_right">
                         <input type="button" value="新闻发布" class="press_release_button"
-                               style="padding: 3px 5px;background: #f3f3f3;border: 1px #000000 solid;margin-right: 10px;border-radius: 3px;"
+                               style="padding: 3px 5px;background: #f3f3f3;border: 1px #000000 solid;margin-right: 10px;border-radius: 3px;outline: none;cursor: pointer"
                                id="newsRelease">
-                        <a onclick="moreNewsData()" style="color: #00b8ff">更多</a>
+                        <a onclick="moreNewsData()" style="color: #00b8ff;cursor: pointer">更多</a>
                     </div>
                 </div>
 
@@ -143,29 +98,27 @@
                         <thead>
                         <th style="width: 5%">序号</th>
                         <th style="width: 30%">标题</th>
-                        <th style="width: 10%">发布部门</th>
+                        <th style="width: 15%">发布部门</th>
                         <th style="width: 10%">发布人</th>
-                        <th style="width: 10%">发布时间</th>
-                        <th style="width: 15%">关键字</th>
-                        <th style="width: 20%">摘要</th>
+                        <th style="width: 15%">发布时间</th>
+                        <th style="width: 25%">摘要</th>
                         </thead>
 
                         <tbody>
 
                         <c:choose>
                             <c:when test="${oaCorporateHonorList.size() <= 0}">
-                                <td colspan="7">暂无数据</td>
+                                <td colspan="7">没有查询到匹配记录</td>
                             </c:when>
                             <c:otherwise>
                                 <c:forEach var="corporateHonor" items="${oaCorporateHonorList}" varStatus="status">
                                     <tr onclick="corporateHonorParticulars(${corporateHonor.id})">
                                         <td>${status.count}</td>
-                                        <td>${corporateHonor.title}</td>
+                                        <td style="text-align: left;text-indent: 10px;">${corporateHonor.title}</td>
                                         <td>${corporateHonor.releaseDepartment}</td>
                                         <td>${corporateHonor.publisher}</td>
                                         <td>${corporateHonor.releaseDateStr}</td>
-                                        <td>${corporateHonor.keyword}</td>
-                                        <td>${corporateHonor.summary}</td>
+                                        <td style="text-align: left;text-indent: 10px;">${corporateHonor.summary}</td>
                                     </tr>
                                 </c:forEach>
                             </c:otherwise>
@@ -184,9 +137,9 @@
 
                     <div class="unit_news_foot_right">
                         <input type="button" value="荣誉发布" class="press_release_button"
-                               style="padding: 3px 5px;background: #f3f3f3;border: 1px #000000 solid;margin-right: 10px;border-radius: 3px;"
+                               style="padding: 3px 5px;background: #f3f3f3;border: 1px #000000 solid;margin-right: 10px;border-radius: 3px;outline: none;cursor: pointer"
                                onclick="corporateHonorRelease()">
-                        <a onclick="moreCorporateHonorData()" style="color: #00b8ff">更多</a>
+                        <a onclick="moreCorporateHonorData()" style="color: #00b8ff;cursor: pointer">更多</a>
                     </div>
                 </div>
 
@@ -218,7 +171,7 @@
     /*-------企业荣誉----------*/
 
     //企业荣誉发布
-    function corporateHonorRelease(){
+    function corporateHonorRelease() {
         window.location.href = '/newsCenter/toCorporateHonor';
     }
 

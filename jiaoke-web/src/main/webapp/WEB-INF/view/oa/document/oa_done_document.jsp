@@ -67,42 +67,7 @@
         <th style="width: 15%;">接收时间</th>
         </thead>
 
-        <tbody class="tbodys">
-
-        <c:choose>
-            <c:when test="${oaDocumentList.size() == 0}">
-                <tr></tr>
-                <tr>
-                    <td colspan="9">没有查询到匹配记录</td>
-                </tr>
-            </c:when>
-            <c:otherwise>
-                <tr></tr>
-
-                <c:forEach var="oaDocument" items="${oaDocumentList}" varStatus="status">
-                    <tr onclick="particulars(${oaDocument.id})">
-                        <td class="tdnum">
-                            <input type="checkbox" onclick="window.event.cancelBubble=true;">
-                        </td>
-                        <td>
-                            <c:if test="${oaDocument.rank == 0}">普通公文</c:if>
-                            <c:if test="${oaDocument.rank == 1}">秘密公文</c:if>
-                            <c:if test="${oaDocument.rank == 2}">机密公文</c:if>
-                            <c:if test="${oaDocument.rank == 3}">绝密公文</c:if>
-                        </td>
-                        <td class="text_style"
-                            title="${oaDocument.textTitle}">${oaDocument.textTitle}
-                        </td>
-                        <td>${oaDocument.textNumber}</td>
-                        <td>${oaDocument.userInfoId}</td>
-                        <td>${oaDocument.createTimeStr}</td>
-                        <td>${oaDocument.createTimeStr}</td>
-                    </tr>
-                </c:forEach>
-            </c:otherwise>
-        </c:choose>
-
-        </tbody>
+        <tbody id="tbodys"></tbody>
 
     </table>
 
@@ -210,17 +175,17 @@
                 resultList += '<input type="hidden" id="taskId" value="' + objList[i].taskId + '">';
                 resultList += '<td><input type="checkbox" value="' + objList[i].id + '" onclick="window.event.cancelBubble=true;"></td>';
                 resultList += '<td>';
-                if (objList[i].rank === 1) {
+                if (objList[i].rank === 0) {
                     resultList += '普通公文';
-                } else if (objList[i].rank === 2) {
+                } else if (objList[i].rank === 1) {
                     resultList += '秘密公文';
-                } else if (objList[i].rank === 3) {
+                } else if (objList[i].rank === 2) {
                     resultList += '机密公文';
-                } else if (objList[i].rank === 4) {
+                } else if (objList[i].rank === 3) {
                     resultList += '绝密公文';
                 }
                 resultList += '</td>';
-                resultList += '<td style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align: left;text-indent:10px;" title="' + objList[i].textTitle + '"> ' + objList[i].textTitle + ' </td>';
+                resultList += '<td class="text_style" style="text-align:left;text-indent:10px;" title="' + objList[i].textTitle + '"> ' + objList[i].textTitle + ' </td>';
                 resultList += '<td>' + objList[i].textNumber + '</td>';
                 resultList += '<td>';
                 if (objList[i].userInfoId != null && objList[i].userInfoId != "") {

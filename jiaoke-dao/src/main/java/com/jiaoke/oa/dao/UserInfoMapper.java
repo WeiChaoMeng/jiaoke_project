@@ -62,6 +62,7 @@ public interface UserInfoMapper {
 
     /**
      * 根据名字查询
+     *
      * @param username username
      * @return userInfo
      */
@@ -97,4 +98,28 @@ public interface UserInfoMapper {
      * @return list
      */
     List<UserInfo> selectIdAndNicknameAndDepartment();
+
+    /**
+     * 根据权限获取用户信息
+     *
+     * @param url 权限访问地址
+     * @return userInfo
+     */
+    UserInfo selectByPermission(String url);
+
+    /**
+     * 根据用户id获取部门id
+     *
+     * @param id 用户id
+     * @return 部门id
+     */
+    String selectDepartment(Integer id);
+
+    /**
+     * 根据id获取nickname
+     *
+     * @param id id
+     * @return nickname
+     */
+    String getNicknameById(Integer id);
 }

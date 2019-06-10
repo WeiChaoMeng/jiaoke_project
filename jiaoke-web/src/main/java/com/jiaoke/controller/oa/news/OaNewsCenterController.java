@@ -113,6 +113,20 @@ public class OaNewsCenterController {
         return "oa/culture/oa_news_details";
     }
 
+    /**
+     * 删除新闻
+     *
+     * @return int
+     */
+    @RequestMapping(value = "/delete")
+    @ResponseBody
+    public String delete(Integer id) {
+        if (oaNewsCenterService.deleteByPrimaryKey(id) < 0) {
+            return "error";
+        }
+        return "success";
+    }
+
     /**----------------------------------企业荣誉-----------------------------------------*/
 
     /**

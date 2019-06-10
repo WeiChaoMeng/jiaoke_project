@@ -1,8 +1,8 @@
 package com.jiaoke;
 
 import com.jiaoke.controller.SpringHelper;
-import com.jiaoke.oa.bean.DingDingPunchTime;
-import com.jiaoke.oa.dao.DingDingPunchTimeMapper;
+import com.jiaoke.oa.bean.OaCollaboration;
+import com.jiaoke.oa.dao.OaCollaborationMapper;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,20 +16,15 @@ import java.util.List;
 public class qualityTest {
 
     //    private RoleInfoMapper roleInfoMapper;
-    private DingDingPunchTimeMapper dingDingPunchTimeMapper;
+    private OaCollaborationMapper oaCollaborationMapper;
 //    private DingDingPunchRecordMapper dingDingPunchRecordMapper;
 
     @Before
     public void setUp() {
-        dingDingPunchTimeMapper = SpringHelper.getBean("dingDingPunchTimeMapper");
+        oaCollaborationMapper = SpringHelper.getBean("oaCollaborationMapper");
     }
 
     @Test
     public void testUser() {
-        List<DingDingPunchTime> punchTimeList = dingDingPunchTimeMapper.selectAllByAttendanceId("0221276640856571");
-        for (DingDingPunchTime dingDingPunchTime : punchTimeList) {
-            System.out.println(dingDingPunchTime.getTime());
-        }
     }
-
 }

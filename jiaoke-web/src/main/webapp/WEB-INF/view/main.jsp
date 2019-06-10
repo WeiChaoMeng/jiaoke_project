@@ -488,7 +488,7 @@
     //公文-选择抄送人员
     function selectNotifyPerson(userInfoList, departmentList, flag) {
         window.lar = layer.open({
-            title: '选择抄送人员',
+            title: '请选择',
             type: 1,
             area: ['50%', '66%'],
             shadeClose: true, //点击遮罩关闭
@@ -620,7 +620,7 @@
     //公文-选择拟稿人
     function selectReviewers(userInfoList, draftedPerson, flag) {
         window.lar = layer.open({
-            title: '选择拟稿人',
+            title: '请选择',
             type: 1,
             area: ['25%', '55%'],
             shadeClose: true, //点击遮罩关闭
@@ -679,8 +679,10 @@
                 $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.insertMeetingCompere($(".selectedDrafter").prev().text());
             } else if (flag === "meetingRecorder") {
                 $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.insertMeetingRecorder($(".selectedDrafter").prev().text());
-            } else {
+            } else if (flag === "draftAuthor") {
                 $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.insertReviewer($(".selectedDrafter").prev().text());
+            } else if (flag === "editReviewer") {
+                $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.insertReviewerEdit($(".selectedDrafter").prev().text());
             }
             cancel();
         } else {
@@ -790,7 +792,7 @@
     //部门绑定主管
     function bindingDepartmentHead(userInfoList, departmentList, id, page) {
         window.lar = layer.open({
-            title: '绑定部门主管',
+            title: '绑定负责人',
             type: 1,
             area: ['20%', '50%'],
             shadeClose: true, //点击遮罩关闭
@@ -2326,6 +2328,140 @@
                             $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.productionOtherPageReload($('#currentPage').val());
                         } else {
                             layer.msg('删除失败！');
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                });
+            }
+        );
+    }
+
+    //删除公告
+    function deleteNotice(id, currentPage) {
+        layer.confirm('确定要删除吗？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $.ajax({
+                    type: "post",
+                    url: '/notice/delete',
+                    data: {'id': id},
+                    async: false,
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.msg('删除成功！');
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.reloadNoticePage(currentPage);
+                        } else {
+                            layer.msg('删除失败！')
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                });
+            }
+        );
+    }
+
+    //删除公告
+    function deleteNews(id, currentPage) {
+        layer.confirm('确定要删除吗？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $.ajax({
+                    type: "post",
+                    url: '/newsCenter/delete',
+                    data: {'id': id},
+                    async: false,
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.msg('删除成功！');
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.reloadNewsPage();
+                        } else {
+                            layer.msg('删除失败！')
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                });
+            }
+        );
+    }
+
+    //协同-删除已发事项
+    function deleteAlreadySend(url, id, processInstanceId, currentPage) {
+        //提示窗
+        layer.confirm('该操作不能恢复,是否进行删除操作？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $.ajax({
+                    type: "post",
+                    url: url,
+                    data: {'id': id, 'processInstanceId': processInstanceId},
+                    async: false,
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.msg('删除成功！');
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.reloadAlreadySendDocument(currentPage);
+                        } else {
+                            layer.msg('删除失败！')
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                });
+            }
+        );
+    }
+
+    //协同-撤销已发事项
+    function rescindAlreadySend(url, id, processInstanceId, currentPage) {
+        //提示窗
+        layer.confirm('确定要撤销流程吗？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $.ajax({
+                    type: "post",
+                    url: url,
+                    data: {'id': id, 'processInstanceId': processInstanceId},
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.msg('撤销流程成功,并将数据转存到待发事项中！');
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.reloadAlreadySendDocument(currentPage);
+                        } else if (data === 'end') {
+                            layer.msg('该流程已结束,不能撤销！')
+                        } else {
+                            layer.msg('撤销流程失败！')
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                });
+            }
+        );
+    }
+
+    //协同-删除待发事项
+    function deleteWaitSend(correlationId, table, currentPage) {
+        //提示窗
+        layer.confirm('该操作不能恢复,是否进行删除操作？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $.ajax({
+                    type: "post",
+                    url: "/collaboration/deleteWaitSend",
+                    data: {'correlationId': correlationId, 'table': table},
+                    async: false,
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.msg('删除成功！');
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.reloadWaitSendDocument(currentPage);
+                        } else {
+                            layer.msg('删除失败！')
                         }
                     },
                     error: function (result) {

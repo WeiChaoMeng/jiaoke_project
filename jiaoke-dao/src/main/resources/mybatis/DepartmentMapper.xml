@@ -10,22 +10,26 @@
     </select>
 
     <select id="departmentNameFilter" parameterType="java.lang.String" resultType="com.jiaoke.oa.bean.Department">
-        SELECT
-            id,
-            department_key as departmentKey,
-            department_name as departmentName,
-            principal
+       SELECT
+            dep.id,
+            dep.department_key AS departmentKey,
+            dep.department_name AS departmentName,
+            ui1.nickname AS principal,
+            ui2.nickname AS supervisor
         FROM
-            department
+            `department` AS dep
+            INNER JOIN user_info AS ui1 ON dep.principal = ui1.id
+            INNER JOIN user_info AS ui2 ON dep.supervisor = ui2.id
         WHERE
-            department_name LIKE "%"#{departmentName}"%"
+            dep.department_name LIKE "%"#{departmentName}"%"
     </select>
 
     <select id="checkDepartmentName" parameterType="java.lang.String" resultType="com.jiaoke.oa.bean.Department">
         SELECT
             department_key as departmentKey,
             department_name as departmentName,
-            principal
+            principal,
+            supervisor
         FROM
             department
         WHERE
@@ -41,12 +45,14 @@
     <select id="selectAllDepartment" resultType="com.jiaoke.oa.bean.Department">
         SELECT
             dep.id,
-            dep.department_key as departmentKey,
-            dep.department_name as departmentName,
-            ui.nickname AS principal
+            dep.department_key AS departmentKey,
+            dep.department_name AS departmentName,
+            ui1.nickname AS principal,
+            ui2.nickname AS supervisor
         FROM
             `department` AS dep
-        LEFT JOIN user_info AS ui ON dep.principal = ui.id
+            INNER JOIN user_info AS ui1 ON dep.principal = ui1.id
+            INNER JOIN user_info AS ui2 ON dep.supervisor = ui2.id
     </select>
 
     <update id="updateDepartmentName" parameterType="java.util.Map">
@@ -54,4 +60,11 @@
         set department_name = #{departmentName}
         where id = #{id}
     </update>
+
+    <select id="selectEnforcer" parameterType="java.util.Map" resultType="java.lang.String" statementType="STATEMENT">
+        SELECT
+            ${column}
+        FROM `department`
+        WHERE department_key = ${departmentKey}
+    </select>
 </mapper>

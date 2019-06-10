@@ -23,4 +23,11 @@ public interface OaCorporateHonorMapper extends Mapper<OaCorporateHonor> {
      * @return list
      */
     List<OaCorporateHonor> selectLatestData();
+
+    /**
+     * 查询所有数据
+     *
+     * @return list
+     */
+    List<OaCorporateHonor> selectAllData();
 }

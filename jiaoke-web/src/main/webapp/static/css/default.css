@@ -757,7 +757,7 @@ table {
     font-style: normal;
     color: #7e7e7e;
     position: absolute;
-    right: 20px;
+    right: 30px;
 }
 
 /*form*/
@@ -1070,6 +1070,13 @@ table {
 .textlist li a {
     display: block;
     float: left;
+    line-height: 30px;
+    border: none;
+    text-align: left;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 260px;
 }
 
 .textlist li span {

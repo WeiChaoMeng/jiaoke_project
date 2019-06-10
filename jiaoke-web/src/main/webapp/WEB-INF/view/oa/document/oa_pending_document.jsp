@@ -173,17 +173,17 @@
                 resultList += '<input type="hidden" id="taskId" value="' + objList[i].taskId + '">';
                 resultList += '<td><input type="checkbox" value="' + objList[i].id + '" onclick="window.event.cancelBubble=true;"></td>';
                 resultList += '<td>';
-                if (objList[i].rank === 1) {
+                if (objList[i].rank === 0) {
                     resultList += '普通公文';
-                } else if (objList[i].rank === 2) {
+                } else if (objList[i].rank === 1) {
                     resultList += '秘密公文';
-                } else if (objList[i].rank === 3) {
+                } else if (objList[i].rank === 2) {
                     resultList += '机密公文';
-                } else if (objList[i].rank === 4) {
+                } else if (objList[i].rank === 3) {
                     resultList += '绝密公文';
                 }
                 resultList += '</td>';
-                resultList += '<td style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align: left;text-indent:10px;" title="' + objList[i].textTitle + '"> ' + objList[i].textTitle + ' </td>';
+                resultList += '<td class="text_style" style="text-align:left;text-indent:10px;" title="' + objList[i].textTitle + '"> ' + objList[i].textTitle + ' </td>';
                 resultList += '<td>' + objList[i].textNumber + '</td>';
                 resultList += '<td>';
                 if (objList[i].userInfoId != null && objList[i].userInfoId != "") {
