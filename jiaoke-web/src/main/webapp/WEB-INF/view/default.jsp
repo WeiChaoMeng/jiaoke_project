@@ -35,7 +35,7 @@
         </div>
 
         <div class="wrap">
-            <div class="div_left2">
+            <%--<div class="div_left2">
                 <ul>
                     <li>
                         <div class="listbox">
@@ -88,7 +88,7 @@
                         </div>
                     </li>
                 </ul>
-            </div>
+            </div>--%>
 
             <div class="infolist1">
 
