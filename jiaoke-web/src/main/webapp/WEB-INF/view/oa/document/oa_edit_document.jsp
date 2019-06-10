@@ -17,8 +17,7 @@
     <meta charset="utf-8">
     <title>编辑公文</title>
     <link href="../../../../static/css/oa/oa_common.css" rel="stylesheet" type="text/css">
-    <link href="../../../../static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
-    <link href="../../../../static/js/datepicker/css/bootstrap-datepicker.css" rel="stylesheet">
+    <link href="../../../../static/js/date_pickers/date_picker.css" rel="stylesheet">
 </head>
 
 <body style="padding: 20px">
@@ -41,24 +40,27 @@
         <div>
             <span>打印</span>
         </div>
+
+        <div class="form-but" style="float: right">
+            <button type="button" class="return-but" onclick="previousPage()">返回</button>
+        </div>
     </div>
 </div>
 <!--  -->
-<form action="${path}/document/add" name="oaDocumentProcessing" id="oaDocumentProcessing" method="post" onsubmit="">
+<form id="oaDocument">
     <div class="form_area">
         <table style="width: 100%">
             <tbody>
             <tr>
                 <td nowrap="nowrap" class="send_button_td">
-                    <input class="send_button_inpt" type="submit" value="发送">
+                    <button type="button" class="send_button_inpt" onclick="send()">发送</button>
                 </td>
                 <td class="th_title" nowrap="nowrap">流程:</td>
 
                 <td style="padding-right: 1%;">
                     <div class="common_input_frame">
                         <input type="hidden" name="id" id="id" value="${oaDocument.id}">
-                        <input type="text" value="" name="flow" placeholder="发起者、[王玉秋,李宝琦,杨德秀]（会签）、总经理（审批）"
-                               readonly="readonly">
+                        <input type="text" placeholder="发起者、[王玉秋,李宝琦,杨德秀]（会签）、总经理（审批）" readonly>
                     </div>
                 </td>
 
@@ -69,7 +71,6 @@
                 </td>
 
                 <td class="common_th">流程期限:</td>
-
                 <td class="common_condition_select_frame">
                     <div class="common_select_frame">
                         <select name="processDeadline" id="deadline">
@@ -99,20 +100,22 @@
         <tr>
             <td class="tlabel">标题：</td>
             <td colspan="5">
-                <input class="forminput inputstyle inputadress" type="text" id="textTitle" name="textTitle"
-                       value="${oaDocument.textTitle}" required>
+                <input type="hidden" name="id" value="${oaDocument.id}">
+                <input type="hidden" name="formState" id="formState">
+                <input class="forminput inputadress" type="text" id="textTitle" name="textTitle"
+                       value="${oaDocument.textTitle}" autocomplete="off">
             </td>
         </tr>
 
         <tr>
             <td class="tlabel">文号：</td>
             <td>
-                <input class="forminput inputstyle" type="text" name="textNumber" value="${oaDocument.textNumber}"
-                       required>
+                <input class="forminput" type="text" name="textNumber" value="${oaDocument.textNumber}" autocomplete="off">
             </td>
+
             <td class="tlabel">密级：</td>
             <td>
-                <select class="select swidth" name="rank" data-value="0" required>
+                <select class="select swidth" name="rank">
                     <c:choose>
                         <c:when test="${oaDocument.rank == 0}">
                             <option value="0" selected="selected">普通公文</option>
@@ -147,9 +150,10 @@
                     </c:choose>
                 </select>
             </td>
+
             <td class="tlabel">标识：</td>
             <td>
-                <select class="select swidth" name="identification" data-value="0" required>
+                <select class="select swidth" name="identification">
                     <c:choose>
                         <c:when test="${oaDocument.identification == 0}">
                             <option value="0" selected="selected">平行文</option>
@@ -197,7 +201,7 @@
         <tr>
             <td class="tlabel">公文类型：</td>
             <td>
-                <select class="select swidth" name="docType" data-value="0">
+                <select class="select swidth" name="docType">
                     <c:choose>
                         <c:when test="${oaDocument.docType == 0}">
                             <option value="0" selected="selected">公文</option>
@@ -248,14 +252,16 @@
                     </c:choose>
                 </select>
             </td>
+
             <td class="tlabel">发文时间：</td>
             <td colspan="tlabel">
-                <input type="text" class="forminput inputstyle" id="writingTime" name="writingTime"
-                       value="${oaDocument.writingTime}" onfocus="this.blur()" required>
+                <input type="text" class="forminput date_picker" id="writingTime" name="writingTime"
+                       value="${oaDocument.writingTime}" onfocus="this.blur()">
             </td>
+
             <td class="tlabel">保存期限：</td>
             <td>
-                <select class="select swidth" name="storageLife" data-value="0" required>
+                <select class="select swidth" name="storageLife">
                     <c:choose>
                         <c:when test="${oaDocument.storageLife == 0}">
                             <option value="0" selected="selected">10年</option>
@@ -287,7 +293,7 @@
         <tr>
             <td class="tlabel">拟稿部门：</td>
             <td>
-                <select class="select swidth" name="draftingDepartment" id="draftingDepartment" data-value="0" required>
+                <select class="select swidth" name="draftingDepartment" id="draftingDepartment">
                     <c:choose>
                         <c:when test="${oaDocument.draftingDepartment == 10}">
                             <option value="10" selected="selected">综合办公室</option>
@@ -338,55 +344,55 @@
                     </c:choose>
                 </select>
             </td>
+
             <td class="tlabel">拟稿人：</td>
-            <td><input type="text" class="forminput inputstyle" name="draftedPerson" value="${oaDocument.draftedPerson}"
-                       onclick="selectReviewer()" id="draftedPerson" onfocus="this.blur()" required></td>
+            <td>
+                <input type="text" class="forminput" name="draftedPerson" value="${oaDocument.draftedPerson}"
+                       onclick="selectReviewer()" id="draftedPerson" onfocus="this.blur()">
+            </td>
+
             <td class="tlabel">核稿人：</td>
-            <td><input type="text" class="forminput inputstyle" name="nuclearDrafts" value="" disabled="disabled"
-                       style="background: #f4f4f4;"></td>
+            <td><input type="text" class="forminput permissions_color" name="nuclearDrafts" disabled="disabled"></td>
         </tr>
 
         <tr>
             <td class="tlabel">签发：</td>
             <td colspan="2.5" style="height: 70px">
-                <textarea rows="10" name="issue" disabled="disabled"
-                          style="background: #f4f4f4;resize:none;width: 87%;margin: 10px 0; border: 1px #bdbdbd solid;padding:5px;font-size: 14px;height: 74px;outline: none"
-                          required></textarea>
+                <textarea class="textarea_style permissions_color" name="issue" disabled="disabled"></textarea>
             </td>
 
             <td class="tlabel">会签：</td>
             <td colspan="2.5" rowspan="1">
-                <textarea rows="10" name="countersign" disabled="disabled"
-                          style="background: #f4f4f4;resize:none;width: 87%;margin: 10px 0; border: 1px #bdbdbd solid;padding:5px;font-size: 14px;height: 74px;outline: none"
-                          required></textarea>
+                <textarea class="textarea_style permissions_color" name="countersign" disabled="disabled"></textarea>
             </td>
         </tr>
 
         <tr>
             <td class="tlabel">抄送：</td>
             <td colspan="5">
-                <input type="text" class="forminput inputstyle inputadress" id="copyGive" name="copyGive"
+                <input type="text" class="forminput inputadress" id="copyGive" name="copyGive"
                        onclick="carbonCopy()" value="${oaDocument.copyGive}" onfocus="this.blur()">
             </td>
         </tr>
 
         <tr>
             <td class="tlabel">内容：</td>
-            <td colspan="5"><textarea rows="10" name="content"
-                                      style=" resize:none;width: 95%;margin: 10px 0; border: 1px #bdbdbd solid;padding:5px;font-size: 14px;height: 106px;">${oaDocument.content}</textarea>
+            <td colspan="5">
+                <textarea class="content_textarea_style" name="content">${oaDocument.content}</textarea>
             </td>
         </tr>
 
         <tr>
             <td class="tlabel">印制：</td>
-            <td><input type="text" class="forminput inputstyle" value="${oaDocument.print}" name="print" id="print"
+            <td><input type="text" class="forminput" value="${oaDocument.print}" name="print" id="print"
                        readonly></td>
             <td class="tlabel">校对：</td>
-            <td><input type="text" class="forminput inputstyle" value="${oaDocument.proofreading}" name="proofreading"
+            <td><input type="text" class="forminput" value="${oaDocument.proofreading}" name="proofreading"
                        id="proofreading" readonly>
             </td>
             <td class="tlabel">份数：</td>
-            <td><input readonly="readonly" value="" name="attachmentNumber"></td>
+            <td><input type="text" class="forminput" value="${oaDocument.attachmentNumber}" name="attachmentNumber"
+                       readonly="readonly"></td>
         </tr>
 
         <tr>
@@ -400,20 +406,57 @@
 
     </table>
 </form>
+
 </body>
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
 <script type="text/javascript" src="../../../../static/js/common.js"></script>
 <script type="text/javascript" src="../../../../static/js/skin.js"></script>
 <script type="text/javascript" src="../../../../static/js/oa/oa_common.js"></script>
-<script type="text/javascript" src="../../../../static/js/datepicker/js/bootstrap-datepicker.js"></script>
-<script type="text/javascript"
-        src="../../../../static/js/datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+<script type="text/javascript" src="../../../../static/js/date_pickers/jquery.date_input.pack.js"></script>
 <script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
+
+    //设置当前页
+    var currentPage = JSON.parse('${page}');
+
+    //返回
+    function previousPage() {
+        window.location.href = '${path}/document/toPrimedDocument.do?page=' + currentPage;
+    }
+
+    //发送
+    function send() {
+        if ($.trim($("#textTitle").val()) === "") {
+            layer.msg('标题不可以为空！');
+        } else if ($('#draftedPerson').val() === "") {
+            layer.msg('拟稿人不可以为空！');
+        } else if ($('#copyGive').val() === "") {
+            layer.msg('抄送人不可以为空！');
+        } else {
+            $("#formState").val("0");
+            $.ajax({
+                type: "POST",
+                url: '${path}/document/addPrimedDocument',
+                data: $('#oaDocument').serialize(),
+                error: function (request) {
+                    layer.msg("出错！");
+                },
+                success: function (result) {
+                    if (result === "success") {
+                        window.location.href = "${path}/document/toIssuedDocument.do?page=1";
+                        layer.msg("发送成功！");
+                    } else {
+                        layer.msg('发送失败！');
+                        $("#editorHTNL").val('');
+                    }
+                }
+            })
+        }
+    }
+
     //保存待发
     function preservationPending() {
-        var textTitle = $("#textTitle").val();
-        if ($.trim(textTitle) == '') {
+        if ($.trim($("#textTitle").val()) === '') {
             layer.msg("标题不能为空！")
         } else {
             $("#formState").val("1");
@@ -421,7 +464,7 @@
                 cache: true,
                 type: "POST",
                 url: '${path}/document/updatePendingDocument',
-                data: $("#oaDocumentProcessing").serialize(),
+                data: $("#oaDocument").serialize(),
                 error: function (request) {
                     layer.msg("出错！");
                 },
@@ -435,13 +478,6 @@
             })
         }
     }
-
-
-    //日期选择器
-    $("#writingTime").datepicker({
-        "language": "zh-CN",
-        "format": 'yyyy-mm-dd'
-    });
 
     //拟稿部门发生改变则清空拟稿人
     $('#draftingDepartment').change(function () {
@@ -464,16 +500,14 @@
                     alert("Connection error");
                 },
                 success: function (result) {
-                    /*console.log(JSON.parse(result))
-                    parent.openBack(JSON.parse(result));*/
-                    top.window.selectReviewers(JSON.parse(result), draftedPerson);
+                    top.window.selectReviewers(JSON.parse(result), draftedPerson,"editReviewer");
                 }
             });
         }
     }
 
     //插入选择的核稿人
-    function insertReviewer(parameter) {
+    function insertReviewerEdit(parameter) {
         $('#draftedPerson').val(parameter);
     }
 
@@ -486,9 +520,15 @@
         top.selectNotifyPerson(userInfoList, departmentList);
     }
 
+    //插入抄送
     function insertCopyGive(array) {
         $('#copyGive').val(array);
     }
+
+    //日期选择器
+    $(function () {
+        $('.date_picker').date_input();
+    });
 </script>
 </html>
 

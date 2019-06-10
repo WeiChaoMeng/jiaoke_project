@@ -121,7 +121,7 @@ public class OaMeetingController {
 
         UserInfo userInfo = getCurrentUser();
         //查询待办任务
-        List<Task> taskList = activitiUtil.getTaskByAssignee(userInfo.getId(), "oa_meeting");
+        List<Task> taskList = activitiUtil.getTaskByProcessDefinitionKey(userInfo.getId(), "oa_meeting");
         if (taskList.size() < 1) {
             return JsonHelper.toJSONString("noData");
         }

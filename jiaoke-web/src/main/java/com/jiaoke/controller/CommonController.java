@@ -8,12 +8,17 @@
  **/
 package com.jiaoke.controller;
 
+import com.jiaoke.oa.bean.OaNewsCenter;
+import com.jiaoke.oa.bean.OaNotice;
+import com.jiaoke.oa.service.OaNewsCenterService;
+import com.jiaoke.oa.service.OaNoticeService;
 import com.jiaoke.quality.service.QualityIndexInf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 /**
@@ -28,6 +33,12 @@ public class CommonController {
 
     @Autowired
     QualityIndexInf qualityIndexInf;
+
+    @Resource
+    private OaNewsCenterService oaNewsCenterService;
+
+    @Resource
+    private OaNoticeService oaNoticeService;
 
     /**
      *
@@ -53,7 +64,11 @@ public class CommonController {
      * @date: 2018/9/29 18:16
      */
     @RequestMapping("/default.do")
-    public String main(){
+    public String main(Model model){
+        List<OaNewsCenter> oaNewsCenterList = oaNewsCenterService.homePageData();
+        List<OaNotice> oaNoticeList = oaNoticeService.homePageData();
+        model.addAttribute("oaNewsCenterList", oaNewsCenterList);
+        model.addAttribute("oaNoticeList", oaNoticeList);
         return  "default";
     }
 
@@ -170,76 +185,6 @@ public class CommonController {
     @RequestMapping("/OANotepad.do")
     public String notepad() {
         return "oa/personal/oa_notepad";
-    }
-
-     /**
-     * 待发事项
-     *
-     * @return  oa_schedule_planning.jsp
-     */
-    @RequestMapping("/OANewMatter.do")
-    public String newMatter() {
-        return "oa/collaboration/oa_new_matter";
-    }
-
-    /**
-     * 待发事项
-     *
-     * @return  oa_schedule_planning.jsp
-     */
-    @RequestMapping("/OAWaitingMatter.do")
-    public String waitingMatter() {
-        return "oa/collaboration/oa_waiting_matter";
-    }
-
-    /**
-     * 已发事项
-     *
-     * @return  oa_schedule_planning.jsp
-     */
-    @RequestMapping("/OAAlreadyIssuedMatter.do")
-    public String alreadyIssuedMatter() {
-        return "oa/collaboration/oa_already_issued_matter";
-    }
-
-    /**
-     * 待办事项
-     *
-     * @return  oa_schedule_planning.jsp
-     */
-    @RequestMapping("/OAUpcomingMatter.do")
-    public String upcomingMatter() {
-        return "oa/collaboration/oa_upcoming_matter";
-    }
-
-    /**
-     * 已办事项
-     *
-     * @return  oa_schedule_planning.jsp
-     */
-    @RequestMapping("/OAManagedMatter.do")
-    public String managedMatter() {
-        return "oa/collaboration/oa_managed_matter";
-    }
-
-    /**
-     * 督办事项
-     *
-     * @return  oa_schedule_planning.jsp
-     */
-    @RequestMapping("/OASupervisionMatters.do")
-    public String supervisionMatters() {
-        return "oa/collaboration/oa_supervision_matters";
-    }
-
-    /**
-     * 公告管理
-     *
-     * @return  oa_schedule_planning.jsp
-     */
-    @RequestMapping("/OAAnnouncements.do")
-    public String announcements() {
-        return "oa/culture/oa_announcements";
     }
 
     /**

@@ -244,4 +244,27 @@
     <select id="selectIdAndNicknameAndDepartment" resultType="com.jiaoke.oa.bean.UserInfo">
         select id,nickname,department from user_info
     </select>
+
+    <select id="selectByPermission" parameterType="java.lang.String" resultType="com.jiaoke.oa.bean.UserInfo">
+        SELECT
+            ui.id,
+            ui.nickname
+        FROM
+            user_info AS ui
+            LEFT JOIN user_role AS ur ON ui.id = ur.user_info_id
+            LEFT JOIN role_info AS ri ON ur.role_info_id = ri.id
+            LEFT JOIN role_permission AS rp ON ri.id = rp.role_id
+            LEFT JOIN permission AS per ON rp.permission_id = per.id
+        WHERE
+            per.url = #{url}
+        LIMIT 1
+    </select>
+
+    <select id="selectDepartment" parameterType="java.lang.Integer" resultType="java.lang.String">
+        SELECT department FROM `user_info` WHERE id = #{id}
+    </select>
+
+    <select id="getNicknameById" parameterType="java.lang.Integer" resultType="java.lang.String">
+        select nickname from user_info where id = #{id}
+    </select>
 </mapper>

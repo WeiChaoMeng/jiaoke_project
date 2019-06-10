@@ -105,4 +105,20 @@ public interface UserInfoService {
      * @return list
      */
     List<UserInfo> selectIdAndNicknameAndDepartment();
+
+    /**
+     * 根据权限获取用户信息
+     *
+     * @param url 权限访问地址
+     * @return userInfo
+     */
+    UserInfo getUserInfoByPermission(String url);
+
+    /**
+     * 根据用户id获取部门id
+     *
+     * @param userId 用户id
+     * @return 部门id
+     */
+    String selectDepartmentByUserId(Integer userId);
 }

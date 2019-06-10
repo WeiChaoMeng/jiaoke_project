@@ -74,42 +74,42 @@ $(function () {
 
     //新建事项
     $("#new_matter").on("click", function () {
-        window.open('OANewMatter.do', '_blank', 'height=700, width=1400, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
+        window.open('collaboration/newBuild', '_blank', 'height=700, width=1400, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
     });
 
     //待发事项
     $("#waiting_matter").on("click", function () {
         removeOwnName();
         synergetic_work(this);
-        $("#oa-iframe").attr("src", "OAWaitingMatter.do")
+        $("#oa-iframe").attr("src", "collaboration/waitSend?page=1")
     });
 
     //已发事项
     $("#already_issued_matter").on("click", function () {
         removeOwnName();
         synergetic_work(this);
-        $("#oa-iframe").attr("src", "OAAlreadyIssuedMatter.do")
+        $("#oa-iframe").attr("src", "collaboration/alreadySend?page=1")
     });
 
     //待办事项
     $("#to_do_matter").on("click", function () {
         removeOwnName();
         synergetic_work(this);
-        $("#oa-iframe").attr("src", "OAUpcomingMatter.do")
+        $("#oa-iframe").attr("src", "collaboration/pending?page=1")
     });
 
     //已办事项
     $("#managed_matter").on("click", function () {
         removeOwnName();
         synergetic_work(this);
-        $("#oa-iframe").attr("src", "OAManagedMatter.do")
+        $("#oa-iframe").attr("src", "collaboration/done?page=1")
     });
 
     //督办事项
     $("#supervision_matters").on("click", function () {
         removeOwnName();
         synergetic_work(this);
-        $("#oa-iframe").attr("src", "OASupervisionMatters.do")
+        $("#oa-iframe").attr("src", "collaboration/supervise")
     });
 
     /*--- 公文管理 ---*/
@@ -277,7 +277,7 @@ $(function () {
     $("#announcements").on("click", function () {
         removeOwnName();
         cultural_construction(this);
-        $('#oa-iframe').attr("src", "OAAnnouncements.do");
+        $('#oa-iframe').attr("src", "notice/toIndex?page=1");
     });
 
     //新闻管理

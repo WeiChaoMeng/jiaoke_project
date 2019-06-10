@@ -17,68 +17,60 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>企业荣誉发布</title>
+    <title>新建企业荣誉</title>
     <!-- 引用控制层插件样式 -->
     <link href="../../../../static/css/oa/oa_news_center.css" rel="stylesheet" type="text/css">
 
 </head>
 <body>
-<form id="oaCorporateHonor">
-    <div style="width: 70%;margin: 0 auto;height: 40px;text-align: center;line-height: 40px;">
+<form id="oaCorporateHonor" style="width: 90%;margin: 0 auto;">
+    <div style="width: 100%;height: 40px;text-align: center;line-height: 40px;">
         <span style="font-size: 18px;border: 1px solid #d8d4d4;border-bottom: none;border-radius:10px 10px 0 0;">新建企业荣誉</span>
     </div>
-    <table class="form_table">
+    <table class="form_table" style="width: 100%;">
 
         <tbody>
 
         <tr>
             <td class="table_td">标题：</td>
-            <td colspan="5" class="table_content">
-                <input type="text" class="form_input" name="title" value="">
+            <td colspan="4" class="table_content">
+                <input type="text" class="form_input" name="title" id="title" autocomplete="off">
+            </td>
+
+            <td class="table_td">发布日期：</td>
+            <td class="table_content">
+                <input type="text" class="form_input" name="releaseDateStr"
+                       value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly="readonly">
             </td>
         </tr>
 
         <tr>
-            <td class="table_td">发布人：</td>
-            <td class="table_content">
-                <input type="text" class="form_input" name="publisher" value="${userInfo.nickname}" readonly="readonly">
-            </td>
-
             <td class="table_td">发布部门：</td>
             <td class="table_content">
                 <input type="text" class="form_input" name="releaseDepartment" value="${userInfo.department}"
                        readonly="readonly">
             </td>
 
-            <td class="table_td">发布日期：</td>
+            <td class="table_td">发布人：</td>
             <td class="table_content">
-                <input type="text" class="form_input" name="releaseDateStr"
-                       value="<%=new SimpleDateFormat("yyyy-MM-dd").format(new Date())%>" readonly="readonly">
-            </td>
-        </tr>
-
-        <tr>
-            <td class="table_td">关键字：</td>
-            <td class="table_content">
-                <input type="text" class="form_input" name="keyword" value="">
+                <input type="text" class="form_input" name="publisher" value="${userInfo.nickname}" readonly="readonly">
             </td>
 
             <td class="table_td">摘要：</td>
             <td colspan="3" class="table_content">
-                <input type="text" class="form_input" name="summary" value="">
+                <input type="text" class="form_input" name="summary" id="summary" autocomplete="off">
             </td>
         </tr>
-
     </table>
 
-    <div id="editor" style="width: 70%;margin: 20px auto">
+    <div id="editor" style="width: 100%;margin: 20px auto">
         <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
     </div>
 
     <div class="form_but">
         <input type="hidden" name="richText" value="" id="editorHTNL">
-        <input type="button" value="提交" onclick="commit()">
-        <input type="button" value="返回" onclick="previousPage()" style="margin-left: 10px">
+        <input type="button" class="return-but-inp" value="返回" onclick="previousPage()">
+        <input type="button" class="commit-but-inp" value="提交" onclick="commit()">
     </div>
 
     </tbody>
@@ -88,6 +80,7 @@
 
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
 <script type="text/javascript" src="../../../../static/editor/release/wangEditor.min.js"></script>
+<script src="../../../../static/js/oa/layer/layer.js"></script>
 <script type="text/javascript">
     var E = window.wangEditor;
     var editor = new E('#editor');
@@ -141,7 +134,7 @@
                     insert(ret.imageFilePaths);
                     $("#editorHTNL").val(editor.txt.html());
                 } else {
-                    alert("失败");
+                    layer.msg("失败");
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -159,26 +152,32 @@
 
     //提交from
     function commit() {
-        $("#editorHTNL").val(editor.txt.html());
+        if ($.trim($('#title').val()) === '') {
+            layer.msg('标题不可以为空！')
+        }else if($.trim($('#summary').val()) === ''){
+            layer.msg('摘要不可以为空！')
+        }else {
+            $("#editorHTNL").val(editor.txt.html());
 
-        $.ajax({
-            type: "POST",
-            url: '${path}/newsCenter/addCorporateHonor',
-            data: $('#oaCorporateHonor').serialize(),
-            async: false,
-            error: function (request) {
-                alert("Connection error");
-            },
-            success: function (data) {
-                var result = JSON.parse(data);
-                if (result === "success") {
-                    alert("成功");
-                    window.location.href = "${path}/newsCenter/toNewsCenter";
-                } else {
-                    alert('失败');
+            $.ajax({
+                type: "POST",
+                url: '${path}/newsCenter/addCorporateHonor',
+                data: $('#oaCorporateHonor').serialize(),
+                async: false,
+                error: function (request) {
+                    layer.msg("连接错误！");
+                },
+                success: function (data) {
+                    var result = JSON.parse(data);
+                    if (result === "success") {
+                        layer.msg("添加成功!");
+                        window.location.href = "${path}/newsCenter/toNewsCenter";
+                    } else {
+                        layer.msg('添加失败!');
+                    }
                 }
-            }
-        })
+            })
+        }
     }
 
 </script>

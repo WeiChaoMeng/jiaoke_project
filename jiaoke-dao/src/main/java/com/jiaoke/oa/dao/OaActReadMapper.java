@@ -1,0 +1,24 @@
+package com.jiaoke.oa.dao;
+
+import com.jiaoke.oa.bean.OaActRead;
+import org.springframework.stereotype.Repository;
+import tk.mybatis.mapper.common.Mapper;
+
+/**
+ * 印章使用审批单
+ *
+ * @author lihui
+ * @version 1.0
+ * @date 2019/1/16 11:08
+ */
+@Repository
+public interface OaActReadMapper extends Mapper<OaActRead> {
+
+    /**
+     * 插入数据并返回主键
+     *
+     * @param oaActRead oaActRead
+     * @return int
+     */
+    int insertData(OaActRead oaActRead);
+}

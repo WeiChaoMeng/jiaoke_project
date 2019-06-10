@@ -10,6 +10,7 @@ import java.util.Date;
  * @version 1.0
  * @date 2019/1/21 18:09
  */
+@Table(name = "oa_news_center")
 public class OaNewsCenter {
 
     /**
@@ -39,14 +40,8 @@ public class OaNewsCenter {
      * 发布日期
      */
     private Date releaseDate;
-
     @Transient
     private String releaseDateStr;
-
-    /**
-     * 关键字
-     */
-    private String keyword;
 
     /**
      * 摘要
@@ -109,14 +104,6 @@ public class OaNewsCenter {
 
     public void setReleaseDateStr(String releaseDateStr) {
         this.releaseDateStr = releaseDateStr;
-    }
-
-    public String getKeyword() {
-        return keyword;
-    }
-
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
     }
 
     public String getSummary() {

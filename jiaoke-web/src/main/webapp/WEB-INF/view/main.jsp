@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
@@ -348,6 +349,7 @@
 <%-- 模态窗-选择拟稿人 --%>
 <div id="singleSelection" class="single-option-window" style="display: none">
     <input type="hidden" id="pendingDocumentPage">
+    <input type="hidden" id="singleFlag">
     <div class="option-window-body-head">
 
         <ul id="singleSelectionContent">
@@ -470,6 +472,7 @@
 
 <script type="text/javascript" src="/static/js/jquery.js"></script>
 <script type="text/javascript" src="/static/js/common.js"></script>
+<script type="text/javascript" src="/static/js/skin.js"></script>
 <script src="../../static/js/oa/layer/layer.js"></script>
 <script>
 
@@ -525,10 +528,12 @@
 
         })
     });
+
     //删除待发公文
     function deleteDocument(id, currentPage) {
         //记录用户页面选择的页数
         $('#pendingDocumentPage').val(currentPage);
+
         //提示窗
         layer.confirm('确定要删除吗？', {
                 btn: ['确认', '取消']
@@ -553,19 +558,23 @@
             }
         );
     }
+
     //公文-选择抄送人员
     function selectNotifyPerson(userInfoList, departmentList, flag) {
         window.lar = layer.open({
-            title: '选择抄送人员',
+            title: '请选择',
             type: 1,
             area: ['50%', '66%'],
             shadeClose: true, //点击遮罩关闭
             content: $("#selectWindow"),
             offset: "20%"
         });
+
         $('#multiFlag').val(flag);
+
         //清空已选列表
         $('#selectedNotifyPerson li').remove();
+
         //加载部门和员工
         var department = "";
         for (let i = 0; i < departmentList.length; i++) {
@@ -573,6 +582,7 @@
             department += '<img src="../../static/images/icon/department.png">';
             department += '<span onclick="departmentSelect(this)" id="' + departmentList[i].departmentKey + '">' + departmentList[i].departmentName + '</span>';
             department += '<div></div>';
+
             for (let j = 0; j < userInfoList.length; j++) {
                 if (userInfoList[j].department === departmentList[i].departmentKey) {
                     department += '<ul class="submenu-ul">';
@@ -589,6 +599,7 @@
         //添加到选择列表
         $("#selectContent").html(department);
     }
+
     //确认
     function consentNotifyPerson() {
         var flag = $('#multiFlag').val();
@@ -601,6 +612,7 @@
                 array.push($(this).text());
                 arrayId.push($(this).attr('id'));
             });
+
             if (flag === 'meetingParticipants') {
                 $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.insertParticipants(array, arrayId);
             } else {
@@ -609,6 +621,7 @@
             cancel();
         });
     }
+
     //选择框中的展开与收缩
     function departmentSelect(own) {
         if ($(own).siblings('ul').css('display') == "none") {
@@ -621,6 +634,7 @@
         }
         preventBubble();
     }
+
     //选择列表的选择与取消
     function addNotifyPerson(own) {
         var id = $(own).children('span').attr('id');
@@ -645,6 +659,7 @@
         }
         preventBubble();
     }
+
     //删除已选列表选中的标签并且删除选择列表中选中的样式
     $('#selectedNotifyPerson').on("click", "li", function () {
         //获取选中li的id
@@ -665,26 +680,30 @@
             })
         });
     });
+
     //组织冒泡
     function preventBubble(event) {
-        var e = arguments.callee.caller.arguments[0] || event; //若省略此句，下面的e改为event，IE运行可以，但是其他浏览器就不兼容
+        var e = arguments.callee.caller.arguments[0] || event; //若省略此句，下面的e改为event，IE运行可以，但是其他浏览器就不兼容  
         if (e && e.stopPropagation) {
             e.stopPropagation();
         } else if (window.event) {
             window.event.cancelBubble = true;
         }
     }
+
     //公文-选择拟稿人
     function selectReviewers(userInfoList, draftedPerson, flag) {
         window.lar = layer.open({
-            title: '选择拟稿人',
+            title: '请选择',
             type: 1,
             area: ['25%', '55%'],
             shadeClose: true, //点击遮罩关闭
             content: $("#singleSelection"),
             offset: "20%"
         });
+
         $('#singleFlag').val(flag);
+
         var content = '';
         if (userInfoList.length <= 0) {
             //当前部门没有人员
@@ -706,11 +725,13 @@
                         '<div></div>' +
                         '</li>';
                 }
+
             }
         }
         //添加到选择列表
         $("#singleSelectionContent").html(content);
     }
+
     //单选弹窗 - li选择器
     $("#singleSelectionContent").on('click', 'li', function () {
         if ($(this).find("div").hasClass("selectedDrafter")) {
@@ -721,6 +742,7 @@
             $(this).find("div").addClass("selectedDrafter");
         }
     });
+
     //单选弹窗 - 确认
     function confirmReviewers() {
         var flag = $('#singleFlag').val();
@@ -731,14 +753,17 @@
                 $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.insertMeetingCompere($(".selectedDrafter").prev().text());
             } else if (flag === "meetingRecorder") {
                 $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.insertMeetingRecorder($(".selectedDrafter").prev().text());
-            } else {
+            } else if (flag === "draftAuthor") {
                 $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.insertReviewer($(".selectedDrafter").prev().text());
+            } else if (flag === "editReviewer") {
+                $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.insertReviewerEdit($(".selectedDrafter").prev().text());
             }
             cancel();
         } else {
             layer.msg('请选择拟稿人！')
         }
     }
+
     /**-----------------------部门管理---------------------------*/
     //添加部门
     function addDepartment(currentPage) {
@@ -750,9 +775,11 @@
             content: $("#addDepartment"),
             offset: "20%"
         });
+
         //记录用户页面选择的页数
         $('#departmentPage').val(currentPage);
     }
+
     //提交新增部门
     function commitDepartment() {
         var departmentName = $('#departmentName').val();
@@ -783,6 +810,7 @@
             layer.msg("部门名称不可以为空！");
         }
     }
+
     //检查部门名称是否被注册
     function departmentWhetherRegister(departmentName) {
         var res = false;
@@ -804,10 +832,12 @@
         });
         return res;
     }
+
     //删除部门
     function deleteDepartment(id, currentPage) {
         //记录选择的页数
         $('#departmentPage').val(currentPage);
+
         //提示窗
         layer.confirm('确定要删除吗？', {
                 btn: ['确认', '取消']
@@ -832,16 +862,18 @@
             }
         );
     }
+
     //部门绑定主管
     function bindingDepartmentHead(userInfoList, departmentList, id, page) {
         window.lar = layer.open({
-            title: '绑定部门主管',
+            title: '绑定负责人',
             type: 1,
             area: ['20%', '50%'],
             shadeClose: true, //点击遮罩关闭
             content: $("#bindingDepartment"),
             offset: "20%"
         });
+
         //记录选择的页数
         $('#departmentPage').val(page);
         //部门id
@@ -853,6 +885,7 @@
             department += '<img src="../../static/images/icon/department.png">';
             department += '<span onclick="departmentSelect(this)" id="' + departmentList[i].departmentKey + '">' + departmentList[i].departmentName + '</span>';
             department += '<div></div>';
+
             for (let j = 0; j < userInfoList.length; j++) {
                 if (userInfoList[j].department === departmentList[i].departmentKey) {
                     department += '<ul class="submenu-ul">';
@@ -866,8 +899,10 @@
             }
             department += '</li>';
         }
+
         $("#departmentAndUser").html(department);
     }
+
     //用户选择器
     function addSelectionUser(own) {
         if ($(own).children('div').hasClass("selection")) {
@@ -877,6 +912,7 @@
             $(own).find("div").addClass("selection");
         }
     }
+
     //提交绑定
     function confirmDepartmentHead() {
         var lis = $("#selectDepartment").find("div");
@@ -886,6 +922,7 @@
             var principal = $(".selection").prev().attr('id')
             //部门id
             var id = $('#departmentId').val();
+
             $.ajax({
                 type: "post",
                 url: '/backstageManagement/bindingDepartmentHead',
@@ -907,6 +944,7 @@
             layer.msg('请选择拟稿人！')
         }
     }
+
     //编辑部门
     function editDepartment(department, currentPage) {
         window.lar = layer.open({
@@ -917,11 +955,13 @@
             content: $("#editDepartment"),
             offset: "20%"
         });
+
         //记录用户页面选择的页数
         $('#departmentPage').val(currentPage);
         $('#editDepartmentName').val(department.departmentName);
         $('#editDepartmentId').val(department.id);
     }
+
     //提交编辑后的部门
     function commitEditDepartment() {
         var id = $('#editDepartmentId').val();
@@ -952,6 +992,7 @@
             layer.msg("部门名称不可以为空！");
         }
     }
+
     /**-------------------------角色管理-------------------------*/
     //新增角色
     function addRole(currentPage) {
@@ -963,9 +1004,11 @@
             content: $("#addRole"),
             offset: "20%"
         });
+
         //记录用户页面选择的页数
         $('#rolePage').val(currentPage);
     }
+
     //提交新增角色
     function commitRole() {
         if ($('#name').val() === '') {
@@ -998,6 +1041,7 @@
             }
         }
     }
+
     //校验角色名输入内容
     function checkRoleName(own) {
         var name = $(own).val();
@@ -1023,6 +1067,7 @@
             return true;
         }
     }
+
     //检查角色名是否被注册
     function roleWhetherRegister(name) {
         var res = false;
@@ -1044,6 +1089,7 @@
         });
         return res;
     }
+
     //角色输入提示
     function clickPromptRole(owm) {
         var name = $(owm).val();
@@ -1052,6 +1098,7 @@
             $(owm).next().css("color", "#737373");
         }
     }
+
     //编辑角色
     function editRole(roleInfo, currentPage) {
         window.lar = layer.open({
@@ -1062,8 +1109,10 @@
             content: $("#modifyRole"),
             offset: "20%"
         });
+
         //记录用户页面选择的页数
         $('#rolePage').val(currentPage);
+
         var resultRoleInfo = '';
         resultRoleInfo += '<table class="window-table">';
         resultRoleInfo += '<tbody>';
@@ -1084,13 +1133,16 @@
         resultRoleInfo += '</tr>';
         resultRoleInfo += '</tbody>';
         resultRoleInfo += '</table>';
+
         $('#roleInformation').html(resultRoleInfo);
     }
+
     //提交编辑后的用户
     function commitRoleEdit() {
         //角色id
         var description = $('#descriptionEdit').val();
         var roleId = $("#roleIdEdit").val();
+
         $.ajax({
             type: "post",
             url: '/backstageManagement/roleEdit',
@@ -1112,10 +1164,12 @@
             }
         });
     }
+
     //删除角色
     function deleteRole(id, currentPage) {
         //记录用户页面选择的页数
         $('#rolePage').val(currentPage);
+
         //提示窗
         layer.confirm('确定要删除吗？', {
                 btn: ['确认', '取消']
@@ -1140,6 +1194,7 @@
             }
         );
     }
+
     //绑定权限
     function bindingPower(permissionInfo, id, currentPage) {
         window.lar = layer.open({
@@ -1150,12 +1205,15 @@
             content: $("#bindingPermission"),
             offset: "20%"
         });
+
         //记录用户页面选择的页数
         $('#rolePage').val(currentPage);
+
         //角色信息
         var permissionList = permissionInfo.permissionList;
         //已绑定角色信息
         var possessPermissionList = permissionInfo.existingPermission;
+
         var permissionInfoList = '';
         permissionInfoList += '<div id="RoleInformationTab" style="height: 80%;overflow: auto">';
         permissionInfoList += '<table id="permissionList" class="table-list">';
@@ -1176,7 +1234,9 @@
         permissionInfoList += '<input type="button" value="确认" onclick="submissionBindingPower()" class="body-bottom-button">';
         permissionInfoList += '<input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">';
         permissionInfoList += '</div>';
+
         $('#bindingPermission').html(permissionInfoList);
+
         //勾选已有角色
         for (var j = 0; j < possessPermissionList.length; j++) {
             $('#powerListTbody').children('tr').find('input').each(function () {
@@ -1186,6 +1246,7 @@
             });
         }
     }
+
     //提交绑定
     function submissionBindingPower() {
         //用户id
@@ -1214,6 +1275,7 @@
             }
         })
     }
+
     /**-----------------------用户管理---------------------------*/
     //添加用户
     function addUser(department, currentPage) {
@@ -1225,8 +1287,10 @@
             content: $("#addUser"),
             offset: "20%"
         });
+
         //记录用户页面选择的页数
         $('#currentPage').val(currentPage);
+
         //解析部门list
         var dep = '';
         for (var i = 0; i < department.length; i++) {
@@ -1234,6 +1298,7 @@
         }
         $('#department').html(dep);
     }
+
     //提交新增用户
     function confirm() {
         if ($('#username').val() === '') {
@@ -1291,6 +1356,7 @@
             }
         }
     }
+
     //编辑用户
     function editUser(userInfo, department, currentPage) {
         window.lar = layer.open({
@@ -1301,9 +1367,12 @@
             content: $("#modifyUser"),
             offset: "20%"
         });
+
         //记录用户页面选择的页数
         $('#currentPage').val(currentPage);
+
         var resultsInfo = '';
+
         resultsInfo += '<table class="window-table">';
         resultsInfo += '<tbody>';
         resultsInfo += '<tr>';
@@ -1350,10 +1419,13 @@
         resultsInfo += '</tr>';
         resultsInfo += '</tbody>';
         resultsInfo += '</table>';
+
         $('#userInformation').html(resultsInfo);
     }
+
     //提交编辑后的用户
     function submissionEdit() {
+
         if ($('#passwordEdit').val() === '') {
             $('#passwordEdit').next().html("请输入密码");
             $('#passwordEdit').next().css("color", "#ff0202");
@@ -1397,6 +1469,7 @@
             }
         }
     }
+
     //绑定角色
     function bindingRole(roleInfo, id, currentPage) {
         window.lar = layer.open({
@@ -1407,12 +1480,15 @@
             content: $("#bindingRole"),
             offset: "20%"
         });
+
         //记录用户页面选择的页数
         $('#currentPage').val(currentPage);
+
         //角色信息
         var roleList = roleInfo.roleInfoList;
         //已绑定角色信息
         var possessRoleList = roleInfo.existingRoleInfo;
+
         var roleInfoList = '';
         roleInfoList += '<div id="RoleInformationTab" style="height: 80%;overflow: auto">';
         roleInfoList += '<table id="permissionList" class="table-list">';
@@ -1433,7 +1509,9 @@
         roleInfoList += '<input type="button" value="确认" onclick="submissionBinding()" class="body-bottom-button">';
         roleInfoList += '<input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">';
         roleInfoList += '</div>';
+
         $('#bindingRole').html(roleInfoList);
+
         //勾选已有角色
         for (var j = 0; j < possessRoleList.length; j++) {
             $('#perListTbody').children('tr').find('input').each(function () {
@@ -1443,6 +1521,7 @@
             });
         }
     }
+
     //提交绑定
     function submissionBinding() {
         //用户id
@@ -1471,10 +1550,13 @@
             }
         })
     }
+
     //删除用户
     function deleteUser(id, currentPage) {
+
         //记录用户页面选择的页数
         $('#currentPage').val(currentPage);
+
         //提示窗
         layer.confirm('确定要删除吗？', {
                 btn: ['确认', '取消']
@@ -1499,6 +1581,7 @@
             }
         );
     }
+
     //用户名密码输入提示
     function clickPrompt(owm) {
         var username = $(owm).val();
@@ -1507,6 +1590,7 @@
             $(owm).next().css("color", "#737373");
         }
     }
+
     //校验密码输入内容
     function checkPassword(own) {
         var pwd = $(own).val();
@@ -1533,6 +1617,7 @@
             return true;
         }
     }
+
     //校验用户名输入内容
     function checkUsername(own) {
         var username = $(own).val();
@@ -1563,6 +1648,7 @@
             return true;
         }
     }
+
     //检查用户名是否被注册
     function whetherRegister(username) {
         var res = false;
@@ -1584,6 +1670,7 @@
         });
         return res;
     }
+
     //显示昵称输入提示
     function nicknameClickPrompt(owm) {
         var username = $(owm).val();
@@ -1592,6 +1679,7 @@
             $(owm).next().css("color", "#737373");
         }
     }
+
     //校验昵称输入内容
     function checkNickname(own) {
         var nick = $(own).val();
@@ -1613,6 +1701,7 @@
             return true;
         }
     }
+
     //校验岗位
     function checkPosition(own) {
         var position = $(own).val();
@@ -1625,6 +1714,7 @@
             return true;
         }
     }
+
     /**---------------档案----------------*/
     //删除合同
     function deleteOperateContract(id, currentPage) {
@@ -1654,6 +1744,7 @@
             }
         );
     }
+
     //删除签认
     function deleteOperateSign(id, currentPage) {
         //记录用户页面选择的页数
@@ -1682,6 +1773,7 @@
             }
         );
     }
+
     //删除签认
     function deleteOperateBid(id, currentPage) {
         //记录用户页面选择的页数
@@ -1710,6 +1802,7 @@
             }
         );
     }
+
     //删除签认
     function deleteOperateCustomer(id, currentPage) {
         //记录用户页面选择的页数
@@ -1738,6 +1831,7 @@
             }
         );
     }
+
     //删除报价
     function deleteOperateOffer(id, currentPage) {
         //记录用户页面选择的页数
@@ -1766,6 +1860,7 @@
             }
         );
     }
+
     //删除其他
     function deleteOperateOther(id, currentPage) {
         //记录用户页面选择的页数
@@ -1794,6 +1889,7 @@
             }
         );
     }
+
     //删除其他
     function deleteOperateMeeting(id, currentPage) {
         //记录用户页面选择的页数
@@ -1822,6 +1918,7 @@
             }
         );
     }
+
     //删除诉讼
     function deleteOperateLawsuit(id, currentPage) {
         //记录用户页面选择的页数
@@ -1850,6 +1947,7 @@
             }
         );
     }
+
     //删除环保改造台账
     function deleteProductionEnvironment(id, currentPage) {
         //记录用户页面选择的页数
@@ -1878,6 +1976,7 @@
             }
         );
     }
+
     //删除生产管理部-合同
     function deleteProductionContract(id, currentPage) {
         //记录用户页面选择的页数
@@ -1906,6 +2005,7 @@
             }
         );
     }
+
     //删除生产管理部-合同
     function deleteProductionEnergy(id, currentPage) {
         //记录用户页面选择的页数
@@ -1934,6 +2034,7 @@
             }
         );
     }
+
     //生产管理部-设备档案技术资料
     function deleteProductionEquipment(id, currentPage) {
         //记录用户页面选择的页数
@@ -1962,6 +2063,7 @@
             }
         );
     }
+
     //生产管理部-工程基建类资料
     function deleteProductionEngineering(id, currentPage) {
         //记录用户页面选择的页数
@@ -1990,6 +2092,7 @@
             }
         );
     }
+
     //财务管理部-凭证
     function deleteFinanceVoucher(id, currentPage) {
         //记录用户页面选择的页数
@@ -2018,6 +2121,7 @@
             }
         );
     }
+
     //财务管理部-报表及材料
     function deleteFinanceMaterial(id, currentPage) {
         //记录用户页面选择的页数
@@ -2046,6 +2150,7 @@
             }
         );
     }
+
     //财务管理部-凭证
     function deleteFinanceBill(id, currentPage) {
         //记录用户页面选择的页数
@@ -2074,6 +2179,7 @@
             }
         );
     }
+
     //财务管理部-凭证
     function deleteFinanceOther(id, currentPage) {
         //记录用户页面选择的页数
@@ -2102,6 +2208,7 @@
             }
         );
     }
+
     //财务管理部-凭证
     function deleteFinancePersonnel(id, currentPage) {
         //记录用户页面选择的页数
@@ -2130,6 +2237,7 @@
             }
         );
     }
+
     //财务管理部-凭证
     function deleteFinanceConfirm(id, currentPage) {
         //记录用户页面选择的页数
@@ -2158,6 +2266,7 @@
             }
         );
     }
+
     //质量技术部-设计文件
     function deleteQualityDevise(id, currentPage) {
         //记录用户页面选择的页数
@@ -2186,6 +2295,7 @@
             }
         );
     }
+
     //物资管理部-其他
     function deleteMaterialOther(id, currentPage) {
         //记录用户页面选择的页数
@@ -2214,6 +2324,7 @@
             }
         );
     }
+
     //物资管理部-其他
     function deleteMaterialPurchase(id, currentPage) {
         //记录用户页面选择的页数
@@ -2242,6 +2353,7 @@
             }
         );
     }
+
     //物资管理部-砂石料招投标资料
     function deleteMaterialBidding(id, currentPage) {
         //记录用户页面选择的页数
@@ -2270,6 +2382,7 @@
             }
         );
     }
+
     //生产管理部-其他文件
     function deleteProductionOther(id, currentPage) {
         //记录用户页面选择的页数
@@ -2298,6 +2411,141 @@
             }
         );
     }
+
+    //删除公告
+    function deleteNotice(id, currentPage) {
+        layer.confirm('确定要删除吗？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $.ajax({
+                    type: "post",
+                    url: '/notice/delete',
+                    data: {'id': id},
+                    async: false,
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.msg('删除成功！');
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.reloadNoticePage(currentPage);
+                        } else {
+                            layer.msg('删除失败！')
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                });
+            }
+        );
+    }
+
+    //删除公告
+    function deleteNews(id, currentPage) {
+        layer.confirm('确定要删除吗？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $.ajax({
+                    type: "post",
+                    url: '/newsCenter/delete',
+                    data: {'id': id},
+                    async: false,
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.msg('删除成功！');
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.reloadNewsPage();
+                        } else {
+                            layer.msg('删除失败！')
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                });
+            }
+        );
+    }
+
+    //协同-删除已发事项
+    function deleteAlreadySend(url, id, processInstanceId, currentPage) {
+        //提示窗
+        layer.confirm('该操作不能恢复,是否进行删除操作？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $.ajax({
+                    type: "post",
+                    url: url,
+                    data: {'id': id, 'processInstanceId': processInstanceId},
+                    async: false,
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.msg('删除成功！');
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.reloadAlreadySendDocument(currentPage);
+                        } else {
+                            layer.msg('删除失败！')
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                });
+            }
+        );
+    }
+
+    //协同-撤销已发事项
+    function rescindAlreadySend(url, id, processInstanceId, currentPage) {
+        //提示窗
+        layer.confirm('确定要撤销流程吗？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $.ajax({
+                    type: "post",
+                    url: url,
+                    data: {'id': id, 'processInstanceId': processInstanceId},
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.msg('撤销流程成功,并将数据转存到待发事项中！');
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.reloadAlreadySendDocument(currentPage);
+                        } else if (data === 'end') {
+                            layer.msg('该流程已结束,不能撤销！')
+                        } else {
+                            layer.msg('撤销流程失败！')
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                });
+            }
+        );
+    }
+
+    //协同-删除待发事项
+    function deleteWaitSend(correlationId, table, currentPage) {
+        //提示窗
+        layer.confirm('该操作不能恢复,是否进行删除操作？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $.ajax({
+                    type: "post",
+                    url: "/collaboration/deleteWaitSend",
+                    data: {'correlationId': correlationId, 'table': table},
+                    async: false,
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.msg('删除成功！');
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.reloadWaitSendDocument(currentPage);
+                        } else {
+                            layer.msg('删除失败！')
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                });
+            }
+        );
+    }
+
     //checkbox选中事件
     function checkboxEvent(own) {
         var checkbox = $(own).children('td').children('input').prop('checked');

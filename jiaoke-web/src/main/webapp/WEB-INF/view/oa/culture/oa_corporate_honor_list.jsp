@@ -17,23 +17,21 @@
     <meta charset="utf-8">
     <title>企业荣誉列表</title>
     <link href="../../../../static/css/oa/oa_common.css" rel="stylesheet" type="text/css">
-    <link href="../../../../static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
     <link href="../../../../static/css/paging/htmleaf-demo.css" rel="stylesheet" type="text/css">
     <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body style="padding:15px 8px 0px 8px;">
 
-<table class="simpletable simpletable_color">
+<table class="simpletable">
 
     <thead>
     <th style="width: 5%">序号</th>
     <th style="width: 30%">标题</th>
-    <th style="width: 10%">发布部门</th>
+    <th style="width: 15%">发布部门</th>
     <th style="width: 10%">发布人</th>
-    <th style="width: 10%">发布时间</th>
-    <th style="width: 15%">关键字</th>
-    <th style="width: 20%">摘要</th>
+    <th style="width: 15%">发布时间</th>
+    <th style="width: 25%">摘要</th>
     </thead>
 
     <tbody id="tbody">
@@ -42,8 +40,7 @@
 </table>
 
 <div class="replenishment_record_btn" style="text-align: center;position: absolute;bottom: 50px;left: 45%;">
-    <input type="button" value="返回" onclick="previousPage()" class="btn_save"
-           style="padding: 7px 20px;background: #92ebff;border: 1px #a5a5a5 solid;">
+    <input type="button" value="返回" onclick="previousPage()" class="return-but-inp">
 </div>
 
 <div id="fenye" style="right: 10px;height: 35px;position: absolute;bottom: 10px;">
@@ -137,12 +134,11 @@
                     for (let i = 0; i < oaCorporateHonorList.length; i++) {
                         oaCorporateHonor += '<tr onclick="particulars(' + oaCorporateHonorList[i].id + ')">';
                         oaCorporateHonor += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 15 + i + 1) + '</td>';
-                        oaCorporateHonor += '<td>' + oaCorporateHonorList[i].title + '</td>';
+                        oaCorporateHonor += '<td style="text-align: left;text-indent: 10px;">' + oaCorporateHonorList[i].title + '</td>';
                         oaCorporateHonor += '<td>' + oaCorporateHonorList[i].releaseDepartment + '</td>';
                         oaCorporateHonor += '<td>' + oaCorporateHonorList[i].publisher + '</td>';
                         oaCorporateHonor += '<td>' + oaCorporateHonorList[i].releaseDateStr + '</td>';
-                        oaCorporateHonor += '<td>' + oaCorporateHonorList[i].keyword + '</td>';
-                        oaCorporateHonor += '<td>' + oaCorporateHonorList[i].summary + '</td>';
+                        oaCorporateHonor += '<td style="text-align: left;text-indent: 10px;">' + oaCorporateHonorList[i].summary + '</td>';
                         oaCorporateHonor += '</tr>';
                     }
                 }

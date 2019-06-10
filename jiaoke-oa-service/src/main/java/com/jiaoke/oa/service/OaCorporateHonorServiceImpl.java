@@ -24,16 +24,16 @@ public class OaCorporateHonorServiceImpl implements OaCorporateHonorService {
 
     @Override
     public int insertSelective(OaCorporateHonor oaCorporateHonor) {
-        oaCorporateHonor.setReleaseDate(DateUtil.stringConvertYYYYMMDD(oaCorporateHonor.getReleaseDateStr()));
+        oaCorporateHonor.setReleaseDate(DateUtil.stringConvertYYYYMMDDHHMMSS(oaCorporateHonor.getReleaseDateStr()));
         oaCorporateHonor.setCreateTime(new Date());
         return oaCorporateHonorMapper.insertSelective(oaCorporateHonor);
     }
 
     @Override
     public List<OaCorporateHonor> selectAll() {
-        List<OaCorporateHonor> oaCorporateHonorList = oaCorporateHonorMapper.selectAll();
+        List<OaCorporateHonor> oaCorporateHonorList = oaCorporateHonorMapper.selectAllData();
         for (OaCorporateHonor oaCorporateHonor : oaCorporateHonorList) {
-            oaCorporateHonor.setReleaseDateStr(DateUtil.dateConvertYYYYMMDD(oaCorporateHonor.getReleaseDate()));
+            oaCorporateHonor.setReleaseDateStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaCorporateHonor.getReleaseDate()));
         }
         return oaCorporateHonorList;
     }
@@ -41,7 +41,7 @@ public class OaCorporateHonorServiceImpl implements OaCorporateHonorService {
     @Override
     public OaCorporateHonor selectByPrimaryKey(Integer id) {
         OaCorporateHonor oaCorporateHonor = oaCorporateHonorMapper.selectByPrimaryKey(id);
-        oaCorporateHonor.setReleaseDateStr(DateUtil.dateConvertYYYYMMDD(oaCorporateHonor.getReleaseDate()));
+        oaCorporateHonor.setReleaseDateStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaCorporateHonor.getReleaseDate()));
         return oaCorporateHonor;
     }
 
@@ -49,7 +49,7 @@ public class OaCorporateHonorServiceImpl implements OaCorporateHonorService {
     public List<OaCorporateHonor> selectLatestData() {
         List<OaCorporateHonor> oaCorporateHonorList = oaCorporateHonorMapper.selectLatestData();
         for (OaCorporateHonor oaCorporateHonor : oaCorporateHonorList) {
-            oaCorporateHonor.setReleaseDateStr(DateUtil.dateConvertYYYYMMDD(oaCorporateHonor.getReleaseDate()));
+            oaCorporateHonor.setReleaseDateStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaCorporateHonor.getReleaseDate()));
         }
         return oaCorporateHonorList;
     }

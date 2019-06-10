@@ -84,4 +84,13 @@ public interface DepartmentService {
      * @return int
      */
     int updateDepartmentName(Integer id, String departmentName);
+
+    /**
+     * 查询执行者id
+     *
+     * @param column        column
+     * @param departmentKey departmentKey
+     * @return string
+     */
+    String selectEnforcerId(String column, String departmentKey);
 }

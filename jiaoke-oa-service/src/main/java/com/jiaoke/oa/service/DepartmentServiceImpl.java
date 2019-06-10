@@ -71,4 +71,9 @@ public class DepartmentServiceImpl implements DepartmentService {
     public int updateDepartmentName(Integer id, String departmentName) {
         return departmentMapper.updateDepartmentName(id ,departmentName);
     }
+
+    @Override
+    public String selectEnforcerId(String column, String departmentKey) {
+        return departmentMapper.selectEnforcer(column, departmentKey);
+    }
 }

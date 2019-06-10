@@ -18,11 +18,6 @@ public class OaDocument implements Serializable {
     private Integer id;
 
     /**
-     * 表单流程
-     */
-    private String flow;
-
-    /**
      * 流程期限
      */
     private String processDeadline;
@@ -125,11 +120,6 @@ public class OaDocument implements Serializable {
     private String createTimeStr;
 
     /**
-     * 流程状态
-     */
-    private String processState;
-
-    /**
      * 表单状态：0已发，1待发，2已办，3待办，4草稿
      */
     private Integer formState;
@@ -138,16 +128,6 @@ public class OaDocument implements Serializable {
      * 发布人id
      */
     private String userInfoId;
-
-    /**
-     * 处理状态：1未读，2已读
-     */
-    private Integer processingState;
-
-    /**
-     * 催办次数
-     */
-    private Integer urgingNumber;
 
     /**
      * 任务id
@@ -167,14 +147,6 @@ public class OaDocument implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getFlow() {
-        return flow;
-    }
-
-    public void setFlow(String flow) {
-        this.flow = flow;
     }
 
     public String getProcessDeadline() {
@@ -345,14 +317,6 @@ public class OaDocument implements Serializable {
         this.createTimeStr = createTimeStr;
     }
 
-    public String getProcessState() {
-        return processState;
-    }
-
-    public void setProcessState(String processState) {
-        this.processState = processState;
-    }
-
     public Integer getFormState() {
         return formState;
     }
@@ -367,22 +331,6 @@ public class OaDocument implements Serializable {
 
     public void setUserInfoId(String userInfoId) {
         this.userInfoId = userInfoId;
-    }
-
-    public Integer getProcessingState() {
-        return processingState;
-    }
-
-    public void setProcessingState(Integer processingState) {
-        this.processingState = processingState;
-    }
-
-    public Integer getUrgingNumber() {
-        return urgingNumber;
-    }
-
-    public void setUrgingNumber(Integer urgingNumber) {
-        this.urgingNumber = urgingNumber;
     }
 
     public String getTaskId() {

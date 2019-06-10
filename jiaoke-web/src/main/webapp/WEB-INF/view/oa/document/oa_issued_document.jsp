@@ -18,21 +18,10 @@
     <meta charset="utf-8">
     <title>已发公文</title>
     <link href="../../../../static/css/oa/oa_common.css" rel="stylesheet" type="text/css">
-    <link href="../../../../static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
     <link href="../../../../static/css/paging/htmleaf-demo.css" rel="stylesheet" type="text/css">
     <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<style>
-    .text_style {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
 
-    .tbodys tr:hover {
-        background-color: #d8d8d8;
-    }
-</style>
 <body style="padding:15px 8px 0px 8px;">
 
 <div>
@@ -40,18 +29,6 @@
         <table style="width:100%;height: 30px;">
             <tbody>
             <tr>
-                <td>
-                    <div class="head_left_button">
-                        <button type="button" class="cursor_hand">&#xe8e5; 转发</button>
-                    </div>
-
-                    <div class="separation_line"></div>
-
-                    <div class="head_left_button">
-                        <button type="button" class="cursor_hand">&#xe90f; 取回</button>
-                    </div>
-                </td>
-
                 <td>
                     <div>
                         <div class="conditional-query cursor_hand">
@@ -219,17 +196,17 @@
                 resultList += '<tr onclick="particulars(' + objList[i].id + ')">';
                 resultList += '<td><input type="checkbox" value="' + objList[i].id + '" onclick="window.event.cancelBubble=true;"></td>';
                 resultList += '<td>';
-                if (objList[i].rank === 1) {
+                if (objList[i].rank === 0) {
                     resultList += '普通公文';
-                } else if (objList[i].rank === 2) {
+                } else if (objList[i].rank === 1) {
                     resultList += '秘密公文';
-                } else if (objList[i].rank === 3) {
+                } else if (objList[i].rank === 2) {
                     resultList += '机密公文';
-                } else if (objList[i].rank === 4) {
+                } else if (objList[i].rank === 3) {
                     resultList += '绝密公文';
                 }
                 resultList += '</td>';
-                resultList += '<td class="text_style" title="' + objList[i].textTitle + '"> ' + objList[i].textTitle + ' </td>';
+                resultList += '<td class="text_style" style="text-align:left;text-indent:10px;" title="' + objList[i].textTitle + '"> ' + objList[i].textTitle + ' </td>';
                 resultList += '<td>' + objList[i].textNumber + '</td>';
                 resultList += '<td>' + objList[i].createTimeStr + '</td>';
 
@@ -241,17 +218,17 @@
                 }
                 resultList += '</td>';
                 resultList += '<td>';
-                if (objList[i].docType === 0) {
+                if (objList[i].docType === '0') {
                     resultList += '公文';
-                } else if (objList[i].docType === 1) {
+                } else if (objList[i].docType === '1') {
                     resultList += '会议纪要';
-                } else if (objList[i].docType === 2) {
+                } else if (objList[i].docType === '2') {
                     resultList += '请示';
-                } else if (objList[i].docType === 3) {
+                } else if (objList[i].docType === '3') {
                     resultList += '通知';
-                } else if (objList[i].docType === 4) {
+                } else if (objList[i].docType === '4') {
                     resultList += '通告';
-                } else if (objList[i].docType === 5) {
+                } else if (objList[i].docType === '5') {
                     resultList += '函';
                 }
                 resultList += '</td>';

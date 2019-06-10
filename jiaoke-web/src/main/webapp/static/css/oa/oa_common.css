@@ -1,6 +1,4 @@
 @charset "utf-8";
-/* CSS Document */
-@import url(../style/green.css);
 
 * {
     font-size: 12px;
@@ -36,13 +34,6 @@ dl, dt, dd, span {
     margin: 0;
     padding: 0;
     display: block;
-}
-
-a, a:focus {
-    text-decoration: none;
-    color: #000;
-    outline: none;
-    blr: expression(this.onFocus=this.blur());
 }
 
 .pre {
@@ -164,6 +155,11 @@ table {
     width: 100%;
     border: none;
     border-top: solid 1px #d4d4d4;
+    table-layout: fixed;
+}
+
+.simpletable tr {
+    cursor: pointer;
 }
 
 .check_color:hover {
@@ -188,8 +184,10 @@ table {
 .simpletable tbody tr td {
     line-height: 30px;
     border: none;
-    white-space: nowrap;
     text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .simpletable a:hover {
@@ -236,26 +234,43 @@ table {
 .oa_homepage_upper_left {
     width: 53%;
     float: left;
-    margin-right: 2%;
+    margin-right: 1.5%;
+    border: solid 1px #d0dae1;
+    box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
 }
 
 .oa_homepage_modular_head {
     width: 100%;
     float: left;
-    height: 10%;
-    border: 1px #cacaca solid;
+    height: 7%;
     overflow: hidden;
     position: relative;
+    background: #f4f9fdf0;
+    border-radius: 5px;
 }
 
 .upper_left_head_a {
     list-style: none;
     float: left;
-    padding: 9px;
+    padding: 7px;
     margin-left: 10px;
     margin-right: 10px;
     position: relative;
     border-bottom: 3px solid #cae4fff0;
+    cursor: pointer;
+}
+
+.more-data {
+    font-family: "iconfont" !important;
+    float: right;
+    cursor: pointer;
+    margin: 9px;
+    font-size: 20px;
+}
+
+.more-data:hover {
+    color: #2196F3;
 }
 
 .upper_left_head_b {
@@ -271,6 +286,11 @@ table {
 
 .head_option a span {
     float: left;
+    font-size: 15px;
+}
+
+.upper_left_head_a a span {
+    font-size: 15px;
 }
 
 .head_dividing_line {
@@ -279,11 +299,10 @@ table {
 }
 
 .menu1_style {
-    border: 1px #cacbca solid;
-    width: 100%;
     overflow: hidden;
     border-top: none;
-    height: 254px;
+    height: 235px;
+    padding: 10px;
 }
 
 .menu2_style {
@@ -295,34 +314,57 @@ table {
     display: none;
 }
 
-.list_content {
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
-    padding: 0 20px;
+.list-content-proposer {
+    width: 8%;
+    text-indent: 5px;
+    height: 29px;
+    cursor: pointer;
 }
 
-.list_content li {
-    font-size: 12px;
-    padding-top: 10px;
-    list-style: none;
-    display: block;
+.list-content-time {
+    width: 12%;
+    text-indent: 5px;
+    height: 29px;
+    cursor: pointer;
+}
+
+.list_content {
+    height: 29px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 80%;
     cursor: pointer;
 }
 
 .list_content_name {
-    width: 60%;
+    line-height: 29px;
     display: inline-block;
+}
+
+.list_content_name a {
+    font-size: 13px;
+    color: #666;
 }
 
 .list_content_date {
-    width: 15%;
+    line-height: 29px;
     display: inline-block;
 }
 
+.list_content_date a {
+    font-size: 13px;
+    color: #666;
+}
+
 .list_content_sponsor {
-    width: 10%;
+    line-height: 29px;
     display: inline-block;
+}
+
+.list_content_sponsor a {
+    font-size: 13px;
+    color: #666;
 }
 
 .list_content_operating {
@@ -333,25 +375,30 @@ table {
 .oa_homepage_upper_right {
     width: 45%;
     float: left;
+    border: solid 1px #d0dae1;
+    box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
 }
 
 .oa_homepage_bottom {
     width: 100%;
     float: left;
     margin-top: 20px;
+    border: solid 1px #d0dae1;
+    box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
 }
 
 .template_content {
-    border: 1px #cacbca solid;
     width: 100%;
-    height: 255px;
+    height: 200px;
     overflow: hidden;
     border-top: none;
 }
 
 .template {
     padding: 15px 0 15px 15px;
-    width: 33%;
+    width: 16%;
 }
 
 .template a {
@@ -633,6 +680,7 @@ table {
     text-align: left;
     width: 90%;
     text-indent: 5px;
+    outline: none;
 }
 
 .input-outline {
@@ -714,6 +762,10 @@ table {
     margin-right: 10px;
 }
 
+.press_release_button:hover {
+    background: #00BCD4;
+}
+
 .th_title {
     width: 3%;
     text-align: right;
@@ -750,6 +802,7 @@ table {
     cursor: pointer;
     width: 90%;
     text-indent: 5px;
+    outline: none;
 }
 
 .select:after {
@@ -1237,7 +1290,7 @@ table {
 }
 
 .send_button_td {
-    width: 1px
+    width: 5%;
 }
 
 .send_button_inp {
@@ -1247,11 +1300,13 @@ table {
     cursor: pointer;
 }
 
-.send_button_inpt{
+.send_button_inpt {
     padding: 5px 15px;
     margin: 5px 10px;
     background-color: #00a6f570;
+    border: 1px #a5a5a5 solid;
     cursor: pointer;
+    outline: none;
 }
 
 .permissions_color {
@@ -1265,7 +1320,7 @@ table {
     border: 1px #bdbdbd solid;
     padding: 5px;
     font-size: 14px;
-    height: 74px;
+    height: 50px;
     outline: none;
 }
 
@@ -1276,7 +1331,8 @@ table {
     border: 1px #bdbdbd solid;
     padding: 5px;
     font-size: 14px;
-    height: 106px;
+    height: 76px;
+    outline: none;
 }
 
 .textarea_td {
@@ -1341,7 +1397,7 @@ table {
     color: #000;
 }
 
-.attendance-user-content{
+.attendance-user-content {
     margin-top: 20px;
 }
 
@@ -1361,4 +1417,53 @@ table {
 .date_header {
     position: relative;
     height: 52px;
+}
+
+.text_style {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tbodys tr:hover {
+    background-color: #d8d8d8;
+}
+
+.form-but {
+    text-align: center;
+}
+
+.return-but {
+    padding: 4px 20px;
+    border: 1px #a5a5a5 solid;
+    cursor: pointer;
+    background: #00a6f570;
+    outline: none;
+    border-radius: 5px;
+}
+
+.commit-but {
+    padding: 7px 20px;
+    border: 1px #a5a5a5 solid;
+    cursor: pointer;
+    background: #92ebff;
+    outline: none;
+    border-radius: 5px;
+}
+
+.commit-but:hover, .return-but:hover, .send_button_inpt:hover {
+    background: #00BCD4;
+}
+
+.return-but-inp {
+    background: #FFFFFF;
+    padding: 7px 20px;
+    border: 1px #a5a5a5 solid;
+    cursor: pointer;
+    outline: none;
+    border-radius: 5px;
+}
+
+.return-but-inp:hover {
+    background: #00BCD4;
 }

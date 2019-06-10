@@ -156,4 +156,14 @@ public class UserInfoServiceImpl implements UserInfoService {
     public List<UserInfo> selectIdAndNicknameAndDepartment() {
         return userInfoMapper.selectIdAndNicknameAndDepartment();
     }
+
+    @Override
+    public UserInfo getUserInfoByPermission(String url) {
+        return userInfoMapper.selectByPermission(url);
+    }
+
+    @Override
+    public String selectDepartmentByUserId(Integer userId) {
+        return userInfoMapper.selectDepartment(userId);
+    }
 }

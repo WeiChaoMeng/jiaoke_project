@@ -625,8 +625,8 @@
                     objarr = jet.extend({YYYY: null, MM: null, DD: null}, valobj || {}),
                     ranMat = [], newArr = new Array(2), unObj = function (obj) {
                         return [(objarr[obj] == undefined || objarr[obj] == null), objarr[obj]];
-                    }, defObj = [{YYYY: dateY, MM: dateM, DD: dateD, hh: timeh, mm: timem, ss: times, zz: 00},
-                        {YYYY: dateY, MM: dateM, DD: dateD, hh: timeh, mm: timem, ss: times, zz: 00}];
+                    }, defObj = [{YYYY: dateY, MM: dateM, DD: dateD, hh: timeh, mm: timem, ss: times, zz: 0},
+                        {YYYY: dateY, MM: dateM, DD: dateD, hh: timeh, mm: timem, ss: times, zz: 0}];
                 if (isValShow) {
                     //目标为空值则获取当前日期时间
                     jet.each(newArr, function (i) {

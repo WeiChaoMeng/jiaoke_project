@@ -7,11 +7,14 @@ import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.oa.bean.Department;
 import com.jiaoke.oa.bean.OaDocument;
+import com.jiaoke.oa.bean.OaMeeting;
 import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.service.DepartmentService;
 import com.jiaoke.oa.service.OaDocumentService;
 import com.jiaoke.oa.service.UserInfoService;
 import org.activiti.bpmn.model.SequenceFlow;
+import org.activiti.engine.history.HistoricProcessInstance;
+import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.task.Task;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
@@ -66,7 +69,8 @@ public class OaDocumentController {
         model.addAttribute("nickName", userInfo.getNickname());
         model.addAttribute("departmentName", userInfo.getDepartment());
         model.addAttribute("userInfoList", JsonHelper.toJSONString(userInfoList));
-        model.addAttribute("departmentList", JsonHelper.toJSONString(departmentList));
+        model.addAttribute("departmentListJson", JsonHelper.toJSONString(departmentList));
+        model.addAttribute("departmentList", departmentList);
         return "oa/document/oa_release_document";
     }
 
@@ -77,30 +81,30 @@ public class OaDocumentController {
      * @return oa_release_document.jsp
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @ResponseBody
     public String add(OaDocument oaDocument) {
         //生成公文id
         Integer random = RandomUtil.random();
         oaDocument.setId(random);
+        //添加公文
         if (oaDocumentService.add(oaDocument) == 1) {
-            //获取当前登录人的id
-            UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
-            Map<String, Object> map = new HashMap<>(16);
-            map.put("user", userInfo.getId());
-            //启动流程实例
-            String document = activitiUtil.startProceesInstance("oa_doc", random.toString(), map);
-            //获取任务id
-            Task taskId = activitiUtil.getTaskIdByProcessInstanceId(document);
-            //指定会签人员
+
+            //启动流程并指定会签人员(王玉秋，李保奇，杨德秀)
             Map<String, Object> assigneeListMap = new HashMap<>(16);
             List<Object> assigneeList = new ArrayList<>();
             assigneeList.add("2");
             assigneeList.add("3");
             assigneeList.add("4");
             assigneeListMap.put("userList", assigneeList);
-            activitiUtil.designatedCountersignPersonnel(taskId.getId(), assigneeListMap);
-            return "redirect:/document/toIssuedDocument.do?page=1";
+
+            String processInstanceId = activitiUtil.startProceesInstance("oa_doc", random.toString(), assigneeListMap);
+            if (processInstanceId != null) {
+                return "success";
+            } else {
+                return "error";
+            }
         } else {
-            return null;
+            return "error";
         }
     }
 
@@ -159,7 +163,7 @@ public class OaDocumentController {
      * @return oa_edit_document.jsp
      */
     @RequestMapping(value = "/toEdit")
-    public String toEdit(Integer id, Model model) {
+    public String toEdit(Integer id, Integer page, Model model) {
         OaDocument oaDocument = oaDocumentService.getDocumentDetailsById(id);
         //所有用户
         List<UserInfo> userInfoList = userInfoService.selectIdAndNicknameAndDepartment();
@@ -167,6 +171,7 @@ public class OaDocumentController {
         model.addAttribute("oaDocument", oaDocument);
         model.addAttribute("userInfoList", JsonHelper.toJSONString(userInfoList));
         model.addAttribute("departmentList", JsonHelper.toJSONString(departmentList));
+        model.addAttribute("page", JsonHelper.toJSONString(page));
         return "oa/document/oa_edit_document";
     }
 
@@ -183,6 +188,36 @@ public class OaDocumentController {
             return "error";
         }
         return "success";
+    }
+
+    /**
+     * 待发公文发送
+     *
+     * @param oaDocument oaDocument
+     * @return oa_release_document.jsp
+     */
+    @RequestMapping(value = "/addPrimedDocument")
+    @ResponseBody
+    public String addPrimedDocument(OaDocument oaDocument) {
+        //更新公文
+        if (oaDocumentService.updatePendingDocument(oaDocument) < 0) {
+            return "error";
+        } else {
+            //启动流程并指定会签人员(王玉秋，李保奇，杨德秀)
+            Map<String, Object> assigneeListMap = new HashMap<>(16);
+            List<Object> assigneeList = new ArrayList<>();
+            assigneeList.add("2");
+            assigneeList.add("3");
+            assigneeList.add("4");
+            assigneeListMap.put("userList", assigneeList);
+
+            String processInstanceId = activitiUtil.startProceesInstance("oa_doc", oaDocument.getId().toString(), assigneeListMap);
+            if (processInstanceId != null) {
+                return "success";
+            } else {
+                return "error";
+            }
+        }
     }
 
     /**
@@ -253,7 +288,7 @@ public class OaDocumentController {
         //获取当前登录人的名称
         UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
         //根据登录人的名称查询任务
-        List<Task> taskList = activitiUtil.getTaskByAssignee(userInfo.getId(), "oa_doc");
+        List<Task> taskList = activitiUtil.getTaskByProcessDefinitionKey(userInfo.getId(), "oa_doc");
         if (taskList.size() < 1) {
             return JsonHelper.toJSONString("noData");
         }
@@ -309,12 +344,26 @@ public class OaDocumentController {
     @RequestMapping(value = "/doneDocument")
     @ResponseBody
     public String doneDocument(int page, String textTitle) {
+        List<Integer> businessIdList = new ArrayList<>();
         UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
-        List<String> businessKeyList = activitiUtil.historicTask(userInfo.getId().toString());
-        PageHelper.startPage(page, 15);
-        List<OaDocument> oaDocumentList = oaDocumentService.getListById(businessKeyList);
-        PageInfo<OaDocument> pageInfo = new PageInfo<>(oaDocumentList);
-        return JsonHelper.toJSONString(pageInfo);
+        List<HistoricTaskInstance> historicTaskInstanceList = activitiUtil.selectHistoricTaskInstance(userInfo.getId().toString(), "oa_doc");
+        if (historicTaskInstanceList.size() <= 0) {
+            return JsonHelper.toJSONString("noData");
+        } else {
+            List<HistoricProcessInstance> processInstanceList = activitiUtil.selectHistoricProcessInstance(historicTaskInstanceList);
+            for (HistoricProcessInstance historicProcessInstance : processInstanceList) {
+                businessIdList.add(Integer.valueOf(historicProcessInstance.getBusinessKey()));
+            }
+
+            if (businessIdList.size() <= 0) {
+                return JsonHelper.toJSONString("noData");
+            } else {
+                PageHelper.startPage(page, 15);
+                List<OaDocument> oaDocumentList = oaDocumentService.selectByBusinessId(businessIdList, textTitle);
+                PageInfo<OaDocument> pageInfo = new PageInfo<>(oaDocumentList);
+                return JsonHelper.toJSONString(pageInfo);
+            }
+        }
     }
 
     /**------------communal---------------------*/

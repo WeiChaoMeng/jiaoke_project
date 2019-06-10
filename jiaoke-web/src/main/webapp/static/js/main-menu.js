@@ -292,7 +292,7 @@ function right_change(id) {
         /*--- 协同工作 ---*/
         //新建事项
         case 'new_matter':
-            window.open('oa_new_matter.jsp', '_blank', 'height=700, width=1400, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
+            window.open('oa_new_build.jsp', '_blank', 'height=700, width=1400, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
             $('#new_matter').attr("class", "selected");
             if ($("#new_matter_menu").attr("id") == null) {
                 $('.menutab').last().after(right_top_str);
@@ -301,7 +301,7 @@ function right_change(id) {
 
         //待发事项
         case 'waiting_matter':
-            $("#oa-iframe").attr("src", "oa_waiting_matter.jsp")
+            $("#oa-iframe").attr("src", "oa_wait_send.jsp")
             $('#waiting_matter').attr("class", "selected");
             if ($("#waiting_matter_menu").attr("id") == null) {
                 $('.menutab').last().after(right_top_str);
@@ -310,7 +310,7 @@ function right_change(id) {
 
         //已发事项
         case 'already_issued_matter':
-            $("#oa-iframe").attr("src", "oa_already_issued_matter.jsp")
+            $("#oa-iframe").attr("src", "oa_already_send.jsp")
             $('#already_issued_matter').attr("class", "selected");
             if ($("#already_issued_matter_menu").attr("id") == null) {
                 $('.menutab').last().after(right_top_str);
@@ -319,7 +319,7 @@ function right_change(id) {
 
         //待办事项
         case 'to_do_matter':
-            $("#oa-iframe").attr("src", "oa_upcoming_matter.jsp")
+            $("#oa-iframe").attr("src", "oa_pending.jsp")
             $('#to_do_matter').attr("class", "selected");
             if ($("#to_do_matter_menu").attr("id") == null) {
                 $('.menutab').last().after(right_top_str);
@@ -328,7 +328,7 @@ function right_change(id) {
 
         //已办事项
         case 'managed_matter':
-            $("#oa-iframe").attr("src", "oa_managed_matter.jsp")
+            $("#oa-iframe").attr("src", "oa_done.jsp")
             $('#managed_matter').attr("class", "selected");
             if ($("#managed_matter_menu").attr("id") == null) {
                 $('.menutab').last().after(right_top_str);
@@ -337,7 +337,7 @@ function right_change(id) {
 
         //督办事项
         case 'supervision_matters':
-            $("#oa-iframe").attr("src", "oa_supervision_matters.jsp")
+            $("#oa-iframe").attr("src", "oa_supervise.jsp")
             $('#supervision_matters').attr("class", "selected");
             if ($("#supervision_matters_menu").attr("id") == null) {
                 $('.menutab').last().after(right_top_str);
@@ -499,7 +499,7 @@ function right_change(id) {
         /*--- 文化建设 ---*/
         //公告管理
         case 'announcements':
-            $('#oa-iframe').attr("src", "oa_announcements.jsp");
+            $('#oa-iframe').attr("src", "oa_notice_add.jsp");
             $('#announcements').attr("class", "selected");
             if ($("#announcements_menu").attr("id") == null) {
                 $('.menutab').last().after(right_top_str);

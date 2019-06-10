@@ -79,10 +79,31 @@ table {
     text-align: center;
 }
 
-.form_but input {
+.commit-but-inp{
     padding: 7px 20px;
     background: #92ebff;
     border: 1px #a5a5a5 solid;
+    cursor: pointer;
+    outline: none;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+.commit-but-inp:hover {
+    background: #00BCD4;
+}
+
+.return-but-inp{
+    background: #FFFFFF;
+    padding: 7px 20px;
+    border: 1px #a5a5a5 solid;
+    cursor: pointer;
+    outline: none;
+    border-radius: 5px;
+}
+
+.return-but-inp:hover {
+    background: #00BCD4;
 }
 
 .form_input {

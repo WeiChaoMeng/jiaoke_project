@@ -22,4 +22,18 @@ public interface OaNewsCenterMapper extends Mapper<OaNewsCenter> {
      * @return list
      */
     List<OaNewsCenter> selectLatestData();
+
+    /**
+     * 首页展示数据
+     *
+     * @return list
+     */
+    List<OaNewsCenter> homePageData();
+
+    /**
+     * 查询最新数据
+     *
+     * @return list
+     */
+    List<OaNewsCenter> selectAllData();
 }

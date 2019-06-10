@@ -9,7 +9,6 @@
             publisher as publisher,
             release_department as releaseDepartment,
             release_date as releaseDate,
-            keyword as keyword,
             summary as summary,
             rich_text as richText,
             create_time as createTime
@@ -17,5 +16,20 @@
         ORDER BY
             create_time DESC
         LIMIT 5
+    </select>
+
+    <select id="selectAllData" resultType="com.jiaoke.oa.bean.OaCorporateHonor">
+        SELECT
+            id as id,
+            title as title,
+            publisher as publisher,
+            release_department as releaseDepartment,
+            release_date as releaseDate,
+            summary as summary,
+            rich_text as richText,
+            create_time as createTime
+        FROM oa_corporate_honor
+        ORDER BY
+            create_time DESC
     </select>
 </mapper>

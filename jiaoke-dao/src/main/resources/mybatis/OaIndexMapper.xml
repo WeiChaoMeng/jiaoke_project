@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.oa.dao.OaIndexMapper">
+
+    <select id="selectSimpleData" parameterType="java.util.Map" resultType="com.jiaoke.oa.bean.OaActTemporary">
+        select
+            id,
+            title,
+            create_time as createTime,
+            promoter,
+            url
+        from ${tableName}
+        where id = ${id}
+    </select>
+
+    <update id="updateStateByIdAndTableName" parameterType="java.util.Map">
+        update ${tableName}
+        set state = ${state}
+        where id = ${id}
+    </update>
+
+    <delete id="deleteByIdAndTableName" parameterType="java.util.Map">
+        delete from ${tableName}
+        where id = ${id}
+    </delete>
+
+</mapper>
