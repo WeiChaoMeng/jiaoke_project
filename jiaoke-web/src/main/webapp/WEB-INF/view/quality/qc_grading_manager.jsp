@@ -198,7 +198,7 @@
                 <td class="my_grading_tlables">备注</td>
                 <td>
                     <input type="text"   name="grading_edit_remaker"  class="my_grading_input_remaker">
-                    <input type="text"   name="id"  class="my_grading_input_remaker">
+                    <%--<input type="text"   name="id"  class="my_grading_input_remaker">--%>
                 </td>
             </tr>
 

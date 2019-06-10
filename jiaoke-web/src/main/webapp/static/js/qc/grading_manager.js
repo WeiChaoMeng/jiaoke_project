@@ -208,6 +208,9 @@ $('#btn_click').click(function() {
     $('.popup_window_first,.popup_back').show();
 });
 
+function closeGradingModel() {
+    $('#GradingBrk,#Grading').hide();
+}
 
 /***********************  及配图相关逻辑 ********************************/
 var jsonData;
