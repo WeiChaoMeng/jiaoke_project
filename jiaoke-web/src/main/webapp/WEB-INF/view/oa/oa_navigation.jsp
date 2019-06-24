@@ -62,7 +62,7 @@
                 <%--<li><a id="supervision_matters"><span>督办事项</span></a></li>--%>
             </ul>
         </li>
-        <%--<li class="nav-item">
+        <li class="nav-item">
             <shiro:hasPermission name="documentManagement">
                 <a><i class="iconfont icon-gongwen"></i>
                     <span class="parent-menu-span">公文管理</span>
@@ -79,7 +79,7 @@
                 <li><a id="done_document"><span>已办公文</span></a></li>
 
             </ul>
-        </li>--%>
+        </li>
 
         <shiro:hasPermission name="comprehensiveOffice">
             <li class="nav-item">

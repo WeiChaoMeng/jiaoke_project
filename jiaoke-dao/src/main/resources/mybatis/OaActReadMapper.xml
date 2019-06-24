@@ -4,8 +4,8 @@
 
     <insert id="insertData" parameterType="com.jiaoke.oa.bean.OaActRead">
         insert into oa_act_read
-            (id,title,`number`,organ,font_size,copies,receipt_time,deadline,create_time,promoter,url)
+            (id,title,`number`,organ,font_size,copies,receipt_time,deadline,annex,create_time,promoter,url)
         values
-            (#{id},#{title},#{number},#{organ},#{fontSize},#{copies},#{receiptTime},#{deadline},#{createTime},#{promoter},#{url})
+            (#{id},#{title},#{number},#{organ},#{fontSize},#{copies},#{receiptTime},#{deadline},#{annex},#{createTime},#{promoter},#{url})
     </insert>
 </mapper>

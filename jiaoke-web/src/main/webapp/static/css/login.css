@@ -159,7 +159,7 @@ input::-webkit-input-placeholder {
 .logo {
     width: 100%;
     height: 60px;
-    border-bottom: 3px #92ebff solid;
+    border-bottom: 3px #38adff solid;
 }
 
 .logo span {
@@ -203,14 +203,23 @@ input::-webkit-input-placeholder {
     padding: 0 20px;
     box-sizing: border-box;
     font-size: 15px;
+    outline: none;
+    border: 1px #a9a9a9 solid;
+    background: #FFFFFF;
 }
 
 .login-but {
     height: 48px;
     width: 100%;
-    background: #92ebff;
+    background: #38adff;
+    color: #FFFFFF;
     border: none;
     font-size: 16px;
+    outline: none;
+}
+
+.login-but:hover{
+    background-color: #6dbff9;
 }
 
 .login-bottom {

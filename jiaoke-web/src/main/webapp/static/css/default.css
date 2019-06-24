@@ -6,7 +6,7 @@
  * http://www.uimaker.com
  * e-mail: admin@uimaker.com
  */
-@import url(style/green.css);
+/*@import url(style/green.css);*/
 
 * {
     font-size: 12px;
@@ -91,6 +91,7 @@ table {
 
 .headtop {
     height: 80px;
+    background: #f5f9ff;
 }
 
 .logo {

@@ -17,6 +17,7 @@
 </head>
 
 <body>
+<!--startprint-->
 <div class="table-title">
     <span>客饭审批单</span>
 </div>
@@ -149,6 +150,7 @@
 
     </table>
 </form>
+<!--endprint-->
 </body>
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
 <script type="text/javascript" src="../../../../static/js/jeDate/src/jedate.js"></script>
