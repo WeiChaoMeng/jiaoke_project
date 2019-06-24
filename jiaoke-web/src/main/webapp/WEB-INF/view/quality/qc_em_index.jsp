@@ -12,7 +12,7 @@
     <section class="grid">
 
         <a class="grid__item" href="#">
-            <h2 class="title title--preview">新建取样</h2>
+            <h2 class="title title--preview">取样管理</h2>
             <div class="loader"></div>
             <span class="category">取样通知相关</span>
             <div class="meta meta--preview">
@@ -22,7 +22,7 @@
             </div>
         </a>
         <a class="grid__item" href="#">
-            <h2 class="title title--preview">新建实验</h2>
+            <h2 class="title title--preview">实验管理</h2>
             <div class="loader"></div>
             <span class="category">实验相关流程</span>
             <div class="meta meta--preview">
@@ -63,7 +63,7 @@
         </a>
 
         <a class="grid__item" href="#">
-            <h2 class="title title--preview">新建取样</h2>
+            <h2 class="title title--preview">取样管理</h2>
             <div class="loader"></div>
             <span class="category">取样通知相关</span>
             <div class="meta meta--preview">
@@ -73,7 +73,7 @@
             </div>
         </a>
         <a class="grid__item" href="#">
-            <h2 class="title title--preview">新建实验</h2>
+            <h2 class="title title--preview">实验管理</h2>
             <div class="loader"></div>
             <span class="category">实验相关流程</span>
             <div class="meta meta--preview">
