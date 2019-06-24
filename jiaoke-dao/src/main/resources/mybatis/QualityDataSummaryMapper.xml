@@ -7,7 +7,7 @@
         (SELECT
         'data1' AS crewNums,
         date_format(QMRD.produce_date,'%Y-%m-%d') as  produce_date,
-        date_format(QMRD.produce_time,'%H:%I:%S') as produce_time,
+        date_format(QMRD.produce_time,'%H:%i:%s') as produce_time,
         QMRD.produce_disc_num,
         QMRD.produce_proportioning_num,
         QPM.pro_name,
@@ -104,7 +104,7 @@
         SELECT
                &apos;${crew}&apos; as crewNums,
               date_format(QMRD.produce_date,'%Y-%m-%d') as  produce_date,
-               date_format(QMRD.produce_time,'%H:%I:%S') as produce_time,
+               date_format(QMRD.produce_time,'%H:%i:%s') as produce_time,
                QMRD.produce_disc_num,
                QPM.pro_name,
                QMRD.produce_proportioning_num,

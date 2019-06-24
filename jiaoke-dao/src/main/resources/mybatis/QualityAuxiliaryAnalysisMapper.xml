@@ -6,7 +6,7 @@
         SELECT
         t1.id,
         date_format(t1.produce_date,'%Y-%m-%d') as  produce_date,
-        date_format(t1.produce_time,'%H:%I:%S') as produce_time,
+        date_format(t1.produce_time,'%H:%i:%s') as produce_time,
         t1.produce_ratio_id,
         t3.pro_name,
         t1.produce_car_num,

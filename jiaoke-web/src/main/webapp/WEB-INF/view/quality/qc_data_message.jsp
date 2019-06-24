@@ -64,7 +64,7 @@
                         min:${baseMap.warehouse1Min - 5},
                     </c:when>
                     <c:otherwise>
-                    max:${baseMap.template.temperatureMilling - 5},
+                        min:${baseMap.template.temperatureMilling - 5},
                     </c:otherwise>
                     </c:choose>
 
@@ -175,7 +175,7 @@
                     min:${baseMap.mixtureMin - 5},
                     </c:when>
                     <c:otherwise>
-                    max:${baseMap.template.temperatureMixture - 5},
+                    min:${baseMap.template.temperatureMixture - 5},
                     </c:otherwise>
                     </c:choose>
                     axisPointer: {
@@ -258,7 +258,7 @@
                     min:${baseMap.asphaltMin - 5},
                     </c:when>
                     <c:otherwise>
-                    max:${baseMap.template.temperatureAsphalt - 5},
+                    min:${baseMap.template.temperatureAsphalt - 5},
                     </c:otherwise>
                     </c:choose>
                     axisPointer: {
@@ -343,7 +343,7 @@
                     min:${baseMap.aggregateMin - 5},
                     </c:when>
                     <c:otherwise>
-                    max:${baseMap.template.temperatureAggregate - 5},
+                    min:${baseMap.template.temperatureAggregate - 5},
                     </c:otherwise>
                     </c:choose>
 
