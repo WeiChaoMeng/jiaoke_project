@@ -123,7 +123,7 @@
                                 </a>
                             </td>
 
-                            <%--<td class="template" valign="middle">
+                            <td class="template" valign="middle">
                                 <a class="check_color" onclick="review()" title="合同审查表">
                                     <img src="../../../static/images/icon/table.png">合同审查表
                                 </a>
@@ -133,7 +133,7 @@
                                 <a class="check_color" onclick="read()" title="收文阅办审批单">
                                     <img src="/static/images/icon/table.png">收文阅办审批单
                                 </a>
-                            </td>--%>
+                            </td>
 
                             <td class="template" valign="middle">
                                 <a class="check_color" onclick="maintain()" title="设备维修申请单">

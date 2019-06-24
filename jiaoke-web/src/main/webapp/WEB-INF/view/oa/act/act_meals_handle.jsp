@@ -17,6 +17,9 @@
 </head>
 
 <body>
+
+<!--startprint-->
+
 <div class="table-title">
     <span>${oaActMeals.title}</span>
 </div>
@@ -26,8 +29,8 @@
             <span style="float: left;margin-left: 10px;font-size: 13px;">申请时间：${oaActMeals.createTimeStr}</span>
         </div>
 
-        <div class="head_left_button" style="float: right;line-height: 40px;">
-            <button type="button" class="cursor_hand" onclick="addUser()" style="font-size: 13px;">&#xea0e; 打印</button>
+        <div class="head_left_button" style="float: right;line-height: 40px;" id="printBut">
+            <button type="button" class="cursor_hand" onclick="print()" style="font-size: 13px;">&#xea0e; 打印</button>
         </div>
     </div>
 </div>
@@ -152,6 +155,8 @@
     <div class="receipt-style"></div>
 </div>
 
+<!--endprint-->
+
 </body>
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
 <script src="../../../../static/js/oa/layer/layer.js"></script>
@@ -189,6 +194,27 @@
                 layer.msg("出错！");
             }
         })
+    }
+
+    //打印
+    function print() {
+        $('#printBut').hide();
+        bdhtml = window.document.body.innerHTML;
+        //开始打印标识字符串有17个字符
+        sprnstr = "<!--startprint-->";
+        //结束打印标识字符串
+        eprnstr = "<!--endprint-->";
+        //从开始打印标识之后的内容
+        prnhtml = bdhtml.substr(bdhtml.indexOf(sprnstr) + 17);
+        //截取开始标识和结束标识之间的内容
+        prnhtml = prnhtml.substring(0, prnhtml.indexOf(eprnstr));
+        //把需要打印的指定内容赋给body.innerHTML
+        window.document.body.innerHTML = prnhtml;
+        //调用浏览器的打印功能打印指定区域
+        window.print();
+        // 最后还原页面
+        window.document.body.innerHTML = bdhtml;
+        $('#printBut').show();
     }
 
 </script>

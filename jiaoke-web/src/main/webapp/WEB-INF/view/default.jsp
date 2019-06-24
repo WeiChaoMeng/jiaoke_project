@@ -16,7 +16,7 @@
     <meta charset="utf-8">
     <title>无标题文档</title>
     <link href="/static/css/default.css" rel="stylesheet" type="text/css">
-    <link href="/static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
+    <%--<link href="/static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>--%>
     <link type="text/css" rel="stylesheet" href="/static/slider/css/carousel.css">
     <script src="/static/js/echarts/echarts.js"></script>
     <script src="/static/js/echarts/uimaker.js"></script>
@@ -169,5 +169,5 @@
 <script type="text/javascript" src="/static/js/jquery.min.js"></script>
 <script type="text/javascript" src="/static/slider/js/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="/static/slider/js/jquery.carousel.js"></script>
-<script type="text/javascript" src="/static/js/skin.js"></script>
+<%--<script type="text/javascript" src="/static/js/skin.js"></script>--%>
 </html>

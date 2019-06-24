@@ -18,7 +18,7 @@
     <meta charset="utf-8">
     <title>路驰办公系统</title>
     <link href="/static/css/default.css" rel="stylesheet" type="text/css">
-    <link href="/static/css/style/green.css" rel="stylesheet" type="text/css">
+    <%--<link href="/static/css/style/green.css" rel="stylesheet" type="text/css">--%>
     <link href="../../static/css/oa/backstage_style.css" rel="stylesheet" type="text/css">
     <link href="../../static/css/oa/document.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="/static/images/favicon.ico" type="image/ico"/>
@@ -26,12 +26,14 @@
         html {
             overflow: hidden;
         }
+
         /* Border styles */
         .altrowstable thead, .altrowstable tr {
             border-top-width: 1px;
             border-top-style: solid;
             border-top-color: rgb(230, 189, 189);
         }
+
         .altrowstable {
             border-bottom-width: 1px;
             border-bottom-style: solid;
@@ -48,37 +50,14 @@
 
         /* Alternating background colors */
         /*.altrowstable tr:nth-child(even) {*/
-            /*background: rgb(238, 211, 210)*/
+        /*background: rgb(238, 211, 210)*/
         /*}*/
         .altrowstable tr:nth-child(odd) {
             background: #FFF
         }
     </style>
 </head>
-<body style="background:url(../../static/images/line.gif) repeat-y 0 0;">
-
-
-<div id="flag"></div>
-<!--弹窗背景变暗-->
-<!--<div id="window_background_color"></div>-->
-
-<!-- 未选中时弹窗-->
-<!--<div id="log_window" class="log_popup">
-    <div class="window_head log_popup_width">
-        <div class="log_popup_window_head">
-            <span>查看明细日志</span>
-            <i class="iconfont cursor_hand window_closing" id="unselected_windows_close">&#xe68d;</i></div>
-        <div class="log_window_son">
-            <iframe src="process_log/index.jsp" id="" name="right" width="100%" height="100%" frameborder="0"
-                    scrolling="auto"></iframe>
-        </div>
-        <div class="window_foot">
-            <span>
-                <a id="unselected_windows_confirm" class="cursor_hand window_confirmation">确定</a>
-            </span>
-        </div>
-    </div>
-</div>-->
+<body>
 
 <div class="header">
     <div class="headtop">
@@ -120,16 +99,25 @@
 
         <div class="topright">
             <div class="user">
-                <span><a href="#"><i class="userico iconfont">&#xe6cb;</i>${userInfo.nickname}<i
-                        class="userdown iconfont">&#xe920;</i></a></span>
+                <span>
+                    <a href="#">
+                        <i class="userico iconfont">&#xe6cb;</i>${userInfo.nickname}
+                        <i class="userdown iconfont">&#xe920;</i>
+                    </a>
+                </span>
+
                 <ul class="userlist">
                     <li><a href="#"><i class="userxl iconfont">&#xe666;</i>用户信息</a></li>
-                    <li><a href="#" id="about"><i class="userxl iconfont">&#xe7e9;</i>修改密码</a></li>
+                    <li>
+                        <a href="javascript:;" onclick="editPsw()">
+                            <i class="userxl iconfont">&#xe7e9;</i>修改密码
+                        </a>
+                    </li>
                     <li><a href="/logout"><i class="userxl iconfont">&#xeae2;</i>退出</a></li>
                 </ul>
             </div>
 
-            <div class="skin">
+            <%--<div class="skin">
                 <a href="#">设置</a>
                 <ul class="skinlist">
                     <li><a href="#" data-value="green" class="targetElem green"></a></li>
@@ -141,7 +129,7 @@
                     <li><a href="#" data-value="lightblue" class="targetElem lightblue"></a></li>
                     <li><a href="#" data-value="red" class="targetElem red"></a></li>
                 </ul>
-            </div>
+            </div>--%>
 
         </div>
     </div>
@@ -424,6 +412,58 @@
     </div>
 </div>
 
+<%--文件上传--%>
+<div id="uploadFile" style="display: none;">
+    <div style="margin: auto;height: 65px;text-align: center;vertical-align: middle;line-height: 65px;">
+        <input type="text" id="fileName"
+               style="outline: none;padding: 0;margin: 0;height: 25px;width:200px;border: #b9b9b9 1px solid;font-size: 12px;"
+               readonly>
+
+        <input type="file" id="file" class="file-input"
+               style="width: 44px;height: 26px;display: block;position: absolute;left: 272px;top: 20px;z-index: 10;opacity: 0;cursor: pointer;"
+               onchange="fileSelect(this)">
+
+        <button type="button" class="add-but"
+                style="padding: 5px 10px;background: #2196F3;border-radius: 5px;border: none;outline: none;color: #fff2f2;">
+            添加
+        </button>
+
+    </div>
+
+    <div class="option-window-body-bottom">
+        <input type="button" value="确认" onclick="fileConfirm()" class="body-bottom-button">
+        <input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">
+    </div>
+</div>
+
+<%--修改密码--%>
+<div id="editPassword" style="display: none;">
+    <div style="margin: 10px 0;float: left;width: 100%;">
+        <label style="float: left;display: block;padding: 9px 15px;width: 80px;font-weight: 400;line-height: 20px;text-align: right;">当前密码</label>
+        <div style="float: left;width: 190px;margin-right: 10px;">
+            <input id="currentPassword" autocomplete="off" type="password" style="outline: none;height: 38px;line-height: 1.3;background-color: #fff;border-radius: 2px;padding-left: 10px;width: 100%;border: 1px solid #e6e6e6;">
+        </div>
+    </div>
+
+    <div style="margin-bottom: 10px;float: left;width: 100%;">
+        <label style="float: left;display: block;padding: 9px 15px;width: 80px;font-weight: 400;line-height: 20px;text-align: right;">新密码</label>
+        <div style="float: left;width: 190px;margin-right: 10px;">
+            <input type="password" id="newPsw" autocomplete="off" style="outline: none;height: 38px;line-height: 1.3;background-color: #fff;border-radius: 2px;padding-left: 10px;width: 100%;border: 1px solid #e6e6e6;">
+        </div>
+    </div>
+
+    <div style="margin-bottom: 20px;float: left;width: 100%;">
+        <label style="float: left;display: block;padding: 9px 15px;width: 80px;font-weight: 400;line-height: 20px;text-align: right;">确认密码</label>
+        <div style="float: left;width: 190px;margin-right: 10px;">
+            <input type="password" id="confirmPsw"  autocomplete="off" style="outline: none;height: 38px;line-height: 1.3;background-color: #fff;border-radius: 2px;padding-left: 10px;width: 100%;border: 1px solid #e6e6e6;">
+        </div>
+    </div>
+
+    <div style="margin-bottom: 10px;float: left;width: 100%;text-align: center">
+        <button onclick="editPswCom()" style="outline:none;display: inline-block;height: 38px;line-height: 38px;padding: 0 18px;background-color: #2196F3;color: #fff;white-space: nowrap;text-align: center;font-size: 14px;border: none;border-radius: 2px;cursor: pointer;">确认修改</button>
+    </div>
+</div>
+
 <!-- Table goes in the document BODY -->
 <table class="altrowstable" id="showMessage" style="display: none">
     <tr>
@@ -444,35 +484,30 @@
 
 <!-- Javascript goes in the document HEAD -->
 <script type="text/javascript">
-    function altRows(id){
-        if(document.getElementsByTagName){
+    function altRows(id) {
+        if (document.getElementsByTagName) {
 
             var table = document.getElementById(id);
             var rows = table.getElementsByTagName("tr");
 
-            for(i = 0; i < rows.length; i++){
-                if(i % 2 == 0){
+            for (i = 0; i < rows.length; i++) {
+                if (i % 2 == 0) {
                     rows[i].className = "evenrowcolor";
-                }else{
+                } else {
                     rows[i].className = "oddrowcolor";
                 }
             }
         }
     }
 
-    window.onload=function(){
+    window.onload = function () {
         altRows('alternatecolor');
     }
 </script>
 
-
-
-
-
-
 <script type="text/javascript" src="/static/js/jquery.js"></script>
 <script type="text/javascript" src="/static/js/common.js"></script>
-<script type="text/javascript" src="/static/js/skin.js"></script>
+<%--<script type="text/javascript" src="/static/js/skin.js"></script>--%>
 <script src="../../static/js/oa/layer/layer.js"></script>
 <script>
 
@@ -528,6 +563,79 @@
 
         })
     });
+
+    function editPsw() {
+        window.lar = layer.open({
+            title: '修改密码',
+            type: 1,
+            area: ['25%', '35%'],
+            shadeClose: true, //点击遮罩关闭
+            content: $("#editPassword"),
+            offset: "auto"
+        });
+    }
+
+    function editPswCom() {
+        if ($.trim($('#currentPassword').val()) === ''){
+                layer.tips('必填项不能为空！','#currentPassword',{
+                    tips: 1
+                });
+            }else {
+                if ($('#confirmPsw').val() !== $('#newPsw').val()) {
+                    layer.tips('两次密码输入不一致！','#confirmPsw',{
+                        tips: 1
+                    });
+                }else {
+                    layer.msg('成功！！！！！');
+                }
+            }
+    }
+
+    //文件选择
+    function fileSelect(own) {
+        $('#fileName').val(own.files[0].name);
+    }
+
+    //上传文件弹窗
+    function uploadFile() {
+        window.lar = layer.open({
+            title: '上传本地文件',
+            type: 1,
+            area: ['25%', '25%'],
+            shadeClose: true, //点击遮罩关闭
+            content: $("#uploadFile"),
+            offset: "auto"
+        });
+    }
+
+    //确认文件上传
+    function fileConfirm() {
+        var formData = new FormData();
+        var f = $('#file')[0].files[0];
+        formData.append("file", f);
+        $.ajax({
+            type: "POST",
+            url: '${path}/fileUploadHandle/upload',
+            data: formData,
+            async: true,
+            cache: false,
+            contentType: false,    //不可缺
+            processData: false,    //不可缺
+            success: function (ret) {
+                if (ret.message === "success") {
+                    layer.msg("上传成功");
+                    $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.writeFile(ret.originalName, ret.filePaths);
+                    cancel();
+                } else {
+                    layer.msg("上传失败");
+                }
+            },
+            error: function (res) {
+                layer.msg("上传失败，请检查网络后重试!");
+            }
+        });
+    }
+
 
     //删除待发公文
     function deleteDocument(id, currentPage) {
@@ -659,6 +767,7 @@
         }
         preventBubble();
     }
+
     //删除已选列表选中的标签并且删除选择列表中选中的样式
     $('#selectedNotifyPerson').on("click", "li", function () {
         //获取选中li的id
@@ -679,6 +788,7 @@
             })
         });
     });
+
     //组织冒泡
     function preventBubble(event) {
         var e = arguments.callee.caller.arguments[0] || event; //若省略此句，下面的e改为event，IE运行可以，但是其他浏览器就不兼容
@@ -688,6 +798,7 @@
             window.event.cancelBubble = true;
         }
     }
+
     //公文-选择拟稿人
     function selectReviewers(userInfoList, draftedPerson, flag) {
         window.lar = layer.open({
@@ -758,6 +869,7 @@
             layer.msg('请选择拟稿人！')
         }
     }
+
     /**-----------------------部门管理---------------------------*/
     //添加部门
     function addDepartment(currentPage) {
@@ -772,6 +884,7 @@
         //记录用户页面选择的页数
         $('#departmentPage').val(currentPage);
     }
+
     //提交新增部门
     function commitDepartment() {
         var departmentName = $('#departmentName').val();
@@ -824,6 +937,7 @@
         });
         return res;
     }
+
     //删除部门
     function deleteDepartment(id, currentPage) {
         //记录选择的页数
@@ -852,6 +966,7 @@
             }
         );
     }
+
     //部门绑定主管
     function bindingDepartmentHead(userInfoList, departmentList, id, page) {
         window.lar = layer.open({
@@ -888,6 +1003,7 @@
         }
         $("#departmentAndUser").html(department);
     }
+
     //用户选择器
     function addSelectionUser(own) {
         if ($(own).children('div').hasClass("selection")) {
@@ -897,6 +1013,7 @@
             $(own).find("div").addClass("selection");
         }
     }
+
     //提交绑定
     function confirmDepartmentHead() {
         var lis = $("#selectDepartment").find("div");
@@ -927,6 +1044,7 @@
             layer.msg('请选择拟稿人！')
         }
     }
+
     //编辑部门
     function editDepartment(department, currentPage) {
         window.lar = layer.open({
@@ -2363,6 +2481,7 @@
             }
         );
     }
+
     //生产管理部-其他文件
     function deleteProductionOther(id, currentPage) {
         //记录用户页面选择的页数
@@ -2535,13 +2654,14 @@
             $(own).children('td').children('input').attr("checked", true);
         }
     }
+
     //关闭弹窗
     function cancel() {
         layer.close(window.lar);
     }
 
     //全局质量报警
-    window.setInterval("showGlobalWarningData()",3000);
+    window.setInterval("showGlobalWarningData()", 3000);
 
     function showGlobalWarningData() {
         var path = $("#path").val();
@@ -2571,14 +2691,15 @@
                         if (materialName == "一仓温度" || materialName == "沥青" || materialName == "骨料1") {
                             if (warningLevel >= 1) {
 
-                                if (crewNum == 1){
+                                if (crewNum == 1) {
                                     crew1DiscNum = discNum;
-                                }else {
+                                } else {
                                     crew2DiscNum = discNum;
-                                };
+                                }
+                                ;
 
-                                var str ="";
-                                if (materialName == "一仓温度"){
+                                var str = "";
+                                if (materialName == "一仓温度") {
                                     str = "<tr>" +
                                         "<td>机组" + crewNum + "</td>" +
                                         "<td>" + discNum + "</td>" +
@@ -2588,7 +2709,7 @@
                                         "<td>" + deviationRatio + "℃</td>" +
                                         "<td>" + warningLevel + "</td>" +
                                         "</tr>";
-                                }else {
+                                } else {
                                     str = "<tr>" +
                                         "<td>机组" + crewNum + "</td>" +
                                         "<td>" + discNum + "</td>" +
@@ -2602,7 +2723,7 @@
 
 
                                 $("#warningData").append(str);
-                            }else {
+                            } else {
                                 continue;
                             }
                         } else {
@@ -2610,12 +2731,13 @@
                         }
 
 
-                    };
+                    }
+                    ;
 
 
-                    var condition  = $("#warningData").find("tr").length;
-                    if (condition != 0){
-                        showWaringData(crew1DiscNum,crew2DiscNum);
+                    var condition = $("#warningData").find("tr").length;
+                    if (condition != 0) {
+                        showWaringData(crew1DiscNum, crew2DiscNum);
                     }
 
                 }
@@ -2623,12 +2745,12 @@
         })
     }
 
-    function showWaringData(crew1DiscNum,crew2DiscNum) {
+    function showWaringData(crew1DiscNum, crew2DiscNum) {
 
         var crew1LastDiscNum = sessionStorage.getItem("crew1LastDiscNum");
         var crew2LastDiscNum = sessionStorage.getItem("crew2LastDiscNum");
 
-        if (crew1LastDiscNum  == "undefined" || crew2LastDiscNum  == "undefined"){
+        if (crew1LastDiscNum == "undefined" || crew2LastDiscNum == "undefined") {
             layer.open({
                 type: 1,
                 title: ['生产预警', 'height:auto;line-height: 27px;font-size:11px;'],
@@ -2642,7 +2764,7 @@
             })
         }
 
-        if (crew1DiscNum == crew1LastDiscNum && crew2DiscNum == crew2LastDiscNum ) {
+        if (crew1DiscNum == crew1LastDiscNum && crew2DiscNum == crew2LastDiscNum) {
             return;
         }
 
@@ -2658,8 +2780,8 @@
             content: $('#showMessage')
         })
 
-        sessionStorage.setItem("crew1LastDiscNum", crew1DiscNum) ;
-        sessionStorage.setItem("crew2LastDiscNum", crew2DiscNum) ;
+        sessionStorage.setItem("crew1LastDiscNum", crew1DiscNum);
+        sessionStorage.setItem("crew2LastDiscNum", crew2DiscNum);
     }
 
 </script>

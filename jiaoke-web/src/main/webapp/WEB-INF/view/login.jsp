@@ -24,8 +24,6 @@
 </head>
 
 <body>
-<!--loginbox start-->
-
 <div class="login-title" style="width: 100%;height: 80px;">
     <div class="login-title-content" style="height: 80px;width: 80%;margin: 0 auto">
         <div>
@@ -44,13 +42,11 @@
             <div class="login-form">
                 <div class="login_input_content">
                     <div class="left-icon"><img src="/static/images/icon/username.png" alt=""></div>
-                    <input type="text" placeholder="账号" name="username" id="username" value="" class="right-input"
-                           onkeyup="this.value=this.value.replace(/\s+/g,'')" autocomplete="off">
+                    <input type="text" placeholder="用户名" name="username" id="username" class="right-input" autocomplete="off">
                 </div>
                 <div class="login_input_content">
                     <div class="left-icon"><img src="/static/images/icon/password.png" alt=""></div>
-                    <input type="password" placeholder="密码" name="password" id="password" value=""
-                           class="right-input" onkeyup="this.value=this.value.replace(/\s+/g,'')" autocomplete="off">
+                    <input type="password" placeholder="密码" name="password" id="password" class="right-input" autocomplete="off">
                 </div>
                 <div class="login_input_content">
                     <button type="submit" class="login-but" id="submit">登录</button>
@@ -60,31 +56,29 @@
     </div>
     <div class="login-bottom">
         <div class="login-bottom-copyright">
-            <span>Copyright © 2008-2018  北京市政路桥建材集团有限公司路驰分公司 版权所有</span>
+            <span>Copyright © 2008-2019  北京市政路桥建材集团有限公司路驰分公司 版权所有</span>
         </div>
     </div>
 </div>
-<!--loginbox end-->
 
 </body>
-<script type="text/javascript" src="/static/js/jquery.js"></script>
-<script type="text/javascript" src="/static/js/common.js"></script>
-<script type="text/javascript" src="/static/js/skin.js"></script>
+<script type="text/javascript" src="../../static/js/jquery.js"></script>
+<script src="../../static/js/oa/layer/layer.js"></script>
 <script type="text/javascript">
-    var height = $(window).height();
-    $(".login").css("padding-top", height / 2 - $(".login").height() / 2);
-    $(window).resize(function () {
-        $(".login").css("padding-top", $(window).height() / 2 - $(".login").height() / 2);
-    });
 
     $('#submit').on('click', function () {
         var username = $('#username').val();
         var password = $('#password').val();
+
         if (username === "") {
-            alert('用户名不可以是空的');
+            layer.msg('用户名不能为空',{
+                icon:5
+            });
         } else {
             if (password === "") {
-                alert("密码不可以是空的");
+                layer.msg('密码不能为空',{
+                   icon:5
+                });
             } else {
                 $.ajax({
                     cache: true,
@@ -99,7 +93,9 @@
                         if (result.messages === "success") {
                             window.location.href = '${path}/login/homePage.do';
                         } else {
-                            alert("您输入的账号密码不匹配");
+                            layer.msg('您输入的账号密码不匹配',{
+                                icon:2
+                            });
                         }
                     }
                 });

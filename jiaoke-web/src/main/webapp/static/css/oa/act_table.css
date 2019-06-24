@@ -310,7 +310,7 @@ img {
 }
 
 .table-td-textarea {
-    height:68px;
+    height: 68px;
     padding: 10px;
 }
 
@@ -376,7 +376,7 @@ img {
     line-height: 40px;
 }
 
-.receipt-style{
+.receipt-style {
     height: 15px;
 }
 
@@ -407,4 +407,20 @@ img {
 .comment-date {
     float: left;
     margin: 0 15px;
+}
+
+.download-file {
+    font-family: "iconfont" !important;
+    border: 0;
+    height: 100%;
+    background: none;
+    padding: 0;
+    outline: none;
+    color: #64c8f5;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.download-file:hover{
+    color: #2196F3;
 }

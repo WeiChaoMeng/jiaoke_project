@@ -218,7 +218,7 @@ public class OaActReadController {
         List<Comments> commentsList = activitiUtil.selectHistoryComment(taskId);
         model.addAttribute("oaActRead", oaActRead);
         model.addAttribute("commentsList", commentsList);
-        return "oa/act/act_review_details";
+        return "oa/act/oa_document_reading_details";
     }
 
 

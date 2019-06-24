@@ -1,6 +1,3 @@
-<%@ page import="java.util.Date" %>
-<%@ page import="java.text.SimpleDateFormat" %>
-<!DOCTYPE html>
 <%@ page language="java" contentType="text/html;charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -26,12 +23,13 @@
             <span style="float: left;margin-left: 10px;font-size: 13px;">申请时间：${oaActMeals.createTimeStr}</span>
         </div>
 
-        <div class="head_left_button" style="float: right;line-height: 40px;">
-            <button type="button" class="cursor_hand" onclick="addUser()" style="font-size: 13px;">&#xea0e; 打印</button>
+        <div class="head_left_button" style="float: right;line-height: 40px;" id="printBut">
+            <button type="button" class="cursor_hand" onclick="printContent()" style="font-size: 13px;">&#xea0e; 打印
+            </button>
         </div>
     </div>
 </div>
-<!--  -->
+
 <table class="formTable" style="margin: 0">
     <tbody>
     <tr>
@@ -138,7 +136,7 @@
     <div class="receipt-style"></div>
 </div>
 
-<div class="form-but" style="margin-top: 20px;">
+<div class="form-but" style="margin-top: 20px;" id="returnBut">
     <button type="button" class="return-but" onclick="previousPage()">返回</button>
 </div>
 
@@ -152,6 +150,12 @@
         window.history.back();
     }
 
+    //打印
+    function printContent() {
+        $('#printBut,#returnBut').hide();
+        window.print();
+        $('#printBut,#returnBut').show();
+    }
 </script>
 </html>
 

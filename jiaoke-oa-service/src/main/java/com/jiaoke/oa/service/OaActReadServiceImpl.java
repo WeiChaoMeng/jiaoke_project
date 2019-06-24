@@ -66,6 +66,7 @@ public class OaActReadServiceImpl implements OaActReadService {
         OaActRead oaActRead = oaActReadMapper.selectByPrimaryKey(id);
         oaActRead.setReceiptTimeStr(DateUtil.dateConvertYYYYMMDD(oaActRead.getReceiptTime()));
         oaActRead.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActRead.getCreateTime()));
+        oaActRead.setAnnexStr(oaActRead.getAnnex().substring(oaActRead.getAnnex().lastIndexOf("_") + 1));
         return oaActRead;
     }
 

@@ -64,6 +64,8 @@ public class OaActRead {
      * 附件
      */
     private String annex;
+    @Transient
+    private String annexStr;
     /**
      * 创建日期
      */
@@ -191,5 +193,13 @@ public class OaActRead {
 
     public void setAnnex(String annex) {
         this.annex = annex;
+    }
+
+    public String getAnnexStr() {
+        return annexStr;
+    }
+
+    public void setAnnexStr(String annexStr) {
+        this.annexStr = annexStr;
     }
 }

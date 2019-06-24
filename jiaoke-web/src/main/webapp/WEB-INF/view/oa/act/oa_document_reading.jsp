@@ -30,14 +30,20 @@
 
         <div class="head_left_button">
             <button type="button" class="cursor_hand" onclick="insertFile()">&#xeac1; 插入</button>
-            <input type="file" id="file" onchange="fileName(this)"
-                   style="width: 43px;height: 20px;display: block;position: absolute;top: 68px;z-index: 10;opacity: 0;cursor: pointer;">
+            <%--<input type="file" id="file" onchange="fileName(this)"
+                   style="width: 43px;height: 20px;display: block;position: absolute;top: 68px;z-index: 10;opacity: 0;cursor: pointer;">--%>
         </div>
+
+        <%--<div class="separation_line"></div>
+
+        <div class="head_left_button">
+            <button type="button" class="cursor_hand" onclick="uploadFile()">&#xeac1; 上传</button>
+        </div>--%>
 
         <div class="separation_line"></div>
 
         <div class="head_left_button">
-            <button type="button" class="cursor_hand" onclick="addUser()">&#xea0e; 打印</button>
+            <button type="button" class="cursor_hand" onclick="print()">&#xea0e; 打印</button>
         </div>
     </div>
 </div>
@@ -168,10 +174,6 @@
         if ($.trim($("#title").val()) === '') {
             layer.msg("标题不可以为空！")
         } else {
-            if($('#annexStr').val() !== ""){
-                upload();
-            }
-
             $.ajax({
                 type: "POST",
                 url: '${path}/read/savePending',
@@ -191,14 +193,26 @@
         }
     }
 
-    function fileName(own) {
-        $('#annexStr').val(own.files[0].name);
+    //插入附件
+    function insertFile() {
+        window.top.uploadFile();
+    }
+
+    //插入成功后写入
+    function writeFile(originalName,saveFilename) {
+        $('#annexStr').val(originalName);
+        $('#annex').val(saveFilename);
     }
 
     //文件上传
     function upload() {
         var formData = new FormData();
         var f = $('#file')[0].files[0];
+        console.log(f);
+        console.log($('#file')[0]);
+        console.log($('#file'));
+        console.log($('#annexStr'));
+        console.log($('#file').val());
         formData.append("file", f);
         $.ajax({
             type: "POST",
@@ -209,9 +223,8 @@
             contentType: false,    //不可缺
             processData: false,    //不可缺
             success: function (ret) {
-                console.log(ret);
                 if (ret.message === "success") {
-                    layer.msg(ret.filePaths);
+                    console.log(ret.filePaths);
                     $('#annex').val(ret.filePaths);
                 } else {
                     alert("失败");
@@ -221,6 +234,11 @@
                 alert("上传失败，请检查网络后重试!");
             }
         });
+    }
+
+    //打印
+    function print() {
+
     }
 </script>
 </html>

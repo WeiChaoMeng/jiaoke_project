@@ -93,6 +93,7 @@ public class FilesUploadHandle {
             out.close();
             map.put("message", "success");
             map.put("filePaths", saveFilename);
+            map.put("originalName", filename);
         } catch (Exception e) {
             e.printStackTrace();
             map.put("message", "error");
