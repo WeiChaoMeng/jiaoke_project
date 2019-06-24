@@ -50,8 +50,25 @@
                     axisLabel: {
                         formatter: '{value} ℃'
                     },
-                    min:${baseMap.template.temperatureMilling - 50},
-                    max:${baseMap.template.temperatureMillingUp + 50},
+                    <c:choose>
+                        <c:when test="${baseMap.warehouse1Max > baseMap.template.temperatureMillingUp}">
+                            max:${baseMap.warehouse1Max + 5},
+                        </c:when>
+                        <c:otherwise>
+                            max:${baseMap.template.temperatureMillingUp + 5},
+                        </c:otherwise>
+                    </c:choose>
+
+                    <c:choose>
+                    <c:when test="${baseMap.warehouse1Min < baseMap.template.temperatureMilling}">
+                        min:${baseMap.warehouse1Min - 5},
+                    </c:when>
+                    <c:otherwise>
+                    max:${baseMap.template.temperatureMilling - 5},
+                    </c:otherwise>
+                    </c:choose>
+
+
                     axisPointer: {
                         snap: true
                     }
@@ -144,8 +161,23 @@
                     axisLabel: {
                         formatter: '{value} ℃'
                     },
-                    min:50,
-                    max:220,
+                    <c:choose>
+                    <c:when test="${baseMap.mixtureMax > baseMap.template.temperatureMixtureUp}">
+                    max:${baseMap.mixtureMax + 5},
+                    </c:when>
+                    <c:otherwise>
+                    max:${baseMap.template.temperatureMixtureUp + 5},
+                    </c:otherwise>
+                    </c:choose>
+
+                    <c:choose>
+                    <c:when test="${baseMap.mixtureMin < baseMap.template.temperatureMixture}">
+                    min:${baseMap.mixtureMin - 5},
+                    </c:when>
+                    <c:otherwise>
+                    max:${baseMap.template.temperatureMixture - 5},
+                    </c:otherwise>
+                    </c:choose>
                     axisPointer: {
                         snap: true
                     }
@@ -212,8 +244,23 @@
                     axisLabel: {
                         formatter: '{value} ℃'
                     },
-                    min:${baseMap.template.temperatureAsphalt - 50},
-                    max:${baseMap.template.temperatureAsphaltUp + 50},
+                    <c:choose>
+                    <c:when test="${baseMap.asphaltMax > baseMap.template.temperatureAsphaltUp}">
+                    max:${baseMap.asphaltMax + 5},
+                    </c:when>
+                    <c:otherwise>
+                    max:${baseMap.template.temperatureAsphaltUp + 5},
+                    </c:otherwise>
+                    </c:choose>
+
+                    <c:choose>
+                    <c:when test="${baseMap.asphaltMin < baseMap.template.temperatureAsphalt}">
+                    min:${baseMap.asphaltMin - 5},
+                    </c:when>
+                    <c:otherwise>
+                    max:${baseMap.template.temperatureAsphalt - 5},
+                    </c:otherwise>
+                    </c:choose>
                     axisPointer: {
                         snap: true
                     }
@@ -281,8 +328,25 @@
                     axisLabel: {
                         formatter: '{value} ℃'
                     },
-                    min:${baseMap.template.temperatureAggregate - 50},
-                    max:${baseMap.template.temperatureAggregateUp + 50},
+
+                    <c:choose>
+                    <c:when test="${baseMap.aggregateMax > baseMap.template.temperatureAggregateUp}">
+                    max:${baseMap.aggregateMax + 5},
+                    </c:when>
+                    <c:otherwise>
+                    max:${baseMap.template.temperatureAggregateUp + 5},
+                    </c:otherwise>
+                    </c:choose>
+
+                    <c:choose>
+                    <c:when test="${baseMap.aggregateMin < baseMap.template.temperatureAggregate}">
+                    min:${baseMap.aggregateMin - 5},
+                    </c:when>
+                    <c:otherwise>
+                    max:${baseMap.template.temperatureAggregate - 5},
+                    </c:otherwise>
+                    </c:choose>
+
                     axisPointer: {
                         snap: true
                     }
@@ -345,10 +409,12 @@
                 }],
                 yAxis: [{
                     type: 'value',
+                    interval :0.2,
+                    max:parseInt(${baseMap.template.ratioStone + 2}),
+                    min:parseInt(${baseMap.template.ratioStone - 1.2}),
                     axisLabel: {
                         formatter: '{value} %'
                     },
-                    max:parseInt(${baseMap.template.ratioStone + 3})
                 }],
                 grid: [{
                     bottom: '25%'

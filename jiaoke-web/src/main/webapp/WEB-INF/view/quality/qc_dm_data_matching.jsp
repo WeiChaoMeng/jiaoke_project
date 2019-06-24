@@ -168,122 +168,122 @@
         </c:forEach>
 
 
+<%--客户分类--%>
+    <%--<div class="infolist1">--%>
 
-    <div class="infolist1">
+        <%--<div class="infoboxleft">--%>
+            <%--<div class="boxtitle">--%>
+                <%--<span>客户分类产品统计</span>--%>
+                <%--&lt;%&ndash;qc_dm_data_number.jsp&ndash;%&gt;--%>
+                <%--<a href="javascript:;" target="_self">更多--%>
+                    <%--<i class="iconfont">&#xeba8;</i>--%>
+                <%--</a>--%>
+            <%--</div>--%>
 
-        <div class="infoboxleft">
-            <div class="boxtitle">
-                <span>客户分类产品统计</span>
-                <%--qc_dm_data_number.jsp--%>
-                <a href="javascript:;" target="_self">更多
-                    <i class="iconfont">&#xeba8;</i>
-                </a>
-            </div>
+            <%--<div class="boxdown">--%>
+                <%--<table class="simpletable">--%>
 
-            <div class="boxdown">
-                <table class="simpletable">
+                    <%--<thead>--%>
+                        <%--<th>模板号</th>--%>
+                        <%--<th>总盘数</th>--%>
+                        <%--<th>生产时间</th>--%>
+                        <%--<th>客户名</th>--%>
+                        <%--<th>操作</th>--%>
+                    <%--</thead>--%>
 
-                    <thead>
-                        <th>模板号</th>
-                        <th>总盘数</th>
-                        <th>生产时间</th>
-                        <th>客户名</th>
-                        <th>操作</th>
-                    </thead>
-
-                    <tbody>
-                    <c:forEach items="${userProList}" var="userPro" begin="0" end="7" >
-                        <tr>
-                            <td>${userPro.rationNum}</td>
-                            <td>${userPro.total}</td>
-                            <td>${userPro.startTime}</td>
-                            <td>${userPro.userName}</td>
-                            <td>
-                                <a href="#" class="selected" id="">
-                                    <i class="toolico iconfont">&#xe970;</i>查看</a>
-                            </td>
-                        </tr>
-                    </c:forEach>
+                    <%--<tbody>--%>
+                    <%--<c:forEach items="${userProList}" var="userPro" begin="0" end="7" >--%>
+                        <%--<tr>--%>
+                            <%--<td>${userPro.rationNum}</td>--%>
+                            <%--<td>${userPro.total}</td>--%>
+                            <%--<td>${userPro.startTime}</td>--%>
+                            <%--<td>${userPro.userName}</td>--%>
+                            <%--<td>--%>
+                                <%--<a href="#" class="selected" id="">--%>
+                                    <%--<i class="toolico iconfont">&#xe970;</i>查看</a>--%>
+                            <%--</td>--%>
+                        <%--</tr>--%>
+                    <%--</c:forEach>--%>
 
 
-                    </tbody>
+                    <%--</tbody>--%>
 
-                </table>
-            </div>
+                <%--</table>--%>
+            <%--</div>--%>
 
-        </div>
-    </div>
+        <%--</div>--%>
+    <%--</div>--%>
 
-    <div class="chartbox4">
-        <div class="my_echars_title">
-            <span>当日客户产量占比图</span>
-        </div>
-        <div id="chart500" class="charts"></div>
+    <%--<div class="chartbox4">--%>
+        <%--<div class="my_echars_title">--%>
+            <%--<span>当日客户产量占比图</span>--%>
+        <%--</div>--%>
+        <%--<div id="chart500" class="charts"></div>--%>
 
-        <script type="text/javascript">
-            var myChart500 = echarts.init(document.getElementById('chart500'));
-            // 指定图表的配置项和数据
-            var colors = ['#5793f3', '#d14a61', '#675bba'];
-            var option500 =  {
-                    title: {
-                        text: '',
-                        subtext: '',
-                        x: 'center'
-                    },
-                    tooltip: {
-                        trigger: 'item',
-                        formatter: "{a} <br/>{b} : {c} ({d}%)"
-                    },
-                    legend: {
-                        orient: 'vertical',
-                        left: 'left',
-                        data: [
-                            <c:forEach items="${userProTotal}"  var="userPro" varStatus="sta">
-                                    <c:choose>
-                                        <c:when test="${sta.last}">
-                                            '${userPro.userName}'
-                                        </c:when>
-                                        <c:otherwise>
-                                            '${userPro.userName}',
-                                        </c:otherwise>
-                                    </c:choose>
-                            </c:forEach>
-                        ]},
-                    series: [
-                        {
-                            name: '占比总量',
-                            type: 'pie',
-                            radius: '55%',
-                            center: ['50%', '60%'],
-                            data: [
-                                <c:forEach items="${userProTotal}" var="userList" varStatus="stus">
-                                    <c:choose>
-                                        <c:when test="${sta.last}">
-                                            { value:${userList.userTotal}, name:'${userList.userName}'}
-                                        </c:when>
-                                        <c:otherwise>
-                                            { value:${userList.userTotal}, name:'${userList.userName}'},
-                                        </c:otherwise>
-                                    </c:choose>
-                                </c:forEach>
-                            ],
-                            itemStyle: {
-                                emphasis: {
-                                    shadowBlur: 10,
-                                    shadowOffsetX: 0,
-                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-                                }
-                            }
-                        }
-                    ]
-                };
-            myChart500.setOption(option500);
-            window.addEventListener("resize", function () {
-                myChart500.resize();
-            });
-        </script>
+        <%--<script type="text/javascript">--%>
+            <%--var myChart500 = echarts.init(document.getElementById('chart500'));--%>
+            <%--// 指定图表的配置项和数据--%>
+            <%--var colors = ['#5793f3', '#d14a61', '#675bba'];--%>
+            <%--var option500 =  {--%>
+                    <%--title: {--%>
+                        <%--text: '',--%>
+                        <%--subtext: '',--%>
+                        <%--x: 'center'--%>
+                    <%--},--%>
+                    <%--tooltip: {--%>
+                        <%--trigger: 'item',--%>
+                        <%--formatter: "{a} <br/>{b} : {c} ({d}%)"--%>
+                    <%--},--%>
+                    <%--legend: {--%>
+                        <%--orient: 'vertical',--%>
+                        <%--left: 'left',--%>
+                        <%--data: [--%>
+                            <%--<c:forEach items="${userProTotal}"  var="userPro" varStatus="sta">--%>
+                                    <%--<c:choose>--%>
+                                        <%--<c:when test="${sta.last}">--%>
+                                            <%--'${userPro.userName}'--%>
+                                        <%--</c:when>--%>
+                                        <%--<c:otherwise>--%>
+                                            <%--'${userPro.userName}',--%>
+                                        <%--</c:otherwise>--%>
+                                    <%--</c:choose>--%>
+                            <%--</c:forEach>--%>
+                        <%--]},--%>
+                    <%--series: [--%>
+                        <%--{--%>
+                            <%--name: '占比总量',--%>
+                            <%--type: 'pie',--%>
+                            <%--radius: '55%',--%>
+                            <%--center: ['50%', '60%'],--%>
+                            <%--data: [--%>
+                                <%--<c:forEach items="${userProTotal}" var="userList" varStatus="stus">--%>
+                                    <%--<c:choose>--%>
+                                        <%--<c:when test="${sta.last}">--%>
+                                            <%--{ value:${userList.userTotal}, name:'${userList.userName}'}--%>
+                                        <%--</c:when>--%>
+                                        <%--<c:otherwise>--%>
+                                            <%--{ value:${userList.userTotal}, name:'${userList.userName}'},--%>
+                                        <%--</c:otherwise>--%>
+                                    <%--</c:choose>--%>
+                                <%--</c:forEach>--%>
+                            <%--],--%>
+                            <%--itemStyle: {--%>
+                                <%--emphasis: {--%>
+                                    <%--shadowBlur: 10,--%>
+                                    <%--shadowOffsetX: 0,--%>
+                                    <%--shadowColor: 'rgba(0, 0, 0, 0.5)'--%>
+                                <%--}--%>
+                            <%--}--%>
+                        <%--}--%>
+                    <%--]--%>
+                <%--};--%>
+            <%--myChart500.setOption(option500);--%>
+            <%--window.addEventListener("resize", function () {--%>
+                <%--myChart500.resize();--%>
+            <%--});--%>
+        <%--</script>--%>
 
-        <!--查看模板弹出-->
+        <%--<!--查看模板弹出-->--%>
         <div id="showSVGBrk" class="form_background"  style="display:none;" ></div>
         <div id="showSVG" class="dm_form_model"  style="display:none;" >
             <div id="point">
@@ -417,9 +417,49 @@
                     </table>
                 </tr>
 
+                <tr>
+                    <td colspan="4">
+                        <input type="text" disabled="disabled"  style="color: #000;outline: 0;background: #fff;margin-top: 1%;font-size: 18px;margin-bottom: 20px;padding-left: 15%;" style="width: 72%;" value="模板配比信息">
+                    </td>
+                    <table class="gridtable">
+                        <tr>
+                            <th>骨料1</th>
+                            <th>骨料2</th>
+                            <th>骨料3</th>
+                            <th>骨料4</th>
+                            <th>骨料5</th>
+                            <th>骨料6</th>
+                            <th>石粉</th>
+                            <th>沥青</th>
+                            <th>再生料1</th>
+                            <th>再生料2</th>
+                            <th>添加剂</th>
+                            <th>1仓温度</th>
+                            <th>混合料温度</th>
+                            <th>沥青温度</th>
+                            <th>骨料温度</th>
+                        </tr>
+                        <tr>
+                            <td id="repertoryOne" ><i>%</i></td>
+                            <td id="repertoryTwo" ><i>%</i></td>
+                            <td id="repertoryThree" ><i>%</i></td>
+                            <td id="repertoryFour" ><i>%</i></td>
+                            <td id="repertoryFive" ><i>%</i></td>
+                            <td id="repertorySix" ><i>%</i></td>
+                            <td id="breeze" ><i>%</i></td>
+                            <td id="ratioStone" ><i>%</i></td>
+                            <td id="ratioRegenerate1" ><i>%</i></td>
+                            <td id="ratioRegenerate2" ><i>%</i></td>
+                            <td id="ratioAdditive" ><i>%</i></td>
+                            <td id="temperatureMilling"><i>℃</i></td>
+                            <td id="temperatureMixture" ><i>℃</i></td>
+                            <td id="temperatureAsphalt" ><i>℃</i></td>
+                            <td id="temperatureAggregate" ><i>℃</i></td>
+                        </tr>
+                    </table>
+                </tr>
 
                 </tbody>
-
             </table>
             </div>
             <div class="form_btn">
@@ -454,6 +494,8 @@
         var proTotalList = ${produceTotal};
         //获取当天各模板实际配比
         var proSVGList = ${ProSVG};
+        //获取当天模板配比
+        var modelRaion = ${model};
         $("#proNam").empty();
         $("#proNam").append("今日"+raionName + "生产信息");
         // var objArr = eval("(" + proTotalList + ")");
@@ -478,6 +520,20 @@
                 }
             }
         }
+        for (var i in modelRaion){
+            if (raionName === modelRaion[i].proName ){
+                debugger
+                for (var y in modelRaion[i]){
+                    if (y == 'temperatureAsphalt' || y == 'temperatureAggregate' || y == 'temperatureMixture' ||  y == 'temperatureMilling' ) {
+                        var temUp = y + "Up";
+                        $("#" + y).html(modelRaion[i][y] + "-" +  modelRaion[i][temUp] + "<i>℃</i>");
+                    }else {
+                        $("#" + y).html(modelRaion[i][y] + "<i>%</i>");
+                    }
+                }
+            }
+        }
+
         $('#addSVGBrk,#showSVG').show();
     })
 

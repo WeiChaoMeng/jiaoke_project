@@ -72,10 +72,10 @@
 
         <div class="boxtitle">
             <span>历史产品数据</span>
-
+            <a href="#" id="submitExcel"  onclick="method5('proExcel')" >导出excel<i class="iconfont"></i></a>
         </div>
                 <div class="boxdown">
-                    <table class="simpletable">
+                    <table class="simpletable" id="proExcel">
 
                         <thead>
                         <tr>

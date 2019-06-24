@@ -208,7 +208,10 @@ function eachMaterialList(res) {
             var arr = returnJsonArray(res[i]['crew1']['moudleList']);
             var temArray  = returnArrayToJson(res[i]['crew1']['moudleList']);
 
-            option7.xAxis.max = arr[arr.length - 1][0];
+            if(arr){
+                option7.xAxis.max = arr[arr.length - 1][0];
+            }
+
             option7.series[0].markLine.data = temArray;
             option7.series[1].data = returnJsonArray(res[i]['crew1']['moudleList']);
             option7.series[2].data = returnJsonArray(res[i]['crew1']['realList']);
@@ -223,8 +226,10 @@ function eachMaterialList(res) {
         }else {
 
             var temArr = returnJsonArray(res[i]['crew2']['moudleList']);
+            if(temArr){
+                option4.xAxis.max = temArr[temArr.length - 1][0];
+            }
 
-            option4.xAxis.max = temArr[temArr.length - 1][0];
             option4.series[0].markLine.data = returnArrayToJson(res[i]['crew2']['moudleList']);
             option4.series[1].data = returnJsonArray(res[i]['crew2']['moudleList']);
             option4.series[2].data = returnJsonArray(res[i]['crew2']['realList']);
