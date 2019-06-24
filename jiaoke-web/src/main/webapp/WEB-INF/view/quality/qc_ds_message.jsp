@@ -157,9 +157,9 @@
                     </tr>
                     <tr>
                         <td>矿粉</td>
-                        <td>${productRationSVG.material_stone_1 >= productRationSVG.material_stone_2?  productRationSVG.material_stone_1:productRationSVG.material_stone_2}<i>%</i></td>
-                        <td>${productModelRationSVG.breeze}<i>%</i></td>
-                        <td><fmt:formatNumber value="${productRationSVG.material_stone_1 >= productRationSVG.material_stone_2?  productRationSVG.material_stone_1 - productModelRationSVG.breeze:productRationSVG.material_stone_2 - productModelRationSVG.breeze}" pattern="0.00"/><i>%</i></td>
+                                <td>${productRationSVG.breezeReal}<i>%</i></td>
+                                <td>${productModelRationSVG.breeze}<i>%</i></td>
+                                <td><fmt:formatNumber value="${productRationSVG.breezeReal - productModelRationSVG.breeze}" pattern="0.00"/><i>%</i></td>
                     </tr>
                     <tr>
                         <td>沥青</td>
@@ -170,7 +170,7 @@
                     <tr>
                         <td>再生料</td>
                         <td>${productRationSVG.material_regenerate}<i>%</i></td>
-                        <td>${productModelRationSVG.ratio_regenerate1 + productModelRationSVG.ratio_regenerate2}<i>%</i></td>
+                        <td><fmt:formatNumber value="${productModelRationSVG.ratio_regenerate1 + productModelRationSVG.ratio_regenerate2}" pattern="0.00"/><i>%</i></td>
                         <td><fmt:formatNumber value="${productRationSVG.material_regenerate - productModelRationSVG.ratio_regenerate1 - productModelRationSVG.ratio_regenerate2}" pattern="0.00"/><i>%</i></td>
                     </tr>
                     <tr>
@@ -382,7 +382,6 @@
     <script type="text/javascript">
         var myChart7= echarts.init(document.getElementById('chart7'));
         // 指定图表的配置项和数据
-        var colors = ['#5793f3', '#d14a61', '#675bba'];
         var option7= {
             title: {
                 text: '平均级配曲线图'
@@ -466,35 +465,30 @@
                     }
                 },
                 {
-                    id: 'a',
                     type: 'line',
                     name:'合成级配',
                     symbolSize:6,
                     data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
                 },
                 {
-                    id: 'b',
                     type: 'line',
                     name:'实际级配',
                     symbolSize:6,
                     data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
                 },
                 {
-                    id: 'c',
                     type: 'line',
                     name:'上限',
                     symbolSize:6,
                     data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
                 },
                 {
-                    id: 'd',
                     type: 'line',
                     name:'中值',
                     symbolSize:6,
                     data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
                 },
                 {
-                    id: 'e',
                     type: 'line',
                     name:'下限',
                     symbolSize:6,
@@ -526,7 +520,6 @@
 
 
         for (var i = 0; i < res.length;i++){
-
 
                 var arr = returnJsonArray(res[i]['crew1']['moudleList']);
                 var temArray  = returnArrayToJson(res[i]['crew1']['moudleList']);

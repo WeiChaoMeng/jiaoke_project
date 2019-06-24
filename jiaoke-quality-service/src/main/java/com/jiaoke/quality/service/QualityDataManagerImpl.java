@@ -214,7 +214,7 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
 
         String total = JSON.toJSONString(list);
         String SVG = JSON.toJSONString(SVGList);
-
+        String model = JSON.toJSONString(rationMessageList);
 
         request.setAttribute("ratioNumList",ratioNumList);
         request.setAttribute("rationMessageList",rationMessageList);
@@ -223,6 +223,7 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
         request.setAttribute("producedList",producedList);
         //js用
         request.setAttribute("ProSVG",SVG);
+        request.setAttribute("model",model);
         //客户相关展示
         request.setAttribute("userProList",userProList);
         request.setAttribute("userProTotal",userProTotal);
@@ -333,6 +334,7 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
             asphaltRatio.add(asphaltRation);
         }
 
+
         map.put("aggregate",aggregate);
         map.put("mixture",mixture);
         map.put("asphalt",asphalt);
@@ -342,6 +344,14 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
         map.put("proListJson",JSON.toJSONString(list));
         map.put("template",template);
         map.put("asphaltRatio",asphaltRatio);
+        map.put("aggregateMax",Collections.max(aggregate));
+        map.put("aggregateMin",Collections.min(aggregate));
+        map.put("mixtureMax",Collections.max(mixture));
+        map.put("mixtureMin",Collections.min(mixture));
+        map.put("asphaltMax",Collections.max(asphalt));
+        map.put("asphaltMin",Collections.min(asphalt));
+        map.put("warehouse1Max",Collections.max(warehouse1));
+        map.put("warehouse1Min",Collections.min(warehouse1));
 
         return map;
     }

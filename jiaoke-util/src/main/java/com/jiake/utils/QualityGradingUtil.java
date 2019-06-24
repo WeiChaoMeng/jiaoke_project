@@ -72,10 +72,16 @@ public class QualityGradingUtil {
 
             //计算矿料总量
             float breezeTotal;
-            float regenerateRough = Float.parseFloat(regenerate)*(1 - Float.parseFloat(regenerateRoughRation)/100);
-            float regenerateThin = Float.parseFloat(regenerate)*(1 - Float.parseFloat(regenerateThinRation)/100);
-            float additiveGrading = Float.parseFloat(additive)*(1 - Float.parseFloat(additiveRation)/100);
-            breezeTotal = Float.parseFloat(aggregate1) + Float.parseFloat(stone) + regenerateRough + regenerateThin + additiveGrading;
+            float regenerateRough = 0;
+            float regenerateThin = 0;
+            float regenerateRationCondition = Float.parseFloat(regenerateRoughRation) + Float.parseFloat(regenerateThinRation);
+            if (regenerateRationCondition > 0){
+               regenerateRough = Float.parseFloat(regenerate)/(Float.parseFloat(regenerateRoughRation) + Float.parseFloat(regenerateThinRation))*Float.parseFloat(regenerateRoughRation);
+               regenerateThin = Float.parseFloat(regenerate)/(Float.parseFloat(regenerateRoughRation) + Float.parseFloat(regenerateThinRation)) * Float.parseFloat(regenerateThinRation);
+            }
+
+            float additiveGrading = Float.parseFloat(additive);
+            breezeTotal = Float.parseFloat(aggregate1) + Float.parseFloat(stone) + regenerateRough + regenerateThin + Float.parseFloat(additive);
 
             //计算实际配合比
             float aggregate6Real = Float.parseFloat(aggregate6)/breezeTotal;

@@ -100,6 +100,14 @@ public class QualityDataSummaryImpl implements QualityDataSummaryInf {
 
 
         Map<String, String> realRationMap = QualityProsvg.getProportionBySvgMessage(svgMap);
+        Double stone1 =  Double.parseDouble(realRationMap.get("material_stone_1").toString());
+        Double stone2 =  Double.parseDouble(realRationMap.get("material_stone_2").toString());
+
+        if (stone2 > stone1) {
+            realRationMap.put("breezeReal", String.valueOf(stone2));
+        } else {
+            realRationMap.put("breezeReal", String.valueOf(stone1));
+        }
 
         request.setAttribute("productSVG",svgMap);
         request.setAttribute("productGrading",gradingStr);

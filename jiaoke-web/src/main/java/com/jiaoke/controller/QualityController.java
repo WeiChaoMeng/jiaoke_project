@@ -773,4 +773,15 @@ public class QualityController {
     }
 
     /********************************  级配管理 end *****************************************/
+
+
+    /********************************  实验管理 start *****************************************/
+
+    @RequestMapping("/experimental_management.do")
+    public String experimentalManagement(){
+        return "quality/qc_em_index";
+    }
+
+    /********************************  实验管理 end *****************************************/
+
 }

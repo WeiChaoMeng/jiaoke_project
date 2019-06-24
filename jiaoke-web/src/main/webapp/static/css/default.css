@@ -1454,6 +1454,20 @@ table {
     outline: none;
 }
 
+.my_grading_edit_input{
+    width: 50px;
+    color: #000;
+    height: 26px;
+    border-bottom: solid 1px #484242;
+    line-height: 26px;
+    text-indent: 8px;
+    text-indent: 0;
+    padding-left: 8px;
+    font-family: '微软雅黑';
+    color: #585858;
+    outline: none;
+}
+
 .my_grading_input_remaker{
     width: 160px;
     color: #000;
@@ -1870,7 +1884,7 @@ table.gridtable td {
     margin-top: 22px;
 }
 .dm_form_table td {
-    line-height: 40px;
+    line-height: 25px;
     text-indent: 55px;
 }
 .dm_form_input{

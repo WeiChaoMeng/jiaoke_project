@@ -83,7 +83,7 @@ public class PageBean<T> {
         if (currentPageNum == 1){
             this.pageFirstNum = 0;
         }else {
-            this.pageFirstNum = eachPageDataNum * (currentPageNum - 1) + 1;
+            this.pageFirstNum = eachPageDataNum * (currentPageNum - 1);
         }
 
     }
