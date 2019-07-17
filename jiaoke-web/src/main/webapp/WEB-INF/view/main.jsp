@@ -79,6 +79,10 @@
             </shiro:hasPermission>
 
             <li>
+                <a href="#" class="manu" id="SY">实验管理</a>
+            </li>
+
+            <li>
                 <a href="#" class="manu" id="HR">人事管理</a>
             </li>
 
@@ -558,6 +562,10 @@
                 case 'AQ':
 
                     $("#iframe").attr("src", "/security.do");
+                    break;
+                case 'SY':
+
+                    $("#iframe").attr("src", "/experimental_management.do");
                     break;
             }
 
