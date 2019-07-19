@@ -9,6 +9,7 @@ import org.activiti.bpmn.model.Process;
 import org.activiti.engine.*;
 import org.activiti.engine.history.HistoricActivityInstance;
 import org.activiti.engine.history.HistoricProcessInstance;
+import org.activiti.engine.history.HistoricProcessInstanceQuery;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.impl.RepositoryServiceImpl;
 import org.activiti.engine.impl.identity.Authentication;
@@ -350,6 +351,22 @@ public class ActivitiUtil {
     }
 
     /**
+     * 开启流程实例（支持驳回）
+     *
+     * @param processDefinitionKey 流程定义键
+     * @param businessKey          业务键
+     * @param variables            变量
+     * @param startUserId          发起用户id
+     */
+    public ProcessInstance startProcessInstance(String processDefinitionKey, String businessKey, Map<String, Object> variables, String startUserId) {
+        //设置发起人act_hi_procinst - START_USER_ID_
+        ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
+        processEngine.getIdentityService().setAuthenticatedUserId(startUserId);
+        //启动流程实例
+        return runtimeService.startProcessInstanceByKey(processDefinitionKey, businessKey, variables);
+    }
+
+    /**
      * 根据任务id获取任务
      *
      * @param taskId 任务id
@@ -357,6 +374,16 @@ public class ActivitiUtil {
      */
     public Task getTaskByTaskId(String taskId) {
         return taskService.createTaskQuery().taskId(taskId).singleResult();
+    }
+
+    /**
+     * 根据任务id获取任务
+     *
+     * @param processInstanceId 流程实例Id
+     * @return 流程实例id
+     */
+    public Task getAssigneeByProcessInstanceId(String processInstanceId) {
+        return taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
     }
 
     /**
@@ -416,6 +443,16 @@ public class ActivitiUtil {
     }
 
     /**
+     * 完成审批（无批注）
+     *
+     * @param taskId 任务Id
+     */
+    public void endProcess(String taskId) {
+        //完成并结束
+        taskService.complete(taskId);
+    }
+
+    /**
      * 完成并指定下一个节点
      *
      * @param processInstanceId 流程实例Id
@@ -430,6 +467,16 @@ public class ActivitiUtil {
         taskService.addComment(taskId, processInstanceId, processingOpinion);
 
         //指定下个执行人
+        taskService.complete(taskId, map);
+    }
+
+    /**
+     * 流程启动成功后内部完成并指定下个节点（驳回）
+     *
+     * @param taskId 任务Id
+     * @param map    变量
+     */
+    public void internalCompletion(String taskId, Map<String, Object> map) {
         taskService.complete(taskId, map);
     }
 
@@ -482,6 +529,16 @@ public class ActivitiUtil {
     }
 
     /**
+     * 根据业务Key获取流程实例ID
+     *
+     * @param businessKey 关联业务主键
+     * @return 流程实例id
+     */
+    public HistoricProcessInstance getProcessInstanceByBusinessKey(String businessKey) {
+        return historyService.createHistoricProcessInstanceQuery().processInstanceBusinessKey(businessKey).singleResult();
+    }
+
+    /**
      * 已发布的流程实例
      *
      * @param userId 用户id
@@ -524,22 +581,42 @@ public class ActivitiUtil {
      *
      * @return list
      */
-    public List<OaCollaboration> selectDoneProcessInstance(List<HistoricTaskInstance> historicTaskInstanceList) {
+    public List<OaCollaboration> selectDoneProcessInstance(String assignee) {
+        //存储流程实例Id
+        List<String> processInstanceIdList = new ArrayList<>();
+        //存储最终要展示的数据
         List<OaCollaboration> oaCollaborationList = new ArrayList<>();
-        Set<String> processInstanceIds = new HashSet<>();
-        for (HistoricTaskInstance historicTaskInstance : historicTaskInstanceList) {
-            processInstanceIds.add(historicTaskInstance.getProcessInstanceId());
+        //根据用户id查询历史任务实例列表
+        List<HistoricTaskInstance> historicTaskInstanceList = historyService.createHistoricTaskInstanceQuery().taskAssignee(assignee).finished().orderByHistoricTaskInstanceEndTime().desc().list();
+        //历史任务实例列表为空
+        if (historicTaskInstanceList.size() < 1) {
+            return oaCollaborationList;
+        } else {
+            for (HistoricTaskInstance historicTaskInstance : historicTaskInstanceList) {
+                processInstanceIdList.add(historicTaskInstance.getProcessInstanceId());
+            }
+
+            //去除重复
+            LinkedHashSet<String> linkedHashSet = new LinkedHashSet<>(processInstanceIdList);
+            List<HistoricProcessInstance> historicProcessInstanceList = historyService.createHistoricProcessInstanceQuery().processInstanceIds(linkedHashSet).list();
+            for (HistoricProcessInstance hpi : historicProcessInstanceList) {
+                OaCollaboration oaCollaboration = new OaCollaboration();
+                oaCollaboration.setCorrelationId(hpi.getBusinessKey().substring(hpi.getBusinessKey().lastIndexOf(":") + 1));
+                oaCollaboration.setTable(hpi.getBusinessKey().substring(0, hpi.getBusinessKey().indexOf(":")));
+                oaCollaboration.setProcessInstanceId(hpi.getId());
+                //d当前待办人
+                Task task = getAssigneeByProcessInstanceId(hpi.getId());
+                if (task == null) {
+                    oaCollaboration.setCurrentExecutor("已结束");
+                } else {
+                    oaCollaboration.setCurrentExecutor(task.getAssignee());
+                }
+                oaCollaboration.setStartTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(hpi.getStartTime()));
+                oaCollaborationList.add(oaCollaboration);
+            }
+            return oaCollaborationList;
         }
-        List<HistoricProcessInstance> processInstanceList = historyService.createHistoricProcessInstanceQuery().processInstanceIds(processInstanceIds).finished().orderByProcessInstanceId().desc().list();
-        for (HistoricProcessInstance hpi : processInstanceList) {
-            OaCollaboration oaCollaboration = new OaCollaboration();
-            oaCollaboration.setCorrelationId(hpi.getBusinessKey().substring(hpi.getBusinessKey().lastIndexOf(":") + 1));
-            oaCollaboration.setTable(hpi.getBusinessKey().substring(0, hpi.getBusinessKey().indexOf(":")));
-            oaCollaboration.setProcessInstanceId(hpi.getProcessDefinitionId());
-            oaCollaboration.setStartTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(hpi.getStartTime()));
-            oaCollaborationList.add(oaCollaboration);
-        }
-        return oaCollaborationList;
+
     }
 
     /**
@@ -579,7 +656,11 @@ public class ActivitiUtil {
                     oaCollaboration.setPreviousApprover(startUser);
                 } else {
                     UserTask userTask = getUserTask(task.getProcessDefinitionId(), flow.getSourceRef());
-                    oaCollaboration.setPreviousApprover(userTask.getAssignee());
+                    if (userTask != null) {
+                        oaCollaboration.setPreviousApprover(userTask.getAssignee());
+                    } else {
+                        oaCollaboration.setPreviousApprover("网关");
+                    }
                 }
             }
             list.add(oaCollaboration);

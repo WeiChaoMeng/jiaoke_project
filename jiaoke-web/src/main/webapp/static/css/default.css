@@ -1985,3 +1985,76 @@ table.gridtable td {
 .auxiliary_simpletable a:hover {
     color: #000;
 }
+
+.file-input {
+    width: 45px;
+    height: 28px;
+    display: block;
+    position: absolute;
+    left: 307px;
+    top: 29px;
+    z-index: 10;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.add-but {
+    padding: 5px 10px;
+    background: #38adff;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.file-input:hover {
+    background: #6dbff9;
+}
+
+.file-ul {
+    width: 255px;
+    height: auto;
+    min-height: 25px;
+    margin: 0;
+    float: left;
+    border: 1px #848484 solid;
+    padding: 0 5px;
+}
+
+.file-li {
+    height: 25px;
+    line-height: 25px;
+    float: left;
+    white-space: nowrap;
+    list-style: none;
+    margin: 0 5px;
+    line-height: 25px;
+    display: inline-block;
+}
+
+.icon {
+    font-size: 12px;
+    font-family: "iconfont" !important;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+    color: #7b7b7b;
+    cursor: pointer;
+}
+
+.icon:hover {
+    color: #a5a3a3;
+}
+
+.file-name {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 100px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+}

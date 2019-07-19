@@ -1,6 +1,7 @@
 package com.jiaoke.controller.oa;
 
 import com.google.gson.Gson;
+import com.jiake.utils.JsonHelper;
 import com.jiake.utils.OaResources;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadBase;
@@ -37,6 +38,69 @@ public class FilesUploadHandle {
         FILE_PATH = props.getProperty("file.path");
     }
 
+    /**
+     * 多个文件上传
+     *
+     * @param files    files
+     * @param request  request
+     * @param response response
+     */
+    @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
+    @ResponseBody
+    public void uploadFile(@RequestParam("files") MultipartFile[] files, HttpServletRequest request, HttpServletResponse response) {
+
+        ArrayList<Map<String, Object>> list = new ArrayList<>();
+
+        for (int i = 0; i < files.length; i++) {
+            Map<String, Object> map = new HashMap<>(16);
+            //消息提示
+            String message = "";
+            try {
+                DiskFileItemFactory factory = new DiskFileItemFactory();
+                factory.setSizeThreshold(1024 * 100);
+                ServletFileUpload upload = new ServletFileUpload(factory);
+                upload.setHeaderEncoding("UTF-8");
+                if (!ServletFileUpload.isMultipartContent(request)) {
+                    return;
+                }
+//                upload.setFileSizeMax(1024 * 1024 * 10);
+                upload.setSizeMax(1024 * 1024 * 50);
+                String filename = files[i].getOriginalFilename();
+                if (filename == null || filename.trim().equals("")) {
+                    return;
+                }
+                filename = filename.substring(filename.lastIndexOf("\\") + 1);
+                String fileExtName = filename.substring(filename.lastIndexOf(".") + 1);
+                InputStream in = files[i].getInputStream();
+                String saveFilename = makeFileName(filename);
+                FileOutputStream out = new FileOutputStream(FILE_PATH + "\\" + saveFilename);
+                byte buffer[] = new byte[1024];
+                int len = 0;
+                while ((len = in.read(buffer)) > 0) {
+                    out.write(buffer, 0, len);
+                }
+                in.close();
+                out.close();
+
+                map.put("message", "success");
+                map.put("filePaths", saveFilename);
+                map.put("originalName", filename);
+            } catch (Exception e) {
+                e.printStackTrace();
+                map.put("message", "error");
+            }
+            list.add(map);
+        }
+        writeJson(response, list);
+    }
+
+    /**
+     * 单个文件上传
+     *
+     * @param file     file
+     * @param request  request
+     * @param response response
+     */
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
     public void upload(@RequestParam("file") MultipartFile file, HttpServletRequest request, HttpServletResponse response) {
@@ -99,6 +163,31 @@ public class FilesUploadHandle {
             map.put("message", "error");
         }
         writeJson(response, map);
+    }
+
+    /**
+     * 删除文件
+     *
+     * @param fileName fileName
+     * @return json
+     */
+    @RequestMapping(value = "/deleteFile", method = RequestMethod.POST)
+    @ResponseBody
+    public String deleteFile(String fileName) {
+
+        String filePath = FILE_PATH + fileName;
+
+        File file = new File(filePath);
+
+        if (!file.exists()) {
+            return "error";
+        } else {
+            if (file.delete()) {
+                return "success";
+            } else {
+                return "error";
+            }
+        }
     }
 
     /**

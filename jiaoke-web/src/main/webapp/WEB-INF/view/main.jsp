@@ -414,7 +414,7 @@
 
 <%--文件上传--%>
 <div id="uploadFile" style="display: none;">
-    <div style="margin: auto;height: 65px;text-align: center;vertical-align: middle;line-height: 65px;">
+    <%--<div style="margin: auto;height: 65px;text-align: center;vertical-align: middle;line-height: 65px;">
         <input type="text" id="fileName"
                style="outline: none;padding: 0;margin: 0;height: 25px;width:200px;border: #b9b9b9 1px solid;font-size: 12px;"
                readonly>
@@ -428,11 +428,15 @@
             添加
         </button>
 
+    </div>--%>
+    <div style="margin: 30px">
+        <div id="addFile" style="display:inline-table;"></div>
+        <ul class="file-ul" id="fileNames"></ul>
     </div>
 
-    <div class="option-window-body-bottom">
+    <div class="option-window-body-bottom" style="padding: 0;">
         <input type="button" value="确认" onclick="fileConfirm()" class="body-bottom-button">
-        <input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">
+        <input type="button" value="取消" onclick="fileCancel()" class="body-bottom-button left-spacing">
     </div>
 </div>
 
@@ -441,26 +445,32 @@
     <div style="margin: 10px 0;float: left;width: 100%;">
         <label style="float: left;display: block;padding: 9px 15px;width: 80px;font-weight: 400;line-height: 20px;text-align: right;">当前密码</label>
         <div style="float: left;width: 190px;margin-right: 10px;">
-            <input id="currentPassword" autocomplete="off" type="password" style="outline: none;height: 38px;line-height: 1.3;background-color: #fff;border-radius: 2px;padding-left: 10px;width: 100%;border: 1px solid #e6e6e6;">
+            <input id="currentPassword" autocomplete="off" type="password"
+                   style="outline: none;height: 38px;line-height: 1.3;background-color: #fff;border-radius: 2px;padding-left: 10px;width: 100%;border: 1px solid #e6e6e6;">
         </div>
     </div>
 
     <div style="margin-bottom: 10px;float: left;width: 100%;">
         <label style="float: left;display: block;padding: 9px 15px;width: 80px;font-weight: 400;line-height: 20px;text-align: right;">新密码</label>
         <div style="float: left;width: 190px;margin-right: 10px;">
-            <input type="password" id="newPsw" autocomplete="off" style="outline: none;height: 38px;line-height: 1.3;background-color: #fff;border-radius: 2px;padding-left: 10px;width: 100%;border: 1px solid #e6e6e6;">
+            <input type="password" id="newPsw" autocomplete="off"
+                   style="outline: none;height: 38px;line-height: 1.3;background-color: #fff;border-radius: 2px;padding-left: 10px;width: 100%;border: 1px solid #e6e6e6;">
         </div>
     </div>
 
     <div style="margin-bottom: 20px;float: left;width: 100%;">
         <label style="float: left;display: block;padding: 9px 15px;width: 80px;font-weight: 400;line-height: 20px;text-align: right;">确认密码</label>
         <div style="float: left;width: 190px;margin-right: 10px;">
-            <input type="password" id="confirmPsw"  autocomplete="off" style="outline: none;height: 38px;line-height: 1.3;background-color: #fff;border-radius: 2px;padding-left: 10px;width: 100%;border: 1px solid #e6e6e6;">
+            <input type="password" id="confirmPsw" autocomplete="off"
+                   style="outline: none;height: 38px;line-height: 1.3;background-color: #fff;border-radius: 2px;padding-left: 10px;width: 100%;border: 1px solid #e6e6e6;">
         </div>
     </div>
 
     <div style="margin-bottom: 10px;float: left;width: 100%;text-align: center">
-        <button onclick="editPswCom()" style="outline:none;display: inline-block;height: 38px;line-height: 38px;padding: 0 18px;background-color: #2196F3;color: #fff;white-space: nowrap;text-align: center;font-size: 14px;border: none;border-radius: 2px;cursor: pointer;">确认修改</button>
+        <button onclick="editPswCom()"
+                style="outline:none;display: inline-block;height: 38px;line-height: 38px;padding: 0 18px;background-color: #2196F3;color: #fff;white-space: nowrap;text-align: center;font-size: 14px;border: none;border-radius: 2px;cursor: pointer;">
+            确认修改
+        </button>
     </div>
 </div>
 
@@ -576,19 +586,19 @@
     }
 
     function editPswCom() {
-        if ($.trim($('#currentPassword').val()) === ''){
-                layer.tips('必填项不能为空！','#currentPassword',{
+        if ($.trim($('#currentPassword').val()) === '') {
+            layer.tips('必填项不能为空！', '#currentPassword', {
+                tips: 1
+            });
+        } else {
+            if ($('#confirmPsw').val() !== $('#newPsw').val()) {
+                layer.tips('两次密码输入不一致！', '#confirmPsw', {
                     tips: 1
                 });
-            }else {
-                if ($('#confirmPsw').val() !== $('#newPsw').val()) {
-                    layer.tips('两次密码输入不一致！','#confirmPsw',{
-                        tips: 1
-                    });
-                }else {
-                    layer.msg('成功！！！！！');
-                }
+            } else {
+                layer.msg('成功！！！！！');
             }
+        }
     }
 
     //文件选择
@@ -596,36 +606,93 @@
         $('#fileName').val(own.files[0].name);
     }
 
+    let count = 0;
+
     //上传文件弹窗
     function uploadFile() {
         window.lar = layer.open({
             title: '上传本地文件',
             type: 1,
             area: ['25%', '25%'],
-            shadeClose: true, //点击遮罩关闭
+            shadeClose: false, //点击遮罩关闭
             content: $("#uploadFile"),
-            offset: "auto"
+            offset: "auto",
+            cancel: function () {
+                //初始化上传弹窗
+                fileCancel();
+            }
         });
+    }
+
+    $(function () {
+        addBut();
+    });
+
+    //添加按钮
+    function addBut() {
+        var addFile = '';
+        addFile += '<div id="fileContent1" style="display:inline-table;">';
+        addFile += '<button type="button" class="add-but">添加</button>';
+        addFile += '<input type="file" id="file1" name="file1" class="file-input" onchange="addFile(this)">';
+        addFile += '</div>';
+        $('#addFile').append(addFile);
+    }
+
+    //添加
+    function addFile(owm) {
+        count++;
+
+        var nameHTML = '';
+        nameHTML += '<li class="file-li" id="fileName' + count + '">';
+        nameHTML += '<span class="file-name" title="' + $(owm)[0].files[0].name + '">' + $(owm)[0].files[0].name + '</span>';
+        nameHTML += '<em class="icon" title="删除" onclick="deleteFile(' + count + ')">&#xeabb;</em>';
+        nameHTML += '</li>';
+        $('#fileNames').append(nameHTML);
+
+        $('#fileContent' + count + '').css('display', 'none');
+
+        var addFile = '';
+        addFile += '<div id="fileContent' + (count + 1) + '" style="display:inline-table;">';
+        addFile += '<button type="button" class="add-but">添加</button>';
+        addFile += '<input type="file" id="file' + (count + 1) + '" name="file' + (count + 1) + '" class="file-input" onchange="addFile(this)">';
+        addFile += '</div>';
+        $('#addFile').append(addFile);
+    }
+
+    //删除
+    function deleteFile(id) {
+        $('#fileName' + id).remove();
+        $('#fileContent' + id).remove();
+        layer.msg("删除");
+    }
+
+    //关闭弹窗并初始化
+    function fileCancel() {
+        $('#addFile').html("");
+        $('#fileNames').html("");
+        addBut();
+        count = 0;
+        cancel();
     }
 
     //确认文件上传
     function fileConfirm() {
         var formData = new FormData();
-        var f = $('#file')[0].files[0];
-        formData.append("file", f);
+        $('#addFile').find('input').each(function () {
+            formData.append("files", $(this)[0].files[0]);
+        });
         $.ajax({
             type: "POST",
-            url: '${path}/fileUploadHandle/upload',
+            url: '${path}/fileUploadHandle/uploadFile',
             data: formData,
             async: true,
             cache: false,
             contentType: false,    //不可缺
             processData: false,    //不可缺
             success: function (ret) {
-                if (ret.message === "success") {
+                if (ret[0].message === "success") {
                     layer.msg("上传成功");
-                    $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.writeFile(ret.originalName, ret.filePaths);
-                    cancel();
+                    $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.writeFile(ret);
                 } else {
                     layer.msg("上传失败");
                 }
@@ -634,8 +701,23 @@
                 layer.msg("上传失败，请检查网络后重试!");
             }
         });
+
+        //初始化上传弹窗
+        fileCancel();
     }
 
+    //删除已上传文件
+    function deleteUploaded(fileName) {
+
+        var fileId = fileName.substring(fileName.indexOf("_") + 1);
+        //提示窗
+        layer.confirm('确定要删除"' + fileId + '"吗？', {
+                btn: ['确认', '取消']
+            }, function () {
+                $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.delFile(fileName);
+            }
+        );
+    }
 
     //删除待发公文
     function deleteDocument(id, currentPage) {
@@ -2653,6 +2735,18 @@
         } else {
             $(own).children('td').children('input').attr("checked", true);
         }
+    }
+
+    //提示
+    function tips(tipsContent, anim, icon, time) {
+        layer.msg(tipsContent, {
+            //0平滑放大。默认 1从上掉落、2从最底部往上滑入、3从左滑入、4从左翻滚、5渐显、6抖动
+            anim: anim,
+            //0感叹号、1正确、2错误、3文号、4锁、5哭脸、6笑脸
+            icon: icon,
+            //单位毫秒
+            time: time
+        });
     }
 
     //关闭弹窗

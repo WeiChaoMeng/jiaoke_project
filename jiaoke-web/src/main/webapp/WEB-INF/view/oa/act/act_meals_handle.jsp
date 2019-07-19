@@ -1,9 +1,9 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<!DOCTYPE html>
 <%@ page language="java" contentType="text/html;charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
@@ -18,8 +18,6 @@
 
 <body>
 
-<!--startprint-->
-
 <div class="table-title">
     <span>${oaActMeals.title}</span>
 </div>
@@ -30,11 +28,12 @@
         </div>
 
         <div class="head_left_button" style="float: right;line-height: 40px;" id="printBut">
-            <button type="button" class="cursor_hand" onclick="print()" style="font-size: 13px;">&#xea0e; 打印</button>
+            <button type="button" class="cursor_hand" onclick="printContent()" style="font-size: 13px;">&#xea0e; 打印
+            </button>
         </div>
     </div>
 </div>
-<!--  -->
+
 <table class="formTable" style="margin: 0">
     <tbody>
     <tr>
@@ -115,47 +114,74 @@
     </tr>
 
     <tr>
+        <td class="tdLabel">附件：</td>
+        <td colspan="5" class="table-td-content">
+            <c:forTokens items="${oaActMeals.annex}" delims="," var="annex">
+                <div class="table-file">
+                    <div class="table-file-content">
+                        <span title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                        <a class="table-file-download icon" href="/fileDownloadHandle/download?fileName=${annex}"
+                           title="下载">&#xebda;</a>
+                    </div>
+                </div>
+            </c:forTokens>
+        </td>
+    </tr>
+
+    <tr>
         <td class="tdLabel">备注：</td>
-        <td colspan="5" class="table-td-textarea">
+        <td colspan="5" class="table-td-content">
             ${oaActMeals.remarks}
         </td>
     </tr>
 
+    <shiro:lacksPermission name="mealsApproval">
+        <tr>
+            <c:forEach items="${commentsList}" var="comments">
+                <td class="tdLabel">审批人意见</td>
+                <td colspan="5" class="approval-content">
+                    <textarea disabled="disabled" class="approval-content-textarea">${comments.message}</textarea>
+                    <div class="approval-date">
+                        <label class="approval-date-label">日期:</label>
+                        <input class="approval-date-input" type="text" value="${comments.timeStr}" disabled>
+                    </div>
+                    <div class="approval-signature">
+                        <label class="approval-signature-label">签字:</label>
+                        <input class="approval-signature-input" type="text" value="${comments.userName}" disabled>
+                    </div>
+                </td>
+            </c:forEach>
+        </tr>
+    </shiro:lacksPermission>
+
+    <shiro:hasPermission name="mealsApproval">
+        <tr>
+            <td class="tdLabel">审批人意见</td>
+            <td colspan="5" class="approval-content">
+                <textarea class="approval-content-textarea" id="processingOpinion"
+                          style="background: #ffffff;padding: 5px"></textarea>
+                <div class="approval-date">
+                    <label class="approval-date-label">日期:</label>
+                    <input type="text" class="approval-date-input"
+                           value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date())%>" disabled="disabled">
+                </div>
+                <div class="approval-signature">
+                    <label class="approval-signature-label">签字:</label>
+                    <input type="text" class="approval-signature-input" value="${nickname}" disabled="disabled">
+                </div>
+            </td>
+        </tr>
+    </shiro:hasPermission>
     </tbody>
 </table>
 
-<div class="handle-container">
-    <div class="handle-title">
-        <div class="handle-title-script">处理意见</div>
-    </div>
-
-    <textarea id="processingOpinion" class="opinion-column" style="height: 72px;"></textarea>
-
-    <div class="form-but" style="margin-top: 20px;">
-        <button type="button" class="return-but" style="margin-right: 10px;" onclick="previousPage()">返回</button>
-        <button type="button" class="commit-but" onclick="commit()">提交</button>
-    </div>
+<div class="form-but" style="margin-top: 20px;" id="operationBut">
+    <button type="button" class="return-but" style="margin-right: 10px;" onclick="previousPage()">返回</button>
+    <button type="button" class="commit-but" style="margin-right: 10px;" onclick="commit(1)">提交</button>
+    <shiro:hasPermission name="mealsApproval">
+        <button type="button" class="commit-but" onclick="commit(2)">回退</button>
+    </shiro:hasPermission>
 </div>
-
-<div class="receipt-container">
-    <div class="receipt-title">
-        <div class="receipt-script">回执意见（共条）</div>
-    </div>
-
-    <c:forEach items="${commentsList}" var="comments">
-        <div class="comment-container">
-            <div class="comment-style">
-                <span class="comment-name">${comments.userName}</span>
-                <span class="comment-message">${comments.message}</span>
-                <span class="comment-date">${comments.timeStr}</span>
-            </div>
-        </div>
-    </c:forEach>
-
-    <div class="receipt-style"></div>
-</div>
-
-<!--endprint-->
 
 </body>
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
@@ -171,50 +197,51 @@
     }
 
     //提交
-    function commit() {
+    function commit(flag) {
         var processingOpinion = $('#processingOpinion').val();
+        if (flag === 2) {
+            if ($.trim(processingOpinion) === "") {
+                window.top.tips("请填写回退意见！", 6, 5, 2000);
+            } else {
+                commitAjax(processingOpinion, flag);
+            }
+        } else {
+            commitAjax(processingOpinion, flag);
+        }
+    }
+
+    function commitAjax(processingOpinion, flag) {
         $.ajax({
             type: "post",
             url: '/meals/approvalSubmit',
             data: {
                 'processingOpinion': processingOpinion,
-                'taskId': taskId
+                'taskId': taskId,
+                'flag': flag
             },
             async: false,
             success: function (data) {
                 if (data === 'success') {
+                    window.top.tips('提交成功！', 0, 1, 1000);
                     //返回上一页
                     window.location.href = '${path}/oaHomePage/toOaHomePage';
-                    layer.msg('提交成功！');
                 } else {
-                    layer.msg('提交失败！');
+                    window.top.tips('提交失败！', 0, 2, 1000);
                 }
             },
             error: function (result) {
-                layer.msg("出错！");
+                window.top.tips('错误，请检查网络！', 6, 2, 1000);
             }
         })
     }
 
     //打印
-    function print() {
-        $('#printBut').hide();
-        bdhtml = window.document.body.innerHTML;
-        //开始打印标识字符串有17个字符
-        sprnstr = "<!--startprint-->";
-        //结束打印标识字符串
-        eprnstr = "<!--endprint-->";
-        //从开始打印标识之后的内容
-        prnhtml = bdhtml.substr(bdhtml.indexOf(sprnstr) + 17);
-        //截取开始标识和结束标识之间的内容
-        prnhtml = prnhtml.substring(0, prnhtml.indexOf(eprnstr));
-        //把需要打印的指定内容赋给body.innerHTML
-        window.document.body.innerHTML = prnhtml;
-        //调用浏览器的打印功能打印指定区域
+    function printContent() {
+        //隐藏不需要的内容
+        $('#printBut,#operationBut').hide();
         window.print();
-        // 最后还原页面
-        window.document.body.innerHTML = bdhtml;
-        $('#printBut').show();
+        //还原页面
+        $('#printBut,#operationBut').show();
     }
 
 </script>

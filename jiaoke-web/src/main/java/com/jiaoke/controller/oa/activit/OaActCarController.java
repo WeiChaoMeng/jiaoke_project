@@ -63,7 +63,7 @@ public class OaActCarController {
      *
      * @return jsp
      */
-    @RequestMapping("/toCarApply")
+    @RequestMapping("/toIndex")
     public String toCarApply(Model model) {
         model.addAttribute("nickname", getCurrentUser().getNickname());
         return "oa/act/act_car";
@@ -110,6 +110,8 @@ public class OaActCarController {
         model.addAttribute("oaActCar", oaActCar);
         model.addAttribute("taskId", JsonHelper.toJSONString(taskId));
         model.addAttribute("commentsList", commentsList);
+        model.addAttribute("commentsListLength", commentsList.size());
+        model.addAttribute("nickname", getCurrentUser().getNickname());
         return "oa/act/act_car_handle";
     }
 

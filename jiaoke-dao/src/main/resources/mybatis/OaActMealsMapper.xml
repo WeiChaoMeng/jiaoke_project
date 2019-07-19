@@ -4,8 +4,8 @@
 
     <insert id="insertData" parameterType="com.jiaoke.oa.bean.OaActMeals">
         insert into oa_act_meals
-            (id,title,applicant,entertain,dining_time,standard,chef,`number`,place,table_number,dishes,dishes_content,remarks,create_time,promoter,url)
+            (id,title,applicant,entertain,dining_time,standard,chef,`number`,place,table_number,dishes,dishes_content,remarks,annex,create_time,promoter,url)
         values
-            (#{id},#{title},#{applicant},#{entertain},#{diningTime},#{standard},#{chef},#{number},#{place},#{tableNumber},#{dishes},#{dishesContent},#{remarks},#{createTime},#{promoter},#{url})
+            (#{id},#{title},#{applicant},#{entertain},#{diningTime},#{standard},#{chef},#{number},#{place},#{tableNumber},#{dishes},#{dishesContent},#{remarks},#{annex},#{createTime},#{promoter},#{url})
     </insert>
 </mapper>

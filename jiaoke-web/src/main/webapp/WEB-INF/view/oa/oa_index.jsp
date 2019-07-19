@@ -74,141 +74,262 @@
 
         <div class="template_content">
             <div>
-                <div style="height:100%;width:100%;">
+                <div style="height:100%;width:100%;overflow: auto">
 
                     <table border="0" cellspacing="0" cellpadding="0" width="100%">
                         <tbody>
                         <tr>
                             <td class="template" valign="middle">
-                                <a class="check_color" onclick="carApplication()" title="用车申请单">
-                                    <img src="../../../static/images/icon/table.png">用车申请单
+                                <a class="check_color" onclick="commonJump('car')" title="用车申请单">
+                                    <em class="template-icon">&#xe695;</em>用车申请单
                                 </a>
                             </td>
 
                             <td class="template" valign="middle">
                                 <a class="check_color" onclick="meals()" title="客饭审批单">
-                                    <img src="../../../static/images/icon/table.png">客饭审批单
+                                    <em class="template-icon">&#xe695;</em>客饭审批单
                                 </a>
                             </td>
 
                             <td class="template" valign="middle">
                                 <a class="check_color" onclick="card()" title="饭卡申请单">
-                                    <img src="../../../static/images/icon/table.png">饭卡申请单
+                                    <em class="template-icon">&#xe695;</em>饭卡申请单
                                 </a>
                             </td>
 
                             <td class="template" valign="middle">
                                 <a class="check_color" onclick="sealsBorrow()" title="印章借用审批单">
-                                    <img src="/static/images/icon/table.png">印章借用审批单
+                                    <em class="template-icon">&#xe695;</em>印章借用审批单
                                 </a>
                             </td>
 
                             <td class="template" valign="middle">
                                 <a class="check_color" onclick="sealsUse()" title="印章使用审批单">
-                                    <img src="/static/images/icon/table.png">印章使用审批单
+                                    <em class="template-icon">&#xe695;</em>印章使用审批单
                                 </a>
                             </td>
 
                             <td class="template" valign="middle">
                                 <a class="check_color" onclick="licenceBorrow()" title="证照借用审批单（原件）">
-                                    <img src="/static/images/icon/table.png">证照借用审批单（原件）
+                                    <em class="template-icon">&#xe695;</em>证照借用审批单（原件）
+                                </a>
+                            </td>
+
+                            <td class="template" valign="middle">
+                                <a class="check_color" onclick="licenceUse()" title="证照使用审批单（复印件）">
+                                    <em class="template-icon">&#xe695;</em>证照使用审批单（复印件）
+                                </a>
+                            </td>
+
+                            <td class="template" valign="middle">
+                                <a class="check_color" onclick="commonJump('review')"  title="合同审查表">
+                                    <em class="template-icon">&#xe695;</em>合同审查表
                                 </a>
                             </td>
                         </tr>
 
                         <tr>
                             <td class="template" valign="middle">
-                                <a class="check_color" onclick="licenceUse()" title="证照使用审批单（复印件）">
-                                    <img src="/static/images/icon/table.png">证照使用审批单（复印件）
+                                <a class="check_color" onclick="read()" title="收文阅办审批单">
+                                    <em class="template-icon">&#xe695;</em>收文阅办审批单
                                 </a>
                             </td>
 
-                            <%--<td class="template" valign="middle">
-                                <a class="check_color" onclick="review()" title="合同审查表">
-                                    <img src="../../../static/images/icon/table.png">合同审查表
-                                </a>
-                            </td>--%>
-
-                           <%-- <td class="template" valign="middle">
-                                <a class="check_color" onclick="read()" title="收文阅办审批单">
-                                    <img src="/static/images/icon/table.png">收文阅办审批单
-                                </a>
-                            </td>--%>
-
                             <td class="template" valign="middle">
                                 <a class="check_color" onclick="maintain()" title="设备维修申请单">
-                                    <img src="/static/images/icon/table.png">设备维修申请单
+                                    <em class="template-icon">&#xe695;</em>设备维修申请单
                                 </a>
                             </td>
 
                             <td class="template" valign="middle">
                                 <a class="check_color" onclick="acceptance()" title="验收单">
-                                    <img src="/static/images/icon/table.png">验收单
+                                    <em class="template-icon">&#xe695;</em>验收单
                                 </a>
                             </td>
 
                             <td class="template" valign="middle">
                                 <a class="check_color" onclick="engineering()" title="工程名称变更记录表">
-                                    <img src="/static/images/icon/table.png">工程名称变更记录表
+                                    <em class="template-icon">&#xe695;</em>工程名称变更记录表
                                 </a>
                             </td>
-                        </tr>
 
-                        <%--<tr>
                             <td class="template" valign="middle">
                                 <a class="check_color" onclick="assets()" title="固定资产投资完成验收单（生产用）">
-                                    <img src="/static/images/icon/table.png">固定资产投资完成验收单（生产用）
+                                    <em class="template-icon">&#xe695;</em>固定资产投资完成验收单（生产用）
                                 </a>
                             </td>
 
                             <td class="template" valign="middle">
                                 <a class="check_color" onclick="supplies()" title="办公用品需求计划">
-                                    <img src="/static/images/icon/table.png">办公用品需求计划
+                                    <em class="template-icon">&#xe695;</em>办公用品需求计划
                                 </a>
                             </td>
 
                             <td class="template" valign="middle">
-                                <a class="check_color" onclick="confirm()" title="确认单审批单">
-                                    <img src="/static/images/icon/table.png">确认单审批单
+                                <a class="check_color" onclick="commonJump('confirm')" title="确认单审批单">
+                                    <em class="template-icon">&#xe695;</em>确认单审批单
                                 </a>
                             </td>
 
                             <td class="template" valign="middle">
                                 <a class="check_color" onclick="liaison()" title="信息联络处理单">
-                                    <img src="/static/images/icon/table.png">信息联络处理单
+                                    <em class="template-icon">&#xe695;</em>信息联络处理单
                                 </a>
                             </td>
+                        </tr>
 
+                        <%--new--%>
+                        <tr>
                             <td class="template" valign="middle">
                                 <a class="check_color" onclick="assetUse()" title="资产领用申请单">
-                                    <img src="/static/images/icon/table.png">资产领用申请单
+                                    <em class="template-icon">&#xe695;</em>资产领用申请单
                                 </a>
                             </td>
 
                             <td class="template" valign="middle">
                                 <a class="check_color" onclick="conferenceRoom()" title="会议室申请单">
-                                    <img src="/static/images/icon/table.png">会议室申请单
-                                </a>
-                            </td>
-                        </tr>--%>
-
-                        <%--<tr>
-                            <td class="template" valign="middle">
-                                <a class="check_color" onclick="leaveRequest()" title="请假申请单">
-                                    <img src="/static/images/icon/table.png">请假申请单
+                                    <em class="template-icon">&#xe695;</em>会议室申请单
                                 </a>
                             </td>
 
                             <td class="template" valign="middle">
-                                <a class="check_color" onclick="filesUpload()" title="文件上传">
-                                    <img src="/static/images/icon/table.png">文件上传</a>
+                                <a class="check_color" onclick="commonJump('regularization')" title="转正申请表">
+                                    <em class="template-icon">&#xe695;</em>转正申请表
+                                </a>
                             </td>
 
                             <td class="template" valign="middle">
-                                <a class="check_color" onclick="filesDownload()" title="文件下载">
-                                    <img src="/static/images/icon/table.png">文件下载</a>
+                                <a class="check_color" onclick="commonJump('transfer')" title="转岗审批表">
+                                    <em class="template-icon">&#xe695;</em>转岗审批表
+                                </a>
                             </td>
-                        </tr>--%>
+
+                            <td class="template" valign="middle">
+                                <a class="check_color" onclick="commonJump('transferTwo')" title="转岗审批表2">
+                                    <em class="template-icon">&#xe695;</em>转岗审批表2
+                                </a>
+                            </td>
+
+                            <td class="template" valign="middle">
+                                <a class="check_color" onclick="commonJump('rotation')" title="员工轮岗审批表">
+                                    <em class="template-icon">&#xe695;</em>员工轮岗审批表
+                                </a>
+                            </td>
+
+                            <td class="template" valign="middle">
+                                <a class="check_color" onclick="commonJump('rotationHandover')" title="轮岗交接表">
+                                    <em class="template-icon">&#xe695;</em>轮岗交接表
+                                </a>
+                            </td>
+
+                            <td class="template" valign="middle">
+                                <a class="check_color" onclick="commonJump('adjustWages')" title="调资审批表">
+                                    <em class="template-icon">&#xe695;</em>调资审批表
+                                </a>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="template" valign="middle">
+                                <a class="check_color" onclick="commonJump('productionLeave')" title="生产假审批表">
+                                    <em class="template-icon">&#xe695;</em>生产假审批表
+                                </a>
+                            </td>
+
+                            <td class="template" valign="middle">
+                                <a class="check_color" onclick="commonJump('integrity')" title="廉政谈话审批表">
+                                    <em class="template-icon">&#xe695;</em>廉政谈话审批表
+                                </a>
+                            </td>
+
+                            <td class="template" valign="middle">
+                                <a class="check_color" onclick="commonJump('dimission')" title="离职会签表">
+                                    <em class="template-icon">&#xe695;</em>离职会签表
+                                </a>
+                            </td>
+
+                            <td class="template" valign="middle">
+                                <a class="check_color" onclick="commonJump('pactStop')" title="劳务协议终止通知书">
+                                    <em class="template-icon">&#xe695;</em>劳务协议终止通知书
+                                </a>
+                            </td>
+
+                            <td class="template" valign="middle">
+                                <a class="check_color" onclick="commonJump('pactSign')" title="劳务派遣员工协议签订、续订、变更、终止审批表">
+                                    <em class="template-icon">&#xe695;</em>劳务派遣员工协议签订、续订、变更、终止审批表
+                                </a>
+                            </td>
+
+                            <td class="template" valign="middle">
+                                <a class="check_color" onclick="commonJump('contractSign')"
+                                   title="劳务派遣员工合同签订、续订、变更、终止审批表">
+                                    <em class="template-icon">&#xe695;</em>劳务派遣员工合同签订、续订、变更、终止审批表
+                                </a>
+                            </td>
+
+                            <td class="template" valign="middle">
+                                <a class="check_color" onclick="commonJump('laborContractStop')" title="劳动合同终止通知书">
+                                    <em class="template-icon">&#xe695;</em>劳动合同终止通知书
+                                </a>
+                            </td>
+
+                            <td class="template" valign="middle">
+                                <a class="check_color" onclick="commonJump('laborContractSign')" title="劳动合同签订通知书">
+                                    <em class="template-icon">&#xe695;</em>劳动合同签订通知书
+                                </a>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="template" valign="middle">
+                                <a class="check_color" onclick="commonJump('laborContractRenewal')"
+                                   title="劳动合同签订、续订、变更、终止审批表">
+                                    <em class="template-icon">&#xe695;</em>劳动合同签订、续订、变更、终止审批表
+                                </a>
+                            </td>
+
+                            <td class="template" valign="middle">
+                                <a class="check_color" onclick="commonJump('relieveLaborContract')" title="解除劳动合同审批表">
+                                    <em class="template-icon">&#xe695;</em>解除劳动合同审批表
+                                </a>
+                            </td>
+
+                            <td class="template" valign="middle">
+                                <a class="check_color" onclick="commonJump('rewardsPenalties')" title="奖罚意见表">
+                                    <em class="template-icon">&#xe695;</em>奖罚意见表
+                                </a>
+                            </td>
+
+                            <td class="template" valign="middle">
+                                <a class="check_color" onclick="commonJump('overtime')" title="加班审批表、统计表">
+                                    <em class="template-icon">&#xe695;</em>加班审批表、统计表
+                                </a>
+                            </td>
+
+                            <td class="template" valign="middle">
+                                <a class="check_color" onclick="commonJump('personalInfo')" title="个人信息登记表">
+                                    <em class="template-icon">&#xe695;</em>个人信息登记表
+                                </a>
+                            </td>
+
+                            <td class="template" valign="middle">
+                                <a class="check_color" onclick="commonJump('leave')" title="请假审批表">
+                                    <em class="template-icon">&#xe695;</em>请假审批表
+                                </a>
+                            </td>
+
+                            <td class="template" valign="middle">
+                                <a class="check_color" onclick="commonJump('annualLeave')" title="年休假审批表">
+                                    <em class="template-icon">&#xe695;</em>年休假审批表
+                                </a>
+                            </td>
+
+                            <td class="template" valign="middle">
+                                <a class="check_color" onclick="commonJump('overtimeRest')" title="加班（倒休）审批表">
+                                    <em class="template-icon">&#xe695;</em>加班（倒休）审批表
+                                </a>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
 
@@ -303,10 +424,16 @@
         });
     });
 
-    //用车申请单
+    /*-----------new---------------*/
+
+    function commonJump(classAddress) {
+        window.location.href = "${path}" + classAddress + "/toIndex";
+    }
+
+    /*//用车申请单
     function carApplication() {
         window.location.href = "${path}/car/toCarApply";
-    }
+    }*/
 
     //客饭审批单
     function meals() {
@@ -317,11 +444,11 @@
     function card() {
         window.location.href = "${path}/card/toCard";
     }
-
+/*
     //合同审查表
     function review() {
         window.location.href = "${path}/review/toReview";
-    }
+    }*/
 
     //印章借用审批单
     function sealsBorrow() {
@@ -368,10 +495,10 @@
         window.location.href = "${path}/actTab/toOfficeSupplies";
     }
 
-    //确认单审批单 confirm
+   /* //确认单审批单 confirm
     function confirm() {
         window.location.href = "${path}/confirm/toConfirm";
-    }
+    }*/
 
     //信息联络处理单
     function liaison() {
@@ -383,33 +510,7 @@
         window.location.href = "${path}/read/toRead";
     }
 
-    //资产领用申请单
-    function assetUse() {
-        window.location.href = "${path}/assetUse/toAssetUse";
-    }
-
-    //会议室申请单
-    function conferenceRoom() {
-        window.location.href = "${path}/conferenceRoom/toConferenceRoom";
-    }
-
-    //请假申请单
-    function leaveRequest() {
-        window.location.href = "${path}/leaveRequest/toLeaveRequest";
-    }
-
-    /*------其他------*/
-
-    //上传
-    function filesUpload() {
-        window.location.href = "${path}/actTab/filesUpload";
-    }
-
-    //下载
-    function filesDownload() {
-        window.location.href = "${path}/actTab/filesDownload";
-    }
-
+    /*-------------------------------------------------------------*/
     //待办工作板块 - 任务审批处理页面
     function taskApprovalHandle(url, id, taskId) {
         url += "/approval";

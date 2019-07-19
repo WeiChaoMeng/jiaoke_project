@@ -83,6 +83,11 @@ public class OaActMeals {
     private String remarks;
 
     /**
+     * 附件
+     */
+    private String annex;
+
+    /**
      * 创建日期
      */
     private Date createTime;
@@ -209,6 +214,14 @@ public class OaActMeals {
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
+    }
+
+    public String getAnnex() {
+        return annex;
+    }
+
+    public void setAnnex(String annex) {
+        this.annex = annex;
     }
 
     public Date getCreateTime() {

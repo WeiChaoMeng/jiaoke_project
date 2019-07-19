@@ -5,6 +5,7 @@ import com.jiaoke.oa.bean.OaActCar;
 import com.jiaoke.oa.bean.OaCollaboration;
 import com.jiaoke.oa.dao.OaActCarMapper;
 import com.jiaoke.oa.dao.OaCollaborationMapper;
+import com.jiaoke.oa.dao.UserInfoMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -25,6 +26,9 @@ public class OaActCarServiceImpl implements OaActCarService {
 
     @Resource
     private OaCollaborationMapper oaCollaborationMapper;
+
+    @Resource
+    private UserInfoMapper userInfoMapper;
 
     @Override
     public int savePending(OaActCar oaActCar, Integer userId, String randomId) {
@@ -95,6 +99,7 @@ public class OaActCarServiceImpl implements OaActCarService {
         oaActCar.setStartTimeStr(DateUtil.dateConvertYYYYMMDDHHMM(oaActCar.getStartTime()));
         oaActCar.setEndTimeStr(DateUtil.dateConvertYYYYMMDDHHMM(oaActCar.getEndTime()));
         oaActCar.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActCar.getCreateTime()));
+        oaActCar.setPromoterStr(userInfoMapper.getNicknameById(oaActCar.getPromoter()));
         return oaActCar;
     }
 

@@ -37,9 +37,10 @@
     <thead>
     <th style="width: 3%;"><input type="checkbox"></th>
     <th style="width: 3%;">序号</th>
-    <th style="width: 64%;">标题</th>
+    <th style="width: 49%;">标题</th>
     <th style="width: 15%;">发起人</th>
     <th style="width: 15%;">发起时间</th>
+    <th style="width: 15%;">当前待办人</th>
     </thead>
 
     <tbody id="tbody">
@@ -160,7 +161,7 @@
 
         if (resultLists === 'noData') {
             result += '<tr>';
-            result += '<td colspan="5">' + '没有查询到匹配记录' + '</td>';
+            result += '<td colspan="6">' + '没有查询到匹配记录' + '</td>';
             result += '</tr>';
             $("#PageCount").val(0);
             //每页显示条数
@@ -180,8 +181,9 @@
                 result += '<td><input type="checkbox" value="' + resultList[i].id + '" onclick="window.event.cancelBubble=true;"></td>';
                 result += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 15 + i + 1) + '</td>';
                 result += '<td style="text-align:left;text-indent:10px" title="' + resultList[i].title + '">' + resultList[i].title + '</td>';
-                result += '<td style="color: #2196F3;font-weight: 600;">' + resultList[i].promoterStr + '</td>';
+                result += '<td>' + resultList[i].promoterStr + '</td>';
                 result += '<td>' + resultList[i].startTimeStr + '</td>';
+                result += '<td style="color: #2196F3;font-weight: 600;">' + resultList[i].currentExecutor + '</td>';
                 result += '</tr>';
             }
         }
