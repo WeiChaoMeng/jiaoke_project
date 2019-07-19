@@ -18,8 +18,10 @@ import com.jiaoke.quality.bean.QualityRatioModel;
 import com.jiaoke.quality.bean.QualityRatioTemplate;
 import com.jiaoke.quality.service.QualityGradingManagerInf;
 import com.jiaoke.quality.service.*;
+import org.apache.ibatis.annotations.Param;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -68,6 +70,8 @@ public class QualityController {
     private QualityDataSummaryInf qualityDataSummaryInf;
     @Autowired
     private QualityGradingManagerInf qualityGradingManagerInf;
+    @Autowired
+    private QualityExperimentalManagerInf qualityExperimentalManagerInf;
 
     /**
      *
@@ -777,11 +781,225 @@ public class QualityController {
 
     /********************************  实验管理 start *****************************************/
 
+    /**
+     *
+     * 功能描述: <br>
+     *  <实验首页跳转>
+     * @param []
+     * @return java.lang.String
+     * @auther Melone
+     * @date 2019/6/26 11:48
+     */
     @RequestMapping("/experimental_management.do")
     public String experimentalManagement(){
         return "quality/qc_em_index";
     }
 
+    /**
+     *
+     * 功能描述: <br>
+     *  <跳转到取样单页面>
+     * @param []
+     * @return java.lang.String
+     * @auther Melone
+     * @date 2019/6/26 11:48
+     */
+    @RequestMapping("/getSampleManagementPage.do")
+    public String getSampleManagementPage(){
+        return "quality/qc_em_sample_management";
+    }
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询所有取样单>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/6/27 10:57
+     */
+    @ResponseBody
+    @RequestMapping("/getAllSamplingPage.do")
+    public String getAllSamplingPage(){
+        String res = qualityExperimentalManagerInf.getAllSamplingPage();
+        return res;
+    }
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <返回from表单下拉框字段>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/6/26 11:51
+     */
+    @ResponseBody
+    @RequestMapping("/getSamplingPageFromData.do")
+    public String getSamplingPageFromData(){
+        String res = qualityExperimentalManagerInf.getSamplingPageFromData();
+        return res;
+    };
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <新建取样单方法>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/6/27 10:02
+     */
+    @ResponseBody
+    @RequestMapping(value = "/addSample.do",method = RequestMethod.POST)
+    public String addSample(String materials,String manufacturers,String specification,String tunnage,String creat_time,String remark ){
+       String res =  qualityExperimentalManagerInf.addSample(materials,manufacturers,specification,tunnage,creat_time,remark);
+       return res;
+    };
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据ID删除取样单>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/6/26 17:38
+     */
+     @ResponseBody
+     @RequestMapping(value = "/removeSampleById.do",method = RequestMethod.POST)
+     public String removeSampleById(@RequestParam("id") String id){
+         String res = qualityExperimentalManagerInf.removeSampleById(id);
+         return res;
+     }
+
+     @ResponseBody
+     @RequestMapping(value = "/confirmCompletedById.do",method = RequestMethod.POST)
+     public String confirmCompletedById(@RequestParam("id") String id){
+        String res = qualityExperimentalManagerInf.confirmCompletedById(id);
+        return res;
+     }
+
+
+     //实验管理页面(委托单列表)
+
+    @RequestMapping(value = "/getExperimentalManagement.do")
+    public String getExperimentalManagement(){
+         return "quality/qc_em_experimental_management";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getAllexperimental.do")
+    public String getAllexperimental(){
+       String res =  qualityExperimentalManagerInf.getAllexperimental();
+       return res;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getExperimentalMessageById.do",method = RequestMethod.POST)
+    public String getExperimentalMessageById(@RequestParam("id") String id){
+         String res = qualityExperimentalManagerInf.getExperimentalMessageById(id);
+         return res;
+    }
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据ID查询当前选择的已经选择的试验项目>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/7/3 10:45
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getExperimentalItemByOrderNum.do",method = RequestMethod.POST)
+    public String getExperimentalItemByOrderNum(@RequestParam("orderNum") String orderNum){
+        String res = qualityExperimentalManagerInf.getExperimentalItemByOrderNum(orderNum);
+        return res;
+    }
+    @ResponseBody
+    @RequestMapping(value ="/getExperimentalItemById.do",method = RequestMethod.POST)
+    public String getExperimentalItemById(@RequestParam("id") String id){
+        String res = qualityExperimentalManagerInf.getExperimentalItemById(id);
+        return res;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/addExperimentalItemByOrderTicketNum.do",method = RequestMethod.POST)
+    public String addExperimentalItemByOrderTicketNum(@RequestParam("orderTicketNum") String orderTicketNum,@RequestParam("experimentalItemId") String experimentalItemId){
+         String res = qualityExperimentalManagerInf.addExperimentalItemByOrderTicketNum(orderTicketNum,experimentalItemId);
+         return res;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/getExperimentalItemCount.do",method = RequestMethod.POST)
+    public String getExperimentalItemCount(@RequestParam("orderTicketNum") String orderTicketNum){
+        String res = qualityExperimentalManagerInf.getExperimentalItemCount(orderTicketNum);
+        return res;
+    }
     /********************************  实验管理 end *****************************************/
+
+    /********************************  未完实验 Start *****************************************/
+
+    @RequestMapping(value ="/getExperimentMessagePage.do")
+    public String getExperimentMessagePage(){
+        return "quality/qc_em_unfinished_experimental";
+    }
+    @ResponseBody
+    @RequestMapping("/getAllExperimentalItem.do")
+    public String getAllExperimentalItem(){
+        String res = qualityExperimentalManagerInf.getAllExperimentalItem();
+        return res;
+    }
+
+
+    @RequestMapping("/getExperimentalItemMsgPage.do")
+    public String getExperimentalItemMsgPage(@RequestParam("id") String id,HttpServletRequest request){
+        request.setAttribute("id",id);
+        return "quality/qc_em_experimental_model";
+    }
+
+    @ResponseBody
+    @RequestMapping("/getExperimentalItemMsgById.do")
+    public String getExperimentalItemMsgById(@RequestParam("id") String id){
+        String msg = qualityExperimentalManagerInf.getExperimentalItemMsgById(id);
+        return msg;
+    }
+
+    @ResponseBody
+    @RequestMapping("/getExperimentalItemListById.do")
+    public String getExperimentalItemListById(@RequestParam("id") String id){
+        String res = qualityExperimentalManagerInf.getExperimentalItemNumList(id);
+        return res;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/sendFromData.do",method = RequestMethod.POST)
+    public String sendFromData(@RequestParam("fromJson") String fromJson,@RequestParam("firstTest") String firstTest,@RequestParam("coarseTest") String coarseTest){
+        String res = qualityExperimentalManagerInf.addExperimentalMsgAndItem(fromJson,firstTest,coarseTest);
+        return res;
+    }
+
+    @RequestMapping("/getExperimentalMsgById.do")
+    public String getExperimentalMsgById(@RequestParam("id") String id,HttpServletRequest request){
+        request.setAttribute("id",id);
+        return "quality/qc_em_experimental_message";
+    }
+    @ResponseBody
+    @RequestMapping(value = "/getExperimentalProjectMessage.do",method = RequestMethod.POST)
+    public String getExperimentalProjectMessage(@RequestParam("id") String  id){
+        String res = qualityExperimentalManagerInf.getExperimentalProjectMessage(id);
+        return res;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/showExperimentalProjectItem.do",method = RequestMethod.POST)
+    public String showExperimentalProjectItem(@RequestParam("tableName") String tableName,@RequestParam("experiment_num") String experiment_num){
+        String res = qualityExperimentalManagerInf.getExperimentalProjectItem(tableName,experiment_num);
+        return res;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/removeExperimentalItemById.do",method = RequestMethod.POST)
+    public String removeExperimentalItemById(@RequestParam("id") String id){
+        String res = qualityExperimentalManagerInf.removeExperimentalItemById(id);
+        return res;
+    }
+    /********************************  未完实验 end *****************************************/
 
 }

@@ -42,11 +42,11 @@
             <div class="login-form">
                 <div class="login_input_content">
                     <div class="left-icon"><img src="/static/images/icon/username.png" alt=""></div>
-                    <input type="text" placeholder="用户名" name="username" id="username" class="right-input" autocomplete="off">
+                    <input type="text" placeholder="用户名" name="username" id="username" class="right-input" autocomplete="off" aria-placeholder="admin">
                 </div>
                 <div class="login_input_content">
                     <div class="left-icon"><img src="/static/images/icon/password.png" alt=""></div>
-                    <input type="password" placeholder="密码" name="password" id="password" class="right-input" autocomplete="off">
+                    <input type="password" placeholder="密码" name="password" id="password" class="right-input" autocomplete="off" aria-placeholder="admin">
                 </div>
                 <div class="login_input_content">
                     <button type="submit" class="login-but" id="submit">登录</button>

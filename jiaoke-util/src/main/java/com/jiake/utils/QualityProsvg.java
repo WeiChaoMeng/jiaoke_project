@@ -105,18 +105,18 @@ public class QualityProsvg {
             if (list.get(0).containsKey("ratio_regenerate1")){
                 map.put("crewNum",list.get(0).get("crewNum").toString());
                 map.put("repertory_one",list.get(1).get("repertory_one").toString());
-                map.put("repertory_two",list.get(1).get("repertory_one").toString());
-                map.put("repertory_three",list.get(1).get("repertory_one").toString());
-                map.put("repertory_four",list.get(1).get("repertory_one").toString());
-                map.put("repertory_five",list.get(1).get("repertory_one").toString());
-                map.put("repertory_six",list.get(1).get("repertory_one").toString());
-                map.put("breeze",list.get(1).get("repertory_one").toString());
-                map.put("ratio_stone",list.get(1).get("repertory_one").toString());
-                map.put("ratio_regenerate1",list.get(1).get("repertory_one").toString());
-                map.put("ratio_additive",list.get(1).get("repertory_one").toString());
-                map.put("regenerate",list.get(1).get("repertory_one").toString());
-                map.put("additive",list.get(1).get("repertory_one").toString());
-                map.put("ratio_regenerate2",list.get(1).get("repertory_one").toString());
+                map.put("repertory_two",list.get(1).get("repertory_two").toString());
+                map.put("repertory_three",list.get(1).get("repertory_three").toString());
+                map.put("repertory_four",list.get(1).get("repertory_four").toString());
+                map.put("repertory_five",list.get(1).get("repertory_five").toString());
+                map.put("repertory_six",list.get(1).get("repertory_six").toString());
+                map.put("breeze",list.get(1).get("breeze").toString());
+                map.put("ratio_stone",list.get(1).get("ratio_stone").toString());
+                map.put("ratio_regenerate1",list.get(1).get("ratio_regenerate1").toString());
+                map.put("ratio_additive",list.get(1).get("ratio_additive").toString());
+                map.put("regenerate",list.get(1).get("regenerate").toString());
+                map.put("additive",list.get(1).get("additive").toString());
+                map.put("ratio_regenerate2",list.get(1).get("ratio_regenerate2").toString());
             }
         }
 

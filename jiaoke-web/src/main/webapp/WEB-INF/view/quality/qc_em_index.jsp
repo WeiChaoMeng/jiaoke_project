@@ -11,8 +11,8 @@
 <div id="theGrid" class="main">
     <section class="grid">
 
-        <a class="grid__item" href="#">
-            <h2 class="title title--preview">新建取样</h2>
+        <a class="grid__item" href="javacript:void(0);" onclick="sample_management()">
+            <h2 class="title title--preview">取样管理</h2>
             <div class="loader"></div>
             <span class="category">取样通知相关</span>
             <div class="meta meta--preview">
@@ -21,8 +21,8 @@
                 <span class="meta__reading-time"><i class="fa fa-clock-o"></i></span>
             </div>
         </a>
-        <a class="grid__item" href="#">
-            <h2 class="title title--preview">新建实验</h2>
+        <a class="grid__item" href="javacript:void(0);" onclick="experimental_management()">
+            <h2 class="title title--preview">实验管理</h2>
             <div class="loader"></div>
             <span class="category">实验相关流程</span>
             <div class="meta meta--preview">
@@ -31,7 +31,7 @@
                 <span class="meta__reading-time"><i class="fa fa-clock-o"></i></span>
             </div>
         </a>
-        <a class="grid__item" href="#">
+        <a class="grid__item" href="javacript:void(0);" onclick="unfinished_experimental()">
             <h2 class="title title--preview">未完实验</h2>
             <div class="loader"></div>
             <span class="category">填写实验数据、输入计算表格</span>
@@ -63,7 +63,7 @@
         </a>
 
         <a class="grid__item" href="#">
-            <h2 class="title title--preview">新建取样</h2>
+            <h2 class="title title--preview">取样管理</h2>
             <div class="loader"></div>
             <span class="category">取样通知相关</span>
             <div class="meta meta--preview">
@@ -73,7 +73,7 @@
             </div>
         </a>
         <a class="grid__item" href="#">
-            <h2 class="title title--preview">新建实验</h2>
+            <h2 class="title title--preview">实验管理</h2>
             <div class="loader"></div>
             <span class="category">实验相关流程</span>
             <div class="meta meta--preview">
@@ -114,7 +114,10 @@
         </a>
     </section>
 </div>
+<%--js获取路径--%>
+<input id="path" type="hidden" value="${path}"/>
 </body>
-
-
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/js/layer/layer.js"></script>
+<script type="text/javascript" src="/static/js/qc/qc_experimental.js"></script>
 </html>

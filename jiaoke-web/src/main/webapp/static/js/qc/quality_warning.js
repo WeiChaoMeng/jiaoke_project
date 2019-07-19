@@ -55,7 +55,7 @@ function getWarningData() {
                     }
 
                     /****************渲染材料数据*****************/
-                    if (res[i].material_name == '沥青温度' || res[i].material_name == '混合料温度' || res[i].material_name == '骨料温度') {
+                    if (res[i].material_name == '沥青温度' || res[i].material_name == '混合料温度' || res[i].material_name == '骨料温度'||res[i].material_name == '一仓温度') {
                         $(materialStr).append(
                             '<tr class="warning_table_even">'
                             + '<td>' + res[i].material_name + '</td>'

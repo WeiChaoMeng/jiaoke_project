@@ -104,10 +104,7 @@
         <%--<a href="#" id="prodoct_list" onclick="prodoct_list()" class="menu_selected">--%>
         <%--<i class="menuico iconfont1">&#xebdc;</i>产品报表</a>--%>
         <%--</li>--%>
-        <li>
-            <a href="#" id="experimental_management" class="menu_selected" onclick="experimental_management()">
-                <i class="menuico iconfont1">&#xe689;</i>实验管理</a>
-        </li>
+
     </ul>
 
     <ul class="menu">
@@ -187,10 +184,7 @@
     function data_summary() {
         $('iframe').attr("src", "qc_data_summary.do");
     }
-    function experimental_management(){
-        $('iframe').attr("src", "experimental_management.do");
 
-    }
 
     //二级菜单选中时添加背景色
     $('.menu_selected').click(function () {
