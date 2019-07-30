@@ -80,7 +80,7 @@
                      </choose>
 
         WHERE
-                QR.produce_date = ${producedDate}
+                QR.produce_date = date &apos;${producedDate}&apos;
         GROUP BY QR.produce_proportioning_num;
 
     </select>
@@ -109,7 +109,7 @@
         FROM
              quality_monitoring_realtime_${crewNum}
         WHERE
-                produce_date = ${producedDate}
+                produce_date = &apos;${producedDate}&apos;
         GROUP BY
                  produce_proportioning_num
     </select>
@@ -178,7 +178,7 @@
         R.produce_proportioning_num
         AND T.produce_date = R.produce_date
         AND T.produce_time <![CDATA[ <= ]]>  R.produce_time
-        WHERE T.produce_date = date ${producedDate}
+        WHERE T.produce_date = date &apos;${producedDate}&apos;
         GROUP BY T.produce_proportioning_num,
         T.produce_date,
         T.produce_time) as T1
@@ -199,7 +199,7 @@
         FROM
              quality_monitoring_realtime_${crewNum}
         WHERE
-                produce_date = ${producedDate}
+                produce_date = &apos;${producedDate}&apos;
         GROUP BY
                  produce_custom_num,produce_proportioning_num
     </select>
@@ -211,7 +211,7 @@
         FROM
              quality_monitoring_realtime_${crewNum}
         WHERE
-                produce_date = ${producedDate}
+                produce_date = &apos;${producedDate}&apos;
         GROUP BY
                  produce_custom_num
 

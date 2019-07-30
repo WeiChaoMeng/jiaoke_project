@@ -291,3 +291,279 @@ font-size:11px; padding:0px 5px; -moz-border-radius: 2px;   -webkit-border-radiu
 	background-color: #EBEBEB;
 	border-color: #ADADAD;
 }
+/*****Select 样式*****/
+.dy_select_div{
+
+	width: 130px;
+	height: 36px;
+	border-radius: 5px;
+
+	border: 1px solid #e6e6e6;
+	/*position: relative;*/
+	float: left;
+	top: 35%;
+}
+.dy_select{
+
+	border: none;
+
+	outline: none;
+
+	width: 100%;
+	height: 30px;
+	line-height: 36px;
+
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+
+	padding-left: 10px;
+}
+
+.dy_select_div:after{
+	content: "";
+	width: 14px;
+	height: 8px;
+	position: absolute;
+	right: 20px;
+	top: 45%;
+	pointer-events: none;
+}
+.dy_select_date{
+
+	border: none;
+
+	outline: none;
+
+	width: 100%;
+	height: 30px;
+	line-height: 36px;
+
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+
+	padding-left: 10px;
+}
+
+.standingBookTable{
+	border: none;
+	width: 100%;
+	border-collapse: collapse;
+	border-color: #abb2b9;
+	margin: 30px 0px 30px 0px;
+}
+.twoHead th {
+	width: 3.25%;
+	height: 48px;
+	padding: 0 10px;
+	font-size: 13px;
+	font-weight: normal;
+}
+
+.firstHead th {
+	padding: 5px 0px;
+	font-size: 11px;
+	font-weight: bold;
+}
+td{
+	text-align: center;
+	font-size: 10px;
+	padding: 5px;
+}
+.messageSpan{
+	position: absolute;
+	left: 43%;
+	top: 50%;
+	font-family: "Times New Roman", Times, serif;
+	font-size: 20px;
+	color: #bdb3b3;
+}
+/***************试验设置************************/
+
+
+
+.experiment_infoboxleft {
+	border: solid 1px #d6d6d6;
+	height: 327px;
+	margin-right: 10px;
+}
+
+.experiment_infoboxleft {
+	border: solid 1px #d6d6d6;
+	margin-bottom: 40px;
+	height: auto;
+	margin-left: 40px;
+	min-height: 327px;
+	float: left;
+	width: 45%;
+}
+
+.experiment_boxtitle {
+	height: 40px;
+	line-height: 40px;
+}
+
+.experiment_boxtitle span {
+	padding-left: 20px;
+	display: block;
+	float: left;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+.experiment_boxtitle a {
+	float: right;
+	font-style: normal;
+	color: #7e7e7e;
+	padding-right: 15px;
+}
+
+.experiment_boxtitle a i {
+	line-height: 40px;
+	font-size: 10px;
+}
+.experiment_textlist li {
+	line-height: 30px;
+	height: 30px;
+	*line-height: 27px;
+	*height: 27px;
+	width: 100%;
+}
+
+.experiment_textlist li a {
+	font-style: normal;
+	color:#001cff;
+	float: left;
+	padding-left: 10px;
+}
+
+/*.experiment_textlist li span {*/
+	/*display: block;*/
+	/*width: 3px;*/
+	/*height: 3px;*/
+	/*float: left;*/
+	/*margin-top: 15px;*/
+	/*margin-right: 8px;*/
+/*}*/
+
+.experiment_textlist li i {
+	line-height: 30px;
+	width: 80%;
+	border: none;
+	text-align: left;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	padding-left: 15px;
+	float: left;
+}
+.experiment_infoboxleft_div{
+	width: 65%;
+	margin-left: 35%;
+}
+/******************from表单**************************/
+.experiment_from_div{
+
+	margin: 0 auto;
+	padding-left: 25px;
+	padding-right: 25px;
+	padding-top: 15px;
+	width: 350px;
+	height: 350px;
+}
+.title {
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+}
+
+.title span {
+	font-size: 18px;
+	color: #353f42;
+}
+
+.title-msg {
+	width: 100%;
+	height: 64px;
+	line-height: 64px;
+}
+
+.title:hover{
+	cursor: default	;
+}
+
+.title-msg:hover{
+	cursor: default	;
+}
+
+.title-msg span {
+	font-size: 12px;
+	color: #707472;
+}
+
+.input-content {
+	width: 100%;
+	height: auto;
+	margin-bottom: 40px;
+}
+
+.input-content input {
+	width: 330px;
+	height: 40px;
+	border: 1px solid #dad9d6;
+	background: #ffffff;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.enter-btn {
+	width: 350px;
+	height: 40px;
+	color: #fff;
+	background: #0bc5de;
+	line-height: 40px;
+	text-align: center;
+	border: 0px;
+}
+
+.foor{
+	width: 100%;
+	height: auto;
+	color: #9b9c98;
+	font-size: 12px;
+	margin-top: 20px;
+}
+
+.enter-btn:hover {
+	cursor:pointer;
+	background: #1db5c9;
+}
+
+.foor div:hover {
+	cursor:pointer;
+	color: #484847;
+	font-weight: 600;
+}
+
+.left{
+	float: left;
+}
+.right{
+	float: right;
+}
+.experiment_from_span{
+	line-height: 30px;
+	width: 80%;
+	text-align: left;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	padding-left: 40px;
+	float: left;
+	border-width: initial;
+	border-style: none;
+	border-color: initial;
+	border-image: initial;
+	overflow: hidden;
+	font-size: 13px;
+}

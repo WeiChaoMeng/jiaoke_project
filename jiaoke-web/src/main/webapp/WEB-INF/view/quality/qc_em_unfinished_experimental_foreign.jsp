@@ -11,7 +11,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>委托管理</title>
+    <title>取样管理</title>
     <link href="/static/css/default.css" rel="stylesheet" type="text/css">
     <link href="/static/css/qc/sample_management.css" rel="stylesheet" type="text/css">
     <link type="text/css" rel="stylesheet" href="/static/css/qc/zxf_page.css">
@@ -21,7 +21,7 @@
 
 <div class="yyui_tab">
     <ul>
-        <li class="yyui_tab_title_this">委托单<span class="yyui_badge" id="experimentalCount">99+</span></li>
+        <li class="yyui_tab_title_this">未完实验<span class="yyui_badge" id="experimentalCount">99+</span></li>
     </ul>
 
     <div class="yyui_tab_content_this">
@@ -29,25 +29,26 @@
             <table class="simpletable"  style="border-top:none; text-align: center;table-layout: fixed;word-break: break-all;" id="proExcel">
 
                 <thead>
-                <tr>
-                    <th style="text-align:center;">委托单编号</th>
-                    <th style="text-align:center;">取样单编号</th>
-                    <th style="text-align:center;">创建时间</th>
-                    <th style="text-align:center;">所属厂家</th>
-                    <th style="text-align:center;">规格</th>
-                    <th style="text-align:center;">代表吨数</th>
-                    <th style="text-align:center;">状态</th>
-                    <th style="text-align:center;">操作</th>
-                </tr></thead>
+                    <tr>
+                        <th style="text-align:center;">实验编号</th>
+                        <th style="text-align:center;">委托单编号</th>
+                        <th style="text-align:center;">材料名称</th>
+                        <th style="text-align:center;">所属厂家</th>
+                        <th style="text-align:center;">取样时间</th>
+                        <th style="text-align:center;">实验时间</th>
+                        <th style="text-align:center;">实验状态</th>
+                        <th style="text-align:center;">操作</th>
+                    </tr>
+                </thead>
 
-                <tbody id="experimentalData">
+                <tbody id="experimentalItemData">
                     <tr>
                         <td>01</td>
-                        <td>粗集料</td>
-                        <td>2019/6/26</td>
+                        <td>01</td>
+                        <td>沥青</td>
                         <td>北京市政路桥建材集团有限公司路驰分公司</td>
-                        <td>公路沥青路面施工技术规范</td>
-                        <td>100t</td>
+                        <td>2019/6/26</td>
+                        <td>2019/6/26</td>
                         <td>未完成</td>
                         <td>
                             <a href="javascript:;" style="color: rgb(114, 112, 209);">查看</a>
@@ -103,27 +104,12 @@
         </form>
     </div>
 
-    <%-- 实验项目添加弹出 --%>
-    <div class="yyui_tab_content" id="experimentalItemLayer" style="display: none">
-        <form  class="bootstrap-frm" style="border: none;">
-            <label id="experimentalItemList">
-                <span style="width: 30%;" >选择试验项目 :</span>
-
-            </label>
-            <label>
-                <label>
-                    <span>&nbsp;</span>
-                    <input type="button" onclick="addExperimentalItem()"  class="button" value="确认" />
-                </label>
-            </label>
-        </form>
-    </div>
 </div>
 <input  id="path" value="${path}" type="hidden" >
 </body>
 <script type="text/javascript" src="/static/js/jquery.js"></script>
 <script type="text/javascript" src="/static/js/qc/zxf_page.js"></script>
 <script type="text/javascript" src="/static/js/layer/layer.js"></script>
-<script type="text/javascript" src="/static/js/qc/experimental_management.js"></script>
+<script type="text/javascript" src="/static/js/qc/unfinished_experimental_foreign.js"></script>
 
 </html>

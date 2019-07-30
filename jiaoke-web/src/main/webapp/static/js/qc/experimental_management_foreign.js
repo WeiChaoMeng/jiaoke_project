@@ -3,10 +3,8 @@
 var basePath  = "";
 $(function () {
     basePath  = $("#path").val();
-    //查询所有实验
-    var res = getAllExperimentalItem();
-    //展示第一页
-    echaExperimentalItem(1,res);
+    //查询取样单
+    var res = getAllexperimental();
     //编写总数
     getExperimentalCount(res);
     $(".zxf_pagediv").createPage({
@@ -14,7 +12,7 @@ $(function () {
         current: 1,
         backfun: function(e) {
             e.pageNum = Math.ceil(res.length / 10);
-            echaExperimentalItem(e.current,res);
+            echaExperimental(e.current,res);
         }
     });
 
@@ -23,19 +21,19 @@ $(function () {
 
 
 $(document).ready(function(){
-    //选项卡tab
-    $(".yyui_tab_title , .yyui_tab_title_this ").click(function(){
-        $(this).siblings('li').attr('class','yyui_tab_title');
-        $(this).attr('class','yyui_tab_title_this');
-        //alert($(this).index()); 选项卡序号编号从0开始
-        $(this).parent().siblings('div').attr('class','yyui_tab_content');
-        $(this).parent().siblings('div').eq($(this).index()).attr('class','yyui_tab_content_this');
-    });
-    //////////////////////////
+	//选项卡tab
+	$(".yyui_tab_title , .yyui_tab_title_this ").click(function(){
+		$(this).siblings('li').attr('class','yyui_tab_title');
+		$(this).attr('class','yyui_tab_title_this');
+		//alert($(this).index()); 选项卡序号编号从0开始
+		$(this).parent().siblings('div').attr('class','yyui_tab_content');
+		$(this).parent().siblings('div').eq($(this).index()).attr('class','yyui_tab_content_this');
+	});
+	//////////////////////////
 
 
-    //到底了///////////////////////
-});
+	//到底了///////////////////////
+}); 
 
 //用法：
 //第一步、运行函数；
@@ -50,83 +48,62 @@ $(document).ready(function(){
 //.yyui_menu1 li ul { position:absolute; float:left; width:150px; border:1px solid #D2D2D2; display:none; background-color:#FFFfff; z-index:9999;} /*这是第二级菜单*/
 //.yyui_menu1 li ul a { width:110px;text-decoration:none; color:#333333;}
 //.yyui_menu1 li ul a:hover { background:#f2f2f2;}
-//
+// 
 //.yyui_menu1 li ul ul{ top:0;left:150px;} /*从第三级菜单开始,所有的子级菜单都相对偏移*/
 //</style>
 function yyui_menu(ulclass){
-    $(document).ready(function(){
-        $(ulclass+' li').hover(function(){
-            $(this).children("ul").show(); //mouseover
-        },function(){
-            $(this).children("ul").hide(); //mouseout
-        });
-    });
+	$(document).ready(function(){
+		$(ulclass+' li').hover(function(){
+			$(this).children("ul").show(); //mouseover
+		},function(){
+			$(this).children("ul").hide(); //mouseout
+		});
+	});
 }
 
 
-/***********************未完实验单列表start*****************************/
-function getAllExperimentalItem() {
-    var res ;
-    debugger
+/***********************委托单列表start*****************************/
+function getAllexperimental() {
+	var res ;
     $.ajax({
         type: "GET",
-        url: basePath + "/getAllExperimentalItem.do",
+        url: basePath + "/getAllexperimentalForeign.do",
         async: false,
         dataType:'json',
         success: function(msg){
+            echaExperimental(1,msg);
             res = msg;
         }
-    });
-    return res;
+    })
+	return res;
 }
 
 
 
-function echaExperimentalItem(currentNum,amplingArray) {
-
+function echaExperimental(currentNum,amplingArray) {
     var arrayStart = (currentNum - 1) * 10;
     var arrayEnd = arrayStart + 10;
-    $("#experimentalItemData").empty();
+    $("#experimentalData").empty();
     for (var i = arrayStart; i < arrayEnd; i++ ){
+
         var tem =amplingArray[i];
         if (typeof(tem) === "undefined"){
             break;
         }
-
-        var htmlStr;
-        //判断是否完成
-        if (amplingArray[i].experiment_status == 1){
-
-            htmlStr = "<tr>"
-                + "<td>" + amplingArray[i]["experiment_num"] + "</td>"
-                + "<td>" + amplingArray[i]["order_ticket_num"]  + "</td>"
-                + "<td>" + amplingArray[i].materials_name  + "</td>"
-                + "<td>" + amplingArray[i].manufacturers_name  + "</td>"
-                + "<td>" + amplingArray[i].sampling_date  + "</td>"
-                + "<td>" + amplingArray[i].test_date  + "</td>"
-                + "<td>" + (amplingArray[i].experiment_status === 1? '已完成':'未完成')  + "</td>"
-                + "<td>"
-                + "<a href='javascript:;' onclick='getExperimentalMsgById(\""+amplingArray[i].Id +"\")' style='color: rgb(114, 112, 209);padding: 10px;'>查看实验</a>"
-                + "<a href='javascript:;' onclick='removeExperimentalItemById(\""+amplingArray[i].Id +"\")' style='color: rgb(114, 112, 209);'>删除</a>"
-                + "</td>"
-                + "</tr>";
-        } else {
-            htmlStr = "<tr>"
-                + "<td>" + amplingArray[i]["experiment_num"] + "</td>"
-                + "<td>" + amplingArray[i]["order_ticket_num"]  + "</td>"
-                + "<td>" + amplingArray[i].materials_name  + "</td>"
-                + "<td>" + amplingArray[i].manufacturers_name  + "</td>"
-                + "<td>" + amplingArray[i].sampling_date  + "</td>"
-                + "<td>" + amplingArray[i].test_date  + "</td>"
-                + "<td>" + (amplingArray[i].experiment_status === 1? '已完成':'未完成')  + "</td>"
-                + "<td>"
-                + "<a href='javascript:;' onclick='getExperimentalById(\""+amplingArray[i].Id +"\")' style='color: rgb(114, 112, 209);padding: 10px;'>填写实验</a>"
-                + "<a href='javascript:;' onclick='removeExperimentalItemById(\""+amplingArray[i].Id +"\")' style='color: rgb(114, 112, 209);'>删除</a>"
-                + "</td>"
-                + "</tr>";
-        }
-
-        $("#experimentalItemData").append(htmlStr);
+        var htmlStr = "<tr>"
+            + "<td>" + amplingArray[i]["order_ticket_num"] + "</td>"
+            + "<td>" + amplingArray[i]["sampling_id"]  + "</td>"
+            + "<td>" + amplingArray[i].creat_time  + "</td>"
+            + "<td>" + amplingArray[i].manufacturers  + "</td>"
+            + "<td>" + amplingArray[i].specification  + "</td>"
+            + "<td>" + amplingArray[i].tunnage  + "</td>"
+            + "<td>" + (amplingArray[i].status === 1? '已完成':'未完成')  + "</td>"
+            + "<td>"
+            + "<a href='javascript:;' onclick='getExperimentalById(\""+amplingArray[i].Id +"\")' style='color: rgb(114, 112, 209);padding: 10px;'>查看</a>"
+            + "<a href='javascript:;' onclick='getExperimentalItemById(\""+amplingArray[i].Id +"\" ,  \""+amplingArray[i].order_ticket_num +"\")' style='color: rgb(114, 112, 209);'>添加试验</a>"
+             + "</td>"
+            + "</tr>";
+        $("#experimentalData").append(htmlStr);
     }
 
 
@@ -141,22 +118,38 @@ function getExperimentalCount(amplingArray) {
         count = amplingArray[i].status === 1? count:++count;
     }
     if (count < 99){
-        $("#experimentalCount").empty().text(count);
+        $("#experimentalCount").empty();
+        $("#experimentalCount").text(count);
     }
 }
 
 //查看相关委托单
 function getExperimentalById(id) {
 
-            //弹出层
-            layer.open({
-                type: 2,
-                title: false,
-                shadeClose: true,
-                shade: 0.1,
-                area: ['98%', '95%'],
-                content: basePath + "/getExperimentalItemMsgPage.do?id=" + id//iframe的url
-            });
+        $.ajax({
+            type: "POST",
+            url: basePath + "/getExperimentalMessageByIdForeign.do",
+			data:{"id":id},
+            dataType:'json',
+            success: function(msg){
+                //循环委托单基本信息
+                for (var p in msg){
+                    $("#" + p).val(msg[p]);
+                }
+                //查询委托单已选试验信息
+                getExperimentalItem(msg.order_ticket_num);
+
+                //弹出层
+                layer.open({
+                    type: 1,
+                    title: false,
+                    closeBtn: 1, //不显示关闭按钮
+                    anim: 2,
+                    area: ['45%', '100%'],
+                    content: $("#layer_out")
+                });
+            }
+        })
 
 }
 
@@ -164,7 +157,7 @@ function getExperimentalById(id) {
 function getExperimentalItem(order_num) {
     $.ajax({
         type: "POST",
-        url: basePath + "/getExperimentalItemByOrderNum.do",
+        url: basePath + "/getExperimentalItemByOrderNumForeign.do",
         data:{"orderNum":order_num},
         dataType:'json',
         async: false,
@@ -185,34 +178,24 @@ function getExperimentalItem(order_num) {
     })
 }
 
-function removeExperimentalItemById(id) {
-    var basePath = $("#path").val();
-
-    layer.confirm('确认删除？', {
-        btn: ['确认','取消'] //按钮
-    }, function(){
-
-        $.ajax({
-            type: "POST",
-            url: basePath + "/removeExperimentalItemById.do",
-            data: {
-                "id":id
-            },
-            dataType:'JSON',
-            success: function(msg){
-                if (msg.message == 'success'){
-                    location.reload();
-                    layer.msg('删除成功');
-                } else {
-                    layer.msg('删除失败');
-                }
+//点击确认完成按钮时相关逻辑
+function confirm_completed(id) {
+    $.ajax({
+        type: "POST",
+        url: basePath + "/confirmCompletedByIdForeign.do",
+        data: {
+            "id":id
+        },
+        dataType:'JSON',
+        success: function(msg){
+            if (msg.message === 'success'){
+                layer.msg("添加成功");
+                getAllSamplingPage();
+            } else {
+                layer.msg("添加失败");
             }
-        })
-
-    }, function(){
-        return;
-    });
-
+        }
+    })
 }
 /***********************委托单列表end*****************************/
 
@@ -220,12 +203,12 @@ function removeExperimentalItemById(id) {
 /***********************添加试验项目start*****************************/
 //根据委托单ID查询试验项目列表
 function getExperimentalItemById(id,orderTicketNum){
-
+debugger
     //查询该项试验委托单下是否已有项目
     var condition;
     $.ajax({
         type: "POST",
-        url: basePath + "/getExperimentalItemCount.do",
+        url: basePath + "/getExperimentalItemCountForeign.do",
         async: false,
         data: {
             "orderTicketNum":orderTicketNum
@@ -240,7 +223,7 @@ function getExperimentalItemById(id,orderTicketNum){
     if (condition <= 0){
         $.ajax({
             type: "POST",
-            url: basePath + "/getExperimentalItemById.do",
+            url: basePath + "/getExperimentalItemByIdForeign.do",
             data: {
                 "id":id
             },
@@ -251,9 +234,8 @@ function getExperimentalItemById(id,orderTicketNum){
                 if (msg === "undefined" || msg === null || msg === ""|| msg.length == 0){
                     layer.msg("该材料无试验项目")
                 } else {
-
                     //添加委托单编号
-                    $("#experimentalItemList").append('<input type="text" value="' + orderTicketNum +'" id="orderTicketNum"  style="display: none"  disabled="true" />');
+                    $("#experimentalItemList").append('<div style="width: 100%;padding: 10px 35%;"><input type="hidden" value="' + orderTicketNum +'" id="orderTicketNum"  disabled="true" /></div>');
 
                     for(var i = 0; i < msg.length;i++){
                         var htmlStr = '<div style="width: 100%;padding: 10px 35%;"><input type="checkbox" name="item"  value="' + msg[i].Id +'"   style="-webkit-appearance:checkbox;" /><span>' + msg[i].name + '</span></div>';
@@ -275,7 +257,6 @@ function getExperimentalItemById(id,orderTicketNum){
 
 //添加试验项目
 function addExperimentalItem(){
-    debugger
     var orderTicketNum = $("#orderTicketNum").val();
     var spCodesTemp = "";
 
@@ -287,11 +268,11 @@ function addExperimentalItem(){
         }
     });
 
-
+    debugger
     if (!spCodesTemp.isBlank()){
         $.ajax({
             type: "POST",
-            url: basePath + "/addExperimentalItemByOrderTicketNum.do",
+            url: basePath + "/addExperimentalItemByOrderTicketNumForeign.do",
             data: {
                 "orderTicketNum":orderTicketNum,
                 "experimentalItemId":spCodesTemp
@@ -301,7 +282,6 @@ function addExperimentalItem(){
                 if (msg.messages === 'success'){
                     layer.close(layer.index);
                     layer.msg("添加成功");
-                    getAllExperimentalItem();
                 } else {
                     layer.msg("添加失败");
                 }
@@ -312,21 +292,6 @@ function addExperimentalItem(){
     }
 }
 /***********************添加试验项目end*****************************/
-
-/***********************查看试验项目Start*****************************/
-function getExperimentalMsgById(id){
-    //弹出层
-    layer.open({
-        type: 2,
-        title: false,
-        shadeClose: true,
-        shade: 0.1,
-        area: ['98%', '95%'],
-        content: basePath + "/getExperimentalMsgById.do?id=" + id//iframe的url
-    });
-}
-/***********************查看试验项目end*****************************/
-
 
 /***********************其他方法Start*****************************/
 Date.prototype.Format = function (fmt) {

@@ -115,6 +115,6 @@
 <script type="text/javascript" src="/static/js/jquery.js"></script>
 <script type="text/javascript" src="/static/js/qc/zxf_page.js"></script>
 <script type="text/javascript" src="/static/js/layer/layer.js"></script>
-<script type="text/javascript" src="/static/js/qc/sample_management.js"></script>
+<script type="text/javascript" src="/static/js/qc/sample_management_foreign.js"></script>
 
 </html>

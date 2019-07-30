@@ -11,7 +11,7 @@ function getExperimentalProjectMessage(id) {
     $.ajax({
         type: "POST",
         async:false,
-        url: basePath + "/getExperimentalProjectMessage.do",
+        url: basePath + "/getExperimentalProjectMessageForeign.do",
         data: {
             "id":id
         },
@@ -40,7 +40,7 @@ function showExperimentalProjectItem(tem) {
     var experiment_num = $("input[name='experiment_num']").val();
     $.ajax({
         type: "POST",
-        url: basePath + "/showExperimentalProjectItem.do",
+        url: basePath + "/showExperimentalProjectItemForeign.do",
         data: {
             "tableName":tem,
             "experiment_num":experiment_num

@@ -66,7 +66,7 @@ function getAllSamplingPage() {
 	var res ;
     $.ajax({
         type: "GET",
-        url: basePath + "/getAllSamplingPage.do",
+        url: basePath + "/getAllSamplingPageForeign.do",
         async: false,
         dataType:'json',
         success: function(msg){
@@ -112,6 +112,7 @@ function echaSamplingPage(currentNum,amplingArray) {
     }
 
 
+
 }
 
 //未完成总数计算
@@ -135,7 +136,7 @@ function removeSample(id) {
     }, function(){
         $.ajax({
             type: "POST",
-            url: basePath + "/removeSampleById.do",
+            url: basePath + "/removeSampleByIdForeign.do",
 			data:{"id":id},
             dataType:'json',
             success: function(msg){
@@ -160,7 +161,7 @@ function confirm_completed(id) {
     var condition = false;
     $.ajax({
         type: "POST",
-        url: basePath + "/getSampleStatusById.do",
+        url: basePath + "/getSampleStatusByIdForeign.do",
         async: false,
         data: {
             "id":id
@@ -182,7 +183,7 @@ function confirm_completed(id) {
     } else {
         $.ajax({
             type: "POST",
-            url: basePath + "/confirmCompletedById.do",
+            url: basePath + "/confirmCompletedByIdForeign.do",
             data: {
                 "id":id
             },
@@ -207,7 +208,7 @@ function confirm_completed(id) {
 function getFromData() {
 	$.ajax({
         type: "GET",
-        url: basePath + "/getSamplingPageFromData.do",
+        url: basePath + "/getSamplingPageFromDataForeign.do",
         dataType:'json',
         success: function(msg){
             for(p in msg){
@@ -240,7 +241,7 @@ function addSample(){
 	} else {
         $.ajax({
             type: "POST",
-            url: basePath + "/addSample.do",
+            url: basePath + "/addSampleForeign.do",
             async: false,
             data: {
                 "materials":materials,

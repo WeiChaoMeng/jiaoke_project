@@ -92,7 +92,7 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
         if (Strings.isBlank(producedDate) || Strings.isBlank(crewNum) ) {return null;}
 
         String crew=  "crew1".equals(crewNum) ? "data1":"data2";
-        String date = "'" + producedDate + "'";
+        String date = producedDate;
 
         //待返回集合
         Map<String,Object> map = new HashMap<>();
@@ -100,6 +100,7 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
         long DBstartTime = System.currentTimeMillis();
         //当天使用的模板集合
         List<Map<String,Object>> ratioNumList  = qualityDataManagerDao.selectRatioNumListByDate(date,crew);
+
         //获取当天使用模板的模板数据
         List<QualityRatioTemplate> rationMessageList =  qualityDataManagerDao.selectRatioMessageById(crewNum,ratioNumList);
         //当天每种模板产品各材料总和

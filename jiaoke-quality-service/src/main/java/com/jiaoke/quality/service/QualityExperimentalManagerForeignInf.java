@@ -15,7 +15,7 @@ package com.jiaoke.quality.service;
  * @create: 2019/6/26 11:54
  * @Description:
  */
-public interface QualityExperimentalManagerInf {
+public interface QualityExperimentalManagerForeignInf {
     /**
      *
      * 功能描述: <br>
@@ -181,7 +181,7 @@ public interface QualityExperimentalManagerInf {
      * @auther Melone
      * @date 2019/7/12 15:13
      */
-    String addExperimentalMsgAndItem(String fromJson,String firstTest,String coarseTest);
+    String addExperimentalMsgAndItem(String fromJson, String firstTest, String coarseTest);
 
     /**
      *
@@ -203,7 +203,7 @@ public interface QualityExperimentalManagerInf {
      * @auther Melone
      * @date 2019/7/16 19:48
      */
-   String getExperimentalProjectItem( String tableName,String experiment_num);
+   String getExperimentalProjectItem(String tableName, String experiment_num);
 
     /**
      *

@@ -17,7 +17,7 @@ function getExperimentalItemMsgById(id) {
     var basePath = $("#path").val();
     $.ajax({
         type: "POST",
-        url: basePath + "/getExperimentalItemMsgById.do",
+        url: basePath + "/getExperimentalItemMsgByIdForeign.do",
         data:{"id":id},
         dataType:'json',
         success: function(msg){
@@ -39,7 +39,7 @@ function getExperimentalItemListById(id) {
     var basePath = $("#path").val();
     $.ajax({
         type: "POST",
-        url: basePath + "/getExperimentalItemListById.do",
+        url: basePath + "/getExperimentalItemListByIdForeign.do",
         data:{"id":id},
         dataType:'json',
         async: false,
@@ -313,7 +313,7 @@ function sendFrom(){
 
     $.ajax({
         type: "POST",
-        url: basePath + "/sendFromData.do",
+        url: basePath + "/sendFromDataForeign.do",
         data:{"fromJson":json_str,
                 "firstTest":firstTest,
                 "coarseTest":coarseTest},

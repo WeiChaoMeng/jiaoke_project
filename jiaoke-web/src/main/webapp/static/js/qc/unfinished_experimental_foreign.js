@@ -70,7 +70,7 @@ function getAllExperimentalItem() {
     debugger
     $.ajax({
         type: "GET",
-        url: basePath + "/getAllExperimentalItem.do",
+        url: basePath + "/getAllExperimentalItemForeign.do",
         async: false,
         dataType:'json',
         success: function(msg){
@@ -155,7 +155,7 @@ function getExperimentalById(id) {
                 shadeClose: true,
                 shade: 0.1,
                 area: ['98%', '95%'],
-                content: basePath + "/getExperimentalItemMsgPage.do?id=" + id//iframe的url
+                content: basePath + "/getExperimentalItemMsgPageForeign.do?id=" + id//iframe的url
             });
 
 }
@@ -164,7 +164,7 @@ function getExperimentalById(id) {
 function getExperimentalItem(order_num) {
     $.ajax({
         type: "POST",
-        url: basePath + "/getExperimentalItemByOrderNum.do",
+        url: basePath + "/getExperimentalItemByOrderNumForeign.do",
         data:{"orderNum":order_num},
         dataType:'json',
         async: false,
@@ -194,7 +194,7 @@ function removeExperimentalItemById(id) {
 
         $.ajax({
             type: "POST",
-            url: basePath + "/removeExperimentalItemById.do",
+            url: basePath + "/removeExperimentalItemByIdForeign.do",
             data: {
                 "id":id
             },
@@ -225,7 +225,7 @@ function getExperimentalItemById(id,orderTicketNum){
     var condition;
     $.ajax({
         type: "POST",
-        url: basePath + "/getExperimentalItemCount.do",
+        url: basePath + "/getExperimentalItemCountForeign.do",
         async: false,
         data: {
             "orderTicketNum":orderTicketNum
@@ -240,7 +240,7 @@ function getExperimentalItemById(id,orderTicketNum){
     if (condition <= 0){
         $.ajax({
             type: "POST",
-            url: basePath + "/getExperimentalItemById.do",
+            url: basePath + "/getExperimentalItemByIdForeign.do",
             data: {
                 "id":id
             },
@@ -291,7 +291,7 @@ function addExperimentalItem(){
     if (!spCodesTemp.isBlank()){
         $.ajax({
             type: "POST",
-            url: basePath + "/addExperimentalItemByOrderTicketNum.do",
+            url: basePath + "/addExperimentalItemByOrderTicketNumForeign.do",
             data: {
                 "orderTicketNum":orderTicketNum,
                 "experimentalItemId":spCodesTemp
@@ -322,7 +322,7 @@ function getExperimentalMsgById(id){
         shadeClose: true,
         shade: 0.1,
         area: ['98%', '95%'],
-        content: basePath + "/getExperimentalMsgById.do?id=" + id//iframe的url
+        content: basePath + "/getExperimentalMsgByIdForeign.do?id=" + id//iframe的url
     });
 }
 /***********************查看试验项目end*****************************/
