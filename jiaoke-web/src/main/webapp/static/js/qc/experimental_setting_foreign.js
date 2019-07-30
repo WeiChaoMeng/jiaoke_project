@@ -75,7 +75,7 @@ function getSpecificationDataAndManufacturersData() {
     var basePath = $("#path").val();
     $.ajax({
         type:"get",
-        url:basePath + "getSpecificationDataAndManufacturersDataForeign.do",
+        url:basePath + "/getSpecificationDataAndManufacturersDataForeign.do",
         dataType:"json",
         async: false,
         success:function (res) {
@@ -122,7 +122,7 @@ function deleteSpecificationOrManufacturersById(id,make) {
     }, function(){
         $.ajax({
             type:"POST",
-            url:basePath + "deleteSpecificationOrManufacturersByIdForeign.do",
+            url:basePath + "/deleteSpecificationOrManufacturersByIdForeign.do",
             dataType:"json",
             data:{
                 'id':id,
@@ -153,7 +153,7 @@ function updateSpecificationOrManufacturersById(id,make) {
     var basePath = $("#path").val();
     $.ajax({
         type:"POST",
-        url:basePath + "getSpecificationOrManufacturersByIdForeign.do",
+        url:basePath + "/getSpecificationOrManufacturersByIdForeign.do",
         dataType:"json",
         data:{
             'id':id,
@@ -194,7 +194,7 @@ debugger
     }else {
         $.ajax({
             type:"POST",
-            url:basePath + "updateSpecificationOrManufacturersByIdForeign.do",
+            url:basePath + "/updateSpecificationOrManufacturersByIdForeign.do",
             dataType:"json",
             data:{
                 'id':id,
@@ -227,7 +227,7 @@ function sendSpecificationFrom() {
     }else {
         $.ajax({
             type:"POST",
-            url:basePath + "sendSpecificationFromForeign.do",
+            url:basePath + "/sendSpecificationFromForeign.do",
             dataType:"json",
             data:{
                 'specificationName':specificationName
@@ -255,7 +255,7 @@ function sendManufacturersFrom(){
     }else {
         $.ajax({
             type:"POST",
-            url:basePath + "sendManufacturersFromForeign.do",
+            url:basePath + "/sendManufacturersFromForeign.do",
             dataType:"json",
             data:{
                 'manufacturersName':manufacturersName

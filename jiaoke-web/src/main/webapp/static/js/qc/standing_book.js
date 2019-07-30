@@ -55,7 +55,7 @@ function yyui_menu(ulclass){
 function getRawMaterialStandingBook() {
     $.ajax({
         type:"get",
-        url: basePath + "getSevenDayRawMaterialStandingBook.do ",
+        url: basePath + "/getSevenDayRawMaterialStandingBook.do ",
         dataType:'json',
         success:function (res) {
             $(".messageSpan").remove();
@@ -160,7 +160,7 @@ function getRawMaterialStandingBookByDate() {
     }else {
         $.ajax({
             type:"post",
-            url: basePath + "getRawMaterialStandingBookByDate.do ",
+            url: basePath + "/getRawMaterialStandingBookByDate.do ",
             data:{
               'startDate':start,
                 'endDate':end
@@ -261,7 +261,7 @@ function getRawMaterialStandingBookByDate() {
 function getAsphaltStandingBook() {
     $.ajax({
         type:"get",
-        url: basePath + "getAsphaltStandingBook.do ",
+        url: basePath + "/getAsphaltStandingBook.do ",
         dataType:'json',
         success:function (res) {
             $(".messageSpan").remove();
@@ -307,7 +307,7 @@ function getAsphaltStandingBookByDate() {
 
     $.ajax({
         type:"post",
-        url: basePath + "getAsphaltStandingBookByDate.do ",
+        url: basePath + "/getAsphaltStandingBookByDate.do ",
         data:{
             'startDate':start,
             'endDate':end
@@ -357,7 +357,7 @@ function getAsphaltStandingBookByDate() {
 function getTestStandingBook() {
     $.ajax({
         type:"get",
-        url: basePath + "getTestStandingBook.do",
+        url: basePath + "/getTestStandingBook.do",
         dataType:'json',
         success:function (res) {
             debugger
@@ -404,7 +404,7 @@ function getTestStandingBookByDate() {
 
     $.ajax({
         type:"post",
-        url: basePath + "getTestStandingBookByDate.do",
+        url: basePath + "/getTestStandingBookByDate.do",
         data:{
             'startDate':start,
             'endDate':end

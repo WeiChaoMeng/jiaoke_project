@@ -75,7 +75,7 @@ function getSpecificationDataAndManufacturersData() {
     var basePath = $("#path").val();
     $.ajax({
         type:"get",
-        url:basePath + "getSpecificationDataAndManufacturersData.do",
+        url:basePath + "/getSpecificationDataAndManufacturersData.do",
         dataType:"json",
         async: false,
         success:function (res) {
@@ -122,7 +122,7 @@ function deleteSpecificationOrManufacturersById(id,make) {
     }, function(){
         $.ajax({
             type:"POST",
-            url:basePath + "deleteSpecificationOrManufacturersById.do",
+            url:basePath + "/deleteSpecificationOrManufacturersById.do",
             dataType:"json",
             data:{
                 'id':id,
@@ -153,7 +153,7 @@ function updateSpecificationOrManufacturersById(id,make) {
     var basePath = $("#path").val();
     $.ajax({
         type:"POST",
-        url:basePath + "getSpecificationOrManufacturersById.do",
+        url:basePath + "/getSpecificationOrManufacturersById.do",
         dataType:"json",
         data:{
             'id':id,
@@ -194,7 +194,7 @@ debugger
     }else {
         $.ajax({
             type:"POST",
-            url:basePath + "updateSpecificationOrManufacturersById.do",
+            url:basePath + "/updateSpecificationOrManufacturersById.do",
             dataType:"json",
             data:{
                 'id':id,
@@ -227,7 +227,7 @@ function sendSpecificationFrom() {
     }else {
         $.ajax({
             type:"POST",
-            url:basePath + "sendSpecificationFrom.do",
+            url:basePath + "/sendSpecificationFrom.do",
             dataType:"json",
             data:{
                 'specificationName':specificationName
