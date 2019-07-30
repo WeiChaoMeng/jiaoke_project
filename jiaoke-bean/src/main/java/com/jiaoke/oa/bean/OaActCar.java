@@ -79,6 +79,16 @@ public class OaActCar {
     private String drivingNumber;
 
     /**
+     * 计费(元)
+     */
+    private String billing;
+
+    /**
+     * 附件
+     */
+    private String annex;
+
+    /**
      * 状态：0,已发 1,待发
      */
     private Integer state;
@@ -94,6 +104,8 @@ public class OaActCar {
      * 发起人
      */
     private Integer promoter;
+    @Transient
+    private String promoterStr;
 
     /**
      * 查询路径
@@ -250,5 +262,29 @@ public class OaActCar {
 
     public void setState(Integer state) {
         this.state = state;
+    }
+
+    public String getBilling() {
+        return billing;
+    }
+
+    public void setBilling(String billing) {
+        this.billing = billing;
+    }
+
+    public String getAnnex() {
+        return annex;
+    }
+
+    public void setAnnex(String annex) {
+        this.annex = annex;
+    }
+
+    public String getPromoterStr() {
+        return promoterStr;
+    }
+
+    public void setPromoterStr(String promoterStr) {
+        this.promoterStr = promoterStr;
     }
 }

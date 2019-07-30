@@ -178,7 +178,7 @@ a {
     -moz-transition: width 2s; /* Firefox 4 */
     -webkit-transition: width 0.3s; /* Safari and Chrome */
     -o-transition: width 2s; /* Opera */
-    height: 99%;
+    height: 100%;
     width: 96%;
     float: right;
     background-color: #fff;

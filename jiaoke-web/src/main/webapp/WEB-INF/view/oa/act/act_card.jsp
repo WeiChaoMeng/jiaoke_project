@@ -20,17 +20,29 @@
 <div class="table-title">
     <span>饭卡申请单</span>
 </div>
-<div class="top_toolbar">
+<div class="top_toolbar" id="tool">
     <div class="top_toolbar_inside">
         <div class="head_left_button">
             <button type="button" class="cursor_hand" onclick="savePending()">&#xea97; 保存待发</button>
         </div>
+
+        <div class="separation_line"></div>
+
+        <div class="head_left_button">
+            <button type="button" class="cursor_hand" onclick="insertFile()">&#xeac1; 插入</button>
+        </div>
+
+        <div class="separation_line"></div>
+
+        <div class="head_left_button">
+            <button type="button" class="cursor_hand" onclick="printContent()">&#xea0e; 打印</button>
+        </div>
     </div>
 </div>
-<!--  -->
+
 <form id="oaActCard">
 
-    <div class="form_area">
+    <div class="form_area" id="titleArea">
         <table>
             <tbody>
             <tr>
@@ -39,7 +51,7 @@
                 </td>
 
                 <th nowrap="nowrap" class="th_title" style="width: 4%">标题:</th>
-                <td style="width: 44%">
+                <td style="width: 40%">
                     <div class="common_input_frame">
                         <input type="text" id="title" name="title" placeholder="请输入标题" title="点击此处填写标题"
                                value="饭卡申请单(${nickname} <%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>)"
@@ -50,7 +62,7 @@
                 <th class="th_title" nowrap="nowrap" style="width: 4%">流程:</th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" placeholder="发起者关联部门负责人(审批)、发起者关联部门领导主管(审批)、主管部门负责人(审批)"
+                        <input type="text" placeholder="关联部门负责人(审批)、关联部门领导主管(审批)、主管部门负责人(审批)、发起者(协同)"
                                readonly="readonly">
                     </div>
                 </td>
@@ -62,46 +74,90 @@
     <table class="formTable">
         <tbody>
         <tr>
-            <td class="tdLabel">申请人：</td>
+            <td class="tdLabel">申请人</td>
             <td class="table-td-content">
                 <input type="text" class="formInput" name="applicant" value="${nickname}" readonly="readonly">
             </td>
 
-            <td class="tdLabel">申请时间：</td>
+            <td class="tdLabel">申请时间</td>
             <td class="table-td-content">
                 <input type="text" class="formInput je-date" name="applyTimeStr" onfocus="this.blur()">
             </td>
         </tr>
 
         <tr>
-            <td class="tdLabel">所属单位：</td>
+            <td class="tdLabel">所属单位</td>
             <td colspan="3" class="table-td-content">
                 <input type="text" class="formInput" name="company" autocomplete="off">
             </td>
         </tr>
 
         <tr>
-            <td class="tdLabel">事由：</td>
+            <td class="tdLabel">事由</td>
             <td colspan="3" class="table-td-content">
                 <input type="text" class="formInput" name="reason" autocomplete="off">
             </td>
         </tr>
 
         <tr>
-            <td class="tdLabel">拟使用期限(开始)：</td>
+            <td class="tdLabel">拟使用期限(开始)</td>
             <td class="table-td-content">
                 <input type="text" class="formInput je-start-date" name="startTimeStr" onfocus="this.blur()">
             </td>
 
 
-            <td class="tdLabel">拟使用期限(结束)：</td>
+            <td class="tdLabel">拟使用期限(结束)</td>
             <td class="table-td-content">
                 <input type="text" class="formInput je-end-date" name="endTimeStr" onfocus="this.blur()">
                 <input type="hidden" name="state" value="0">
             </td>
         </tr>
-        </tbody>
 
+        <tr>
+            <td class="tdLabel">关联部门负责人</td>
+            <td colspan="5" class="approval-content">
+                <textarea disabled="disabled" class="approval-content-textarea"></textarea>
+                <div class="approval-date">
+                    <label class="approval-date-label">日期:</label>
+                    <input class="approval-date-input" type="text" disabled="disabled">
+                </div>
+                <div class="approval-signature">
+                    <label class="approval-signature-label">签字:</label>
+                    <input class="approval-signature-input" type="text" disabled="disabled">
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">关联部门领导主管</td>
+            <td colspan="5" class="approval-content">
+                <textarea disabled="disabled" class="approval-content-textarea"></textarea>
+                <div class="approval-date">
+                    <label class="approval-date-label">日期:</label>
+                    <input class="approval-date-input" type="text" disabled="disabled">
+                </div>
+                <div class="approval-signature">
+                    <label class="approval-signature-label">签字:</label>
+                    <input class="approval-signature-input" type="text" disabled="disabled">
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">主管部门负责人</td>
+            <td colspan="5" class="approval-content">
+                <textarea disabled="disabled" class="approval-content-textarea"></textarea>
+                <div class="approval-date">
+                    <label class="approval-date-label">日期:</label>
+                    <input class="approval-date-input" type="text" disabled="disabled">
+                </div>
+                <div class="approval-signature">
+                    <label class="approval-signature-label">签字:</label>
+                    <input class="approval-signature-input" type="text" disabled="disabled">
+                </div>
+            </td>
+        </tr>
+        </tbody>
     </table>
 </form>
 </body>
@@ -199,6 +255,24 @@
                 }
             })
         }
+    }
+
+    //插入附件
+    function insertFile() {
+        window.top.testContentWindow();
+    }
+
+
+    //插入成功后写入
+    function testReceive() {
+        console.log("饭卡收到返回参数！！！！！！！！！");
+    }
+
+    //打印
+    function printContent() {
+        $('#tool,#titleArea').hide();
+        window.print();
+        $('#tool,#titleArea').show();
     }
 </script>
 </html>

@@ -11,6 +11,8 @@
     <meta charset="utf-8">
     <title>用车审批单审批处理</title>
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
+    <link href="../../../../static/js/date_pickers/date_picker.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
 </head>
 
 <body>
@@ -28,72 +30,153 @@
         </div>
     </div>
 </div>
-<!-- -->
+
 <table class="formTable" style="margin: 0">
     <tbody>
     <tr>
-        <td class="tdLabel">使用人：</td>
+        <td class="tdLabel">使用人</td>
         <td class="table-td-content">
+            <input type="hidden" id="id" value="${oaActCar.id}">
             ${oaActCar.user}
         </td>
 
-        <td class="tdLabel">车牌号：</td>
-        <td class="table-td-content">
-            ${oaActCar.licensePlate}
-        </td>
-
-        <td class="tdLabel">车辆性质：</td>
-        <td class="table-td-content">
-            <c:choose>
-                <c:when test="${oaActCar.properties == 0}">私家车</c:when>
-                <c:when test="${oaActCar.properties == 1}">享车补车</c:when>
-            </c:choose>
-        </td>
-    </tr>
-
-    <tr>
-        <td class="tdLabel">事由：</td>
-        <td colspan="5" class="table-td-textarea" style="padding: 0 10px;height: 50px">
+        <td class="tdLabel">事由</td>
+        <td colspan="5" class="table-td-reason">
             ${oaActCar.cause}
         </td>
     </tr>
 
     <tr>
-        <td class="tdLabel">目的地：</td>
+        <td class="tdLabel">车牌号</td>
         <td class="table-td-content">
-            ${oaActCar.destination}
+            ${oaActCar.licensePlate}
         </td>
 
-        <td class="tdLabel">开始时间：</td>
+        <td class="tdLabel">车辆性质</td>
         <td class="table-td-content">
-            ${oaActCar.startTimeStr}
-        </td>
+            <div>
+                <c:choose>
+                    <c:when test="${oaActCar.properties == 0}">
+                        <input type="radio" style="vertical-align: middle;margin-right: 5px;" checked disabled>
+                        <span style="margin-right: 10px;">私家车</span>
+                    </c:when>
 
-        <td class="tdLabel">结束时间：</td>
-        <td class="table-td-content">
-            ${oaActCar.endTimeStr}
+                    <c:otherwise>
+                        <input type="radio" style="vertical-align: middle;margin-right: 5px;" disabled>
+                        <span style="margin-right: 10px;">私家车</span>
+                    </c:otherwise>
+                </c:choose>
+
+                <c:choose>
+                    <c:when test="${oaActCar.properties == 1}">
+                        <input type="radio" style="vertical-align: middle;margin-right: 5px;" checked disabled>
+                        <span>享车补车</span>
+                    </c:when>
+
+                    <c:otherwise>
+                        <input type="radio" style="vertical-align: middle;margin-right: 5px;" disabled>
+                        <span>享车补车</span>
+                    </c:otherwise>
+                </c:choose>
+            </div>
         </td>
     </tr>
 
     <tr>
-        <td class="tdLabel">公里基数：</td>
+        <td class="tdLabel">用车时间</td>
+        <td class="table-td-content">
+            ${oaActCar.startTimeStr}
+        </td>
+
+        <td class="tdLabel">目的地</td>
+        <td class="table-td-content">
+            ${oaActCar.destination}
+        </td>
+    </tr>
+
+    <tr>
+        <td class="tdLabel">公里基数</td>
         <td class="table-td-content">
             ${oaActCar.cardinalNumber}
+            <input type="hidden" id="cardinalNumber" value="${oaActCar.cardinalNumber}">
         </td>
 
-        <td class="tdLabel">使用后数：</td>
+        <td class="tdLabel">使用后数</td>
         <td class="table-td-content">
-            ${oaActCar.after}
+            <shiro:hasPermission name="lookup">
+                <input type="text" class="formInput" name="after" id="after"
+                       onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')" onblur="resultNum()" autocomplete="off">
+            </shiro:hasPermission>
+            <shiro:lacksPermission name="lookup">
+                ${oaActCar.after}
+            </shiro:lacksPermission>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="tdLabel">行驶数</td>
+        <td class="table-td-content">
+            <shiro:hasPermission name="lookup">
+                <input type="text" class="formInput-readonly" id="drivingNumber" name="drivingNumber" readonly>
+            </shiro:hasPermission>
+            <shiro:lacksPermission name="lookup">
+                ${oaActCar.drivingNumber}
+            </shiro:lacksPermission>
         </td>
 
-        <td class="tdLabel">行驶数：</td>
+        <td class="tdLabel">计费(元)</td>
         <td class="table-td-content">
-            ${oaActCar.drivingNumber}
+            <shiro:hasPermission name="lookup">
+                <input type="text" class="formInput-readonly" id="billing" name="billing" readonly>
+            </shiro:hasPermission>
+            <shiro:lacksPermission name="lookup">
+                ${oaActCar.billing}
+            </shiro:lacksPermission>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="tdLabel">查表计数人</td>
+        <td class="table-td-content">
+            <shiro:hasPermission name="lookup">
+                <input type="text" class="formInput-readonly" value="${nickname}" readonly>
+            </shiro:hasPermission>
+        </td>
+
+        <td class="tdLabel">交车时间</td>
+        <td class="table-td-content">
+            <shiro:hasPermission name="lookup">
+                <input type="text" class="formInput je-end-date" name="endTimeStr" onfocus="this.blur()">
+            </shiro:hasPermission>
+            <shiro:lacksPermission name="lookup">
+                ${oaActCar.endTimeStr}
+            </shiro:lacksPermission>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="tdLabel">审核人</td>
+        <td class="table-td-content">
+            <shiro:hasPermission name="principal">
+                <input type="text" class="formInput-readonly" value="${nickname}" readonly>
+            </shiro:hasPermission>
+        </td>
+
+        <td class="tdLabel">批准人</td>
+        <td class="table-td-content">
+            <shiro:hasPermission name="supervisor">
+                <input type="text" class="formInput-readonly" value="${nickname}" readonly>
+            </shiro:hasPermission>
         </td>
     </tr>
     </tbody>
-
 </table>
+
+<div class="notice-tips">
+    <span class="notice-tips-mark">*</span>
+    <span class="notice-tips-script">说明：1.每公里2元。使用的车辆为享受车补待遇的，每公里1.2元。2.审核人为使用部门负责人，批准人为使用人部门主管领导。3.多人同时使用时费用均摊。4.费用按月报销或扣除。</span>
+</div>
+
 
 <div class="handle-container">
     <div class="handle-title">
@@ -104,13 +187,19 @@
 
     <div class="form-but" style="margin-top: 20px;">
         <button type="button" class="return-but" style="margin-right: 10px;" onclick="previousPage()">返回</button>
-        <button type="button" class="commit-but" onclick="commit()">提交</button>
+        <shiro:lacksPermission name="lookup">
+            <button type="button" class="commit-but" onclick="commit()">提交</button>
+        </shiro:lacksPermission>
+
+        <shiro:hasPermission name="lookup">
+            <button type="button" class="commit-but" onclick="commitAndUpdate()">提交</button>
+        </shiro:hasPermission>
     </div>
 </div>
 
 <div class="receipt-container">
     <div class="receipt-title">
-        <div class="receipt-script">回执意见（共条）</div>
+        <div class="receipt-script">回执意见（共${commentsListLength}条）</div>
     </div>
 
     <c:forEach items="${commentsList}" var="comments">
@@ -128,8 +217,21 @@
 
 </body>
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
+<script type="text/javascript" src="../../../../static/js/jeDate/src/jedate.js"></script>
 <script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
+
+    //日期选择器
+    jeDate(".je-end-date", {
+        theme: {bgcolor: "#00A1CB", pnColor: "#00CCFF"},
+        festival: false,
+        isinitVal: true,
+        isClear: false,                     //是否开启清空
+        minDate: "1900-01-01",              //最小日期
+        maxDate: "2099-12-31",              //最大日期
+        format: "YYYY-MM-DD hh:mm",
+        zIndex: 100000,
+    });
 
     //任务Id
     var taskId = JSON.parse('${taskId}');
@@ -137,6 +239,30 @@
     //返回上一页
     function previousPage() {
         window.history.back();
+    }
+
+    //查表计数人提交
+    function commitAndUpdate() {
+        if ($.trim($("#after").val()) === '') {
+            top.window.tips("使用后数不可以为空！", 6, 5, 1000);
+        } else {
+            $.ajax({
+                type: "POST",
+                url: '${path}/car/add',
+                data: $('#oaActCar').serialize(),
+                error: function (request) {
+                    layer.msg("出错！");
+                },
+                success: function (result) {
+                    if (result === "success") {
+                        window.location.href = "${path}/oaIndex.do";
+                        layer.msg("发送成功！");
+                    } else {
+                        layer.msg('发送失败！');
+                    }
+                }
+            })
+        }
     }
 
     //提交
@@ -163,6 +289,26 @@
                 layer.msg("出错！");
             }
         })
+    }
+
+    //计算行驶数
+    function resultNum() {
+        var beforeNum = $('#cardinalNumber').val();
+        var afterNum = $('#after').val();
+
+        if (beforeNum !== "" && afterNum !== "") {
+            if (parseInt(afterNum) <= parseInt(beforeNum)) {
+                layer.tips('不可以小于等于公里基数', '#after', {
+                    tips: 1
+                });
+                $('#drivingNumber').val('');
+            } else {
+                $('#drivingNumber').val(parseInt(afterNum) - parseInt(beforeNum));
+                $('#billing').val((parseInt(afterNum) - parseInt(beforeNum)) * 2);
+            }
+        } else {
+            $('#drivingNumber').val('');
+        }
     }
 </script>
 </html>

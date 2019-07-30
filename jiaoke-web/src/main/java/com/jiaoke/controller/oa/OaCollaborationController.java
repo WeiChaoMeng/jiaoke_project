@@ -6,7 +6,7 @@ import com.jiake.utils.JsonHelper;
 import com.jiaoke.oa.bean.OaCollaboration;
 import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.service.OaCollaborationService;
-import org.activiti.engine.history.HistoricTaskInstance;
+import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.task.Task;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
@@ -67,6 +67,12 @@ public class OaCollaborationController {
     public String loadingWaitSendData(int page, String title) {
         PageHelper.startPage(page, 15);
         List<OaCollaboration> collaborationList = oaCoordinationService.selectWaitSend(getCurrentUser().getId(), title);
+        for (OaCollaboration collaboration : collaborationList) {
+            HistoricProcessInstance processInstance = activitiUtil.getProcessInstanceByBusinessKey(collaboration.getTable() + collaboration.getCorrelationId());
+            if (processInstance != null){
+                collaboration.setProcessInstanceId(processInstance.getId());
+            }
+        }
         PageInfo<OaCollaboration> pageInfo = new PageInfo<>(collaborationList);
         return JsonHelper.toJSONString(pageInfo);
     }
@@ -152,6 +158,7 @@ public class OaCollaborationController {
             List<OaCollaboration> oaCollaborations = activitiUtil.getPendingProcessInstance(taskList);
             PageHelper.startPage(page, 15);
             List<OaCollaboration> oaCollaborationList = oaCoordinationService.selectPending(oaCollaborations, title);
+            Collections.reverse(oaCollaborationList);
             PageInfo<OaCollaboration> pageInfo = new PageInfo<>(oaCollaborationList);
             return JsonHelper.toJSONString(pageInfo);
         }
@@ -179,19 +186,15 @@ public class OaCollaborationController {
     @RequestMapping(value = "/loadingDoneData")
     @ResponseBody
     public String loadingDoneData(int page, String title) {
-        List<HistoricTaskInstance> historicTaskInstanceList = activitiUtil.getHistoricTask(getCurrentUser().getId().toString());
-        if (historicTaskInstanceList.size() <= 0) {
+        List<OaCollaboration> collaborationList = activitiUtil.selectDoneProcessInstance(getCurrentUser().getId().toString());
+        if (collaborationList.size() < 1) {
             return JsonHelper.toJSONString("noData");
         } else {
-            List<OaCollaboration> collaborationList = activitiUtil.selectDoneProcessInstance(historicTaskInstanceList);
-            if (collaborationList.size() <= 0) {
-                return JsonHelper.toJSONString("noData");
-            } else {
-                PageHelper.startPage(page, 15);
-                List<OaCollaboration> oaCollaborationList = oaCoordinationService.selectDone(collaborationList, title);
-                PageInfo<OaCollaboration> pageInfo = new PageInfo<>(oaCollaborationList);
-                return JsonHelper.toJSONString(pageInfo);
-            }
+            PageHelper.startPage(page, 15);
+            List<OaCollaboration> oaCollaborationList = oaCoordinationService.selectDone(collaborationList, title);
+            Collections.reverse(oaCollaborationList);
+            PageInfo<OaCollaboration> pageInfo = new PageInfo<>(oaCollaborationList);
+            return JsonHelper.toJSONString(pageInfo);
         }
     }
 

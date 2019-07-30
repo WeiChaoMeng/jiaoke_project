@@ -52,6 +52,11 @@ public class OaCollaborationServiceImpl implements OaCollaborationService {
                     oc.setProcessInstanceId(collaboration.getProcessInstanceId());
                     oc.setPromoterStr(userInfoMapper.getNicknameById(oc.getPromoter()));
                     oc.setStartTimeStr(collaboration.getStartTimeStr());
+                    if (!"已结束".equals(collaboration.getCurrentExecutor())) {
+                        oc.setCurrentExecutor(userInfoMapper.getNicknameById(Integer.valueOf(collaboration.getCurrentExecutor())));
+                    } else {
+                        oc.setCurrentExecutor(collaboration.getCurrentExecutor());
+                    }
                 }
             }
         }
@@ -117,6 +122,8 @@ public class OaCollaborationServiceImpl implements OaCollaborationService {
                             UserInfo userInfo = userInfoMapper.selectByPermission(enforcer);
                             oc.setPreviousApprover(userInfo.getNickname());
                         }
+                    } else if ("网关".equals(collaboration.getPreviousApprover())) {
+                        oc.setPreviousApprover(collaboration.getPreviousApprover());
                     } else {
                         //上个处理人是发起人的处理
                         String nickname = userInfoMapper.getNicknameById(Integer.valueOf(collaboration.getPreviousApprover()));

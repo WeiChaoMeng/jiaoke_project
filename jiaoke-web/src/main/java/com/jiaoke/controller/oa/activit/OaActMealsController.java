@@ -6,6 +6,7 @@ import com.jiaoke.controller.oa.ActivitiUtil;
 import com.jiaoke.oa.bean.Comments;
 import com.jiaoke.oa.bean.OaActMeals;
 import com.jiaoke.oa.bean.UserInfo;
+import com.jiaoke.oa.service.DepartmentService;
 import com.jiaoke.oa.service.OaActMealsService;
 import com.jiaoke.oa.service.OaCollaborationService;
 import com.jiaoke.oa.service.UserInfoService;
@@ -22,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 客饭审批
+ *
  * @author lihui
  * @version 1.0
  * @date 2019-6-5 1:59
@@ -41,6 +44,9 @@ public class OaActMealsController {
 
     @Resource
     private OaCollaborationService oaCollaborationService;
+
+    @Resource
+    private DepartmentService departmentService;
 
     /**
      * 获取当前登录用户信息
@@ -77,8 +83,9 @@ public class OaActMealsController {
         } else {
             //获取拥有权限的用户
             UserInfo userInfo = userInfoService.getUserInfoByPermission("mealsApproval");
+            //开启流程
             Map<String, Object> map = new HashMap<>(16);
-            map.put("mealsApproval", userInfo.getId());
+            map.put("approval", userInfo.getId());
             String instance = activitiUtil.startProcessInstanceByKey("oa_meals", "oa_act_meals:" + randomId, map, getCurrentUser().getId().toString());
             if (instance != null) {
                 return "success";
@@ -104,6 +111,7 @@ public class OaActMealsController {
         model.addAttribute("oaActMeals", oaActMeals);
         model.addAttribute("taskId", JsonHelper.toJSONString(taskId));
         model.addAttribute("commentsList", commentsList);
+        model.addAttribute("nickname", getCurrentUser().getNickname());
         return "oa/act/act_meals_handle";
     }
 
@@ -116,12 +124,37 @@ public class OaActMealsController {
      */
     @RequestMapping(value = "/approvalSubmit")
     @ResponseBody
-    public String approvalSubmit(String processingOpinion, String taskId) {
+    public String approvalSubmit(String processingOpinion, String taskId, Integer flag) {
+        //回退标识
+        String back = "back";
+        //结束标识
+        String end = "end";
+        //网关标识
+        String eg = "eg";
         Task task = activitiUtil.getTaskByTaskId(taskId);
+        Map<String, Object> map = new HashMap<>(16);
         if (task == null) {
             return "error";
         } else {
-            activitiUtil.complete(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname());
+            //下个节点
+            String nextNode = activitiUtil.getNextNode(task.getProcessDefinitionId(), task.getTaskDefinitionKey());
+
+            //下个节点是否为end直接结束
+            if (end.equals(nextNode)) {
+                activitiUtil.endProcess(taskId);
+
+                //下个节点为back修改表达状态为2并结束流程
+            } else if (back.equals(nextNode)) {
+                String businessId = activitiUtil.getBusinessByTaskId(task.getId());
+                String correlationId = businessId.substring(businessId.lastIndexOf(":") + 1);
+                oaCollaborationService.updateState(correlationId, 3);
+                activitiUtil.endProcess(taskId);
+
+            } else if (eg.equals(nextNode)) {
+                map.put("result", flag);
+                map.put("notify", activitiUtil.getStartUserId(task.getProcessInstanceId()));
+                activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
+            }
             return "success";
         }
     }
@@ -216,6 +249,7 @@ public class OaActMealsController {
         List<Comments> commentsList = activitiUtil.selectHistoryComment(taskId);
         model.addAttribute("oaActMeals", oaActMeals);
         model.addAttribute("commentsList", commentsList);
+        model.addAttribute("commentsListSize", commentsList.size());
         return "oa/act/act_meals_details";
     }
 

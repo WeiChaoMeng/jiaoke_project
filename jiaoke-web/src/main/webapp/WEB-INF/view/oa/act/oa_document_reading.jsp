@@ -209,10 +209,6 @@
         var formData = new FormData();
         var f = $('#file')[0].files[0];
         console.log(f);
-        console.log($('#file')[0]);
-        console.log($('#file'));
-        console.log($('#annexStr'));
-        console.log($('#file').val());
         formData.append("file", f);
         $.ajax({
             type: "POST",

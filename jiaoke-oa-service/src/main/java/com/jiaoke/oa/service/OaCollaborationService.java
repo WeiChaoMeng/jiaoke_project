@@ -1,13 +1,8 @@
 package com.jiaoke.oa.service;
 
-import com.jiaoke.oa.bean.OaActTemporary;
 import com.jiaoke.oa.bean.OaCollaboration;
-import com.jiaoke.oa.bean.OaMeeting;
-import org.activiti.engine.task.Task;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * 协同

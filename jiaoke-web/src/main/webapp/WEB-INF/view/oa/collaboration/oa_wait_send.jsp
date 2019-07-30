@@ -93,7 +93,7 @@
         $.ajax({
             type: "post",
             url: '/collaboration/loadingWaitSendData',
-            data: {'page': page,'title':title},
+            data: {'page': page, 'title': title},
             async: false,
             success: function (data) {
                 var resultLists = JSON.parse(data);
@@ -184,14 +184,16 @@
             result += '</tr>';
         } else {
             for (let i = 0; i < resultList.length; i++) {
-                result += '<tr onclick="particulars(\'' + resultList[i].url + '\',\'' + resultList[i].correlationId + '\')">';
+                result += '<tr onclick="particulars(\'' + resultList[i].url + '\',\'' + resultList[i].correlationId + '\',\'' + resultList[i].processInstanceId + '\')">';
                 result += '<td><input type="checkbox" value="' + resultList[i].url + ',' + resultList[i].correlationId + ',' + resultList[i].table + '" onclick="window.event.cancelBubble=true;"></td>';
                 result += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 15 + i + 1) + '</td>';
                 result += '<td style="text-align:left;text-indent:10px" title="' + resultList[i].title + '">' + resultList[i].title + '</td>';
                 if (resultList[i].state === 1) {
                     result += '<td>草稿</td>';
-                }else if (resultList[i].state === 2){
+                } else if (resultList[i].state === 2) {
                     result += '<td>撤销</td>';
+                } else if (resultList[i].state === 3) {
+                    result += '<td>被回退</td>';
                 } else {
                     result += '<td>其他</td>';
                 }
@@ -203,9 +205,9 @@
     }
 
     //详情
-    function particulars(url, correlationId) {
+    function particulars(url, correlationId, processInstanceId) {
         url += "/details";
-        window.location.href = "${path}" + url + "?id=" + correlationId;
+        window.location.href = "${path}" + url + "?id=" + correlationId + "&taskId=" + processInstanceId;
     }
 
     //编辑

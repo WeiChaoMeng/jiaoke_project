@@ -4,9 +4,9 @@
 
     <insert id="insertData" parameterType="com.jiaoke.oa.bean.OaActCar">
         insert into oa_act_car
-            (id,title,`user`,license_plate,properties,cause,destination,start_time,end_time,cardinal_number,after,driving_number,state,create_time,promoter,url)
+            (id,title,`user`,license_plate,properties,cause,destination,start_time,end_time,cardinal_number,after,driving_number,billing,annex,state,create_time,promoter,url)
         values
-            (#{id},#{title},#{user},#{licensePlate},#{properties},#{cause},#{destination},#{startTime},#{endTime},#{cardinalNumber},#{after},#{drivingNumber},#{state},#{createTime},#{promoter},#{url})
+            (#{id},#{title},#{user},#{licensePlate},#{properties},#{cause},#{destination},#{startTime},#{endTime},#{cardinalNumber},#{after},#{drivingNumber},#{billing},#{annex},#{state},#{createTime},#{promoter},#{url})
     </insert>
 
     <update id="updateStateById" parameterType="java.util.Map">

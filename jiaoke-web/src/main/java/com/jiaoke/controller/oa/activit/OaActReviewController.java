@@ -61,7 +61,7 @@ public class OaActReviewController {
      *
      * @return jsp
      */
-    @RequestMapping("/toReview")
+    @RequestMapping("/toIndex")
     public String toReview() {
         return "oa/act/act_review";
     }
