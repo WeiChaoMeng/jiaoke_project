@@ -109,11 +109,10 @@
             <td class="tdLabel">车辆性质</td>
             <td class="table-td-content">
                 <div>
-                    <input type="radio" name="properties" value="0" checked
-                           style="vertical-align: middle;margin-right: 5px;">
+                    <input type="radio" name="properties" value="0" class="table-radio-two" checked>
                     <span style="margin-right: 10px;">私家车</span>
 
-                    <input type="radio" name="properties" value="1" style="vertical-align: middle;margin-right: 5px;">
+                    <input type="radio" name="properties" value="1" class="table-radio-two">
                     <span>享车补车</span>
                 </div>
             </td>

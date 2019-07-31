@@ -10,7 +10,16 @@ package com.jiaoke.quality.service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.jiake.utils.RandomUtil;
+import com.jiaoke.oa.bean.OaCollaboration;
+import com.jiaoke.oa.bean.UserInfo;
+import com.jiaoke.oa.dao.OaCollaborationMapper;
+import com.jiaoke.oa.dao.UserInfoMapper;
 import com.jiaoke.quality.dao.QualityExperimentalManagerDao;
+import org.activiti.engine.*;
+import org.activiti.engine.history.HistoricProcessInstance;
+import org.activiti.engine.runtime.ProcessInstance;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -29,6 +38,30 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
 
     @Resource
     private QualityExperimentalManagerDao qualityExperimentalManagerDao;
+
+    @Resource
+    private OaCollaborationMapper oaCollaborationMapper;
+
+    @Resource
+    private UserInfoMapper userInfoMapper;
+
+    @Resource
+    private HistoryService historyService;
+
+    @Resource
+    private RuntimeService runtimeService;
+
+    @Resource
+    private TaskService taskService;
+
+    /**
+     * 获取当前登录用户信息
+     *
+     * @return userInfo
+     */
+    private UserInfo getCurrentUser() {
+        return (UserInfo) SecurityUtils.getSubject().getPrincipal();
+    }
 
     /**
      *
@@ -369,6 +402,8 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
 
         //插入实验过程表
         int res = qualityExperimentalManagerDao.insertLabReport(
+                //随机id
+                RandomUtil.randomId(),
                 experimentNum,
                 map.get("order_ticket_num"),
                String.valueOf(map.get("materials_num")) ,
@@ -421,15 +456,49 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
 
 
         Map<String,String> insertMap = new HashMap<>();
+        //暂存实验数据主键
+        String id = "";
 
         //修改实验报告表
         for(Map<String,String> mapList : listObjectSec){
             String val = mapList.get("value");
             String valName = mapList.get("name");
+            if ("Id".equals(valName)){
+                id = val;
+            }
             insertMap.put(valName,val);
         }
 
         int upRes = qualityExperimentalManagerDao.updateLabReport(insertMap);
+
+        /**--------------审批使用s--------------------*/
+        if (upRes > 0) {
+            //检查数据是否存在，避免重复添加
+            if (oaCollaborationMapper.selectOne(id) == null) {
+                OaCollaboration collaboration = new OaCollaboration();
+                collaboration.setTitle("实验报告");
+                collaboration.setPromoter(getCurrentUser().getId());
+                collaboration.setTable("quality_test_lab_report");
+                collaboration.setCorrelationId(id);
+                collaboration.setUrl("ExperimentalItems.do");
+                collaboration.setState(0);
+                collaboration.setCreateTime(new Date());
+
+                //添加成功后开启流程
+                if (oaCollaborationMapper.insertData(collaboration) > 0) {
+                    //获取拥有查表计数人权限的用户信息
+                    UserInfo userInfo = userInfoMapper.selectByPermission("experimentPrincipal");
+                    Map<String, Object> map = new HashMap<>(16);
+                    map.put("experimentPrincipal", userInfo.getId());
+                    //businessKey格式为 mysql表名：新增数据id
+                    ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
+                    processEngine.getIdentityService().setAuthenticatedUserId(getCurrentUser().getId().toString());
+                    processEngine.getRuntimeService().startProcessInstanceByKey("qc_experimental", "quality_test_lab_report:" + id, map);
+                }
+
+            }
+        }
+        /**--------------审批使用e--------------------*/
 
         int materialsNum = Integer.parseInt(insertMap.get("materials_num"));
         String experimentNum = insertMap.get("experiment_num");
@@ -519,6 +588,30 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
     @Override
     public String removeExperimentalItemById(String id) {
         int res = qualityExperimentalManagerDao.delectExperimentalItemById(id);
+
+        //删除协同表中数据和activiti相关数据
+        //查询数据是否开启流程
+        OaCollaboration collaboration = oaCollaborationMapper.selectOne(id);
+        if (collaboration != null){
+            //删除协同表中数据
+            oaCollaborationMapper.deleteByCorrelationId(id);
+
+            //根据业务键查询流程实例Id
+            String processInstanceId = historyService.createHistoricProcessInstanceQuery().processInstanceBusinessKey("quality_test_lab_report:" + id).singleResult().getId();
+            //1.判断流程是否结束
+            ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
+            //流程已结束
+            if (processInstance == null) {
+                historyService.deleteHistoricProcessInstance(processInstanceId);
+                taskService.deleteComments("", processInstanceId);
+            } else {
+                //流程未结束
+                runtimeService.deleteProcessInstance(processInstanceId, "");
+                historyService.deleteHistoricProcessInstance(processInstanceId);
+                taskService.deleteComments("", processInstanceId);
+            }
+        }
+
         Map<String,String> map = new HashMap<>();
         if (res > 0){
             map.put("message","success");
@@ -530,4 +623,26 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
 
     /*************************************未完实验End****************************************************/
 
+    @Override
+    public int updateExperimentalItemApproval(String id, String chargePerson, String checkPerson) {
+        return qualityExperimentalManagerDao.updateExperimentalApproval(id,chargePerson,checkPerson);
+    }
+
+    @Override
+    public int deleteExperimentalItemById(String id) {
+        if (qualityExperimentalManagerDao.delectExperimentalItemById(id) < 0) {
+            return -1;
+        }else {
+            if (oaCollaborationMapper.deleteByCorrelationId(id) < 0){
+                return -1;
+            }else {
+                return 1;
+            }
+        }
+    }
+
+    @Override
+    public int updateExperimentalItemStateById(String id,Integer state) {
+        return qualityExperimentalManagerDao.updateExperimentalItemStateById(id,state);
+    }
 }

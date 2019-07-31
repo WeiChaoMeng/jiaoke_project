@@ -116,6 +116,60 @@ public class OaActCarController {
     }
 
     /**
+     * 查表计数人提交
+     *
+     * @param processingOpinion 处理意见
+     * @param taskId            任务Id
+     * @return s/e
+     */
+    @RequestMapping(value = "/lookupApprovalSubmit")
+    @ResponseBody
+    public String lookupApprovalSubmit(OaActCar oaActCar,String processingOpinion, String taskId) {
+
+        //1.更新表数据
+        //2.完成审批
+        System.out.println(taskId + processingOpinion);
+        System.out.println(oaActCar.getId() + oaActCar.getBilling());
+
+        //更新数据
+        oaActCarService.updateByPrimaryKey(oaActCar);
+
+        //根据processDefinitionId获取下个节点
+        /*Task task = activitiUtil.getTaskByTaskId(taskId);
+        if (task == null) {
+            return "error";
+        } else {
+            //下个节点
+            String nextNode = activitiUtil.getNextNode(task.getProcessDefinitionId(), task.getTaskDefinitionKey());
+
+            //判断下个节点是否为end。
+            if ("end".equals(nextNode)) {
+                // 直接完成审批并结束流程。
+                activitiUtil.complete(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname());
+            } else {
+                UserTask userTask = activitiUtil.getUserTask(task.getProcessDefinitionId(), nextNode);
+                if (nextNode.equals(userTask.getId())) {
+                    String assignee = userTask.getAssignee();
+                    String enforcer = assignee.substring(assignee.indexOf("{") + 1, assignee.indexOf("}"));
+
+                    // 否:  1.获取当前流程发起者id(act_hi_procinst表，START_USER_ID_字段)
+                    String startUserId = activitiUtil.getStartUserId(task.getProcessInstanceId());
+                    //根据发起者id获取所属部门id
+                    String departmentId = userInfoService.selectDepartmentByUserId(Integer.valueOf(startUserId));
+                    //选择执行者Id
+                    String enforcerId = departmentService.selectEnforcerId(enforcer, departmentId);
+                    //4.完成审批指定下个节点
+                    Map<String, Object> map = new HashMap<>(16);
+                    map.put(enforcer, enforcerId);
+                    activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
+                }
+            }
+            return "success";
+        }*/
+        return "success";
+    }
+
+    /**
      * 提交审批处理
      *
      * @param processingOpinion 处理意见

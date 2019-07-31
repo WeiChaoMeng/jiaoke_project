@@ -202,8 +202,12 @@
 
     //详情
     function particulars(url, id, processInstanceId) {
-        url += "/details";
-        window.location.href = "${path}" + url + "?id=" + id + "&taskId=" + processInstanceId;
+        if (url.indexOf('.do') !== -1) {
+            window.location.href = "${path}details" + url + "?id=" + id + "&taskId=" + processInstanceId;
+        } else {
+            url += "/details";
+            window.location.href = "${path}" + url + "?id=" + id + "&taskId=" + processInstanceId;
+        }
     }
 
     //撤销流程
@@ -215,8 +219,14 @@
         } else {
             var val = $("#tbody input:checked").val();
             //拼接controller
+            var url = '';
             var arr = val.split(",");
-            var url = "/" + arr[0] + "/rescind";
+            if (arr[0].indexOf('.do') !== -1) {
+                url = "/rescind" + arr[0];
+            }else {
+                url = "/" + arr[0] + "/rescind";
+            }
+
             //主页fun
             window.top.rescindAlreadySend(url, arr[3], arr[2], $('#page').val());
         }
@@ -231,8 +241,13 @@
         } else {
             var val = $("#tbody input:checked").val();
             //拼接controller
+            var url = '';
             var arr = val.split(",");
-            var url = "/" + arr[0] + "/delete";
+            if (arr[0].indexOf('.do') !== -1) {
+                url = "/delete" + arr[0];
+            }else {
+                url = "/" + arr[0] + "/delete";
+            }
 
             //主页fun
             window.top.deleteAlreadySend(url, arr[3], arr[2], $('#page').val());

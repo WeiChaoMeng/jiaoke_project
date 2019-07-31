@@ -240,7 +240,8 @@ public interface QualityExperimentalManagerDao {
      * @auther Melone
      * @date 2019/7/8 11:43
      */
-    int insertLabReport(@Param("experimentNum") String experimentNum,
+    int insertLabReport(@Param("id") String id,
+                        @Param("experimentNum") String experimentNum,
                             @Param("order_ticket_num")  String order_ticket_num,
                             @Param("materials_num")  String materials_num,
                             @Param("entrustingParty")  String entrustingParty,
@@ -398,4 +399,21 @@ public interface QualityExperimentalManagerDao {
      * @date 2019/7/17 11:05
      */
     int delectExperimentalItemById(@Param("id") String id);
+
+    /**
+     * 更新审批数据
+     * @param id 主键
+     * @param chargePerson 负责人
+     * @param checkPerson 审核人
+     * @return int
+     */
+    int updateExperimentalApproval(@Param("id") String id,@Param("chargePerson") String chargePerson,@Param("checkPerson") String checkPerson);
+
+    /**
+     * 根据id更新实验数据状态
+     * @param id id
+     * @param state state
+     * @return int
+     */
+    int updateExperimentalItemStateById(@Param("id") String id,@Param("state") Integer state);
 }

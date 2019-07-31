@@ -1,7 +1,7 @@
 package com.jiaoke.controller.oa;
 
 import com.jiake.utils.JsonHelper;
-import com.jiaoke.oa.bean.OaActTemporary;
+import com.jiaoke.oa.bean.OaCollaboration;
 import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.service.OaIndexService;
 import org.activiti.engine.history.HistoricProcessInstance;
@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -57,45 +58,28 @@ public class OaIndexController {
     public String loadingData() {
         //待办任务
         HashMap<String, Object> map = new HashMap<>(16);
-        List<OaActTemporary> oaActTemporaryList = new ArrayList<>();
         //根据当前登录人id获取taskList
         List<Task> taskList = activitiUtil.getTaskByAssignee(getCurrentUser().getId().toString());
         if (taskList.size() <= 0) {
-            map.put("dataNumber", taskList.size());
-            map.put("oaActTemporaryList", "empty");
+            map.put("upcomingMatterNumber", taskList.size());
+            map.put("upcomingMatterList", "empty");
         } else {
-            for (int i = 0; i < taskList.size(); i++) {
-                if (i < 8) {
-                    OaActTemporary oaActTemporary = oaIndexService.selectSimpleData(activitiUtil.getBusinessByTaskId(taskList.get(i).getId()));
-                    oaActTemporary.setTaskId(taskList.get(i).getId());
-                    oaActTemporaryList.add(oaActTemporary);
-                } else {
-                    break;
-                }
-            }
-            map.put("dataNumber", taskList.size());
-            map.put("oaActTemporaryList", oaActTemporaryList);
+            List<OaCollaboration> oaCollaborationList = oaIndexService.upcomingMatterData(taskList);
+            Collections.reverse(oaCollaborationList);
+            map.put("upcomingMatterNumber", taskList.size());
+            map.put("upcomingMatterList", oaCollaborationList);
         }
 
         //审批未结束任务追踪
-        List<OaActTemporary> alreadyIssuedList = new ArrayList<>();
         List<HistoricProcessInstance> processInstanceList = activitiUtil.getUnfinishedProcessInstance(getCurrentUser().getId().toString());
         if (processInstanceList.size() <= 0) {
-            map.put("alreadyIssuedNumber", processInstanceList.size());
-            map.put("alreadyIssuedList", "empty");
+            map.put("trackingMatterNumber", processInstanceList.size());
+            map.put("trackingMatterList", "empty");
         } else {
-            for (int i = 0; i < processInstanceList.size(); i++) {
-                if (i < 8) {
-                    OaActTemporary oaActTemporary = oaIndexService.selectSimpleData(processInstanceList.get(i).getBusinessKey());
-                    oaActTemporary.setTaskId(processInstanceList.get(i).getId());
-                    oaActTemporary.setCurrentExecutor(oaIndexService.getNicknameById(Integer.valueOf(activitiUtil.getCurrentExecutor(processInstanceList.get(i).getId()))));
-                    alreadyIssuedList.add(oaActTemporary);
-                } else {
-                    break;
-                }
-            }
-            map.put("alreadyIssuedNumber", processInstanceList.size());
-            map.put("alreadyIssuedList", alreadyIssuedList);
+            List<OaCollaboration> oaCollaborationList = oaIndexService.trackingMatterData(processInstanceList);
+            Collections.reverse(oaCollaborationList);
+            map.put("trackingMatterNumber", processInstanceList.size());
+            map.put("trackingMatterList", oaCollaborationList);
         }
 
         return JsonHelper.toJSONString(map);

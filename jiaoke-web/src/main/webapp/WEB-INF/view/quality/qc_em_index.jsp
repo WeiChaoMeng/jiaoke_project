@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html style="padding-bottom: 54px;">
 
 <head>
@@ -10,7 +11,7 @@
 <body>
 <div id="theGrid" class="main">
     <section class="grid">
-
+        <shiro:hasPermission name="experimentItemInterior">
         <a class="grid__item" href="javacript:void(0);" onclick="sample_management()">
             <h2 class="title title--preview">取样管理</h2>
             <div class="loader"></div>
@@ -61,6 +62,7 @@
                 <span class="meta__reading-time"><i class="fa fa-clock-o"></i></span>
             </div>
         </a>
+        </shiro:hasPermission>
 
         <a class="grid__item" href="#">
             <h2 class="title title--preview">取样管理</h2>

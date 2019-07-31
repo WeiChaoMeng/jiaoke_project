@@ -13,6 +13,58 @@
     <meta charset="utf-8">
     <title>实验信息</title>
     <link type="text/css" rel="stylesheet" href="/static/css/qc/experimental_model.css">
+    <style>
+        .receipt-container {
+            margin-bottom: 20px;
+            height: auto;
+            border: 1px #b3b3b3 solid;
+        }
+
+        .receipt-title {
+            width: 100%;
+            background: #afdbef;
+            height: 40px;
+        }
+
+        .receipt-script {
+            font-size: 14px;
+            padding-left: 10px;
+            line-height: 40px;
+        }
+
+        .receipt-style {
+            height: 15px;
+        }
+
+        .comment-container {
+            height: 25px;
+            padding: 10px;
+            font-size: 13px;
+        }
+
+        .comment-style {
+            width: 100%;
+            height: 100%;
+            line-height: 25px;
+            background: #d8eef9;
+        }
+
+        .comment-name {
+            float: left;
+            margin: 0 15px;
+            width: 40px;
+        }
+
+        .comment-message {
+            float: left;
+            margin: 0 15px;
+        }
+
+        .comment-date {
+            float: left;
+            margin: 0 15px;
+        }
+    </style>
 </head>
 <body style="width: 95%;">
 <h1>北京市政路桥建材集团有限公司路驰分公司
@@ -220,6 +272,26 @@
         <input type="text" id="report_date" name="report_date" value=" 2017-03-18" readonly="readonly"  />
     </div>
 </form>
+
+<div style="width: 65%;margin: 0 auto">
+    <div class="receipt-container">
+        <div class="receipt-title">
+            <div class="receipt-script">回执意见（共${commentsSize}条）</div>
+        </div>
+
+        <c:forEach items="${commentsList}" var="comments">
+            <div class="comment-container">
+                <div class="comment-style">
+                    <span class="comment-name">${comments.userName}</span>
+                    <span class="comment-message">${comments.message}</span>
+                    <span class="comment-date">${comments.timeStr}</span>
+                </div>
+            </div>
+        </c:forEach>
+
+        <div class="receipt-style"></div>
+    </div>
+</div>
 
 <input  id="path" value="${path}" type="hidden" >
 <input  id="id" value="${id}" type="hidden" >

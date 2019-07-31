@@ -20,7 +20,10 @@ function getExperimentalProjectMessage(id) {
             if (res){
                 for (var i = 0 ; i < res.length;i++) {
                     for (var p in  res[i]){
-                        $("input[name='"+p+"']").val(res[i][p]);
+
+                        if ($.trim(res[i][p]) !== ""){
+                            $("input[name='"+p+"']").val(res[i][p]);
+                        }
                     }
 
                     if (tem == "undefined" || tem == null || tem == ""){

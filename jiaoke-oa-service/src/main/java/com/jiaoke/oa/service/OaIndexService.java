@@ -1,6 +1,10 @@
 package com.jiaoke.oa.service;
 
-import com.jiaoke.oa.bean.OaActTemporary;
+import com.jiaoke.oa.bean.OaCollaboration;
+import org.activiti.engine.history.HistoricProcessInstance;
+import org.activiti.engine.task.Task;
+
+import java.util.List;
 
 /**
  * OA模块首页
@@ -12,18 +16,18 @@ import com.jiaoke.oa.bean.OaActTemporary;
 public interface OaIndexService {
 
     /**
-     * 查询基本数据信息
+     * 待办工作
      *
-     * @param businessKey 业务键
-     * @return OaActTemporary
+     * @param taskList taskList
+     * @return list
      */
-    OaActTemporary selectSimpleData(String businessKey);
+    List<OaCollaboration> upcomingMatterData(List<Task> taskList);
 
     /**
-     * 根据id获取nickname
+     * 跟踪事项
      *
-     * @param id id
-     * @return nickname
+     * @param processInstanceList processInstanceList
+     * @return list
      */
-    String getNicknameById(Integer id);
+    List<OaCollaboration> trackingMatterData(List<HistoricProcessInstance> processInstanceList);
 }

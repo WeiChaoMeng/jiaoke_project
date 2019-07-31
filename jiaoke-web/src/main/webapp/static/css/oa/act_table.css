@@ -61,27 +61,28 @@ img {
     border-bottom: none;
 }
 
-.top-info-bar-user{
+.top-info-bar-user {
     line-height: 30px;
     float: left;
     width: 50px;
     text-align: right;
 }
-.top-info-bar-user span{
+
+.top-info-bar-user span {
     font-size: 13px;
 }
 
-.top-info-bar-time{
+.top-info-bar-time {
     line-height: 30px;
     float: left;
     margin-left: 10px;
 }
 
-.top-info-bar-time span{
+.top-info-bar-time span {
     font-size: 13px;
 }
 
-.printing-but-style{
+.printing-but-style {
     float: right;
     line-height: 30px;
     display: table-cell;
@@ -101,14 +102,14 @@ img {
     font-size: 13px;
 }
 
-.top-annexes-details{
+.top-annexes-details {
     border: solid 1px #eaeaea;
     border-bottom: 0;
     border-top: 0;
     padding: 5px 0;
 }
 
-.annexes-icon-details{
+.annexes-icon-details {
     width: 50px;
     text-align: right;
     margin: 0;
@@ -256,6 +257,12 @@ img {
     padding: 0 10px;
 }
 
+.table-radio-two {
+    vertical-align: middle;
+    margin-right: 5px;
+    outline: none;
+}
+
 .formInput {
     border: solid 1px #c6c6c6;
     color: #585858;
@@ -327,7 +334,6 @@ img {
     color: #000;
     border: solid 1px #c6c6c6;
     padding: 5px;
-    background-color: #f6f6f6;
 }
 
 .table-remark {
@@ -392,7 +398,7 @@ img {
     border: solid 1px #c6c6c6;
     padding: 5px;
     width: 100%;
-    height: 73px;
+    height: 60px;
     background-color: #f6f6f6;
 }
 
@@ -434,7 +440,7 @@ img {
 .approval-date-input {
     border: 1px solid #c6c6c6;
     height: 25px;
-    width: 140px;
+    width: 130px;
     outline: none;
     padding: 0 5px;
     background: #f6f6f6;
@@ -453,7 +459,7 @@ img {
 .approval-signature-input {
     border: 1px solid #c6c6c6;
     height: 25px;
-    width: 100px;
+    width: 55px;
     outline: none;
     padding: 0 5px;
     background: #f6f6f6;
@@ -574,8 +580,26 @@ img {
 }
 
 .table-td-evaluation {
-    height: 150px;
-    padding: 10px 10px 0 10px;
+    height: 105px;
+    padding: 10px 10px 5px 10px;
+}
+
+.table-td-details{
+    height: 105px;
+    padding: 10px;
+}
+
+.evaluation-content-disabled{
+    height: 100%;
+    background-color: #f6f6f6;
+    resize: none;
+    font-size: 14px;
+    outline: none;
+    display: block;
+    color: #000;
+    border: solid 1px #c6c6c6;
+    padding: 5px;
+    width: 100%;
 }
 
 .opinion-principal {
@@ -604,6 +628,7 @@ img {
 
 .form-but {
     text-align: center;
+    margin-bottom: 20px;
 }
 
 .return-but {
@@ -649,7 +674,7 @@ img {
 }
 
 .receipt-container {
-    margin: 20px auto;
+    margin-bottom: 20px;
     height: auto;
     border: 1px #b3b3b3 solid;
 }
@@ -786,7 +811,7 @@ img {
 .notice-content {
     font-size: 14px;
     text-indent: 50px;
-    margin-bottom: 10px;
+    margin: 10px 0;
 }
 
 .agreement-start-end {
@@ -859,6 +884,7 @@ img {
     width: 135px;
     background: #f6f6f6;
     height: 25px;
+    outline: none;
 }
 
 .td-column-two {

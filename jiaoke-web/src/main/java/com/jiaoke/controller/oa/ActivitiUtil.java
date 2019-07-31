@@ -2,14 +2,12 @@ package com.jiaoke.controller.oa;
 
 import com.jiake.utils.DateUtil;
 import com.jiaoke.oa.bean.Comments;
-import com.jiaoke.oa.bean.OaActTemporary;
 import com.jiaoke.oa.bean.OaCollaboration;
 import org.activiti.bpmn.model.*;
 import org.activiti.bpmn.model.Process;
 import org.activiti.engine.*;
 import org.activiti.engine.history.HistoricActivityInstance;
 import org.activiti.engine.history.HistoricProcessInstance;
-import org.activiti.engine.history.HistoricProcessInstanceQuery;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.impl.RepositoryServiceImpl;
 import org.activiti.engine.impl.identity.Authentication;
@@ -516,7 +514,7 @@ public class ActivitiUtil {
      * @return list
      */
     public List<HistoricProcessInstance> getUnfinishedProcessInstance(String userId) {
-        return historyService.createHistoricProcessInstanceQuery().startedBy(userId).unfinished().list();
+        return historyService.createHistoricProcessInstanceQuery().startedBy(userId).unfinished().orderByProcessInstanceStartTime().desc().list();
     }
 
     /**

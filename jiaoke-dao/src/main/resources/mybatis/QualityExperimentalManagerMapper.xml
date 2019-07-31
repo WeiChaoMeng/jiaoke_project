@@ -230,8 +230,9 @@
           AND materials_num = #{materials_num}
     </select>
 
-    <insert id="insertLabReport" useGeneratedKeys="true">
+    <insert id="insertLabReport">
         INSERT INTO quality_test_lab_report (
+                id,
                 experiment_num,
                 order_ticket_num,
                 materials_num,
@@ -246,6 +247,7 @@
                 )
         VALUES
                (
+                #{id},
                 #{experimentNum},
                 #{order_ticket_num},
                 #{materials_num},
@@ -501,4 +503,22 @@
                  LEFT JOIN quality_test_asphalt AS QTA ON QTLR.experiment_num = QTA.experiment_num
         WHERE QTLR.Id =  #{id}
     </delete>
+
+    <update id="updateExperimentalApproval" parameterType="java.util.Map">
+        update quality_test_lab_report
+        SET
+        <if test="chargePerson != null" >
+            charge_person = #{chargePerson}
+        </if>
+        <if test="checkPerson != null" >
+            check_person = #{checkPerson}
+        </if>
+        WHERE Id =#{id}
+    </update>
+
+    <update id="updateExperimentalItemStateById" parameterType="java.util.Map">
+        update quality_test_lab_report
+        set experiment_status = #{state}
+        where Id = #{id}
+    </update>
 </mapper>

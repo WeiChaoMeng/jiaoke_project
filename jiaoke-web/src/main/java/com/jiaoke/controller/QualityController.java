@@ -13,16 +13,31 @@ import com.alibaba.fastjson.JSON;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.QualityMatchingUtil;
 import com.jiaoke.common.bean.PageBean;
+import com.jiaoke.controller.oa.ActivitiUtil;
+import com.jiaoke.controller.oa.TargetFlowNodeCommand;
+import com.jiaoke.oa.bean.Comments;
+import com.jiaoke.oa.bean.UserInfo;
+import com.jiaoke.oa.service.DepartmentService;
+import com.jiaoke.oa.service.OaCollaborationService;
+import com.jiaoke.oa.service.UserInfoService;
 import com.jiaoke.quality.bean.QualityDataManagerDay;
 import com.jiaoke.quality.bean.QualityRatioModel;
 import com.jiaoke.quality.bean.QualityRatioTemplate;
 import com.jiaoke.quality.service.QualityGradingManagerInf;
 import com.jiaoke.quality.service.*;
+import org.activiti.bpmn.model.UserTask;
+import org.activiti.engine.HistoryService;
+import org.activiti.engine.ManagementService;
+import org.activiti.engine.TaskService;
+import org.activiti.engine.impl.identity.Authentication;
+import org.activiti.engine.task.Task;
 import org.apache.ibatis.annotations.Param;
 import org.apache.logging.log4j.util.Strings;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,6 +46,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -72,6 +88,27 @@ public class QualityController {
     private QualityGradingManagerInf qualityGradingManagerInf;
     @Autowired
     private QualityExperimentalManagerInf qualityExperimentalManagerInf;
+    @Resource
+    private ActivitiUtil activitiUtil;
+    @Resource
+    private UserInfoService userInfoService;
+    @Resource
+    private OaCollaborationService oaCollaborationService;
+    @Resource
+    private ManagementService managementService;
+    @Resource
+    private HistoryService historyService;
+    @Resource
+    private TaskService taskService;
+
+    /**
+     * 获取当前登录用户信息
+     *
+     * @return userInfo
+     */
+    private UserInfo getCurrentUser() {
+        return (UserInfo) SecurityUtils.getSubject().getPrincipal();
+    }
 
     /**
      *
@@ -953,6 +990,7 @@ public class QualityController {
     @RequestMapping("/getExperimentalItemMsgPage.do")
     public String getExperimentalItemMsgPage(@RequestParam("id") String id,HttpServletRequest request){
         request.setAttribute("id",id);
+        request.setAttribute("nickname",getCurrentUser().getNickname());
         return "quality/qc_em_experimental_model";
     }
 
@@ -977,9 +1015,191 @@ public class QualityController {
         return res;
     }
 
+    /********************************  实验审批 Start *****************************************/
+    /**
+     * 详情页面
+     * @param id 主键
+     * @param taskId 任务id
+     * @param model model
+     * @return jsp
+     */
+    @RequestMapping(value = "/detailsExperimentalItems.do")
+    public String experimentalItemsDetails(String id,String taskId,Model model){
+        if ("undefined".equals(taskId) || "".equals(taskId)){
+            //根据业务键查询流程实例Id
+            taskId = historyService.createHistoricProcessInstanceQuery().processInstanceBusinessKey("quality_test_lab_report:" + id).singleResult().getId();
+        }
+
+        //获取批注信息
+        List<Comments> commentsList = activitiUtil.selectHistoryComment(taskId);
+
+        model.addAttribute("id",id);
+        model.addAttribute("commentsList",commentsList);
+        model.addAttribute("commentsSize",commentsList.size());
+        return "quality/qc_em_experimental_message";
+    }
+
+    /**
+     * 跳转审批页面
+     * @param id 主键
+     * @param taskId 任务id
+     * @param model model
+     * @return jsp
+     */
+    @RequestMapping(value = "/approvalExperimentalItems.do")
+    public String experimentalItemsApproval(String id, String taskId, Model model){
+        //获取批注信息
+        List<Comments> commentsList = activitiUtil.selectHistoryComment(activitiUtil.getTaskByTaskId(taskId).getProcessInstanceId());
+
+        model.addAttribute("nickname",getCurrentUser().getNickname());
+        model.addAttribute("id",id);
+        model.addAttribute("taskId",taskId);
+        model.addAttribute("commentsList",commentsList);
+        model.addAttribute("commentsSize",commentsList.size());
+        return "quality/qc_em_experimental_approval";
+    }
+
+    /**
+     * 审批操作
+     * @param processingOpinion 处理意见
+     * @param taskId  任务Id
+     * @param flag 1,同意 2,不同意
+     * @param chargePerson  负责的人
+     * @param checkPerson 审核的人
+     * @param id 主键
+     * @return s/e
+     */
+    @RequestMapping(value = "/experimentApprovalSubmit")
+    @ResponseBody
+    public String experimentApprovalSubmit(String processingOpinion, String taskId,Integer flag,String chargePerson,String checkPerson,String id) {
+
+        //结束标识
+        String end = "end";
+        //发起人
+        String promoter = "promoter";
+        //回退
+        String back = "back";
+
+        if (processingOpinion == null){
+            processingOpinion = " ";
+        }
+
+        if (chargePerson != null | checkPerson != null){
+            //更新审批人签字
+            qualityExperimentalManagerInf.updateExperimentalItemApproval(id,chargePerson,checkPerson);
+        }
+
+        Task task = activitiUtil.getTaskByTaskId(taskId);
+        if (task == null) {
+            return "error";
+        }
+
+        //同意
+        if (flag == 1) {
+            //下个节点
+            String nextNode = activitiUtil.getNextNode(task.getProcessDefinitionId(), task.getTaskDefinitionKey());
+
+            //下个节点是否为end直接结束
+            if (end.equals(nextNode)) {
+                //更新实验项目状态
+                qualityExperimentalManagerInf.updateExperimentalItemStateById(id,3);
+
+                //插入批注
+                Authentication.setAuthenticatedUserId(getCurrentUser().getNickname());
+                taskService.addComment(taskId, task.getProcessInstanceId(), processingOpinion);
+
+                activitiUtil.endProcess(taskId);
+                return "success";
+            } else {
+                UserTask userTask = activitiUtil.getUserTask(task.getProcessDefinitionId(), nextNode);
+                if (nextNode.equals(userTask.getId())) {
+                    String enforcer = userTask.getAssignee().substring(userTask.getAssignee().indexOf("{") + 1, userTask.getAssignee().indexOf("}"));
+
+                    if (promoter.equals(enforcer)) {
+                        Map<String, Object> map = new HashMap<>(16);
+                        map.put(promoter, activitiUtil.getStartUserId(task.getProcessInstanceId()));
+                        activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
+                        return "success";
+
+                    } else {
+                        UserInfo userInfo = userInfoService.getUserInfoByPermission(enforcer);
+                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
+                        return "success";
+                    }
+                } else {
+                    return "error";
+                }
+            }
+        } else {
+            //插入批注
+            Authentication.setAuthenticatedUserId(getCurrentUser().getNickname());
+            taskService.addComment(taskId, task.getProcessInstanceId(), processingOpinion);
+            //驳回
+            managementService.executeCommand(new TargetFlowNodeCommand(task.getId(), back));
+            //修改协同表单表单状态
+            oaCollaborationService.updateState(id,3);
+            //更新实验项目状态
+            qualityExperimentalManagerInf.updateExperimentalItemStateById(id,2);
+            return "success";
+        }
+    }
+
+    /**
+     * 删除
+     *
+     * @param id                id
+     * @param processInstanceId processInstanceId
+     * @return jsp
+     */
+    @RequestMapping(value = "/deleteExperimentalItems.do")
+    @ResponseBody
+    public String delete(String id, String processInstanceId) {
+        //删除流程
+        if (activitiUtil.deleteByProcessInstanceId(processInstanceId) == 1) {
+            //执行删除数据
+            qualityExperimentalManagerInf.deleteExperimentalItemById(id);
+            return "success";
+        } else {
+            return "error";
+        }
+    }
+
+    /**
+     * 撤销流程
+     *
+     * @param id                id
+     * @param processInstanceId processInstanceId
+     * @return jsp
+     */
+    @RequestMapping(value = "/rescindExperimentalItems.do")
+    @ResponseBody
+    public String rescind(String id, String processInstanceId) {
+        int rescind = activitiUtil.rescindByProcessInstanceId(processInstanceId);
+        if (rescind < 0) {
+            //流程结束无法撤销
+            return "end";
+        } else if (rescind > 0) {
+            //撤销成功后更新state为2
+            oaCollaborationService.updateState(id, 2);
+            return "success";
+        } else {
+            //错误
+            return "error";
+        }
+    }
+    /********************************  实验审批 end *****************************************/
+
     @RequestMapping("/getExperimentalMsgById.do")
-    public String getExperimentalMsgById(@RequestParam("id") String id,HttpServletRequest request){
-        request.setAttribute("id",id);
+    public String getExperimentalMsgById(@RequestParam("id") String id,Model model){
+
+        //根据业务键查询流程实例Id
+        String processInstanceId = historyService.createHistoricProcessInstanceQuery().processInstanceBusinessKey("quality_test_lab_report:" + id).singleResult().getId();
+        //获取批注信息
+        List<Comments> commentsList = activitiUtil.selectHistoryComment(processInstanceId);
+
+        model.addAttribute("id",id);
+        model.addAttribute("commentsList",commentsList);
+        model.addAttribute("commentsSize",commentsList.size());
         return "quality/qc_em_experimental_message";
     }
     @ResponseBody

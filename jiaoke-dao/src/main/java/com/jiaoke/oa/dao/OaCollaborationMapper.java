@@ -45,7 +45,7 @@ public interface OaCollaborationMapper {
     /**
      * 查询待办任务
      *
-     * @param list list
+     * @param list  list
      * @param title title
      * @return list
      */
@@ -103,4 +103,20 @@ public interface OaCollaborationMapper {
      * @return int
      */
     int updateState(@Param("correlationId") String correlationId, @Param("state") Integer state);
+
+    /**
+     * 查询数据是否存在
+     *
+     * @param correlationId 关联id
+     * @return int
+     */
+    OaCollaboration selectOne(String correlationId);
+
+    /**
+     * 查询多条数据
+     *
+     * @param ids ids
+     * @return list
+     */
+    List<OaCollaboration> selectMultipleData(@Param("ids") List<String> ids);
 }

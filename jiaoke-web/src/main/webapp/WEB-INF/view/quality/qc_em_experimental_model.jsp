@@ -208,11 +208,11 @@
 
     <div class="report">
         <span>负责人 :</span>
-        <input type="text" name="charge_person" value=" " />
+        <input type="text" name="charge_person" readonly/>
         <span>审核 :</span>
-        <input type="text" name="check_person"  />
+        <input type="text" name="check_person"  readonly/>
         <span>报告人 :</span>
-        <input type="text" name="report_person"  />
+        <input type="text" name="report_person" value="${nickname}" readonly />
     </div>
 
     <div class="datediv">
