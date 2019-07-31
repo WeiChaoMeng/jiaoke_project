@@ -11,7 +11,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>取样管理</title>
+    <title>委托管理</title>
     <link href="/static/css/default.css" rel="stylesheet" type="text/css">
     <link href="/static/css/qc/sample_management.css" rel="stylesheet" type="text/css">
     <link type="text/css" rel="stylesheet" href="/static/css/qc/zxf_page.css">
@@ -21,8 +21,7 @@
 
 <div class="yyui_tab">
     <ul>
-        <li id="sampleList"  class="yyui_tab_title_this">取样单<span class="yyui_badge" id="sampleCount">99+</span></li>
-        <li class="yyui_tab_title" onclick="getFromData()">新建取样</li>
+        <li class="yyui_tab_title_this">委托单<span class="yyui_badge" id="experimentalCount">99+</span></li>
     </ul>
 
     <div class="yyui_tab_content_this">
@@ -31,18 +30,17 @@
 
                 <thead>
                 <tr>
-                    <th style="text-align:center;">编号</th>
-                    <th style="text-align:center;">材料名称</th>
-                    <th style="text-align:center;">取样时间</th>
+                    <th style="text-align:center;">委托单编号</th>
+                    <th style="text-align:center;">取样单编号</th>
+                    <th style="text-align:center;">创建时间</th>
                     <th style="text-align:center;">所属厂家</th>
                     <th style="text-align:center;">规格</th>
                     <th style="text-align:center;">代表吨数</th>
-                    <th style="text-align:center;">备注</th>
                     <th style="text-align:center;">状态</th>
                     <th style="text-align:center;">操作</th>
                 </tr></thead>
 
-                <tbody id="samplingData">
+                <tbody id="experimentalData">
                     <tr>
                         <td>01</td>
                         <td>粗集料</td>
@@ -61,60 +59,71 @@
         </div>
         <div class="zxf_pagediv"></div>
     </div>
-    <div class="yyui_tab_content">
-        <form  class="bootstrap-frm">
-            <h1>新建取样单
-                <span>Please fill all the texts in the fields.</span>
+
+    <%--委托单信息弹出--%>
+    <div class="yyui_tab_content" id="layer_out">
+        <form  class="bootstrap-frm" style="    border: none;">
+            <h1>委托单
+                <span>order ticket detailed information.</span>
             </h1>
             <label>
+                <span>委托编号 :</span>
+                <input type="text" id="order_ticket_num" placeholder="填写吨数" readonly="readonly"  />
+            </label>
+            <label>
                 <span>材料 :</span>
-                <select  id="materials" name="materials">
-                    <option value="Job Inquiry">Job Inquiry</option>
-                    <option value="General Question">General Question</option>
-                </select>
+                <input type="text" id="material"  placeholder="填写吨数" readonly="readonly"  />
             </label>
             </label>
             <label>
                 <span>厂家 :</span>
-                <select id="manufacturers" name="manufacturers">
-                    <option value="Job Inquiry">Job Inquiry</option>
-                    <option value="General Question">General Question</option>
-                </select>
+                <input type="text" id="manufacturers"  placeholder="填写吨数" readonly="readonly"  />
             </label>
             </label>
             <label>
                 <label>
                     <span>规格 :</span>
-                    <select id="specification" name="specification">
-                        <option value="Job Inquiry">Job Inquiry</option>
-                    </select>
+                    <input type="text" id="specification" name="tunnage" placeholder="填写吨数" readonly="readonly"  />
                 </label>
             </label>
             <label>
                 <span>代表吨数 :</span>
-                <input type="number" id="tunnage" name="tunnage" placeholder="填写吨数" required />
+                <input type="number" id="tunnage"  placeholder="填写吨数" readonly="readonly"  />
             </label>
             <label>
-                <span>取样时间 :</span>
-                <input type="text" id="creat_time" name="creat_time" readonly="readonly" placeholder="取样时间" />
+                <span>委托时间 :</span>
+                <input type="text" id="creat_time"  readonly="readonly" placeholder="取样时间" />
             </label>
-            <label>
-                <span>备注 :</span>
-                <textarea  name="remark" id="remark" placeholder="取样相关备注信息"></textarea>
-            </label>
-            <label>
-                <span>&nbsp;</span>
-                <input type="button" onclick="addSample()" class="button" value="Send" />
+            <label id="experimentalItem">
+                <span  >试验项目 :</span>
+                <div style="width: 100%;padding: 10px 25%;"><input type="checkbox"  value="筛分试验 T0327-2005" style="-webkit-appearance:checkbox;"  disabled="true" /> 筛分试验 T0327-2005</div>
+                    <div style="width: 100%;padding: 10px 25%;"><input type="checkbox"  value="表观密度 T0328-2005"  style="-webkit-appearance:checkbox;"  disabled="true" /> 表观密度 T0328-2005</div>
+                        <div style="width: 100%;padding: 10px 25%;"> <input type="checkbox"  value="砂当量 T0334-2005"  style="-webkit-appearance:checkbox;"  disabled="true" /> 砂当量 T0334-2005</div>
             </label>
         </form>
     </div>
 
+    <%-- 实验项目添加弹出 --%>
+    <div class="yyui_tab_content" id="experimentalItemLayer" style="display: none">
+        <form  class="bootstrap-frm" style="border: none;">
+            <label id="experimentalItemList">
+                <span style="width: 30%;" >选择试验项目 :</span>
+
+            </label>
+            <label>
+                <label>
+                    <span>&nbsp;</span>
+                    <input type="button" onclick="addExperimentalItem()"  class="button" value="确认" />
+                </label>
+            </label>
+        </form>
+    </div>
 </div>
 <input  id="path" value="${path}" type="hidden" >
 </body>
 <script type="text/javascript" src="/static/js/jquery.js"></script>
 <script type="text/javascript" src="/static/js/qc/zxf_page.js"></script>
 <script type="text/javascript" src="/static/js/layer/layer.js"></script>
-<script type="text/javascript" src="/static/js/qc/sample_management.js"></script>
+<script type="text/javascript" src="/static/js/qc/experimental_management_foreign.js"></script>
 
 </html>

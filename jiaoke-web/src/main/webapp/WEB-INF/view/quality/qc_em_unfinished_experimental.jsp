@@ -21,7 +21,7 @@
 
 <div class="yyui_tab">
     <ul>
-        <li class="yyui_tab_title_this">实验单列表<span class="yyui_badge" id="experimentalCount">99+</span></li>
+        <li class="yyui_tab_title_this">未完实验<span class="yyui_badge" id="experimentalCount">99+</span></li>
     </ul>
 
     <div class="yyui_tab_content_this">

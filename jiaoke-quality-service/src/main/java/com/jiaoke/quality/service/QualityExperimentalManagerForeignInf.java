@@ -15,7 +15,7 @@ package com.jiaoke.quality.service;
  * @create: 2019/6/26 11:54
  * @Description:
  */
-public interface QualityExperimentalManagerInf {
+public interface QualityExperimentalManagerForeignInf {
     /**
      *
      * 功能描述: <br>
@@ -181,7 +181,7 @@ public interface QualityExperimentalManagerInf {
      * @auther Melone
      * @date 2019/7/12 15:13
      */
-    String addExperimentalMsgAndItem(String fromJson,String firstTest,String coarseTest);
+    String addExperimentalMsgAndItem(String fromJson, String firstTest, String coarseTest);
 
     /**
      *
@@ -203,7 +203,7 @@ public interface QualityExperimentalManagerInf {
      * @auther Melone
      * @date 2019/7/16 19:48
      */
-   String getExperimentalProjectItem( String tableName,String experiment_num);
+   String getExperimentalProjectItem(String tableName, String experiment_num);
 
     /**
      *
@@ -215,30 +215,6 @@ public interface QualityExperimentalManagerInf {
      * @date 2019/7/17 10:30
      */
     String removeExperimentalItemById(String id);
-
-    /**
-     * 更新审批数据
-     * @param id 主键
-     * @param chargePerson 负责人
-     * @param checkPerson 审核人
-     * @return int
-     */
-    int updateExperimentalItemApproval(String id,String chargePerson,String checkPerson);
-
-    /**
-     * 根据id删除实验数据
-     * @param id 主键
-     * @return int
-     */
-    int deleteExperimentalItemById(String id);
-
-    /**
-     * 根据id更新实验数据状态
-     * @param id id
-     * @param state state
-     * @return int
-     */
-    int updateExperimentalItemStateById(String id,Integer state);
 
     /**
      *
@@ -255,8 +231,8 @@ public interface QualityExperimentalManagerInf {
      *
      * 功能描述: <br>
      *  <根据日期查询原材相关试验信息>
-     * @param
-     * @return
+     * @param 
+     * @return 
      * @auther Melone
      * @date 2019/7/25 11:43
      */

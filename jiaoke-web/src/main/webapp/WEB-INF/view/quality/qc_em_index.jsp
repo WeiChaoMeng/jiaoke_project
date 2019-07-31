@@ -42,20 +42,20 @@
                 <span class="meta__reading-time"><i class="fa fa-clock-o"></i></span>
             </div>
         </a>
-        <a class="grid__item" href="#">
-            <h2 class="title title--preview">取样单 &amp; 任务单 </h2>
+        <a class="grid__item"  href="javacript:void(0);"onclick="standing_book()">
+            <h2 class="title title--preview">台账管理</h2>
             <div class="loader"></div>
-            <span class="category">取样台账、取样单、委托单、任务单展示</span>
+            <span class="category">各类台账展示</span>
             <div class="meta meta--preview">
 
                 <span class="meta__date"><i class="fa fa-calendar-o"></i></span>
                 <span class="meta__reading-time"><i class="fa fa-clock-o"></i></span>
             </div>
         </a>
-        <a class="grid__item" href="#">
-            <h2 class="title title--preview">报告 &amp; 台账</h2>
+        <a class="grid__item" href="javacript:void(0);"onclick="experiment_setting()">
+            <h2 class="title title--preview">试验设置</h2>
             <div class="loader"></div>
-            <span class="category">实验报告与与实验台账展示</span>
+            <span class="category">材料规格、生产厂家设置</span>
             <div class="meta meta--preview">
 
                 <span class="meta__date"><i class="fa fa-calendar-o"></i> </span>
@@ -64,7 +64,7 @@
         </a>
         </shiro:hasPermission>
 
-        <a class="grid__item" href="#">
+        <a class="grid__item" href="javacript:void(0);" onclick="sample_management_foreign()">
             <h2 class="title title--preview">取样管理</h2>
             <div class="loader"></div>
             <span class="category">取样通知相关</span>
@@ -74,7 +74,7 @@
                 <span class="meta__reading-time"><i class="fa fa-clock-o"></i></span>
             </div>
         </a>
-        <a class="grid__item" href="#">
+        <a class="grid__item" href="javacript:void(0);" onclick="experimental_management_foreign()">
             <h2 class="title title--preview">实验管理</h2>
             <div class="loader"></div>
             <span class="category">实验相关流程</span>
@@ -84,7 +84,7 @@
                 <span class="meta__reading-time"><i class="fa fa-clock-o"></i></span>
             </div>
         </a>
-        <a class="grid__item" href="#">
+        <a class="grid__item" href="javacript:void(0);" onclick="unfinished_experimental_foreign()">
             <h2 class="title title--preview">未完实验</h2>
             <div class="loader"></div>
             <span class="category">填写实验数据、输入计算表格</span>
@@ -94,25 +94,26 @@
                 <span class="meta__reading-time"><i class="fa fa-clock-o"></i></span>
             </div>
         </a>
-        <a class="grid__item" href="#">
-            <h2 class="title title--preview">取样单 &amp; 任务单 </h2>
+        <a class="grid__item"  href="javacript:void(0);"onclick="standing_book_foreign()">
+            <h2 class="title title--preview">台账管理</h2>
             <div class="loader"></div>
-            <span class="category">取样台账、取样单、委托单、任务单展示</span>
+            <span class="category">各类台账展示</span>
             <div class="meta meta--preview">
 
                 <span class="meta__date"><i class="fa fa-calendar-o"></i></span>
                 <span class="meta__reading-time"><i class="fa fa-clock-o"></i></span>
             </div>
         </a>
-        <a class="grid__item" href="#">
-            <h2 class="title title--preview">报告 &amp; 台账</h2>
+        <a class="grid__item" href="javacript:void(0);"onclick="experiment_setting_foreign()">
+            <h2 class="title title--preview">试验设置</h2>
             <div class="loader"></div>
-            <span class="category">实验报告与与实验台账展示</span>
+            <span class="category">材料规格、生产厂家设置</span>
             <div class="meta meta--preview">
 
                 <span class="meta__date"><i class="fa fa-calendar-o"></i> </span>
                 <span class="meta__reading-time"><i class="fa fa-clock-o"></i></span>
             </div>
+        </a>v>
         </a>
     </section>
 </div>

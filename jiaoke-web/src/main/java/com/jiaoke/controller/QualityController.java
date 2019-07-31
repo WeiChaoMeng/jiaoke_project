@@ -25,6 +25,7 @@ import com.jiaoke.quality.bean.QualityRatioModel;
 import com.jiaoke.quality.bean.QualityRatioTemplate;
 import com.jiaoke.quality.service.QualityGradingManagerInf;
 import com.jiaoke.quality.service.*;
+import javafx.scene.chart.ValueAxis;
 import org.activiti.bpmn.model.UserTask;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.ManagementService;
@@ -88,6 +89,8 @@ public class QualityController {
     private QualityGradingManagerInf qualityGradingManagerInf;
     @Autowired
     private QualityExperimentalManagerInf qualityExperimentalManagerInf;
+    @Autowired
+    private QualityExperimentalManagerForeignInf QualityExperimentalManagerForeignInf;
     @Resource
     private ActivitiUtil activitiUtil;
     @Resource
@@ -917,6 +920,12 @@ public class QualityController {
         return res;
      }
 
+     @ResponseBody
+     @RequestMapping(value = "/getSampleStatusById.do",method = RequestMethod.POST)
+     public String getSampleStatusById(@RequestParam("id") String id){
+         String res = qualityExperimentalManagerInf.getSampleStatusById(id);
+         return res;
+     }
 
      //实验管理页面(委托单列表)
 
@@ -1222,4 +1231,485 @@ public class QualityController {
     }
     /********************************  未完实验 end *****************************************/
 
+    /********************************  台账相关 end *****************************************/
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <台账首页跳转>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/7/17 17:25
+     */
+    @RequestMapping("/getStandingBookPage.do")
+    public String standing_book(){
+        return "quality/qc_em_standing_book";
+    }
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <原材料台账首页>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/7/24 11:00
+     */
+    @ResponseBody
+    @RequestMapping("/getSevenDayRawMaterialStandingBook.do")
+    public String getSevenDayRawMaterialStandingBook(){
+        String res = qualityExperimentalManagerInf.getSevenDayRawMaterialStandingBook();
+        return res;
+    }
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期查询原材相关信息>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/7/25 11:40
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getRawMaterialStandingBookByDate.do",method = RequestMethod.POST)
+    public String getRawMaterialStandingBookByDate(@RequestParam("startDate") String startDate,@RequestParam("endDate") String endDate){
+        String res = qualityExperimentalManagerInf.getRawMaterialStandingBookByDate(startDate,endDate);
+        return res;
+    };
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <返回沥青原材七日内试验数据>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/7/25 13:16
+     */
+
+    @ResponseBody
+    @RequestMapping(value = "/getAsphaltStandingBook.do")
+    public String getAsphaltStandingBook(){
+        String res = qualityExperimentalManagerInf.getAsphaltStandingBook();
+        return res;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/getAsphaltStandingBookByDate.do",method = RequestMethod.POST)
+    public String getAsphaltStandingBookByDate(@RequestParam("startDate") String startDate,@RequestParam("endDate") String endDate){
+        String res = qualityExperimentalManagerInf.getAsphaltStandingBookByDate(startDate,endDate);
+        return res;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getTestStandingBook.do")
+    public String getTestStandingBook(){
+        String res = qualityExperimentalManagerInf.getTestStandingBook();
+        return res;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getTestStandingBookByDate.do",method = RequestMethod.POST)
+    public String getTestStandingBookByDate(@RequestParam("startDate") String startDate,@RequestParam("endDate") String endDate){
+        String res = qualityExperimentalManagerInf.getTestStandingBookByDate(startDate,endDate);
+        return res;
+    }
+
+    /********************************  台账相关 end *****************************************/
+
+
+    /********************************  设置相关 Start *****************************************/
+    @RequestMapping("/getExperimentSetting.do")
+    public String getPerimentSetting(){
+        return "quality/qc_em_experimental_setting";
+    }
+    @ResponseBody
+    @RequestMapping("/getSpecificationDataAndManufacturersData.do")
+    public String getSpecificationDataAndManufacturersData(){
+        String res = qualityExperimentalManagerInf.getSpecificationDataAndManufacturersData();
+        return res;
+    }
+    @ResponseBody
+    @RequestMapping("/deleteSpecificationOrManufacturersById.do")
+    public String deleteSpecificationOrManufacturersById(@RequestParam("id") String id,@RequestParam("make") String make){
+        String res = qualityExperimentalManagerInf.deleteSpecificationOrManufacturersById(id,make);
+        return res;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/sendSpecificationFrom.do",method = RequestMethod.POST)
+    public String sendSpecificationFrom(@RequestParam("specificationName") String specificationName){
+        String res = qualityExperimentalManagerInf.insertSpecificationFrom(specificationName);
+        return res;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/sendManufacturersFrom.do",method = RequestMethod.POST)
+    public String sendManufacturersFrom(@RequestParam("manufacturersName") String manufacturersName){
+        String res = qualityExperimentalManagerInf.insertManufacturersFrom(manufacturersName);
+        return res;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/getSpecificationOrManufacturersById.do",method = RequestMethod.POST)
+    public String getSpecificationOrManufacturersById(@RequestParam("id") String id,@RequestParam("make") String make){
+        String res = qualityExperimentalManagerInf.getSpecificationOrManufacturersById(id,make);
+        return res;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/updateSpecificationOrManufacturersById.do",method = RequestMethod.POST)
+    public String updateSpecificationOrManufacturersById(@RequestParam("id") String id,@RequestParam("make") String make,@RequestParam("updateName") String updateName){
+        String res = qualityExperimentalManagerInf.updateSpecificationOrManufacturersById(id,make,updateName);
+        return res;
+    }
+     /********************************  设置相关 end *****************************************/
+
+
+    /********************************  实验管理(对外) start *****************************************/
+
+
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <跳转到取样单页面>
+     * @param []
+     * @return java.lang.String
+     * @auther Melone
+     * @date 2019/6/26 11:48
+     */
+    @RequestMapping("/getSampleManagementPageForeign.do")
+    public String getSampleManagementPageForeign(){
+        return "quality/qc_em_sample_management_foreign";
+    }
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询所有取样单>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/6/27 10:57
+     */
+    @ResponseBody
+    @RequestMapping("/getAllSamplingPageForeign.do")
+    public String getAllSamplingPageForeign(){
+        String res = QualityExperimentalManagerForeignInf.getAllSamplingPage();
+        return res;
+    }
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <返回from表单下拉框字段>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/6/26 11:51
+     */
+    @ResponseBody
+    @RequestMapping("/getSamplingPageFromDataForeign.do")
+    public String getSamplingPageFromDataForeign(){
+        String res = QualityExperimentalManagerForeignInf.getSamplingPageFromData();
+        return res;
+    };
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <新建取样单方法>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/6/27 10:02
+     */
+    @ResponseBody
+    @RequestMapping(value = "/addSampleForeign.do",method = RequestMethod.POST)
+    public String addSampleForeign(String materials,String manufacturers,String specification,String tunnage,String creat_time,String remark ){
+        String res =  QualityExperimentalManagerForeignInf.addSample(materials,manufacturers,specification,tunnage,creat_time,remark);
+        return res;
+    };
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据ID删除取样单>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/6/26 17:38
+     */
+    @ResponseBody
+    @RequestMapping(value = "/removeSampleByIdForeign.do",method = RequestMethod.POST)
+    public String removeSampleByIdForeign(@RequestParam("id") String id){
+        String res = QualityExperimentalManagerForeignInf.removeSampleById(id);
+        return res;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/confirmCompletedByIdForeign.do",method = RequestMethod.POST)
+    public String confirmCompletedByIdForeign(@RequestParam("id") String id){
+        String res = QualityExperimentalManagerForeignInf.confirmCompletedById(id);
+        return res;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getSampleStatusByIdForeign.do",method = RequestMethod.POST)
+    public String getSampleStatusByIdForeign(@RequestParam("id") String id){
+        String res = QualityExperimentalManagerForeignInf.getSampleStatusById(id);
+        return res;
+    }
+
+    //实验管理页面(委托单列表)
+
+    @RequestMapping(value = "/getExperimentalManagementForeign.do")
+    public String getExperimentalManagementForeign(){
+        return "quality/qc_em_experimental_management_foreign";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getAllexperimentalForeign.do")
+    public String getAllexperimentalForeign(){
+        String res =  QualityExperimentalManagerForeignInf.getAllexperimental();
+        return res;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getExperimentalMessageByIdForeign.do",method = RequestMethod.POST)
+    public String getExperimentalMessageByIdForeign(@RequestParam("id") String id){
+        String res = QualityExperimentalManagerForeignInf.getExperimentalMessageById(id);
+        return res;
+    }
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据ID查询当前选择的已经选择的试验项目>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/7/3 10:45
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getExperimentalItemByOrderNumForeign.do",method = RequestMethod.POST)
+    public String getExperimentalItemByOrderNumForeign(@RequestParam("orderNum") String orderNum){
+        String res = QualityExperimentalManagerForeignInf.getExperimentalItemByOrderNum(orderNum);
+        return res;
+    }
+    @ResponseBody
+    @RequestMapping(value ="/getExperimentalItemByIdForeign.do",method = RequestMethod.POST)
+    public String getExperimentalItemByIdForeign(@RequestParam("id") String id){
+        String res = QualityExperimentalManagerForeignInf.getExperimentalItemById(id);
+        return res;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/addExperimentalItemByOrderTicketNumForeign.do",method = RequestMethod.POST)
+    public String addExperimentalItemByOrderTicketNumForeign(@RequestParam("orderTicketNum") String orderTicketNum,@RequestParam("experimentalItemId") String experimentalItemId){
+        String res = QualityExperimentalManagerForeignInf.addExperimentalItemByOrderTicketNum(orderTicketNum,experimentalItemId);
+        return res;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/getExperimentalItemCountForeign.do",method = RequestMethod.POST)
+    public String getExperimentalItemCountForeign(@RequestParam("orderTicketNum") String orderTicketNum){
+        String res = QualityExperimentalManagerForeignInf.getExperimentalItemCount(orderTicketNum);
+        return res;
+    }
+    /********************************  实验管理 end *****************************************/
+
+    /********************************  未完实验 Start *****************************************/
+
+    @RequestMapping(value ="/getExperimentMessagePageForeign.do")
+    public String getExperimentMessagePageForeign(){
+        return "quality/qc_em_unfinished_experimental_foreign";
+    }
+    @ResponseBody
+    @RequestMapping("/getAllExperimentalItemForeign.do")
+    public String getAllExperimentalItemForeign(){
+        String res = QualityExperimentalManagerForeignInf.getAllExperimentalItem();
+        return res;
+    }
+
+
+    @RequestMapping("/getExperimentalItemMsgPageForeign.do")
+    public String getExperimentalItemMsgPageForeign(@RequestParam("id") String id,HttpServletRequest request){
+        request.setAttribute("id",id);
+        return "quality/qc_em_experimental_model_foreign";
+    }
+
+    @ResponseBody
+    @RequestMapping("/getExperimentalItemMsgByIdForeign.do")
+    public String getExperimentalItemMsgByIdForeign(@RequestParam("id") String id){
+        String msg = QualityExperimentalManagerForeignInf.getExperimentalItemMsgById(id);
+        return msg;
+    }
+
+    @ResponseBody
+    @RequestMapping("/getExperimentalItemListByIdForeign.do")
+    public String getExperimentalItemListByIdForeign(@RequestParam("id") String id){
+        String res = QualityExperimentalManagerForeignInf.getExperimentalItemNumList(id);
+        return res;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/sendFromDataForeign.do",method = RequestMethod.POST)
+    public String sendFromDataForeign(@RequestParam("fromJson") String fromJson,@RequestParam("firstTest") String firstTest,@RequestParam("coarseTest") String coarseTest){
+        String res = QualityExperimentalManagerForeignInf.addExperimentalMsgAndItem(fromJson,firstTest,coarseTest);
+        return res;
+    }
+
+    @RequestMapping("/getExperimentalMsgByIdForeign.do")
+    public String getExperimentalMsgByIdForeign(@RequestParam("id") String id,HttpServletRequest request){
+        request.setAttribute("id",id);
+        return "quality/qc_em_experimental_message_foreign";
+    }
+    @ResponseBody
+    @RequestMapping(value = "/getExperimentalProjectMessageForeign.do",method = RequestMethod.POST)
+    public String getExperimentalProjectMessageForeign(@RequestParam("id") String  id){
+        String res = QualityExperimentalManagerForeignInf.getExperimentalProjectMessage(id);
+        return res;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/showExperimentalProjectItemForeign.do",method = RequestMethod.POST)
+    public String showExperimentalProjectItemForeign(@RequestParam("tableName") String tableName,@RequestParam("experiment_num") String experiment_num){
+        String res = QualityExperimentalManagerForeignInf.getExperimentalProjectItem(tableName,experiment_num);
+        return res;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/removeExperimentalItemByIdForeign.do",method = RequestMethod.POST)
+    public String removeExperimentalItemByIdForeign(@RequestParam("id") String id){
+        String res = QualityExperimentalManagerForeignInf.removeExperimentalItemById(id);
+        return res;
+    }
+    /********************************  未完实验 end *****************************************/
+
+    /********************************  台账相关 end *****************************************/
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <台账首页跳转>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/7/17 17:25
+     */
+    @RequestMapping("/getStandingBookPageForeign.do")
+    public String standing_bookForeign(){
+        return "quality/qc_em_standing_book_foreign";
+    }
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <原材料台账首页>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/7/24 11:00
+     */
+    @ResponseBody
+    @RequestMapping("/getSevenDayRawMaterialStandingBookForeign.do")
+    public String getSevenDayRawMaterialStandingBookForeign(){
+        String res = QualityExperimentalManagerForeignInf.getSevenDayRawMaterialStandingBook();
+        return res;
+    }
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期查询原材相关信息>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/7/25 11:40
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getRawMaterialStandingBookByDateForeign.do",method = RequestMethod.POST)
+    public String getRawMaterialStandingBookByDateForeign(@RequestParam("startDate") String startDate,@RequestParam("endDate") String endDate){
+        String res = QualityExperimentalManagerForeignInf.getRawMaterialStandingBookByDate(startDate,endDate);
+        return res;
+    };
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <返回沥青原材七日内试验数据>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/7/25 13:16
+     */
+
+    @ResponseBody
+    @RequestMapping(value = "/getAsphaltStandingBookForeign.do")
+    public String getAsphaltStandingBookForeign(){
+        String res = QualityExperimentalManagerForeignInf.getAsphaltStandingBook();
+        return res;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/getAsphaltStandingBookByDateForeign.do",method = RequestMethod.POST)
+    public String getAsphaltStandingBookByDateForeign(@RequestParam("startDate") String startDate,@RequestParam("endDate") String endDate){
+        String res = QualityExperimentalManagerForeignInf.getAsphaltStandingBookByDate(startDate,endDate);
+        return res;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getTestStandingBookForeign.do")
+    public String getTestStandingBookForeign(){
+        String res = QualityExperimentalManagerForeignInf.getTestStandingBook();
+        return res;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getTestStandingBookByDateForeign.do",method = RequestMethod.POST)
+    public String getTestStandingBookByDateForeign(@RequestParam("startDate") String startDate,@RequestParam("endDate") String endDate){
+        String res = QualityExperimentalManagerForeignInf.getTestStandingBookByDate(startDate,endDate);
+        return res;
+    }
+
+    /********************************  台账相关 end *****************************************/
+
+
+    /********************************  设置相关 Start *****************************************/
+    @RequestMapping("/getExperimentSettingForeign.do")
+    public String getPerimentSettingForeign(){
+        return "quality/qc_em_experimental_setting_foreign";
+    }
+    @ResponseBody
+    @RequestMapping("/getSpecificationDataAndManufacturersDataForeign.do")
+    public String getSpecificationDataAndManufacturersDataForeign(){
+        String res = QualityExperimentalManagerForeignInf.getSpecificationDataAndManufacturersData();
+        return res;
+    }
+    @ResponseBody
+    @RequestMapping("/deleteSpecificationOrManufacturersByIdForeign.do")
+    public String deleteSpecificationOrManufacturersByIdForeign(@RequestParam("id") String id,@RequestParam("make") String make){
+        String res = QualityExperimentalManagerForeignInf.deleteSpecificationOrManufacturersById(id,make);
+        return res;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/sendSpecificationFromForeign.do",method = RequestMethod.POST)
+    public String sendSpecificationFromForeign(@RequestParam("specificationName") String specificationName){
+        String res = QualityExperimentalManagerForeignInf.insertSpecificationFrom(specificationName);
+        return res;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/sendManufacturersFromForeign.do",method = RequestMethod.POST)
+    public String sendManufacturersFromForeign(@RequestParam("manufacturersName") String manufacturersName){
+        String res = QualityExperimentalManagerForeignInf.insertManufacturersFrom(manufacturersName);
+        return res;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/getSpecificationOrManufacturersByIdForeign.do",method = RequestMethod.POST)
+    public String getSpecificationOrManufacturersByIdForeign(@RequestParam("id") String id,@RequestParam("make") String make){
+        String res = QualityExperimentalManagerForeignInf.getSpecificationOrManufacturersById(id,make);
+        return res;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/updateSpecificationOrManufacturersByIdForeign.do",method = RequestMethod.POST)
+    public String updateSpecificationOrManufacturersByIdForeign(@RequestParam("id") String id,@RequestParam("make") String make,@RequestParam("updateName") String updateName){
+        String res = QualityExperimentalManagerForeignInf.updateSpecificationOrManufacturersById(id,make,updateName);
+        return res;
+    }
+    /********************************  设置相关 end *****************************************/
+
 }
+

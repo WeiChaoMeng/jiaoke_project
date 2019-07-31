@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jiaoke.quality.dao.QualityExperimentalManagerDao">
+<mapper namespace="com.jiaoke.quality.dao.QualityExperimentalManagerForeignDao">
     <select id="getMaterialList" resultType="java.util.Map">
-        SELECT * FROM quality_test_material_dictionary;
+        SELECT * FROM quality_test_material_dictionary_foreign;
     </select>
 
     <select id="getManufacturersList" resultType="java.util.Map">
-        SELECT * FROM quality_test_manufacturers_dictionaries;
+        SELECT * FROM quality_test_manufacturers_dictionaries_foreign;
     </select>
 
     <select id="getSpecificationList" resultType="java.util.Map">
-        SELECT * FROM quality_test_specification_dictionary;    </select>
+        SELECT * FROM quality_test_specification_dictionary_foreign;    </select>
 
     <select id="selectAllSamplingPage" resultType="java.util.Map">
         SELECT
@@ -23,10 +23,10 @@
                QTS.remark,
                QTS.`status`
         FROM
-             quality_test_samplingPage AS QTS
-                 INNER JOIN quality_test_material_dictionary AS QTM ON QTS.materials_num = QTM.Id
-                 INNER JOIN quality_test_manufacturers_dictionaries AS QTD ON QTS.manufacturers_num = QTD.Id
-                 INNER JOIN quality_test_specification_dictionary AS QTSD ON QTS.specification_num = QTSD.Id
+             quality_test_samplingPage_foreign AS QTS
+                 INNER JOIN quality_test_material_dictionary_foreign AS QTM ON QTS.materials_num = QTM.Id
+                 INNER JOIN quality_test_manufacturers_dictionaries_foreign AS QTD ON QTS.manufacturers_num = QTD.Id
+                 INNER JOIN quality_test_specification_dictionary_foreign AS QTSD ON QTS.specification_num = QTSD.Id
         ORDER BY
                  `status`,Id DESC;
     </select>
@@ -34,13 +34,13 @@
     <delete id="delectSampleById" parameterType="java.lang.String" >
         DELETE
         FROM
-             quality_test_samplingPage
+             quality_test_samplingPage_foreign
         WHERE
                 Id = #{id}
     </delete>
 
     <insert id="insertSample" parameterType="java.lang.String" useGeneratedKeys="true" >
-        INSERT INTO quality_test_samplingPage (
+        INSERT INTO quality_test_samplingPage_foreign (
                 materials_num,
                 creat_time,
                 manufacturers_num,
@@ -63,14 +63,14 @@
         SELECT
                QTS.*, QTMD.logogram_name
         FROM
-             quality_test_samplingPage AS QTS
-                 INNER JOIN quality_test_material_dictionary AS QTMD ON QTS.materials_num = QTMD.Id
+             quality_test_samplingPage_foreign AS QTS
+                 INNER JOIN quality_test_material_dictionary_foreign AS QTMD ON QTS.materials_num = QTMD.Id
         WHERE
                 QTS.Id = #{id}
     </select>
 
     <update id="updateSampleMessageById" useGeneratedKeys="true">
-        UPDATE quality_test_samplingPage
+        UPDATE quality_test_samplingPage_foreign
         SET `status` = 1
         WHERE
                 Id = #{id}
@@ -80,13 +80,13 @@
         SELECT
                count(*) AS counts
         FROM
-             quality_test_order_ticket
+             quality_test_order_ticket_foreign
         WHERE
                 date_format(creat_time,'%Y-%m-%d')  = #{date}
     </select>
 
     <insert id="insertOrderTicketBySampleMssage" useGeneratedKeys="true" parameterType="java.lang.String">
-        INSERT INTO quality_test_order_ticket (
+        INSERT INTO quality_test_order_ticket_foreign (
                 order_ticket_num,
                 sampling_id,
                 creat_time,
@@ -118,9 +118,9 @@
                QTOT.tunnage,
                QTOT.`status`
         FROM
-             quality_test_order_ticket AS QTOT
-                 INNER JOIN quality_test_manufacturers_dictionaries AS QTMD ON QTOT.manufacturers_num = QTMD.Id
-                 INNER JOIN quality_test_specification_dictionary AS QTSD ON QTOT.specification_num = QTSD.Id
+             quality_test_order_ticket_foreign AS QTOT
+                 INNER JOIN quality_test_manufacturers_dictionaries_foreign AS QTMD ON QTOT.manufacturers_num = QTMD.Id
+                 INNER JOIN quality_test_specification_dictionary_foreign AS QTSD ON QTOT.specification_num = QTSD.Id
         ORDER BY
                  `status`,Id DESC;
     </select>
@@ -135,11 +135,11 @@
                QTSD. NAME AS specification,
                QTOT.tunnage
         FROM
-             `quality_test_order_ticket` AS QTOT
-                 INNER JOIN quality_test_samplingPage AS QTS ON QTOT.sampling_id = QTS.Id
-                 INNER JOIN quality_test_manufacturers_dictionaries AS QTMD ON QTS.manufacturers_num = QTMD.Id
-                 INNER JOIN quality_test_specification_dictionary AS QTSD ON QTSD.Id = QTOT.specification_num
-                 INNER JOIN quality_test_material_dictionary AS materialt ON materialt.Id = QTS.materials_num
+             `quality_test_order_ticket_foreign` AS QTOT
+                 INNER JOIN quality_test_samplingPage_foreign AS QTS ON QTOT.sampling_id = QTS.Id
+                 INNER JOIN quality_test_manufacturers_dictionaries_foreign AS QTMD ON QTS.manufacturers_num = QTMD.Id
+                 INNER JOIN quality_test_specification_dictionary_foreign AS QTSD ON QTSD.Id = QTOT.specification_num
+                 INNER JOIN quality_test_material_dictionary_foreign AS materialt ON materialt.Id = QTS.materials_num
         WHERE
                 QTOT.Id = #{id}
     </select>
@@ -148,8 +148,8 @@
         SELECT
                QTEID.*
         FROM
-             quality_test_experiment_contrast AS QTEC
-                 INNER JOIN quality_test_experiment_ietm_dictionary AS QTEID ON QTEC.experimentId = QTEID.Id
+             quality_test_experiment_contrast_foreign AS QTEC
+                 INNER JOIN quality_test_experiment_ietm_dictionary_foreign AS QTEID ON QTEC.experimentId = QTEID.Id
         WHERE QTEC.orderTicketNum = #{orderNum}
     </select>
 
@@ -157,15 +157,15 @@
         SELECT
                QTEID.*
         FROM
-             `quality_test_order_ticket` AS QTOT
-                 INNER JOIN quality_test_samplingPage AS QTS ON QTOT.sampling_id = QTS.Id
-                 INNER JOIN quality_test_material_dictionary AS QTMD ON QTS.materials_num = QTMD.Id
-                 INNER JOIN quality_test_experiment_ietm_dictionary AS QTEID ON QTEID.material_num = QTMD.Id
+             `quality_test_order_ticket_foreign` AS QTOT
+                 INNER JOIN quality_test_samplingPage_foreign AS QTS ON QTOT.sampling_id = QTS.Id
+                 INNER JOIN quality_test_material_dictionary_foreign AS QTMD ON QTS.materials_num = QTMD.Id
+                 INNER JOIN quality_test_experiment_ietm_dictionary_foreign AS QTEID ON QTEID.material_num = QTMD.Id
         WHERE QTOT.Id = #{id}
     </select>
 
     <insert id="addExperimentalItemByOrderTicketNum" useGeneratedKeys="true" keyColumn="id">
-        insert into quality_test_experiment_contrast (orderTicketNum,experimentId)
+        insert into quality_test_experiment_contrast_foreign (orderTicketNum,experimentId)
         values
         <foreach collection="ids" index="index" item="item" separator=",">
             (
@@ -175,7 +175,7 @@
     </insert>
 
     <select id="selectExperimentalItemCount" resultType="java.util.Map">
-        SELECT count(*) as counts FROM `quality_test_experiment_contrast` WHERE orderTicketNum = #{orderTicketNum};
+        SELECT count(*) as counts FROM `quality_test_experiment_contrast_foreign` WHERE orderTicketNum = #{orderTicketNum};
     </select>
 
     <select id="getOrderTicketByOrderTicketNum" resultType="java.util.Map">
@@ -189,17 +189,17 @@
                QTMFD.`name` AS manufacturersName,
                QTS.remark
         FROM
-             `quality_test_order_ticket` AS QTOT
-                 INNER JOIN quality_test_samplingPage AS QTS ON QTOT.sampling_id = QTS.Id
-                 INNER JOIN quality_test_material_dictionary AS QTMD ON QTS.materials_num = QTMD.Id
-                 INNER JOIN quality_test_specification_dictionary AS QTSD ON QTOT.specification_num = QTSD.Id
-                 INNER JOIN quality_test_manufacturers_dictionaries AS QTMFD ON QTS.manufacturers_num = QTMFD.Id
+             `quality_test_order_ticket_foreign` AS QTOT
+                 INNER JOIN quality_test_samplingPage_foreign AS QTS ON QTOT.sampling_id = QTS.Id
+                 INNER JOIN quality_test_material_dictionary_foreign AS QTMD ON QTS.materials_num = QTMD.Id
+                 INNER JOIN quality_test_specification_dictionary_foreign AS QTSD ON QTOT.specification_num = QTSD.Id
+                 INNER JOIN quality_test_manufacturers_dictionaries_foreign AS QTMFD ON QTS.manufacturers_num = QTMFD.Id
         WHERE
                 QTOT.order_ticket_num = #{orderTicketNum}
 
     </select>
     <insert id="insertTaskList" useGeneratedKeys="true" >
-        INSERT INTO quality_test_task_list (
+        INSERT INTO quality_test_task_list_foreign (
                 ticket_num,
                 test_num,
                 creat_time,
@@ -223,16 +223,15 @@
                count(*) AS counts,
                QTMD.logogram_name
         FROM
-             quality_test_lab_report AS QTLR
-                 INNER JOIN quality_test_material_dictionary AS QTMD ON QTLR.materials_num = QTMD.Id
+             quality_test_lab_report_foreign AS QTLR
+                 INNER JOIN quality_test_material_dictionary_foreign AS QTMD ON QTLR.materials_num = QTMD.Id
         WHERE
                 DATE_FORMAT(test_date, '%Y') =  #{dates}
           AND materials_num = #{materials_num}
     </select>
 
-    <insert id="insertLabReport">
-        INSERT INTO quality_test_lab_report (
-                id,
+    <insert id="insertLabReport" useGeneratedKeys="true">
+        INSERT INTO quality_test_lab_report_foreign (
                 experiment_num,
                 order_ticket_num,
                 materials_num,
@@ -247,7 +246,6 @@
                 )
         VALUES
                (
-                #{id},
                 #{experimentNum},
                 #{order_ticket_num},
                 #{materials_num},
@@ -265,8 +263,8 @@
         SELECT
                QTEID.`name`
         FROM
-             quality_test_experiment_contrast AS QTEC
-                 INNER JOIN quality_test_experiment_ietm_dictionary AS QTEID ON QTEC.experimentId = QTEID.Id
+             quality_test_experiment_contrast_foreign AS QTEC
+                 INNER JOIN quality_test_experiment_ietm_dictionary_foreign AS QTEID ON QTEC.experimentId = QTEID.Id
         WHERE
                 QTEC.orderTicketNum = #{order_ticket_num}
     </select>
@@ -278,8 +276,8 @@
                QTLR.*,
                QTMD.`name` AS materials_name
         FROM
-             `quality_test_lab_report` AS QTLR
-                 INNER JOIN quality_test_material_dictionary AS QTMD ON QTLR.materials_num = QTMD.Id
+             `quality_test_lab_report_foreign` AS QTLR
+                 INNER JOIN quality_test_material_dictionary_foreign AS QTMD ON QTLR.materials_num = QTMD.Id
         ORDER BY QTLR.experiment_status,QTLR.test_date DESC;
     </select>
 
@@ -311,8 +309,8 @@
                QTLR.report_date,
                QTMD.`name` AS materials_name
         FROM
-             `quality_test_lab_report` AS QTLR
-                 INNER JOIN quality_test_material_dictionary AS QTMD ON QTLR.materials_num = QTMD.Id
+             `quality_test_lab_report_foreign` AS QTLR
+                 INNER JOIN quality_test_material_dictionary_foreign AS QTMD ON QTLR.materials_num = QTMD.Id
         WHERE
                 QTLR.Id = #{id};
     </select>
@@ -326,16 +324,16 @@
                QTEID.`name`,
                QTEID.table_name
         FROM
-             `quality_test_lab_report` AS QTLR
-                 INNER JOIN quality_test_experiment_contrast AS QTEC
+             `quality_test_lab_report_foreign` AS QTLR
+                 INNER JOIN quality_test_experiment_contrast_foreign AS QTEC
                      ON QTLR.order_ticket_num = QTEC.orderTicketNum
-                 INNER JOIN quality_test_experiment_ietm_dictionary AS QTEID
+                 INNER JOIN quality_test_experiment_ietm_dictionary_foreign AS QTEID
                      ON QTEC.experimentId = QTEID.Id
         where QTLR.Id =#{id};
     </select>
 
     <update id="updateLabReport" useGeneratedKeys="true"  parameterType="java.util.Map">
-        UPDATE quality_test_lab_report
+        UPDATE quality_test_lab_report_foreign
         SET experiment_num = #{map.experiment_num},
             experiment_status = '1',
             order_ticket_num = #{map.order_ticket_num},
@@ -363,7 +361,7 @@
     </update>
 
     <insert id="insertFineAggregate" useGeneratedKeys="true" >
-        INSERT INTO quality_test_fine_aggregate (
+        INSERT INTO quality_test_fine_aggregate_foreign (
         experiment_num,
         fine_name,
         fine_requirements,
@@ -377,7 +375,7 @@
     </insert>
 
     <insert id="insertFineAggregateSieving" useGeneratedKeys="true" >
-        INSERT INTO quality_test_fine_aggregate_sieving (
+        INSERT INTO quality_test_fine_aggregate_sieving_foreign (
         experiment_num,
         fine_sieve_pore,
         fine_sieve_pore_4_75,
@@ -395,7 +393,7 @@
     </insert>
 
     <insert id="insertCoarseAggregate" useGeneratedKeys="true" >
-        INSERT INTO quality_test_coarse_aggregate (
+        INSERT INTO quality_test_coarse_aggregate_foreign (
         experiment_num,
         coarse_name,
         coarse_requirements,
@@ -412,7 +410,7 @@
     </insert>
 
     <insert id="insertCoarseAggregateSieving" useGeneratedKeys="true" >
-        INSERT INTO quality_test_coarse_aggregate_sieving (
+        INSERT INTO quality_test_coarse_aggregate_sieving_foreign (
         experiment_num,
         coarse_sieve_pore,
         coarse_sieve_pore_19_0,
@@ -434,7 +432,7 @@
     </insert>
 
     <insert id="insertAsphalt" useGeneratedKeys="true" >
-        INSERT INTO quality_test_asphalt (
+        INSERT INTO quality_test_asphalt_foreign (
         experiment_num,
         asphalt_name,
         asphalt_unit,
@@ -460,9 +458,9 @@
                                   QTLR.report_date,
                                   '%Y-%m-%d'
                                       ) AS report_date,
-                              QTLR.*,QTEC.*,QTEID.* FROM `quality_test_lab_report` AS QTLR
-                                                             INNER JOIN quality_test_experiment_contrast AS QTEC ON QTLR.order_ticket_num = QTEC.orderTicketNum
-                                                             INNER JOIN quality_test_experiment_ietm_dictionary AS QTEID ON QTEC.experimentId = QTEID.Id
+                              QTLR.*,QTEC.*,QTEID.* FROM `quality_test_lab_report_foreign` AS QTLR
+                                                             INNER JOIN quality_test_experiment_contrast_foreign AS QTEC ON QTLR.order_ticket_num = QTEC.orderTicketNum
+                                                             INNER JOIN quality_test_experiment_ietm_dictionary_foreign AS QTEID ON QTEC.experimentId = QTEID.Id
         WHERE QTLR.Id = #{id}
     </select>
 
@@ -473,7 +471,7 @@
         FROM
              ${ tableName } AS TABA
                 INNER JOIN
-                quality_test_lab_report AS QTLR
+                quality_test_lab_report_foreign AS QTLR
                 ON TABA.experiment_num = QTLR.experiment_num
                 WHERE
                 TABA.experiment_num = &apos;${experiment_num}&apos;
@@ -493,37 +491,19 @@
                 QTA.*,
                 QTB.*
         FROM
-             quality_test_lab_report AS QTLR
-                 INNER JOIN quality_test_task_list AS QTTL ON QTLR.order_ticket_num = QTTL.ticket_num
-                 INNER JOIN quality_test_order_ticket AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
-                 INNER JOIN quality_test_experiment_contrast AS QTEC ON QTLR.order_ticket_num = QTEC.orderTicketNum
-                 INNER JOIN quality_test_samplingPage AS QTS ON QTOT.sampling_id = QTS.Id
-                 LEFT JOIN quality_test_coarse_aggregate AS QTCA ON QTLR.experiment_num = QTCA.experiment_num
-                 LEFT JOIN quality_test_coarse_aggregate_sieving AS QTCAS ON QTLR.experiment_num = QTCAS.experiment_num
-                 LEFT JOIN quality_test_fine_aggregate AS QTFA ON QTLR.experiment_num = QTFA.experiment_num
-                 LEFT JOIN quality_test_fine_aggregate_sieving AS QTFAS ON QTLR.experiment_num = QTFAS.experiment_num
-                 LEFT JOIN quality_test_breeze AS QTB ON QTLR.experiment_num = QTB.experiment_num
-                 LEFT JOIN quality_test_asphalt AS QTA ON QTLR.experiment_num = QTA.experiment_num
+             quality_test_lab_report_foreign AS QTLR
+                 INNER JOIN quality_test_task_list_foreign AS QTTL ON QTLR.order_ticket_num = QTTL.ticket_num
+                 INNER JOIN quality_test_order_ticket_foreign AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
+                 INNER JOIN quality_test_experiment_contrast_foreign AS QTEC ON QTLR.order_ticket_num = QTEC.orderTicketNum
+                 INNER JOIN quality_test_samplingPage_foreign AS QTS ON QTOT.sampling_id = QTS.Id
+                 LEFT JOIN quality_test_coarse_aggregate_foreign AS QTCA ON QTLR.experiment_num = QTCA.experiment_num
+                 LEFT JOIN quality_test_coarse_aggregate_sieving_foreign AS QTCAS ON QTLR.experiment_num = QTCAS.experiment_num
+                 LEFT JOIN quality_test_fine_aggregate_foreign AS QTFA ON QTLR.experiment_num = QTFA.experiment_num
+                 LEFT JOIN quality_test_fine_aggregate_sieving_foreign AS QTFAS ON QTLR.experiment_num = QTFAS.experiment_num
+                 LEFT JOIN quality_test_breeze_foreign AS QTB ON QTLR.experiment_num = QTB.experiment_num
+                 LEFT JOIN quality_test_asphalt_foreign AS QTA ON QTLR.experiment_num = QTA.experiment_num
         WHERE QTLR.Id =  #{id}
     </delete>
-
-    <update id="updateExperimentalApproval" parameterType="java.util.Map">
-        update quality_test_lab_report
-        SET
-        <if test="chargePerson != null" >
-            charge_person = #{chargePerson}
-        </if>
-        <if test="checkPerson != null" >
-            check_person = #{checkPerson}
-        </if>
-        WHERE Id =#{id}
-    </update>
-
-    <update id="updateExperimentalItemStateById" parameterType="java.util.Map">
-        update quality_test_lab_report
-        set experiment_status = #{state}
-        where Id = #{id}
-    </update>
 
     <select id="selectCoarseStandingBook" resultType="java.util.Map">
         SELECT
@@ -538,11 +518,11 @@
         QTCA.coarse_result5_10 AS testResult5_10 ,
         QTS.remark
         FROM
-        `quality_test_coarse_aggregate` AS QTCA
-        INNER JOIN quality_test_lab_report AS QTLR ON QTCA.experiment_num = QTLR.experiment_num
-        INNER JOIN quality_test_material_dictionary AS QTMD ON QTLR.materials_num = QTMD.Id
-        INNER JOIN quality_test_order_ticket AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
-        INNER JOIN quality_test_samplingPage AS QTS ON QTOT.sampling_id = QTS.Id
+        `quality_test_coarse_aggregate_foreign` AS QTCA
+        INNER JOIN quality_test_lab_report_foreign AS QTLR ON QTCA.experiment_num = QTLR.experiment_num
+        INNER JOIN quality_test_material_dictionary_foreign AS QTMD ON QTLR.materials_num = QTMD.Id
+        INNER JOIN quality_test_order_ticket_foreign AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
+        INNER JOIN quality_test_samplingPage_foreign AS QTS ON QTOT.sampling_id = QTS.Id
         WHERE
         DATE_SUB(CURDATE(), INTERVAL 7 DAY)  &lt;= date(QTLR.test_date)
     </select>
@@ -570,11 +550,11 @@
         QTCA.coarse_sieve_pore_0_15 AS sievePore007,
         QTS.remark
         FROM
-        `quality_test_coarse_aggregate_sieving` AS QTCA
-        INNER JOIN quality_test_lab_report AS QTLR ON QTCA.experiment_num = QTLR.experiment_num
-        INNER JOIN quality_test_material_dictionary AS QTMD ON QTLR.materials_num = QTMD.Id
-        INNER JOIN quality_test_order_ticket AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
-        INNER JOIN quality_test_samplingPage AS QTS ON QTOT.sampling_id = QTS.Id
+        `quality_test_coarse_aggregate_sieving_foreign` AS QTCA
+        INNER JOIN quality_test_lab_report_foreign AS QTLR ON QTCA.experiment_num = QTLR.experiment_num
+        INNER JOIN quality_test_material_dictionary_foreign AS QTMD ON QTLR.materials_num = QTMD.Id
+        INNER JOIN quality_test_order_ticket_foreign AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
+        INNER JOIN quality_test_samplingPage_foreign AS QTS ON QTOT.sampling_id = QTS.Id
         WHERE
         DATE_SUB(CURDATE(), INTERVAL 7 DAY)  &lt;= date(QTLR.test_date)
     </select>
@@ -589,11 +569,11 @@
         QTCA.fine_result  AS testResult,
         QTS.remark
         FROM
-        `quality_test_fine_aggregate` AS QTCA
-        INNER JOIN quality_test_lab_report AS QTLR ON QTCA.experiment_num = QTLR.experiment_num
-        INNER JOIN quality_test_material_dictionary AS QTMD ON QTLR.materials_num = QTMD.Id
-        INNER JOIN quality_test_order_ticket AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
-        INNER JOIN quality_test_samplingPage AS QTS ON QTOT.sampling_id = QTS.Id
+        `quality_test_fine_aggregate_foreign` AS QTCA
+        INNER JOIN quality_test_lab_report_foreign AS QTLR ON QTCA.experiment_num = QTLR.experiment_num
+        INNER JOIN quality_test_material_dictionary_foreign AS QTMD ON QTLR.materials_num = QTMD.Id
+        INNER JOIN quality_test_order_ticket_foreign AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
+        INNER JOIN quality_test_samplingPage_foreign AS QTS ON QTOT.sampling_id = QTS.Id
         WHERE
         DATE_SUB(CURDATE(), INTERVAL 7 DAY)  &lt;= date(QTLR.test_date)
     </select>
@@ -622,11 +602,11 @@
             fine_sieve_pore_0_075 AS sievePore007,
             QTS.remark
             FROM
-            `quality_test_fine_aggregate_sieving` AS QTCA
-            INNER JOIN quality_test_lab_report AS QTLR ON QTCA.experiment_num = QTLR.experiment_num
-            INNER JOIN quality_test_material_dictionary AS QTMD ON QTLR.materials_num = QTMD.Id
-            INNER JOIN quality_test_order_ticket AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
-            INNER JOIN quality_test_samplingPage AS QTS ON QTOT.sampling_id = QTS.Id
+            `quality_test_fine_aggregate_sieving_foreign` AS QTCA
+            INNER JOIN quality_test_lab_report_foreign AS QTLR ON QTCA.experiment_num = QTLR.experiment_num
+            INNER JOIN quality_test_material_dictionary_foreign AS QTMD ON QTLR.materials_num = QTMD.Id
+            INNER JOIN quality_test_order_ticket_foreign AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
+            INNER JOIN quality_test_samplingPage_foreign AS QTS ON QTOT.sampling_id = QTS.Id
             WHERE
             DATE_SUB(CURDATE(), INTERVAL 7 DAY)   &lt;= date(QTLR.test_date)
     </select>
@@ -642,11 +622,11 @@
                QTLR.manufacturers_name AS manufacturersName,
         QTS.remark
         FROM
-        `quality_test_asphalt` AS QTCA
-        INNER JOIN quality_test_lab_report AS QTLR ON QTCA.experiment_num = QTLR.experiment_num
-        INNER JOIN quality_test_material_dictionary AS QTMD ON QTLR.materials_num = QTMD.Id
-        INNER JOIN quality_test_order_ticket AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
-        INNER JOIN quality_test_samplingPage AS QTS ON QTOT.sampling_id = QTS.Id
+        `quality_test_asphalt_foreign` AS QTCA
+        INNER JOIN quality_test_lab_report_foreign AS QTLR ON QTCA.experiment_num = QTLR.experiment_num
+        INNER JOIN quality_test_material_dictionary_foreign AS QTMD ON QTLR.materials_num = QTMD.Id
+        INNER JOIN quality_test_order_ticket_foreign AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
+        INNER JOIN quality_test_samplingPage_foreign AS QTS ON QTOT.sampling_id = QTS.Id
         WHERE
         DATE_SUB(CURDATE(), INTERVAL 7 DAY)   &lt;= date(QTLR.test_date)
     </select>
@@ -663,11 +643,11 @@
                QTCA.coarse_result5_10 AS testResult5_10 ,
                QTS.remark
         FROM
-             `quality_test_coarse_aggregate` AS QTCA
-                 INNER JOIN quality_test_lab_report AS QTLR ON QTCA.experiment_num = QTLR.experiment_num
-                 INNER JOIN quality_test_material_dictionary AS QTMD ON QTLR.materials_num = QTMD.Id
-                 INNER JOIN quality_test_order_ticket AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
-                 INNER JOIN quality_test_samplingPage AS QTS ON QTOT.sampling_id = QTS.Id
+             `quality_test_coarse_aggregate_foreign` AS QTCA
+                 INNER JOIN quality_test_lab_report_foreign AS QTLR ON QTCA.experiment_num = QTLR.experiment_num
+                 INNER JOIN quality_test_material_dictionary_foreign AS QTMD ON QTLR.materials_num = QTMD.Id
+                 INNER JOIN quality_test_order_ticket_foreign AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
+                 INNER JOIN quality_test_samplingPage_foreign AS QTS ON QTOT.sampling_id = QTS.Id
         WHERE
                 QTLR.test_date between #{startDate} and #{endDate};
     </select>
@@ -695,11 +675,11 @@
                QTCA.coarse_sieve_pore_0_15 AS sievePore007,
                QTS.remark
         FROM
-             `quality_test_coarse_aggregate_sieving` AS QTCA
-                 INNER JOIN quality_test_lab_report AS QTLR ON QTCA.experiment_num = QTLR.experiment_num
-                 INNER JOIN quality_test_material_dictionary AS QTMD ON QTLR.materials_num = QTMD.Id
-                 INNER JOIN quality_test_order_ticket AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
-                 INNER JOIN quality_test_samplingPage AS QTS ON QTOT.sampling_id = QTS.Id
+             `quality_test_coarse_aggregate_sieving_foreign` AS QTCA
+                 INNER JOIN quality_test_lab_report_foreign AS QTLR ON QTCA.experiment_num = QTLR.experiment_num
+                 INNER JOIN quality_test_material_dictionary_foreign AS QTMD ON QTLR.materials_num = QTMD.Id
+                 INNER JOIN quality_test_order_ticket_foreign AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
+                 INNER JOIN quality_test_samplingPage_foreign AS QTS ON QTOT.sampling_id = QTS.Id
         WHERE
                 QTLR.test_date between #{startDate} and #{endDate};
     </select>
@@ -714,11 +694,11 @@
                QTCA.fine_result  AS testResult,
                QTS.remark
         FROM
-             `quality_test_fine_aggregate` AS QTCA
-                 INNER JOIN quality_test_lab_report AS QTLR ON QTCA.experiment_num = QTLR.experiment_num
-                 INNER JOIN quality_test_material_dictionary AS QTMD ON QTLR.materials_num = QTMD.Id
-                 INNER JOIN quality_test_order_ticket AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
-                 INNER JOIN quality_test_samplingPage AS QTS ON QTOT.sampling_id = QTS.Id
+             `quality_test_fine_aggregate_foreign` AS QTCA
+                 INNER JOIN quality_test_lab_report_foreign AS QTLR ON QTCA.experiment_num = QTLR.experiment_num
+                 INNER JOIN quality_test_material_dictionary_foreign AS QTMD ON QTLR.materials_num = QTMD.Id
+                 INNER JOIN quality_test_order_ticket_foreign AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
+                 INNER JOIN quality_test_samplingPage_foreign AS QTS ON QTOT.sampling_id = QTS.Id
         WHERE
                 QTLR.test_date between #{startDate} and #{endDate};
     </select>
@@ -747,11 +727,11 @@
                fine_sieve_pore_0_075 AS sievePore007,
                QTS.remark
         FROM
-             `quality_test_fine_aggregate_sieving` AS QTCA
-                 INNER JOIN quality_test_lab_report AS QTLR ON QTCA.experiment_num = QTLR.experiment_num
-                 INNER JOIN quality_test_material_dictionary AS QTMD ON QTLR.materials_num = QTMD.Id
-                 INNER JOIN quality_test_order_ticket AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
-                 INNER JOIN quality_test_samplingPage AS QTS ON QTOT.sampling_id = QTS.Id
+             `quality_test_fine_aggregate_sieving_foreign` AS QTCA
+                 INNER JOIN quality_test_lab_report_foreign AS QTLR ON QTCA.experiment_num = QTLR.experiment_num
+                 INNER JOIN quality_test_material_dictionary_foreign AS QTMD ON QTLR.materials_num = QTMD.Id
+                 INNER JOIN quality_test_order_ticket_foreign AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
+                 INNER JOIN quality_test_samplingPage_foreign AS QTS ON QTOT.sampling_id = QTS.Id
         WHERE
                 QTLR.test_date between #{startDate} and #{endDate};
     </select>
@@ -767,17 +747,17 @@
                QTLR.manufacturers_name AS manufacturersName,
                QTS.remark
         FROM
-             `quality_test_asphalt` AS QTCA
-                 INNER JOIN quality_test_lab_report AS QTLR ON QTCA.experiment_num = QTLR.experiment_num
-                 INNER JOIN quality_test_material_dictionary AS QTMD ON QTLR.materials_num = QTMD.Id
-                 INNER JOIN quality_test_order_ticket AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
-                 INNER JOIN quality_test_samplingPage AS QTS ON QTOT.sampling_id = QTS.Id
+             `quality_test_asphalt_foreign` AS QTCA
+                 INNER JOIN quality_test_lab_report_foreign AS QTLR ON QTCA.experiment_num = QTLR.experiment_num
+                 INNER JOIN quality_test_material_dictionary_foreign AS QTMD ON QTLR.materials_num = QTMD.Id
+                 INNER JOIN quality_test_order_ticket_foreign AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
+                 INNER JOIN quality_test_samplingPage_foreign AS QTS ON QTOT.sampling_id = QTS.Id
         WHERE
                 QTLR.test_date between #{startDate} and #{endDate};
     </select>
 
     <update id="updateOrderTicketByOrderTicketNum" useGeneratedKeys="true">
-        UPDATE quality_test_order_ticket SET `status` = 1 WHERE order_ticket_num = #{orderTicketNum}
+        UPDATE quality_test_order_ticket_foreign SET `status` = 1 WHERE order_ticket_num = #{orderTicketNum}
     </update>
     <select id="selectSpecificationDataAndManufacturersData" resultType="java.util.Map">
         SELECT
@@ -785,45 +765,45 @@
                Id,
                `name`
         FROM
-             quality_test_specification_dictionary
+             quality_test_specification_dictionary_foreign
         UNION ALL
         SELECT
                'manufacturers' AS marks,
                Id,
                `name`
         FROM
-             quality_test_manufacturers_dictionaries
+             quality_test_manufacturers_dictionaries_foreign
     </select>
     <delete id="delectSpecificationById" >
-        delete  from quality_test_specification_dictionary WHERE Id = #{id};
+        delete  from quality_test_specification_dictionary_foreign WHERE Id = #{id};
     </delete>
     <delete id="delectManufacturersById" >
-        delete  from quality_test_manufacturers_dictionaries WHERE Id = #{id};
+        delete  from quality_test_manufacturers_dictionaries_foreign WHERE Id = #{id};
     </delete>
     <insert id="insertSpecification" useGeneratedKeys="true">
-        INSERT INTO quality_test_specification_dictionary (`name`)
+        INSERT INTO quality_test_specification_dictionary_foreign (`name`)
         VALUES
                (#{specificationName})
     </insert>
     <insert id="insertManufacturers" useGeneratedKeys="true">
-        INSERT INTO quality_test_manufacturers_dictionaries (`name`)
+        INSERT INTO quality_test_manufacturers_dictionaries_foreign (`name`)
         VALUES
                (#{manufacturersName})
     </insert>
     <select id="selectSpecificationById" resultType="java.util.Map">
-        select 'specification' as marks, Id,`name` from quality_test_specification_dictionary where Id = #{id}
+        select 'specification' as marks, Id,`name` from quality_test_specification_dictionary_foreign where Id = #{id}
     </select>
     <select id="selectManufacturersById" resultType="java.util.Map">
-        select 'manufacturers' as marks, Id,`name` from quality_test_manufacturers_dictionaries where Id = #{id}
+        select 'manufacturers' as marks, Id,`name` from quality_test_manufacturers_dictionaries_foreign where Id = #{id}
     </select>
     <update id="updateSpecificationById" useGeneratedKeys="true">
-        update quality_test_specification_dictionary set `name` = #{name} where Id = #{id}
+        update quality_test_specification_dictionary_foreign set `name` = #{name} where Id = #{id}
     </update>
     <update id="updateManufacturersById" useGeneratedKeys="true">
-        update quality_test_manufacturers_dictionaries set `name` = #{name} where Id = #{id}
+        update quality_test_manufacturers_dictionaries_foreign set `name` = #{name} where Id = #{id}
     </update>
     <insert id="insertBrzzez" useGeneratedKeys="true">
-        INSERT INTO quality_test_breeze (
+        INSERT INTO quality_test_breeze_foreign (
         experiment_num,
         breeze_name,
         breeze_requirements,
@@ -845,11 +825,11 @@
         QTCA.breeze_result  AS testResult,
         QTS.remark
         FROM
-        `quality_test_breeze` AS QTCA
-        INNER JOIN quality_test_lab_report AS QTLR ON QTCA.experiment_num = QTLR.experiment_num
-        INNER JOIN quality_test_material_dictionary AS QTMD ON QTLR.materials_num = QTMD.Id
-        INNER JOIN quality_test_order_ticket AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
-        INNER JOIN quality_test_samplingPage AS QTS ON QTOT.sampling_id = QTS.Id
+        `quality_test_breeze_foreign` AS QTCA
+        INNER JOIN quality_test_lab_report_foreign AS QTLR ON QTCA.experiment_num = QTLR.experiment_num
+        INNER JOIN quality_test_material_dictionary_foreign AS QTMD ON QTLR.materials_num = QTMD.Id
+        INNER JOIN quality_test_order_ticket_foreign AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
+        INNER JOIN quality_test_samplingPage_foreign AS QTS ON QTOT.sampling_id = QTS.Id
         WHERE
         DATE_SUB(CURDATE(), INTERVAL 7 DAY)  &lt;= date(QTLR.test_date)
     </select>
@@ -863,16 +843,16 @@
                QTCA.breeze_result  AS testResult,
                QTS.remark
         FROM
-             `quality_test_breeze` AS QTCA
-                 INNER JOIN quality_test_lab_report AS QTLR ON QTCA.experiment_num = QTLR.experiment_num
-                 INNER JOIN quality_test_material_dictionary AS QTMD ON QTLR.materials_num = QTMD.Id
-                 INNER JOIN quality_test_order_ticket AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
-                 INNER JOIN quality_test_samplingPage AS QTS ON QTOT.sampling_id = QTS.Id
+             `quality_test_breeze_foreign` AS QTCA
+                 INNER JOIN quality_test_lab_report_foreign AS QTLR ON QTCA.experiment_num = QTLR.experiment_num
+                 INNER JOIN quality_test_material_dictionary_foreign AS QTMD ON QTLR.materials_num = QTMD.Id
+                 INNER JOIN quality_test_order_ticket_foreign AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
+                 INNER JOIN quality_test_samplingPage_foreign AS QTS ON QTOT.sampling_id = QTS.Id
         WHERE
                 QTLR.test_date between #{startDate} and #{endDate};
     </select>
     <select id="selectSampleStatusById" resultType="java.util.Map">
-        SELECT * FROM `quality_test_samplingPage` WHERE Id = #{id};
+        SELECT * FROM `quality_test_samplingPage_foreign` WHERE Id = #{id};
     </select>
     <select id="selectTestStandingBook" resultType="java.util.Map">
         SELECT
@@ -884,11 +864,11 @@
         QTLR.required_experimental AS requiredExperimental,
         QTS.remark
         FROM
-        quality_test_samplingPage AS QTS
-        INNER JOIN quality_test_specification_dictionary AS QTSD ON QTS.specification_num = QTSD.Id
-        INNER JOIN quality_test_material_dictionary AS QTMD ON QTS.materials_num = QTMD.Id
-        INNER JOIN quality_test_order_ticket AS QTOT ON QTS.Id = QTOT.sampling_id
-        INNER JOIN quality_test_lab_report AS QTLR ON QTOT.order_ticket_num = QTLR.order_ticket_num
+        quality_test_samplingPage_foreign AS QTS
+        INNER JOIN quality_test_specification_dictionary_foreign AS QTSD ON QTS.specification_num = QTSD.Id
+        INNER JOIN quality_test_material_dictionary_foreign AS QTMD ON QTS.materials_num = QTMD.Id
+        INNER JOIN quality_test_order_ticket_foreign AS QTOT ON QTS.Id = QTOT.sampling_id
+        INNER JOIN quality_test_lab_report_foreign AS QTLR ON QTOT.order_ticket_num = QTLR.order_ticket_num
         WHERE
         DATE_SUB(CURDATE(), INTERVAL 7 DAY)  &lt;= date(QTLR.test_date)
     </select>
@@ -903,11 +883,11 @@
                QTLR.required_experimental AS requiredExperimental,
                QTS.remark
         FROM
-             quality_test_samplingPage AS QTS
-                 INNER JOIN quality_test_specification_dictionary AS QTSD ON QTS.specification_num = QTSD.Id
-                 INNER JOIN quality_test_material_dictionary AS QTMD ON QTS.materials_num = QTMD.Id
-                 INNER JOIN quality_test_order_ticket AS QTOT ON QTS.Id = QTOT.sampling_id
-                 INNER JOIN quality_test_lab_report AS QTLR ON QTOT.order_ticket_num = QTLR.order_ticket_num
+             quality_test_samplingPage_foreign AS QTS
+                 INNER JOIN quality_test_specification_dictionary_foreign AS QTSD ON QTS.specification_num = QTSD.Id
+                 INNER JOIN quality_test_material_dictionary_foreign AS QTMD ON QTS.materials_num = QTMD.Id
+                 INNER JOIN quality_test_order_ticket_foreign AS QTOT ON QTS.Id = QTOT.sampling_id
+                 INNER JOIN quality_test_lab_report_foreign AS QTLR ON QTOT.order_ticket_num = QTLR.order_ticket_num
         WHERE
                 QTLR.test_date between #{startDate} and #{endDate};
     </select>

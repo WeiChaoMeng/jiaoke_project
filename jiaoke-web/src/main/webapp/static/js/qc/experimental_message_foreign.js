@@ -11,7 +11,7 @@ function getExperimentalProjectMessage(id) {
     $.ajax({
         type: "POST",
         async:false,
-        url: basePath + "/getExperimentalProjectMessage.do",
+        url: basePath + "/getExperimentalProjectMessageForeign.do",
         data: {
             "id":id
         },
@@ -20,10 +20,7 @@ function getExperimentalProjectMessage(id) {
             if (res){
                 for (var i = 0 ; i < res.length;i++) {
                     for (var p in  res[i]){
-
-                        if ($.trim(res[i][p]) !== ""){
-                            $("input[name='"+p+"']").val(res[i][p]);
-                        }
+                        $("input[name='"+p+"']").val(res[i][p]);
                     }
 
                     if (tem == "undefined" || tem == null || tem == ""){
@@ -43,7 +40,7 @@ function showExperimentalProjectItem(tem) {
     var experiment_num = $("input[name='experiment_num']").val();
     $.ajax({
         type: "POST",
-        url: basePath + "/showExperimentalProjectItem.do",
+        url: basePath + "/showExperimentalProjectItemForeign.do",
         data: {
             "tableName":tem,
             "experiment_num":experiment_num

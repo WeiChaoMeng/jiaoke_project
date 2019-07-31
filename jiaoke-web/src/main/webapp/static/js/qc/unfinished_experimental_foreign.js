@@ -70,7 +70,7 @@ function getAllExperimentalItem() {
     debugger
     $.ajax({
         type: "GET",
-        url: basePath + "/getAllExperimentalItem.do",
+        url: basePath + "/getAllExperimentalItemForeign.do",
         async: false,
         dataType:'json',
         success: function(msg){
@@ -93,53 +93,37 @@ function echaExperimentalItem(currentNum,amplingArray) {
             break;
         }
 
-        var htmlStr = "";
+        var htmlStr;
         //判断是否完成
-        if (amplingArray[i].experiment_status !== 0){
+        if (amplingArray[i].experiment_status == 1){
 
-            htmlStr += "<tr>";
-            htmlStr += "<td>" + amplingArray[i]["experiment_num"] + "</td>";
-            htmlStr += "<td>" + amplingArray[i]["order_ticket_num"]  + "</td>";
-            htmlStr += "<td>" + amplingArray[i].materials_name  + "</td>";
-            htmlStr += "<td>" + amplingArray[i].manufacturers_name  + "</td>";
-            htmlStr += "<td>" + amplingArray[i].sampling_date  + "</td>";
-            htmlStr += "<td>" + amplingArray[i].test_date  + "</td>";
-            if(amplingArray[i].experiment_status === 0){
-                htmlStr += "<td>待发送</td>"
-            }else if(amplingArray[i].experiment_status === 1){
-                htmlStr += "<td>审批中</td>"
-            }else if(amplingArray[i].experiment_status === 2){
-                htmlStr += "<td>被回退</td>"
-            }else {
-                htmlStr += "<td>已完成</td>"
-            }
-            htmlStr += "<td>";
-            htmlStr += "<a href='javascript:;' onclick='getExperimentalMsgById(\""+amplingArray[i].Id +"\")' style='color: rgb(114, 112, 209);padding: 10px;'>查看实验</a>";
-            htmlStr += "<a href='javascript:;' onclick='removeExperimentalItemById(\""+amplingArray[i].Id +"\")' style='color: rgb(114, 112, 209);'>删除</a>";
-            htmlStr += "</td>";
-            htmlStr += "</tr>";
+            htmlStr = "<tr>"
+                + "<td>" + amplingArray[i]["experiment_num"] + "</td>"
+                + "<td>" + amplingArray[i]["order_ticket_num"]  + "</td>"
+                + "<td>" + amplingArray[i].materials_name  + "</td>"
+                + "<td>" + amplingArray[i].manufacturers_name  + "</td>"
+                + "<td>" + amplingArray[i].sampling_date  + "</td>"
+                + "<td>" + amplingArray[i].test_date  + "</td>"
+                + "<td>" + (amplingArray[i].experiment_status === 1? '已完成':'未完成')  + "</td>"
+                + "<td>"
+                + "<a href='javascript:;' onclick='getExperimentalMsgById(\""+amplingArray[i].Id +"\")' style='color: rgb(114, 112, 209);padding: 10px;'>查看实验</a>"
+                + "<a href='javascript:;' onclick='removeExperimentalItemById(\""+amplingArray[i].Id +"\")' style='color: rgb(114, 112, 209);'>删除</a>"
+                + "</td>"
+                + "</tr>";
         } else {
-            htmlStr += "<tr>";
-            htmlStr += "<td>" + amplingArray[i]["experiment_num"] + "</td>";
-            htmlStr += "<td>" + amplingArray[i]["order_ticket_num"]  + "</td>";
-            htmlStr += "<td>" + amplingArray[i].materials_name  + "</td>";
-            htmlStr += "<td>" + amplingArray[i].manufacturers_name  + "</td>";
-            htmlStr += "<td>" + amplingArray[i].sampling_date  + "</td>";
-            htmlStr += "<td>" + amplingArray[i].test_date  + "</td>";
-            if(amplingArray[i].experiment_status === 0){
-                htmlStr += "<td>待发送</td>"
-            }else if(amplingArray[i].experiment_status === 1){
-                htmlStr += "<td>审批中</td>"
-            }else if(amplingArray[i].experiment_status === 2){
-                htmlStr += "<td>被回退</td>"
-            }else {
-                htmlStr += "<td>已完成</td>"
-            }
-            htmlStr += "<td>";
-            htmlStr += "<a href='javascript:;' onclick='getExperimentalById(\""+amplingArray[i].Id +"\")' style='color: rgb(114, 112, 209);padding: 10px;'>填写实验</a>";
-            htmlStr += "<a href='javascript:;' onclick='removeExperimentalItemById(\""+amplingArray[i].Id +"\")' style='color: rgb(114, 112, 209);'>删除</a>";
-            htmlStr += "</td>";
-            htmlStr += "</tr>";
+            htmlStr = "<tr>"
+                + "<td>" + amplingArray[i]["experiment_num"] + "</td>"
+                + "<td>" + amplingArray[i]["order_ticket_num"]  + "</td>"
+                + "<td>" + amplingArray[i].materials_name  + "</td>"
+                + "<td>" + amplingArray[i].manufacturers_name  + "</td>"
+                + "<td>" + amplingArray[i].sampling_date  + "</td>"
+                + "<td>" + amplingArray[i].test_date  + "</td>"
+                + "<td>" + (amplingArray[i].experiment_status === 1? '已完成':'未完成')  + "</td>"
+                + "<td>"
+                + "<a href='javascript:;' onclick='getExperimentalById(\""+amplingArray[i].Id +"\")' style='color: rgb(114, 112, 209);padding: 10px;'>填写实验</a>"
+                + "<a href='javascript:;' onclick='removeExperimentalItemById(\""+amplingArray[i].Id +"\")' style='color: rgb(114, 112, 209);'>删除</a>"
+                + "</td>"
+                + "</tr>";
         }
 
         $("#experimentalItemData").append(htmlStr);
@@ -171,7 +155,7 @@ function getExperimentalById(id) {
                 shadeClose: true,
                 shade: 0.1,
                 area: ['98%', '95%'],
-                content: basePath + "/getExperimentalItemMsgPage.do?id=" + id//iframe的url
+                content: basePath + "/getExperimentalItemMsgPageForeign.do?id=" + id//iframe的url
             });
 
 }
@@ -180,7 +164,7 @@ function getExperimentalById(id) {
 function getExperimentalItem(order_num) {
     $.ajax({
         type: "POST",
-        url: basePath + "/getExperimentalItemByOrderNum.do",
+        url: basePath + "/getExperimentalItemByOrderNumForeign.do",
         data:{"orderNum":order_num},
         dataType:'json',
         async: false,
@@ -210,7 +194,7 @@ function removeExperimentalItemById(id) {
 
         $.ajax({
             type: "POST",
-            url: basePath + "/removeExperimentalItemById.do",
+            url: basePath + "/removeExperimentalItemByIdForeign.do",
             data: {
                 "id":id
             },
@@ -241,7 +225,7 @@ function getExperimentalItemById(id,orderTicketNum){
     var condition;
     $.ajax({
         type: "POST",
-        url: basePath + "/getExperimentalItemCount.do",
+        url: basePath + "/getExperimentalItemCountForeign.do",
         async: false,
         data: {
             "orderTicketNum":orderTicketNum
@@ -256,7 +240,7 @@ function getExperimentalItemById(id,orderTicketNum){
     if (condition <= 0){
         $.ajax({
             type: "POST",
-            url: basePath + "/getExperimentalItemById.do",
+            url: basePath + "/getExperimentalItemByIdForeign.do",
             data: {
                 "id":id
             },
@@ -307,7 +291,7 @@ function addExperimentalItem(){
     if (!spCodesTemp.isBlank()){
         $.ajax({
             type: "POST",
-            url: basePath + "/addExperimentalItemByOrderTicketNum.do",
+            url: basePath + "/addExperimentalItemByOrderTicketNumForeign.do",
             data: {
                 "orderTicketNum":orderTicketNum,
                 "experimentalItemId":spCodesTemp
@@ -338,7 +322,7 @@ function getExperimentalMsgById(id){
         shadeClose: true,
         shade: 0.1,
         area: ['98%', '95%'],
-        content: basePath + "/getExperimentalMsgById.do?id=" + id//iframe的url
+        content: basePath + "/getExperimentalMsgByIdForeign.do?id=" + id//iframe的url
     });
 }
 /***********************查看试验项目end*****************************/

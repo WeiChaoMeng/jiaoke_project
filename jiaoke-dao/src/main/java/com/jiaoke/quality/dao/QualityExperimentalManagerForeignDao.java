@@ -20,7 +20,7 @@ import java.util.Map;
  * @create: 2019/6/26 12:00
  * @Description:
  */
-public interface QualityExperimentalManagerDao {
+public interface QualityExperimentalManagerForeignDao {
 
     /**
      *
@@ -49,7 +49,7 @@ public interface QualityExperimentalManagerDao {
      * 功能描述: <br>
      *  <查询规格字典，返回所以规格>
      * @param
-     * @return 
+     * @return
      * @auther Melone
      * @date 2019/6/26 12:16
      */
@@ -86,7 +86,7 @@ public interface QualityExperimentalManagerDao {
      * @auther Melone
      * @date 2019/6/27 10:26
      */
-    int insertSample(@Param("materials") String materials,@Param("manufacturers")  String manufacturers,@Param("specification") String specification,@Param("tunnage") String tunnage,@Param("creat_time") String creat_time,@Param("remark")  String remark);
+    int insertSample(@Param("materials") String materials, @Param("manufacturers") String manufacturers, @Param("specification") String specification, @Param("tunnage") String tunnage, @Param("creat_time") String creat_time, @Param("remark") String remark);
 
     /**
      *
@@ -119,7 +119,7 @@ public interface QualityExperimentalManagerDao {
      * @auther Melone
      * @date 2019/6/27 15:25
      */
-    int insertOrderTicketBySampleMssage(@Param("orderTicketNum") String orderTicketNum, @Param("sampling_id") String sampling_id,@Param("date") String date,@Param("manufacturers_num") String manufacturers_num,@Param("specification_num") String specification_num,@Param("tunnage") String tunnage,@Param("test_num") String test_num);
+    int insertOrderTicketBySampleMssage(@Param("orderTicketNum") String orderTicketNum, @Param("sampling_id") String sampling_id, @Param("date") String date, @Param("manufacturers_num") String manufacturers_num, @Param("specification_num") String specification_num, @Param("tunnage") String tunnage, @Param("test_num") String test_num);
 
     /**
      *
@@ -185,7 +185,7 @@ public interface QualityExperimentalManagerDao {
      * @auther Melone
      * @date 2019/7/2 15:15
      */
-    int addExperimentalItemByOrderTicketNum(@Param("orderTicketNum") String orderTicketNum,@Param("ids") String[] ids);
+    int addExperimentalItemByOrderTicketNum(@Param("orderTicketNum") String orderTicketNum, @Param("ids") String[] ids);
 
     /**
      *
@@ -218,7 +218,7 @@ public interface QualityExperimentalManagerDao {
      * @auther Melone
      * @date 2019/7/3 15:10
      */
-    int insertTaskList(@Param("order_ticket_num") String order_ticket_num,@Param("test_num") String test_num,@Param("result")  String result, @Param("materialName") String materialName,@Param("specificationName") String specificationName,@Param("remark") String remark);
+    int insertTaskList(@Param("order_ticket_num") String order_ticket_num, @Param("test_num") String test_num, @Param("result") String result, @Param("materialName") String materialName, @Param("specificationName") String specificationName, @Param("remark") String remark);
 
     /**
      *
@@ -229,7 +229,7 @@ public interface QualityExperimentalManagerDao {
      * @auther Melone
      * @date 2019/7/5 13:05
      */
-    Map<String, Object> selectLabReportConuntByDateAndMaterials(@Param("dates") String dates,@Param("materials_num") String materials_num);
+    Map<String, Object> selectLabReportConuntByDateAndMaterials(@Param("dates") String dates, @Param("materials_num") String materials_num);
 
     /**
      *
@@ -240,18 +240,17 @@ public interface QualityExperimentalManagerDao {
      * @auther Melone
      * @date 2019/7/8 11:43
      */
-    int insertLabReport(@Param("id") String id,
-                        @Param("experimentNum") String experimentNum,
-                            @Param("order_ticket_num")  String order_ticket_num,
-                            @Param("materials_num")  String materials_num,
-                            @Param("entrustingParty")  String entrustingParty,
-                            @Param("manufacturersName") String manufacturersName,
-                            @Param("samplingTime")  String samplingTime,
-                            @Param("creatTime")  String creatTime,
-                            @Param("requiredExperimental")  String requiredExperimental,
-                            @Param("logogram_name") String logogram_name,
-                            @Param("samplingSpot") String samplingSpot,
-                            @Param("specificationName") String specificationName);
+    int insertLabReport(@Param("experimentNum") String experimentNum,
+                        @Param("order_ticket_num") String order_ticket_num,
+                        @Param("materials_num") String materials_num,
+                        @Param("entrustingParty") String entrustingParty,
+                        @Param("manufacturersName") String manufacturersName,
+                        @Param("samplingTime") String samplingTime,
+                        @Param("creatTime") String creatTime,
+                        @Param("requiredExperimental") String requiredExperimental,
+                        @Param("logogram_name") String logogram_name,
+                        @Param("samplingSpot") String samplingSpot,
+                        @Param("specificationName") String specificationName);
 
     /**
      *
@@ -292,11 +291,11 @@ public interface QualityExperimentalManagerDao {
      * 功能描述: <br>
      *  <根据ID查询指定实验项目>
      * @param
-     * @return 
+     * @return
      * @auther Melone
      * @date 2019/7/11 18:20
      */
-    List<Map<String, String>> selectExperimentalItemNumList(@Param("id")  String id);
+    List<Map<String, String>> selectExperimentalItemNumList(@Param("id") String id);
 
     /**
      *
@@ -318,7 +317,7 @@ public interface QualityExperimentalManagerDao {
      * @auther Melone
      * @date 2019/7/16 12:48
      */
-    int insertFineAggregate(@Param("firstTestList") List<Map<String,String>> firstTestList,@Param("experimentNum") String experimentNum);
+    int insertFineAggregate(@Param("firstTestList") List<Map<String, String>> firstTestList, @Param("experimentNum") String experimentNum);
 
     /**
      *
@@ -329,7 +328,7 @@ public interface QualityExperimentalManagerDao {
      * @auther Melone
      * @date 2019/7/16 12:49
      */
-    int insertFineAggregateSieving(@Param("coarseTestList") List<Map<String,String>> coarseTestList,@Param("experimentNum") String experimentNum);
+    int insertFineAggregateSieving(@Param("coarseTestList") List<Map<String, String>> coarseTestList, @Param("experimentNum") String experimentNum);
 
 
     /**
@@ -341,7 +340,7 @@ public interface QualityExperimentalManagerDao {
      * @auther Melone
      * @date 2019/7/16 12:48
      */
-    int insertCoarseAggregate(@Param("firstTestList") List<Map<String,String>> firstTestList,@Param("experimentNum") String experimentNum);
+    int insertCoarseAggregate(@Param("firstTestList") List<Map<String, String>> firstTestList, @Param("experimentNum") String experimentNum);
 
 
     /**
@@ -353,7 +352,7 @@ public interface QualityExperimentalManagerDao {
      * @auther Melone
      * @date 2019/7/16 12:49
      */
-    int insertCoarseAggregateSieving(@Param("coarseTestList") List<Map<String,String>> coarseTestList,@Param("experimentNum") String experimentNum);
+    int insertCoarseAggregateSieving(@Param("coarseTestList") List<Map<String, String>> coarseTestList, @Param("experimentNum") String experimentNum);
 
 
     /**
@@ -365,7 +364,7 @@ public interface QualityExperimentalManagerDao {
      * @auther Melone
      * @date 2019/7/16 12:48
      */
-    int insertAsphalt(@Param("firstTestList") List<Map<String,String>> firstTestList,@Param("experimentNum") String experimentNum);
+    int insertAsphalt(@Param("firstTestList") List<Map<String, String>> firstTestList, @Param("experimentNum") String experimentNum);
 
     /**
      *
@@ -387,7 +386,7 @@ public interface QualityExperimentalManagerDao {
      * @auther Melone
      * @date 2019/7/16 21:00
      */
-    List<Map<String,String>>  selectExperimentalMsgByTableName(@Param("tableName") String tableName,@Param("experiment_num") String experiment_num);
+    List<Map<String,String>>  selectExperimentalMsgByTableName(@Param("tableName") String tableName, @Param("experiment_num") String experiment_num);
 
     /**
      *
@@ -399,23 +398,6 @@ public interface QualityExperimentalManagerDao {
      * @date 2019/7/17 11:05
      */
     int delectExperimentalItemById(@Param("id") String id);
-
-    /**
-     * 更新审批数据
-     * @param id 主键
-     * @param chargePerson 负责人
-     * @param checkPerson 审核人
-     * @return int
-     */
-    int updateExperimentalApproval(@Param("id") String id,@Param("chargePerson") String chargePerson,@Param("checkPerson") String checkPerson);
-
-    /**
-     * 根据id更新实验数据状态
-     * @param id id
-     * @param state state
-     * @return int
-     */
-    int updateExperimentalItemStateById(@Param("id") String id,@Param("state") Integer state);
 
     /**
      *
@@ -623,7 +605,7 @@ public interface QualityExperimentalManagerDao {
      * @auther Melone
      * @date 2019/7/26 22:18
      */
-    int updateSpecificationById(@Param("id") String id,@Param("name") String name);
+    int updateSpecificationById(@Param("id") String id, @Param("name") String name);
 
     /**
      *
@@ -634,7 +616,7 @@ public interface QualityExperimentalManagerDao {
      * @auther Melone
      * @date 2019/7/26 22:18
      */
-    int updateManufacturersById(@Param("id") String id,@Param("name") String name);
+    int updateManufacturersById(@Param("id") String id, @Param("name") String name);
 
     /**
      *
@@ -645,7 +627,7 @@ public interface QualityExperimentalManagerDao {
      * @auther Melone
      * @date 2019/7/28 15:12
      */
-    int insertBrzzez(@Param("list")List<Map<String,String>> firstTestList,@Param("experimentNum") String experimentNum);
+    int insertBrzzez(@Param("list") List<Map<String, String>> firstTestList, @Param("experimentNum") String experimentNum);
 
     /**
      *
@@ -667,7 +649,7 @@ public interface QualityExperimentalManagerDao {
      * @auther Melone
      * @date 2019/7/28 16:15
      */
-    List<Map<String, String>> selectBreezeStandingBookByDate(@Param("startDate") String startDate,@Param("endDate") String endDate);
+    List<Map<String, String>> selectBreezeStandingBookByDate(@Param("startDate") String startDate, @Param("endDate") String endDate);
 
     /**
      *
@@ -700,5 +682,5 @@ public interface QualityExperimentalManagerDao {
      * @auther Melone
      * @date 2019/7/29 13:17
      */
-    List<Map<String, String>> selectTestStandingBookByDate(@Param("startDate") String startDate,@Param("endDate")  String endDate);
+    List<Map<String, String>> selectTestStandingBookByDate(@Param("startDate") String startDate, @Param("endDate") String endDate);
 }

@@ -10,16 +10,7 @@ package com.jiaoke.quality.service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.jiake.utils.RandomUtil;
-import com.jiaoke.oa.bean.OaCollaboration;
-import com.jiaoke.oa.bean.UserInfo;
-import com.jiaoke.oa.dao.OaCollaborationMapper;
-import com.jiaoke.oa.dao.UserInfoMapper;
-import com.jiaoke.quality.dao.QualityExperimentalManagerDao;
-import org.activiti.engine.*;
-import org.activiti.engine.history.HistoricProcessInstance;
-import org.activiti.engine.runtime.ProcessInstance;
-import org.apache.shiro.SecurityUtils;
+import com.jiaoke.quality.dao.QualityExperimentalManagerForeignDao;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -34,34 +25,10 @@ import java.util.*;
  * @Description:
  */
 @Service
-public class QualityExperimentalManagerImpl implements  QualityExperimentalManagerInf{
+public class QualityExperimentalManagerForeignImpl implements  QualityExperimentalManagerForeignInf{
 
     @Resource
-    private QualityExperimentalManagerDao qualityExperimentalManagerDao;
-
-    @Resource
-    private OaCollaborationMapper oaCollaborationMapper;
-
-    @Resource
-    private UserInfoMapper userInfoMapper;
-
-    @Resource
-    private HistoryService historyService;
-
-    @Resource
-    private RuntimeService runtimeService;
-
-    @Resource
-    private TaskService taskService;
-
-    /**
-     * 获取当前登录用户信息
-     *
-     * @return userInfo
-     */
-    private UserInfo getCurrentUser() {
-        return (UserInfo) SecurityUtils.getSubject().getPrincipal();
-    }
+    private QualityExperimentalManagerForeignDao qualityExperimentalManagerForeignDao;
 
     /**
      *
@@ -75,9 +42,9 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
     @Override
     public String getSamplingPageFromData() {
 
-        List<Map<String,String>> materiaList = qualityExperimentalManagerDao.getMaterialList();
-        List<Map<String,String>> manufacturersList = qualityExperimentalManagerDao.getManufacturersList();
-        List<Map<String,String>> specificationList = qualityExperimentalManagerDao.getSpecificationList();
+        List<Map<String,String>> materiaList = qualityExperimentalManagerForeignDao.getMaterialList();
+        List<Map<String,String>> manufacturersList = qualityExperimentalManagerForeignDao.getManufacturersList();
+        List<Map<String,String>> specificationList = qualityExperimentalManagerForeignDao.getSpecificationList();
 
 
         Map<String,List<Map<String,String>>> res = new HashMap<>();
@@ -101,7 +68,7 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
      */
     @Override
     public String getAllSamplingPage() {
-        List<Map<String,String>> list = qualityExperimentalManagerDao.selectAllSamplingPage();
+        List<Map<String,String>> list = qualityExperimentalManagerForeignDao.selectAllSamplingPage();
         return JSON.toJSONString(list);
     }
 
@@ -116,7 +83,7 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
      */
     @Override
     public String removeSampleById(String id) {
-        int res = qualityExperimentalManagerDao.delectSampleById(id);
+        int res = qualityExperimentalManagerForeignDao.delectSampleById(id);
 
         Map<String,String> map = new HashMap<>();
         if (res > 0){
@@ -139,7 +106,7 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
      */
     @Override
     public String addSample(String materials, String manufacturers, String specification, String tunnage, String creat_time, String remark) {
-        int res = qualityExperimentalManagerDao.insertSample(materials,manufacturers,specification,tunnage,creat_time,remark);
+        int res = qualityExperimentalManagerForeignDao.insertSample(materials,manufacturers,specification,tunnage,creat_time,remark);
 
         Map<String,String> map = new HashMap<>();
 
@@ -164,7 +131,7 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
     @Override
     public String confirmCompletedById(String id) {
         //获取取样消息
-        Map<String,String> map = qualityExperimentalManagerDao.selectSampleMessageById(id);
+        Map<String,String> map = qualityExperimentalManagerForeignDao.selectSampleMessageById(id);
 
         //生产委托单
 
@@ -176,7 +143,7 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
         //查询当日委托单数量
         String[] dateArray = result.split(" ");
 
-        Map<String,Object>  countMap = qualityExperimentalManagerDao.selectOrderTicketCountByDate(dateArray[0]);
+        Map<String,Object>  countMap = qualityExperimentalManagerForeignDao.selectOrderTicketCountByDate(dateArray[0]);
 
         int count = Integer.parseInt(countMap.get("counts").toString());
 
@@ -188,12 +155,12 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
         //生产试验编号
         String test_num = map.get("logogram_name") + date[0] + number;
 
-        int res = qualityExperimentalManagerDao.insertOrderTicketBySampleMssage(orderTicketNum,String.valueOf(id),result,String.valueOf(map.get("manufacturers_num")),String.valueOf(map.get("specification_num")),String.valueOf(map.get("tunnage")),test_num);
+        int res = qualityExperimentalManagerForeignDao.insertOrderTicketBySampleMssage(orderTicketNum,String.valueOf(id),result,String.valueOf(map.get("manufacturers_num")),String.valueOf(map.get("specification_num")),String.valueOf(map.get("tunnage")),test_num);
 
         //返回map
         Map<String,String> resMap = new HashMap<>();
         if (res > 0){
-            int i = qualityExperimentalManagerDao.updateSampleMessageById(id);
+            int i = qualityExperimentalManagerForeignDao.updateSampleMessageById(id);
             if (i > 0){
                 resMap.put("message","success");
             }else {
@@ -217,7 +184,7 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
      */
     @Override
     public String getAllexperimental() {
-        List<Map<String,String>> list = qualityExperimentalManagerDao.selectAllexperimental();
+        List<Map<String,String>> list = qualityExperimentalManagerForeignDao.selectAllexperimental();
         return JSON.toJSONString(list);
     }
 
@@ -233,7 +200,7 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
      */
     @Override
     public String getExperimentalMessageById(String id) {
-        Map<String,String> map = qualityExperimentalManagerDao.selectExperimentalMessageById(id);
+        Map<String,String> map = qualityExperimentalManagerForeignDao.selectExperimentalMessageById(id);
         return JSON.toJSONString(map);
     }
 
@@ -249,7 +216,7 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
      */
     @Override
     public String getExperimentalItemByOrderNum(String orderNum) {
-        List<Map<String,String>> list = qualityExperimentalManagerDao.selectExperimentalItemByOrderNum(orderNum);
+        List<Map<String,String>> list = qualityExperimentalManagerForeignDao.selectExperimentalItemByOrderNum(orderNum);
         return JSON.toJSONString(list);
     }
 
@@ -264,7 +231,7 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
      */
     @Override
     public String getExperimentalItemById(String id) {
-        List<Map<String,String>> list = qualityExperimentalManagerDao.getExperimentalItemById(id);
+        List<Map<String,String>> list = qualityExperimentalManagerForeignDao.getExperimentalItemById(id);
         return JSON.toJSONString(list);
     }
 
@@ -280,14 +247,14 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
     @Override
     public String addExperimentalItemByOrderTicketNum(String orderTicketNum, String experimentalItemId) {
         String[] ids = experimentalItemId.split(",");
-        int i = qualityExperimentalManagerDao.addExperimentalItemByOrderTicketNum(orderTicketNum,ids);
+        int i = qualityExperimentalManagerForeignDao.addExperimentalItemByOrderTicketNum(orderTicketNum,ids);
         Map<String,String> res = new HashMap<>();
         if (i > 0){
 
-            Map<String,String> map = qualityExperimentalManagerDao.getOrderTicketByOrderTicketNum(orderTicketNum);
+            Map<String,String> map = qualityExperimentalManagerForeignDao.getOrderTicketByOrderTicketNum(orderTicketNum);
 
             //修改委托单状态
-            int update = qualityExperimentalManagerDao.updateOrderTicketByOrderTicketNum(orderTicketNum);
+            int update = qualityExperimentalManagerForeignDao.updateOrderTicketByOrderTicketNum(orderTicketNum);
 
             /*
                         生产任务单、与试验过程
@@ -320,7 +287,7 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
      */
     @Override
     public String getExperimentalItemCount(String orderTicketNum) {
-        Map<String,Integer> map = qualityExperimentalManagerDao.selectExperimentalItemCount(orderTicketNum);
+        Map<String,Integer> map = qualityExperimentalManagerForeignDao.selectExperimentalItemCount(orderTicketNum);
         return JSON.toJSONString(map);
     }
 
@@ -340,7 +307,7 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String result = sdf.format(new Date());
 
-        int res = qualityExperimentalManagerDao.insertTaskList(map.get("order_ticket_num"),
+        int res = qualityExperimentalManagerForeignDao.insertTaskList(map.get("order_ticket_num"),
                 map.get("test_num"),
                 result,
                 map.get("materialName"),
@@ -360,7 +327,7 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
         //生产实验编号
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
         String result = sdf.format(new Date());
-        Map<String,Object> countMap = qualityExperimentalManagerDao.selectLabReportConuntByDateAndMaterials(result,String.valueOf(map.get("materials_num")));
+        Map<String,Object> countMap = qualityExperimentalManagerForeignDao.selectLabReportConuntByDateAndMaterials(result,String.valueOf(map.get("materials_num")));
         int count = Integer.parseInt(String.valueOf(countMap.get("counts")));
         String experimentNum;
         if (count < 10){
@@ -383,7 +350,7 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
 
 
         //查询实验项目
-        List<Map<String,String>> experimentItme = qualityExperimentalManagerDao.selectExperimentItme(map.get("order_ticket_num"));
+        List<Map<String,String>> experimentItme = qualityExperimentalManagerForeignDao.selectExperimentItme(map.get("order_ticket_num"));
 
         StringBuffer str = new StringBuffer();
 
@@ -404,9 +371,7 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
 
 
         //插入实验过程表
-        int res = qualityExperimentalManagerDao.insertLabReport(
-                //随机id
-                RandomUtil.randomId(),
+        int res = qualityExperimentalManagerForeignDao.insertLabReport(
                 experimentNum,
                 map.get("order_ticket_num"),
                String.valueOf(map.get("materials_num")) ,
@@ -429,19 +394,19 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
     /*************************************未完实验Start****************************************************/
     @Override
     public String getAllExperimentalItem() {
-        List<Map<String,String>> list = qualityExperimentalManagerDao.selectAllExperimentalItem();
+        List<Map<String,String>> list = qualityExperimentalManagerForeignDao.selectAllExperimentalItem();
         return JSON.toJSONString(list);
     }
 
     @Override
     public String getExperimentalItemMsgById(String id) {
-        Map<String,String> map  = qualityExperimentalManagerDao.selectExperimentalItemMsgById(id);
+        Map<String,String> map  = qualityExperimentalManagerForeignDao.selectExperimentalItemMsgById(id);
         return JSON.toJSONString(map);
     }
 
     @Override
     public String getExperimentalItemNumList(String id) {
-        List<Map<String,String> > map  = qualityExperimentalManagerDao.selectExperimentalItemNumList(id);
+        List<Map<String,String> > map  = qualityExperimentalManagerForeignDao.selectExperimentalItemNumList(id);
         return JSON.toJSONString(map);
     }
 
@@ -459,49 +424,15 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
 
 
         Map<String,String> insertMap = new HashMap<>();
-        //暂存实验数据主键
-        String id = "";
 
         //修改实验报告表
         for(Map<String,String> mapList : listObjectSec){
             String val = mapList.get("value");
             String valName = mapList.get("name");
-            if ("Id".equals(valName)){
-                id = val;
-            }
             insertMap.put(valName,val);
         }
 
-        int upRes = qualityExperimentalManagerDao.updateLabReport(insertMap);
-
-        /**--------------审批使用s--------------------*/
-        if (upRes > 0) {
-            //检查数据是否存在，避免重复添加
-            if (oaCollaborationMapper.selectOne(id) == null) {
-                OaCollaboration collaboration = new OaCollaboration();
-                collaboration.setTitle("实验报告");
-                collaboration.setPromoter(getCurrentUser().getId());
-                collaboration.setTable("quality_test_lab_report");
-                collaboration.setCorrelationId(id);
-                collaboration.setUrl("ExperimentalItems.do");
-                collaboration.setState(0);
-                collaboration.setCreateTime(new Date());
-
-                //添加成功后开启流程
-                if (oaCollaborationMapper.insertData(collaboration) > 0) {
-                    //获取拥有查表计数人权限的用户信息
-                    UserInfo userInfo = userInfoMapper.selectByPermission("experimentPrincipal");
-                    Map<String, Object> map = new HashMap<>(16);
-                    map.put("experimentPrincipal", userInfo.getId());
-                    //businessKey格式为 mysql表名：新增数据id
-                    ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
-                    processEngine.getIdentityService().setAuthenticatedUserId(getCurrentUser().getId().toString());
-                    processEngine.getRuntimeService().startProcessInstanceByKey("qc_experimental", "quality_test_lab_report:" + id, map);
-                }
-
-            }
-        }
-        /**--------------审批使用e--------------------*/
+        int upRes = qualityExperimentalManagerForeignDao.updateLabReport(insertMap);
 
         int materialsNum = Integer.parseInt(insertMap.get("materials_num"));
         String experimentNum = insertMap.get("experiment_num");
@@ -514,34 +445,34 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
                 //细集料插入方法
                 case 1:
                     if (firstTestList.size() != 0 ){
-                        res = qualityExperimentalManagerDao.insertFineAggregate(firstTestList,experimentNum);
+                        res = qualityExperimentalManagerForeignDao.insertFineAggregate(firstTestList,experimentNum);
                     }
                     if (coarseTestList.size() != 0){
-                        res = qualityExperimentalManagerDao.insertFineAggregateSieving(coarseTestList,experimentNum);
+                        res = qualityExperimentalManagerForeignDao.insertFineAggregateSieving(coarseTestList,experimentNum);
                     }
                     break;
                 //粗集料插入方法
                 case 2:
                     if (firstTestList.size() != 0 ){
-                        res = qualityExperimentalManagerDao.insertCoarseAggregate(firstTestList,experimentNum);
+                        res = qualityExperimentalManagerForeignDao.insertCoarseAggregate(firstTestList,experimentNum);
                     }
                     if (coarseTestList.size() != 0){
-                        res = qualityExperimentalManagerDao.insertCoarseAggregateSieving(coarseTestList,experimentNum);
+                        res = qualityExperimentalManagerForeignDao.insertCoarseAggregateSieving(coarseTestList,experimentNum);
                     }
                     break;
                     //矿粉
                 case 3:
                     if (firstTestList.size() != 0 ){
-                        res = qualityExperimentalManagerDao.insertBrzzez(firstTestList,experimentNum);
+                        res = qualityExperimentalManagerForeignDao.insertBrzzez(firstTestList,experimentNum);
                     }
                     break;
                     //沥青
                 case 4:
                     if (firstTestList.size() != 0 ){
-                        res = qualityExperimentalManagerDao.insertAsphalt(firstTestList,experimentNum);
+                        res = qualityExperimentalManagerForeignDao.insertAsphalt(firstTestList,experimentNum);
                     }
                     if (coarseTestList.size() != 0){
-                        res = qualityExperimentalManagerDao.insertAsphalt(coarseTestList,experimentNum);
+                        res = qualityExperimentalManagerForeignDao.insertAsphalt(coarseTestList,experimentNum);
                     }
                     break;
                 default:
@@ -565,7 +496,7 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
 
     @Override
     public String getExperimentalProjectMessage(String id) {
-        List<Map<String,String>> res = qualityExperimentalManagerDao.selectExperimentalProjectMessage(id);
+        List<Map<String,String>> res = qualityExperimentalManagerForeignDao.selectExperimentalProjectMessage(id);
         return JSON.toJSONString(res);
     }
 
@@ -578,7 +509,7 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
 
         Iterator<String> iterator = staffsSet.iterator();
         while (iterator.hasNext()){
-            List<Map<String,String>> list = qualityExperimentalManagerDao.selectExperimentalMsgByTableName(iterator.next(),experiment_num);
+            List<Map<String,String>> list = qualityExperimentalManagerForeignDao.selectExperimentalMsgByTableName(iterator.next(),experiment_num);
             res.add(list);
         }
         res.removeIf(List::isEmpty);
@@ -588,31 +519,7 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
 
     @Override
     public String removeExperimentalItemById(String id) {
-        int res = qualityExperimentalManagerDao.delectExperimentalItemById(id);
-
-        //删除协同表中数据和activiti相关数据
-        //查询数据是否开启流程
-        OaCollaboration collaboration = oaCollaborationMapper.selectOne(id);
-        if (collaboration != null){
-            //删除协同表中数据
-            oaCollaborationMapper.deleteByCorrelationId(id);
-
-            //根据业务键查询流程实例Id
-            String processInstanceId = historyService.createHistoricProcessInstanceQuery().processInstanceBusinessKey("quality_test_lab_report:" + id).singleResult().getId();
-            //1.判断流程是否结束
-            ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
-            //流程已结束
-            if (processInstance == null) {
-                historyService.deleteHistoricProcessInstance(processInstanceId);
-                taskService.deleteComments("", processInstanceId);
-            } else {
-                //流程未结束
-                runtimeService.deleteProcessInstance(processInstanceId, "");
-                historyService.deleteHistoricProcessInstance(processInstanceId);
-                taskService.deleteComments("", processInstanceId);
-            }
-        }
-
+        int res = qualityExperimentalManagerForeignDao.delectExperimentalItemById(id);
         Map<String,String> map = new HashMap<>();
         if (res > 0){
             map.put("message","success");
@@ -626,13 +533,13 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
     public String getSevenDayRawMaterialStandingBook() {
         List<Map<String,String>> res = new ArrayList<>();
         //普通试验
-        List<Map<String,String>> coarse = qualityExperimentalManagerDao.selectCoarseStandingBook();
-        List<Map<String,String>> fine = qualityExperimentalManagerDao.selectFineStandingBook();
-        List<Map<String,String>> breeze = qualityExperimentalManagerDao.selectBreezeStandingBook();
+        List<Map<String,String>> coarse = qualityExperimentalManagerForeignDao.selectCoarseStandingBook();
+        List<Map<String,String>> fine = qualityExperimentalManagerForeignDao.selectFineStandingBook();
+        List<Map<String,String>> breeze = qualityExperimentalManagerForeignDao.selectBreezeStandingBook();
 
         //筛分试验
-        List<Map<String,String>> coarseSieving = qualityExperimentalManagerDao.selectCoarseSievingStandingBook();
-        List<Map<String,String>> fineSieving = qualityExperimentalManagerDao.selectFineievingStandingBook();
+        List<Map<String,String>> coarseSieving = qualityExperimentalManagerForeignDao.selectCoarseSievingStandingBook();
+        List<Map<String,String>> fineSieving = qualityExperimentalManagerForeignDao.selectFineievingStandingBook();
 
         res.addAll(coarse);
         res.addAll(fine);
@@ -651,12 +558,12 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
         endDate = endDate.split(" ")[0];
 
         //普通试验
-        List<Map<String,String>> coarse = qualityExperimentalManagerDao.selectCoarseStandingBookByDate(startDate,endDate);
-        List<Map<String,String>> fine = qualityExperimentalManagerDao.selectFineStandingBookByDate(startDate,endDate);
-        List<Map<String,String>> breeze = qualityExperimentalManagerDao.selectBreezeStandingBookByDate(startDate,endDate);
+        List<Map<String,String>> coarse = qualityExperimentalManagerForeignDao.selectCoarseStandingBookByDate(startDate,endDate);
+        List<Map<String,String>> fine = qualityExperimentalManagerForeignDao.selectFineStandingBookByDate(startDate,endDate);
+        List<Map<String,String>> breeze = qualityExperimentalManagerForeignDao.selectBreezeStandingBookByDate(startDate,endDate);
         //筛分试验
-        List<Map<String,String>> coarseSieving = qualityExperimentalManagerDao.selectCoarseSievingStandingBookByDate(startDate,endDate);
-        List<Map<String,String>> fineSieving = qualityExperimentalManagerDao.selectFineievingStandingBookByDate(startDate,endDate);
+        List<Map<String,String>> coarseSieving = qualityExperimentalManagerForeignDao.selectCoarseSievingStandingBookByDate(startDate,endDate);
+        List<Map<String,String>> fineSieving = qualityExperimentalManagerForeignDao.selectFineievingStandingBookByDate(startDate,endDate);
 
         res.addAll(coarse);
         res.addAll(fine);
@@ -669,43 +576,21 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
 
     @Override
     public String getAsphaltStandingBook() {
-        List<Map<String,String>> asphalt = qualityExperimentalManagerDao.selectAsphaltStandingBook();
+        List<Map<String,String>> asphalt = qualityExperimentalManagerForeignDao.selectAsphaltStandingBook();
         return JSON.toJSONString(asphalt);
     }
 
     @Override
     public String getAsphaltStandingBookByDate(String startDate, String endDate) {
-        List<Map<String,String>> asphalt = qualityExperimentalManagerDao.selectAsphaltStandingBookByDate(startDate,endDate);
+        List<Map<String,String>> asphalt = qualityExperimentalManagerForeignDao.selectAsphaltStandingBookByDate(startDate,endDate);
         return JSON.toJSONString(asphalt);
     }
     /*************************************未完实验End****************************************************/
 
-    @Override
-    public int updateExperimentalItemApproval(String id, String chargePerson, String checkPerson) {
-        return qualityExperimentalManagerDao.updateExperimentalApproval(id,chargePerson,checkPerson);
-    }
-
-    @Override
-    public int deleteExperimentalItemById(String id) {
-        if (qualityExperimentalManagerDao.delectExperimentalItemById(id) < 0) {
-            return -1;
-        }else {
-            if (oaCollaborationMapper.deleteByCorrelationId(id) < 0){
-                return -1;
-            }else {
-                return 1;
-            }
-        }
-    }
-
-    @Override
-    public int updateExperimentalItemStateById(String id,Integer state) {
-        return qualityExperimentalManagerDao.updateExperimentalItemStateById(id,state);
-    }
     /*************************************试验设置End****************************************************/
     @Override
     public String getSpecificationDataAndManufacturersData() {
-        List<Map<String,String>> res = qualityExperimentalManagerDao.selectSpecificationDataAndManufacturersData();
+        List<Map<String,String>> res = qualityExperimentalManagerForeignDao.selectSpecificationDataAndManufacturersData();
         return JSON.toJSONString(res);
     }
 
@@ -715,10 +600,10 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
         int res = 0;
         switch (make){
             case "specification":
-                res =  qualityExperimentalManagerDao.delectSpecificationById(id);
+                res =  qualityExperimentalManagerForeignDao.delectSpecificationById(id);
                 break;
             case "manufacturers":
-                res =  qualityExperimentalManagerDao.delectManufacturersById(id);
+                res =  qualityExperimentalManagerForeignDao.delectManufacturersById(id);
                 break;
                 default:
                     map.put("message","fail");
@@ -736,7 +621,7 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
     @Override
     public String insertSpecificationFrom(String specificationName) {
         Map<String,String> map = new HashMap<>();
-        int res  =  qualityExperimentalManagerDao.insertSpecification(specificationName);
+        int res  =  qualityExperimentalManagerForeignDao.insertSpecification(specificationName);
         if (res > 0){
             map.put("message","success");
         }else {
@@ -748,7 +633,7 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
     @Override
     public String insertManufacturersFrom(String manufacturersName) {
         Map<String,String> map = new HashMap<>();
-        int res  =  qualityExperimentalManagerDao.insertManufacturers(manufacturersName);
+        int res  =  qualityExperimentalManagerForeignDao.insertManufacturers(manufacturersName);
         if (res > 0){
             map.put("message","success");
         }else {
@@ -762,10 +647,10 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
         Map<String,String> map = new HashMap<>();
         switch (make){
             case "specification":
-                map =  qualityExperimentalManagerDao.selectSpecificationById(id);
+                map =  qualityExperimentalManagerForeignDao.selectSpecificationById(id);
                 break;
             case "manufacturers":
-                map =  qualityExperimentalManagerDao.selectManufacturersById(id);
+                map =  qualityExperimentalManagerForeignDao.selectManufacturersById(id);
                 break;
             default:
                 break;
@@ -781,10 +666,10 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
 
         switch (make){
             case "specification":
-                res =  qualityExperimentalManagerDao.updateSpecificationById(id,updateName);
+                res =  qualityExperimentalManagerForeignDao.updateSpecificationById(id,updateName);
                 break;
             case "manufacturers":
-                res =  qualityExperimentalManagerDao.updateManufacturersById(id,updateName);
+                res =  qualityExperimentalManagerForeignDao.updateManufacturersById(id,updateName);
                 break;
             default:
                 break;
@@ -800,7 +685,7 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
 
     @Override
     public String getSampleStatusById(String id) {
-        Map<String,String> map  =  qualityExperimentalManagerDao.selectSampleStatusById(id);
+        Map<String,String> map  =  qualityExperimentalManagerForeignDao.selectSampleStatusById(id);
         Map<String,String> res = new HashMap<>();
 
         if (map.isEmpty()){
@@ -821,13 +706,13 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
 
     @Override
     public String getTestStandingBook() {
-        List<Map<String,String>> list =  qualityExperimentalManagerDao.selectTestStandingBook();
+        List<Map<String,String>> list =  qualityExperimentalManagerForeignDao.selectTestStandingBook();
         return JSON.toJSONString(list);
     }
 
     @Override
     public String getTestStandingBookByDate(String startDate, String endDate) {
-        List<Map<String,String>> list =  qualityExperimentalManagerDao.selectTestStandingBookByDate(startDate,endDate);
+        List<Map<String,String>> list =  qualityExperimentalManagerForeignDao.selectTestStandingBookByDate(startDate,endDate);
         return JSON.toJSONString(list);
     }
 
