@@ -206,8 +206,12 @@
 
     //详情
     function particulars(url, correlationId, processInstanceId) {
-        url += "/details";
-        window.location.href = "${path}" + url + "?id=" + correlationId + "&taskId=" + processInstanceId;
+        if (url.indexOf('.do') !== -1) {
+            window.location.href = "${path}details" + url + "?id=" + correlationId + "&taskId=" + processInstanceId;
+        } else {
+            url += "/details";
+            window.location.href = "${path}" + url + "?id=" + correlationId + "&taskId=" + processInstanceId;
+        }
     }
 
     //编辑

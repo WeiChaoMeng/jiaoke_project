@@ -194,8 +194,12 @@
 
     //审批
     function particulars(url, id, taskId) {
-        url += "/approval";
-        window.location.href = "${path}" + url + "?id=" + id + "&taskId=" + taskId;
+        if (url.indexOf('.do') !== -1) {
+            window.location.href = "${path}approval" + url + "?id=" + id + "&taskId=" + taskId;
+        } else {
+            url += "/approval";
+            window.location.href = "${path}" + url + "?id=" + id + "&taskId=" + taskId;
+        }
     }
 </script>
 </html>

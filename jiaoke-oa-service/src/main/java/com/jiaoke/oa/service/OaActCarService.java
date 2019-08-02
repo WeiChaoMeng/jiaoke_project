@@ -65,4 +65,11 @@ public interface OaActCarService {
      */
     int updateState(String id, Integer state);
 
+    /**
+     * 根据主键更新
+     *
+     * @param oaActCar oaActCar
+     * @return int
+     */
+    int updateByPrimaryKey(OaActCar oaActCar);
 }

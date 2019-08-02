@@ -5,7 +5,6 @@ import com.jiaoke.oa.bean.OaCollaboration;
 import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.dao.DepartmentMapper;
 import com.jiaoke.oa.dao.OaCollaborationMapper;
-import com.jiaoke.oa.dao.OaIndexMapper;
 import com.jiaoke.oa.dao.UserInfoMapper;
 import org.springframework.stereotype.Service;
 
@@ -22,9 +21,6 @@ import java.util.List;
  */
 @Service
 public class OaCollaborationServiceImpl implements OaCollaborationService {
-
-    @Resource
-    private OaIndexMapper oaIndexMapper;
 
     @Resource
     private UserInfoMapper userInfoMapper;

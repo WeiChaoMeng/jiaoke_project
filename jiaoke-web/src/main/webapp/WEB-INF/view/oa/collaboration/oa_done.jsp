@@ -192,8 +192,12 @@
 
     //详情
     function particulars(url, id, processInstanceId) {
-        url += "/details";
-        window.location.href = "${path}" + url + "?id=" + id + "&taskId=" + processInstanceId;
+        if (url.indexOf('.do') !== -1) {
+            window.location.href = "${path}details" + url + "?id=" + id + "&taskId=" + processInstanceId;
+        } else {
+            url += "/details";
+            window.location.href = "${path}" + url + "?id=" + id + "&taskId=" + processInstanceId;
+        }
     }
 </script>
 </html>

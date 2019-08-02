@@ -128,4 +128,9 @@ public class OaActCarServiceImpl implements OaActCarService {
             }
         }
     }
+
+    @Override
+    public int updateByPrimaryKey(OaActCar oaActCar) {
+        return oaActCarMapper.updateByPrimaryKey(oaActCar);
+    }
 }

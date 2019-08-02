@@ -93,37 +93,53 @@ function echaExperimentalItem(currentNum,amplingArray) {
             break;
         }
 
-        var htmlStr;
+        var htmlStr = "";
         //判断是否完成
-        if (amplingArray[i].experiment_status == 1){
+        if (amplingArray[i].experiment_status !== 0){
 
-            htmlStr = "<tr>"
-                + "<td>" + amplingArray[i]["experiment_num"] + "</td>"
-                + "<td>" + amplingArray[i]["order_ticket_num"]  + "</td>"
-                + "<td>" + amplingArray[i].materials_name  + "</td>"
-                + "<td>" + amplingArray[i].manufacturers_name  + "</td>"
-                + "<td>" + amplingArray[i].sampling_date  + "</td>"
-                + "<td>" + amplingArray[i].test_date  + "</td>"
-                + "<td>" + (amplingArray[i].experiment_status === 1? '已完成':'未完成')  + "</td>"
-                + "<td>"
-                + "<a href='javascript:;' onclick='getExperimentalMsgById(\""+amplingArray[i].Id +"\")' style='color: rgb(114, 112, 209);padding: 10px;'>查看实验</a>"
-                + "<a href='javascript:;' onclick='removeExperimentalItemById(\""+amplingArray[i].Id +"\")' style='color: rgb(114, 112, 209);'>删除</a>"
-                + "</td>"
-                + "</tr>";
+            htmlStr += "<tr>";
+            htmlStr += "<td>" + amplingArray[i]["experiment_num"] + "</td>";
+            htmlStr += "<td>" + amplingArray[i]["order_ticket_num"]  + "</td>";
+            htmlStr += "<td>" + amplingArray[i].materials_name  + "</td>";
+            htmlStr += "<td>" + amplingArray[i].manufacturers_name  + "</td>";
+            htmlStr += "<td>" + amplingArray[i].sampling_date  + "</td>";
+            htmlStr += "<td>" + amplingArray[i].test_date  + "</td>";
+            if(amplingArray[i].experiment_status === 0){
+                htmlStr += "<td>待发送</td>"
+            }else if(amplingArray[i].experiment_status === 1){
+                htmlStr += "<td>审批中</td>"
+            }else if(amplingArray[i].experiment_status === 2){
+                htmlStr += "<td>被回退</td>"
+            }else {
+                htmlStr += "<td>已完成</td>"
+            }
+            htmlStr += "<td>";
+            htmlStr += "<a href='javascript:;' onclick='getExperimentalMsgById(\""+amplingArray[i].Id +"\")' style='color: rgb(114, 112, 209);padding: 10px;'>查看实验</a>";
+            htmlStr += "<a href='javascript:;' onclick='removeExperimentalItemById(\""+amplingArray[i].Id +"\")' style='color: rgb(114, 112, 209);'>删除</a>";
+            htmlStr += "</td>";
+            htmlStr += "</tr>";
         } else {
-            htmlStr = "<tr>"
-                + "<td>" + amplingArray[i]["experiment_num"] + "</td>"
-                + "<td>" + amplingArray[i]["order_ticket_num"]  + "</td>"
-                + "<td>" + amplingArray[i].materials_name  + "</td>"
-                + "<td>" + amplingArray[i].manufacturers_name  + "</td>"
-                + "<td>" + amplingArray[i].sampling_date  + "</td>"
-                + "<td>" + amplingArray[i].test_date  + "</td>"
-                + "<td>" + (amplingArray[i].experiment_status === 1? '已完成':'未完成')  + "</td>"
-                + "<td>"
-                + "<a href='javascript:;' onclick='getExperimentalById(\""+amplingArray[i].Id +"\")' style='color: rgb(114, 112, 209);padding: 10px;'>填写实验</a>"
-                + "<a href='javascript:;' onclick='removeExperimentalItemById(\""+amplingArray[i].Id +"\")' style='color: rgb(114, 112, 209);'>删除</a>"
-                + "</td>"
-                + "</tr>";
+            htmlStr += "<tr>";
+            htmlStr += "<td>" + amplingArray[i]["experiment_num"] + "</td>";
+            htmlStr += "<td>" + amplingArray[i]["order_ticket_num"]  + "</td>";
+            htmlStr += "<td>" + amplingArray[i].materials_name  + "</td>";
+            htmlStr += "<td>" + amplingArray[i].manufacturers_name  + "</td>";
+            htmlStr += "<td>" + amplingArray[i].sampling_date  + "</td>";
+            htmlStr += "<td>" + amplingArray[i].test_date  + "</td>";
+            if(amplingArray[i].experiment_status === 0){
+                htmlStr += "<td>待发送</td>"
+            }else if(amplingArray[i].experiment_status === 1){
+                htmlStr += "<td>审批中</td>"
+            }else if(amplingArray[i].experiment_status === 2){
+                htmlStr += "<td>被回退</td>"
+            }else {
+                htmlStr += "<td>已完成</td>"
+            }
+            htmlStr += "<td>";
+            htmlStr += "<a href='javascript:;' onclick='getExperimentalById(\""+amplingArray[i].Id +"\")' style='color: rgb(114, 112, 209);padding: 10px;'>填写实验</a>";
+            htmlStr += "<a href='javascript:;' onclick='removeExperimentalItemById(\""+amplingArray[i].Id +"\")' style='color: rgb(114, 112, 209);'>删除</a>";
+            htmlStr += "</td>";
+            htmlStr += "</tr>";
         }
 
         $("#experimentalItemData").append(htmlStr);

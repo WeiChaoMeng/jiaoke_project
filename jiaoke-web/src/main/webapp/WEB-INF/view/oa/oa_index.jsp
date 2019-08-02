@@ -122,7 +122,7 @@
                             </td>
 
                             <td class="template" valign="middle">
-                                <a class="check_color" onclick="commonJump('review')"  title="合同审查表">
+                                <a class="check_color" onclick="commonJump('review')" title="合同审查表">
                                     <em class="template-icon">&#xe695;</em>合同审查表
                                 </a>
                             </td>
@@ -302,7 +302,7 @@
 
                             <td class="template" valign="middle">
                                 <a class="check_color" onclick="commonJump('overtime')" title="加班审批表、统计表">
-                                    <em class="template-icon">&#xe695;</em>加班审批表、统计表
+                                    <em class="template-icon">&#xe695;</em>加班统计表
                                 </a>
                             </td>
 
@@ -355,9 +355,9 @@
                 var result = JSON.parse(data);
 
                 //待办
-                $('#dataNumber').text('(' + result.dataNumber + ')');
+                $('#dataNumber').text('(' + result.upcomingMatterNumber + ')');
 
-                var list = result.oaActTemporaryList;
+                var list = result.upcomingMatterList;
 
                 if (list === "empty") {
                     $("#pending").html();
@@ -367,7 +367,7 @@
                         pendingList += '<tr>';
                         pendingList += '    <td class="list_content">';
                         pendingList += '        <span class="list_content_name">';
-                        pendingList += '            <a class="check_color" onclick="taskApprovalHandle(\'' + list[i].url + '\',\'' + list[i].id + '\',\'' + list[i].taskId + '\')" title="' + list[i].title + '">' + list[i].title + '</a>';
+                        pendingList += '            <a class="check_color" onclick="taskApprovalHandle(\'' + list[i].url + '\',\'' + list[i].correlationId + '\',\'' + list[i].taskId + '\')" title="' + list[i].title + '">' + list[i].title + '</a>';
                         pendingList += '        </span>';
                         pendingList += '    </td>';
                         pendingList += '    <td class="list-content-time">';
@@ -377,7 +377,7 @@
                         pendingList += '    </td>';
                         pendingList += '    <td class="list-content-proposer">';
                         pendingList += '        <span class="list_content_sponsor">';
-                        pendingList += '            <a title="申请人">' + list[i].promoter + '</a>';
+                        pendingList += '            <a title="申请人">' + list[i].promoterStr + '</a>';
                         pendingList += '        </span>';
                         pendingList += '    </td>';
                         pendingList += '</tr>';
@@ -387,9 +387,9 @@
                 }
 
                 //跟踪
-                $('#trackingNumber').text('(' + result.alreadyIssuedNumber + ')');
+                $('#trackingNumber').text('(' + result.trackingMatterNumber + ')');
 
-                var alreadyIssued = result.alreadyIssuedList;
+                var alreadyIssued = result.trackingMatterList;
 
                 if (alreadyIssued === "empty") {
                     $("#history").html();
@@ -399,7 +399,7 @@
                         trackList += '<tr>';
                         trackList += '    <td class="list_content" style="width: 74%">';
                         trackList += '        <span class="list_content_name">';
-                        trackList += '            <a class="check_color" onclick="taskDetails(\'' + alreadyIssued[i].url + '\',\'' + alreadyIssued[i].id + '\',\'' + alreadyIssued[i].taskId + '\')" title="' + alreadyIssued[i].title + '">' + alreadyIssued[i].title + '</a>';
+                        trackList += '            <a class="check_color" onclick="taskDetails(\'' + alreadyIssued[i].url + '\',\'' + alreadyIssued[i].correlationId + '\',\'' + alreadyIssued[i].taskId + '\')" title="' + alreadyIssued[i].title + '">' + alreadyIssued[i].title + '</a>';
                         trackList += '        </span>';
                         trackList += '    </td>';
                         trackList += '    <td class="list-content-time" style="width: 15%">';
@@ -430,11 +430,6 @@
         window.location.href = "${path}" + classAddress + "/toIndex";
     }
 
-    /*//用车申请单
-    function carApplication() {
-        window.location.href = "${path}/car/toCarApply";
-    }*/
-
     //客饭审批单
     function meals() {
         window.location.href = "${path}/meals/toMeals";
@@ -444,11 +439,6 @@
     function card() {
         window.location.href = "${path}/card/toCard";
     }
-/*
-    //合同审查表
-    function review() {
-        window.location.href = "${path}/review/toReview";
-    }*/
 
     //印章借用审批单
     function sealsBorrow() {
@@ -495,11 +485,6 @@
         window.location.href = "${path}/actTab/toOfficeSupplies";
     }
 
-   /* //确认单审批单 confirm
-    function confirm() {
-        window.location.href = "${path}/confirm/toConfirm";
-    }*/
-
     //信息联络处理单
     function liaison() {
         window.location.href = "${path}/liaison/toInformationLiaison";
@@ -513,14 +498,22 @@
     /*-------------------------------------------------------------*/
     //待办工作板块 - 任务审批处理页面
     function taskApprovalHandle(url, id, taskId) {
-        url += "/approval";
-        window.location.href = "${path}" + url + "?id=" + id + "&taskId=" + taskId;
+        if (url.indexOf('.do') !== -1) {
+            window.location.href = "${path}approval" + url + "?id=" + id + "&taskId=" + taskId;
+        } else {
+            url += "/approval";
+            window.location.href = "${path}" + url + "?id=" + id + "&taskId=" + taskId;
+        }
     }
 
     //跟踪事项板块 - 任务详情
     function taskDetails(url, id, taskId) {
-        url += "/details";
-        window.location.href = "${path}" + url + "?id=" + id + "&taskId=" + taskId;
+        if (url.indexOf('.do') !== -1) {
+            window.location.href = "${path}details" + url + "?id=" + id + "&taskId=" + taskId;
+        } else {
+            url += "/details";
+            window.location.href = "${path}" + url + "?id=" + id + "&taskId=" + taskId;
+        }
     }
 
     //更多待办任务

@@ -81,4 +81,19 @@
         set state = #{state}
         where correlation_id = #{correlationId}
     </update>
+
+    <select id="selectOne" parameterType="java.lang.String" resultType="com.jiaoke.oa.bean.OaCollaboration">
+        SELECT id,title,`table`,correlation_id as correlationId,url,state,create_time as createTime
+         FROM oa_collaboration
+         WHERE correlation_id = #{correlationId} LIMIT 1
+    </select>
+
+    <select id="selectMultipleData" parameterType="java.util.List" resultType="com.jiaoke.oa.bean.OaCollaboration">
+        select id,title,`table`,promoter,correlation_id as correlationId,url,state,create_time as createTime
+        from oa_collaboration
+        where correlation_id in
+        <foreach collection="ids" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
 </mapper>

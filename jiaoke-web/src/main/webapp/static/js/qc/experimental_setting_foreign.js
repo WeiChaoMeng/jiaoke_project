@@ -79,6 +79,7 @@ function getSpecificationDataAndManufacturersData() {
         dataType:"json",
         async: false,
         success:function (res) {
+            debugger
             if (res.length === 0){
                 layer.alert("当前并无材料规格与材料厂家信息");
             } else {
@@ -86,7 +87,7 @@ function getSpecificationDataAndManufacturersData() {
                 var manufacturersHtml= '';
                 for (var i = 0 ; i < res.length; i++) {
                     if (res[i].marks === 'specification'){
-                        specificationHtml= '<li>'
+                        specificationHtml += '<li>'
                         +'<span class="experiment_from_span">' + res[i].name + '</span>'
                         +'<div>'
                             +'<a href="javascript:void(0)" onclick="deleteSpecificationOrManufacturersById('+ res[i].Id +',\''+res[i].marks+'\');">删除</a>'
@@ -94,7 +95,7 @@ function getSpecificationDataAndManufacturersData() {
                             +'</div>'
                         + '</li>'
                     }else {
-                        manufacturersHtml= '<li>'
+                        manufacturersHtml += '<li>'
                             +'<span class="experiment_from_span">' + res[i].name + '</span>'
                             +'<div>'
                             +'<a href="javascript:void(0)" onclick="deleteSpecificationOrManufacturersById('+ res[i].Id +',\''+res[i].marks+'\');">删除</a>'
