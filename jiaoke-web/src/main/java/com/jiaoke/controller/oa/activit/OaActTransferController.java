@@ -6,6 +6,7 @@ import com.jiaoke.controller.oa.ActivitiUtil;
 import com.jiaoke.oa.bean.Comments;
 import com.jiaoke.oa.bean.OaActTransfer;
 import com.jiaoke.oa.bean.UserInfo;
+import com.jiaoke.oa.service.DepartmentService;
 import com.jiaoke.oa.service.OaActTransferService;
 import com.jiaoke.oa.service.OaCollaborationService;
 import com.jiaoke.oa.service.UserInfoService;
@@ -44,6 +45,9 @@ public class OaActTransferController {
     @Resource
     private OaCollaborationService oaCollaborationService;
 
+    @Resource
+    private DepartmentService departmentService;
+
     /**
      * 获取当前登录用户信息
      *
@@ -77,12 +81,13 @@ public class OaActTransferController {
         if (oaActTransferService.insert(oaActTransfer, getCurrentUser().getId(), randomId, 0) < 1) {
             return "error";
         } else {
-            //获取拥有权限的用户
-            UserInfo userInfo = userInfoService.getUserInfoByPermission("mealsApproval");
+            String department = userInfoService.selectDepartmentByUserId(getCurrentUser().getId());
+            String principal = departmentService.selectEnforcerId("principal", department);
+
             //开启流程
             Map<String, Object> map = new HashMap<>(16);
-            map.put("approval", userInfo.getId());
-            String instance = activitiUtil.startProcessInstanceByKey("oa_meals", "oa_act_meals:" + randomId, map, getCurrentUser().getId().toString());
+            map.put("outPrincipal", principal);
+            String instance = activitiUtil.startProcessInstanceByKey("oa_transfer", "act_transfer_handle:" + randomId, map, getCurrentUser().getId().toString());
             if (instance != null) {
                 return "success";
             }
@@ -108,7 +113,7 @@ public class OaActTransferController {
         model.addAttribute("taskId", JsonHelper.toJSONString(taskId));
         model.addAttribute("commentsList", commentsList);
         model.addAttribute("nickname", getCurrentUser().getNickname());
-        return "oa/act/act_meals_handle";
+        return "oa/act/act_transfer_handle";
     }
 
     /**

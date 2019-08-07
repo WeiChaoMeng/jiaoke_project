@@ -113,7 +113,7 @@
                 <span class="meta__date"><i class="fa fa-calendar-o"></i> </span>
                 <span class="meta__reading-time"><i class="fa fa-clock-o"></i></span>
             </div>
-        </a>v>
+        </a>
         </a>
     </section>
 </div>
