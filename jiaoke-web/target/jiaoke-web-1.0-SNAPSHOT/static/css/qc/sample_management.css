@@ -1,0 +1,569 @@
+/* css style ,made by zgy 2018.06 */
+/*全局设置*/
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td,hr,button,article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {
+    margin:0;
+    padding:0;
+	font-family: "Microsoft YaHei" ! important;
+	font-size:10px;
+}
+input,button,select,option,textarea{outline: none;} /*去掉聚焦时的蓝框*/
+div,ul,li{ list-style-type:none;}
+
+input,textarea {-webkit-appearance:none; /*去除input默认样式，尤其是iphone/pad*/}
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {  /* placeholder的颜色 */ color: #cacaca;}
+input:-moz-placeholder, textarea:-moz-placeholder {color:#cacaca;}
+input::-moz-placeholder, textarea::-moz-placeholder {color:#cacaca;}
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {color:#cacaca;}
+		
+/*输入框****************************************************************************/
+.yyui_input{box-sizing:border-box;
+	border:1px solid #E6E6E6; padding-left:10px; height:38px;   font-size:13px; 
+	-webkit-border-radius: 2px;  border-radius:2px; outline:none;
+}
+.yyui_input_sm{box-sizing:border-box;
+	border:1px solid #E6E6E6; padding-left:8px; height:30px;   font-size:13px;
+	-webkit-border-radius: 2px;  border-radius:2px; outline:none;
+}
+
+/*日期框****************************************************************************/
+.yyui_date , .yyui_datetime {box-sizing:border-box;
+	border:1px solid #E6E6E6; padding-left:10px; height:38px;   font-size:13px; 
+	-webkit-border-radius: 2px;  border-radius:2px; outline:none;
+	background: url("http://yuyun365.com/images/riqi.png") no-repeat scroll right center transparent; background-color:#FFFFFF;
+}
+
+
+/*文本域****************************************************************************/
+.yyui_textarea{box-sizing:border-box; resize:none; 
+	border:1px solid #E6E6E6; padding:6px 10px; line-height:1.5; font-size:13px;
+	-webkit-border-radius: 2px;  border-radius:2px; outline:none; 
+}
+
+
+
+/*普通按钮****************************************************************************/
+.yyui_btnbai { box-sizing:border-box; border:1px solid #CCCCCC; height:38px; color:#333333; background-color:#ffffff;  cursor:pointer; 
+font-size:13px; padding:0px 18px;-moz-border-radius: 2px;   -webkit-border-radius: 2px;   border-radius:2px; letter-spacing:0px;}
+.yyui_btnbai:hover {background-color:#E6E6E6; border:1px solid #ADADAD; }
+
+.yyui_btnlan {box-sizing:border-box; border:0 none; height:38px; color:#ffffff; background-color:#337AB7;  cursor:pointer;
+font-size:13px; padding:0px 18px;-moz-border-radius: 2px;   -webkit-border-radius: 2px;   border-radius:2px; letter-spacing:0px;}
+.yyui_btnlan:hover {background-color:#2E6DA4;  }
+
+.yyui_btnhong {box-sizing:border-box;  border:0 none; height:38px; color:#ffffff; background-color:#D9534F;  cursor:pointer;
+font-size:13px; padding:0px 18px;-moz-border-radius: 2px;   -webkit-border-radius: 2px;   border-radius:2px; letter-spacing:0px;}
+.yyui_btnhong:hover {background-color:#C9302C;  }
+
+.yyui_btnjinyong {box-sizing:border-box;  border:1px solid #E6E6E6; height:38px; color:#C9C9C9; background-color:#FBFBFB;  cursor:not-allowed; 
+font-size:13px; padding:0px 18px;-moz-border-radius: 2px;   -webkit-border-radius: 2px;   border-radius:2px; letter-spacing:0px;}
+.yyui_btnjinyong:hover {}
+
+
+/*小按钮small****************************************************************************/
+.yyui_btnbai_sm {box-sizing:border-box;  border:1px solid #CCCCCC; height:30px; color:#333333; background-color:#ffffff;  cursor:pointer; 
+font-size:11px; padding:0px 10px; -moz-border-radius: 2px;   -webkit-border-radius: 2px;   border-radius:2px; letter-spacing:0px;}
+.yyui_btnbai_sm:hover {background-color:#E6E6E6; border:1px solid #ADADAD; }
+
+.yyui_btnlan_sm {box-sizing:border-box;  border:0 none; height:30px; color:#fff; background-color:#337AB7;  cursor:pointer; 
+font-size:11px; padding:0px 10px; -moz-border-radius: 2px;   -webkit-border-radius: 2px;   border-radius:2px; letter-spacing:0px;}
+.yyui_btnlan_sm:hover {background-color:#2E6DA4;  }
+
+.yyui_btnhong_sm {box-sizing:border-box;  border:0 none; height:30px; color:#fff; background-color:#D9534F;  cursor:pointer; 
+font-size:11px; padding:0px 10px; -moz-border-radius: 2px;   -webkit-border-radius: 2px;   border-radius:2px; letter-spacing:0px;}
+.yyui_btnhong_sm:hover {background-color:#C9302C;  }
+
+.yyui_btnjinyong_sm {box-sizing:border-box;  border:1px solid #E6E6E6; height:30px; color:#C9C9C9; background-color:#FBFBFB;cursor:not-allowed; 
+font-size:11px; padding:0px 10px;-moz-border-radius: 2px;   -webkit-border-radius: 2px;   border-radius:2px; letter-spacing:0px;}
+.yyui_btnjinyong_sm:hover {}
+
+
+/*特小按钮small****************************************************************************/
+.yyui_btnbai_xs {box-sizing:border-box; border:1px solid #CCCCCC; height:22px; color:#333333; background-color:#ffffff;  cursor:pointer; 
+font-size:11px; padding:0px 5px; -moz-border-radius: 2px;   -webkit-border-radius: 2px;   border-radius:2px; letter-spacing:0px;}
+.yyui_btnbai_xs:hover {background-color:#E6E6E6; border:1px solid #ADADAD; }
+
+.yyui_btnlan_xs {box-sizing:border-box; border:0 none; height:22px; color:#fff; background-color:#337AB7;  cursor:pointer; 
+font-size:11px; padding:0px 5px; -moz-border-radius: 2px;   -webkit-border-radius: 2px;   border-radius:2px; letter-spacing:0px;}
+.yyui_btnlan_xs:hover {background-color:#2E6DA4;  }
+
+.yyui_btnhong_xs {box-sizing:border-box; border:0 none; height:22px; color:#fff; background-color:#D9534F;  cursor:pointer; 
+font-size:11px; padding:0px 5px; -moz-border-radius: 2px;   -webkit-border-radius: 2px;   border-radius:2px; letter-spacing:0px;}
+.yyui_btnhong_xs:hover {background-color:#C9302C;  }
+
+.yyui_btnjinyong_xs {box-sizing:border-box; border:1px solid #E6E6E6; height:22px; color:#C9C9C9; background-color:#FBFBFB;cursor:not-allowed; 
+font-size:11px; padding:0px 5px;-moz-border-radius: 2px;   -webkit-border-radius: 2px;   border-radius:2px; letter-spacing:0px;}
+.yyui_btnjinyong_xs:hover {}
+
+ 
+
+/*下拉框****************************************************************************/
+.yyui_select::-ms-expand { display: none;  } /*清除ie的默认选择框样式清除，隐藏下拉箭头*/
+.yyui_select{ box-sizing:border-box;
+	/*很关键：将默认的select选择框样式清除*/
+	appearance:none;
+	-moz-appearance:none;
+	-webkit-appearance:none;
+	/*Chrome和Firefox里面的边框是不一样的，所以复写了一下*/
+	border:1px solid #E6E6E6; height:38px; 
+	-webkit-border-radius: 2px;  border-radius:2px; 
+	/*在选择框的最右侧中间显示小箭头图片*/
+	background: url("http://yuyun365.com/images/jiantou.png") no-repeat scroll right center transparent;
+	background-color:#FFFFFF;
+	/*为下拉小箭头留出一点位置，避免被文字覆盖*/
+	padding-right: 24px;padding-left:10px;
+}
+
+
+
+/*单选框与复选框****************************************************************************/
+.yyui_checkbox input[type=checkbox],
+.yyui_radio input[type=radio] {
+    -webkit-appearance: none;
+    background-color: transparent;
+    outline: 0 !important;
+    border: 0;
+}
+.yyui_checkbox input[type=checkbox]:before,
+.yyui_radio input[type=radio]:before {
+    display: inline-block;
+	width:1em;
+    text-align: left;
+	font-family:FontAwesome;
+    color: rgb(212, 212, 212);
+	font-size:1.6em;
+}
+.yyui_checkbox input[type=checkbox]:checked:before,.yyui_radio input[type=radio]:checked:before {color:#3498DB;}
+.yyui_checkbox input[type=checkbox]:before {content: "\f096";}
+.yyui_checkbox input[type=checkbox]:checked:before {content: "\f14a";}
+.yyui_radio input[type=radio]:before {content: "\f1db";}
+.yyui_radio input[type=radio]:checked:before {content: "\f192";}
+
+
+
+/*选项卡_默认样式****************************************************************************/
+.yyui_tab{ }
+.yyui_tab > ul{}
+.yyui_tab > ul > .yyui_tab_title{box-sizing:border-box;line-height:38px;
+height:38px; color:#000000;    cursor:pointer; display:inline-block;
+font-size:13px; padding:0px 18px; letter-spacing:0px;
+}
+.yyui_tab > ul > .yyui_tab_title_this{box-sizing:border-box; line-height:36px;
+border-left:1px solid #e6e6e6;border-top:1px solid #e6e6e6;border-right:1px solid #e6e6e6;  height:38px; color:#000000; background-color:#ffffff;  cursor:pointer; display:inline-block; font-size:13px; padding:0px 18px;
+-moz-border-radius: 2px 2px 0px 0px;   -webkit-border-radius: 2px 2px 0px 0px; border-radius:2px 2px 0px 0px; letter-spacing:0px;
+}
+.yyui_tab > .yyui_tab_content{ margin-top:-1px; display:none; box-sizing:border-box; padding:10px; border-top:1px solid #e6e6e6; }
+.yyui_tab > .yyui_tab_content_this{margin-top:-1px;  display:block; box-sizing:border-box; padding:10px; border-top:1px solid #e6e6e6;}
+
+
+/*选项卡_card卡片样式****************************************************************************/
+.yyui_tab_card{ border:1px solid #e6e6e6; background-color:#f2f2f2;
+-moz-border-radius: 2px ;   -webkit-border-radius: 2px; border-radius:2px; letter-spacing:0px;
+}
+.yyui_tab_card > ul{ margin-left:-1px;}
+.yyui_tab_card > ul > .yyui_tab_title{box-sizing:border-box;line-height:38px;
+height:38px; color:#333333; cursor:pointer; display:inline-block;
+font-size:13px; padding:0px 18px; letter-spacing:0px;
+}
+.yyui_tab_card > ul > .yyui_tab_title_this{box-sizing:border-box;line-height:36px;
+border-left:1px solid #e6e6e6; border-right:1px solid #e6e6e6; height:38px; color:#333333; background-color:#ffffff;  cursor:pointer; display:inline-block; font-size:13px; padding:0px 18px;
+-moz-border-radius: 2px 2px 0px 0px; -webkit-border-radius: 2px 2px 0px 0px; border-radius:2px 2px 0px 0px; letter-spacing:0px;
+}
+.yyui_tab_card > .yyui_tab_content{ display:none; box-sizing:border-box; padding:10px;margin-top:-1px;border-top:1px solid #e6e6e6; background-color:#ffffff; }
+.yyui_tab_card > .yyui_tab_content_this{ display:block; box-sizing:border-box; padding:10px;margin-top:-1px; border-top:1px solid #e6e6e6;background-color:#ffffff;}
+
+
+
+/*徽章，未读数，小圆点****************************************************************************/
+.yyui_badge { line-height:21px; color:#ffffff; background-color:#FF5722; margin-left:4px;
+font-size:11px; padding:0px 5px; -moz-border-radius: 2px;   -webkit-border-radius: 2px;   border-radius:2px; letter-spacing:0px;}
+.yyui_badge_dot { color:#FF5722; font-size:1.4em; line-height:0.8; margin-left:4px;  }
+
+
+  
+
+/*下面是个性定义****************************************************************************/
+
+.bootstrap-frm {
+	margin-left:auto;
+	margin-right:auto;
+	max-width: 500px;
+	background: #FFF;
+	padding: 20px 30px 20px 30px;
+	font: 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
+	color: #888;
+	text-shadow: 1px 1px 1px #FFF;
+	border:1px solid #DDD;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+.bootstrap-frm h1 {
+	font: 25px "Helvetica Neue", Helvetica, Arial, sans-serif;
+	padding: 0px 0px 10px 40px;
+	display: block;
+	border-bottom: 1px solid #DADADA;
+	margin: -10px -30px 30px -30px;
+	color: #888;
+}
+.bootstrap-frm h1>span {
+	display: block;
+	font-size: 11px;
+}
+.bootstrap-frm label {
+	display: block;
+	margin: 0px 0px 5px;
+}
+.bootstrap-frm label>span {
+	float: left;
+	width: 20%;
+	text-align: right;
+	padding-right: 10px;
+	margin-top: 10px;
+	color: #333;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-weight: bold;
+}
+.bootstrap-frm input[type="text"], .bootstrap-frm input[type="email"], .bootstrap-frm textarea, .bootstrap-frm select{
+	border: 1px solid #CCC;
+	color: #888;
+	height: 35px;
+	line-height:15px;
+	margin-bottom: 16px;
+	margin-right: 6px;
+	margin-top: 2px;
+	outline: 0 none;
+	padding: 5px 0px 5px 5px;
+	width: 70%;
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+.bootstrap-frm input[type="number"], .bootstrap-frm textarea, .bootstrap-frm select{
+	border: 1px solid #CCC;
+	color: #888;
+	height: 35px;
+	line-height:15px;
+	margin-bottom: 16px;
+	margin-right: 6px;
+	margin-top: 2px;
+	outline: 0 none;
+	padding: 5px 0px 5px 5px;
+	width: 70%;
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+.bootstrap-frm select {
+	background: #FFF url('down-arrow.png') no-repeat right;
+	background: #FFF url('down-arrow.png') no-repeat right;
+	appearance:none;
+	-webkit-appearance:none;
+	-moz-appearance: none;
+	text-indent: 0.01px;
+	text-overflow: '';
+	width: 70%;
+	height: 35px;
+	line-height:15px;
+
+}
+.bootstrap-frm textarea{
+	height:100px;
+	padding: 5px 0px 0px 5px;
+	width: 70%;
+}
+.bootstrap-frm .button {
+	background: #FFF;
+	border: 1px solid #CCC;
+	padding: 10px 25px 10px 25px;
+	color: #333;
+	border-radius: 4px;
+	margin-left: 20%;
+}
+.bootstrap-frm .button:hover {
+	color: #333;
+	background-color: #EBEBEB;
+	border-color: #ADADAD;
+}
+/*****Select 样式*****/
+.dy_select_div{
+
+	width: 130px;
+	height: 36px;
+	border-radius: 5px;
+
+	border: 1px solid #e6e6e6;
+	/*position: relative;*/
+	float: left;
+	top: 35%;
+}
+.dy_select{
+
+	border: none;
+
+	outline: none;
+
+	width: 100%;
+	height: 30px;
+	line-height: 36px;
+
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+
+	padding-left: 10px;
+}
+
+.dy_select_div:after{
+	content: "";
+	width: 14px;
+	height: 8px;
+	position: absolute;
+	right: 20px;
+	top: 45%;
+	pointer-events: none;
+}
+.dy_select_date{
+
+	border: none;
+
+	outline: none;
+
+	width: 100%;
+	height: 30px;
+	line-height: 36px;
+
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+
+	padding-left: 10px;
+}
+
+.standingBookTable{
+	border: none;
+	width: 100%;
+	border-collapse: collapse;
+	border-color: #abb2b9;
+	margin: 30px 0px 30px 0px;
+}
+.twoHead th {
+	width: 3.25%;
+	height: 48px;
+	padding: 0 10px;
+	font-size: 13px;
+	font-weight: normal;
+}
+
+.firstHead th {
+	padding: 5px 0px;
+	font-size: 11px;
+	font-weight: bold;
+}
+td{
+	text-align: center;
+	font-size: 10px;
+	padding: 5px;
+}
+.messageSpan{
+	position: absolute;
+	left: 43%;
+	top: 50%;
+	font-family: "Times New Roman", Times, serif;
+	font-size: 20px;
+	color: #bdb3b3;
+}
+/***************试验设置************************/
+
+
+
+.experiment_infoboxleft {
+	border: solid 1px #d6d6d6;
+	height: 327px;
+	margin-right: 10px;
+}
+
+.experiment_infoboxleft {
+	border: solid 1px #d6d6d6;
+	margin-bottom: 40px;
+	height: auto;
+	margin-left: 40px;
+	min-height: 327px;
+	float: left;
+	width: 45%;
+}
+
+.experiment_boxtitle {
+	height: 40px;
+	line-height: 40px;
+}
+
+.experiment_boxtitle span {
+	padding-left: 20px;
+	display: block;
+	float: left;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+.experiment_boxtitle a {
+	float: right;
+	font-style: normal;
+	color: #7e7e7e;
+	padding-right: 15px;
+}
+
+.experiment_boxtitle a i {
+	line-height: 40px;
+	font-size: 10px;
+}
+.experiment_textlist li {
+	line-height: 30px;
+	height: 30px;
+	*line-height: 27px;
+	*height: 27px;
+	width: 100%;
+}
+
+.experiment_textlist li a {
+	font-style: normal;
+	color:#001cff;
+	float: left;
+	padding-left: 10px;
+}
+
+/*.experiment_textlist li span {*/
+	/*display: block;*/
+	/*width: 3px;*/
+	/*height: 3px;*/
+	/*float: left;*/
+	/*margin-top: 15px;*/
+	/*margin-right: 8px;*/
+/*}*/
+
+.experiment_textlist li i {
+	line-height: 30px;
+	width: 80%;
+	border: none;
+	text-align: left;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	padding-left: 15px;
+	float: left;
+}
+.experiment_infoboxleft_div{
+	width: 65%;
+	margin-left: 35%;
+}
+/******************from表单**************************/
+.experiment_from_div{
+
+	margin: 0 auto;
+	padding-left: 25px;
+	padding-right: 25px;
+	padding-top: 15px;
+	width: 350px;
+	height: 350px;
+}
+.title {
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+}
+
+.title span {
+	font-size: 18px;
+	color: #353f42;
+}
+
+.title-msg {
+	width: 100%;
+	height: 64px;
+	line-height: 64px;
+}
+
+.title:hover{
+	cursor: default	;
+}
+
+.title-msg:hover{
+	cursor: default	;
+}
+
+.title-msg span {
+	font-size: 12px;
+	color: #707472;
+}
+
+.input-content {
+	width: 100%;
+	height: auto;
+	margin-bottom: 40px;
+}
+
+.input-content input {
+	width: 330px;
+	height: 40px;
+	border: 1px solid #dad9d6;
+	background: #ffffff;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.enter-btn {
+	width: 350px;
+	height: 40px;
+	color: #fff;
+	background: #0bc5de;
+	line-height: 40px;
+	text-align: center;
+	border: 0px;
+}
+
+.foor{
+	width: 100%;
+	height: auto;
+	color: #9b9c98;
+	font-size: 12px;
+	margin-top: 20px;
+}
+
+.enter-btn:hover {
+	cursor:pointer;
+	background: #1db5c9;
+}
+
+.foor div:hover {
+	cursor:pointer;
+	color: #484847;
+	font-weight: 600;
+}
+
+.left{
+	float: left;
+}
+.right{
+	float: right;
+}
+.experiment_from_span{
+	line-height: 30px;
+	width: 80%;
+	text-align: left;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	padding-left: 40px;
+	float: left;
+	border-width: initial;
+	border-style: none;
+	border-color: initial;
+	border-image: initial;
+	overflow: hidden;
+	font-size: 13px;
+}

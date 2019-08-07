@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.oa.dao.OaCollaborationMapper">
+
+    <insert id="insertData" parameterType="com.jiaoke.oa.bean.OaCollaboration" useGeneratedKeys="true" keyProperty="id">
+        insert into oa_collaboration
+            (id,title,`table`,promoter,correlation_id,url,state,create_time)
+        values
+            (#{id},#{title},#{table},#{promoter},#{correlationId},#{url},#{state},#{createTime})
+    </insert>
+
+    <select id="selectAlreadySend" parameterType="java.util.List" resultType="com.jiaoke.oa.bean.OaCollaboration">
+        select id,title,`table`,correlation_id as correlationId,url,state,create_time as createTime
+        from oa_collaboration
+        where correlation_id in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+        and state = 0
+        <if test="title != ''">
+            and title LIKE "%"#{title}"%"
+        </if>
+    </select>
+
+    <select id="selectWaitSend" parameterType="java.util.Map" resultType="com.jiaoke.oa.bean.OaCollaboration">
+        select id,title,`table`,correlation_id as correlationId,url,state,create_time as createTime
+        from oa_collaboration
+        where state &gt; 0
+        and promoter = #{userId}
+        <if test="title != ''">
+            and title LIKE "%"#{title}"%"
+        </if>
+    </select>
+
+    <select id="selectPending" parameterType="java.util.List" resultType="com.jiaoke.oa.bean.OaCollaboration">
+        select id,title,`table`,correlation_id as correlationId,url
+        from oa_collaboration
+        where correlation_id in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+        <if test="title != ''">
+            and title LIKE "%"#{title}"%"
+        </if>
+    </select>
+
+    <select id="selectDone" parameterType="java.util.List" resultType="com.jiaoke.oa.bean.OaCollaboration">
+        select id,title,`table`,correlation_id as correlationId,url,promoter
+        from oa_collaboration
+        where correlation_id in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+        <if test="title != ''">
+            and title LIKE "%"#{title}"%"
+        </if>
+    </select>
+
+    <update id="update" parameterType="java.util.Map">
+        update oa_collaboration
+        set title = #{title}
+        where correlation_id = #{correlationId}
+    </update>
+
+    <update id="updateStateByCorrelationId" parameterType="java.util.Map">
+        update oa_collaboration
+        set state = #{state},title = #{title}
+        where correlation_id = #{correlationId}
+    </update>
+
+    <delete id="deleteByCorrelationId" parameterType="java.lang.String">
+        delete from oa_collaboration where correlation_id = #{correlationId}
+    </delete>
+
+    <delete id="deleteCorrelationTable" parameterType="java.util.Map">
+        delete from ${table} where id = #{correlationId}
+    </delete>
+
+    <update id="updateState" parameterType="java.util.Map">
+        update oa_collaboration
+        set state = #{state}
+        where correlation_id = #{correlationId}
+    </update>
+
+    <select id="selectOne" parameterType="java.lang.String" resultType="com.jiaoke.oa.bean.OaCollaboration">
+        SELECT id,title,`table`,correlation_id as correlationId,url,state,create_time as createTime
+         FROM oa_collaboration
+         WHERE correlation_id = #{correlationId} LIMIT 1
+    </select>
+
+    <select id="selectMultipleData" parameterType="java.util.List" resultType="com.jiaoke.oa.bean.OaCollaboration">
+        select id,title,`table`,promoter,correlation_id as correlationId,url,state,create_time as createTime
+        from oa_collaboration
+        where correlation_id in
+        <foreach collection="ids" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+</mapper>

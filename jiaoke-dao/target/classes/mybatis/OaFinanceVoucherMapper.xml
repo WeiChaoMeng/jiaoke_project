@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.oa.dao.OaFinanceVoucherMapper">
+
+    <select id="searchFilter" parameterType="java.lang.String" resultType="com.jiaoke.oa.bean.OaFinanceVoucher">
+        SELECT
+            id,
+            `number`,
+            remarks,
+            `date`,
+            rich_text as richText,
+            create_date as createDate
+        FROM oa_finance_voucher
+        WHERE
+            remarks LIKE "%"#{remarks}"%"
+    </select>
+
+    <select id="selectAllData" resultType="com.jiaoke.oa.bean.OaFinanceVoucher">
+        SELECT
+            id,
+            `number`,
+            remarks,
+            `date`,
+            rich_text as richText,
+            create_date as createDate
+        FROM oa_finance_voucher
+        order by
+        create_date desc
+    </select>
+</mapper>

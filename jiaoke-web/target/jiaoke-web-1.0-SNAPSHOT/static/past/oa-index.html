@@ -1,0 +1,352 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>无标题文档</title>
+    <link href="../css/calendar.css" rel="stylesheet" type="text/css">
+    <link href="../css/default.css" rel="stylesheet" type="text/css">
+    <link href="../css/style/green.css" rel="stylesheet" type="text/css" id='link'>
+    <script src="../js/echarts/echarts.js"></script>
+    <script src="../js/echarts/uimaker.js"></script>
+</head>
+
+<body class="inner-container">
+
+<!--
+	<ul class="toollist">
+    <li><div class="listbox"><i class="iconfont">&#xe6da;</i><em>25<p>待办事项</p></em></div></li>
+    <li><div class="listbox"><i class="iconfont">&#xe648;</i><em>16<p>档案管理</p></em></div></li>
+    <li><div class="listbox"><i class="iconfont">&#xe619;</i><em>198<p>产品统计</p></em></div></li>
+	<li><div class="listbox"><i class="iconfont">&#xe6c9;</i><em>10<p>公告信息</p></em></div></li>
+    <li><div class="listbox"><i class="iconfont">&#xe624;</i><em>15<p>日程管理</p></em></div></li>
+    <li><div class="listbox"><i class="iconfont">&#xe6bf;</i><em>7<p>邮件管理</p></em></div></li>
+    </ul>
+-->
+
+<ul class="chartlist">
+
+    <li>
+        <div class="chartbox">
+            <div id="calendar" class="calendar"></div>
+        </div>
+    </li>
+
+    <li>
+
+        <div class="chartbox">
+            <div class="boxtitle"><span>办公资源使用图</span><a href="#">更多<i class="iconfont">&#xeba8;</i></a></div>
+            <div id="chart1" class="charts"></div>
+            <script type="text/javascript">
+                var myChart = echarts.init(document.getElementById('chart1'));
+                // 指定图表的配置项和数据
+                var
+                    option1 = {
+                        xAxis: {
+                            type: 'category',
+                            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                        },
+                        yAxis: {
+                            type: 'value'
+                        },
+                        series: [{
+                            data: [820, 932, 901, 934, 1290, 1330, 1320],
+                            type: 'line'
+                        }]
+                    };
+
+                setInterval(function () {//把option.series[0].data[0].value的值使用random()方法获取一个随机数
+                    option1.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
+                    myChart.setOption(option1, true);
+                }, 2000);
+                myChart.setOption(option1);
+                window.addEventListener("resize", function () {
+                    myChart.resize();
+                });
+
+
+            </script>
+        </div>
+    </li>
+
+
+    <li>
+
+        <div class="chartbox">
+            <div class="boxtitle">
+                <span>协同工作构成图</span>
+                <a href="#">更多
+                    <i class="iconfont">&#xeba8;</i>
+                </a>
+            </div>
+            <div id="chart2" class="charts"></div>
+            <script type="text/javascript">
+                var myChart1 = echarts.init(document.getElementById('chart2'));
+                // 指定图表的配置项和数据
+                var
+                    option = {
+                        title: {
+                            text: '协同工作占比构成图',
+                            subtext: '事项月统计',
+                            x: 'center'
+                        },
+                        tooltip: {
+                            trigger: 'item',
+                            formatter: "{a} <br/>{b} : {c} ({d}%)"
+                        },
+                        legend: {
+                            orient: 'vertical',
+                            left: 'left',
+                            data: ['待发事项', '已发事项', '待办事项', '已办事项', '督办事项']
+                        },
+                        series: [
+                            {
+                                name: '事项处理',
+                                type: 'pie',
+                                radius: '55%',
+                                center: ['50%', '60%'],
+                                data: [
+                                    {value: 335, name: '待发事项'},
+                                    {value: 310, name: '已发事项'},
+                                    {value: 234, name: '待办事项'},
+                                    {value: 135, name: '已办事项'},
+                                    {value: 1548, name: '督办事项'}
+                                ],
+                                itemStyle: {
+                                    emphasis: {
+                                        shadowBlur: 10,
+                                        shadowOffsetX: 0,
+                                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                    }
+                                }
+                            }
+                        ]
+                    };
+
+
+                myChart1.setOption(option, true);
+                window.addEventListener("resize", function () {
+                    myChart1.resize();
+                });
+
+
+            </script>
+        </div>
+    </li>
+
+</ul>
+
+<div class="infolist">
+
+    <div class="infoleft">
+        <div class="infoboxleft">
+            <div class="boxtitle"><span>今日考勤</span><a href="#">更多<i class="iconfont">&#xeba8;</i></a></div>
+
+            <div class="boxdown">
+                <table class="simpletable">
+
+                    <div class="boxdown">
+                        <table class="simpletable">
+
+                            <thead>
+                            <th>员工编号</th>
+                            <th>所属部门</th>
+                            <th>打卡时间</th>
+                            <th>打卡方式</th>
+                            <th>打卡人</th>
+                            <th>操作</th>
+                            </thead>
+
+                            <tbody>
+
+                            <tr>
+                                <td>20171101</td>
+                                <td>256</td>
+                                <td>2017-11-01 16:35:26</td>
+                                <td>打卡机</td>
+                                <td>uimaker</td>
+                                <td>
+
+                                    <a href="#" class="selected" id="add"><i class="toolico iconfont">&#xe685;</i>查看</a>
+
+
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>20171102</td>
+                                <td>300</td>
+                                <td>2017-11-02 10:50:08</td>
+                                <td>打卡机</td>
+                                <td>uimaker</td>
+                                <td>
+
+                                    <a href="#" class="selected" id="add"><i class="toolico iconfont">&#xe685;</i>查看</a>
+
+
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>20171103</td>
+                                <td>500</td>
+                                <td>2017-11-03 00:00:14</td>
+                                <td>打卡机</td>
+                                <td>uimaker</td>
+                                <td>
+
+                                    <a href="#" class="selected" id="add"><i class="toolico iconfont">&#xe685;</i>查看</a>
+
+
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>20171104</td>
+                                <td>1000</td>
+                                <td>2017-11-04 16:22:00</td>
+                                <td>打卡机</td>
+                                <td>uimaker</td>
+                                <td>
+
+                                    <a href="#" class="selected" id="add"><i class="toolico iconfont">&#xe685;</i>查看</a>
+
+
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>20171105</td>
+                                <td>200</td>
+                                <td>2017-11-05 04:00:00</td>
+                                <td>打卡机</td>
+                                <td>uimaker</td>
+                                <td>
+
+                                    <a href="#" class="selected" id="add"><i class="toolico iconfont">&#xe685;</i>查看</a>
+
+
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>20171106</td>
+                                <td>150</td>
+                                <td>2017-11-06 18:20:10</td>
+                                <td>打卡机</td>
+                                <td>uimaker</td>
+                                <td>
+
+                                    <a href="#" class="selected" id="add"><i class="toolico iconfont">&#xe685;</i>查看</a>
+
+
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>20171107</td>
+                                <td>450</td>
+                                <td>2017-11-07 08:34:00</td>
+                                <td>打卡机</td>
+                                <td>uimaker</td>
+                                <td>
+
+                                    <a href="#" class="selected" id="add"><i class="toolico iconfont">&#xe685;</i>查看</a>
+
+
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>20171108</td>
+                                <td>500</td>
+                                <td>2017-11-08 19:00:14</td>
+                                <td>打卡机</td>
+                                <td>uimaker</td>
+                                <td>
+
+                                    <a href="#" class="selected" id="add"><i class="toolico iconfont">&#xe685;</i>查看</a>
+
+
+                                </td>
+                            </tr>
+
+
+                            </tbody>
+
+                        </table>
+                    </div>
+
+            </div>
+        </div>
+
+        <div class="inforight">
+            <div class="infoboxright">
+                <div class="boxtitle">
+                    <span>通知公告</span>
+                    <a href="#">更多
+                        <i class="iconfont">&#xeba8;</i>
+                    </a>
+                </div>
+
+                <ul class="textlist">
+                    <li>
+                        <span></span>
+                        <a href="#">交通局：金坛研用路面胶粉改性剂橡胶沥青</a>
+                        <i>11-10</i>
+                    </li>
+                    <li>
+                        <span></span>
+                        <a href="#">道路新技术：超粘纤维磨耗层技术</a>
+                        <i>11-09</i>
+                    </li>
+                    <li>
+                        <span></span>
+                        <a href="#">工程技术知识：防水工程施工七项新技术介</a>
+                        <i>11-08</i>
+                    </li>
+                    <li>
+                        <span></span>
+                        <a href="#">沥青路面冷再生技术在路面大中修工程中的</a>
+                        <i>11-07</i>
+                    </li>
+                    <li>
+                        <span></span>
+                        <a href="#">新疆:吉木乃公路分局两项创新成果获国家专</a>
+                        <i>11-06</i>
+                    </li>
+                    <li>
+                        <span></span>
+                        <a href="#">部交科院常温沥青改性剂通过中国公路学会</a>
+                        <i>11-05</i>
+                    </li>
+                    <li>
+                        <span></span>
+                        <a href="#">山西:《重载沥青路面合理设计方法的研究》</a>
+                        <i>11-04</i>
+                    </li>
+                    <li>
+                        <span></span>
+                        <a href="#">塔式起重机租赁市场持续增长 建设机械拟定/a>
+                            <i>11-03</i>
+                    </li>
+                    <li>
+                        <span></span>
+                        <a href="#">需求旺季要来了 沥青上涨动能充足！</a>
+                        <i>11-02</i>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+
+    </div>
+
+
+</body>
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../js/skin.js"></script>
+<script src="../js/calendar.js" type="text/javascript"></script>
+
+</html>

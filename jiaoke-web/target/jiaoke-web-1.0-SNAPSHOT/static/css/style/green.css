@@ -1,0 +1,130 @@
+@charset "utf-8";
+/* CSS Document */
+/***
+ * uimaker
+ * http://www.uimaker.com
+ * e-mail: admin@uimaker.com/
+/*color*/
+a:hover {
+    color: #929292;
+}
+
+.loginbox {
+    background: #f5f9ff;
+}
+
+.userlogin li a {
+    background: #f5f9ff;
+}
+
+.headtop {
+    background: #f5f9ff;
+}
+
+.nav li a.selected {
+    color: #000000;
+}
+
+.leftmenu li a.selected {
+    color: #f5f9ff;
+}
+
+.menutab li.tabselected {
+    border-top: solid 2px #f5f9ff;
+    color: #f5f9ff;
+}
+
+.menutab li.tabselected a {
+    color: #f5f9ff;
+}
+
+.tabbtn a:hover {
+    color: #f5f9ff;
+}
+
+.toolbar li a.selected, .toolbar li a.selected:hover {
+    background: #f5f9ff;
+    border: solid 1px #f5f9ff;
+}
+
+.pagelist li a.selected, .pagelist li a.selected:hover {
+    background: #939ca9;
+    border: solid 1px #748aab
+}
+
+.layui-layer-btn .layui-layer-btn0 {
+    border-color: #f5f9ff;
+    background-color: #f5f9ff;
+}
+
+.listbox i {
+    color: #7ec0ff;
+}
+
+.simpletable a {
+    color: #4f69b5;
+}
+
+.textlist li span {
+    background: #f5f9ff;
+}
+
+.formtable td a {
+    color: #b19292;
+}
+
+.btnsave {
+    background: #d3d3d3;
+    border: solid 1px #a0a5ab;
+}
+
+.btnstyle {
+    background: #f5f9ff;
+    border: solid 1px #f5f9ff;
+}
+
+.classify {
+    border-left: solid 3px #f5f9ff;
+}
+
+.datetitle {
+    border-left: solid 3px #f5f9ff;
+}
+
+.dateright li.current {
+    background: #f5f9ff;
+    border: solid 1px #f5f9ff;
+}
+
+.tab li.tabcurrent {
+    border-top: solid 3px #f5f9ff;
+}
+
+.tab li.tabcurrent a {
+    color: #000000;
+}
+
+.step li.stepcurrent {
+    background: #f5f9ff;
+}
+
+.step li.stepcurrent span {
+    color: #f5f9ff;
+}
+
+.nextlink {
+    background: #f5f9ff;
+    border: solid 1px #f5f9ff;
+}
+
+.select_ul li.cur {
+    background: #f5f9ff;
+}
+
+.nav{
+    background: #f5f9ff;
+}
+
+.nav-mini.nav .nav-item ul {
+    background: #f5f9ff;
+}

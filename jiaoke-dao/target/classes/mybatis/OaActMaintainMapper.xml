@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.oa.dao.OaActMaintainMapper">
+
+    <insert id="insertData" parameterType="com.jiaoke.oa.bean.OaActMaintain">
+        insert into oa_act_maintain
+            (id,title,company,department,applicant,apply_time,device_name,specification,fault_description,content,amount,create_time,promoter,url)
+        values
+            (#{id},#{title},#{company},#{department},#{applicant},#{applyTime},#{deviceName},#{specification},#{faultDescription},#{content},#{amount},#{createTime},#{promoter},#{url})
+    </insert>
+</mapper>

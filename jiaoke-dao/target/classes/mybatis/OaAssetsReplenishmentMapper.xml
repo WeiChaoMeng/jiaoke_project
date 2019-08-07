@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.oa.dao.OaAssetsReplenishmentMapper">
+
+    <select id="replenishmentTimeFilter" parameterType="java.util.Map" resultType="com.jiaoke.oa.bean.OaAssetReplenishment">
+        SELECT
+            id as id,
+            assets_name as assetsName,
+            assets_custodian as assetsCustodian,
+            replenishment_before_quantity as replenishmentBeforeQuantity,
+            replenishment_quantity as replenishmentQuantity,
+            replenishment_person as replenishmentPerson,
+            replenishment_storage_location as replenishmentStorageLocation,
+            replenishment_remarks as replenishmentRemarks,
+            create_time as createTime,
+            asset_management_id as assetManagementId
+        FROM oa_asset_replenishment
+        WHERE
+            create_time &gt; #{startTime}
+        AND
+            create_time &lt; #{endTime}
+        AND
+            asset_management_id = #{assetManagementId}
+    </select>
+</mapper>

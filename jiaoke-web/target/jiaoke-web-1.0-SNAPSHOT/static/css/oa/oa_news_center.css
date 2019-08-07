@@ -1,0 +1,121 @@
+@charset "utf-8";
+/* CSS Document */
+@import url(../style/green.css);
+
+* {
+    font-size: 12px;
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: '微软雅黑';
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+ul {
+    display: block;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+li {
+    display: block;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+img {
+    border: 0;
+}
+
+dl, dt, dd, span {
+    margin: 0;
+    padding: 0;
+    display: block;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/*font_1*/
+@font-face {
+    font-family: "iconfont";
+    src: url('../../fonts/font_1/iconfont.eot'); /* IE9*/
+    src: url('../../fonts/font_1/iconfont.eot#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('../../fonts/font_1/iconfont.woff') format('woff'), /* chrome, firefox */ url('../../fonts/font_1/iconfont.ttf') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/ url('../../fonts/font_1/iconfont.svg#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+/*form*/
+.form_table {
+    width: 70%;
+    margin: auto;
+    border: solid 1px #d4d4d4;
+    border-bottom: none;
+}
+
+.table_td {
+    background: #f6f6f6;
+    text-align: right;
+    padding-right: 20px;
+    white-space: nowrap;
+}
+
+.form_table td {
+    line-height: 40px;
+    border-right: solid 1px #e5e5e5;
+    border-bottom: solid 1px #e5e5e5;
+    width: 12%;
+    text-indent: 0;
+    font-size: 12px;
+}
+
+.form_but {
+    text-align: center;
+}
+
+.commit-but-inp{
+    padding: 7px 20px;
+    background: #92ebff;
+    border: 1px #a5a5a5 solid;
+    cursor: pointer;
+    outline: none;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+.commit-but-inp:hover {
+    background: #00BCD4;
+}
+
+.return-but-inp{
+    background: #FFFFFF;
+    padding: 7px 20px;
+    border: 1px #a5a5a5 solid;
+    cursor: pointer;
+    outline: none;
+    border-radius: 5px;
+}
+
+.return-but-inp:hover {
+    background: #00BCD4;
+}
+
+.form_input {
+    width: 100%;
+    color: #000;
+    height: 30px;
+    border: solid 1px #c6c6c6;
+    line-height: 26px;
+    text-indent: 8px;
+    outline: none;
+}
+
+.table_content {
+    padding: 0 10px;
+}

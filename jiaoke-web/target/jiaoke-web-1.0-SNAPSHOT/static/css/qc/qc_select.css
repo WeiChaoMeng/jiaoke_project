@@ -1,0 +1,318 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box
+}
+
+ul,
+ol {
+    list-style: none
+}
+
+
+body {
+    font-family: microsoft yahei;
+    font-size: 14px
+}
+
+a {
+    text-decoration: none
+}
+
+.guide-slider {
+    width: 850px;
+    margin: 10% auto;
+    background: #fff;
+    height: 260px
+}
+
+.guide-slider .guide {
+    width: 200px;
+    height: 260px;
+    float: left;
+    -webkit-transition: all ease-in .3s;
+    transition: all ease-in .3s;
+    position: relative;
+    overflow: hidden
+}
+
+.guide-slider .guide .display {
+    border-right: 1px solid #d5d5d5;
+    width: 200px;
+    height: 260px;
+    text-align: center;
+    float: left;
+    position: relative;
+    z-index: 2;
+    background: #fff;
+    -webkit-transition: all ease-in .3s;
+    transition: all ease-in .3s
+}
+
+.guide-slider .guide .display .icon {
+    display: inline-block;
+    width: 74px;
+    height: 74px;
+    margin-top: 42px;
+    background-image: url(function.png)
+}
+
+.guide-slider .guide .display .icon.icon1 {
+    background-position: -592px 0
+}
+
+.guide-slider .guide .display .icon.icon2 {
+    background-position: 0 0
+}
+
+.guide-slider .guide .display .icon.icon3 {
+    background-position: -296px 0
+}
+
+.guide-slider .guide .display .icon.icon4 {
+    background-position: -444px 0
+}
+
+.guide-slider .guide .display .icon.icon5 {
+    background-position: -518px 0
+}
+
+.guide-slider .guide .display .title {
+    font-size: 16px;
+    color: #666;
+    height: 40px;
+    line-height: 40px
+}
+
+.guide-slider .guide .display .introduction {
+    border-top: 1px solid #ddd;
+    width: 150px;
+    margin: 0 auto;
+    font-size: 12px;
+    color: #999;
+    text-align: left;
+    line-height: 20px
+}
+
+.guide-slider .guide .display::after {
+    content: "";
+    display: block;
+    position: absolute;
+    border-style: solid;
+    border-color: transparent #fff transparent transparent;
+    border-width: 10px 15px;
+    top: 100%;
+    margin-top: 0;
+    right: -1px;
+    -webkit-transition: all ease-in .3s;
+    transition: all ease-in .3s
+}
+
+.guide-slider .guide .behind {
+    width: 250px;
+    height: 260px;
+    display: inline-block;
+    border-right: 1px solid #ddd;
+    background: #fff;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1
+}
+
+.guide-slider .guide .behind .function-list-wrap {
+    width: 210px;
+    margin: 0 auto
+}
+
+.guide-slider .guide .behind .function-list {
+    margin-right: -10px;
+    margin-top: 20px
+}
+
+.guide-slider .guide .behind .function-list>li {
+    float: left;
+    padding-right: 10px
+}
+
+.guide-slider .guide .behind .function-list>li>a {
+    display: block;
+    border: 1px solid #ddd;
+    width: 100px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    margin-bottom: 18px;
+    color: #0876c2
+}
+
+.guide-slider .guide .behind .function-list>li>a:hover {
+    text-decoration: none;
+    border: 1px solid #0876c2;
+    background: #0876c2;
+    color: #fff
+}
+
+.guide-slider .guide .behind .function-list>li>a.important {
+    color: #f58914
+}
+
+.guide-slider .guide .behind .function-list>li>a.important:hover {
+    border: 1px solid #f58914;
+    background: #f58914;
+    color: #fff
+}
+
+.guide-slider .guide.on {
+    width: 450px
+}
+
+.guide-slider .guide.on .display {
+    background: #4fa0d8;
+    border-right-color: transparent
+}
+
+.guide-slider .guide.on .display .title {
+    color: #fff
+}
+
+.guide-slider .guide.on .display .introduction {
+    color: #fff
+}
+
+.guide-slider .guide.on .display::after {
+    top: 50%;
+    margin-top: -5px
+}
+
+.guide-slider .guide.on .display .icon.icon1 {
+    background-position: -74px 0
+}
+
+.guide-slider .guide.on .display .icon.icon2 {
+    background-position: -148px 0
+}
+
+.guide-slider .guide.on .display .icon.icon3 {
+    background-position: -222px 0
+}
+
+.guide-slider .guide.on .display .icon.icon4 {
+    background-position: -370px 0
+}
+
+.guide-slider .guide.on .display .icon.icon5 {
+    background-position: -666px 0
+}
+
+
+.behind {
+    width: 100%;
+    /* height: 250px; */
+    display: inline-block;
+    /* border-right: 1px solid #ddd; */
+    /* background: #fff; */
+    overflow: hidden;
+
+}
+
+ .behind .function-list-wrap {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.behind .function-list {
+    margin-right: -10px;
+    margin-top: 20px
+}
+
+.behind .function-list>li {
+    float: left;
+    padding-right: 3%;
+}
+
+.behind .function-list>li>a {
+    display: block;
+    border: 1px solid #ddd;
+    width: 100px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    margin-bottom: 18px;
+    color: #0876c2;
+    background: #fff;
+}
+
+ .behind .function-list>li>a:hover {
+    text-decoration: none;
+    border: 1px solid #0876c2;
+    background: #0876c2;
+    color: #fff
+}
+
+.behind .function-list>li>a.important {
+    color: #f58914
+}
+
+.behind .function-list>li>a.important:hover {
+    border: 1px solid #f58914;
+    background: #f58914;
+    color: #fff
+}
+
+/*****Select 样式*****/
+.dy_select_div{
+
+    width: 130px;
+    height: 36px;
+    border-radius: 5px;
+
+    border: 1px solid #e6e6e6;
+    /*position: relative;*/
+    float: left;
+    top: 35%;
+}
+.dy_select{
+
+    border: none;
+
+    outline: none;
+
+    width: 100%;
+    height: 30px;
+    line-height: 36px;
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    padding-left: 10px;
+}
+
+.dy_select_div:after{
+    content: "";
+    width: 14px;
+    height: 8px;
+    position: absolute;
+    right: 20px;
+    top: 45%;
+    pointer-events: none;
+}
+.dy_select_date{
+
+    border: none;
+
+    outline: none;
+
+    width: 100%;
+    height: 30px;
+    line-height: 36px;
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    padding-left: 10px;
+}
+

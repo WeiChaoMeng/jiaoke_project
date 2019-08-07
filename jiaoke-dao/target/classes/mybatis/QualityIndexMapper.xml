@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.quality.dao.QualityIndexDao">
+
+    <select id="getLastWeekCrewData"  resultType="java.util.HashMap" >
+
+        SELECT 'crew1' as crewNum ,DAYNAME(produce_date) AS proDate,SUM(material_total) DIV 100 AS prototal,produce_date
+        FROM quality_monitoring_realtime_data1
+        WHERE YEARWEEK(date_format(produce_date,'%Y-%m-%d'), 1) = YEARWEEK(now(), 1)-1
+        group by produce_date
+        UNION ALL
+        SELECT 'crew2' as crewNum,DAYNAME(produce_date) AS proDate ,SUM(material_total) DIV 100 AS prototal,produce_date
+        FROM quality_monitoring_realtime_data2
+        WHERE YEARWEEK(date_format(produce_date,'%Y-%m-%d'), 1) = YEARWEEK(now(), 1)-1
+        group by produce_date
+        order by crewNum,produce_date
+
+    </select>
+
+    <select id="getLastProductData" resultType="java.util.HashMap">
+        (
+        SELECT
+               produce_disc_num,
+               material_total,
+               DATE_FORMAT(produce_date,'%Y-%c-%d') as produce_date,
+               produce_time,
+               produce_custom_num,
+               '机组一' AS crew1
+        FROM
+             quality_monitoring_realtime_data1
+        ORDER BY
+                 id DESC
+        LIMIT 4
+        )
+        UNION ALL
+                (
+                SELECT
+                       produce_disc_num,
+                       material_total,
+                       produce_date,
+                       produce_time,
+                       produce_custom_num,
+                       '机组二' AS crew1
+                FROM
+                     quality_monitoring_realtime_data2
+                ORDER BY
+                         id DESC
+                LIMIT 4
+                )
+
+    </select>
+</mapper>

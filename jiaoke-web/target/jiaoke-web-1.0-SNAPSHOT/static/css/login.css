@@ -1,0 +1,338 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.bg-div {
+    background: url('../images/login/page3.JPG') center;
+    width: 100%;
+    height: 70%;
+    background-size: 100% 100%;
+    top: 0;
+    left: 0;
+}
+
+article {
+    width: 40%;
+    height: 1200px;
+    margin: 0 auto;
+    text-align: center;
+    z-index: 1;
+    position: relative;
+}
+
+.signin {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.user-avater {
+    border-radius: 50%;
+    border: 4px solid #fff;
+}
+
+.box {
+    width: 450px;
+    height: 300px;
+    left: -webkit-calc(50% - 250px);
+    top: 20%;
+    position: absolute;
+    border-radius: 5px;
+    -moz-box-shadow: 0 20px 30px rgba(0, 0, 0, 0.6);
+    -webkit-box-shadow: 0 20px 30px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(35, 5, 5, 0.3);
+    padding: 45px;
+    text-align: center;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+    display: flex;
+    transition: box-shadow .3s ease;
+
+}
+
+.box:active {
+    cursor: move;
+    -moz-box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
+    -webkit-box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
+}
+
+.box .content {
+    margin: auto;
+}
+
+.btn-submit {
+    width: 360px;
+    height: 40px;
+    background-color: #3B89F5;
+    border-color: #3B89F5;
+    margin-top: 20px;
+}
+
+.btn-submit:hover {
+    color: #fff;
+    background-color: #0C6CED;
+    border-color: #0C6CED;
+    text-decoration: none;
+}
+
+input::-webkit-input-placeholder {
+    color: #242424;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    height: 40px;
+    padding: 6px 12px;
+    font-size: 15px;
+    line-height: 1.42857143;
+    color: #fff;
+    box-sizing: border-box;
+}
+
+.form-control:focus {
+    border-color: rgba(59, 137, 245, 0.5);
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(59, 137, 245, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(59, 137, 245, 0.6);
+}
+
+.form-input {
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: inset 0 0 4px rgba(255, 255, 255, 0.2), 0 0 4px rgba(185, 160, 160, 0.2);
+}
+
+.save-div {
+    color: #fff;
+    font-weight: bold;
+}
+
+.save-checkbox {
+    float: left;
+}
+
+.save-pass {
+    float: left;
+}
+
+.save-text {
+    float: right;
+    color: #DD4B39;
+}
+
+.signup {
+    font-weight: 400;
+    font-size: 13px;
+    color: #fff;
+    margin-top: 8px;
+    display: block;
+}
+
+.signup-a {
+    color: #468BEA;
+    font-weight: bold;
+}
+
+.dowebok {
+    position: absolute;
+    left: 65%;
+    width: 350px;
+    height: 350px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #fff;
+    top: 15%;
+}
+
+.logo {
+    width: 100%;
+    height: 60px;
+    border-bottom: 3px #38adff solid;
+}
+
+.logo span {
+    font-size: 18px;
+    line-height: 60px;
+}
+
+.login-form {
+    width: 100%;
+    padding: 40px;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.login_input_content {
+    position: relative;
+    padding-bottom: 24px;
+    overflow: hidden;
+    height: 45px;
+    width: 100%;
+}
+
+.left-icon {
+    height: 43px;
+    width: 20%;
+    float: left;
+    border: 1px #a9a9a9 solid;
+    border-right: none;
+    background: #e4e4e4;
+}
+
+.left-icon img {
+    padding: 10px 15px;
+    width: 23px;
+}
+
+.right-input {
+    height: 45px;
+    width: 79%;
+    float: left;
+    padding: 0 20px;
+    box-sizing: border-box;
+    font-size: 15px;
+    outline: none;
+    border: 1px #a9a9a9 solid;
+    background: #FFFFFF;
+}
+
+.login-but {
+    height: 48px;
+    width: 100%;
+    background: #38adff;
+    color: #FFFFFF;
+    border: none;
+    font-size: 16px;
+    outline: none;
+}
+
+.login-but:hover{
+    background-color: #6dbff9;
+}
+
+.login-bottom {
+    width: 700px;
+    height: 60px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.login-bottom-copyright {
+    width: 100%;
+    padding-top: 20px;
+    font-size: 12px;
+}
+
+.tip {
+    display: none;
+    position: absolute;
+    left: 20px;
+    top: 52px;
+    font-size: 14px;
+    color: #f50;
+}
+
+.reg-bar {
+    width: 360px;
+    margin: 20px auto 0;
+    font-size: 14px;
+    overflow: hidden;
+}
+
+.reg-bar a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.reg-bar a:hover {
+    text-decoration: underline;
+}
+
+.reg-bar .reg {
+    float: left;
+}
+
+.reg-bar .forget {
+    float: right;
+}
+
+.dowebok ::-webkit-input-placeholder {
+    font-size: 15px;
+    line-height: 1.4;
+    color: #dbddde;
+}
+
+.dowebok :-moz-placeholder {
+    font-size: 15px;
+    line-height: 1.4;
+    color: #dbddde;
+}
+
+.dowebok ::-moz-placeholder {
+    font-size: 15px;
+    line-height: 1.4;
+    color: #dbddde;
+}
+
+.dowebok :-ms-input-placeholder {
+    font-size: 15px;
+    line-height: 1.4;
+    color: #dbddde;
+}
+
+@media screen and (max-width: 500px) {
+    * {
+        box-sizing: border-box;
+    }
+
+    .dowebok {
+        position: static;
+        width: auto;
+        height: auto;
+        margin: 0 30px;
+        border: 0;
+        border-radius: 0;
+    }
+
+    .logo {
+        margin: 50px auto;
+    }
+
+    .form-item {
+        width: auto;
+    }
+
+    .form-item input, .form-item button, .reg-bar {
+        width: 100%;
+    }
+}
+
+/*overflow滚动条样式*/
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #E5E8EC;
+    background-clip: padding-box;
+    border: 1px solid #E6E5E6;
+    min-height: 28px;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-track-piece {
+    background-color: #fff;
+}

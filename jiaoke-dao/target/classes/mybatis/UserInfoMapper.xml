@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.oa.dao.UserInfoMapper">
+    <resultMap id="BaseResultMap" type="com.jiaoke.oa.bean.UserInfo">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="sex" jdbcType="INTEGER" property="sex"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="position" jdbcType="VARCHAR" property="position"/>
+        <result column="register_time" jdbcType="TIMESTAMP" property="registerTime"/>
+        <result column="department" jdbcType="VARCHAR" property="department"/>
+        <result column="dept_principal" jdbcType="VARCHAR" property="deptPrincipal"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, username, `password`, nickname, phone, sex, email, `position`, register_time, department, dept_principal
+  </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user_info
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+    <insert id="insertSelective" parameterType="com.jiaoke.oa.bean.UserInfo">
+        insert into user_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="username != null">
+                username,
+            </if>
+            <if test="password != null">
+                `password`,
+            </if>
+            <if test="nickname != null">
+                nickname,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="position != null">
+                position,
+            </if>
+            <if test="registerTime != null">
+                register_time,
+            </if>
+            <if test="department != null">
+                department,
+            </if>
+            <if test="deptPrincipal != null">
+                dept_principal,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=INTEGER},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="position != null">
+                #{position,jdbcType=VARCHAR},
+            </if>
+            <if test="registerTime != null">
+                #{registerTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="department != null">
+                #{department,jdbcType=VARCHAR},
+            </if>
+            <if test="deptPrincipal != null">
+                #{deptPrincipal,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.jiaoke.oa.bean.UserInfo">
+    update user_info
+    set username = #{username,jdbcType=VARCHAR},
+      `password` = #{password,jdbcType=VARCHAR},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      email = #{email,jdbcType=VARCHAR},
+      `position` = #{position,jdbcType=VARCHAR},
+      register_time = #{registerTime,jdbcType=TIMESTAMP},
+      department = #{department,jdbcType=VARCHAR},
+      dept_principal = #{deptPrincipal,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <select id="getUserInfoByUserName" parameterType="java.lang.String" resultType="com.jiaoke.oa.bean.UserInfo">
+        SELECT
+            user_info.id,
+            user_info.username,
+            user_info.`password`,
+            user_info.nickname,
+            user_info.phone,
+            user_info.sex,
+            user_info.email,
+            user_info.position,
+            user_info.register_time,
+            department.department_name AS department ,
+            user_info.dept_principal
+        FROM
+            user_info
+            LEFT JOIN department ON department.department_key = user_info.department
+        WHERE username = #{username}
+    </select>
+
+    <select id="getUserByDepartmentKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+          id,
+          nickname,
+          department
+        from user_info
+        where department = #{department,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getIdByNickName" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select
+          dept_principal
+        from user_info
+        where nickname = #{nickname,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectAll" resultType="com.jiaoke.oa.bean.UserInfo">
+        SELECT
+            user_info.id,
+            user_info.username,
+            user_info.`password`,
+            user_info.nickname,
+            user_info.phone,
+            user_info.sex,
+            user_info.email,
+            user_info.position,
+            user_info.register_time,
+            department.department_name AS department ,
+            user_info.dept_principal
+        FROM
+            user_info
+            LEFT JOIN department ON department.department_key = user_info.department
+        order by
+            register_time
+    </select>
+
+    <select id="usernameFilter" parameterType="java.lang.String" resultType="com.jiaoke.oa.bean.UserInfo">
+        SELECT
+            user_info.id,
+            user_info.username,
+            user_info.`password`,
+            user_info.nickname,
+            user_info.phone,
+            user_info.sex,
+            user_info.email,
+            user_info.position,
+            user_info.register_time,
+            department.department_name AS department ,
+            user_info.dept_principal
+        FROM
+            user_info
+            LEFT JOIN department ON department.department_key = user_info.department
+        WHERE
+            user_info.username LIKE "%"#{username}"%"
+    </select>
+
+    <select id="checkUsername" parameterType="java.lang.String" resultType="com.jiaoke.oa.bean.UserInfo">
+        SELECT
+            *
+        FROM
+            user_info
+        WHERE
+            username = #{username,jdbcType=VARCHAR}
+        LIMIT 1
+    </select>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.jiaoke.oa.bean.UserInfo">
+        update user_info
+        <set>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                `password` = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                nickname = #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=INTEGER},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="position != null">
+                position = #{position,jdbcType=VARCHAR},
+            </if>
+            <if test="registerTime != null">
+                register_time = #{registerTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="department != null">
+                department = #{department,jdbcType=VARCHAR},
+            </if>
+            <if test="deptPrincipal != null">
+                dept_principal = #{deptPrincipal,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectIdAndNicknameAndDepartment" resultType="com.jiaoke.oa.bean.UserInfo">
+        select id,nickname,department from user_info
+    </select>
+
+    <select id="selectByPermission" parameterType="java.lang.String" resultType="com.jiaoke.oa.bean.UserInfo">
+        SELECT
+            ui.id,
+            ui.nickname
+        FROM
+            user_info AS ui
+            LEFT JOIN user_role AS ur ON ui.id = ur.user_info_id
+            LEFT JOIN role_info AS ri ON ur.role_info_id = ri.id
+            LEFT JOIN role_permission AS rp ON ri.id = rp.role_id
+            LEFT JOIN permission AS per ON rp.permission_id = per.id
+        WHERE
+            per.url = #{url}
+        LIMIT 1
+    </select>
+
+    <select id="selectDepartment" parameterType="java.lang.Integer" resultType="java.lang.String">
+        SELECT department FROM `user_info` WHERE id = #{id}
+    </select>
+
+    <select id="getNicknameById" parameterType="java.lang.Integer" resultType="java.lang.String">
+        select nickname from user_info where id = #{id}
+    </select>
+</mapper>

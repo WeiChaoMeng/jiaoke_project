@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.quality.dao.QualityDataManagerDao">
+
+    <select id="selectHistoryDataToDay" resultType="com.jiaoke.quality.bean.QualityDataManagerDay">
+        SELECT *
+        FROM
+             (
+
+             (SELECT
+                     'crew1' as crewNum,
+                     date_format(produce_date, '%Y-%m-%d') AS produceDate,
+                     SUM(material_total) DIV 100 AS materialTotal,
+                     date_format(MIN(produce_time), '%T') AS startTime,
+                     date_format(MAX(produce_time), '%T') AS endTime
+              FROM
+                   quality_monitoring_realtime_data1
+              GROUP BY
+                       produceDate)
+
+             UNION ALL
+
+             (SELECT
+                     'crew2' as crewNum,
+                     date_format(produce_date, '%Y-%m-%d') AS produceDate,
+                     SUM(material_total) DIV 100 AS materialTotal,
+                     date_format(MIN(produce_time), '%T') AS startTime,
+                     date_format(MAX(produce_time), '%T') AS endTime
+              FROM
+                   quality_monitoring_realtime_data2
+              GROUP BY
+                       produceDate)
+
+             ) AS t
+        ORDER BY
+                 t.produceDate DESC
+        LIMIT #{pageFirstNum},#{eachPageDataNum}
+    </select>
+
+    <select id="selectHistoryDataToDayCount" resultType="int">
+
+        SELECT
+               count(*)
+        FROM
+             (
+             SELECT
+                    produce_date
+             FROM
+                  quality_monitoring_realtime_data1
+             GROUP BY
+                      produce_date
+             UNION ALL
+             SELECT
+                    produce_date
+             FROM
+                  quality_monitoring_realtime_data2
+             GROUP BY
+                      produce_date
+             ) AS f;
+
+    </select>
+
+
+    <select id="selectRatioNumListByDate" resultType="java.util.Map">
+
+        SELECT
+               QR.produce_proportioning_num,
+               QM.pro_name
+        FROM
+             quality_monitoring_realtime_${crewNum} AS QR
+                 INNER JOIN
+                     quality_proportioning_message AS QM
+                     <choose>
+                         <when test="producedDate == 'data1'">
+                             ON QR.produce_proportioning_num = QM.crew1_modele_id
+                         </when>
+                          <otherwise>
+                              ON QR.produce_proportioning_num = QM.crew2_modele_id
+                          </otherwise>
+                     </choose>
+
+        WHERE
+                QR.produce_date = date &apos;${producedDate}&apos;
+        GROUP BY QR.produce_proportioning_num;
+
+    </select>
+
+    <select id="selectProducedSVG" resultType="java.util.Map">
+        SELECT
+               produce_proportioning_num as rationNum,
+               COUNT(*) as procount,
+               SUM(material_aggregate_1) as aggregate_1 ,
+               SUM(material_aggregate_2) as aggregate_2,
+               SUM(material_aggregate_3) as aggregate_3,
+               SUM(material_aggregate_4) as aggregate_4,
+               SUM(material_aggregate_5) as aggregate_5,
+               SUM(material_aggregate_6) as aggregate_6,
+               SUM(material_stone_1) as stone_1,
+               SUM(material_stone_2) as stone_2,
+               SUM(material_asphalt)	as asphalt,
+               SUM(material_regenerate) as regenerate,
+               SUM(material_additive) as additive,
+               SUM(material_total) as total,
+               SUM(temperature_warehouse_1) as warehouse_1,
+               SUM(temperature_mixture) as mixture,
+               SUM(temperature_duster) as duster,
+               SUM(temperature_asphalt) as temAsphalt,
+               SUM(temperature_aggregate) as aggregate
+        FROM
+             quality_monitoring_realtime_${crewNum}
+        WHERE
+                produce_date = &apos;${producedDate}&apos;
+        GROUP BY
+                 produce_proportioning_num
+    </select>
+
+    <select id="selectRatioMessageById" resultType="com.jiaoke.quality.bean.QualityRatioTemplate">
+        SELECT
+        pro_name AS proName,
+        repertory_one AS repertoryOne,
+        repertory_two AS repertoryTwo,
+        repertory_three AS repertoryThree,
+        repertory_four AS repertoryFour,
+        repertory_five AS repertoryFive,
+        repertory_six AS repertorySix,
+        breeze AS breeze,
+        ratio_stone AS ratioStone,
+        ratio_regenerate1 AS ratioRegenerate1,
+        ratio_regenerate2 AS ratioRegenerate2,
+        ratio_additive AS ratioAdditive,
+        temperature_asphalt AS temperatureAsphalt,
+        temperature_asphalt AS temperatureAggregate,
+        temperature_mixture AS temperaturemixture,
+        temperature_milling AS temperatureMilling,
+        crew1_modele_id AS crew1ModeleId,
+        crew2_modele_id AS crew2ModeleId
+        FROM
+        quality_proportioning_message
+        WHERE
+        ${crewNum}_modele_id IN
+
+        <foreach collection="ratioNumList" item="item" open="(" close=")" separator=",">
+            ${item.produce_proportioning_num}
+        </foreach>
+    </select>
+
+    <select id="selectProduceByDate" resultType="java.util.Map">
+#         SELECT
+#         *
+#         FROM
+#         (
+#         SELECT
+#         *, row_number () over (
+#         PARTITION BY produce_proportioning_num
+#         ORDER BY
+#         produce_date DESC
+#         ) AS rowindex
+#         FROM
+#         quality_monitoring_realtime_${crewNum}
+#         WHERE
+#         produce_date = ${producedDate}
+#         ) AS t1
+#         WHERE
+#         t1.rowindex <![CDATA[ <= ]]>  7
+
+
+
+        SELECT X.*
+        FROM quality_monitoring_realtime_${crewNum} as  X
+        INNER JOIN (SELECT *
+        FROM (SELECT T.produce_proportioning_num,
+        T.produce_date,
+        T.produce_time,
+        COUNT(*) RNS
+        FROM quality_monitoring_realtime_${crewNum} T
+        LEFT JOIN quality_monitoring_realtime_${crewNum} R
+        ON T.produce_proportioning_num =
+        R.produce_proportioning_num
+        AND T.produce_date = R.produce_date
+        AND T.produce_time <![CDATA[ <= ]]>  R.produce_time
+        WHERE T.produce_date = date &apos;${producedDate}&apos;
+        GROUP BY T.produce_proportioning_num,
+        T.produce_date,
+        T.produce_time) as T1
+        WHERE T1.RNS <![CDATA[ <= ]]>  7
+        ORDER BY produce_proportioning_num, RNS ) as N
+        ON X.produce_proportioning_num = N.produce_proportioning_num
+        AND X.produce_date = N.produce_date
+        AND X.produce_time = N.produce_time
+        ORDER BY X.produce_proportioning_num, X.produce_time DESC
+    </select>
+
+    <select id="selectProduceMessageByDate" resultType="java.util.Map">
+        SELECT
+               produce_proportioning_num as rationNum,
+               count(*) as total,
+               MIN(produce_time) as startTime,
+               produce_custom_num as userName
+        FROM
+             quality_monitoring_realtime_${crewNum}
+        WHERE
+                produce_date = &apos;${producedDate}&apos;
+        GROUP BY
+                 produce_custom_num,produce_proportioning_num
+    </select>
+
+    <select id="selectUserProTotalByDate" resultType="java.util.Map">
+        SELECT
+               produce_custom_num as userName,
+               SUM(material_total) as userTotal
+        FROM
+             quality_monitoring_realtime_${crewNum}
+        WHERE
+                produce_date = &apos;${producedDate}&apos;
+        GROUP BY
+                 produce_custom_num
+
+    </select>
+
+    <select id="selectProductMessageById" resultType="java.util.Map" >
+        select * from  quality_monitoring_realtime_${crewNum} where id = ${id}
+    </select>
+
+    <select id="selectProduceByDateAndDiscNum" resultType="java.util.Map">
+        SELECT
+               T1.*
+        FROM
+             quality_warning_data AS T1
+                 INNER JOIN (
+                            SELECT
+                                    *
+                            FROM
+                                 quality_warning_promessage_crew
+                            WHERE
+                                    produce_date = DATE #{date}
+                              AND produce_disc_num = #{discNum}
+                              AND produce_crewNum = #{crewNum}
+                            ) AS T2 ON T1.crew_id = T2.id
+    </select>
+    <select id="selectProListByRatioNumAndDate" resultType="java.util.Map">
+        SELECT
+        &apos;${crewNum}&apos; as crewNums,
+        date_format(QMRD.produce_date,'%Y-%m-%d') as  produce_date,
+        date_format(QMRD.produce_time,'%H:%i:%s') as produce_time,
+        QMRD.produce_disc_num,
+        QPM.pro_name,
+        QMRD.produce_proportioning_num,
+        QMRD.produce_car_num,
+        QMRD.produce_custom_num,
+        QMRD.material_aggregate_6,
+        QMRD.material_aggregate_5,
+        QMRD.material_aggregate_4,
+        QMRD.material_aggregate_3,
+        QMRD.material_aggregate_2,
+        QMRD.material_aggregate_1,
+        QMRD.material_stone_1,
+        QMRD.material_stone_2,
+        QMRD.material_asphalt,
+        QMRD.material_regenerate,
+        QMRD.material_additive,
+        QMRD.material_total,
+        QMRD.temperature_warehouse_1,
+        QMRD.temperature_mixture,
+        QMRD.temperature_duster,
+        QMRD.temperature_asphalt,
+        QMRD.temperature_aggregate
+        FROM
+        quality_monitoring_realtime_${crewNum} AS QMRD
+        INNER JOIN
+        quality_proportioning_message AS QPM
+
+        <choose>
+            <when test="crewNum=='data1'.toString()">
+                ON QMRD.produce_proportioning_num = QPM.crew1_modele_id
+            </when>
+            <otherwise>
+                ON QMRD.produce_proportioning_num = QPM.crew2_modele_id
+            </otherwise>
+        </choose>
+        WHERE
+        QMRD.produce_proportioning_num = ${ratioNum}
+        AND
+        QMRD.produce_date = date ${date};
+    </select>
+    <select id="selectRationById" resultType="com.jiaoke.quality.bean.QualityRatioTemplate">
+        select
+               pro_name as proName,
+               repertory_one as repertoryOne,
+               repertory_two as repertoryTwo,
+               repertory_three as repertoryThree,
+               repertory_four as repertoryFour,
+               repertory_five as repertoryFive,
+               repertory_six as repertorySix,
+               breeze as breeze,
+               ratio_stone as ratioStone,
+               ratio_regenerate1 as ratioRegenerate1,
+               ratio_regenerate2 as ratioRegenerate2,
+               ratio_additive as ratioAdditive,
+               regenerate as regenerate,
+               additive as additive,
+               temperature_asphalt as temperatureAsphalt,
+               temperature_aggregate as temperatureAggregate,
+               temperature_mixture as temperatureMixture,
+               temperature_milling as temperatureMilling,
+               temperature_asphalt_up as temperatureAsphaltUp,
+               temperature_aggregate_up as temperatureAggregateUp,
+               temperature_mixture_up as temperatureMixtureUp,
+               temperature_milling_up as temperatureMillingUp
+        from quality_proportioning_message where ${crewNum}_modele_id = ${ratioNum}
+    </select>
+</mapper>

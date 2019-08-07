@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.oa.dao.UserRoleMapper">
+    <resultMap id="UserRoleMap" type="com.jiaoke.oa.bean.UserRole">
+        <id column="user_info_id" jdbcType="INTEGER" property="userInfoId"/>
+        <result column="role_info_id" jdbcType="INTEGER" property="roleInfoId"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        user_info_id, role_info_id
+    </sql>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+      DELETE
+      FROM
+	      user_role
+	  WHERE user_info_id = #{userInfoId}
+   </delete>
+
+    <insert id="insert" parameterType="map">
+        INSERT INTO user_role ( user_info_id, role_info_id )
+        VALUES
+        <foreach collection="array" item="item" index="index" separator=",">
+            (#{userInfoId},#{item})
+        </foreach>
+    </insert>
+</mapper>

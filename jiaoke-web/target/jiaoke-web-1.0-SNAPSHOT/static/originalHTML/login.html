@@ -1,0 +1,144 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>路驰公司企业综合管理平台</title>
+<link href="../css/default.css" rel="stylesheet" type="text/css">
+<link href="../css/style/green.css" rel="stylesheet" type="text/css" id = 'link'>
+<style>/*login*/
+
+.loginlogo {
+    background: url(../images/luchi.jpg) no-repeat center center;
+    height: 58px;
+}
+
+.loginpanel {
+    width: 547px;
+    height: 375px;
+    background: #fff;
+    margin: 0 auto;
+    box-shadow: 5px 8px 0px rgba(0, 0, 0, .2);
+    margin-top: 53px;
+}
+
+.logininfo {
+    margin-top: 57px;
+    color: #fff;
+    text-align: center;
+    filter: alpha(opacity=60);
+    -moz-opacity: 0.60;
+    opacity: 0.60;
+}
+
+.loginpanel h2 {
+    font-size: 24px;
+    font-weight: normal;
+    line-height: 81px;
+    text-align: center;
+}
+
+.userlogin {
+    width: 486px;
+    height: 215px;
+    background: #f1f1f1;
+    border-top: solid 1px #e5e5e5;
+    border-left: solid 1px #e5e5e5;
+    margin-left: 30px;
+    padding-top: 38px;
+    overflow: hidden;
+}
+
+.userlogin li {
+    width: 306px;
+    padding-left: 89px;
+    margin-bottom: 17px;
+    *margin-bottom: 15px;
+    height: 40px;
+    position: relative;
+}
+
+.loginuser,
+.loginpassword {
+    width: 303px;
+    height: 40px;
+    background: #fff;
+    border-left: solid 3px #eac282;
+    text-indent: 40px;
+    color: #676767;
+    font-family: '微软雅黑';
+    line-height: 40px;
+    float: left;
+}
+
+.userlogin li i {
+    display: block;
+    position: absolute;
+    left: 108px;
+    top: 13px;
+}
+
+.userlogin li a {
+    width: 306px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    display: block;
+    color: #fff;
+    font-size: 16px;
+}
+
+.userlogin li a:hover {
+    color: #fff;
+    filter: alpha(opacity=85);
+    -moz-opacity: 0.85;
+    opacity: 0.85;
+}
+
+.logincheck {
+    width: 15px;
+    height: 15px;
+}
+
+.userlogin li span {
+    padding-left: 20px;
+    padding-right: 8px;
+    float: left;
+}</style>
+</head>
+
+<body>
+
+<!--loginbox start-->
+<div class="loginbox">
+
+	<div class="login">
+		<div class="loginlogo"></div>
+        
+        <div class="loginpanel">
+        	<h2>路驰公司企业综合管理平台</h2>
+            <ul class="userlogin">
+            <li><i class="iconfont">&#xe600;</i><input type="text" class="loginuser" value="用户名" onClick="JavaScript:this.value=''"></li>
+            <li><i class="iconfont">&#xe616;</i><input type="text" class="loginpassword" value="密码" onClick="JavaScript:this.value=''"></li>
+            <li><a href="../view/main.html">登录</a></li>
+            <li><span><input type="checkbox" class="logincheck"></span>记住我的信息</li>
+            </ul>
+        </div>
+        
+        <div class="logininfo">CopyRight 2017  版权所有  </div>
+    </div> 
+    
+</div>
+<!--loginbox end-->
+
+</body>
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../js/skin.js"></script>
+<script type="text/javascript">
+var height = $(window).height();
+	$(".login").css("padding-top",height/2 - $(".login").height()/2);
+$(window).resize(function(){
+	$(".login").css("padding-top",$(window).height()/2 - $(".login").height()/2);	
+});
+</script>
+</html>

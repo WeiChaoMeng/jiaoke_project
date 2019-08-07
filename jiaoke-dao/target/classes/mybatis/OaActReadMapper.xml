@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.oa.dao.OaActReadMapper">
+
+    <insert id="insertData" parameterType="com.jiaoke.oa.bean.OaActRead">
+        insert into oa_act_read
+            (id,title,`number`,organ,font_size,copies,receipt_time,deadline,annex,create_time,promoter,url)
+        values
+            (#{id},#{title},#{number},#{organ},#{fontSize},#{copies},#{receiptTime},#{deadline},#{annex},#{createTime},#{promoter},#{url})
+    </insert>
+</mapper>

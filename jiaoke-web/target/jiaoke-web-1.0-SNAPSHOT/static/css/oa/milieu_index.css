@@ -1,0 +1,275 @@
+body, button, dd, div, dl, dt, form, h1, h2, h3, h4, h5, h6, input, li, ol, p, td, textarea, th, ul {
+    padding: 0;
+    margin: 0;
+}
+
+#ct-current {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    float: right;
+    height: 100%
+}
+
+.container {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+#ct-current #txt-pub-time {
+    font-size: 14px;
+    color: #fff;
+    opacity: .6;
+    height: 19px;
+    line-height: 19px;
+    margin: 20px 0;
+}
+
+#ct-current #ct-main {
+    height: 86px;
+    margin-bottom: 28px;
+    vertical-align: bottom;
+    font-size: 0;
+}
+
+#ct-current #ct-main #txt-temperature {
+    display: inline-block;
+    font-size: 86px;
+    color: #fff;
+    height: 86px;
+    line-height: 86px;
+    margin: 0;
+    padding: 0;
+}
+
+#ct-current #ct-main #txt-name {
+    display: inline-block;
+    font-size: 28px;
+    color: #fff;
+    line-height: 45px;
+    height: 45px;
+    margin: 0;
+    padding: 0;
+}
+
+#ct-current #ct-other {
+    vertical-align: middle;
+    font-size: 0;
+    margin-bottom: 28px;
+}
+
+#ct-current #ct-other .txt {
+    display: inline-block;
+    font-size: 18px;
+    vertical-align: middle;
+}
+
+#ct-current #ct-other .item {
+    display: inline-block;
+    margin-right: 42px;
+    color: #fff;
+    height: 20px;
+    line-height: 20px;
+    font-size: 0;
+}
+
+#ct-current #ct-current-weather {
+    position: absolute;
+    top: 50px;
+    right: 150px;
+    width: 134px;
+    height: 134px;
+}
+
+#ct-current #ct-current-weather img {
+    width: 134px;
+    height: 134px;
+}
+
+#ct-7-days {
+    float: left;
+    width: 644px;
+    height: 330px;
+    padding: 20px 0 0;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 14px 0 rgba(0, 0, 0, .08);
+}
+
+#ct-living-index {
+    float: right;
+    width: 480px;
+    position: relative;
+}
+
+#ct-7-days #title {
+    font-size: 18px;
+    color: #344665;
+    line-height: 25px;
+    height: 25px;
+    margin-bottom: 18px;
+    margin-left: 30px;
+}
+
+#ct-7-days #ct-weather {
+    overflow: hidden;
+    position: relative;
+}
+
+#ct-7-days #chart-days {
+    width: 740px;
+    height: 174px;
+    position: absolute;
+    top: 145px;
+}
+
+#ct-7-days .item {
+    width: 92px;
+    text-align: center;
+    float: left;
+    background-repeat: no-repeat;
+    background-position: right;
+    position: relative;
+    padding: 11px 0 25px;
+    list-style-type: none;
+}
+
+#ct-7-days .item.first .day {
+    color: #c2c2c2;
+}
+
+#ct-7-days .item .day {
+    font-size: 14px;
+    color: #384c78;
+    margin-bottom: 12px;
+    height: 14px;
+    line-height: 14px;
+}
+
+#ct-7-days .item.first .date {
+    color: #c2c2c2;
+}
+
+#ct-7-days .item .date {
+    font-size: 12px;
+    color: #8a9baf;
+    margin-bottom: 25px;
+    height: 12px;
+    line-height: 12px;
+}
+
+#ct-7-days .item.first .weather {
+    color: #c2c2c2;
+}
+
+#ct-7-days .item .weather {
+    font-size: 14px;
+    color: #384c78;
+    line-height: 14px;
+    height: 14px;
+    margin-top: 30px;
+}
+
+#ct-7-days .item.first .icon {
+    opacity: .3;
+}
+
+#ct-7-days .item .icon {
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    background: #2196f3a1;
+}
+
+#ct-7-days .item .ct-night {
+    margin-top: 15px;
+    margin-bottom: 25px;
+}
+
+#ct-7-days .item.first .wind {
+    color: #c2c2c2;
+}
+
+#ct-7-days .item .wind {
+    font-size: 12px;
+    color: #8a9baf;
+    line-height: 12px;
+    height: 12px;
+}
+
+#ct-7-days .item .temperature-range {
+    font-size: 14px;
+    color: #384c78;
+    margin-bottom: 12px;
+    height: 14px;
+    line-height: 14px;
+}
+
+#ct-living-index #ct-pages {
+    clear: both;
+    overflow: hidden;
+    position: relative;
+    width: 490px;
+    margin-left: -5px;
+    padding-top: 18px;
+}
+
+#ct-living-index #ct-pages .ct-sub {
+    height: 110px;
+    width: 100%;
+    padding-top: 30px;
+}
+
+#ct-living-index #ct-pages .page {
+    float: left;
+}
+
+#ct-living-index #air-quality {
+    float: left;
+    font-size: 18px;
+    color: #344665;
+    height: 21px;
+    line-height: 21px;
+    margin-bottom: 6px;
+    margin-top: 6px;
+}
+
+#ct-living-index #ct-pages #ct-content {
+    width: 890px;
+}
+
+#ct-living-index #ct-pages .item.odd {
+    margin-right: 14px;
+}
+
+#ct-living-index #ct-pages .item {
+    height: 140px;
+    width: 100px;
+    background: #fff;
+    box-shadow: 0 0 14px 0 rgba(0, 0, 0, .08);
+    border-radius: 10px;
+    float: left;
+    text-align: center;
+    overflow: hidden;
+    margin-bottom: 20px;
+    margin-left: 10px;
+}
+
+#ct-living-index #ct-pages .icon {
+    height: 34px;
+    width: 34px;
+    display: block;
+    margin: 0 auto 12px;
+}
+
+#ct-living-index #ct-pages .content {
+    font-size: 16px;
+    color: #384c78;
+    line-height: 22px;
+}
+
+.basic-data-icon {
+    margin-right: 10px;
+    vertical-align: middle;
+    height: 20px;
+}

@@ -1,0 +1,337 @@
+@charset "utf-8";
+
+* {
+    font-size: 12px;
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: '微软雅黑';
+    margin: 0 auto;
+    padding: 15px 8px 0 8px;
+}
+
+ul {
+    display: block;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+li {
+    display: block;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+img {
+    border: 0;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/*font_1*/
+@font-face {
+    font-family: "iconfont";
+    src: url('../../fonts/font_1/iconfont.eot'); /* IE9*/
+    src: url('../../fonts/font_1/iconfont.eot#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('../../fonts/font_1/iconfont.woff') format('woff'), /* chrome, firefox */ url('../../fonts/font_1/iconfont.ttf') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/ url('../../fonts/font_1/iconfont.svg#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont {
+    font-size: 16px;
+    font-family: "iconfont" !important;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+}
+
+.cursor_hand {
+    cursor: pointer;
+}
+
+.page_head {
+    height: 30px;
+    width: 100%;
+    background: #f1f1f1;
+}
+
+.page_head table {
+    width: 100%;
+    height: 100%;
+}
+
+.head_left_button {
+    font-family: "iconfont" !important;
+    display: table-cell;
+    height: 20px;
+    width: 70px;
+    vertical-align: middle;
+    text-align: center;
+    float: left;
+    padding-top: 2px;
+}
+
+.head_left_button button {
+    border: 0;
+    height: 100%;
+    background: none;
+    padding: 0;
+    margin: 0;
+    outline: none;
+}
+
+.head_left_button button:hover {
+    color: #0089f7;
+}
+
+.separation_line {
+    background: #000000;
+    width: 1px;
+    height: 12px;
+    float: left;
+    margin: 5px 5px;
+}
+
+/*搜索*/
+.conditional-query {
+    float: right;
+    margin-right: 20px;
+    height: 23px;
+    border: 1px #000 solid;
+    border-radius: 10px;
+    padding: 0 10px;
+    background: #fff
+}
+
+.search-bar {
+    outline: none;
+    height: 100%;
+}
+
+.search-icon-size {
+    font-size: 18px
+}
+
+/*table*/
+.simple_table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.simple_table thead tr th {
+    height: 30px;
+    line-height: 30px;
+    font-weight: bold;
+    text-align: center;
+    white-space: nowrap;
+    background: #92ebff;
+    border: solid 1px #fff;
+}
+
+.simple_table thead tr th select {
+    background: #92ebff;
+    width: 100%;
+    height: 100%;
+    outline: none;
+    text-align: center;
+    text-align-last: center;
+}
+
+.simple_table tbody tr td {
+    line-height: 30px;
+    border: none;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.head_right_side select {
+    height: 21px;
+    border: solid 1px;
+    margin-right: 10px;
+    margin-top: 5px;
+}
+
+.simple_table thead th select {
+    background: #92ebff;
+    width: 100%;
+    height: 100%;
+    outline: none;
+    text-align: center;
+    text-align-last: center
+}
+
+.simple_table tbody tr:hover {
+    background: #e6e6e6;
+}
+
+/*分页*/
+.paging-div {
+    right: 10px;
+    height: 35px;
+    position: absolute;
+    bottom: 10px;
+}
+
+/*add*/
+.table-container {
+    width: 80%;
+    margin: 0 auto
+}
+
+.table-title {
+    width: 100%;
+    margin: 0 auto;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+}
+
+.table-title span {
+    font-size: 18px;
+}
+
+.form-table {
+    width: 100%;
+    margin: auto;
+    border: solid 1px #d4d4d4;
+    border-bottom: none;
+}
+
+.table-td {
+    background: #f6f6f6;
+    text-align: right;
+    padding-right: 1%;
+    white-space: nowrap;
+    width: 10%;
+}
+
+.table-td-special {
+    background: #f6f6f6;
+    text-align: right;
+    padding-right: 1%;
+    white-space: nowrap;
+    width: 19%;
+}
+
+.table-td-width {
+    background: #f6f6f6;
+    text-align: right;
+    padding-right: 1%;
+    white-space: nowrap;
+    width: 10%;
+}
+
+.form-table td {
+    line-height: 40px;
+    border-right: solid 1px #e5e5e5;
+    border-bottom: solid 1px #e5e5e5;
+    text-indent: 0;
+    font-size: 12px;
+}
+
+.table-content {
+    padding: 0 10px;
+}
+
+.form-input {
+    width: 100%;
+    color: #000;
+    height: 30px;
+    border: solid 1px #c6c6c6;
+    line-height: 26px;
+    text-indent: 8px;
+    outline: none;
+}
+
+.form-select {
+    width: 100%;
+    color: #000;
+    height: 30px;
+    border: solid 1px #c6c6c6;
+    line-height: 26px;
+    text-indent: 8px;
+    outline: none;
+}
+
+.form-but {
+    text-align: center;
+}
+
+.return-but {
+    padding: 7px 20px;
+    border: 1px #a5a5a5 solid;
+    cursor: pointer;
+    background: #ffffff;
+    outline: none;
+    border-radius: 5px;
+}
+
+.commit-but {
+    padding: 7px 20px;
+    border: 1px #a5a5a5 solid;
+    cursor: pointer;
+    background: #92ebff;
+    outline: none;
+    border-radius: 5px;
+}
+
+.commit-but:hover, .return-but:hover {
+    background: #00BCD4;
+}
+
+/*富文本*/
+.w-e-text-container{
+    height: 250px !important;/*!important是重点，因为原div是行内样式设置的高度300px*/
+}
+
+.editor-container {
+    width: 100%;
+    margin: 20px auto
+}
+
+.details-editor-container {
+    margin: 20px auto;
+    height: 300px;
+    border: 1px #dcdbdb solid;
+    padding: 10px;
+    overflow: auto;
+}
+
+/*overflow滚动条样式*/
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-clip: padding-box;
+    border: 1px solid #E6E5E6;
+    min-height: 28px;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-track-piece {
+    background-color: #fff;
+}
+
+.opinion-column {
+    resize: none;
+    width: 100%;
+    font-size: 15px;
+    height: 100px;
+    border: 1px #b3b3b3 solid;
+    border-top: none;
+    outline: none;
+    display: block;
+    color: #000;
+    padding: 5px;
+}

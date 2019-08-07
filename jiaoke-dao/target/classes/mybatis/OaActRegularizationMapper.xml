@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.oa.dao.OaActRegularizationMapper">
+
+    <insert id="insertData" parameterType="com.jiaoke.oa.bean.OaActRegularization">
+        insert into oa_act_regularization
+            (id,
+            title,
+            `name`,
+            department,
+            `position`,
+            education,
+            entry_date,
+            probation_period,
+            self_assessment,
+            annex,
+            create_time,
+            promoter,
+            url)
+        values
+            (#{id},#{title},#{name},#{department},#{position},#{education},#{entryDate},#{probationPeriod},#{selfAssessment},#{annex},#{createTime},#{promoter},#{url})
+    </insert>
+</mapper>
+
+

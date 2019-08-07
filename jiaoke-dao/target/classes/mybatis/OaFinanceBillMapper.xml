@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.oa.dao.OaFinanceBillMapper">
+
+    <select id="searchFilter" parameterType="java.lang.String" resultType="com.jiaoke.oa.bean.OaFinanceBill">
+        SELECT
+            id,
+            number_segment as numberSegment,
+            `number`,
+            invoice_date as invoiceDate,
+            rich_text as richText,
+            create_date as createDate
+        FROM oa_finance_bill
+        WHERE
+            number_segment LIKE "%"#{numberSegment}"%"
+    </select>
+
+    <select id="selectAllData" resultType="com.jiaoke.oa.bean.OaFinanceBill">
+        SELECT
+            id,
+            number_segment as numberSegment,
+            `number`,
+            invoice_date as invoiceDate,
+            rich_text as richText,
+            create_date as createDate
+        FROM oa_finance_bill
+        order by
+        create_date desc
+    </select>
+</mapper>

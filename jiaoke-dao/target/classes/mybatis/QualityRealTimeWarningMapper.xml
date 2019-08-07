@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.quality.dao.QualityRealTimeWarningDao">
+
+    <select id="selectLastWarningData" resultType="java.util.Map">
+        SELECT
+               t1.material_name,
+               t1.actual_ratio,
+               t1.moudle_ratio,
+               t1.deviation_ratio,
+               t1.warning_level,
+               t2.pro_name,
+               DATE_FORMAT(t2.produce_date, '%Y-%m-%d') AS produce_date,
+               DATE_FORMAT(t2.produce_time, '%H:%i:%s') AS produce_time,
+               t2.produce_ratio_id,
+               t2.produce_car_num,
+               t2.produce_disc_num,
+               t2.produce_user,
+               t2.produce_custom_num,
+               t2.produce_crewNum
+        FROM
+             quality_warning_data AS t1
+                 INNER JOIN (
+                            (
+                            SELECT
+                                   QC.*,
+                                   QM.pro_name
+                            FROM
+                                 quality_warning_promessage_crew AS QC
+                                     INNER JOIN
+                                         quality_proportioning_message AS QM
+                                         ON QC.produce_ratio_id = QM.crew1_modele_id
+                            WHERE
+                                    QC.produce_crewNum = 1
+                            ORDER BY
+                                     QC.id DESC
+                            LIMIT 1
+                            )
+                            UNION ALL
+                            (
+                            SELECT
+                                   QC.*,
+                                   QM.pro_name
+                            FROM
+                                 quality_warning_promessage_crew AS QC
+                                     INNER JOIN
+                                         quality_proportioning_message AS QM
+                                         ON QC.produce_ratio_id = QM.crew2_modele_id
+                            WHERE
+                                    QC.produce_crewNum = 2
+                            ORDER BY
+                                     QC.id DESC
+                            LIMIT 1
+                            )
+                            ) AS t2
+                     ON t1.crew_id = t2.id
+    </select>
+
+    <select id="selectWarningEcharsData" resultType="java.util.Map">
+        (
+        SELECT
+               t1.pro_name,
+               t1.repertory_one,
+               t1.repertory_two,
+               t1.repertory_three,
+               t1.repertory_four,
+               t1.repertory_five,
+               t1.repertory_six,
+               t1.breeze,
+               t1.ratio_stone,
+               t1.ratio_regenerate1,
+               t1.ratio_additive,
+               t1.regenerate,
+               t1.additive,
+               t1.ratio_regenerate2,
+               'crew1' AS 'crewNum',
+               t2.produce_proportioning_num,
+               t2.material_aggregate_1,
+               t2.material_aggregate_2,
+               t2.material_aggregate_3,
+               t2.material_aggregate_4,
+               t2.material_aggregate_5,
+               t2.material_aggregate_6,
+               t2.material_stone_1,
+               t2.material_stone_2,
+               t2.material_asphalt,
+               t2.material_regenerate,
+               t2.material_additive,
+               t2.temperature_warehouse_1,
+               t2.temperature_mixture,
+               t2.temperature_duster,
+               t2.temperature_asphalt,
+               t2.temperature_aggregate,
+               t2.material_total
+        FROM
+             quality_proportioning_message AS t1
+                 INNER JOIN (
+                            SELECT
+                                   produce_proportioning_num,
+                                   material_aggregate_1,
+                                   material_aggregate_2,
+                                   material_aggregate_3,
+                                   material_aggregate_4,
+                                   material_aggregate_5,
+                                   material_aggregate_6,
+                                   material_stone_1,
+                                   material_stone_2,
+                                   material_asphalt,
+                                   material_regenerate,
+                                   material_additive,
+                                   temperature_warehouse_1,
+                                   temperature_mixture,
+                                   temperature_duster,
+                                   temperature_asphalt,
+                                   temperature_aggregate,
+                                   material_total
+                            FROM
+                                 quality_monitoring_realtime_data1
+                            WHERE
+                                    produce_proportioning_num = (
+                                                                SELECT
+                                                                       produce_proportioning_num
+                                                                FROM
+                                                                     quality_monitoring_realtime_data1
+                                                                ORDER BY
+                                                                         id DESC
+                                                                LIMIT 1
+                                                                )
+                            ORDER BY
+                                     id DESC
+                            LIMIT 3
+                            ) AS t2 ON t1.crew1_modele_id = t2.produce_proportioning_num
+        )
+        UNION ALL
+                (
+                SELECT
+                       t1.pro_name,
+                       t1.repertory_one,
+                       t1.repertory_two,
+                       t1.repertory_three,
+                       t1.repertory_four,
+                       t1.repertory_five,
+                       t1.repertory_six,
+                       t1.breeze,
+                       t1.ratio_stone,
+                       t1.ratio_regenerate1,
+                       t1.ratio_additive,
+                       t1.regenerate,
+                       t1.additive,
+                       t1.ratio_regenerate2,
+                       'crew2' AS 'crewNum',
+                       t2.produce_proportioning_num,
+                       t2.material_aggregate_1,
+                       t2.material_aggregate_2,
+                       t2.material_aggregate_3,
+                       t2.material_aggregate_4,
+                       t2.material_aggregate_5,
+                       t2.material_aggregate_6,
+                       t2.material_stone_1,
+                       t2.material_stone_2,
+                       t2.material_asphalt,
+                       t2.material_regenerate,
+                       t2.material_additive,
+                       t2.temperature_warehouse_1,
+                       t2.temperature_mixture,
+                       t2.temperature_duster,
+                       t2.temperature_asphalt,
+                       t2.temperature_aggregate,
+                       t2.material_total
+                FROM
+                     quality_proportioning_message AS t1
+                         INNER JOIN (
+                                    SELECT
+                                           produce_proportioning_num,
+                                           material_aggregate_1,
+                                           material_aggregate_2,
+                                           material_aggregate_3,
+                                           material_aggregate_4,
+                                           material_aggregate_5,
+                                           material_aggregate_6,
+                                           material_stone_1,
+                                           material_stone_2,
+                                           material_asphalt,
+                                           material_regenerate,
+                                           material_additive,
+                                           temperature_warehouse_1,
+                                           temperature_mixture,
+                                           temperature_duster,
+                                           temperature_asphalt,
+                                           temperature_aggregate,
+                                           material_total
+                                    FROM
+                                         quality_monitoring_realtime_data2
+                                    WHERE
+                                            produce_proportioning_num = (
+                                                                        SELECT
+                                                                               produce_proportioning_num
+                                                                        FROM
+                                                                             quality_monitoring_realtime_data2
+                                                                        ORDER BY
+                                                                                 id DESC
+                                                                        LIMIT 1
+                                                                        )
+                                    ORDER BY
+                                             id DESC
+                                    LIMIT 3
+                                    ) AS t2 ON t1.crew1_modele_id = t2.produce_proportioning_num
+                )
+    </select>
+
+
+    <select id="selectThreeWarningData" resultType="java.util.Map">
+        SELECT
+               t1.material_name,
+               t2.produce_crewNum,
+               TRUNCATE (AVG(t1.actual_ratio), 2) AS avg_real_ration
+        FROM
+             quality_warning_data AS t1
+                 INNER JOIN (
+                            SELECT
+                                   QC.*, QM.pro_name
+                            FROM
+                                 quality_warning_promessage_crew AS QC
+                                     INNER JOIN quality_proportioning_message AS QM ON QC.produce_ratio_id = QM.crew1_modele_id
+                            WHERE
+                                    QC.produce_crewNum = 1
+                              AND QC.produce_ratio_id = (
+                                                        SELECT
+                                                               produce_ratio_id
+                                                        FROM
+                                                             quality_warning_promessage_crew
+                                                        WHERE
+                                                                produce_crewNum = 1
+                                                        ORDER BY
+                                                                 id DESC
+                                                        LIMIT 1
+                                                        )
+                            ORDER BY
+                                     QC.id DESC
+                            LIMIT 3
+                            ) AS t2 ON t1.crew_id = t2.id
+        GROUP BY
+                 t1.material_name
+        UNION ALL
+        SELECT
+               t1.material_name,
+               t2.produce_crewNum,
+               TRUNCATE (AVG(t1.actual_ratio), 2)
+        FROM
+             quality_warning_data AS t1
+                 INNER JOIN (
+                            SELECT
+                                   QC.*, QM.pro_name
+                            FROM
+                                 quality_warning_promessage_crew AS QC
+                                     INNER JOIN quality_proportioning_message AS QM ON QC.produce_ratio_id = QM.crew1_modele_id
+                            WHERE
+                                    QC.produce_crewNum = 2
+                              AND QC.produce_ratio_id = (
+                                                        SELECT
+                                                               produce_ratio_id
+                                                        FROM
+                                                             quality_warning_promessage_crew
+                                                        WHERE
+                                                                produce_crewNum = 2
+                                                        ORDER BY
+                                                                 id DESC
+                                                        LIMIT 1
+                                                        )
+                            ORDER BY
+                                     QC.id DESC
+                            LIMIT 3
+                            ) AS t2 ON t1.crew_id = t2.id
+        GROUP BY
+                 t1.material_name
+    </select>
+    <select id="selectGlobalWarningData" resultType="java.util.Map">
+        SELECT
+               t1.material_name,
+               t1.actual_ratio,
+               t1.moudle_ratio,
+               t1.deviation_ratio,
+               t1.warning_level,
+               t2.produce_crewNum,
+               t2.produce_disc_num
+        FROM
+             quality_warning_data AS t1
+                 INNER JOIN (
+                            (
+                            SELECT
+                                   QC.*,
+                                   QM.pro_name
+                            FROM
+                                 quality_warning_promessage_crew AS QC
+                                     INNER JOIN
+                                         quality_proportioning_message AS QM
+                                         ON QC.produce_ratio_id = QM.crew1_modele_id
+                            WHERE
+                                    QC.produce_crewNum = 1
+                            ORDER BY
+                                     QC.id DESC
+                            LIMIT 1
+                            )
+                            UNION ALL
+                            (
+                            SELECT
+                                   QC.*,
+                                   QM.pro_name
+                            FROM
+                                 quality_warning_promessage_crew AS QC
+                                     INNER JOIN
+                                         quality_proportioning_message AS QM
+                                         ON QC.produce_ratio_id = QM.crew2_modele_id
+                            WHERE
+                                    QC.produce_crewNum = 2
+                            ORDER BY
+                                     QC.id DESC
+                            LIMIT 1
+                            )
+                            ) AS t2
+                     ON t1.crew_id = t2.id
+    </select>
+</mapper>

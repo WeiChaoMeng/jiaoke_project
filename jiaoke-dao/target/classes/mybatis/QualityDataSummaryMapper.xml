@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.quality.dao.QualityDataSummaryDao">
+
+    <select id="selectThreeDayData" resultType="java.util.Map">
+
+        (SELECT
+        'data1' AS crewNums,
+        date_format(QMRD.produce_date,'%Y-%m-%d') as  produce_date,
+        date_format(QMRD.produce_time,'%H:%i:%s') as produce_time,
+        QMRD.produce_disc_num,
+        QMRD.produce_proportioning_num,
+        QPM.pro_name,
+        QMRD.produce_car_num,
+        QMRD.produce_custom_num,
+        QMRD.material_aggregate_6,
+        QMRD.material_aggregate_5,
+        QMRD.material_aggregate_4,
+        QMRD.material_aggregate_3,
+        QMRD.material_aggregate_2,
+        QMRD.material_aggregate_1,
+        QMRD.material_stone_1,
+        QMRD.material_stone_2,
+        QMRD.material_asphalt,
+        QMRD.material_regenerate,
+        QMRD.material_additive,
+        QMRD.material_total,
+        QMRD.temperature_warehouse_1,
+        QMRD.temperature_mixture,
+        QMRD.temperature_duster,
+        QMRD.temperature_asphalt,
+        QMRD.temperature_aggregate
+        FROM
+        quality_monitoring_realtime_data1 AS QMRD
+        INNER JOIN
+        quality_proportioning_message AS QPM
+        ON QMRD.produce_proportioning_num = QPM.crew1_modele_id
+        WHERE
+        DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(QMRD.produce_date)
+        order by QMRD.produce_date,QMRD.produce_time)
+        Union ALL
+        (SELECT
+        'data2' AS crewNums,
+        date_format(QMRD.produce_date,'%Y-%m-%d') as  produce_date,
+        date_format(QMRD.produce_time,'%H:%I:%S') as produce_time,
+        QMRD.produce_disc_num,
+        QMRD.produce_proportioning_num,
+        QPM.pro_name,
+        QMRD.produce_car_num,
+        QMRD.produce_custom_num,
+        QMRD.material_aggregate_6,
+        QMRD.material_aggregate_5,
+        QMRD.material_aggregate_4,
+        QMRD.material_aggregate_3,
+        QMRD.material_aggregate_2,
+        QMRD.material_aggregate_1,
+        QMRD.material_stone_1,
+        QMRD.material_stone_2,
+        QMRD.material_asphalt,
+        QMRD.material_regenerate,
+        QMRD.material_additive,
+        QMRD.material_total,
+        QMRD.temperature_warehouse_1,
+        QMRD.temperature_mixture,
+        QMRD.temperature_duster,
+        QMRD.temperature_asphalt,
+        QMRD.temperature_aggregate
+        FROM
+        quality_monitoring_realtime_data2 AS QMRD
+        INNER JOIN
+        quality_proportioning_message AS QPM
+        ON QMRD.produce_proportioning_num = QPM.crew2_modele_id
+        order by QMRD.produce_date,QMRD.produce_time)
+    </select>
+
+    <select id="selectRatioListByDateTimeAndCrew" resultType="java.util.Map">
+        SELECT
+               QM.pro_name,
+               QD.produce_proportioning_num AS modele_id
+        FROM
+             quality_monitoring_realtime_${crew} AS QD
+                 INNER JOIN
+                     quality_proportioning_message AS QM
+                     <if test="crew == 'data1'.toString()">
+                         ON
+                         QD.produce_proportioning_num = QM.crew1_modele_id
+                     </if>
+        <if test="crew == 'data2'.toString()">
+            ON
+            QD.produce_proportioning_num = QM.crew2_modele_id
+        </if>
+        WHERE
+        CONCAT(
+        QD.produce_date,
+        ' ',
+        QD.produce_time
+        ) BETWEEN &apos;${startDate}&apos;
+        AND &apos;${endDate}&apos;
+        GROUP BY
+        QM.pro_name,modele_id;
+    </select>
+
+    <select id="selectPromessageByRaionModel" resultType="java.util.Map">
+        SELECT
+               &apos;${crew}&apos; as crewNums,
+              date_format(QMRD.produce_date,'%Y-%m-%d') as  produce_date,
+               date_format(QMRD.produce_time,'%H:%i:%s') as produce_time,
+               QMRD.produce_disc_num,
+               QPM.pro_name,
+               QMRD.produce_proportioning_num,
+               QMRD.produce_car_num,
+               QMRD.produce_custom_num,
+               QMRD.material_aggregate_6,
+               QMRD.material_aggregate_5,
+               QMRD.material_aggregate_4,
+               QMRD.material_aggregate_3,
+               QMRD.material_aggregate_2,
+               QMRD.material_aggregate_1,
+               QMRD.material_stone_1,
+               QMRD.material_stone_2,
+               QMRD.material_asphalt,
+               QMRD.material_regenerate,
+               QMRD.material_additive,
+               QMRD.material_total,
+               QMRD.temperature_warehouse_1,
+               QMRD.temperature_mixture,
+               QMRD.temperature_duster,
+               QMRD.temperature_asphalt,
+               QMRD.temperature_aggregate
+        FROM
+             quality_monitoring_realtime_${crew} AS QMRD
+                 INNER JOIN
+                     quality_proportioning_message AS QPM
+
+              <choose>
+                  <when test="crew=='data1'.toString()">
+                      ON QMRD.produce_proportioning_num = QPM.crew1_modele_id
+                  </when>
+                  <otherwise>
+                      ON QMRD.produce_proportioning_num = QPM.crew2_modele_id
+                  </otherwise>
+              </choose>
+        WHERE
+          QMRD.produce_proportioning_num = ${rationId}
+          AND
+                CONCAT(
+                  QMRD.produce_date,
+                    ' ',
+                  QMRD.produce_time
+                        ) BETWEEN &apos;${startDate}&apos;
+                        AND &apos;${endDate}&apos;
+    </select>
+    <select id="selectRaionModelById" resultType="java.util.Map">
+        SELECT
+                *
+        FROM
+             quality_proportioning_message
+        WHERE
+                ${crewNum}_modele_id = ${rationNum}
+    </select>
+</mapper>
