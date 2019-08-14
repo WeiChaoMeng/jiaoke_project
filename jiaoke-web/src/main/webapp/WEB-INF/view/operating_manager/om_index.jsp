@@ -5,6 +5,7 @@
   Time: 18:14
   To change this template use File | Settings | File Templates.
 --%>
+<!doctype html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 
@@ -27,14 +28,14 @@
         <div class="layui-col-sm6 layui-col-md3">
             <div class="layui-card">
                 <div class="layui-card-header">
-                    本周生产量
+                    本周生产量(吨)
                     <span class="layui-badge layui-bg-blue layuiadmin-badge">周</span>
                 </div>
                 <div class="layui-card-body layuiadmin-card-list">
-                    <p class="layuiadmin-big-font">9,999,666</p>
+                    <p class="layuiadmin-big-font" id="weekTotal">9,999,666</p>
                     <p>
                         时间段
-                        <span class="layuiadmin-span-color">2019-8-6 <i
+                        <span class="layuiadmin-span-color" id="weekDate">2019-8-6 <i
                                 class="layui-inline layui-icon layui-icon-flag"></i></span>
                     </p>
                 </div>
@@ -43,14 +44,14 @@
         <div class="layui-col-sm6 layui-col-md3">
             <div class="layui-card">
                 <div class="layui-card-header">
-                    本月生产量
+                    本月生产量(吨)
                     <span class="layui-badge layui-bg-cyan layuiadmin-badge">月</span>
                 </div>
                 <div class="layui-card-body layuiadmin-card-list">
-                    <p class="layuiadmin-big-font">33,555</p>
+                    <p class="layuiadmin-big-font" id="monthData" >33,555</p>
                     <p>
                         时间段
-                        <span class="layuiadmin-span-color">2019-8-6 <i
+                        <span class="layuiadmin-span-color" id="monthDate">2019-8-6 <i
                                 class="layui-inline layui-icon layui-icon-face-smile-b"></i></span>
                     </p>
                 </div>
@@ -59,15 +60,15 @@
         <div class="layui-col-sm6 layui-col-md3">
             <div class="layui-card">
                 <div class="layui-card-header">
-                    本年生产量
+                    本年生产量(万吨)
                     <span class="layui-badge layui-bg-green layuiadmin-badge">年</span>
                 </div>
                 <div class="layui-card-body layuiadmin-card-list">
 
-                    <p class="layuiadmin-big-font">999,666</p>
+                    <p class="layuiadmin-big-font" id="yearData">999,666</p>
                     <p>
                         时间段
-                        <span class="layuiadmin-span-color">2019-8-6  <i
+                        <span class="layuiadmin-span-color" id="yearDate" >2019-8-6  <i
                                 class="layui-inline layui-icon layui-icon-dollar"></i></span>
                     </p>
                 </div>
@@ -76,15 +77,15 @@
         <div class="layui-col-sm6 layui-col-md3">
             <div class="layui-card">
                 <div class="layui-card-header">
-                    累计完成生产量
+                    累计完成生产量(万吨)
                     <span class="layui-badge layui-bg-orange layuiadmin-badge">总</span>
                 </div>
                 <div class="layui-card-body layuiadmin-card-list">
 
-                    <p class="layuiadmin-big-font">66,666</p>
+                    <p class="layuiadmin-big-font" id="sumData">66,666</p>
                     <p>
                         时间段
-                        <span class="layuiadmin-span-color">2019-8-6  <i
+                        <span class="layuiadmin-span-color" id="sumDate">2019-8-6  <i
                                 class="layui-inline layui-icon layui-icon-user"></i></span>
                     </p>
                 </div>
@@ -93,7 +94,7 @@
         <div class="layui-col-sm12">
             <div class="layui-card">
                 <div class="layui-card-header">
-                    本月产量折线图
+                    上月产量折线图
                 </div>
                 <div class="layui-card-body">
                     <div class="layui-row">
@@ -139,27 +140,8 @@
                                             itemStyle: {
                                                 borderWidth: 2,
                                             },
-                                        }],
-                                        visualMap: [
-                                            {
-                                                show: false,
-                                                pieces: [{
-                                                    gt: 0,
-                                                    lt: 1800,
-                                                    color: '#673CD1',
-                                                },{
-                                                    gte: 1800,
-                                                    lt: 2800,
-                                                    color: 'green',
-                                                }],
-                                                outOfRange: {
-                                                    color: '#FF5D1D',
-                                                },
-                                            },
-                                        ],
+                                        }]
                                     }
-                                    // 使用刚指定的配置项和数据显示图表。
-                                    myChart1.setOption(option);
                                 </script>
                             </div>
                         </div>
@@ -168,8 +150,8 @@
                                 <p class="layuiadmin-normal-font">月生产吨数</p>
                                 <span>同上月增长</span>
                                 <div class="layui-progress layui-progress-big" lay-showpercent="yes">
-                                    <div class="layui-progress-bar" lay-percent="30%" style="width: 30%;"><span
-                                            class="layui-progress-text">30%</span>
+                                    <div class="layui-progress-bar" id ="lastMonthTonDiv" lay-percent="30%" style="width: 30%;"><span
+                                            class="layui-progress-text" id ="lastMonthTonSpan">30%</span>
                                     </div>
                                 </div>
                             </div>
@@ -177,16 +159,16 @@
                                 <p class="layuiadmin-normal-font">月生产盘数</p>
                                 <span>同上月增长</span>
                                 <div class="layui-progress layui-progress-big" lay-showpercent="yes">
-                                    <div class="layui-progress-bar" lay-percent="20%" style="width: 20%;"><span
-                                            class="layui-progress-text">20%</span></div>
+                                    <div class="layui-progress-bar" id ="lastMonthDishDiv" lay-percent="20%" style="width: 20%;"><span
+                                            class="layui-progress-text" id ="lastMonthDishSpan">20%</span></div>
                                 </div>
                             </div>
                             <div class="layuiadmin-card-list">
                                 <p class="layuiadmin-normal-font">月收入</p>
                                 <span>同上月增长</span>
                                 <div class="layui-progress layui-progress-big" lay-showpercent="yes">
-                                    <div class="layui-progress-bar" lay-percent="25%" style="width: 25%;"><span
-                                            class="layui-progress-text">25%</span></div>
+                                    <div class="layui-progress-bar" id ="lastMonthIncomeDiv" lay-percent="25%" style="width: 25%;"><span
+                                            class="layui-progress-text" id ="lastMonthIncomeSpan">25%</span></div>
                                 </div>
                             </div>
                         </div>
@@ -198,7 +180,11 @@
             <div class="layui-row layui-col-space15">
                 <div class="layui-col-sm6">
                     <div class="layui-card" >
-                        <div class="layui-card-header">完成工作与计划对比</div>
+                        <div class="layui-card-header">完成工作与计划对比
+                            <div class="layui-btn-group layuiadmin-btn-group">
+                                <a href="javascript:;" onclick="addYearMessage()"  class="layui-btn layui-btn-primary layui-btn-xs" style="    top: 10px;">添加计划</a>
+                            </div>
+                        </div>
                         <div class="layui-card-body" id="echarts2" style="height: 300px;">
                             <script type="text/javascript">
                                 // 基于准备好的dom，初始化echarts实例
@@ -214,7 +200,7 @@
                                         containLabel: true
                                     },
                                     title: {
-                                        text: '今年产量完成情况表(吨)',
+                                        text: '今年产量完成情况表(万吨)',
                                         x: 'center',
                                         y: 'top',
                                         itemGap: 20,
@@ -227,12 +213,12 @@
                                     },
                                     tooltip: {
                                         trigger: 'item',
-                                        formatter: "{b}: ({d}%)<br/> {c}吨"
+                                        formatter: "{b}: ({d}%)<br/> {c}万吨"
                                     },
                                     series: [
                                         //认购完成01
                                         {
-                                            name:'认购完成率',
+                                            name:'产量完成率',
                                             center: ['center', 'center'],
                                             type:'pie',
                                             radius: ['40%', '60%'],
@@ -243,7 +229,7 @@
                                                         show:true,
                                                         distance:0.7,
                                                         textStyle:{color:'#000',fontSize:"10"},
-                                                        formatter:'{b} {{d}%} \n {{c}吨}',
+                                                        formatter:'{b} {{d}%} \n {{c}万吨}',
 
                                                     },
                                                 },
@@ -268,7 +254,7 @@
                                         },
                                         //认购完成02
                                         {
-                                            name:'认购完成率',
+                                            name:'产量完成率',
                                             center: ['center', 'center'],
                                             type:'pie',
                                             radius: ['36%', '34%'],
@@ -300,7 +286,6 @@
 
                                     ]
                                 };
-                                // 使用刚指定的配置项和数据显示图表。
                                 myChart2.setOption(option2);
                             </script>
                         </div>
@@ -376,8 +361,7 @@
                                     ],
                                     backgroundColor: '#fff'
                                 };
-                                // 使用刚指定的配置项和数据显示图表。
-                                myChart3.setOption(option3);
+
                             </script>
                         </div>
                     </div>
@@ -389,8 +373,6 @@
                             <script type="text/javascript">
                                 // 基于准备好的dom，初始化echarts实例
                                 var myChart4 = echarts.init(document.getElementById('echarts4'));
-                                var xData = ['芝罘区','福山区','莱山区','牟平区','海阳市','莱阳市','蓬莱市','栖霞市','龙口市','长岛县','招远市','莱州市','开发区','高新区','昆嵛山','龙海','机场','核电'];
-                                var y1Data = [10,31,29,18,21,30,31,17,27,3,24,23,14,13,16,9,6,4];
                                 option4 = {
                                     grid: {
                                         left: '7%',
@@ -434,7 +416,7 @@
                                                     width:'1'//坐标线的宽度
                                                 }
                                             },
-                                            data: xData
+                                            data: []
                                         }
                                     ],
                                     yAxis: [
@@ -462,38 +444,11 @@
                                             },
                                             min: 0,
                                             boundaryGap: [0.2, 0.2]
-                                        },
-                                        {
-                                            type: 'value',
-                                            scale: true,
-                                            axisLine: {
-                                                show: false
-                                            },
-                                            splitNumber : 3,
-                                            axisTick: {
-                                                show: false
-                                            },
-                                            axisLabel: {
-                                                fontSize: 13,
-                                                color: '#d0d0d0',
-                                                margin: 12,
-                                            },
-                                            splitLine: {
-                                                lineStyle: {
-                                                    // 使用深浅的间隔色
-                                                    color: '#4e608b'
-                                                }
-                                            },
-                                            name: '',
-                                            max: 30,
-                                            min: 0,
-                                            boundaryGap: [0.2, 0.2]
-                                        },
-
+                                        }
                                     ],
                                     series: [
                                         {
-                                            name:'监控数量',
+                                            name:'每月生产天数',
                                             type:'bar',
                                             label: {
                                                 normal: {
@@ -517,13 +472,12 @@
                                             },
                                             barWidth: '40%',
                                             yAxisIndex: 0,
-                                            data: y1Data
+                                            data: []
                                         }
                                     ]
                                 };
 
-                                // 使用刚指定的配置项和数据显示图表。
-                                myChart4.setOption(option4);
+
                             </script>
                         </div>
                     </div>
@@ -532,7 +486,40 @@
         </div>
     </div>
 </div>
+<div class="experiment_from_div" id="addFrom" style="display:none;">
+    <div class="title">
+        <span>添加计划量</span>
+    </div>
+
+    <div class="title-msg">
+
+    </div>
+
+    <form class="login-form" method="post" novalidate >
+        <!--输入框-->
+        <div class="input-content">
+            <!--autoFocus-->
+            <div>
+                <input type="text" autocomplete="off" id="dates"
+                       placeholder="添加计划年份 例:2019"  />
+                <input type="text" autocomplete="off" id="setTotal"
+                       placeholder="添加计划量(万吨) 例:200"  />
+            </div>
+        </div>
+        <!--登入按钮-->
+        <div style="text-align: center">
+            <button type="button" class="enter-btn"  onclick="sendFromData()">确定</button>
+        </div>
+    </form>
+
+</div>
+</div>
+<%--js获取路径--%>
+<input id="path" type="hidden" value="${path}"/>
+
 <script type="text/javascript" src="/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/layer/layer.js"></script>
 <script type="text/javascript" src="/static/js/operating_manager/operating_manager.js"></script>
+
 </body>
 </html>

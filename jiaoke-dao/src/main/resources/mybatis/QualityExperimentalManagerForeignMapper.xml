@@ -446,22 +446,24 @@
         </foreach>
     </insert>
     <select id="selectExperimentalProjectMessage" resultType="java.util.Map">
-        SELECT                DATE_FORMAT(
-                                  QTLR.sampling_date,
-                                  '%Y-%m-%d'
-                                      ) AS sampling_date,
-                              DATE_FORMAT(
-                                  QTLR.test_date,
-                                  '%Y-%m-%d'
-                                      ) AS test_date,
-                              DATE_FORMAT(
-                                  QTLR.report_date,
-                                  '%Y-%m-%d'
-                                      ) AS report_date,
-                              QTLR.*,QTEC.*,QTEID.* FROM `quality_test_lab_report_foreign` AS QTLR
-                                                             INNER JOIN quality_test_experiment_contrast_foreign AS QTEC ON QTLR.order_ticket_num = QTEC.orderTicketNum
-                                                             INNER JOIN quality_test_experiment_ietm_dictionary_foreign AS QTEID ON QTEC.experimentId = QTEID.Id
-        WHERE QTLR.Id = #{id}
+        SELECT
+               DATE_FORMAT(
+                   QTLR.sampling_date,
+                   '%Y-%m-%d'
+                       ) AS sampling_date,
+               DATE_FORMAT(QTLR.test_date, '%Y-%m-%d') AS test_date,
+               DATE_FORMAT(
+                   QTLR.report_date,
+                   '%Y-%m-%d'
+                       ) AS report_date,
+               QTLR.*, QTEC.*, QTEID.*,QTTLF.materials_name
+        FROM
+             `quality_test_lab_report_foreign` AS QTLR
+                 INNER JOIN quality_test_experiment_contrast_foreign AS QTEC ON QTLR.order_ticket_num = QTEC.orderTicketNum
+                 INNER JOIN quality_test_experiment_ietm_dictionary_foreign AS QTEID ON QTEC.experimentId = QTEID.Id
+                 INNER JOIN quality_test_task_list_foreign AS QTTLF ON QTLR.order_ticket_num = QTTLF.ticket_num
+        WHERE
+                QTLR.Id = #{id}
     </select>
 
     <select id="selectExperimentalMsgByTableName" resultType="java.util.Map">

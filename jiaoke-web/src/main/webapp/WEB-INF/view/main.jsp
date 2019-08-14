@@ -556,7 +556,7 @@
 
                 case 'DJ':
 
-                    $("#iframe").attr("src", "/construction.do");
+                    $("#iframe").attr("src", "/partyIndex.do");
                     break;
 
                 case 'JY':
