@@ -2113,6 +2113,7 @@ h1 > span{
 
 
 /*****table*****/
+/*
 td,
 th {
     font-style: normal;
@@ -2158,6 +2159,7 @@ table thead {
     color: rgb(126, 122, 122);
     text-shadow: 1px 1px 1px #FFF;
 }
+*/
 
 
 /*************结论******************/

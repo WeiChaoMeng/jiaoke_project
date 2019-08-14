@@ -86,7 +86,7 @@ function getSpecificationDataAndManufacturersData() {
                 var manufacturersHtml= '';
                 for (var i = 0 ; i < res.length; i++) {
                     if (res[i].marks === 'specification'){
-                        specificationHtml= '<li>'
+                        specificationHtml += '<li>'
                         +'<span class="experiment_from_span">' + res[i].name + '</span>'
                         +'<div>'
                             +'<a href="javascript:void(0)" onclick="deleteSpecificationOrManufacturersById('+ res[i].Id +',\''+res[i].marks+'\');">删除</a>'
@@ -94,7 +94,7 @@ function getSpecificationDataAndManufacturersData() {
                             +'</div>'
                         + '</li>'
                     }else {
-                        manufacturersHtml= '<li>'
+                        manufacturersHtml += '<li>'
                             +'<span class="experiment_from_span">' + res[i].name + '</span>'
                             +'<div>'
                             +'<a href="javascript:void(0)" onclick="deleteSpecificationOrManufacturersById('+ res[i].Id +',\''+res[i].marks+'\');">删除</a>'
@@ -250,12 +250,13 @@ function sendSpecificationFrom() {
 function sendManufacturersFrom(){
     var basePath = $("#path").val();
     var manufacturersName =  $('#manufacturersInput').val();
+    debugger
     if (manufacturersName.isBlank()){
         layer.msg("请填写厂家名称");
     }else {
         $.ajax({
             type:"POST",
-            url:basePath + "sendManufacturersFrom.do",
+            url:basePath + "/sendManufacturersFrom.do",
             dataType:"json",
             data:{
                 'manufacturersName':manufacturersName

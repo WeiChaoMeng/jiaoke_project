@@ -65,7 +65,7 @@
         </shiro:hasPermission>
 
         <a class="grid__item" href="javacript:void(0);" onclick="sample_management_foreign()">
-            <h2 class="title title--preview">取样管理</h2>
+            <h2 class="title title--preview">每日取样</h2>
             <div class="loader"></div>
             <span class="category">取样通知相关</span>
             <div class="meta meta--preview">
@@ -75,7 +75,7 @@
             </div>
         </a>
         <a class="grid__item" href="javacript:void(0);" onclick="experimental_management_foreign()">
-            <h2 class="title title--preview">实验管理</h2>
+            <h2 class="title title--preview">每日实验</h2>
             <div class="loader"></div>
             <span class="category">实验相关流程</span>
             <div class="meta meta--preview">
@@ -85,7 +85,7 @@
             </div>
         </a>
         <a class="grid__item" href="javacript:void(0);" onclick="unfinished_experimental_foreign()">
-            <h2 class="title title--preview">未完实验</h2>
+            <h2 class="title title--preview">实验填写</h2>
             <div class="loader"></div>
             <span class="category">填写实验数据、输入计算表格</span>
             <div class="meta meta--preview">
@@ -95,7 +95,7 @@
             </div>
         </a>
         <a class="grid__item"  href="javacript:void(0);"onclick="standing_book_foreign()">
-            <h2 class="title title--preview">台账管理</h2>
+            <h2 class="title title--preview">实验台账</h2>
             <div class="loader"></div>
             <span class="category">各类台账展示</span>
             <div class="meta meta--preview">
@@ -105,7 +105,7 @@
             </div>
         </a>
         <a class="grid__item" href="javacript:void(0);"onclick="experiment_setting_foreign()">
-            <h2 class="title title--preview">试验设置</h2>
+            <h2 class="title title--preview">相关试验</h2>
             <div class="loader"></div>
             <span class="category">材料规格、生产厂家设置</span>
             <div class="meta meta--preview">

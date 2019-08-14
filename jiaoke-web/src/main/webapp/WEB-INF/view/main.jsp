@@ -560,12 +560,12 @@
 
                 case 'DJ':
 
-                    $("#iframe").attr("src", "/construction.do");
+                    $("#iframe").attr("src", "/partyIndex.do");
                     break;
 
                 case 'JY':
 
-                    $("#iframe").attr("src", "/construction.do");
+                    $("#iframe").attr("src", "/operatingManager.do");
                     break;
 
                 case 'HB':

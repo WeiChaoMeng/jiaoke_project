@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.operating.dao.OperatingManagerDao">
+    <select id="selectThisWeekData" resultType="java.util.Map">
+        SELECT
+               SUM(material_total) AS total
+        FROM
+             quality_monitoring_realtime_data1
+        WHERE
+                YEARWEEK(
+                    date_format(produce_date, '%Y-%m-%d'),
+                    1
+                        ) = YEARWEEK(now(), 1)
+        UNION ALL
+        SELECT
+               SUM(material_total) AS total
+        FROM
+             quality_monitoring_realtime_data2
+        WHERE
+                YEARWEEK(
+                    date_format(produce_date, '%Y-%m-%d'),
+                    1
+                        ) = YEARWEEK(now(), 1);
+    </select>
+
+    <select id="selectThisMonthData" resultType="java.util.Map">
+        SELECT
+               SUM(material_total) AS total
+        FROM
+             quality_monitoring_realtime_data1
+        WHERE
+                DATE_FORMAT(produce_date, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')
+        UNION ALL
+        SELECT
+               SUM(material_total) AS total
+        FROM
+             quality_monitoring_realtime_data2
+        WHERE
+                DATE_FORMAT(produce_date, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m');
+    </select>
+
+    <select id="selectThisYearData" resultType="java.util.Map">
+        SELECT
+               CAST(SUM(material_total)/1000 AS CHAR) AS total
+        FROM
+             `quality_monitoring_realtime_data1`
+        WHERE
+                YEAR (produce_date) = YEAR (NOW())
+        UNION ALL
+        SELECT
+               CAST(SUM(material_total)/1000 AS CHAR) AS total
+        FROM
+             `quality_monitoring_realtime_data2`
+        WHERE
+                YEAR (produce_date) = YEAR (NOW())
+
+    </select>
+    <select id="selectAllData" resultType="java.util.Map">
+        SELECT CAST(SUM(material_total)/1000 AS CHAR) AS total from quality_monitoring_realtime_data1
+        UNION ALL
+        SELECT CAST(SUM(material_total)/1000 AS CHAR) AS total  from quality_monitoring_realtime_data2;
+    </select>
+    <select id="selectFirstProductDate" resultType="java.util.Map">
+        SELECT
+               DATE_FORMAT(produce_date,'%Y-%m-%d') AS firstDate
+        FROM
+             quality_monitoring_realtime_data1
+        ORDER BY
+                 produce_date
+        LIMIT 1
+    </select>
+
+    <select id="selectLastMonthData" resultType="java.util.Map">
+        SELECT
+               DATE_FORMAT(T1.produce_date,'%d') AS proDate,
+               SUM(T1.total) AS total
+        FROM
+             (SELECT
+                     produce_date,
+                     SUM(material_total) AS total
+              FROM
+                   quality_monitoring_realtime_data1
+              WHERE
+                      PERIOD_DIFF(
+                          date_format(now(), '%Y%m'),
+                          date_format(produce_date, '%Y%m')
+                              ) = 1
+              GROUP BY
+                       produce_date
+              UNION ALL
+              SELECT
+                     produce_date,
+                     SUM(material_total) AS total
+              FROM
+                   quality_monitoring_realtime_data2
+              WHERE
+                      PERIOD_DIFF(
+                          date_format(now(), '%Y%m'),
+                          date_format(produce_date, '%Y%m')
+                              ) = 1
+              GROUP BY
+                       produce_date) AS T1
+        GROUP BY T1.produce_date
+    </select>
+
+    <select id="selectMonthContrast" resultType="java.util.Map">
+        SELECT
+               CAST(SUM(T1.sumCount)  AS CHAR) AS counts,
+               CAST(SUM(total)  AS CHAR) AS totals
+        FROM
+             (
+             SELECT
+                    COUNT(*) AS sumCount,
+                    SUM(material_total) AS total
+             FROM
+                  quality_monitoring_realtime_data1
+             WHERE
+                     date_format(produce_date, '%Y %m') = date_format(
+                                                              DATE_SUB(curdate(), INTERVAL 1 MONTH),
+                                                              '%Y %m'
+                             )
+             UNION ALL
+             SELECT
+                    COUNT(*) AS sumCount,
+                    SUM(material_total) AS total
+             FROM
+                  quality_monitoring_realtime_data2
+             WHERE
+                     date_format(produce_date, '%Y %m') = date_format(
+                                                              DATE_SUB(curdate(), INTERVAL 1 MONTH),
+                                                              '%Y %m'
+                             )
+             ) AS T1
+    </select>
+    <select id="selectmonthBeforeLatContrast" resultType="java.util.Map">
+        SELECT
+               CAST(SUM(T1.sumCount)   AS CHAR) AS counts,
+               CAST(SUM(total)  AS CHAR)  AS totals
+        FROM
+             (
+             SELECT
+                    COUNT(*) AS sumCount,
+                    SUM(material_total) AS total
+             FROM
+                  quality_monitoring_realtime_data1
+             WHERE
+                     date_format(produce_date, '%Y %m') = date_format(
+                                                              DATE_SUB(curdate(), INTERVAL 2 MONTH),
+                                                              '%Y %m'
+                             )
+             UNION ALL
+             SELECT
+                    COUNT(*) AS sumCount,
+                    SUM(material_total) AS total
+             FROM
+                  quality_monitoring_realtime_data2
+             WHERE
+                     date_format(produce_date, '%Y %m') = date_format(
+                                                              DATE_SUB(curdate(), INTERVAL 2 MONTH),
+                                                              '%Y %m'
+                             )
+             ) AS T1
+    </select>
+    <select id="selectAllMonthPercent" resultType="java.util.Map">
+        SELECT
+               SUM(T1.`value`) AS `value`,
+               CONCAT(T1.`name`,'月') AS `name`
+        FROM
+             (SELECT
+                     ROUND(SUM(material_total)/1000 )AS `value`,
+                     MONTH(produce_date) AS `name`
+              FROM
+                   quality_monitoring_realtime_data1
+              WHERE
+                      DATE_FORMAT(produce_date, '%y') = DATE_FORMAT(NOW(), '%y')
+              GROUP BY
+                       MONTH(produce_date)
+              UNION ALL
+              SELECT
+                     ROUND(SUM(material_total)/1000 )AS `value`,
+                     MONTH(produce_date) AS `name`
+              FROM
+                   quality_monitoring_realtime_data2
+              WHERE
+                      DATE_FORMAT(produce_date, '%y') = DATE_FORMAT(NOW(), '%y')
+              GROUP BY
+                       MONTH(produce_date)) AS T1
+        GROUP BY
+                 T1.`name`
+
+    </select>
+
+    <select id="selectEveryMonthDays" resultType="java.util.Map">
+        SELECT
+               COUNT(*) AS totals,
+               CONCAT(MONTH(T1.produce_date),'月') AS dates
+        FROM
+             (
+             SELECT
+                    produce_date
+             FROM
+                  quality_monitoring_realtime_data1
+             WHERE
+                     DATE_FORMAT(produce_date, '%y') = DATE_FORMAT(NOW(), '%y')
+             GROUP BY
+                      produce_date
+             UNION ALL
+             SELECT
+                    produce_date
+             FROM
+                  quality_monitoring_realtime_data2
+             WHERE
+                     DATE_FORMAT(produce_date, '%y') = DATE_FORMAT(NOW(), '%y')
+             GROUP BY
+                      produce_date
+             ) AS T1
+        GROUP BY
+                 MONTH(T1.produce_date)
+    </select>
+    <insert id="insetFromData" useGeneratedKeys="true">
+        INSERT INTO operating_manager (year_name, totals)
+        VALUES
+               (#{dates},#{total})
+    </insert>
+    <select id="selectDataByDate" resultType="java.util.Map">
+        select * from  operating_manager where year_name = #{dates}
+    </select>
+    <select id="selectThisYearTwoCrewData" resultType="java.util.Map">
+        SELECT
+               CAST(
+                   SUM(T1.total) / 1000000 AS CHAR
+                       ) AS total
+        FROM
+             (
+             SELECT
+                    SUM(material_total) AS total
+             FROM
+                  `quality_monitoring_realtime_data1`
+             WHERE
+                     YEAR (produce_date) = YEAR (NOW())
+             UNION ALL
+             SELECT
+                    SUM(material_total) AS total
+             FROM
+                  `quality_monitoring_realtime_data2`
+             WHERE
+                     YEAR (produce_date) = YEAR (NOW())
+             ) AS T1
+    </select>
+    <select id="selectThisYearPlan" resultType="java.util.Map">
+        SELECT totals FROM operating_manager WHERE year_name = YEAR (NOW());
+    </select>
+</mapper>
