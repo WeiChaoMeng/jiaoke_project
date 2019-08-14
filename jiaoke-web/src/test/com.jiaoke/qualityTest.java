@@ -3,10 +3,12 @@ package com.jiaoke;
 import com.jiaoke.controller.SpringHelper;
 import com.jiaoke.oa.bean.OaCollaboration;
 import com.jiaoke.oa.dao.OaCollaborationMapper;
+import com.jiaoke.oa.dao.UserInfoMapper;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author lihui
@@ -16,12 +18,12 @@ import java.util.List;
 public class qualityTest {
 
     //    private RoleInfoMapper roleInfoMapper;
-    private OaCollaborationMapper oaCollaborationMapper;
+    private UserInfoMapper userInfoMapper;
 //    private DingDingPunchRecordMapper dingDingPunchRecordMapper;
 
     @Before
     public void setUp() {
-        oaCollaborationMapper = SpringHelper.getBean("oaCollaborationMapper");
+        userInfoMapper = SpringHelper.getBean("userInfoMapper");
     }
 
     @Test

@@ -7,15 +7,21 @@
         <result column="password" jdbcType="VARCHAR" property="password"/>
         <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
         <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="nature" jdbcType="VARCHAR" property="nature"/>
+        <result column="telephone" jdbcType="VARCHAR" property="telephone"/>
+        <result column="job" jdbcType="VARCHAR" property="job"/>
+        <result column="birthday" jdbcType="TIMESTAMP" property="birthday"/>
         <result column="sex" jdbcType="INTEGER" property="sex"/>
         <result column="email" jdbcType="VARCHAR" property="email"/>
         <result column="position" jdbcType="VARCHAR" property="position"/>
         <result column="register_time" jdbcType="TIMESTAMP" property="registerTime"/>
+        <result column="entry_date" jdbcType="TIMESTAMP" property="entryDate"/>
+        <result column="positive_date" jdbcType="TIMESTAMP" property="positiveDate"/>
         <result column="department" jdbcType="VARCHAR" property="department"/>
         <result column="dept_principal" jdbcType="VARCHAR" property="deptPrincipal"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, username, `password`, nickname, phone, sex, email, `position`, register_time, department, dept_principal
+    id, username, `password`, nickname, phone, job, birthday, telephone,  nature, sex, email, `position`, register_time, entry_date, positive_date, department, dept_principal
   </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -48,6 +54,18 @@
             <if test="phone != null">
                 phone,
             </if>
+            <if test="nature != null">
+                nature,
+            </if>
+            <if test="telephone != null">
+                telephone,
+            </if>
+            <if test="job != null">
+                job,
+            </if>
+            <if test="birthday != null">
+                birthday,
+            </if>
             <if test="sex != null">
                 sex,
             </if>
@@ -59,6 +77,12 @@
             </if>
             <if test="registerTime != null">
                 register_time,
+            </if>
+            <if test="entryDate != null">
+                entry_date,
+            </if>
+            <if test="positiveDate != null">
+                positive_date,
             </if>
             <if test="department != null">
                 department,
@@ -83,6 +107,18 @@
             <if test="phone != null">
                 #{phone,jdbcType=VARCHAR},
             </if>
+            <if test="nature != null">
+                #{nature,jdbcType=VARCHAR},
+            </if>
+            <if test="telephone != null">
+                #{telephone,jdbcType=VARCHAR},
+            </if>
+            <if test="job != null">
+                #{job,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                #{birthday,jdbcType=TIMESTAMP},
+            </if>
             <if test="sex != null">
                 #{sex,jdbcType=INTEGER},
             </if>
@@ -94,6 +130,12 @@
             </if>
             <if test="registerTime != null">
                 #{registerTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="entryDate != null">
+                #{entryDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="positiveDate != null">
+                #{positiveDate,jdbcType=TIMESTAMP},
             </if>
             <if test="department != null">
                 #{department,jdbcType=VARCHAR},
@@ -110,10 +152,16 @@
       `password` = #{password,jdbcType=VARCHAR},
       nickname = #{nickname,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
+      nature = #{nature,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      job = #{job,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=TIMESTAMP},
       sex = #{sex,jdbcType=INTEGER},
       email = #{email,jdbcType=VARCHAR},
       `position` = #{position,jdbcType=VARCHAR},
       register_time = #{registerTime,jdbcType=TIMESTAMP},
+      entry_date = #{entryDate,jdbcType=TIMESTAMP},
+      positive_date = #{positiveDate,jdbcType=TIMESTAMP},
       department = #{department,jdbcType=VARCHAR},
       dept_principal = #{deptPrincipal,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
@@ -126,6 +174,9 @@
             user_info.`password`,
             user_info.nickname,
             user_info.phone,
+            user_info.telephone,
+            user_info.job,
+            user_info.birthday,
             user_info.sex,
             user_info.email,
             user_info.position,
@@ -161,6 +212,9 @@
             user_info.`password`,
             user_info.nickname,
             user_info.phone,
+            user_info.telephone,
+            user_info.job,
+            user_info.birthday,
             user_info.sex,
             user_info.email,
             user_info.position,
@@ -181,7 +235,10 @@
             user_info.`password`,
             user_info.nickname,
             user_info.phone,
+            user_info.telephone,
             user_info.sex,
+            user_info.job,
+            user_info.birthday,
             user_info.email,
             user_info.position,
             user_info.register_time,
@@ -219,6 +276,18 @@
             <if test="phone != null">
                 phone = #{phone,jdbcType=VARCHAR},
             </if>
+            <if test="nature != null">
+                nature = #{nature,jdbcType=VARCHAR},
+            </if>
+            <if test="telephone != null">
+                telephone = #{telephone,jdbcType=VARCHAR},
+            </if>
+            <if test="job != null">
+                job = #{job,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday,jdbcType=TIMESTAMP},
+            </if>
             <if test="sex != null">
                 sex = #{sex,jdbcType=INTEGER},
             </if>
@@ -230,6 +299,12 @@
             </if>
             <if test="registerTime != null">
                 register_time = #{registerTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="entryDate != null">
+                entry_date = #{entryDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="positiveDate != null">
+                positive_date = #{positiveDate,jdbcType=TIMESTAMP},
             </if>
             <if test="department != null">
                 department = #{department,jdbcType=VARCHAR},
@@ -266,5 +341,59 @@
 
     <select id="getNicknameById" parameterType="java.lang.Integer" resultType="java.lang.String">
         select nickname from user_info where id = #{id}
+    </select>
+
+    <select id="getUserInfoByUseId" parameterType="java.lang.Integer" resultType="com.jiaoke.oa.bean.UserInfo">
+        SELECT
+            ui.id,
+            ui.nickname,
+            ui.phone,
+            ui.telephone,
+            ui.job,
+            ui.birthday,
+            ui.sex,
+            ui.email,
+            ui.position,
+            wn.name AS nature,
+            dt.department_name AS department
+        FROM
+            user_info AS ui
+            LEFT JOIN department AS dt ON dt.department_key = ui.department
+            LEFT JOIN work_nature AS wn ON wn.id = ui.nature
+        WHERE ui.id = #{userInfoId}
+    </select>
+
+    <select id="getUserBasicInfo" resultType="com.jiaoke.oa.bean.UserInfo">
+        SELECT
+            ui.id,
+            ui.nickname,
+            ui.phone,
+            ui.telephone,
+            ui.job,
+            ui.birthday,
+            ui.sex,
+            ui.email,
+            ui.position,
+            ui.entry_date as entryDate,
+            wn.name AS nature,
+            dt.department_name AS department
+        FROM
+            user_info AS ui
+            LEFT JOIN department AS dt ON dt.department_key = ui.department
+            LEFT JOIN work_nature AS wn ON wn.id = ui.nature
+        where ui.nature &lt; 6
+        ORDER BY
+            ui.id
+    </select>
+
+    <select id="getUserStatistical" resultType="java.lang.Integer">
+        SELECT
+            count( * ) as num
+        FROM
+            `user_info`
+        WHERE
+            nature &lt; 6
+        GROUP BY
+            nature
     </select>
 </mapper>

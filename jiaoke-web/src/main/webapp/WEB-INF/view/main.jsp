@@ -416,6 +416,10 @@
     </div>
 </div>
 
+<div id="userDetails" style="display: none;padding: 20px;">
+    <dl id="userDetailsInfoShow"></dl>
+</div>
+
 <%--文件上传--%>
 <div id="uploadFile" style="display: none;">
     <%--<div style="margin: auto;height: 65px;text-align: center;vertical-align: middle;line-height: 65px;">
@@ -2733,6 +2737,120 @@
                 });
             }
         );
+    }
+
+    /*用户详情信息*/
+    function userDetails(userInfoId) {
+        window.lar = layer.open({
+            title: false,
+            type: 1,
+            area: ['25%', '60%'],
+            shadeClose: false, //点击遮罩关闭
+            content: $("#userDetails"),
+            offset: "20%"
+        });
+
+        $.ajax({
+            type: "post",
+            url: "/personnel/userDetails",
+            data: {'userInfoId': userInfoId},
+            async: false,
+            dataType: "json",
+            success: function (data) {
+
+                var userDetailsInfo = '';
+
+                userDetailsInfo += '<dd style="font-size: 18px;color: #5a5a5a;padding-bottom: 10px;">';
+                userDetailsInfo += '<span id="nickname-ud" style="display: inline-block;cursor: pointer;font-size: 18px;color: #5193e1;">' + data.nickname + '</span>';
+                userDetailsInfo += '</dd>';
+
+                userDetailsInfo += '<dt style="height: 26px;line-height: 26px;">';
+                userDetailsInfo += '<span class="personnel-span-right">部门：</span>';
+                if (data.department !== undefined) {
+                    userDetailsInfo += '<span>' + data.department + '</span>';
+                } else {
+                    userDetailsInfo += '<span></span>';
+                }
+                userDetailsInfo += '</dt>';
+
+                userDetailsInfo += '<dt style="height: 26px;line-height: 26px;">';
+                userDetailsInfo += '<span class="personnel-span-right">岗位：</span>';
+                if (data.position !== undefined) {
+                    userDetailsInfo += '<span>' + data.position + '</span>';
+                } else {
+                    userDetailsInfo += '<span></span>';
+                }
+                userDetailsInfo += '</dt>';
+
+                userDetailsInfo += '<dt style="height: 26px;line-height: 26px;">';
+                userDetailsInfo += '<span class="personnel-span-right">职务级别：</span>';
+                if (data.job !== undefined) {
+                    userDetailsInfo += '<span>' + data.job + '</span>';
+                } else {
+                    userDetailsInfo += '<span></span>';
+                }
+                userDetailsInfo += '</dt>';
+
+                userDetailsInfo += '<dt style="height: 26px;line-height: 26px;">';
+                userDetailsInfo += '<span class="personnel-span-right">手机：</span>';
+                if (data.phone !== undefined) {
+                    userDetailsInfo += '<span>' + data.phone + '</span>';
+                } else {
+                    userDetailsInfo += '<span></span>';
+                }
+                userDetailsInfo += '</dt>';
+
+                userDetailsInfo += '<dt style="height: 26px;line-height: 26px;">';
+                userDetailsInfo += '<span class="personnel-span-right">办公电话：</span>';
+                if (data.telephone !== undefined) {
+                    userDetailsInfo += '<span>' + data.telephone + '</span>';
+                } else {
+                    userDetailsInfo += '<span></span>';
+                }
+                userDetailsInfo += '</dt>';
+
+                userDetailsInfo += '<dt style="height: 26px;line-height: 26px;">';
+                userDetailsInfo += '<span class="personnel-span-right">邮箱：</span>';
+                if (data.email !== undefined) {
+                    userDetailsInfo += '<span>' + data.email + '</span>';
+                } else {
+                    userDetailsInfo += '<span></span>';
+                }
+                userDetailsInfo += '</dt>';
+
+                userDetailsInfo += '<dt style="height: 26px;line-height: 26px;">';
+                userDetailsInfo += '<span class="personnel-span-right">性别：</span>';
+                if (data.sex == 0) {
+                    userDetailsInfo += '<span>男</span>';
+                } else {
+                    userDetailsInfo += '<span>女</span>';
+                }
+                userDetailsInfo += '</dt>';
+
+                userDetailsInfo += '<dt style="height: 26px;line-height: 26px;">';
+                userDetailsInfo += '<span class="personnel-span-right">生日：</span>';
+                if (data.birthdayStr !== undefined) {
+                    userDetailsInfo += '<span>' + data.birthdayStr + '</span>';
+                } else {
+                    userDetailsInfo += '<span></span>';
+                }
+                userDetailsInfo += '</dt>';
+
+                userDetailsInfo += '<dt style="height: 26px;line-height: 26px;">';
+                userDetailsInfo += '<span class="personnel-span-right">年龄：</span>';
+                if (data.age !== undefined) {
+                    userDetailsInfo += '<span>' + data.age + '</span>';
+                } else {
+                    userDetailsInfo += '<span></span>';
+                }
+                userDetailsInfo += '</dt>';
+
+                $('#userDetailsInfoShow').html(userDetailsInfo);
+            },
+            error: function (result) {
+                layer.msg("出错！");
+            }
+        });
     }
 
     //checkbox选中事件

@@ -21,6 +21,11 @@ a {
     text-decoration: none;
 }
 
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
 /*导航*/
 .nav {
     width: 5%;
@@ -38,27 +43,201 @@ a {
     text-align: center;
 }
 
-.nav-item:hover{
+/*.nav-item:hover {
+    background-color: #ffffff;
+    transition: all .3s;
+    box-shadow: 1px 1px 5px 0 #a7a7a7;
+}*/
+
+.nav-item-style {
     background-color: #ffffff;
     transition: all .3s;
     box-shadow: 1px 1px 5px 0 #a7a7a7;
 }
 
-.nav-item-style{
-    background-color: #ffffff;
-    transition: all .3s;
-    box-shadow: 1px 1px 5px 0 #a7a7a7;
-}
-
-.nav-item span{
-    font-size: 13px;margin-top: 3px;display: block;
+.nav-item span {
+    font-size: 13px;
+    margin-top: 3px;
+    display: block;
 }
 
 /*frame*/
-.page{
-    width: 95%;float: right
+.frame-page {
+    width: 95%;
+    float: right
 }
 
-.personnel{
-    width: 100%;height: 100%;
+.personnel {
+    width: 100%;
+    height: 100%;
+}
+
+/*页面-table*/
+.cursor_hand {
+    cursor: pointer;
+}
+
+.simple-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 13px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.simple-table thead tr th {
+    height: 25px;
+    line-height: 25px;
+    font-weight: bold;
+    white-space: nowrap;
+    width: calc(100% / 8);
+}
+
+.simple-table-file thead tr th {
+    height: 25px;
+    line-height: 25px;
+    font-weight: bold;
+    white-space: nowrap;
+    width: calc(100% / 10);
+}
+
+.simple-table-dynamic thead tr th {
+    width: calc(100% / 7);
+}
+
+.simple-table-contract thead tr th {
+    width: calc(100% / 8);
+}
+
+.simple-table-welfare thead tr th {
+    width: calc(100% / 9);
+}
+
+.simple-table tbody tr td {
+    line-height: 25px;
+    border: none;
+    white-space: nowrap;
+}
+
+.simple-table tbody tr:hover {
+    background: #edf0f3;
+}
+
+.overview-margin {
+    width: 97%;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+
+.overview-border {
+    display: table;
+    border: 1.5px solid #4bbff3;
+    border-radius: 5px;
+}
+
+.overview-field1 {
+    text-align: center;
+    float: left;
+    width: 150px;
+    height: 60px;
+    line-height: 70px;
+    color: #00aefd;
+}
+
+.overview-field1 span {
+    font-size: 14px;
+}
+
+.overview-field1 span h2 {
+    border: 0;
+    padding: 0;
+    display: inline-block;
+    margin: 0 5px;
+}
+
+.partition-line1 {
+    border: .5px solid #c1c1c1;
+    height: 40px;
+    margin-top: 10px;
+    float: left
+}
+
+.overview-field2 {
+    float: left;
+    width: 100px;
+    font-size: 13px;
+    text-align: center;
+}
+
+.overview-field2-name {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    float: left;
+    width: 100%;
+    line-height: 35px;
+    height: 30px;
+}
+
+.overview-field2-num {
+    float: left;
+    width: 100%;
+    height: 30px;
+}
+
+.partition-line2 {
+    border: .5px solid #c1c1c1;
+    height: 30px;
+    margin-top: 15px;
+    float: left
+}
+
+.border-w {
+    border: .3px solid #c1c1c1;
+}
+
+.table-margin {
+    background-color: #f5f9ff;
+    width: 97%;
+    margin: 15px auto 0;
+    border-radius: 5px;
+    padding: 10px;
+    min-height: 455px;
+}
+
+.paging-div {
+    right: 25px;
+    height: 35px;
+    position: absolute;
+    bottom: 50px;
+}
+
+.username>span{
+    cursor: pointer;
+}
+
+.username>span:hover{
+    color: #0C6CED;
+}
+
+.dynamic-category{
+    border-bottom: solid #0bc5de 2px;
+}
+
+.width-overstep{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.more-data{
+    font-size: 13px;float: right;margin-right: 50px;cursor: pointer;
+}
+
+.more-data:hover{
+    color: #ffbc00;
 }
