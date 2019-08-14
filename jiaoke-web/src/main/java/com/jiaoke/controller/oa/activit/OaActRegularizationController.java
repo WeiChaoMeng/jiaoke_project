@@ -190,7 +190,7 @@ public class OaActRegularizationController {
             managementService.executeCommand(new TargetFlowNodeCommand(task.getId(), back));
             //修改表单状态
             oaCollaborationService.updateState(oaActRegularization.getId(),3);
-            return "error";
+            return "success";
         }
     }
 

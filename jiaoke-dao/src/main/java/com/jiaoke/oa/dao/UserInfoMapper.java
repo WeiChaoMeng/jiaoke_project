@@ -3,6 +3,7 @@ package com.jiaoke.oa.dao;
 import com.jiaoke.oa.bean.UserInfo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 用户信息
@@ -122,4 +123,25 @@ public interface UserInfoMapper {
      * @return nickname
      */
     String getNicknameById(Integer id);
+
+    /**
+     * 根据主键查询
+     *
+     * @param userInfoId id
+     * @return UserInfo
+     */
+    UserInfo getUserInfoByUseId(Integer userInfoId);
+
+    /**
+     * 获取所用用户基本信息
+     *
+     * @return list
+     */
+    List<UserInfo> getUserBasicInfo();
+
+    /**
+     * 用户统计
+     * @return lit
+     */
+   List<Integer> getUserStatistical();
 }

@@ -1,5 +1,6 @@
 package com.jiaoke.oa.bean;
 
+import javax.persistence.Transient;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -32,14 +33,41 @@ public class UserInfo implements Serializable {
     private String nickname;
 
     /**
-     * 部门编码
-     */
-    private String department;
-
-    /**
      * 岗位
      */
     private String position;
+
+    /**
+     * 职务级别
+     */
+    private String job;
+
+    /**
+     * 出生日期
+     */
+    private Date birthday;
+    @Transient
+    private String birthdayStr;
+
+    /**
+     * 年龄
+     */
+    @Transient
+    private Integer age;
+
+    /**
+     * 入职日期
+     */
+    private Date entryDate;
+    @Transient
+    private String entryDateStr;
+
+    /**
+     * 转正日期
+     */
+    private Date positiveDate;
+    @Transient
+    private String positiveDateStr;
 
     /**
      * 性别：0男，1女
@@ -47,9 +75,19 @@ public class UserInfo implements Serializable {
     private Integer sex;
 
     /**
+     * 工作性质
+     */
+    private String nature;
+
+    /**
      * 手机号
      */
     private String phone;
+
+    /**
+     * 办公电话
+     */
+    private String telephone;
 
     /**
      * 邮箱
@@ -60,6 +98,11 @@ public class UserInfo implements Serializable {
      * 注册时间
      */
     private Date registerTime;
+
+    /**
+     * 部门编码
+     */
+    private String department;
 
     /**
      * 部门负责人
@@ -158,5 +201,85 @@ public class UserInfo implements Serializable {
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
+    }
+
+    public String getJob() {
+        return job;
+    }
+
+    public void setJob(String job) {
+        this.job = job;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getBirthdayStr() {
+        return birthdayStr;
+    }
+
+    public void setBirthdayStr(String birthdayStr) {
+        this.birthdayStr = birthdayStr;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public String getNature() {
+        return nature;
+    }
+
+    public void setNature(String nature) {
+        this.nature = nature;
+    }
+
+    public Date getEntryDate() {
+        return entryDate;
+    }
+
+    public void setEntryDate(Date entryDate) {
+        this.entryDate = entryDate;
+    }
+
+    public String getEntryDateStr() {
+        return entryDateStr;
+    }
+
+    public void setEntryDateStr(String entryDateStr) {
+        this.entryDateStr = entryDateStr;
+    }
+
+    public Date getPositiveDate() {
+        return positiveDate;
+    }
+
+    public void setPositiveDate(Date positiveDate) {
+        this.positiveDate = positiveDate;
+    }
+
+    public String getPositiveDateStr() {
+        return positiveDateStr;
+    }
+
+    public void setPositiveDateStr(String positiveDateStr) {
+        this.positiveDateStr = positiveDateStr;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
     }
 }

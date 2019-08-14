@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.oa.dao.UserContractMapper">
+    <select id="getUserContractData" resultType="com.jiaoke.oa.bean.UserContract">
+        SELECT
+            uc.id,
+            uc.user_id as userId,
+            ui.nickname AS name,
+            uc.type,
+            uc.entry_date as entryDate,
+            uc.sing_date as singDate,
+            uc.start_date as startDate,
+            uc.end_date as endDate,
+            uc.term,
+            wn.NAME AS nature
+        FROM
+            `user_contract` AS uc
+            LEFT JOIN user_info AS ui ON uc.user_id = ui.id
+            LEFT JOIN work_nature AS wn ON wn.id = ui.nature
+        WHERE uc.nature &lt; 5
+    </select>
+
+    <select id="statisticsFormalUser" resultType="java.lang.Integer">
+        SELECT
+        COUNT( * )
+        FROM
+        user_contract
+        WHERE
+        nature &lt; 3
+    </select>
+
+    <select id="getUserNameByNature" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT
+        COUNT( * )
+        FROM
+        user_contract
+        WHERE
+        nature = #{id}
+    </select>
+
+    <select id="getProbationUser" resultType="com.jiaoke.oa.bean.UserContract">
+        SELECT
+            ui.nickname as name,
+            dept.department_name AS dep,
+            ui.position as pos,
+            ui.job as job,
+            uc.entry_date as entryDate,
+            uc.positive_date as positiveDate
+        FROM
+            `user_contract` AS uc
+            LEFT JOIN user_info AS ui ON uc.user_id = ui.id
+            LEFT JOIN department AS dept ON ui.department = dept.department_key
+        WHERE
+            uc.nature = 3
+    </select>
+
+    <select id="getDataListByNature" parameterType="java.util.Map" resultType="com.jiaoke.oa.bean.UserContract">
+        SELECT
+            ui.nickname as name,
+            dept.department_name AS dep,
+            ui.position as pos,
+            ui.job as job,
+            uc.entry_date as entryDate,
+            uc.soon_leave_date as soonLeaveDate,
+            uc.leave_date as leaveDate
+        FROM
+            `user_contract` AS uc
+            LEFT JOIN user_info AS ui ON uc.user_id = ui.id
+            LEFT JOIN department AS dept ON ui.department = dept.department_key
+        WHERE
+            uc.nature = #{natureId}
+        LIMIT #{number}
+    </select>
+</mapper>
