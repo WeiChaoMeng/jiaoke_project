@@ -45,4 +45,26 @@ public interface QualityDataSummaryInf {
     List<Map<String,Object>> getPromessageByRaionModel(String startDate, String endDate, String crew, String rationId);
 
     void getProSvgmessage(String startDate, String endDate, String crew, String rationId, HttpServletRequest request);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询所有关键预警数据>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/8/20 12:10
+     */
+    String getAllCriticalWarning();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期盘好查询核心预警数据相关信息>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/8/21 8:39
+     */
+    Map<String, Object> getCeiticalWarning(String proDate, String produceDisc,String crewNum);
 }

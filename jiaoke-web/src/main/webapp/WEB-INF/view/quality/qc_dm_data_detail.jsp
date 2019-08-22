@@ -84,18 +84,18 @@
                     <tr>
                         <td>${product.proBase.produce_disc_num}</td>
                         <td>${product.proBase.produce_proportioning_num}</td>
-                        <td>${product.proBase.material_aggregate_1 - product.proBase.material_aggregate_2}</td>
-                        <td>${product.proBase.material_aggregate_2 - product.proBase.material_aggregate_3}</td>
-                        <td>${product.proBase.material_aggregate_3 - product.proBase.material_aggregate_4}</td>
-                        <td>${product.proBase.material_aggregate_4 - product.proBase.material_aggregate_5}</td>
-                        <td>${product.proBase.material_aggregate_5 - product.proBase.material_aggregate_6}</td>
-                        <td>${product.proBase.material_aggregate_6}</td>
-                        <td>${product.proBase.material_stone_1}</td>
-                        <td>${product.proBase.material_stone_2}</td>
-                        <td>${product.proBase.material_asphalt}</td>
-                        <td>${product.proBase.material_regenerate}</td>
-                        <td>${product.proBase.material_additive}</td>
-                        <td>${product.proBase.material_total}</td>
+                        <td>${product.proBase.material_aggregate_1 - product.proBase.material_aggregate_2}<i>kg</i></td>
+                        <td>${product.proBase.material_aggregate_2 - product.proBase.material_aggregate_3}<i>kg</i></td>
+                        <td>${product.proBase.material_aggregate_3 - product.proBase.material_aggregate_4}<i>kg</i></td>
+                        <td>${product.proBase.material_aggregate_4 - product.proBase.material_aggregate_5}<i>kg</i></td>
+                        <td>${product.proBase.material_aggregate_5 - product.proBase.material_aggregate_6}<i>kg</i></td>
+                        <td>${product.proBase.material_aggregate_6}<i>kg</i></td>
+                        <td>${product.proBase.material_stone_1}<i>kg</i></td>
+                        <td>${product.proBase.material_stone_2}<i>kg</i></td>
+                        <td>${product.proBase.material_asphalt}<i>kg</i></td>
+                        <td>${product.proBase.material_regenerate}<i>kg</i></td>
+                        <td>${product.proBase.material_additive}<i>kg</i></td>
+                        <td>${product.proBase.material_total}<i>kg</i></td>
                     </tr>
                 
                 </tbody>
@@ -116,11 +116,11 @@
                     <th style="width: 100px ">再生料占比</th>
                 </thead>
                 <tbody>
-                    <td>${product.proBase.temperature_warehouse_1}</td>
-                    <td>${product.proBase.temperature_mixture}</td>
-                    <td>${product.proBase.temperature_duster}</td>
-                    <td>${product.proBase.temperature_asphalt}</td>
-                    <td>${product.proBase.temperature_aggregate}</td>
+                    <td>${product.proBase.temperature_warehouse_1}<i>℃</i></td>
+                    <td>${product.proBase.temperature_mixture}<i>℃</i></td>
+                    <td>${product.proBase.temperature_duster}<i>℃</i></td>
+                    <td>${product.proBase.temperature_asphalt}<i>℃</i></td>
+                    <td>${product.proBase.temperature_aggregate}<i>℃</i></td>
                     <td id="one">0</td>
                     <td id="two" >0</td>
                     <td id="three" >0</td>
@@ -135,31 +135,31 @@
 
                                 switch ('${item.material_name}') {
                                     case '骨料1' :
-                                        $('#one').text(${item.actual_ratio});
+                                        $('#one').empty().append(${item.actual_ratio} + "<i>%</i>");
                                         break;
                                     case '骨料2' :
-                                        $('#two').text(${item.actual_ratio});
+                                        $('#two').empty().append(${item.actual_ratio} + "<i>%</i>");
                                         break;
                                     case '骨料3' :
-                                        $('#three').text(${item.actual_ratio});
+                                        $('#three').empty().append(${item.actual_ratio}  + "<i>%</i>");
                                         break;
                                     case '骨料4' :
-                                        $('#four').text(${item.actual_ratio});
+                                        $('#four').empty().append(${item.actual_ratio}  + "<i>%</i>");
                                         break;
                                     case '骨料5' :
-                                        $('#five').text(${item.actual_ratio});
+                                        $('#five').empty().append(${item.actual_ratio}  + "<i>%</i>");
                                         break;
                                     case '骨料6' :
-                                        $('#six').text(${item.actual_ratio});
+                                        $('#six').empty().append(${item.actual_ratio}  + "<i>%</i>");
                                         break;
                                     case '矿粉' :
-                                        $('#k').text(${item.actual_ratio});
+                                        $('#k').empty().append(${item.actual_ratio}  + "<i>%</i>");
                                         break;
                                     case '沥青' :
-                                        $('#l').text(${item.actual_ratio});
+                                        $('#l').empty().append(${item.actual_ratio}  + "<i>%</i>");
                                         break;
                                     case '再生料' :
-                                        $('#z').text(${item.actual_ratio});
+                                        $('#z').empty().append(${item.actual_ratio}  + "<i>%</i>");
                                         break;
                                 }
                             </script>
@@ -187,15 +187,15 @@
                 <td id="ccqModel">${product.modelMessage.temperatureMilling} - ${product.modelMessage.temperatureMillingUp}</td>
                 <td id="lqModel">${product.modelMessage.temperatureAsphalt} - ${product.modelMessage.temperatureAsphaltUp}</td>
                 <td id="zslModel">${product.modelMessage.temperatureMilling} - ${product.modelMessage.temperatureMillingUp}</td>
-                <td id="oneModel">0</td>
-                <td id="twoModel" >0</td>
-                <td id="threeModel" >0</td>
-                <td id="fourModel" >0</td>
-                <td id="fiveModel" >0</td>
-                <td id="sixModel" >0</td>
-                <td id="kModel" >0</td>
-                <td id="lModel" >0</td>
-                <td id="zModel" >0</td>
+                <td id="oneModel">0<i>%</i></td>
+                <td id="twoModel" >0<i>%</i></td>
+                <td id="threeModel" >0<i>%</i></td>
+                <td id="fourModel" >0<i>%</i></td>
+                <td id="fiveModel" >0<i>%</i></td>
+                <td id="sixModel" >0<i>%</i></td>
+                <td id="kModel" >0<i>%</i></td>
+                <td id="lModel" >0<i>%</i></td>
+                <td id="zModel" >0<i>%</i></td>
 
 
                 <c:forEach items="${product.proMessage}" var="items">
@@ -203,31 +203,31 @@
 
                         switch ('${items.material_name}') {
                             case '骨料1' :
-                                $('#oneModel').text(${items.moudle_ratio});
+                                $('#oneModel').empty().append(${items.moudle_ratio}   + "<i>%</i>");
                                 break;
                             case '骨料2' :
-                                $('#twoModel').text(${items.moudle_ratio});
+                                $('#twoModel').empty().append(${items.moudle_ratio}   + "<i>%</i>");
                                 break;
                             case '骨料3' :
-                                $('#threeModel').text(${items.moudle_ratio});
+                                $('#threeModel').empty().append(${items.moudle_ratio}   + "<i>%</i>");
                                 break;
                             case '骨料4' :
-                                $('#fourModel').text(${items.moudle_ratio});
+                                $('#fourModel').empty().append(${items.moudle_ratio}   + "<i>%</i>");
                                 break;
                             case '骨料5' :
-                                $('#fiveModel').text(${items.moudle_ratio});
+                                $('#fiveModel').empty().append(${items.moudle_ratio}   + "<i>%</i>");
                                 break;
                             case '骨料6' :
-                                $('#sixModel').text(${items.moudle_ratio});
+                                $('#sixModel').empty().append(${items.moudle_ratio}   + "<i>%</i>");
                                 break;
                             case '矿粉' :
-                                $('#kModel').text(${items.moudle_ratio});
+                                $('#kModel').empty().append(${items.moudle_ratio}   + "<i>%</i>");
                                 break;
                             case '沥青' :
-                                $('#lModel').text(${items.moudle_ratio});
+                                $('#lModel').empty().append(${items.moudle_ratio}   + "<i>%</i>");
                                 break;
                             case '再生料' :
-                                $('#zModel').text(${items.moudle_ratio});
+                                $('#zModel').empty().append(${items.moudle_ratio}   + "<i>%</i>");
                                 break;
                         }
                     </script>
@@ -350,7 +350,8 @@
                     type: 'value',
                     axisLabel: {
                         formatter: '{value} %'
-                    }
+                    },
+                    min:0
                 },
                 series: [
                     {
@@ -415,9 +416,9 @@
                 </c:when>
                 <c:when test="${item.material_name == '骨料6'}">
 
-                upArray[5] = ${item.moudle_ratio == '0'? '0':item.moudle_ratio + 4};
+                upArray[5] = ${item.moudle_ratio == "0.0"? '0':item.moudle_ratio + 4};
                 realArray[5] = ${item.actual_ratio};
-                downArray[5] = ${item.moudle_ratio == '0'? '0':item.moudle_ratio - 4};
+                downArray[5] = ${item.moudle_ratio == "0.0" ? '0':item.moudle_ratio - 4};
 
                 </c:when>
                 <c:when test="${item.material_name == '矿粉'}">

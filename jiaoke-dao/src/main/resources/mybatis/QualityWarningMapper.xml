@@ -99,4 +99,10 @@
         where id = #{id}
 
     </select>
+    
+    <insert id="insertCriticalWarning" useGeneratedKeys="true">
+        INSERT INTO quality_critical_warning (warning_crew_id)
+        VALUES
+               (#{id})
+    </insert>
 </mapper>

@@ -83,8 +83,8 @@
                     <table class="auxiliary_simpletable">
 
                         <c:choose>
-                            <c:when test="${pageBean.pageData} == null || ${pageBean.dataCountNum == 0}" >
-                                <span style="text-align: center" >暂无历史生产数据</span>
+                            <c:when test="${pageBean.pageData  == null || pageBean.dataCountNum == 0}" >
+                                <span style="position: absolute;top: 45%;left: 45%;font: 14px/1.5 'Microsoft YaHei',arial,tahoma,\5b8b\4f53,sans-serif;color: #a29c9c;" >暂无历史生产数据</span>
                             </c:when>
                             <c:otherwise>
                                 <tbody>
@@ -238,7 +238,7 @@
         }
 
         if (ratioNum != "") {
-            getModelByDateAndCrew(ratioNum);
+            getModelByDateTimeAndCrew(ratioNum);
         }
 
         if (waring != "") {

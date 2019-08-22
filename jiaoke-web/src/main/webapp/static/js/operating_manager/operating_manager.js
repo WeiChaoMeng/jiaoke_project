@@ -19,6 +19,9 @@
     getEveryMonthDays();
     //获取今年产量与计划产量
     getThisYearDataAndPlan();
+    
+    //获取本月渲染
+    getMonthNumToPage();
 })(jQuery);
 
 
@@ -124,14 +127,19 @@ function getLastMonthData() {
         dataType:"json",
         success:function (res) {
             if (res){
-
-                var xArray = [];
+                debugger
                 var dataArray = [];
-                for (var i = 0 ; i < res.length ;i ++){
-                    xArray.push(res[i].proDate);
-                    dataArray.push(Math.floor(res[i].total/1000));
+                for (var i = 1 ; i < 32;i ++){
+                    if (res[i - 1]){
+                        if (res[i - 1].proDate === i){
+                            dataArray.push(Math.floor(res[i].total/1000));
+                        } else {
+                            dataArray.push(0);
+                        }
+                    }
+
                 }
-                option.xAxis.data = xArray;
+
                 option.series[0].data = dataArray;
                 myChart1.setOption(option);
                 window.addEventListener("resize", function () {
@@ -281,6 +289,16 @@ function sendFromData() {
 
 }
 
+
+function getMonthNumToPage() {
+    var now = new Date();
+    var month = (now.getMonth() + 1) - 1 ;
+    $("#monthD").empty().text(month + "月生产吨数");
+    $("#monthP").empty().text(month + "月生产盘数");
+    $("#monthS").empty().text(month + "月收入");
+}
+
+
 function dateFtt(fmt,date)
 { //author: meizz
     var o = {
@@ -299,6 +317,7 @@ function dateFtt(fmt,date)
             fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("0"+ o[k]).substr((""+ o[k]).length)));
     return fmt;
 }
+
 
 
 //本月第一天日期函数

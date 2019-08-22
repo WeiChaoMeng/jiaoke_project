@@ -8,6 +8,7 @@
  **/
 package com.jiaoke.quality.dao;
 
+import com.jiaoke.quality.bean.QualityRatioTemplate;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -38,4 +39,47 @@ public interface QualityDataSummaryDao {
 
     Map<String, String> selectRaionModelById(@Param("crewNum")String crew, @Param("rationNum")String rationId);
 
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询所有关键预警数据>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/8/20 12:13
+     */
+    List<Map<String, String>> selectAllCriticalWarning();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期、盘号、机组查询生产信息>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/8/21 8:46
+     */
+    Map<String, String> selectProductMessageById(@Param("proDate") String proDate,@Param("produceDisc") String produceDisc,@Param("crewStr") String crewStr);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期与盘号查询预警信息>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/8/21 8:55
+     */
+    List<Map<String, String>> selectProduceByDateAndDiscNum(@Param("date")String proDate,@Param("discNum") String discNum,@Param("crewNum") String crewNum);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据配比编号查询配比信息>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/8/21 8:59
+     */
+    QualityRatioTemplate selectRationById(@Param("ratioNum") String ratioNum,@Param("crewNum") String crewNum);
 }

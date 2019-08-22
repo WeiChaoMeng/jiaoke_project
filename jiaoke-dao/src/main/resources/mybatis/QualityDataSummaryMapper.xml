@@ -70,6 +70,8 @@
         INNER JOIN
         quality_proportioning_message AS QPM
         ON QMRD.produce_proportioning_num = QPM.crew2_modele_id
+        WHERE
+        DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(QMRD.produce_date)
         order by QMRD.produce_date,QMRD.produce_time)
     </select>
 
@@ -157,5 +159,97 @@
              quality_proportioning_message
         WHERE
                 ${crewNum}_modele_id = ${rationNum}
+    </select>
+    <select id="selectAllCriticalWarning" resultType="java.util.Map">
+
+        SELECT
+               DATE_FORMAT(QWPC.produce_date,'%Y-%m-%d') AS produce_date,
+               DATE_FORMAT(QWPC.produce_time,'%H:%i:%s') AS produce_time,
+               QWPC.produce_ratio_id,
+               QWPC.produce_car_num,
+               QWPC.produce_disc_num,
+               QWPC.produce_crewNum,
+               QWD.*,
+               (SELECT QPM1.pro_name FROM quality_warning_promessage_crew AS QWPC1 INNER JOIN quality_proportioning_message AS QPM1 ON QWPC1.produce_ratio_id = QPM1.crew1_modele_id WHERE QWPC1.produce_ratio_id = QWPC.produce_ratio_id LIMIT 1 ) AS crew1RatioName,
+               (SELECT QPM1.pro_name FROM quality_warning_promessage_crew AS QWPC1 INNER JOIN quality_proportioning_message AS QPM1 ON QWPC1.produce_ratio_id = QPM1.crew2_modele_id WHERE QWPC1.produce_ratio_id = QWPC.produce_ratio_id LIMIT 1 ) AS crew2RatioName
+        FROM
+             `quality_critical_warning` AS QCW
+                 INNER JOIN quality_warning_promessage_crew AS QWPC ON QCW.warning_crew_id = QWPC.id
+                 INNER JOIN quality_warning_data AS QWD ON QWPC.id = QWD.crew_id
+
+
+
+#         SELECT
+#                DATE_FORMAT(QWPC.produce_date,'%Y-%m-%d') AS produce_date,
+#                DATE_FORMAT(QWPC.produce_time,'%H:%i:%s') AS produce_time,
+#                QWPC.produce_ratio_id,
+#                QWPC.produce_car_num,
+#                QWPC.produce_disc_num,
+#                QWPC.produce_crewNum,
+#                MAX(QWD.warning_level) AS warningLevel,
+#                (SELECT QPM1.pro_name FROM quality_warning_promessage_crew AS QWPC1 INNER JOIN quality_proportioning_message AS QPM1 ON QWPC1.produce_ratio_id = QPM1.crew1_modele_id WHERE QWPC1.produce_ratio_id = QWPC.produce_ratio_id LIMIT 1 ) AS crew1RatioName,
+#                (SELECT QPM1.pro_name FROM quality_warning_promessage_crew AS QWPC1 INNER JOIN quality_proportioning_message AS QPM1 ON QWPC1.produce_ratio_id = QPM1.crew2_modele_id WHERE QWPC1.produce_ratio_id = QWPC.produce_ratio_id LIMIT 1 ) AS crew2RatioName
+#         FROM
+#              `quality_critical_warning` AS QCW
+#                  INNER JOIN quality_warning_promessage_crew AS QWPC ON QCW.warning_crew_id = QWPC.id
+#                  INNER JOIN quality_warning_data AS QWD ON QWPC.id = QWD.crew_id
+#         GROUP BY QWD.crew_id
+    </select>
+    <select id="selectProductMessageById" resultType="java.util.Map">
+        SELECT
+                *
+        FROM
+             quality_monitoring_realtime_${crewStr}
+        WHERE
+                produce_date = &apos;${proDate}&apos; AND produce_disc_num = &apos;${produceDisc}&apos;
+    </select>
+    <select id="selectProduceByDateAndDiscNum" resultType="java.util.Map">
+        SELECT
+               T1.*
+        FROM
+             quality_warning_data AS T1
+                 INNER JOIN (
+                            SELECT
+                                    *
+                            FROM
+                                 quality_warning_promessage_crew
+                            WHERE
+                                    produce_date = DATE #{date}
+                              AND produce_disc_num = #{discNum}
+                              AND produce_crewNum = #{crewNum}
+                            ) AS T2 ON T1.crew_id = T2.id
+    </select>
+    <select id="selectRationById" resultType="com.jiaoke.quality.bean.QualityRatioTemplate" >
+        select
+               pro_name as proName,
+               repertory_one as repertoryOne,
+               repertory_two as repertoryTwo,
+               repertory_three as repertoryThree,
+               repertory_four as repertoryFour,
+               repertory_five as repertoryFive,
+               repertory_six as repertorySix,
+               breeze as breeze,
+               ratio_stone as ratioStone,
+               ratio_regenerate1 as ratioRegenerate1,
+               ratio_regenerate2 as ratioRegenerate2,
+               ratio_additive as ratioAdditive,
+               regenerate as regenerate,
+               additive as additive,
+               temperature_asphalt as temperatureAsphalt,
+               temperature_aggregate as temperatureAggregate,
+               temperature_mixture as temperatureMixture,
+               temperature_milling as temperatureMilling,
+               temperature_asphalt_up as temperatureAsphaltUp,
+               temperature_aggregate_up as temperatureAggregateUp,
+               temperature_mixture_up as temperatureMixtureUp,
+               temperature_milling_up as temperatureMillingUp
+        from quality_proportioning_message
+        <if test="crewNum == 1">
+            where crew1_modele_id = #{ratioNum}
+        </if>
+        <if test="crewNum == 2">
+            where crew2_modele_id = #{ratioNum}
+        </if>
+
     </select>
 </mapper>

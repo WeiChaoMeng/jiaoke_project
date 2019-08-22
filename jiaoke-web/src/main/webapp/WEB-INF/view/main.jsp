@@ -483,7 +483,7 @@
 </div>
 
 <!-- Table goes in the document BODY -->
-<table class="altrowstable" id="showMessage" style="display: none">
+<table class="altrowstable" id="showMessage" onclick="goCriticalWarningPage()" style="display: none">
     <tr>
         <th>机组:</th>
         <th>盘号:</th>
@@ -2965,6 +2965,10 @@
         })
     }
 
+    function goCriticalWarningPage() {
+        var path = $("#path").val();
+        $("#iframe").attr("src", "/qualityIndex.do");
+    }
     function showWaringData(crew1DiscNum, crew2DiscNum) {
 
         var crew1LastDiscNum = sessionStorage.getItem("crew1LastDiscNum");

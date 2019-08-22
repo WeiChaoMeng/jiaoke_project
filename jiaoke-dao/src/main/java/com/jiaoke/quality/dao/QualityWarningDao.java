@@ -43,4 +43,15 @@ public interface QualityWarningDao {
     void insertQualityWarningData( @Param("warningDataList") List<QualityWarningData> warningDataList);
 
     QualityRatioTemplate getQualityRatioTemplateById(int id);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <插入关键信息表>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/8/19 17:22
+     */
+    void insertCriticalWarning(@Param("id") int id);
 }

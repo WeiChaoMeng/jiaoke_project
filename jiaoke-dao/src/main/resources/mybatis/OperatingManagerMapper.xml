@@ -84,7 +84,7 @@
                       PERIOD_DIFF(
                           date_format(now(), '%Y%m'),
                           date_format(produce_date, '%Y%m')
-                              ) = 1
+                              ) = 0
               GROUP BY
                        produce_date
               UNION ALL
@@ -97,10 +97,11 @@
                       PERIOD_DIFF(
                           date_format(now(), '%Y%m'),
                           date_format(produce_date, '%Y%m')
-                              ) = 1
+                              ) = 0
               GROUP BY
                        produce_date) AS T1
         GROUP BY T1.produce_date
+        order by T1.produce_date
     </select>
 
     <select id="selectMonthContrast" resultType="java.util.Map">

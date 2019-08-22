@@ -518,7 +518,9 @@ public class QualityController {
 
         PageBean<Map<String,String>> pageBean = new PageBean<Map<String,String>>();
         if ( temp == null || temp.trim().isEmpty() ){
-            pageBean = qualityAuxiliaryAnalysisInf.selelectWarningLiveData(1,url,warningLive,proData,crew, rationId );
+            if (proData != null){
+                pageBean = qualityAuxiliaryAnalysisInf.selelectWarningLiveData(1,url,warningLive,proData,crew, rationId );
+            }
         }else {
             pageBean = qualityAuxiliaryAnalysisInf.selelectWarningLiveData(Integer.parseInt(temp),url,warningLive,proData,crew, rationId );
         }
@@ -1710,6 +1712,28 @@ public class QualityController {
         return res;
     }
     /********************************  设置相关 end *****************************************/
+
+    /********************************  关键预警数据 Start *****************************************/
+
+    @RequestMapping("/qc_critical_warning.do")
+    public String criticalWarning(){
+        return "quality/qc_critical_warning";
+    }
+
+    @ResponseBody
+    @RequestMapping("/getAllCriticalWarning.do")
+    public String getAllCriticalWarning(){
+        String res = qualityDataSummaryInf.getAllCriticalWarning();
+        return res;
+    }
+
+    @RequestMapping("/getCeiticalWarning.do")
+    public String getCeiticalWarning(HttpServletRequest request,@RequestParam("proDate") String proDate,@RequestParam("produceDisc") String produceDisc,@RequestParam("crewNum") String crewNum){
+        Map<String,Object> map = qualityDataSummaryInf.getCeiticalWarning(proDate,produceDisc,crewNum);
+        request.setAttribute("product",map);
+        return "quality/qc_dm_data_detail";
+    }
+    /********************************  关键预警数据 End *****************************************/
 
 }
 

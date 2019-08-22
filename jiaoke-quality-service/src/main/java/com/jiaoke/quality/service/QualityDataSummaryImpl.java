@@ -11,16 +11,14 @@ package com.jiaoke.quality.service;
 import com.alibaba.fastjson.JSON;
 import com.jiake.utils.QualityGradingUtil;
 import com.jiake.utils.QualityProsvg;
+import com.jiaoke.quality.bean.QualityRatioTemplate;
 import com.jiaoke.quality.dao.QualityDataMontoringDao;
 import com.jiaoke.quality.dao.QualityDataSummaryDao;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  *  <一句话功能描述>
@@ -114,5 +112,74 @@ public class QualityDataSummaryImpl implements QualityDataSummaryInf {
         request.setAttribute("productRationSVG",realRationMap);
         request.setAttribute("productModelRationSVG",modelRationMap);
 
+    }
+
+    @Override
+    public String getAllCriticalWarning() {
+        List<Map<String,String>> list = qualityDataSummaryDao.selectAllCriticalWarning();
+
+        String tem = "";
+        Set<String> crewIdSet = new HashSet<>();
+        //取出相同crew_id，以确定数据数量
+        for (int i = 0; i < list.size();i++){
+            crewIdSet.add(String.valueOf(list.get(i).get("crew_id")));
+        }
+        //填充返回值集合
+        List<Map<String,String>> res = new ArrayList<>();
+        for(String crewId:crewIdSet){
+            Map<String,String> map = new HashMap<>();
+            String materialName = "";
+            String warningLive = "";
+            String deviation = "";
+            for (Map<String,String> temMap : list){
+                if (String.valueOf(temMap.get("crew_id")).equals(crewId)){
+                    materialName = String.valueOf(temMap.get("material_name"));
+                    warningLive = String.valueOf(temMap.get("warning_level"));
+                    deviation = String.valueOf(temMap.get("deviation_ratio"));
+                    map.putAll(temMap);
+                }else {
+                    continue;
+                }
+                map.put(materialName,warningLive);
+                map.put(materialName + "deviation" ,deviation);
+            }
+            res.add(map);
+        }
+
+
+        return JSON.toJSONString(res);
+    }
+
+    @Override
+    public Map<String, Object> getCeiticalWarning(String proDate, String produceDisc,String crewNum) {
+
+        Map<String,Object> modelMap = new HashMap<>();
+        //根据id与机组查询基本信息
+        String crewStr;
+        switch (crewNum){
+            case "1":
+                crewStr = "data1";
+                break;
+            case "2":
+                crewStr = "data2";
+                break;
+            default:
+                crewStr = "data1";
+        }
+        Map<String,String> map =  qualityDataSummaryDao.selectProductMessageById(proDate,produceDisc,crewStr);
+
+        //根据日期与盘号查询各材料百分比、预警信息
+        Object date =  map.get("produce_date");
+        String discNum =  map.get("produce_disc_num");
+
+        List<Map<String,String>>  waringData =  qualityDataSummaryDao.selectProduceByDateAndDiscNum(String.valueOf(date),discNum,crewNum);
+
+        QualityRatioTemplate ratioMap = qualityDataSummaryDao.selectRationById(map.get("produce_proportioning_num"),crewNum);
+
+        modelMap.put("proBase",map);
+        modelMap.put("proMessage",waringData);
+        modelMap.put("modelMessage",ratioMap);
+
+        return modelMap;
     }
 }
