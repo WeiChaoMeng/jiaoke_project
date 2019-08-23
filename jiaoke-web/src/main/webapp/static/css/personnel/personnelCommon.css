@@ -81,7 +81,7 @@ table {
     width: 100%;
     border-collapse: collapse;
     text-align: left;
-    font-size: 13px;
+    font-size: 12px;
     margin: 0;
     padding: 0;
     border: 0;
@@ -92,7 +92,8 @@ table {
     line-height: 25px;
     font-weight: bold;
     white-space: nowrap;
-    width: calc(100% / 8);
+    width: calc(100% / 12);
+    text-align: center;
 }
 
 .simple-table-file thead tr th {
@@ -119,6 +120,7 @@ table {
     line-height: 25px;
     border: none;
     white-space: nowrap;
+    text-align: center;
 }
 
 .simple-table tbody tr:hover {
@@ -199,7 +201,7 @@ table {
 }
 
 .table-margin {
-    background-color: #f5f9ff;
+    /*background-color: #f5f9ff;*/
     width: 97%;
     margin: 15px auto 0;
     border-radius: 5px;

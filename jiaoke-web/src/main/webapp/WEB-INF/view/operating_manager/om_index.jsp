@@ -94,7 +94,7 @@
         <div class="layui-col-sm12">
             <div class="layui-card">
                 <div class="layui-card-header">
-                    上月产量折线图
+                    本月产量折线图
                 </div>
                 <div class="layui-card-body">
                     <div class="layui-row">
@@ -117,7 +117,7 @@
                                             type: 'category',
 
                                             data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
-                                                '21', '22', '23', '24', '25', '26', '27', '28', '29', '30'],
+                                                '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],
 
                                             splitLine: {
                                                 show: true,
@@ -132,6 +132,8 @@
                                         },
                                         yAxis: {
                                             type: 'value',
+                                            min:0,
+                                            max:4000
                                         },
                                         series: [{
                                             data: [1820, 932, 1901, 2934, 1290, 1330, 320, 423, 1289, 2345, 2235, 3234, 3200, 234, 123, 1465, 67, 78, 435, 824, 354, 546, 446, 346, 46, 673, 36, 903, 2896, 3534],
@@ -147,7 +149,7 @@
                         </div>
                         <div class="layui-col-sm4">
                             <div class="layuiadmin-card-list">
-                                <p class="layuiadmin-normal-font">月生产吨数</p>
+                                <p class="layuiadmin-normal-font" id="monthD">月生产吨数</p>
                                 <span>同上月增长</span>
                                 <div class="layui-progress layui-progress-big" lay-showpercent="yes">
                                     <div class="layui-progress-bar" id ="lastMonthTonDiv" lay-percent="30%" style="width: 30%;"><span
@@ -156,7 +158,7 @@
                                 </div>
                             </div>
                             <div class="layuiadmin-card-list">
-                                <p class="layuiadmin-normal-font">月生产盘数</p>
+                                <p class="layuiadmin-normal-font" id="monthP">月生产盘数</p>
                                 <span>同上月增长</span>
                                 <div class="layui-progress layui-progress-big" lay-showpercent="yes">
                                     <div class="layui-progress-bar" id ="lastMonthDishDiv" lay-percent="20%" style="width: 20%;"><span
@@ -164,7 +166,7 @@
                                 </div>
                             </div>
                             <div class="layuiadmin-card-list">
-                                <p class="layuiadmin-normal-font">月收入</p>
+                                <p class="layuiadmin-normal-font" id="monthS">月收入</p>
                                 <span>同上月增长</span>
                                 <div class="layui-progress layui-progress-big" lay-showpercent="yes">
                                     <div class="layui-progress-bar" id ="lastMonthIncomeDiv" lay-percent="25%" style="width: 25%;"><span
@@ -228,8 +230,8 @@
                                                     label:{
                                                         show:true,
                                                         distance:0.7,
-                                                        textStyle:{color:'#000',fontSize:"10"},
-                                                        formatter:'{b} {{d}%} \n {{c}万吨}',
+                                                        textStyle:{color:'#000',fontSize:"14"},
+                                                        formatter:'{b} {{d}%} \n {c}万吨',
 
                                                     },
                                                 },
@@ -237,18 +239,10 @@
 
                                             data:[
                                                 {value:6000, name:'已完成',itemStyle:{
-                                                        color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [{
-                                                            offset: 1,
-                                                            color: "#3893e5" // 0% 处的颜色
-                                                        },
-                                                            {
-                                                                offset: 0,
-                                                                color: "#00ffff" // 100% 处的颜色
-                                                            }], false),
+                                                        normal:{color:'#2b992b'}
                                                     },},
                                                 {value:2000, name:'未完成',itemStyle:{
-                                                        color:'#888f9b',
-
+                                                        normal:{color:'#7b7b7b'}
                                                     }},
                                             ]
                                         },
@@ -286,7 +280,7 @@
 
                                     ]
                                 };
-                                myChart2.setOption(option2);
+
                             </script>
                         </div>
                     </div>
@@ -422,6 +416,7 @@
                                     yAxis: [
                                         {
                                             type: 'value',
+                                            min:0,
                                             scale: true,
                                             name: '',
                                             axisLine: {
@@ -442,7 +437,6 @@
                                                 color: '#d0d0d0',
                                                 margin: 12,
                                             },
-                                            min: 0,
                                             boundaryGap: [0.2, 0.2]
                                         }
                                     ],

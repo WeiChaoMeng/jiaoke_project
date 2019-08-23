@@ -79,7 +79,7 @@ public class ReceiveDataImpl implements ReceiveDataInf {
         map.put("produce_crewNum",crewNum);
 
         //插入数据库表quality_warning_promessage_crew，返回主键ID
-         qualityWarningDao.insertQualityWarningCrew(map);
+        qualityWarningDao.insertQualityWarningCrew(map);
         int id =Integer.parseInt(map.get("id"));
 
         //根据机组获取字段名称
@@ -126,6 +126,20 @@ public class ReceiveDataImpl implements ReceiveDataInf {
 
         //插入数据库
         qualityWarningDao.insertQualityWarningData(warningDataList);
+
+        //判断预警级别插入关键数据预警表
+        for (int i = 0; i < warningDataList.size(); i++){
+            String materialName = warningDataList.get(i).getMaterialName();
+            String warningLevel = warningDataList.get(i).getWarningLevel();
+
+            if (materialName.equals("一仓温度") || materialName.equals("沥青") || materialName.equals("骨料1")){
+                if (Integer.parseInt(warningLevel) > 1){
+                    qualityWarningDao.insertCriticalWarning(id);
+                    break;
+                }
+            }
+
+        }
 
 
 

@@ -100,6 +100,10 @@
                     <i class="menuico iconfont1">&#xe94d;</i>数据汇总</a>
             </li>
         </shiro:hasPermission>
+            <li>
+                <a href="#" id="critical_warning" onclick="critical_warning()" class="menu_selected">
+                    <i class="menuico iconfont1">&#xebdc;</i>关键预警</a>
+            </li>
         <%--<li>--%>
         <%--<a href="#" id="prodoct_list" onclick="prodoct_list()" class="menu_selected">--%>
         <%--<i class="menuico iconfont1">&#xebdc;</i>产品报表</a>--%>
@@ -183,6 +187,10 @@
 
     function data_summary() {
         $('iframe').attr("src", "qc_data_summary.do");
+    }
+
+    function critical_warning(){
+        $('iframe').attr("src", "qc_critical_warning.do");
     }
 
 

@@ -28,7 +28,7 @@
 
 <ul id="tabs">
     <li><a href="#" title="tab1">学习强国</a></li>
-    <li><a href="#" title="tab2">北京党员教育</a></li>
+    <li><a href="#" title="tab2">北京长城网</a></li>
     <li><a href="#" title="tab3">组织架构</a></li>
 </ul>
 <div id="content">

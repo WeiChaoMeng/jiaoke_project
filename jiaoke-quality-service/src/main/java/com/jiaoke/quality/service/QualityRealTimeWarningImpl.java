@@ -128,6 +128,7 @@ public class QualityRealTimeWarningImpl implements  QualityRealTimeWarningInf {
 
         List<Map<String,Object>> list = qualityRealTimeWarningDao.selectGlobalWarningData();
 
+
         return JSON.toJSONString(list);
     }
 }
