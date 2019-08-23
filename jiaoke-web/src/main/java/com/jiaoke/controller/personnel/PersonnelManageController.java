@@ -30,12 +30,32 @@ public class PersonnelManageController {
     private PersonnelManageService personnelManageService;
 
     /**
+     * 跳转人事管理首页
+     *
+     * @return jsp
+     */
+    @RequestMapping(value = "/toIndex")
+    public String toPersonnelIndex() {
+        return "personnel/main";
+    }
+
+    /**
+     * 跳转人事管理首页
+     *
+     * @return jsp
+     */
+    @RequestMapping(value = "/toHomePage")
+    public String toHomePage() {
+        return "personnel/index";
+    }
+
+    /**
      * 跳转员工基本信息
      *
      * @return jsp
      */
     @RequestMapping(value = "/toBasic")
-    public String toIndex(int page, Model model) {
+    public String toBasic(int page, Model model) {
         List<Integer> statistical = personnelManageService.getUserStatistical();
         model.addAttribute("statistical", JsonHelper.toJSONString(statistical));
         model.addAttribute("currentPage", JsonHelper.toJSONString(page));
@@ -110,15 +130,15 @@ public class PersonnelManageController {
         model.addAttribute("soonLeave", soonLeave);
 
         //预离职数据
-        if (soonLeave != 0){
-            model.addAttribute("soonLeaveData", personnelManageService.getDataListByNature(5,3));
+        if (soonLeave != 0) {
+            model.addAttribute("soonLeaveData", personnelManageService.getDataListByNature(5, 3));
         }
 
         int leave = personnelManageService.getUserNameByNature(6);
         model.addAttribute("leave", leave);
         //离职数据
-        if (soonLeave != 0){
-            model.addAttribute("leaveData", personnelManageService.getDataListByNature(6,5));
+        if (soonLeave != 0) {
+            model.addAttribute("leaveData", personnelManageService.getDataListByNature(6, 5));
         }
 
         return "personnel/dynamic";
@@ -166,16 +186,4 @@ public class PersonnelManageController {
         PageInfo<UserContract> pageInfo = new PageInfo<>(userContractList);
         return JsonHelper.toJSONString(pageInfo);
     }
-
-    /**
-     * 跳转员工福利
-     *
-     * @return jsp
-     */
-    @RequestMapping(value = "/toWelfare")
-    public String toWelfare(int page, Model model) {
-        model.addAttribute("currentPage", JsonHelper.toJSONString(page));
-        return "personnel/welfare";
-    }
-
 }

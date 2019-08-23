@@ -198,15 +198,6 @@ public class CommonController {
     }
 
     /**
-     * 跳转人事管理
-     * @return jsp
-     */
-    @RequestMapping("/personnel.do")
-    public String personnel(){
-        return "personnel/index";
-    }
-
-    /**
      * 跳转厂区安全
      * @return security_index.jsp
      */
@@ -241,7 +232,7 @@ public class CommonController {
     }
  /**
      * 跳转环保监控-首页
-     * @return index.jsp
+     * @return main.jsp
      */
     @RequestMapping("/weatherIndex.do")
     public String weatherIndex(){

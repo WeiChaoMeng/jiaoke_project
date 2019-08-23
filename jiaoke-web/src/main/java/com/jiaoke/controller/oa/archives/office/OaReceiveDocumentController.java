@@ -41,7 +41,7 @@ public class OaReceiveDocumentController {
     /**
      * 公司发文首页
      *
-     * @return index.jsp
+     * @return main.jsp
      */
     @RequestMapping(value = "/index")
     @ResponseBody

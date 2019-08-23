@@ -124,7 +124,7 @@ var logWindow =
     + "<span>查看明细日志</span>"
     + "<i class='iconfont cursor_hand window_closing' id='unselected_windows_close' onclick='closeAll()'>&#xe68d;</i></div>"
     + "<div class='log_window_son'>"
-    + "<iframe src='process_log/index.jsp' id='' name='right' width='100%' height='100%' frameborder='0' scrolling='auto'></iframe>"
+    + "<iframe src='process_log/main.jsp' id='' name='right' width='100%' height='100%' frameborder='0' scrolling='auto'></iframe>"
     + "</div>"
     + "<div class='window_foot'>"
     + "<span>"

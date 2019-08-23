@@ -555,7 +555,7 @@
 
                 case 'HR':
 
-                    $("#iframe").attr("src", "/personnel.do");
+                    $("#iframe").attr("src", "/personnel/toIndex");
                     break;
 
                 case 'DJ':

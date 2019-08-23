@@ -46,8 +46,8 @@ var webpackConfig = merge(baseWebpackConfig, {
         safe: true
       }
     }),
-    // generate dist index.jsp with correct asset hash for caching.
-    // you can customize output by editing /index.jsp
+    // generate dist main.jsp with correct asset hash for caching.
+    // you can customize output by editing /main.jsp
     // see https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
       filename: config.build.index,

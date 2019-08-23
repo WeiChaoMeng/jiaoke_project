@@ -41,7 +41,7 @@ public class OaContractAgreementController {
     /**
      * 合同/协议首页
      *
-     * @return index.jsp
+     * @return main.jsp
      */
     @RequestMapping(value = "/index")
     @ResponseBody

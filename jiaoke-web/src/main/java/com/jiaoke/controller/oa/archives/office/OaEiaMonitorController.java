@@ -43,7 +43,7 @@ public class OaEiaMonitorController {
     /**
      * 首页数据加载
      *
-     * @return index.jsp
+     * @return main.jsp
      */
     @RequestMapping(value = "/index")
     @ResponseBody
