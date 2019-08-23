@@ -31,7 +31,7 @@ public class OaReleaseDocumentController {
     /**
      * 跳转公司发文
      *
-     * @return index.jsp
+     * @return main.jsp
      */
     @RequestMapping(value = "/toReleaseDocument")
     public String toReleaseDocument() {
@@ -41,7 +41,7 @@ public class OaReleaseDocumentController {
     /**
      * 公司发文首页
      *
-     * @return index.jsp
+     * @return main.jsp
      */
     @RequestMapping(value = "/index")
     @ResponseBody

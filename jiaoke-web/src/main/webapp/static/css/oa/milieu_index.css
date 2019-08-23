@@ -12,7 +12,7 @@ body, button, dd, div, dl, dt, form, h1, h2, h3, h4, h5, h6, input, li, ol, p, t
 }
 
 .container {
-    width: 1200px;
+    width: 1250px;
     margin: 0 auto;
 }
 
@@ -87,19 +87,22 @@ body, button, dd, div, dl, dt, form, h1, h2, h3, h4, h5, h6, input, li, ol, p, t
 }
 
 #ct-7-days {
-    float: left;
-    width: 644px;
+    float: right;
+    width: 645px;
     height: 330px;
     padding: 20px 0 0;
     border-radius: 10px;
-    background-color: #fff;
+    background-color: #ffffff;
     box-shadow: 0 0 14px 0 rgba(0, 0, 0, .08);
+    opacity: .7;
 }
 
 #ct-living-index {
-    float: right;
-    width: 480px;
+    float: left;
     position: relative;
+    background: #ffffff;
+    padding: 0 20px;
+    border-radius: 10px;
 }
 
 #ct-7-days #title {
@@ -178,7 +181,7 @@ body, button, dd, div, dl, dt, form, h1, h2, h3, h4, h5, h6, input, li, ol, p, t
     display: inline-block;
     height: 30px;
     width: 30px;
-    background: #2196f3a1;
+    background: #0007f3;
 }
 
 #ct-7-days .item .ct-night {
@@ -209,19 +212,16 @@ body, button, dd, div, dl, dt, form, h1, h2, h3, h4, h5, h6, input, li, ol, p, t
     clear: both;
     overflow: hidden;
     position: relative;
-    width: 490px;
-    margin-left: -5px;
     padding-top: 18px;
 }
 
 #ct-living-index #ct-pages .ct-sub {
-    height: 110px;
-    width: 100%;
-    padding-top: 30px;
+    padding-top: 10px;
 }
 
-#ct-living-index #ct-pages .page {
-    float: left;
+.ct-sub img {
+    margin-bottom: 10px;
+    text-align: center;
 }
 
 #ct-living-index #air-quality {
@@ -238,21 +238,16 @@ body, button, dd, div, dl, dt, form, h1, h2, h3, h4, h5, h6, input, li, ol, p, t
     width: 890px;
 }
 
-#ct-living-index #ct-pages .item.odd {
-    margin-right: 14px;
-}
-
 #ct-living-index #ct-pages .item {
-    height: 140px;
-    width: 100px;
+    height: 100px;
+    width: 70px;
     background: #fff;
     box-shadow: 0 0 14px 0 rgba(0, 0, 0, .08);
     border-radius: 10px;
     float: left;
     text-align: center;
     overflow: hidden;
-    margin-bottom: 20px;
-    margin-left: 10px;
+    margin: 0 10px 10px 10px;
 }
 
 #ct-living-index #ct-pages .icon {
@@ -263,7 +258,7 @@ body, button, dd, div, dl, dt, form, h1, h2, h3, h4, h5, h6, input, li, ol, p, t
 }
 
 #ct-living-index #ct-pages .content {
-    font-size: 16px;
+    font-size: 13px;
     color: #384c78;
     line-height: 22px;
 }
@@ -272,4 +267,32 @@ body, button, dd, div, dl, dt, form, h1, h2, h3, h4, h5, h6, input, li, ol, p, t
     margin-right: 10px;
     vertical-align: middle;
     height: 20px;
+}
+
+.alone-data-style {
+    overflow: hidden;
+    position: relative;
+    padding-top: 18px;
+}
+
+.alone-inner-style {
+    display: inline-block;
+    height: 100px;
+    width: 70px;
+    margin-left: 10px;
+    background: #fff;
+    box-shadow: 0 0 14px 0 rgba(0, 0, 0, .08);
+    border-radius: 10px;
+    text-align: center;
+    overflow: hidden;
+}
+
+.alone-inner-style img {
+    margin-bottom: 10px;
+    text-align: center;
+    padding-top: 10px;
+}
+
+.alone-inner-style p {
+    font-size: 13px;
 }

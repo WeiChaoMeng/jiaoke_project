@@ -82,71 +82,71 @@ body {
 /*西门*/
 .west-door {
     position: absolute;
-    left: 62%;
-    top: 32%;
+    left: 56%;
+    top: 37%;
     font-size: 20px;
-    width: 3%;
+    width: 2%;
 }
 
 /*南门坐标*/
 .south-door {
     position: absolute;
-    left: 27%;
-    top: 55%;
+    left: 13%;
+    top: 60%;
     font-size: 20px;
-    width: 3%;
+    width: 2%;
 }
 
 /*办公区线路1*/
 .office-area-line1 {
     position: absolute;
-    left: 50%;
-    top: 60%;
+    left: 39%;
+    top: 73%;
     font-size: 20px;
-    width: 3%;
+    width: 2%;
 }
 
 /*办公区线路2*/
 .office-area-line2 {
     position: absolute;
-    left: 50%;
-    top: 50%;
+    left: 40%;
+    top: 53%;
     font-size: 20px;
-    width: 3%;
+    width: 2%;
 }
 
 /*生产区东-线路1*/
 .east-production-line1 {
     position: absolute;
-    left: 75%;
+    left: 67%;
     top: 52%;
     font-size: 20px;
-    width: 3%;
+    width: 2%;
 }
 
 /*生产区东-线路2*/
 .east-production-line2 {
     position: absolute;
     left: 62%;
-    top: 38%;
+    top: 51%;
     font-size: 20px;
-    width: 3%;
+    width: 2%;
 }
 
 /*生产区西-线路1*/
 .west-production-line1 {
     position: absolute;
     left: 35%;
-    top: 15%;
+    top: 16%;
     font-size: 20px;
-    width: 3%;
+    width: 2%;
 }
 
 /*生产区西-线路2*/
 .west-production-line2 {
     position: absolute;
-    left: 57%;
-    top: 17%;
+    left: 52%;
+    top: 24%;
     font-size: 20px;
-    width: 3%;
+    width: 2%;
 }

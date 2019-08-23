@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.oa.dao.WeatherReportByCityMapper">
+    <select id="selectLastWeekData" resultType="com.jiaoke.oa.bean.AirQuality">
+        SELECT
+            id,
+            fine_particle as fineParticle,
+            pmio,
+            update_date as updateDate
+        FROM
+            `air_quality`
+        ORDER BY
+            update_date DESC
+            LIMIT 1,7
+    </select>
+</mapper>
