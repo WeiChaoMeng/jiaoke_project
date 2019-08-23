@@ -93,7 +93,7 @@
         </div>
         <div class="layui-col-sm12">
             <div class="layui-card">
-                <div class="layui-card-header">
+                <div class="layui-card-header" id="thisMonth">
                     本月产量折线图
                 </div>
                 <div class="layui-card-body">

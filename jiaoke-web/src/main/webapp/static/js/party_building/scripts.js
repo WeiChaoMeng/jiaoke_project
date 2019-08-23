@@ -23,15 +23,15 @@
                           ] },
                       { 'name': '沈德才', 'title': '二组组长', 'className': 'rd-dept',
                           'children': [
-                              { 'name': '李保奇', 'title': '二组组员', 'className': 'product-dept'},
-                              { 'name': '王爱军', 'title': '二组组员', 'className': 'product-dept'},
-                              { 'name': '王玉平', 'title': '二组组员', 'className': 'product-dept'},
-                              { 'name': '李章', 'title': '二组组员', 'className': 'product-dept'},
-                              { 'name': '李传龙', 'title': '二组组员', 'className': 'product-dept'},
-                              { 'name': '李树东', 'title': '二组组员', 'className': 'product-dept'},
-                              { 'name': '吴热东', 'title': '二组组员', 'className': 'product-dept'},
-                              { 'name': '常炜', 'title': '二组组员', 'className': 'product-dept'},
-                              { 'name': '梁夏夏', 'title': '二组组员', 'className': 'product-dept'}
+                              { 'name': '李保奇', 'title': '二组组员', 'className': 'pipeline1'},
+                              { 'name': '王爱军', 'title': '二组组员', 'className': 'pipeline1'},
+                              { 'name': '王玉平', 'title': '二组组员', 'className': 'pipeline1'},
+                              { 'name': '李章', 'title': '二组组员', 'className': 'pipeline1'},
+                              { 'name': '李传龙', 'title': '二组组员', 'className': 'pipeline1'},
+                              { 'name': '李树东', 'title': '二组组员', 'className': 'pipeline1'},
+                              { 'name': '吴热东', 'title': '二组组员', 'className': 'pipeline1'},
+                              { 'name': '常炜', 'title': '二组组员', 'className': 'pipeline1'},
+                              { 'name': '梁夏夏', 'title': '二组组员', 'className': 'pipeline1'}
                           ]
                       }
                   ]
