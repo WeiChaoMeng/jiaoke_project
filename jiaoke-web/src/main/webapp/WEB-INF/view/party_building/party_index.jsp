@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="/static/css/party_building/font-awesome.min.css" >
     <link rel="stylesheet" href="/static/css/party_building/style2.css" >
     <link rel="stylesheet" href="/static/css/party_building/jquery.orgchart.css" >
-    <link rel="stylesheet" href="/static/css/party_building/style.css" >
+    <%--<link rel="stylesheet" href="/static/css/party_building/style.css" >--%>
     <style>
         .edge {
             display: none;

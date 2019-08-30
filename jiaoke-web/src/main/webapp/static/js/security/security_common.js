@@ -73,4 +73,5 @@ function popupBackdrop(parameter) {
 $(".backdrop").on("click", function () {
     $(".popup-window").hide();
     $('#video').empty();
+    $('#videos').empty();
 });

@@ -102,7 +102,7 @@
         </shiro:hasPermission>
             <li>
                 <a href="#" id="critical_warning" onclick="critical_warning()" class="menu_selected">
-                    <i class="menuico iconfont1">&#xebdc;</i>关键预警</a>
+                    <i class="menuico iconfont1">&#xebdc;</i>警报管理</a>
             </li>
         <%--<li>--%>
         <%--<a href="#" id="prodoct_list" onclick="prodoct_list()" class="menu_selected">--%>

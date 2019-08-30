@@ -31,7 +31,7 @@
         <div class="partition-line2"></div>
 
         <div class="overview-field2">
-            <span class="overview-field2-name">外包</span>
+            <span class="overview-field2-name">劳务</span>
             <span class="overview-field2-num" id="outsourcing">2人</span>
         </div>
 
