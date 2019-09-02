@@ -296,6 +296,8 @@ function getMonthNumToPage() {
     $("#monthD").empty().text(month + "月生产吨数");
     $("#monthP").empty().text(month + "月生产盘数");
     $("#monthS").empty().text(month + "月收入");
+    var thisMonth = now.getMonth() + 1;
+    $("#thisMonth").empty().text(thisMonth + "月产量折线图");
 }
 
 
