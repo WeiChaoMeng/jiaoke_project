@@ -6,6 +6,11 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+    request.setAttribute("path", basePath);
+%>
 <html>
 <head>
     <title>基本信息</title>
@@ -15,91 +20,61 @@
 </head>
 <body>
 
-<div class="overview-margin">
-    <div class="overview-border">
-        <div class="overview-field1">
-            <span>在职<h2 id="totalNumberPeople">55</h2>人</span>
-        </div>
-
-        <div class="partition-line1"></div>
-
-        <div class="overview-field2">
-            <span class="overview-field2-name">正式</span>
-            <span class="overview-field2-num" id="official">50人</span>
-        </div>
-
-        <div class="partition-line2"></div>
-
-        <div class="overview-field2">
-            <span class="overview-field2-name">外包</span>
-            <span class="overview-field2-num" id="outsourcing">2人</span>
-        </div>
-
-        <div class="partition-line2 border-w"></div>
-
-        <div class="overview-field2">
-            <span class="overview-field2-name">试用期</span>
-            <span class="overview-field2-num" id="probation">3人</span>
-        </div>
-    </div>
-</div>
-
 <div class="table-margin">
-    <div style="display: table;">
-        <span style="font-size: 13px;">在职人员</span>
+    <div style="padding: 15px;">
+        <button type="button"
+                style="padding: 5px 15px;border: 0;cursor: pointer;background: #38adff;outline: none;border-radius: 5px;color: #FFFFFF;font-size: 13px;"
+                onclick="addPersonnel()">添加员工
+        </button>
     </div>
+    <table class="simple-table">
+        <thead>
+        <tr>
+            <th>姓名</th>
+            <th>部门</th>
+            <th>岗位</th>
+            <th>年龄</th>
+            <th>生日</th>
+            <th>手机号码</th>
+            <th>入职日期</th>
+            <th>工作性质</th>
+        </tr>
+        </thead>
 
-    <div style="padding: 10px 25px;">
-        <table class="simple-table">
-            <thead>
-            <tr>
-                <th>姓名</th>
-                <th>部门</th>
-                <th>岗位</th>
-                <th>年龄</th>
-                <th>生日</th>
-                <th>手机号码</th>
-                <th>入职日期</th>
-                <th>工作性质</th>
-            </tr>
-            </thead>
+        <tbody id="tbody">
+        <tr>
+            <td>西西</td>
+            <td>综合办公室</td>
+            <td>员工</td>
+            <td>22</td>
+            <td>9月9日</td>
+            <td>18827167321</td>
+            <td>2017-12-05</td>
+            <td>正式</td>
+        </tr>
 
-            <tbody id="tbody">
-            <tr>
-                <td>西西</td>
-                <td>综合办公室</td>
-                <td>员工</td>
-                <td>22</td>
-                <td>9月9日</td>
-                <td>18827167321</td>
-                <td>2017-12-05</td>
-                <td>正式</td>
-            </tr>
-
-            <tr>
-                <td>楠楠</td>
-                <td>综合办公室</td>
-                <td>员工</td>
-                <td>25</td>
-                <td>7月18日</td>
-                <td>15682471623</td>
-                <td>2017-04-08</td>
-                <td>外包</td>
-            </tr>
-            </tbody>
-        </table>
-
-        <div id="paging" class="paging-div">
-            <div class="">
-                <div class="" style="float: right;">
-                    <ul class="pagination" id="pagination" style="margin: 0"></ul>
-                    <input type="hidden" id="PageCount" runat="server"/>
-                    <input type="hidden" id="PageSize" runat="server"/>
-                    <input type="hidden" id="countindex" runat="server"/>
-                    <!--设置最多显示的页码数 可以手动设置 默认为10-->
-                    <input type="hidden" id="visiblePages" runat="server" value="10"/>
-                    <input type="hidden" id="page" value="1"/>
-                </div>
+        <tr>
+            <td>楠楠</td>
+            <td>综合办公室</td>
+            <td>员工</td>
+            <td>25</td>
+            <td>7月18日</td>
+            <td>15682471623</td>
+            <td>2017-04-08</td>
+            <td>外包</td>
+        </tr>
+        </tbody>
+    </table>
+    <div id="paging" class="paging-div">
+        <div class="">
+            <div class="" style="float: right;">
+                <ul class="pagination" id="pagination" style="margin: 0"></ul>
+                <input type="hidden" id="PageCount" runat="server"/>
+                <input type="hidden" id="PageSize" runat="server"/>
+                <input type="hidden" id="countindex" runat="server"/>
+                <!--设置最多显示的页码数 可以手动设置 默认为10-->
+                <input type="hidden" id="visiblePages" runat="server" value="10"/>
+                <input type="hidden" id="page" value="1"/>
             </div>
         </div>
     </div>
@@ -280,6 +255,11 @@
     //用户详情信息
     function userDetailsShow(userInfoId) {
         window.top.userDetails(userInfoId);
+    }
+
+    //跳转添加员工
+    function addPersonnel() {
+        window.location.href = '${path}/personnel/toAddPersonnel';
     }
 </script>
 </html>

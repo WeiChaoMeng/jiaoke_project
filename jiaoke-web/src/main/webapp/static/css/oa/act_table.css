@@ -632,13 +632,13 @@ img {
 }
 
 .return-but {
-    padding: 7px 20px;
-    border: 1px #a5a5a5 solid;
-    cursor: pointer;
-    background: #ffffff;
-    outline: none;
-    border-radius: 5px;
-}
+     padding: 7px 20px;
+     border: 1px #a5a5a5 solid;
+     cursor: pointer;
+     background: #ffffff;
+     outline: none;
+     border-radius: 5px;
+ }
 
 .commit-but {
     padding: 7px 20px;

@@ -13,61 +13,44 @@
     <script src="../../../static/js/echarts/echarts.js"></script>
 </head>
 <body>
-<div style="    padding: 15px;position: relative;">
+<div style="padding: 30px 15px 15px;">
+        <div style="display: flex">
+            <div style="background-color: #ffffff;margin-right: 1%;width: 49%;box-shadow: 2px 2px 2px rgb(220, 220, 220), -1px 0 2px rgb(220, 220, 220);padding: 20px 10px;">
+                <div style="border-right: 1px solid #c1c1c1;width: 33%;float: left;text-align: center;line-height: 50px;">
+                    <span style="font-size: 16px;">在职<h2
+                            style="border: 0;padding: 0;display: inline-block;margin: 0 5px;color: #2196F3;">85</h2>人</span>
+                </div>
 
-    <div style="margin: -7.5px;">
+                <div style="border-right: 1px solid #c1c1c1;width: 33%;float: left;text-align: center;line-height: 50px;">
+                    <span style="font-size: 16px;">正式<h2
+                            style="border: 0;padding: 0;display: inline-block;margin: 0 5px;color: #2196F3;">54</h2>人</span>
+                </div>
 
-        <div style="padding: 7.5px;width: 16.66%;float: left;position: relative;display: block;box-sizing: border-box;">
-            <div style="border-radius: 2px;margin:0;box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);background: #efefef;">
-                <div style="position: relative;padding: 10px 15px;line-height: 80px;text-align: center;">
-                    <span>在职<h2 style="border: 0;padding: 0;display: inline-block;margin: 0 5px;color: #ffbc00;">85</h2>人</span>
+                <div style="width: 33%;float: left;text-align: center;line-height: 50px;">
+                    <span style="font-size: 16px;">劳务<h2
+                            style="border: 0;padding: 0;display: inline-block;margin: 0 5px;color: #2196F3;">30</h2>人</span>
                 </div>
             </div>
-        </div>
 
-        <div style="padding: 7.5px;width: 16.66%;float: left;position: relative;display: block;box-sizing: border-box;">
-            <div style="border-radius: 2px;margin:0;box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);background: #efefef;">
-                <div style="position: relative;padding: 10px 15px;line-height: 80px;text-align: center;">
-                    <span>正式<h2 style="border: 0;padding: 0;display: inline-block;margin: 0 5px;color: #ffbc00;">54</h2>人</span>
+            <div style="background-color: #ffffff;margin-left: 1%;width: 49%;box-shadow: 2px 2px 2px rgb(220, 220, 220), -1px 0 2px rgb(220, 220, 220);padding: 20px 10px;">
+                <div style="border-right: 1px solid #c1c1c1;width: 33%;float: left;text-align: center;line-height: 50px;">
+                    <span style="font-size: 16px;">即将转正<h2
+                            style="border: 0;padding: 0;display: inline-block;margin: 0 5px;color: #ffbc00;">2</h2>人</span>
                 </div>
-            </div>
-        </div>
 
-        <div style="padding: 7.5px;width: 16.66%;float: left;position: relative;display: block;box-sizing: border-box;">
-            <div style="border-radius: 2px;margin:0;box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);background: #efefef;">
-                <div style="position: relative;padding: 10px 15px;line-height: 80px;text-align: center;">
-                    <span>劳务<h2 style="border: 0;padding: 0;display: inline-block;margin: 0 5px;color: #ffbc00;">30</h2>人</span>
-                </div>
-            </div>
-        </div>
-
-        <div style="padding: 7.5px;width: 16.66%;float: left;position: relative;display: block;box-sizing: border-box;">
-            <div style="border-radius: 2px;margin:0;box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);background: #efefef;">
-                <div style="position: relative;padding: 10px 15px;line-height: 80px;text-align: center;">
-                    <span>即将转正<h2
+                <div style="border-right: 1px solid #c1c1c1;width: 33%;float: left;text-align: center;line-height: 50px;">
+                    <span style="font-size: 16px;">待离职<h2
                             style="border: 0;padding: 0;display: inline-block;margin: 0 5px;color: #ffbc00;">1</h2>人</span>
                 </div>
-            </div>
-        </div>
 
-        <div style="padding: 7.5px;width: 16.66%;float: left;position: relative;display: block;box-sizing: border-box;">
-            <div style="border-radius: 2px;margin:0;box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);background: #efefef;">
-                <div style="position: relative;padding: 10px 15px;line-height: 80px;text-align: center;">
-                    <span>待离职<h2 style="border: 0;padding: 0;display: inline-block;margin: 0 5px;color: #ffbc00;">1</h2>人</span>
+                <div style="width: 33%;float: left;text-align: center;line-height: 50px;">
+                    <span style="font-size: 16px;">即将到期合同<h2
+                            style="border: 0;padding: 0;display: inline-block;margin: 0 5px;color: #ffbc00;">5</h2>人</span>
                 </div>
             </div>
         </div>
 
-        <div style="padding: 7.5px;width: 16.66%;float: left;position: relative;display: block;box-sizing: border-box;">
-            <div style="border-radius: 2px;margin:0;box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);background: #efefef;">
-                <div style="position: relative;padding: 10px 15px;line-height: 80px;text-align: center;">
-                    <span>即将到期合同<h2
-                            style="border: 0;padding: 0;display: inline-block;margin: 0 5px;color: #ffbc00;">1</h2>人</span>
-                </div>
-            </div>
-        </div>
-
-        <div style="padding: 7.5px;width: 100%;float: left;position: relative;display: block;box-sizing: border-box;">
+        <div style="margin-top: 25px;width: 100%;display: inline-block;">
 
             <div style="margin: -7.5px;">
 
@@ -120,7 +103,6 @@
                 </div>
             </div>
         </div>
-    </div>
 </div>
 </body>
 <script src="../../../static/js/jquery.min.js" type="text/javascript"></script>
@@ -135,7 +117,11 @@
     var option = {
         title: {
             text: '人员基本信息',
-            x: 'center'
+            x: 'center',
+            textStyle: {
+                fontWeight: 500,
+                fontSize: 14
+            }
         },
         tooltip: {
             trigger: 'item',
@@ -166,7 +152,11 @@
     var option1 = {
         title: {
             text: '人才信息',
-            x: 'center'
+            x: 'center',
+            textStyle: {
+                fontWeight: 500,
+                fontSize: 14
+            }
         },
         tooltip: {
             trigger: 'item',
@@ -200,7 +190,11 @@
     var option2 = {
         title: {
             text: '职称情况',
-            x: 'center'
+            x: 'center',
+            textStyle: {
+                fontWeight: 500,
+                fontSize: 14
+            }
         },
         tooltip: {
             trigger: 'item',
@@ -231,7 +225,11 @@
     var option3 = {
         title: {
             text: '持证情况',
-            x: 'center'
+            x: 'center',
+            textStyle: {
+                fontWeight: 500,
+                fontSize: 14
+            }
         },
         color: ['#3398DB'],
         tooltip: {

@@ -193,6 +193,17 @@ public class DateUtil {
     }
 
     /**
+     * date转string（MM月dd日）
+     *
+     * @param date date
+     * @return string
+     */
+    public static String dateConvertMMDD2(Date date) {
+        SimpleDateFormat formatter = new SimpleDateFormat("MM月dd日");
+        return formatter.format(date);
+    }
+
+    /**
      * 根据生日获取年龄
      *
      * @param birthDay 生日

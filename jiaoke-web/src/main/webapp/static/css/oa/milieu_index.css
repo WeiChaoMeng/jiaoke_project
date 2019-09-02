@@ -12,7 +12,7 @@ body, button, dd, div, dl, dt, form, h1, h2, h3, h4, h5, h6, input, li, ol, p, t
 }
 
 .container {
-    width: 1250px;
+    width: 1300px;
     margin: 0 auto;
 }
 
@@ -216,11 +216,11 @@ body, button, dd, div, dl, dt, form, h1, h2, h3, h4, h5, h6, input, li, ol, p, t
 }
 
 #ct-living-index #ct-pages .ct-sub {
-    padding-top: 10px;
+    padding-top: 5px;
 }
 
 .ct-sub img {
-    margin-bottom: 10px;
+    /*margin-bottom: 10px;*/
     text-align: center;
 }
 
@@ -239,8 +239,8 @@ body, button, dd, div, dl, dt, form, h1, h2, h3, h4, h5, h6, input, li, ol, p, t
 }
 
 #ct-living-index #ct-pages .item {
-    height: 100px;
-    width: 70px;
+    height: 115px;
+    width: 80px;
     background: #fff;
     box-shadow: 0 0 14px 0 rgba(0, 0, 0, .08);
     border-radius: 10px;
@@ -258,7 +258,7 @@ body, button, dd, div, dl, dt, form, h1, h2, h3, h4, h5, h6, input, li, ol, p, t
 }
 
 #ct-living-index #ct-pages .content {
-    font-size: 13px;
+    font-size: 12px;
     color: #384c78;
     line-height: 22px;
 }
@@ -288,11 +288,11 @@ body, button, dd, div, dl, dt, form, h1, h2, h3, h4, h5, h6, input, li, ol, p, t
 }
 
 .alone-inner-style img {
-    margin-bottom: 10px;
     text-align: center;
-    padding-top: 10px;
+    margin: 5px 0;
 }
 
 .alone-inner-style p {
-    font-size: 13px;
+    font-size: 12px;
+    color: #384c78;
 }

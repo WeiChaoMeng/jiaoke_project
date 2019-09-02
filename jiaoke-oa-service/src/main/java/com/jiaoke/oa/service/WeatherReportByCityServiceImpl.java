@@ -1,5 +1,6 @@
 package com.jiaoke.oa.service;
 
+import com.jiake.utils.DateUtil;
 import com.jiaoke.oa.bean.AirQuality;
 import com.jiaoke.oa.dao.WeatherReportByCityMapper;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,10 @@ public class WeatherReportByCityServiceImpl implements WeatherReportByCityServic
 
     @Override
     public List<AirQuality> selectLastWeekData() {
-        return weatherReportByCityMapper.selectLastWeekData();
+        List<AirQuality> airQualityList = weatherReportByCityMapper.selectLastWeekData();
+        for (AirQuality airQuality : airQualityList) {
+            airQuality.setUpdateDateStr(DateUtil.dateConvertMMDD2(airQuality.getUpdateDate()));
+        }
+        return airQualityList;
     }
 }

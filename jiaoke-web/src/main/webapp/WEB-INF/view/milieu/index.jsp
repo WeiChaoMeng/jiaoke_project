@@ -52,29 +52,31 @@
 
         <div id="ct-living-index">
             <div style="display: inline-block">
-                <h2 id="air-quality">空气质量</h2>
+                <h2 id="air-quality"><%=new SimpleDateFormat("MM月dd日").format(new Date())%>空气质量</h2>
             </div>
 
             <div class="alone-data-style">
                 <div class="alone-inner-style">
-                    <img src="../../../static/images/wether/aqi/pm.png" title="PM2.5指数(ug/m3)">
-                    <p class="content" id="PM25">28</p>
+                    <p class="content" id="PM25" style="padding-top: 5px;">28</p>
+                    <img src="../../../static/images/wether/aqi/PM2.5.png" title="PM2.5指数(ug/m3)">
+                    <p class="content">PM2.5指数(ug/m3)</p>
                 </div>
 
                 <%--折线--%>
-                <div style="height:100px;width:430px;display: inline-block;">
+                <div style="height:100px;width:510px;display: inline-block;">
                     <div id="chart1" style="width: 100%;height: 100%;"></div>
                 </div>
             </div>
 
             <div class="alone-data-style">
                 <div class="alone-inner-style">
+                    <p class="content" id="PM10" style="padding-top: 5px;">39</p>
                     <img src="../../../static/images/wether/aqi/pm10.png" title="PM10(ug/m3)">
-                    <p class="content" id="PM10">39</p>
+                    <p class="content">PM10指数(ug/m3)</p>
                 </div>
 
                 <%--折线--%>
-                <div style="height:100px;width: 430px;display: inline-block;">
+                <div style="height:100px;width: 510px;display: inline-block;">
                     <div id="chart2" style="width: 100%;height: 100%;"></div>
                 </div>
             </div>
@@ -84,52 +86,58 @@
                     <%--空气质量--%>
                     <li class="item odd">
                         <div class="ct-sub">
-                            <img src="../../../static/images/wether/aqi/AQI.png" title="空气质量">
                             <p class="content" id="AQI">轻度污染</p>
+                            <img src="../../../static/images/wether/aqi/AQI.png" style="width: 38px;padding: 5px;" title="空气质量">
+                            <p class="content">空气质量</p>
                         </div>
                     </li>
 
                     <%--空气质量指数--%>
                     <li class="item odd">
                         <div class="ct-sub">
-                            <img src="../../../static/images/wether/aqi/AQIzhishu.png" title="空气质量指数">
                             <p class="content" id="AQIIndex">85</p>
+                            <img src="../../../static/images/wether/aqi/AQIzhishu.png" style="width: 38px;padding: 5px;" title="空气质量指数">
+                            <p class="content">空气质量指数</p>
                         </div>
                     </li>
 
                     <%--CO--%>
                     <li class="item odd">
                         <div class="ct-sub">
+                            <p class="content" id="CO">1.0</p>
                             <img src="../../../static/images/wether/aqi/co.png"
                                  title="一氧化碳(mg/m3)">
-                            <p class="content" id="CO">1.0</p>
+                            <p class="content">一氧化碳(mg/m3)</p>
                         </div>
                     </li>
 
                     <%--NO2--%>
                     <li class="item odd">
                         <div class="ct-sub">
-                            <img src="../../../static/images/wether/aqi/no.png" style="margin: 10px 0 20px 0;"
-                                 title="二氧化氮(ug/m3)">
                             <p class="content" id="NO2">84</p>
+                            <img src="../../../static/images/wether/aqi/no.png" style="margin: 10px 0 10px 0;"
+                                 title="二氧化氮(ug/m3)">
+                            <p class="content">二氧化氮(ug/m3)</p>
                         </div>
                     </li>
 
                     <%--O3--%>
                     <li class="item odd">
                         <div class="ct-sub">
-                            <img src="../../../static/images/wether/aqi/o.png" style="margin: 10px 0 20px 0;"
-                                 title="臭氧(ug/m3)">
                             <p class="content" id="O3">16</p>
+                            <img src="../../../static/images/wether/aqi/o.png" style="margin: 10px 0 10px 0;"
+                                 title="臭氧(ug/m3)">
+                            <p class="content">臭氧(ug/m3)</p>
                         </div>
                     </li>
 
                     <%--SO2--%>
                     <li class="item odd">
                         <div class="ct-sub">
-                            <img src="../../../static/images/wether/aqi/so.png" style="margin: 10px 0 20px 0;"
-                                 title="二氧化硫(ug/m3)">
                             <p class="content" id="SO2">12</p>
+                            <img src="../../../static/images/wether/aqi/so.png" style="margin: 10px 0 10px 0;"
+                                 title="二氧化硫(ug/m3)">
+                            <p class="content">二氧化硫(ug/m3)</p>
                         </div>
                     </li>
                 </ul>
@@ -246,6 +254,8 @@
     //pm10
     var pmios = [];
 
+    var dates = [];
+
     $(function () {
         $.ajax({
             type: "get",
@@ -296,12 +306,9 @@
                                         abc += '<p class="temperature-range">' + results[key][i][j].temperature + '</p>';
                                         abc += '<p class="wind">' + results[key][i][j].wind + '</p>';
                                         abc += '</li>'
-
                                     }
                                 }
-
                             }
-
                         }
                     }
                 }
@@ -329,6 +336,7 @@
                 for (var i = 0; i < airQuality.length; i++) {
                     pmios.push(airQuality[i].pmio);
                     fineParticles.push(airQuality[i].fineParticle);
+                    dates.push(airQuality[i].updateDateStr);
                 }
 
                 var myChart = echarts.init(document.getElementById('chart1'));
@@ -337,7 +345,7 @@
                 // 指定图表的配置项和数据
                 var option = {
                     title: {
-                        text: '过去一周',
+                        text: 'PM2.5过去一周走势图',
                         x: 'left',
                         y: 'top',
                         textStyle: {
@@ -347,12 +355,11 @@
                     },
                     xAxis: {
                         type: "category",
-                        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                        data: dates,
                         splitLine: {show: false},
                         axisLine: {show: false},
                         axisTick: {show: false},
-                        axisLabel: {show: false},
-                        boundaryGap: false
+                        axisLabel: {show: true}
                     },
                     yAxis: {
                         type: 'value',
@@ -365,7 +372,7 @@
                         x: 10,
                         y: 30,
                         x2: 10,
-                        y2: 10
+                        y2: 30
                     },
                     series: [{
                         data: fineParticles,
@@ -390,7 +397,7 @@
                 // 指定图表的配置项和数据
                 var option1 = {
                     title: {
-                        text: '过去一周',
+                        text: 'PM10过去一周走势图',
                         x: 'left',
                         y: 'top',
                         textStyle: {
@@ -400,12 +407,11 @@
                     },
                     xAxis: {
                         type: "category",
-                        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                        data: dates,
                         splitLine: {show: false},
                         axisLine: {show: false},
                         axisTick: {show: false},
-                        axisLabel: {show: false},
-                        boundaryGap: false
+                        axisLabel: {show: true}
                     },
                     yAxis: {
                         type: 'value',
@@ -418,7 +424,7 @@
                         x: 10,
                         y: 30,
                         x2: 10,
-                        y2: 10
+                        y2: 30
                     },
                     series: [{
                         data: pmios,

@@ -63,6 +63,16 @@ public class PersonnelManageController {
     }
 
     /**
+     * 跳转添加员工信息
+     *
+     * @return jsp
+     */
+    @RequestMapping(value = "/toAddPersonnel")
+    public String toAddPersonnel(){
+        return "personnel/add";
+    }
+
+    /**
      * 加载用户数据
      *
      * @param page page

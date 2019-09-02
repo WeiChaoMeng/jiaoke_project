@@ -69,7 +69,7 @@ public class OaCollaborationController {
         List<OaCollaboration> collaborationList = oaCoordinationService.selectWaitSend(getCurrentUser().getId(), title);
         for (OaCollaboration collaboration : collaborationList) {
             HistoricProcessInstance processInstance = activitiUtil.getProcessInstanceByBusinessKey(collaboration.getTable() + collaboration.getCorrelationId());
-            if (processInstance != null){
+            if (processInstance != null) {
                 collaboration.setProcessInstanceId(processInstance.getId());
             }
         }
@@ -162,6 +162,19 @@ public class OaCollaborationController {
             PageInfo<OaCollaboration> pageInfo = new PageInfo<>(oaCollaborationList);
             return JsonHelper.toJSONString(pageInfo);
         }
+    }
+
+    @RequestMapping(value = "/pendingApproval.api")
+    @ResponseBody
+    public String pendingApproval(String abc) {
+        System.out.println("----------------------------------------" + abc);
+        //根据当前登录人id获取taskList
+        List<Task> taskList = activitiUtil.getTaskByAssignee(getCurrentUser().getId().toString());
+        List<OaCollaboration> oaCollaborations = activitiUtil.getPendingProcessInstance(taskList);
+        List<OaCollaboration> oaCollaborationList = oaCoordinationService.selectPending(oaCollaborations, "");
+        Collections.reverse(oaCollaborationList);
+        PageInfo<OaCollaboration> pageInfo = new PageInfo<>(oaCollaborationList);
+        return JsonHelper.toJSONString(pageInfo);
     }
 
     /**------------已办事项--------------*/
