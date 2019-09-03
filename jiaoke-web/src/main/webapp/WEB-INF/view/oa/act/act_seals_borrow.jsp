@@ -20,14 +20,42 @@
 <div class="table-title">
     <span>印章借用审批单</span>
 </div>
-<div class="top_toolbar">
+
+<div class="top_toolbar" id="tool">
     <div class="top_toolbar_inside">
+
         <div class="head_left_button">
             <button type="button" class="cursor_hand" onclick="savePending()">&#xea97; 保存待发</button>
         </div>
+
+        <div class="separation_line"></div>
+
+        <div class="head_left_button">
+            <button type="button" class="cursor_hand" onclick="insertFile()">&#xeac1; 插入</button>
+        </div>
+
+        <div class="separation_line"></div>
+
+        <div class="head_left_button">
+            <button type="button" class="cursor_hand" onclick="printContent()">&#xea0e; 打印</button>
+        </div>
     </div>
 </div>
-<!--  -->
+
+<%--附件列表--%>
+<div class="top_toolbar" id="annexList" style="display: none;">
+    <div class="top-toolbar-annexes">
+
+        <div class="annexes-icon">
+            <button type="button" class="cursor_hand">&#xeac1; ：</button>
+        </div>
+
+        <div id="annexes"></div>
+
+    </div>
+</div>
+
+
 <form id="oaActSealsBorrow">
 
     <div class="form_area">
@@ -75,9 +103,7 @@
                     <option value="7">大兴合同章</option>
                 </select>
             </td>
-        </tr>
 
-        <tr>
             <td class="tdLabel">借用时间：</td>
             <td class="table-td-content">
                 <input type="text" class="formInput je-date" name="borrowTimeStr" onfocus="this.blur()">
@@ -96,9 +122,40 @@
             <td class="table-td-content">
                 <input type="text" class="formInput" name="borrower" value="${nickname}" readonly="readonly">
             </td>
+
+            <td class="tdLabel">部门负责人：</td>
+            <td class="table-td-content">
+                <input type="text" class="formInput-readonly" readonly="readonly">
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">印章主管领导：</td>
+            <td class="table-td-content">
+                <input type="text" class="formInput-readonly" readonly="readonly">
+            </td>
+
+            <td class="tdLabel">公司负责人：</td>
+            <td class="table-td-content">
+                <input type="text" class="formInput-readonly" readonly="readonly">
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">经办人：</td>
+            <td class="table-td-content">
+                <input type="text" class="formInput-readonly" readonly="readonly">
+            </td>
+
+            <td class="tdLabel">归还时间：</td>
+            <td class="table-td-content">
+                <input type="text" class="formInput-readonly" readonly="readonly">
+            </td>
+
+            <%--暂存附件--%>
+            <input type="hidden" id="annex" name="annex">
         </tr>
         </tbody>
-
     </table>
 </form>
 </body>
@@ -120,15 +177,19 @@
         zIndex: 100000,
     });
 
-    function selectFile(own) {
-        $('#fileName').html(own.files[0].name);
-    }
-
     //发送
     function send() {
+        var array = [];
+        $('#annexes').find('input').each(function () {
+            array.push($(this).val());
+        });
+
         if ($.trim($("#title").val()) === '') {
             layer.msg("标题不可以为空！")
         } else {
+            //发送前将上传好的附件插入form中
+            $('#annex').val(array);
+
             $.ajax({
                 type: "POST",
                 url: '${path}/sealsBorrow/add',
@@ -150,9 +211,17 @@
 
     //保存待发
     function savePending() {
+        var array = [];
+        $('#annexes').find('input').each(function () {
+            array.push($(this).val());
+        });
+
         if ($.trim($("#title").val()) === '') {
             layer.msg("标题不可以为空！")
         } else {
+            //发送前将上传好的附件插入form中
+            $('#annex').val(array);
+
             $.ajax({
                 type: "POST",
                 url: '${path}/sealsBorrow/savePending',
@@ -169,6 +238,76 @@
                     }
                 }
             })
+        }
+    }
+
+    //插入附件
+    function insertFile() {
+        window.top.uploadFile();
+    }
+
+    //上传附件成功后插入form
+    function writeFile(ret) {
+        $('#annexList').css("display", "block");
+        for (let i = 0; i < ret.length; i++) {
+            var annex = '';
+            var fileId = ret[i].filePaths.substring(0, ret[i].filePaths.indexOf("_"));
+            annex += '<div id="file' + fileId + '" class="table-file">';
+            annex += '<div class="table-file-content">';
+            annex += '<a class="table-file-title" href="/fileDownloadHandle/download?fileName=' + ret[i].filePaths + '" title="' + ret[i].originalName + '">' + ret[i].originalName + '</a>';
+            annex += '<span class="delete-file" title="删除" onclick="whether(\'' + ret[i].filePaths + '\')">&#xeabb;</span>';
+            annex += '<input type="hidden" value="' + ret[i].filePaths + '">';
+            annex += '</div>';
+            annex += '</div>';
+            $('#annexes').append(annex);
+        }
+    }
+
+    //删除已上传附件
+    function whether(fileName) {
+        window.top.deleteUploaded(fileName);
+    }
+
+    //执行删除附件
+    function delFile(fileName) {
+        $.ajax({
+            type: "POST",
+            url: '${path}/fileUploadHandle/deleteFile',
+            data: {"fileName": fileName},
+            error: function (request) {
+                layer.msg("出错！");
+            },
+            success: function (result) {
+                if (result === "success") {
+                    $('#file' + fileName.substring(0, fileName.indexOf("_"))).remove();
+                    window.top.tips("删除成功！", 0, 1, 2000);
+
+                    let annexesLen = $('#annexes').children().length;
+                    if (annexesLen === 0) {
+                        $('#annexList').css("display", "none");
+                    }
+                } else {
+                    window.top.tips("文件不存在！", 6, 5, 2000);
+                }
+            }
+        });
+    }
+
+    //打印
+    function printContent() {
+        $('#tool,#titleArea,#annexList').hide();
+        $('#body').css('width', '100%');
+        //执行打印
+        window.print();
+        $('#tool,#titleArea').show();
+        $('#body').css('width', '80%');
+
+        //附件列表
+        let annexesLen = $('#annexes').children().length;
+        if (annexesLen === 0) {
+            $('#annexList').css("display", "none");
+        } else {
+            $('#annexList').css("display", "block");
         }
     }
 </script>

@@ -5,6 +5,7 @@ import com.jiaoke.oa.bean.OaActCard;
 import com.jiaoke.oa.bean.OaCollaboration;
 import com.jiaoke.oa.dao.OaActCardMapper;
 import com.jiaoke.oa.dao.OaCollaborationMapper;
+import com.jiaoke.oa.dao.UserInfoMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -26,6 +27,9 @@ public class OaActCardServiceImpl implements OaActCardService {
     @Resource
     private OaCollaborationMapper oaCollaborationMapper;
 
+    @Resource
+    private UserInfoMapper userInfoMapper;
+
     @Override
     public int savePendingCard(OaActCard oaActCard, Integer userId, String randomId) {
         oaActCard.setApplyTime(DateUtil.stringConvertYYYYMMDD(oaActCard.getApplyTimeStr()));
@@ -34,7 +38,6 @@ public class OaActCardServiceImpl implements OaActCardService {
         oaActCard.setId(randomId);
         oaActCard.setPromoter(userId);
         oaActCard.setUrl("card");
-        oaActCard.setState(1);
         oaActCard.setCreateTime(new Date());
         if (oaActCardMapper.insertData(oaActCard) < 0) {
             return -1;
@@ -61,7 +64,7 @@ public class OaActCardServiceImpl implements OaActCardService {
         oaActCard.setCreateTime(new Date());
         oaActCard.setPromoter(userId);
         oaActCard.setUrl("card");
-        if (oaActCardMapper.insertData(oaActCard) < 0) {
+        if (oaActCardMapper.insertSelective(oaActCard) < 0) {
             return -1;
         } else {
             OaCollaboration oaCollaboration = new OaCollaboration();
@@ -99,6 +102,7 @@ public class OaActCardServiceImpl implements OaActCardService {
         oaActCard.setStartTimeStr(DateUtil.dateConvertYYYYMMDD(oaActCard.getStartTime()));
         oaActCard.setEndTimeStr(DateUtil.dateConvertYYYYMMDD(oaActCard.getEndTime()));
         oaActCard.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActCard.getCreateTime()));
+        oaActCard.setPromoterStr(userInfoMapper.getNicknameById(oaActCard.getPromoter()));
         return oaActCard;
     }
 
@@ -126,5 +130,10 @@ public class OaActCardServiceImpl implements OaActCardService {
                 return 1;
             }
         }
+    }
+
+    @Override
+    public int updateByPrimaryKeySelective(OaActCard oaActCard) {
+        return oaActCardMapper.updateByPrimaryKeySelective(oaActCard);
     }
 }

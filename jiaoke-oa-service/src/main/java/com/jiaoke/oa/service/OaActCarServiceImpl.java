@@ -33,7 +33,6 @@ public class OaActCarServiceImpl implements OaActCarService {
     @Override
     public int savePending(OaActCar oaActCar, Integer userId, String randomId) {
         oaActCar.setStartTime(DateUtil.stringConvertYYYYMMDDHHMM(oaActCar.getStartTimeStr()));
-        oaActCar.setEndTime(DateUtil.stringConvertYYYYMMDDHHMM(oaActCar.getEndTimeStr()));
         oaActCar.setId(randomId);
         oaActCar.setPromoter(userId);
         oaActCar.setUrl("car");
@@ -58,7 +57,6 @@ public class OaActCarServiceImpl implements OaActCarService {
     @Override
     public int insert(OaActCar oaActCar, Integer userId, String randomId) {
         oaActCar.setStartTime(DateUtil.stringConvertYYYYMMDDHHMM(oaActCar.getStartTimeStr()));
-        oaActCar.setEndTime(DateUtil.stringConvertYYYYMMDDHHMM(oaActCar.getEndTimeStr()));
         oaActCar.setId(randomId);
         oaActCar.setPromoter(userId);
         oaActCar.setUrl("car");
@@ -96,8 +94,12 @@ public class OaActCarServiceImpl implements OaActCarService {
     @Override
     public OaActCar selectByPrimaryKey(String id) {
         OaActCar oaActCar = oaActCarMapper.selectByPrimaryKey(id);
-        oaActCar.setStartTimeStr(DateUtil.dateConvertYYYYMMDDHHMM(oaActCar.getStartTime()));
-        oaActCar.setEndTimeStr(DateUtil.dateConvertYYYYMMDDHHMM(oaActCar.getEndTime()));
+        if (oaActCar.getEndTime() != null){
+            oaActCar.setEndTimeStr(DateUtil.dateConvertYYYYMMDDHHMM(oaActCar.getEndTime()));
+        }
+        if (oaActCar.getStartTime() != null){
+            oaActCar.setStartTimeStr(DateUtil.dateConvertYYYYMMDDHHMM(oaActCar.getStartTime()));
+        }
         oaActCar.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActCar.getCreateTime()));
         oaActCar.setPromoterStr(userInfoMapper.getNicknameById(oaActCar.getPromoter()));
         return oaActCar;
@@ -130,7 +132,10 @@ public class OaActCarServiceImpl implements OaActCarService {
     }
 
     @Override
-    public int updateByPrimaryKey(OaActCar oaActCar) {
-        return oaActCarMapper.updateByPrimaryKey(oaActCar);
+    public int updateByPrimaryKeySelective(OaActCar oaActCar) {
+        if (oaActCar.getEndTimeStr() != null){
+            oaActCar.setEndTime(DateUtil.stringConvertYYYYMMDDHHMM(oaActCar.getEndTimeStr()));
+        }
+        return oaActCarMapper.updateByPrimaryKeySelective(oaActCar);
     }
 }

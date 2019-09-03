@@ -9,7 +9,10 @@
     <sequenceFlow id="_8" sourceRef="start" targetRef="card1"/>
     <sequenceFlow id="_9" sourceRef="card1" targetRef="card2"/>
     <sequenceFlow id="_10" sourceRef="card2" targetRef="card3"/>
-    <sequenceFlow id="_11" sourceRef="card3" targetRef="end"/>
+    <userTask activiti:assignee="${promoter}" activiti:exclusive="true" id="card4" name="发起人"/>
+    <endEvent id="back" name="回退"/>
+    <sequenceFlow id="_4" sourceRef="card3" targetRef="card4"/>
+    <sequenceFlow id="_5" sourceRef="card4" targetRef="end"/>
   </process>
   <bpmndi:BPMNDiagram documentation="background=#3C3F41;count=1;horizontalcount=1;orientation=0;width=842.4;height=1195.2;imageableWidth=832.4;imageableHeight=1185.2;imageableX=5.0;imageableY=5.0" id="Diagram-_1" name="New Diagram">
     <bpmndi:BPMNPlane bpmnElement="oa_card">
@@ -38,11 +41,37 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="end" id="Shape-end">
-        <omgdc:Bounds height="32.0" width="32.0" x="325.0" y="415.0"/>
+        <omgdc:Bounds height="32.0" width="32.0" x="330.0" y="505.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="card4" id="Shape-card4">
+        <omgdc:Bounds height="55.0" width="85.0" x="300.0" y="415.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="back" id="Shape-back">
+        <omgdc:Bounds height="32.0" width="32.0" x="420.0" y="500.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="_4" id="BPMNEdge__4" sourceElement="card3" targetElement="_2">
+        <omgdi:waypoint x="342.5" y="365.0"/>
+        <omgdi:waypoint x="342.5" y="415.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_5" id="BPMNEdge__5" sourceElement="_2" targetElement="end">
+        <omgdi:waypoint x="346.0" y="470.0"/>
+        <omgdi:waypoint x="346.0" y="505.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_8" id="BPMNEdge__8" sourceElement="start" targetElement="card1">
         <omgdi:waypoint x="346.0" y="47.0"/>
         <omgdi:waypoint x="346.0" y="110.0"/>
@@ -53,13 +82,6 @@
       <bpmndi:BPMNEdge bpmnElement="_9" id="BPMNEdge__9" sourceElement="card1" targetElement="card2">
         <omgdi:waypoint x="342.5" y="165.0"/>
         <omgdi:waypoint x="342.5" y="215.0"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_11" id="BPMNEdge__11" sourceElement="card3" targetElement="end">
-        <omgdi:waypoint x="341.0" y="365.0"/>
-        <omgdi:waypoint x="341.0" y="415.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>

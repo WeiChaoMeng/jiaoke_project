@@ -65,4 +65,6 @@ public interface OaActCardService {
      * @return int
      */
     int edit(OaActCard oaActCard);
+
+    int updateByPrimaryKeySelective(OaActCard oaActCard);
 }

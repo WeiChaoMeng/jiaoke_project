@@ -84,6 +84,21 @@ public class OaActCar {
     private String billing;
 
     /**
+     * 查表计数人
+     */
+    private String lookup;
+
+    /**
+     * 审核人
+     */
+    private String reviewer;
+
+    /**
+     * 批准人
+     */
+    private String approver;
+
+    /**
      * 附件
      */
     private String annex;
@@ -286,5 +301,29 @@ public class OaActCar {
 
     public void setPromoterStr(String promoterStr) {
         this.promoterStr = promoterStr;
+    }
+
+    public String getLookup() {
+        return lookup;
+    }
+
+    public void setLookup(String lookup) {
+        this.lookup = lookup;
+    }
+
+    public String getReviewer() {
+        return reviewer;
+    }
+
+    public void setReviewer(String reviewer) {
+        this.reviewer = reviewer;
+    }
+
+    public String getApprover() {
+        return approver;
+    }
+
+    public void setApprover(String approver) {
+        this.approver = approver;
     }
 }

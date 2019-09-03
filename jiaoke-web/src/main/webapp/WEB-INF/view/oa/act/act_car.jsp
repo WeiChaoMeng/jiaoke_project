@@ -210,38 +210,38 @@
     //发送
     function send() {
 
-        /*else if ($.trim($("#drivingNumber").val()) === '') {
-            top.window.tips("行驶数不可以为空！", 6, 5, 1000);
-        }*/
+        if ($.trim($("#cardinalNumber").val()) === '') {
+            top.window.tips("公里基数不可以为空！", 6, 5, 1000);
+        }else {
+            var array = [];
+            $('#annexes').find('input').each(function () {
+                array.push($(this).val());
+            });
 
-        var array = [];
-        $('#annexes').find('input').each(function () {
-            array.push($(this).val());
-        });
+            if ($.trim($("#title").val()) === '') {
+                top.window.tips("标题不可以为空！", 6, 5, 1000);
+            } else {
 
-        if ($.trim($("#title").val()) === '') {
-            top.window.tips("标题不可以为空！", 6, 5, 1000);
-        } else {
+                //发送前将上传好的附件插入form中
+                $('#annex').val(array);
 
-            //发送前将上传好的附件插入form中
-            $('#annex').val(array);
-
-            $.ajax({
-                type: "POST",
-                url: '${path}/car/add',
-                data: $('#oaActCar').serialize(),
-                error: function (request) {
-                    layer.msg("出错！");
-                },
-                success: function (result) {
-                    if (result === "success") {
-                        window.location.href = "${path}/oaIndex.do";
-                        layer.msg("发送成功！");
-                    } else {
-                        layer.msg('发送失败！');
+                $.ajax({
+                    type: "POST",
+                    url: '${path}/car/add',
+                    data: $('#oaActCar').serialize(),
+                    error: function (request) {
+                        layer.msg("出错！");
+                    },
+                    success: function (result) {
+                        if (result === "success") {
+                            window.location.href = "${path}/oaIndex.do";
+                            layer.msg("发送成功！");
+                        } else {
+                            layer.msg('发送失败！');
+                        }
                     }
-                }
-            })
+                })
+            }
         }
     }
 

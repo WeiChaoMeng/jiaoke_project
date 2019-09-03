@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html;charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
@@ -20,16 +21,44 @@
     <span>${oaActCar.title}</span>
 </div>
 
-<div class="top_toolbar">
-    <div class="top_toolbar_inside" style="height: 40px;border-bottom: none;">
-        <div style="line-height: 40px;margin: 0 10px;float: left;">
-            <span style="float: left;margin-left: 10px;font-size: 13px;">申请时间：${oaActCar.createTimeStr}</span>
+<div class="top_toolbar" id="tool">
+    <div class="top-toolbar-details">
+        <div class="top-info-bar-user">
+            <span>${oaActCar.promoterStr}</span>
         </div>
 
-        <div class="head_left_button" style="float: right;line-height: 40px;">
-            <button type="button" class="cursor_hand" onclick="addUser()" style="font-size: 13px;">&#xea0e; 打印</button>
+        <div class="top-info-bar-time">
+            <span>${oaActCar.createTimeStr}</span>
+        </div>
+
+        <div class="printing-but-style">
+            <button type="button" class="cursor_hand" onclick="printContent()">&#xea0e; 打印</button>
         </div>
     </div>
+
+    <c:choose>
+        <c:when test="${oaActCar.annex != ''}">
+            <div class="top_toolbar" id="annexList" style="display: block;">
+                <div class="top-annexes-details">
+
+                    <div class="annexes-icon-details">
+                        <button type="button" class="cursor_hand">&#xeac1;</button>
+                    </div>
+
+                    <c:forTokens items="${oaActCar.annex}" delims="," var="annex">
+                        <div class="table-file">
+                            <div class="table-file-content">
+                                <span title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <a class="table-file-download icon"
+                                   href="/fileDownloadHandle/download?fileName=${annex}"
+                                   title="下载">&#xebda;</a>
+                            </div>
+                        </div>
+                    </c:forTokens>
+                </div>
+            </div>
+        </c:when>
+    </c:choose>
 </div>
 
 <form id="oaActCar">
@@ -39,6 +68,7 @@
             <td class="tdLabel">使用人</td>
             <td class="table-td-content">
                 <input type="hidden" id="id" name="id" value="${oaActCar.id}">
+                <input type="hidden" id="title" name="title" value="${oaActCar.title}">
                 ${oaActCar.user}
             </td>
 
@@ -141,8 +171,11 @@
             <td class="tdLabel">查表计数人</td>
             <td class="table-td-content">
                 <shiro:hasPermission name="lookup">
-                    <input type="text" class="formInput-readonly" value="${nickname}" readonly>
+                    <input type="text" class="formInput-readonly" name="lookup" value="${nickname}" readonly>
                 </shiro:hasPermission>
+                <shiro:lacksPermission name="lookup">
+                    ${oaActCar.lookup}
+                </shiro:lacksPermission>
             </td>
 
             <td class="tdLabel">交车时间</td>
@@ -151,6 +184,7 @@
                     <input type="text" class="formInput je-end-date" name="endTimeStr" onfocus="this.blur()">
                 </shiro:hasPermission>
                 <shiro:lacksPermission name="lookup">
+                    <input type="hidden" class="formInput je-end-date" onfocus="this.blur()">
                     ${oaActCar.endTimeStr}
                 </shiro:lacksPermission>
             </td>
@@ -159,16 +193,22 @@
         <tr>
             <td class="tdLabel">审核人</td>
             <td class="table-td-content">
-                <shiro:hasPermission name="principal">
-                    <input type="text" class="formInput-readonly" value="${nickname}" readonly>
+                <shiro:hasPermission name="officePrincipal">
+                    <input type="text" class="formInput-readonly" name="reviewer" value="${nickname}" readonly>
                 </shiro:hasPermission>
+                <shiro:lacksPermission name="officePrincipal">
+                    ${oaActCar.reviewer}
+                </shiro:lacksPermission>
             </td>
 
             <td class="tdLabel">批准人</td>
             <td class="table-td-content">
-                <shiro:hasPermission name="supervisor">
-                    <input type="text" class="formInput-readonly" value="${nickname}" readonly>
+                <shiro:hasPermission name="officeSupervisor">
+                    <input type="text" class="formInput-readonly" name="approver" value="${nickname}" readonly>
                 </shiro:hasPermission>
+                <shiro:lacksPermission name="officeSupervisor">
+                    ${oaActCar.approver}
+                </shiro:lacksPermission>
             </td>
         </tr>
         </tbody>
@@ -181,41 +221,18 @@
 </div>
 
 
-<div class="handle-container">
-    <div class="handle-title">
-        <div class="handle-title-script">处理意见</div>
-    </div>
+<div class="form-but" id="ret">
+    <shiro:hasAnyPermission name="officePrincipal,officeSupervisor,lookup">
+        <button type="button" class="return-but" style="margin-right: 10px;" onclick="approvalProcessing(2)">回退</button>
+    </shiro:hasAnyPermission>
 
-    <textarea id="processingOpinion" class="opinion-column" style="height: 72px;"></textarea>
+    <shiro:hasPermission name="lookup">
+        <button type="button" class="commit-but" onclick="commitAndUpdate(1)">同意</button>
+    </shiro:hasPermission>
 
-    <div class="form-but" style="margin-top: 20px;">
-        <button type="button" class="return-but" style="margin-right: 10px;" onclick="previousPage()">返回</button>
-        <shiro:lacksPermission name="lookup">
-            <button type="button" class="commit-but" onclick="commit()">提交</button>
-        </shiro:lacksPermission>
-
-        <shiro:hasPermission name="lookup">
-            <button type="button" class="commit-but" onclick="commitAndUpdate()">提交</button>
-        </shiro:hasPermission>
-    </div>
-</div>
-
-<div class="receipt-container">
-    <div class="receipt-title">
-        <div class="receipt-script">回执意见（共${commentsListLength}条）</div>
-    </div>
-
-    <c:forEach items="${commentsList}" var="comments">
-        <div class="comment-container">
-            <div class="comment-style">
-                <span class="comment-name">${comments.userName}</span>
-                <span class="comment-message">${comments.message}</span>
-                <span class="comment-date">${comments.timeStr}</span>
-            </div>
-        </div>
-    </c:forEach>
-
-    <div class="receipt-style"></div>
+    <shiro:lacksPermission name="lookup">
+        <button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>
+    </shiro:lacksPermission>
 </div>
 
 </body>
@@ -245,19 +262,15 @@
     }
 
     //查表计数人提交
-    function commitAndUpdate() {
+    function commitAndUpdate(flag) {
 
         if ($.trim($("#drivingNumber").val()) === '') {
             top.window.tips("行驶数不可以为空！", 6, 5, 1000);
         } else {
-
-            var oaActCar = $('#oaActCar').serialize()
-            var processingOpinion = $('#processingOpinion').val();
-
             $.ajax({
                 type: "POST",
                 url: '${path}/car/lookupApprovalSubmit',
-                data: oaActCar + "&taskId=" + taskId + "&processingOpinion=" + processingOpinion,
+                data: $('#oaActCar').serialize() + "&taskId=" + taskId + "&flag=" + flag,
                 error: function (request) {
                     layer.msg("出错！");
                 },
@@ -274,15 +287,11 @@
     }
 
     //提交
-    function commit() {
-        var processingOpinion = $('#processingOpinion').val();
+    function approvalProcessing(flag) {
         $.ajax({
             type: "post",
-            url: '/car/approvalSubmit',
-            data: {
-                'processingOpinion': processingOpinion,
-                'taskId': taskId
-            },
+            url: '/car/lookupApprovalSubmit',
+            data: $('#oaActCar').serialize() + "&taskId=" + taskId + "&flag=" + flag,
             async: false,
             success: function (data) {
                 if (data === 'success') {
@@ -317,6 +326,16 @@
         } else {
             $('#drivingNumber').val('');
         }
+    }
+
+    //打印
+    function printContent() {
+        $('#tool').hide();
+        $('#ret').hide();
+        //执行打印
+        window.print();
+        $('#tool').show();
+        $('#ret').show();
     }
 </script>
 </html>
