@@ -40,6 +40,19 @@
     </div>
 </div>
 
+<%--附件列表--%>
+<div class="top_toolbar" id="annexList" style="display: none;">
+    <div class="top-toolbar-annexes">
+
+        <div class="annexes-icon">
+            <button type="button" class="cursor_hand">&#xeac1; ：</button>
+        </div>
+
+        <div id="annexes"></div>
+
+    </div>
+</div>
+
 <form id="oaActCard">
 
     <div class="form_area" id="titleArea">
@@ -76,10 +89,10 @@
         <tr>
             <td class="tdLabel">申请人</td>
             <td class="table-td-content">
-                <input type="text" class="formInput" name="applicant" value="${nickname}" readonly="readonly">
+                <input type="text" class="formInput-readonly" name="applicant" value="${nickname}" readonly="readonly">
             </td>
 
-            <td class="tdLabel">申请时间</td>
+            <td class="tdLabel">申请日期</td>
             <td class="table-td-content">
                 <input type="text" class="formInput je-date" name="applyTimeStr" onfocus="this.blur()">
             </td>
@@ -109,7 +122,6 @@
             <td class="tdLabel">拟使用期限(结束)</td>
             <td class="table-td-content">
                 <input type="text" class="formInput je-end-date" name="endTimeStr" onfocus="this.blur()">
-                <input type="hidden" name="state" value="0">
             </td>
         </tr>
 
@@ -155,6 +167,9 @@
                     <label class="approval-signature-label">签字:</label>
                     <input class="approval-signature-input" type="text" disabled="disabled">
                 </div>
+
+                <%--暂存附件--%>
+                <input type="hidden" id="annex" name="annex">
             </td>
         </tr>
         </tbody>
@@ -211,9 +226,17 @@
 
     //发送
     function send() {
+        var array = [];
+        $('#annexes').find('input').each(function () {
+            array.push($(this).val());
+        });
+
         if ($.trim($("#title").val()) === '') {
             layer.msg("标题不可以为空！")
         } else {
+            //发送前将上传好的附件插入form中
+            $('#annex').val(array);
+
             $.ajax({
                 type: "POST",
                 url: '${path}/card/add',
@@ -235,9 +258,17 @@
 
     //保存待发
     function savePending() {
+        var array = [];
+        $('#annexes').find('input').each(function () {
+            array.push($(this).val());
+        });
+
         if ($.trim($("#title").val()) === '') {
             layer.msg("标题不可以为空！")
         } else {
+            //发送前将上传好的附件插入form中
+            $('#annex').val(array);
+
             $.ajax({
                 type: "POST",
                 url: '${path}/card/savePending',
@@ -259,20 +290,72 @@
 
     //插入附件
     function insertFile() {
-        window.top.testContentWindow();
+        window.top.uploadFile();
     }
 
+    //上传附件成功后插入form
+    function writeFile(ret) {
+        $('#annexList').css("display", "block");
+        for (let i = 0; i < ret.length; i++) {
+            var annex = '';
+            var fileId = ret[i].filePaths.substring(0, ret[i].filePaths.indexOf("_"));
+            annex += '<div id="file' + fileId + '" class="table-file">';
+            annex += '<div class="table-file-content">';
+            annex += '<a class="table-file-title" href="/fileDownloadHandle/download?fileName=' + ret[i].filePaths + '" title="' + ret[i].originalName + '">' + ret[i].originalName + '</a>';
+            annex += '<span class="delete-file" title="删除" onclick="whether(\'' + ret[i].filePaths + '\')">&#xeabb;</span>';
+            annex += '<input type="hidden" value="' + ret[i].filePaths + '">';
+            annex += '</div>';
+            annex += '</div>';
+            $('#annexes').append(annex);
+        }
+    }
 
-    //插入成功后写入
-    function testReceive() {
-        console.log("饭卡收到返回参数！！！！！！！！！");
+    //删除已上传附件
+    function whether(fileName) {
+        window.top.deleteUploaded(fileName);
+    }
+
+    //执行删除附件
+    function delFile(fileName) {
+        $.ajax({
+            type: "POST",
+            url: '${path}/fileUploadHandle/deleteFile',
+            data: {"fileName": fileName},
+            error: function (request) {
+                layer.msg("出错！");
+            },
+            success: function (result) {
+                if (result === "success") {
+                    $('#file' + fileName.substring(0, fileName.indexOf("_"))).remove();
+                    window.top.tips("删除成功！", 0, 1, 2000);
+
+                    let annexesLen = $('#annexes').children().length;
+                    if (annexesLen === 0) {
+                        $('#annexList').css("display", "none");
+                    }
+                } else {
+                    window.top.tips("文件不存在！", 6, 5, 2000);
+                }
+            }
+        });
     }
 
     //打印
     function printContent() {
-        $('#tool,#titleArea').hide();
+        $('#tool,#titleArea,#annexList').hide();
+        $('#body').css('width', '100%');
+        //执行打印
         window.print();
         $('#tool,#titleArea').show();
+        $('#body').css('width', '80%');
+
+        //附件列表
+        let annexesLen = $('#annexes').children().length;
+        if (annexesLen === 0) {
+            $('#annexList').css("display", "none");
+        } else {
+            $('#annexList').css("display", "block");
+        }
     }
 </script>
 </html>

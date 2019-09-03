@@ -62,9 +62,53 @@ public class OaActCard {
     private String endTimeStr;
 
     /**
-     * 状态(0,已发 - 1,待发)
+     * 部门负责人审批内容
      */
-    private Integer state;
+    private String principalContent;
+    /**
+     * 部门负责人签字
+     */
+    private String principalSign;
+
+    /**
+     * 部门负责人签字时间
+     */
+    private String principalDate;
+
+    /**
+     * 部门主管审批内容
+     */
+    private String supervisorContent;
+
+    /**
+     * 部门主管签字
+     */
+    private String supervisorSign;
+
+    /**
+     * 部门主管签字时间
+     */
+    private String supervisorDate;
+
+    /**
+     * 主管部门负责人审批内容
+     */
+    private String directorContent;
+
+    /**
+     * 主管部门负责人签字
+     */
+    private String directorSign;
+
+    /**
+     * 主管部门负责人签字时间
+     */
+    private String directorDate;
+
+    /**
+     * 附件
+     */
+    private String annex;
 
     /**
      * 创建日期
@@ -77,6 +121,8 @@ public class OaActCard {
      * 发起人
      */
     private Integer promoter;
+    @Transient
+    private String promoterStr;
 
     /**
      * 查询路径
@@ -171,14 +217,6 @@ public class OaActCard {
         this.endTimeStr = endTimeStr;
     }
 
-    public Integer getState() {
-        return state;
-    }
-
-    public void setState(Integer state) {
-        this.state = state;
-    }
-
     public Date getCreateTime() {
         return createTime;
     }
@@ -209,5 +247,93 @@ public class OaActCard {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getPrincipalContent() {
+        return principalContent;
+    }
+
+    public void setPrincipalContent(String principalContent) {
+        this.principalContent = principalContent;
+    }
+
+    public String getPrincipalSign() {
+        return principalSign;
+    }
+
+    public void setPrincipalSign(String principalSign) {
+        this.principalSign = principalSign;
+    }
+
+    public String getPrincipalDate() {
+        return principalDate;
+    }
+
+    public void setPrincipalDate(String principalDate) {
+        this.principalDate = principalDate;
+    }
+
+    public String getSupervisorContent() {
+        return supervisorContent;
+    }
+
+    public void setSupervisorContent(String supervisorContent) {
+        this.supervisorContent = supervisorContent;
+    }
+
+    public String getSupervisorSign() {
+        return supervisorSign;
+    }
+
+    public void setSupervisorSign(String supervisorSign) {
+        this.supervisorSign = supervisorSign;
+    }
+
+    public String getSupervisorDate() {
+        return supervisorDate;
+    }
+
+    public void setSupervisorDate(String supervisorDate) {
+        this.supervisorDate = supervisorDate;
+    }
+
+    public String getDirectorContent() {
+        return directorContent;
+    }
+
+    public void setDirectorContent(String directorContent) {
+        this.directorContent = directorContent;
+    }
+
+    public String getDirectorSign() {
+        return directorSign;
+    }
+
+    public void setDirectorSign(String directorSign) {
+        this.directorSign = directorSign;
+    }
+
+    public String getDirectorDate() {
+        return directorDate;
+    }
+
+    public void setDirectorDate(String directorDate) {
+        this.directorDate = directorDate;
+    }
+
+    public String getAnnex() {
+        return annex;
+    }
+
+    public void setAnnex(String annex) {
+        this.annex = annex;
+    }
+
+    public String getPromoterStr() {
+        return promoterStr;
+    }
+
+    public void setPromoterStr(String promoterStr) {
+        this.promoterStr = promoterStr;
     }
 }

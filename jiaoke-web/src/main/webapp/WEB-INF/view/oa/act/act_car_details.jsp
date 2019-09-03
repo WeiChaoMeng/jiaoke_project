@@ -149,7 +149,7 @@
     <tr>
         <td class="tdLabel">查表计数人</td>
         <td class="table-td-content">
-
+            ${oaActCar.lookup}
         </td>
 
         <td class="tdLabel">交车时间</td>
@@ -161,12 +161,12 @@
     <tr>
         <td class="tdLabel">审核人</td>
         <td class="table-td-content">
-
+            ${oaActCar.reviewer}
         </td>
 
         <td class="tdLabel">批准人</td>
         <td class="table-td-content">
-
+            ${oaActCar.approver}
         </td>
     </tr>
     </tbody>
@@ -177,7 +177,7 @@
     <span class="notice-tips-script">说明：1.每公里2元。使用的车辆为享受车补待遇的，每公里1.2元。2.审核人为使用部门负责人，批准人为使用人部门主管领导。3.多人同时使用时费用均摊。4.费用按月报销或扣除。</span>
 </div>
 
-<div class="form-but" style="margin-top: 20px;">
+<div class="form-but" id="ret" style="margin-top: 20px;">
     <button type="button" class="return-but" onclick="previousPage()">返回</button>
 </div>
 
@@ -194,9 +194,11 @@
     //打印
     function printContent() {
         $('#tool').hide();
+        $('#ret').hide();
         //执行打印
         window.print();
         $('#tool').show();
+        $('#ret').show();
     }
 </script>
 </html>

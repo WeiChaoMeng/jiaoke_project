@@ -1,6 +1,9 @@
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
 <%@ page language="java" contentType="text/html;charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
@@ -17,90 +20,253 @@
 <div class="table-title">
     <span>${oaActCard.title}</span>
 </div>
-<div class="top_toolbar">
-    <div class="top_toolbar_inside" style="height: 40px;border-bottom: none;">
-        <div style="line-height: 40px;margin: 0 10px;float: left;">
-            <span style="float: left;margin-left: 10px;font-size: 13px;">申请时间：${oaActCard.createTimeStr}</span>
+
+<div class="top_toolbar" id="tool">
+    <div class="top-toolbar-details">
+        <div class="top-info-bar-user">
+            <span>${oaActCard.promoterStr}</span>
         </div>
 
-        <div class="head_left_button" style="float: right;line-height: 40px;">
-            <button type="button" class="cursor_hand" onclick="addUser()" style="font-size: 13px;">&#xea0e; 打印</button>
+        <div class="top-info-bar-time">
+            <span>${oaActCard.createTimeStr}</span>
+        </div>
+
+        <div class="printing-but-style">
+            <button type="button" class="cursor_hand" onclick="printContent()">&#xea0e; 打印</button>
         </div>
     </div>
-</div>
-<!-- -->
-<table class="formTable" style="margin: 0">
-    <tbody>
-    <tr>
-        <td class="tdLabel">申请人：</td>
-        <td class="table-td-content">
-            ${oaActCard.applicant}
-        </td>
 
-        <td class="tdLabel">申请时间：</td>
-        <td class="table-td-content">
-            ${oaActCard.applyTimeStr}
-        </td>
-    </tr>
+    <c:choose>
+        <c:when test="${oaActCard.annex != ''}">
+            <div class="top_toolbar" id="annexList">
+                <div class="top-annexes-details">
 
-    <tr>
-        <td class="tdLabel">所属单位：</td>
-        <td colspan="3" class="table-td-content">
-            ${oaActCard.company}
-        </td>
-    </tr>
+                    <div class="annexes-icon-details">
+                        <button type="button" class="cursor_hand">&#xeac1;</button>
+                    </div>
 
-    <tr>
-        <td class="tdLabel">事由：</td>
-        <td colspan="3" class="table-td-content">
-            ${oaActCard.reason}
-        </td>
-    </tr>
-
-    <tr>
-        <td class="tdLabel">拟使用期限(开始)：</td>
-        <td class="table-td-content">
-            ${oaActCard.startTimeStr}
-        </td>
-
-
-        <td class="tdLabel">拟使用期限(结束)：</td>
-        <td class="table-td-content">
-            ${oaActCard.endTimeStr}
-        </td>
-    </tr>
-    </tbody>
-</table>
-
-<div class="handle-container">
-    <div class="handle-title">
-        <div class="handle-title-script">处理意见</div>
-    </div>
-
-    <textarea id="processingOpinion" class="opinion-column" style="height: 72px;"></textarea>
-
-    <div class="form-but" style="margin-top: 20px;">
-        <button type="button" class="return-but" style="margin-right: 10px;" onclick="previousPage()">返回</button>
-        <button type="button" class="commit-but" onclick="commit()">提交</button>
-    </div>
-</div>
-
-<div class="receipt-container">
-    <div class="receipt-title">
-        <div class="receipt-script">回执意见（共条）</div>
-    </div>
-
-    <c:forEach items="${commentsList}" var="comments">
-        <div class="comment-container">
-            <div class="comment-style">
-                <span class="comment-name">${comments.userName}</span>
-                <span class="comment-message">${comments.message}</span>
-                <span class="comment-date">${comments.timeStr}</span>
+                    <c:forTokens items="${oaActCard.annex}" delims="," var="annex">
+                        <div class="table-file">
+                            <div class="table-file-content">
+                                <span title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <a class="table-file-download icon"
+                                   href="/fileDownloadHandle/download?fileName=${annex}"
+                                   title="下载">&#xebda;</a>
+                            </div>
+                        </div>
+                    </c:forTokens>
+                </div>
             </div>
-        </div>
-    </c:forEach>
+        </c:when>
+    </c:choose>
+</div>
 
-    <div class="receipt-style"></div>
+<form id="oaActCard">
+    <table class="formTable">
+        <tbody>
+        <tr>
+            <td class="tdLabel">申请人：</td>
+            <td class="table-td-content">
+                ${oaActCard.applicant}
+                <input type="hidden" name="id" value="${oaActCard.id}">
+                <input type="hidden" name="title" value="${oaActCard.title}">
+            </td>
+
+            <td class="tdLabel">申请时间：</td>
+            <td class="table-td-content">
+                ${oaActCard.applyTimeStr}
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">所属单位：</td>
+            <td colspan="3" class="table-td-content">
+                ${oaActCard.company}
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">事由：</td>
+            <td colspan="3" class="table-td-content">
+                ${oaActCard.reason}
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">拟使用期限(开始)：</td>
+            <td class="table-td-content">
+                ${oaActCard.startTimeStr}
+            </td>
+
+
+            <td class="tdLabel">拟使用期限(结束)：</td>
+            <td class="table-td-content">
+                ${oaActCard.endTimeStr}
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">关联部门负责人</td>
+            <td colspan="5" class="approval-content">
+                <shiro:hasPermission name="officePrincipal">
+                    <c:choose>
+                        <c:when test="${oaActCard.principalContent == null}">
+                            <textarea class="approval-content-textarea" style="background-color: #ffffff" name="principalContent"></textarea>
+                        </c:when>
+                        <c:otherwise>
+                            <textarea class="approval-content-textarea" readonly>${oaActCard.principalContent}</textarea>
+                        </c:otherwise>
+                    </c:choose>
+
+                    <div class="approval-date">
+                        <label class="approval-date-label">日期:</label>
+                        <c:choose>
+                            <c:when test="${oaActCard.principalDate == null}">
+                                <input class="approval-date-input" type="text" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>
+                            </c:when>
+                            <c:otherwise>
+                                <input class="approval-date-input" type="text" value="${oaActCard.principalDate}" readonly>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                    <div class="approval-signature">
+                        <label class="approval-signature-label">签字:</label>
+                        <c:choose>
+                            <c:when test="${oaActCard.principalSign == null}">
+                                <input class="approval-signature-input" type="text" name="principalSign" value="${nickname}" readonly>
+                            </c:when>
+                            <c:otherwise>
+                                <input class="approval-signature-input" type="text" value="${oaActCard.principalSign}" readonly>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                </shiro:hasPermission>
+
+                <shiro:lacksPermission name="officePrincipal">
+                    <textarea readonly class="approval-content-textarea">${oaActCard.principalContent}</textarea>
+                    <div class="approval-date">
+                        <label class="approval-date-label">日期:</label>
+                        <input class="approval-date-input" type="text" value="${oaActCard.principalDate}" readonly>
+                    </div>
+                    <div class="approval-signature">
+                        <label class="approval-signature-label">签字:</label>
+                        <input class="approval-signature-input" type="text" value="${oaActCard.principalSign}" readonly>
+                    </div>
+                </shiro:lacksPermission>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">关联部门领导主管</td>
+            <td colspan="5" class="approval-content">
+                <shiro:hasPermission name="officeSupervisor">
+                    <c:choose>
+                        <c:when test="${oaActCard.supervisorContent == null}">
+                            <textarea class="approval-content-textarea" style="background-color: #ffffff" name="supervisorContent"></textarea>
+                        </c:when>
+                        <c:otherwise>
+                            <textarea class="approval-content-textarea" readonly>${oaActCard.supervisorContent}</textarea>
+                        </c:otherwise>
+                    </c:choose>
+
+                    <div class="approval-date">
+                        <label class="approval-date-label">日期:</label>
+                        <c:choose>
+                            <c:when test="${oaActCard.supervisorDate == null}">
+                                <input class="approval-date-input" type="text" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>
+                            </c:when>
+                            <c:otherwise>
+                                <input class="approval-date-input" type="text" value="${oaActCard.supervisorDate}" readonly>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                    <div class="approval-signature">
+                        <label class="approval-signature-label">签字:</label>
+                        <c:choose>
+                            <c:when test="${oaActCard.supervisorSign == null}">
+                                <input class="approval-signature-input" type="text" name="supervisorSign" value="${nickname}" readonly>
+                            </c:when>
+                            <c:otherwise>
+                                <input class="approval-signature-input" type="text" value="${oaActCard.supervisorSign}" readonly>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                </shiro:hasPermission>
+
+                <shiro:lacksPermission name="officeSupervisor">
+                    <textarea readonly class="approval-content-textarea">${oaActCard.supervisorContent}</textarea>
+                    <div class="approval-date">
+                        <label class="approval-date-label">日期:</label>
+                        <input class="approval-date-input" type="text" value="${oaActCard.supervisorDate}" readonly>
+                    </div>
+                    <div class="approval-signature">
+                        <label class="approval-signature-label">签字:</label>
+                        <input class="approval-signature-input" type="text" value="${oaActCard.supervisorSign}" readonly>
+                    </div>
+                </shiro:lacksPermission>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">主管部门负责人</td>
+            <td colspan="5" class="approval-content">
+                <shiro:hasPermission name="cardApproval">
+                    <c:choose>
+                        <c:when test="${oaActCard.directorContent == null}">
+                            <textarea class="approval-content-textarea" style="background-color: #ffffff" name="directorContent"></textarea>
+                        </c:when>
+                        <c:otherwise>
+                            <textarea readonly class="approval-content-textarea">${oaActCard.directorContent}</textarea>
+                        </c:otherwise>
+                    </c:choose>
+
+                    <div class="approval-date">
+                        <label class="approval-date-label">日期:</label>
+                        <c:choose>
+                            <c:when test="${oaActCard.directorDate == null}">
+                                <input class="approval-date-input" type="text" name="directorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>
+                            </c:when>
+                            <c:otherwise>
+                                <input class="approval-date-input" type="text" value="${oaActCard.directorDate}" readonly>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                    <div class="approval-signature">
+                        <label class="approval-signature-label">签字:</label>
+
+                        <c:choose>
+                            <c:when test="${oaActCard.directorSign == null}">
+                                <input class="approval-signature-input" type="text" name="directorSign" value="${nickname}" readonly>
+                            </c:when>
+                            <c:otherwise>
+                                <input class="approval-signature-input" type="text" value="${oaActCard.directorSign}" readonly>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                </shiro:hasPermission>
+
+                <shiro:lacksPermission name="cardApproval">
+                    <textarea readonly class="approval-content-textarea">${oaActCard.directorContent}</textarea>
+                    <div class="approval-date">
+                        <label class="approval-date-label">日期:</label>
+                        <input class="approval-date-input" type="text" value="${oaActCard.directorDate}" readonly>
+                    </div>
+                    <div class="approval-signature">
+                        <label class="approval-signature-label">签字:</label>
+                        <input class="approval-signature-input" type="text" value="${oaActCard.directorSign}" readonly>
+                    </div>
+                </shiro:lacksPermission>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+
+<div class="form-but">
+    <shiro:hasAnyPermission name="officePrincipal,officeSupervisor,cardApproval">
+        <button type="button" class="return-but" style="margin-right: 10px;" onclick="approvalProcessing(2)">回退</button>
+    </shiro:hasAnyPermission>
+    <button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>
 </div>
 
 </body>
@@ -111,21 +277,12 @@
     //任务Id
     var taskId = JSON.parse('${taskId}');
 
-    //返回上一页
-    function previousPage() {
-        window.history.back();
-    }
-
     //提交
-    function commit() {
-        var processingOpinion = $('#processingOpinion').val();
+    function approvalProcessing(flag) {
         $.ajax({
             type: "post",
             url: '/card/approvalSubmit',
-            data: {
-                'processingOpinion': processingOpinion,
-                'taskId': taskId
-            },
+            data: $('#oaActCard').serialize() + "&taskId=" + taskId + "&flag=" + flag,
             async: false,
             success: function (data) {
                 if (data === 'success') {

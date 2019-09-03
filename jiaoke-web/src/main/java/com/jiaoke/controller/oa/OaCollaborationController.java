@@ -1,5 +1,6 @@
 package com.jiaoke.controller.oa;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jiake.utils.JsonHelper;
@@ -12,6 +13,7 @@ import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -168,13 +170,17 @@ public class OaCollaborationController {
     @ResponseBody
     public String pendingApproval(String abc) {
         System.out.println("----------------------------------------" + abc);
+        System.out.println("----------------------------------------" + getCurrentUser().getId().toString() + getCurrentUser().getNickname());
+
         //根据当前登录人id获取taskList
         List<Task> taskList = activitiUtil.getTaskByAssignee(getCurrentUser().getId().toString());
         List<OaCollaboration> oaCollaborations = activitiUtil.getPendingProcessInstance(taskList);
         List<OaCollaboration> oaCollaborationList = oaCoordinationService.selectPending(oaCollaborations, "");
         Collections.reverse(oaCollaborationList);
-        PageInfo<OaCollaboration> pageInfo = new PageInfo<>(oaCollaborationList);
-        return JsonHelper.toJSONString(pageInfo);
+        for (OaCollaboration collaboration : oaCollaborationList) {
+            System.out.println(collaboration.toString() + collaboration.getTitle());
+        }
+        return JSON.toJSONString(oaCollaborationList);
     }
 
     /**------------已办事项--------------*/

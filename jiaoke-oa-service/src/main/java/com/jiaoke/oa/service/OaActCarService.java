@@ -71,5 +71,5 @@ public interface OaActCarService {
      * @param oaActCar oaActCar
      * @return int
      */
-    int updateByPrimaryKey(OaActCar oaActCar);
+    int updateByPrimaryKeySelective(OaActCar oaActCar);
 }

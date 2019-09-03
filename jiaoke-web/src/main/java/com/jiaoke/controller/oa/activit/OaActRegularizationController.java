@@ -142,9 +142,12 @@ public class OaActRegularizationController {
         String promoter = "promoter";
         //回退
         String back = "back";
-
+        //部门负责人
+        String principal = "principal";
+        //部门主管领导
+        String supervisor = "supervisor";
         //更新数据
-        if (oaActRegularizationService.updateData(oaActRegularization) < 1){
+        if (oaActRegularizationService.updateData(oaActRegularization) < 1) {
             return "error";
         }
 
@@ -176,6 +179,14 @@ public class OaActRegularizationController {
                         activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
                         return "success";
 
+                    } else if (principal.equals(enforcer) || supervisor.equals(enforcer)){
+                        String startUserId = activitiUtil.getStartUserId(task.getProcessInstanceId());
+                        //根据发起者id获取所属部门id
+                        String departmentId = userInfoService.selectDepartmentByUserId(Integer.valueOf(startUserId));
+                        //选择执行者Id
+                        String enforcerId = departmentService.selectEnforcerId(enforcer, departmentId);
+                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, Integer.valueOf(enforcerId));
+                        return "success";
                     } else {
                         UserInfo userInfo = userInfoService.getUserInfoByPermission(enforcer);
                         activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
@@ -189,7 +200,7 @@ public class OaActRegularizationController {
             //驳回
             managementService.executeCommand(new TargetFlowNodeCommand(task.getId(), back));
             //修改表单状态
-            oaCollaborationService.updateState(oaActRegularization.getId(),3);
+            oaCollaborationService.updateState(oaActRegularization.getId(), 3);
             return "success";
         }
     }
