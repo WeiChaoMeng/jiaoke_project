@@ -77,7 +77,7 @@
         FROM
              (SELECT
                      produce_date,
-                     SUM(material_total) AS total
+                     ROUND(SUM(material_total)/1000) AS total
               FROM
                    quality_monitoring_realtime_data1
               WHERE
@@ -90,7 +90,7 @@
               UNION ALL
               SELECT
                      produce_date,
-                     SUM(material_total) AS total
+                     ROUND(SUM(material_total)/1000) AS total
               FROM
                    quality_monitoring_realtime_data2
               WHERE

@@ -131,11 +131,13 @@ function getLastMonthData() {
                 var dataArray = [];
                 for (var i = 1 ; i < 32;i ++){
                     if (res[i - 1]){
-                        if (res[i - 1].proDate === i){
-                            dataArray.push(Math.floor(res[i].total/1000));
+                        if (res[i - 1].proDate === i || res[i - 1].proDate === ('0'+ i)  ){
+                            dataArray.push(Math.floor(res[i - 1].total));
                         } else {
                             dataArray.push(0);
                         }
+                    }else {
+                        dataArray.push(0);
                     }
 
                 }
@@ -204,7 +206,7 @@ function getEveryMonthDays() {
         dataType:"json",
         async: false,
         success:function (res) {
-            debugger
+
             if (res){
                 var xArray = [];
                 var yArray = [];
@@ -247,10 +249,10 @@ function getThisYearDataAndPlan() {
                 var plan = res.totals;
                 var yearTotal = res.total;
 
-                option2.series[0].data[0].value = yearTotal;
-                option2.series[0].data[1].value = plan - yearTotal;
-                option2.series[1].data[0].value = plan;
-                option2.series[1].label.normal.formatter= '目标值\r\n\r\n'+ plan;
+                option2.series[0].data[0].value = Math.round(yearTotal);
+                option2.series[0].data[1].value = Math.round(plan - yearTotal);
+                option2.series[1].data[0].value = Math.round(plan) ;
+                option2.series[1].label.normal.formatter= '目标值\r\n\r\n'+ Math.round(plan);
                 // 使用刚指定的配置项和数据显示图表。
                 myChart2.setOption(option2);
                 window.addEventListener("resize", function () {
@@ -316,7 +318,7 @@ function dateFtt(fmt,date)
         fmt=fmt.replace(RegExp.$1, (date.getFullYear()+"").substr(4 - RegExp.$1.length));
     for(var k in o)
         if(new RegExp("("+ k +")").test(fmt))
-            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("0"+ o[k]).substr((""+ o[k]).length)));
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
     return fmt;
 }
 
