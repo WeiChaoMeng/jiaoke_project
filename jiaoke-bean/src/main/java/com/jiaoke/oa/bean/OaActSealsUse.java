@@ -49,6 +49,26 @@ public class OaActSealsUse {
     private String name;
 
     /**
+     * 部门负责人
+     */
+    private String principal;
+
+    /**
+     * 部门主管领导
+     */
+    private String supervisor;
+
+    /**
+     * 印章管理部门主管领导
+     */
+    private String sealManage;
+
+    /**
+     * 盖章人
+     */
+    private String stamp;
+
+    /**
      * 创建日期
      */
     private Date createTime;
@@ -59,11 +79,18 @@ public class OaActSealsUse {
      * 发起人
      */
     private Integer promoter;
+    @Transient
+    private String promoterStr;
 
     /**
      * 查询路径
      */
     private String url;
+
+    /**
+     * 附件
+     */
+    private String annex;
 
     public String getId() {
         return id;
@@ -143,5 +170,53 @@ public class OaActSealsUse {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(String principal) {
+        this.principal = principal;
+    }
+
+    public String getSupervisor() {
+        return supervisor;
+    }
+
+    public void setSupervisor(String supervisor) {
+        this.supervisor = supervisor;
+    }
+
+    public String getSealManage() {
+        return sealManage;
+    }
+
+    public void setSealManage(String sealManage) {
+        this.sealManage = sealManage;
+    }
+
+    public String getStamp() {
+        return stamp;
+    }
+
+    public void setStamp(String stamp) {
+        this.stamp = stamp;
+    }
+
+    public String getAnnex() {
+        return annex;
+    }
+
+    public void setAnnex(String annex) {
+        this.annex = annex;
+    }
+
+    public String getPromoterStr() {
+        return promoterStr;
+    }
+
+    public void setPromoterStr(String promoterStr) {
+        this.promoterStr = promoterStr;
     }
 }

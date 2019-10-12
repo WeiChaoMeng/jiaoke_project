@@ -38,6 +38,8 @@ public interface OaActLicenceUseService {
      */
     int edit(OaActLicenceUse oaActLicenceUse);
 
+    int updateByPrimaryKeySelective(OaActLicenceUse oaActLicenceUse);
+
     /**
      * 查询
      *

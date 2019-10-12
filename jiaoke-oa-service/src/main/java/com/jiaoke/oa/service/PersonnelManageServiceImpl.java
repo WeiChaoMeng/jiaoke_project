@@ -1,11 +1,11 @@
 package com.jiaoke.oa.service;
 
 import com.jiake.utils.DateUtil;
+import com.jiaoke.oa.bean.PersonnelInfo;
 import com.jiaoke.oa.bean.UserContract;
-import com.jiaoke.oa.bean.UserFiles;
 import com.jiaoke.oa.bean.UserInfo;
+import com.jiaoke.oa.dao.PersonnelManageMapper;
 import com.jiaoke.oa.dao.UserContractMapper;
-import com.jiaoke.oa.dao.UserFilesMapper;
 import com.jiaoke.oa.dao.UserInfoMapper;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,6 @@ import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Month;
-import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
@@ -35,7 +34,7 @@ public class PersonnelManageServiceImpl implements PersonnelManageService {
     private UserContractMapper userContractMapper;
 
     @Resource
-    private UserFilesMapper userFilesMapper;
+    private PersonnelManageMapper personnelManageMapper;
 
     @Override
     public List<UserInfo> getUserBasicInfo() {
@@ -156,6 +155,19 @@ public class PersonnelManageServiceImpl implements PersonnelManageService {
         return userContractMapper.getUserNameByNature(id);
     }
 
+    @Override
+    public int addPersonnelInfo(PersonnelInfo personnelInfo) {
+        personnelInfo.setBirthday(DateUtil.stringConvertYYYYMMDD(personnelInfo.getBirthdayStr()));
+        personnelInfo.setJoinPartyDate(DateUtil.stringConvertYYYYMMDD(personnelInfo.getJoinPartyDateStr()));
+        personnelInfo.setJoinWorkDate(DateUtil.stringConvertYYYYMMDD(personnelInfo.getJoinWorkDateStr()));
+        personnelInfo.setOriginalGraduationDate(DateUtil.stringConvertYYYYMMDD(personnelInfo.getOriginalGraduationDateStr()));
+        personnelInfo.setNowGraduationDate(DateUtil.stringConvertYYYYMMDD(personnelInfo.getNowGraduationDateStr()));
+        personnelInfo.setCorrectionDate(DateUtil.stringConvertYYYYMMDD(personnelInfo.getCorrectionDateStr()));
+        personnelInfo.setEstimateRetirementDate(DateUtil.stringConvertYYYYMMDD(personnelInfo.getEstimateRetirementDateStr()));
+        personnelInfo.setRetirementDate(DateUtil.stringConvertYYYYMMDD(personnelInfo.getRetirementDateStr()));
+        return personnelManageMapper.insertSelective(personnelInfo);
+    }
+
     /**
      * 按周期计算时差
      *
@@ -182,17 +194,5 @@ public class PersonnelManageServiceImpl implements PersonnelManageService {
             flag = 1;
         }
         return flag;
-    }
-
-
-    @Override
-    public List<UserFiles> getUserFilesData() {
-        List<UserFiles> userFiles = userFilesMapper.getUserFilesData();
-        for (UserFiles userFile : userFiles) {
-            if (userFile.getUpdateDate() != null) {
-                userFile.setUpdateDateStr(DateUtil.dateConvertYYYYMMDD(userFile.getUpdateDate()));
-            }
-        }
-        return userFiles;
     }
 }

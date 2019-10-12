@@ -5,6 +5,7 @@ import com.jiaoke.oa.bean.OaActLicenceUse;
 import com.jiaoke.oa.bean.OaCollaboration;
 import com.jiaoke.oa.dao.OaActLicenceUseMapper;
 import com.jiaoke.oa.dao.OaCollaborationMapper;
+import com.jiaoke.oa.dao.UserInfoMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -26,6 +27,9 @@ public class OaActLicenceUseServiceImpl implements OaActLicenceUseService {
     @Resource
     private OaCollaborationMapper oaCollaborationMapper;
 
+    @Resource
+    private UserInfoMapper userInfoMapper;
+
     @Override
     public int insert(OaActLicenceUse oaActLicenceUse, Integer userId, String randomId, Integer state) {
         oaActLicenceUse.setReceiveTime(DateUtil.stringConvertYYYYMMDD(oaActLicenceUse.getReceiveTimeStr()));
@@ -33,7 +37,7 @@ public class OaActLicenceUseServiceImpl implements OaActLicenceUseService {
         oaActLicenceUse.setCreateTime(new Date());
         oaActLicenceUse.setPromoter(userId);
         oaActLicenceUse.setUrl("licenceUse");
-        if (oaActLicenceUseMapper.insertData(oaActLicenceUse) < 0) {
+        if (oaActLicenceUseMapper.insertSelective(oaActLicenceUse) < 0) {
             return -1;
         } else {
             OaCollaboration oaCollaboration = new OaCollaboration();
@@ -66,11 +70,17 @@ public class OaActLicenceUseServiceImpl implements OaActLicenceUseService {
         OaActLicenceUse oaActLicenceUse = oaActLicenceUseMapper.selectByPrimaryKey(id);
         oaActLicenceUse.setReceiveTimeStr(DateUtil.dateConvertYYYYMMDD(oaActLicenceUse.getReceiveTime()));
         oaActLicenceUse.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActLicenceUse.getCreateTime()));
+        oaActLicenceUse.setPromoterStr(userInfoMapper.getNicknameById(oaActLicenceUse.getPromoter()));
         return oaActLicenceUse;
     }
 
     @Override
     public int deleteData(String id) {
         return oaActLicenceUseMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public int updateByPrimaryKeySelective(OaActLicenceUse oaActLicenceUse) {
+        return oaActLicenceUseMapper.updateByPrimaryKeySelective(oaActLicenceUse);
     }
 }

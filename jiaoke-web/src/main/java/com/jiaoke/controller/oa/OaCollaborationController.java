@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -168,19 +170,28 @@ public class OaCollaborationController {
 
     @RequestMapping(value = "/pendingApproval.api")
     @ResponseBody
-    public String pendingApproval(String abc) {
-        System.out.println("----------------------------------------" + abc);
-        System.out.println("----------------------------------------" + getCurrentUser().getId().toString() + getCurrentUser().getNickname());
-
+    public String pendingApproval() {
+        HashMap<String, Object> map = new HashMap<>(16);
         //根据当前登录人id获取taskList
         List<Task> taskList = activitiUtil.getTaskByAssignee(getCurrentUser().getId().toString());
-        List<OaCollaboration> oaCollaborations = activitiUtil.getPendingProcessInstance(taskList);
-        List<OaCollaboration> oaCollaborationList = oaCoordinationService.selectPending(oaCollaborations, "");
-        Collections.reverse(oaCollaborationList);
-        for (OaCollaboration collaboration : oaCollaborationList) {
-            System.out.println(collaboration.toString() + collaboration.getTitle());
+        if (taskList.size() <= 0) {
+            map.put("resultCode", "204");
+            map.put("reason", "无匹配数据");
+            map.put("result", "null");
+            return JsonHelper.toJSONString(map);
+        } else {
+            List<OaCollaboration> oaCollaborations = activitiUtil.getPendingProcessInstance(taskList);
+            List<OaCollaboration> oaCollaborationList = oaCoordinationService.selectPending(oaCollaborations, "");
+            for (OaCollaboration collaboration : oaCollaborationList) {
+                collaboration.setCreateTimeStr(collaboration.getCreateTimeStr().substring(0,10));
+            }
+            Collections.reverse(oaCollaborationList);
+            map.put("resultCode", "200");
+            map.put("reason", "success");
+            map.put("result", oaCollaborationList);
+            return JSON.toJSONString(map);
         }
-        return JSON.toJSONString(oaCollaborationList);
+
     }
 
     /**------------已办事项--------------*/

@@ -20,11 +20,6 @@
             <span>基本信息</span>
         </li>
 
-        <li class="nav-item" id="DA">
-            <img src="../../../static/images/personnel/archives.png">
-            <span>员工档案</span>
-        </li>
-
         <li class="nav-item" id="DT">
             <img src="../../../static/images/personnel/dynamic.png">
             <span>人员管理</span>
@@ -53,10 +48,6 @@
         switch ($(this).attr('id')) {
             case 'JB':
                 $("#personnel").attr("src", "toBasic?page=1");
-                break;
-
-            case 'DA':
-                $("#personnel").attr("src", "toFile?page=1");
                 break;
 
             case 'DT':

@@ -45,4 +45,6 @@ public interface OaActSealsUseService {
      * @return OaActSealsUse
      */
     OaActSealsUse selectByPrimaryKey(String id);
+
+    int updateByPrimaryKeySelective(OaActSealsUse oaActSealsUse);
 }

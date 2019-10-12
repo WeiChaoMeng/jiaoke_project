@@ -253,6 +253,29 @@ img {
     font-weight: 600;
 }
 
+.content-textarea-style {
+    resize: none;
+    width: 100%;
+    margin: 10px 0;
+    border: 1px #bdbdbd solid;
+    padding: 5px;
+    font-size: 14px;
+    height: 76px;
+    outline: none;
+}
+
+.textarea-style {
+    resize: none;
+    width: 100%;
+    margin: 10px 0;
+    border: 1px #bdbdbd solid;
+    padding: 5px;
+    font-size: 14px;
+    height: 50px;
+    outline: none;
+    background-color: #e8e8e8;
+}
+
 .table-td-content {
     padding: 0 10px;
 }
@@ -423,7 +446,7 @@ img {
     font-size: 14px;
     outline: none;
     display: block;
-    background: #f6f6f6;
+    background: #e8e8e8;
     border: solid 1px #c6c6c6;
     height: 60px
 }
@@ -443,7 +466,7 @@ img {
     width: 130px;
     outline: none;
     padding: 0 5px;
-    background: #f6f6f6;
+    background: #e8e8e8;
 }
 
 .approval-signature {
@@ -462,12 +485,12 @@ img {
     width: 55px;
     outline: none;
     padding: 0 5px;
-    background: #f6f6f6;
+    background: #e8e8e8;
 }
 
 .fill-in-date {
     float: right;
-    margin: 0 10px 5px 0;
+    margin: 10px;
     font-size: 13px;
 }
 

@@ -1,9 +1,8 @@
 package com.jiaoke.oa.service;
 
+import com.jiaoke.oa.bean.PersonnelInfo;
 import com.jiaoke.oa.bean.UserContract;
-import com.jiaoke.oa.bean.UserFiles;
 import com.jiaoke.oa.bean.UserInfo;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -77,10 +76,11 @@ public interface PersonnelManageService {
     List<UserContract> getDataListByNature(int natureId, int number);
 
     /**
-     * 获取所有
+     * 添加人员信息
      *
-     * @return list
+     * @param personnelInfo personnelInfo
+     * @return int
      */
-    List<UserFiles> getUserFilesData();
+    int addPersonnelInfo(PersonnelInfo personnelInfo);
 }
 

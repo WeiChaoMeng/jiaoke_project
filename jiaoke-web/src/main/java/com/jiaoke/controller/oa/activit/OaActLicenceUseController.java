@@ -1,17 +1,17 @@
 package com.jiaoke.controller.oa.activit;
 
+import com.alibaba.fastjson.JSON;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
-import com.jiaoke.oa.bean.Comments;
-import com.jiaoke.oa.bean.OaActCar;
-import com.jiaoke.oa.bean.OaActLicenceUse;
-import com.jiaoke.oa.bean.UserInfo;
+import com.jiaoke.controller.oa.TargetFlowNodeCommand;
+import com.jiaoke.oa.bean.*;
 import com.jiaoke.oa.service.DepartmentService;
 import com.jiaoke.oa.service.OaActLicenceUseService;
 import com.jiaoke.oa.service.OaCollaborationService;
 import com.jiaoke.oa.service.UserInfoService;
 import org.activiti.bpmn.model.UserTask;
+import org.activiti.engine.ManagementService;
 import org.activiti.engine.task.Task;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
@@ -47,6 +47,9 @@ public class OaActLicenceUseController {
 
     @Resource
     private OaCollaborationService oaCollaborationService;
+
+    @Resource
+    private ManagementService managementService;
 
     /**
      * 获取当前登录用户信息
@@ -112,60 +115,95 @@ public class OaActLicenceUseController {
         model.addAttribute("oaActLicenceUse", oaActLicenceUse);
         model.addAttribute("taskId", JsonHelper.toJSONString(taskId));
         model.addAttribute("commentsList", commentsList);
+        model.addAttribute("nickname", getCurrentUser().getNickname());
         return "oa/act/act_licence_use_handle";
+    }
+
+    @RequestMapping(value = "/approval.api")
+    @ResponseBody
+    public String approvalApi(String id, String taskId) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActLicenceUse oaActLicenceUse = oaActLicenceUseService.selectByPrimaryKey(id);
+        map.put("data",oaActLicenceUse);
+        map.put("taskId",taskId);
+        return JSON.toJSONString(map);
     }
 
     /**
      * 提交
      *
-     * @param processingOpinion 处理意见
+     * @param oaActLicenceUse oaActLicenceUse
      * @param taskId            任务Id
      * @return s/e
      */
     @RequestMapping(value = "/approvalSubmit")
     @ResponseBody
-    public String approvalSubmit(String processingOpinion, String taskId) {
-        //根据processDefinitionId获取下个节点
+    public String approvalSubmit(OaActLicenceUse oaActLicenceUse, String taskId, Integer flag) {
+        //结束标识
+        String end = "end";
+        //发起人
+        String promoter = "promoter";
+        //回退
+        String back = "back";
+        //部门负责人
+        String principal = "principal";
+        //部门主管领导
+        String supervisor = "supervisor";
+        //更新数据
+        if (oaActLicenceUseService.updateByPrimaryKeySelective(oaActLicenceUse) < 1) {
+            return "error";
+        }
+
         Task task = activitiUtil.getTaskByTaskId(taskId);
         if (task == null) {
             return "error";
-        } else {
+        }
+
+        if (flag == 1) {
+            //同意
             //下个节点
             String nextNode = activitiUtil.getNextNode(task.getProcessDefinitionId(), task.getTaskDefinitionKey());
 
-            //判断下个节点是否为end
-            if ("end".equals(nextNode)) {
-                // 直接完成审批并结束流程。
-                activitiUtil.complete(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname());
+            //下个节点是否为end直接结束
+            if (end.equals(nextNode)) {
+                activitiUtil.endProcess(taskId);
                 return "success";
             } else {
+                //附言
+                String processingOpinion = "";
+
                 UserTask userTask = activitiUtil.getUserTask(task.getProcessDefinitionId(), nextNode);
                 if (nextNode.equals(userTask.getId())) {
-                    String assignee = userTask.getAssignee();
-                    String enforcer = assignee.substring(assignee.indexOf("{") + 1, assignee.indexOf("}"));
-                    //指定证照主管领导
-                    if ("licenceManage".equals(enforcer)) {
-                        UserInfo userInfo = userInfoService.getUserInfoByPermission("licenceManage");
-                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
+                    String enforcer = userTask.getAssignee().substring(userTask.getAssignee().indexOf("{") + 1, userTask.getAssignee().indexOf("}"));
+
+                    if (promoter.equals(enforcer)) {
+                        Map<String, Object> map = new HashMap<>(16);
+                        map.put(promoter, activitiUtil.getStartUserId(task.getProcessInstanceId()));
+                        activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
                         return "success";
 
-                    } else if ("licenceOperator".equals(enforcer)) {
-                        UserInfo userInfo = userInfoService.getUserInfoByPermission("licenceOperator");
+                    } else if (principal.equals(enforcer) || supervisor.equals(enforcer)){
+                        String startUserId = activitiUtil.getStartUserId(task.getProcessInstanceId());
+                        //根据发起者id获取所属部门id
+                        String departmentId = userInfoService.selectDepartmentByUserId(Integer.valueOf(startUserId));
+                        //选择执行者Id
+                        String enforcerId = departmentService.selectEnforcerId(enforcer, departmentId);
+                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, Integer.valueOf(enforcerId));
+                        return "success";
+                    } else {
+                        UserInfo userInfo = userInfoService.getUserInfoByPermission(enforcer);
                         activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
                         return "success";
                     }
-                    // 否:  1.获取当前流程发起者id(act_hi_procinst表，START_USER_ID_字段)
-                    String startUserId = activitiUtil.getStartUserId(task.getProcessInstanceId());
-                    //根据发起者id获取所属部门id
-                    String departmentId = userInfoService.selectDepartmentByUserId(Integer.valueOf(startUserId));
-                    //选择执行者Id
-                    String enforcerId = departmentService.selectEnforcerId(enforcer, departmentId);
-                    //4.完成审批指定下个节点
-                    Map<String, Object> map = new HashMap<>(16);
-                    map.put(enforcer, enforcerId);
-                    activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
+                } else {
+                    return "error";
                 }
             }
+        } else {
+            //驳回
+            managementService.executeCommand(new TargetFlowNodeCommand(task.getId(), back));
+            //修改表单状态
+            oaCollaborationService.updateState(oaActLicenceUse.getId(), 3);
             return "success";
         }
     }

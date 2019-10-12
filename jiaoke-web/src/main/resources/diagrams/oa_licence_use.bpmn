@@ -9,7 +9,10 @@
     <sequenceFlow id="_7" sourceRef="start" targetRef="olu1"/>
     <sequenceFlow id="_8" sourceRef="olu1" targetRef="olu2"/>
     <sequenceFlow id="_9" sourceRef="olu2" targetRef="olu3"/>
-    <sequenceFlow id="_10" sourceRef="olu3" targetRef="end"/>
+    <userTask activiti:assignee="${promoter}" activiti:exclusive="true" id="olu4" name="发起人"/>
+    <endEvent id="back" name="回退"/>
+    <sequenceFlow id="_4" sourceRef="olu3" targetRef="olu4"/>
+    <sequenceFlow id="_5" sourceRef="olu4" targetRef="end"/>
   </process>
   <bpmndi:BPMNDiagram documentation="background=#3C3F41;count=1;horizontalcount=1;orientation=0;width=842.4;height=1195.2;imageableWidth=832.4;imageableHeight=1185.2;imageableX=5.0;imageableY=5.0" id="Diagram-_1" name="New Diagram">
     <bpmndi:BPMNPlane bpmnElement="oa_licence_use">
@@ -38,35 +41,54 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="end" id="Shape-end">
-        <omgdc:Bounds height="32.0" width="32.0" x="315.0" y="430.0"/>
+        <omgdc:Bounds height="32.0" width="32.0" x="315.0" y="520.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge bpmnElement="_7" id="BPMNEdge__7" sourceElement="_2" targetElement="_3">
+      <bpmndi:BPMNShape bpmnElement="olu4" id="Shape-olu4">
+        <omgdc:Bounds height="55.0" width="85.0" x="290.0" y="425.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="back" id="Shape-back">
+        <omgdc:Bounds height="32.0" width="32.0" x="430.0" y="510.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="_4" id="BPMNEdge__4" sourceElement="olu3" targetElement="_2">
+        <omgdi:waypoint x="332.5" y="380.0"/>
+        <omgdi:waypoint x="332.5" y="425.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_5" id="BPMNEdge__5" sourceElement="_2" targetElement="end">
+        <omgdi:waypoint x="331.0" y="480.0"/>
+        <omgdi:waypoint x="331.0" y="520.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_7" id="BPMNEdge__7" sourceElement="start" targetElement="olu1">
         <omgdi:waypoint x="331.0" y="52.0"/>
         <omgdi:waypoint x="331.0" y="115.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_8" id="BPMNEdge__8" sourceElement="_3" targetElement="_4">
+      <bpmndi:BPMNEdge bpmnElement="_8" id="BPMNEdge__8" sourceElement="olu1" targetElement="olu2">
         <omgdi:waypoint x="332.5" y="170.0"/>
         <omgdi:waypoint x="332.5" y="225.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_9" id="BPMNEdge__9" sourceElement="_4" targetElement="_5">
+      <bpmndi:BPMNEdge bpmnElement="_9" id="BPMNEdge__9" sourceElement="olu2" targetElement="olu3">
         <omgdi:waypoint x="332.5" y="280.0"/>
         <omgdi:waypoint x="332.5" y="325.0"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_10" id="BPMNEdge__10" sourceElement="_5" targetElement="_6">
-        <omgdi:waypoint x="331.0" y="380.0"/>
-        <omgdi:waypoint x="331.0" y="430.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>

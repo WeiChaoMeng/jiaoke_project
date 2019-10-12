@@ -1,6 +1,9 @@
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
 <%@ page language="java" contentType="text/html;charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
@@ -13,86 +16,285 @@
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
 </head>
 
-<body>
+<body id="body">
 <div class="table-title">
     <span>${oaActReview.title}</span>
 </div>
-<div class="top_toolbar">
-    <div class="top_toolbar_inside" style="height: 40px;border-bottom: none;">
-        <div style="line-height: 40px;margin: 0 10px;float: left;">
-            <span style="float: left;margin-left: 10px;font-size: 13px;">申请时间：${oaActReview.createTimeStr}</span>
+
+<div class="top_toolbar" id="tool">
+    <div class="top-toolbar-details">
+        <div class="top-info-bar-user">
+            <span>${oaActReview.promoterStr}</span>
         </div>
 
-        <div class="head_left_button" style="float: right;line-height: 40px;">
-            <button type="button" class="cursor_hand" onclick="addUser()" style="font-size: 13px;">&#xea0e; 打印</button>
+        <div class="top-info-bar-time">
+            <span>${oaActReview.createTimeStr}</span>
+        </div>
+
+        <div class="printing-but-style">
+            <button type="button" class="cursor_hand" onclick="printContent()">&#xea0e; 打印</button>
         </div>
     </div>
-</div>
-<!-- -->
-<table class="formTable" style="margin: 0">
-    <tbody>
-    <tr>
-        <td class="tdLabel">合同名称：</td>
-        <td class="table-td-content">
-            ${oaActReview.name}
-        </td>
 
-        <td class="tdLabel">编号：</td>
-        <td class="table-td-content">
-            ${oaActReview.numbering}
-        </td>
-    </tr>
+    <c:choose>
+        <c:when test="${oaActReview.annex != ''}">
+            <div class="top_toolbar" id="annexList">
+                <div class="top-annexes-details">
 
-    <tr>
-        <td class="tdLabel">合同相对人：</td>
-        <td colspan="3" class="table-td-content">
-            ${oaActReview.relative}
-        </td>
-    </tr>
+                    <div class="annexes-icon-details">
+                        <button type="button" class="cursor_hand">&#xeac1;</button>
+                    </div>
 
-    <tr>
-        <td class="tdLabel">合同金额：</td>
-        <td class="table-td-content">
-            ${oaActReview.amount}
-        </td>
-
-        <td class="tdLabel">合同编号：</td>
-        <td class="table-td-content">
-            ${oaActReview.number}
-        </td>
-    </tr>
-    </tbody>
-</table>
-
-<div class="handle-container">
-    <div class="handle-title">
-        <div class="handle-title-script">处理意见</div>
-    </div>
-
-    <textarea id="processingOpinion" class="opinion-column" style="height: 72px;"></textarea>
-
-    <div class="form-but" style="margin-top: 20px;">
-        <button type="button" class="return-but" style="margin-right: 10px;" onclick="previousPage()">返回</button>
-        <button type="button" class="commit-but" onclick="commit()">提交</button>
-    </div>
-</div>
-
-<div class="receipt-container">
-    <div class="receipt-title">
-        <div class="receipt-script">回执意见（共条）</div>
-    </div>
-
-    <c:forEach items="${commentsList}" var="comments">
-        <div class="comment-container">
-            <div class="comment-style">
-                <span class="comment-name">${comments.userName}</span>
-                <span class="comment-message">${comments.message}</span>
-                <span class="comment-date">${comments.timeStr}</span>
+                    <c:forTokens items="${oaActReview.annex}" delims="," var="annex">
+                        <div class="table-file">
+                            <div class="table-file-content">
+                                <span title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <a class="table-file-download icon"
+                                   href="/fileDownloadHandle/download?fileName=${annex}"
+                                   title="下载">&#xebda;</a>
+                            </div>
+                        </div>
+                    </c:forTokens>
+                </div>
             </div>
-        </div>
-    </c:forEach>
+        </c:when>
+    </c:choose>
+</div>
 
-    <div class="receipt-style"></div>
+<span class="fill-in-date">编号：${oaActReview.numbering}</span>
+
+<form id="oaActReview">
+    <table class="formTable">
+        <tbody>
+        <tr>
+            <td class="tdLabel">合同名称</td>
+            <td class="table-td-content" colspan="3">
+                ${oaActReview.name}
+                <input type="hidden" name="id" value="${oaActReview.id}">
+                <input type="hidden" name="title" value="${oaActReview.title}">
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">合同相对人</td>
+            <td class="table-td-content" colspan="3">
+                ${oaActReview.relative}
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">合同金额</td>
+            <td class="table-td-content">
+                ${oaActReview.amount}
+            </td>
+
+            <td class="tdLabel">合同编号</td>
+            <td class="table-td-content">
+                ${oaActReview.number}
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">经办人</td>
+            <td class="table-td-content" style="width: 340px">
+                ${oaActReview.promoterStr}
+            </td>
+
+            <td class="tdLabel">部门负责人</td>
+            <td class="table-td-content" style="width: 340px">
+                <shiro:hasPermission name="principal">
+                    <input type="text" class="formInput-readonly" name="principal" value="${nickname}" readonly>
+                </shiro:hasPermission>
+
+                <shiro:lacksPermission name="principal">
+                    ${oaActReview.principal}
+                </shiro:lacksPermission>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">法务审查意见</td>
+            <td colspan="5" class="approval-content">
+                <shiro:hasPermission name="legalAffairs">
+                    <textarea class="approval-content-textarea" name="legalAffairsContent"
+                              style="background-color: #ffffff"></textarea>
+                    <div class="approval-date">
+                        <label class="approval-date-label">日期:</label>
+                        <input class="approval-date-input" type="text" name="legalAffairsDate"
+                               value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>
+                    </div>
+                    <div class="approval-signature">
+                        <label class="approval-signature-label">签字:</label>
+                        <input class="approval-signature-input" type="text" name="legalAffairsSign" value="${nickname}"
+                               readonly>
+                    </div>
+                </shiro:hasPermission>
+
+                <shiro:lacksPermission name="legalAffairs">
+                    <textarea class="approval-content-textarea"
+                              readonly>${oaActReview.legalAffairsContent}</textarea>
+                    <div class="approval-date">
+                        <label class="approval-date-label">日期:</label>
+                        <input class="approval-date-input" type="text" value="${oaActReview.legalAffairsDate}"
+                               readonly>
+                    </div>
+                    <div class="approval-signature">
+                        <label class="approval-signature-label">签字:</label>
+                        <input class="approval-signature-input" type="text" value="${oaActReview.legalAffairsSign}"
+                               readonly>
+                    </div>
+                </shiro:lacksPermission>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">财务部门审查意见</td>
+            <td colspan="5" class="approval-content">
+                <shiro:hasPermission name="finance">
+                    <textarea class="approval-content-textarea" name="financeContent"
+                              style="background-color: #ffffff"></textarea>
+                    <div class="approval-date">
+                        <label class="approval-date-label">日期:</label>
+                        <input class="approval-date-input" type="text" name="financeDate"
+                               value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>
+                    </div>
+                    <div class="approval-signature">
+                        <label class="approval-signature-label">签字:</label>
+                        <input class="approval-signature-input" type="text" name="financeSign" value="${nickname}"
+                               readonly>
+                    </div>
+                </shiro:hasPermission>
+
+                <shiro:lacksPermission name="finance">
+                    <textarea class="approval-content-textarea"
+                              readonly>${oaActReview.financeContent}</textarea>
+                    <div class="approval-date">
+                        <label class="approval-date-label">日期:</label>
+                        <input class="approval-date-input" type="text" value="${oaActReview.financeDate}"
+                               readonly>
+                    </div>
+                    <div class="approval-signature">
+                        <label class="approval-signature-label">签字:</label>
+                        <input class="approval-signature-input" type="text" value="${oaActReview.financeSign}"
+                               readonly>
+                    </div>
+                </shiro:lacksPermission>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">技术负责人审查意见</td>
+            <td colspan="5" class="approval-content">
+                <shiro:hasPermission name="technology">
+                    <textarea class="approval-content-textarea" name="technologyContent"
+                              style="background-color: #ffffff"></textarea>
+                    <div class="approval-date">
+                        <label class="approval-date-label">日期:</label>
+                        <input class="approval-date-input" type="text" name="technologyDate"
+                               value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>
+                    </div>
+                    <div class="approval-signature">
+                        <label class="approval-signature-label">签字:</label>
+                        <input class="approval-signature-input" type="text" name="technologySign" value="${nickname}"
+                               readonly>
+                    </div>
+                </shiro:hasPermission>
+
+                <shiro:lacksPermission name="technology">
+                    <textarea class="approval-content-textarea"
+                              readonly>${oaActReview.technologyContent}</textarea>
+                    <div class="approval-date">
+                        <label class="approval-date-label">日期:</label>
+                        <input class="approval-date-input" type="text" value="${oaActReview.technologyDate}"
+                               readonly>
+                    </div>
+                    <div class="approval-signature">
+                        <label class="approval-signature-label">签字:</label>
+                        <input class="approval-signature-input" type="text" value="${oaActReview.technologySign}"
+                               readonly>
+                    </div>
+                </shiro:lacksPermission>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">主管领导审查意见</td>
+            <td colspan="5" class="approval-content">
+                <shiro:hasPermission name="supervisor">
+                    <textarea class="approval-content-textarea" name="supervisorContent"
+                              style="background-color: #ffffff"></textarea>
+                    <div class="approval-date">
+                        <label class="approval-date-label">日期:</label>
+                        <input class="approval-date-input" type="text" name="supervisorDate"
+                               value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>
+                    </div>
+                    <div class="approval-signature">
+                        <label class="approval-signature-label">签字:</label>
+                        <input class="approval-signature-input" type="text" name="supervisorSign" value="${nickname}"
+                               readonly>
+                    </div>
+                </shiro:hasPermission>
+
+                <shiro:lacksPermission name="supervisor">
+                    <textarea class="approval-content-textarea"
+                              readonly>${oaActReview.supervisorContent}</textarea>
+                    <div class="approval-date">
+                        <label class="approval-date-label">日期:</label>
+                        <input class="approval-date-input" type="text" value="${oaActReview.supervisorDate}"
+                               readonly>
+                    </div>
+                    <div class="approval-signature">
+                        <label class="approval-signature-label">签字:</label>
+                        <input class="approval-signature-input" type="text" value="${oaActReview.supervisorSign}"
+                               readonly>
+                    </div>
+                </shiro:lacksPermission>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">主管领导审查意见</td>
+            <td colspan="5" class="approval-content">
+                <shiro:hasPermission name="companyPrincipal">
+                    <textarea class="approval-content-textarea" name="companyPrincipalContent"
+                              style="background-color: #ffffff"></textarea>
+                    <div class="approval-date">
+                        <label class="approval-date-label">日期:</label>
+                        <input class="approval-date-input" type="text" name="companyPrincipalDate"
+                               value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>
+                    </div>
+                    <div class="approval-signature">
+                        <label class="approval-signature-label">签字:</label>
+                        <input class="approval-signature-input" type="text" name="companyPrincipalSign"
+                               value="${nickname}" readonly>
+                    </div>
+                </shiro:hasPermission>
+
+                <shiro:lacksPermission name="companyPrincipal">
+                    <textarea class="approval-content-textarea"
+                              readonly>${oaActReview.companyPrincipalContent}</textarea>
+                    <div class="approval-date">
+                        <label class="approval-date-label">日期:</label>
+                        <input class="approval-date-input" type="text" value="${oaActReview.companyPrincipalDate}"
+                               readonly>
+                    </div>
+                    <div class="approval-signature">
+                        <label class="approval-signature-label">签字:</label>
+                        <input class="approval-signature-input" type="text" value="${oaActReview.companyPrincipalSign}"
+                               readonly>
+                    </div>
+                </shiro:lacksPermission>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+
+<div class="form-but" id="return">
+    <shiro:hasAnyPermission name="technology,finance,legalAffairs,principal,supervisor,companyPrincipal">
+        <button type="button" class="return-but" style="margin-right: 10px;" onclick="approvalProcessing(2)">回退</button>
+    </shiro:hasAnyPermission>
+    <button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>
 </div>
 
 </body>
@@ -103,21 +305,12 @@
     //任务Id
     var taskId = JSON.parse('${taskId}');
 
-    //返回上一页
-    function previousPage() {
-        window.history.back();
-    }
-
     //提交
-    function commit() {
-        var processingOpinion = $('#processingOpinion').val();
+    function approvalProcessing(flag) {
         $.ajax({
             type: "post",
-            url: '/actReview/approvalSubmit',
-            data: {
-                'processingOpinion': processingOpinion,
-                'taskId': taskId
-            },
+            url: '/review/approvalSubmit',
+            data: $('#oaActReview').serialize() + "&taskId=" + taskId + "&flag=" + flag,
             async: false,
             success: function (data) {
                 if (data === 'success') {
@@ -132,6 +325,16 @@
                 layer.msg("出错！");
             }
         })
+    }
+
+    //打印
+    function printContent() {
+        $('#tool,#return').hide();
+        $('#body').css('width', '100%');
+        //执行打印
+        window.print();
+        $('#tool,#return').show();
+        $('#body').css('width', '80%');
     }
 </script>
 </html>

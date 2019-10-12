@@ -5,6 +5,7 @@ import com.jiaoke.oa.bean.OaActLicenceBorrow;
 import com.jiaoke.oa.bean.OaCollaboration;
 import com.jiaoke.oa.dao.OaActLicenceBorrowMapper;
 import com.jiaoke.oa.dao.OaCollaborationMapper;
+import com.jiaoke.oa.dao.UserInfoMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -26,6 +27,9 @@ public class OaActLicenceBorrowServiceImpl implements OaActLicenceBorrowService 
     @Resource
     private OaCollaborationMapper oaCollaborationMapper;
 
+    @Resource
+    private UserInfoMapper userInfoMapper;
+
     @Override
     public int insert(OaActLicenceBorrow oaActLicenceBorrow, Integer userId, String randomId, Integer state) {
         oaActLicenceBorrow.setBorrowTime(DateUtil.stringConvertYYYYMMDDHH(oaActLicenceBorrow.getBorrowTimeStr()));
@@ -33,7 +37,7 @@ public class OaActLicenceBorrowServiceImpl implements OaActLicenceBorrowService 
         oaActLicenceBorrow.setPromoter(userId);
         oaActLicenceBorrow.setUrl("licenceBorrow");
         oaActLicenceBorrow.setCreateTime(new Date());
-        if (oaActLicenceBorrowMapper.insertData(oaActLicenceBorrow) < 0) {
+        if (oaActLicenceBorrowMapper.insertSelective(oaActLicenceBorrow) < 0) {
             return -1;
         } else {
             OaCollaboration oaCollaboration = new OaCollaboration();
@@ -89,11 +93,17 @@ public class OaActLicenceBorrowServiceImpl implements OaActLicenceBorrowService 
         OaActLicenceBorrow oaActLicenceBorrow = oaActLicenceBorrowMapper.selectByPrimaryKey(id);
         oaActLicenceBorrow.setBorrowTimeStr(DateUtil.dateConvertYYYYMMDDHH(oaActLicenceBorrow.getBorrowTime()));
         oaActLicenceBorrow.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActLicenceBorrow.getCreateTime()));
+        oaActLicenceBorrow.setPromoterStr(userInfoMapper.getNicknameById(oaActLicenceBorrow.getPromoter()));
         return oaActLicenceBorrow;
     }
 
     @Override
     public int deleteData(String id) {
         return oaActLicenceBorrowMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public int updateByPrimaryKeySelective(OaActLicenceBorrow oaActLicenceBorrow) {
+        return oaActLicenceBorrowMapper.updateByPrimaryKeySelective(oaActLicenceBorrow);
     }
 }

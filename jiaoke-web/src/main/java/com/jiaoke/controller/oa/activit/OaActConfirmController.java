@@ -4,9 +4,9 @@ import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
 import com.jiaoke.oa.bean.Comments;
-import com.jiaoke.oa.bean.OaActMeals;
+import com.jiaoke.oa.bean.OaActConfirm;
 import com.jiaoke.oa.bean.UserInfo;
-import com.jiaoke.oa.service.OaActMealsService;
+import com.jiaoke.oa.service.OaActConfirmService;
 import com.jiaoke.oa.service.OaCollaborationService;
 import com.jiaoke.oa.service.UserInfoService;
 import org.activiti.engine.task.Task;
@@ -36,7 +36,7 @@ public class OaActConfirmController {
     private ActivitiUtil activitiUtil;
 
     @Resource
-    private OaActMealsService oaActMealsService;
+    private OaActConfirmService oaActConfirmService;
 
     @Resource
     private UserInfoService userInfoService;
@@ -68,14 +68,14 @@ public class OaActConfirmController {
     /**
      * 提交新增
      *
-     * @param oaActMeals oaActMeals
+     * @param oaActConfirm oaActConfirm
      * @return s/e
      */
     @RequestMapping(value = "/add")
     @ResponseBody
-    public String add(OaActMeals oaActMeals) {
+    public String add(OaActConfirm oaActConfirm) {
         String randomId = RandomUtil.randomId();
-        if (oaActMealsService.insert(oaActMeals, getCurrentUser().getId(), randomId, 0) < 1) {
+        if (oaActConfirmService.insert(oaActConfirm, getCurrentUser().getId(), randomId, 0) < 1) {
             return "error";
         } else {
             //获取拥有权限的用户
@@ -83,7 +83,7 @@ public class OaActConfirmController {
             //开启流程
             Map<String, Object> map = new HashMap<>(16);
             map.put("approval", userInfo.getId());
-            String instance = activitiUtil.startProcessInstanceByKey("oa_meals", "oa_act_meals:" + randomId, map, getCurrentUser().getId().toString());
+            String instance = activitiUtil.startProcessInstanceByKey("oa_confirm", "oa_act_confirm:" + randomId, map, getCurrentUser().getId().toString());
             if (instance != null) {
                 return "success";
             }
@@ -102,10 +102,10 @@ public class OaActConfirmController {
     @RequestMapping(value = "/approval")
     public String approval(String id, String taskId, Model model) {
         //审批
-        OaActMeals oaActMeals = oaActMealsService.selectByPrimaryKey(id);
+        OaActConfirm oaActConfirm = oaActConfirmService.selectByPrimaryKey(id);
         //获取批注信息
         List<Comments> commentsList = activitiUtil.selectHistoryComment(activitiUtil.getTaskByTaskId(taskId).getProcessInstanceId());
-        model.addAttribute("oaActMeals", oaActMeals);
+        model.addAttribute("oaActConfirm", oaActConfirm);
         model.addAttribute("taskId", JsonHelper.toJSONString(taskId));
         model.addAttribute("commentsList", commentsList);
         model.addAttribute("nickname", getCurrentUser().getNickname());
@@ -159,14 +159,14 @@ public class OaActConfirmController {
     /**
      * 保存待发
      *
-     * @param oaActMeals oaActMeals
+     * @param oaActConfirm oaActConfirm
      * @return s/e
      */
     @RequestMapping(value = "/savePending")
     @ResponseBody
-    public String savePending(OaActMeals oaActMeals) {
+    public String savePending(OaActConfirm oaActConfirm) {
         String randomId = RandomUtil.randomId();
-        if (oaActMealsService.insert(oaActMeals, getCurrentUser().getId(), randomId, 1) < 1) {
+        if (oaActConfirmService.insert(oaActConfirm, getCurrentUser().getId(), randomId, 1) < 1) {
             return "error";
         } else {
             return "success";
@@ -182,21 +182,21 @@ public class OaActConfirmController {
      */
     @RequestMapping(value = "/toEdit")
     public String toEdit(String id, Model model) {
-        OaActMeals oaActMeals = oaActMealsService.selectByPrimaryKey(id);
-        model.addAttribute("oaActMeals", oaActMeals);
+        OaActConfirm oaActConfirm = oaActConfirmService.selectByPrimaryKey(id);
+        model.addAttribute("oaActConfirm", oaActConfirm);
         return "oa/act/act_meals_edit";
     }
 
     /**
      * 编辑后保存
      *
-     * @param oaActMeals oaActMeals
+     * @param oaActConfirm oaActConfirm
      * @return s/e
      */
     @RequestMapping(value = "/edit")
     @ResponseBody
-    public String edit(OaActMeals oaActMeals) {
-        if (oaActMealsService.edit(oaActMeals) < 0) {
+    public String edit(OaActConfirm oaActConfirm) {
+        if (oaActConfirmService.edit(oaActConfirm) < 0) {
             return "error";
         } else {
             return "success";
@@ -206,24 +206,24 @@ public class OaActConfirmController {
     /**
      * 编辑后发送
      *
-     * @param oaActMeals oaActMeals
+     * @param oaActConfirm oaActConfirm
      * @return s/e
      */
     @RequestMapping(value = "/editAdd")
     @ResponseBody
-    public String editAdd(OaActMeals oaActMeals) {
+    public String editAdd(OaActConfirm oaActConfirm) {
         //更新数据
-        if (oaActMealsService.edit(oaActMeals) < 0) {
+        if (oaActConfirmService.edit(oaActConfirm) < 0) {
             return "error";
         } else {
             //获取拥有权限的用户
             UserInfo userInfo = userInfoService.getUserInfoByPermission("mealsApproval");
             Map<String, Object> map = new HashMap<>(16);
             map.put("mealsApproval", userInfo.getId());
-            String instance = activitiUtil.startProcessInstanceByKey("oa_meals", "oa_act_meals:" + oaActMeals.getId(), map, getCurrentUser().getId().toString());
+            String instance = activitiUtil.startProcessInstanceByKey("oa_meals", "oa_act_meals:" + oaActConfirm.getId(), map, getCurrentUser().getId().toString());
             if (instance != null) {
                 //发送成功后更新状态
-                oaCollaborationService.updateStateByCorrelationId(oaActMeals.getId(), 0, oaActMeals.getTitle());
+                oaCollaborationService.updateStateByCorrelationId(oaActConfirm.getId(), 0, oaActConfirm.getTitle());
                 return "success";
             } else {
                 return "error";
@@ -241,10 +241,10 @@ public class OaActConfirmController {
      */
     @RequestMapping(value = "/details")
     public String details(String id, String taskId, Model model) {
-        OaActMeals oaActMeals = oaActMealsService.selectByPrimaryKey(id);
+        OaActConfirm oaActConfirm = oaActConfirmService.selectByPrimaryKey(id);
         //获取批注信息
         List<Comments> commentsList = activitiUtil.selectHistoryComment(taskId);
-        model.addAttribute("oaActMeals", oaActMeals);
+        model.addAttribute("oaActConfirm", oaActConfirm);
         model.addAttribute("commentsList", commentsList);
         model.addAttribute("commentsListSize", commentsList.size());
         return "oa/act/act_meals_details";
@@ -263,7 +263,7 @@ public class OaActConfirmController {
         //删除流程
         if (activitiUtil.deleteByProcessInstanceId(processInstanceId) == 1) {
             //执行删除数据
-            oaActMealsService.deleteData(id);
+            oaActConfirmService.deleteData(id);
             oaCollaborationService.deleteByCorrelationId(id);
             return "success";
         } else {

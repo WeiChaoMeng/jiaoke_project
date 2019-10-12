@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html;charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
@@ -13,89 +14,131 @@
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
 </head>
 
-<body>
+<body id="body" style="width: 70%">
 <div class="table-title">
-    <span>${oaActSealsUse.title}</span>
+    <span>${oaActLicenceUse.title}</span>
 </div>
-<div class="top_toolbar">
-    <div class="top_toolbar_inside" style="height: 40px;border-bottom: none;">
-        <div style="line-height: 40px;margin: 0 10px;float: left;">
-            <span style="float: left;margin-left: 10px;font-size: 13px;">申请时间：${oaActSealsUse.createTimeStr}</span>
+
+<div class="top_toolbar" id="tool">
+    <div class="top-toolbar-details">
+        <div class="top-info-bar-user">
+            <span>${oaActLicenceUse.promoterStr}</span>
         </div>
 
-        <div class="head_left_button" style="float: right;line-height: 40px;">
-            <button type="button" class="cursor_hand" onclick="addUser()" style="font-size: 13px;">&#xea0e; 打印</button>
+        <div class="top-info-bar-time">
+            <span>${oaActLicenceUse.createTimeStr}</span>
+        </div>
+
+        <div class="printing-but-style">
+            <button type="button" class="cursor_hand" onclick="printContent()">&#xea0e; 打印</button>
         </div>
     </div>
-</div>
-<!-- -->
-<table class="formTable" style="margin: 0">
-    <tbody>
-    <tr>
-        <td class="tdLabel">印章种类：</td>
-        <td class="table-td-content">
-            <c:choose>
-                <c:when test="${oaActLicenceUse.seal == 0}">路驰营业执照正本</c:when>
-                <c:when test="${oaActLicenceUse.seal == 1}">路驰营业执照副本</c:when>
-                <c:when test="${oaActLicenceUse.seal == 2}">路驰工会法人资格证书</c:when>
-                <c:when test="${oaActLicenceUse.seal == 3}">大兴营业执照正本</c:when>
-                <c:when test="${oaActLicenceUse.seal == 4}">大兴营业执照副本</c:when>
-            </c:choose>
-        </td>
-    </tr>
 
-    <tr>
-        <td class="tdLabel">领取时间：</td>
-        <td class="table-td-content">
-            ${oaActLicenceUse.receiveTimeStr}
-        </td>
-    </tr>
+    <c:choose>
+        <c:when test="${oaActLicenceUse.annex != ''}">
+            <div class="top_toolbar" id="annexList">
+                <div class="top-annexes-details">
 
-    <tr>
-        <td class="tdLabel">用途：</td>
-        <td class="table-td-content">
-            ${oaActLicenceUse.purpose}
-        </td>
-    </tr>
+                    <div class="annexes-icon-details">
+                        <button type="button" class="cursor_hand">&#xeac1;</button>
+                    </div>
 
-    <tr>
-        <td class="tdLabel">使用人：</td>
-        <td class="table-td-content">
-            ${oaActLicenceUse.user}
-        </td>
-    </tr>
-    </tbody>
-</table>
-
-<div class="handle-container">
-    <div class="handle-title">
-        <div class="handle-title-script">处理意见</div>
-    </div>
-
-    <textarea id="processingOpinion" class="opinion-column" style="height: 72px;"></textarea>
-
-    <div class="form-but" style="margin-top: 20px;">
-        <button type="button" class="return-but" style="margin-right: 10px;" onclick="previousPage()">返回</button>
-        <button type="button" class="commit-but" onclick="commit()">提交</button>
-    </div>
-</div>
-
-<div class="receipt-container">
-    <div class="receipt-title">
-        <div class="receipt-script">回执意见（共条）</div>
-    </div>
-
-    <c:forEach items="${commentsList}" var="comments">
-        <div class="comment-container">
-            <div class="comment-style">
-                <span class="comment-name">${comments.userName}</span>
-                <span class="comment-message">${comments.message}</span>
-                <span class="comment-date">${comments.timeStr}</span>
+                    <c:forTokens items="${oaActLicenceUse.annex}" delims="," var="annex">
+                        <div class="table-file">
+                            <div class="table-file-content">
+                                <span title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <a class="table-file-download icon"
+                                   href="/fileDownloadHandle/download?fileName=${annex}"
+                                   title="下载">&#xebda;</a>
+                            </div>
+                        </div>
+                    </c:forTokens>
+                </div>
             </div>
-        </div>
-    </c:forEach>
+        </c:when>
+    </c:choose>
+</div>
 
-    <div class="receipt-style"></div>
+<form id="oaActLicenceUse">
+    <table class="formTable">
+        <tbody>
+        <tr>
+            <td class="tdLabel">印章种类：</td>
+            <td class="table-td-content">
+                <c:choose>
+                    <c:when test="${oaActLicenceUse.seal == 0}">路驰营业执照正本</c:when>
+                    <c:when test="${oaActLicenceUse.seal == 1}">路驰营业执照副本</c:when>
+                    <c:when test="${oaActLicenceUse.seal == 2}">路驰工会法人资格证书</c:when>
+                    <c:when test="${oaActLicenceUse.seal == 3}">大兴营业执照正本</c:when>
+                    <c:when test="${oaActLicenceUse.seal == 4}">大兴营业执照副本</c:when>
+                </c:choose>
+            </td>
+
+            <td class="tdLabel">领取时间：</td>
+            <td class="table-td-content">
+                ${oaActLicenceUse.receiveTimeStr}
+                <input type="hidden" name="id" value="${oaActLicenceUse.id}">
+                <input type="hidden" name="title" value="${oaActLicenceUse.title}">
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">用途：</td>
+            <td class="table-td-content" colspan="3">
+                ${oaActLicenceUse.purpose}
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">使用人</td>
+            <td class="table-td-content" style="width: 340px;">
+                ${oaActLicenceUse.user}
+            </td>
+
+            <td class="tdLabel">部门负责人</td>
+            <td class="table-td-content" style="width: 340px;">
+                <shiro:hasPermission name="officePrincipal">
+                    <input type="text" class="formInput-readonly" name="principal" value="${nickname}" readonly>
+                </shiro:hasPermission>
+
+                <shiro:lacksPermission name="officePrincipal">
+                    ${oaActLicenceUse.principal}
+                </shiro:lacksPermission>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">证照主管领导</td>
+            <td class="table-td-content">
+                <shiro:hasPermission name="licenceManage">
+                    <input type="text" class="formInput-readonly" name="licenceManage" value="${nickname}" readonly>
+                </shiro:hasPermission>
+
+                <shiro:lacksPermission name="licenceManage">
+                    ${oaActLicenceUse.licenceManage}
+                </shiro:lacksPermission>
+            </td>
+
+            <td class="tdLabel">经办人</td>
+            <td class="table-td-content">
+                <shiro:hasPermission name="licenceOperator">
+                    <input type="text" class="formInput-readonly" name="licenceOperator" value="${nickname}" readonly>
+                </shiro:hasPermission>
+
+                <shiro:lacksPermission name="licenceOperator">
+                    ${oaActLicenceUse.licenceOperator}
+                </shiro:lacksPermission>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+
+<div class="form-but" id="return">
+    <shiro:hasAnyPermission name="officePrincipal,licenceManage,licenceOperator">
+        <button type="button" class="return-but" style="margin-right: 10px;" onclick="approvalProcessing(2)">回退</button>
+    </shiro:hasAnyPermission>
+    <button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>
 </div>
 
 </body>
@@ -106,21 +149,12 @@
     //任务Id
     var taskId = JSON.parse('${taskId}');
 
-    //返回上一页
-    function previousPage() {
-        window.history.back();
-    }
-
     //提交
-    function commit() {
-        var processingOpinion = $('#processingOpinion').val();
+    function approvalProcessing(flag) {
         $.ajax({
             type: "post",
             url: '/licenceUse/approvalSubmit',
-            data: {
-                'processingOpinion': processingOpinion,
-                'taskId': taskId
-            },
+            data: $('#oaActLicenceUse').serialize() + "&taskId=" + taskId + "&flag=" + flag,
             async: false,
             success: function (data) {
                 if (data === 'success') {
@@ -135,6 +169,16 @@
                 layer.msg("出错！");
             }
         })
+    }
+
+    //打印
+    function printContent() {
+        $('#tool,#return').hide();
+        $('#body').css('width', '100%');
+        //执行打印
+        window.print();
+        $('#tool,#return').show();
+        $('#body').css('width', '70%');
     }
 </script>
 </html>

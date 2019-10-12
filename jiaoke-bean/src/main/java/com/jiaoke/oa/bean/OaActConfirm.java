@@ -1,6 +1,9 @@
 package com.jiaoke.oa.bean;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.Date;
 
 /**
@@ -18,8 +21,7 @@ public class OaActConfirm {
      */
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private String id;
 
     /**
      * 标题
@@ -27,31 +29,94 @@ public class OaActConfirm {
     private String title;
 
     /**
-     * 印章种类(1、路驰公章，2、路驰合同章，3、路驰党支部章，4、路驰工会章，5、大兴公章，6、大兴合同章)
+     * 经办部门
      */
-    private Integer seal;
+    private String department;
 
     /**
-     * 借用时间
+     * 经办人
      */
-    private Date borrowTime;
-    @Transient
-    private String borrowTimeStr;
+    private String operator;
 
     /**
-     * 盖章文件内容
+     * 确认名称
      */
-    private String content;
+    private String name;
 
     /**
-     * 借章人
+     * 确认金额（元）
      */
-    private String borrower;
+    private String money;
 
     /**
-     * 状态：0,已发 1,待发
+     * 品种
      */
-    private Integer state;
+    private String variety;
+
+    /**
+     * 单价
+     */
+    private String univalent;
+
+    /**
+     * 数量
+     */
+    private String number;
+
+    /**
+     * 是否与ERP一致
+     */
+    private String erp;
+
+    /**
+     * 是否与合同一致
+     */
+    private String contract;
+
+    /**
+     * 单位（全称）
+     */
+    private String unit;
+
+    /**
+     * 工程名称（全称）
+     */
+    private String projectName;
+
+    /**
+     * 审批时间
+     */
+    private String approvalTime;
+
+    /**
+     * 总经理
+     */
+    private String companyPrincipal;
+
+    /**
+     * 经营主管
+     */
+    private String businessSupervisor;
+
+    /**
+     * 财务主管
+     */
+    private String financeSupervisor;
+
+    /**
+     * 财务审核
+     */
+    private String financialAudit;
+
+    /**
+     * 经营统计
+     */
+    private String operatingStatistics;
+
+    /**
+     * 业务
+     */
+    private String business;
 
     /**
      * 创建日期
@@ -63,18 +128,25 @@ public class OaActConfirm {
     /**
      * 发起人
      */
-    private String promoter;
+    private Integer promoter;
+    @Transient
+    private String promoterStr;
 
     /**
      * 查询路径
      */
     private String url;
 
-    public Integer getId() {
+    /**
+     * 附件
+     */
+    private String annex;
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -86,52 +158,148 @@ public class OaActConfirm {
         this.title = title;
     }
 
-    public Integer getSeal() {
-        return seal;
+    public String getDepartment() {
+        return department;
     }
 
-    public void setSeal(Integer seal) {
-        this.seal = seal;
+    public void setDepartment(String department) {
+        this.department = department;
     }
 
-    public Date getBorrowTime() {
-        return borrowTime;
+    public String getOperator() {
+        return operator;
     }
 
-    public void setBorrowTime(Date borrowTime) {
-        this.borrowTime = borrowTime;
+    public void setOperator(String operator) {
+        this.operator = operator;
     }
 
-    public String getBorrowTimeStr() {
-        return borrowTimeStr;
+    public String getName() {
+        return name;
     }
 
-    public void setBorrowTimeStr(String borrowTimeStr) {
-        this.borrowTimeStr = borrowTimeStr;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getContent() {
-        return content;
+    public String getMoney() {
+        return money;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setMoney(String money) {
+        this.money = money;
     }
 
-    public String getBorrower() {
-        return borrower;
+    public String getVariety() {
+        return variety;
     }
 
-    public void setBorrower(String borrower) {
-        this.borrower = borrower;
+    public void setVariety(String variety) {
+        this.variety = variety;
     }
 
-    public Integer getState() {
-        return state;
+    public String getUnivalent() {
+        return univalent;
     }
 
-    public void setState(Integer state) {
-        this.state = state;
+    public void setUnivalent(String univalent) {
+        this.univalent = univalent;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public String getErp() {
+        return erp;
+    }
+
+    public void setErp(String erp) {
+        this.erp = erp;
+    }
+
+    public String getContract() {
+        return contract;
+    }
+
+    public void setContract(String contract) {
+        this.contract = contract;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public String getApprovalTime() {
+        return approvalTime;
+    }
+
+    public void setApprovalTime(String approvalTime) {
+        this.approvalTime = approvalTime;
+    }
+
+    public String getCompanyPrincipal() {
+        return companyPrincipal;
+    }
+
+    public void setCompanyPrincipal(String companyPrincipal) {
+        this.companyPrincipal = companyPrincipal;
+    }
+
+    public String getBusinessSupervisor() {
+        return businessSupervisor;
+    }
+
+    public void setBusinessSupervisor(String businessSupervisor) {
+        this.businessSupervisor = businessSupervisor;
+    }
+
+    public String getFinanceSupervisor() {
+        return financeSupervisor;
+    }
+
+    public void setFinanceSupervisor(String financeSupervisor) {
+        this.financeSupervisor = financeSupervisor;
+    }
+
+    public String getFinancialAudit() {
+        return financialAudit;
+    }
+
+    public void setFinancialAudit(String financialAudit) {
+        this.financialAudit = financialAudit;
+    }
+
+    public String getOperatingStatistics() {
+        return operatingStatistics;
+    }
+
+    public void setOperatingStatistics(String operatingStatistics) {
+        this.operatingStatistics = operatingStatistics;
+    }
+
+    public String getBusiness() {
+        return business;
+    }
+
+    public void setBusiness(String business) {
+        this.business = business;
     }
 
     public Date getCreateTime() {
@@ -150,12 +318,20 @@ public class OaActConfirm {
         this.createTimeStr = createTimeStr;
     }
 
-    public String getPromoter() {
+    public Integer getPromoter() {
         return promoter;
     }
 
-    public void setPromoter(String promoter) {
+    public void setPromoter(Integer promoter) {
         this.promoter = promoter;
+    }
+
+    public String getPromoterStr() {
+        return promoterStr;
+    }
+
+    public void setPromoterStr(String promoterStr) {
+        this.promoterStr = promoterStr;
     }
 
     public String getUrl() {
@@ -164,5 +340,13 @@ public class OaActConfirm {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getAnnex() {
+        return annex;
+    }
+
+    public void setAnnex(String annex) {
+        this.annex = annex;
     }
 }

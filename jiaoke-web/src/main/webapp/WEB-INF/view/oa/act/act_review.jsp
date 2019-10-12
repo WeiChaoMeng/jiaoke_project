@@ -54,7 +54,7 @@
     </div>
 </div>
 
-<form id="oaActMeals">
+<form id="oaActReview">
     <div class="form_area" id="titleArea" style="margin-bottom: 15px">
         <table>
             <tbody>
@@ -84,59 +84,59 @@
         </table>
     </div>
 
-    <span class="fill-in-date">编号：<input type="text" class="notice-personnel-field"></span>
+    <span class="fill-in-date">编号：<input type="text" name="numbering" class="notice-personnel-field"></span>
 
     <table class="formTable">
         <tbody>
         <tr>
             <td class="tdLabel">合同名称</td>
             <td colspan="3" class="table-td-content">
-                <input type="text" class="formInput" name="entertain" autocomplete="off">
+                <input type="text" class="formInput" name="name" autocomplete="off">
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel">合同相对人</td>
             <td colspan="3" class="table-td-content">
-                <input type="text" class="formInput" name="entertain" autocomplete="off">
+                <input type="text" class="formInput" name="relative" autocomplete="off">
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel">合同金额</td>
             <td class="table-td-content">
-                <input type="text" class="formInput" name="entertain" autocomplete="off">
+                <input type="text" class="formInput" name="amount" autocomplete="off">
             </td>
 
             <td class="tdLabel">合同编号</td>
             <td class="table-td-content">
-                <input type="text" class="formInput" name="entertain" autocomplete="off">
+                <input type="text" class="formInput" name="number" autocomplete="off">
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel">经办人</td>
             <td class="table-td-content">
-                <input type="text" class="formInput" name="entertain" autocomplete="off">
+                <input type="text" class="formInput-readonly" value="${nickname}" readonly>
             </td>
 
             <td class="tdLabel">部门负责人</td>
             <td class="table-td-content">
-                <input type="text" class="formInput" name="entertain" autocomplete="off">
+                <input type="text" class="formInput-readonly" readonly>
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel">法务审查意见</td>
             <td colspan="3" class="approval-content">
-                <textarea disabled="disabled" class="approval-content-textarea"></textarea>
+                <textarea readonly class="approval-content-textarea"></textarea>
                 <div class="approval-date">
                     <label class="approval-date-label">日期:</label>
-                    <input class="approval-date-input" type="text" disabled="disabled">
+                    <input class="approval-date-input" type="text" readonly>
                 </div>
                 <div class="approval-signature">
                     <label class="approval-signature-label">签字:</label>
-                    <input class="approval-signature-input" type="text" disabled="disabled">
+                    <input class="approval-signature-input" type="text" readonly>
                 </div>
             </td>
         </tr>
@@ -144,14 +144,14 @@
         <tr>
             <td class="tdLabel">财务部门审查意见</td>
             <td colspan="3" class="approval-content">
-                <textarea disabled="disabled" class="approval-content-textarea"></textarea>
+                <textarea readonly class="approval-content-textarea"></textarea>
                 <div class="approval-date">
                     <label class="approval-date-label">日期:</label>
-                    <input class="approval-date-input" type="text" disabled="disabled">
+                    <input class="approval-date-input" type="text" readonly>
                 </div>
                 <div class="approval-signature">
                     <label class="approval-signature-label">签字:</label>
-                    <input class="approval-signature-input" type="text" disabled="disabled">
+                    <input class="approval-signature-input" type="text" readonly>
                 </div>
             </td>
         </tr>
@@ -159,14 +159,14 @@
         <tr>
             <td class="tdLabel">技术负责人审查意见</td>
             <td colspan="3" class="approval-content">
-                <textarea disabled="disabled" class="approval-content-textarea"></textarea>
+                <textarea readonly class="approval-content-textarea"></textarea>
                 <div class="approval-date">
                     <label class="approval-date-label">日期:</label>
-                    <input class="approval-date-input" type="text" disabled="disabled">
+                    <input class="approval-date-input" type="text" readonly>
                 </div>
                 <div class="approval-signature">
                     <label class="approval-signature-label">签字:</label>
-                    <input class="approval-signature-input" type="text" disabled="disabled">
+                    <input class="approval-signature-input" type="text" readonly>
                 </div>
             </td>
         </tr>
@@ -174,14 +174,14 @@
         <tr>
             <td class="tdLabel">主管领导审查意见</td>
             <td colspan="3" class="approval-content">
-                <textarea disabled="disabled" class="approval-content-textarea"></textarea>
+                <textarea readonly class="approval-content-textarea"></textarea>
                 <div class="approval-date">
                     <label class="approval-date-label">日期:</label>
-                    <input class="approval-date-input" type="text" disabled="disabled">
+                    <input class="approval-date-input" type="text" readonly>
                 </div>
                 <div class="approval-signature">
                     <label class="approval-signature-label">签字:</label>
-                    <input class="approval-signature-input" type="text" disabled="disabled">
+                    <input class="approval-signature-input" type="text" readonly>
                 </div>
             </td>
         </tr>
@@ -189,15 +189,18 @@
         <tr>
             <td class="tdLabel">主要领导审查意见</td>
             <td colspan="3" class="approval-content">
-                <textarea disabled="disabled" class="approval-content-textarea"></textarea>
+                <textarea readonly class="approval-content-textarea"></textarea>
                 <div class="approval-date">
                     <label class="approval-date-label">日期:</label>
-                    <input class="approval-date-input" type="text" disabled="disabled">
+                    <input class="approval-date-input" type="text" readonly>
                 </div>
                 <div class="approval-signature">
                     <label class="approval-signature-label">签字:</label>
-                    <input class="approval-signature-input" type="text" disabled="disabled">
+                    <input class="approval-signature-input" type="text" readonly>
                 </div>
+
+                <%--暂存附件--%>
+                <input type="hidden" id="annex" name="annex">
             </td>
         </tr>
         </tbody>
@@ -228,8 +231,8 @@
 
             $.ajax({
                 type: "POST",
-                url: '${path}/meals/add',
-                data: $('#oaActMeals').serialize(),
+                url: '${path}/review/add',
+                data: $('#oaActReview').serialize(),
                 error: function (request) {
                     layer.msg("出错！");
                 },
@@ -252,8 +255,8 @@
         } else {
             $.ajax({
                 type: "POST",
-                url: '${path}/meals/savePending',
-                data: $('#oaActMeals').serialize(),
+                url: '${path}/review/savePending',
+                data: $('#oaActReview').serialize(),
                 error: function (request) {
                     layer.msg("出错！");
                 },

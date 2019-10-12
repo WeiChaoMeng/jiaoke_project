@@ -51,6 +51,31 @@ public class OaActSealsBorrow {
     private String borrower;
 
     /**
+     * 部门负责人
+     */
+    private String principal;
+
+    /**
+     * 印章主管领导
+     */
+    private String sealManage;
+
+    /**
+     * 公司负责人
+     */
+    private String companyPrincipal;
+
+    /**
+     * 经办人
+     */
+    private String sealOperator;
+
+    /**
+     * 归还时间
+     */
+    private String returnTime;
+
+    /**
      * 创建日期
      */
     private Date createTime;
@@ -61,11 +86,18 @@ public class OaActSealsBorrow {
      * 发起人
      */
     private Integer promoter;
+    @Transient
+    private String promoterStr;
 
     /**
      * 查询路径
      */
     private String url;
+
+    /**
+     * 附件
+     */
+    private String annex;
 
     public String getId() {
         return id;
@@ -153,5 +185,61 @@ public class OaActSealsBorrow {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(String principal) {
+        this.principal = principal;
+    }
+
+    public String getSealManage() {
+        return sealManage;
+    }
+
+    public void setSealManage(String sealManage) {
+        this.sealManage = sealManage;
+    }
+
+    public String getCompanyPrincipal() {
+        return companyPrincipal;
+    }
+
+    public void setCompanyPrincipal(String companyPrincipal) {
+        this.companyPrincipal = companyPrincipal;
+    }
+
+    public String getSealOperator() {
+        return sealOperator;
+    }
+
+    public void setSealOperator(String sealOperator) {
+        this.sealOperator = sealOperator;
+    }
+
+    public String getReturnTime() {
+        return returnTime;
+    }
+
+    public void setReturnTime(String returnTime) {
+        this.returnTime = returnTime;
+    }
+
+    public String getAnnex() {
+        return annex;
+    }
+
+    public void setAnnex(String annex) {
+        this.annex = annex;
+    }
+
+    public String getPromoterStr() {
+        return promoterStr;
+    }
+
+    public void setPromoterStr(String promoterStr) {
+        this.promoterStr = promoterStr;
     }
 }

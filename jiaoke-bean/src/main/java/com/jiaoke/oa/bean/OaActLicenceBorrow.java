@@ -51,6 +51,36 @@ public class OaActLicenceBorrow {
     private String borrower;
 
     /**
+     * 部门负责人
+     */
+    private String principal;
+
+    /**
+     * 证照主管领导
+     */
+    private String licenceManage;
+
+    /**
+     * 公司负责人
+     */
+    private String companyPrincipal;
+
+    /**
+     * 经办人
+     */
+    private String licenceOperator;
+
+    /**
+     * 归还时间
+     */
+    private String returnTime;
+
+    /**
+     * 附件
+     */
+    private String annex;
+
+    /**
      * 创建日期
      */
     private Date createTime;
@@ -61,6 +91,8 @@ public class OaActLicenceBorrow {
      * 发起人
      */
     private Integer promoter;
+    @Transient
+    private String promoterStr;
 
     /**
      * 查询路径
@@ -153,5 +185,61 @@ public class OaActLicenceBorrow {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(String principal) {
+        this.principal = principal;
+    }
+
+    public String getLicenceManage() {
+        return licenceManage;
+    }
+
+    public void setLicenceManage(String licenceManage) {
+        this.licenceManage = licenceManage;
+    }
+
+    public String getCompanyPrincipal() {
+        return companyPrincipal;
+    }
+
+    public void setCompanyPrincipal(String companyPrincipal) {
+        this.companyPrincipal = companyPrincipal;
+    }
+
+    public String getLicenceOperator() {
+        return licenceOperator;
+    }
+
+    public void setLicenceOperator(String licenceOperator) {
+        this.licenceOperator = licenceOperator;
+    }
+
+    public String getReturnTime() {
+        return returnTime;
+    }
+
+    public void setReturnTime(String returnTime) {
+        this.returnTime = returnTime;
+    }
+
+    public String getAnnex() {
+        return annex;
+    }
+
+    public void setAnnex(String annex) {
+        this.annex = annex;
+    }
+
+    public String getPromoterStr() {
+        return promoterStr;
+    }
+
+    public void setPromoterStr(String promoterStr) {
+        this.promoterStr = promoterStr;
     }
 }

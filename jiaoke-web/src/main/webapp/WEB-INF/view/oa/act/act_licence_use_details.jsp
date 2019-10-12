@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html;charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
@@ -17,18 +18,47 @@
 <div class="table-title">
     <span>${oaActLicenceUse.title}</span>
 </div>
-<div class="top_toolbar">
-    <div class="top_toolbar_inside" style="height: 40px;border-bottom: none;">
-        <div style="line-height: 40px;margin: 0 10px;float: left;">
-            <span style="float: left;margin-left: 10px;font-size: 13px;">申请时间：${oaActLicenceUse.createTimeStr}</span>
+
+<div class="top_toolbar" id="tool">
+    <div class="top-toolbar-details">
+        <div class="top-info-bar-user">
+            <span>${oaActLicenceUse.promoterStr}</span>
         </div>
 
-        <div class="head_left_button" style="float: right;line-height: 40px;">
-            <button type="button" class="cursor_hand" onclick="addUser()" style="font-size: 13px;">&#xea0e; 打印</button>
+        <div class="top-info-bar-time">
+            <span>${oaActLicenceUse.createTimeStr}</span>
+        </div>
+
+        <div class="printing-but-style">
+            <button type="button" class="cursor_hand" onclick="printContent()">&#xea0e; 打印</button>
         </div>
     </div>
+
+    <c:choose>
+        <c:when test="${oaActLicenceUse.annex != ''}">
+            <div class="top_toolbar" id="annexList">
+                <div class="top-annexes-details">
+
+                    <div class="annexes-icon-details">
+                        <button type="button" class="cursor_hand">&#xeac1;</button>
+                    </div>
+
+                    <c:forTokens items="${oaActLicenceUse.annex}" delims="," var="annex">
+                        <div class="table-file">
+                            <div class="table-file-content">
+                                <span title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <a class="table-file-download icon"
+                                   href="/fileDownloadHandle/download?fileName=${annex}"
+                                   title="下载">&#xebda;</a>
+                            </div>
+                        </div>
+                    </c:forTokens>
+                </div>
+            </div>
+        </c:when>
+    </c:choose>
 </div>
-<!-- -->
+
 <table class="formTable" style="margin: 0">
     <tbody>
     <tr>
@@ -42,9 +72,7 @@
                 <c:when test="${oaActLicenceUse.seal == 4}">大兴营业执照副本</c:when>
             </c:choose>
         </td>
-    </tr>
 
-    <tr>
         <td class="tdLabel">领取时间：</td>
         <td class="table-td-content">
             ${oaActLicenceUse.receiveTimeStr}
@@ -53,52 +81,50 @@
 
     <tr>
         <td class="tdLabel">用途：</td>
-        <td class="table-td-content">
+        <td class="table-td-content" colspan="3">
             ${oaActLicenceUse.purpose}
         </td>
     </tr>
 
     <tr>
-        <td class="tdLabel">使用人：</td>
-        <td class="table-td-content">
+        <td class="tdLabel">使用人</td>
+        <td class="table-td-content" style="width: 340px;">
             ${oaActLicenceUse.user}
+        </td>
+
+        <td class="tdLabel">部门负责人</td>
+        <td class="table-td-content" style="width: 340px;">
+            ${oaActLicenceUse.principal}
+        </td>
+    </tr>
+
+    <tr>
+        <td class="tdLabel">证照主管领导</td>
+        <td class="table-td-content">
+            ${oaActLicenceUse.licenceManage}
+        </td>
+
+        <td class="tdLabel">经办人</td>
+        <td class="table-td-content">
+            ${oaActLicenceUse.licenceOperator}
         </td>
     </tr>
     </tbody>
 </table>
 
-<div class="receipt-container">
-    <div class="receipt-title">
-        <div class="receipt-script">回执意见（共条）</div>
-    </div>
-
-    <c:forEach items="${commentsList}" var="comments">
-        <div class="comment-container">
-            <div class="comment-style">
-                <span class="comment-name">${comments.userName}</span>
-                <span class="comment-message">${comments.message}</span>
-                <span class="comment-date">${comments.timeStr}</span>
-            </div>
-        </div>
-    </c:forEach>
-
-    <div class="receipt-style"></div>
-</div>
-
-<div class="form-but" style="margin-top: 20px;">
-    <button type="button" class="return-but" onclick="previousPage()">返回</button>
-</div>
-
 </body>
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
 <script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
-
-    //返回上一页
-    function previousPage() {
-        window.history.back();
+    //打印
+    function printContent() {
+        $('#tool').hide();
+        $('#body').css('width', '100%');
+        //执行打印
+        window.print();
+        $('#tool').show();
+        $('#body').css('width', '80%');
     }
-
 </script>
 </html>
 
