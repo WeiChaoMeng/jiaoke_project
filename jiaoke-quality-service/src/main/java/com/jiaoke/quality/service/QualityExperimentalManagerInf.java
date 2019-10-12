@@ -380,4 +380,37 @@ public interface QualityExperimentalManagerInf {
      * @date 2019/7/29 13:08
      */
     String getTestStandingBookByDate(String startDate, String endDate);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <移动端获取所有未填写实验>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/10/12 10:12
+     */
+    String getMobileUnfinishedExperimental();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <获取近一周历史实验数据>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/10/12 10:22
+     */
+    String getLastWeekExperimentHistory();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期获取当日所有实验>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/10/12 10:40
+     */
+    String getMobileExperimentByDate(String startDate);
 }

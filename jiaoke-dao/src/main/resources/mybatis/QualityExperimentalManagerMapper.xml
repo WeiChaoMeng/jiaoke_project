@@ -913,4 +913,41 @@
         WHERE
                 QTLR.test_date between #{startDate} and #{endDate};
     </select>
+    <select id="selectMobileUnfinishedExperimental" resultType="java.util.Map">
+        SELECT
+               DATE_FORMAT(QTLR.sampling_date,'%Y-%m-%d') AS sampling_date,
+               DATE_FORMAT(QTLR.test_date, '%Y-%m-%d') AS test_date,
+               QTLR.*,
+               QTMD.`name` AS materials_name
+        FROM
+             `quality_test_lab_report` AS QTLR
+                 INNER JOIN quality_test_material_dictionary AS QTMD ON QTLR.materials_num = QTMD.Id
+        WHERE QTLR.experiment_status = 0
+        ORDER BY QTLR.experiment_status,QTLR.test_date DESC;
+    </select>
+    <select id="selectLastWeekExperimentHistory" resultType="java.util.Map">
+        SELECT
+        DATE_FORMAT(QTLR.sampling_date,'%Y-%m-%d') AS sampling_date,
+        DATE_FORMAT(QTLR.test_date, '%Y-%m-%d') AS test_date,
+        QTLR.*,
+        QTMD.`name` AS materials_name
+        FROM
+        `quality_test_lab_report` AS QTLR
+        INNER JOIN quality_test_material_dictionary AS QTMD ON QTLR.materials_num = QTMD.Id
+        WHERE QTLR.experiment_status != 0
+        AND DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(QTLR.test_date)
+        ORDER BY QTLR.experiment_status,QTLR.test_date DESC;
+    </select>
+    <select id="selectMobileExperimentByDate" resultType="java.util.Map">
+        SELECT
+               DATE_FORMAT(QTLR.sampling_date,'%Y-%m-%d') AS sampling_date,
+               DATE_FORMAT(QTLR.test_date, '%Y-%m-%d') AS test_date,
+               QTLR.*,
+               QTMD.`name` AS materials_name
+        FROM
+             `quality_test_lab_report` AS QTLR
+                 INNER JOIN quality_test_material_dictionary AS QTMD ON QTLR.materials_num = QTMD.Id
+        WHERE QTLR.test_date = #{startDate}
+        ORDER BY QTLR.experiment_status,QTLR.test_date DESC;
+    </select>
 </mapper>

@@ -17,26 +17,22 @@ import com.jiaoke.controller.oa.ActivitiUtil;
 import com.jiaoke.controller.oa.TargetFlowNodeCommand;
 import com.jiaoke.oa.bean.Comments;
 import com.jiaoke.oa.bean.UserInfo;
-import com.jiaoke.oa.service.DepartmentService;
 import com.jiaoke.oa.service.OaCollaborationService;
 import com.jiaoke.oa.service.UserInfoService;
 import com.jiaoke.quality.bean.QualityDataManagerDay;
 import com.jiaoke.quality.bean.QualityRatioModel;
 import com.jiaoke.quality.bean.QualityRatioTemplate;
-import com.jiaoke.quality.service.QualityGradingManagerInf;
 import com.jiaoke.quality.service.*;
-import javafx.scene.chart.ValueAxis;
+import lombok.experimental.var;
 import org.activiti.bpmn.model.UserTask;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.ManagementService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.impl.identity.Authentication;
 import org.activiti.engine.task.Task;
-import org.apache.ibatis.annotations.Param;
 import org.apache.logging.log4j.util.Strings;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -767,7 +763,6 @@ public class QualityController {
         }
 
         List<Map<String,Object>> res = qualityDataSummaryInf.getRatioListByDateTimeAndCrew(startDate,endDate,crew);
-
 
         return  JSON.toJSONString(res);
     }
@@ -1734,6 +1729,181 @@ public class QualityController {
         return "quality/qc_dm_data_detail";
     }
     /********************************  关键预警数据 End *****************************************/
+
+
+    /*********************************移动端数据管理start***************************************/
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询指定日期内生产的产品类型>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/9/17 10:08
+     */
+    @ResponseBody
+    @RequestMapping(value = "/mobileGetRatioListByDate.do",method = RequestMethod.POST)
+    public String mobileGetRatioListByDate(@RequestParam("startDateTime") String startDate,@RequestParam("crew") String crew){
+        if (startDate.isEmpty() || crew.isEmpty()) {
+            return null;
+        }
+        List<Map<String,Object>> res = qualityDataSummaryInf.mobileGetRatioListByDate(startDate,crew);
+
+        return  JSON.toJSONString(res);
+    }
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <移动端根据日期机组获取生产信息>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/9/17 10:32
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getMobilePromessage.do",method = RequestMethod.POST)
+    public String getMobilePromessageByRaionModel(String startDate,  String crew, String rationId){
+
+        List<Map<String,Object>> list =  qualityDataSummaryInf.getMobilePromessageByRaionModel(startDate,crew,rationId);
+
+        return JSON.toJSONString(list);
+    }
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <移动端获取产品详细信息>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/9/24 12:16
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getMobileProductMessage.do",method = RequestMethod.POST )
+    public String getMobileProductMessage( String id,String crewNum){
+
+        if (id.isEmpty()) return "";
+
+        Map<String,Object> map =  qualityDataManagerInf.selectProductMessageById(id,crewNum);
+        String res = qualityDataManagerInf.selectEchartsDataById(id,crewNum);
+        //json处理
+        String modelMessage = JSON.toJSONString(map.get("modelMessage"));
+        String proBase = JSON.toJSONString(map.get("proBase"));
+        String proMessage = JSON.toJSONString(map.get("proMessage"));
+
+        map.put("modelMessage",modelMessage);
+        map.put("proBase",proBase);
+        map.put("proMessage",proMessage);
+        map.put("echarts",res);
+
+        return JSON.toJSONString(map);
+    }
+
+
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询昨天生产情况>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/10/8 20:39
+     */
+    @ResponseBody
+    @RequestMapping("/getYesterdayProduct.do")
+    public String getYesterdayProduct(){
+
+        List<Map<String,Object>> res = qualityDataSummaryInf.mobileGetYesterdayProduct();
+
+        return  JSON.toJSONString(res);
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/getYesterdayCriticalWarning.do")
+    public String getYesterdayCriticalWarning(){
+        String res = qualityDataSummaryInf.getAllCriticalWarning();
+        return res;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getMobileWarningMessage.do",method = RequestMethod.POST)
+    public String getMobileWarningMessage(String crewNum,String produceDate,String produceTime){
+
+        Map<String,Object> map =  qualityDataManagerInf.selectWarningMessageById(crewNum,produceDate,produceTime);
+        Map<String,String> pro = (Map<String,String>) map.get("proBase");
+        String res = qualityDataManagerInf.selectEchartsDataById(String.valueOf(pro.get("Id")),crewNum);
+        //json处理
+        String modelMessage = JSON.toJSONString(map.get("modelMessage"));
+        String proBase = JSON.toJSONString(map.get("proBase"));
+        String proMessage = JSON.toJSONString(map.get("proMessage"));
+
+        map.put("modelMessage",modelMessage);
+        map.put("proBase",proBase);
+        map.put("proMessage",proMessage);
+        map.put("echarts",res);
+
+        return JSON.toJSONString(map);
+
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getMobileWarningDataByDate.do",method = RequestMethod.POST)
+    public String getMobileWarningDataByDate(  String startDate, String crew ){
+        String res = qualityDataSummaryInf.getWarningDataByDate(crew,startDate);
+        return res;
+    }
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <移动端获取所有未填写实验>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/10/12 10:12
+     */
+    @ResponseBody
+    @RequestMapping("/getMobileUnfinishedExperimental.do")
+    public String getMobileUnfinishedExperimental(){
+        String res = qualityExperimentalManagerInf.getMobileUnfinishedExperimental();
+        return res;
+    }
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <获取近一周已完成实验数据>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/10/12 10:21
+     */
+    @ResponseBody
+    @RequestMapping("/getLastWeekExperimentHistory.do")
+    public String getLastWeekExperimentHistory(){
+        String res = qualityExperimentalManagerInf.getLastWeekExperimentHistory();
+        return res;
+    }
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期获取当日所有实验>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/10/12 10:38
+     */
+    @ResponseBody
+    @RequestMapping("/getMobileExperimentByDate.do")
+    public String getMobileExperimentByDate(String startDate){
+        String res = qualityExperimentalManagerInf.getMobileExperimentByDate(startDate);
+        return res;
+    }
+    /*********************************移动端数据管理end***************************************/
 
 }
 

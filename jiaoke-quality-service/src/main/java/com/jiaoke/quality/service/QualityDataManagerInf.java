@@ -74,4 +74,26 @@ public interface QualityDataManagerInf {
      * @date 2019/5/13 18:08
      */
     String getProductSvgGrading(String productSVG);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据ID与机组查询Echarts需要的相关数据>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/10/8 19:58
+     */
+    String selectEchartsDataById(String id, String crewNum);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据机组、生产时间、生产日期查询>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/10/10 9:30
+     */
+    Map<String, Object> selectWarningMessageById(String crewNum, String produceDate, String produceTime);
 }

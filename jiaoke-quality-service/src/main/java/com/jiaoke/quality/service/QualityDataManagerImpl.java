@@ -400,4 +400,60 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
 
         return gradingStr;
     }
+
+    @Override
+    public String selectEchartsDataById(String id, String crewNum) {
+
+        List<Map<String, String>> list = qualityDataSummaryDao.selectEchartsDataById(id,crewNum);
+        //获取所有级配
+        Map<String,List<Map<String,String>>> gradingMap = new HashMap<>();
+        //返回的结果集 一层Key为机组 二层为模板级配等 三层Key为筛孔
+        List<Map<String,Map<String,List<Map<String,String>>>>> result = new ArrayList<>();
+
+        String resoult = QualityGradingUtil.getGradingResultJson(list,qualityDataMontoringDao,result);
+
+        return resoult;
+    }
+
+    @Override
+    public Map<String, Object> selectWarningMessageById(String crewNum, String produceDate, String produceTime) {
+        Map<String,Object> modelMap = new HashMap<>();
+        //根据id与机组查询基本信息
+        String crewStr;
+        switch (crewNum){
+            case "crew1":
+                crewStr = "data1";
+                break;
+            case "crew2":
+                crewStr = "data2";
+                break;
+            default:
+                crewStr = "data1";
+        }
+        Map<String,String> map =  qualityDataSummaryDao.selectWarningMessageById(crewNum,produceDate,produceTime);
+
+        //根据日期与盘号查询各材料百分比、预警信息
+        Object date =  map.get("produce_date");
+        String discNum =  map.get("produce_disc_num");
+        String crew ;
+        switch (crewNum){
+            case "crew1":
+                crew = "1";
+                break;
+            case "crew2":
+                crew = "2";
+                break;
+            default:
+                crew = "1";
+        }
+        List<Map<String,String>>  waringData =  qualityDataManagerDao.selectProduceByDateAndDiscNum(String.valueOf(date),discNum,crew);
+
+        QualityRatioTemplate ratioMap = qualityDataManagerDao.selectRationById(map.get("produce_proportioning_num"),crewNum);
+
+        modelMap.put("proBase",map);
+        modelMap.put("proMessage",waringData);
+        modelMap.put("modelMessage",ratioMap);
+
+        return modelMap;
+    }
 }

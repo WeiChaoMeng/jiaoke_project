@@ -32,7 +32,7 @@
                QR.temperature_aggregate
         FROM
              quality_monitoring_realtime_data1 AS QR
-                 INNER JOIN
+                 left JOIN
                      quality_proportioning_message AS QM
                      ON QR.produce_proportioning_num = QM.crew1_modele_id
         ORDER BY
@@ -69,13 +69,80 @@
                        QR.temperature_aggregate
                 FROM
                      quality_monitoring_realtime_data2 AS QR
-                         INNER JOIN
+                         left JOIN
                              quality_proportioning_message AS QM
                              ON QR.produce_proportioning_num = QM.crew2_modele_id
                 ORDER BY
                          QR.id DESC
                 LIMIT 1
                 )
+
+
+#         (
+#         SELECT
+#                'crew1' AS 'crewNum',
+#                date_format(QR.produce_date, '%Y-%m-%d') AS produce_date,
+#                date_format(QR.produce_time, '%T') AS produce_time,
+#                QR.produce_disc_num,
+#                QR.produce_proportioning_num,
+#                QR.produce_car_num,
+#                QR.produce_custom_num,
+#                QR.material_aggregate_1,
+#                QR.material_aggregate_2,
+#                QR.material_aggregate_3,
+#                QR.material_aggregate_4,
+#                QR.material_aggregate_5,
+#                QR.material_aggregate_6,
+#                QR.material_stone_1,
+#                QR.material_stone_2,
+#                QR.material_asphalt,
+#                QR.material_regenerate,
+#                QR.material_additive,
+#                QR.material_total,
+#                QR.temperature_warehouse_1 ,
+#                QR.temperature_mixture ,
+#                QR.temperature_duster ,
+#                QR.temperature_asphalt ,
+#                QR.temperature_aggregate
+#         FROM
+#              quality_monitoring_realtime_data1 AS QR
+#         ORDER BY
+#                  QR.id DESC
+#         LIMIT 1
+#         )
+#         UNION ALL
+#                 (
+#                 SELECT
+#                        'crew2' AS 'crewNum',
+#                        date_format(QR.produce_date, '%Y-%m-%d') AS produce_date,
+#                        date_format(QR.produce_time, '%T') AS produce_time,
+#                        QR.produce_disc_num,
+#                        QR.produce_proportioning_num,
+#                        QR.produce_car_num,
+#                        QR.produce_custom_num,
+#                        QR.material_aggregate_1,
+#                        QR.material_aggregate_2,
+#                        QR.material_aggregate_3,
+#                        QR.material_aggregate_4,
+#                        QR.material_aggregate_5,
+#                        QR.material_aggregate_6,
+#                        QR.material_stone_1,
+#                        QR.material_stone_2,
+#                        QR.material_asphalt,
+#                        QR.material_regenerate,
+#                        QR.material_additive,
+#                        QR.material_total,
+#                        QR.temperature_warehouse_1 ,
+#                        QR.temperature_mixture,
+#                        QR.temperature_duster,
+#                        QR.temperature_asphalt ,
+#                        QR.temperature_aggregate
+#                 FROM
+#                      quality_monitoring_realtime_data2 AS QR
+#                 ORDER BY
+#                          QR.id DESC
+#                 LIMIT 1
+#                 )
     </select>
 
     <select id="selectRealTimeDataEcharsTemp" resultType="java.util.HashMap">

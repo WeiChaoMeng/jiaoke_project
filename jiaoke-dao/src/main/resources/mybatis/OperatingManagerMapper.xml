@@ -41,14 +41,14 @@
 
     <select id="selectThisYearData" resultType="java.util.Map">
         SELECT
-               CAST(SUM(material_total)/1000 AS CHAR) AS total
+               CAST(SUM(material_total)/10000 AS CHAR) AS total
         FROM
              `quality_monitoring_realtime_data1`
         WHERE
                 YEAR (produce_date) = YEAR (NOW())
         UNION ALL
         SELECT
-               CAST(SUM(material_total)/1000 AS CHAR) AS total
+               CAST(SUM(material_total)/10000 AS CHAR) AS total
         FROM
              `quality_monitoring_realtime_data2`
         WHERE
@@ -56,9 +56,9 @@
 
     </select>
     <select id="selectAllData" resultType="java.util.Map">
-        SELECT CAST(SUM(material_total)/1000 AS CHAR) AS total from quality_monitoring_realtime_data1
+        SELECT CAST(SUM(material_total)/10000 AS CHAR) AS total from quality_monitoring_realtime_data1
         UNION ALL
-        SELECT CAST(SUM(material_total)/1000 AS CHAR) AS total  from quality_monitoring_realtime_data2;
+        SELECT CAST(SUM(material_total)/10000 AS CHAR) AS total  from quality_monitoring_realtime_data2;
     </select>
     <select id="selectFirstProductDate" resultType="java.util.Map">
         SELECT
@@ -229,7 +229,7 @@
     <select id="selectThisYearTwoCrewData" resultType="java.util.Map">
         SELECT
                CAST(
-                   SUM(T1.total) / 1000000 AS CHAR
+                   SUM(T1.total) / 10000000 AS CHAR
                        ) AS total
         FROM
              (

@@ -701,4 +701,37 @@ public interface QualityExperimentalManagerDao {
      * @date 2019/7/29 13:17
      */
     List<Map<String, String>> selectTestStandingBookByDate(@Param("startDate") String startDate,@Param("endDate")  String endDate);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <移动端获取所有未填写的实验>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/10/12 10:14
+     */
+    List<Map<String, String>> selectMobileUnfinishedExperimental();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <获取近一周实验数据>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/10/12 10:23
+     */
+    List<Map<String, String>> selectLastWeekExperimentHistory();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期查询当日所有实验>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/10/12 10:42
+     */
+    List<Map<String, String>> selectMobileExperimentByDate(@Param("startDate") String startDate);
 }

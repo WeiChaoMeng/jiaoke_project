@@ -42,7 +42,12 @@ function renderDataToPage(listStr) {
                     $("#crew1_basic_date").html(listStr[i].produce_date);
                     $("#crew1_basic_time").html(listStr[i].produce_time);
                     $("#crew1_basic_ratio").html(listStr[i].produce_proportioning_num);
-                    $("#crew1_basic_ratio_name").html(listStr[i].pro_name);
+                    debugger
+                    if (listStr[i].pro_name){
+                        $("#crew1_basic_ratio_name").html(listStr[i].pro_name);
+                    } else {
+                        $("#crew1_basic_ratio_name").html('无配比');
+                    }
                     $("#crew1_basic_carNum").html(listStr[i].produce_car_num);
                     $("#crew1_basic_discNum").html(listStr[i].produce_disc_num);
                     $("#crew1_basic_userNum").html(listStr[i].produce_custom_num);
@@ -73,7 +78,11 @@ function renderDataToPage(listStr) {
                     $("#crew2_basic_date").html(listStr[i].produce_date);
                     $("#crew2_basic_time").html(listStr[i].produce_time);
                     $("#crew2_basic_ratio").html(listStr[i].produce_proportioning_num);
-                    $("#crew2_basic_ratio_name").html(listStr[i].pro_name);
+                    if (listStr[i].pro_name){
+                        $("#crew2_basic_ratio_name").html(listStr[i].pro_name);
+                    } else {
+                        $("#crew2_basic_ratio_name").html('无配比');
+                    }
                     $("#crew2_basic_carNum").html(listStr[i].produce_car_num);
                     $("#crew2_basic_discNum").html(listStr[i].produce_disc_num);
                     $("#crew2_basic_userNum").html(listStr[i].produce_custom_num);

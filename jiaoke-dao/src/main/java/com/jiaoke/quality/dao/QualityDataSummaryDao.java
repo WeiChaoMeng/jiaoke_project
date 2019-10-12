@@ -82,4 +82,70 @@ public interface QualityDataSummaryDao {
      * @date 2019/8/21 8:59
      */
     QualityRatioTemplate selectRationById(@Param("ratioNum") String ratioNum,@Param("crewNum") String crewNum);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/9/17 10:16
+     */
+    List<Map<String, Object>> mobileGetRatioListByDate(@Param("startDate") String startDate,@Param("crew")  String crew);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期与机组查询相关产品信息>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/9/17 10:39
+     */
+    List<Map<String, Object>> selectMobilePromessageByRaionModel( @Param("startDate") String startDate,@Param("crew")  String crew,@Param("rationId")  String rationId);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <移动端根据指定id与机组查询echarts数据>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/10/8 20:01
+     */
+    List<Map<String, String>> selectEchartsDataById(@Param("id") String id,@Param("crew")  String crewNum);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询昨天生产数据>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/10/8 20:52
+     */
+    List<Map<String, Object>> selectmobileGetYesterdayProduct();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据机组、生产日期、生产时间查询相关数据>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/10/10 9:33
+     */
+    Map<String, String> selectWarningMessageById(@Param("crewNum") String crewNum,@Param("produceDate") String produceDate,@Param("produceTime") String produceTime);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据机组、日期查询预警数据>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/10/10 16:40
+     */
+    List<Map<String, String>> selectMobileWarningDataByDate(@Param("crew") String crew,@Param("startDate") String startDate);
 }

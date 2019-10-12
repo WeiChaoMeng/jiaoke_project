@@ -176,8 +176,9 @@
              `quality_critical_warning` AS QCW
                  INNER JOIN quality_warning_promessage_crew AS QWPC ON QCW.warning_crew_id = QWPC.id
                  INNER JOIN quality_warning_data AS QWD ON QWPC.id = QWD.crew_id
-        WHERE produce_date >= DATE_SUB(NOW(),INTERVAL 2 DAY)
-
+        WHERE
+#                 produce_date >= DATE_SUB(NOW(),INTERVAL 1 DAY)
+                produce_date = '2019-08-17'
 
 #         SELECT
 #                DATE_FORMAT(QWPC.produce_date,'%Y-%m-%d') AS produce_date,
@@ -214,7 +215,30 @@
     </select>
     <select id="selectProductMessageById" resultType="java.util.Map">
         SELECT
-                *
+               Id,
+               produce_date,
+               produce_time,
+               produce_disc_num,
+               produce_proportioning_num,
+               produce_car_num,
+               produce_custom_num,
+               material_aggregate_6,
+               material_aggregate_5,
+               material_aggregate_4,
+               material_aggregate_3,
+               material_aggregate_2,
+               material_aggregate_1,
+               material_stone_1,
+               material_stone_2,
+               material_asphalt,
+               material_regenerate,
+               material_additive,
+               material_total,
+               temperature_warehouse_1,
+               temperature_mixture,
+               temperature_duster,
+               temperature_asphalt,
+               temperature_aggregate
         FROM
              quality_monitoring_realtime_${crewStr}
         WHERE
@@ -268,5 +292,318 @@
             where crew2_modele_id = #{ratioNum}
         </if>
 
+    </select>
+    <select id="mobileGetRatioListByDate" resultType="java.util.Map">
+        SELECT
+        QM.pro_name,
+        QD.produce_proportioning_num AS modele_id
+        FROM
+        quality_monitoring_realtime_${crew} AS QD
+        INNER JOIN
+        quality_proportioning_message AS QM
+        <if test="crew == 'data1'.toString()">
+            ON
+            QD.produce_proportioning_num = QM.crew1_modele_id
+        </if>
+        <if test="crew == 'data2'.toString()">
+            ON
+            QD.produce_proportioning_num = QM.crew2_modele_id
+        </if>
+        WHERE
+          QD.produce_date = &apos;${startDate}&apos;
+        GROUP BY
+        QM.pro_name,modele_id;
+    </select>
+
+    <select id="selectMobilePromessageByRaionModel" resultType="java.util.Map">
+        SELECT
+        QMRD.id,
+        &apos;${crew}&apos; as crewNums,
+        date_format(QMRD.produce_date,'%Y-%m-%d') as  produce_date,
+        date_format(QMRD.produce_time,'%H:%i:%s') as produce_time,
+        QMRD.produce_disc_num,
+        QPM.pro_name,
+        QMRD.produce_proportioning_num,
+        QMRD.produce_car_num,
+        QMRD.produce_custom_num,
+        QMRD.material_aggregate_6,
+        QMRD.material_aggregate_5,
+        QMRD.material_aggregate_4,
+        QMRD.material_aggregate_3,
+        QMRD.material_aggregate_2,
+        QMRD.material_aggregate_1,
+        QMRD.material_stone_1,
+        QMRD.material_stone_2,
+        QMRD.material_asphalt,
+        QMRD.material_regenerate,
+        QMRD.material_additive,
+        QMRD.material_total,
+        QMRD.temperature_warehouse_1,
+        QMRD.temperature_mixture,
+        QMRD.temperature_duster,
+        QMRD.temperature_asphalt,
+        QMRD.temperature_aggregate
+        FROM
+        quality_monitoring_realtime_${crew} AS QMRD
+        INNER JOIN
+        quality_proportioning_message AS QPM
+
+        <choose>
+            <when test="crew=='data1'.toString()">
+                ON QMRD.produce_proportioning_num = QPM.crew1_modele_id
+            </when>
+            <otherwise>
+                ON QMRD.produce_proportioning_num = QPM.crew2_modele_id
+            </otherwise>
+        </choose>
+
+        <choose>
+            <when test="rationId=='select'.toString()">
+                WHERE
+                QMRD.produce_date = &apos;${startDate}&apos;
+            </when>
+            <otherwise>
+                WHERE
+                QMRD.produce_proportioning_num = ${rationId}
+                AND
+                QMRD.produce_date = &apos;${startDate}&apos;
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="selectEchartsDataById" resultType="java.util.Map">
+      <choose>
+          <when test="crew == 'crew1'.toString() ">
+              SELECT
+              t1.*,
+              'crew1' AS 'crewNum',
+              t2.produce_proportioning_num,
+              t2.material_aggregate_1,
+              t2.material_aggregate_2,
+              t2.material_aggregate_3,
+              t2.material_aggregate_4,
+              t2.material_aggregate_5,
+              t2.material_aggregate_6,
+              t2.material_stone_1,
+              t2.material_stone_2,
+              t2.material_asphalt,
+              t2.material_regenerate,
+              t2.material_additive,
+              t2.temperature_warehouse_1 as tem_warehouse_1,
+              t2.temperature_mixture as tem_mixture,
+              t2.temperature_duster as tem_duster,
+              t2.temperature_asphalt as tem_asphalt ,
+              t2.temperature_aggregate as tem_aggregate,
+              t2.material_total
+              FROM
+              quality_proportioning_message AS t1
+              INNER JOIN (
+              SELECT
+              produce_proportioning_num,
+              material_aggregate_1,
+              material_aggregate_2,
+              material_aggregate_3,
+              material_aggregate_4,
+              material_aggregate_5,
+              material_aggregate_6,
+              material_stone_1,
+              material_stone_2,
+              material_asphalt,
+              material_regenerate,
+              material_additive,
+              temperature_warehouse_1,
+              temperature_mixture,
+              temperature_duster,
+              temperature_asphalt,
+              temperature_aggregate,
+              material_total
+              FROM
+              quality_monitoring_realtime_data1
+              WHERE
+              Id = #{id}
+              ) as t2
+              on t1.crew1_modele_id = t2.produce_proportioning_num
+          </when>
+          <otherwise>
+              SELECT
+              t1.*,
+              'crew2' AS 'crewNum',
+              t2.produce_proportioning_num,
+              t2.material_aggregate_1,
+              t2.material_aggregate_2,
+              t2.material_aggregate_3,
+              t2.material_aggregate_4,
+              t2.material_aggregate_5,
+              t2.material_aggregate_6,
+              t2.material_stone_1,
+              t2.material_stone_2,
+              t2.material_asphalt,
+              t2.material_regenerate,
+              t2.material_additive,
+              t2.temperature_warehouse_1 as tem_warehouse_1,
+              t2.temperature_mixture as tem_mixture,
+              t2.temperature_duster as tem_duster,
+              t2.temperature_asphalt as tem_asphalt ,
+              t2.temperature_aggregate as tem_aggregate,
+              t2.material_total
+              FROM
+              quality_proportioning_message AS t1
+              INNER JOIN (
+              SELECT
+              produce_proportioning_num,
+              material_aggregate_1,
+              material_aggregate_2,
+              material_aggregate_3,
+              material_aggregate_4,
+              material_aggregate_5,
+              material_aggregate_6,
+              material_stone_1,
+              material_stone_2,
+              material_asphalt,
+              material_regenerate,
+              material_additive,
+              temperature_warehouse_1,
+              temperature_mixture,
+              temperature_duster,
+              temperature_asphalt,
+              temperature_aggregate,
+              material_total
+              FROM
+              quality_monitoring_realtime_data2
+              WHERE
+              Id = #{id}
+              ) as t2
+              on t1.crew2_modele_id = t2.produce_proportioning_num
+          </otherwise>
+      </choose>
+    </select>
+    <select id="selectmobileGetYesterdayProduct" resultType="java.util.Map">
+        (
+        SELECT
+        QMRD.id,
+        'data1' AS crewNums,
+        date_format(
+        QMRD.produce_date,
+        '%Y-%m-%d'
+        ) AS produce_date,
+        date_format(
+        QMRD.produce_time,
+        '%H:%i:%s'
+        ) AS produce_time,
+        QMRD.produce_disc_num,
+        QPM.pro_name,
+        QMRD.produce_proportioning_num,
+        QMRD.produce_car_num,
+        QMRD.produce_custom_num,
+        QMRD.material_aggregate_6,
+        QMRD.material_aggregate_5,
+        QMRD.material_aggregate_4,
+        QMRD.material_aggregate_3,
+        QMRD.material_aggregate_2,
+        QMRD.material_aggregate_1,
+        QMRD.material_stone_1,
+        QMRD.material_stone_2,
+        QMRD.material_asphalt,
+        QMRD.material_regenerate,
+        QMRD.material_additive,
+        QMRD.material_total,
+        QMRD.temperature_warehouse_1,
+        QMRD.temperature_mixture,
+        QMRD.temperature_duster,
+        QMRD.temperature_asphalt,
+        QMRD.temperature_aggregate
+        FROM
+        quality_monitoring_realtime_data1 AS QMRD
+        INNER JOIN quality_proportioning_message AS QPM ON QMRD.produce_proportioning_num = QPM.crew1_modele_id
+        WHERE
+#         TO_DAYS(NOW()) - TO_DAYS(QMRD.produce_date) &lt;= 1
+                QMRD.produce_date = '2019-09-15'
+        )
+        UNION ALL
+        (
+        SELECT
+        QMRD.id,
+        'data2' AS crewNums,
+        date_format(
+        QMRD.produce_date,
+        '%Y-%m-%d'
+        ) AS produce_date,
+        date_format(
+        QMRD.produce_time,
+        '%H:%i:%s'
+        ) AS produce_time,
+        QMRD.produce_disc_num,
+        QPM.pro_name,
+        QMRD.produce_proportioning_num,
+        QMRD.produce_car_num,
+        QMRD.produce_custom_num,
+        QMRD.material_aggregate_6,
+        QMRD.material_aggregate_5,
+        QMRD.material_aggregate_4,
+        QMRD.material_aggregate_3,
+        QMRD.material_aggregate_2,
+        QMRD.material_aggregate_1,
+        QMRD.material_stone_1,
+        QMRD.material_stone_2,
+        QMRD.material_asphalt,
+        QMRD.material_regenerate,
+        QMRD.material_additive,
+        QMRD.material_total,
+        QMRD.temperature_warehouse_1,
+        QMRD.temperature_mixture,
+        QMRD.temperature_duster,
+        QMRD.temperature_asphalt,
+        QMRD.temperature_aggregate
+        FROM
+        quality_monitoring_realtime_data2 AS QMRD
+        INNER JOIN quality_proportioning_message AS QPM ON QMRD.produce_proportioning_num = QPM.crew2_modele_id
+        WHERE
+#         TO_DAYS(NOW()) - TO_DAYS(QMRD.produce_date) &lt;= 1
+                QMRD.produce_date = '2019-06-11'
+        )
+    </select>
+    
+    <select id="selectWarningMessageById" resultType="java.util.Map">
+        <choose>
+            <when test="crewNum == 'crew1'.toString()">
+                SELECT
+                *
+                FROM
+                quality_monitoring_realtime_data1
+                WHERE
+                produce_date = #{produceDate}
+                AND produce_time = #{produceTime}
+            </when>
+            <otherwise>
+                SELECT
+                *
+                FROM
+                quality_monitoring_realtime_data2
+                WHERE
+                produce_date = #{produceDate}
+                AND produce_time = #{produceTime}
+            </otherwise>
+        </choose>
+    </select>
+    <select id="selectMobileWarningDataByDate" resultType="java.util.Map">
+
+        SELECT
+               DATE_FORMAT(QWPC.produce_date,'%Y-%m-%d') AS produce_date,
+               DATE_FORMAT(QWPC.produce_time,'%H:%i:%s') AS produce_time,
+               QWPC.produce_ratio_id,
+               QWPC.produce_car_num,
+               QWPC.produce_disc_num,
+               QWPC.produce_crewNum,
+               QWD.*,
+               (SELECT QPM1.pro_name FROM quality_warning_promessage_crew AS QWPC1 INNER JOIN quality_proportioning_message AS QPM1 ON QWPC1.produce_ratio_id = QPM1.crew1_modele_id WHERE QWPC1.produce_ratio_id = QWPC.produce_ratio_id  LIMIT 1 ) AS crew1RatioName,
+               (SELECT QPM1.pro_name FROM quality_warning_promessage_crew AS QWPC1 INNER JOIN quality_proportioning_message AS QPM1 ON QWPC1.produce_ratio_id = QPM1.crew2_modele_id WHERE QWPC1.produce_ratio_id = QWPC.produce_ratio_id  LIMIT 1 ) AS crew2RatioName
+        FROM
+             `quality_critical_warning` AS QCW
+                 INNER JOIN quality_warning_promessage_crew AS QWPC ON QCW.warning_crew_id = QWPC.id
+                 INNER JOIN quality_warning_data AS QWD ON QWPC.id = QWD.crew_id
+        WHERE
+#                 produce_date >= DATE_SUB(NOW(),INTERVAL 1 DAY)
+                QWPC.produce_date = #{startDate}
+          AND QWPC.produce_crewNum = #{crew}
     </select>
 </mapper>

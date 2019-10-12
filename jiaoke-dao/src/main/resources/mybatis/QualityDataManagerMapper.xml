@@ -307,5 +307,8 @@
                temperature_mixture_up as temperatureMixtureUp,
                temperature_milling_up as temperatureMillingUp
         from quality_proportioning_message where ${crewNum}_modele_id = ${ratioNum}
+        <if test="crewNum=='crew2'.toString()">
+            limit 1
+        </if>
     </select>
 </mapper>

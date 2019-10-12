@@ -131,6 +131,7 @@
                                             },
                                         },
                                         yAxis: {
+                                            name:'单位：吨',
                                             type: 'value',
                                             min:0,
                                             max:4000

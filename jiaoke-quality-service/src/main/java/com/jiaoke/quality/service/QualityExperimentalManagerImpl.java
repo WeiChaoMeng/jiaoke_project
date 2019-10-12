@@ -17,7 +17,6 @@ import com.jiaoke.oa.dao.OaCollaborationMapper;
 import com.jiaoke.oa.dao.UserInfoMapper;
 import com.jiaoke.quality.dao.QualityExperimentalManagerDao;
 import org.activiti.engine.*;
-import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Service;
@@ -831,6 +830,23 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
         return JSON.toJSONString(list);
     }
 
+    @Override
+    public String getMobileUnfinishedExperimental() {
+        List<Map<String,String>> list = qualityExperimentalManagerDao.selectMobileUnfinishedExperimental();
+        return JSON.toJSONString(list);
+    }
+
+    @Override
+    public String getLastWeekExperimentHistory() {
+        List<Map<String,String>> list = qualityExperimentalManagerDao.selectLastWeekExperimentHistory();
+        return JSON.toJSONString(list);
+    }
+
+    @Override
+    public String getMobileExperimentByDate(String startDate) {
+        List<Map<String,String>> list = qualityExperimentalManagerDao.selectMobileExperimentByDate(startDate);
+        return JSON.toJSONString(list);
+    }
     /*************************************试验设置Start****************************************************/
 
 }

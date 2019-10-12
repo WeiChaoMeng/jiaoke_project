@@ -67,4 +67,49 @@ public interface QualityDataSummaryInf {
      * @date 2019/8/21 8:39
      */
     Map<String, Object> getCeiticalWarning(String proDate, String produceDisc,String crewNum);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询指定日期内生产的产品类型>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/9/17 10:08
+     */
+    List<Map<String, Object>> mobileGetRatioListByDate(String startDate, String crew);
+
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <移动端根据日期机组获取生产信息>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/9/17 10:32
+     */
+    List<Map<String, Object>> getMobilePromessageByRaionModel(String startDate, String crew, String rationId);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询昨天一、二机组生产数据>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/10/8 20:51
+     */
+    List<Map<String, Object>> mobileGetYesterdayProduct();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据机组日期>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/10/10 16:29
+     */
+    String getWarningDataByDate(String crew, String startDate);
 }
