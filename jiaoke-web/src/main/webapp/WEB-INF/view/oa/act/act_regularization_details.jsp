@@ -189,20 +189,14 @@
 <script type="text/javascript" src="../../../../static/js/jeDate/src/jedate.js"></script>
 <script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
-
-    //返回上一页
-    function previousPage() {
-        window.history.back();
-    }
-
     //打印
     function printContent() {
-        $('#tool,#return').hide();
+        $('#tool').hide();
         $('#body').css('width', '100%');
         //执行打印
         window.print();
         $('#tool').show();
-        $('#body,#return').css('width', '80%');
+        $('#body').css('width', '80%');
     }
 </script>
 </html>

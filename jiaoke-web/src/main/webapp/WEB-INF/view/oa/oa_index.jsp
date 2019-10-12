@@ -205,8 +205,8 @@
                             </td>
 
                             <td class="template" valign="middle">
-                                <a class="check_color" onclick="commonJump('transferTwo')" title="转岗审批表2">
-                                    <em class="template-icon">&#xe695;</em>转岗审批表2
+                                <a class="check_color" onclick="commonJump('annualLeave')" title="年休假审批表">
+                                    <em class="template-icon">&#xe695;</em>年休假审批表
                                 </a>
                             </td>
 
@@ -236,11 +236,7 @@
                                 </a>
                             </td>
 
-                            <td class="template" valign="middle">
-                                <a class="check_color" onclick="commonJump('integrity')" title="廉政谈话审批表">
-                                    <em class="template-icon">&#xe695;</em>廉政谈话审批表
-                                </a>
-                            </td>
+
 
                             <td class="template" valign="middle">
                                 <a class="check_color" onclick="commonJump('dimission')" title="离职会签表">
@@ -295,40 +291,49 @@
                             </td>
 
                             <td class="template" valign="middle">
-                                <a class="check_color" onclick="commonJump('rewardsPenalties')" title="奖罚意见表">
-                                    <em class="template-icon">&#xe695;</em>奖罚意见表
-                                </a>
-                            </td>
-
-                            <td class="template" valign="middle">
-                                <a class="check_color" onclick="commonJump('overtime')" title="加班审批表、统计表">
-                                    <em class="template-icon">&#xe695;</em>加班统计表
-                                </a>
-                            </td>
-
-                            <td class="template" valign="middle">
-                                <a class="check_color" onclick="commonJump('personalInfo')" title="个人信息登记表">
-                                    <em class="template-icon">&#xe695;</em>个人信息登记表
-                                </a>
-                            </td>
-
-                            <td class="template" valign="middle">
                                 <a class="check_color" onclick="commonJump('leave')" title="请假审批表">
                                     <em class="template-icon">&#xe695;</em>请假审批表
                                 </a>
                             </td>
 
                             <td class="template" valign="middle">
-                                <a class="check_color" onclick="commonJump('annualLeave')" title="年休假审批表">
-                                    <em class="template-icon">&#xe695;</em>年休假审批表
+                                <a class="check_color" onclick="commonJump('document')" title="发送公文">
+                                    <em class="template-icon">&#xe695;</em>发送公文
                                 </a>
                             </td>
 
-                            <td class="template" valign="middle">
-                                <a class="check_color" onclick="commonJump('overtimeRest')" title="加班（倒休）审批表">
-                                    <em class="template-icon">&#xe695;</em>加班（倒休）审批表
-                                </a>
-                            </td>
+
+                            <%--未完成--%>
+                            <%--<td class="template" valign="middle">--%>
+                            <%--<a class="check_color" onclick="commonJump('rewardsPenalties')" title="奖罚意见表">--%>
+                            <%--<em class="template-icon">&#xe695;</em>奖罚意见表--%>
+                            <%--</a>--%>
+                            <%--</td>--%>
+
+                            <%--<td class="template" valign="middle">--%>
+                            <%--<a class="check_color" onclick="commonJump('overtime')" title="加班审批表、统计表">--%>
+                            <%--<em class="template-icon">&#xe695;</em>加班统计表--%>
+                            <%--</a>--%>
+                            <%--</td>--%>
+
+                            <%--删除--%>
+                            <%--<td class="template" valign="middle">--%>
+                            <%--<a class="check_color" onclick="commonJump('personalInfo')" title="个人信息登记表">--%>
+                            <%--<em class="template-icon">&#xe695;</em>个人信息登记表--%>
+                            <%--</a>--%>
+                            <%--</td>--%>
+
+                            <%--<td class="template" valign="middle">--%>
+                            <%--<a class="check_color" onclick="commonJump('integrity')" title="廉政谈话审批表">--%>
+                            <%--<em class="template-icon">&#xe695;</em>廉政谈话审批表--%>
+                            <%--</a>--%>
+                            <%--</td>--%>
+
+                            <%--<td class="template" valign="middle">--%>
+                            <%--<a class="check_color" onclick="commonJump('transferTwo')" title="转岗审批表2">--%>
+                            <%--<em class="template-icon">&#xe695;</em>转岗审批表2--%>
+                            <%--</a>--%>
+                            <%--</td>--%>
                         </tr>
                         </tbody>
                     </table>

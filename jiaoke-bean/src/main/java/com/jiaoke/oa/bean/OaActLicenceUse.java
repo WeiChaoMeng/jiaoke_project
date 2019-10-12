@@ -51,6 +51,26 @@ public class OaActLicenceUse {
     private String user;
 
     /**
+     * 部门负责人
+     */
+    private String principal;
+
+    /**
+     * 证照主管领导
+     */
+    private String licenceManage;
+
+    /**
+     * 经办人
+     */
+    private String licenceOperator;
+
+    /**
+     * 附件
+     */
+    private String annex;
+
+    /**
      * 创建日期
      */
     private Date createTime;
@@ -61,6 +81,8 @@ public class OaActLicenceUse {
      * 发起人
      */
     private Integer promoter;
+    @Transient
+    private String promoterStr;
 
     /**
      * 查询路径
@@ -153,5 +175,45 @@ public class OaActLicenceUse {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(String principal) {
+        this.principal = principal;
+    }
+
+    public String getLicenceManage() {
+        return licenceManage;
+    }
+
+    public void setLicenceManage(String licenceManage) {
+        this.licenceManage = licenceManage;
+    }
+
+    public String getLicenceOperator() {
+        return licenceOperator;
+    }
+
+    public void setLicenceOperator(String licenceOperator) {
+        this.licenceOperator = licenceOperator;
+    }
+
+    public String getAnnex() {
+        return annex;
+    }
+
+    public void setAnnex(String annex) {
+        this.annex = annex;
+    }
+
+    public String getPromoterStr() {
+        return promoterStr;
+    }
+
+    public void setPromoterStr(String promoterStr) {
+        this.promoterStr = promoterStr;
     }
 }

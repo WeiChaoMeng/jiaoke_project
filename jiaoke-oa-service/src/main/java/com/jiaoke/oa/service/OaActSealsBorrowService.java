@@ -45,4 +45,6 @@ public interface OaActSealsBorrowService {
      * @return OaActMeals
      */
     OaActSealsBorrow selectByPrimaryKey(String id);
+
+    int updateByPrimaryKeySelective(OaActSealsBorrow oaActSealsBorrow);
 }

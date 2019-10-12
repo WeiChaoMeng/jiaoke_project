@@ -1,5 +1,6 @@
 package com.jiaoke.controller.oa.activit;
 
+import com.alibaba.fastjson.JSON;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
@@ -100,6 +101,7 @@ public class OaActCarController {
         }
     }
 
+
     /**
      * 审批单处理页面
      *
@@ -118,6 +120,16 @@ public class OaActCarController {
         model.addAttribute("commentsListLength", commentsList.size());
         model.addAttribute("nickname", getCurrentUser().getNickname());
         return "oa/act/act_car_handle";
+    }
+
+    @RequestMapping(value = "/approval.api")
+    @ResponseBody
+    public String approvalApi(String id, String taskId) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActCar oaActCar = oaActCarService.selectByPrimaryKey(id);
+        map.put("car",oaActCar);
+        map.put("taskId",taskId);
+        return JSON.toJSONString(map);
     }
 
     /**

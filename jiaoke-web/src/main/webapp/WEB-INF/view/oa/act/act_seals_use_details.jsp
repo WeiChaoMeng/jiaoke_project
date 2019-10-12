@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html;charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
@@ -13,40 +14,60 @@
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
 </head>
 
-<body>
+<body style="width: 70%" id="body">
 <div class="table-title">
     <span>${oaActSealsUse.title}</span>
 </div>
-<div class="top_toolbar">
-    <div class="top_toolbar_inside" style="height: 40px;border-bottom: none;">
-        <div style="line-height: 40px;margin: 0 10px;float: left;">
-            <span style="float: left;margin-left: 10px;font-size: 13px;">申请时间：${oaActSealsUse.createTimeStr}</span>
+
+<div class="top_toolbar" id="tool">
+    <div class="top-toolbar-details">
+        <div class="top-info-bar-user">
+            <span>${oaActSealsUse.promoterStr}</span>
         </div>
 
-        <div class="head_left_button" style="float: right;line-height: 40px;">
-            <button type="button" class="cursor_hand" onclick="addUser()" style="font-size: 13px;">&#xea0e; 打印</button>
+        <div class="top-info-bar-time">
+            <span>${oaActSealsUse.createTimeStr}</span>
+        </div>
+
+        <div class="printing-but-style">
+            <button type="button" class="cursor_hand" onclick="printContent()">&#xea0e; 打印</button>
         </div>
     </div>
+
+    <c:choose>
+        <c:when test="${oaActSealsUse.annex != ''}">
+            <div class="top_toolbar" id="annexList">
+                <div class="top-annexes-details" style="border: solid 1px #eaeaea;">
+
+                    <div class="annexes-icon-details">
+                        <button type="button" class="cursor_hand">&#xeac1;</button>
+                    </div>
+
+                    <c:forTokens items="${oaActSealsUse.annex}" delims="," var="annex">
+                        <div class="table-file">
+                            <div class="table-file-content">
+                                <span title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <a class="table-file-download icon"
+                                   href="/fileDownloadHandle/download?fileName=${annex}"
+                                   title="下载">&#xebda;</a>
+                            </div>
+                        </div>
+                    </c:forTokens>
+                </div>
+            </div>
+        </c:when>
+    </c:choose>
 </div>
-<!-- -->
+
+<div>
+    <span style="float: right;width: 110px;margin-bottom: 5px;line-height: 30px;">${oaActSealsUse.number}</span>
+    <span class="" style="float: right;line-height: 30px;">编号：</span>
+</div>
+
 <table class="formTable" style="margin: 0">
     <tbody>
     <tr>
-        <td class="tdLabel">编号：</td>
-        <td class="table-td-content">
-            ${oaActSealsUse.number}
-        </td>
-    </tr>
-
-    <tr>
-        <td class="tdLabel">申请人：</td>
-        <td class="table-td-content">
-            ${oaActSealsUse.applicant}
-        </td>
-    </tr>
-
-    <tr>
-        <td class="tdLabel">印章种类：</td>
+        <td class="tdLabel">印章种类</td>
         <td class="table-td-content">
             <c:choose>
                 <c:when test="${oaActSealsUse.seal == 0}">路驰公章</c:when>
@@ -59,49 +80,60 @@
                 <c:when test="${oaActSealsUse.seal == 7}">大兴合同章</c:when>
             </c:choose>
         </td>
+
+        <td class="tdLabel">申请人</td>
+        <td class="table-td-content">
+            ${oaActSealsUse.applicant}
+        </td>
     </tr>
 
     <tr>
-        <td class="tdLabel">申请文件名称：</td>
-        <td class="table-td-content">
+        <td class="tdLabel">申请文件名称</td>
+        <td class="table-td-content" colspan="3">
             ${oaActSealsUse.name}
+        </td>
+    </tr>
+
+    <tr>
+        <td class="tdLabel">部门负责人</td>
+        <td class="table-td-content" style="width: 340px">
+            ${oaActSealsUse.principal}
+        </td>
+
+        <td class="tdLabel">部门主管领导</td>
+        <td class="table-td-content" style="width: 340px">
+            ${oaActSealsUse.supervisor}
+        </td>
+    </tr>
+
+    <tr>
+        <td class="tdLabel" style="line-height: 0;padding: 16px 0;text-align: center;">印章管理部门主管领导
+            <span style="display: block;padding-top: 15px;">（涉及资金支出以外的文件）</span>
+        </td>
+        <td class="table-td-content">
+            ${oaActSealsUse.sealManage}
+        </td>
+
+        <td class="tdLabel">盖章人</td>
+        <td class="table-td-content">
+            ${oaActSealsUse.stamp}
         </td>
     </tr>
     </tbody>
 </table>
-
-<div class="receipt-container">
-    <div class="receipt-title">
-        <div class="receipt-script">回执意见（共条）</div>
-    </div>
-
-    <c:forEach items="${commentsList}" var="comments">
-        <div class="comment-container">
-            <div class="comment-style">
-                <span class="comment-name">${comments.userName}</span>
-                <span class="comment-message">${comments.message}</span>
-                <span class="comment-date">${comments.timeStr}</span>
-            </div>
-        </div>
-    </c:forEach>
-
-    <div class="receipt-style"></div>
-</div>
-
-<div class="form-but" style="margin-top: 20px;">
-    <button type="button" class="return-but" onclick="previousPage()">返回</button>
-</div>
-
 </body>
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
 <script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
-
-    //返回上一页
-    function previousPage() {
-        window.history.back();
+    //打印
+    function printContent() {
+        $('#tool,#return').hide();
+        $('#body').css('width', '100%');
+        //执行打印
+        window.print();
+        $('#tool,#return').show();
+        $('#body').css('width', '70%');
     }
-
 </script>
 </html>
 

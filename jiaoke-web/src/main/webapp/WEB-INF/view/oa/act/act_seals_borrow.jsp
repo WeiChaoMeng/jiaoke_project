@@ -16,7 +16,7 @@
     <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
 </head>
 
-<body style="width: 70%">
+<body style="width: 70%" id="body">
 <div class="table-title">
     <span>印章借用审批单</span>
 </div>
@@ -58,7 +58,7 @@
 
 <form id="oaActSealsBorrow">
 
-    <div class="form_area">
+    <div class="form_area" id="titleArea">
         <table>
             <tbody>
             <tr>
@@ -90,7 +90,7 @@
     <table class="formTable">
         <tbody>
         <tr>
-            <td class="tdLabel">印章种类：</td>
+            <td class="tdLabel">印章种类</td>
             <td class="table-td-content">
                 <select class="select" name="seal" style="width: 100%">
                     <option value="0">路驰公章</option>
@@ -104,50 +104,50 @@
                 </select>
             </td>
 
-            <td class="tdLabel">借用时间：</td>
+            <td class="tdLabel">借用时间</td>
             <td class="table-td-content">
                 <input type="text" class="formInput je-date" name="borrowTimeStr" onfocus="this.blur()">
             </td>
         </tr>
 
         <tr>
-            <td class="tdLabel">盖章文件内容：</td>
-            <td class="table-td-content">
+            <td class="tdLabel">盖章文件内容</td>
+            <td class="table-td-content" colspan="3">
                 <input type="text" class="formInput" name="content" autocomplete="off">
             </td>
         </tr>
 
         <tr>
-            <td class="tdLabel">借章人：</td>
+            <td class="tdLabel">借章人</td>
             <td class="table-td-content">
-                <input type="text" class="formInput" name="borrower" value="${nickname}" readonly="readonly">
+                <input type="text" class="formInput-readonly" name="borrower" value="${nickname}" readonly="readonly">
             </td>
 
-            <td class="tdLabel">部门负责人：</td>
-            <td class="table-td-content">
-                <input type="text" class="formInput-readonly" readonly="readonly">
-            </td>
-        </tr>
-
-        <tr>
-            <td class="tdLabel">印章主管领导：</td>
-            <td class="table-td-content">
-                <input type="text" class="formInput-readonly" readonly="readonly">
-            </td>
-
-            <td class="tdLabel">公司负责人：</td>
+            <td class="tdLabel">部门负责人</td>
             <td class="table-td-content">
                 <input type="text" class="formInput-readonly" readonly="readonly">
             </td>
         </tr>
 
         <tr>
-            <td class="tdLabel">经办人：</td>
+            <td class="tdLabel">印章主管领导</td>
             <td class="table-td-content">
                 <input type="text" class="formInput-readonly" readonly="readonly">
             </td>
 
-            <td class="tdLabel">归还时间：</td>
+            <td class="tdLabel">公司负责人</td>
+            <td class="table-td-content">
+                <input type="text" class="formInput-readonly" readonly="readonly">
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">经办人</td>
+            <td class="table-td-content">
+                <input type="text" class="formInput-readonly" readonly="readonly">
+            </td>
+
+            <td class="tdLabel">归还时间</td>
             <td class="table-td-content">
                 <input type="text" class="formInput-readonly" readonly="readonly">
             </td>
@@ -261,11 +261,6 @@
             annex += '</div>';
             $('#annexes').append(annex);
         }
-    }
-
-    //删除已上传附件
-    function whether(fileName) {
-        window.top.deleteUploaded(fileName);
     }
 
     //执行删除附件

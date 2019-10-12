@@ -5,6 +5,7 @@ import com.jiaoke.oa.bean.OaActSealsBorrow;
 import com.jiaoke.oa.bean.OaCollaboration;
 import com.jiaoke.oa.dao.OaActSealsBorrowMapper;
 import com.jiaoke.oa.dao.OaCollaborationMapper;
+import com.jiaoke.oa.dao.UserInfoMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -26,6 +27,9 @@ public class OaActSealsBorrowServiceImpl implements OaActSealsBorrowService {
     @Resource
     private OaCollaborationMapper oaCollaborationMapper;
 
+    @Resource
+    private UserInfoMapper userInfoMapper;
+
     @Override
     public int deleteData(String id) {
         return oaActSealsBorrowMapper.deleteByPrimaryKey(id);
@@ -38,7 +42,7 @@ public class OaActSealsBorrowServiceImpl implements OaActSealsBorrowService {
         oaActSealsBorrow.setId(randomId);
         oaActSealsBorrow.setPromoter(userId);
         oaActSealsBorrow.setUrl("sealsBorrow");
-        if (oaActSealsBorrowMapper.insertData(oaActSealsBorrow) < 0) {
+        if (oaActSealsBorrowMapper.insertSelective(oaActSealsBorrow) < 0) {
             return -1;
         } else {
             OaCollaboration oaCollaboration = new OaCollaboration();
@@ -71,6 +75,12 @@ public class OaActSealsBorrowServiceImpl implements OaActSealsBorrowService {
         OaActSealsBorrow oaActSealsBorrow = oaActSealsBorrowMapper.selectByPrimaryKey(id);
         oaActSealsBorrow.setBorrowTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActSealsBorrow.getBorrowTime()));
         oaActSealsBorrow.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActSealsBorrow.getCreateTime()));
+        oaActSealsBorrow.setPromoterStr(userInfoMapper.getNicknameById(oaActSealsBorrow.getPromoter()));
         return oaActSealsBorrow;
+    }
+
+    @Override
+    public int updateByPrimaryKeySelective(OaActSealsBorrow oaActSealsBorrow) {
+        return oaActSealsBorrowMapper.updateByPrimaryKeySelective(oaActSealsBorrow);
     }
 }

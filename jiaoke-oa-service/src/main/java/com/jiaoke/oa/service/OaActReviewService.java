@@ -38,6 +38,8 @@ public interface OaActReviewService {
      */
     int edit(OaActReview oaActReview);
 
+    int updateByPrimaryKeySelective(OaActReview oaActReview);
+
     /**
      * 查询
      *

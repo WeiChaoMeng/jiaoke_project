@@ -3,9 +3,11 @@ package com.jiaoke.controller.personnel;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jiake.utils.JsonHelper;
+import com.jiaoke.oa.bean.Department;
+import com.jiaoke.oa.bean.PersonnelInfo;
 import com.jiaoke.oa.bean.UserContract;
-import com.jiaoke.oa.bean.UserFiles;
 import com.jiaoke.oa.bean.UserInfo;
+import com.jiaoke.oa.service.DepartmentService;
 import com.jiaoke.oa.service.PersonnelManageService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +30,9 @@ public class PersonnelManageController {
 
     @Resource
     private PersonnelManageService personnelManageService;
+
+    @Resource
+    private DepartmentService departmentService;
 
     /**
      * 跳转人事管理首页
@@ -68,8 +73,25 @@ public class PersonnelManageController {
      * @return jsp
      */
     @RequestMapping(value = "/toAddPersonnel")
-    public String toAddPersonnel(){
+    public String toAddPersonnel(Model model) {
+        List<Department> departmentList = departmentService.selectAll();
+        model.addAttribute("departmentList", departmentList);
         return "personnel/add";
+    }
+
+    /**
+     * 添加员工信息
+     *
+     * @return jsp
+     */
+    @RequestMapping(value = "/add")
+    @ResponseBody
+    public String addPersonnelInfo(PersonnelInfo personnelInfo) {
+        if (personnelManageService.addPersonnelInfo(personnelInfo) < 0) {
+            return "error";
+        } else {
+            return "success";
+        }
     }
 
     /**
@@ -98,32 +120,6 @@ public class PersonnelManageController {
     public String userDetails(Integer userInfoId) {
         UserInfo userInfo = personnelManageService.getUserInfoByUseId(userInfoId);
         return JsonHelper.toJSONString(userInfo);
-    }
-
-    /**
-     * 跳转员工档案
-     *
-     * @return jsp
-     */
-    @RequestMapping(value = "/toFile")
-    public String toFile(int page, Model model) {
-        model.addAttribute("currentPage", JsonHelper.toJSONString(page));
-        return "personnel/file";
-    }
-
-    /**
-     * 加载员工档案
-     *
-     * @param page page
-     * @return list
-     */
-    @RequestMapping(value = "/userFiles")
-    @ResponseBody
-    public String getUserFilesData(int page) {
-        PageHelper.startPage(page, 15);
-        List<UserFiles> userInfoList = personnelManageService.getUserFilesData();
-        PageInfo<UserFiles> pageInfo = new PageInfo<>(userInfoList);
-        return JsonHelper.toJSONString(pageInfo);
     }
 
     /**

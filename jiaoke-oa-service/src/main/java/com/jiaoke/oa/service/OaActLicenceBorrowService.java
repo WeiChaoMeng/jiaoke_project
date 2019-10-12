@@ -55,4 +55,6 @@ public interface OaActLicenceBorrowService {
      * @return OaActSealsUse
      */
     OaActLicenceBorrow selectByPrimaryKey(String id);
+
+    int updateByPrimaryKeySelective(OaActLicenceBorrow oaActLicenceBorrow);
 }
