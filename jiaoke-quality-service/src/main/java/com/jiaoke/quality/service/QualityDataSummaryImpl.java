@@ -241,4 +241,40 @@ public class QualityDataSummaryImpl implements QualityDataSummaryInf {
 
         return JSON.toJSONString(res);
     }
+
+    @Override
+    public String getAllCriticalWarningByDate(String startDate, String endDate) {
+        List<Map<String,String>> list = qualityDataSummaryDao.getAllCriticalWarningByDate(startDate,endDate);
+
+        String tem = "";
+        Set<String> crewIdSet = new HashSet<>();
+        //取出相同crew_id，以确定数据数量
+        for (int i = 0; i < list.size();i++){
+            crewIdSet.add(String.valueOf(list.get(i).get("crew_id")));
+        }
+        //填充返回值集合
+        List<Map<String,String>> res = new ArrayList<>();
+        for(String crewId:crewIdSet){
+            Map<String,String> map = new HashMap<>();
+            String materialName = "";
+            String warningLive = "";
+            String deviation = "";
+            for (Map<String,String> temMap : list){
+                if (String.valueOf(temMap.get("crew_id")).equals(crewId)){
+                    materialName = String.valueOf(temMap.get("material_name"));
+                    warningLive = String.valueOf(temMap.get("warning_level"));
+                    deviation = String.valueOf(temMap.get("deviation_ratio"));
+                    map.putAll(temMap);
+                }else {
+                    continue;
+                }
+                map.put(materialName,warningLive);
+                map.put(materialName + "deviation" ,deviation);
+            }
+            res.add(map);
+        }
+
+
+        return JSON.toJSONString(res);
+    }
 }

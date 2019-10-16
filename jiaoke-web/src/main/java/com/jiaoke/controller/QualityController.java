@@ -1721,6 +1721,12 @@ public class QualityController {
         String res = qualityDataSummaryInf.getAllCriticalWarning();
         return res;
     }
+    @ResponseBody
+    @RequestMapping(value = "/getAllCriticalWarningByDate.do",method = RequestMethod.POST)
+    public String getAllCriticalWarningByDate(@RequestParam("startDate") String startDate,@RequestParam("endDate") String endDate){
+        String res = qualityDataSummaryInf.getAllCriticalWarningByDate(startDate,endDate);
+        return res;
+    }
 
     @RequestMapping("/getCeiticalWarning.do")
     public String getCeiticalWarning(HttpServletRequest request,@RequestParam("proDate") String proDate,@RequestParam("produceDisc") String produceDisc,@RequestParam("crewNum") String crewNum){

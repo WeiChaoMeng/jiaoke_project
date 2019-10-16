@@ -232,7 +232,6 @@ window.addEventListener("resize", function () {
 });
 
 
-
 //遍历json，返回指定格式数据
 function returnJsonArray(jsonArray) {
     var array = new Array();
@@ -271,6 +270,18 @@ function returnJsonArray(jsonArray) {
                     break;
                 case '4.75':
                     temArray.push(2.016);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+                case '6.7':
+                    temArray.push(2.354);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+                case '7.0':
+                    temArray.push(2.400);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+                case '7.2':
+                    temArray.push(2.431);
                     temArray.push(parseFloat(jsonArray[i][key]));
                     break;
                 case '9.5':
@@ -329,53 +340,61 @@ function returnArrayToJson(json) {
         for (var key in json[i]){
             switch (key) {
                 case '0.075':
-                    array.push({xAxis:0.312,label: {normal: {formatter: key+""}}});
+                    array.push({xAxis:0.312,label: {normal: {formatter:'\n' +  key+""}}});
                     break;
                 case '0.15':
-                    array.push({xAxis:0.426,label: {normal: {formatter: key+""}}});
+                    array.push({xAxis:0.426,label: {normal: {formatter: key+"" }}});
                     break;
                 case '0.3':
-                    array.push({xAxis:0.582,label: {normal: {formatter: key+""}}});
+                    array.push({xAxis:0.582,label: {normal: {formatter:'\n\n' +  key+""}}});
                     break;
                 case '0.6':
                     array.push({xAxis:0.795,label: {normal: {formatter: key+""}}});
                     break;
                 case '1.18':
-                    array.push({xAxis:1.007,label: {normal: {formatter: key+""}}});
+                    array.push({xAxis:1.007,label: {normal: {formatter:'\n\n' +  key+""}}});
                     break;
                 case '2.36':
-                    array.push({xAxis:1.472,label: {normal: {formatter: key+""}}});
+                    array.push({xAxis:1.472,label: {normal: {formatter: key+"" }}});
                     break;
                 case '4.75':
-                    array.push({xAxis:2.016,label: {normal: {formatter: key+""}}});
+                    array.push({xAxis:2.016,label: {normal: {formatter:'\n\n' +  key+""}}});
+                    break;
+                case '6.7':
+                    array.push({xAxis:2.354,label: {normal: {formatter: key+""}}});
+                    break;
+                case '7.0':
+                    array.push({xAxis:2.400,label: {normal: {formatter:'\n\n' +  key+""}}});
+                    break;
+                case '7.2':
+                    array.push({xAxis:2.431,label: {normal: {formatter: key+""}}});
                     break;
                 case '9.5':
-                    array.push({xAxis:2.754,label: {normal: {formatter: key+""}}});
+                    array.push({xAxis:2.754,label: {normal: {formatter:'\n\n' +  key+""}}});
                     break;
                 case '13.2':
                     array.push({xAxis:3.193,label: {normal: {formatter: key+""}}});
                     break;
-
                 case '16':
-                    array.push({xAxis:3.482,label: {normal: {formatter: key+""}}});
+                    array.push({xAxis:3.482,label: {normal: {formatter:'\n\n' + key+""}}});
                     break;
                 case '19':
                     array.push({xAxis:3.762,label: {normal: {formatter: key+""}}});
                     break;
                 case '26.5':
-                    array.push({xAxis:4.370,label: {normal: {formatter: key+""}}});
+                    array.push({xAxis:4.370,label: {normal: {formatter: '\n\n' + key+"" }}});
                     break;
                 case '31.5':
                     array.push({xAxis:4.723,label: {normal: {formatter: key+""}}});
                     break;
                 case '37.5':
-                    array.push({xAxis:5.109,label: {normal: {formatter: key+""}}});
+                    array.push({xAxis:5.109,label: {normal: {formatter:'\n\n' + key}}});
                     break;
                 case '53':
                     array.push({xAxis:5.969,label: {normal: {formatter: key+""}}});
                     break;
                 case '63':
-                    array.push({xAxis:6.452,label: {normal: {formatter: key+""}}});
+                    array.push({xAxis:6.452,label: {normal: {formatter:'\n\n' + key}}});
                     break;
             }
 
@@ -384,6 +403,7 @@ function returnArrayToJson(json) {
 
     return array;
 }
+
 
 //排序
 function sortNumber(a, b)

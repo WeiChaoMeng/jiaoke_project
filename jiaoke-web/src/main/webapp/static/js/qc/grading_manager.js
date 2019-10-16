@@ -43,7 +43,8 @@ function getDateByPageNum(currentNum){
     for (var i = arrayStart; i < arrayEnd; i++ ){
         var htmlStr = "<tr>"
             + "<td class='tdnum'><input name='spCodeId' type='checkbox' value='" + jsonList[i].id   +"'></td>"
-            + "<td>" + jsonList[i].id  + "</td>"
+            + "<td>" + jsonList[i].crew1Id  + "</td>"
+            + "<td>" + jsonList[i].crew2Id  + "</td>"
             + "<td>" + jsonList[i].grading_name + "</td>"
             + "<td>" + jsonList[i].create_time  + "</td>"
             + "<td>" + jsonList[i].grading_remaker  + "</td>"

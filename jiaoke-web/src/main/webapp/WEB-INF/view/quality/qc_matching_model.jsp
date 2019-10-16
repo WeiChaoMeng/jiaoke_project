@@ -21,7 +21,7 @@
 
 
     <ul class="toolbar">
-        <li><a href="#" id="from_click" ><i class="toolico iconfont">&#xe7e9;</i>新建通知</a></li>
+        <li><a href="#" id="from_click" ><i class="toolico iconfont">&#xe7e9;</i>新建配比</a></li>
         <li><a href="#" id="btn_click"><i class="toolico iconfont">&#xe7ea;</i>删除</a></li>
 
     </ul>
@@ -33,7 +33,8 @@
 
             <thead>
                 <th class="num"></th>
-                <th>模板编号</th>
+                <th>一号机组编号</th>
+                <th>二号机组编号</th>
                 <th>模板名称</th>
                 <th>上传时间</th>
                 <th>备注信息</th>
@@ -46,7 +47,8 @@
             <c:forEach items="${pageBean.pageData}" var="item">
                 <tr>
                     <td class="tdnum"><input name="spCodeId" type="checkbox" value="${item.messageId}" ></td>
-                    <td>${item.messageId}</td>
+                    <td>${item.crew1Id}</td>
+                    <td>${item.crew2Id}</td>
                     <td><a href="#">${item.modelName}</a></td>
                     <td>${item.createTime}</td>
                     <td>${item.remaker}</td>

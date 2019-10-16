@@ -32,7 +32,8 @@
 
             <thead>
                 <th class="num"></th>
-                <th>级配编号</th>
+                <th>一号机组编号</th>
+                <th>二号机组编号</th>
                 <th>级配名称</th>
                 <th>上传时间</th>
                 <th>备注</th>

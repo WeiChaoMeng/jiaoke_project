@@ -148,4 +148,15 @@ public interface QualityDataSummaryDao {
      * @date 2019/10/10 16:40
      */
     List<Map<String, String>> selectMobileWarningDataByDate(@Param("crew") String crew,@Param("startDate") String startDate);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期时间查询核心报警信息>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/10/16 13:19
+     */
+    List<Map<String, String>> getAllCriticalWarningByDate(@Param("startDate") String startDate,@Param("endDate") String endDate);
 }

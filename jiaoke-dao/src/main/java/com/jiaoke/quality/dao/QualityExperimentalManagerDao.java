@@ -734,4 +734,15 @@ public interface QualityExperimentalManagerDao {
      * @date 2019/10/12 10:42
      */
     List<Map<String, String>> selectMobileExperimentByDate(@Param("startDate") String startDate);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <获取每种材料的总数>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/10/16 9:59
+     */
+    Map<String, Object> selectOrderTicketCountByDateAndLogogramName(@Param("year") String year,@Param("logogramName") String logogramName);
 }
