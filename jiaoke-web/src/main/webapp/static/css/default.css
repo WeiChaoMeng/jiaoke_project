@@ -65,7 +65,7 @@ table {
 }
 
 .iconfont {
-    font-size: 12px;
+    font-size: 16px;
     font-family: "iconfont" !important;
     font-style: normal;
     -webkit-font-smoothing: antialiased;
@@ -103,8 +103,8 @@ table {
 
 .nav {
     float: left;
-    margin-top: 54px;
-    margin-left: 17px;
+    margin-top: 8px;
+    margin-left: 48px;
 }
 
 .nav li {
@@ -118,7 +118,7 @@ table {
     height: 26px;
     padding: 0 15px;
     line-height: 23px;
-    font-size: 13px;
+    font-size: 17px;
 }
 
 .nav li a:hover {
@@ -135,6 +135,7 @@ table {
 
 .topright {
     float: right;
+    margin-top: -44px;
 }
 
 .topright a {
@@ -152,6 +153,7 @@ table {
     height: 26px;
     line-height: 26px;
     padding: 0 3px;
+    font-size: 14px;
 }
 
 .skin {

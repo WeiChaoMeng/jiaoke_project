@@ -24,19 +24,12 @@
 </head>
 
 <body>
-<div class="login-title" style="width: 100%;height: 80px;">
-    <div class="login-title-content" style="height: 80px;width: 80%;margin: 0 auto">
-        <div>
-            <img src="/static/images/login-logo.jpg" alt="" style="height: 60px;padding: 10px 0">
-            <span style="height: 50px;font-size: 17px;line-height:  80px;position: absolute;margin-left: 20px">路驰公司企业综合管理平台</span>
-        </div>
-    </div>
-</div>
 <div class="bg-div">
     <div class="signin">
         <div class="dowebok">
             <div class="logo">
-                <span>账号登录</span>
+                <img src="/static/images/login-logo.jpg" alt="" style="width: 15%;float: left;padding: 10px 0px;margin-left: 25px;">
+                <span style="    height: 25px;width: 80%;font-size: 20px;display: block;padding-top: 6px;padding-left: 33px;">路驰公司企业综合管理平台</span>
             </div>
 
             <div class="login-form">
@@ -51,14 +44,16 @@
                 <div class="login_input_content">
                     <button type="submit" class="login-but" id="submit">登录</button>
                 </div>
+                <span style="text-align: center;color: rgba(0, 0, 0, 0.75);display: block;margin-top: 12px;" >欢迎登录路驰综合管理平台</span>
+            </div>
+        </div>
+        <div class="login-bottom">
+            <div class="login-bottom-copyright">
+                <span>Copyright © 2008-2019  北京市政路桥建材集团有限公司路驰分公司 版权所有</span>
             </div>
         </div>
     </div>
-    <div class="login-bottom">
-        <div class="login-bottom-copyright">
-            <span>Copyright © 2008-2019  北京市政路桥建材集团有限公司路驰分公司 版权所有</span>
-        </div>
-    </div>
+
 </div>
 
 </body>

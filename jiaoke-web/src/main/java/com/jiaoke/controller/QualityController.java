@@ -1706,7 +1706,7 @@ public class QualityController {
         String res = QualityExperimentalManagerForeignInf.updateSpecificationOrManufacturersById(id,make,updateName);
         return res;
     }
-    /********************************  设置相关 end *****************************************/
+    /********************************  设置相关 end *****getExperimentalProjectMessage************************************/
 
     /********************************  关键预警数据 Start *****************************************/
 

@@ -439,6 +439,7 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
     @Override
     public String getExperimentalItemMsgById(String id) {
         Map<String,String> map  = qualityExperimentalManagerDao.selectExperimentalItemMsgById(id);
+        map.put("nickname",getCurrentUser().getNickname());
         return JSON.toJSONString(map);
     }
 

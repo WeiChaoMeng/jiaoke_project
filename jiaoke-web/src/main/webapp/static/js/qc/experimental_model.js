@@ -274,7 +274,7 @@ function showBrzzez(msg) {
     }
 
     $("#firstTwoHead").remove();
-    $("#firstThead").empty().append(firstHead);
+    $("#firstHead").empty().append(firstHead);
     $("#firstTbody").empty().append(firstTbody);
     $("#secondDiv").remove();
 

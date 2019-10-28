@@ -64,7 +64,7 @@
                 <thead>
                     <th style="width: 70px">盘号</th>
                     <th style="width: 70px ">配比号</th>
-                    <th style="width: 70px">骨料1</th>
+                    <th style="width: 70px;color: #a94442;">骨料1</th>
                     <th style="width: 70px">骨料2</th>
                     <th style="width: 70px">骨料3</th>
                     <th style="width: 70px">骨料4</th>
@@ -72,7 +72,7 @@
                     <th style="width: 70px">骨料6</th>
                     <th style="width: 70px ">石粉2</th>
                     <th style="width: 70px ">石粉1</th>
-                    <th style="width: 70px ">沥青</th>
+                    <th style="width: 70px;color: #a94442; ">沥青</th>
                     <th style="width: 70px ">再生料</th>
                     <th style="width: 70px ">添加剂</th>
                     <th style="width: 100px">合计(kg)</th>
@@ -84,7 +84,7 @@
                     <tr>
                         <td>${product.proBase.produce_disc_num}</td>
                         <td>${product.proBase.produce_proportioning_num}</td>
-                        <td>${product.proBase.material_aggregate_1 - product.proBase.material_aggregate_2}<i>kg</i></td>
+                        <td style="color: #a94442;" >${product.proBase.material_aggregate_1 - product.proBase.material_aggregate_2}<i>kg</i></td>
                         <td>${product.proBase.material_aggregate_2 - product.proBase.material_aggregate_3}<i>kg</i></td>
                         <td>${product.proBase.material_aggregate_3 - product.proBase.material_aggregate_4}<i>kg</i></td>
                         <td>${product.proBase.material_aggregate_4 - product.proBase.material_aggregate_5}<i>kg</i></td>
@@ -92,7 +92,7 @@
                         <td>${product.proBase.material_aggregate_6}<i>kg</i></td>
                         <td>${product.proBase.material_stone_1}<i>kg</i></td>
                         <td>${product.proBase.material_stone_2}<i>kg</i></td>
-                        <td>${product.proBase.material_asphalt}<i>kg</i></td>
+                        <td style="color: #a94442;" >${product.proBase.material_asphalt}<i>kg</i></td>
                         <td>${product.proBase.material_regenerate}<i>kg</i></td>
                         <td>${product.proBase.material_additive}<i>kg</i></td>
                         <td>${product.proBase.material_total}<i>kg</i></td>
@@ -100,35 +100,35 @@
                 
                 </tbody>
                 <thead>
-                    <th style="width: 100px ">1仓温度</th>
+                    <th style="width: 100px;color: #a94442; ">1仓温度</th>
                     <th style="width: 100px ">混合料温度</th>
                     <th style="width: 100px ">除尘器入口温度</th>
                     <th style="width: 100px ">沥青温度</th>
                     <th style="width: 100px ">再生料温度</th>
-                    <th style="width: 100px ">骨料1比例</th>
+                    <th style="width: 100px;color: #a94442; ">骨料1比例</th>
                     <th style="width: 100px ">骨料2比例</th>
                     <th style="width: 100px ">骨料3比例</th>
                     <th style="width: 100px ">骨料4比例</th>
                     <th style="width: 100px ">骨料5比例</th>
                     <th style="width: 100px ">骨料6比例</th>
                     <th style="width: 100px ">矿料1比例</th>
-                    <th style="width: 100px ">沥青占比</th>
+                    <th style="width: 100px;color: #a94442;  ">沥青占比</th>
                     <th style="width: 100px ">再生料占比</th>
                 </thead>
                 <tbody>
-                    <td>${product.proBase.temperature_warehouse_1}<i>℃</i></td>
+                    <td style="color: #a94442;" >${product.proBase.temperature_warehouse_1}<i>℃</i></td>
                     <td>${product.proBase.temperature_mixture}<i>℃</i></td>
                     <td>${product.proBase.temperature_duster}<i>℃</i></td>
                     <td>${product.proBase.temperature_asphalt}<i>℃</i></td>
                     <td>${product.proBase.temperature_aggregate}<i>℃</i></td>
-                    <td id="one">0</td>
+                    <td style="color: #a94442;" id="one">0</td>
                     <td id="two" >0</td>
                     <td id="three" >0</td>
                     <td id="four" >0</td>
                     <td id="five" >0</td>
                     <td id="six" >0</td>
                     <td id="k" >0</td>
-                    <td id="l" >0</td>
+                    <td style="color: #a94442;"  id="l" >0</td>
                     <td id="z" >0</td>
                     <c:forEach items="${product.proMessage}" var="item">
                         <script type="text/javascript">

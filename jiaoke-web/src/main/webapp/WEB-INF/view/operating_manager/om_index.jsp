@@ -91,6 +91,23 @@
                 </div>
             </div>
         </div>
+        <a href="javascript:;"  class="layui-col-sm6 layui-col-md3"><div onclick="gotoERP();">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    登陆生产ERP系统
+                    <span class="layui-badge layui-bg-orange layuiadmin-badge">ERP</span>
+                </div>
+                <div class="layui-card-body layuiadmin-card-list">
+
+                    <p class="layuiadmin-big-font" >ERP</p>
+                    <p>
+                        ERP快捷入口
+                        <span class="layuiadmin-span-color" ><i
+                                class="layui-inline layui-icon layui-icon-user"></i></span>
+                    </p>
+                </div>
+            </div>
+        </div></a>
         <div class="layui-col-sm12">
             <div class="layui-card">
                 <div class="layui-card-header" id="thisMonth">
