@@ -129,19 +129,16 @@ function getLastMonthData() {
             if (res){
                 debugger
                 var dataArray = [];
-                for (var i = 1 ; i < 32;i ++){
-                    if (res[i - 1]){
-                        if (res[i - 1].proDate === i || res[i - 1].proDate === ('0'+ i)  ){
-                            dataArray.push(Math.floor(res[i - 1].total));
-                        } else {
-                            dataArray.push(0);
-                        }
+                for(var i in res){
+                    var temDate = res[i].proDate;
+                    if (temDate.split("")[0] === '0'){
+                        var temStr = temDate.split("")[1];
+                        dataArray.push([temStr,res[i].total]);
                     }else {
-                        dataArray.push(0);
+                        dataArray.push([temDate,res[i].total]);
                     }
 
                 }
-
                 option.series[0].data = dataArray;
                 myChart1.setOption(option);
                 window.addEventListener("resize", function () {
@@ -290,7 +287,9 @@ function sendFromData() {
     }
 
 }
-
+function gotoERP() {
+    window.location.href="http://119.90.97.107:9002/  ";
+}
 
 function getMonthNumToPage() {
     var now = new Date();

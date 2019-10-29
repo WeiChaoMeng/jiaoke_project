@@ -177,41 +177,8 @@
                  INNER JOIN quality_warning_promessage_crew AS QWPC ON QCW.warning_crew_id = QWPC.id
                  INNER JOIN quality_warning_data AS QWD ON QWPC.id = QWD.crew_id
         WHERE
-#                 produce_date >= DATE_SUB(NOW(),INTERVAL 1 DAY)
-                produce_date = '2019-08-17'
+                produce_date >= DATE_SUB(NOW(),INTERVAL 1 DAY)
 
-#         SELECT
-#                DATE_FORMAT(QWPC.produce_date,'%Y-%m-%d') AS produce_date,
-#                DATE_FORMAT(QWPC.produce_time,'%H:%i:%s') AS produce_time,
-#                QWPC.produce_ratio_id,
-#                QWPC.produce_car_num,
-#                QWPC.produce_disc_num,
-#                QWPC.produce_crewNum,
-#                QWD.*,
-#                (SELECT QPM1.pro_name FROM quality_warning_promessage_crew AS QWPC1 INNER JOIN quality_proportioning_message AS QPM1 ON QWPC1.produce_ratio_id = QPM1.crew1_modele_id WHERE QWPC1.produce_ratio_id = QWPC.produce_ratio_id LIMIT 1 ) AS crew1RatioName,
-#                (SELECT QPM1.pro_name FROM quality_warning_promessage_crew AS QWPC1 INNER JOIN quality_proportioning_message AS QPM1 ON QWPC1.produce_ratio_id = QPM1.crew2_modele_id WHERE QWPC1.produce_ratio_id = QWPC.produce_ratio_id LIMIT 1 ) AS crew2RatioName
-#         FROM
-#              `quality_critical_warning` AS QCW
-#                  INNER JOIN quality_warning_promessage_crew AS QWPC ON QCW.warning_crew_id = QWPC.id
-#                  INNER JOIN quality_warning_data AS QWD ON QWPC.id = QWD.crew_id
-
-
-
-#         SELECT
-#                DATE_FORMAT(QWPC.produce_date,'%Y-%m-%d') AS produce_date,
-#                DATE_FORMAT(QWPC.produce_time,'%H:%i:%s') AS produce_time,
-#                QWPC.produce_ratio_id,
-#                QWPC.produce_car_num,
-#                QWPC.produce_disc_num,
-#                QWPC.produce_crewNum,
-#                MAX(QWD.warning_level) AS warningLevel,
-#                (SELECT QPM1.pro_name FROM quality_warning_promessage_crew AS QWPC1 INNER JOIN quality_proportioning_message AS QPM1 ON QWPC1.produce_ratio_id = QPM1.crew1_modele_id WHERE QWPC1.produce_ratio_id = QWPC.produce_ratio_id LIMIT 1 ) AS crew1RatioName,
-#                (SELECT QPM1.pro_name FROM quality_warning_promessage_crew AS QWPC1 INNER JOIN quality_proportioning_message AS QPM1 ON QWPC1.produce_ratio_id = QPM1.crew2_modele_id WHERE QWPC1.produce_ratio_id = QWPC.produce_ratio_id LIMIT 1 ) AS crew2RatioName
-#         FROM
-#              `quality_critical_warning` AS QCW
-#                  INNER JOIN quality_warning_promessage_crew AS QWPC ON QCW.warning_crew_id = QWPC.id
-#                  INNER JOIN quality_warning_data AS QWD ON QWPC.id = QWD.crew_id
-#         GROUP BY QWD.crew_id
     </select>
     <select id="selectProductMessageById" resultType="java.util.Map">
         SELECT
@@ -605,5 +572,24 @@
 #                 produce_date >= DATE_SUB(NOW(),INTERVAL 1 DAY)
                 QWPC.produce_date = #{startDate}
           AND QWPC.produce_crewNum = #{crew}
+    </select>
+    <select id="getAllCriticalWarningByDate" resultType="java.util.Map">
+        SELECT
+               DATE_FORMAT(QWPC.produce_date,'%Y-%m-%d') AS produce_date,
+               DATE_FORMAT(QWPC.produce_time,'%H:%i:%s') AS produce_time,
+               QWPC.produce_ratio_id,
+               QWPC.produce_car_num,
+               QWPC.produce_disc_num,
+               QWPC.produce_crewNum,
+               QWD.*,
+               (SELECT QPM1.pro_name FROM quality_warning_promessage_crew AS QWPC1 INNER JOIN quality_proportioning_message AS QPM1 ON QWPC1.produce_ratio_id = QPM1.crew1_modele_id WHERE QWPC1.produce_ratio_id = QWPC.produce_ratio_id  LIMIT 1 ) AS crew1RatioName,
+               (SELECT QPM1.pro_name FROM quality_warning_promessage_crew AS QWPC1 INNER JOIN quality_proportioning_message AS QPM1 ON QWPC1.produce_ratio_id = QPM1.crew2_modele_id WHERE QWPC1.produce_ratio_id = QWPC.produce_ratio_id  LIMIT 1 ) AS crew2RatioName
+        FROM
+             `quality_critical_warning` AS QCW
+                 INNER JOIN quality_warning_promessage_crew AS QWPC ON QCW.warning_crew_id = QWPC.id
+                 INNER JOIN quality_warning_data AS QWD ON QWPC.id = QWD.crew_id
+        WHERE
+                QWPC.produce_date between #{startDate} and #{endDate}
+        order by QWPC.produce_date
     </select>
 </mapper>

@@ -100,6 +100,15 @@
                         tooltip: {
                             trigger: 'item'
                         },
+                        toolbox: {
+                            feature: {
+                                dataZoom: {
+                                    yAxisIndex: 'none'
+                                },
+                                restore: {},
+                                saveAsImage: {}
+                            }
+                        },
                         xAxis: {
                             type: 'value',
                             name: '筛孔',
@@ -295,6 +304,15 @@
                         },
                         tooltip: {
                             trigger: 'item'
+                        },
+                        toolbox: {
+                            feature: {
+                                dataZoom: {
+                                    yAxisIndex: 'none'
+                                },
+                                restore: {},
+                                saveAsImage: {}
+                            }
                         },
                         xAxis: {
                             type: 'value',

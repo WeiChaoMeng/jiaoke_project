@@ -112,4 +112,15 @@ public interface QualityDataSummaryInf {
      * @date 2019/10/10 16:29
      */
     String getWarningDataByDate(String crew, String startDate);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期查询预警信息>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/10/16 13:16
+     */
+    String getAllCriticalWarningByDate(String startDate, String endDate);
 }

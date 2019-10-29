@@ -3,13 +3,17 @@
 <mapper namespace="com.jiaoke.quality.dao.QualityGradingManagerDao">
     <select id="selectGradingModelList" resultType="java.util.Map">
         SELECT
-               id,
-               grading_name,
-               DATE_FORMAT(create_time,'%Y-%m-%d') AS create_time,
-               grading_remaker,
-               up_user
+               QPGM.id,
+               QPG.crew1_id AS crew1Id,
+               QPG.crew2_id AS crew2Id,
+               QPGM.grading_name,
+               DATE_FORMAT(QPGM.create_time, '%Y-%m-%d') AS create_time,
+               QPGM.grading_remaker,
+               QPGM.up_user
         FROM
-             quality_proportioning_grading_model;
+             quality_proportioning_grading_model AS QPGM
+                 INNER JOIN quality_proportioning_grading AS QPG ON QPGM.id = QPG.model_id
+        GROUP BY QPGM.id
     </select>
 
     <delete id="delectGrading" >

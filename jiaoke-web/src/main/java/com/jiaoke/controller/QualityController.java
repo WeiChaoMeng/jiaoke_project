@@ -1749,7 +1749,7 @@ public class QualityController {
         String res = QualityExperimentalManagerForeignInf.updateSpecificationOrManufacturersById(id,make,updateName);
         return res;
     }
-    /********************************  设置相关 end *****************************************/
+    /********************************  设置相关 end *****getExperimentalProjectMessage************************************/
 
     /********************************  关键预警数据 Start *****************************************/
 
@@ -1762,6 +1762,12 @@ public class QualityController {
     @RequestMapping("/getAllCriticalWarning.do")
     public String getAllCriticalWarning(){
         String res = qualityDataSummaryInf.getAllCriticalWarning();
+        return res;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/getAllCriticalWarningByDate.do",method = RequestMethod.POST)
+    public String getAllCriticalWarningByDate(@RequestParam("startDate") String startDate,@RequestParam("endDate") String endDate){
+        String res = qualityDataSummaryInf.getAllCriticalWarningByDate(startDate,endDate);
         return res;
     }
 

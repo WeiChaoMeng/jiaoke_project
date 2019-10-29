@@ -63,6 +63,7 @@
 <div class="header">
     <div class="headtop">
         <span class="logo" id="logo"><img src="/static/images/logo/logo-2.png"></span>
+        <span style="    color: #f00;margin-left: 78px;font-size: 25px;float: left;margin-left: 63px;display: block;padding-top: 13px; width: 55%;">北京市政路桥建材集团有限公司路驰分公司企业管理综合平台</span>
         <ul class="nav">
             <li>
                 <a href="#" class="manu" id="index">首页</a>
@@ -101,7 +102,7 @@
                 <a href="#" class="manu" id="AQ">厂区安全</a>
             </li>
         </ul>
-
+        <div id="codeDiv" style="float: left;    width: 5%;height: 71px;margin-left: 28%;margin-top: -40px;"><a onclick="selectedCode()" href="javascript:;"><img id="code" style="width:auto;height:auto;max-width:100%; max-height:100%;" src="/static/images/logo/download.png"></a></div>
         <div class="topright">
             <div class="user">
                 <span>
@@ -149,6 +150,10 @@
 <div class="footer">
     <span class="fleft">信息管理系统v2.3.2019.6.24</span>
     <span class="fright">路驰版权所有<i class="infoicon iconfont">&#xe620;</i></span>
+</div>
+
+<div id="layerDemo" style="width: 200px;height: 200px;display: none;">
+    <img style="width:100%;height:100%;"  src="/static/images/logo/download.png" alt="移动端二维码">
 </div>
 
 <%--模态窗-添加用户--%>
@@ -591,6 +596,19 @@
         })
     });
 
+    //查看二维码
+    function selectedCode() {
+        layer.open({
+            type: 1,
+            title: false,
+            closeBtn: 0,
+            skin: 'layui-layer-nobg', //没有背景色
+            shade: [0.95, '#A8A0A1'],
+            shadeClose: true,
+            content: $('#layerDemo')
+        });
+    }
+    
     function editPsw() {
         window.lar = layer.open({
             title: '修改密码',

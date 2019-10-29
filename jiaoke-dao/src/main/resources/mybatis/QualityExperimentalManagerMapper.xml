@@ -82,7 +82,7 @@
         FROM
              quality_test_order_ticket
         WHERE
-                date_format(creat_time,'%Y-%m-%d')  = #{date}
+                date_format(creat_time,'%Y')  = #{date}
     </select>
 
     <insert id="insertOrderTicketBySampleMssage" useGeneratedKeys="true" parameterType="java.lang.String">
@@ -949,5 +949,18 @@
                  INNER JOIN quality_test_material_dictionary AS QTMD ON QTLR.materials_num = QTMD.Id
         WHERE QTLR.test_date = #{startDate}
         ORDER BY QTLR.experiment_status,QTLR.test_date DESC;
+    </select>
+    <select id="selectOrderTicketCountByDateAndLogogramName" resultType="java.util.Map">
+
+        SELECT
+               count(QTOT.Id) AS counts
+        FROM
+             quality_test_order_ticket AS QTOT
+                 INNER JOIN quality_test_samplingPage AS QTS ON QTOT.sampling_id = QTS.Id
+                 INNER JOIN quality_test_material_dictionary AS QTMD ON QTS.materials_num = QTMD.Id
+        WHERE
+                QTMD.logogram_name = #{logogramName}
+          AND
+                date_format(QTOT.creat_time, '%Y') = #{year};
     </select>
 </mapper>

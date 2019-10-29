@@ -5,118 +5,101 @@
 
 <head>
     <meta charset="utf-8">
-    <link href="/static/css/qc/emIndex.css" rel="stylesheet" media="all">
+    <link href="/static/css/qc/emIndex.css" rel="stylesheet" >
 </head>
 
 <body>
-<div id="theGrid" class="main">
-    <section class="grid">
+    <div style="height:130px;"></div>
+    <!-- 可删除 -->
+    <div class="Service-box">
         <shiro:hasPermission name="experimentItemInterior">
-        <a class="grid__item" href="javacript:void(0);" onclick="sample_management()">
-            <h2 class="title title--preview">取样管理</h2>
-            <div class="loader"></div>
-            <span class="category">取样通知相关</span>
-            <div class="meta meta--preview">
-
-                <span class="meta__date"><i class="fa fa-calendar-o"></i> </span>
-                <span class="meta__reading-time"><i class="fa fa-clock-o"></i></span>
-            </div>
-        </a>
-        <a class="grid__item" href="javacript:void(0);" onclick="experimental_management()">
-            <h2 class="title title--preview">实验管理</h2>
-            <div class="loader"></div>
-            <span class="category">实验相关流程</span>
-            <div class="meta meta--preview">
-
-                <span class="meta__date"><i class="fa fa-calendar-o"></i> </span>
-                <span class="meta__reading-time"><i class="fa fa-clock-o"></i></span>
-            </div>
-        </a>
-        <a class="grid__item" href="javacript:void(0);" onclick="unfinished_experimental()">
-            <h2 class="title title--preview">未完实验</h2>
-            <div class="loader"></div>
-            <span class="category">填写实验数据、输入计算表格</span>
-            <div class="meta meta--preview">
-
-                <span class="meta__date"><i class="fa fa-calendar-o"></i></span>
-                <span class="meta__reading-time"><i class="fa fa-clock-o"></i></span>
-            </div>
-        </a>
-        <a class="grid__item"  href="javacript:void(0);"onclick="standing_book()">
-            <h2 class="title title--preview">台账管理</h2>
-            <div class="loader"></div>
-            <span class="category">各类台账展示</span>
-            <div class="meta meta--preview">
-
-                <span class="meta__date"><i class="fa fa-calendar-o"></i></span>
-                <span class="meta__reading-time"><i class="fa fa-clock-o"></i></span>
-            </div>
-        </a>
-        <a class="grid__item" href="javacript:void(0);"onclick="experiment_setting()">
-            <h2 class="title title--preview">试验设置</h2>
-            <div class="loader"></div>
-            <span class="category">材料规格、生产厂家设置</span>
-            <div class="meta meta--preview">
-
-                <span class="meta__date"><i class="fa fa-calendar-o"></i> </span>
-                <span class="meta__reading-time"><i class="fa fa-clock-o"></i></span>
-            </div>
-        </a>
+        <div class="Service-content clearfix">
+            <a  href="javacript:void(0);"  class="Service-item">
+                <div class="item-image">
+                    <img src="/static/images/icon/icon-tag001.png" alt="">
+                </div>
+                <h3 class="item-title">取样管理</h3>
+                <div class="item-text">取样通知相关</div>
+                <span class="item-link" onclick="sample_management()">查看相关</span>
+            </a>
+            <a href="javacript:void(0);" class="Service-item">
+                <div class="item-image">
+                    <img src="/static/images/icon/icon-tag002.png" alt="">
+                </div>
+                <h3 class="item-title">试验管理</h3>
+                <div class="item-text">实验相关流程</div>
+                <span class="item-link" onclick="experimental_management()" >查看相关</span>
+            </a>
+            <a href="javacript:void(0);"  class="Service-item">
+                <div class="item-image">
+                    <img src="/static/images/icon/icon-tag003.png" alt="">
+                </div>
+                <h3 class="item-title">未完试验</h3>
+                <div class="item-text">填写实验数据、输入计算表格</div>
+                <span class="item-link" onclick="unfinished_experimental()">查看相关</span>
+            </a>
+            <a href="javacript:void(0);" class="Service-item">
+                <div class="item-image">
+                    <img src="/static/images/icon/icon-tag004.png" alt="">
+                </div>
+                <h3 class="item-title">台账管理</h3>
+                <div class="item-text">各类台账展示</div>
+                <span class="item-link" onclick="standing_book()">查看相关</span>
+            </a>
+            <a href="javacript:void(0);" class="Service-item">
+                <div class="item-image">
+                    <img src="/static/images/icon/icon-tag005.png" alt="">
+                </div>
+                <h3 class="item-title">试验设置</h3>
+                <div class="item-text">材料规格、生产厂家设置</div>
+                <span class="item-link" onclick="experiment_setting()">查看相关</span>
+            </a>
+        </div>
         </shiro:hasPermission>
 
-        <a class="grid__item" href="javacript:void(0);" onclick="sample_management_foreign()">
-            <h2 class="title title--preview">每日取样</h2>
-            <div class="loader"></div>
-            <span class="category">取样通知相关</span>
-            <div class="meta meta--preview">
-
-                <span class="meta__date"><i class="fa fa-calendar-o"></i> </span>
-                <span class="meta__reading-time"><i class="fa fa-clock-o"></i></span>
-            </div>
-        </a>
-        <a class="grid__item" href="javacript:void(0);" onclick="experimental_management_foreign()">
-            <h2 class="title title--preview">每日实验</h2>
-            <div class="loader"></div>
-            <span class="category">实验相关流程</span>
-            <div class="meta meta--preview">
-
-                <span class="meta__date"><i class="fa fa-calendar-o"></i> </span>
-                <span class="meta__reading-time"><i class="fa fa-clock-o"></i></span>
-            </div>
-        </a>
-        <a class="grid__item" href="javacript:void(0);" onclick="unfinished_experimental_foreign()">
-            <h2 class="title title--preview">实验填写</h2>
-            <div class="loader"></div>
-            <span class="category">填写实验数据、输入计算表格</span>
-            <div class="meta meta--preview">
-
-                <span class="meta__date"><i class="fa fa-calendar-o"></i></span>
-                <span class="meta__reading-time"><i class="fa fa-clock-o"></i></span>
-            </div>
-        </a>
-        <a class="grid__item"  href="javacript:void(0);"onclick="standing_book_foreign()">
-            <h2 class="title title--preview">实验台账</h2>
-            <div class="loader"></div>
-            <span class="category">各类台账展示</span>
-            <div class="meta meta--preview">
-
-                <span class="meta__date"><i class="fa fa-calendar-o"></i></span>
-                <span class="meta__reading-time"><i class="fa fa-clock-o"></i></span>
-            </div>
-        </a>
-        <a class="grid__item" href="javacript:void(0);"onclick="experiment_setting_foreign()">
-            <h2 class="title title--preview">相关试验</h2>
-            <div class="loader"></div>
-            <span class="category">材料规格、生产厂家设置</span>
-            <div class="meta meta--preview">
-
-                <span class="meta__date"><i class="fa fa-calendar-o"></i> </span>
-                <span class="meta__reading-time"><i class="fa fa-clock-o"></i></span>
-            </div>
-        </a>
-        </a>
-    </section>
-</div>
+        <div class="Service-content clearfix">
+            <a href="javacript:void(0);"  class="Service-item">
+                <div class="item-image">
+                    <img src="/static/images/icon/icon-tag001.png" alt="">
+                </div>
+                <h3 class="item-title">每日取样</h3>
+                <div class="item-text">取样通知相关</div>
+                <span class="item-link" onclick="sample_management_foreign()">取样相关</span>
+            </a>
+            <a href="javacript:void(0);" class="Service-item">
+                <div class="item-image">
+                    <img src="/static/images/icon/icon-tag002.png" alt="">
+                </div>
+                <h3 class="item-title">每日通知单</h3>
+                <div class="item-text">通知单相关流程</div>
+                <span class="item-link" onclick="experimental_management_foreign()">通知单相关</span>
+            </a>
+            <a href="javacript:void(0);"  class="Service-item">
+                <div class="item-image">
+                    <img src="/static/images/icon/icon-tag003.png" alt="">
+                </div>
+                <h3 class="item-title">试验填写</h3>
+                <div class="item-text">填写实验数据、输入计算表格</div>
+                <span class="item-link" onclick="unfinished_experimental_foreign()">填写试验</span>
+            </a>
+            <a  href="javacript:void(0);"class="Service-item">
+                <div class="item-image">
+                    <img src="/static/images/icon/icon-tag004.png" alt="">
+                </div>
+                <h3 class="item-title">试验台账</h3>
+                <div class="item-text">各类台账展示</div>
+                <span class="item-link" onclick="standing_book_foreign()" >查看台账</span>
+            </a>
+            <a href="javacript:void(0);" class="Service-item">
+                <div class="item-image">
+                    <img src="/static/images/icon/icon-tag005.png" alt="">
+                </div>
+                <h3 class="item-title">参数设置</h3>
+                <div class="item-text">材料规格、生产厂家设置</div>
+                <span class="item-link" onclick="experiment_setting_foreign()">设置参数</span>
+            </a>
+        </div>
+    </div>
 <%--js获取路径--%>
 <input id="path" type="hidden" value="${path}"/>
 </body>

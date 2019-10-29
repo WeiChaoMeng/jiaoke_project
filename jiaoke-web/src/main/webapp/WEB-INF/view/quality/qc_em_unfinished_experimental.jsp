@@ -11,7 +11,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>取样管理</title>
+    <title>未完实验</title>
     <link href="/static/css/default.css" rel="stylesheet" type="text/css">
     <link href="/static/css/qc/sample_management.css" rel="stylesheet" type="text/css">
     <link type="text/css" rel="stylesheet" href="/static/css/qc/zxf_page.css">

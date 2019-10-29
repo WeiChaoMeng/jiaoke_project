@@ -157,7 +157,7 @@
 
     <div class="boxleft">
         <div class="leftbox">
-            <div class="boxtitle"><span>最新产品</span></div>
+            <div class="boxtitle"><span>一号机组最近生产情况</span></div>
 
             <div class="boxdown">
                 <table class="simpletable">
@@ -174,15 +174,17 @@
 
                     <tbody>
                         <c:forEach items="${list}" var ="map" >
-                            <tr>
-                                <td>${map.produce_disc_num}</td>
-                                <td>${map.material_total}</td>
-                                <td>${map.produce_date}</td>
-                                <td>${map.produce_time}</td>
-                                <td>${map.produce_custom_num}</td>
-                                <td>${map.crew1}</td>
-                                <td><a href="#">查看</a></td>
-                            </tr>
+                            <c:if test="${map.crew1 eq '机组一'}">
+                                <tr>
+                                    <td>${map.produce_disc_num}</td>
+                                    <td>${map.material_total}</td>
+                                    <td>${map.produce_date}</td>
+                                    <td>${map.produce_time}</td>
+                                    <td>${map.produce_custom_num}</td>
+                                    <td>${map.crew1}</td>
+                                    <td><a href="${path}/getProductMessage.do?id=${map.Id}&crewNum=crew1" target="_self">查看</a></td>
+                                </tr>
+                            </c:if>
                         </c:forEach>
                     </tbody>
 
@@ -194,20 +196,39 @@
 
     <div class="boxright">
         <div class="rightbox">
-            <div class="boxtitle"><span>产品报表</span></div>
+            <div class="boxtitle"><span>二号机组最近生产情况</span></div>
 
-            <ul class="textlist">
-                <li><span></span><a href="#">一月沥青产品质量报表</a><i>11-10</i></li>
-                <li><span></span><a href="#">二月沥青产品质量报表</a><i>11-09</i></li>
-                <li><span></span><a href="#">三月沥青产品质量报表</a><i>11-08</i></li>
-                <li><span></span><a href="#">四月沥青产品质量报表</a><i>11-07</i></li>
-                <li><span></span><a href="#">五月沥青产品质量报表</a><i>11-06</i></li>
-                <li><span></span><a href="#">六月沥青产品质量报表</a><i>11-05</i></li>
-                <li><span></span><a href="#">七月沥青产品质量报表</a><i>11-04</i></li>
-                <li><span></span><a href="#">八月沥青产品质量报表</a><i>11-03</i></li>
-                <li><span></span><a href="#">九月沥青产品质量报表</a><i>11-02</i></li>
-            </ul>
+            <div class="boxdown">
+                <table class="simpletable">
 
+                    <thead>
+                    <th>产品盘号</th>
+                    <th>产品重量</th>
+                    <th>生产日期</th>
+                    <th>生产时间</th>
+                    <th>客户</th>
+                    <th>机组</th>
+                    <th>操作</th>
+                    </thead>
+
+                    <tbody>
+                    <c:forEach items="${list}" var ="map" >
+                        <c:if test="${map.crew1 eq '机组二'}" >
+                            <tr>
+                                <td>${map.produce_disc_num}</td>
+                                <td>${map.material_total}</td>
+                                <td>${map.produce_date}</td>
+                                <td>${map.produce_time}</td>
+                                <td>${map.produce_custom_num}</td>
+                                <td>${map.crew1}</td>
+                                <td><a href="${path}/getProductMessage.do?id=${map.Id}&crewNum=crew2" target="_self">查看</a></td>
+                            </tr>
+                        </c:if>
+                    </c:forEach>
+                    </tbody>
+
+                </table>
+            </div>
         </div>
     </div>
 </div>

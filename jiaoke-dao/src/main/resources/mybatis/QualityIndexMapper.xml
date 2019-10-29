@@ -20,6 +20,7 @@
     <select id="getLastProductData" resultType="java.util.HashMap">
         (
         SELECT
+               Id,
                produce_disc_num,
                material_total,
                DATE_FORMAT(produce_date,'%Y-%c-%d') as produce_date,
@@ -30,23 +31,23 @@
              quality_monitoring_realtime_data1
         ORDER BY
                  id DESC
-        LIMIT 4
+        LIMIT 8
         )
         UNION ALL
                 (
                 SELECT
+                       Id,
                        produce_disc_num,
                        material_total,
                        produce_date,
                        produce_time,
                        produce_custom_num,
-                       '机组二' AS crew1
+                       '机组二' AS crew2
                 FROM
                      quality_monitoring_realtime_data2
                 ORDER BY
                          id DESC
-                LIMIT 4
+                LIMIT 8
                 )
-
     </select>
 </mapper>

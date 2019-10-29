@@ -29,5 +29,7 @@ public class QualityRatioModel {
     private String createTime;
     private String remaker;
     private String createUser;
+    private String crew1Id;
+    private String crew2Id;
 
 }

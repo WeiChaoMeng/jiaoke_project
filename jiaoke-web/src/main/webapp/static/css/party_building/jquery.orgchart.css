@@ -153,10 +153,10 @@
 
 .orgchart .node .title {
   text-align: center;
-  font-size: 12px;
+  font-size: 17px;
   font-weight: bold;
-  height: 20px;
-  line-height: 20px;
+  height: 30px;
+  line-height: 33px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -208,9 +208,10 @@
 
 .orgchart .node .content {
   width: 100%;
-  height: 20px;
-  font-size: 11px;
-  line-height: 18px;
+  height: 30px;
+  font-size: 16px;
+  padding-left: 20px;
+  line-height: 33px;
   border: 1px solid rgba(217, 83, 79, 0.8);
   border-radius: 0 0 4px 4px;
   text-align: center;
@@ -426,10 +427,10 @@
 
 /*************自定义****************/
 .orgchart .motherC {
-  width: 195px;
+  width: 270px;
 }
 .orgchart .childC{
-  width: 195px;
+  width: 260px;
 }
 .orgchart .childC .name {
   background-color: #f15a00;
@@ -576,7 +577,8 @@
 .orgchart .leafC .title {
 
   text-align: center;
-  font-size: 12px;
+  font-size: 17px;
+  padding-top: 15px;
   font-weight: bold;
   height: 100%;
   line-height: 20px;

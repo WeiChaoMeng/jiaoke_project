@@ -460,6 +460,15 @@
             grid: {
 
             },
+            toolbox: {
+                feature: {
+                    dataZoom: {
+                        yAxisIndex: 'none'
+                    },
+                    restore: {},
+                    saveAsImage: {}
+                }
+            },
             tooltip: {
                 trigger: 'item'
             },
@@ -473,6 +482,7 @@
                 },
                 min:0,
                 max:7,
+
                 splitLine: {
                     show: false
                 },
@@ -595,6 +605,15 @@
             },
             grid: {
 
+            },
+            toolbox: {
+                feature: {
+                    dataZoom: {
+                        yAxisIndex: 'none'
+                    },
+                    restore: {},
+                    saveAsImage: {}
+                }
             },
             tooltip: {
                 trigger: 'item'

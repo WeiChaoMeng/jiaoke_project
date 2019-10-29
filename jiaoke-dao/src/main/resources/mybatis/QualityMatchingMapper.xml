@@ -2,8 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jiaoke.quality.dao.QualityMatchingDao">
     <select id="selectMatchingMoudelByLimte"  resultType="com.jiaoke.quality.bean.QualityRatioModel">
-        select  id,message_id as messageId,  model_name as modelName , create_time as createTime , remaker as remaker  ,create_user as createUser
-        from quality_proportioning_model
+
+        SELECT
+               QPM.id,
+               QPM.message_id AS messageId,
+               QPM.model_name AS modelName,
+               QPM.create_time AS createTime,
+               QPM.remaker AS remaker,
+               QPM.create_user AS createUser,
+               QPMS.crew1_modele_id AS crew1Id,
+               QPMS.crew2_modele_id AS crew2Id
+        FROM
+             quality_proportioning_model AS QPM
+                 INNER JOIN quality_proportioning_message AS QPMS ON QPM.message_id = QPMS.id
+        ORDER BY QPMS.crew1_modele_id
         limit #{startLineNum},#{endLineNum};
     </select>
     <!--start-->

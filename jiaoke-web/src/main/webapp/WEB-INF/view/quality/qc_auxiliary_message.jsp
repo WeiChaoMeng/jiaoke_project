@@ -320,56 +320,56 @@
                 <c:when test="${item.material_name == '骨料1'}">
                     upArray[0] = ${item.moudle_ratio + 2};
                 realArray[0] = ${item.actual_ratio};
-                downArray[0] = ${item.moudle_ratio - 2};
+                downArray[0] = ${item.moudle_ratio - 2 > 0 ? item.moudle_ratio - 2 : 0};
 
                 </c:when>
                 <c:when test="${item.material_name == '骨料2'}">
                 upArray[1] = ${item.moudle_ratio + 2};
                 realArray[1] = ${item.actual_ratio};
-                downArray[1] = ${item.moudle_ratio - 2};
+                downArray[1] = ${item.moudle_ratio - 2 > 0 ? item.moudle_ratio - 2 : 0};
 
                 </c:when>
                 <c:when test="${item.material_name == '骨料3'}">
                 upArray[2] = ${item.moudle_ratio + 4};
                 realArray[2] = ${item.actual_ratio};
-                downArray[2] = ${item.moudle_ratio - 4};
+                downArray[2] = ${item.moudle_ratio - 4 > 0 ? item.moudle_ratio - 4 : 0};
 
                 </c:when>
                 <c:when test="${item.material_name == '骨料4'}">
                 upArray[3] = ${item.moudle_ratio + 4};
                 realArray[3] = ${item.actual_ratio};
-                downArray[3] = ${item.moudle_ratio - 4};
+                downArray[3] = ${item.moudle_ratio - 4 > 0 ? item.moudle_ratio - 4 : 0};
 
                 </c:when>
                 <c:when test="${item.material_name == '骨料5'}">
                 upArray[4] = ${item.moudle_ratio + 4};
                 realArray[4] = ${item.actual_ratio};
-                downArray[4] = ${item.moudle_ratio - 4};
+                downArray[4] = ${item.moudle_ratio - 4 > 0 ? item.moudle_ratio - 4 : 0};
 
                 </c:when>
                 <c:when test="${item.material_name == '骨料6'}">
 
                 upArray[5] = ${item.moudle_ratio + 4};
                 realArray[5] = ${item.actual_ratio};
-                downArray[5] = ${item.moudle_ratio - 4};
+                downArray[5] = ${item.moudle_ratio - 4 > 0 ? item.moudle_ratio - 4 : 0};
 
                 </c:when>
                 <c:when test="${item.material_name == '矿粉'}">
                 upArray[6] = ${item.moudle_ratio +1};
                 realArray[6] = ${item.actual_ratio};
-                downArray[6] = ${item.moudle_ratio - 1};
+                downArray[6] = ${item.moudle_ratio - 1 > 0 ? item.moudle_ratio - 1 : 0};
 
                 </c:when>
                 <c:when test="${item.material_name == '沥青'}">
                 upArray[7] = ${item.moudle_ratio + 1};
                 realArray[7] = ${item.actual_ratio};
-                downArray[7] = ${item.moudle_ratio - 1};
+                downArray[7] = ${item.moudle_ratio - 1 > 0 ? item.moudle_ratio - 1 : 0};
 
                 </c:when>
                 <c:when test="${item.material_name == '再生料'}">
                 upArray[8] = ${item.moudle_ratio + 1};
                 realArray[8] = ${item.actual_ratio};
-                downArray[8] = ${item.moudle_ratio - 1};
+                downArray[8] = ${item.moudle_ratio - 1 > 0 ? item.moudle_ratio - 1 : 0};
                 </c:when>
                 </c:choose>
                 </c:forEach>
@@ -420,6 +420,15 @@
             },
             grid: {
 
+            },
+            toolbox: {
+                feature: {
+                    dataZoom: {
+                        yAxisIndex: 'none'
+                    },
+                    restore: {},
+                    saveAsImage: {}
+                }
             },
             tooltip: {
                 trigger: 'item'
@@ -630,7 +639,6 @@
 
 
 
-
 //遍历json，返回指定格式数据
     function returnJsonArray(jsonArray) {
         var array = new Array();
@@ -669,6 +677,18 @@
                         break;
                     case '4.75':
                         temArray.push(2.016);
+                        temArray.push(parseFloat(jsonArray[i][key]));
+                        break;
+                    case '6.7':
+                        temArray.push(2.354);
+                        temArray.push(parseFloat(jsonArray[i][key]));
+                        break;
+                    case '7.0':
+                        temArray.push(2.400);
+                        temArray.push(parseFloat(jsonArray[i][key]));
+                        break;
+                    case '7.2':
+                        temArray.push(2.431);
                         temArray.push(parseFloat(jsonArray[i][key]));
                         break;
                     case '9.5':
@@ -727,53 +747,61 @@
             for (var key in json[i]){
                 switch (key) {
                     case '0.075':
-                        array.push({xAxis:0.312,label: {normal: {formatter: key+""}}});
+                        array.push({xAxis:0.312,label: {normal: {formatter:'\n' +  key+""}}});
                         break;
                     case '0.15':
-                        array.push({xAxis:0.426,label: {normal: {formatter: key+""}}});
+                        array.push({xAxis:0.426,label: {normal: {formatter: key+"" }}});
                         break;
                     case '0.3':
-                        array.push({xAxis:0.582,label: {normal: {formatter: key+""}}});
+                        array.push({xAxis:0.582,label: {normal: {formatter:'\n\n' +  key+""}}});
                         break;
                     case '0.6':
                         array.push({xAxis:0.795,label: {normal: {formatter: key+""}}});
                         break;
                     case '1.18':
-                        array.push({xAxis:1.007,label: {normal: {formatter: key+""}}});
+                        array.push({xAxis:1.007,label: {normal: {formatter:'\n\n' +  key+""}}});
                         break;
                     case '2.36':
-                        array.push({xAxis:1.472,label: {normal: {formatter: key+""}}});
+                        array.push({xAxis:1.472,label: {normal: {formatter: key+"" }}});
                         break;
                     case '4.75':
-                        array.push({xAxis:2.016,label: {normal: {formatter: key+""}}});
+                        array.push({xAxis:2.016,label: {normal: {formatter:'\n\n' +  key+""}}});
+                        break;
+                    case '6.7':
+                        array.push({xAxis:2.354,label: {normal: {formatter: key+""}}});
+                        break;
+                    case '7.0':
+                        array.push({xAxis:2.400,label: {normal: {formatter:'\n\n' +  key+""}}});
+                        break;
+                    case '7.2':
+                        array.push({xAxis:2.431,label: {normal: {formatter: key+""}}});
                         break;
                     case '9.5':
-                        array.push({xAxis:2.754,label: {normal: {formatter: key+""}}});
+                        array.push({xAxis:2.754,label: {normal: {formatter:'\n\n' +  key+""}}});
                         break;
                     case '13.2':
                         array.push({xAxis:3.193,label: {normal: {formatter: key+""}}});
                         break;
-
                     case '16':
-                        array.push({xAxis:3.482,label: {normal: {formatter: key+""}}});
+                        array.push({xAxis:3.482,label: {normal: {formatter:'\n\n' + key+""}}});
                         break;
                     case '19':
                         array.push({xAxis:3.762,label: {normal: {formatter: key+""}}});
                         break;
                     case '26.5':
-                        array.push({xAxis:4.370,label: {normal: {formatter: key+""}}});
+                        array.push({xAxis:4.370,label: {normal: {formatter: '\n\n' + key+"" }}});
                         break;
                     case '31.5':
                         array.push({xAxis:4.723,label: {normal: {formatter: key+""}}});
                         break;
                     case '37.5':
-                        array.push({xAxis:5.109,label: {normal: {formatter: key+""}}});
+                        array.push({xAxis:5.109,label: {normal: {formatter:'\n\n' + key}}});
                         break;
                     case '53':
                         array.push({xAxis:5.969,label: {normal: {formatter: key+""}}});
                         break;
                     case '63':
-                        array.push({xAxis:6.452,label: {normal: {formatter: key+""}}});
+                        array.push({xAxis:6.452,label: {normal: {formatter:'\n\n' + key}}});
                         break;
                 }
 
@@ -782,6 +810,7 @@
 
         return array;
     }
+
 
     //排序
     function sortNumber(a, b)

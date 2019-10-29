@@ -172,10 +172,10 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String result = sdf.format(new Date());
 
-        //查询当日委托单数量
+        //查询本年委托单数量
         String[] dateArray = result.split(" ");
-
-        Map<String,Object>  countMap = qualityExperimentalManagerDao.selectOrderTicketCountByDate(dateArray[0]);
+        String year = dateArray[0].split("-")[0];
+        Map<String,Object>  countMap = qualityExperimentalManagerDao.selectOrderTicketCountByDate(year);
 
         int count = Integer.parseInt(countMap.get("counts").toString());
 
@@ -185,7 +185,11 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
         String orderTicketNum = date[0] + date[1] + date[2] + number;
 
         //生产试验编号
-        String test_num = map.get("logogram_name") + date[0] + number;
+        Map<String,Object>  logogramCount = qualityExperimentalManagerDao.selectOrderTicketCountByDateAndLogogramName(year,map.get("logogram_name"));
+        int testCount = Integer.parseInt(logogramCount.get("counts").toString());
+        String testNumber = testCount >= 9? "00" + String.valueOf(testCount + 1): "000" + String.valueOf(testCount + 1);
+
+        String test_num = map.get("logogram_name") + date[0] + testNumber;
 
         int res = qualityExperimentalManagerDao.insertOrderTicketBySampleMssage(orderTicketNum,String.valueOf(id),result,String.valueOf(map.get("manufacturers_num")),String.valueOf(map.get("specification_num")),String.valueOf(map.get("tunnage")),test_num);
 
@@ -435,6 +439,7 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
     @Override
     public String getExperimentalItemMsgById(String id) {
         Map<String,String> map  = qualityExperimentalManagerDao.selectExperimentalItemMsgById(id);
+        map.put("nickname",getCurrentUser().getNickname());
         return JSON.toJSONString(map);
     }
 
