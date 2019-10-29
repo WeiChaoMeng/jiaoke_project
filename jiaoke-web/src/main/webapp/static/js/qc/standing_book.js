@@ -58,6 +58,7 @@ function getRawMaterialStandingBook() {
         url: basePath + "/getSevenDayRawMaterialStandingBook.do ",
         dataType:'json',
         success:function (res) {
+            debugger
             $(".messageSpan").remove();
             var rawMaterialHtml = '';
            if (res.length === 0){

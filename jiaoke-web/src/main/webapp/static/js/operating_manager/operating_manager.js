@@ -288,7 +288,7 @@ function sendFromData() {
 
 }
 function gotoERP() {
-    window.location.href="http://119.90.97.107:9002/  ";
+    window.open("http://119.90.97.107:9002/",'_blank');
 }
 
 function getMonthNumToPage() {
