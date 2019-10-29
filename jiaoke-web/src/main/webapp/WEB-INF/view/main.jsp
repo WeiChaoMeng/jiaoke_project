@@ -102,7 +102,9 @@
                 <a href="#" class="manu" id="AQ">厂区安全</a>
             </li>
         </ul>
-        <div id="codeDiv" style="float: left;    width: 5%;height: 71px;margin-left: 28%;margin-top: -40px;"><a onclick="selectedCode()" href="javascript:;"><img id="code" style="width:auto;height:auto;max-width:100%; max-height:100%;" src="/static/images/logo/download.png"></a></div>
+        <div id="codeDiv" style="width: 75px;height: 75px;position: absolute;right: 115px;">
+            <a onclick="selectedCode()" href="javascript:;" style="height: 100%;width: 100%;position: absolute;">
+                <img id="code" style="width: 100%;height: 100%;" src="/static/images/logo/download.png"></a></div>
         <div class="topright">
             <div class="user">
                 <span>
@@ -153,7 +155,7 @@
 </div>
 
 <div id="layerDemo" style="width: 200px;height: 200px;display: none;">
-    <img style="width:100%;height:100%;"  src="/static/images/logo/download.png" alt="移动端二维码">
+    <img style="width:100%;height:100%;" src="/static/images/logo/download.png" alt="移动端二维码">
 </div>
 
 <%--模态窗-添加用户--%>
@@ -608,7 +610,7 @@
             content: $('#layerDemo')
         });
     }
-    
+
     function editPsw() {
         window.lar = layer.open({
             title: '修改密码',
