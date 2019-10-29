@@ -1,74 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jiaoke.oa.dao.UserContractMapper">
-    <select id="getUserContractData" resultType="com.jiaoke.oa.bean.UserContract">
-        SELECT
-            uc.id,
-            uc.user_id as userId,
-            ui.nickname AS name,
-            uc.type,
-            uc.entry_date as entryDate,
-            uc.sing_date as singDate,
-            uc.start_date as startDate,
-            uc.end_date as endDate,
-            uc.term,
-            wn.NAME AS nature
-        FROM
-            `user_contract` AS uc
-            LEFT JOIN user_info AS ui ON uc.user_id = ui.id
-            LEFT JOIN work_nature AS wn ON wn.id = ui.nature
-        WHERE uc.nature &lt; 5
+    <!--总数-->
+    <select id="getContractTotal" resultType="java.lang.Integer">
+        SELECT COUNT(id) FROM `user_contract`
     </select>
 
-    <select id="statisticsFormalUser" resultType="java.lang.Integer">
+    <!--合同台账列表-->
+    <select id="contractList" resultType="com.jiaoke.oa.bean.UserContract">
         SELECT
-        COUNT( * )
+            us.id,
+            pi.name as name,
+            pi.sex as sex,
+            pi.joined_date as joinedDate,
+            us.contract_term as contractTerm,
+            us.contract_sign as contractSign,
+            us.contract_stop as contractStop
         FROM
-        user_contract
-        WHERE
-        nature &lt; 3
+            `user_contract` AS us
+        LEFT JOIN `personnel_info` pi ON us.personnel_id = pi.id
     </select>
 
-    <select id="getUserNameByNature" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    <select id="getByPrimaryKey" parameterType="java.lang.Integer" resultType="com.jiaoke.oa.bean.UserContract">
         SELECT
-        COUNT( * )
+            us.id,
+            pi.name AS name,
+            pi.sex AS sex,
+            pi.joined_date AS joinedDate,
+            first_term as firstTerm,
+            first_sign as firstSign,
+            first_stop as firstStop,
+            renew_term as renewTerm,
+            renew_sign as renewSign,
+            renew_stop as renewStop,
+            last_term as lastTerm,
+            last_sign as lastSign,
+            last_stop as lastStop,
+            us.contract_term AS contractTerm,
+            us.contract_sign AS contractSign,
+            us.contract_stop AS contractStop
         FROM
-        user_contract
+            `user_contract` AS us
+        LEFT JOIN `personnel_info` pi ON us.personnel_id = pi.id
         WHERE
-        nature = #{id}
+	        us.id = #{id}
     </select>
 
-    <select id="getProbationUser" resultType="com.jiaoke.oa.bean.UserContract">
-        SELECT
-            ui.nickname as name,
-            dept.department_name AS dep,
-            ui.position as pos,
-            ui.job as job,
-            uc.entry_date as entryDate,
-            uc.positive_date as positiveDate
+    <delete id="deleteByRelevanceId" parameterType="java.lang.Integer">
+        DELETE
         FROM
-            `user_contract` AS uc
-            LEFT JOIN user_info AS ui ON uc.user_id = ui.id
-            LEFT JOIN department AS dept ON ui.department = dept.department_key
+            `user_contract`
         WHERE
-            uc.nature = 3
-    </select>
-
-    <select id="getDataListByNature" parameterType="java.util.Map" resultType="com.jiaoke.oa.bean.UserContract">
-        SELECT
-            ui.nickname as name,
-            dept.department_name AS dep,
-            ui.position as pos,
-            ui.job as job,
-            uc.entry_date as entryDate,
-            uc.soon_leave_date as soonLeaveDate,
-            uc.leave_date as leaveDate
-        FROM
-            `user_contract` AS uc
-            LEFT JOIN user_info AS ui ON uc.user_id = ui.id
-            LEFT JOIN department AS dept ON ui.department = dept.department_key
-        WHERE
-            uc.nature = #{natureId}
-        LIMIT #{number}
-    </select>
+            personnel_id = #{id}
+    </delete>
 </mapper>

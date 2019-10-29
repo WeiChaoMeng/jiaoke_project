@@ -2,6 +2,7 @@ package com.jiaoke.oa.bean;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * OA协同
@@ -89,6 +90,12 @@ public class OaCollaboration {
      * 上一审批人
      */
     private String previousApprover;
+
+
+    /**
+     * 当前待办人
+     */
+    private List<String> currentExecutorList;
 
 
     public Integer getId() {
@@ -217,5 +224,13 @@ public class OaCollaboration {
 
     public void setPromoterStr(String promoterStr) {
         this.promoterStr = promoterStr;
+    }
+
+    public List<String> getCurrentExecutorList() {
+        return currentExecutorList;
+    }
+
+    public void setCurrentExecutorList(List<String> currentExecutorList) {
+        this.currentExecutorList = currentExecutorList;
     }
 }

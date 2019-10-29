@@ -98,8 +98,17 @@ public class OaIndexServiceImpl implements OaIndexService {
                 if (collaboration.getCorrelationId().equals(s)) {
                     collaboration.setCreateTimeStr(DateUtil.dateConvertYYYYMMDD(collaboration.getCreateTime()));
                     collaboration.setTaskId(processInstance.getId());
-                    String assignee = userInfoMapper.getNicknameById(Integer.valueOf(taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult().getAssignee()));
-                    collaboration.setCurrentExecutor(assignee);
+                    List<Task> taskList = taskService.createTaskQuery().processInstanceId(processInstance.getId()).list();
+
+                    StringBuilder sb = new StringBuilder();
+                    for (int i = 0; i < taskList.size(); i++) {
+                        String nickname = userInfoMapper.getNicknameById(Integer.valueOf(taskList.get(i).getAssignee()));
+                        sb.append(nickname);
+                        if (i != taskList.size() -1){
+                            sb.append(",");
+                        }
+                    }
+                    collaboration.setCurrentExecutor(sb.toString());
                 }
             }
         }

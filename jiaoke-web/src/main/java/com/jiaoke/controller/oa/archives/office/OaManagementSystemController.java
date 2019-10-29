@@ -149,7 +149,7 @@ public class OaManagementSystemController {
      *
      * @param id    id
      * @param model model
-     * @return details.jsp
+     * @return edit.jsp
      */
     @RequestMapping(value = "/toManagementSystemDetails")
     public String particulars(int id, Model model) {

@@ -151,40 +151,20 @@ public class CommonController {
     }
 
     /**
-     * 跳转oa_wage_statistics_inner.jsp
+     * 跳转人事管理模块
      *
-     * @return oa_wage_statistics.jsp
+     * @return oa_navigation.jsp
      * @author lihui
-     * @date 2018/10/9 18:34
+     * @date 2018/10/8 12:00
      */
-    @RequestMapping("/OAWageStatisticsInner.do")
-    public String toOAWageStatisticsInner() {
-        return "oa/personal/oa_wage_statistics";
+    @RequestMapping("/personnelIndex.do")
+    public String toPersonnelIndex() {
+        return "personnel/main";
     }
 
     @RequestMapping("/index.do")
     public String logout() {
         return "permission/index";
-    }
-
-    /**
-     * 日程计划
-     *
-     * @return  oa_schedule_planning.jsp
-     */
-    @RequestMapping("/OASchedulePlanning.do")
-    public String schedulePlanning() {
-        return "oa/personal/oa_schedule_planning";
-    }
-
-    /**
-     * 待办记事
-     *
-     * @return  oa_schedule_planning.jsp
-     */
-    @RequestMapping("/OANotepad.do")
-    public String notepad() {
-        return "oa/personal/oa_notepad";
     }
 
     /**

@@ -37,19 +37,12 @@
             </shiro:hasPermission>
             <ul>
                 <li><a id="personal_attendance"><span>个人考勤</span></a></li>
-                <shiro:hasPermission name="attendanceStatistics">
-                    <li><a id="attendance_statistics"><span>考勤统计</span></a></li>
-                </shiro:hasPermission>
                 <li><a id="personal_salary"><span>个人工资</span></a></li>
-                <shiro:hasPermission name="wageStatistics">
-                    <li><a id="wage_statistics"><span>工资统计</span></a></li>
-                </shiro:hasPermission>
-                <%-- <li><a id="schedule_planning"><span>日程计划</span></a></li>
-                 <li><a id="notepad"><span>待办记事</span></a></li>--%>
             </ul>
         </li>
         <li class="nav-item">
-            <a><i class="iconfont icon-m3-newCoordination-copy"></i>
+            <a>
+                <i class="iconfont icon-m3-newCoordination-copy"></i>
                 <span class="parent-menu-span">协同工作</span>
                 <i class="my-icon nav-more"></i>
             </a>
@@ -62,7 +55,7 @@
                 <%--<li><a id="supervision_matters"><span>督办事项</span></a></li>--%>
             </ul>
         </li>
-        <li class="nav-item">
+        <%--<li class="nav-item">
             <shiro:hasPermission name="documentManagement">
                 <a><i class="iconfont icon-gongwen"></i>
                     <span class="parent-menu-span">公文管理</span>
@@ -79,7 +72,7 @@
                 <li><a id="done_document"><span>已办公文</span></a></li>
 
             </ul>
-        </li>
+        </li>--%>
 
         <shiro:hasPermission name="comprehensiveOffice">
             <li class="nav-item">

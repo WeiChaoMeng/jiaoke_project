@@ -380,8 +380,8 @@ public class ActivitiUtil {
      * @param processInstanceId 流程实例Id
      * @return 流程实例id
      */
-    public Task getAssigneeByProcessInstanceId(String processInstanceId) {
-        return taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
+    public List<Task> getAssigneeByProcessInstanceId(String processInstanceId) {
+        return taskService.createTaskQuery().processInstanceId(processInstanceId).list();
     }
 
     /**
@@ -549,24 +549,28 @@ public class ActivitiUtil {
         List<HistoricProcessInstance> processInstanceList = historyService.createHistoricProcessInstanceQuery().startedBy(userId).list();
         for (HistoricProcessInstance hpi : processInstanceList) {
             //判断流程是否已经结束
-            ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(hpi.getId()).singleResult();
-            if (processInstance == null) {
+            List<ProcessInstance> processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(hpi.getId()).list();
+            if (processInstance.size() == 0) {
                 //结束
                 OaCollaboration oaCollaboration = new OaCollaboration();
                 oaCollaboration.setCorrelationId(hpi.getBusinessKey().substring(hpi.getBusinessKey().lastIndexOf(":") + 1));
                 oaCollaboration.setTable(hpi.getBusinessKey().substring(0, hpi.getBusinessKey().indexOf(":")));
                 oaCollaboration.setStartTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(hpi.getStartTime()));
-                oaCollaboration.setCurrentExecutor("已结束");
+                oaCollaboration.setCurrentExecutorList(Arrays.asList("已结束"));
                 oaCollaboration.setProcessInstanceId(hpi.getId());
                 list.add(oaCollaboration);
             } else {
                 //正在执行中
-                Task task = taskService.createTaskQuery().processInstanceId(hpi.getId()).singleResult();
+                List<Task> task = taskService.createTaskQuery().processInstanceId(hpi.getId()).list();
+                ArrayList<String> arrayList = new ArrayList<>();
+                for (Task task1 : task) {
+                    arrayList.add(task1.getAssignee());
+                }
                 OaCollaboration oaCollaboration = new OaCollaboration();
                 oaCollaboration.setCorrelationId(hpi.getBusinessKey().substring(hpi.getBusinessKey().lastIndexOf(":") + 1));
                 oaCollaboration.setTable(hpi.getBusinessKey().substring(0, hpi.getBusinessKey().indexOf(":")));
                 oaCollaboration.setStartTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(hpi.getStartTime()));
-                oaCollaboration.setCurrentExecutor(task.getAssignee());
+                oaCollaboration.setCurrentExecutorList(arrayList);
                 oaCollaboration.setProcessInstanceId(hpi.getId());
                 list.add(oaCollaboration);
             }
@@ -603,11 +607,15 @@ public class ActivitiUtil {
                 oaCollaboration.setTable(hpi.getBusinessKey().substring(0, hpi.getBusinessKey().indexOf(":")));
                 oaCollaboration.setProcessInstanceId(hpi.getId());
                 //d当前待办人
-                Task task = getAssigneeByProcessInstanceId(hpi.getId());
-                if (task == null) {
-                    oaCollaboration.setCurrentExecutor("已结束");
+                List<Task> task = getAssigneeByProcessInstanceId(hpi.getId());
+                if (task.size() == 0) {
+                    oaCollaboration.setCurrentExecutorList(Arrays.asList("已结束"));
                 } else {
-                    oaCollaboration.setCurrentExecutor(task.getAssignee());
+                    ArrayList<String> list = new ArrayList<>();
+                    for (Task task1 : task) {
+                        list.add(task1.getAssignee());
+                    }
+                    oaCollaboration.setCurrentExecutorList(list);
                 }
                 oaCollaboration.setStartTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(hpi.getStartTime()));
                 oaCollaborationList.add(oaCollaboration);

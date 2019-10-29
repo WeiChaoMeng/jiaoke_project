@@ -48,11 +48,21 @@ public class OaCollaborationServiceImpl implements OaCollaborationService {
                     oc.setProcessInstanceId(collaboration.getProcessInstanceId());
                     oc.setPromoterStr(userInfoMapper.getNicknameById(oc.getPromoter()));
                     oc.setStartTimeStr(collaboration.getStartTimeStr());
-                    if (!"已结束".equals(collaboration.getCurrentExecutor())) {
-                        oc.setCurrentExecutor(userInfoMapper.getNicknameById(Integer.valueOf(collaboration.getCurrentExecutor())));
-                    } else {
-                        oc.setCurrentExecutor(collaboration.getCurrentExecutor());
+
+                    StringBuilder sb = new StringBuilder();
+                    List<String> executorList = collaboration.getCurrentExecutorList();
+                    for (int i = 0; i < executorList.size(); i++) {
+                        if (!"已结束".equals(executorList.get(i))) {
+                            String nickname = userInfoMapper.getNicknameById(Integer.valueOf(executorList.get(i)));
+                            sb.append(nickname);
+                            if (i != executorList.size() - 1) {
+                                sb.append(",");
+                            }
+                        } else {
+                            sb.append(executorList.get(i));
+                        }
                     }
+                    oc.setCurrentExecutor(sb.toString());
                 }
             }
         }
@@ -74,11 +84,21 @@ public class OaCollaborationServiceImpl implements OaCollaborationService {
                 if (oaCollaboration.getCorrelationId().equals(collaboration.getCorrelationId())) {
                     oaCollaboration.setStartTimeStr(collaboration.getStartTimeStr());
                     oaCollaboration.setProcessInstanceId(collaboration.getProcessInstanceId());
-                    if (!"已结束".equals(collaboration.getCurrentExecutor())) {
-                        oaCollaboration.setCurrentExecutor(userInfoMapper.getNicknameById(Integer.valueOf(collaboration.getCurrentExecutor())));
-                    } else {
-                        oaCollaboration.setCurrentExecutor(collaboration.getCurrentExecutor());
+
+                    StringBuilder sb = new StringBuilder();
+                    List<String> executorList = collaboration.getCurrentExecutorList();
+                    for (int i = 0; i < executorList.size(); i++) {
+                        if (!"已结束".equals(executorList.get(i))) {
+                            String nickname = userInfoMapper.getNicknameById(Integer.valueOf(executorList.get(i)));
+                            sb.append(nickname);
+                            if (i != executorList.size() - 1) {
+                                sb.append(",");
+                            }
+                        } else {
+                            sb.append(executorList.get(i));
+                        }
                     }
+                    oaCollaboration.setCurrentExecutor(sb.toString());
                 }
             }
         }

@@ -320,6 +320,7 @@
         select id,nickname,department from user_info
     </select>
 
+    <!--根据权限查询单个-->
     <select id="selectByPermission" parameterType="java.lang.String" resultType="com.jiaoke.oa.bean.UserInfo">
         SELECT
             ui.id,
@@ -333,6 +334,21 @@
         WHERE
             per.url = #{url}
         LIMIT 1
+    </select>
+
+    <!--根据权限查询多个-->
+    <select id="selectMultipleByPermission" parameterType="java.lang.String" resultType="com.jiaoke.oa.bean.UserInfo">
+        SELECT
+            ui.id,
+            ui.nickname
+        FROM
+            user_info AS ui
+            LEFT JOIN user_role AS ur ON ui.id = ur.user_info_id
+            LEFT JOIN role_info AS ri ON ur.role_info_id = ri.id
+            LEFT JOIN role_permission AS rp ON ri.id = rp.role_id
+            LEFT JOIN permission AS per ON rp.permission_id = per.id
+        WHERE
+            per.url = #{url}
     </select>
 
     <select id="selectDepartment" parameterType="java.lang.Integer" resultType="java.lang.String">
@@ -361,39 +377,5 @@
             LEFT JOIN department AS dt ON dt.department_key = ui.department
             LEFT JOIN work_nature AS wn ON wn.id = ui.nature
         WHERE ui.id = #{userInfoId}
-    </select>
-
-    <select id="getUserBasicInfo" resultType="com.jiaoke.oa.bean.UserInfo">
-        SELECT
-            ui.id,
-            ui.nickname,
-            ui.phone,
-            ui.telephone,
-            ui.job,
-            ui.birthday,
-            ui.sex,
-            ui.email,
-            ui.position,
-            ui.entry_date as entryDate,
-            wn.name AS nature,
-            dt.department_name AS department
-        FROM
-            user_info AS ui
-            LEFT JOIN department AS dt ON dt.department_key = ui.department
-            LEFT JOIN work_nature AS wn ON wn.id = ui.nature
-        where ui.nature &lt; 6
-        ORDER BY
-            ui.id
-    </select>
-
-    <select id="getUserStatistical" resultType="java.lang.Integer">
-        SELECT
-            count( * ) as num
-        FROM
-            `user_info`
-        WHERE
-            nature &lt; 6
-        GROUP BY
-            nature
     </select>
 </mapper>

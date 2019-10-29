@@ -22,47 +22,27 @@
 
 <div class="table-margin">
     <div style="padding: 15px;">
-        <button type="button"
-                style="padding: 5px 15px;border: 0;cursor: pointer;background: #38adff;outline: none;border-radius: 5px;color: #FFFFFF;font-size: 13px;"
-                onclick="addPersonnel()">添加员工
+        <button type="button" class="add-personnel" onclick="addPersonnel()">添加员工
         </button>
     </div>
     <table class="simple-table">
         <thead>
         <tr>
+            <th>序号</th>
             <th>姓名</th>
             <th>部门</th>
-            <th>岗位</th>
-            <th>年龄</th>
+            <th>职务</th>
             <th>生日</th>
+            <th>年龄</th>
             <th>手机号码</th>
             <th>入职日期</th>
-            <th>工作性质</th>
+            <th>用工类型</th>
+            <th>操作</th>
         </tr>
         </thead>
 
         <tbody id="tbody">
-        <tr>
-            <td>西西</td>
-            <td>综合办公室</td>
-            <td>员工</td>
-            <td>22</td>
-            <td>9月9日</td>
-            <td>18827167321</td>
-            <td>2017-12-05</td>
-            <td>正式</td>
-        </tr>
 
-        <tr>
-            <td>楠楠</td>
-            <td>综合办公室</td>
-            <td>员工</td>
-            <td>25</td>
-            <td>7月18日</td>
-            <td>15682471623</td>
-            <td>2017-04-08</td>
-            <td>外包</td>
-        </tr>
         </tbody>
     </table>
     <div id="paging" class="paging-div">
@@ -90,21 +70,6 @@
 
     //初始化分页
     $(function () {
-        //人员统计数
-        var statisticalNum = JSON.parse('${statistical}');
-
-
-        $("#official").text(statisticalNum[0]);
-        $("#outsourcing").text(statisticalNum[1]);
-
-        if (statisticalNum[2] !== undefined) {
-            $("#probation").text(statisticalNum[2]);
-            $("#totalNumberPeople").text(statisticalNum[0] + statisticalNum[1] + statisticalNum[2]);
-        } else {
-            $("#probation").text(0);
-            $("#totalNumberPeople").text(statisticalNum[0] + statisticalNum[1]);
-        }
-
         //设置当前页
         $('#page').val(currentPageNum);
         loadData(currentPageNum);
@@ -119,13 +84,12 @@
             data: {'page': page},
             async: false,
             success: function (data) {
-                var userInfos = JSON.parse(data);
+                var personnelInfos = JSON.parse(data);
                 //总数
-                $("#PageCount").val(userInfos.total);
-                // $("#totalNumberPeople").text(userInfos.total);
+                $("#PageCount").val(personnelInfos.total);
                 //每页显示条数
                 $("#PageSize").val("15");
-                parseResult(userInfos);
+                parseResult(personnelInfos);
             },
             error: function (result) {
                 layer.msg("出错！");
@@ -143,12 +107,12 @@
             async: false,
             success: function (data) {
                 $('#page').val(1);
-                var userInfos = JSON.parse(data);
+                var personnelInfos = JSON.parse(data);
                 //总数
-                $("#PageCount").val(userInfos.total);
+                $("#PageCount").val(personnelInfos.total);
                 //每页显示条数
                 $("#PageSize").val("15");
-                parseResult(userInfos);
+                parseResult(personnelInfos);
                 loadPage(parameter);
             },
             error: function (result) {
@@ -195,57 +159,73 @@
     }
 
     //解析list
-    function parseResult(userInfos) {
+    function parseResult(personnelInfos) {
         //结果集
-        var userInfoList = userInfos.list;
+        var personnelInfoList = personnelInfos.list;
         //当前页
-        var pageNum = userInfos.pageNum;
+        var pageNum = personnelInfos.pageNum;
         //插入tbody
         var userInfo = '';
-        if (userInfoList.length === 0) {
+        if (personnelInfoList.length === 0) {
             userInfo += '<tr>';
-            userInfo += '<td colspan="7">' + '暂无数据' + '</td>';
+            userInfo += '<td colspan="10">' + '暂无数据' + '</td>';
             userInfo += '</tr>';
         } else {
-            for (let i = 0; i < userInfoList.length; i++) {
+            for (let i = 0; i < personnelInfoList.length; i++) {
                 userInfo += '<tr>';
-                userInfo += '<td class="username" onclick="window.event.cancelBubble=true;userDetailsShow(\'' + userInfoList[i].id + '\')"><span>' + userInfoList[i].nickname + '</span></td>';
-                if (userInfoList[i].department !== undefined) {
-                    userInfo += '<td>' + userInfoList[i].department + '</td>';
+                userInfo += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 15 + i + 1) + '</td>';
+                userInfo += '<td class="username" onclick="window.event.cancelBubble=true;userDetailsShow(\'' + personnelInfoList[i].id + '\')"><span>' + personnelInfoList[i].name + '</span></td>';
+                if (personnelInfoList[i].department !== undefined) {
+                    userInfo += '<td>' + personnelInfoList[i].department + '</td>';
                 } else {
                     userInfo += '<td></td>';
                 }
 
-                if (userInfoList[i].position !== undefined) {
-                    userInfo += '<td class="width-overstep">' + userInfoList[i].position + '</td>';
+                if (personnelInfoList[i].job !== undefined) {
+                    userInfo += '<td>' + personnelInfoList[i].job + '</td>';
                 } else {
                     userInfo += '<td></td>';
                 }
 
-                if (userInfoList[i].age !== undefined) {
-                    userInfo += '<td>' + userInfoList[i].age + '</td>';
+                if (personnelInfoList[i].birthday !== undefined) {
+                    userInfo += '<td>' + personnelInfoList[i].birthday + '</td>';
                 } else {
                     userInfo += '<td></td>';
                 }
 
-                if (userInfoList[i].birthdayStr !== undefined) {
-                    userInfo += '<td>' + userInfoList[i].birthdayStr + '</td>';
+                if (personnelInfoList[i].age !== undefined) {
+                    userInfo += '<td>' + personnelInfoList[i].age + '</td>';
                 } else {
                     userInfo += '<td></td>';
                 }
 
-                if (userInfoList[i].phone !== undefined) {
-                    userInfo += '<td>' + userInfoList[i].phone + '</td>';
+                if (personnelInfoList[i].phone !== undefined) {
+                    userInfo += '<td>' + personnelInfoList[i].phone + '</td>';
                 } else {
                     userInfo += '<td></td>';
                 }
 
-                if (userInfoList[i].entryDateStr !== undefined) {
-                    userInfo += '<td>' + userInfoList[i].entryDateStr + '</td>';
+                if (personnelInfoList[i].joinWorkDate !== undefined) {
+                    userInfo += '<td>' + personnelInfoList[i].joinWorkDate + '</td>';
                 } else {
                     userInfo += '<td></td>';
                 }
-                userInfo += '<td>' + userInfoList[i].nature + '</td>';
+
+                if (personnelInfoList[i].workType === 0) {
+                    userInfo += '<td>自有职工</td>';
+                } else {
+                    userInfo += '<td>外包职工</td>';
+                }
+                userInfo += '<td>';
+                userInfo += '<button type="button" class="basic-info-operation" onclick="del(\'' + personnelInfoList[i].id + '\')">删除</button>';
+                userInfo += '<button type="button" class="basic-info-operation" onclick="edit(\'' + personnelInfoList[i].id + '\')">编辑</button>';
+                userInfo += '<button type="button" class="basic-info-operation" onclick="particulars(\'' + personnelInfoList[i].id + '\')">详情</button>';
+                if(personnelInfoList[i].contractFlag === 0){
+                    userInfo += '<button type="button" class="basic-info-operation" onclick="contract(\'' + personnelInfoList[i].id + '\')">添加合同</button>';
+                }else {
+                    userInfo += '<button type="button" class="basic-info-operation" style="background-color: #b3b4b4;">添加合同</button>';
+                }
+                userInfo += '</td>';
                 userInfo += '</tr>';
             }
         }
@@ -260,6 +240,44 @@
     //跳转添加员工
     function addPersonnel() {
         window.location.href = '${path}/personnel/toAddPersonnel';
+    }
+
+    function del(id) {
+        window.top.deletePersonnel(id, $('#page').val());
+    }
+
+    //重载页面
+    function reloadPersonnelPage(page) {
+        window.location.href = "${path}/personnel/toBasic?page=" + page;
+    }
+
+    function edit(id) {
+        window.location.href = "${path}/personnel/toEdit?id=" + id;
+    }
+
+    function particulars(id) {
+        window.top.personnelDetails(id);
+    }
+
+    //添加合同
+    function contract(id) {
+        $.ajax({
+            type: "post",
+            url: '${path}/personnel/appendContract',
+            data: {'id': id},
+            success: function (data) {
+                if (data === "success") {
+                    window.location.href = "${path}/personnel/toBasic?page=" + $('#page').val();
+                    top.window.tips("添加成功,请到合同管理中查看！", 0, 1, 2000);
+                } else {
+                    layer.msg("添加失败！");
+                }
+
+            },
+            error: function (result) {
+                layer.msg("出错！");
+            }
+        })
     }
 </script>
 </html>

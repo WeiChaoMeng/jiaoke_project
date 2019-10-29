@@ -163,6 +163,11 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
+    public List<UserInfo> selectMultipleByPermission(String url) {
+        return userInfoMapper.selectMultipleByPermission(url);
+    }
+
+    @Override
     public String selectDepartmentByUserId(Integer userId) {
         return userInfoMapper.selectDepartment(userId);
     }

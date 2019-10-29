@@ -1,12 +1,8 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%
-    String path = request.getContextPath();
-    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
-    request.setAttribute("path", basePath);
-%>
 <html>
 <head>
-    <title>员工合同</title>
+    <title>人员管理</title>
     <link rel="stylesheet" type="text/css" href="../../../static/css/personnel/personnelCommon.css">
     <link href="../../../static/css/paging/htmleaf-demo.css" rel="stylesheet" type="text/css">
     <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -16,25 +12,24 @@
 <div class="personnel-manage-style">
     <div class="top-statistics">
         <div class="top-statistics-style">
-            <span>已签订合同<h2>${total}</h2>人</span>
+            <span>试用期<h2 id="probation">0</h2>人</span>
         </div>
 
-        <div class="top-statistics-style" style="margin-left: 20px">
-            <span>即将到期合同<h2 id="expire">0</h2>人</span>
+        <div class="top-statistics-style">
+            <span>即将转正<h2 id="expire">0</h2>人</span>
         </div>
     </div>
 
-    <div class="table-margin">
-        <table class="simple-table simple-table-contract">
+    <div class="personnel-manage-content">
+        <table class="simple-table simple-table-dynamic">
             <thead>
             <tr>
-                <th>序号</th>
                 <th>姓名</th>
-                <th>性别</th>
+                <th>部门</th>
+                <th>岗位</th>
+                <th>职务</th>
                 <th>入职日期</th>
-                <th>合同期限</th>
-                <th>合同签订日期</th>
-                <th>合同终止日期</th>
+                <th>转正日期</th>
                 <th>操作</th>
             </tr>
             </thead>
@@ -58,7 +53,6 @@
     </div>
 </div>
 
-
 </body>
 <script src="../../../static/js/jquery.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="../../../static/js/paging/jqPaginator.js"></script>
@@ -80,14 +74,13 @@
     function loadData(page) {
         $.ajax({
             type: "post",
-            url: '/personnel/contractList',
+            url: '/personnel/entryManage',
             data: {'page': page},
             async: false,
             success: function (data) {
                 var userInfos = JSON.parse(data);
                 //总数
                 $("#PageCount").val(userInfos.total);
-                $("#totalNumberPeople").text(userInfos.total);
                 //每页显示条数
                 $("#PageSize").val("15");
                 parseResult(userInfos);
@@ -98,44 +91,12 @@
         })
     }
 
-    //名字搜索
-    function searchButton(page, parameter) {
-        var username = $('#logonName').val();
-        $.ajax({
-            type: "post",
-            url: '/personnel/usernameFilter',
-            data: {'page': page, 'username': username},
-            async: false,
-            success: function (data) {
-                $('#page').val(1);
-                var userInfos = JSON.parse(data);
-                //总数
-                $("#PageCount").val(userInfos.total);
-                //每页显示条数
-                $("#PageSize").val("15");
-                parseResult(userInfos);
-                loadPage(parameter);
-            },
-            error: function (result) {
-                layer.msg("出错！");
-            }
-        })
+    function exeData(page, type) {
+        loadData(page);
+        loadPage();
     }
 
-    function exeData(page, type, parameter) {
-        //全部
-        if (parameter === 1) {
-            loadData(page);
-            loadPage(parameter);
-
-            //名字搜索
-        } else if (parameter === 2) {
-            searchButton(page);
-            loadPage(parameter);
-        }
-    }
-
-    function loadPage(parameter) {
+    function loadPage() {
         var myPageCount = parseInt($("#PageCount").val());
         var myPageSize = parseInt($("#PageSize").val());
         var countindex = myPageCount === 0 ? 1 : Math.ceil(myPageCount / myPageSize);
@@ -153,7 +114,7 @@
             onPageChange: function (page, type) {
                 if (type == "change") {
                     $('#page').val(page);
-                    exeData(page, type, parameter);
+                    exeData(page, type);
                 }
             }
         });
@@ -161,6 +122,7 @@
 
     //解析list
     function parseResult(userInfos) {
+        var sum = 0;
         var count = 0;
         //结果集
         var userInfoList = userInfos.list;
@@ -174,55 +136,52 @@
             userInfo += '</tr>';
         } else {
             for (let i = 0; i < userInfoList.length; i++) {
-                if (userInfoList[i].expire === 1) {
+                sum++;
+                if (userInfoList[i].flag === 1) {
                     count++;
                     userInfo += '<tr style="background: #fbdcb5;">';
                 } else {
                     userInfo += '<tr>';
                 }
-                userInfo += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 15 + i + 1) + '</td>';
+
                 userInfo += '<td>' + userInfoList[i].name + '</td>';
-                userInfo += '<td>' + userInfoList[i].sex + '</td>';
+                userInfo += '<td>' + userInfoList[i].department + '</td>';
+                if (userInfoList[i].jobCategory === 0) {
+                    userInfo += '<td>领导班子</td>';
+                } else if (userInfoList[i].jobCategory === 1) {
+                    userInfo += '<td>中层管理人员</td>';
+                }
+                if (userInfoList[i].jobCategory === 2) {
+                    userInfo += '<td>一般管理人员</td>';
+                }
+                if (userInfoList[i].jobCategory === 3) {
+                    userInfo += '<td>一线生产工人</td>';
+                }
+                if (userInfoList[i].jobCategory === 4) {
+                    userInfo += '<td>其它</td>';
+                }
+                userInfo += '<td>' + userInfoList[i].job + '</td>';
                 userInfo += '<td>' + userInfoList[i].joinedDate + '</td>';
-                if (userInfoList[i].contractTerm === 0) {
-                    userInfo += '<td>—</td>';
-                } else if (userInfoList[i].contractTerm === 1) {
-                    userInfo += '<td>三年</td>';
-                } else if (userInfoList[i].contractTerm === 2) {
-                    userInfo += '<td>五年</td>';
-                } else if (userInfoList[i].contractTerm === 3) {
-                    userInfo += '<td>无固定</td>';
-                } else if (userInfoList[i].contractTerm === 4) {
-                    userInfo += '<td>其他</td>';
-                }
-                if(userInfoList[i].contractSign === undefined || userInfoList[i].contractSign === ""){
-                    userInfo += '<td>—</td>';
-                }else {
-                    userInfo += '<td>' + userInfoList[i].contractSign + '</td>';
-                }
-                if(userInfoList[i].contractStop === undefined || userInfoList[i].contractStop === ""){
-                    userInfo += '<td>—</td>';
-                }else {
-                    userInfo += '<td>' + userInfoList[i].contractStop + '</td>';
-                }
+                userInfo += '<td>' + userInfoList[i].correctionDate + '</td>';
                 userInfo += '<td>';
-                userInfo += '<button type="button" class="basic-info-operation" onclick="edit(\'' + userInfoList[i].id + '\')">编辑</button>';
                 userInfo += '<button type="button" class="basic-info-operation" onclick="particulars(\'' + userInfoList[i].id + '\')">详情</button>';
+                userInfo += '<button type="button" class="basic-info-operation" onclick="notice(\'' + userInfoList[i].id + '\')">通知</button>';
                 userInfo += '</td>';
                 userInfo += '</tr>';
             }
 
             $('#expire').text(count);
+            $('#probation').text(sum);
         }
         $('#tbody').html(userInfo);
     }
 
-    function edit(id) {
-        window.location.href = "${path}/personnel/toContractEdit?id=" + id;
+    function particulars(id) {
+        window.top.personnelDetails(id);
     }
 
-    function particulars(id) {
-        window.top.contractDetails(id);
+    function notice(id) {
+        layer.msg("跳转通知" + id);
     }
 </script>
 </html>

@@ -67,22 +67,6 @@
 <script type="text/javascript" src="../../../../static/js/oa/oa_common.js"></script>
 <script type="text/javascript" src="../../../../static/js/skin.js"></script>
 <script>
-
-    /* 预定撤销 - 查询条件*/
-    $("#condition5").on("change", function () {
-        var opt = $("#condition5").val();
-        if (opt == 2) {
-            $(".head_right_side_select").css("display", "block");
-            $(".head_right_side_input").css("display", "none");
-        } else if (opt == 1) {
-            $(".head_right_side_input").css("display", "block");
-            $(".head_right_side_select").css("display", "none");
-        } else {
-            $(".head_right_side_input").css("display", "none");
-            $(".head_right_side_select").css("display", "none");
-        }
-    });
-
     //导入excel
     function importExcel(filePath){
         alert("外包员工" + filePath);

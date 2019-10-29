@@ -331,7 +331,7 @@
             <input type="text" name="check_person" id="checkPerson" value="${nickname}" readonly/>
         </shiro:hasPermission>
         <shiro:lacksPermission name="experimentReviewer">
-            <input type="text" name="check_person" readonly/>
+            <input type="text" name="check_person" id="lackCheckPerson" readonly/>
         </shiro:lacksPermission>
 
         <span>报告人 :</span>
@@ -348,7 +348,7 @@
 
     <div class="handle-container">
 
-        <shiro:hasAnyPermission name="experimentPrincipal,experimentReviewer">
+        <shiro:hasAnyPermission name="experimentPrincipal,experimentReviewer,materialPrincipal">
             <div class="handle-title">
                 <div class="handle-title-script">处理意见</div>
             </div>
@@ -364,6 +364,10 @@
             </shiro:hasAnyPermission>
 
             <button type="button" class="commit-but" onclick="commitApproval(1)">同意</button>
+
+            <shiro:hasAnyPermission name="experimentPrincipal,experimentReviewer">
+                <button type="button" class="return-but" style="margin-right: 10px;" onclick="commitApproval(3)">发送材料部</button>
+            </shiro:hasAnyPermission>
         </div>
     </div>
 

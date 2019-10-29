@@ -164,7 +164,7 @@ public class OaReleaseDocumentController {
      *
      * @param id    id
      * @param model model
-     * @return details.jsp
+     * @return edit.jsp
      */
     @RequestMapping(value = "/toReleaseDocumentDetails")
     public String particulars(int id, Model model) {

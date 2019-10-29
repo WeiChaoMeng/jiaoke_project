@@ -1,7 +1,6 @@
 package com.jiaoke.oa.bean;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
  * 人员信息表
@@ -27,7 +26,7 @@ public class PersonnelInfo {
     private String department;
 
     /**
-     * 岗位类别：0.高层经营管理人员、1.中层经营管理人员、2.一般经营管理人员、3.专业技术人员、4.技能操作人员
+     * 岗位类别：0.领导班子，1.中层管理人员，2.一般管理人员，3.一线生产工人，4.其它
      */
     private Integer jobCategory;
 
@@ -37,14 +36,19 @@ public class PersonnelInfo {
     private String job;
 
     /**
+     * 副职
+     */
+    private String viceJob;
+
+    /**
      * 姓名
      */
     private String name;
 
     /**
-     * 性别：0.男、1.女
+     * 性别
      */
-    private Integer sex;
+    private String sex;
 
     /**
      * 身份证号
@@ -54,9 +58,7 @@ public class PersonnelInfo {
     /**
      * 出生日期
      */
-    private Date birthday;
-    @Transient
-    private String birthdayStr;
+    private String birthday;
 
     /**
      * 年龄
@@ -79,38 +81,39 @@ public class PersonnelInfo {
     private String registeredResidence;
 
     /**
+     * 户口性质0.本埠城镇，1.本埠农村，2.外埠城镇，3.外埠农村
+     */
+    private Integer accountNature;
+
+    /**
      * 联系电话
      */
     private String phone;
 
     /**
-     * 政治面貌: 0.中共党员、1.团员、2.群众
+     * 政治面貌: 0.群众、1.团员、2.中共党员
      */
     private Integer politicCountenance;
 
     /**
      * 入党时间（年月）
      */
-    private Date joinPartyDate;
-    @Transient
-    private String joinPartyDateStr;
+    private String joinPartyDate;
 
     /**
      * 参加工作时间（年月）
      */
-    private Date joinWorkDate;
-    @Transient
-    private String joinWorkDateStr;
+    private String joinWorkDate;
 
     /**
      * 工作年限
      */
-    private String workingYears;
+    private Integer workingYears;
 
     /**
-     * 职称级别
+     * 职称级别0.未取得职称，1.员级，2.助理，3.中级，4.副高级，5.正高级
      */
-    private String titleLevel;
+    private Integer titleLevel;
 
     /**
      * 职称系列
@@ -128,9 +131,9 @@ public class PersonnelInfo {
     private String professionName;
 
     /**
-     * 工人技术等级
+     * 工人技术等级0.未取证，1.初级，2.中级，3.高级，4.技师，5.高级技师
      */
-    private String technologyGrade;
+    private Integer technologyGrade;
 
     /**
      * 原学历:0.初中及以下，1.高中，2.技校，3.中专，4.专科，5.本科，6.硕士，7.博士
@@ -155,9 +158,7 @@ public class PersonnelInfo {
     /**
      * 原毕业时间
      */
-    private Date originalGraduationDate;
-    @Transient
-    private String originalGraduationDateStr;
+    private String originalGraduationDate;
 
     /**
      * 现学历:0.初中及以下，1.高中，2.技校，3.中专，4.专科，5.本科，6.硕士，7.博士
@@ -182,9 +183,7 @@ public class PersonnelInfo {
     /**
      * 现毕业时间
      */
-    private Date nowGraduationDate;
-    @Transient
-    private String nowGraduationDateStr;
+    private String nowGraduationDate;
 
     /**
      * 其他证书
@@ -204,23 +203,17 @@ public class PersonnelInfo {
     /**
      * 转正时间
      */
-    private Date correctionDate;
-    @Transient
-    private String correctionDateStr;
+    private String correctionDate;
 
     /**
      * 预计退休时间
      */
-    private Date estimateRetirementDate;
-    @Transient
-    private String estimateRetirementDateStr;
+    private String estimateRetirementDate;
 
     /**
      * 退休时间
      */
-    private Date retirementDate;
-    @Transient
-    private String retirementDateStr;
+    private String retirementDate;
 
     /**
      * 身体情况
@@ -231,6 +224,64 @@ public class PersonnelInfo {
      * 退休单位
      */
     private String retirementCompany;
+    /**
+     * 原职务
+     */
+    private String originalPosition;
+
+    /**
+     * 原岗位
+     */
+    private String originalPost;
+
+    /**
+     * 现岗位任职时间
+     */
+    private String currentPosition;
+
+    /**
+     * 转岗时间
+     */
+    private String transfer;
+
+    /**
+     * 提交离职申请日期
+     */
+    private String submissionApply;
+
+    /**
+     * 申请离职日期
+     */
+    private String applyLeave;
+
+    /**
+     * 离职日期
+     */
+    private String leaveDate;
+
+    /**
+     * 入职日期
+     */
+    private String joinedDate;
+
+    /**
+     * 合同标识0.未开通，1.已开通
+     */
+    private Integer contractFlag;
+
+    /**
+     * 标识（与数据库无关）
+     */
+    @Transient
+    private Integer flag;
+
+    public Integer getFlag() {
+        return flag;
+    }
+
+    public void setFlag(Integer flag) {
+        this.flag = flag;
+    }
 
     public Integer getId() {
         return id;
@@ -264,6 +315,14 @@ public class PersonnelInfo {
         this.job = job;
     }
 
+    public String getViceJob() {
+        return viceJob;
+    }
+
+    public void setViceJob(String viceJob) {
+        this.viceJob = viceJob;
+    }
+
     public String getName() {
         return name;
     }
@@ -272,11 +331,11 @@ public class PersonnelInfo {
         this.name = name;
     }
 
-    public Integer getSex() {
+    public String getSex() {
         return sex;
     }
 
-    public void setSex(Integer sex) {
+    public void setSex(String sex) {
         this.sex = sex;
     }
 
@@ -288,20 +347,12 @@ public class PersonnelInfo {
         this.idCard = idCard;
     }
 
-    public Date getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
-    }
-
-    public String getBirthdayStr() {
-        return birthdayStr;
-    }
-
-    public void setBirthdayStr(String birthdayStr) {
-        this.birthdayStr = birthdayStr;
     }
 
     public Integer getAge() {
@@ -336,6 +387,14 @@ public class PersonnelInfo {
         this.registeredResidence = registeredResidence;
     }
 
+    public Integer getAccountNature() {
+        return accountNature;
+    }
+
+    public void setAccountNature(Integer accountNature) {
+        this.accountNature = accountNature;
+    }
+
     public String getPhone() {
         return phone;
     }
@@ -352,51 +411,35 @@ public class PersonnelInfo {
         this.politicCountenance = politicCountenance;
     }
 
-    public Date getJoinPartyDate() {
+    public String getJoinPartyDate() {
         return joinPartyDate;
     }
 
-    public void setJoinPartyDate(Date joinPartyDate) {
+    public void setJoinPartyDate(String joinPartyDate) {
         this.joinPartyDate = joinPartyDate;
     }
 
-    public String getJoinPartyDateStr() {
-        return joinPartyDateStr;
-    }
-
-    public void setJoinPartyDateStr(String joinPartyDateStr) {
-        this.joinPartyDateStr = joinPartyDateStr;
-    }
-
-    public Date getJoinWorkDate() {
+    public String getJoinWorkDate() {
         return joinWorkDate;
     }
 
-    public void setJoinWorkDate(Date joinWorkDate) {
+    public void setJoinWorkDate(String joinWorkDate) {
         this.joinWorkDate = joinWorkDate;
     }
 
-    public String getJoinWorkDateStr() {
-        return joinWorkDateStr;
-    }
-
-    public void setJoinWorkDateStr(String joinWorkDateStr) {
-        this.joinWorkDateStr = joinWorkDateStr;
-    }
-
-    public String getWorkingYears() {
+    public Integer getWorkingYears() {
         return workingYears;
     }
 
-    public void setWorkingYears(String workingYears) {
+    public void setWorkingYears(Integer workingYears) {
         this.workingYears = workingYears;
     }
 
-    public String getTitleLevel() {
+    public Integer getTitleLevel() {
         return titleLevel;
     }
 
-    public void setTitleLevel(String titleLevel) {
+    public void setTitleLevel(Integer titleLevel) {
         this.titleLevel = titleLevel;
     }
 
@@ -424,11 +467,11 @@ public class PersonnelInfo {
         this.professionName = professionName;
     }
 
-    public String getTechnologyGrade() {
+    public Integer getTechnologyGrade() {
         return technologyGrade;
     }
 
-    public void setTechnologyGrade(String technologyGrade) {
+    public void setTechnologyGrade(Integer technologyGrade) {
         this.technologyGrade = technologyGrade;
     }
 
@@ -464,20 +507,12 @@ public class PersonnelInfo {
         this.originalProfession = originalProfession;
     }
 
-    public Date getOriginalGraduationDate() {
+    public String getOriginalGraduationDate() {
         return originalGraduationDate;
     }
 
-    public void setOriginalGraduationDate(Date originalGraduationDate) {
+    public void setOriginalGraduationDate(String originalGraduationDate) {
         this.originalGraduationDate = originalGraduationDate;
-    }
-
-    public String getOriginalGraduationDateStr() {
-        return originalGraduationDateStr;
-    }
-
-    public void setOriginalGraduationDateStr(String originalGraduationDateStr) {
-        this.originalGraduationDateStr = originalGraduationDateStr;
     }
 
     public Integer getNowEducation() {
@@ -512,20 +547,12 @@ public class PersonnelInfo {
         this.nowProfession = nowProfession;
     }
 
-    public Date getNowGraduationDate() {
+    public String getNowGraduationDate() {
         return nowGraduationDate;
     }
 
-    public void setNowGraduationDate(Date nowGraduationDate) {
+    public void setNowGraduationDate(String nowGraduationDate) {
         this.nowGraduationDate = nowGraduationDate;
-    }
-
-    public String getNowGraduationDateStr() {
-        return nowGraduationDateStr;
-    }
-
-    public void setNowGraduationDateStr(String nowGraduationDateStr) {
-        this.nowGraduationDateStr = nowGraduationDateStr;
     }
 
     public String getOtherCertificates() {
@@ -552,52 +579,28 @@ public class PersonnelInfo {
         this.workType = workType;
     }
 
-    public Date getCorrectionDate() {
+    public String getCorrectionDate() {
         return correctionDate;
     }
 
-    public void setCorrectionDate(Date correctionDate) {
+    public void setCorrectionDate(String correctionDate) {
         this.correctionDate = correctionDate;
     }
 
-    public String getCorrectionDateStr() {
-        return correctionDateStr;
-    }
-
-    public void setCorrectionDateStr(String correctionDateStr) {
-        this.correctionDateStr = correctionDateStr;
-    }
-
-    public Date getEstimateRetirementDate() {
+    public String getEstimateRetirementDate() {
         return estimateRetirementDate;
     }
 
-    public void setEstimateRetirementDate(Date estimateRetirementDate) {
+    public void setEstimateRetirementDate(String estimateRetirementDate) {
         this.estimateRetirementDate = estimateRetirementDate;
     }
 
-    public String getEstimateRetirementDateStr() {
-        return estimateRetirementDateStr;
-    }
-
-    public void setEstimateRetirementDateStr(String estimateRetirementDateStr) {
-        this.estimateRetirementDateStr = estimateRetirementDateStr;
-    }
-
-    public Date getRetirementDate() {
+    public String getRetirementDate() {
         return retirementDate;
     }
 
-    public void setRetirementDate(Date retirementDate) {
+    public void setRetirementDate(String retirementDate) {
         this.retirementDate = retirementDate;
-    }
-
-    public String getRetirementDateStr() {
-        return retirementDateStr;
-    }
-
-    public void setRetirementDateStr(String retirementDateStr) {
-        this.retirementDateStr = retirementDateStr;
     }
 
     public String getPhysicalCondition() {
@@ -614,5 +617,77 @@ public class PersonnelInfo {
 
     public void setRetirementCompany(String retirementCompany) {
         this.retirementCompany = retirementCompany;
+    }
+
+    public String getOriginalPosition() {
+        return originalPosition;
+    }
+
+    public void setOriginalPosition(String originalPosition) {
+        this.originalPosition = originalPosition;
+    }
+
+    public String getOriginalPost() {
+        return originalPost;
+    }
+
+    public void setOriginalPost(String originalPost) {
+        this.originalPost = originalPost;
+    }
+
+    public String getCurrentPosition() {
+        return currentPosition;
+    }
+
+    public void setCurrentPosition(String currentPosition) {
+        this.currentPosition = currentPosition;
+    }
+
+    public String getTransfer() {
+        return transfer;
+    }
+
+    public void setTransfer(String transfer) {
+        this.transfer = transfer;
+    }
+
+    public String getSubmissionApply() {
+        return submissionApply;
+    }
+
+    public void setSubmissionApply(String submissionApply) {
+        this.submissionApply = submissionApply;
+    }
+
+    public String getApplyLeave() {
+        return applyLeave;
+    }
+
+    public void setApplyLeave(String applyLeave) {
+        this.applyLeave = applyLeave;
+    }
+
+    public String getLeaveDate() {
+        return leaveDate;
+    }
+
+    public void setLeaveDate(String leaveDate) {
+        this.leaveDate = leaveDate;
+    }
+
+    public String getJoinedDate() {
+        return joinedDate;
+    }
+
+    public void setJoinedDate(String joinedDate) {
+        this.joinedDate = joinedDate;
+    }
+
+    public Integer getContractFlag() {
+        return contractFlag;
+    }
+
+    public void setContractFlag(Integer contractFlag) {
+        this.contractFlag = contractFlag;
     }
 }

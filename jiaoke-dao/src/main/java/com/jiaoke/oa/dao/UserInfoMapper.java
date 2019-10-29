@@ -109,6 +109,14 @@ public interface UserInfoMapper {
     UserInfo selectByPermission(String url);
 
     /**
+     * 根据权限获取用户信息(多个)
+     *
+     * @param url 权限访问地址
+     * @return userInfo
+     */
+    List<UserInfo> selectMultipleByPermission(String url);
+
+    /**
      * 根据用户id获取部门id
      *
      * @param id 用户id
@@ -131,17 +139,4 @@ public interface UserInfoMapper {
      * @return UserInfo
      */
     UserInfo getUserInfoByUseId(Integer userInfoId);
-
-    /**
-     * 获取所用用户基本信息
-     *
-     * @return list
-     */
-    List<UserInfo> getUserBasicInfo();
-
-    /**
-     * 用户统计
-     * @return lit
-     */
-   List<Integer> getUserStatistical();
 }

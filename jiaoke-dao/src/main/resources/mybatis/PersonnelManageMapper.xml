@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.oa.dao.PersonnelManageMapper">
+
+    <select id="getPersonnelBasicData" resultType="com.jiaoke.oa.bean.PersonnelInfo">
+        SELECT
+            id,
+            name,
+            department,
+            job,
+            birthday,
+            age,
+            phone,
+            join_work_date as joinWorkDate,
+            work_type as workType,
+            contract_flag as contractFlag
+        FROM
+            `personnel_info`
+    </select>
+
+    <!--性别划分-->
+    <select id="getSexCount" resultType="com.jiaoke.oa.bean.DataAnalysis">
+        SELECT
+            sex as sex,
+            COUNT( * ) as sexNumber
+        FROM
+            `personnel_info`
+        GROUP BY
+            sex
+    </select>
+
+    <!--学历划分-->
+    <select id="getEducationCount" resultType="com.jiaoke.oa.bean.DataAnalysis">
+        SELECT
+            now_education as education,
+            COUNT( * )  as educationNum
+        FROM
+            `personnel_info`
+        GROUP BY
+            now_education
+    </select>
+
+    <!--技术等级划分-->
+    <select id="getTechnologyCount" resultType="com.jiaoke.oa.bean.DataAnalysis">
+        SELECT
+            technology_grade as technology,
+            COUNT( * )  as technologyNum
+        FROM
+            `personnel_info`
+        GROUP BY
+            technology_grade
+    </select>
+
+    <!--职称划分-->
+    <select id="getTitleCount" resultType="com.jiaoke.oa.bean.DataAnalysis">
+        SELECT
+            title_level as title,
+            COUNT( * ) as titleNum
+        FROM
+            `personnel_info`
+        GROUP BY
+            title_level
+    </select>
+
+    <!--户口性质划分-->
+    <select id="getAccountCount" resultType="com.jiaoke.oa.bean.DataAnalysis">
+        SELECT
+            account_nature as account,
+            COUNT( * ) as accountNum
+        FROM
+            `personnel_info`
+        GROUP BY
+            account_nature
+    </select>
+
+    <!--职务等级划分-->
+    <select id="getJobCount" resultType="com.jiaoke.oa.bean.DataAnalysis">
+        SELECT
+            job_category as job,
+            COUNT( * )  as jobNum
+        FROM
+            `personnel_info`
+        GROUP BY
+            job_category
+    </select>
+
+    <!--年龄划分-->
+    <select id="getAllAge" resultType="java.lang.Integer">
+        SELECT
+            age
+        FROM
+            `personnel_info`
+    </select>
+
+    <!--工作类型-->
+    <select id="getWorkType" resultType="java.lang.Integer">
+        SELECT
+            work_type
+        FROM
+            `personnel_info`
+    </select>
+
+    <!--入职管理-->
+    <select id="entryManage" resultType="com.jiaoke.oa.bean.PersonnelInfo">
+        SELECT
+            id,
+            `name`,
+            department,
+            job_category as jobCategory,
+            job,
+            joined_date as joinedDate,
+            correction_date as correctionDate
+        FROM
+            `personnel_info`
+        WHERE
+            correction_date &gt;= DATE_FORMAT( NOW( ), '%Y-%m-%d' )
+        ORDER BY
+	        correction_date ASC
+    </select>
+
+    <!--等待离职管理-->
+    <select id="waitLeave" resultType="com.jiaoke.oa.bean.PersonnelInfo">
+        SELECT
+            id,
+            `name`,
+            department,
+            job_category as jobCategory,
+            job,
+            joined_date as joinedDate,
+            apply_leave as applyLeave
+        FROM
+            `personnel_info`
+        WHERE
+            apply_leave &lt;&gt; ""
+        AND
+            apply_leave &gt;= DATE_FORMAT( NOW( ), '%Y-%m-%d' )
+        ORDER BY
+            apply_leave ASC
+    </select>
+
+    <!--已经离职管理-->
+    <select id="alreadyLeave" resultType="com.jiaoke.oa.bean.PersonnelInfo">
+        SELECT
+            id,
+            `name`,
+            department,
+            job_category as jobCategory,
+            job,
+            joined_date as joinedDate,
+            leave_date as leaveDate
+        FROM
+            `personnel_info`
+        WHERE
+            leave_date &lt;&gt; ""
+        AND
+            leave_date &lt;= DATE_FORMAT( NOW( ), '%Y-%m-%d' )
+        ORDER BY
+            leave_date ASC
+    </select>
+
+    <!--退休管理-->
+    <select id="retireManage" resultType="com.jiaoke.oa.bean.PersonnelInfo">
+        SELECT
+            id,
+            `name`,
+            sex,
+            id_card as idCard,
+            phone,
+            retirement_date as retirementDate,
+            retirement_company as retirementCompany,
+            physical_condition as physicalCondition
+        FROM
+            `personnel_info`
+        WHERE
+            retirement_date &lt;&gt; ""
+        AND
+            correction_date &lt;= DATE_FORMAT( NOW( ), '%Y-%m-%d' )
+        ORDER BY
+            leave_date DESC
+    </select>
+
+    <!--职位变动-->
+    <select id="jobChangeManage" resultType="com.jiaoke.oa.bean.PersonnelInfo">
+        SELECT
+            id,
+            `name`,
+            sex,
+            age,
+            original_position as originalPosition,
+            job,
+            vice_job as viceJob,
+            original_post as originalPost,
+            current_position as currentPosition,
+            transfer,
+            joined_date as joinedDate,
+            correction_date as correctionDate
+        FROM
+            `personnel_info`
+        WHERE
+            transfer &lt;&gt; ""
+        ORDER BY
+            transfer DESC
+    </select>
+
+    <!--根据主键修改合同状态-->
+    <update id="updateContractState" parameterType="java.lang.Integer">
+        UPDATE `personnel_info`
+        SET contract_flag = 1
+        WHERE
+	        id = #{id}
+    </update>
+</mapper>

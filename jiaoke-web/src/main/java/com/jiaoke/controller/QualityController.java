@@ -1014,6 +1014,14 @@ public class QualityController {
         return res;
     }
 
+    /**
+     * 发送实验报告并开启审批流程
+     *
+     * @param fromJson fromJson
+     * @param firstTest firstTest
+     * @param coarseTest coarseTest
+     * @return res
+     */
     @ResponseBody
     @RequestMapping(value = "/sendFromData.do",method = RequestMethod.POST)
     public String sendFromData(@RequestParam("fromJson") String fromJson,@RequestParam("firstTest") String firstTest,@RequestParam("coarseTest") String coarseTest){
@@ -1085,6 +1093,12 @@ public class QualityController {
         String promoter = "promoter";
         //回退
         String back = "back";
+        //审核人处理结果
+        String experimentReviewerDecide = "eg0";
+        //负责人处理结果
+        String experimentPrincipalDecide = "eg1";
+        //知会组
+        String notifyGroup = "notifyGroup";
 
         if (processingOpinion == null){
             processingOpinion = " ";
@@ -1109,33 +1123,62 @@ public class QualityController {
             if (end.equals(nextNode)) {
                 //更新实验项目状态
                 qualityExperimentalManagerInf.updateExperimentalItemStateById(id,3);
-
                 //插入批注
                 Authentication.setAuthenticatedUserId(getCurrentUser().getNickname());
                 taskService.addComment(taskId, task.getProcessInstanceId(), processingOpinion);
-
                 activitiUtil.endProcess(taskId);
                 return "success";
-            } else {
-                UserTask userTask = activitiUtil.getUserTask(task.getProcessDefinitionId(), nextNode);
-                if (nextNode.equals(userTask.getId())) {
-                    String enforcer = userTask.getAssignee().substring(userTask.getAssignee().indexOf("{") + 1, userTask.getAssignee().indexOf("}"));
 
-                    if (promoter.equals(enforcer)) {
-                        Map<String, Object> map = new HashMap<>(16);
-                        map.put(promoter, activitiUtil.getStartUserId(task.getProcessInstanceId()));
-                        activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
-                        return "success";
-
-                    } else {
-                        UserInfo userInfo = userInfoService.getUserInfoByPermission(enforcer);
-                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
-                        return "success";
-                    }
-                } else {
-                    return "error";
+                //材料部审批后的知会
+            } else if(notifyGroup.equals(nextNode)){
+                Map<String, Object> map = new HashMap<>(16);
+                ArrayList<String> list = new ArrayList<>();
+                //当前执行人批注
+                Authentication.setAuthenticatedUserId(getCurrentUser().getNickname());
+                taskService.addComment(taskId, task.getProcessInstanceId(), processingOpinion);
+                //查询知会人（多个）
+                List<UserInfo> userInfoList = userInfoService.selectMultipleByPermission(notifyGroup);
+                for (UserInfo userInfo : userInfoList) {
+                    list.add(userInfo.getId().toString());
                 }
+                map.put("userList", list);
+                taskService.complete(taskId, map);
+                return "success";
+
+                //审核人通过
+            } else if(experimentReviewerDecide.equals(nextNode)){
+                Map<String, Object> map = new HashMap<>(16);
+                UserInfo userInfo = userInfoService.getUserInfoByPermission("experimentPrincipal");
+                Authentication.setAuthenticatedUserId(getCurrentUser().getNickname());
+                taskService.addComment(taskId, task.getProcessInstanceId(), processingOpinion);
+                map.put("decide", 0);
+                map.put("experimentPrincipal",  userInfo.getId());
+                taskService.complete(taskId, map);
+                return "success";
+
+                //负责人通过
+            }else if (experimentPrincipalDecide.equals(nextNode)) {
+                Map<String, Object> map = new HashMap<>(16);
+                map.put("decide", 0);
+                map.put(promoter, activitiUtil.getStartUserId(task.getProcessInstanceId()));
+                activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
+                return "success";
+            }else {
+                return "error";
             }
+
+            //发送材料部
+        } else if (flag == 3){
+            Map<String, Object> map = new HashMap<>(16);
+            UserInfo userInfo = userInfoService.getUserInfoByPermission("materialPrincipal");
+            Authentication.setAuthenticatedUserId(getCurrentUser().getNickname());
+            taskService.addComment(taskId, task.getProcessInstanceId(), processingOpinion);
+            map.put("decide", 1);
+            map.put("materialPrincipal",  userInfo.getId());
+            taskService.complete(taskId, map);
+            return "success";
+
+            //回退
         } else {
             //插入批注
             Authentication.setAuthenticatedUserId(getCurrentUser().getNickname());

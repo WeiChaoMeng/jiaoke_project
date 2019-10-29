@@ -164,7 +164,7 @@ public class OaContractAgreementController {
      *
      * @param id    id
      * @param model model
-     * @return details.jsp
+     * @return edit.jsp
      */
     @RequestMapping(value = "/toContractAgreementDetails")
     public String particulars(int id, Model model) {

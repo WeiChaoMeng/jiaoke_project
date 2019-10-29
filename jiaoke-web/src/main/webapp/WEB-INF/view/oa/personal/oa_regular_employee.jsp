@@ -35,9 +35,9 @@
         background-color: #bdbdbd80;
     }
 </style>
-<body>
+<body style="padding: 15px">
 
-<table class="simpletable simpletable_color" style="margin-top: 10px;">
+<table class="simpletable simpletable_color">
 
     <thead>
     <th style="width: 5%">序号</th>
@@ -47,7 +47,6 @@
     <th style="width: 15%">结算日期</th>
     <th style="width: 15%">上传时间</th>
     <th style="width: 10%">操作</th>
-    <th></th>
     </thead>
 
     <tbody>
@@ -75,9 +74,9 @@
 
 </table>
 
-<div style="position: fixed;bottom: 10px;left: 45%;background: #92ebff;border: solid 1px #d4d4d4;">
+<div style="position: fixed;bottom: 30px;left: 45%;background: #92ebff;border: solid 1px #d4d4d4;">
     <input id="fileSelect" type="file"
-           style="height: 30px;opacity: 0;width: 102px;position: absolute;"
+           style="height: 30px;opacity: 0;width: 102px;position: absolute;left: 0;top: 0;"
            value="" onchange="importExcel(this)" multiple="multiple"
            accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
     <span style="width: 60px;float: left;line-height: 28px;padding: 0 20px;text-align: center;">
@@ -90,21 +89,6 @@
 <script type="text/javascript" src="../../../../static/js/oa/oa_common.js"></script>
 <script type="text/javascript" src="../../../../static/js/skin.js"></script>
 <script>
-
-    /* 预定撤销 - 查询条件*/
-    $("#condition5").on("change", function () {
-        var opt = $("#condition5").val();
-        if (opt == 2) {
-            $(".head_right_side_select").css("display", "block");
-            $(".head_right_side_input").css("display", "none");
-        } else if (opt == 1) {
-            $(".head_right_side_input").css("display", "block");
-            $(".head_right_side_select").css("display", "none");
-        } else {
-            $(".head_right_side_input").css("display", "none");
-            $(".head_right_side_select").css("display", "none");
-        }
-    });
 
     //导入excel
     function importExcel(obj) {

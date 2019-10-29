@@ -402,7 +402,7 @@
                     var trackList = '';
                     for (let i = 0; i < alreadyIssued.length; i++) {
                         trackList += '<tr>';
-                        trackList += '    <td class="list_content" style="width: 74%">';
+                        trackList += '    <td class="list_content" style="width: 69%">';
                         trackList += '        <span class="list_content_name">';
                         trackList += '            <a class="check_color" onclick="taskDetails(\'' + alreadyIssued[i].url + '\',\'' + alreadyIssued[i].correlationId + '\',\'' + alreadyIssued[i].taskId + '\')" title="' + alreadyIssued[i].title + '">' + alreadyIssued[i].title + '</a>';
                         trackList += '        </span>';
@@ -412,7 +412,7 @@
                         trackList += '            <a title="申请时间">' + alreadyIssued[i].createTimeStr + '</a>';
                         trackList += '        </span>';
                         trackList += '    </td>';
-                        trackList += '    <td class="list-content-proposer" style="width: 10%">';
+                        trackList += '    <td class="list-content-proposer" style="width: 15%">';
                         trackList += '        <span class="list_content_sponsor">';
                         trackList += '            <a style="color: #2196F3;font-weight: 600;" title="当前待办人">' + alreadyIssued[i].currentExecutor + '</a>';
                         trackList += '        </span>';

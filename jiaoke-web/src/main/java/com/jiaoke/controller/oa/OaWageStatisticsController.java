@@ -104,7 +104,7 @@ public class OaWageStatisticsController {
     public String personalSalary(Model model) {
         UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
         OaPersonalWages personalWages = oaWageStatisticsService.getPersonalWagesByNickName(userInfo.getNickname());
-        model.addAttribute("personalWages",personalWages);
+        model.addAttribute("personalWages", personalWages);
         return "oa/personal/oa_personal_salary";
     }
 }

@@ -210,6 +210,7 @@ function getFromData() {
         url: basePath + "/getSamplingPageFromData.do",
         dataType:'json',
         success: function(msg){
+            debugger
             for(p in msg){
                 $("#" + p).empty();
             	for (var i=0; i < msg[p].length;i++){

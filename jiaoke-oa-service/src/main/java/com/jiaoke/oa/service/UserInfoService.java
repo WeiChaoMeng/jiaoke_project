@@ -115,6 +115,14 @@ public interface UserInfoService {
     UserInfo getUserInfoByPermission(String url);
 
     /**
+     * 根据权限获取用户信息(多个)
+     *
+     * @param url 权限访问地址
+     * @return userInfo
+     */
+    List<UserInfo> selectMultipleByPermission(String url);
+
+    /**
      * 根据用户id获取部门id
      *
      * @param userId 用户id

@@ -1,16 +1,13 @@
 package com.jiaoke;
 
 import com.jiaoke.controller.SpringHelper;
-import com.jiaoke.oa.bean.AirQuality;
-import com.jiaoke.oa.bean.OaCollaboration;
-import com.jiaoke.oa.dao.OaCollaborationMapper;
+import com.jiaoke.oa.bean.UserInfo;
+import com.jiaoke.oa.dao.PersonnelManageMapper;
 import com.jiaoke.oa.dao.UserInfoMapper;
-import com.jiaoke.oa.dao.WeatherReportByCityMapper;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author lihui
@@ -19,21 +16,18 @@ import java.util.Map;
  */
 public class qualityTest {
 
-    //    private RoleInfoMapper roleInfoMapper;
-    private WeatherReportByCityMapper weatherReportByCityMapper;
-//    private DingDingPunchRecordMapper dingDingPunchRecordMapper;
+    private UserInfoMapper userInfoMapper;
 
     @Before
     public void setUp() {
-        weatherReportByCityMapper = SpringHelper.getBean("weatherReportByCityMapper");
+        userInfoMapper = SpringHelper.getBean("userInfoMapper");
     }
 
     @Test
     public void testUser() {
-
-        List<AirQuality> airQualityList = weatherReportByCityMapper.selectLastWeekData();
-        for (int i = 0; i < airQualityList.size(); i++) {
-            System.out.println(airQualityList.get(i).getFineParticle());
+        List<UserInfo> userInfoList = userInfoMapper.selectMultipleByPermission("materialPrincipal");
+        for (UserInfo userInfo : userInfoList) {
+            System.out.println(userInfo.getId());
         }
     }
 }

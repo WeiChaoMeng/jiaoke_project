@@ -39,6 +39,17 @@ public class DateUtil {
     }
 
     /**
+     * date转string（yyyy-MM）
+     *
+     * @param date date
+     * @return string
+     */
+    public static String dateConvertYYYYMM(Date date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM");
+        return simpleDateFormat.format(date);
+    }
+
+    /**
      * dateString转date（yyyy-MM-dd）
      *
      * @param dateString dateString
@@ -46,6 +57,21 @@ public class DateUtil {
      */
     public static Date stringConvertYYYYMMDD(String dateString) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            return simpleDateFormat.parse(dateString);
+        } catch (Exception e) {
+            return new Date();
+        }
+    }
+
+    /**
+     * dateString转date（yyyy-MM）
+     *
+     * @param dateString dateString
+     * @return date
+     */
+    public static Date stringConvertYYYYMM(String dateString) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM");
         try {
             return simpleDateFormat.parse(dateString);
         } catch (Exception e) {

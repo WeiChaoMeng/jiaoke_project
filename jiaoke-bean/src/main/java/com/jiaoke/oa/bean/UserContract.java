@@ -1,105 +1,109 @@
 package com.jiaoke.oa.bean;
 
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
- * 用户合同
+ * 用户合同管理
  *
  * @author lihui
  * @version 1.0
  * @date 2018/10/10 11:00
  */
+@Table(name = "user_contract")
 public class UserContract implements Serializable {
+
     /**
-     * 用户信息id
+     * 主键
      */
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     /**
-     * 用户id（关联id）
+     * 人员信息ID（G管理Id）
      */
-    private String userId;
+    private Integer personnelId;
 
     /**
-     * 合同类型：1固定期限劳动合同，2无固定期限劳动合同
+     * 首次签订期限（0.—，1.三年，2.五年，无固定，4其他）
      */
-    private Integer type;
+    private Integer firstTerm;
+
+    /**
+     * 首次签订日期
+     */
+    private String firstSign;
+
+    /**
+     * 首次签订终止日期
+     */
+    private String firstStop;
+
+    /**
+     * 续签期限
+     */
+    private Integer renewTerm;
+
+    /**
+     * 续签日期
+     */
+    private String renewSign;
+
+    /**
+     * 续签终止日期
+     */
+    private String renewStop;
+
+    /**
+     * 最后续签期限
+     */
+    private Integer lastTerm;
+
+    /**
+     * 最后续签日期
+     */
+    private String lastSign;
+
+    /**
+     * 最后续签终止日期
+     */
+    private String lastStop;
+
+    /**
+     * 合同期限
+     */
+    private Integer contractTerm;
+
+    /**
+     * 合同签订日期
+     */
+    private String contractSign;
+
+    /**
+     * 合同终止日期
+     */
+    private String contractStop;
+
+    /*临时使用*/
+    /**
+     * 名字
+     */
+    @Transient
+    private String name;
+
+    /**
+     * 性别
+     */
+    @Transient
+    private String sex;
 
     /**
      * 入职日期
      */
-    private Date entryDate;
     @Transient
-    private String entryDateStr;
-
-    /**
-     * 转正日期
-     */
-    private Date positiveDate;
-    @Transient
-    private String positiveDateStr;
-
-    /**
-     * 签订日期
-     */
-    private Date singDate;
-    @Transient
-    private String singDateStr;
-
-    /**
-     * 合同开始日期
-     */
-    private Date startDate;
-    @Transient
-    private String startDateStr;
-
-    /**
-     * 合同结束日期
-     */
-    private Date endDate;
-    @Transient
-    private String endDateStr;
-
-    /**
-     * 合同结束日期
-     */
-    private Date soonLeaveDate;
-    @Transient
-    private String soonLeaveDateStr;
-
-    /**
-     * 合同结束日期
-     */
-    private Date LeaveDate;
-    @Transient
-    private String LeaveDateStr;
-
-    @Transient
-    private Integer expire;
-
-    /**
-     * 期限
-     */
-    private String term;
-
-    /**
-     * 工作性质
-     */
-    private String nature;
-
-    @Transient
-    private String name;
-
-    @Transient
-    private String dep;
-
-    @Transient
-    private String pos;
-
-    @Transient
-    private String job;
+    private String joinedDate;
 
     public Integer getId() {
         return id;
@@ -109,124 +113,108 @@ public class UserContract implements Serializable {
         this.id = id;
     }
 
-    public String getUserId() {
-        return userId;
+    public Integer getPersonnelId() {
+        return personnelId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setPersonnelId(Integer personnelId) {
+        this.personnelId = personnelId;
     }
 
-    public Integer getType() {
-        return type;
+    public Integer getFirstTerm() {
+        return firstTerm;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public void setFirstTerm(Integer firstTerm) {
+        this.firstTerm = firstTerm;
     }
 
-    public Date getEntryDate() {
-        return entryDate;
+    public String getFirstSign() {
+        return firstSign;
     }
 
-    public void setEntryDate(Date entryDate) {
-        this.entryDate = entryDate;
+    public void setFirstSign(String firstSign) {
+        this.firstSign = firstSign;
     }
 
-    public String getEntryDateStr() {
-        return entryDateStr;
+    public String getFirstStop() {
+        return firstStop;
     }
 
-    public void setEntryDateStr(String entryDateStr) {
-        this.entryDateStr = entryDateStr;
+    public void setFirstStop(String firstStop) {
+        this.firstStop = firstStop;
     }
 
-    public Date getSingDate() {
-        return singDate;
+    public Integer getRenewTerm() {
+        return renewTerm;
     }
 
-    public void setSingDate(Date singDate) {
-        this.singDate = singDate;
+    public void setRenewTerm(Integer renewTerm) {
+        this.renewTerm = renewTerm;
     }
 
-    public String getSingDateStr() {
-        return singDateStr;
+    public String getRenewSign() {
+        return renewSign;
     }
 
-    public void setSingDateStr(String singDateStr) {
-        this.singDateStr = singDateStr;
+    public void setRenewSign(String renewSign) {
+        this.renewSign = renewSign;
     }
 
-    public Date getStartDate() {
-        return startDate;
+    public String getRenewStop() {
+        return renewStop;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public void setRenewStop(String renewStop) {
+        this.renewStop = renewStop;
     }
 
-    public String getStartDateStr() {
-        return startDateStr;
+    public Integer getLastTerm() {
+        return lastTerm;
     }
 
-    public void setStartDateStr(String startDateStr) {
-        this.startDateStr = startDateStr;
+    public void setLastTerm(Integer lastTerm) {
+        this.lastTerm = lastTerm;
     }
 
-    public Date getEndDate() {
-        return endDate;
+    public String getLastSign() {
+        return lastSign;
     }
 
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public void setLastSign(String lastSign) {
+        this.lastSign = lastSign;
     }
 
-    public String getEndDateStr() {
-        return endDateStr;
+    public String getLastStop() {
+        return lastStop;
     }
 
-    public void setEndDateStr(String endDateStr) {
-        this.endDateStr = endDateStr;
+    public void setLastStop(String lastStop) {
+        this.lastStop = lastStop;
     }
 
-    public String getTerm() {
-        return term;
+    public Integer getContractTerm() {
+        return contractTerm;
     }
 
-    public void setTerm(String term) {
-        this.term = term;
+    public void setContractTerm(Integer contractTerm) {
+        this.contractTerm = contractTerm;
     }
 
-    public String getNature() {
-        return nature;
+    public String getContractSign() {
+        return contractSign;
     }
 
-    public void setNature(String nature) {
-        this.nature = nature;
+    public void setContractSign(String contractSign) {
+        this.contractSign = contractSign;
     }
 
-    public Integer getExpire() {
-        return expire;
+    public String getContractStop() {
+        return contractStop;
     }
 
-    public void setExpire(Integer expire) {
-        this.expire = expire;
-    }
-
-    public Date getPositiveDate() {
-        return positiveDate;
-    }
-
-    public void setPositiveDate(Date positiveDate) {
-        this.positiveDate = positiveDate;
-    }
-
-    public String getPositiveDateStr() {
-        return positiveDateStr;
-    }
-
-    public void setPositiveDateStr(String positiveDateStr) {
-        this.positiveDateStr = positiveDateStr;
+    public void setContractStop(String contractStop) {
+        this.contractStop = contractStop;
     }
 
     public String getName() {
@@ -237,59 +225,19 @@ public class UserContract implements Serializable {
         this.name = name;
     }
 
-    public String getDep() {
-        return dep;
+    public String getSex() {
+        return sex;
     }
 
-    public void setDep(String dep) {
-        this.dep = dep;
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
-    public String getPos() {
-        return pos;
+    public String getJoinedDate() {
+        return joinedDate;
     }
 
-    public void setPos(String pos) {
-        this.pos = pos;
-    }
-
-    public String getJob() {
-        return job;
-    }
-
-    public void setJob(String job) {
-        this.job = job;
-    }
-
-    public Date getSoonLeaveDate() {
-        return soonLeaveDate;
-    }
-
-    public void setSoonLeaveDate(Date soonLeaveDate) {
-        this.soonLeaveDate = soonLeaveDate;
-    }
-
-    public String getSoonLeaveDateStr() {
-        return soonLeaveDateStr;
-    }
-
-    public void setSoonLeaveDateStr(String soonLeaveDateStr) {
-        this.soonLeaveDateStr = soonLeaveDateStr;
-    }
-
-    public Date getLeaveDate() {
-        return LeaveDate;
-    }
-
-    public void setLeaveDate(Date leaveDate) {
-        LeaveDate = leaveDate;
-    }
-
-    public String getLeaveDateStr() {
-        return LeaveDateStr;
-    }
-
-    public void setLeaveDateStr(String leaveDateStr) {
-        LeaveDateStr = leaveDateStr;
+    public void setJoinedDate(String joinedDate) {
+        this.joinedDate = joinedDate;
     }
 }

@@ -35,20 +35,6 @@ $(function () {
         $('#oa-iframe').attr("src", "personalAttendance/toPersonalAttendance");
     });
 
-    //考勤统计
-    $("#attendance_statistics").on("click", function () {
-        removeOwnName();
-        personal(this);
-        $('#oa-iframe').attr("src", "personalAttendance/toAttendanceStatistics");
-    });
-
-    //日程计划
-    $("#schedule_planning").on("click", function () {
-        removeOwnName();
-        personal(this);
-        $('#oa-iframe').attr("src", "OASchedulePlanning.do");
-    });
-
     //个人工资
     $("#personal_salary").on("click", function () {
         removeOwnName();
@@ -56,22 +42,7 @@ $(function () {
         $('#oa-iframe').attr("src", "wageStatistics/toPersonalSalary");
     });
 
-    //工资统计
-    $("#wage_statistics").on("click", function () {
-        removeOwnName();
-        personal(this);
-        $('#oa-iframe').attr("src", "OAWageStatisticsInner.do");
-    });
-
-    //待办记事
-    $("#notepad").on("click", function () {
-        removeOwnName();
-        personal(this);
-        $('#oa-iframe').attr("src", "OANotepad.do");
-    });
-
     /*--- 协同工作 ---*/
-
     //新建事项
     $("#new_matter").on("click", function () {
         window.open('collaboration/newBuild', '_blank', 'height=700, width=1400, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
