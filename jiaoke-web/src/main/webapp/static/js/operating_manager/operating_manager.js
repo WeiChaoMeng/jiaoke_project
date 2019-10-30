@@ -87,8 +87,8 @@ function getThisMonthData() {
 }
 function getThisYearData() {
     var basePath = $("#path").val();
-    var time2 = dateFtt("yyyy",new Date());
-    $("#yearDate").text(time2);
+    var time2 = dateFtt("yyyy-mm-dd",new Date());
+    $("#yearDate").text(time2 + ' - ' + getFirstDayOfYear(new Date()));
 
     //后台获取生产量
     $.ajax({
@@ -100,6 +100,22 @@ function getThisYearData() {
         }
     })
 }
+function getFirstDayOfYear (date) {
+         date.setDate(1);
+         date.setMonth(0);
+    return timeFormat(date);
+}
+ //日期格式化，返回值形式为yy-mm-dd
+ function timeFormat(date) {
+         if (!date || typeof(date) === "string") {
+                this.error("参数异常，请检查...");
+        }
+        var y = date.getFullYear(); //年
+         var m = date.getMonth() + 1; //月
+         var d = date.getDate(); //日
+
+    return y + "-" + m + "-" + d;
+ }
 
 function getAlldata() {
     //path
@@ -127,7 +143,6 @@ function getLastMonthData() {
         dataType:"json",
         success:function (res) {
             if (res){
-                debugger
                 var dataArray = [];
                 for(var i in res){
                     var temDate = res[i].proDate;

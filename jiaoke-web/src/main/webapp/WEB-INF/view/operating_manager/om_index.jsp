@@ -128,7 +128,11 @@
                                             bottom: 30,
                                         },
                                         tooltip: {
-                                            show: true,
+                                            trigger: 'axis',
+                                            formatter: function (params) {
+                                                params = params[0];
+                                                return params.name +'日:'+ params.value+'吨';
+                                            }
                                         },
                                         xAxis: {
                                             type: 'category',
@@ -139,13 +143,13 @@
                                             splitLine: {
                                                 show: true,
                                                 lineStyle: {
-                                                    color: 'rgb(237, 232, 249)',
-                                                },
+                                                    color: 'rgb(237, 232, 249)'
+                                                }
                                             },
 
                                             axisTick: {
-                                                show: false,
-                                            },
+                                                show: false
+                                            }
                                         },
                                         yAxis: {
                                             name:'单位：吨',
@@ -158,8 +162,8 @@
                                             type: 'line',
                                             symbolSize: 8,
                                             itemStyle: {
-                                                borderWidth: 2,
-                                            },
+                                                borderWidth: 2
+                                            }
                                         }]
                                     }
                                 </script>
