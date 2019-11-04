@@ -50,11 +50,11 @@
                 <th>盘号</th>
                 <th>配比名称</th>
                 <th>机组名称</th>
-                <th style="color: #a94442;" >骨料1预警级别</th>
+                <th >骨料1预警级别</th>
                 <th>骨料1偏差比</th>
-                <th style="color: #a94442;"  >沥青预警级别</th>
+                <th >沥青预警级别</th>
                 <th>沥青偏差比</th>
-                <th style="color: #a94442;" >一仓温度预警级别</th>
+                <th>一仓温度预警级别</th>
                 <th>一仓温度偏差比</th>
                 <th>操作</th>
             </tr>

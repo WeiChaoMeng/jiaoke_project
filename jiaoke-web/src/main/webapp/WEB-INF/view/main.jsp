@@ -106,7 +106,10 @@
         </ul>
         <div id="codeDiv" style="width: 75px;height: 75px;position: absolute;right: 115px;">
             <a onclick="selectedCode()" href="javascript:;" style="height: 100%;width: 100%;position: absolute;">
-                <img id="code" style="width: 100%;height: 100%;" src="/static/images/logo/download.png"></a></div>
+                <img id="code" style="width: 80%;height: 75%;margin-top: 10%;padding-left: 6px;" src="/static/images/logo/download.png"></a>
+            <span style="display: block;margin-top: 90%;">点击下载APP</span>
+        </div>
+
         <div class="topright">
             <div class="user">
                 <span>
@@ -157,7 +160,7 @@
 </div>
 
 <div id="layerDemo" style="width: 200px;height: 200px;display: none;">
-    <img style="width:100%;height:100%;" src="/static/images/logo/download.png" alt="移动端二维码">
+    <img style="width:100%;height:100%;background-color: #fff" src="/static/images/logo/download.png" alt="移动端二维码">
 </div>
 
 <%--模态窗-添加用户--%>
