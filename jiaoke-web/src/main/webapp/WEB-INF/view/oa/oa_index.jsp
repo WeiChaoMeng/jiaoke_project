@@ -315,25 +315,6 @@
                             <%--<em class="template-icon">&#xe695;</em>加班统计表--%>
                             <%--</a>--%>
                             <%--</td>--%>
-
-                            <%--删除--%>
-                            <%--<td class="template" valign="middle">--%>
-                            <%--<a class="check_color" onclick="commonJump('personalInfo')" title="个人信息登记表">--%>
-                            <%--<em class="template-icon">&#xe695;</em>个人信息登记表--%>
-                            <%--</a>--%>
-                            <%--</td>--%>
-
-                            <%--<td class="template" valign="middle">--%>
-                            <%--<a class="check_color" onclick="commonJump('integrity')" title="廉政谈话审批表">--%>
-                            <%--<em class="template-icon">&#xe695;</em>廉政谈话审批表--%>
-                            <%--</a>--%>
-                            <%--</td>--%>
-
-                            <%--<td class="template" valign="middle">--%>
-                            <%--<a class="check_color" onclick="commonJump('transferTwo')" title="转岗审批表2">--%>
-                            <%--<em class="template-icon">&#xe695;</em>转岗审批表2--%>
-                            <%--</a>--%>
-                            <%--</td>--%>
                         </tr>
                         </tbody>
                     </table>

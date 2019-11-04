@@ -17,6 +17,11 @@
         .nav a {
             padding-left: 16px;
         }
+
+        .nav-item {
+            position: relative;
+            height: 42px;
+        }
     </style>
 </head>
 <body>
@@ -30,24 +35,14 @@
         <li class="nav-item">
             <a id="circumstanceIndex">
                 <img src="../../../static/images/milieu/index1.png" style="padding: 5px 0">
-                <span style="margin-left: 10px;position: absolute;font-size: 13px;">首页</span>
+                <span style="margin-left: 10px;position: absolute;font-size: 13px;">公开环保数据</span>
             </a>
         </li>
         <li class="nav-item">
-            <a><img src="../../../static/images/milieu/realTime.png" style="padding: 5px 0">
-                <span style="margin-left: 10px;position: absolute;font-size: 13px;">实时数据</span>
+            <a id="dataAnalysis">
+                <img src="../../../static/images/milieu/realTime.png" style="padding: 5px 0">
+                <span style="margin-left: 10px;position: absolute;font-size: 13px;">实时环保数据</span>
             </a>
-            <ul>
-                <li><a id="data_analysis"><span>数据分析</span></a></li>
-            </ul>
-        </li>
-        <li class="nav-item">
-            <a><img src="../../../static/images/milieu/history1.png" style="padding: 5px 0">
-                <span style="margin-left: 10px;position: absolute;font-size: 13px;">历史数据</span>
-            </a>
-            <ul>
-                <li><a id="circumstance"><span>环境监测</span></a></li>
-            </ul>
         </li>
     </ul>
 </div>
@@ -89,12 +84,8 @@
         });
     });
 
-    $("#data_analysis").on("click", function () {
+    $("#dataAnalysis").on("click", function () {
         $('#iframe').attr("src", "realTimeData.do");
-    });
-
-    $("#circumstance").on("click", function () {
-        $('#iframe').attr("src", "circumstance.do");
     });
 
     $("#circumstanceIndex").on("click", function () {

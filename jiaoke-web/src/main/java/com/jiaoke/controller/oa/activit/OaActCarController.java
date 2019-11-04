@@ -127,6 +127,8 @@ public class OaActCarController {
     public String approvalApi(String id, String taskId) {
         HashMap<String, Object> map = new HashMap<>(16);
         OaActCar oaActCar = oaActCarService.selectByPrimaryKey(id);
+        String nickname = getCurrentUser().getNickname();
+        map.put("nickname",nickname);
         map.put("car",oaActCar);
         map.put("taskId",taskId);
         return JSON.toJSONString(map);

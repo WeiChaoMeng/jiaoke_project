@@ -45,7 +45,14 @@ body {
 }
 
 .nav {
-    width: 140px
+    width: 6.5%;
+    min-height: 100%;
+    height: auto;
+    background: #f5f9ff;
+    transition: all .3s;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .mini {
@@ -71,7 +78,34 @@ body {
     float: right;
     position: relative;
     height: 99%;
-    width: 90%;
+    width: 93%;
+}
+
+.nav-item {
+    position: relative;
+    text-align: center;
+    padding: 5px 0;
+}
+
+.nav-item img {
+    width: 28px;
+}
+
+.nav-item span {
+    display: block;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.nav ul {
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item-style {
+    background-color: #ffffff;
+    transition: all .3s;
+    box-shadow: 1px 1px 5px 0 #a7a7a7;
 }
 
 .right_page > img {
@@ -149,4 +183,135 @@ body {
     top: 24%;
     font-size: 20px;
     width: 2%;
+}
+
+/*办公区域*/
+.office-region {
+    position: absolute;
+    left: 33%;
+    top: 55%;
+    font-size: 20px;
+    background: #ffe500;
+    width: 80px;
+    height: 108px;
+    opacity: .5;
+    border-radius: 40px;
+}
+
+.sign-office-1 {
+    width: 20px;
+    margin-top: -10px;
+    cursor: pointer;
+    left: 26px;
+    position: absolute;
+    top: 10px;
+}
+
+.sign-office-2 {
+    width: 20px;
+    margin-top: -10px;
+    cursor: pointer;
+    left: 38px;
+    position: absolute;
+    top: 86px;
+}
+
+/*出入口区域*/
+.guard-region {
+    position: absolute;
+    left: 5%;
+    top: 67%;
+    font-size: 20px;
+    background: #ffe500;
+    width: 33px;
+    height: 29px;
+    opacity: .7;
+    border-radius: 0 0 0 100px;
+}
+
+.sign {
+    width: 20px;
+    margin-top: -10px;
+    float: right;
+    cursor: pointer;
+}
+
+.sign:hover, .sign-office-1:hover, .sign-office-2:hover {
+    width: 25px;
+    margin-top: -15px;
+}
+
+/*右上角示意区域*/
+.signal-region {
+    position: absolute;
+    right: 5%;
+    top: 5%;
+    text-align: right;
+}
+
+.signal-region-name {
+    font-size: 30px;
+    color: #f00;
+}
+
+.legend-region {
+    background-color: #FFFFFF;
+    padding: 10px 18px;
+    display: inline-block;
+    text-align: center;
+    margin-top: 10px;
+    opacity: .9;
+}
+
+.legend-region-name {
+    font-size: 15px;
+    display: block;
+    margin-bottom: 7px;
+}
+
+.legend-region-content {
+    margin: 0;
+    border: 0;
+    display: table;
+    padding: 5px 0;
+}
+
+.boundary-legend-img {
+    border: 2px solid #f00;
+    width: 14px;
+    display: inline-block;
+}
+
+.boundary-legend-name {
+    font-size: 13px;
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+.scope-legend-img {
+    background-color: #ffe500;
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.scope-legend-name {
+    font-size: 13px;
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+.scope-location-img {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.scope-location-name {
+    font-size: 13px;
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: middle;
 }

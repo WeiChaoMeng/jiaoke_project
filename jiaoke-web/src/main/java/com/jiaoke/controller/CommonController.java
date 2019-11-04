@@ -202,14 +202,7 @@ public class CommonController {
     public String realTimeData(){
         return "milieu/real_time_data";
     }
- /**
-     * 跳转环保监控-环境监测
-     * @return circumstance.jsp
-     */
-    @RequestMapping("/circumstance.do")
-    public String circumstance(){
-        return "milieu/circumstance";
-    }
+
  /**
      * 跳转环保监控-首页
      * @return main.jsp

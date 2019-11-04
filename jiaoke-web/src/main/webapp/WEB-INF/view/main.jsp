@@ -84,9 +84,11 @@
                 <a href="#" class="manu" id="SY">实验管理</a>
             </li>
 
-            <li>
-                <a href="#" class="manu" id="HR">人事管理</a>
-            </li>
+            <shiro:hasPermission name="personnelManage">
+                <li>
+                    <a href="#" class="manu" id="HR">人事管理</a>
+                </li>
+            </shiro:hasPermission>
 
             <li>
                 <a href="#" class="manu" id="DJ">党建工作</a>
