@@ -1,5 +1,7 @@
 package com.jiaoke.oa.bean;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -34,6 +36,17 @@ public class Permission implements Serializable {
      * 创建时间
      */
     private Date createTime;
+
+    /**
+     * 父id
+     */
+    private Integer pid;
+
+    /**
+     * tree选中必要字段
+     */
+    @Transient
+    private String LAY_CHECKED;
 
     private String createTimeStr;
 
@@ -75,5 +88,22 @@ public class Permission implements Serializable {
 
     public void setCreateTimeStr(String createTimeStr) {
         this.createTimeStr = createTimeStr;
+    }
+
+    public Integer getPid() {
+        return pid;
+    }
+
+    public void setPid(Integer pid) {
+        this.pid = pid;
+    }
+
+    @JSONField(name = "LAY_CHECKED")
+    public String getLAY_CHECKED() {
+        return LAY_CHECKED;
+    }
+
+    public void setLAY_CHECKED(String LAY_CHECKED) {
+        this.LAY_CHECKED = LAY_CHECKED;
     }
 }

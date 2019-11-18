@@ -28,82 +28,85 @@
 
 <div style="height: 10%">
     <ul class="menu">
-
-        <shiro:hasPermission name="realTimeMonitor">
+        <shiro:hasPermission name="quality:monitorOuter">
             <li>
                 <a href="#" id="real_time_monitor" onclick="real_time_monitor()" class="menu_selected">
                     <i class="menuico iconfont1">&#xe656;</i>实时监测</a>
             </li>
         </shiro:hasPermission>
 
-        <shiro:hasPermission name="historicalData">
+        <shiro:hasPermission name="quality:historyOuter">
             <li>
                 <a href="#" id="historical_data" onclick="historical_data()" class="menu_selected">
                     <i class="menuico iconfont1">&#xe8bc;</i>历史数据</a>
             </li>
         </shiro:hasPermission>
 
-        <shiro:hasPermission name="matchingManager">
+        <shiro:hasPermission name="quality:proportioning">
             <li>
                 <a href="#" id="matching_manager" onclick="matching_model()" class="menu_selected">
                     <i class="menuico iconfont1">&#xe636;</i>配比管理</a>
             </li>
         </shiro:hasPermission>
 
+        <shiro:hasPermission name="quality:grading">
             <li>
                 <a href="#" id="grading_manager" onclick="grading_manager()" class="menu_selected">
                     <i class="menuico iconfont1">&#xe636;</i>级配管理</a>
             </li>
-        <shiro:hasPermission name="dynamicManagement">
+        </shiro:hasPermission>
+
+        <shiro:hasPermission name="quality:dynamic">
             <li>
                 <a href="#" id="dynamic_management" class="menu_selected" onclick="dynamic_management()">
                     <i class="menuico iconfont1">&#xe813;</i>动态管理</a>
             </li>
         </shiro:hasPermission>
-
     </ul>
 
 
     <ul class="menu">
-
-        <shiro:hasPermission name="realTimeProtection">
+        <shiro:hasPermission name="quality:monitor">
             <li>
                 <a href="#" id="real_time_protection" class="menu_selected" onclick="real_time_protection()"><i
                         class="menuico iconfont1">&#xeba7;</i>实时监控</a>
             </li>
         </shiro:hasPermission>
 
-        <shiro:hasPermission name="qualityWarning">
+        <shiro:hasPermission name="quality:warning">
             <li>
                 <a href="#" id="quality_warning" onclick="quality_warning()" class="menu_selected">
                     <i class="menuico iconfont1">&#xe6a8;</i>质量预警</a>
             </li>
         </shiro:hasPermission>
 
-        <shiro:hasPermission name="dataManager">
+        <shiro:hasPermission name="quality:data">
             <li>
                 <a href="#" id="data_manager" onclick="data_manager()" class="menu_selected">
                     <i class="menuico iconfont1">&#xe843;</i>数据管理</a>
             </li>
         </shiro:hasPermission>
 
-        <shiro:hasPermission name="auxiliaryAnalysis">
+        <shiro:hasPermission name="quality:assist">
             <li>
                 <a href="#" id="auxiliary_analysis" onclick="auxiliary_analysis()" class="menu_selected">
                     <i class="menuico iconfont1">&#xe68c;</i>辅助分析</a>
             </li>
         </shiro:hasPermission>
 
-        <shiro:hasPermission name="dataSummary">
+        <shiro:hasPermission name="quality:summary">
             <li>
                 <a href="#" id="data_summary" onclick="data_summary()" class="menu_selected">
                     <i class="menuico iconfont1">&#xe94d;</i>数据汇总</a>
             </li>
         </shiro:hasPermission>
+
+        <shiro:hasPermission name="quality:alarm">
             <li>
                 <a href="#" id="critical_warning" onclick="critical_warning()" class="menu_selected">
                     <i class="menuico iconfont1">&#xebdc;</i>警报管理</a>
             </li>
+        </shiro:hasPermission>
         <%--<li>--%>
         <%--<a href="#" id="prodoct_list" onclick="prodoct_list()" class="menu_selected">--%>
         <%--<i class="menuico iconfont1">&#xebdc;</i>产品报表</a>--%>
@@ -181,7 +184,8 @@
     function dynamic_management() {
         $('iframe').attr("src", "qc_dynamic_management.do");
     }
-    function grading_manager(){
+
+    function grading_manager() {
         $('iframe').attr("src", "qc_grading_manager.do");
     }
 
@@ -189,7 +193,7 @@
         $('iframe').attr("src", "qc_data_summary.do");
     }
 
-    function critical_warning(){
+    function critical_warning() {
         $('iframe').attr("src", "qc_critical_warning.do");
     }
 

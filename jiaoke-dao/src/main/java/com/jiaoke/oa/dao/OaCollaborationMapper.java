@@ -87,6 +87,15 @@ public interface OaCollaborationMapper {
     int deleteByCorrelationId(String correlationId);
 
     /**
+     * 根据ID查询附件
+     *
+     * @param correlationId id
+     * @param table         表名
+     * @return string
+     */
+    String selectAnnex(@Param("correlationId") String correlationId, @Param("table") String table);
+
+    /**
      * 删除关联表数据
      *
      * @param correlationId correlationId

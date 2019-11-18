@@ -31,36 +31,8 @@ public class OaActCardServiceImpl implements OaActCardService {
     private UserInfoMapper userInfoMapper;
 
     @Override
-    public int savePendingCard(OaActCard oaActCard, Integer userId, String randomId) {
-        oaActCard.setApplyTime(DateUtil.stringConvertYYYYMMDD(oaActCard.getApplyTimeStr()));
-        oaActCard.setStartTime(DateUtil.stringConvertYYYYMMDD(oaActCard.getStartTimeStr()));
-        oaActCard.setEndTime(DateUtil.stringConvertYYYYMMDD(oaActCard.getEndTimeStr()));
+    public int insertCard(OaActCard oaActCard, Integer userId, String randomId,Integer state) {
         oaActCard.setId(randomId);
-        oaActCard.setPromoter(userId);
-        oaActCard.setUrl("card");
-        oaActCard.setCreateTime(new Date());
-        if (oaActCardMapper.insertData(oaActCard) < 0) {
-            return -1;
-        } else {
-            OaCollaboration oaCollaboration = new OaCollaboration();
-            oaCollaboration.setCorrelationId(randomId);
-            oaCollaboration.setPromoter(userId);
-            oaCollaboration.setTitle(oaActCard.getTitle());
-            oaCollaboration.setUrl("card");
-            oaCollaboration.setTable("oa_act_card");
-            oaCollaboration.setState(1);
-            oaCollaboration.setCreateTime(new Date());
-            oaCollaborationMapper.insertData(oaCollaboration);
-            return 1;
-        }
-    }
-
-    @Override
-    public int insertCard(OaActCard oaActCard, Integer userId, String randomId) {
-        oaActCard.setId(randomId);
-        oaActCard.setApplyTime(DateUtil.stringConvertYYYYMMDD(oaActCard.getApplyTimeStr()));
-        oaActCard.setStartTime(DateUtil.stringConvertYYYYMMDD(oaActCard.getStartTimeStr()));
-        oaActCard.setEndTime(DateUtil.stringConvertYYYYMMDD(oaActCard.getEndTimeStr()));
         oaActCard.setCreateTime(new Date());
         oaActCard.setPromoter(userId);
         oaActCard.setUrl("card");
@@ -73,7 +45,7 @@ public class OaActCardServiceImpl implements OaActCardService {
             oaCollaboration.setTitle(oaActCard.getTitle());
             oaCollaboration.setUrl("card");
             oaCollaboration.setTable("oa_act_card");
-            oaCollaboration.setState(0);
+            oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);
             return 1;
@@ -82,9 +54,6 @@ public class OaActCardServiceImpl implements OaActCardService {
 
     @Override
     public int edit(OaActCard oaActCard) {
-        oaActCard.setApplyTime(DateUtil.stringConvertYYYYMMDD(oaActCard.getApplyTimeStr()));
-        oaActCard.setStartTime(DateUtil.stringConvertYYYYMMDD(oaActCard.getStartTimeStr()));
-        oaActCard.setEndTime(DateUtil.stringConvertYYYYMMDD(oaActCard.getEndTimeStr()));
         oaActCard.setCreateTime(new Date());
 
         if (oaActCardMapper.updateByPrimaryKey(oaActCard) < 1) {
@@ -98,9 +67,6 @@ public class OaActCardServiceImpl implements OaActCardService {
     @Override
     public OaActCard selectByPrimaryKey(String id) {
         OaActCard oaActCard = oaActCardMapper.selectByPrimaryKey(id);
-        oaActCard.setApplyTimeStr(DateUtil.dateConvertYYYYMMDD(oaActCard.getApplyTime()));
-        oaActCard.setStartTimeStr(DateUtil.dateConvertYYYYMMDD(oaActCard.getStartTime()));
-        oaActCard.setEndTimeStr(DateUtil.dateConvertYYYYMMDD(oaActCard.getEndTime()));
         oaActCard.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActCard.getCreateTime()));
         oaActCard.setPromoterStr(userInfoMapper.getNicknameById(oaActCard.getPromoter()));
         return oaActCard;
@@ -112,19 +78,6 @@ public class OaActCardServiceImpl implements OaActCardService {
             return -1;
         } else {
             if (oaCollaborationMapper.deleteByCorrelationId(id) < 0) {
-                return -1;
-            } else {
-                return 1;
-            }
-        }
-    }
-
-    @Override
-    public int updateStateById(String id, Integer state) {
-        if (oaActCardMapper.updateStateById(id, state) < 0) {
-            return -1;
-        } else {
-            if (oaCollaborationMapper.updateState(id, state) < 0) {
                 return -1;
             } else {
                 return 1;

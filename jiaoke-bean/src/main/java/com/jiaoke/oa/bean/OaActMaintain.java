@@ -1,6 +1,9 @@
 package com.jiaoke.oa.bean;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.Date;
 
 /**
@@ -28,7 +31,7 @@ public class OaActMaintain {
     /**
      * 单位
      */
-    private String company;
+    private Integer company;
 
     /**
      * 申请部门
@@ -43,9 +46,7 @@ public class OaActMaintain {
     /**
      * 申请日期
      */
-    private Date applyTime;
-    @Transient
-    private String applyTimeStr;
+    private String applyTime;
 
     /**
      * 设备名称
@@ -73,6 +74,26 @@ public class OaActMaintain {
     private String amount;
 
     /**
+     * 部门负责人
+     */
+    private String principal;
+
+    /**
+     * 部门主管领导
+     */
+    private String supervisor;
+
+    /**
+     * 总经理
+     */
+    private String companyPrincipal;
+
+    /**
+     * 附件
+     */
+    private String annex;
+
+    /**
      * 创建日期
      */
     private Date createTime;
@@ -83,6 +104,8 @@ public class OaActMaintain {
      * 发起人
      */
     private Integer promoter;
+    @Transient
+    private String promoterStr;
 
     /**
      * 查询路径
@@ -105,11 +128,11 @@ public class OaActMaintain {
         this.title = title;
     }
 
-    public String getCompany() {
+    public Integer getCompany() {
         return company;
     }
 
-    public void setCompany(String company) {
+    public void setCompany(Integer company) {
         this.company = company;
     }
 
@@ -121,20 +144,20 @@ public class OaActMaintain {
         this.department = department;
     }
 
-    public Date getApplyTime() {
+    public String getApplicant() {
+        return applicant;
+    }
+
+    public void setApplicant(String applicant) {
+        this.applicant = applicant;
+    }
+
+    public String getApplyTime() {
         return applyTime;
     }
 
-    public void setApplyTime(Date applyTime) {
+    public void setApplyTime(String applyTime) {
         this.applyTime = applyTime;
-    }
-
-    public String getApplyTimeStr() {
-        return applyTimeStr;
-    }
-
-    public void setApplyTimeStr(String applyTimeStr) {
-        this.applyTimeStr = applyTimeStr;
     }
 
     public String getDeviceName() {
@@ -177,6 +200,30 @@ public class OaActMaintain {
         this.amount = amount;
     }
 
+    public String getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(String principal) {
+        this.principal = principal;
+    }
+
+    public String getSupervisor() {
+        return supervisor;
+    }
+
+    public void setSupervisor(String supervisor) {
+        this.supervisor = supervisor;
+    }
+
+    public String getCompanyPrincipal() {
+        return companyPrincipal;
+    }
+
+    public void setCompanyPrincipal(String companyPrincipal) {
+        this.companyPrincipal = companyPrincipal;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -201,6 +248,14 @@ public class OaActMaintain {
         this.promoter = promoter;
     }
 
+    public String getPromoterStr() {
+        return promoterStr;
+    }
+
+    public void setPromoterStr(String promoterStr) {
+        this.promoterStr = promoterStr;
+    }
+
     public String getUrl() {
         return url;
     }
@@ -209,11 +264,11 @@ public class OaActMaintain {
         this.url = url;
     }
 
-    public String getApplicant() {
-        return applicant;
+    public String getAnnex() {
+        return annex;
     }
 
-    public void setApplicant(String applicant) {
-        this.applicant = applicant;
+    public void setAnnex(String annex) {
+        this.annex = annex;
     }
 }

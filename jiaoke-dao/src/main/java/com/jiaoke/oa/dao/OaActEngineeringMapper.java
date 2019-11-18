@@ -13,12 +13,4 @@ import tk.mybatis.mapper.common.Mapper;
  */
 @Repository
 public interface OaActEngineeringMapper extends Mapper<OaActEngineering> {
-
-    /**
-     * 插入数据
-     *
-     * @param oaActEngineering oaActEngineering
-     * @return int
-     */
-    int insertData(OaActEngineering oaActEngineering);
 }

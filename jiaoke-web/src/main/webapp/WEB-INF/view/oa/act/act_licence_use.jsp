@@ -17,6 +17,7 @@
 </head>
 
 <body id="body" style="width: 70%">
+
 <div class="table-title">
     <span>证照使用审批单（复印件）</span>
 </div>
@@ -65,7 +66,7 @@
                     <button type="button" class="table-tab-send" onclick="send()">发送</button>
                 </td>
 
-                <th nowrap="nowrap" class="th_title" style="width: 4%">标题:</th>
+                <th nowrap="nowrap" class="th_title" style="width: 4%">标题</th>
                 <td style="width: 44%">
                     <div class="common_input_frame">
                         <input type="text" id="title" name="title" placeholder="请输入标题" title="点击此处填写标题"
@@ -74,7 +75,7 @@
                     </div>
                 </td>
 
-                <th class="th_title" nowrap="nowrap" style="width: 4%">流程:</th>
+                <th class="th_title" nowrap="nowrap" style="width: 4%">流程</th>
                 <td>
                     <div class="common_input_frame">
                         <input type="text" placeholder="部门负责人(审批)、证照主管领导(审批)、经办人"
@@ -102,14 +103,14 @@
 
             <td class="tdLabel">领取时间</td>
             <td class="table-td-content">
-                <input type="text" class="formInput je-date" name="receiveTimeStr" onfocus="this.blur()">
+                <input type="text" class="formInput je-date" name="receiveTime" onfocus="this.blur()">
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel">用途</td>
-            <td class="table-td-content" colspan="3">
-                <input type="text" class="formInput" name="purpose" autocomplete="off">
+            <td class="table-td-content" colspan="3" style="padding: 10px">
+                <textarea class="write-approval-content-textarea" name="purpose"></textarea>
             </td>
         </tr>
 
@@ -170,7 +171,7 @@
         });
 
         if ($.trim($("#title").val()) === '') {
-            layer.msg("标题不可以为空！")
+            window.top.tips("标题不能为空！", 6, 5, 1000);
         } else {
             //发送前将上传好的附件插入form中
             $('#annex').val(array);
@@ -180,14 +181,14 @@
                 url: '${path}/licenceUse/add',
                 data: $('#oaActLicenceUse').serialize(),
                 error: function (request) {
-                    layer.msg("出错！");
+                    window.top.tips("出错！", 6, 2, 1000);
                 },
                 success: function (result) {
                     if (result === "success") {
-                        layer.msg("发送成功！");
+                        window.top.tips("发送成功！", 0, 1, 1000);
                         window.location.href = "${path}/oaIndex.do";
                     } else {
-                        layer.msg('发送失败！');
+                        window.top.tips("发送失败！", 0, 2, 1000);
                     }
                 }
             })
@@ -202,7 +203,7 @@
         });
 
         if ($.trim($("#title").val()) === '') {
-            layer.msg("标题不可以为空！")
+            window.top.tips("标题不能为空！", 6, 5, 1000);
         } else {
             //发送前将上传好的附件插入form中
             $('#annex').val(array);
@@ -212,14 +213,14 @@
                 url: '${path}/licenceUse/savePending',
                 data: $('#oaActLicenceUse').serialize(),
                 error: function (request) {
-                    layer.msg("出错！");
+                    window.top.tips("出错！", 6, 2, 1000);
                 },
                 success: function (result) {
                     if (result === "success") {
                         window.location.href = "${path}/oaIndex.do";
-                        layer.msg("保存成功！");
+                        window.top.tips("保存成功！", 0, 1, 1000);
                     } else {
-                        layer.msg('保存失败！');
+                        window.top.tips("保存失败！", 0, 2, 1000);
                     }
                 }
             })
@@ -260,19 +261,19 @@
             url: '${path}/fileUploadHandle/deleteFile',
             data: {"fileName": fileName},
             error: function (request) {
-                layer.msg("出错！");
+                window.top.tips("出错！", 6, 2, 1000);
             },
             success: function (result) {
                 if (result === "success") {
                     $('#file' + fileName.substring(0, fileName.indexOf("_"))).remove();
-                    window.top.tips("删除成功！", 0, 1, 2000);
+                    window.top.tips("删除成功！", 0, 1, 1000);
 
                     let annexesLen = $('#annexes').children().length;
                     if (annexesLen === 0) {
                         $('#annexList').css("display", "none");
                     }
                 } else {
-                    window.top.tips("文件不存在！", 6, 5, 2000);
+                    window.top.tips("文件不存在！", 6, 5, 1000);
                 }
             }
         });

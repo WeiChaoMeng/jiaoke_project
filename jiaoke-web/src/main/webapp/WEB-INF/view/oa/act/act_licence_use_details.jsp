@@ -14,7 +14,8 @@
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
 </head>
 
-<body>
+<body id="body" style="width: 70%">
+
 <div class="table-title">
     <span>${oaActLicenceUse.title}</span>
 </div>
@@ -46,7 +47,7 @@
                     <c:forTokens items="${oaActLicenceUse.annex}" delims="," var="annex">
                         <div class="table-file">
                             <div class="table-file-content">
-                                <span title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <span class="table-file-title" title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
                                 <a class="table-file-download icon"
                                    href="/fileDownloadHandle/download?fileName=${annex}"
                                    title="下载">&#xebda;</a>
@@ -62,7 +63,7 @@
 <table class="formTable" style="margin: 0">
     <tbody>
     <tr>
-        <td class="tdLabel">印章种类：</td>
+        <td class="tdLabel">印章种类</td>
         <td class="table-td-content">
             <c:choose>
                 <c:when test="${oaActLicenceUse.seal == 0}">路驰营业执照正本</c:when>
@@ -73,14 +74,14 @@
             </c:choose>
         </td>
 
-        <td class="tdLabel">领取时间：</td>
+        <td class="tdLabel">领取时间</td>
         <td class="table-td-content">
-            ${oaActLicenceUse.receiveTimeStr}
+            ${oaActLicenceUse.receiveTime}
         </td>
     </tr>
 
     <tr>
-        <td class="tdLabel">用途：</td>
+        <td class="tdLabel">用途</td>
         <td class="table-td-content" colspan="3">
             ${oaActLicenceUse.purpose}
         </td>
@@ -123,7 +124,7 @@
         //执行打印
         window.print();
         $('#tool').show();
-        $('#body').css('width', '80%');
+        $('#body').css('width', '70%');
     }
 </script>
 </html>

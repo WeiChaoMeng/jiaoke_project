@@ -14,7 +14,7 @@
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
 </head>
 
-<body style="width: 70%" id="body">
+<body style="width: 75%" id="body">
 <div class="table-title">
     <span>${oaActSealsUse.title}</span>
 </div>
@@ -61,8 +61,7 @@
 
 <form id="oaActSealsUse">
     <div>
-        <span style="float: right;width: 110px;margin-bottom: 5px;line-height: 30px;">${oaActSealsUse.number}</span>
-        <span class="" style="float: right;line-height: 30px;">编号：</span>
+        <span class="form-number-left" style="float: right;min-width: 140px;">编号  ${oaActSealsUse.number}</span>
     </div>
 
     <table class="formTable">
@@ -208,13 +207,13 @@
                 if (data === 'success') {
                     //返回上一页
                     window.location.href = '${path}/oaHomePage/toOaHomePage';
-                    layer.msg('提交成功！');
+                    window.top.tips("提交成功！", 0, 1, 1000);
                 } else {
-                    layer.msg('提交失败！');
+                    window.top.tips("提交失败！", 0, 2, 1000);
                 }
             },
             error: function (result) {
-                layer.msg("出错！");
+                window.top.tips("出错！", 6, 2, 1000);
             }
         })
     }
@@ -226,7 +225,7 @@
         //执行打印
         window.print();
         $('#tool,#return').show();
-        $('#body').css('width', '70%');
+        $('#body').css('width', '75%');
     }
 </script>
 </html>

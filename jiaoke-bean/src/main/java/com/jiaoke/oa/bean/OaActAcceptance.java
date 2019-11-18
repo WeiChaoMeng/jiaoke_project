@@ -44,21 +44,39 @@ public class OaActAcceptance {
     private String amount;
 
     /**
+     * 申请人
+     */
+    private String applicant;
+
+    /**
      * 验收人
      */
     private String accepter;
 
     /**
-     * 经办人
-     */
-    private String operator;
-
-    /**
      * 日期
      */
-    private Date acceptanceDate;
-    @Transient
-    private String acceptanceDateStr;
+    private String acceptanceDate;
+
+    /**
+     * 部门负责人
+     */
+    private String principal;
+
+    /**
+     * 部门主管领导
+     */
+    private String supervisor;
+
+    /**
+     * 总经理
+     */
+    private String companyPrincipal;
+
+    /**
+     * 附件
+     */
+    private String annex;
 
     /**
      * 创建日期
@@ -71,6 +89,8 @@ public class OaActAcceptance {
      * 发起人
      */
     private Integer promoter;
+    @Transient
+    private String promoterStr;
 
     /**
      * 查询路径
@@ -117,6 +137,62 @@ public class OaActAcceptance {
         this.amount = amount;
     }
 
+    public String getApplicant() {
+        return applicant;
+    }
+
+    public void setApplicant(String applicant) {
+        this.applicant = applicant;
+    }
+
+    public String getAccepter() {
+        return accepter;
+    }
+
+    public void setAccepter(String accepter) {
+        this.accepter = accepter;
+    }
+
+    public String getAcceptanceDate() {
+        return acceptanceDate;
+    }
+
+    public void setAcceptanceDate(String acceptanceDate) {
+        this.acceptanceDate = acceptanceDate;
+    }
+
+    public String getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(String principal) {
+        this.principal = principal;
+    }
+
+    public String getSupervisor() {
+        return supervisor;
+    }
+
+    public void setSupervisor(String supervisor) {
+        this.supervisor = supervisor;
+    }
+
+    public String getCompanyPrincipal() {
+        return companyPrincipal;
+    }
+
+    public void setCompanyPrincipal(String companyPrincipal) {
+        this.companyPrincipal = companyPrincipal;
+    }
+
+    public String getAnnex() {
+        return annex;
+    }
+
+    public void setAnnex(String annex) {
+        this.annex = annex;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -141,43 +217,19 @@ public class OaActAcceptance {
         this.promoter = promoter;
     }
 
+    public String getPromoterStr() {
+        return promoterStr;
+    }
+
+    public void setPromoterStr(String promoterStr) {
+        this.promoterStr = promoterStr;
+    }
+
     public String getUrl() {
         return url;
     }
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public String getAccepter() {
-        return accepter;
-    }
-
-    public void setAccepter(String accepter) {
-        this.accepter = accepter;
-    }
-
-    public Date getAcceptanceDate() {
-        return acceptanceDate;
-    }
-
-    public void setAcceptanceDate(Date acceptanceDate) {
-        this.acceptanceDate = acceptanceDate;
-    }
-
-    public String getAcceptanceDateStr() {
-        return acceptanceDateStr;
-    }
-
-    public void setAcceptanceDateStr(String acceptanceDateStr) {
-        this.acceptanceDateStr = acceptanceDateStr;
-    }
-
-    public String getOperator() {
-        return operator;
-    }
-
-    public void setOperator(String operator) {
-        this.operator = operator;
     }
 }

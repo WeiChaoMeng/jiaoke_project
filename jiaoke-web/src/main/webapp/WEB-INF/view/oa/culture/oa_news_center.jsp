@@ -7,12 +7,12 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html>
 <head>
     <meta charset="utf-8">
     <title>新闻中心</title>
     <link href="../../../../static/css/oa/oa_common.css" rel="stylesheet" type="text/css">
-    <link href="../../../../static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
 </head>
 
 <body style="padding:15px 8px 0px 8px;">
@@ -80,9 +80,11 @@
 
                     </div>
                     <div class="unit_news_foot_right">
-                        <input type="button" value="新闻发布" class="press_release_button"
-                               style="padding: 3px 5px;background: #f3f3f3;border: 1px #000000 solid;margin-right: 10px;border-radius: 3px;outline: none;cursor: pointer"
-                               id="newsRelease">
+
+                        <shiro:hasPermission name="news:add">
+                            <button class="publish-new-content" type="button" onclick="newsRelease()">新闻发布</button>
+                        </shiro:hasPermission>
+
                         <a onclick="moreNewsData()" style="color: #00b8ff;cursor: pointer">更多</a>
                     </div>
                 </div>
@@ -136,9 +138,11 @@
                     </div>
 
                     <div class="unit_news_foot_right">
-                        <input type="button" value="荣誉发布" class="press_release_button"
-                               style="padding: 3px 5px;background: #f3f3f3;border: 1px #000000 solid;margin-right: 10px;border-radius: 3px;outline: none;cursor: pointer"
-                               onclick="corporateHonorRelease()">
+
+                        <shiro:hasPermission name="honour:add">
+                            <button class="publish-new-content" type="button" onclick="corporateHonorRelease()">新闻发布</button>
+                        </shiro:hasPermission>
+
                         <a onclick="moreCorporateHonorData()" style="color: #00b8ff;cursor: pointer">更多</a>
                     </div>
                 </div>
@@ -154,9 +158,9 @@
 <script type="text/javascript" src="../../../../static/js/oa/oa_common.js"></script>
 <script>
     //新闻发布
-    $('#newsRelease').on('click', function () {
+    function newsRelease(){
         window.location.href = '/newsCenter/toNewsRelease';
-    });
+    }
 
     //更多新闻
     function moreNewsData() {

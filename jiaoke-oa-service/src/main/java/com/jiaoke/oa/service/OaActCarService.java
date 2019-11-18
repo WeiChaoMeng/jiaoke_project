@@ -12,24 +12,15 @@ import com.jiaoke.oa.bean.OaActCar;
 public interface OaActCarService {
 
     /**
-     * 用车审批单 - 保存待发
-     *
-     * @param oaActCar oaActCar
-     * @param userId   userId
-     * @param randomId randomId
-     * @return int
-     */
-    int savePending(OaActCar oaActCar, Integer userId, String randomId);
-
-    /**
      * 用车审批单 - 新增
      *
      * @param oaActCar oaActCar
      * @param userId   userId
      * @param randomId randomId
+     * @param state    state
      * @return int
      */
-    int insert(OaActCar oaActCar, Integer userId, String randomId);
+    int insert(OaActCar oaActCar, Integer userId, String randomId, Integer state);
 
     /**
      * 用车审批单 - 查询
@@ -54,16 +45,6 @@ public interface OaActCarService {
      * @return int
      */
     int deleteData(String id);
-
-
-    /**
-     * 更新状态(0,已发 - 1,待发)
-     *
-     * @param id    id
-     * @param state state
-     * @return int
-     */
-    int updateState(String id, Integer state);
 
     /**
      * 根据主键更新

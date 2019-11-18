@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
@@ -23,14 +24,45 @@
 
 <body style="padding:15px 8px 0px 8px;">
 
+<div class="page_head">
+    <table style="width: 100%;">
+        <tbody>
+        <tr>
+            <td>
+                <shiro:hasPermission name="honour:add">
+                    <div class="head_left_button" style="line-height: 30px">
+                        <button type="button" class="cursor_hand" onclick="add()">&#xeb86; 添加</button>
+                    </div>
+                </shiro:hasPermission>
+
+                <shiro:hasPermission name="honour:delete">
+                    <div class="head_left_button" style="line-height: 30px">
+                        <button type="button" class="cursor_hand" onclick="del()">&#xeaa5; 删除</button>
+                    </div>
+                </shiro:hasPermission>
+            </td>
+            <td>
+                <div>
+                    <div class="conditional-query cursor_hand">
+                        <input type="text" id="title" class="search-bar" placeholder="标题" autocomplete="off">
+                        <i onclick="searchButton(1,2)" class="iconfont search-icon-size" id="conditional_search">&#xe7e7;</i>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
 <table class="simpletable">
 
     <thead>
+    <th style="width: 3%;"><input type="checkbox"></th>
     <th style="width: 5%">序号</th>
     <th style="width: 30%">标题</th>
-    <th style="width: 15%">发布部门</th>
+    <th style="width: 14%">发布部门</th>
     <th style="width: 10%">发布人</th>
-    <th style="width: 15%">发布时间</th>
+    <th style="width: 13%">发布时间</th>
     <th style="width: 25%">摘要</th>
     </thead>
 
@@ -38,10 +70,6 @@
 
     </tbody>
 </table>
-
-<div class="replenishment_record_btn" style="text-align: center;position: absolute;bottom: 50px;left: 45%;">
-    <input type="button" value="返回" onclick="previousPage()" class="return-but-inp">
-</div>
 
 <div id="fenye" style="right: 10px;height: 35px;position: absolute;bottom: 10px;">
     <div class="">
@@ -61,11 +89,6 @@
 <script type="text/javascript" src="../../../../static/js/oa/oa_common.js"></script>
 <script type="text/javascript" src="../../../../static/js/paging/jqPaginator.js"></script>
 <script>
-
-    //返回上一页
-    function previousPage() {
-        window.history.back();
-    }
 
     //新闻详情
     function particulars(id) {
@@ -133,6 +156,7 @@
                 } else {
                     for (let i = 0; i < oaCorporateHonorList.length; i++) {
                         oaCorporateHonor += '<tr onclick="particulars(' + oaCorporateHonorList[i].id + ')">';
+                        oaCorporateHonor += '<td><input type="checkbox" value="' + oaCorporateHonorList[i].id + '" onclick="window.event.cancelBubble=true;"></td>';
                         oaCorporateHonor += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 15 + i + 1) + '</td>';
                         oaCorporateHonor += '<td style="text-align: left;text-indent: 10px;">' + oaCorporateHonorList[i].title + '</td>';
                         oaCorporateHonor += '<td>' + oaCorporateHonorList[i].releaseDepartment + '</td>';
@@ -149,6 +173,24 @@
                 alert("出错！");
             }
         })
+    }
+
+    //删除
+    function del() {
+        let length = $("tbody input:checked").length;
+        if (length !== 1) {
+            layer.msg('请选择一条数据！');
+            return false;
+        } else {
+            var id = $("tbody input:checked").val();
+            //主页fun
+            // window.top.deleteNews(id, $('#page').val());
+        }
+    }
+
+    //新增
+    function add() {
+        window.location.href = '/newsCenter/toCorporateHonor';
     }
 </script>
 </html>

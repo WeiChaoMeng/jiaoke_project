@@ -66,7 +66,7 @@ public class OaActSealsBorrowController {
      *
      * @return jsp
      */
-    @RequestMapping("/toSealsBorrow")
+    @RequestMapping("/toIndex")
     public String toSealsBorrow(Model model) {
         model.addAttribute("nickname", getCurrentUser().getNickname());
         return "oa/act/act_seals_borrow";

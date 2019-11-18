@@ -36,9 +36,7 @@ public class OaActSealsBorrow {
     /**
      * 借用时间
      */
-    private Date borrowTime;
-    @Transient
-    private String borrowTimeStr;
+    private String borrowTime;
 
     /**
      * 盖章文件内容
@@ -59,11 +57,6 @@ public class OaActSealsBorrow {
      * 印章主管领导
      */
     private String sealManage;
-
-    /**
-     * 公司负责人
-     */
-    private String companyPrincipal;
 
     /**
      * 经办人
@@ -123,20 +116,12 @@ public class OaActSealsBorrow {
         this.seal = seal;
     }
 
-    public Date getBorrowTime() {
+    public String getBorrowTime() {
         return borrowTime;
     }
 
-    public void setBorrowTime(Date borrowTime) {
+    public void setBorrowTime(String borrowTime) {
         this.borrowTime = borrowTime;
-    }
-
-    public String getBorrowTimeStr() {
-        return borrowTimeStr;
-    }
-
-    public void setBorrowTimeStr(String borrowTimeStr) {
-        this.borrowTimeStr = borrowTimeStr;
     }
 
     public String getContent() {
@@ -153,6 +138,38 @@ public class OaActSealsBorrow {
 
     public void setBorrower(String borrower) {
         this.borrower = borrower;
+    }
+
+    public String getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(String principal) {
+        this.principal = principal;
+    }
+
+    public String getSealManage() {
+        return sealManage;
+    }
+
+    public void setSealManage(String sealManage) {
+        this.sealManage = sealManage;
+    }
+
+    public String getSealOperator() {
+        return sealOperator;
+    }
+
+    public void setSealOperator(String sealOperator) {
+        this.sealOperator = sealOperator;
+    }
+
+    public String getReturnTime() {
+        return returnTime;
+    }
+
+    public void setReturnTime(String returnTime) {
+        this.returnTime = returnTime;
     }
 
     public Date getCreateTime() {
@@ -179,6 +196,14 @@ public class OaActSealsBorrow {
         this.promoter = promoter;
     }
 
+    public String getPromoterStr() {
+        return promoterStr;
+    }
+
+    public void setPromoterStr(String promoterStr) {
+        this.promoterStr = promoterStr;
+    }
+
     public String getUrl() {
         return url;
     }
@@ -187,59 +212,11 @@ public class OaActSealsBorrow {
         this.url = url;
     }
 
-    public String getPrincipal() {
-        return principal;
-    }
-
-    public void setPrincipal(String principal) {
-        this.principal = principal;
-    }
-
-    public String getSealManage() {
-        return sealManage;
-    }
-
-    public void setSealManage(String sealManage) {
-        this.sealManage = sealManage;
-    }
-
-    public String getCompanyPrincipal() {
-        return companyPrincipal;
-    }
-
-    public void setCompanyPrincipal(String companyPrincipal) {
-        this.companyPrincipal = companyPrincipal;
-    }
-
-    public String getSealOperator() {
-        return sealOperator;
-    }
-
-    public void setSealOperator(String sealOperator) {
-        this.sealOperator = sealOperator;
-    }
-
-    public String getReturnTime() {
-        return returnTime;
-    }
-
-    public void setReturnTime(String returnTime) {
-        this.returnTime = returnTime;
-    }
-
     public String getAnnex() {
         return annex;
     }
 
     public void setAnnex(String annex) {
         this.annex = annex;
-    }
-
-    public String getPromoterStr() {
-        return promoterStr;
-    }
-
-    public void setPromoterStr(String promoterStr) {
-        this.promoterStr = promoterStr;
     }
 }

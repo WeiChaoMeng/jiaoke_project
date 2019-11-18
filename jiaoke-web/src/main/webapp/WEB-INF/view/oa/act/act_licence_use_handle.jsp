@@ -76,7 +76,7 @@
 
             <td class="tdLabel">领取时间：</td>
             <td class="table-td-content">
-                ${oaActLicenceUse.receiveTimeStr}
+                ${oaActLicenceUse.receiveTime}
                 <input type="hidden" name="id" value="${oaActLicenceUse.id}">
                 <input type="hidden" name="title" value="${oaActLicenceUse.title}">
             </td>
@@ -160,13 +160,13 @@
                 if (data === 'success') {
                     //返回上一页
                     window.location.href = '${path}/oaHomePage/toOaHomePage';
-                    layer.msg('提交成功！');
+                    window.top.tips("提交成功！", 0, 1, 1000);
                 } else {
-                    layer.msg('提交失败！');
+                    window.top.tips("提交失败！", 0, 2, 1000);
                 }
             },
             error: function (result) {
-                layer.msg("出错！");
+                window.top.tips("出错！", 6, 2, 1000);
             }
         })
     }

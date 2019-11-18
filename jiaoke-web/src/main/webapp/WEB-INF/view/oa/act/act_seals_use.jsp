@@ -15,7 +15,7 @@
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
 </head>
 
-<body style="width: 70%" id="body">
+<body style="width: 75%" id="body">
 <div class="table-title">
     <span>印章使用审批单</span>
 </div>
@@ -64,7 +64,7 @@
                     <button type="button" class="table-tab-send" onclick="send()">发送</button>
                 </td>
 
-                <th nowrap="nowrap" class="th_title" style="width: 4%">标题:</th>
+                <th nowrap="nowrap" class="th_title" style="width: 4%">标题</th>
                 <td style="width: 44%">
                     <div class="common_input_frame">
                         <input type="text" id="title" name="title" placeholder="请输入标题" title="点击此处填写标题"
@@ -73,7 +73,7 @@
                     </div>
                 </td>
 
-                <th class="th_title" nowrap="nowrap" style="width: 4%">流程:</th>
+                <th class="th_title" nowrap="nowrap" style="width: 4%">流程</th>
                 <td>
                     <div class="common_input_frame">
                         <input type="text" placeholder="部门负责人(审批)、部门主管领导(审批)、印章管理部门主管领导(审批)、盖章人"
@@ -86,28 +86,28 @@
     </div>
 
     <div>
-        <c:choose>
-            <c:when test="${department == '综合办公室'}">
-                <input type="text" class="formInput" name="number" value="LC/BGS-" autocomplete="off" style="float: right;width: 150px;margin-bottom: 5px;">
-            </c:when>
-            <c:when test="${department == '经营开发部'}">
-                <input type="text" class="formInput" name="number" value="LC/JY-" autocomplete="off" style="float: right;width: 150px;margin-bottom: 5px;">
-            </c:when>
-            <c:when test="${department == '生产管理部'}">
-                <input type="text" class="formInput" name="number" value="LC/SC-" autocomplete="off" style="float: right;width: 150px;margin-bottom: 5px;">
-            </c:when>
-            <c:when test="${department == '财务管理部'}">
-                <input type="text" class="formInput" name="number" value="LC/CW-" autocomplete="off" style="float: right;width: 150px;margin-bottom: 5px;">
-            </c:when>
-            <c:when test="${department == '物资管理部'}">
-                <input type="text" class="formInput" name="number" value="LC/WZ-" autocomplete="off" style="float: right;width: 150px;margin-bottom: 5px;">
-            </c:when>
-            <c:when test="${department == '质量技术部'}">
-                <input type="text" class="formInput" name="number" value="LC/ZL-" autocomplete="off" style="float: right;width: 150px;margin-bottom: 5px;">
-            </c:when>
-        </c:choose>
-
-        <span class="" style="float: right;line-height: 30px;">编号：</span>
+        <span class="form-number-left" style="float: right">编号
+            <c:choose>
+                <c:when test="${department == '综合办公室'}">
+                    <input type="text" class="form-number-content" name="number" value="LC/BGS-" autocomplete="off">
+                </c:when>
+                <c:when test="${department == '经营开发部'}">
+                    <input type="text" class="form-number-content" name="number" value="LC/JY-" autocomplete="off">
+                </c:when>
+                <c:when test="${department == '生产管理部'}">
+                    <input type="text" class="form-number-content" name="number" value="LC/SC-" autocomplete="off">
+                </c:when>
+                <c:when test="${department == '财务管理部'}">
+                    <input type="text" class="form-number-content" name="number" value="LC/CW-" autocomplete="off">
+                </c:when>
+                <c:when test="${department == '物资管理部'}">
+                    <input type="text" class="form-number-content" name="number" value="LC/WZ-" autocomplete="off">
+                </c:when>
+                <c:when test="${department == '质量技术部'}">
+                    <input type="text" class="form-number-content" name="number" value="LC/ZL-" autocomplete="off">
+                </c:when>
+            </c:choose>
+        </span>
     </div>
 
     <table class="formTable">
@@ -135,8 +135,8 @@
 
         <tr>
             <td class="tdLabel">申请文件名称</td>
-            <td class="table-td-content" colspan="3">
-                <input type="text" class="formInput" name="name" autocomplete="off">
+            <td class="table-td-content" colspan="3" style="padding: 10px">
+                <textarea class="write-approval-content-textarea" name="name"></textarea>
             </td>
         </tr>
 
@@ -175,10 +175,6 @@
 <script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
 
-    function selectFile(own) {
-        $('#fileName').html(own.files[0].name);
-    }
-
     //发送
     function send() {
         var array = [];
@@ -187,7 +183,7 @@
         });
 
         if ($.trim($("#title").val()) === '') {
-            layer.msg("标题不可以为空！")
+            window.top.tips("标题不能为空！", 6, 5, 1000);
         } else {
             //发送前将上传好的附件插入form中
             $('#annex').val(array);
@@ -197,14 +193,14 @@
                 url: '${path}/sealsUse/add',
                 data: $('#oaActSealsUse').serialize(),
                 error: function (request) {
-                    layer.msg("出错！");
+                    window.top.tips("出错！", 6, 2, 1000);
                 },
                 success: function (result) {
                     if (result === "success") {
-                        layer.msg("发送成功！");
+                        window.top.tips("发送成功！", 0, 1, 1000);
                         window.location.href = "${path}/oaIndex.do";
                     } else {
-                        layer.msg('发送失败！');
+                        window.top.tips("发送失败！", 0, 2, 1000);
                     }
                 }
             })
@@ -219,7 +215,7 @@
         });
 
         if ($.trim($("#title").val()) === '') {
-            layer.msg("标题不可以为空！")
+            window.top.tips("标题不能为空！", 6, 5, 1000);
         } else {
             //发送前将上传好的附件插入form中
             $('#annex').val(array);
@@ -229,14 +225,14 @@
                 url: '${path}/sealsUse/savePending',
                 data: $('#oaActSealsUse').serialize(),
                 error: function (request) {
-                    layer.msg("出错！");
+                    window.top.tips("出错！", 6, 2, 1000);
                 },
                 success: function (result) {
                     if (result === "success") {
                         window.location.href = "${path}/oaIndex.do";
-                        layer.msg("保存成功！");
+                        window.top.tips("保存成功！", 0, 1, 1000);
                     } else {
-                        layer.msg('保存失败！');
+                        window.top.tips("保存失败！", 0, 2, 1000);
                     }
                 }
             })
@@ -277,19 +273,19 @@
             url: '${path}/fileUploadHandle/deleteFile',
             data: {"fileName": fileName},
             error: function (request) {
-                layer.msg("出错！");
+                window.top.tips("出错！", 6, 2, 1000);
             },
             success: function (result) {
                 if (result === "success") {
                     $('#file' + fileName.substring(0, fileName.indexOf("_"))).remove();
-                    window.top.tips("删除成功！", 0, 1, 2000);
+                    window.top.tips("删除成功！", 0, 1, 1000);
 
                     let annexesLen = $('#annexes').children().length;
                     if (annexesLen === 0) {
                         $('#annexList').css("display", "none");
                     }
                 } else {
-                    window.top.tips("文件不存在！", 6, 5, 2000);
+                    window.top.tips("文件不存在！", 6, 5, 1000);
                 }
             }
         });
@@ -302,7 +298,7 @@
         //执行打印
         window.print();
         $('#tool,#titleArea').show();
-        $('#body').css('width', '70%');
+        $('#body').css('width', '75%');
 
         //附件列表
         let annexesLen = $('#annexes').children().length;

@@ -61,63 +61,84 @@
 <body>
 
 <div class="header">
-    <div class="headtop">
-        <span class="logo" id="logo"><img src="/static/images/logo/logo-2.png"></span>
-        <span style="    color: #f00;margin-left: 78px;font-size: 25px;float: left;margin-left: 63px;display: block;padding-top: 13px; width: 55%;">北京市政路桥建材集团有限公司路驰分公司企业管理综合平台</span>
-        <ul class="nav">
-            <li>
-                <a href="#" class="manu" id="index">首页</a>
-            </li>
-            <shiro:hasPermission name="oa">
-                <li>
-                    <a href="#" class="manu" id="OA">OA系统</a>
-                </li>
-            </shiro:hasPermission>
+    <div class="headtop" style="width: 100%;">
+        <div class="logo-style">
+            <img src="/static/images/logo/logo-2.png" style="margin-top: 5px;padding: 0;">
+        </div>
 
-            <shiro:hasPermission name="qualityControl">
-                <li>
-                    <a href="#" class="manu" id="quality_control">质量管控</a>
-                </li>
-            </shiro:hasPermission>
+        <div class="title-nav-style">
+            <div class="title-style">
+                <span class="title-content">北京市政路桥建材集团有限公司路驰分公司企业管理综合平台</span>
+            </div>
 
-            <li>
-                <a href="#" class="manu" id="SY">实验管理</a>
-            </li>
+            <div class="navigation-style">
+                <ul class="nav">
+                    <li>
+                        <a href="#" class="manu" id="index">首页</a>
+                    </li>
+                    <shiro:hasPermission name="oa:oa">
+                        <li>
+                            <a href="#" class="manu" id="OA">OA系统</a>
+                        </li>
+                    </shiro:hasPermission>
 
-            <shiro:hasPermission name="personnelManage">
-                <li>
-                    <a href="#" class="manu" id="HR">人事管理</a>
-                </li>
-            </shiro:hasPermission>
+                    <shiro:hasPermission name="quality:quality">
+                        <li>
+                            <a href="#" class="manu" id="quality_control">质量管控</a>
+                        </li>
+                    </shiro:hasPermission>
 
-            <li>
-                <a href="#" class="manu" id="DJ">党建工作</a>
-            </li>
-            <li>
-                <a href="#" class="manu" id="JY">经营管理</a>
-            </li>
+                    <shiro:hasPermission name="experiment:experiment">
+                        <li>
+                            <a href="#" class="manu" id="SY">实验管理</a>
+                        </li>
+                    </shiro:hasPermission>
 
-            <li>
-                <a href="#" class="manu" id="HB">环保监控</a>
-            </li>
-            <li>
-                <a href="#" class="manu" id="AQ">厂区安全</a>
-            </li>
-        </ul>
-        <div id="codeDiv" style="width: 75px;height: 75px;position: absolute;right: 115px;">
-            <a onclick="selectedCode()" href="javascript:;" style="height: 100%;width: 100%;position: absolute;">
-                <img id="code" style="width: 80%;height: 75%;margin-top: 10%;padding-left: 6px;" src="/static/images/logo/download.png"></a>
-            <span style="display: block;margin-top: 90%;">点击下载APP</span>
+                    <shiro:hasPermission name="personnel:personnel">
+                        <li>
+                            <a href="#" class="manu" id="HR">人事管理</a>
+                        </li>
+                    </shiro:hasPermission>
+
+                    <shiro:hasPermission name="party:party">
+                        <li>
+                            <a href="#" class="manu" id="DJ">党建工作</a>
+                        </li>
+                    </shiro:hasPermission>
+
+                    <shiro:hasPermission name="operate:operate">
+                        <li>
+                            <a href="#" class="manu" id="JY">经营管理</a>
+                        </li>
+                    </shiro:hasPermission>
+
+                    <shiro:hasPermission name="milieu:milieu">
+                        <li>
+                            <a href="#" class="manu" id="HB">环保监控</a>
+                        </li>
+                    </shiro:hasPermission>
+
+                    <shiro:hasPermission name="security:security">
+                        <li>
+                            <a href="#" class="manu" id="AQ">厂区安全</a>
+                        </li>
+                    </shiro:hasPermission>
+                </ul>
+            </div>
+        </div>
+
+        <div id="codeDiv" class="app-code-style">
+            <a onclick="selectedCode()" href="javascript:;" class="app-code-link">
+                <img id="code" class="app-code-img" src="/static/images/logo/download.png"></a>
+            <span>点击下载APP</span>
         </div>
 
         <div class="topright">
             <div class="user">
-                <span>
                     <a href="#">
                         <i class="userico iconfont">&#xe6cb;</i>${userInfo.nickname}
                         <i class="userdown iconfont">&#xe920;</i>
                     </a>
-                </span>
 
                 <ul class="userlist">
                     <li><a href="#"><i class="userxl iconfont">&#xe666;</i>用户信息</a></li>
@@ -1277,10 +1298,6 @@
             $(own).next().html("长度只能在2-16个字符之间");
             $(own).next().css("color", "#ff0202");
             return false;
-        } else if (!name.match(check)) {
-            $(own).next().html("只支持汉字、英文、数字的组合");
-            $(own).next().css("color", "#ff0202");
-            return false;
         } else if (roleWhetherRegister(name)) {
             $(own).next().html("角色被占用");
             $(own).next().css("color", "#ff0202");
@@ -1416,87 +1433,6 @@
                 })
             }
         );
-    }
-
-    //绑定权限
-    function bindingPower(permissionInfo, id, currentPage) {
-        window.lar = layer.open({
-            title: '绑定权限',
-            type: 1,
-            area: ['25%', '55%'],
-            shadeClose: true, //点击遮罩关闭
-            content: $("#bindingPermission"),
-            offset: "20%"
-        });
-
-        //记录用户页面选择的页数
-        $('#rolePage').val(currentPage);
-
-        //角色信息
-        var permissionList = permissionInfo.permissionList;
-        //已绑定角色信息
-        var possessPermissionList = permissionInfo.existingPermission;
-
-        var permissionInfoList = '';
-        permissionInfoList += '<div id="RoleInformationTab" style="height: 80%;overflow: auto">';
-        permissionInfoList += '<table id="permissionList" class="table-list">';
-        permissionInfoList += '<tbody id="powerListTbody">';
-        permissionInfoList += '<input id="bindingPermissionId" type="hidden" value="' + id + '">';
-        for (var i = 0; i < permissionList.length; i++) {
-            permissionInfoList += '<tr onclick="checkboxEvent(this)" style="height: 18px">';
-            permissionInfoList += '<td class="table-list-td-checkbox">';
-            permissionInfoList += '<input type="checkbox" value="' + permissionList[i].id + '" onclick="window.event.cancelBubble=true;">';
-            permissionInfoList += '</td>';
-            permissionInfoList += '<td class="per-list-td">' + permissionList[i].description + '</td>';
-            permissionInfoList += '</tr>';
-        }
-        permissionInfoList += '</tbody>';
-        permissionInfoList += '</table>';
-        permissionInfoList += '</div>';
-        permissionInfoList += '<div style="padding-top: 20px;text-align: center">';
-        permissionInfoList += '<input type="button" value="确认" onclick="submissionBindingPower()" class="body-bottom-button">';
-        permissionInfoList += '<input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">';
-        permissionInfoList += '</div>';
-
-        $('#bindingPermission').html(permissionInfoList);
-
-        //勾选已有角色
-        for (var j = 0; j < possessPermissionList.length; j++) {
-            $('#powerListTbody').children('tr').find('input').each(function () {
-                if ($(this).val() == possessPermissionList[j].id) {
-                    this.checked = true;
-                }
-            });
-        }
-    }
-
-    //提交绑定
-    function submissionBindingPower() {
-        //用户id
-        var roleId = $('#bindingPermissionId').val();
-        //选中的角色列表
-        var array = [];
-        var list = $("#powerListTbody input:checked");
-        for (var i = 0; i < list.length; i++) {
-            array.push(list[i].value);
-        }
-        $.ajax({
-            type: "post",
-            url: '/backstageManagement/bindingPower',
-            data: 'roleId=' + roleId + '&array=' + array,
-            success: function (data) {
-                if (data === 'success') {
-                    layer.close(window.lar);
-                    layer.msg('绑定角色成功！');
-                    $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.roleInfoPageReload($('#rolePage').val());
-                } else {
-                    layer.msg('绑定角色失败！');
-                }
-            },
-            error: function (result) {
-                layer.msg("出错！");
-            }
-        })
     }
 
     /**-----------------------用户管理---------------------------*/

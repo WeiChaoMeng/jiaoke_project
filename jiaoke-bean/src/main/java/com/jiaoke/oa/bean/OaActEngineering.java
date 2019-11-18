@@ -61,16 +61,12 @@ public class OaActEngineering {
     /**
      * 变更前用料日期
      */
-    private Date beforeData;
-    @Transient
-    private String beforeDataStr;
+    private String beforeData;
 
     /**
      * 变更后用料日期
      */
-    private Date afterData;
-    @Transient
-    private String afterDataStr;
+    private String afterData;
 
     /**
      * 变更前用料数量
@@ -93,6 +89,16 @@ public class OaActEngineering {
     private String salesman;
 
     /**
+     * 经营部部长
+     */
+
+    private String minister;
+    /**
+     * 经营部负责人
+     */
+    private String principal;
+
+    /**
      * 备注
      */
     private String remark;
@@ -108,6 +114,13 @@ public class OaActEngineering {
      * 发起人
      */
     private Integer promoter;
+    @Transient
+    private String promoterStr;
+
+    /**
+     * 附件
+     */
+    private String annex;
 
     /**
      * 查询路径
@@ -178,36 +191,20 @@ public class OaActEngineering {
         this.afterVariety = afterVariety;
     }
 
-    public Date getBeforeData() {
+    public String getBeforeData() {
         return beforeData;
     }
 
-    public void setBeforeData(Date beforeData) {
+    public void setBeforeData(String beforeData) {
         this.beforeData = beforeData;
     }
 
-    public String getBeforeDataStr() {
-        return beforeDataStr;
-    }
-
-    public void setBeforeDataStr(String beforeDataStr) {
-        this.beforeDataStr = beforeDataStr;
-    }
-
-    public Date getAfterData() {
+    public String getAfterData() {
         return afterData;
     }
 
-    public void setAfterData(Date afterData) {
+    public void setAfterData(String afterData) {
         this.afterData = afterData;
-    }
-
-    public String getAfterDataStr() {
-        return afterDataStr;
-    }
-
-    public void setAfterDataStr(String afterDataStr) {
-        this.afterDataStr = afterDataStr;
     }
 
     public String getBeforeNumber() {
@@ -242,6 +239,22 @@ public class OaActEngineering {
         this.salesman = salesman;
     }
 
+    public String getMinister() {
+        return minister;
+    }
+
+    public void setMinister(String minister) {
+        this.minister = minister;
+    }
+
+    public String getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(String principal) {
+        this.principal = principal;
+    }
+
     public String getRemark() {
         return remark;
     }
@@ -272,6 +285,22 @@ public class OaActEngineering {
 
     public void setPromoter(Integer promoter) {
         this.promoter = promoter;
+    }
+
+    public String getPromoterStr() {
+        return promoterStr;
+    }
+
+    public void setPromoterStr(String promoterStr) {
+        this.promoterStr = promoterStr;
+    }
+
+    public String getAnnex() {
+        return annex;
+    }
+
+    public void setAnnex(String annex) {
+        this.annex = annex;
     }
 
     public String getUrl() {

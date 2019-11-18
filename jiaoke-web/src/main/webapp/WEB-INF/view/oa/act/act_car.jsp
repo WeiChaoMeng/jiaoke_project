@@ -17,7 +17,8 @@
     <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
 </head>
 
-<body>
+<body id="body">
+
 <div class="table-title">
     <span>用车审批单</span>
 </div>
@@ -121,7 +122,7 @@
         <tr>
             <td class="tdLabel">用车时间</td>
             <td class="table-td-content">
-                <input type="text" class="formInput je-start-date" name="startTimeStr" onfocus="this.blur()">
+                <input type="text" class="formInput je-start-date" name="startTime" onfocus="this.blur()">
             </td>
 
             <td class="tdLabel">目的地</td>
@@ -139,21 +140,19 @@
 
             <td class="tdLabel">使用后数</td>
             <td class="table-td-content">
-                <input type="text" class="formInput-readonly" name="after" readonly>
-                <%--<input type="text" class="formInput-readonly" name="after" id="after" autocomplete="off"
-                       onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')" onblur="resultNum()" readonly>--%>
+                <input type="text" class="formInput-readonly" readonly>
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel">行驶数</td>
             <td class="table-td-content">
-                <input type="text" class="formInput-readonly" name="drivingNumber" readonly>
+                <input type="text" class="formInput-readonly" readonly>
             </td>
 
             <td class="tdLabel">计费(元)</td>
             <td class="table-td-content">
-                <input type="text" class="formInput-readonly" name="billing" readonly>
+                <input type="text" class="formInput-readonly" readonly>
             </td>
         </tr>
 
@@ -165,7 +164,7 @@
 
             <td class="tdLabel">交车时间</td>
             <td class="table-td-content">
-                <input type="text" class="formInput-readonly" name="endTimeStr" readonly>
+                <input type="text" class="formInput-readonly" readonly>
             </td>
         </tr>
 
@@ -209,60 +208,62 @@
 
     //发送
     function send() {
-
-        if ($.trim($("#cardinalNumber").val()) === '') {
-            top.window.tips("公里基数不可以为空！", 6, 5, 1000);
-        }else {
+        if ($.trim($("#title").val()) === '' || $.trim($("#cardinalNumber").val()) === '') {
+            top.window.tips("标题和公里基数不可以为空！", 6, 5, 1000);
+        } else {
             var array = [];
             $('#annexes').find('input').each(function () {
                 array.push($(this).val());
             });
 
-            if ($.trim($("#title").val()) === '') {
-                top.window.tips("标题不可以为空！", 6, 5, 1000);
-            } else {
+            //发送前将上传好的附件插入form中
+            $('#annex').val(array);
 
-                //发送前将上传好的附件插入form中
-                $('#annex').val(array);
-
-                $.ajax({
-                    type: "POST",
-                    url: '${path}/car/add',
-                    data: $('#oaActCar').serialize(),
-                    error: function (request) {
-                        layer.msg("出错！");
-                    },
-                    success: function (result) {
-                        if (result === "success") {
-                            window.location.href = "${path}/oaIndex.do";
-                            layer.msg("发送成功！");
-                        } else {
-                            layer.msg('发送失败！');
-                        }
+            $.ajax({
+                type: "POST",
+                url: '${path}/car/add',
+                data: $('#oaActCar').serialize(),
+                error: function (request) {
+                    window.top.tips("出错！", 6, 2, 1000);
+                },
+                success: function (result) {
+                    if (result === "success") {
+                        window.location.href = "${path}/oaIndex.do";
+                        window.top.tips("发送成功！", 0, 1, 1000);
+                    } else {
+                        window.top.tips("发送失败！", 0, 2, 1000);
                     }
-                })
-            }
+                }
+            })
         }
     }
 
     //保存待发
     function savePending() {
-        if ($.trim($("#title").val()) === '') {
-            layer.msg("标题不可以为空！")
+        if ($.trim($("#title").val()) === '' || $.trim($("#cardinalNumber").val()) === '') {
+            top.window.tips("标题和公里基数不可以为空！", 6, 5, 1000);
         } else {
+            var array = [];
+            $('#annexes').find('input').each(function () {
+                array.push($(this).val());
+            });
+
+            //发送前将上传好的附件插入form中
+            $('#annex').val(array);
+
             $.ajax({
                 type: "POST",
                 url: '${path}/car/savePending',
                 data: $('#oaActCar').serialize(),
                 error: function (request) {
-                    layer.msg("出错！");
+                    window.top.tips("出错！", 6, 2, 1000);
                 },
                 success: function (result) {
                     if (result === "success") {
                         window.location.href = "${path}/oaIndex.do";
-                        layer.msg("保存成功！");
+                        window.top.tips("保存成功！", 0, 1, 1000);
                     } else {
-                        layer.msg('保存失败！');
+                        window.top.tips("保存失败！", 0, 2, 1000);
                     }
                 }
             })
@@ -324,9 +325,11 @@
     //打印
     function printContent() {
         $('#tool,#titleArea,#annexList').hide();
+        $('#body').css('width', '100%');
         //执行打印
         window.print();
         $('#tool,#titleArea').show();
+        $('#body').css('width', '80%');
 
         //附件列表
         let annexesLen = $('#annexes').children().length;

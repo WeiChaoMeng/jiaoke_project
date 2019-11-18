@@ -112,14 +112,19 @@ public class RoleInfoServiceImpl implements RoleInfoService {
     }
 
     @Override
-    public Map<String, Object> bindingInfo(Integer id) {
-        HashMap<String, Object> map = new HashMap<>();
-        //查询全部角色
+    public List<Permission> bindingInfo(Integer id) {
         List<Permission> permissionList = permissionMapper.selectAll();
         //已绑定角色
         List<Permission> existingPermission = permissionMapper.selectExistingPermission(id);
-        map.put("permissionList", permissionList);
-        map.put("existingPermission", existingPermission);
-        return map;
+
+        for (Permission per : permissionList) {
+
+            for (Permission permission : existingPermission) {
+                if (permission.getId().equals(per.getId())){
+                    per.setLAY_CHECKED("true");
+                }
+            }
+        }
+        return permissionList;
     }
 }

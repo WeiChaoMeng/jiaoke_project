@@ -11,7 +11,6 @@ import com.jiaoke.oa.service.DepartmentService;
 import com.jiaoke.oa.service.PermissionService;
 import com.jiaoke.oa.service.RoleInfoService;
 import com.jiaoke.oa.service.UserInfoService;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -276,7 +275,7 @@ public class BackstageManagementController {
     }
 
     /**
-     * 绑定权限
+     * 查询已绑定权限
      *
      * @param id id
      * @return roleInfo
@@ -284,7 +283,9 @@ public class BackstageManagementController {
     @RequestMapping(value = "/toBindingPower")
     @ResponseBody
     public String toBindingPower(Integer id) {
-        Map<String, Object> map = roleInfoService.bindingInfo(id);
+        Map<String, Object> map = new HashMap<>(16);
+        List<Permission> permissionList = roleInfoService.bindingInfo(id);
+        map.put("data",permissionList);
         return JsonHelper.toJSONString(map);
     }
 
@@ -362,16 +363,15 @@ public class BackstageManagementController {
     /**
      * 加载权限数据
      *
-     * @param page page
      * @return list
      */
-    @RequestMapping(value = "/permissionManager")
     @ResponseBody
-    public String permissionManager(int page) {
-        PageHelper.startPage(page, 15);
+    @RequestMapping(value = "/permissionManager")
+    public String permissionsData() {
+        HashMap<String, Object> map = new HashMap<>(16);
         List<Permission> permissionList = permissionService.selectAll();
-        PageInfo<Permission> pageInfo = new PageInfo<>(permissionList);
-        return JsonHelper.toJSONString(pageInfo);
+        map.put("data",permissionList);
+        return JsonHelper.toJSONString(map);
     }
 
     /**

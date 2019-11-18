@@ -64,7 +64,7 @@ public class OaActEngineeringController {
      *
      * @return jsp
      */
-    @RequestMapping("/toEngineering")
+    @RequestMapping("/toIndex")
     public String toEngineering(Model model) {
         model.addAttribute("nickname", getCurrentUser().getNickname());
         return "oa/act/act_engineering";
@@ -80,7 +80,7 @@ public class OaActEngineeringController {
     @ResponseBody
     public String add(OaActEngineering oaActEngineering) {
         String randomId = RandomUtil.randomId();
-        if (oaActEngineeringService.insert(oaActEngineering, getCurrentUser().getId(),randomId) < 1) {
+        if (oaActEngineeringService.insert(oaActEngineering, getCurrentUser().getId(), randomId, 0) < 1) {
             return "error";
         } else {
             //用户所在部门id
@@ -169,7 +169,7 @@ public class OaActEngineeringController {
     @ResponseBody
     public String savePending(OaActEngineering oaActEngineering) {
         String randomId = RandomUtil.randomId();
-        if (oaActEngineeringService.savePending(oaActEngineering, getCurrentUser().getId(), randomId) < 1) {
+        if (oaActEngineeringService.insert(oaActEngineering, getCurrentUser().getId(), randomId, 1) < 1) {
             return "error";
         } else {
             return "success";

@@ -14,11 +14,4 @@ import tk.mybatis.mapper.common.Mapper;
 @Repository
 public interface OaActMaintainMapper extends Mapper<OaActMaintain> {
 
-    /**
-     * 插入数据并返回主键
-     *
-     * @param oaActMaintain oaActMaintain
-     * @return int
-     */
-    int insertData(OaActMaintain oaActMaintain);
 }

@@ -28,12 +28,11 @@ public class OaActMaintainServiceImpl implements OaActMaintainService {
 
     @Override
     public int insert(OaActMaintain oaActMaintain, Integer userId, String randomId, Integer state) {
-        oaActMaintain.setApplyTime(DateUtil.stringConvertYYYYMMDD(oaActMaintain.getApplyTimeStr()));
         oaActMaintain.setId(randomId);
         oaActMaintain.setPromoter(userId);
         oaActMaintain.setUrl("maintain");
         oaActMaintain.setCreateTime(new Date());
-        if (oaActMaintainMapper.insertData(oaActMaintain) < 0) {
+        if (oaActMaintainMapper.insertSelective(oaActMaintain) < 0) {
             return -1;
         } else {
             OaCollaboration oaCollaboration = new OaCollaboration();
@@ -51,7 +50,6 @@ public class OaActMaintainServiceImpl implements OaActMaintainService {
 
     @Override
     public int edit(OaActMaintain oaActMaintain) {
-        oaActMaintain.setApplyTime(DateUtil.stringConvertYYYYMMDD(oaActMaintain.getApplyTimeStr()));
         oaActMaintain.setCreateTime(new Date());
         if (oaActMaintainMapper.updateByPrimaryKey(oaActMaintain) < 0) {
             return -1;
@@ -64,7 +62,6 @@ public class OaActMaintainServiceImpl implements OaActMaintainService {
     @Override
     public OaActMaintain selectByPrimaryKey(String id) {
         OaActMaintain oaActMaintain = oaActMaintainMapper.selectByPrimaryKey(id);
-        oaActMaintain.setApplyTimeStr(DateUtil.dateConvertYYYYMMDD(oaActMaintain.getApplyTime()));
         oaActMaintain.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActMaintain.getCreateTime()));
         return oaActMaintain;
     }

@@ -171,4 +171,9 @@ public class UserInfoServiceImpl implements UserInfoService {
     public String selectDepartmentByUserId(Integer userId) {
         return userInfoMapper.selectDepartment(userId);
     }
+
+    @Override
+    public String getNicknameById(Integer id) {
+        return userInfoMapper.getNicknameById(id);
+    }
 }

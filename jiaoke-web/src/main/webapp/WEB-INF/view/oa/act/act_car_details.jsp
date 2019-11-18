@@ -15,7 +15,8 @@
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
 </head>
 
-<body>
+<body id="body">
+
 <div class="table-title">
     <span>${oaActCar.title}</span>
 </div>
@@ -47,7 +48,7 @@
                     <c:forTokens items="${oaActCar.annex}" delims="," var="annex">
                         <div class="table-file">
                             <div class="table-file-content">
-                                <span title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <span class="table-file-title" title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
                                 <a class="table-file-download icon"
                                    href="/fileDownloadHandle/download?fileName=${annex}"
                                    title="下载">&#xebda;</a>
@@ -113,7 +114,7 @@
     <tr>
         <td class="tdLabel">用车时间</td>
         <td class="table-td-content">
-            ${oaActCar.startTimeStr}
+            ${oaActCar.startTime}
         </td>
 
         <td class="tdLabel">目的地</td>
@@ -154,7 +155,7 @@
 
         <td class="tdLabel">交车时间</td>
         <td class="table-td-content">
-            ${oaActCar.endTimeStr}
+            ${oaActCar.endTime}
         </td>
     </tr>
 
@@ -177,28 +178,19 @@
     <span class="notice-tips-script">说明：1.每公里2元。使用的车辆为享受车补待遇的，每公里1.2元。2.审核人为使用部门负责人，批准人为使用人部门主管领导。3.多人同时使用时费用均摊。4.费用按月报销或扣除。</span>
 </div>
 
-<div class="form-but" id="ret" style="margin-top: 20px;">
-    <button type="button" class="return-but" onclick="previousPage()">返回</button>
-</div>
-
 </body>
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
 <script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
 
-    //返回上一页
-    function previousPage() {
-        window.history.back();
-    }
-
     //打印
     function printContent() {
         $('#tool').hide();
-        $('#ret').hide();
+        $('#body').css('width', '100%');
         //执行打印
         window.print();
         $('#tool').show();
-        $('#ret').show();
+        $('#body').css('width', '80%');
     }
 </script>
 </html>

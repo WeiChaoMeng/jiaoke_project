@@ -31,14 +31,12 @@ public class OaActCarServiceImpl implements OaActCarService {
     private UserInfoMapper userInfoMapper;
 
     @Override
-    public int savePending(OaActCar oaActCar, Integer userId, String randomId) {
-        oaActCar.setStartTime(DateUtil.stringConvertYYYYMMDDHHMM(oaActCar.getStartTimeStr()));
+    public int insert(OaActCar oaActCar, Integer userId, String randomId, Integer state) {
         oaActCar.setId(randomId);
         oaActCar.setPromoter(userId);
         oaActCar.setUrl("car");
-        oaActCar.setState(1);
         oaActCar.setCreateTime(new Date());
-        if (oaActCarMapper.insertData(oaActCar) < 0) {
+        if (oaActCarMapper.insertSelective(oaActCar) < 0) {
             return -1;
         } else {
             OaCollaboration oaCollaboration = new OaCollaboration();
@@ -47,31 +45,7 @@ public class OaActCarServiceImpl implements OaActCarService {
             oaCollaboration.setTitle(oaActCar.getTitle());
             oaCollaboration.setUrl("car");
             oaCollaboration.setTable("oa_act_car");
-            oaCollaboration.setState(1);
-            oaCollaboration.setCreateTime(new Date());
-            oaCollaborationMapper.insertData(oaCollaboration);
-            return 1;
-        }
-    }
-
-    @Override
-    public int insert(OaActCar oaActCar, Integer userId, String randomId) {
-        oaActCar.setStartTime(DateUtil.stringConvertYYYYMMDDHHMM(oaActCar.getStartTimeStr()));
-        oaActCar.setId(randomId);
-        oaActCar.setPromoter(userId);
-        oaActCar.setUrl("car");
-        oaActCar.setState(0);
-        oaActCar.setCreateTime(new Date());
-        if (oaActCarMapper.insertData(oaActCar) < 0) {
-            return -1;
-        } else {
-            OaCollaboration oaCollaboration = new OaCollaboration();
-            oaCollaboration.setCorrelationId(randomId);
-            oaCollaboration.setPromoter(userId);
-            oaCollaboration.setTitle(oaActCar.getTitle());
-            oaCollaboration.setUrl("car");
-            oaCollaboration.setTable("oa_act_car");
-            oaCollaboration.setState(0);
+            oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);
             return 1;
@@ -80,8 +54,6 @@ public class OaActCarServiceImpl implements OaActCarService {
 
     @Override
     public int edit(OaActCar oaActCar) {
-        oaActCar.setStartTime(DateUtil.stringConvertYYYYMMDDHHMM(oaActCar.getStartTimeStr()));
-        oaActCar.setEndTime(DateUtil.stringConvertYYYYMMDDHHMM(oaActCar.getEndTimeStr()));
         oaActCar.setCreateTime(new Date());
         if (oaActCarMapper.updateByPrimaryKey(oaActCar) < 0) {
             return -1;
@@ -94,12 +66,6 @@ public class OaActCarServiceImpl implements OaActCarService {
     @Override
     public OaActCar selectByPrimaryKey(String id) {
         OaActCar oaActCar = oaActCarMapper.selectByPrimaryKey(id);
-        if (oaActCar.getEndTime() != null){
-            oaActCar.setEndTimeStr(DateUtil.dateConvertYYYYMMDDHHMM(oaActCar.getEndTime()));
-        }
-        if (oaActCar.getStartTime() != null){
-            oaActCar.setStartTimeStr(DateUtil.dateConvertYYYYMMDDHHMM(oaActCar.getStartTime()));
-        }
         oaActCar.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActCar.getCreateTime()));
         oaActCar.setPromoterStr(userInfoMapper.getNicknameById(oaActCar.getPromoter()));
         return oaActCar;
@@ -119,23 +85,7 @@ public class OaActCarServiceImpl implements OaActCarService {
     }
 
     @Override
-    public int updateState(String id, Integer state) {
-        if (oaActCarMapper.updateStateById(id, state) < 0) {
-            return -1;
-        } else {
-            if (oaCollaborationMapper.updateState(id, state) < 0) {
-                return -1;
-            } else {
-                return 1;
-            }
-        }
-    }
-
-    @Override
     public int updateByPrimaryKeySelective(OaActCar oaActCar) {
-        if (oaActCar.getEndTimeStr() != null){
-            oaActCar.setEndTime(DateUtil.stringConvertYYYYMMDDHHMM(oaActCar.getEndTimeStr()));
-        }
         return oaActCarMapper.updateByPrimaryKeySelective(oaActCar);
     }
 }

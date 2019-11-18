@@ -62,7 +62,7 @@ public class OaActMealsController {
      *
      * @return jsp
      */
-    @RequestMapping("/toMeals")
+    @RequestMapping("/toIndex")
     public String toMeals(Model model) {
         model.addAttribute("nickname", getCurrentUser().getNickname());
         return "oa/act/act_meals";

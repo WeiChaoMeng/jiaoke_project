@@ -71,6 +71,10 @@
     <delete id="deleteByCorrelationId" parameterType="java.lang.String">
         delete from oa_collaboration where correlation_id = #{correlationId}
     </delete>
+    
+    <select id="selectAnnex" parameterType="java.util.Map" resultType="java.lang.String">
+        select annex from ${table} where id = #{correlationId}
+    </select>
 
     <delete id="deleteCorrelationTable" parameterType="java.util.Map">
         delete from ${table} where id = #{correlationId}

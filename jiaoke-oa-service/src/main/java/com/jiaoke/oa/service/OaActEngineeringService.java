@@ -25,19 +25,10 @@ public interface OaActEngineeringService {
      * @param oaActEngineering oaActEngineering
      * @param userId           userId
      * @param randomId         randomId
+     * @param state            state
      * @return int
      */
-    int insert(OaActEngineering oaActEngineering, Integer userId, String randomId);
-
-    /**
-     * 编辑
-     *
-     * @param oaActEngineering oaActEngineering
-     * @param userId           userId
-     * @param randomId         randomId
-     * @return int
-     */
-    int savePending(OaActEngineering oaActEngineering, Integer userId, String randomId);
+    int insert(OaActEngineering oaActEngineering, Integer userId, String randomId, Integer state);
 
     /**
      * 工程名称变更记录表 - 查询

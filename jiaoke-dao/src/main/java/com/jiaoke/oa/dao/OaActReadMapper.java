@@ -13,12 +13,4 @@ import tk.mybatis.mapper.common.Mapper;
  */
 @Repository
 public interface OaActReadMapper extends Mapper<OaActRead> {
-
-    /**
-     * 插入数据并返回主键
-     *
-     * @param oaActRead oaActRead
-     * @return int
-     */
-    int insertData(OaActRead oaActRead);
 }

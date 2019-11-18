@@ -37,7 +37,6 @@ public class OaActSealsBorrowServiceImpl implements OaActSealsBorrowService {
 
     @Override
     public int insert(OaActSealsBorrow oaActSealsBorrow, Integer userId, String randomId, Integer state) {
-        oaActSealsBorrow.setBorrowTime(DateUtil.stringConvertYYYYMMDDHH(oaActSealsBorrow.getBorrowTimeStr()));
         oaActSealsBorrow.setCreateTime(new Date());
         oaActSealsBorrow.setId(randomId);
         oaActSealsBorrow.setPromoter(userId);
@@ -60,7 +59,6 @@ public class OaActSealsBorrowServiceImpl implements OaActSealsBorrowService {
 
     @Override
     public int edit(OaActSealsBorrow oaActSealsBorrow) {
-        oaActSealsBorrow.setBorrowTime(DateUtil.stringConvertYYYYMMDDHH(oaActSealsBorrow.getBorrowTimeStr()));
         oaActSealsBorrow.setCreateTime(new Date());
         if (oaActSealsBorrowMapper.updateByPrimaryKey(oaActSealsBorrow) < 0) {
             return -1;
@@ -73,7 +71,6 @@ public class OaActSealsBorrowServiceImpl implements OaActSealsBorrowService {
     @Override
     public OaActSealsBorrow selectByPrimaryKey(String id) {
         OaActSealsBorrow oaActSealsBorrow = oaActSealsBorrowMapper.selectByPrimaryKey(id);
-        oaActSealsBorrow.setBorrowTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActSealsBorrow.getBorrowTime()));
         oaActSealsBorrow.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActSealsBorrow.getCreateTime()));
         oaActSealsBorrow.setPromoterStr(userInfoMapper.getNicknameById(oaActSealsBorrow.getPromoter()));
         return oaActSealsBorrow;

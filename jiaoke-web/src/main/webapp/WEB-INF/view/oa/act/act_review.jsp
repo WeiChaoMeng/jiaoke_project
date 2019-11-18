@@ -14,7 +14,7 @@
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
 </head>
 
-<body>
+<body id="body">
 
 <div class="table-title">
     <span>合同审查表</span>
@@ -63,7 +63,7 @@
                     <button type="button" class="table-tab-send" onclick="send()">发送</button>
                 </td>
 
-                <th nowrap="nowrap" class="th_title" style="width: 4%">标题:</th>
+                <th nowrap="nowrap" class="th_title" style="width: 4%">标题</th>
                 <td style="width: 35%">
                     <div class="common_input_frame">
                         <input type="text" id="title" name="title" placeholder="请输入标题" title="点击此处填写标题"
@@ -72,10 +72,10 @@
                     </div>
                 </td>
 
-                <th class="th_title" nowrap="nowrap" style="width: 4%">流程:</th>
+                <th class="th_title" nowrap="nowrap" style="width: 4%">流程</th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" placeholder="发起者部门负责人(审批)、发起者部门主管领导(审批)、组织人事部门(审批)、总经理(审批)、发起人(协同)"
+                        <input type="text" placeholder="发起者部门负责人(审批)、法务(审批)、财务(审批)、发起者主管领导(审批)、主要领导(审批)、发起人(协同)"
                                readonly="readonly">
                     </div>
                 </td>
@@ -84,7 +84,7 @@
         </table>
     </div>
 
-    <span class="fill-in-date">编号：<input type="text" name="numbering" class="notice-personnel-field"></span>
+    <span class="fill-in-date">编号<input type="text" name="numbering" class="form-number-content" autocomplete="off"></span>
 
     <table class="formTable">
         <tbody>
@@ -131,11 +131,11 @@
             <td colspan="3" class="approval-content">
                 <textarea readonly class="approval-content-textarea"></textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
+                    <label class="approval-date-label">日期</label>
                     <input class="approval-date-input" type="text" readonly>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">签字:</label>
+                    <label class="approval-signature-label">签字</label>
                     <input class="approval-signature-input" type="text" readonly>
                 </div>
             </td>
@@ -146,26 +146,11 @@
             <td colspan="3" class="approval-content">
                 <textarea readonly class="approval-content-textarea"></textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
+                    <label class="approval-date-label">日期</label>
                     <input class="approval-date-input" type="text" readonly>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">签字:</label>
-                    <input class="approval-signature-input" type="text" readonly>
-                </div>
-            </td>
-        </tr>
-
-        <tr>
-            <td class="tdLabel">技术负责人审查意见</td>
-            <td colspan="3" class="approval-content">
-                <textarea readonly class="approval-content-textarea"></textarea>
-                <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
-                    <input class="approval-date-input" type="text" readonly>
-                </div>
-                <div class="approval-signature">
-                    <label class="approval-signature-label">签字:</label>
+                    <label class="approval-signature-label">签字</label>
                     <input class="approval-signature-input" type="text" readonly>
                 </div>
             </td>
@@ -176,11 +161,11 @@
             <td colspan="3" class="approval-content">
                 <textarea readonly class="approval-content-textarea"></textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
+                    <label class="approval-date-label">日期</label>
                     <input class="approval-date-input" type="text" readonly>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">签字:</label>
+                    <label class="approval-signature-label">签字</label>
                     <input class="approval-signature-input" type="text" readonly>
                 </div>
             </td>
@@ -191,11 +176,11 @@
             <td colspan="3" class="approval-content">
                 <textarea readonly class="approval-content-textarea"></textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
+                    <label class="approval-date-label">日期</label>
                     <input class="approval-date-input" type="text" readonly>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">签字:</label>
+                    <label class="approval-signature-label">签字</label>
                     <input class="approval-signature-input" type="text" readonly>
                 </div>
 
@@ -224,7 +209,7 @@
         });
 
         if ($.trim($("#title").val()) === '') {
-            window.top.tips("标题不可以为空！", 6, 5, 2000);
+            window.top.tips("标题不能为空！", 6, 5, 1000);
         } else {
             //发送前将上传好的附件插入form中
             $('#annex').val(array);
@@ -250,22 +235,30 @@
 
     //保存待发
     function savePending() {
+        var array = [];
+        $('#annexes').find('input').each(function () {
+            array.push($(this).val());
+        });
+
         if ($.trim($("#title").val()) === '') {
-            layer.msg("标题不可以为空！")
+            window.top.tips("标题不能为空！", 6, 5, 1000);
         } else {
+            //发送前将上传好的附件插入form中
+            $('#annex').val(array);
+
             $.ajax({
                 type: "POST",
                 url: '${path}/review/savePending',
                 data: $('#oaActReview').serialize(),
                 error: function (request) {
-                    layer.msg("出错！");
+                    window.top.tips("出错！", 6, 2, 1000);
                 },
                 success: function (result) {
                     if (result === "success") {
                         window.location.href = "${path}/oaIndex.do";
-                        window.top.tips("保存成功！");
+                        window.top.tips("保存成功！", 0, 1, 1000);
                     } else {
-                        window.top.tips("保存失败！");
+                        window.top.tips("保存失败！", 0, 2, 1000);
                     }
                 }
             })
@@ -306,19 +299,19 @@
             url: '${path}/fileUploadHandle/deleteFile',
             data: {"fileName": fileName},
             error: function (request) {
-                layer.msg("出错！");
+                window.top.tips("出错！", 6, 2, 1000);
             },
             success: function (result) {
                 if (result === "success") {
                     $('#file' + fileName.substring(0, fileName.indexOf("_"))).remove();
-                    window.top.tips("删除成功！", 0, 1, 2000);
+                    window.top.tips("删除成功！", 0, 1, 1000);
 
                     let annexesLen = $('#annexes').children().length;
                     if (annexesLen === 0) {
                         $('#annexList').css("display", "none");
                     }
                 } else {
-                    window.top.tips("文件不存在！", 6, 5, 2000);
+                    window.top.tips("文件不存在！", 6, 5, 1000);
                 }
             }
         });
@@ -327,9 +320,11 @@
     //打印
     function printContent() {
         $('#tool,#titleArea,#annexList').hide();
+        $('#body').css('width', '100%');
         //执行打印
         window.print();
         $('#tool,#titleArea').show();
+        $('#body').css('width', '80%');
 
         //附件列表
         let annexesLen = $('#annexes').children().length;

@@ -32,7 +32,6 @@ public class OaActLicenceUseServiceImpl implements OaActLicenceUseService {
 
     @Override
     public int insert(OaActLicenceUse oaActLicenceUse, Integer userId, String randomId, Integer state) {
-        oaActLicenceUse.setReceiveTime(DateUtil.stringConvertYYYYMMDD(oaActLicenceUse.getReceiveTimeStr()));
         oaActLicenceUse.setId(randomId);
         oaActLicenceUse.setCreateTime(new Date());
         oaActLicenceUse.setPromoter(userId);
@@ -55,7 +54,6 @@ public class OaActLicenceUseServiceImpl implements OaActLicenceUseService {
 
     @Override
     public int edit(OaActLicenceUse oaActLicenceUse) {
-        oaActLicenceUse.setReceiveTime(DateUtil.stringConvertYYYYMMDD(oaActLicenceUse.getReceiveTimeStr()));
         oaActLicenceUse.setCreateTime(new Date());
         if (oaActLicenceUseMapper.updateByPrimaryKey(oaActLicenceUse) < 0) {
             return -1;
@@ -68,7 +66,6 @@ public class OaActLicenceUseServiceImpl implements OaActLicenceUseService {
     @Override
     public OaActLicenceUse selectByPrimaryKey(String id) {
         OaActLicenceUse oaActLicenceUse = oaActLicenceUseMapper.selectByPrimaryKey(id);
-        oaActLicenceUse.setReceiveTimeStr(DateUtil.dateConvertYYYYMMDD(oaActLicenceUse.getReceiveTime()));
         oaActLicenceUse.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActLicenceUse.getCreateTime()));
         oaActLicenceUse.setPromoterStr(userInfoMapper.getNicknameById(oaActLicenceUse.getPromoter()));
         return oaActLicenceUse;

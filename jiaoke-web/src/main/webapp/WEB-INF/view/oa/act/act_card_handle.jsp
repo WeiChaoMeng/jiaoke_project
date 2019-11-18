@@ -10,13 +10,15 @@
     request.setAttribute("path", basePath);
 %>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <title>饭卡申请单审批处理</title>
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
 </head>
 
-<body>
+<body id="body">
+
 <div class="table-title">
     <span>${oaActCard.title}</span>
 </div>
@@ -65,43 +67,41 @@
     <table class="formTable">
         <tbody>
         <tr>
-            <td class="tdLabel">申请人：</td>
+            <td class="tdLabel">申请人</td>
             <td class="table-td-content">
                 ${oaActCard.applicant}
                 <input type="hidden" name="id" value="${oaActCard.id}">
                 <input type="hidden" name="title" value="${oaActCard.title}">
             </td>
 
-            <td class="tdLabel">申请时间：</td>
+            <td class="tdLabel">申请时间</td>
             <td class="table-td-content">
-                ${oaActCard.applyTimeStr}
+                ${oaActCard.applyTime}
             </td>
         </tr>
 
         <tr>
-            <td class="tdLabel">所属单位：</td>
-            <td colspan="3" class="table-td-content">
+            <td class="tdLabel">所属单位</td>
+            <td class="table-td-content" style="padding: 10px;width: 30%;">
                 ${oaActCard.company}
             </td>
-        </tr>
 
-        <tr>
-            <td class="tdLabel">事由：</td>
-            <td colspan="3" class="table-td-content">
+            <td class="tdLabel">事由</td>
+            <td class="table-td-content" style="padding: 10px;width: 30%;">
                 ${oaActCard.reason}
             </td>
         </tr>
 
         <tr>
-            <td class="tdLabel">拟使用期限(开始)：</td>
+            <td class="tdLabel">拟使用期限(开始)</td>
             <td class="table-td-content">
-                ${oaActCard.startTimeStr}
+                ${oaActCard.startTime}
             </td>
 
 
-            <td class="tdLabel">拟使用期限(结束)：</td>
+            <td class="tdLabel">拟使用期限(结束)</td>
             <td class="table-td-content">
-                ${oaActCard.endTimeStr}
+                ${oaActCard.endTime}
             </td>
         </tr>
 
@@ -119,7 +119,7 @@
                     </c:choose>
 
                     <div class="approval-date">
-                        <label class="approval-date-label">日期:</label>
+                        <label class="approval-date-label">日期</label>
                         <c:choose>
                             <c:when test="${oaActCard.principalDate == null}">
                                 <input class="approval-date-input" type="text" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>
@@ -130,7 +130,7 @@
                         </c:choose>
                     </div>
                     <div class="approval-signature">
-                        <label class="approval-signature-label">签字:</label>
+                        <label class="approval-signature-label">签字</label>
                         <c:choose>
                             <c:when test="${oaActCard.principalSign == null}">
                                 <input class="approval-signature-input" type="text" name="principalSign" value="${nickname}" readonly>
@@ -145,11 +145,11 @@
                 <shiro:lacksPermission name="officePrincipal">
                     <textarea readonly class="approval-content-textarea">${oaActCard.principalContent}</textarea>
                     <div class="approval-date">
-                        <label class="approval-date-label">日期:</label>
+                        <label class="approval-date-label">日期</label>
                         <input class="approval-date-input" type="text" value="${oaActCard.principalDate}" readonly>
                     </div>
                     <div class="approval-signature">
-                        <label class="approval-signature-label">签字:</label>
+                        <label class="approval-signature-label">签字</label>
                         <input class="approval-signature-input" type="text" value="${oaActCard.principalSign}" readonly>
                     </div>
                 </shiro:lacksPermission>
@@ -170,7 +170,7 @@
                     </c:choose>
 
                     <div class="approval-date">
-                        <label class="approval-date-label">日期:</label>
+                        <label class="approval-date-label">日期</label>
                         <c:choose>
                             <c:when test="${oaActCard.supervisorDate == null}">
                                 <input class="approval-date-input" type="text" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>
@@ -181,7 +181,7 @@
                         </c:choose>
                     </div>
                     <div class="approval-signature">
-                        <label class="approval-signature-label">签字:</label>
+                        <label class="approval-signature-label">签字</label>
                         <c:choose>
                             <c:when test="${oaActCard.supervisorSign == null}">
                                 <input class="approval-signature-input" type="text" name="supervisorSign" value="${nickname}" readonly>
@@ -196,11 +196,11 @@
                 <shiro:lacksPermission name="officeSupervisor">
                     <textarea readonly class="approval-content-textarea">${oaActCard.supervisorContent}</textarea>
                     <div class="approval-date">
-                        <label class="approval-date-label">日期:</label>
+                        <label class="approval-date-label">日期</label>
                         <input class="approval-date-input" type="text" value="${oaActCard.supervisorDate}" readonly>
                     </div>
                     <div class="approval-signature">
-                        <label class="approval-signature-label">签字:</label>
+                        <label class="approval-signature-label">签字</label>
                         <input class="approval-signature-input" type="text" value="${oaActCard.supervisorSign}" readonly>
                     </div>
                 </shiro:lacksPermission>
@@ -221,7 +221,7 @@
                     </c:choose>
 
                     <div class="approval-date">
-                        <label class="approval-date-label">日期:</label>
+                        <label class="approval-date-label">日期</label>
                         <c:choose>
                             <c:when test="${oaActCard.directorDate == null}">
                                 <input class="approval-date-input" type="text" name="directorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>
@@ -232,7 +232,7 @@
                         </c:choose>
                     </div>
                     <div class="approval-signature">
-                        <label class="approval-signature-label">签字:</label>
+                        <label class="approval-signature-label">签字</label>
 
                         <c:choose>
                             <c:when test="${oaActCard.directorSign == null}">
@@ -248,11 +248,11 @@
                 <shiro:lacksPermission name="cardApproval">
                     <textarea readonly class="approval-content-textarea">${oaActCard.directorContent}</textarea>
                     <div class="approval-date">
-                        <label class="approval-date-label">日期:</label>
+                        <label class="approval-date-label">日期</label>
                         <input class="approval-date-input" type="text" value="${oaActCard.directorDate}" readonly>
                     </div>
                     <div class="approval-signature">
-                        <label class="approval-signature-label">签字:</label>
+                        <label class="approval-signature-label">签字</label>
                         <input class="approval-signature-input" type="text" value="${oaActCard.directorSign}" readonly>
                     </div>
                 </shiro:lacksPermission>
@@ -297,6 +297,16 @@
                 layer.msg("出错！");
             }
         })
+    }
+
+    //打印
+    function printContent() {
+        $('#tool').hide();
+        $('#body').css('width', '100%');
+        //执行打印
+        window.print();
+        $('#tool').show();
+        $('#body').css('width', '80%');
     }
 </script>
 </html>

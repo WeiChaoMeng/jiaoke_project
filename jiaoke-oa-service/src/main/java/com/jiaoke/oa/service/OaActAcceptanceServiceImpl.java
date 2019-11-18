@@ -27,36 +27,12 @@ public class OaActAcceptanceServiceImpl implements OaActAcceptanceService {
     private OaCollaborationMapper oaCollaborationMapper;
 
     @Override
-    public int insert(OaActAcceptance oaActAcceptance, Integer userId, String randomId) {
-        oaActAcceptance.setAcceptanceDate(DateUtil.stringConvertYYYYMMDD(oaActAcceptance.getAcceptanceDateStr()));
+    public int insert(OaActAcceptance oaActAcceptance, Integer userId, String randomId, Integer state) {
         oaActAcceptance.setId(randomId);
         oaActAcceptance.setPromoter(userId);
         oaActAcceptance.setUrl("acceptance");
         oaActAcceptance.setCreateTime(new Date());
-        if (oaActAcceptanceMapper.insertData(oaActAcceptance) < 0) {
-            return -1;
-        } else {
-            OaCollaboration oaCollaboration = new OaCollaboration();
-            oaCollaboration.setCorrelationId(randomId);
-            oaActAcceptance.setPromoter(userId);
-            oaCollaboration.setTitle(oaActAcceptance.getTitle());
-            oaCollaboration.setUrl("acceptance");
-            oaCollaboration.setTable("oa_act_acceptance");
-            oaCollaboration.setState(0);
-            oaCollaboration.setCreateTime(new Date());
-            oaCollaborationMapper.insertData(oaCollaboration);
-            return 1;
-        }
-    }
-
-    @Override
-    public int savePending(OaActAcceptance oaActAcceptance, Integer userId, String randomId) {
-        oaActAcceptance.setAcceptanceDate(DateUtil.stringConvertYYYYMMDD(oaActAcceptance.getAcceptanceDateStr()));
-        oaActAcceptance.setId(randomId);
-        oaActAcceptance.setPromoter(userId);
-        oaActAcceptance.setUrl("acceptance");
-        oaActAcceptance.setCreateTime(new Date());
-        if (oaActAcceptanceMapper.insertData(oaActAcceptance) < 0) {
+        if (oaActAcceptanceMapper.insertSelective(oaActAcceptance) < 0) {
             return -1;
         } else {
             OaCollaboration oaCollaboration = new OaCollaboration();
@@ -65,7 +41,7 @@ public class OaActAcceptanceServiceImpl implements OaActAcceptanceService {
             oaCollaboration.setTitle(oaActAcceptance.getTitle());
             oaCollaboration.setUrl("acceptance");
             oaCollaboration.setTable("oa_act_acceptance");
-            oaCollaboration.setState(1);
+            oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);
             return 1;
@@ -75,14 +51,12 @@ public class OaActAcceptanceServiceImpl implements OaActAcceptanceService {
     @Override
     public OaActAcceptance selectByPrimaryKey(String id) {
         OaActAcceptance oaActAcceptance = oaActAcceptanceMapper.selectByPrimaryKey(id);
-        oaActAcceptance.setAcceptanceDateStr(DateUtil.dateConvertYYYYMMDD(oaActAcceptance.getAcceptanceDate()));
         oaActAcceptance.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActAcceptance.getCreateTime()));
         return oaActAcceptance;
     }
 
     @Override
     public int edit(OaActAcceptance oaActAcceptance) {
-        oaActAcceptance.setAcceptanceDate(DateUtil.stringConvertYYYYMMDD(oaActAcceptance.getAcceptanceDateStr()));
         oaActAcceptance.setCreateTime(new Date());
         if (oaActAcceptanceMapper.updateByPrimaryKey(oaActAcceptance) < 0) {
             return -1;

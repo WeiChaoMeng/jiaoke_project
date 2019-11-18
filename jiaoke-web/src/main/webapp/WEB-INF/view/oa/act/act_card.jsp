@@ -16,10 +16,12 @@
     <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
 </head>
 
-<body>
+<body id="body">
+
 <div class="table-title">
     <span>饭卡申请单</span>
 </div>
+
 <div class="top_toolbar" id="tool">
     <div class="top_toolbar_inside">
         <div class="head_left_button">
@@ -94,48 +96,46 @@
 
             <td class="tdLabel">申请日期</td>
             <td class="table-td-content">
-                <input type="text" class="formInput je-date" name="applyTimeStr" onfocus="this.blur()">
+                <input type="text" class="formInput je-date" name="applyTime" onfocus="this.blur()">
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel">所属单位</td>
-            <td colspan="3" class="table-td-content">
-                <input type="text" class="formInput" name="company" autocomplete="off">
+            <td class="table-td-content" style="padding: 10px">
+                <textarea class="write-approval-content-textarea" name="company"></textarea>
             </td>
-        </tr>
 
-        <tr>
             <td class="tdLabel">事由</td>
-            <td colspan="3" class="table-td-content">
-                <input type="text" class="formInput" name="reason" autocomplete="off">
+            <td class="table-td-content" style="padding: 10px">
+                <textarea class="write-approval-content-textarea" name="reason"></textarea>
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel">拟使用期限(开始)</td>
             <td class="table-td-content">
-                <input type="text" class="formInput je-start-date" name="startTimeStr" onfocus="this.blur()">
+                <input type="text" class="formInput je-start-date" name="startTime" onfocus="this.blur()">
             </td>
 
 
             <td class="tdLabel">拟使用期限(结束)</td>
             <td class="table-td-content">
-                <input type="text" class="formInput je-end-date" name="endTimeStr" onfocus="this.blur()">
+                <input type="text" class="formInput je-end-date" name="endTime" onfocus="this.blur()">
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel">关联部门负责人</td>
             <td colspan="5" class="approval-content">
-                <textarea disabled="disabled" class="approval-content-textarea"></textarea>
+                <textarea class="approval-content-textarea" readonly></textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
-                    <input class="approval-date-input" type="text" disabled="disabled">
+                    <label class="approval-date-label">日期</label>
+                    <input class="approval-date-input" type="text" readonly>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">签字:</label>
-                    <input class="approval-signature-input" type="text" disabled="disabled">
+                    <label class="approval-signature-label">签字</label>
+                    <input class="approval-signature-input" type="text" readonly>
                 </div>
             </td>
         </tr>
@@ -143,14 +143,14 @@
         <tr>
             <td class="tdLabel">关联部门领导主管</td>
             <td colspan="5" class="approval-content">
-                <textarea disabled="disabled" class="approval-content-textarea"></textarea>
+                <textarea class="approval-content-textarea" readonly></textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
-                    <input class="approval-date-input" type="text" disabled="disabled">
+                    <label class="approval-date-label">日期</label>
+                    <input class="approval-date-input" type="text" readonly>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">签字:</label>
-                    <input class="approval-signature-input" type="text" disabled="disabled">
+                    <label class="approval-signature-label">签字</label>
+                    <input class="approval-signature-input" type="text" readonly>
                 </div>
             </td>
         </tr>
@@ -158,14 +158,14 @@
         <tr>
             <td class="tdLabel">主管部门负责人</td>
             <td colspan="5" class="approval-content">
-                <textarea disabled="disabled" class="approval-content-textarea"></textarea>
+                <textarea class="approval-content-textarea" readonly></textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
-                    <input class="approval-date-input" type="text" disabled="disabled">
+                    <label class="approval-date-label">日期</label>
+                    <input class="approval-date-input" type="text" readonly>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">签字:</label>
-                    <input class="approval-signature-input" type="text" disabled="disabled">
+                    <label class="approval-signature-label">签字</label>
+                    <input class="approval-signature-input" type="text" readonly>
                 </div>
 
                 <%--暂存附件--%>
@@ -220,10 +220,6 @@
         zIndex: 100000,
     });
 
-    function selectFile(own) {
-        $('#fileName').html(own.files[0].name);
-    }
-
     //发送
     function send() {
         var array = [];
@@ -232,7 +228,7 @@
         });
 
         if ($.trim($("#title").val()) === '') {
-            layer.msg("标题不可以为空！")
+            window.top.tips("标题不能为空！", 6, 5, 1000);
         } else {
             //发送前将上传好的附件插入form中
             $('#annex').val(array);
@@ -242,14 +238,14 @@
                 url: '${path}/card/add',
                 data: $('#oaActCard').serialize(),
                 error: function (request) {
-                    layer.msg("出错！");
+                    window.top.tips("出错！", 6, 2, 1000);
                 },
                 success: function (result) {
                     if (result === "success") {
                         window.location.href = "${path}/oaIndex.do";
-                        layer.msg("发送成功！");
+                        window.top.tips("发送成功！", 0, 1, 1000);
                     } else {
-                        layer.msg('发送失败！');
+                        window.top.tips("发送失败！", 0, 2, 1000);
                     }
                 }
             })
@@ -264,7 +260,7 @@
         });
 
         if ($.trim($("#title").val()) === '') {
-            layer.msg("标题不可以为空！")
+            window.top.tips("标题不能为空！", 6, 5, 1000);
         } else {
             //发送前将上传好的附件插入form中
             $('#annex').val(array);
@@ -274,14 +270,14 @@
                 url: '${path}/card/savePending',
                 data: $('#oaActCard').serialize(),
                 error: function (request) {
-                    layer.msg("出错！");
+                    window.top.tips("出错！", 6, 2, 1000);
                 },
                 success: function (result) {
                     if (result === "success") {
                         window.location.href = "${path}/oaIndex.do";
-                        layer.msg("发送成功！");
+                        window.top.tips("保存成功！", 0, 1, 1000);
                     } else {
-                        layer.msg('发送失败！');
+                        window.top.tips("保存失败！", 0, 2, 1000);
                     }
                 }
             })

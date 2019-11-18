@@ -1,6 +1,7 @@
 package com.jiaoke.oa.service;
 
 import com.jiake.utils.DateUtil;
+import com.jiake.utils.FileUploadUtil;
 import com.jiaoke.oa.bean.OaCollaboration;
 import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.dao.DepartmentMapper;
@@ -169,10 +170,23 @@ public class OaCollaborationServiceImpl implements OaCollaborationService {
 
     @Override
     public int delete(String correlationId, String table) {
+        //分隔符
+        String delimiter = ",";
         //删除待发数据
         if (oaCollaborationMapper.deleteByCorrelationId(correlationId) < 0) {
             return -1;
         } else {
+            //删除前删除数据中的附件
+            String annex = oaCollaborationMapper.selectAnnex(correlationId, table);
+            if (annex.contains(delimiter)) {
+                String[] strings = annex.split(",");
+                for (String string : strings) {
+                    FileUploadUtil.deleteFile(string);
+                }
+            } else if (!"".equals(annex)) {
+                FileUploadUtil.deleteFile(annex);
+            }
+
             //删除关联表数据
             if (oaCollaborationMapper.deleteCorrelationTable(correlationId, table) < 0) {
                 return -1;

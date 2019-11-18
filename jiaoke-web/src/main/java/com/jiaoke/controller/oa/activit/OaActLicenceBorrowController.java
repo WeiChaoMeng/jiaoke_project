@@ -6,7 +6,6 @@ import com.jiaoke.controller.oa.ActivitiUtil;
 import com.jiaoke.controller.oa.TargetFlowNodeCommand;
 import com.jiaoke.oa.bean.Comments;
 import com.jiaoke.oa.bean.OaActLicenceBorrow;
-import com.jiaoke.oa.bean.OaActRegularization;
 import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.service.DepartmentService;
 import com.jiaoke.oa.service.OaActLicenceBorrowService;
@@ -69,14 +68,14 @@ public class OaActLicenceBorrowController {
      *
      * @return jsp
      */
-    @RequestMapping("/toLicenceBorrow")
+    @RequestMapping("/toIndex")
     public String toLicenceBorrow(Model model) {
         model.addAttribute("nickname", getCurrentUser().getNickname());
         return "oa/act/act_licence_borrow";
     }
 
     /**
-     *  新增
+     * 新增
      *
      * @param oaActLicenceBorrow oaActLicenceBorrow
      * @return s/e
@@ -85,7 +84,7 @@ public class OaActLicenceBorrowController {
     @ResponseBody
     public String add(OaActLicenceBorrow oaActLicenceBorrow) {
         String randomId = RandomUtil.randomId();
-        if (oaActLicenceBorrowService.insert(oaActLicenceBorrow, getCurrentUser().getId(),randomId,0) < 1) {
+        if (oaActLicenceBorrowService.insert(oaActLicenceBorrow, getCurrentUser().getId(), randomId, 0) < 1) {
             return "error";
         } else {
             //用户所在部门id
@@ -127,7 +126,7 @@ public class OaActLicenceBorrowController {
      * 提交
      *
      * @param oaActLicenceBorrow oaActLicenceBorrow
-     * @param taskId            任务Id
+     * @param taskId             任务Id
      * @return s/e
      */
     @RequestMapping(value = "/approvalSubmit")
@@ -176,7 +175,7 @@ public class OaActLicenceBorrowController {
                         activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
                         return "success";
 
-                    } else if (principal.equals(enforcer) || supervisor.equals(enforcer)){
+                    } else if (principal.equals(enforcer) || supervisor.equals(enforcer)) {
                         String startUserId = activitiUtil.getStartUserId(task.getProcessInstanceId());
                         //根据发起者id获取所属部门id
                         String departmentId = userInfoService.selectDepartmentByUserId(Integer.valueOf(startUserId));
@@ -212,7 +211,7 @@ public class OaActLicenceBorrowController {
     @ResponseBody
     public String savePending(OaActLicenceBorrow oaActLicenceBorrow) {
         String randomId = RandomUtil.randomId();
-        if (oaActLicenceBorrowService.insert(oaActLicenceBorrow, getCurrentUser().getId(), randomId,1) < 1) {
+        if (oaActLicenceBorrowService.insert(oaActLicenceBorrow, getCurrentUser().getId(), randomId, 1) < 1) {
             return "error";
         } else {
             return "success";

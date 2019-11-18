@@ -1,3 +1,4 @@
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
 <head>
@@ -32,18 +33,23 @@
         </div>
     </div>
     <ul>
-        <li class="nav-item">
-            <a id="circumstanceIndex">
-                <img src="../../../static/images/milieu/index1.png" style="padding: 5px 0">
-                <span style="margin-left: 10px;position: absolute;font-size: 13px;">公开环保数据</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a id="dataAnalysis">
-                <img src="../../../static/images/milieu/realTime.png" style="padding: 5px 0">
-                <span style="margin-left: 10px;position: absolute;font-size: 13px;">实时环保数据</span>
-            </a>
-        </li>
+        <shiro:hasPermission name="milieu:public">
+            <li class="nav-item">
+                <a id="circumstanceIndex">
+                    <img src="../../../static/images/milieu/index1.png" style="padding: 5px 0">
+                    <span style="margin-left: 10px;position: absolute;font-size: 13px;">公开环保数据</span>
+                </a>
+            </li>
+        </shiro:hasPermission>
+
+        <shiro:hasPermission name="milieu:synchro">
+            <li class="nav-item">
+                <a id="dataAnalysis">
+                    <img src="../../../static/images/milieu/realTime.png" style="padding: 5px 0">
+                    <span style="margin-left: 10px;position: absolute;font-size: 13px;">实时环保数据</span>
+                </a>
+            </li>
+        </shiro:hasPermission>
     </ul>
 </div>
 <div class="rightdown"

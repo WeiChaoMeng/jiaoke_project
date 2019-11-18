@@ -36,9 +36,7 @@ public class OaActLicenceUse {
     /**
      * 领取时间
      */
-    private Date receiveTime;
-    @Transient
-    private String receiveTimeStr;
+    private String receiveTime;
 
     /**
      * 用途
@@ -113,20 +111,12 @@ public class OaActLicenceUse {
         this.seal = seal;
     }
 
-    public Date getReceiveTime() {
+    public String getReceiveTime() {
         return receiveTime;
     }
 
-    public void setReceiveTime(Date receiveTime) {
+    public void setReceiveTime(String receiveTime) {
         this.receiveTime = receiveTime;
-    }
-
-    public String getReceiveTimeStr() {
-        return receiveTimeStr;
-    }
-
-    public void setReceiveTimeStr(String receiveTimeStr) {
-        this.receiveTimeStr = receiveTimeStr;
     }
 
     public String getPurpose() {

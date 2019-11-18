@@ -29,9 +29,14 @@ public class OaActRead {
     private String title;
 
     /**
+     * 部门编号
+     */
+    private String departmentNumbering;
+
+    /**
      * 编号
      */
-    private String number;
+    private String numbering;
 
     /**
      * 来文机关
@@ -51,9 +56,32 @@ public class OaActRead {
     /**
      * 收文日期
      */
-    private Date receiptTime;
-    @Transient
-    private String receiptTimeStr;
+    private String receiptTime;
+
+    /**
+     * 文件标题
+     */
+    private String fileTitle;
+
+    /**
+     * 拟办意见
+     */
+    private String suggestion;
+
+    /**
+     * 部门意见
+     */
+    private String departmentOpinion;
+
+    /**
+     * 领导批示
+     */
+    private String instructions;
+
+    /**
+     * 办理结果
+     */
+    private String outcome;
 
     /**
      * 保存期限（10年，30年，永久）
@@ -64,8 +92,7 @@ public class OaActRead {
      * 附件
      */
     private String annex;
-    @Transient
-    private String annexStr;
+
     /**
      * 创建日期
      */
@@ -77,6 +104,8 @@ public class OaActRead {
      * 发起人
      */
     private Integer promoter;
+    @Transient
+    private String promoterStr;
 
     /**
      * 查询路径
@@ -99,12 +128,20 @@ public class OaActRead {
         this.title = title;
     }
 
-    public String getNumber() {
-        return number;
+    public String getDepartmentNumbering() {
+        return departmentNumbering;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setDepartmentNumbering(String departmentNumbering) {
+        this.departmentNumbering = departmentNumbering;
+    }
+
+    public String getNumbering() {
+        return numbering;
+    }
+
+    public void setNumbering(String numbering) {
+        this.numbering = numbering;
     }
 
     public String getOrgan() {
@@ -131,20 +168,52 @@ public class OaActRead {
         this.copies = copies;
     }
 
-    public Date getReceiptTime() {
+    public String getReceiptTime() {
         return receiptTime;
     }
 
-    public void setReceiptTime(Date receiptTime) {
+    public void setReceiptTime(String receiptTime) {
         this.receiptTime = receiptTime;
     }
 
-    public String getReceiptTimeStr() {
-        return receiptTimeStr;
+    public String getFileTitle() {
+        return fileTitle;
     }
 
-    public void setReceiptTimeStr(String receiptTimeStr) {
-        this.receiptTimeStr = receiptTimeStr;
+    public void setFileTitle(String fileTitle) {
+        this.fileTitle = fileTitle;
+    }
+
+    public String getSuggestion() {
+        return suggestion;
+    }
+
+    public void setSuggestion(String suggestion) {
+        this.suggestion = suggestion;
+    }
+
+    public String getDepartmentOpinion() {
+        return departmentOpinion;
+    }
+
+    public void setDepartmentOpinion(String departmentOpinion) {
+        this.departmentOpinion = departmentOpinion;
+    }
+
+    public String getInstructions() {
+        return instructions;
+    }
+
+    public void setInstructions(String instructions) {
+        this.instructions = instructions;
+    }
+
+    public String getOutcome() {
+        return outcome;
+    }
+
+    public void setOutcome(String outcome) {
+        this.outcome = outcome;
     }
 
     public Integer getDeadline() {
@@ -153,6 +222,14 @@ public class OaActRead {
 
     public void setDeadline(Integer deadline) {
         this.deadline = deadline;
+    }
+
+    public String getAnnex() {
+        return annex;
+    }
+
+    public void setAnnex(String annex) {
+        this.annex = annex;
     }
 
     public Date getCreateTime() {
@@ -179,27 +256,19 @@ public class OaActRead {
         this.promoter = promoter;
     }
 
+    public String getPromoterStr() {
+        return promoterStr;
+    }
+
+    public void setPromoterStr(String promoterStr) {
+        this.promoterStr = promoterStr;
+    }
+
     public String getUrl() {
         return url;
     }
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public String getAnnex() {
-        return annex;
-    }
-
-    public void setAnnex(String annex) {
-        this.annex = annex;
-    }
-
-    public String getAnnexStr() {
-        return annexStr;
-    }
-
-    public void setAnnexStr(String annexStr) {
-        this.annexStr = annexStr;
     }
 }
