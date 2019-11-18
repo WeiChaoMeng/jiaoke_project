@@ -212,19 +212,19 @@
                     </thead>
 
                     <tbody>
-                    <%--<c:forEach items="${list}" var ="map" >--%>
-                        <%--<c:if test="${map.crew1 eq '机组二'}" >--%>
-                            <%--<tr>--%>
-                                <%--<td>${map.produce_disc_num}</td>--%>
-                                <%--<td>${map.material_total}</td>--%>
-                                <%--<td>${map.produce_date}</td>--%>
-                                <%--<td>${map.produce_time}</td>--%>
-                                <%--<td>${map.produce_custom_num}</td>--%>
-                                <%--<td>${map.crew1}</td>--%>
-                                <%--<td><a href="${path}/getProductMessage.do?id=${map.Id}&crewNum=crew2" target="_self">查看</a></td>--%>
-                            <%--</tr>--%>
-                        <%--</c:if>--%>
-                    <%--</c:forEach>--%>
+                    <c:forEach items="${list}" var ="map" >
+                        <c:if test="${map.crew1 eq '机组二'}" >
+                            <tr>
+                                <td>${map.produce_disc_num}</td>
+                                <td>${map.material_total}</td>
+                                <td>${map.produce_date}</td>
+                                <td>${map.produce_time}</td>
+                                <td>${map.produce_custom_num}</td>
+                                <td>${map.crew1}</td>
+                                <td><a href="${path}/getProductMessage.do?id=${map.Id}&crewNum=crew2" target="_self">查看</a></td>
+                            </tr>
+                        </c:if>
+                    </c:forEach>
                     </tbody>
 
                 </table>

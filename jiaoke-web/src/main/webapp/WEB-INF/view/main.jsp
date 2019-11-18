@@ -62,8 +62,8 @@
 
 <div class="header">
     <div class="headtop">
-        <span class="logo" id="logo"><img src="/static/images/logo/logo-2.png"></span>
-        <span style="    color: #f00;margin-left: 78px;font-size: 25px;float: left;margin-left: 63px;display: block;padding-top: 13px; width: 55%;">北京市政路桥建材集团有限公司路驰分公司企业管理综合平台</span>
+        <span class="logo" id="logo"><img style="margin-left: 25px;" src="/static/images/logo/logo-2.png"></span>
+        <span style="    color: #f00;margin-left: 78px;font-size: 25px;float: left;margin-left: 23px;display: block;padding-top: 13px; width: 55%;">北京市政路桥建材集团有限公司路驰分公司企业管理综合平台</span>
         <ul class="nav">
             <li>
                 <a href="#" class="manu" id="index">首页</a>
@@ -153,7 +153,7 @@
 </div>
 
 <div class="footer">
-    <span class="fleft">信息管理系统v2.3.2019.6.24</span>
+    <span class="fleft">信息管理系统v2.4.2019.11.18</span>
     <span class="fright">路驰版权所有<i class="infoicon iconfont">&#xe620;</i></span>
 </div>
 

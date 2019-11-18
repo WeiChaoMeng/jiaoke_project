@@ -216,13 +216,12 @@
                                             name: '含量',
                                             axisTick:{show:false},
                                             axisLine:linecolor,
-                                            // splitLine: linecolor,
-                                            // axisLabel:{color:'#fff'},
                                             axisLabel: {
                                                 formatter: '{value} %'
                                             },
-                                            max: <fmt:formatNumber value="${contentY[keys]['max'] + 0.5}" type="currency" pattern="0.0#"/>,
-                                            min: <fmt:formatNumber value="${contentY[keys]['min']}" type="currency" pattern="0.0#"/>,
+                                            Interval:0.05,
+                                            max: 'dataMax',
+                                            min: 'dataMin',
 
                                         },
                                         series: [
@@ -242,10 +241,18 @@
                                                 </c:if>
                                                 </c:forEach>
                                                 markLine:{
+                                                    silent: true,
                                                     data: [
-
-                                                        { yAxis: '${moudelRatio[keys] + 1}', xAxis: ${fn:length(allItem[keys])}},
-                                                        { yAxis: '${moudelRatio[keys] - 1}', xAxis: ${fn:length(allItem[keys])}}
+                                                        <c:choose>
+                                                            <c:when test="${material == '油石比' || material == '石粉' ||empty material}">
+                                                                { yAxis: '${moudelRatio[keys] + 0.2}', xAxis: '${fn:length(allItem[keys])}'},
+                                                                { yAxis: '${moudelRatio[keys] - 0.2}', xAxis: '${fn:length(allItem[keys])}'}
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                { yAxis: '${moudelRatio[keys] + 3}', xAxis: '${fn:length(allItem[keys])}'},
+                                                                { yAxis: '${moudelRatio[keys] - 3}', xAxis: '${fn:length(allItem[keys])}'}
+                                                            </c:otherwise>
+                                                        </c:choose>
                                                     ]
                                                 }
 
@@ -369,9 +376,9 @@
                                             axisLabel: {
                                                 formatter: '{value} %'
                                             },
-                                            max: <fmt:formatNumber value="${maxMinY[keys]['max'] + 0.5}" type="currency" pattern="0.0#"/>,
-                                            min: <fmt:formatNumber value="${maxMinY[keys]['min']}" type="currency" pattern="0.0#"/>
-
+                                            Interval:0.05,
+                                            max: 'dataMax',
+                                            min: 'dataMin',
                                         },
                                         series: [
                                             {
@@ -528,9 +535,9 @@
                                             axisLabel: {
                                                 formatter: '{value} %'
                                             },
-                                            max: <fmt:formatNumber value="${svg3Y[keys]['max'] + 0.5 }" type="currency" pattern="0.0#"/>,
-                                            min: <fmt:formatNumber value="${svg3Y[keys]['min']}" type="currency" pattern="0.0#"/>
-
+                                            Interval:0.05,
+                                            max: 'dataMax',
+                                            min: 'dataMin',
                                         },
                                         series: [
 

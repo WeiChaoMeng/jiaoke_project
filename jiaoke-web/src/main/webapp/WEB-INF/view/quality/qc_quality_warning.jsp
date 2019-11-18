@@ -35,7 +35,7 @@
                     <th>车号</th>
                     <th>盘号</th>
                     <th>生产人</th>
-                    <th>客户号</th>
+                    <th>工程名称</th>
                 </thead>
 
                 <tbody>
@@ -48,7 +48,7 @@
                         <td id="crew1_produce_car_num"></td>
                         <td id="crew1_produce_disc_num"></td>
                         <td id="crew1_produce_user"></td>
-                        <td id="crew1_produce_custom_num"></td>
+                        <td id="crew1_project_name"></td>
 
                     </tr>
                 </tbody>
@@ -242,7 +242,7 @@
                     <th>车号</th>
                     <th>盘号</th>
                     <th>生产人</th>
-                    <th>客户号</th>
+                    <th>工程名称</th>
                 </thead>
 
                 <tbody  id="crew2_message" >
@@ -255,7 +255,7 @@
                     <td id="crew2_produce_car_num"></td>
                     <td id="crew2_produce_disc_num"></td>
                     <td id="crew2_produce_user"></td>
-                    <td id="crew2_produce_custom_num"></td>
+                    <td id="crew2_project_name"></td>
                 </tr>
                 </tbody>
             </table>

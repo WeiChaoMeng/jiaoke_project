@@ -87,8 +87,8 @@ function getThisMonthData() {
 }
 function getThisYearData() {
     var basePath = $("#path").val();
-    var time2 = dateFtt("yyyy-mm-dd",new Date());
-    $("#yearDate").text(time2 + ' - ' + getFirstDayOfYear(new Date()));
+    var time2 = dateFtt("yyyy-MM-dd",new Date());
+    $("#yearDate").text(getFirstDayOfYear(new Date()) + ' 至 ' + time2);
 
     //后台获取生产量
     $.ajax({
@@ -137,6 +137,7 @@ function getAlldata() {
 function getLastMonthData() {
     //path
     var basePath = $("#path").val();
+
     $.ajax({
         url:basePath + "/getLastMonthData.do",
         type:"get",
@@ -144,16 +145,42 @@ function getLastMonthData() {
         success:function (res) {
             if (res){
                 var dataArray = [];
+                var count = [];
                 for(var i in res){
                     var temDate = res[i].proDate;
                     if (temDate.split("")[0] === '0'){
                         var temStr = temDate.split("")[1];
                         dataArray.push([temStr,res[i].total]);
+                        count.push(temStr);
                     }else {
                         dataArray.push([temDate,res[i].total]);
+                        count.push(temDate);
                     }
-
                 }
+
+                var tem = new Date().getDate();
+                for (var i = 1 ;i < Number(tem);i++){
+                    var num = i + "";
+                    if (count.indexOf(num) >= 0){
+                        continue;
+                    }else {
+                        dataArray.push([num,0]);
+                    }
+                };
+                for (var i = 0; i < dataArray.length - 1;i++){
+                    for (var j = 0; j < dataArray.length - 1 - i;j++){
+                        if (Number(dataArray[j][0]) > Number(dataArray[j + 1][0]) ){
+                            var temp = dataArray[j];
+                            dataArray[j] = dataArray[j+1];
+                            dataArray[j+1] = temp;
+                        }
+                    }
+                }
+                var xdata = [];
+                for (var i = 0;i<dataArray.length;i++){
+                    xdata.push(dataArray[i][0]);
+                }
+                option.xAxis.data = xdata;
                 option.series[0].data = dataArray;
                 myChart1.setOption(option);
                 window.addEventListener("resize", function () {

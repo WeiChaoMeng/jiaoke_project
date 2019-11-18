@@ -68,16 +68,19 @@ public class QualityDynamicUtil {
 
 
 
+            for (int i = 0; i < ratioMap.size();i++){
+                //第一版二次计算占比
+//                String ratio_stone = ratioMap.get(i).get(ratioName).toString();
+//                double asphalt_ratio_moudle =Double.parseDouble(ratio_stone) /(100 - Double.parseDouble(ratio_stone)) * 100;
+//                moudelRatio.put(ratioMap.get(i).get(crew+"_modele_id").toString(),String.valueOf(df.format(asphalt_ratio_moudle/(100 - asphalt_ratio_moudle) * 100)));
+                //第二版直接存入模板配比
+                moudelRatio.put(ratioMap.get(i).get(crew+"_modele_id").toString(),String.valueOf(ratioMap.get(i).get(ratioName).toString()));
+            }
 
-        for (int i = 0; i < ratioMap.size();i++){
-            String ratio_stone = ratioMap.get(i).get(ratioName).toString();
-            double asphalt_ratio_moudle =Double.parseDouble(ratio_stone) /(100 - Double.parseDouble(ratio_stone)) * 100;
-            moudelRatio.put(ratioMap.get(i).get(crew+"_modele_id").toString(),String.valueOf(df.format(asphalt_ratio_moudle/(100 - asphalt_ratio_moudle) * 100)));
-        }
 
 
 
-        //计算油石比
+
         for (int i = 0; i < list.size();i++){
 
             String asphalt ;

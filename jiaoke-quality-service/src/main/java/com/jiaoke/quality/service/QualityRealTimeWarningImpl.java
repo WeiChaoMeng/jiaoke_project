@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -95,32 +96,38 @@ public class QualityRealTimeWarningImpl implements  QualityRealTimeWarningInf {
 
         List<Map<String,Object>> list = qualityRealTimeWarningDao.selectWarningEcharsData();
 
+        String resoult ="";
+
         //分解出两个机组的数据
         List<Map<String,Object>> crew1List = new ArrayList<>();
         List<Map<String,Object>> crew2List = new ArrayList<>();
 
-        for (int i = 0; i < list.size();i++){
-            if ("crew1".equals(list.get(i).get("crewNum"))){
-                crew1List.add(list.get(i));
-            }else {
-                crew2List.add(list.get(i));
+        if (list.isEmpty()){
+            Map<String,String> map = new HashMap<>();
+            map.put("message","fail");
+            resoult = JSON.toJSONString(map);
+        }else {
+            for (int i = 0; i < list.size();i++){
+                if ("crew1".equals(list.get(i).get("crewNum"))){
+                    crew1List.add(list.get(i));
+                }else {
+                    crew2List.add(list.get(i));
+                }
             }
+
+            Map<String, String> crew1SvgList = QualityProsvg.getProsvgByProList(crew1List);
+            Map<String, String> crew2SvgList = QualityProsvg.getProsvgByProList(crew2List);
+
+            List<Map<String,String>> list1 = new ArrayList<>();
+            list1.add(crew1SvgList);
+            list1.add(crew2SvgList);
+
+            //返回的结果集 一层Key为机组 二层为模板级配等 三层Key为筛孔
+            List<Map<String,Map<String,List<Map<String,String>>>>> result = new ArrayList<>();
+
+             resoult = QualityGradingUtil.getGradingResultJson(list1,qualityDataMontoringDao,result);
         }
-
-        Map<String, String> crew1SvgList = QualityProsvg.getProsvgByProList(crew1List);
-        Map<String, String> crew2SvgList = QualityProsvg.getProsvgByProList(crew2List);
-
-        List<Map<String,String>> list1 = new ArrayList<>();
-        list1.add(crew1SvgList);
-        list1.add(crew2SvgList);
-
-        //返回的结果集 一层Key为机组 二层为模板级配等 三层Key为筛孔
-        List<Map<String,Map<String,List<Map<String,String>>>>> result = new ArrayList<>();
-
-        String resoult = QualityGradingUtil.getGradingResultJson(list1,qualityDataMontoringDao,result);
-
         return  resoult ;
-
     }
 
     @Override

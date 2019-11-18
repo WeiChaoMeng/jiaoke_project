@@ -45,6 +45,13 @@
 
         <shiro:hasPermission name="matchingManager">
             <li>
+                <a href="#" id="project_manager" onclick="project_manager()" class="menu_selected">
+                    <i class="menuico iconfont1">&#xe636;</i>工程管理</a>
+            </li>
+        </shiro:hasPermission>
+
+        <shiro:hasPermission name="matchingManager">
+            <li>
                 <a href="#" id="matching_manager" onclick="matching_model()" class="menu_selected">
                     <i class="menuico iconfont1">&#xe636;</i>配比管理</a>
             </li>
@@ -154,6 +161,9 @@
         $('iframe').attr("src", "qc_historical_data.do");
     }
 
+    function project_manager() {
+        $('iframe').attr("src", "qc_project_manager.do");
+    }
     function data_manager() {
         $('iframe').attr("src", "qc_data_manager.do");
     }

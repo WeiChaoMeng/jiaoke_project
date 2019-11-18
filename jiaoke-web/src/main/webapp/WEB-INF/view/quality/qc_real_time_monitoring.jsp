@@ -37,7 +37,7 @@
                     <th>配比名称</th>
                     <th>车号</th>
                     <th>盘号</th>
-                    <th>客户号</th>
+                    <th>工程名称</th>
                 </thead>
 
                 <tbody>
@@ -245,7 +245,7 @@
             <th>配比名称</th>
             <th>车号</th>
             <th>盘号</th>
-            <th>客户号</th>
+            <th>工程名称</th>
             </thead>
 
             <tbody>

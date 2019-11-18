@@ -86,6 +86,7 @@
                     success: function (result) {
                         result = JSON.parse(result);
                         if (result.messages === "success") {
+                            localStorage.setItem("userInfo",JSON.stringify(result.userInfo));
                             window.location.href = '${path}/login/homePage.do';
                         } else {
                             layer.msg('您输入的账号密码不匹配',{

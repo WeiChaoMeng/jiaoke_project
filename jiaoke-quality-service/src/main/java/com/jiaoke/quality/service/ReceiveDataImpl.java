@@ -54,10 +54,9 @@ public class ReceiveDataImpl implements ReceiveDataInf {
     @Override
     public void receiveDataToDB(String messageData) {
 
+        if(StringUtils.isEmpty(messageData)) return;
 
         Map<String,String> map = new HashMap<String, String>();
-
-        if(StringUtils.isEmpty(messageData)) return;
 
         //分解字符串同时替换日期
         String[] messageArray = QualityWarningUtil.splitDataToMap(messageData);
@@ -65,22 +64,6 @@ public class ReceiveDataImpl implements ReceiveDataInf {
         if (0 == messageArray.length || null == messageArray) return;
         //分解出机组号
         String crewNum = messageArray[messageArray.length - 1];
-
-//        //临时逻辑把机组二改为1
-//        crewNum = "1";
-
-        //获取相关数据后放入map中
-        map.put("produce_date",messageArray[0]);
-        map.put("produce_time",messageArray[1]);
-        map.put("produce_disc_num",messageArray[2]);
-        map.put("produce_ratio_id",messageArray[3]);
-        map.put("produce_car_num",messageArray[4]);
-        map.put("produce_custom_num",messageArray[5]);
-        map.put("produce_crewNum",crewNum);
-
-        //插入数据库表quality_warning_promessage_crew，返回主键ID
-        qualityWarningDao.insertQualityWarningCrew(map);
-        int id =Integer.parseInt(map.get("id"));
 
         //根据机组获取字段名称
         String fieldName = "";
@@ -93,15 +76,28 @@ public class ReceiveDataImpl implements ReceiveDataInf {
                 fieldName = "crew2_modele_id";
                 break;
 
-                default:
-                    fieldName = "";
+            default:
+                fieldName = "";
 
         }
+        //获取相关数据后放入map中
+        map.put("produce_date",messageArray[0]);
+        map.put("produce_time",messageArray[1]);
+        map.put("produce_disc_num",messageArray[2]);
+        map.put("produce_ratio_id",messageArray[3]);
+        map.put("produce_car_num",messageArray[4]);
+        map.put("produce_custom_num",messageArray[5]);
+        map.put("produce_crewNum",crewNum);
 
         //根据配比号，获取模板数据
         QualityRatioTemplate ratioTemplate = qualityWarningDao.selectRatioTemplateByCrew1MoudelId(map.get("produce_ratio_id"), fieldName);
 
         if (null == ratioTemplate) return;
+
+        //插入数据库表quality_warning_promessage_crew，返回主键ID
+        qualityWarningDao.insertQualityWarningCrew(map);
+        int id =Integer.parseInt(map.get("id"));
+
 
         //一仓温度
         int warehouse = Integer.parseInt(messageArray[18]);

@@ -25,7 +25,7 @@ import java.util.Map;
  */
 public class QualityGradingUtil {
 
-    public static String  getGradingResultJson(List<Map<String, String>> list , QualityDataMontoringDao qualityDataMontoringDao, List<Map<String,Map<String,List<Map<String,String>>>>> result){
+    public synchronized static  String  getGradingResultJson(List<Map<String, String>> list , QualityDataMontoringDao qualityDataMontoringDao, List<Map<String,Map<String,List<Map<String,String>>>>> result){
 
         for (int i = 0; i < list.size();i++){
             //创建相关map存放数据

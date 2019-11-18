@@ -131,25 +131,14 @@
                                             trigger: 'axis',
                                             formatter: function (params) {
                                                 params = params[0];
-                                                return params.name +'日:'+ params.value+'吨';
+                                                return params.value[0] +'日:'+ params.value[1] +'吨';
                                             }
                                         },
                                         xAxis: {
                                             type: 'category',
 
-                                            data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
-                                                '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],
-
-                                            splitLine: {
-                                                show: true,
-                                                lineStyle: {
-                                                    color: 'rgb(237, 232, 249)'
-                                                }
-                                            },
-
-                                            axisTick: {
-                                                show: false
-                                            }
+                                            data: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20",
+                                                "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"]
                                         },
                                         yAxis: {
                                             name:'单位：吨',
@@ -183,7 +172,7 @@
                                 <p class="layuiadmin-normal-font" id="monthP">月生产盘数</p>
                                 <span>同上月增长</span>
                                 <div class="layui-progress layui-progress-big" lay-showpercent="yes">
-                                    <div class="layui-progress-bar" id ="lastMonthDishDiv" lay-percent="20%" style="width: 20%;"><span
+                                    <div class="layui-progress-bar" id ="lastMonthDishDiv" lay-percent="30%" style="width: 30%;"><span
                                             class="layui-progress-text" id ="lastMonthDishSpan">20%</span></div>
                                 </div>
                             </div>
@@ -191,7 +180,7 @@
                                 <p class="layuiadmin-normal-font" id="monthS">月收入</p>
                                 <span>同上月增长</span>
                                 <div class="layui-progress layui-progress-big" lay-showpercent="yes">
-                                    <div class="layui-progress-bar" id ="lastMonthIncomeDiv" lay-percent="25%" style="width: 25%;"><span
+                                    <div class="layui-progress-bar" id ="lastMonthIncomeDiv" lay-percent="30%" style="width: 30%;"><span
                                             class="layui-progress-text" id ="lastMonthIncomeSpan">25%</span></div>
                                 </div>
                             </div>

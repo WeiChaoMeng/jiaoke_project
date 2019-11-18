@@ -17,19 +17,19 @@
                t2.produce_disc_num,
                t2.produce_user,
                t2.produce_custom_num,
-               t2.produce_crewNum
+               t2.produce_crewNum,
+               t2.project_name
         FROM
              quality_warning_data AS t1
                  INNER JOIN (
                             (
                             SELECT
-                                   QC.*,
-                                   QM.pro_name
+                                   QC.*, QM.pro_name,
+                                   QTP.project_name
                             FROM
                                  quality_warning_promessage_crew AS QC
-                                     INNER JOIN
-                                         quality_proportioning_message AS QM
-                                         ON QC.produce_ratio_id = QM.crew1_modele_id
+                                     INNER JOIN quality_proportioning_message AS QM ON QC.produce_ratio_id = QM.crew1_modele_id
+                                     LEFT JOIN quality_test_project AS QTP ON QC.produce_custom_num = QTP.client_num
                             WHERE
                                     QC.produce_crewNum = 1
                             ORDER BY
@@ -39,21 +39,19 @@
                             UNION ALL
                             (
                             SELECT
-                                   QC.*,
-                                   QM.pro_name
+                                   QC.*, QM.pro_name,
+                                   QTP.project_name
                             FROM
                                  quality_warning_promessage_crew AS QC
-                                     INNER JOIN
-                                         quality_proportioning_message AS QM
-                                         ON QC.produce_ratio_id = QM.crew2_modele_id
+                                     INNER JOIN quality_proportioning_message AS QM ON QC.produce_ratio_id = QM.crew2_modele_id
+                                     LEFT JOIN quality_test_project AS QTP ON QC.produce_custom_num = QTP.client_num
                             WHERE
                                     QC.produce_crewNum = 2
                             ORDER BY
                                      QC.id DESC
                             LIMIT 1
                             )
-                            ) AS t2
-                     ON t1.crew_id = t2.id
+                            ) AS t2 ON t1.crew_id = t2.id
     </select>
 
     <select id="selectWarningEcharsData" resultType="java.util.Map">

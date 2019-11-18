@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.quality.dao.QualityProjectDao">
+
+    <insert id="insertProjectItem" parameterType="com.jiaoke.quality.bean.QualityProjectItem">
+        INSERT INTO quality_test_project (
+                client_num,
+                project_name,
+                client_name,
+                `update`,
+                upUser,
+                remaker
+                )
+        VALUES
+               (#{fromData.clientNum},
+                #{fromData.projectName},
+                #{fromData.clientName},
+                #{fromData.update},
+                #{fromData.upUser},
+                #{fromData.remaker})
+    </insert>
+    <select id="selectUserProjectList" resultType="com.jiaoke.quality.bean.QualityProjectItem">
+        SELECT
+               id,
+               client_num AS clientNum,
+               project_name AS projectName,
+               client_name AS clientName,
+               `update`,
+               upUser,
+               remaker
+        from quality_test_project;
+    </select>
+    <select id="selectUserProjectById" resultType="com.jiaoke.quality.bean.QualityProjectItem">
+        SELECT
+               id,
+               client_num AS clientNum,
+               project_name AS projectName,
+               client_name AS clientName,
+               `update`,
+               upUser,
+               remaker
+        from quality_test_project
+        where id = #{id};
+    </select>
+    <delete id="delectUserProject" parameterType="java.lang.String">
+        DELETE
+        FROM
+             quality_test_project
+        WHERE
+                id = #{idStr}
+    </delete>
+
+    <delete id="delectUserProjectByIdArray" parameterType="java.lang.String">
+        DELETE
+        FROM
+             quality_test_project
+        WHERE
+                id in
+                        <foreach collection="idArr" item="id"  separator="," open="(" close=")">
+                            #{id}
+                        </foreach>
+
+    </delete>
+    <update id="updateProjectItem" parameterType="com.jiaoke.quality.bean.QualityProjectItem">
+        UPDATE quality_test_project
+        SET client_num = #{fromData.clientNum},
+            project_name = #{fromData.projectName},
+            client_name = #{fromData.clientName},
+            `update` = #{fromData.update},
+            upUser = #{fromData.upUser},
+            remaker = #{fromData.remaker}
+        WHERE
+                id = #{fromData.id}
+    </update>
+</mapper>

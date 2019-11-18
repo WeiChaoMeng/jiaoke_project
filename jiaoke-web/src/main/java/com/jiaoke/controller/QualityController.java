@@ -20,11 +20,10 @@ import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.service.OaCollaborationService;
 import com.jiaoke.oa.service.UserInfoService;
 import com.jiaoke.quality.bean.QualityDataManagerDay;
+import com.jiaoke.quality.bean.QualityProjectItem;
 import com.jiaoke.quality.bean.QualityRatioModel;
 import com.jiaoke.quality.bean.QualityRatioTemplate;
 import com.jiaoke.quality.service.*;
-import lombok.experimental.var;
-import org.activiti.bpmn.model.UserTask;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.ManagementService;
 import org.activiti.engine.TaskService;
@@ -87,6 +86,8 @@ public class QualityController {
     private QualityExperimentalManagerInf qualityExperimentalManagerInf;
     @Autowired
     private QualityExperimentalManagerForeignInf QualityExperimentalManagerForeignInf;
+    @Autowired
+    private QualityProjectInf qualityprojectInf;
     @Resource
     private ActivitiUtil activitiUtil;
     @Resource
@@ -177,6 +178,114 @@ public class QualityController {
     }
 
     /**********************************  质量监控首页 end ************************************************/
+
+    /************************************  工程管理 start **********************************************/
+    @RequestMapping("qc_project_manager.do")
+    public String goProjectManager(){
+        return "quality/qc_project_manager";
+    }
+    @ResponseBody
+    @RequestMapping(value = "/addProjectItem.do",method = RequestMethod.POST)
+    public String addProjectItem(QualityProjectItem fromData){
+        Map<String,String> map = new HashMap<>();
+        try{
+            int res = qualityprojectInf.addProjectItem(fromData);
+            if (res > 0){
+                map.put("message","success");
+            }else {
+                map.put("message","fail");
+            }
+        }catch (Exception e){
+            map.put("message","error");
+        }
+        return JSON.toJSONString(map);
+    }
+
+    @ResponseBody
+    @RequestMapping("/getUserProjectList.do")
+    public String getUserProjectList(){
+        Map<String,Object> map = new HashMap<>();
+        try{
+            List<QualityProjectItem> list = qualityprojectInf.getUserProjectList();
+            if (list.size() > 0){
+                map.put("message","success");
+                map.put("projectList",list);
+            }else {
+                map.put("message","empty");
+            }
+        }catch (Exception e){
+            map.put("message","error");
+        }
+        return JSON.toJSONString(map);
+    }
+    @ResponseBody
+    @RequestMapping("/getUserProjectById.do")
+    public String getUserProjectById(String id){
+        Map<String,Object> map = new HashMap<>();
+        try{
+            QualityProjectItem proMsg = qualityprojectInf.getUserProjectById(id);
+            if (proMsg != null){
+                map.put("message","success");
+                map.put("proMsg",proMsg);
+            }else {
+                map.put("message","fail");
+            }
+        }catch (Exception e){
+            map.put("message","error");
+        }
+        return JSON.toJSONString(map);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/delectUserProject.do",method = RequestMethod.POST)
+    public String delectUserProject (String idStr){
+
+        Map<String,Object> map = new HashMap<>();
+        try{
+            if (idStr.indexOf(",") >= 0){
+                String[] idArr = idStr.split(",");
+                int res = qualityprojectInf.delectUserProjectByIdArray(idArr);
+                if (res > 0){
+                    map.put("message","success");
+                }else {
+                    map.put("message","fail");
+                }
+            }else {
+                int res = qualityprojectInf.delectUserProject(idStr);
+                if (res > 0){
+                    map.put("message","success");
+                }else {
+                    map.put("message","fail");
+                }
+            }
+        }catch (Exception e){
+            map.put("message","error");
+        }
+        return JSON.toJSONString(map);
+
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/editProjectItem.do",method = RequestMethod.POST)
+    public String editProjectItem(QualityProjectItem fromData){
+        Map<String,Object> map = new HashMap<>();
+        try{
+            if (fromData != null){
+                int res = qualityprojectInf.editProjectItem(fromData);
+                if (res > 0){
+                    map.put("message","success");
+                }else {
+                    map.put("message","fail");
+                }
+            }else {
+                map.put("message","fail");
+            }
+        }catch (Exception e){
+            map.put("message","error");
+        }
+        return JSON.toJSONString(map);
+    }
+    /************************************  工程管理 end **********************************************/
 
     /************************************  配比管理 String **********************************************/
 
@@ -1862,6 +1971,7 @@ public class QualityController {
      */
     @ResponseBody
     @RequestMapping("/getYesterdayProduct.do")
+
     public String getYesterdayProduct(){
 
         List<Map<String,Object>> res = qualityDataSummaryInf.mobileGetYesterdayProduct();

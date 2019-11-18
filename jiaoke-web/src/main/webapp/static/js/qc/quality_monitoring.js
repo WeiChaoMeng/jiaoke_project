@@ -50,7 +50,7 @@ function renderDataToPage(listStr) {
                     }
                     $("#crew1_basic_carNum").html(listStr[i].produce_car_num);
                     $("#crew1_basic_discNum").html(listStr[i].produce_disc_num);
-                    $("#crew1_basic_userNum").html(listStr[i].produce_custom_num);
+                    $("#crew1_basic_userNum").html(listStr[i].project_name);
                     $("#crew1_data_Aggregate1").html(listStr[i].material_aggregate_1 + "<i>%</i>");
                     $("#crew1_data_Aggregate2").html(listStr[i].material_aggregate_2 + "<i>%</i>");
                     $("#crew1_data_Aggregate3").html(listStr[i].material_aggregate_3 + "<i>%</i>");
@@ -85,7 +85,7 @@ function renderDataToPage(listStr) {
                     }
                     $("#crew2_basic_carNum").html(listStr[i].produce_car_num);
                     $("#crew2_basic_discNum").html(listStr[i].produce_disc_num);
-                    $("#crew2_basic_userNum").html(listStr[i].produce_custom_num);
+                    $("#crew2_basic_userNum").html(listStr[i].project_name);
                     $("#crew2_data_Aggregate1").html(listStr[i].material_aggregate_1 + "<i>%</i>");
                     $("#crew2_data_Aggregate2").html(listStr[i].material_aggregate_2 + "<i>%</i>");
                     $("#crew2_data_Aggregate3").html(listStr[i].material_aggregate_3 + "<i>%</i>");
