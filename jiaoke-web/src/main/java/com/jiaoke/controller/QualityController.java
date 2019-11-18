@@ -592,6 +592,7 @@ public class QualityController {
         return jsonStr;
     }
 
+
     @ResponseBody
     @RequestMapping("/getGlobalWarningData.do")
     public String getGlobalWarningData(){

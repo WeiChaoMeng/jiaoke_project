@@ -117,9 +117,10 @@
                             WHERE
                                     produce_proportioning_num = (
                                                                 SELECT
-                                                                       produce_proportioning_num
+                                                                       produce_ratio_id
                                                                 FROM
-                                                                     quality_monitoring_realtime_data1
+                                                                     quality_warning_promessage_crew
+                                                                WHERE produce_crewNum = 1
                                                                 ORDER BY
                                                                          id DESC
                                                                 LIMIT 1
@@ -192,9 +193,10 @@
                                     WHERE
                                             produce_proportioning_num = (
                                                                         SELECT
-                                                                               produce_proportioning_num
+                                                                               produce_ratio_id
                                                                         FROM
-                                                                             quality_monitoring_realtime_data2
+                                                                             quality_warning_promessage_crew
+                                                                        WHERE produce_crewNum = 2
                                                                         ORDER BY
                                                                                  id DESC
                                                                         LIMIT 1

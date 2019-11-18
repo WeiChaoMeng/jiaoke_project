@@ -42,14 +42,14 @@
             </li>
         </shiro:hasPermission>
 
-        <shiro:hasPermission name="quality:proportioning">
+        <shiro:hasPermission name="quality:project">
             <li>
                 <a href="#" id="project_manager" onclick="project_manager()" class="menu_selected">
                     <i class="menuico iconfont1">&#xe636;</i>工程管理</a>
             </li>
         </shiro:hasPermission>
 
-        <shiro:hasPermission name="matchingManager">
+        <shiro:hasPermission name="quality:proportioning">
             <li>
                 <a href="#" id="matching_manager" onclick="matching_model()" class="menu_selected">
                     <i class="menuico iconfont1">&#xe636;</i>配比管理</a>
