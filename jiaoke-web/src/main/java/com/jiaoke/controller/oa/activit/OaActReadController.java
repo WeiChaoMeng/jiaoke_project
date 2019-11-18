@@ -58,7 +58,7 @@ public class OaActReadController {
      *
      * @return jsp
      */
-    @RequestMapping("/toRead")
+    @RequestMapping("/toIndex")
     public String toRead(Model model) {
         model.addAttribute("nickname", getCurrentUser().getNickname());
         return "oa/act/oa_document_reading";
@@ -106,7 +106,7 @@ public class OaActReadController {
         model.addAttribute("oaActRead", oaActRead);
         model.addAttribute("taskId", JsonHelper.toJSONString(taskId));
         model.addAttribute("commentsList", commentsList);
-        return "oa/act/act_review_handle";
+        return "oa/act/oa_document_reading_handle";
     }
 
     /**
@@ -156,7 +156,7 @@ public class OaActReadController {
     public String toEdit(String id, Model model) {
         OaActRead oaActRead = oaActReadService.selectByPrimaryKey(id);
         model.addAttribute("oaActRead", oaActRead);
-        return "oa/act/act_car_edit";
+        return "oa/act/oa_document_reading_edit";
     }
 
     /**

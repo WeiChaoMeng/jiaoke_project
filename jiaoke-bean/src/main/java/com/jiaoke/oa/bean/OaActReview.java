@@ -59,77 +59,62 @@ public class OaActReview {
     private String principal;
 
     /**
-     *法务审查内容
+     * 法务审查内容
      */
     private String legalAffairsContent;
 
     /**
-     *法务审查签字
+     * 法务审查签字
      */
     private String legalAffairsSign;
 
     /**
-     *法务审查时间
+     * 法务审查时间
      */
     private String legalAffairsDate;
 
     /**
-     *财务部门审查内容
+     * 财务部门审查内容
      */
     private String financeContent;
 
     /**
-     *财务部门审查签字
+     * 财务部门审查签字
      */
     private String financeSign;
 
     /**
-     *财务部门审查时间
+     * 财务部门审查时间
      */
     private String financeDate;
 
     /**
-     *技术负责人审查内容
-     */
-    private String technologyContent;
-
-    /**
-     *技术负责人审查签字
-     */
-    private String technologySign;
-
-    /**
-     *技术负责人审查时间
-     */
-    private String technologyDate;
-
-    /**
-     *主管领导审查内容
+     * 主管领导审查内容
      */
     private String supervisorContent;
 
     /**
-     *主管领导审查签字
+     * 主管领导审查签字
      */
     private String supervisorSign;
 
     /**
-     *主管领导审查时间
+     * 主管领导审查时间
      */
     private String supervisorDate;
 
     /**
-     *主要领导审查内容
+     * 主要领导审查内容
      */
     private String companyPrincipalContent;
 
     /**
-     *主要领导审查签字
+     * 主要领导审查签字
      */
     private String companyPrincipalSign;
 
     /**
-     *主要领导审查时间
+     * 主要领导审查时间
      */
     private String companyPrincipalDate;
 
@@ -299,30 +284,6 @@ public class OaActReview {
 
     public void setFinanceDate(String financeDate) {
         this.financeDate = financeDate;
-    }
-
-    public String getTechnologyContent() {
-        return technologyContent;
-    }
-
-    public void setTechnologyContent(String technologyContent) {
-        this.technologyContent = technologyContent;
-    }
-
-    public String getTechnologySign() {
-        return technologySign;
-    }
-
-    public void setTechnologySign(String technologySign) {
-        this.technologySign = technologySign;
-    }
-
-    public String getTechnologyDate() {
-        return technologyDate;
-    }
-
-    public void setTechnologyDate(String technologyDate) {
-        this.technologyDate = technologyDate;
     }
 
     public String getSupervisorContent() {

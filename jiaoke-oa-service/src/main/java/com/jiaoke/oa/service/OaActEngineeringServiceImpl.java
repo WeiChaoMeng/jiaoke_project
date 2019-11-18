@@ -27,15 +27,13 @@ public class OaActEngineeringServiceImpl implements OaActEngineeringService {
     private OaCollaborationMapper oaCollaborationMapper;
 
     @Override
-    public int insert(OaActEngineering oaActEngineering, Integer userId, String randomId) {
-        oaActEngineering.setBeforeData(DateUtil.stringConvertYYYYMMDD(oaActEngineering.getBeforeDataStr()));
-        oaActEngineering.setAfterData(DateUtil.stringConvertYYYYMMDD(oaActEngineering.getAfterDataStr()));
+    public int insert(OaActEngineering oaActEngineering, Integer userId, String randomId, Integer state) {
         oaActEngineering.setId(randomId);
         oaActEngineering.setPromoter(userId);
         oaActEngineering.setUrl("engineering");
         oaActEngineering.setCreateTime(new Date());
 
-        if (oaActEngineeringMapper.insertData(oaActEngineering) < 0) {
+        if (oaActEngineeringMapper.insertSelective(oaActEngineering) < 0) {
             return -1;
         } else {
             OaCollaboration oaCollaboration = new OaCollaboration();
@@ -44,32 +42,7 @@ public class OaActEngineeringServiceImpl implements OaActEngineeringService {
             oaCollaboration.setTitle(oaActEngineering.getTitle());
             oaCollaboration.setUrl("engineering");
             oaCollaboration.setTable("oa_act_engineering");
-            oaCollaboration.setState(0);
-            oaCollaboration.setCreateTime(new Date());
-            oaCollaborationMapper.insertData(oaCollaboration);
-            return 1;
-        }
-    }
-
-    @Override
-    public int savePending(OaActEngineering oaActEngineering, Integer userId, String randomId) {
-        oaActEngineering.setBeforeData(DateUtil.stringConvertYYYYMMDD(oaActEngineering.getBeforeDataStr()));
-        oaActEngineering.setAfterData(DateUtil.stringConvertYYYYMMDD(oaActEngineering.getAfterDataStr()));
-        oaActEngineering.setId(randomId);
-        oaActEngineering.setPromoter(userId);
-        oaActEngineering.setUrl("engineering");
-        oaActEngineering.setCreateTime(new Date());
-
-        if (oaActEngineeringMapper.insertData(oaActEngineering) < 0) {
-            return -1;
-        } else {
-            OaCollaboration oaCollaboration = new OaCollaboration();
-            oaCollaboration.setCorrelationId(randomId);
-            oaCollaboration.setPromoter(userId);
-            oaCollaboration.setTitle(oaActEngineering.getTitle());
-            oaCollaboration.setUrl("engineering");
-            oaCollaboration.setTable("oa_act_engineering");
-            oaCollaboration.setState(1);
+            oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);
             return 1;
@@ -78,8 +51,6 @@ public class OaActEngineeringServiceImpl implements OaActEngineeringService {
 
     @Override
     public int edit(OaActEngineering oaActEngineering) {
-        oaActEngineering.setBeforeData(DateUtil.stringConvertYYYYMMDD(oaActEngineering.getBeforeDataStr()));
-        oaActEngineering.setAfterData(DateUtil.stringConvertYYYYMMDD(oaActEngineering.getAfterDataStr()));
         oaActEngineering.setCreateTime(new Date());
         if (oaActEngineeringMapper.updateByPrimaryKey(oaActEngineering) < 0) {
             return -1;
@@ -97,8 +68,6 @@ public class OaActEngineeringServiceImpl implements OaActEngineeringService {
     @Override
     public OaActEngineering selectByPrimaryKey(String id) {
         OaActEngineering oaActEngineering = oaActEngineeringMapper.selectByPrimaryKey(id);
-        oaActEngineering.setAfterDataStr(DateUtil.dateConvertYYYYMMDD(oaActEngineering.getAfterData()));
-        oaActEngineering.setBeforeDataStr(DateUtil.dateConvertYYYYMMDD(oaActEngineering.getBeforeData()));
         oaActEngineering.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActEngineering.getCreateTime()));
         return oaActEngineering;
     }

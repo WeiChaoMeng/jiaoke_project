@@ -20,12 +20,11 @@
 <div id="ct-current" style="background: url('../../../static/images/milieu/blue.jpg');position: fixed">
     <div class="container">
 
-        <p id="txt-pub-time">中央气象台 13:40发布</p>
+        <p id="txt-pub-time">数据更新时间  <%=new SimpleDateFormat("yyyy年MM月dd日 HH:mm").format(new Date())%></p>
 
         <div id="ct-main">
             <p id="txt-temperature">13°</p>
             <p id="txt-name">晴</p>
-            <ul id="ls-warning"></ul>
         </div>
 
         <div id="ct-other">
@@ -87,7 +86,8 @@
                     <li class="item odd">
                         <div class="ct-sub">
                             <p class="content" id="AQI">轻度污染</p>
-                            <img src="../../../static/images/wether/aqi/AQI.png" style="width: 38px;padding: 5px;" title="空气质量">
+                            <img src="../../../static/images/wether/aqi/AQI.png" style="width: 38px;padding: 5px;"
+                                 title="空气质量">
                             <p class="content">空气质量</p>
                         </div>
                     </li>
@@ -96,7 +96,8 @@
                     <li class="item odd">
                         <div class="ct-sub">
                             <p class="content" id="AQIIndex">85</p>
-                            <img src="../../../static/images/wether/aqi/AQIzhishu.png" style="width: 38px;padding: 5px;" title="空气质量指数">
+                            <img src="../../../static/images/wether/aqi/AQIzhishu.png" style="width: 38px;padding: 5px;"
+                                 title="空气质量指数">
                             <p class="content">空气质量指数</p>
                         </div>
                     </li>
@@ -265,6 +266,9 @@
                 alert("error");
             },
             success: function (data) {
+                var date = new Date();
+                var currentDate = date.getFullYear() + "年" + (date.getMonth() + 1) + "月" + date.getDate() + "日";
+
                 var results = JSON.parse(data.weather);
 
                 if (results.result !== null) {
@@ -279,7 +283,8 @@
 
                                 //当前实况天气
                                 if (i === "sk") {
-                                    $('#txt-pub-time').text('中央气象台 ' + results[key][i].time + '发布');
+
+                                    $('#txt-pub-time').text('数据更新时间  ' + currentDate + " " + results[key][i].time);
                                     $('#txt-temperature').text(results[key][i].temp + '°');
                                     $('#txt-wind').text(results[key][i].wind_direction + ' ' + results[key][i].wind_strength);
                                     $('#txt-humidity').text('湿度 ' + results[key][i].humidity);

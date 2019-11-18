@@ -18,6 +18,12 @@
     <link href="../../../../static/css/oa/backstage_role.css" rel="stylesheet" type="text/css">
     <link href="../../../../static/css/paging/htmleaf-demo.css" rel="stylesheet" type="text/css">
     <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .left-justifying {
+            text-align: left;
+            text-indent: 20px;
+        }
+    </style>
 </head>
 
 <body>
@@ -218,8 +224,8 @@
                 roleInfo += '<tr onclick="checkboxEvent(this)">';
                 roleInfo += '<td><input type="checkbox" value="' + roleInfoList[i].id + '" onclick="window.event.cancelBubble=true;"></td>';
                 roleInfo += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 15 + i + 1) + '</td>';
-                roleInfo += '<td>' + roleInfoList[i].name + '</td>';
-                roleInfo += '<td>' + roleInfoList[i].description + '</td>';
+                roleInfo += '<td style="text-align: left;text-indent: 20px;">' + roleInfoList[i].name + '</td>';
+                roleInfo += '<td style="text-align: left;text-indent: 20px;">' + roleInfoList[i].description + '</td>';
                 roleInfo += '<td>' + roleInfoList[i].createTimeStr + '</td>';
                 roleInfo += '</tr>';
             }
@@ -267,20 +273,9 @@
             return false;
         } else {
             var id = $("#tbody input:checked").val();
-            $.ajax({
-                type: "post",
-                url: '/backstageManagement/toBindingPower',
-                data: {'id': id},
-                success: function (data) {
-                    //角色信息
-                    var permissionInfo = JSON.parse(data);
-                    //主页fun
-                    window.top.bindingPower(permissionInfo, id, $('#page').val());
-                },
-                error: function (result) {
-                    layer.msg("出错！");
-                }
-            })
+
+            //调用父页面方法
+            window.parent.bindingPowerTest(id, $('#page').val());
         }
     }
 

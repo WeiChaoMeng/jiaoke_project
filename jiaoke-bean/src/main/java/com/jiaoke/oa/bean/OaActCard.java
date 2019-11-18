@@ -33,9 +33,7 @@ public class OaActCard {
     /**
      * 申请时间
      */
-    private Date applyTime;
-    @Transient
-    private String applyTimeStr;
+    private String applyTime;
 
     /**
      * 所属单位
@@ -50,16 +48,12 @@ public class OaActCard {
     /**
      * 拟使用期限(开始)
      */
-    private Date startTime;
-    @Transient
-    private String startTimeStr;
+    private String startTime;
 
     /**
      * 拟使用期限(结束)
      */
-    private Date endTime;
-    @Transient
-    private String endTimeStr;
+    private String endTime;
 
     /**
      * 部门负责人审批内容
@@ -153,20 +147,12 @@ public class OaActCard {
         this.applicant = applicant;
     }
 
-    public Date getApplyTime() {
+    public String getApplyTime() {
         return applyTime;
     }
 
-    public void setApplyTime(Date applyTime) {
+    public void setApplyTime(String applyTime) {
         this.applyTime = applyTime;
-    }
-
-    public String getApplyTimeStr() {
-        return applyTimeStr;
-    }
-
-    public void setApplyTimeStr(String applyTimeStr) {
-        this.applyTimeStr = applyTimeStr;
     }
 
     public String getCompany() {
@@ -185,68 +171,20 @@ public class OaActCard {
         this.reason = reason;
     }
 
-    public Date getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public String getStartTimeStr() {
-        return startTimeStr;
-    }
-
-    public void setStartTimeStr(String startTimeStr) {
-        this.startTimeStr = startTimeStr;
-    }
-
-    public Date getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
-    }
-
-    public String getEndTimeStr() {
-        return endTimeStr;
-    }
-
-    public void setEndTimeStr(String endTimeStr) {
-        this.endTimeStr = endTimeStr;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getCreateTimeStr() {
-        return createTimeStr;
-    }
-
-    public void setCreateTimeStr(String createTimeStr) {
-        this.createTimeStr = createTimeStr;
-    }
-
-    public Integer getPromoter() {
-        return promoter;
-    }
-
-    public void setPromoter(Integer promoter) {
-        this.promoter = promoter;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public String getPrincipalContent() {
@@ -329,11 +267,43 @@ public class OaActCard {
         this.annex = annex;
     }
 
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getCreateTimeStr() {
+        return createTimeStr;
+    }
+
+    public void setCreateTimeStr(String createTimeStr) {
+        this.createTimeStr = createTimeStr;
+    }
+
+    public Integer getPromoter() {
+        return promoter;
+    }
+
+    public void setPromoter(Integer promoter) {
+        this.promoter = promoter;
+    }
+
     public String getPromoterStr() {
         return promoterStr;
     }
 
     public void setPromoterStr(String promoterStr) {
         this.promoterStr = promoterStr;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

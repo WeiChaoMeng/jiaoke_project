@@ -94,17 +94,58 @@ table {
     background: #f5f9ff;
 }
 
-.logo {
-    display: block;
+.logo-style{
+    width: 8%;
+    text-align: right;
     float: left;
-    cursor: pointer;
-    padding: 5px 10px 5px 20px;
+    height: 100%;
+}
+
+.title-nav-style{
+    float: left;
+    width: 79%;
+}
+
+.title-style{
+    width: 100%;
+    display: inline-block;
+}
+
+.title-content{
+    color: #f00;
+    font-size: 25px;
+    float: left;
+    margin-left: 40px;
+    display: block;
+    padding-top: 13px;
+}
+
+.navigation-style{
+    width: 100%;
+    display: inline-block;
+}
+
+.app-code-style{
+    height: 100%;
+    width: 5%;
+    float: left;
+    text-align: center;
+}
+
+.app-code-link{
+    width: 100%;
+    display: block;
+}
+
+.app-code-img{
+    width: 75%;
+    margin: 5% 10% 0;
 }
 
 .nav {
     float: left;
     margin-top: 8px;
-    margin-left: 10px;
+    margin-left: 25px;
 }
 
 .nav li {
@@ -134,18 +175,15 @@ table {
 }
 
 .topright {
-    float: right;
-    margin-top: -44px;
-}
-
-.topright a {
-    color: #000000;
-    margin-top: 54px;
+    width: 8%;
+    float: left;
+    position: absolute;
+    right: 0;
+    bottom: 0;
 }
 
 .user {
     float: right;
-    display: block;
 }
 
 .user a {
@@ -247,17 +285,16 @@ table {
 .userlist {
     position: absolute;
     z-index: 100;
-    top: 80px;
     right: 0;
     padding: 1px;
     background: #fff;
     border: solid 1px #c6c6c6;
     display: none;
-    *width: 110px;
 }
 
 .userlist li {
     line-height: 25px;
+    text-align: left;
 }
 
 .userxl {
@@ -762,35 +799,7 @@ table {
     position: absolute;
     right: 30px;
 }
-.text-adaption {
-    width: 97%;
-    height: 200px;
-    overflow: hidden;
-    padding: 5px 10px;
-    resize: none;
-    line-height: 24px;
-    font-size: 12px;
-    color: #666;
-    border: 1px solid #ccc;
-    outline: 0 none;
-    border-radius: 3px;
-    box-sizing: border-box;
-}
-/*butten*/
-.button-click{
-    padding: 10px 30px 10px 30px;
-    background: #66C1E4;
-    border: none;
-    color: #FFF;
-    box-shadow: 1px 1px 1px #4C6E91;
-    -webkit-box-shadow: 1px 1px 1px #4C6E91;
-    -moz-box-shadow: 1px 1px 1px #4C6E91;
-    text-shadow: 1px 1px 1px #5079A3;
 
-}
-.button-click:hover{
-    background: #3EB1DD;
-}
 /*form*/
 .formtable {
     border: solid 1px #d4d4d4;

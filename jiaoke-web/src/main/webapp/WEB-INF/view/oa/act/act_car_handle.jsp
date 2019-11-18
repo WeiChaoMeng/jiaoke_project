@@ -16,7 +16,8 @@
     <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
 </head>
 
-<body>
+<body id="body">
+
 <div class="table-title">
     <span>${oaActCar.title}</span>
 </div>
@@ -48,7 +49,7 @@
                     <c:forTokens items="${oaActCar.annex}" delims="," var="annex">
                         <div class="table-file">
                             <div class="table-file-content">
-                                <span title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <span class="table-file-title" title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
                                 <a class="table-file-download icon"
                                    href="/fileDownloadHandle/download?fileName=${annex}"
                                    title="下载">&#xebda;</a>
@@ -73,7 +74,7 @@
             </td>
 
             <td class="tdLabel">事由</td>
-            <td colspan="5" class="table-td-reason">
+            <td class="table-td-reason">
                 ${oaActCar.cause}
             </td>
         </tr>
@@ -117,7 +118,7 @@
         <tr>
             <td class="tdLabel">用车时间</td>
             <td class="table-td-content">
-                ${oaActCar.startTimeStr}
+                ${oaActCar.startTime}
             </td>
 
             <td class="tdLabel">目的地</td>
@@ -181,11 +182,11 @@
             <td class="tdLabel">交车时间</td>
             <td class="table-td-content">
                 <shiro:hasPermission name="lookup">
-                    <input type="text" class="formInput je-end-date" name="endTimeStr" onfocus="this.blur()">
+                    <input type="text" class="formInput je-end-date" name="endTime" onfocus="this.blur()">
                 </shiro:hasPermission>
                 <shiro:lacksPermission name="lookup">
                     <input type="hidden" class="formInput je-end-date" onfocus="this.blur()">
-                    ${oaActCar.endTimeStr}
+                    ${oaActCar.endTime}
                 </shiro:lacksPermission>
             </td>
         </tr>
@@ -193,20 +194,20 @@
         <tr>
             <td class="tdLabel">审核人</td>
             <td class="table-td-content">
-                <shiro:hasPermission name="officePrincipal">
+                <shiro:hasPermission name="principal">
                     <input type="text" class="formInput-readonly" name="reviewer" value="${nickname}" readonly>
                 </shiro:hasPermission>
-                <shiro:lacksPermission name="officePrincipal">
+                <shiro:lacksPermission name="principal">
                     ${oaActCar.reviewer}
                 </shiro:lacksPermission>
             </td>
 
             <td class="tdLabel">批准人</td>
             <td class="table-td-content">
-                <shiro:hasPermission name="officeSupervisor">
+                <shiro:hasPermission name="supervisor">
                     <input type="text" class="formInput-readonly" name="approver" value="${nickname}" readonly>
                 </shiro:hasPermission>
-                <shiro:lacksPermission name="officeSupervisor">
+                <shiro:lacksPermission name="supervisor">
                     ${oaActCar.approver}
                 </shiro:lacksPermission>
             </td>
@@ -222,7 +223,7 @@
 
 
 <div class="form-but" id="ret">
-    <shiro:hasAnyPermission name="officePrincipal,officeSupervisor,lookup">
+    <shiro:hasAnyPermission name="principal,supervisor,lookup">
         <button type="button" class="return-but" style="margin-right: 10px;" onclick="approvalProcessing(2)">回退</button>
     </shiro:hasAnyPermission>
 
@@ -256,11 +257,6 @@
     //任务Id
     var taskId = JSON.parse('${taskId}');
 
-    //返回上一页
-    function previousPage() {
-        window.history.back();
-    }
-
     //查表计数人提交
     function commitAndUpdate(flag) {
 
@@ -272,14 +268,14 @@
                 url: '${path}/car/lookupApprovalSubmit',
                 data: $('#oaActCar').serialize() + "&taskId=" + taskId + "&flag=" + flag,
                 error: function (request) {
-                    layer.msg("出错！");
+                    window.top.tips("出错！", 6, 2, 1000);
                 },
                 success: function (result) {
                     if (result === "success") {
+                        window.top.tips("处理成功！", 0, 1, 1000);
                         window.location.href = "${path}/oaIndex.do";
-                        layer.msg("发送成功！");
                     } else {
-                        layer.msg('发送失败！');
+                        window.top.tips("处理失败！", 0, 1, 1000);
                     }
                 }
             })
@@ -297,9 +293,9 @@
                 if (data === 'success') {
                     //返回上一页
                     window.location.href = '${path}/oaHomePage/toOaHomePage';
-                    layer.msg('提交成功！');
+                    window.top.tips("处理成功！", 0, 1, 1000);
                 } else {
-                    layer.msg('提交失败！');
+                    window.top.tips("处理失败！", 0, 1, 1000);
                 }
             },
             error: function (result) {
@@ -330,12 +326,12 @@
 
     //打印
     function printContent() {
-        $('#tool').hide();
-        $('#ret').hide();
+        $('#tool,#ret').hide();
+        $('#body').css('width', '100%');
         //执行打印
         window.print();
-        $('#tool').show();
-        $('#ret').show();
+        $('#tool,#ret').show();
+        $('#body').css('width', '80%');
     }
 </script>
 </html>

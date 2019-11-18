@@ -1488,3 +1488,20 @@ table {
 .return-but-inp:hover {
     background: #00BCD4;
 }
+
+/*企业文化建设*/
+.publish-new-content {
+    padding: 5px 15px;
+    border: 0;
+    cursor: pointer;
+    background: #38adff;
+    outline: none;
+    border-radius: 5px;
+    color: #FFFFFF;
+    font-size: 13px;
+    margin-right: 8px;
+}
+
+.publish-new-content:hover {
+    background-color: #0284df;
+}

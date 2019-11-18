@@ -79,7 +79,7 @@
 
             <td class="tdLabel">借用时间：</td>
             <td class="table-td-content">
-                ${oaActLicenceBorrow.borrowTimeStr}
+                ${oaActLicenceBorrow.borrowTime}
                 <input type="hidden" name="id" value="${oaActLicenceBorrow.id}">
                 <input type="hidden" name="title" value="${oaActLicenceBorrow.title}">
             </td>
@@ -120,7 +120,7 @@
 
         <tr>
             <td class="tdLabel">证照主管领导：</td>
-            <td class="table-td-content">
+            <td class="table-td-content" colspan="3">
                 <shiro:hasPermission name="licenceManage">
                     <c:choose>
                         <c:when test="${oaActLicenceBorrow.licenceManage == null}">
@@ -135,25 +135,6 @@
 
                 <shiro:lacksPermission name="licenceManage">
                     ${oaActLicenceBorrow.licenceManage}
-                </shiro:lacksPermission>
-            </td>
-
-            <td class="tdLabel">公司负责人：</td>
-            <td class="table-td-content">
-                <shiro:hasPermission name="companyPrincipal">
-                    <c:choose>
-                        <c:when test="${oaActLicenceBorrow.companyPrincipal == null}">
-                            <input type="text" class="formInput-readonly" name="companyPrincipal" value="${nickname}"
-                                   readonly="readonly">
-                        </c:when>
-                        <c:otherwise>
-                            ${oaActLicenceBorrow.companyPrincipal}
-                        </c:otherwise>
-                    </c:choose>
-                </shiro:hasPermission>
-
-                <shiro:lacksPermission name="companyPrincipal">
-                    ${oaActLicenceBorrow.companyPrincipal}
                 </shiro:lacksPermission>
             </td>
         </tr>
@@ -228,13 +209,13 @@
                 if (data === 'success') {
                     //返回上一页
                     window.location.href = '${path}/oaHomePage/toOaHomePage';
-                    layer.msg('提交成功！');
+                    window.top.tips("提交成功！", 0, 1, 1000);
                 } else {
-                    layer.msg('提交失败！');
+                    window.top.tips("提交失败！", 0, 2, 1000);
                 }
             },
             error: function (result) {
-                layer.msg("出错！");
+                window.top.tips("出错！", 6, 2, 1000);
             }
         })
     }

@@ -14,11 +14,4 @@ import tk.mybatis.mapper.common.Mapper;
 @Repository
 public interface OaActAcceptanceMapper extends Mapper<OaActAcceptance> {
 
-    /**
-     * 插入数据并返回主键
-     *
-     * @param oaActAcceptance oaActAcceptance
-     * @return int
-     */
-    int insertData(OaActAcceptance oaActAcceptance);
 }

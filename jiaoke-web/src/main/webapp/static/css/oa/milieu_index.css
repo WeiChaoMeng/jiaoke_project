@@ -17,39 +17,33 @@ body, button, dd, div, dl, dt, form, h1, h2, h3, h4, h5, h6, input, li, ol, p, t
 }
 
 #ct-current #txt-pub-time {
-    font-size: 14px;
     color: #fff;
-    opacity: .6;
-    height: 19px;
-    line-height: 19px;
-    margin: 20px 0;
+    opacity: .8;
+    margin: 20px 0 10px;
+    font-size: 18px;
 }
 
 #ct-current #ct-main {
-    height: 86px;
     margin-bottom: 28px;
     vertical-align: bottom;
-    font-size: 0;
 }
 
 #ct-current #ct-main #txt-temperature {
     display: inline-block;
-    font-size: 86px;
+    font-size: 40px;
     color: #fff;
-    height: 86px;
-    line-height: 86px;
+    line-height: 90px;
     margin: 0;
     padding: 0;
 }
 
 #ct-current #ct-main #txt-name {
     display: inline-block;
-    font-size: 28px;
+    font-size: 40px;
     color: #fff;
-    line-height: 45px;
-    height: 45px;
-    margin: 0;
+    line-height: 90px;
     padding: 0;
+    margin-left: 13px;
 }
 
 #ct-current #ct-other {
@@ -82,8 +76,8 @@ body, button, dd, div, dl, dt, form, h1, h2, h3, h4, h5, h6, input, li, ol, p, t
 }
 
 #ct-current #ct-current-weather img {
-    width: 134px;
-    height: 134px;
+    width: 130px;
+    height: 130px;
 }
 
 #ct-7-days {

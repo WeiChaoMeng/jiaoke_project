@@ -13,24 +13,15 @@ import com.jiaoke.oa.bean.UserInfo;
 public interface OaActCardService {
 
     /**
-     * 保存待发
-     *
-     * @param oaActCard oaActCard
-     * @param userId    userId
-     * @param randomId  randomId
-     * @return int
-     */
-    int savePendingCard(OaActCard oaActCard, Integer userId, String randomId);
-
-    /**
      * 新增
      *
      * @param oaActCard oaActCard
      * @param userId    userId
      * @param randomId  randomId
+     * @param state     state
      * @return int
      */
-    int insertCard(OaActCard oaActCard, Integer userId, String randomId);
+    int insertCard(OaActCard oaActCard, Integer userId, String randomId, Integer state);
 
     /**
      * 根据主键查询
@@ -39,7 +30,6 @@ public interface OaActCardService {
      * @return OaActMeals
      */
     OaActCard selectByPrimaryKey(String id);
-
 
     /**
      * 删除
@@ -50,15 +40,6 @@ public interface OaActCardService {
     int delete(String id);
 
     /**
-     * 更新状态
-     *
-     * @param id    id
-     * @param state state
-     * @return int
-     */
-    int updateStateById(String id, Integer state);
-
-    /**
      * 编辑
      *
      * @param oaActCard oaActCard
@@ -66,5 +47,11 @@ public interface OaActCardService {
      */
     int edit(OaActCard oaActCard);
 
+    /**
+     * 根据主键更新
+     *
+     * @param oaActCard oaActCard
+     * @return int
+     */
     int updateByPrimaryKeySelective(OaActCard oaActCard);
 }

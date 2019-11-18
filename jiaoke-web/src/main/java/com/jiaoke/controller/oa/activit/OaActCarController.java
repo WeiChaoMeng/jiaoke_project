@@ -85,7 +85,7 @@ public class OaActCarController {
     @ResponseBody
     public String add(OaActCar oaActCar) {
         String randomId = RandomUtil.randomId();
-        if (oaActCarService.insert(oaActCar, getCurrentUser().getId(), randomId) < 1) {
+        if (oaActCarService.insert(oaActCar, getCurrentUser().getId(), randomId, 0) < 1) {
             return "error";
         } else {
             //获取拥有查表计数人权限的用户信息
@@ -127,21 +127,24 @@ public class OaActCarController {
     public String approvalApi(String id, String taskId) {
         HashMap<String, Object> map = new HashMap<>(16);
         OaActCar oaActCar = oaActCarService.selectByPrimaryKey(id);
-        map.put("car",oaActCar);
-        map.put("taskId",taskId);
+        String nickname = getCurrentUser().getNickname();
+        map.put("nickname", nickname);
+        map.put("car", oaActCar);
+        map.put("taskId", taskId);
         return JSON.toJSONString(map);
     }
 
     /**
-     * 查表计数人提交
+     * 审批处理
      *
-     * @param flag flag
-     * @param taskId            任务Id
+     * @param oaActCar oaActCar
+     * @param flag     flag 1.同意，2.拒绝
+     * @param taskId   任务Id
      * @return s/e
      */
     @RequestMapping(value = "/lookupApprovalSubmit")
     @ResponseBody
-    public String lookupApprovalSubmit(OaActCar oaActCar,String taskId,Integer flag) {
+    public String lookupApprovalSubmit(OaActCar oaActCar, String taskId, Integer flag) {
 
         //结束标识
         String end = "end";
@@ -155,7 +158,7 @@ public class OaActCarController {
         String supervisor = "supervisor";
 
         //更新数据
-        if (oaActCarService.updateByPrimaryKeySelective(oaActCar) < 1){
+        if (oaActCarService.updateByPrimaryKeySelective(oaActCar) < 1) {
             return "error";
         }
 
@@ -181,13 +184,14 @@ public class OaActCarController {
                 if (nextNode.equals(userTask.getId())) {
                     String enforcer = userTask.getAssignee().substring(userTask.getAssignee().indexOf("{") + 1, userTask.getAssignee().indexOf("}"));
 
+                    //发起人
                     if (promoter.equals(enforcer)) {
                         Map<String, Object> map = new HashMap<>(16);
                         map.put(promoter, activitiUtil.getStartUserId(task.getProcessInstanceId()));
                         activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
                         return "success";
-
-                    } else if (principal.equals(enforcer) || supervisor.equals(enforcer)){
+                        //部门负责人、部门主管领导
+                    } else if (principal.equals(enforcer) || supervisor.equals(enforcer)) {
                         String startUserId = activitiUtil.getStartUserId(task.getProcessInstanceId());
                         //根据发起者id获取所属部门id
                         String departmentId = userInfoService.selectDepartmentByUserId(Integer.valueOf(startUserId));
@@ -195,8 +199,7 @@ public class OaActCarController {
                         String enforcerId = departmentService.selectEnforcerId(enforcer, departmentId);
                         activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, Integer.valueOf(enforcerId));
                         return "success";
-                    }
-                    else {
+                    } else {
                         UserInfo userInfo = userInfoService.getUserInfoByPermission(enforcer);
                         activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
                         return "success";
@@ -209,91 +212,7 @@ public class OaActCarController {
             //驳回
             managementService.executeCommand(new TargetFlowNodeCommand(task.getId(), back));
             //修改表单状态
-            oaCollaborationService.updateState(oaActCar.getId(),3);
-            return "success";
-        }
-    }
-
-       /* //1.更新表数据
-        //2.完成审批
-        //更新数据
-        oaActCarService.updateByPrimaryKey(oaActCar);
-
-        //根据processDefinitionId获取下个节点
-        *//*Task task = activitiUtil.getTaskByTaskId(taskId);
-        if (task == null) {
-            return "error";
-        } else {
-            //下个节点
-            String nextNode = activitiUtil.getNextNode(task.getProcessDefinitionId(), task.getTaskDefinitionKey());
-
-            //判断下个节点是否为end。
-            if ("end".equals(nextNode)) {
-                // 直接完成审批并结束流程。
-                activitiUtil.complete(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname());
-            } else {
-                UserTask userTask = activitiUtil.getUserTask(task.getProcessDefinitionId(), nextNode);
-                if (nextNode.equals(userTask.getId())) {
-                    String assignee = userTask.getAssignee();
-                    String enforcer = assignee.substring(assignee.indexOf("{") + 1, assignee.indexOf("}"));
-
-                    // 否:  1.获取当前流程发起者id(act_hi_procinst表，START_USER_ID_字段)
-                    String startUserId = activitiUtil.getStartUserId(task.getProcessInstanceId());
-                    //根据发起者id获取所属部门id
-                    String departmentId = userInfoService.selectDepartmentByUserId(Integer.valueOf(startUserId));
-                    //选择执行者Id
-                    String enforcerId = departmentService.selectEnforcerId(enforcer, departmentId);
-                    //4.完成审批指定下个节点
-                    Map<String, Object> map = new HashMap<>(16);
-                    map.put(enforcer, enforcerId);
-                    activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
-                }
-            }
-            return "success";
-        }*//*
-        return "success";
-    }*/
-
-    /**
-     * 提交审批处理
-     *
-     * @param processingOpinion 处理意见
-     * @param taskId            任务Id
-     * @return s/e
-     */
-    @RequestMapping(value = "/approvalSubmit")
-    @ResponseBody
-    public String approvalSubmit(String processingOpinion, String taskId) {
-        //根据processDefinitionId获取下个节点
-        Task task = activitiUtil.getTaskByTaskId(taskId);
-        if (task == null) {
-            return "error";
-        } else {
-            //下个节点
-            String nextNode = activitiUtil.getNextNode(task.getProcessDefinitionId(), task.getTaskDefinitionKey());
-
-            //判断下个节点是否为end。
-            if ("end".equals(nextNode)) {
-                // 直接完成审批并结束流程。
-                activitiUtil.complete(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname());
-            } else {
-                UserTask userTask = activitiUtil.getUserTask(task.getProcessDefinitionId(), nextNode);
-                if (nextNode.equals(userTask.getId())) {
-                    String assignee = userTask.getAssignee();
-                    String enforcer = assignee.substring(assignee.indexOf("{") + 1, assignee.indexOf("}"));
-
-                    // 否:  1.获取当前流程发起者id(act_hi_procinst表，START_USER_ID_字段)
-                    String startUserId = activitiUtil.getStartUserId(task.getProcessInstanceId());
-                    //根据发起者id获取所属部门id
-                    String departmentId = userInfoService.selectDepartmentByUserId(Integer.valueOf(startUserId));
-                    //选择执行者Id
-                    String enforcerId = departmentService.selectEnforcerId(enforcer, departmentId);
-                    //4.完成审批指定下个节点
-                    Map<String, Object> map = new HashMap<>(16);
-                    map.put(enforcer, enforcerId);
-                    activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
-                }
-            }
+            oaCollaborationService.updateState(oaActCar.getId(), 3);
             return "success";
         }
     }
@@ -308,7 +227,7 @@ public class OaActCarController {
     @ResponseBody
     public String savePending(OaActCar oaActCar) {
         String randomId = RandomUtil.randomId();
-        if (oaActCarService.savePending(oaActCar, getCurrentUser().getId(), randomId) < 1) {
+        if (oaActCarService.insert(oaActCar, getCurrentUser().getId(), randomId, 1) < 1) {
             return "error";
         } else {
             return "success";
@@ -427,8 +346,8 @@ public class OaActCarController {
             //流程结束无法撤销
             return "end";
         } else if (rescind > 0) {
-            //撤销成功后更新state为2
-            oaActCarService.updateState(id, 2);
+            //撤销成功后更新state为1待发
+            oaCollaborationService.updateState(id, 2);
             return "success";
         } else {
             //错误

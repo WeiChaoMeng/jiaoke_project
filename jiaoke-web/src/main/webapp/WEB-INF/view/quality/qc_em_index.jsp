@@ -12,7 +12,7 @@
     <div style="height:130px;"></div>
     <!-- 可删除 -->
     <div class="Service-box">
-        <shiro:hasPermission name="experimentItemInterior">
+        <shiro:hasPermission name="experiment:inner">
         <div class="Service-content clearfix">
             <a  href="javacript:void(0);"  class="Service-item">
                 <div class="item-image">
@@ -57,6 +57,7 @@
         </div>
         </shiro:hasPermission>
 
+        <shiro:hasPermission name="experiment:outer">
         <div class="Service-content clearfix">
             <a href="javacript:void(0);"  class="Service-item">
                 <div class="item-image">
@@ -99,6 +100,7 @@
                 <span class="item-link" onclick="experiment_setting_foreign()">设置参数</span>
             </a>
         </div>
+        </shiro:hasPermission>
     </div>
 <%--js获取路径--%>
 <input id="path" type="hidden" value="${path}"/>

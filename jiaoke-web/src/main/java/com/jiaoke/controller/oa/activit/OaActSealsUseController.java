@@ -68,7 +68,7 @@ public class OaActSealsUseController {
      *
      * @return jsp
      */
-    @RequestMapping("/toSealsUse")
+    @RequestMapping("/toIndex")
     public String toSealsUse(Model model) {
         model.addAttribute("nickname", getCurrentUser().getNickname());
         model.addAttribute("department", getCurrentUser().getDepartment());

@@ -1,0 +1,84 @@
+{
+  "code": 0,
+  "msg": "ok",
+  "data": [
+    {
+      "id": 1,
+      "name": "OA",
+      "url": "oa",
+      "create": "2019-05-01 08:53:50",
+      "pid": -1
+    },
+    {
+      "id": 2,
+      "name": "OA-个人事务",
+      "url": "personalAffairs",
+      "create": "2019-05-01 08:53:50",
+      "pid": 1
+    },
+    {
+      "id": 3,
+      "name": "OA-公文管理",
+      "url": "documentManagement",
+      "create": "2019-05-01 08:53:50",
+      "pid": 1
+    },
+    {
+      "id": 4,
+      "name": "OA-会议管理",
+      "url": "meetingManagement",
+      "create": "2019-05-01 08:53:50",
+      "pid": 1
+    },
+    {
+      "id": 5,
+      "name": "OA-会议管理-新建会议",
+      "url": "newMeeting",
+      "create": "2019-05-01 08:53:50",
+      "pid": 4
+    },
+    {
+      "id": 6,
+      "name": "质量管控",
+      "url": "qualityControl",
+      "create": "2019-05-01 08:53:50",
+      "pid": -1
+    },
+    {
+      "id": 7,
+      "name": "质量管理-实时监测",
+      "url": "realTimeMonitor",
+      "create": "2019-05-01 08:53:50",
+      "pid": 6
+    },
+    {
+      "id": 8,
+      "name": "质量管理-历史数据",
+      "url": "historicalData",
+      "create": "2019-05-01 08:53:50",
+      "pid": 6
+    },
+    {
+      "id": 9,
+      "name": "实验管理",
+      "url": "experiment",
+      "create": "2019-05-01 08:53:50",
+      "pid": -1
+    },
+    {
+      "id": 10,
+      "name": "实验管理（内）",
+      "url": "experimentInner",
+      "create": "2019-05-01 08:53:50",
+      "pid": 9
+    },
+    {
+      "id": 11,
+      "name": "实验管理（外）",
+      "url": "experimentOuter",
+      "create": "2019-05-01 08:53:50",
+      "pid": 9
+    }
+  ],
+  "count": 11
+}

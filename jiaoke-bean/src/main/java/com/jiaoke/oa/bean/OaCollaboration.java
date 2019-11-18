@@ -91,7 +91,6 @@ public class OaCollaboration {
      */
     private String previousApprover;
 
-
     /**
      * 当前待办人
      */

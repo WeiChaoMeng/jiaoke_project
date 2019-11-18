@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
@@ -28,15 +29,17 @@
         <tbody>
         <tr>
             <td>
-                <div class="head_left_button" style="line-height: 30px">
-                    <button type="button" class="cursor_hand" onclick="add()">&#xeb86; 添加</button>
-                </div>
+                <shiro:hasPermission name="news:add">
+                    <div class="head_left_button" style="line-height: 30px">
+                        <button type="button" class="cursor_hand" onclick="add()">&#xeb86; 添加</button>
+                    </div>
+                </shiro:hasPermission>
 
-                <div class="separation_line" style="margin: 9px 5px"></div>
-
-                <div class="head_left_button" style="line-height: 30px">
-                    <button type="button" class="cursor_hand" onclick="del()">&#xeaa5; 删除</button>
-                </div>
+                <shiro:hasPermission name="news:delete">
+                    <div class="head_left_button" style="line-height: 30px">
+                        <button type="button" class="cursor_hand" onclick="del()">&#xeaa5; 删除</button>
+                    </div>
+                </shiro:hasPermission>
             </td>
             <td>
                 <div>
@@ -54,11 +57,12 @@
 <table class="simpletable">
 
     <thead>
+    <th style="width: 3%;"><input type="checkbox"></th>
     <th style="width: 5%">序号</th>
     <th style="width: 30%">标题</th>
-    <th style="width: 15%">发布部门</th>
+    <th style="width: 14%">发布部门</th>
     <th style="width: 10%">发布人</th>
-    <th style="width: 15%">发布时间</th>
+    <th style="width: 13%">发布时间</th>
     <th style="width: 25%">摘要</th>
     </thead>
 
@@ -66,10 +70,6 @@
 
     </tbody>
 </table>
-
-<%--<div class="replenishment_record_btn" style="text-align: center;position: absolute;bottom: 50px;left: 45%;">
-    <input type="button" value="返回" onclick="previousPage()" class="return-but-inp">
-</div>--%>
 
 <div id="fenye" style="right: 10px;height: 35px;position: absolute;bottom: 10px;">
     <div class="">
@@ -90,12 +90,6 @@
 <script type="text/javascript" src="../../../../static/js/paging/jqPaginator.js"></script>
 <script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
-
-    //返回上一页
-    function previousPage() {
-        window.history.back();
-    }
-
     //新闻详情
     function particulars(id) {
         window.location.href = '${path}/newsCenter/newsDetails?id=' + id;

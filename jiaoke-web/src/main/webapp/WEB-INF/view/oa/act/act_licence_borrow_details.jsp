@@ -47,7 +47,7 @@
                     <c:forTokens items="${oaActLicenceBorrow.annex}" delims="," var="annex">
                         <div class="table-file">
                             <div class="table-file-content">
-                                <span title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <span class="table-file-title" title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
                                 <a class="table-file-download icon"
                                    href="/fileDownloadHandle/download?fileName=${annex}"
                                    title="下载">&#xebda;</a>
@@ -63,7 +63,7 @@
 <table class="formTable" style="margin: 0">
     <tbody>
     <tr>
-        <td class="tdLabel">印章种类：</td>
+        <td class="tdLabel">印章种类</td>
         <td class="table-td-content">
             <c:choose>
                 <c:when test="${oaActLicenceBorrow.seal == 0}">路驰营业执照正本</c:when>
@@ -74,21 +74,21 @@
             </c:choose>
         </td>
 
-        <td class="tdLabel">借用时间：</td>
+        <td class="tdLabel">借用时间</td>
         <td class="table-td-content">
-            ${oaActLicenceBorrow.borrowTimeStr}
+            ${oaActLicenceBorrow.borrowTime}
         </td>
     </tr>
 
     <tr>
-        <td class="tdLabel">用途：</td>
+        <td class="tdLabel">用途</td>
         <td class="table-td-content" colspan="3">
             ${oaActLicenceBorrow.purpose}
         </td>
     </tr>
 
     <tr>
-        <td class="tdLabel">借用人：</td>
+        <td class="tdLabel">借用人</td>
         <td class="table-td-content" style="width: 340px">
             ${oaActLicenceBorrow.borrower}
         </td>
@@ -101,13 +101,8 @@
 
     <tr>
         <td class="tdLabel">证照主管领导</td>
-        <td class="table-td-content">
+        <td class="table-td-content" colspan="3">
             ${oaActLicenceBorrow.licenceManage}
-        </td>
-
-        <td class="tdLabel">公司负责人</td>
-        <td class="table-td-content">
-            ${oaActLicenceBorrow.companyPrincipal}
         </td>
     </tr>
 

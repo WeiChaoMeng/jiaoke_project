@@ -25,19 +25,10 @@ public interface OaActAcceptanceService {
      * @param oaActAcceptance oaActAcceptance
      * @param userId          userId
      * @param randomId        randomId
+     * @param state           state
      * @return int
      */
-    int insert(OaActAcceptance oaActAcceptance, Integer userId, String randomId);
-
-    /**
-     * 保存待发
-     *
-     * @param oaActAcceptance oaActAcceptance
-     * @param userId          userId
-     * @param randomId        randomId
-     * @return int
-     */
-    int savePending(OaActAcceptance oaActAcceptance, Integer userId, String randomId);
+    int insert(OaActAcceptance oaActAcceptance, Integer userId, String randomId, Integer state);
 
     /**
      * 验收单 - 查询

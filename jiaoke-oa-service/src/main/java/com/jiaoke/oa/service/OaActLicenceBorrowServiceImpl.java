@@ -32,7 +32,6 @@ public class OaActLicenceBorrowServiceImpl implements OaActLicenceBorrowService 
 
     @Override
     public int insert(OaActLicenceBorrow oaActLicenceBorrow, Integer userId, String randomId, Integer state) {
-        oaActLicenceBorrow.setBorrowTime(DateUtil.stringConvertYYYYMMDDHH(oaActLicenceBorrow.getBorrowTimeStr()));
         oaActLicenceBorrow.setId(randomId);
         oaActLicenceBorrow.setPromoter(userId);
         oaActLicenceBorrow.setUrl("licenceBorrow");
@@ -55,7 +54,6 @@ public class OaActLicenceBorrowServiceImpl implements OaActLicenceBorrowService 
 
     @Override
     public int edit(OaActLicenceBorrow oaActLicenceBorrow) {
-        oaActLicenceBorrow.setBorrowTime(DateUtil.stringConvertYYYYMMDDHH(oaActLicenceBorrow.getBorrowTimeStr()));
         oaActLicenceBorrow.setCreateTime(new Date());
         if (oaActLicenceBorrowMapper.updateByPrimaryKey(oaActLicenceBorrow) < 1) {
             return -1;
@@ -67,7 +65,6 @@ public class OaActLicenceBorrowServiceImpl implements OaActLicenceBorrowService 
 
     @Override
     public int savePending(OaActLicenceBorrow oaActLicenceBorrow, Integer userId, String randomId) {
-        oaActLicenceBorrow.setBorrowTime(DateUtil.stringConvertYYYYMMDDHH(oaActLicenceBorrow.getBorrowTimeStr()));
         oaActLicenceBorrow.setId(randomId);
         oaActLicenceBorrow.setPromoter(userId);
         oaActLicenceBorrow.setUrl("licenceBorrow");
@@ -91,7 +88,6 @@ public class OaActLicenceBorrowServiceImpl implements OaActLicenceBorrowService 
     @Override
     public OaActLicenceBorrow selectByPrimaryKey(String id) {
         OaActLicenceBorrow oaActLicenceBorrow = oaActLicenceBorrowMapper.selectByPrimaryKey(id);
-        oaActLicenceBorrow.setBorrowTimeStr(DateUtil.dateConvertYYYYMMDDHH(oaActLicenceBorrow.getBorrowTime()));
         oaActLicenceBorrow.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActLicenceBorrow.getCreateTime()));
         oaActLicenceBorrow.setPromoterStr(userInfoMapper.getNicknameById(oaActLicenceBorrow.getPromoter()));
         return oaActLicenceBorrow;

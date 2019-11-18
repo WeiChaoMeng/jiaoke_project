@@ -16,14 +16,6 @@ import tk.mybatis.mapper.common.Mapper;
 public interface OaActCarMapper extends Mapper<OaActCar> {
 
     /**
-     * 插入数据并返回主键
-     *
-     * @param oaActCar oaActCar
-     * @return int
-     */
-    int insertData(OaActCar oaActCar);
-
-    /**
      * 更新状态
      *
      * @param id    id

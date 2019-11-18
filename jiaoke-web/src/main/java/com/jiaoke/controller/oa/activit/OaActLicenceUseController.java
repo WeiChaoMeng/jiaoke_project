@@ -65,7 +65,7 @@ public class OaActLicenceUseController {
      *
      * @return jsp
      */
-    @RequestMapping("/toLicenceUse")
+    @RequestMapping("/toIndex")
     public String toLicenceUse(Model model) {
         model.addAttribute("nickname", getCurrentUser().getNickname());
         return "oa/act/act_licence_use";

@@ -1,3 +1,4 @@
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -8,49 +9,60 @@
 <%--菜单--%>
 <div class="nav nav-mini">
     <ul id="nav-ul" class="nav-ul">
-        <li class="nav-item" id="JB">
-            <img src="../../../static/images/personnel/basic.png" style="width: 30px">
-            <span>基本信息</span>
-        </li>
 
-        <li class="nav-item">
-            <img src="../../../static/images/personnel/dynamic.png" style="width: 30px">
-            <span>人员管理</span>
+        <shiro:hasPermission name="personnel:basic">
+            <li class="nav-item" id="JB">
+                <img src="../../../static/images/personnel/basic.png" style="width: 30px">
+                <span>基本信息</span>
+            </li>
+        </shiro:hasPermission>
 
-            <ul>
-                <li><a id="entry"><span>入职</span></a></li>
-                <li><a id="waitLeave"><span>等待离职</span></a></li>
-                <li><a id="alreadyLeave"><span>已经离职</span></a></li>
-                <li><a id="retired"><span>退休</span></a></li>
-                <li><a id="jobChange"><span>职位变动</span></a></li>
-            </ul>
-        </li>
+        <shiro:hasPermission name="personnel:people">
+            <li class="nav-item">
+                <img src="../../../static/images/personnel/dynamic.png" style="width: 30px">
+                <span>人员管理</span>
 
-        <li class="nav-item" id="HT">
-            <img src="../../../static/images/personnel/contract.png" style="width: 30px">
-            <span>合同管理</span>
+                <ul>
+                    <li><a id="entry"><span>入职</span></a></li>
+                    <li><a id="waitLeave"><span>等待离职</span></a></li>
+                    <li><a id="alreadyLeave"><span>已经离职</span></a></li>
+                    <li><a id="retired"><span>退休</span></a></li>
+                    <li><a id="jobChange"><span>职位变动</span></a></li>
+                </ul>
+            </li>
+        </shiro:hasPermission>
 
-            <ul>
-                <li><a id="contract"><span>合同台账</span></a></li>
-                <%--<li><a id="terminate"><span>终止合同</span></a></li>--%>
-                <%--<li><a id="relieve"><span>解除合同</span></a></li>--%>
-            </ul>
-        </li>
+        <shiro:hasPermission name="personnel:contract">
+            <li class="nav-item" id="HT">
+                <img src="../../../static/images/personnel/contract.png" style="width: 30px">
+                <span>合同管理</span>
 
-        <li class="nav-item" id="KQ">
-            <img src="../../../static/images/personnel/kq.png" style="width: 30px">
-            <span>考勤管理</span>
-        </li>
+                <ul>
+                    <li><a id="contract"><span>合同台账</span></a></li>
+                        <%--<li><a id="terminate"><span>终止合同</span></a></li>--%>
+                        <%--<li><a id="relieve"><span>解除合同</span></a></li>--%>
+                </ul>
+            </li>
+        </shiro:hasPermission>
 
-        <li class="nav-item" id="GZ">
-            <img src="../../../static/images/personnel/gz.png" style="width: 30px">
-            <span>工资管理</span>
+        <shiro:hasPermission name="personnel:attendance">
+            <li class="nav-item" id="KQ">
+                <img src="../../../static/images/personnel/kq.png" style="width: 30px">
+                <span>考勤管理</span>
+            </li>
+        </shiro:hasPermission>
 
-            <ul>
-                <li><a id="regularEmployee"><span>正式职工</span></a></li>
-                <li><a id="outsourcedStaff"><span>外包职工</span></a></li>
-            </ul>
-        </li>
+        <shiro:hasPermission name="personnel:wage">
+            <li class="nav-item" id="GZ">
+                <img src="../../../static/images/personnel/gz.png" style="width: 30px">
+                <span>工资管理</span>
+
+                <ul>
+                    <li><a id="regularEmployee"><span>正式职工</span></a></li>
+                    <li><a id="outsourcedStaff"><span>外包职工</span></a></li>
+                </ul>
+            </li>
+        </shiro:hasPermission>
     </ul>
 </div>
 

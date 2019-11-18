@@ -27,15 +27,17 @@
         <tbody>
         <tr>
             <td>
-                <div class="head_left_button">
-                    <button type="button" class="cursor_hand" onclick="addNotice()">&#xeb86; 添加</button>
-                </div>
+                <shiro:hasPermission name="notice:add">
+                    <div class="head_left_button">
+                        <button type="button" class="cursor_hand" onclick="addNotice()">&#xeb86; 添加</button>
+                    </div>
+                </shiro:hasPermission>
 
-                <div class="separation_line"></div>
-
-                <div class="head_left_button">
-                    <button type="button" class="cursor_hand" onclick="del()">&#xeaa5; 删除</button>
-                </div>
+                <shiro:hasPermission name="notice:delete">
+                    <div class="head_left_button">
+                        <button type="button" class="cursor_hand" onclick="del()">&#xeaa5; 删除</button>
+                    </div>
+                </shiro:hasPermission>
             </td>
             <td>
                 <div>

@@ -10,10 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 环保监控
@@ -48,6 +45,7 @@ public class WeatherReportByCity {
         map.put("air", PureNetUtil.get(airUrl));
 
         List<AirQuality> airQualityList = weatherReportByCityService.selectLastWeekData();
+        Collections.reverse(airQualityList);
         map.put("airQualityList", airQualityList);
         //通过工具类获取返回数据
         return map;

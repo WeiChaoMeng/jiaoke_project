@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 验收单
+ * 设备维修验收单
  *
  * @author lihui
  * @version 1.0
@@ -64,7 +64,7 @@ public class OaActAcceptanceController {
      *
      * @return jsp
      */
-    @RequestMapping("/toAcceptance")
+    @RequestMapping("/toIndex")
     public String toAcceptance(Model model) {
         model.addAttribute("nickname", getCurrentUser().getNickname());
         return "oa/act/act_acceptance";
@@ -80,7 +80,7 @@ public class OaActAcceptanceController {
     @ResponseBody
     public String add(OaActAcceptance oaActAcceptance) {
         String randomId = RandomUtil.randomId();
-        if (oaActAcceptanceService.insert(oaActAcceptance, getCurrentUser().getId(), randomId) < 1) {
+        if (oaActAcceptanceService.insert(oaActAcceptance, getCurrentUser().getId(), randomId, 0) < 1) {
             return "error";
         } else {
             //用户所在部门id
@@ -179,7 +179,7 @@ public class OaActAcceptanceController {
     @ResponseBody
     public String savePending(OaActAcceptance oaActAcceptance) {
         String randomId = RandomUtil.randomId();
-        if (oaActAcceptanceService.savePending(oaActAcceptance, getCurrentUser().getId(), randomId) < 1) {
+        if (oaActAcceptanceService.insert(oaActAcceptance, getCurrentUser().getId(), randomId, 1) < 1) {
             return "error";
         } else {
             return "success";

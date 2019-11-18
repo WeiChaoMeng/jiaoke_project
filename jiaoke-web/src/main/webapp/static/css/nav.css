@@ -150,7 +150,7 @@ a {
 .nav-mini.nav .nav-item ul {
     position: absolute;
     top: 0px;
-    left: 60px;
+    left: 100%;
     width: 160px;
     z-index: 99;
     /*background: #367448;*/

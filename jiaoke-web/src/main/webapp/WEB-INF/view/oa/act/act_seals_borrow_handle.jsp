@@ -16,7 +16,8 @@
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
 </head>
 
-<body id="body">
+<body id="body" style="width: 70%">
+
 <div class="table-title">
     <span>${oaActSealsBorrow.title}</span>
 </div>
@@ -81,7 +82,7 @@
 
             <td class="tdLabel">借用时间：</td>
             <td class="table-td-content">
-                ${oaActSealsBorrow.borrowTimeStr}
+                ${oaActSealsBorrow.borrowTime}
                 <input type="hidden" name="id" value="${oaActSealsBorrow.id}">
                 <input type="hidden" name="title" value="${oaActSealsBorrow.title}">
                 <input type="hidden" name="seal" value="${oaActSealsBorrow.seal}">
@@ -123,7 +124,7 @@
 
         <tr>
             <td class="tdLabel">印章主管领导：</td>
-            <td class="table-td-content">
+            <td class="table-td-content" colspan="3">
                 <shiro:hasAnyPermission name="sealManage,specialChapter">
                     <c:choose>
                         <c:when test="${oaActSealsBorrow.sealManage == null}">
@@ -138,25 +139,6 @@
 
                 <shiro:lacksPermission name="sealManage">
                     ${oaActSealsBorrow.sealManage}
-                </shiro:lacksPermission>
-            </td>
-
-            <td class="tdLabel">公司负责人：</td>
-            <td class="table-td-content">
-                <shiro:hasPermission name="companyPrincipal">
-                    <c:choose>
-                        <c:when test="${oaActSealsBorrow.companyPrincipal == null}">
-                            <input type="text" class="formInput-readonly" name="companyPrincipal" value="${nickname}"
-                                   readonly="readonly">
-                        </c:when>
-                        <c:otherwise>
-                            ${oaActSealsBorrow.companyPrincipal}
-                        </c:otherwise>
-                    </c:choose>
-                </shiro:hasPermission>
-
-                <shiro:lacksPermission name="companyPrincipal">
-                    ${oaActSealsBorrow.companyPrincipal}
                 </shiro:lacksPermission>
             </td>
         </tr>
@@ -230,13 +212,13 @@
                 if (data === 'success') {
                     //返回上一页
                     window.location.href = '${path}/oaHomePage/toOaHomePage';
-                    layer.msg('提交成功！');
+                    window.top.tips("提交成功！", 0, 1, 1000);
                 } else {
-                    layer.msg('提交失败！');
+                    window.top.tips("提交失败！", 0, 2, 1000);
                 }
             },
             error: function (result) {
-                layer.msg("出错！");
+                window.top.tips("出错！", 6, 2, 1000);
             }
         })
     }
@@ -248,7 +230,7 @@
         //执行打印
         window.print();
         $('#tool').show();
-        $('#body,#return').css('width', '80%');
+        $('#body,#return').css('width', '70%');
     }
 </script>
 </html>

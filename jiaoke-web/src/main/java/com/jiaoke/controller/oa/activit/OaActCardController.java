@@ -1,5 +1,6 @@
 package com.jiaoke.controller.oa.activit;
 
+import com.alibaba.fastjson.JSON;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
@@ -66,7 +67,7 @@ public class OaActCardController {
      *
      * @return jsp
      */
-    @RequestMapping("/toCard")
+    @RequestMapping("/toIndex")
     public String toCard(Model model) {
         model.addAttribute("nickname", getCurrentUser().getNickname());
         return "oa/act/act_card";
@@ -82,7 +83,7 @@ public class OaActCardController {
     @ResponseBody
     public String add(OaActCard oaActCard) {
         String randomId = RandomUtil.randomId();
-        if (oaActCardService.insertCard(oaActCard, getCurrentUser().getId(), randomId) < 1) {
+        if (oaActCardService.insertCard(oaActCard, getCurrentUser().getId(), randomId, 0) < 1) {
             return "error";
         } else {
             //用户所在部门id
@@ -121,11 +122,34 @@ public class OaActCardController {
         return "oa/act/act_card_handle";
     }
 
+    @RequestMapping(value = "/approval.api")
+    @ResponseBody
+    public String approvalApi(String id, String taskId) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActCard oaActCard = oaActCardService.selectByPrimaryKey(id);
+        String nickname = getCurrentUser().getNickname();
+        //根据发起者id获取所属部门id
+        String departmentId = userInfoService.selectDepartmentByUserId(oaActCard.getPromoter());
+        //选择执行者Id
+        String principalId = departmentService.selectEnforcerId("principal", departmentId);
+        String supervisorId = departmentService.selectEnforcerId("supervisor", departmentId);
+        UserInfo userInfo = userInfoService.getUserInfoByPermission("cardApproval");
+        String principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        String supervisor = userInfoService.getNicknameById(Integer.valueOf(supervisorId));
+        map.put("nickname", nickname);
+        map.put("principal", principal);
+        map.put("supervisor", supervisor);
+        map.put("cardSupervisor", userInfo.getNickname());
+        map.put("card", oaActCard);
+        map.put("taskId", taskId);
+        return JSON.toJSONString(map);
+    }
+
     /**
      * 提交审批处理
      *
      * @param oaActCard oaActCard
-     * @param taskId            任务Id
+     * @param taskId    任务Id
      * @return s/e
      */
     @RequestMapping(value = "/approvalSubmit")
@@ -174,7 +198,7 @@ public class OaActCardController {
                         activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
                         return "success";
 
-                    } else if (principal.equals(enforcer) || supervisor.equals(enforcer)){
+                    } else if (principal.equals(enforcer) || supervisor.equals(enforcer)) {
                         String startUserId = activitiUtil.getStartUserId(task.getProcessInstanceId());
                         //根据发起者id获取所属部门id
                         String departmentId = userInfoService.selectDepartmentByUserId(Integer.valueOf(startUserId));
@@ -210,7 +234,7 @@ public class OaActCardController {
     @ResponseBody
     public String savePending(OaActCard oaActCard) {
         String randomId = RandomUtil.randomId();
-        if (oaActCardService.savePendingCard(oaActCard, getCurrentUser().getId(), randomId) < 0) {
+        if (oaActCardService.insertCard(oaActCard, getCurrentUser().getId(), randomId, 1) < 0) {
             return "error";
         } else {
             return "success";

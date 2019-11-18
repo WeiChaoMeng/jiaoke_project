@@ -4,7 +4,6 @@ import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
 import com.jiaoke.oa.bean.Comments;
-import com.jiaoke.oa.bean.OaActCar;
 import com.jiaoke.oa.bean.OaActMaintain;
 import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.service.DepartmentService;
@@ -64,7 +63,7 @@ public class OaActMaintainController {
      *
      * @return jsp
      */
-    @RequestMapping("/toMaintain")
+    @RequestMapping("/toIndex")
     public String toMaintain(Model model) {
         model.addAttribute("department", getCurrentUser().getDepartment());
         model.addAttribute("nickname", getCurrentUser().getNickname());
@@ -178,7 +177,7 @@ public class OaActMaintainController {
     @ResponseBody
     public String savePending(OaActMaintain oaActMaintain) {
         String randomId = RandomUtil.randomId();
-        if (oaActMaintainService.insert(oaActMaintain, getCurrentUser().getId(), randomId,1) < 1) {
+        if (oaActMaintainService.insert(oaActMaintain, getCurrentUser().getId(), randomId, 1) < 1) {
             return "error";
         } else {
             return "success";

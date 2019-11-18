@@ -17,6 +17,7 @@
 </head>
 
 <body id="body">
+
 <div class="table-title">
     <span>${oaActReview.title}</span>
 </div>
@@ -48,7 +49,7 @@
                     <c:forTokens items="${oaActReview.annex}" delims="," var="annex">
                         <div class="table-file">
                             <div class="table-file-content">
-                                <span title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <span class="table-file-title" title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
                                 <a class="table-file-download icon"
                                    href="/fileDownloadHandle/download?fileName=${annex}"
                                    title="下载">&#xebda;</a>
@@ -61,7 +62,7 @@
     </c:choose>
 </div>
 
-<span class="fill-in-date">编号：${oaActReview.numbering}</span>
+<span class="fill-in-date"  style="min-width: 130px">编号  ${oaActReview.numbering}</span>
 
 <form id="oaActReview">
     <table class="formTable">
@@ -119,12 +120,12 @@
                     <textarea class="approval-content-textarea" name="legalAffairsContent"
                               style="background-color: #ffffff"></textarea>
                     <div class="approval-date">
-                        <label class="approval-date-label">日期:</label>
+                        <label class="approval-date-label">日期</label>
                         <input class="approval-date-input" type="text" name="legalAffairsDate"
                                value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>
                     </div>
                     <div class="approval-signature">
-                        <label class="approval-signature-label">签字:</label>
+                        <label class="approval-signature-label">签字</label>
                         <input class="approval-signature-input" type="text" name="legalAffairsSign" value="${nickname}"
                                readonly>
                     </div>
@@ -134,12 +135,12 @@
                     <textarea class="approval-content-textarea"
                               readonly>${oaActReview.legalAffairsContent}</textarea>
                     <div class="approval-date">
-                        <label class="approval-date-label">日期:</label>
+                        <label class="approval-date-label">日期</label>
                         <input class="approval-date-input" type="text" value="${oaActReview.legalAffairsDate}"
                                readonly>
                     </div>
                     <div class="approval-signature">
-                        <label class="approval-signature-label">签字:</label>
+                        <label class="approval-signature-label">签字</label>
                         <input class="approval-signature-input" type="text" value="${oaActReview.legalAffairsSign}"
                                readonly>
                     </div>
@@ -154,12 +155,12 @@
                     <textarea class="approval-content-textarea" name="financeContent"
                               style="background-color: #ffffff"></textarea>
                     <div class="approval-date">
-                        <label class="approval-date-label">日期:</label>
+                        <label class="approval-date-label">日期</label>
                         <input class="approval-date-input" type="text" name="financeDate"
                                value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>
                     </div>
                     <div class="approval-signature">
-                        <label class="approval-signature-label">签字:</label>
+                        <label class="approval-signature-label">签字</label>
                         <input class="approval-signature-input" type="text" name="financeSign" value="${nickname}"
                                readonly>
                     </div>
@@ -169,48 +170,13 @@
                     <textarea class="approval-content-textarea"
                               readonly>${oaActReview.financeContent}</textarea>
                     <div class="approval-date">
-                        <label class="approval-date-label">日期:</label>
+                        <label class="approval-date-label">日期</label>
                         <input class="approval-date-input" type="text" value="${oaActReview.financeDate}"
                                readonly>
                     </div>
                     <div class="approval-signature">
-                        <label class="approval-signature-label">签字:</label>
+                        <label class="approval-signature-label">签字</label>
                         <input class="approval-signature-input" type="text" value="${oaActReview.financeSign}"
-                               readonly>
-                    </div>
-                </shiro:lacksPermission>
-            </td>
-        </tr>
-
-        <tr>
-            <td class="tdLabel">技术负责人审查意见</td>
-            <td colspan="5" class="approval-content">
-                <shiro:hasPermission name="technology">
-                    <textarea class="approval-content-textarea" name="technologyContent"
-                              style="background-color: #ffffff"></textarea>
-                    <div class="approval-date">
-                        <label class="approval-date-label">日期:</label>
-                        <input class="approval-date-input" type="text" name="technologyDate"
-                               value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>
-                    </div>
-                    <div class="approval-signature">
-                        <label class="approval-signature-label">签字:</label>
-                        <input class="approval-signature-input" type="text" name="technologySign" value="${nickname}"
-                               readonly>
-                    </div>
-                </shiro:hasPermission>
-
-                <shiro:lacksPermission name="technology">
-                    <textarea class="approval-content-textarea"
-                              readonly>${oaActReview.technologyContent}</textarea>
-                    <div class="approval-date">
-                        <label class="approval-date-label">日期:</label>
-                        <input class="approval-date-input" type="text" value="${oaActReview.technologyDate}"
-                               readonly>
-                    </div>
-                    <div class="approval-signature">
-                        <label class="approval-signature-label">签字:</label>
-                        <input class="approval-signature-input" type="text" value="${oaActReview.technologySign}"
                                readonly>
                     </div>
                 </shiro:lacksPermission>
@@ -224,12 +190,12 @@
                     <textarea class="approval-content-textarea" name="supervisorContent"
                               style="background-color: #ffffff"></textarea>
                     <div class="approval-date">
-                        <label class="approval-date-label">日期:</label>
+                        <label class="approval-date-label">日期</label>
                         <input class="approval-date-input" type="text" name="supervisorDate"
                                value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>
                     </div>
                     <div class="approval-signature">
-                        <label class="approval-signature-label">签字:</label>
+                        <label class="approval-signature-label">签字</label>
                         <input class="approval-signature-input" type="text" name="supervisorSign" value="${nickname}"
                                readonly>
                     </div>
@@ -239,12 +205,12 @@
                     <textarea class="approval-content-textarea"
                               readonly>${oaActReview.supervisorContent}</textarea>
                     <div class="approval-date">
-                        <label class="approval-date-label">日期:</label>
+                        <label class="approval-date-label">日期</label>
                         <input class="approval-date-input" type="text" value="${oaActReview.supervisorDate}"
                                readonly>
                     </div>
                     <div class="approval-signature">
-                        <label class="approval-signature-label">签字:</label>
+                        <label class="approval-signature-label">签字</label>
                         <input class="approval-signature-input" type="text" value="${oaActReview.supervisorSign}"
                                readonly>
                     </div>
@@ -259,12 +225,12 @@
                     <textarea class="approval-content-textarea" name="companyPrincipalContent"
                               style="background-color: #ffffff"></textarea>
                     <div class="approval-date">
-                        <label class="approval-date-label">日期:</label>
+                        <label class="approval-date-label">日期</label>
                         <input class="approval-date-input" type="text" name="companyPrincipalDate"
                                value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>
                     </div>
                     <div class="approval-signature">
-                        <label class="approval-signature-label">签字:</label>
+                        <label class="approval-signature-label">签字</label>
                         <input class="approval-signature-input" type="text" name="companyPrincipalSign"
                                value="${nickname}" readonly>
                     </div>
@@ -274,12 +240,12 @@
                     <textarea class="approval-content-textarea"
                               readonly>${oaActReview.companyPrincipalContent}</textarea>
                     <div class="approval-date">
-                        <label class="approval-date-label">日期:</label>
+                        <label class="approval-date-label">日期</label>
                         <input class="approval-date-input" type="text" value="${oaActReview.companyPrincipalDate}"
                                readonly>
                     </div>
                     <div class="approval-signature">
-                        <label class="approval-signature-label">签字:</label>
+                        <label class="approval-signature-label">签字</label>
                         <input class="approval-signature-input" type="text" value="${oaActReview.companyPrincipalSign}"
                                readonly>
                     </div>
@@ -289,6 +255,11 @@
         </tbody>
     </table>
 </form>
+
+<div class="notice-tips">
+    <span class="notice-tips-mark">*</span>
+    <span class="notice-tips-script">注：1.不涉及技术审查的可不填“技术负责人审查意见”。2.应收款确认单不需填写“法务审查意见”。</span>
+</div>
 
 <div class="form-but" id="return">
     <shiro:hasAnyPermission name="technology,finance,legalAffairs,principal,supervisor,companyPrincipal">
@@ -316,13 +287,13 @@
                 if (data === 'success') {
                     //返回上一页
                     window.location.href = '${path}/oaHomePage/toOaHomePage';
-                    layer.msg('提交成功！');
+                    window.top.tips("提交成功！", 0, 1, 1000);
                 } else {
-                    layer.msg('提交失败！');
+                    window.top.tips("提交失败！", 0, 2, 1000);
                 }
             },
             error: function (result) {
-                layer.msg("出错！");
+                window.top.tips("出错！", 6, 2, 1000);
             }
         })
     }

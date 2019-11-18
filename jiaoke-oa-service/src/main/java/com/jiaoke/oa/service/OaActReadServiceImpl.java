@@ -28,12 +28,11 @@ public class OaActReadServiceImpl implements OaActReadService {
 
     @Override
     public int insert(OaActRead oaActRead, Integer userId, String randomId, Integer state) {
-        oaActRead.setReceiptTime(DateUtil.stringConvertYYYYMMDD(oaActRead.getReceiptTimeStr()));
         oaActRead.setId(randomId);
         oaActRead.setCreateTime(new Date());
         oaActRead.setPromoter(userId);
         oaActRead.setUrl("read");
-        if (oaActReadMapper.insertData(oaActRead) < 0) {
+        if (oaActReadMapper.insertSelective(oaActRead) < 0) {
             return -1;
         } else {
             OaCollaboration oaCollaboration = new OaCollaboration();
@@ -51,7 +50,6 @@ public class OaActReadServiceImpl implements OaActReadService {
 
     @Override
     public int edit(OaActRead oaActRead) {
-        oaActRead.setReceiptTime(DateUtil.stringConvertYYYYMMDD(oaActRead.getReceiptTimeStr()));
         oaActRead.setCreateTime(new Date());
         if (oaActReadMapper.updateByPrimaryKey(oaActRead) < 0) {
             return -1;
@@ -64,9 +62,7 @@ public class OaActReadServiceImpl implements OaActReadService {
     @Override
     public OaActRead selectByPrimaryKey(String id) {
         OaActRead oaActRead = oaActReadMapper.selectByPrimaryKey(id);
-        oaActRead.setReceiptTimeStr(DateUtil.dateConvertYYYYMMDD(oaActRead.getReceiptTime()));
         oaActRead.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActRead.getCreateTime()));
-        oaActRead.setAnnexStr(oaActRead.getAnnex().substring(oaActRead.getAnnex().lastIndexOf("_") + 1));
         return oaActRead;
     }
 

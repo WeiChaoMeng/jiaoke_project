@@ -129,4 +129,12 @@ public interface UserInfoService {
      * @return 部门id
      */
     String selectDepartmentByUserId(Integer userId);
+
+    /**
+     * 根据id获取nickname
+     *
+     * @param id id
+     * @return nickname
+     */
+    String getNicknameById(Integer id);
 }

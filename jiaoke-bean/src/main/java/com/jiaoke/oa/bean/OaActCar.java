@@ -52,16 +52,12 @@ public class OaActCar {
     /**
      * 开始时间
      */
-    private Date startTime;
-    @Transient
-    private String startTimeStr;
+    private String startTime;
 
     /**
      * 结束时间
      */
-    private Date endTime;
-    @Transient
-    private String endTimeStr;
+    private String endTime;
 
     /**
      * 公里基数
@@ -102,11 +98,6 @@ public class OaActCar {
      * 附件
      */
     private String annex;
-
-    /**
-     * 状态：0,已发 1,待发
-     */
-    private Integer state;
 
     /**
      * 创建日期
@@ -183,36 +174,20 @@ public class OaActCar {
         this.destination = destination;
     }
 
-    public Date getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public String getStartTimeStr() {
-        return startTimeStr;
-    }
-
-    public void setStartTimeStr(String startTimeStr) {
-        this.startTimeStr = startTimeStr;
-    }
-
-    public Date getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
-    }
-
-    public String getEndTimeStr() {
-        return endTimeStr;
-    }
-
-    public void setEndTimeStr(String endTimeStr) {
-        this.endTimeStr = endTimeStr;
     }
 
     public String getCardinalNumber() {
@@ -269,14 +244,6 @@ public class OaActCar {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public Integer getState() {
-        return state;
-    }
-
-    public void setState(Integer state) {
-        this.state = state;
     }
 
     public String getBilling() {

@@ -15,6 +15,7 @@
 </head>
 
 <body id="body">
+
 <div class="table-title">
     <span>${oaActReview.title}</span>
 </div>
@@ -46,7 +47,7 @@
                     <c:forTokens items="${oaActReview.annex}" delims="," var="annex">
                         <div class="table-file">
                             <div class="table-file-content">
-                                <span title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <span class="table-file-title" title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
                                 <a class="table-file-download icon"
                                    href="/fileDownloadHandle/download?fileName=${annex}"
                                    title="下载">&#xebda;</a>
@@ -59,7 +60,7 @@
     </c:choose>
 </div>
 
-<span class="fill-in-date">编号：${oaActReview.numbering}</span>
+<span class="fill-in-date" style="min-width: 130px">编号  ${oaActReview.numbering}</span>
 
 <table class="formTable" style="margin: 0">
     <tbody>
@@ -106,11 +107,11 @@
         <td colspan="5" class="approval-content">
             <textarea class="approval-content-textarea" readonly>${oaActReview.legalAffairsContent}</textarea>
             <div class="approval-date">
-                <label class="approval-date-label">日期:</label>
+                <label class="approval-date-label">日期</label>
                 <input class="approval-date-input" type="text" value="${oaActReview.legalAffairsDate}" readonly>
             </div>
             <div class="approval-signature">
-                <label class="approval-signature-label">签字:</label>
+                <label class="approval-signature-label">签字</label>
                 <input class="approval-signature-input" type="text" value="${oaActReview.legalAffairsSign}"
                        readonly>
             </div>
@@ -122,28 +123,12 @@
         <td colspan="5" class="approval-content">
             <textarea class="approval-content-textarea" readonly>${oaActReview.financeContent}</textarea>
             <div class="approval-date">
-                <label class="approval-date-label">日期:</label>
+                <label class="approval-date-label">日期</label>
                 <input class="approval-date-input" type="text" value="${oaActReview.financeDate}" readonly>
             </div>
             <div class="approval-signature">
-                <label class="approval-signature-label">签字:</label>
+                <label class="approval-signature-label">签字</label>
                 <input class="approval-signature-input" type="text" value="${oaActReview.financeSign}"
-                       readonly>
-            </div>
-        </td>
-    </tr>
-
-    <tr>
-        <td class="tdLabel">技术负责人审查意见</td>
-        <td colspan="5" class="approval-content">
-            <textarea class="approval-content-textarea" readonly>${oaActReview.technologyContent}</textarea>
-            <div class="approval-date">
-                <label class="approval-date-label">日期:</label>
-                <input class="approval-date-input" type="text" value="${oaActReview.technologyDate}" readonly>
-            </div>
-            <div class="approval-signature">
-                <label class="approval-signature-label">签字:</label>
-                <input class="approval-signature-input" type="text" value="${oaActReview.technologySign}"
                        readonly>
             </div>
         </td>
@@ -154,11 +139,11 @@
         <td colspan="5" class="approval-content">
             <textarea class="approval-content-textarea" readonly>${oaActReview.supervisorContent}</textarea>
             <div class="approval-date">
-                <label class="approval-date-label">日期:</label>
+                <label class="approval-date-label">日期</label>
                 <input class="approval-date-input" type="text" value="${oaActReview.supervisorDate}" readonly>
             </div>
             <div class="approval-signature">
-                <label class="approval-signature-label">签字:</label>
+                <label class="approval-signature-label">签字</label>
                 <input class="approval-signature-input" type="text" value="${oaActReview.supervisorSign}"
                        readonly>
             </div>
@@ -170,11 +155,11 @@
         <td colspan="5" class="approval-content">
             <textarea class="approval-content-textarea" readonly>${oaActReview.companyPrincipalContent}</textarea>
             <div class="approval-date">
-                <label class="approval-date-label">日期:</label>
+                <label class="approval-date-label">日期</label>
                 <input class="approval-date-input" type="text" value="${oaActReview.companyPrincipalDate}" readonly>
             </div>
             <div class="approval-signature">
-                <label class="approval-signature-label">签字:</label>
+                <label class="approval-signature-label">签字</label>
                 <input class="approval-signature-input" type="text" value="${oaActReview.companyPrincipalSign}"
                        readonly>
             </div>
@@ -182,6 +167,11 @@
     </tr>
     </tbody>
 </table>
+
+<div class="notice-tips">
+    <span class="notice-tips-mark">*</span>
+    <span class="notice-tips-script">注：1.不涉及技术审查的可不填“技术负责人审查意见”。2.应收款确认单不需填写“法务审查意见”。</span>
+</div>
 
 </body>
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>

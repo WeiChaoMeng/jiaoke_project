@@ -86,37 +86,37 @@
                             </td>
 
                             <td class="template" valign="middle">
-                                <a class="check_color" onclick="meals()" title="客饭审批单">
+                                <a class="check_color" onclick="commonJump('meals')" title="客饭审批单">
                                     <em class="template-icon">&#xe695;</em>客饭审批单
                                 </a>
                             </td>
 
                             <td class="template" valign="middle">
-                                <a class="check_color" onclick="card()" title="饭卡申请单">
+                                <a class="check_color" onclick="commonJump('card')" title="饭卡申请单">
                                     <em class="template-icon">&#xe695;</em>饭卡申请单
                                 </a>
                             </td>
 
                             <td class="template" valign="middle">
-                                <a class="check_color" onclick="sealsBorrow()" title="印章借用审批单">
+                                <a class="check_color" onclick="commonJump('sealsBorrow')" title="印章借用审批单">
                                     <em class="template-icon">&#xe695;</em>印章借用审批单
                                 </a>
                             </td>
 
                             <td class="template" valign="middle">
-                                <a class="check_color" onclick="sealsUse()" title="印章使用审批单">
+                                <a class="check_color" onclick="commonJump('sealsUse')" title="印章使用审批单">
                                     <em class="template-icon">&#xe695;</em>印章使用审批单
                                 </a>
                             </td>
 
                             <td class="template" valign="middle">
-                                <a class="check_color" onclick="licenceBorrow()" title="证照借用审批单（原件）">
+                                <a class="check_color" onclick="commonJump('licenceBorrow')" title="证照借用审批单（原件）">
                                     <em class="template-icon">&#xe695;</em>证照借用审批单（原件）
                                 </a>
                             </td>
 
                             <td class="template" valign="middle">
-                                <a class="check_color" onclick="licenceUse()" title="证照使用审批单（复印件）">
+                                <a class="check_color" onclick="commonJump('licenceUse')" title="证照使用审批单（复印件）">
                                     <em class="template-icon">&#xe695;</em>证照使用审批单（复印件）
                                 </a>
                             </td>
@@ -130,37 +130,37 @@
 
                         <tr>
                             <td class="template" valign="middle">
-                                <a class="check_color" onclick="read()" title="收文阅办审批单">
+                                <a class="check_color" onclick="commonJump('read')" title="收文阅办审批单">
                                     <em class="template-icon">&#xe695;</em>收文阅办审批单
                                 </a>
                             </td>
 
                             <td class="template" valign="middle">
-                                <a class="check_color" onclick="maintain()" title="设备维修申请单">
+                                <a class="check_color" onclick="commonJump('maintain')" title="设备维修申请单">
                                     <em class="template-icon">&#xe695;</em>设备维修申请单
                                 </a>
                             </td>
 
                             <td class="template" valign="middle">
-                                <a class="check_color" onclick="acceptance()" title="验收单">
-                                    <em class="template-icon">&#xe695;</em>验收单
+                                <a class="check_color" onclick="commonJump('acceptance')" title="验收单">
+                                    <em class="template-icon">&#xe695;</em>设备维修验收单
                                 </a>
                             </td>
 
                             <td class="template" valign="middle">
-                                <a class="check_color" onclick="engineering()" title="工程名称变更记录表">
+                                <a class="check_color" onclick="commonJump('engineering')" title="工程名称变更记录表">
                                     <em class="template-icon">&#xe695;</em>工程名称变更记录表
                                 </a>
                             </td>
 
                             <td class="template" valign="middle">
-                                <a class="check_color" onclick="assets()" title="固定资产投资完成验收单（生产用）">
-                                    <em class="template-icon">&#xe695;</em>固定资产投资完成验收单（生产用）
+                                <a class="check_color" onclick="commonJump('document')" title="发送公文">
+                                    <em class="template-icon">&#xe695;</em>发送公文
                                 </a>
                             </td>
 
                             <td class="template" valign="middle">
-                                <a class="check_color" onclick="supplies()" title="办公用品需求计划">
+                                <a class="check_color" onclick="commonJump('officeSupplies')" title="办公用品需求计划">
                                     <em class="template-icon">&#xe695;</em>办公用品需求计划
                                 </a>
                             </td>
@@ -172,8 +172,8 @@
                             </td>
 
                             <td class="template" valign="middle">
-                                <a class="check_color" onclick="liaison()" title="信息联络处理单">
-                                    <em class="template-icon">&#xe695;</em>信息联络处理单
+                                <a class="check_color" onclick="commonJump('leave')" title="请假审批表">
+                                    <em class="template-icon">&#xe695;</em>请假审批表
                                 </a>
                             </td>
                         </tr>
@@ -237,7 +237,6 @@
                             </td>
 
 
-
                             <td class="template" valign="middle">
                                 <a class="check_color" onclick="commonJump('dimission')" title="离职会签表">
                                     <em class="template-icon">&#xe695;</em>离职会签表
@@ -290,18 +289,17 @@
                                 </a>
                             </td>
 
-                            <td class="template" valign="middle">
-                                <a class="check_color" onclick="commonJump('leave')" title="请假审批表">
-                                    <em class="template-icon">&#xe695;</em>请假审批表
-                                </a>
-                            </td>
+                            <%--<td class="template" valign="middle">--%>
+                            <%--<a class="check_color" onclick="assets()" title="固定资产投资完成验收单（生产用）">--%>
+                            <%--<em class="template-icon">&#xe695;</em>固定资产投资完成验收单（生产用）--%>
+                            <%--</a>--%>
+                            <%--</td>--%>
 
-                            <td class="template" valign="middle">
-                                <a class="check_color" onclick="commonJump('document')" title="发送公文">
-                                    <em class="template-icon">&#xe695;</em>发送公文
-                                </a>
-                            </td>
-
+                            <%--<td class="template" valign="middle">--%>
+                            <%--<a class="check_color" onclick="liaison()" title="信息联络处理单">--%>
+                            <%--<em class="template-icon">&#xe695;</em>信息联络处理单--%>
+                            <%--</a>--%>
+                            <%--</td>--%>
 
                             <%--未完成--%>
                             <%--<td class="template" valign="middle">--%>
@@ -313,25 +311,6 @@
                             <%--<td class="template" valign="middle">--%>
                             <%--<a class="check_color" onclick="commonJump('overtime')" title="加班审批表、统计表">--%>
                             <%--<em class="template-icon">&#xe695;</em>加班统计表--%>
-                            <%--</a>--%>
-                            <%--</td>--%>
-
-                            <%--删除--%>
-                            <%--<td class="template" valign="middle">--%>
-                            <%--<a class="check_color" onclick="commonJump('personalInfo')" title="个人信息登记表">--%>
-                            <%--<em class="template-icon">&#xe695;</em>个人信息登记表--%>
-                            <%--</a>--%>
-                            <%--</td>--%>
-
-                            <%--<td class="template" valign="middle">--%>
-                            <%--<a class="check_color" onclick="commonJump('integrity')" title="廉政谈话审批表">--%>
-                            <%--<em class="template-icon">&#xe695;</em>廉政谈话审批表--%>
-                            <%--</a>--%>
-                            <%--</td>--%>
-
-                            <%--<td class="template" valign="middle">--%>
-                            <%--<a class="check_color" onclick="commonJump('transferTwo')" title="转岗审批表2">--%>
-                            <%--<em class="template-icon">&#xe695;</em>转岗审批表2--%>
                             <%--</a>--%>
                             <%--</td>--%>
                         </tr>
@@ -435,51 +414,6 @@
         window.location.href = "${path}" + classAddress + "/toIndex";
     }
 
-    //客饭审批单
-    function meals() {
-        window.location.href = "${path}/meals/toMeals";
-    }
-
-    //饭卡申请单
-    function card() {
-        window.location.href = "${path}/card/toCard";
-    }
-
-    //印章借用审批单
-    function sealsBorrow() {
-        window.location.href = "${path}/sealsBorrow/toSealsBorrow";
-    }
-
-    //印章使用审批单
-    function sealsUse() {
-        window.location.href = "${path}/sealsUse/toSealsUse";
-    }
-
-    //证照借用审批单（原件）
-    function licenceBorrow() {
-        window.location.href = "${path}/licenceBorrow/toLicenceBorrow";
-    }
-
-    //证照使用审批单（复印件）
-    function licenceUse() {
-        window.location.href = "${path}/licenceUse/toLicenceUse";
-    }
-
-    //设备维修申请单
-    function maintain() {
-        window.location.href = "${path}/maintain/toMaintain";
-    }
-
-    //验收单
-    function acceptance() {
-        window.location.href = "${path}/acceptance/toAcceptance";
-    }
-
-    //工程名称变更记录表
-    function engineering() {
-        window.location.href = "${path}/engineering/toEngineering";
-    }
-
     //固定资产投资完成验收单（生产用）
     function assets() {
         window.location.href = "${path}/actTab/toFixedAssets";
@@ -493,11 +427,6 @@
     //信息联络处理单
     function liaison() {
         window.location.href = "${path}/liaison/toInformationLiaison";
-    }
-
-    //收文阅办审批单
-    function read() {
-        window.location.href = "${path}/read/toRead";
     }
 
     /*-------------------------------------------------------------*/

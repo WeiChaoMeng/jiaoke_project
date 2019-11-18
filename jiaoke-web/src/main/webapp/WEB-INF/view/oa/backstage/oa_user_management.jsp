@@ -27,29 +27,23 @@
         <tbody>
         <tr>
             <td>
-                <shiro:hasPermission name="userManage/add">
-                    <div class="head_left_button">
-                        <button type="button" class="cursor_hand" onclick="addUser()">&#xeb86; 添加</button>
-                    </div>
+                <div class="head_left_button">
+                    <button type="button" class="cursor_hand" onclick="addUser()">&#xeb86; 添加</button>
+                </div>
 
-                    <div class="separation_line"></div>
-                </shiro:hasPermission>
+                <div class="separation_line"></div>
 
-                <shiro:hasPermission name="userManage/edit">
-                    <div class="head_left_button">
-                        <button type="button" class="cursor_hand" onclick="editUser()">&#xe7e9; 编辑</button>
-                    </div>
+                <div class="head_left_button">
+                    <button type="button" class="cursor_hand" onclick="editUser()">&#xe7e9; 编辑</button>
+                </div>
 
-                    <div class="separation_line"></div>
-                </shiro:hasPermission>
+                <div class="separation_line"></div>
 
-                <shiro:hasPermission name="userManage/delete">
-                    <div class="head_left_button">
-                        <button type="button" class="cursor_hand" onclick="del()">&#xeaa5; 删除</button>
-                    </div>
+                <div class="head_left_button">
+                    <button type="button" class="cursor_hand" onclick="del()">&#xeaa5; 删除</button>
+                </div>
 
-                    <div class="separation_line"></div>
-                </shiro:hasPermission>
+                <div class="separation_line"></div>
 
                 <div class="head_left_button">
                     <button type="button" class="cursor_hand" onclick="binding()">&#xeb14; 绑定角色</button>

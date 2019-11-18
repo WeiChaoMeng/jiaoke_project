@@ -36,9 +36,7 @@ public class OaActLicenceBorrow {
     /**
      * 借用时间
      */
-    private Date borrowTime;
-    @Transient
-    private String borrowTimeStr;
+    private String borrowTime;
 
     /**
      * 用途
@@ -59,11 +57,6 @@ public class OaActLicenceBorrow {
      * 证照主管领导
      */
     private String licenceManage;
-
-    /**
-     * 公司负责人
-     */
-    private String companyPrincipal;
 
     /**
      * 经办人
@@ -123,20 +116,12 @@ public class OaActLicenceBorrow {
         this.seal = seal;
     }
 
-    public Date getBorrowTime() {
+    public String getBorrowTime() {
         return borrowTime;
     }
 
-    public void setBorrowTime(Date borrowTime) {
+    public void setBorrowTime(String borrowTime) {
         this.borrowTime = borrowTime;
-    }
-
-    public String getBorrowTimeStr() {
-        return borrowTimeStr;
-    }
-
-    public void setBorrowTimeStr(String borrowTimeStr) {
-        this.borrowTimeStr = borrowTimeStr;
     }
 
     public String getPurpose() {
@@ -155,38 +140,6 @@ public class OaActLicenceBorrow {
         this.borrower = borrower;
     }
 
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getCreateTimeStr() {
-        return createTimeStr;
-    }
-
-    public void setCreateTimeStr(String createTimeStr) {
-        this.createTimeStr = createTimeStr;
-    }
-
-    public Integer getPromoter() {
-        return promoter;
-    }
-
-    public void setPromoter(Integer promoter) {
-        this.promoter = promoter;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
     public String getPrincipal() {
         return principal;
     }
@@ -201,14 +154,6 @@ public class OaActLicenceBorrow {
 
     public void setLicenceManage(String licenceManage) {
         this.licenceManage = licenceManage;
-    }
-
-    public String getCompanyPrincipal() {
-        return companyPrincipal;
-    }
-
-    public void setCompanyPrincipal(String companyPrincipal) {
-        this.companyPrincipal = companyPrincipal;
     }
 
     public String getLicenceOperator() {
@@ -235,11 +180,43 @@ public class OaActLicenceBorrow {
         this.annex = annex;
     }
 
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getCreateTimeStr() {
+        return createTimeStr;
+    }
+
+    public void setCreateTimeStr(String createTimeStr) {
+        this.createTimeStr = createTimeStr;
+    }
+
+    public Integer getPromoter() {
+        return promoter;
+    }
+
+    public void setPromoter(Integer promoter) {
+        this.promoter = promoter;
+    }
+
     public String getPromoterStr() {
         return promoterStr;
     }
 
     public void setPromoterStr(String promoterStr) {
         this.promoterStr = promoterStr;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

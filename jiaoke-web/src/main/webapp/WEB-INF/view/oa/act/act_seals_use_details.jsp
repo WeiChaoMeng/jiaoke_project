@@ -14,7 +14,8 @@
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
 </head>
 
-<body style="width: 70%" id="body">
+<body style="width: 75%" id="body">
+
 <div class="table-title">
     <span>${oaActSealsUse.title}</span>
 </div>
@@ -37,7 +38,7 @@
     <c:choose>
         <c:when test="${oaActSealsUse.annex != ''}">
             <div class="top_toolbar" id="annexList">
-                <div class="top-annexes-details" style="border: solid 1px #eaeaea;">
+                <div class="top-annexes-details">
 
                     <div class="annexes-icon-details">
                         <button type="button" class="cursor_hand">&#xeac1;</button>
@@ -46,7 +47,7 @@
                     <c:forTokens items="${oaActSealsUse.annex}" delims="," var="annex">
                         <div class="table-file">
                             <div class="table-file-content">
-                                <span title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <span class="table-file-title" title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
                                 <a class="table-file-download icon"
                                    href="/fileDownloadHandle/download?fileName=${annex}"
                                    title="下载">&#xebda;</a>
@@ -60,8 +61,7 @@
 </div>
 
 <div>
-    <span style="float: right;width: 110px;margin-bottom: 5px;line-height: 30px;">${oaActSealsUse.number}</span>
-    <span class="" style="float: right;line-height: 30px;">编号：</span>
+    <span class="form-number-left" style="float: right;min-width: 140px;">编号  ${oaActSealsUse.number}</span>
 </div>
 
 <table class="formTable" style="margin: 0">
@@ -132,7 +132,7 @@
         //执行打印
         window.print();
         $('#tool,#return').show();
-        $('#body').css('width', '70%');
+        $('#body').css('width', '75%');
     }
 </script>
 </html>

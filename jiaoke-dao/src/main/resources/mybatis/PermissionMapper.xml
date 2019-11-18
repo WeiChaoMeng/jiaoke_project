@@ -9,7 +9,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, url, description, create_time
+        id, url, description, create_time, pid
     </sql>
 
     <!--获取权限根据用户id-->

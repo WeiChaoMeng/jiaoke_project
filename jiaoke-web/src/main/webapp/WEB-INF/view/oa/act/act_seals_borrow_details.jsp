@@ -14,7 +14,8 @@
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
 </head>
 
-<body id="body">
+<body id="body" style="width: 70%">
+
 <div class="table-title">
     <span>${oaActSealsBorrow.title}</span>
 </div>
@@ -46,7 +47,7 @@
                     <c:forTokens items="${oaActSealsBorrow.annex}" delims="," var="annex">
                         <div class="table-file">
                             <div class="table-file-content">
-                                <span title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <span class="table-file-title" title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
                                 <a class="table-file-download icon"
                                    href="/fileDownloadHandle/download?fileName=${annex}"
                                    title="下载">&#xebda;</a>
@@ -62,8 +63,8 @@
 <table class="formTable" style="margin: 0">
     <tbody>
     <tr>
-        <td class="tdLabel">印章种类：</td>
-        <td class="table-td-content">
+        <td class="tdLabel">印章种类</td>
+        <td class="table-td-content" style="width: 30%;">
             <c:choose>
                 <c:when test="${oaActSealsBorrow.seal == 0}">路驰公章</c:when>
                 <c:when test="${oaActSealsBorrow.seal == 1}">路驰合同章</c:when>
@@ -76,50 +77,45 @@
             </c:choose>
         </td>
 
-        <td class="tdLabel">借用时间：</td>
-        <td class="table-td-content">
-            ${oaActSealsBorrow.borrowTimeStr}
+        <td class="tdLabel">借用时间</td>
+        <td class="table-td-content" style="width: 30%;">
+            ${oaActSealsBorrow.borrowTime}
         </td>
     </tr>
 
     <tr>
-        <td class="tdLabel">盖章文件内容：</td>
+        <td class="tdLabel">盖章文件内容</td>
         <td class="table-td-content" colspan="3">
             ${oaActSealsBorrow.content}
         </td>
     </tr>
 
     <tr>
-        <td class="tdLabel">借章人：</td>
+        <td class="tdLabel">借章人</td>
         <td class="table-td-content">
             ${oaActSealsBorrow.borrower}
         </td>
 
-        <td class="tdLabel">部门负责人：</td>
+        <td class="tdLabel">部门负责人</td>
         <td class="table-td-content">
             ${oaActSealsBorrow.principal}
         </td>
     </tr>
 
     <tr>
-        <td class="tdLabel">印章主管领导：</td>
-        <td class="table-td-content">
+        <td class="tdLabel">印章主管领导</td>
+        <td class="table-td-content" colspan="3">
             ${oaActSealsBorrow.sealManage}
-        </td>
-
-        <td class="tdLabel">公司负责人：</td>
-        <td class="table-td-content">
-            ${oaActSealsBorrow.companyPrincipal}
         </td>
     </tr>
 
     <tr>
-        <td class="tdLabel">经办人：</td>
+        <td class="tdLabel">经办人</td>
         <td class="table-td-content">
             ${oaActSealsBorrow.sealOperator}
         </td>
 
-        <td class="tdLabel">归还时间：</td>
+        <td class="tdLabel">归还时间</td>
         <td class="table-td-content">
             ${oaActSealsBorrow.returnTime}
         </td>
@@ -138,9 +134,8 @@
         //执行打印
         window.print();
         $('#tool').show();
-        $('#body,#return').css('width', '80%');
+        $('#body,#return').css('width', '70%');
     }
-
 </script>
 </html>
 

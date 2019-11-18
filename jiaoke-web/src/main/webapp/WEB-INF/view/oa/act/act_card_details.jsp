@@ -14,7 +14,8 @@
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
 </head>
 
-<body>
+<body id="body">
+
 <div class="table-title">
     <span>${oaActCard.title}</span>
 </div>
@@ -58,59 +59,57 @@
         </c:when>
     </c:choose>
 </div>
-<!-- -->
+
 <table class="formTable" style="margin: 0">
     <tbody>
     <tr>
-        <td class="tdLabel">申请人：</td>
+        <td class="tdLabel">申请人</td>
         <td class="table-td-content">
             ${oaActCard.applicant}
         </td>
 
-        <td class="tdLabel">申请时间：</td>
+        <td class="tdLabel">申请时间</td>
         <td class="table-td-content">
-            ${oaActCard.applyTimeStr}
+            ${oaActCard.applyTime}
         </td>
     </tr>
 
     <tr>
-        <td class="tdLabel">所属单位：</td>
-        <td colspan="3" class="table-td-content">
+        <td class="tdLabel">所属单位</td>
+        <td class="table-td-content" style="padding: 10px;width: 30%">
             ${oaActCard.company}
         </td>
-    </tr>
 
-    <tr>
-        <td class="tdLabel">事由：</td>
-        <td colspan="3" class="table-td-content">
+        <td class="tdLabel">事由</td>
+        <td class="table-td-content" style="padding: 10px;width: 30%">
             ${oaActCard.reason}
         </td>
     </tr>
 
     <tr>
-        <td class="tdLabel">拟使用期限(开始)：</td>
+        <td class="tdLabel">拟使用期限(开始)</td>
         <td class="table-td-content">
-            ${oaActCard.startTimeStr}
+            ${oaActCard.startTime}
         </td>
 
 
-        <td class="tdLabel">拟使用期限(结束)：</td>
+        <td class="tdLabel">拟使用期限(结束)</td>
         <td class="table-td-content">
-            ${oaActCard.endTimeStr}
+            ${oaActCard.endTime}
         </td>
     </tr>
 
     <tr>
         <td class="tdLabel">关联部门负责人</td>
         <td colspan="5" class="approval-content">
-            <textarea disabled="disabled" class="approval-content-textarea">${oaActCard.principalContent}</textarea>
+            <textarea class="approval-content-textarea" readonly>${oaActCard.principalContent}</textarea>
             <div class="approval-date">
-                <label class="approval-date-label">日期:</label>
-                <input class="approval-date-input" type="text" value="${oaActCard.principalDate}" disabled="disabled">
+                <label class="approval-date-label">日期</label>
+                <input class="approval-date-input" type="text" value="${oaActCard.principalDate}" readonly>
             </div>
             <div class="approval-signature">
-                <label class="approval-signature-label">签字:</label>
-                <input class="approval-signature-input" type="text" value="${oaActCard.principalSign}" disabled="disabled">
+                <label class="approval-signature-label">签字</label>
+                <input class="approval-signature-input" type="text" value="${oaActCard.principalSign}" readonly>
             </div>
         </td>
     </tr>
@@ -118,14 +117,14 @@
     <tr>
         <td class="tdLabel">关联部门领导主管</td>
         <td colspan="5" class="approval-content">
-            <textarea disabled="disabled" class="approval-content-textarea">${oaActCard.supervisorContent}</textarea>
+            <textarea class="approval-content-textarea" readonly>${oaActCard.supervisorContent}</textarea>
             <div class="approval-date">
-                <label class="approval-date-label">日期:</label>
-                <input class="approval-date-input" type="text" value="${oaActCard.supervisorDate}" disabled="disabled">
+                <label class="approval-date-label">日期</label>
+                <input class="approval-date-input" type="text" value="${oaActCard.supervisorDate}" readonly>
             </div>
             <div class="approval-signature">
-                <label class="approval-signature-label">签字:</label>
-                <input class="approval-signature-input" type="text" value="${oaActCard.supervisorSign}" disabled="disabled">
+                <label class="approval-signature-label">签字</label>
+                <input class="approval-signature-input" type="text" value="${oaActCard.supervisorSign}" readonly>
             </div>
         </td>
     </tr>
@@ -133,14 +132,14 @@
     <tr>
         <td class="tdLabel">主管部门负责人</td>
         <td colspan="5" class="approval-content">
-            <textarea disabled="disabled" class="approval-content-textarea">${oaActCard.directorContent}</textarea>
+            <textarea class="approval-content-textarea" readonly>${oaActCard.directorContent}</textarea>
             <div class="approval-date">
-                <label class="approval-date-label">日期:</label>
-                <input class="approval-date-input" type="text" value="${oaActCard.directorDate}" disabled="disabled">
+                <label class="approval-date-label">日期</label>
+                <input class="approval-date-input" type="text" value="${oaActCard.directorDate}" readonly>
             </div>
             <div class="approval-signature">
-                <label class="approval-signature-label">签字:</label>
-                <input class="approval-signature-input" type="text" value="${oaActCard.directorSign}" disabled="disabled">
+                <label class="approval-signature-label">签字</label>
+                <input class="approval-signature-input" type="text" value="${oaActCard.directorSign}" readonly>
             </div>
         </td>
     </tr>
@@ -151,15 +150,9 @@
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
 <script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
-
-    //返回上一页
-    function previousPage() {
-        window.history.back();
-    }
-
     //打印
     function printContent() {
-        $('#tool,#return').hide();
+        $('#tool').hide();
         $('#body').css('width', '100%');
         //执行打印
         window.print();
