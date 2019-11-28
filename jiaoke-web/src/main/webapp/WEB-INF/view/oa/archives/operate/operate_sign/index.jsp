@@ -215,7 +215,7 @@
     }
 
     //重载页面
-    function operateSignPageReload(page) {
+    function reloadArchivesData(page) {
         window.location.href = "${path}/operateSign/toIndex?page=" + page;
     }
 
@@ -240,9 +240,11 @@
         } else {
             var id = $("tbody input:checked").val();
             //主页fun
-            window.top.deleteOperateSign(id, $('#page').val());
+            window.top.deleteArchivesData('/operateSign', id, $('#page').val());
         }
     }
+
+
 
     //内容列表选中颜色
     $("#tbody").on('click', 'tr', function () {

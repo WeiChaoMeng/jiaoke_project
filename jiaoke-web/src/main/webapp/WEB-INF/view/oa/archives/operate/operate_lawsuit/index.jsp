@@ -215,7 +215,7 @@
     }
 
     //重载页面
-    function operateLawsuitPageReload(page) {
+    function reloadArchivesData(page) {
         window.location.href = "${path}/operateLawsuit/toIndex?page=" + page;
     }
 
@@ -240,7 +240,7 @@
         } else {
             var id = $("tbody input:checked").val();
             //主页fun
-            window.top.deleteOperateLawsuit(id, $('#page').val());
+            window.top.deleteArchivesData('/operateLawsuit', id, $('#page').val());
         }
     }
 

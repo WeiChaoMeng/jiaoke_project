@@ -1,6 +1,5 @@
 package com.jiaoke.oa.dao;
 
-import com.jiaoke.oa.bean.OaActMeals;
 import com.jiaoke.oa.bean.OaActRegularization;
 import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
@@ -14,12 +13,4 @@ import tk.mybatis.mapper.common.Mapper;
  */
 @Repository
 public interface OaActRegularizationMapper extends Mapper<OaActRegularization> {
-
-    /**
-     * 插入数据并返回主键
-     *
-     * @param oaActRegularization oaActRegularization
-     * @return int
-     */
-    int insertData(OaActRegularization oaActRegularization);
 }

@@ -118,7 +118,7 @@
     <table class="formTable">
         <tbody>
         <tr>
-            <td class="tdLabel">印章种类</td>
+            <td class="tdLabel">证照种类</td>
             <td class="table-td-content">
                 <select class="select" name="seal">
                     <c:choose>
@@ -171,6 +171,9 @@
             <td class="tdLabel">领取时间</td>
             <td class="table-td-content">
                 <input type="text" class="formInput je-date" name="receiveTime" value="${oaActLicenceUse.receiveTime}"  onfocus="this.blur()">
+                <input type="hidden" name="id" value="${oaActLicenceUse.id}">
+                <input type="hidden" name="promoter" value="${oaActLicenceUse.promoter}">
+                <input type="hidden" name="url" value="${oaActLicenceUse.url}">
             </td>
         </tr>
 

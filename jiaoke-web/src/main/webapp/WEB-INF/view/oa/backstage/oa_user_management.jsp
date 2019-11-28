@@ -68,7 +68,7 @@
     <th style="width: 3%;"><input type="checkbox"></th>
     <th style="width: 3%;">序号</th>
     <th style="width: 19%;">姓名</th>
-    <th style="width: 19%;">登录名</th>
+    <th style="width: 19%;">用户名</th>
     <th style="width: 19%;">密码</th>
     <th style="width: 20%;">部门</th>
     <th style="width: 17%;">岗位</th>
@@ -212,7 +212,7 @@
         var userInfo = '';
         if (userInfoList.length === 0) {
             userInfo += '<tr>';
-            userInfo += '<td colspan="5">' + '暂无数据' + '</td>';
+            userInfo += '<td colspan="7">' + '暂无数据' + '</td>';
             userInfo += '</tr>';
         } else {
             for (let i = 0; i < userInfoList.length; i++) {

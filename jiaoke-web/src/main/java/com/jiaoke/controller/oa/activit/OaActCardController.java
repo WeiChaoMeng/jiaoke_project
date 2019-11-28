@@ -116,12 +116,20 @@ public class OaActCardController {
         //获取批注信息
         List<Comments> commentsList = activitiUtil.selectHistoryComment(activitiUtil.getTaskByTaskId(taskId).getProcessInstanceId());
         model.addAttribute("oaActCard", oaActCard);
+        model.addAttribute("oaActCardJson", JsonHelper.toJSONString(oaActCard));
         model.addAttribute("taskId", JsonHelper.toJSONString(taskId));
         model.addAttribute("commentsList", commentsList);
         model.addAttribute("nickname", getCurrentUser().getNickname());
         return "oa/act/act_card_handle";
     }
 
+    /**
+     * app获取审批页面信息
+     *
+     * @param id     id
+     * @param taskId taskId
+     * @return json
+     */
     @RequestMapping(value = "/approval.api")
     @ResponseBody
     public String approvalApi(String id, String taskId) {
@@ -133,7 +141,7 @@ public class OaActCardController {
         //选择执行者Id
         String principalId = departmentService.selectEnforcerId("principal", departmentId);
         String supervisorId = departmentService.selectEnforcerId("supervisor", departmentId);
-        UserInfo userInfo = userInfoService.getUserInfoByPermission("cardApproval");
+        UserInfo userInfo = userInfoService.getUserInfoByPermission("card_approval");
         String principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
         String supervisor = userInfoService.getNicknameById(Integer.valueOf(supervisorId));
         map.put("nickname", nickname);
@@ -316,6 +324,32 @@ public class OaActCardController {
         model.addAttribute("oaActCard", oaActCard);
         model.addAttribute("commentsList", commentsList);
         return "oa/act/act_card_details";
+    }
+
+    /**
+     * app获取详细信息
+     *
+     * @param id id
+     * @return json
+     */
+    @RequestMapping(value = "/details.api")
+    @ResponseBody
+    public String cardDetailsApi(String id) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActCard oaActCard = oaActCardService.selectByPrimaryKey(id);
+        //根据发起者id获取所属部门id
+        String departmentId = userInfoService.selectDepartmentByUserId(oaActCard.getPromoter());
+        //选择执行者Id
+        String principalId = departmentService.selectEnforcerId("principal", departmentId);
+        String supervisorId = departmentService.selectEnforcerId("supervisor", departmentId);
+        UserInfo userInfo = userInfoService.getUserInfoByPermission("cardApproval");
+        String principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        String supervisor = userInfoService.getNicknameById(Integer.valueOf(supervisorId));
+        map.put("principal", principal);
+        map.put("supervisor", supervisor);
+        map.put("cardSupervisor", userInfo.getNickname());
+        map.put("card", oaActCard);
+        return JsonHelper.toJSONString(map);
     }
 
     /**

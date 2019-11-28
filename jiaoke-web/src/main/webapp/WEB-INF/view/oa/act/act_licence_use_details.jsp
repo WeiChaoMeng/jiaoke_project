@@ -63,7 +63,7 @@
 <table class="formTable" style="margin: 0">
     <tbody>
     <tr>
-        <td class="tdLabel">印章种类</td>
+        <td class="tdLabel">证照种类</td>
         <td class="table-td-content">
             <c:choose>
                 <c:when test="${oaActLicenceUse.seal == 0}">路驰营业执照正本</c:when>

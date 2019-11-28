@@ -213,7 +213,7 @@
     }
 
     //重载页面
-    function financeConfirmPageReload(page) {
+    function reloadArchivesData(page) {
         window.location.href = "${path}/financeConfirm/toIndex?page=" + page;
     }
 
@@ -238,7 +238,7 @@
         } else {
             var id = $("tbody input:checked").val();
             //主页fun
-            window.top.deleteFinanceConfirm(id, $('#page').val());
+            window.top.deleteArchivesData('/financeConfirm', id, $('#page').val());
         }
     }
 

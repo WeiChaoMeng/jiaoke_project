@@ -4,9 +4,9 @@
 
     <insert id="insertData" parameterType="com.jiaoke.oa.bean.OaCollaboration" useGeneratedKeys="true" keyProperty="id">
         insert into oa_collaboration
-            (id,title,`table`,promoter,correlation_id,url,state,create_time)
+            (id,title,`table`,promoter,correlation_id,url,state,create_time,name,data_one,data_two)
         values
-            (#{id},#{title},#{table},#{promoter},#{correlationId},#{url},#{state},#{createTime})
+            (#{id},#{title},#{table},#{promoter},#{correlationId},#{url},#{state},#{createTime},#{name},#{dataOne},#{dataTwo})
     </insert>
 
     <select id="selectAlreadySend" parameterType="java.util.List" resultType="com.jiaoke.oa.bean.OaCollaboration">
@@ -33,7 +33,7 @@
     </select>
 
     <select id="selectPending" parameterType="java.util.List" resultType="com.jiaoke.oa.bean.OaCollaboration">
-        select id,title,`table`,correlation_id as correlationId,url
+        select id,title,`table`,correlation_id as correlationId,url,name,data_one as dataOne,data_two as dataTwo
         from oa_collaboration
         where correlation_id in
         <foreach collection="list" item="item" open="(" close=")" separator=",">
@@ -45,7 +45,7 @@
     </select>
 
     <select id="selectDone" parameterType="java.util.List" resultType="com.jiaoke.oa.bean.OaCollaboration">
-        select id,title,`table`,correlation_id as correlationId,url,promoter
+        select id,title,`table`,correlation_id as correlationId,url,promoter,name,data_one as dataOne,data_two as dataTwo
         from oa_collaboration
         where correlation_id in
         <foreach collection="list" item="item" open="(" close=")" separator=",">
@@ -71,7 +71,7 @@
     <delete id="deleteByCorrelationId" parameterType="java.lang.String">
         delete from oa_collaboration where correlation_id = #{correlationId}
     </delete>
-    
+
     <select id="selectAnnex" parameterType="java.util.Map" resultType="java.lang.String">
         select annex from ${table} where id = #{correlationId}
     </select>
@@ -99,5 +99,14 @@
         <foreach collection="ids" item="item" open="(" close=")" separator=",">
             #{item}
         </foreach>
+    </select>
+
+    <select id="selectPreviousNodeInfo" parameterType="java.util.Map" resultType="java.lang.String">
+        SELECT
+            ${field}
+        FROM
+            ${table}
+        WHERE
+            id = #{id}
     </select>
 </mapper>

@@ -63,6 +63,9 @@
             padding: 0 10px;
         }
 
+        .order-number-style{
+            height: 28px;display: inline-block;line-height: 28px;font-size: 14px;
+        }
     </style>
 </head>
 
@@ -129,7 +132,7 @@
     </tr>
 
     <tr>
-        <td class="table-td-content">${oaActOfficeSupplies.serialOne}</td>
+        <td class="table-td-content" style="text-align: center;"><span class="order-number-style">1</span></td>
         <td class="table-td-content">${oaActOfficeSupplies.itemOne}</td>
         <td class="table-td-content">${oaActOfficeSupplies.numberOne}</td>
         <td class="table-td-content">${oaActOfficeSupplies.priceOne}</td>
@@ -137,7 +140,7 @@
     </tr>
 
     <tr>
-        <td class="table-td-content">${oaActOfficeSupplies.serialTwo}</td>
+        <td class="table-td-content" style="text-align: center;"><span class="order-number-style">2</span></td>
         <td class="table-td-content">${oaActOfficeSupplies.itemTwo}</td>
         <td class="table-td-content">${oaActOfficeSupplies.numberTwo}</td>
         <td class="table-td-content">${oaActOfficeSupplies.priceTwo}</td>
@@ -145,7 +148,7 @@
     </tr>
 
     <tr>
-        <td class="table-td-content">${oaActOfficeSupplies.serialThree}</td>
+        <td class="table-td-content" style="text-align: center;"><span class="order-number-style">3</span></td>
         <td class="table-td-content">${oaActOfficeSupplies.itemThree}</td>
         <td class="table-td-content">${oaActOfficeSupplies.numberThree}</td>
         <td class="table-td-content">${oaActOfficeSupplies.priceThree}</td>
@@ -153,7 +156,7 @@
     </tr>
 
     <tr>
-        <td class="table-td-content">${oaActOfficeSupplies.serialFour}</td>
+        <td class="table-td-content" style="text-align: center;"><span class="order-number-style">4</span></td>
         <td class="table-td-content">${oaActOfficeSupplies.itemFour}</td>
         <td class="table-td-content">${oaActOfficeSupplies.numberFour}</td>
         <td class="table-td-content">${oaActOfficeSupplies.priceFour}</td>
@@ -161,7 +164,7 @@
     </tr>
 
     <tr>
-        <td class="table-td-content">${oaActOfficeSupplies.serialFive}</td>
+        <td class="table-td-content" style="text-align: center;"><span class="order-number-style">5</span></td>
         <td class="table-td-content">${oaActOfficeSupplies.itemFive}</td>
         <td class="table-td-content">${oaActOfficeSupplies.numberFive}</td>
         <td class="table-td-content">${oaActOfficeSupplies.priceFive}</td>
@@ -178,7 +181,7 @@
 <div class="approval-div-style">
     <div class="approval-input" style="width: 15%;">
         <span class="approval-input-span">审批：</span>
-        <span class="approval-input-input">${oaActOfficeSupplies.approval}</span>
+        <span class="approval-input-input">${oaActOfficeSupplies.officeSuppliesApproval}</span>
     </div>
 
     <div class="approval-input" style="width: 20%;">
@@ -193,12 +196,12 @@
 
     <div class="approval-input" style="width: 15%;">
         <span class="approval-input-span">验收：</span>
-        <span class="approval-input-input">${oaActOfficeSupplies.acceptance}</span>
+        <span class="approval-input-input">${oaActOfficeSupplies.officeSuppliesAcceptance}</span>
     </div>
 
     <div class="approval-input" style="width: 33%;">
         <span class="approval-input-span" style="width: 40%;">验收时间：</span>
-        <span class="approval-input-input" style="width: 60%;">${oaActOfficeSupplies.acceptanceDate}</span>
+        <span class="approval-input-input" style="width: 60%;">${oaActOfficeSupplies.officeSuppliesAcceptanceDate}</span>
 
     </div>
 </div>

@@ -10,13 +10,13 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>员工轮岗审批表</title>
+    <title>请假审批表详情</title>
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
     <link href="../../../../static/js/date_pickers/date_picker.css" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
 </head>
 
-<body id="body">
+<body id="body" style="width: 65%">
 
 <div class="table-title">
     <span>${oaActLeave.title}</span>
@@ -49,7 +49,7 @@
                     <c:forTokens items="${oaActLeave.annex}" delims="," var="annex">
                         <div class="table-file">
                             <div class="table-file-content">
-                                <span title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <span class="table-file-title" title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
                                 <a class="table-file-download icon"
                                    href="/fileDownloadHandle/download?fileName=${annex}"
                                    title="下载">&#xebda;</a>
@@ -62,19 +62,13 @@
     </c:choose>
 </div>
 
+<div style="margin-top: 10px">
+    <input type="text" class="filling-date-content" value="${oaActLeave.fillingDate}" readonly>
+    <span class="filling-date">填表日期 </span>
+</div>
+
 <table class="formTable" style="margin: 0">
     <tbody>
-    <tr>
-        <td class="tdLabel">单位名称</td>
-        <td colspan="5" class="table-td-content">
-            <c:choose>
-                <c:when test="${oaActLeave.company == 0}">
-                    北京市政路桥建材集团有限公司路驰分公司
-                </c:when>
-            </c:choose>
-        </td>
-    </tr>
-
     <tr>
         <td class="tdLabel">姓名</td>
         <td class="table-td-content">
@@ -83,21 +77,21 @@
 
         <td class="tdLabel">申请时间</td>
         <td class="table-td-content">
-            ${oaActLeave.applyDateStr}
+            ${oaActLeave.applyDate}
         </td>
     </tr>
 
     <tr>
         <td class="tdLabel">事由</td>
         <td colspan="5" class="table-td-evaluation">
-            <textarea class="evaluation-content-disabled" style="height: 90px" readonly>${oaActLeave.reason}</textarea>
+            <textarea class="evaluation-content-disabled" style="height: 58px" readonly>${oaActLeave.reason}</textarea>
             <div class="approval-date">
-                <label class="approval-date-label">日期:</label>
-                <input class="approval-date-input" type="text" value="${oaActLeave.createTimeStr}" disabled>
+                <label class="approval-date-label">日期</label>
+                <input class="approval-date-input" type="text" value="${oaActLeave.applicantSignatureDate}" readonly>
             </div>
             <div class="approval-signature">
-                <label class="approval-signature-label">本人签字:</label>
-                <input class="approval-signature-input" type="text" value="${oaActLeave.promoterStr}" disabled>
+                <label class="approval-signature-label">本人签字</label>
+                <input class="approval-signature-input" type="text" value="${oaActLeave.applicantSignature}" readonly>
             </div>
         </td>
     </tr>
@@ -105,14 +99,14 @@
     <tr>
         <td class="tdLabel">部门负责人</td>
         <td colspan="5" class="approval-content">
-            <textarea disabled="disabled" class="approval-content-textarea"></textarea>
+            <textarea readonly class="approval-content-textarea">${oaActLeave.principalContent}</textarea>
             <div class="approval-date">
-                <label class="approval-date-label">日期:</label>
-                <input class="approval-date-input" type="text" disabled="disabled">
+                <label class="approval-date-label">日期</label>
+                <input class="approval-date-input" type="text" value="${oaActLeave.principalDate}" readonly>
             </div>
             <div class="approval-signature">
-                <label class="approval-signature-label">签字:</label>
-                <input class="approval-signature-input" type="text" disabled="disabled">
+                <label class="approval-signature-label">签字</label>
+                <input class="approval-signature-input" type="text" value="${oaActLeave.principal}" readonly>
             </div>
         </td>
     </tr>
@@ -120,14 +114,14 @@
     <tr>
         <td class="tdLabel">主管领导</td>
         <td colspan="5" class="approval-content">
-            <textarea disabled="disabled" class="approval-content-textarea"></textarea>
+            <textarea readonly class="approval-content-textarea">${oaActLeave.supervisorContent}</textarea>
             <div class="approval-date">
-                <label class="approval-date-label">日期:</label>
-                <input class="approval-date-input" type="text" disabled="disabled">
+                <label class="approval-date-label">日期</label>
+                <input class="approval-date-input" type="text" value="${oaActLeave.supervisorDate}" readonly>
             </div>
             <div class="approval-signature">
-                <label class="approval-signature-label">签字:</label>
-                <input class="approval-signature-input" type="text" disabled="disabled">
+                <label class="approval-signature-label">签字</label>
+                <input class="approval-signature-input" type="text" value="${oaActLeave.supervisor}" readonly>
             </div>
         </td>
     </tr>
@@ -139,29 +133,20 @@
     <span class="notice-tips-script"> 注：每周五上交</span>
 </div>
 
-<div class="form-but" id="return">
-    <button type="button" class="return-but" onclick="previousPage()">返回</button>
-</div>
-
 </body>
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
 <script type="text/javascript" src="../../../../static/js/jeDate/src/jedate.js"></script>
 <script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
 
-    //返回上一页
-    function previousPage() {
-        window.history.back();
-    }
-
     //打印
     function printContent() {
-        $('#tool,#return').hide();
+        $('#tool').hide();
         $('#body').css('width', '100%');
         //执行打印
         window.print();
         $('#tool').show();
-        $('#body,#return').css('width', '80%');
+        $('#body').css('width', '65%');
     }
 </script>
 </html>

@@ -219,7 +219,7 @@
     }
 
     //重载页面
-    function productionEnvironmentPageReload(page) {
+    function reloadArchivesData(page) {
         window.location.href = "${path}/productionEnvironment/toIndex?page=" + page;
     }
 
@@ -244,7 +244,7 @@
         } else {
             var id = $("tbody input:checked").val();
             //主页fun
-            window.top.deleteProductionEnvironment(id, $('#page').val());
+            window.top.deleteArchivesData('/productionEnvironment', id, $('#page').val());
         }
     }
 

@@ -29,9 +29,9 @@ public class OaActAnnualLeave {
     private String title;
 
     /**
-     * 单位名称
+     * 申请日期
      */
-    private String company;
+    private String fillingDate;
 
     /**
      * 部门
@@ -51,9 +51,7 @@ public class OaActAnnualLeave {
     /**
      * 计划休假时间
      */
-    private Date planDate;
-    @Transient
-    private String planDateStr;
+    private String planDate;
 
     /**
      * 累计享受休假天数
@@ -63,9 +61,37 @@ public class OaActAnnualLeave {
     /**
      * 实际休假时间
      */
-    private Date actualDate;
-    @Transient
-    private String actualDateStr;
+    private String actualDate;
+
+    /**
+     * 部门主管领导
+     */
+    private String supervisor;
+
+    /**
+     * 部门主管领导审批时间
+     */
+    private String supervisorDate;
+
+    /**
+     * 总经理
+     */
+    private String companyPrincipal;
+
+    /**
+     * 总经理审批时间
+     */
+    private String companyPrincipalDate;
+
+    /**
+     * 人事
+     */
+    private String personnel;
+
+    /**
+     * 人事审批时间
+     */
+    private String personnelDate;
 
     /**
      * 附件
@@ -107,12 +133,12 @@ public class OaActAnnualLeave {
         this.title = title;
     }
 
-    public String getCompany() {
-        return company;
+    public String getFillingDate() {
+        return fillingDate;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
+    public void setFillingDate(String fillingDate) {
+        this.fillingDate = fillingDate;
     }
 
     public String getDepartment() {
@@ -139,20 +165,12 @@ public class OaActAnnualLeave {
         this.total = total;
     }
 
-    public Date getPlanDate() {
+    public String getPlanDate() {
         return planDate;
     }
 
-    public void setPlanDate(Date planDate) {
+    public void setPlanDate(String planDate) {
         this.planDate = planDate;
-    }
-
-    public String getPlanDateStr() {
-        return planDateStr;
-    }
-
-    public void setPlanDateStr(String planDateStr) {
-        this.planDateStr = planDateStr;
     }
 
     public Integer getCumulative() {
@@ -163,20 +181,12 @@ public class OaActAnnualLeave {
         this.cumulative = cumulative;
     }
 
-    public Date getActualDate() {
+    public String getActualDate() {
         return actualDate;
     }
 
-    public void setActualDate(Date actualDate) {
+    public void setActualDate(String actualDate) {
         this.actualDate = actualDate;
-    }
-
-    public String getActualDateStr() {
-        return actualDateStr;
-    }
-
-    public void setActualDateStr(String actualDateStr) {
-        this.actualDateStr = actualDateStr;
     }
 
     public String getAnnex() {
@@ -211,6 +221,14 @@ public class OaActAnnualLeave {
         this.promoter = promoter;
     }
 
+    public String getPromoterStr() {
+        return promoterStr;
+    }
+
+    public void setPromoterStr(String promoterStr) {
+        this.promoterStr = promoterStr;
+    }
+
     public String getUrl() {
         return url;
     }
@@ -219,11 +237,51 @@ public class OaActAnnualLeave {
         this.url = url;
     }
 
-    public String getPromoterStr() {
-        return promoterStr;
+    public String getSupervisor() {
+        return supervisor;
     }
 
-    public void setPromoterStr(String promoterStr) {
-        this.promoterStr = promoterStr;
+    public void setSupervisor(String supervisor) {
+        this.supervisor = supervisor;
+    }
+
+    public String getSupervisorDate() {
+        return supervisorDate;
+    }
+
+    public void setSupervisorDate(String supervisorDate) {
+        this.supervisorDate = supervisorDate;
+    }
+
+    public String getCompanyPrincipal() {
+        return companyPrincipal;
+    }
+
+    public void setCompanyPrincipal(String companyPrincipal) {
+        this.companyPrincipal = companyPrincipal;
+    }
+
+    public String getCompanyPrincipalDate() {
+        return companyPrincipalDate;
+    }
+
+    public void setCompanyPrincipalDate(String companyPrincipalDate) {
+        this.companyPrincipalDate = companyPrincipalDate;
+    }
+
+    public String getPersonnel() {
+        return personnel;
+    }
+
+    public void setPersonnel(String personnel) {
+        this.personnel = personnel;
+    }
+
+    public String getPersonnelDate() {
+        return personnelDate;
+    }
+
+    public void setPersonnelDate(String personnelDate) {
+        this.personnelDate = personnelDate;
     }
 }

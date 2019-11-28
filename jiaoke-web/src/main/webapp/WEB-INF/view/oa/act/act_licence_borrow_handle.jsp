@@ -49,7 +49,7 @@
                     <c:forTokens items="${oaActLicenceBorrow.annex}" delims="," var="annex">
                         <div class="table-file">
                             <div class="table-file-content">
-                                <span title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <span class="table-file-title" title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
                                 <a class="table-file-download icon"
                                    href="/fileDownloadHandle/download?fileName=${annex}"
                                    title="下载">&#xebda;</a>
@@ -66,7 +66,7 @@
     <table class="formTable">
         <tbody>
         <tr>
-            <td class="tdLabel">印章种类：</td>
+            <td class="tdLabel">证照种类</td>
             <td class="table-td-content">
                 <c:choose>
                     <c:when test="${oaActLicenceBorrow.seal == 0}">路驰营业执照正本</c:when>
@@ -77,7 +77,7 @@
                 </c:choose>
             </td>
 
-            <td class="tdLabel">借用时间：</td>
+            <td class="tdLabel">借用时间</td>
             <td class="table-td-content">
                 ${oaActLicenceBorrow.borrowTime}
                 <input type="hidden" name="id" value="${oaActLicenceBorrow.id}">
@@ -86,95 +86,70 @@
         </tr>
 
         <tr>
-            <td class="tdLabel">用途：</td>
+            <td class="tdLabel">用途</td>
             <td class="table-td-content" colspan="3">
                 ${oaActLicenceBorrow.purpose}
             </td>
         </tr>
 
         <tr>
-            <td class="tdLabel">借用人：</td>
+            <td class="tdLabel">借用人</td>
             <td class="table-td-content" style="width: 340px">
                 ${oaActLicenceBorrow.borrower}
             </td>
 
-            <td class="tdLabel">部门负责人：</td>
+            <td class="tdLabel">部门负责人</td>
             <td class="table-td-content" style="width: 340px">
-                <shiro:hasPermission name="officePrincipal">
-                    <c:choose>
-                        <c:when test="${oaActLicenceBorrow.principal == null}">
-                            <input type="text" class="formInput-readonly" name="principal" value="${nickname}"
-                                   readonly="readonly">
-                        </c:when>
-                        <c:otherwise>
-                            ${oaActLicenceBorrow.principal}
-                        </c:otherwise>
-                    </c:choose>
+                <shiro:hasPermission name="principal">
+                    <div style="width: 100%;height: 100%;" id="principalContent">
+                            <%--<input type="text" class="formInput-readonly" name="principal" value="${nickname}" readonly>--%>
+                    </div>
                 </shiro:hasPermission>
 
-                <shiro:lacksPermission name="officePrincipal">
+                <shiro:lacksPermission name="principal">
                     ${oaActLicenceBorrow.principal}
                 </shiro:lacksPermission>
             </td>
         </tr>
 
         <tr>
-            <td class="tdLabel">证照主管领导：</td>
+            <td class="tdLabel">证照主管领导</td>
             <td class="table-td-content" colspan="3">
-                <shiro:hasPermission name="licenceManage">
-                    <c:choose>
-                        <c:when test="${oaActLicenceBorrow.licenceManage == null}">
-                            <input type="text" class="formInput-readonly" name="licenceManage" value="${nickname}"
-                                   readonly="readonly">
-                        </c:when>
-                        <c:otherwise>
-                            ${oaActLicenceBorrow.licenceManage}
-                        </c:otherwise>
-                    </c:choose>
+                <shiro:hasPermission name="licence_manage">
+                    <div style="width: 100%;height: 100%;" id="licenceManageContent">
+                            <%--<input type="text" class="formInput-readonly" name="licenceManage" value="${nickname}" readonly>--%>
+                    </div>
                 </shiro:hasPermission>
 
-                <shiro:lacksPermission name="licenceManage">
+                <shiro:lacksPermission name="licence_manage">
                     ${oaActLicenceBorrow.licenceManage}
                 </shiro:lacksPermission>
             </td>
         </tr>
 
         <tr>
-            <td class="tdLabel">经办人：</td>
+            <td class="tdLabel">经办人</td>
             <td class="table-td-content">
-                <shiro:hasPermission name="licenceOperator">
-                    <c:choose>
-                        <c:when test="${oaActLicenceBorrow.licenceOperator == null}">
-                            <input type="text" class="formInput-readonly" name="licenceOperator" value="${nickname}"
-                                   readonly="readonly">
-                        </c:when>
-                        <c:otherwise>
-                            ${oaActLicenceBorrow.licenceOperator}
-                        </c:otherwise>
-                    </c:choose>
+                <shiro:hasPermission name="licence_operator">
+                    <div style="width: 100%;height: 100%;" id="licenceOperatorContent">
+                            <%--<input type="text" class="formInput-readonly" name="licenceOperator" value="${nickname}" readonly>--%>
+                    </div>
                 </shiro:hasPermission>
 
-                <shiro:lacksPermission name="licenceOperator">
+                <shiro:lacksPermission name="licence_operator">
                     ${oaActLicenceBorrow.licenceOperator}
                 </shiro:lacksPermission>
             </td>
 
-            <td class="tdLabel">归还时间：</td>
+            <td class="tdLabel">归还时间</td>
             <td class="table-td-content">
-                <shiro:hasPermission name="licenceOperator">
-                    <c:choose>
-                        <c:when test="${oaActLicenceBorrow.returnTime == null}">
-                            <input type="text" class="formInput-readonly" name="returnTime"
-                                   value="<%=new SimpleDateFormat("yyyy-MM-dd HH").format(new Date())%>"
-                                   readonly="readonly">
-                        </c:when>
-                        <c:otherwise>
-                            ${oaActLicenceBorrow.returnTime}
-                        </c:otherwise>
-                    </c:choose>
+                <shiro:hasPermission name="licence_operator">
+                    <div style="width: 100%;height: 100%;" id="returnTimeContent">
+                        <%--<input type="text" class="formInput-readonly" name="returnTime" value="<%=new SimpleDateFormat("yyyy-MM-dd HH").format(new Date())%>" readonly="readonly">--%>
+                    </div>
                 </shiro:hasPermission>
 
-                <shiro:lacksPermission name="licenceOperator">
+                <shiro:lacksPermission name="licence_operator">
                     ${oaActLicenceBorrow.returnTime}
                 </shiro:lacksPermission>
             </td>
@@ -184,7 +159,7 @@
 </form>
 
 <div class="form-but" id="return">
-    <shiro:hasAnyPermission name="officePrincipal,officeSupervisor,licenceOperator,companyPrincipal">
+    <shiro:hasAnyPermission name="principal,licence_manage,licence_operator">
         <button type="button" class="return-but" style="margin-right: 10px;" onclick="approvalProcessing(2)">回退</button>
     </shiro:hasAnyPermission>
     <button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>
@@ -194,6 +169,46 @@
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
 <script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
+
+    //流程执行步骤
+    var licenceBorrow = JSON.parse('${oaActLicenceBorrowJson}');
+    //标记
+    var flag = 0;
+    if (flag === 0) {
+        if (licenceBorrow.principal === "" || licenceBorrow.principal === undefined) {
+            $('#principalContent').append('<input type="text" class="formInput-readonly" name="principal" value="${nickname}" readonly="readonly"><input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+            flag = 1;
+        } else {
+            $('#principalContent').append(licenceBorrow.principal);
+        }
+    } else {
+        $('#principalContent').append(licenceBorrow.principal);
+    }
+
+    if (flag === 0) {
+        if (licenceBorrow.licenceManage === "" || licenceBorrow.licenceManage === undefined) {
+            $('#licenceManageContent').append('<input type="text" class="formInput-readonly" name="licenceManage" value="${nickname}" readonly="readonly"><input type="hidden" name="licenceManageDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+            flag = 1;
+        } else {
+            $('#licenceManageContent').append(licenceBorrow.licenceManage);
+        }
+    } else {
+        $('#licenceManageContent').append(licenceBorrow.licenceManage);
+    }
+
+    if (flag === 0) {
+        if (licenceBorrow.licenceOperator === "" || licenceBorrow.licenceOperator === undefined) {
+            $('#licenceOperatorContent').append('<input type="text" class="formInput-readonly" name="licenceOperator" value="${nickname}" readonly="readonly">');
+            $('#returnTimeContent').append('<input type="text" class="formInput-readonly" name="returnTime" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly="readonly">');
+            flag = 1;
+        } else {
+            $('#licenceOperatorContent').append(licenceBorrow.licenceOperator);
+            $('#returnTimeContent').append(licenceBorrow.returnTime);
+        }
+    } else {
+        $('#licenceOperatorContent').append(licenceBorrow.licenceOperator);
+        $('#returnTimeContent').append(licenceBorrow.returnTime);
+    }
 
     //任务Id
     var taskId = JSON.parse('${taskId}');

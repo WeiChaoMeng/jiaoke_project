@@ -136,8 +136,9 @@ public class OaCollaborationServiceImpl implements OaCollaborationService {
                             oc.setPreviousApprover(nickname);
                         } else {
                             //权限
-                            UserInfo userInfo = userInfoMapper.selectByPermission(enforcer);
-                            oc.setPreviousApprover(userInfo.getNickname());
+                            oc.setPreviousApprover(oaCollaborationMapper.selectPreviousNodeInfo(enforcer,collaboration.getTable(),collaboration.getCorrelationId()));
+//                            UserInfo userInfo = userInfoMapper.selectByPermission(enforcer);
+//                            oc.setPreviousApprover(userInfo.getNickname());
                         }
                     } else if ("网关".equals(collaboration.getPreviousApprover())) {
                         oc.setPreviousApprover(collaboration.getPreviousApprover());

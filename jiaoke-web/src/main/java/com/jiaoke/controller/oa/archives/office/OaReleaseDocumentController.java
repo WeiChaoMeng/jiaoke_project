@@ -34,7 +34,8 @@ public class OaReleaseDocumentController {
      * @return main.jsp
      */
     @RequestMapping(value = "/toReleaseDocument")
-    public String toReleaseDocument() {
+    public String toReleaseDocument(int page, Model model) {
+        model.addAttribute("currentPage", JsonHelper.toJSONString(page));
         return "oa/archives/office/release_document/index";
     }
 
@@ -70,7 +71,7 @@ public class OaReleaseDocumentController {
     @RequestMapping(value = "/addReleaseDocument", method = RequestMethod.POST)
     public String add(OaReleaseDocument oaReleaseDocument) {
         int i = oaReleaseDocumentService.insertSelective(oaReleaseDocument);
-        return "redirect:/releaseDocument/toReleaseDocument";
+        return "redirect:/releaseDocument/toReleaseDocument?page=1";
     }
 
     /**
@@ -141,7 +142,7 @@ public class OaReleaseDocumentController {
     @RequestMapping("/edit")
     public String edit(OaReleaseDocument oaReleaseDocument) {
         int i = oaReleaseDocumentService.updateByPrimaryKeySelective(oaReleaseDocument);
-        return "redirect:/releaseDocument/toReleaseDocument";
+        return "redirect:/releaseDocument/toReleaseDocument?page=1";
     }
 
     /**
@@ -172,47 +173,4 @@ public class OaReleaseDocumentController {
         model.addAttribute("oaReleaseDocument", oaReleaseDocument);
         return "oa/archives/office/release_document/details";
     }
-
-    /*--------------------------------------------------公司收文-------------------------------------------------------*/
-
-    /**
-     * 跳转会议纪要
-     *
-     * @return receive_document.jsp
-     */
-    @RequestMapping(value = "/officeMeetingSummary")
-    public String toMeetingSummary() {
-        return "oa/archives/office/meeting_summary";
-    }
-
-    /**
-     * 跳转管理体系相关
-     *
-     * @return management_system.jsp
-     */
-    @RequestMapping(value = "/officeManagementSystem")
-    public String toManagementSystem() {
-        return "oa/archives/office/management_system";
-    }
-
-    /**
-     * 跳转环评监测报告
-     *
-     * @return eia_monitor.jsp
-     */
-    @RequestMapping(value = "/officeEiaMonitor")
-    public String toEiaMonitor() {
-        return "oa/archives/office/eia_monitor";
-    }
-
-    /**
-     * 跳转其他文件
-     *
-     * @return other_document.jsp
-     */
-    @RequestMapping(value = "/officeOtherDocuments")
-    public String toOtherDocuments() {
-        return "oa/archives/office/other_document";
-    }
-
 }

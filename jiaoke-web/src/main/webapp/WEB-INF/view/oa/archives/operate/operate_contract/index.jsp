@@ -217,7 +217,7 @@
     }
 
     //重载页面
-    function operateContractPageReload(page) {
+    function reloadArchivesData(page) {
         window.location.href = "${path}/operate/toOperateContract?page=" + page;
     }
 
@@ -242,7 +242,7 @@
         } else {
             var id = $("tbody input:checked").val();
             //主页fun
-            window.top.deleteOperateContract(id, $('#page').val());
+            window.top.deleteArchivesData('/operate', id, $('#page').val());
         }
     }
 

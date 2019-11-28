@@ -65,8 +65,8 @@
                     <button type="button" class="table-tab-send" onclick="send()">发送</button>
                 </td>
 
-                <th nowrap="nowrap" class="th_title" style="width: 4%">标题:</th>
-                <td style="width: 35%">
+                <th nowrap="nowrap" class="th_title" style="width: 4%">标题</th>
+                <td style="width: 31%">
                     <div class="common_input_frame">
                         <input type="text" id="title" name="title" placeholder="请输入标题" title="点击此处填写标题"
                                value="转正申请表(${nickname} <%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>)"
@@ -74,10 +74,10 @@
                     </div>
                 </td>
 
-                <th class="th_title" nowrap="nowrap" style="width: 4%">流程:</th>
+                <th class="th_title" nowrap="nowrap" style="width: 4%">流程</th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" placeholder="发起者部门负责人(审批)、发起者部门主管领导(审批)、组织人事部门(审批)、总经理(审批)、发起人(协同)"
+                        <input type="text" placeholder="梁夏夏(查看),部门负责人(审批),部门主管领导(审批),组织人事部门(审批),总经理(审批),发起人、人事(协同)"
                                readonly="readonly">
                     </div>
                 </td>
@@ -86,7 +86,9 @@
         </table>
     </div>
 
-    <span class="fill-in-date">填表日期：<%=new SimpleDateFormat("yyyy-MM-dd").format(new Date())%></span>
+    <input type="text" class="filling-date-content" name="fillingDate"
+           value="<%=new SimpleDateFormat("yyyy-MM-dd").format(new Date())%>" readonly>
+    <span class="filling-date">填表日期 </span>
 
     <table class="formTable">
         <tbody>
@@ -103,7 +105,7 @@
 
             <td class="tdLabel">职务</td>
             <td class="table-td-content">
-                <input type="text" class="formInput" name="position" autocomplete="off">
+                <input type="text" class="formInput-readonly" name="position" value="${job}" readonly>
             </td>
         </tr>
 
@@ -123,19 +125,20 @@
 
             <td class="tdLabel">入职时间</td>
             <td class="table-td-content">
-                <input type="text" class="formInput entry-date" name="entryDateStr" onfocus="this.blur()">
+                <input type="text" class="formInput entry-date" name="entryDate" onfocus="this.blur()">
             </td>
 
             <td class="tdLabel">试用期时间</td>
             <td class="table-td-content">
-                <input type="text" class="formInput probation-date" name="probationPeriodStr" onfocus="this.blur()">
+                <input type="text" class="formInput probation-date" name="probationPeriod" onfocus="this.blur()">
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel">自我评价</td>
             <td colspan="5" class="table-td-evaluation">
-                <textarea class="evaluation-content" name="selfAssessment"></textarea>
+                <textarea onkeyup="value=value.replace(/\s+/g,'')" class="evaluation-content"
+                          name="selfAssessment"></textarea>
                 <label class="evaluation-content-tips">
                     <span>*</span>(可附纸述)
                 </label>
@@ -146,28 +149,28 @@
             <td class="tdLabel">部门评价</td>
             <td colspan="5" class="table-td-textarea" style="line-height: 0">
                 <div class="opinion-principal">
-                    <label class="opinion-principal-title">部长：</label>
-                    <textarea class="opinion-column-Juxtaposition" name="remarks" disabled></textarea>
+                    <label class="opinion-principal-title">部长</label>
+                    <textarea class="opinion-column-Juxtaposition" readonly></textarea>
                     <div class="approval-date">
-                        <label class="approval-date-label">日期:</label>
-                        <input class="approval-date-input" type="text" disabled>
+                        <label class="approval-date-label">日期 </label>
+                        <input class="approval-date-input" type="text" readonly>
                     </div>
                     <div class="approval-signature">
-                        <label class="approval-signature-label">签字:</label>
-                        <input class="approval-signature-input" type="text" disabled>
+                        <label class="approval-signature-label">签字 </label>
+                        <input class="approval-signature-input" type="text" readonly>
                     </div>
                 </div>
 
                 <div class="opinion-supervisor">
-                    <label class="opinion-principal-title">主管：</label>
-                    <textarea class="opinion-column-Juxtaposition" name="remarks" disabled></textarea>
+                    <label class="opinion-principal-title">主管 </label>
+                    <textarea class="opinion-column-Juxtaposition" readonly></textarea>
                     <div class="approval-date">
-                        <label class="approval-date-label">日期:</label>
-                        <input class="approval-date-input" type="text" disabled>
+                        <label class="approval-date-label">日期 </label>
+                        <input class="approval-date-input" type="text" readonly>
                     </div>
                     <div class="approval-signature">
-                        <label class="approval-signature-label">签字:</label>
-                        <input class="approval-signature-input" type="text" disabled>
+                        <label class="approval-signature-label">签字 </label>
+                        <input class="approval-signature-input" type="text" readonly>
                     </div>
                 </div>
             </td>
@@ -176,14 +179,14 @@
         <tr>
             <td class="tdLabel">组织人事部意见</td>
             <td colspan="5" class="approval-content">
-                <textarea class="approval-content-textarea" disabled></textarea>
+                <textarea class="approval-content-textarea" readonly></textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
-                    <input class="approval-date-input" type="text" disabled>
+                    <label class="approval-date-label">日期 </label>
+                    <input class="approval-date-input" type="text" readonly>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">签字:</label>
-                    <input class="approval-signature-input" type="text" disabled>
+                    <label class="approval-signature-label">签字 </label>
+                    <input class="approval-signature-input" type="text" readonly>
                 </div>
             </td>
         </tr>
@@ -191,14 +194,14 @@
         <tr>
             <td class="tdLabel">总经理审批</td>
             <td colspan="5" class="approval-content">
-                <textarea class="approval-content-textarea" disabled></textarea>
+                <textarea class="approval-content-textarea" readonly></textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
-                    <input class="approval-date-input" type="text" disabled>
+                    <label class="approval-date-label">日期 </label>
+                    <input class="approval-date-input" type="text" readonly>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">签字:</label>
-                    <input class="approval-signature-input" type="text" disabled>
+                    <label class="approval-signature-label">签字 </label>
+                    <input class="approval-signature-input" type="text" readonly>
                 </div>
 
                 <%--暂存附件--%>

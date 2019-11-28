@@ -111,12 +111,12 @@
             <span style="display: block;padding-top: 15px;">（涉及资金支出以外的文件）</span>
         </td>
         <td class="table-td-content">
-            ${oaActSealsUse.sealManage}
+            ${oaActSealsUse.sealSupervisor}
         </td>
 
         <td class="tdLabel">盖章人</td>
         <td class="table-td-content">
-            ${oaActSealsUse.stamp}
+            ${oaActSealsUse.sealOperator}
         </td>
     </tr>
     </tbody>

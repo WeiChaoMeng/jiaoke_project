@@ -1016,3 +1016,20 @@ img {
     font-size: 13px;
     font-weight: 600;
 }
+
+.filling-date-content {
+    border: none;
+    width: 100px;
+    background: #ffffff;
+    float: right;
+    height: 30px;
+    text-indent: 8px;
+    outline: none;
+}
+
+.filling-date {
+    float: right;
+    line-height: 30px;
+    font-size: 13px;
+    margin: 0;
+}

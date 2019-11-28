@@ -50,6 +50,9 @@ public class OaActOfficeSuppliesServiceImpl implements OaActOfficeSuppliesServic
             oaCollaboration.setTitle(oaActOfficeSupplies.getTitle());
             oaCollaboration.setUrl("officeSupplies");
             oaCollaboration.setTable("oa_act_office_supplies");
+            oaCollaboration.setName("办公用品需求计划");
+            oaCollaboration.setDataOne("申请部门:" + oaActOfficeSupplies.getDepartment());
+            oaCollaboration.setDataTwo("合计:" + oaActOfficeSupplies.getTotal());
             oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);

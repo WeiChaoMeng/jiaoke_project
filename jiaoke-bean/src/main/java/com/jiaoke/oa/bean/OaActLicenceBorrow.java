@@ -54,9 +54,19 @@ public class OaActLicenceBorrow {
     private String principal;
 
     /**
+     * 部门负责人审批时间
+     */
+    private String principalDate;
+
+    /**
      * 证照主管领导
      */
     private String licenceManage;
+
+    /**
+     * 证照主管领导审批时间
+     */
+    private String licenceManageDate;
 
     /**
      * 经办人
@@ -148,12 +158,28 @@ public class OaActLicenceBorrow {
         this.principal = principal;
     }
 
+    public String getPrincipalDate() {
+        return principalDate;
+    }
+
+    public void setPrincipalDate(String principalDate) {
+        this.principalDate = principalDate;
+    }
+
     public String getLicenceManage() {
         return licenceManage;
     }
 
     public void setLicenceManage(String licenceManage) {
         this.licenceManage = licenceManage;
+    }
+
+    public String getLicenceManageDate() {
+        return licenceManageDate;
+    }
+
+    public void setLicenceManageDate(String licenceManageDate) {
+        this.licenceManageDate = licenceManageDate;
     }
 
     public String getLicenceOperator() {

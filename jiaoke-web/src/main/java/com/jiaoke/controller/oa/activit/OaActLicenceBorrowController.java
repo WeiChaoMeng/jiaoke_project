@@ -1,5 +1,6 @@
 package com.jiaoke.controller.oa.activit;
 
+import com.alibaba.fastjson.JSON;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
@@ -116,10 +117,46 @@ public class OaActLicenceBorrowController {
         //获取批注信息
         List<Comments> commentsList = activitiUtil.selectHistoryComment(activitiUtil.getTaskByTaskId(taskId).getProcessInstanceId());
         model.addAttribute("oaActLicenceBorrow", oaActLicenceBorrow);
+        model.addAttribute("oaActLicenceBorrowJson", JsonHelper.toJSONString(oaActLicenceBorrow));
         model.addAttribute("taskId", JsonHelper.toJSONString(taskId));
         model.addAttribute("commentsList", commentsList);
         model.addAttribute("nickname", getCurrentUser().getNickname());
         return "oa/act/act_licence_borrow_handle";
+    }
+
+    /**
+     * app获取审批页面信息
+     *
+     * @param id     id
+     * @param taskId taskId
+     * @return json
+     */
+    @RequestMapping(value = "/approval.api")
+    @ResponseBody
+    public String approvalApi(String id, String taskId) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActLicenceBorrow oaActLicenceBorrow = oaActLicenceBorrowService.selectByPrimaryKey(id);
+
+        String nickname = getCurrentUser().getNickname();
+        //根据发起者id获取所属部门id
+        String departmentId = userInfoService.selectDepartmentByUserId(oaActLicenceBorrow.getPromoter());
+        //部门负责人
+        String principalId = departmentService.selectEnforcerId("principal", departmentId);
+        String principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+
+        //证照主管领导
+        String licenceManage = userInfoService.getUserInfoByPermission("licence_manage").getNickname();
+
+        //证照经办人
+        String licenceOperator = userInfoService.getUserInfoByPermission("licence_operator").getNickname();
+
+        map.put("nickname", nickname);
+        map.put("principal", principal);
+        map.put("licenceManage", licenceManage);
+        map.put("licenceOperator", licenceOperator);
+        map.put("licenceBorrow", oaActLicenceBorrow);
+        map.put("taskId", taskId);
+        return JSON.toJSONString(map);
     }
 
     /**
@@ -140,8 +177,10 @@ public class OaActLicenceBorrowController {
         String back = "back";
         //部门负责人
         String principal = "principal";
-        //部门主管领导
-        String supervisor = "supervisor";
+        //证照主管领导
+        String licenceManage = "licence_manage";
+        //证照经办人
+        String licenceOperator = "licence_operator";
         //更新数据
         if (oaActLicenceBorrowService.updateByPrimaryKeySelective(oaActLicenceBorrow) < 1) {
             return "error";
@@ -175,13 +214,24 @@ public class OaActLicenceBorrowController {
                         activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
                         return "success";
 
-                    } else if (principal.equals(enforcer) || supervisor.equals(enforcer)) {
+                        //部门负责人
+                    } else if (principal.equals(enforcer)) {
                         String startUserId = activitiUtil.getStartUserId(task.getProcessInstanceId());
                         //根据发起者id获取所属部门id
                         String departmentId = userInfoService.selectDepartmentByUserId(Integer.valueOf(startUserId));
                         //选择执行者Id
                         String enforcerId = departmentService.selectEnforcerId(enforcer, departmentId);
                         activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, Integer.valueOf(enforcerId));
+                        return "success";
+                    } else if (licenceManage.equals(enforcer)) {
+                        UserInfo userInfo = userInfoService.getUserInfoByPermission(licenceManage);
+                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
+                        return "success";
+
+                        //印章经办人
+                    } else if (licenceOperator.equals(enforcer)) {
+                        UserInfo userInfo = userInfoService.getUserInfoByPermission(licenceOperator);
+                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
                         return "success";
                     } else {
                         UserInfo userInfo = userInfoService.getUserInfoByPermission(enforcer);
@@ -294,6 +344,37 @@ public class OaActLicenceBorrowController {
         model.addAttribute("oaActLicenceBorrow", oaActLicenceBorrow);
         model.addAttribute("commentsList", commentsList);
         return "oa/act/act_licence_borrow_details";
+    }
+
+    /**
+     * app获取详细信息
+     *
+     * @param id id
+     * @return json
+     */
+    @RequestMapping(value = "/details.api")
+    @ResponseBody
+    public String detailsApi(String id) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActLicenceBorrow oaActLicenceBorrow = oaActLicenceBorrowService.selectByPrimaryKey(id);
+
+        //根据发起者id获取所属部门id
+        String departmentId = userInfoService.selectDepartmentByUserId(oaActLicenceBorrow.getPromoter());
+        //部门负责人
+        String principalId = departmentService.selectEnforcerId("principal", departmentId);
+        String principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+
+        //证照主管领导
+        String licenceManage = userInfoService.getUserInfoByPermission("licence_manage").getNickname();
+
+        //证照经办人
+        String licenceOperator = userInfoService.getUserInfoByPermission("licence_operator").getNickname();
+
+        map.put("principal", principal);
+        map.put("licenceManage", licenceManage);
+        map.put("licenceOperator", licenceOperator);
+        map.put("licenceBorrow", oaActLicenceBorrow);
+        return JSON.toJSONString(map);
     }
 
     /**

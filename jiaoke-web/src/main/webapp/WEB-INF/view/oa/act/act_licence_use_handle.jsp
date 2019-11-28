@@ -1,3 +1,5 @@
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
 <%@ page language="java" contentType="text/html;charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -46,7 +48,7 @@
                     <c:forTokens items="${oaActLicenceUse.annex}" delims="," var="annex">
                         <div class="table-file">
                             <div class="table-file-content">
-                                <span title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <span class="table-file-title" title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
                                 <a class="table-file-download icon"
                                    href="/fileDownloadHandle/download?fileName=${annex}"
                                    title="下载">&#xebda;</a>
@@ -63,7 +65,7 @@
     <table class="formTable">
         <tbody>
         <tr>
-            <td class="tdLabel">印章种类：</td>
+            <td class="tdLabel">证照种类</td>
             <td class="table-td-content">
                 <c:choose>
                     <c:when test="${oaActLicenceUse.seal == 0}">路驰营业执照正本</c:when>
@@ -74,7 +76,7 @@
                 </c:choose>
             </td>
 
-            <td class="tdLabel">领取时间：</td>
+            <td class="tdLabel">领取时间</td>
             <td class="table-td-content">
                 ${oaActLicenceUse.receiveTime}
                 <input type="hidden" name="id" value="${oaActLicenceUse.id}">
@@ -83,7 +85,7 @@
         </tr>
 
         <tr>
-            <td class="tdLabel">用途：</td>
+            <td class="tdLabel">用途</td>
             <td class="table-td-content" colspan="3">
                 ${oaActLicenceUse.purpose}
             </td>
@@ -97,11 +99,13 @@
 
             <td class="tdLabel">部门负责人</td>
             <td class="table-td-content" style="width: 340px;">
-                <shiro:hasPermission name="officePrincipal">
-                    <input type="text" class="formInput-readonly" name="principal" value="${nickname}" readonly>
+                <shiro:hasPermission name="principal">
+                    <div style="width: 100%;height: 100%;" id="principalContent">
+                        <%--<input type="text" class="formInput-readonly" name="principal" value="${nickname}" readonly>--%>
+                    </div>
                 </shiro:hasPermission>
 
-                <shiro:lacksPermission name="officePrincipal">
+                <shiro:lacksPermission name="principal">
                     ${oaActLicenceUse.principal}
                 </shiro:lacksPermission>
             </td>
@@ -110,22 +114,26 @@
         <tr>
             <td class="tdLabel">证照主管领导</td>
             <td class="table-td-content">
-                <shiro:hasPermission name="licenceManage">
-                    <input type="text" class="formInput-readonly" name="licenceManage" value="${nickname}" readonly>
+                <shiro:hasPermission name="licence_manage">
+                    <div style="width: 100%;height: 100%;" id="licenceManageContent">
+                        <%--<input type="text" class="formInput-readonly" name="licenceManage" value="${nickname}" readonly>--%>
+                    </div>
                 </shiro:hasPermission>
 
-                <shiro:lacksPermission name="licenceManage">
+                <shiro:lacksPermission name="licence_manage">
                     ${oaActLicenceUse.licenceManage}
                 </shiro:lacksPermission>
             </td>
 
             <td class="tdLabel">经办人</td>
             <td class="table-td-content">
-                <shiro:hasPermission name="licenceOperator">
-                    <input type="text" class="formInput-readonly" name="licenceOperator" value="${nickname}" readonly>
+                <shiro:hasPermission name="licence_operator">
+                    <div style="width: 100%;height: 100%;" id="licenceOperatorContent">
+                        <%--<input type="text" class="formInput-readonly" name="licenceOperator" value="${nickname}" readonly>--%>
+                    </div>
                 </shiro:hasPermission>
 
-                <shiro:lacksPermission name="licenceOperator">
+                <shiro:lacksPermission name="licence_operator">
                     ${oaActLicenceUse.licenceOperator}
                 </shiro:lacksPermission>
             </td>
@@ -135,7 +143,7 @@
 </form>
 
 <div class="form-but" id="return">
-    <shiro:hasAnyPermission name="officePrincipal,licenceManage,licenceOperator">
+    <shiro:hasAnyPermission name="principal,licence_manage,licence_operator">
         <button type="button" class="return-but" style="margin-right: 10px;" onclick="approvalProcessing(2)">回退</button>
     </shiro:hasAnyPermission>
     <button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>
@@ -145,6 +153,43 @@
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
 <script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
+
+    //流程执行步骤
+    var licenceUse = JSON.parse('${oaActLicenceUseJson}');
+    //标记
+    var flag = 0;
+    if (flag === 0) {
+        if (licenceUse.principal === "" || licenceUse.principal === undefined) {
+            $('#principalContent').append('<input type="text" class="formInput-readonly" name="principal" value="${nickname}" readonly="readonly"><input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+            flag = 1;
+        } else {
+            $('#principalContent').append(licenceUse.principal);
+        }
+    } else {
+        $('#principalContent').append(licenceUse.principal);
+    }
+
+    if (flag === 0) {
+        if (licenceUse.licenceManage === "" || licenceUse.licenceManage === undefined) {
+            $('#licenceManageContent').append('<input type="text" class="formInput-readonly" name="licenceManage" value="${nickname}" readonly="readonly"><input type="hidden" name="licenceManageDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+            flag = 1;
+        } else {
+            $('#licenceManageContent').append(licenceUse.licenceManage);
+        }
+    } else {
+        $('#licenceManageContent').append(licenceUse.licenceManage);
+    }
+
+    if (flag === 0) {
+        if (licenceUse.licenceOperator === "" || licenceUse.licenceOperator === undefined) {
+            $('#licenceOperatorContent').append('<input type="text" class="formInput-readonly" name="licenceOperator" value="${nickname}" readonly="readonly"><input type="hidden" name="licenceOperatorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+            flag = 1;
+        } else {
+            $('#licenceOperatorContent').append(licenceUse.licenceOperator);
+        }
+    } else {
+        $('#licenceOperatorContent').append(licenceUse.licenceOperator);
+    }
 
     //任务Id
     var taskId = JSON.parse('${taskId}');

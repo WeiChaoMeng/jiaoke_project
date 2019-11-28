@@ -127,7 +127,7 @@
         <tr>
             <td class="tdLabel">维修内容</td>
             <td colspan="5" class="table-td-content" style="padding: 10px">
-                <textarea class="write-approval-content-textarea" name="content">${oaActAcceptance.content}</textarea>
+                <textarea onkeyup="value=value.replace(/\s+/g,'')" class="write-approval-content-textarea" name="content">${oaActAcceptance.content}</textarea>
             </td>
         </tr>
 

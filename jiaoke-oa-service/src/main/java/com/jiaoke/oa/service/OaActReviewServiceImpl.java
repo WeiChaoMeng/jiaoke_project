@@ -45,6 +45,9 @@ public class OaActReviewServiceImpl implements OaActReviewService {
             oaCollaboration.setTitle(oaActReview.getTitle());
             oaCollaboration.setUrl("review");
             oaCollaboration.setTable("oa_act_review");
+            oaCollaboration.setName("合同审查申请");
+            oaCollaboration.setDataOne("合同名称:" + oaActReview.getName());
+            oaCollaboration.setDataTwo("合同金额:" + oaActReview.getAmount());
             oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);

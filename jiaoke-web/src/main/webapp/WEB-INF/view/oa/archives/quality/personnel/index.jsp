@@ -215,7 +215,7 @@
     }
 
     //重载页面
-    function financePersonnelPageReload(page) {
+    function reloadArchivesData(page) {
         window.location.href = "${path}/qualityPersonnel/toIndex?page=" + page;
     }
 
@@ -240,7 +240,7 @@
         } else {
             var id = $("tbody input:checked").val();
             //主页fun
-            window.top.deleteFinancePersonnel(id, $('#page').val());
+            window.top.deleteArchivesData('/qualityPersonnel',id, $('#page').val());
         }
     }
 

@@ -82,24 +82,6 @@
                 <%--<li><a id="supervision_matters"><span>督办事项</span></a></li>--%>
             </ul>
         </li>
-        <%--<li class="nav-item">
-            <shiro:hasPermission name="documentManagement">
-                <a><i class="iconfont icon-gongwen"></i>
-                    <span class="parent-menu-span">公文管理</span>
-                    <i class="my-icon nav-more"></i>
-                </a>
-            </shiro:hasPermission>
-            <ul>
-                <shiro:hasPermission name="createDocument">
-                    <li><a id="release_document"><span>新建公文</span></a></li>
-                    <li><a id="primed_document"><span>待发公文</span></a></li>
-                    <li><a id="issued_document"><span>已发公文</span></a></li>
-                </shiro:hasPermission>
-                <li><a id="pending_document"><span>待办公文</span></a></li>
-                <li><a id="done_document"><span>已办公文</span></a></li>
-
-            </ul>
-        </li>--%>
 
         <shiro:hasPermission name="file:office">
             <li class="nav-item">
@@ -109,44 +91,37 @@
                 </a>
                 <ul>
                     <li>
-                        <a id="office_release_document"
-                           onclick="IFrame(this,$('#office').text(),'releaseDocument/toReleaseDocument')">
+                        <a onclick="IFrame(this,$('#office').text(),'releaseDocument/toReleaseDocument?page=1')">
                             <span>公司发文</span>
                         </a>
                     </li>
                     <li>
-                        <a id="office_receive_document"
-                           onclick="IFrame(this,$('#office').text(),'receiveDocument/toReceiveDocument')">
+                        <a onclick="IFrame(this,$('#office').text(),'receiveDocument/toReceiveDocument?page=1')">
                             <span>公司收文</span>
                         </a>
                     </li>
                         <%--<li>
-                            <a id="office_meeting_summary"
-                               onclick="IFrame(this,$('#office').text(),'comprehensiveOffice/officeMeetingSummary')">
+                            <a onclick="IFrame(this,$('#office').text(),'comprehensiveOffice/officeMeetingSummary')">
                                 <span>会议纪要</span>
                             </a>
                         </li>--%>
                     <li>
-                        <a id="office_management_system"
-                           onclick="IFrame(this,$('#office').text(),'managementSystem/toManagementSystem')">
+                        <a onclick="IFrame(this,$('#office').text(),'managementSystem/toManagementSystem?page=1')">
                             <span>管理体系相关</span>
                         </a>
                     </li>
                     <li>
-                        <a id="office_contract_agreement"
-                           onclick="IFrame(this,$('#office').text(),'contractAgreement/toContractAgreement')">
+                        <a onclick="IFrame(this,$('#office').text(),'contractAgreement/toContractAgreement?page=1')">
                             <span>合同、协议</span>
                         </a>
                     </li>
                     <li>
-                        <a id="office_eia_monitoring"
-                           onclick="IFrame(this,$('#office').text(),'eiaMonitor/toEiaMonitor')">
+                        <a onclick="IFrame(this,$('#office').text(),'eiaMonitor/toEiaMonitor?page=1')">
                             <span>环评监测报告</span>
                         </a>
                     </li>
                     <li>
-                        <a id="office_other_documents"
-                           onclick="IFrame(this,$('#office').text(),'officeOther/toOfficeOther')">
+                        <a onclick="IFrame(this,$('#office').text(),'officeOther/toOfficeOther?page=1')">
                             <span>其他文件</span>
                         </a>
                     </li>
@@ -506,7 +481,7 @@
         $('#oa-iframe').attr("src", url);
     }
 
-
+    //后台管理 - 权限管理
     //展示数据
     function bindingPowerTest(id, currentPage) {
 

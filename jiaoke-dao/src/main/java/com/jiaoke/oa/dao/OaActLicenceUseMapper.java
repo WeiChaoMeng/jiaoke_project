@@ -14,11 +14,4 @@ import tk.mybatis.mapper.common.Mapper;
 @Repository
 public interface OaActLicenceUseMapper extends Mapper<OaActLicenceUse> {
 
-    /**
-     * 插入数据并返回主键
-     *
-     * @param oaActLicenceUse oaActLicenceUse
-     * @return int
-     */
-    int insertData(OaActLicenceUse oaActLicenceUse);
 }

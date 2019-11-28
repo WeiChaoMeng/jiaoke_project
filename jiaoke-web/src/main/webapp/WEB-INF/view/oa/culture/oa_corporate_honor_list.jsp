@@ -92,7 +92,7 @@
 
     //新闻详情
     function particulars(id) {
-        window.location.href = '${path}/newsCenter/corporateHonorDetails?id=' + id;
+        window.location.href = '${path}/corporateHonor/corporateHonorDetails?id=' + id;
     }
 
     //分页
@@ -134,7 +134,7 @@
     function loadData(page) {
         $.ajax({
             type: "post",
-            url: '/newsCenter/corporateHonorListData',
+            url: '/corporateHonor/corporateHonorListData',
             data: {'page': page},
             async: false,
             success: function (data) {
@@ -184,13 +184,17 @@
         } else {
             var id = $("tbody input:checked").val();
             //主页fun
-            // window.top.deleteNews(id, $('#page').val());
+            window.top.cultureCorporateDelete('/corporateHonor', id, $('#page').val());
         }
     }
 
     //新增
     function add() {
-        window.location.href = '/newsCenter/toCorporateHonor';
+        window.location.href = '/corporateHonor/toCorporateHonor';
+    }
+
+    function reloadCultureCorporateData() {
+        window.location.href = '${path}/corporateHonor/toCorporateHonorList';
     }
 </script>
 </html>

@@ -113,19 +113,45 @@ public class OaActLicenceUseController {
         //获取批注信息
         List<Comments> commentsList = activitiUtil.selectHistoryComment(activitiUtil.getTaskByTaskId(taskId).getProcessInstanceId());
         model.addAttribute("oaActLicenceUse", oaActLicenceUse);
+        model.addAttribute("oaActLicenceUseJson", JsonHelper.toJSONString(oaActLicenceUse));
         model.addAttribute("taskId", JsonHelper.toJSONString(taskId));
         model.addAttribute("commentsList", commentsList);
         model.addAttribute("nickname", getCurrentUser().getNickname());
         return "oa/act/act_licence_use_handle";
     }
 
+    /**
+     * app获取审批页面信息
+     *
+     * @param id     id
+     * @param taskId taskId
+     * @return json
+     */
     @RequestMapping(value = "/approval.api")
     @ResponseBody
     public String approvalApi(String id, String taskId) {
         HashMap<String, Object> map = new HashMap<>(16);
         OaActLicenceUse oaActLicenceUse = oaActLicenceUseService.selectByPrimaryKey(id);
-        map.put("data",oaActLicenceUse);
-        map.put("taskId",taskId);
+
+        String nickname = getCurrentUser().getNickname();
+        //根据发起者id获取所属部门id
+        String departmentId = userInfoService.selectDepartmentByUserId(oaActLicenceUse.getPromoter());
+        //部门负责人
+        String principalId = departmentService.selectEnforcerId("principal", departmentId);
+        String principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+
+        //证照主管领导
+        String licenceManage = userInfoService.getUserInfoByPermission("licence_manage").getNickname();
+
+        //证照经办人
+        String licenceOperator = userInfoService.getUserInfoByPermission("licence_operator").getNickname();
+
+        map.put("nickname", nickname);
+        map.put("principal", principal);
+        map.put("licenceManage", licenceManage);
+        map.put("licenceOperator", licenceOperator);
+        map.put("licenceUse", oaActLicenceUse);
+        map.put("taskId", taskId);
         return JSON.toJSONString(map);
     }
 
@@ -133,7 +159,7 @@ public class OaActLicenceUseController {
      * 提交
      *
      * @param oaActLicenceUse oaActLicenceUse
-     * @param taskId            任务Id
+     * @param taskId          任务Id
      * @return s/e
      */
     @RequestMapping(value = "/approvalSubmit")
@@ -147,8 +173,10 @@ public class OaActLicenceUseController {
         String back = "back";
         //部门负责人
         String principal = "principal";
-        //部门主管领导
-        String supervisor = "supervisor";
+        //证照主管领导
+        String licenceManage = "licence_manage";
+        //证照经办人
+        String licenceOperator = "licence_operator";
         //更新数据
         if (oaActLicenceUseService.updateByPrimaryKeySelective(oaActLicenceUse) < 1) {
             return "error";
@@ -182,13 +210,26 @@ public class OaActLicenceUseController {
                         activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
                         return "success";
 
-                    } else if (principal.equals(enforcer) || supervisor.equals(enforcer)){
+                        //部门负责人
+                    } else if (principal.equals(enforcer)) {
                         String startUserId = activitiUtil.getStartUserId(task.getProcessInstanceId());
                         //根据发起者id获取所属部门id
                         String departmentId = userInfoService.selectDepartmentByUserId(Integer.valueOf(startUserId));
                         //选择执行者Id
                         String enforcerId = departmentService.selectEnforcerId(enforcer, departmentId);
                         activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, Integer.valueOf(enforcerId));
+                        return "success";
+
+                        //印章主管领导
+                    } else if (licenceManage.equals(enforcer)) {
+                        UserInfo userInfo = userInfoService.getUserInfoByPermission(licenceManage);
+                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
+                        return "success";
+
+                        //印章经办人
+                    } else if (licenceOperator.equals(enforcer)) {
+                        UserInfo userInfo = userInfoService.getUserInfoByPermission(licenceOperator);
+                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
                         return "success";
                     } else {
                         UserInfo userInfo = userInfoService.getUserInfoByPermission(enforcer);
@@ -218,7 +259,7 @@ public class OaActLicenceUseController {
     @ResponseBody
     public String savePending(OaActLicenceUse oaActLicenceUse) {
         String randomId = RandomUtil.randomId();
-        if (oaActLicenceUseService.insert(oaActLicenceUse, getCurrentUser().getId(), randomId,1) < 1) {
+        if (oaActLicenceUseService.insert(oaActLicenceUse, getCurrentUser().getId(), randomId, 1) < 1) {
             return "error";
         } else {
             return "success";
@@ -301,6 +342,37 @@ public class OaActLicenceUseController {
         model.addAttribute("oaActLicenceUse", oaActLicenceUse);
         model.addAttribute("commentsList", commentsList);
         return "oa/act/act_licence_use_details";
+    }
+
+    /**
+     * app获取详细信息
+     *
+     * @param id id
+     * @return json
+     */
+    @RequestMapping(value = "/details.api")
+    @ResponseBody
+    public String detailsApi(String id) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActLicenceUse oaActLicenceUse = oaActLicenceUseService.selectByPrimaryKey(id);
+
+        //根据发起者id获取所属部门id
+        String departmentId = userInfoService.selectDepartmentByUserId(oaActLicenceUse.getPromoter());
+        //部门负责人
+        String principalId = departmentService.selectEnforcerId("principal", departmentId);
+        String principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+
+        //证照主管领导
+        String licenceManage = userInfoService.getUserInfoByPermission("licence_manage").getNickname();
+
+        //证照经办人
+        String licenceOperator = userInfoService.getUserInfoByPermission("licence_operator").getNickname();
+
+        map.put("principal", principal);
+        map.put("licenceManage", licenceManage);
+        map.put("licenceOperator", licenceOperator);
+        map.put("licenceUse", oaActLicenceUse);
+        return JSON.toJSONString(map);
     }
 
     /**

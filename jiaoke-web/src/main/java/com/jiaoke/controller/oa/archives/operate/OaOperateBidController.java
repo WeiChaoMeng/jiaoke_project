@@ -14,7 +14,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * 经营签发档案
+ * 经营开发 - 投标管理档案
  *
  * @author lihui
  * @version 1.0

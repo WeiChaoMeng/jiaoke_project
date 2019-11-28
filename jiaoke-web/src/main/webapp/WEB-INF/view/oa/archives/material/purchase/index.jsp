@@ -219,7 +219,7 @@
     }
 
     //重载页面
-    function materialPurchasePageReload(page) {
+    function reloadArchivesData(page) {
         window.location.href = "${path}/materialPurchase/toIndex?page=" + page;
     }
 
@@ -244,7 +244,7 @@
         } else {
             var id = $("tbody input:checked").val();
             //主页fun
-            window.top.deleteMaterialPurchase(id, $('#page').val());
+            window.top.deleteArchivesData('/materialPurchase',id, $('#page').val());
         }
     }
 

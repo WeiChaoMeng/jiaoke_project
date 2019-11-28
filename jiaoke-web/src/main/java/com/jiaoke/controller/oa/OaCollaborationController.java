@@ -166,6 +166,11 @@ public class OaCollaborationController {
         }
     }
 
+    /**
+     * app获取待办事项
+     *
+     * @return json
+     */
     @RequestMapping(value = "/pendingApproval.api")
     @ResponseBody
     public String pendingApproval() {
@@ -226,24 +231,32 @@ public class OaCollaborationController {
         }
     }
 
-    /**------------督办事项--------------*/
     /**
-     * 督办事项
+     * app获取已完成事项
      *
-     * @return jsp
+     * @return json
      */
-    @RequestMapping("/supervise")
-    public String supervisionMatters() {
-        return "oa/collaboration/oa_supervise";
-    }
-
-    /**
-     * 新建事项
-     *
-     * @return jsp
-     */
-    @RequestMapping("/newBuild")
-    public String newMatter() {
-        return "oa/collaboration/oa_new_build";
+    @RequestMapping(value = "/doneApproval.api")
+    @ResponseBody
+    public String doneApproval() {
+        HashMap<String, Object> map = new HashMap<>(16);
+        //根据当前登录人id获取taskList
+        List<OaCollaboration> collaborationList = activitiUtil.selectDoneProcessInstance(getCurrentUser().getId().toString());
+        if (collaborationList.size() <= 0) {
+            map.put("resultCode", "204");
+            map.put("reason", "无匹配数据");
+            map.put("result", "null");
+            return JsonHelper.toJSONString(map);
+        } else {
+            List<OaCollaboration> oaCollaborationList = oaCoordinationService.selectDone(collaborationList, "");
+            for (OaCollaboration collaboration : oaCollaborationList) {
+                collaboration.setCreateTimeStr(collaboration.getStartTimeStr().substring(0, 10));
+            }
+            Collections.reverse(oaCollaborationList);
+            map.put("resultCode", "200");
+            map.put("reason", "success");
+            map.put("result", oaCollaborationList);
+            return JSON.toJSONString(map);
+        }
     }
 }

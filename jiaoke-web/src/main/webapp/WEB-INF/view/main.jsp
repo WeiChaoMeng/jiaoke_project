@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: lihui
-  Date: 2018/9/26
-  Time: 14:21
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
@@ -18,7 +11,6 @@
     <meta charset="utf-8">
     <title>路驰办公系统</title>
     <link href="/static/css/default.css" rel="stylesheet" type="text/css">
-    <%--<link href="/static/css/style/green.css" rel="stylesheet" type="text/css">--%>
     <link href="../../static/css/oa/backstage_style.css" rel="stylesheet" type="text/css">
     <link href="../../static/css/oa/document.css" rel="stylesheet" type="text/css">
     <link href="../../static/css/personnel/personnelStyle.css" rel="stylesheet" type="text/css">
@@ -28,7 +20,6 @@
             overflow: hidden;
         }
 
-        /* Border styles */
         .altrowstable thead, .altrowstable tr {
             border-top-width: 1px;
             border-top-style: solid;
@@ -41,7 +32,6 @@
             border-bottom-color: rgb(230, 189, 189);
         }
 
-        /* Padding and font style */
         .altrowstable td, .altrowstable th {
             padding: 8px 5px;
             font-size: 7px;
@@ -49,10 +39,6 @@
             color: rgb(177, 106, 104);
         }
 
-        /* Alternating background colors */
-        /*.altrowstable tr:nth-child(even) {*/
-        /*background: rgb(238, 211, 210)*/
-        /*}*/
         .altrowstable tr:nth-child(odd) {
             background: #FFF
         }
@@ -150,21 +136,6 @@
                     <li><a href="/logout"><i class="userxl iconfont">&#xeae2;</i>退出</a></li>
                 </ul>
             </div>
-
-            <%--<div class="skin">
-                <a href="#">设置</a>
-                <ul class="skinlist">
-                    <li><a href="#" data-value="green" class="targetElem green"></a></li>
-                    <li><a href="#" data-value="darkblue" class="targetElem darkblue"></a></li>
-                    <li><a href="#" data-value="orange" class="targetElem orange"></a></li>
-                    <li><a href="#" data-value="lightgreen" class="targetElem lightgreen"></a></li>
-                    <li><a href="#" data-value="black" class="targetElem black"></a></li>
-                    <li><a href="#" data-value="darkgrey" class="targetElem darkgrey"></a></li>
-                    <li><a href="#" data-value="lightblue" class="targetElem lightblue"></a></li>
-                    <li><a href="#" data-value="red" class="targetElem red"></a></li>
-                </ul>
-            </div>--%>
-
         </div>
     </div>
 
@@ -360,12 +331,9 @@
     <div class="option-window-body-head cursor_hand">
         <input type="hidden" id="departmentId">
         <div id="selectDepartment" class="selection-content-inside">
-            <ul id="departmentAndUser">
-
-            </ul>
+            <ul id="departmentAndUser"></ul>
         </div>
     </div>
-
     <div class="option-window-body-bottom">
         <input type="button" value="确认" onclick="confirmDepartmentHead()" class="body-bottom-button">
         <input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">
@@ -377,12 +345,8 @@
     <input type="hidden" id="pendingDocumentPage">
     <input type="hidden" id="singleFlag">
     <div class="option-window-body-head">
-
-        <ul id="singleSelectionContent">
-
-        </ul>
+        <ul id="singleSelectionContent"></ul>
     </div>
-
     <div class="option-window-body-bottom">
         <input type="button" value="确认" onclick="confirmReviewers()" class="body-bottom-button">
         <input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">
@@ -401,29 +365,7 @@
 
             <div class="selection-content-outer">
                 <div id="selectDiv" class="selection-content-inside">
-                    <ul id="selectContent">
-                        <li class="selection-box-li">
-                            <img src="../../static/images/icon/department.png">
-                            <span id="123" class="department">综合办公室</span>
-                            <div></div>
-
-                            <ul class="submenu-ul">
-                                <li onclick="addNotifyPerson(this)">
-                                    <img src="../../static/images/icon/personnel.png">
-                                    <span id="1234">张三</span>
-                                    <div></div>
-                                </li>
-                            </ul>
-
-                            <ul class="submenu-ul">
-                                <li onclick="addNotifyPerson(this)">
-                                    <img src="../../static/images/icon/personnel.png">
-                                    <span id="1235">李四</span>
-                                    <div></div>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
+                    <ul id="selectContent"></ul>
                 </div>
             </div>
         </div>
@@ -460,21 +402,6 @@
 
 <%--文件上传--%>
 <div id="uploadFile" style="display: none;">
-    <%--<div style="margin: auto;height: 65px;text-align: center;vertical-align: middle;line-height: 65px;">
-        <input type="text" id="fileName"
-               style="outline: none;padding: 0;margin: 0;height: 25px;width:200px;border: #b9b9b9 1px solid;font-size: 12px;"
-               readonly>
-
-        <input type="file" id="file" class="file-input"
-               style="width: 44px;height: 26px;display: block;position: absolute;left: 272px;top: 20px;z-index: 10;opacity: 0;cursor: pointer;"
-               onchange="fileSelect(this)">
-
-        <button type="button" class="add-but"
-                style="padding: 5px 10px;background: #2196F3;border-radius: 5px;border: none;outline: none;color: #fff2f2;">
-            添加
-        </button>
-
-    </div>--%>
     <div style="margin: 30px">
         <div id="addFile" style="display:inline-table;"></div>
         <ul class="file-ul" id="fileNames"></ul>
@@ -869,7 +796,7 @@
             if (flag === 'meetingParticipants') {
                 $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.insertParticipants(array, arrayId);
             } else {
-                $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.insertCopyGive(array);
+                $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.insertCopyGive(array, arrayId);
             }
             cancel();
         });
@@ -1874,9 +1801,9 @@
         }
     }
 
-    /**---------------档案----------------*/
-    //删除合同
-    function deleteOperateContract(id, currentPage) {
+    /**---------------档案管理----------------*/
+    //删除档案数据
+    function deleteArchivesData(tab, id, currentPage) {
         //记录用户页面选择的页数
         $('#currentPage').val(currentPage);
         //提示窗
@@ -1885,13 +1812,13 @@
             }, function () {
                 $.ajax({
                     type: "post",
-                    url: '/operateSign/delete',
+                    url: tab + '/delete',
                     data: {'id': id},
                     async: false,
                     success: function (data) {
                         if (data === 'success') {
                             layer.msg('删除成功！');
-                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.operateContractPageReload($('#currentPage').val());
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.reloadArchivesData($('#currentPage').val());
                         } else {
                             layer.msg('删除失败！');
                         }
@@ -1904,687 +1831,21 @@
         );
     }
 
-    //删除签认
-    function deleteOperateSign(id, currentPage) {
-        //记录用户页面选择的页数
-        $('#currentPage').val(currentPage);
-        //提示窗
+    /**---------------企业文化建设----------------*/
+    //删除企业文化建设数据
+    function cultureCorporateDelete(tab, id, currentPage) {
         layer.confirm('确定要删除吗？', {
                 btn: ['确认', '取消']
             }, function () {
                 $.ajax({
                     type: "post",
-                    url: '/operateSign/delete',
+                    url: tab + '/delete',
                     data: {'id': id},
                     async: false,
                     success: function (data) {
                         if (data === 'success') {
                             layer.msg('删除成功！');
-                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.operateSignPageReload($('#currentPage').val());
-                        } else {
-                            layer.msg('删除失败！');
-                        }
-                    },
-                    error: function (result) {
-                        layer.msg("出错！");
-                    }
-                });
-            }
-        );
-    }
-
-    //删除签认
-    function deleteOperateBid(id, currentPage) {
-        //记录用户页面选择的页数
-        $('#currentPage').val(currentPage);
-        //提示窗
-        layer.confirm('确定要删除吗？', {
-                btn: ['确认', '取消']
-            }, function () {
-                $.ajax({
-                    type: "post",
-                    url: '/operateBid/delete',
-                    data: {'id': id},
-                    async: false,
-                    success: function (data) {
-                        if (data === 'success') {
-                            layer.msg('删除成功！');
-                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.operatePidPageReload($('#currentPage').val());
-                        } else {
-                            layer.msg('删除失败！');
-                        }
-                    },
-                    error: function (result) {
-                        layer.msg("出错！");
-                    }
-                });
-            }
-        );
-    }
-
-    //删除签认
-    function deleteOperateCustomer(id, currentPage) {
-        //记录用户页面选择的页数
-        $('#currentPage').val(currentPage);
-        //提示窗
-        layer.confirm('确定要删除吗？', {
-                btn: ['确认', '取消']
-            }, function () {
-                $.ajax({
-                    type: "post",
-                    url: '/operateCustomer/delete',
-                    data: {'id': id},
-                    async: false,
-                    success: function (data) {
-                        if (data === 'success') {
-                            layer.msg('删除成功！');
-                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.operateCustomerPageReload($('#currentPage').val());
-                        } else {
-                            layer.msg('删除失败！');
-                        }
-                    },
-                    error: function (result) {
-                        layer.msg("出错！");
-                    }
-                });
-            }
-        );
-    }
-
-    //删除报价
-    function deleteOperateOffer(id, currentPage) {
-        //记录用户页面选择的页数
-        $('#currentPage').val(currentPage);
-        //提示窗
-        layer.confirm('确定要删除吗？', {
-                btn: ['确认', '取消']
-            }, function () {
-                $.ajax({
-                    type: "post",
-                    url: '/operateOffer/delete',
-                    data: {'id': id},
-                    async: false,
-                    success: function (data) {
-                        if (data === 'success') {
-                            layer.msg('删除成功！');
-                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.operateOfferPageReload($('#currentPage').val());
-                        } else {
-                            layer.msg('删除失败！');
-                        }
-                    },
-                    error: function (result) {
-                        layer.msg("出错！");
-                    }
-                });
-            }
-        );
-    }
-
-    //删除其他
-    function deleteOperateOther(id, currentPage) {
-        //记录用户页面选择的页数
-        $('#currentPage').val(currentPage);
-        //提示窗
-        layer.confirm('确定要删除吗？', {
-                btn: ['确认', '取消']
-            }, function () {
-                $.ajax({
-                    type: "post",
-                    url: '/operateOther/delete',
-                    data: {'id': id},
-                    async: false,
-                    success: function (data) {
-                        if (data === 'success') {
-                            layer.msg('删除成功！');
-                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.operateOtherPageReload($('#currentPage').val());
-                        } else {
-                            layer.msg('删除失败！');
-                        }
-                    },
-                    error: function (result) {
-                        layer.msg("出错！");
-                    }
-                });
-            }
-        );
-    }
-
-    //删除其他
-    function deleteOperateMeeting(id, currentPage) {
-        //记录用户页面选择的页数
-        $('#currentPage').val(currentPage);
-        //提示窗
-        layer.confirm('确定要删除吗？', {
-                btn: ['确认', '取消']
-            }, function () {
-                $.ajax({
-                    type: "post",
-                    url: '/operateMeeting/delete',
-                    data: {'id': id},
-                    async: false,
-                    success: function (data) {
-                        if (data === 'success') {
-                            layer.msg('删除成功！');
-                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.operateMeetingPageReload($('#currentPage').val());
-                        } else {
-                            layer.msg('删除失败！');
-                        }
-                    },
-                    error: function (result) {
-                        layer.msg("出错！");
-                    }
-                });
-            }
-        );
-    }
-
-    //删除诉讼
-    function deleteOperateLawsuit(id, currentPage) {
-        //记录用户页面选择的页数
-        $('#currentPage').val(currentPage);
-        //提示窗
-        layer.confirm('确定要删除吗？', {
-                btn: ['确认', '取消']
-            }, function () {
-                $.ajax({
-                    type: "post",
-                    url: '/operateLawsuit/delete',
-                    data: {'id': id},
-                    async: false,
-                    success: function (data) {
-                        if (data === 'success') {
-                            layer.msg('删除成功！');
-                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.operateLawsuitPageReload($('#currentPage').val());
-                        } else {
-                            layer.msg('删除失败！');
-                        }
-                    },
-                    error: function (result) {
-                        layer.msg("出错！");
-                    }
-                });
-            }
-        );
-    }
-
-    //删除环保改造台账
-    function deleteProductionEnvironment(id, currentPage) {
-        //记录用户页面选择的页数
-        $('#currentPage').val(currentPage);
-        //提示窗
-        layer.confirm('确定要删除吗？', {
-                btn: ['确认', '取消']
-            }, function () {
-                $.ajax({
-                    type: "post",
-                    url: '/productionEnvironment/delete',
-                    data: {'id': id},
-                    async: false,
-                    success: function (data) {
-                        if (data === 'success') {
-                            layer.msg('删除成功！');
-                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.productionEnvironmentPageReload($('#currentPage').val());
-                        } else {
-                            layer.msg('删除失败！');
-                        }
-                    },
-                    error: function (result) {
-                        layer.msg("出错！");
-                    }
-                });
-            }
-        );
-    }
-
-    //删除生产管理部-合同
-    function deleteProductionContract(id, currentPage) {
-        //记录用户页面选择的页数
-        $('#currentPage').val(currentPage);
-        //提示窗
-        layer.confirm('确定要删除吗？', {
-                btn: ['确认', '取消']
-            }, function () {
-                $.ajax({
-                    type: "post",
-                    url: '/productionContract/delete',
-                    data: {'id': id},
-                    async: false,
-                    success: function (data) {
-                        if (data === 'success') {
-                            layer.msg('删除成功！');
-                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.productionContractPageReload($('#currentPage').val());
-                        } else {
-                            layer.msg('删除失败！');
-                        }
-                    },
-                    error: function (result) {
-                        layer.msg("出错！");
-                    }
-                });
-            }
-        );
-    }
-
-    //删除生产管理部-合同
-    function deleteProductionEnergy(id, currentPage) {
-        //记录用户页面选择的页数
-        $('#currentPage').val(currentPage);
-        //提示窗
-        layer.confirm('确定要删除吗？', {
-                btn: ['确认', '取消']
-            }, function () {
-                $.ajax({
-                    type: "post",
-                    url: '/productionEnergy/delete',
-                    data: {'id': id},
-                    async: false,
-                    success: function (data) {
-                        if (data === 'success') {
-                            layer.msg('删除成功！');
-                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.productionEnergyPageReload($('#currentPage').val());
-                        } else {
-                            layer.msg('删除失败！');
-                        }
-                    },
-                    error: function (result) {
-                        layer.msg("出错！");
-                    }
-                });
-            }
-        );
-    }
-
-    //生产管理部-设备档案技术资料
-    function deleteProductionEquipment(id, currentPage) {
-        //记录用户页面选择的页数
-        $('#currentPage').val(currentPage);
-        //提示窗
-        layer.confirm('确定要删除吗？', {
-                btn: ['确认', '取消']
-            }, function () {
-                $.ajax({
-                    type: "post",
-                    url: '/productionEquipment/delete',
-                    data: {'id': id},
-                    async: false,
-                    success: function (data) {
-                        if (data === 'success') {
-                            layer.msg('删除成功！');
-                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.ProductionEquipmentPageReload($('#currentPage').val());
-                        } else {
-                            layer.msg('删除失败！');
-                        }
-                    },
-                    error: function (result) {
-                        layer.msg("出错！");
-                    }
-                });
-            }
-        );
-    }
-
-    //生产管理部-工程基建类资料
-    function deleteProductionEngineering(id, currentPage) {
-        //记录用户页面选择的页数
-        $('#currentPage').val(currentPage);
-        //提示窗
-        layer.confirm('确定要删除吗？', {
-                btn: ['确认', '取消']
-            }, function () {
-                $.ajax({
-                    type: "post",
-                    url: '/productionEngineering/delete',
-                    data: {'id': id},
-                    async: false,
-                    success: function (data) {
-                        if (data === 'success') {
-                            layer.msg('删除成功！');
-                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.productionEngineeringPageReload($('#currentPage').val());
-                        } else {
-                            layer.msg('删除失败！');
-                        }
-                    },
-                    error: function (result) {
-                        layer.msg("出错！");
-                    }
-                });
-            }
-        );
-    }
-
-    //财务管理部-凭证
-    function deleteFinanceVoucher(id, currentPage) {
-        //记录用户页面选择的页数
-        $('#currentPage').val(currentPage);
-        //提示窗
-        layer.confirm('确定要删除吗？', {
-                btn: ['确认', '取消']
-            }, function () {
-                $.ajax({
-                    type: "post",
-                    url: '/financeVoucher/delete',
-                    data: {'id': id},
-                    async: false,
-                    success: function (data) {
-                        if (data === 'success') {
-                            layer.msg('删除成功！');
-                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.financeVoucherPageReload($('#currentPage').val());
-                        } else {
-                            layer.msg('删除失败！');
-                        }
-                    },
-                    error: function (result) {
-                        layer.msg("出错！");
-                    }
-                });
-            }
-        );
-    }
-
-    //财务管理部-报表及材料
-    function deleteFinanceMaterial(id, currentPage) {
-        //记录用户页面选择的页数
-        $('#currentPage').val(currentPage);
-        //提示窗
-        layer.confirm('确定要删除吗？', {
-                btn: ['确认', '取消']
-            }, function () {
-                $.ajax({
-                    type: "post",
-                    url: '/financeMaterial/delete',
-                    data: {'id': id},
-                    async: false,
-                    success: function (data) {
-                        if (data === 'success') {
-                            layer.msg('删除成功！');
-                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.financeMaterialPageReload($('#currentPage').val());
-                        } else {
-                            layer.msg('删除失败！');
-                        }
-                    },
-                    error: function (result) {
-                        layer.msg("出错！");
-                    }
-                });
-            }
-        );
-    }
-
-    //财务管理部-凭证
-    function deleteFinanceBill(id, currentPage) {
-        //记录用户页面选择的页数
-        $('#currentPage').val(currentPage);
-        //提示窗
-        layer.confirm('确定要删除吗？', {
-                btn: ['确认', '取消']
-            }, function () {
-                $.ajax({
-                    type: "post",
-                    url: '/financeBil/delete',
-                    data: {'id': id},
-                    async: false,
-                    success: function (data) {
-                        if (data === 'success') {
-                            layer.msg('删除成功！');
-                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.financeBillPageReload($('#currentPage').val());
-                        } else {
-                            layer.msg('删除失败！');
-                        }
-                    },
-                    error: function (result) {
-                        layer.msg("出错！");
-                    }
-                });
-            }
-        );
-    }
-
-    //财务管理部-凭证
-    function deleteFinanceOther(id, currentPage) {
-        //记录用户页面选择的页数
-        $('#currentPage').val(currentPage);
-        //提示窗
-        layer.confirm('确定要删除吗？', {
-                btn: ['确认', '取消']
-            }, function () {
-                $.ajax({
-                    type: "post",
-                    url: '/financeOther/delete',
-                    data: {'id': id},
-                    async: false,
-                    success: function (data) {
-                        if (data === 'success') {
-                            layer.msg('删除成功！');
-                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.financeOtherPageReload($('#currentPage').val());
-                        } else {
-                            layer.msg('删除失败！');
-                        }
-                    },
-                    error: function (result) {
-                        layer.msg("出错！");
-                    }
-                });
-            }
-        );
-    }
-
-    //财务管理部-凭证
-    function deleteFinancePersonnel(id, currentPage) {
-        //记录用户页面选择的页数
-        $('#currentPage').val(currentPage);
-        //提示窗
-        layer.confirm('确定要删除吗？', {
-                btn: ['确认', '取消']
-            }, function () {
-                $.ajax({
-                    type: "post",
-                    url: '/qualityPersonnel/delete',
-                    data: {'id': id},
-                    async: false,
-                    success: function (data) {
-                        if (data === 'success') {
-                            layer.msg('删除成功！');
-                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.financePersonnelPageReload($('#currentPage').val());
-                        } else {
-                            layer.msg('删除失败！');
-                        }
-                    },
-                    error: function (result) {
-                        layer.msg("出错！");
-                    }
-                });
-            }
-        );
-    }
-
-    //财务管理部-凭证
-    function deleteFinanceConfirm(id, currentPage) {
-        //记录用户页面选择的页数
-        $('#currentPage').val(currentPage);
-        //提示窗
-        layer.confirm('确定要删除吗？', {
-                btn: ['确认', '取消']
-            }, function () {
-                $.ajax({
-                    type: "post",
-                    url: '/financeConfirm/delete',
-                    data: {'id': id},
-                    async: false,
-                    success: function (data) {
-                        if (data === 'success') {
-                            layer.msg('删除成功！');
-                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.financeConfirmPageReload($('#currentPage').val());
-                        } else {
-                            layer.msg('删除失败！');
-                        }
-                    },
-                    error: function (result) {
-                        layer.msg("出错！");
-                    }
-                });
-            }
-        );
-    }
-
-    //质量技术部-设计文件
-    function deleteQualityDevise(id, currentPage) {
-        //记录用户页面选择的页数
-        $('#currentPage').val(currentPage);
-        //提示窗
-        layer.confirm('确定要删除吗？', {
-                btn: ['确认', '取消']
-            }, function () {
-                $.ajax({
-                    type: "post",
-                    url: '/qualityDevise/delete',
-                    data: {'id': id},
-                    async: false,
-                    success: function (data) {
-                        if (data === 'success') {
-                            layer.msg('删除成功！');
-                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.qualityDevisePageReload($('#currentPage').val());
-                        } else {
-                            layer.msg('删除失败！');
-                        }
-                    },
-                    error: function (result) {
-                        layer.msg("出错！");
-                    }
-                });
-            }
-        );
-    }
-
-    //物资管理部-其他
-    function deleteMaterialOther(id, currentPage) {
-        //记录用户页面选择的页数
-        $('#currentPage').val(currentPage);
-        //提示窗
-        layer.confirm('确定要删除吗？', {
-                btn: ['确认', '取消']
-            }, function () {
-                $.ajax({
-                    type: "post",
-                    url: '/materialOther/delete',
-                    data: {'id': id},
-                    async: false,
-                    success: function (data) {
-                        if (data === 'success') {
-                            layer.msg('删除成功！');
-                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.materialOtherPageReload($('#currentPage').val());
-                        } else {
-                            layer.msg('删除失败！');
-                        }
-                    },
-                    error: function (result) {
-                        layer.msg("出错！");
-                    }
-                });
-            }
-        );
-    }
-
-    //物资管理部-其他
-    function deleteMaterialPurchase(id, currentPage) {
-        //记录用户页面选择的页数
-        $('#currentPage').val(currentPage);
-        //提示窗
-        layer.confirm('确定要删除吗？', {
-                btn: ['确认', '取消']
-            }, function () {
-                $.ajax({
-                    type: "post",
-                    url: '/materialPurchase/delete',
-                    data: {'id': id},
-                    async: false,
-                    success: function (data) {
-                        if (data === 'success') {
-                            layer.msg('删除成功！');
-                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.materialPurchasePageReload($('#currentPage').val());
-                        } else {
-                            layer.msg('删除失败！');
-                        }
-                    },
-                    error: function (result) {
-                        layer.msg("出错！");
-                    }
-                });
-            }
-        );
-    }
-
-    //物资管理部-砂石料招投标资料
-    function deleteMaterialBidding(id, currentPage) {
-        //记录用户页面选择的页数
-        $('#currentPage').val(currentPage);
-        //提示窗
-        layer.confirm('确定要删除吗？', {
-                btn: ['确认', '取消']
-            }, function () {
-                $.ajax({
-                    type: "post",
-                    url: '/materialBidding/delete',
-                    data: {'id': id},
-                    async: false,
-                    success: function (data) {
-                        if (data === 'success') {
-                            layer.msg('删除成功！');
-                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.materialBiddingPageReload($('#currentPage').val());
-                        } else {
-                            layer.msg('删除失败！');
-                        }
-                    },
-                    error: function (result) {
-                        layer.msg("出错！");
-                    }
-                });
-            }
-        );
-    }
-
-    //生产管理部-其他文件
-    function deleteProductionOther(id, currentPage) {
-        //记录用户页面选择的页数
-        $('#currentPage').val(currentPage);
-        //提示窗
-        layer.confirm('确定要删除吗？', {
-                btn: ['确认', '取消']
-            }, function () {
-                $.ajax({
-                    type: "post",
-                    url: '/productionOther/delete',
-                    data: {'id': id},
-                    async: false,
-                    success: function (data) {
-                        if (data === 'success') {
-                            layer.msg('删除成功！');
-                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.productionOtherPageReload($('#currentPage').val());
-                        } else {
-                            layer.msg('删除失败！');
-                        }
-                    },
-                    error: function (result) {
-                        layer.msg("出错！");
-                    }
-                });
-            }
-        );
-    }
-
-    //删除公告
-    function deleteNotice(id, currentPage) {
-        layer.confirm('确定要删除吗？', {
-                btn: ['确认', '取消']
-            }, function () {
-                $.ajax({
-                    type: "post",
-                    url: '/notice/delete',
-                    data: {'id': id},
-                    async: false,
-                    success: function (data) {
-                        if (data === 'success') {
-                            layer.msg('删除成功！');
-                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.reloadNoticePage(currentPage);
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.reloadCultureCorporateData(currentPage);
                         } else {
                             layer.msg('删除失败！')
                         }
@@ -2597,32 +1858,7 @@
         );
     }
 
-    //删除公告
-    function deleteNews(id, currentPage) {
-        layer.confirm('确定要删除吗？', {
-                btn: ['确认', '取消']
-            }, function () {
-                $.ajax({
-                    type: "post",
-                    url: '/newsCenter/delete',
-                    data: {'id': id},
-                    async: false,
-                    success: function (data) {
-                        if (data === 'success') {
-                            layer.msg('删除成功！');
-                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.reloadNewsPage();
-                        } else {
-                            layer.msg('删除失败！')
-                        }
-                    },
-                    error: function (result) {
-                        layer.msg("出错！");
-                    }
-                });
-            }
-        );
-    }
-
+    /**---------------协同工作----------------*/
     //协同-删除已发事项
     function deleteAlreadySend(url, id, processInstanceId, currentPage) {
         //提示窗
@@ -2705,7 +1941,7 @@
         );
     }
 
-    /*-------------------人事管理start-------------------*/
+    /**-------------------人事管理start-------------------*/
     //删除员工信息
     function deletePersonnel(id, currentPage) {
         //提示窗
@@ -3126,7 +2362,7 @@
         });
     }
 
-    /*-------------------人事管理end-------------------*/
+    /**-------------------人事管理end-------------------*/
 
     //checkbox选中事件
     function checkboxEvent(own) {
@@ -3283,6 +2519,5 @@
         sessionStorage.setItem("crew1LastDiscNum", crew1DiscNum);
         sessionStorage.setItem("crew2LastDiscNum", crew2DiscNum);
     }
-
 </script>
 </html>

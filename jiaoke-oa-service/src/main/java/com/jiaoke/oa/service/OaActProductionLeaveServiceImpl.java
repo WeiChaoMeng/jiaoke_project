@@ -6,7 +6,6 @@ import com.jiaoke.oa.bean.OaCollaboration;
 import com.jiaoke.oa.dao.OaActProductionLeaveMapper;
 import com.jiaoke.oa.dao.OaCollaborationMapper;
 import com.jiaoke.oa.dao.UserInfoMapper;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -33,13 +32,11 @@ public class OaActProductionLeaveServiceImpl implements OaActProductionLeaveServ
 
     @Override
     public int insert(OaActProductionLeave oaActProductionLeave, Integer userId, String randomId, Integer state) {
-        oaActProductionLeave.setApplyDate(DateUtil.stringConvertYYYYMMDD(oaActProductionLeave.getApplyDateStr()));
-        oaActProductionLeave.setActualDate(DateUtil.stringConvertYYYYMMDD(oaActProductionLeave.getActualDateStr()));
         oaActProductionLeave.setId(randomId);
         oaActProductionLeave.setCreateTime(new Date());
         oaActProductionLeave.setPromoter(userId);
         oaActProductionLeave.setUrl("productionLeave");
-        if (oaActProductionLeaveMapper.insert(oaActProductionLeave) < 0) {
+        if (oaActProductionLeaveMapper.insertSelective(oaActProductionLeave) < 0) {
             return -1;
         } else {
             OaCollaboration oaCollaboration = new OaCollaboration();
@@ -48,6 +45,9 @@ public class OaActProductionLeaveServiceImpl implements OaActProductionLeaveServ
             oaCollaboration.setTitle(oaActProductionLeave.getTitle());
             oaCollaboration.setUrl("productionLeave");
             oaCollaboration.setTable("oa_act_production_leave");
+            oaCollaboration.setName("生产假审批");
+            oaCollaboration.setDataOne("生育假天数" + oaActProductionLeave.getMaternityLeave());
+            oaCollaboration.setDataTwo("申请休假时间" + oaActProductionLeave.getApplyDate());
             oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);
@@ -57,8 +57,6 @@ public class OaActProductionLeaveServiceImpl implements OaActProductionLeaveServ
 
     @Override
     public int edit(OaActProductionLeave oaActProductionLeave) {
-        oaActProductionLeave.setApplyDate(DateUtil.stringConvertYYYYMMDD(oaActProductionLeave.getApplyDateStr()));
-        oaActProductionLeave.setActualDate(DateUtil.stringConvertYYYYMMDD(oaActProductionLeave.getActualDateStr()));
         if (oaActProductionLeaveMapper.updateByPrimaryKeySelective(oaActProductionLeave) < 0) {
             return -1;
         } else {
@@ -71,8 +69,6 @@ public class OaActProductionLeaveServiceImpl implements OaActProductionLeaveServ
     public OaActProductionLeave selectByPrimaryKey(String id) {
         OaActProductionLeave oaActProductionLeave = oaActProductionLeaveMapper.selectByPrimaryKey(id);
         oaActProductionLeave.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActProductionLeave.getCreateTime()));
-        oaActProductionLeave.setApplyDateStr(DateUtil.dateConvertYYYYMMDD(oaActProductionLeave.getApplyDate()));
-        oaActProductionLeave.setActualDateStr(DateUtil.dateConvertYYYYMMDD(oaActProductionLeave.getActualDate()));
         oaActProductionLeave.setPromoterStr(userInfoMapper.getNicknameById(oaActProductionLeave.getPromoter()));
         return oaActProductionLeave;
     }
@@ -84,14 +80,7 @@ public class OaActProductionLeaveServiceImpl implements OaActProductionLeaveServ
     }
 
     @Override
-    public int updateAnnexes(String[] array, String id) {
-        OaActProductionLeave oaActProductionLeave = new OaActProductionLeave();
-        oaActProductionLeave.setId(id);
-        if (array != null) {
-            oaActProductionLeave.setAnnex(StringUtils.join(array));
-        } else {
-            oaActProductionLeave.setAnnex("");
-        }
+    public int updateByPrimaryKeySelective(OaActProductionLeave oaActProductionLeave) {
         return oaActProductionLeaveMapper.updateByPrimaryKeySelective(oaActProductionLeave);
     }
 }

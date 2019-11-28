@@ -76,115 +76,6 @@ $(function () {
         $("#oa-iframe").attr("src", "collaboration/done?page=1")
     });
 
-    //督办事项
-    $("#supervision_matters").on("click", function () {
-        removeOwnName();
-        synergetic_work(this);
-        $("#oa-iframe").attr("src", "collaboration/supervise")
-    });
-
-    /*--- 公文管理 ---*/
-    //新建公文
-    $("#release_document").on("click", function () {
-        removeOwnName();
-        document(this);
-        $("#oa-iframe").attr("src", "document/releaseDocument.do")
-    });
-
-    //待办公文
-    $("#pending_document").on("click", function () {
-        removeOwnName();
-        document(this);
-        $("#oa-iframe").attr("src", "document/toPendingDocument.do?page=1")
-    });
-
-    //已办公文
-    $("#done_document").on("click", function () {
-        removeOwnName();
-        document(this);
-        $("#oa-iframe").attr("src", "document/toDoneDocument.do?page=1")
-    });
-
-    //待发公文
-    $("#primed_document").on("click", function () {
-        removeOwnName();
-        document(this);
-        $("#oa-iframe").attr("src", "document/toPrimedDocument.do?page=1")
-    });
-
-    //已发公文
-    $("#issued_document").on("click", function () {
-        removeOwnName();
-        document(this);
-        $("#oa-iframe").attr("src", "document/toIssuedDocument.do?page=1")
-    });
-
-    /*--- 档案管理 ---*/
-    //合同档案
-    $("#contract_archives").on("click", function () {
-        removeOwnName();
-        archives(this);
-        $('#oa-iframe').attr("src", "contractArchives/OAContractArchives.do");
-    });
-
-    //综合办公室档案
-    $("#general_office").on("click", function () {
-        removeOwnName();
-        archives(this);
-        $('#oa-iframe').attr("src", "generalOffice/generalOffice.do");
-    });
-
-    //经营开发部档案
-    $("#business_development").on("click", function () {
-        removeOwnName();
-        archives(this);
-        $('#oa-iframe').attr("src", "businessDevelopment/businessDevelopment.do");
-    });
-
-    //质量技术部档案
-    $("#quality_technology").on("click", function () {
-        removeOwnName();
-        archives(this);
-        $('#oa-iframe').attr("src", "qualityTechnology/qualityTechnology.do");
-    });
-
-    //物资管理部档案
-    $("#material_administration").on("click", function () {
-        removeOwnName();
-        archives(this);
-        $('#oa-iframe').attr("src", "materialAdministration/materialAdministration.do");
-    });
-
-    //财务管理部档案
-    $("#finance_administration").on("click", function () {
-        removeOwnName();
-        archives(this);
-        $('#oa-iframe').attr("src", "financeAdministration/financeAdministration.do");
-    });
-
-    //生产管理部档案
-    $("#production_administration").on("click", function () {
-        removeOwnName();
-        archives(this);
-        $('#oa-iframe').attr("src", "productionAdministration/productionAdministration.do");
-    });
-
-    /*---综合办公室档案---*/
-    //公司发文
-    /*$("#office_release_document").on("click", function () {
-        removeOwnName();
-        archives(this);
-        $('#oa-iframe').attr("src", "comprehensiveOffice/officeReleaseDocument");
-    });*/
-
-    function office(id, url) {
-        $(id).on("click", function () {
-            removeOwnName();
-            archives(this);
-            $('#oa-iframe').attr("src", url);
-        });
-    }
-
     /*--- 会议管理 ---*/
     //新建会议
     $("#new_meeting").on("click", function () {
@@ -296,10 +187,6 @@ $(function () {
 
     function synergetic_work(parameter) {
         $('#content').append("<a style='margin-right:8px'>" + "协同工作" + "</a>" + ">" + "<a style='margin-left: 8px'>" + parameter.innerText + "</a>");
-    }
-
-    function document(parameter) {
-        $('#content').append("<a style='margin-right:8px'>" + "公文管理" + "</a>" + ">" + "<a style='margin-left: 8px'>" + parameter.innerText + "</a>");
     }
 
     function archives(parameter) {

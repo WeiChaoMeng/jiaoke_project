@@ -219,7 +219,7 @@
                 url: '${path}/review/add',
                 data: $('#oaActReview').serialize(),
                 error: function (request) {
-                    layer.msg("出错！");
+                    window.top.tips("出错！", 6, 2, 1000);
                 },
                 success: function (result) {
                     if (result === "success") {

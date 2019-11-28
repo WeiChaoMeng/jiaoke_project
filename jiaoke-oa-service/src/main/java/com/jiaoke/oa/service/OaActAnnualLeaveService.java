@@ -47,11 +47,9 @@ public interface OaActAnnualLeaveService {
     OaActAnnualLeave selectByPrimaryKey(String id);
 
     /**
-     * 更新附件列表
-     *
-     * @param array array
-     * @param id    id
+     * 选择性更新
+     * @param oaActAnnualLeave oaActAnnualLeave
      * @return int
      */
-    int updateAnnexes(String[] array, String id);
+    int updateByPrimaryKeySelective(OaActAnnualLeave oaActAnnualLeave);
 }

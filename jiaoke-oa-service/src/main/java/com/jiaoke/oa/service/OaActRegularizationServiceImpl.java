@@ -33,13 +33,11 @@ public class OaActRegularizationServiceImpl implements OaActRegularizationServic
 
     @Override
     public int insert(OaActRegularization oaActRegularization, Integer userId, String randomId, Integer state) {
-        oaActRegularization.setEntryDate(DateUtil.stringConvertYYYYMMDD(oaActRegularization.getEntryDateStr()));
-        oaActRegularization.setProbationPeriod(DateUtil.stringConvertYYYYMMDD(oaActRegularization.getProbationPeriodStr()));
         oaActRegularization.setId(randomId);
         oaActRegularization.setCreateTime(new Date());
         oaActRegularization.setPromoter(userId);
         oaActRegularization.setUrl("regularization");
-        if (oaActRegularizationMapper.insert(oaActRegularization) < 0) {
+        if (oaActRegularizationMapper.insertSelective(oaActRegularization) < 0) {
             return -1;
         } else {
             OaCollaboration oaCollaboration = new OaCollaboration();
@@ -48,6 +46,9 @@ public class OaActRegularizationServiceImpl implements OaActRegularizationServic
             oaCollaboration.setTitle(oaActRegularization.getTitle());
             oaCollaboration.setUrl("regularization");
             oaCollaboration.setTable("oa_act_regularization");
+            oaCollaboration.setName("转正申请");
+            oaCollaboration.setDataOne("入职日期:" + oaActRegularization.getEntryDate());
+            oaCollaboration.setDataTwo("试用期日期:" + oaActRegularization.getProbationPeriod());
             oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);
@@ -57,8 +58,6 @@ public class OaActRegularizationServiceImpl implements OaActRegularizationServic
 
     @Override
     public int edit(OaActRegularization oaActRegularization) {
-        oaActRegularization.setEntryDate(DateUtil.stringConvertYYYYMMDD(oaActRegularization.getEntryDateStr()));
-        oaActRegularization.setProbationPeriod(DateUtil.stringConvertYYYYMMDD(oaActRegularization.getProbationPeriodStr()));
         oaActRegularization.setCreateTime(new Date());
         if (oaActRegularizationMapper.updateByPrimaryKeySelective(oaActRegularization) < 0) {
             return -1;
@@ -71,8 +70,6 @@ public class OaActRegularizationServiceImpl implements OaActRegularizationServic
     @Override
     public OaActRegularization selectByPrimaryKey(String id) {
         OaActRegularization oaActRegularization = oaActRegularizationMapper.selectByPrimaryKey(id);
-        oaActRegularization.setEntryDateStr(DateUtil.dateConvertYYYYMMDD(oaActRegularization.getEntryDate()));
-        oaActRegularization.setProbationPeriodStr(DateUtil.dateConvertYYYYMMDD(oaActRegularization.getProbationPeriod()));
         oaActRegularization.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActRegularization.getCreateTime()));
         oaActRegularization.setPromoterStr(userInfoMapper.getNicknameById(oaActRegularization.getPromoter()));
         return oaActRegularization;
@@ -85,19 +82,7 @@ public class OaActRegularizationServiceImpl implements OaActRegularizationServic
     }
 
     @Override
-    public int updateAnnexes(String[] array, String id) {
-        OaActRegularization oaActRegularization = new OaActRegularization();
-        oaActRegularization.setId(id);
-        if (array != null) {
-            oaActRegularization.setAnnex(StringUtils.join(array));
-        } else {
-            oaActRegularization.setAnnex("");
-        }
-        return oaActRegularizationMapper.updateByPrimaryKeySelective(oaActRegularization);
-    }
-
-    @Override
-    public int updateData(OaActRegularization oaActRegularization) {
+    public int updateByPrimaryKeySelective(OaActRegularization oaActRegularization) {
         return oaActRegularizationMapper.updateByPrimaryKeySelective(oaActRegularization);
     }
 }

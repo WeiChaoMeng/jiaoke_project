@@ -86,7 +86,7 @@
     </div>
 
     <div>
-        <span class="form-number-left" style="float: right">编号
+        <span class="form-number-left" style="float: right;margin-top: 0">编号
             <c:choose>
                 <c:when test="${department == '综合办公室'}">
                     <input type="text" class="form-number-content" name="number" value="LC/BGS-" autocomplete="off">

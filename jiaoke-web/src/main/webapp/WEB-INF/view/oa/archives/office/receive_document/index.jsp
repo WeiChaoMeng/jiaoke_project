@@ -17,7 +17,6 @@
     <meta charset="utf-8">
     <title>公司收文</title>
     <link href="../../../../../../static/css/oa/oa_common.css" rel="stylesheet" type="text/css">
-    <link href="../../../../../../static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
     <link href="../../../../../../static/js/date_pickers/date_picker.css" rel="stylesheet">
     <link href="../../../../../../static/css/paging/htmleaf-demo.css" rel="stylesheet" type="text/css">
     <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -133,6 +132,7 @@
             <input type="hidden" id="countindex" runat="server"/>
             <!--设置最多显示的页码数 可以手动设置 默认为7-->
             <input type="hidden" id="visiblePages" runat="server" value="10"/>
+            <input type="hidden" id="page"/>
         </div>
     </div>
 </div>
@@ -143,8 +143,10 @@
 <script type="text/javascript" src="../../../../../../static/js/oa/oa_common.js"></script>
 <script type="text/javascript" src="../../../../../../static/js/date_pickers/jquery.date_input.pack.js"></script>
 <script type="text/javascript" src="../../../../../../static/js/paging/jqPaginator.js"></script>
-<script type="text/javascript" src="../../../../../../static/js/paging/myPage.js"></script>
 <script>
+
+    //设置当前页
+    var currentPageNum = JSON.parse('${currentPage}');
 
     function loadData(page) {
         $.ajax({
@@ -332,29 +334,20 @@
     //删除
     $('#remove').on('click', function () {
         let length = $("tbody input:checked").length;
-        if (length != 1) {
-            alert("一次只能选择一条数据");
+        if (length !== 1) {
+            layer.msg('请选择一条数据！');
             return false;
         } else {
             var id = $("tbody input:checked").val();
-            $.ajax({
-                url: '/receiveDocument/delete',
-                data: {'id': id},
-                type: 'POST',
-                error: function () {
-                    alert("Connection error");
-                },
-                success: function (result) {
-                    if (result == 'success') {
-                        alert("删除成功");
-                        window.location.reload();
-                    } else {
-                        alert("删除失败");
-                    }
-                }
-            });
+            //主页fun
+            window.top.deleteArchivesData('/receiveDocument', id, $('#page').val());
         }
     });
+
+    //重载页面
+    function reloadArchivesData(page) {
+        window.location.href = "${path}/receiveDocument/toReceiveDocument?page=" + page;
+    }
 
     //分页
     function exeData(page, type, parameter) {
@@ -400,7 +393,8 @@
     }
 
     $(function () {
-        loadData(1);
+        $('#page').val(currentPageNum);
+        loadData(currentPageNum);
         loadPage(1);
     });
 

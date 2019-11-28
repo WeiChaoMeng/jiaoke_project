@@ -219,7 +219,7 @@
     }
 
     //重载页面
-    function ProductionEquipmentPageReload(page) {
+    function reloadArchivesData(page) {
         window.location.href = "${path}/productionEquipment/toIndex?page=" + page;
     }
 
@@ -244,7 +244,7 @@
         } else {
             var id = $("tbody input:checked").val();
             //主页fun
-            window.top.deleteProductionEquipment(id, $('#page').val());
+            window.top.deleteArchivesData('/productionEquipment', id, $('#page').val());
         }
     }
 

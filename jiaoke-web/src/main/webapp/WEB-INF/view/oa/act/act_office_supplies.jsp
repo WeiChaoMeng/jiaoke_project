@@ -57,6 +57,10 @@
             float: left;
             cursor: no-drop;
         }
+
+        .order-number-style{
+            height: 28px;display: inline-block;line-height: 28px;font-size: 14px;
+        }
     </style>
 </head>
 
@@ -115,7 +119,7 @@
                 <td style="width: 44%">
                     <div class="common_input_frame">
                         <input type="text" id="title" name="title" placeholder="请输入标题" title="点击此处填写标题"
-                               value="印章借用审批单(${nickname} <%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>)"
+                               value="办公用品需求计划(${nickname} <%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>)"
                                autocomplete="off">
                     </div>
                 </td>
@@ -150,7 +154,7 @@
         </tr>
 
         <tr>
-            <td class="table-td-content"><input type="text" class="formInput" name="serialOne" autocomplete="off"></td>
+            <td class="table-td-content" style="text-align: center;"><span class="order-number-style">1</span></td>
             <td class="table-td-content"><input type="text" class="formInput" name="itemOne" autocomplete="off"></td>
             <td class="table-td-content">
                 <input type="text" class="formInput" name="numberOne" id="numberOne" onchange="dataOne()"
@@ -166,7 +170,7 @@
         </tr>
 
         <tr>
-            <td class="table-td-content"><input type="text" class="formInput" name="serialTwo" autocomplete="off"></td>
+            <td class="table-td-content" style="text-align: center;"><span class="order-number-style">2</span></td>
             <td class="table-td-content"><input type="text" class="formInput" name="itemTwo" autocomplete="off"></td>
             <td class="table-td-content">
                 <input type="text" class="formInput" name="numberTwo" id="numberTwo" onchange="dataTwo()"
@@ -182,7 +186,7 @@
         </tr>
 
         <tr>
-            <td class="table-td-content"><input type="text" class="formInput" name="serialThree" autocomplete="off">
+            <td class="table-td-content" style="text-align: center;"><span class="order-number-style">3</span></td>
             </td>
             <td class="table-td-content"><input type="text" class="formInput" name="itemThree" autocomplete="off"></td>
             <td class="table-td-content">
@@ -199,7 +203,7 @@
         </tr>
 
         <tr>
-            <td class="table-td-content"><input type="text" class="formInput" name="serialFour" autocomplete="off"></td>
+            <td class="table-td-content" style="text-align: center;"><span class="order-number-style">4</span></td>
             <td class="table-td-content"><input type="text" class="formInput" name="itemFour" autocomplete="off"></td>
             <td class="table-td-content">
                 <input type="text" class="formInput" name="numberFour" id="numberFour" onchange="dataFour()"
@@ -215,7 +219,7 @@
         </tr>
 
         <tr>
-            <td class="table-td-content"><input type="text" class="formInput" name="serialFive" autocomplete="off"></td>
+            <td class="table-td-content" style="text-align: center;"><span class="order-number-style">5</span></td>
             <td class="table-td-content"><input type="text" class="formInput" name="itemFive" autocomplete="off"></td>
             <td class="table-td-content">
                 <input type="text" class="formInput" name="numberFive" id="numberFive" onchange="dataFive()"
@@ -254,7 +258,7 @@
 
         <div class="approval-input">
             <span class="approval-input-span">填表人</span>
-            <input type="text" class="approval-input-input" readonly>
+            <input type="text" class="approval-input-input" value="${nickname}" name="preparer" readonly>
         </div>
 
         <div class="approval-input">

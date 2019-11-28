@@ -31,7 +31,7 @@ public class OaActCardServiceImpl implements OaActCardService {
     private UserInfoMapper userInfoMapper;
 
     @Override
-    public int insertCard(OaActCard oaActCard, Integer userId, String randomId,Integer state) {
+    public int insertCard(OaActCard oaActCard, Integer userId, String randomId, Integer state) {
         oaActCard.setId(randomId);
         oaActCard.setCreateTime(new Date());
         oaActCard.setPromoter(userId);
@@ -45,6 +45,9 @@ public class OaActCardServiceImpl implements OaActCardService {
             oaCollaboration.setTitle(oaActCard.getTitle());
             oaCollaboration.setUrl("card");
             oaCollaboration.setTable("oa_act_card");
+            oaCollaboration.setName("饭卡申请");
+            oaCollaboration.setDataOne("事由:" + oaActCard.getReason());
+            oaCollaboration.setDataTwo("拟使用期限:" + oaActCard.getStartTime() + " ~ " + oaActCard.getEndTime());
             oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);

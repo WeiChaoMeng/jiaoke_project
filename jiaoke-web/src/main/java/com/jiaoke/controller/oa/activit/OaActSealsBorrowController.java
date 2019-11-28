@@ -1,5 +1,6 @@
 package com.jiaoke.controller.oa.activit;
 
+import com.alibaba.fastjson.JSON;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
@@ -82,7 +83,7 @@ public class OaActSealsBorrowController {
     @ResponseBody
     public String add(OaActSealsBorrow oaActSealsBorrow) {
         String randomId = RandomUtil.randomId();
-        if (oaActSealsBorrowService.insert(oaActSealsBorrow, getCurrentUser().getId(),randomId,0) < 1) {
+        if (oaActSealsBorrowService.insert(oaActSealsBorrow, getCurrentUser().getId(), randomId, 0) < 1) {
             return "error";
         } else {
             //用户所在部门id
@@ -114,6 +115,7 @@ public class OaActSealsBorrowController {
         //获取批注信息
         List<Comments> commentsList = activitiUtil.selectHistoryComment(activitiUtil.getTaskByTaskId(taskId).getProcessInstanceId());
         model.addAttribute("oaActSealsBorrow", oaActSealsBorrow);
+        model.addAttribute("oaActSealsBorrowJson", JsonHelper.toJSONString(oaActSealsBorrow));
         model.addAttribute("taskId", JsonHelper.toJSONString(taskId));
         model.addAttribute("commentsList", commentsList);
         model.addAttribute("nickname", getCurrentUser().getNickname());
@@ -121,10 +123,57 @@ public class OaActSealsBorrowController {
     }
 
     /**
+     * app获取审批页面信息
+     *
+     * @param id     id
+     * @param taskId taskId
+     * @return json
+     */
+    @RequestMapping(value = "/approval.api")
+    @ResponseBody
+    public String approvalApi(String id, String taskId) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActSealsBorrow oaActSealsBorrow = oaActSealsBorrowService.selectByPrimaryKey(id);
+
+
+        String nickname = getCurrentUser().getNickname();
+        //根据发起者id获取所属部门id
+        String departmentId = userInfoService.selectDepartmentByUserId(oaActSealsBorrow.getPromoter());
+        //部门负责人
+        String principalId = departmentService.selectEnforcerId("principal", departmentId);
+        String principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        //印章主管领导
+        String sealSupervisor;
+        if (oaActSealsBorrow.getSeal() == 4 || oaActSealsBorrow.getSeal() == 5) {
+            sealSupervisor = userInfoService.getUserInfoByPermission("specialChapter").getNickname();
+        } else {
+            sealSupervisor = userInfoService.getUserInfoByPermission("seal_supervisor").getNickname();
+        }
+
+        //印章经办人
+        String sealOperator;
+        if (oaActSealsBorrow.getSeal() == 4) {
+            sealOperator = userInfoService.getUserInfoByPermission("legalStamp").getNickname();
+        } else if (oaActSealsBorrow.getSeal() == 5) {
+            sealOperator = userInfoService.getUserInfoByPermission("financeStamp").getNickname();
+        } else {
+            sealOperator = userInfoService.getUserInfoByPermission("seal_operator").getNickname();
+        }
+
+        map.put("nickname", nickname);
+        map.put("principal", principal);
+        map.put("sealSupervisor", sealSupervisor);
+        map.put("sealOperator", sealOperator);
+        map.put("sealsBorrow", oaActSealsBorrow);
+        map.put("taskId", taskId);
+        return JSON.toJSONString(map);
+    }
+
+    /**
      * 提交
      *
      * @param oaActSealsBorrow oaActSealsBorrow
-     * @param taskId            任务Id
+     * @param taskId           任务Id
      * @return s/e
      */
     @RequestMapping(value = "/approvalSubmit")
@@ -139,7 +188,9 @@ public class OaActSealsBorrowController {
         //部门负责人
         String principal = "principal";
         //印章主管领导
-        String sealManage = "sealManage";
+        String sealSupervisor = "seal_supervisor";
+        //印章经办人
+        String sealOperator = "seal_operator";
 
         //更新数据
         if (oaActSealsBorrowService.updateByPrimaryKeySelective(oaActSealsBorrow) < 1) {
@@ -174,7 +225,7 @@ public class OaActSealsBorrowController {
                         activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
                         return "success";
 
-                    } else if (principal.equals(enforcer)){
+                    } else if (principal.equals(enforcer)) {
                         String startUserId = activitiUtil.getStartUserId(task.getProcessInstanceId());
                         //根据发起者id获取所属部门id
                         String departmentId = userInfoService.selectDepartmentByUserId(Integer.valueOf(startUserId));
@@ -182,13 +233,26 @@ public class OaActSealsBorrowController {
                         String enforcerId = departmentService.selectEnforcerId(enforcer, departmentId);
                         activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, Integer.valueOf(enforcerId));
                         return "success";
-                    }else if (sealManage.equals(enforcer)){
+                    } else if (sealSupervisor.equals(enforcer)) {
                         //法人章和财务章的印章主管是总经理
-                        if (oaActSealsBorrow.getSeal() == 4 || oaActSealsBorrow.getSeal() == 5){
+                        if (oaActSealsBorrow.getSeal() == 4 || oaActSealsBorrow.getSeal() == 5) {
                             UserInfo userInfo = userInfoService.getUserInfoByPermission("specialChapter");
                             activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
-                        }else{
-                            UserInfo userInfo = userInfoService.getUserInfoByPermission("sealManage");
+                        } else {
+                            UserInfo userInfo = userInfoService.getUserInfoByPermission("seal_supervisor");
+                            activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
+                        }
+                        return "success";
+                    } else if (sealOperator.equals(enforcer)) {
+                        //法人章经办人（出纳回凤英）和财务章经办人（李佳）其他印章经办人是（汪宁）
+                        if (oaActSealsBorrow.getSeal() == 4) {
+                            UserInfo userInfo = userInfoService.getUserInfoByPermission("legalStamp");
+                            activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
+                        } else if (oaActSealsBorrow.getSeal() == 5) {
+                            UserInfo userInfo = userInfoService.getUserInfoByPermission("financeStamp");
+                            activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
+                        } else {
+                            UserInfo userInfo = userInfoService.getUserInfoByPermission("seal_operator");
                             activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
                         }
                         return "success";
@@ -220,7 +284,7 @@ public class OaActSealsBorrowController {
     @ResponseBody
     public String savePending(OaActSealsBorrow oaActSealsBorrow) {
         String randomId = RandomUtil.randomId();
-        if (oaActSealsBorrowService.insert(oaActSealsBorrow, getCurrentUser().getId(), randomId,1) < 1) {
+        if (oaActSealsBorrowService.insert(oaActSealsBorrow, getCurrentUser().getId(), randomId, 1) < 1) {
             return "error";
         } else {
             return "success";
@@ -303,6 +367,48 @@ public class OaActSealsBorrowController {
         model.addAttribute("oaActSealsBorrow", oaActSealsBorrow);
         model.addAttribute("commentsList", commentsList);
         return "oa/act/act_seals_borrow_details";
+    }
+
+    /**
+     * app获取详细信息
+     *
+     * @param id id
+     * @return json
+     */
+    @RequestMapping(value = "/details.api")
+    @ResponseBody
+    public String cardDetailsApi(String id) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActSealsBorrow oaActSealsBorrow = oaActSealsBorrowService.selectByPrimaryKey(id);
+
+        //根据发起者id获取所属部门id
+        String departmentId = userInfoService.selectDepartmentByUserId(oaActSealsBorrow.getPromoter());
+        //部门负责人
+        String principalId = departmentService.selectEnforcerId("principal", departmentId);
+        String principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        //印章主管领导
+        String sealSupervisor;
+        if (oaActSealsBorrow.getSeal() == 4 || oaActSealsBorrow.getSeal() == 5) {
+            sealSupervisor = userInfoService.getUserInfoByPermission("specialChapter").getNickname();
+        } else {
+            sealSupervisor = userInfoService.getUserInfoByPermission("seal_supervisor").getNickname();
+        }
+
+        //印章经办人
+        String sealOperator;
+        if (oaActSealsBorrow.getSeal() == 4) {
+            sealOperator = userInfoService.getUserInfoByPermission("legalStamp").getNickname();
+        } else if (oaActSealsBorrow.getSeal() == 5) {
+            sealOperator = userInfoService.getUserInfoByPermission("financeStamp").getNickname();
+        } else {
+            sealOperator = userInfoService.getUserInfoByPermission("seal_operator").getNickname();
+        }
+
+        map.put("principal", principal);
+        map.put("sealSupervisor", sealSupervisor);
+        map.put("sealOperator", sealOperator);
+        map.put("sealsBorrow", oaActSealsBorrow);
+        return JsonHelper.toJSONString(map);
     }
 
     /**

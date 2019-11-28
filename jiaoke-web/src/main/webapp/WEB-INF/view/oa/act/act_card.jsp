@@ -103,12 +103,12 @@
         <tr>
             <td class="tdLabel">所属单位</td>
             <td class="table-td-content" style="padding: 10px">
-                <textarea class="write-approval-content-textarea" name="company"></textarea>
+                <textarea onkeyup="value=value.replace(/\s+/g,'')" class="write-approval-content-textarea" name="company"></textarea>
             </td>
 
             <td class="tdLabel">事由</td>
             <td class="table-td-content" style="padding: 10px">
-                <textarea class="write-approval-content-textarea" name="reason"></textarea>
+                <textarea onkeyup="value=value.replace(/\s+/g,'')" class="write-approval-content-textarea" name="reason"></textarea>
             </td>
         </tr>
 

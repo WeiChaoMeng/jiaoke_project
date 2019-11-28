@@ -38,6 +38,12 @@ public interface OaActReviewService {
      */
     int edit(OaActReview oaActReview);
 
+    /**
+     * 选择性更新
+     *
+     * @param oaActReview oaActReview
+     * @return int
+     */
     int updateByPrimaryKeySelective(OaActReview oaActReview);
 
     /**

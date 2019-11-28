@@ -14,11 +14,4 @@ import tk.mybatis.mapper.common.Mapper;
 @Repository
 public interface OaActSealsUseMapper extends Mapper<OaActSealsUse> {
 
-    /**
-     * 插入数据并返回主键
-     *
-     * @param oaActSealsUse oaActSealsUse
-     * @return int
-     */
-    int insertData(OaActSealsUse oaActSealsUse);
 }

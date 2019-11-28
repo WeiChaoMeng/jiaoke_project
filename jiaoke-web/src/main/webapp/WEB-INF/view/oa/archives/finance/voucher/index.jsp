@@ -211,7 +211,7 @@
     }
 
     //重载页面
-    function financeVoucherPageReload(page) {
+    function reloadArchivesData(page) {
         window.location.href = "${path}/financeVoucher/toIndex?page=" + page;
     }
 
@@ -236,7 +236,7 @@
         } else {
             var id = $("tbody input:checked").val();
             //主页fun
-            window.top.deleteFinanceVoucher(id, $('#page').val());
+            window.top.deleteArchivesData('/financeVoucher',id, $('#page').val());
         }
     }
 

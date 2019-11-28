@@ -1,13 +1,11 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: lihui
-  Date: 2018/9/26
-  Time: 14:21
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+    request.setAttribute("path", basePath);
+%>
 <html>
 <head>
     <meta charset="utf-8">
@@ -76,8 +74,13 @@
 
                 <div class="unit_news_foot_left">
                     <div class="unit_news_margin">
-                        <span class="unit_news_margin_content">管理员:系统管理员</span>
-
+                        <span class="unit_news_margin_content">管理员:
+                            <span style="display: inline-block;color: #2196F3;">
+                                <c:forEach items="${newsManagerList}" var="newsManager">
+                                    ${newsManager.nickname}
+                                </c:forEach>
+                            </span>
+                        </span>
                     </div>
                     <div class="unit_news_foot_right">
 
@@ -133,14 +136,20 @@
 
                 <div class="unit_news_foot_left">
                     <div class="unit_news_margin">
-                        <span class="unit_news_margin_content">管理员:系统管理员</span>
-
+                        <span class="unit_news_margin_content">管理员:
+                            <span style="display: inline-block;color: #2196F3;">
+                                <c:forEach items="${honourManagerList}" var="honourManager">
+                                    ${honourManager.nickname}
+                                </c:forEach>
+                            </span>
+                        </span>
                     </div>
 
                     <div class="unit_news_foot_right">
 
                         <shiro:hasPermission name="honour:add">
-                            <button class="publish-new-content" type="button" onclick="corporateHonorRelease()">新闻发布</button>
+                            <button class="publish-new-content" type="button" onclick="corporateHonorRelease()">荣誉发布
+                            </button>
                         </shiro:hasPermission>
 
                         <a onclick="moreCorporateHonorData()" style="color: #00b8ff;cursor: pointer">更多</a>
@@ -158,7 +167,7 @@
 <script type="text/javascript" src="../../../../static/js/oa/oa_common.js"></script>
 <script>
     //新闻发布
-    function newsRelease(){
+    function newsRelease() {
         window.location.href = '/newsCenter/toNewsRelease';
     }
 
@@ -176,17 +185,17 @@
 
     //企业荣誉发布
     function corporateHonorRelease() {
-        window.location.href = '/newsCenter/toCorporateHonor';
+        window.location.href = '/corporateHonor/toCorporateHonor';
     }
 
     //更多企业荣誉
     function moreCorporateHonorData() {
-        window.location.href = '/newsCenter/toCorporateHonorList';
+        window.location.href = '/corporateHonor/toCorporateHonorList';
     }
 
     //企业荣誉详情
     function corporateHonorParticulars(id) {
-        window.location.href = '${path}/newsCenter/corporateHonorDetails?id=' + id;
+        window.location.href = '${path}/corporateHonor/corporateHonorDetails?id=' + id;
     }
 
 </script>

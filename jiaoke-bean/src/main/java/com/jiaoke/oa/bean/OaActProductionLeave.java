@@ -29,9 +29,9 @@ public class OaActProductionLeave {
     private String title;
 
     /**
-     * 单位名称
+     * 申请日期
      */
-    private Integer company;
+    private String fillingDate;
 
     /**
      * 部门
@@ -51,9 +51,7 @@ public class OaActProductionLeave {
     /**
      * 申请休假时间
      */
-    private Date applyDate;
-    @Transient
-    private String applyDateStr;
+    private String applyDate;
 
     /**
      * 晚育假天数
@@ -63,9 +61,37 @@ public class OaActProductionLeave {
     /**
      * 实际休假时间
      */
-    private Date actualDate;
-    @Transient
-    private String actualDateStr;
+    private String actualDate;
+
+    /**
+     * 部门主管领导
+     */
+    private String supervisor;
+
+    /**
+     * 部门主管领导审批时间
+     */
+    private String supervisorDate;
+
+    /**
+     * 总经理
+     */
+    private String companyPrincipal;
+
+    /**
+     * 总经理审批时间
+     */
+    private String companyPrincipalDate;
+
+    /**
+     * 人事
+     */
+    private String personnel;
+
+    /**
+     * 人事审批时间
+     */
+    private String personnelDate;
 
     /**
      * 附件
@@ -107,6 +133,14 @@ public class OaActProductionLeave {
         this.title = title;
     }
 
+    public String getFillingDate() {
+        return fillingDate;
+    }
+
+    public void setFillingDate(String fillingDate) {
+        this.fillingDate = fillingDate;
+    }
+
     public String getDepartment() {
         return department;
     }
@@ -131,20 +165,12 @@ public class OaActProductionLeave {
         this.maternityLeave = maternityLeave;
     }
 
-    public Date getApplyDate() {
+    public String getApplyDate() {
         return applyDate;
     }
 
-    public void setApplyDate(Date applyDate) {
+    public void setApplyDate(String applyDate) {
         this.applyDate = applyDate;
-    }
-
-    public String getApplyDateStr() {
-        return applyDateStr;
-    }
-
-    public void setApplyDateStr(String applyDateStr) {
-        this.applyDateStr = applyDateStr;
     }
 
     public Integer getLateChildbirth() {
@@ -155,20 +181,60 @@ public class OaActProductionLeave {
         this.lateChildbirth = lateChildbirth;
     }
 
-    public Date getActualDate() {
+    public String getActualDate() {
         return actualDate;
     }
 
-    public void setActualDate(Date actualDate) {
+    public void setActualDate(String actualDate) {
         this.actualDate = actualDate;
     }
 
-    public String getActualDateStr() {
-        return actualDateStr;
+    public String getSupervisor() {
+        return supervisor;
     }
 
-    public void setActualDateStr(String actualDateStr) {
-        this.actualDateStr = actualDateStr;
+    public void setSupervisor(String supervisor) {
+        this.supervisor = supervisor;
+    }
+
+    public String getSupervisorDate() {
+        return supervisorDate;
+    }
+
+    public void setSupervisorDate(String supervisorDate) {
+        this.supervisorDate = supervisorDate;
+    }
+
+    public String getCompanyPrincipal() {
+        return companyPrincipal;
+    }
+
+    public void setCompanyPrincipal(String companyPrincipal) {
+        this.companyPrincipal = companyPrincipal;
+    }
+
+    public String getCompanyPrincipalDate() {
+        return companyPrincipalDate;
+    }
+
+    public void setCompanyPrincipalDate(String companyPrincipalDate) {
+        this.companyPrincipalDate = companyPrincipalDate;
+    }
+
+    public String getPersonnel() {
+        return personnel;
+    }
+
+    public void setPersonnel(String personnel) {
+        this.personnel = personnel;
+    }
+
+    public String getPersonnelDate() {
+        return personnelDate;
+    }
+
+    public void setPersonnelDate(String personnelDate) {
+        this.personnelDate = personnelDate;
     }
 
     public String getAnnex() {
@@ -203,14 +269,6 @@ public class OaActProductionLeave {
         this.promoter = promoter;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
     public String getPromoterStr() {
         return promoterStr;
     }
@@ -219,11 +277,11 @@ public class OaActProductionLeave {
         this.promoterStr = promoterStr;
     }
 
-    public Integer getCompany() {
-        return company;
+    public String getUrl() {
+        return url;
     }
 
-    public void setCompany(Integer company) {
-        this.company = company;
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

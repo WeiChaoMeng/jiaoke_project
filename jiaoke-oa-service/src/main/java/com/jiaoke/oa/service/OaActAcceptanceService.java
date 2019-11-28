@@ -1,6 +1,7 @@
 package com.jiaoke.oa.service;
 
 import com.jiaoke.oa.bean.OaActAcceptance;
+import com.jiaoke.oa.bean.OaActMaintain;
 
 /**
  * 验收单
@@ -45,4 +46,12 @@ public interface OaActAcceptanceService {
      * @return int
      */
     int edit(OaActAcceptance oaActAcceptance);
+
+    /**
+     * 选择性更新
+     *
+     * @param oaActAcceptance oaActAcceptance
+     * @return int
+     */
+    int updateByPrimaryKeySelective(OaActAcceptance oaActAcceptance);
 }

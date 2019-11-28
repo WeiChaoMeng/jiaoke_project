@@ -181,7 +181,7 @@
                 result += '<td><input type="checkbox" value="' + resultList[i].id + '" onclick="window.event.cancelBubble=true;"></td>';
                 result += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 15 + i + 1) + '</td>';
                 result += '<td style="text-align:left;text-indent:10px" title="' + resultList[i].title + '">' + resultList[i].title + '</td>';
-                result += '<td>' + resultList[i].promoterStr + '</td>';
+                result += '<td style="color: #2196F3;font-weight: 600;">' + resultList[i].promoterStr + '</td>';
                 result += '<td>' + resultList[i].startTimeStr + '</td>';
                 result += '<td style="color: #2196F3;font-weight: 600;">' + resultList[i].currentExecutor + '</td>';
                 result += '</tr>';

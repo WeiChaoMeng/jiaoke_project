@@ -43,4 +43,12 @@ public interface OaCorporateHonorService {
      * @return list
      */
     List<OaCorporateHonor> selectLatestData();
+
+    /**
+     * 根据主键删除
+     *
+     * @param id id
+     * @return int
+     */
+    int deleteByPrimaryKey(Integer id);
 }

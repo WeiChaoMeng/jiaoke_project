@@ -3,12 +3,17 @@ package com.jiaoke.controller.oa.activit;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
+import com.jiaoke.controller.oa.TargetFlowNodeCommand;
 import com.jiaoke.oa.bean.Comments;
 import com.jiaoke.oa.bean.OaActLeave;
+import com.jiaoke.oa.bean.OaActSealsBorrow;
 import com.jiaoke.oa.bean.UserInfo;
+import com.jiaoke.oa.service.DepartmentService;
 import com.jiaoke.oa.service.OaActLeaveService;
 import com.jiaoke.oa.service.OaCollaborationService;
 import com.jiaoke.oa.service.UserInfoService;
+import org.activiti.bpmn.model.UserTask;
+import org.activiti.engine.ManagementService;
 import org.activiti.engine.task.Task;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
@@ -17,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +49,12 @@ public class OaActLeaveController {
 
     @Resource
     private OaCollaborationService oaCollaborationService;
+
+    @Resource
+    private DepartmentService departmentService;
+
+    @Resource
+    private ManagementService managementService;
 
     /**
      * 获取当前登录用户信息
@@ -77,12 +89,13 @@ public class OaActLeaveController {
         if (oaActLeaveService.insert(oaActLeave, getCurrentUser().getId(), randomId, 0) < 1) {
             return "error";
         } else {
-            //获取拥有权限的用户
-            UserInfo userInfo = userInfoService.getUserInfoByPermission("mealsApproval");
-            //开启流程
+            //用户所在部门id
+            String department = userInfoService.selectDepartmentByUserId(getCurrentUser().getId());
+            //部门负责人
+            String principal = departmentService.selectEnforcerId("principal", department);
             Map<String, Object> map = new HashMap<>(16);
-            map.put("approval", userInfo.getId());
-            String instance = activitiUtil.startProcessInstanceByKey("oa_meals", "oa_act_meals:" + randomId, map, getCurrentUser().getId().toString());
+            map.put("principal", principal);
+            String instance = activitiUtil.startProcessInstanceByKey("oa_leave", "oa_act_leave:" + randomId, map, getCurrentUser().getId().toString());
             if (instance != null) {
                 return "success";
             }
@@ -105,52 +118,108 @@ public class OaActLeaveController {
         //获取批注信息
         List<Comments> commentsList = activitiUtil.selectHistoryComment(activitiUtil.getTaskByTaskId(taskId).getProcessInstanceId());
         model.addAttribute("oaActLeave", oaActLeave);
+        model.addAttribute("oaActLeaveJson", JsonHelper.toJSONString(oaActLeave));
         model.addAttribute("taskId", JsonHelper.toJSONString(taskId));
         model.addAttribute("commentsList", commentsList);
         model.addAttribute("nickname", getCurrentUser().getNickname());
-        return "oa/act/act_meals_handle";
+        return "oa/act/act_leave_handle";
     }
 
     /**
      * 提交审批
      *
-     * @param processingOpinion 处理意见
-     * @param taskId            任务Id
+     * @param oaActLeave oaActLeave
+     * @param taskId            taskId
+     * @param flag            flag
      * @return s/e
      */
     @RequestMapping(value = "/approvalSubmit")
     @ResponseBody
-    public String approvalSubmit(String processingOpinion, String taskId, Integer flag) {
-        //回退标识
-        String back = "back";
-        //结束标识
+    public String approvalSubmit(OaActLeave oaActLeave, String taskId, Integer flag) {
+        //流程终点名称
         String end = "end";
-        //网关标识
-        String eg = "eg";
+        //发起人
+        String promoter = "promoter";
+        //回退
+        String back = "back";
+        //部门负责人
+        String principal = "principal";
+        //部门主管领导
+        String supervisor = "supervisor";
+        //知会人
+        String leaveNotify = "leaveNotify";
+
+        //更新数据
+        if (oaActLeaveService.updateByPrimaryKeySelective(oaActLeave) < 1) {
+            return "error";
+        }
+
         Task task = activitiUtil.getTaskByTaskId(taskId);
-        Map<String, Object> map = new HashMap<>(16);
         if (task == null) {
             return "error";
-        } else {
+        }
+
+        if (flag == 1) {
+            //同意
             //下个节点
             String nextNode = activitiUtil.getNextNode(task.getProcessDefinitionId(), task.getTaskDefinitionKey());
 
             //下个节点是否为end直接结束
             if (end.equals(nextNode)) {
                 activitiUtil.endProcess(taskId);
+                return "success";
+            } else {
+                //附言
+                String processingOpinion = "";
 
-                //下个节点为back修改表达状态为2并结束流程
-            } else if (back.equals(nextNode)) {
-                String businessId = activitiUtil.getBusinessByTaskId(task.getId());
-                String correlationId = businessId.substring(businessId.lastIndexOf(":") + 1);
-                oaCollaborationService.updateState(correlationId, 3);
-                activitiUtil.endProcess(taskId);
+                UserTask userTask = activitiUtil.getUserTask(task.getProcessDefinitionId(), nextNode);
+                if (nextNode.equals(userTask.getId())) {
+                    String enforcer = userTask.getAssignee().substring(userTask.getAssignee().indexOf("{") + 1, userTask.getAssignee().indexOf("}"));
 
-            } else if (eg.equals(nextNode)) {
-                map.put("result", flag);
-                map.put("notify", activitiUtil.getStartUserId(task.getProcessInstanceId()));
-                activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
+                    if (promoter.equals(enforcer)) {
+                        Map<String, Object> map = new HashMap<>(16);
+                        map.put(promoter, activitiUtil.getStartUserId(task.getProcessInstanceId()));
+                        activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
+                        return "success";
+
+                        //部门负责人和主管领导
+                    } else if (principal.equals(enforcer) || supervisor.equals(enforcer)) {
+                        String startUserId = activitiUtil.getStartUserId(task.getProcessInstanceId());
+                        //根据发起者id获取所属部门id
+                        String departmentId = userInfoService.selectDepartmentByUserId(Integer.valueOf(startUserId));
+                        //选择执行者Id
+                        String enforcerId = departmentService.selectEnforcerId(enforcer, departmentId);
+                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, Integer.valueOf(enforcerId));
+                        return "success";
+
+                        //审批后知会
+                    } else if (leaveNotify.equals(enforcer)) {
+                        List<UserInfo> userInfoList = userInfoService.selectMultipleByPermission("leaveNotify");
+                        Map<String, Object> map = new HashMap<>(16);
+                        List<Object> leaveNotifyList = new ArrayList<>();
+                        for (UserInfo user : userInfoList) {
+                            leaveNotifyList.add(user.getId());
+                        }
+                        leaveNotifyList.add(oaActLeave.getPromoter());
+                        map.put("leaveNotifyList", leaveNotifyList);
+                        activitiUtil.designatedCountersignPersonnel(taskId,map);
+                        return "success";
+
+                        //知会
+                    }else {
+                        UserInfo userInfo = userInfoService.getUserInfoByPermission(enforcer);
+                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
+                        return "success";
+                    }
+                } else {
+                    return "error";
+                }
             }
+        } else {
+            //驳回
+            managementService.executeCommand(new TargetFlowNodeCommand(task.getId(), back));
+            //修改表单状态
+            oaCollaborationService.updateState(oaActLeave.getId(), 3);
             return "success";
         }
     }
@@ -183,7 +252,6 @@ public class OaActLeaveController {
     public String toEdit(String id, Model model) {
         OaActLeave oaActLeave = oaActLeaveService.selectByPrimaryKey(id);
         model.addAttribute("oaActLeave", oaActLeave);
-        model.addAttribute("annexList", JsonHelper.toJSONString(oaActLeave.getAnnex()));
         return "oa/act/act_leave_edit";
     }
 
@@ -216,11 +284,13 @@ public class OaActLeaveController {
         if (oaActLeaveService.edit(oaActLeave) < 0) {
             return "error";
         } else {
-            //获取拥有权限的用户
-            UserInfo userInfo = userInfoService.getUserInfoByPermission("mealsApproval");
+            //用户所在部门id
+            String department = userInfoService.selectDepartmentByUserId(getCurrentUser().getId());
+            //部门负责人
+            String principal = departmentService.selectEnforcerId("principal", department);
             Map<String, Object> map = new HashMap<>(16);
-            map.put("mealsApproval", userInfo.getId());
-            String instance = activitiUtil.startProcessInstanceByKey("oa_meals", "oa_act_meals:" + oaActLeave.getId(), map, getCurrentUser().getId().toString());
+            map.put("principal", principal);
+            String instance = activitiUtil.startProcessInstanceByKey("oa_leave", "oa_act_leave:" + oaActLeave.getId(), map, getCurrentUser().getId().toString());
             if (instance != null) {
                 //发送成功后更新状态
                 oaCollaborationService.updateStateByCorrelationId(oaActLeave.getId(), 0, oaActLeave.getTitle());
@@ -246,7 +316,6 @@ public class OaActLeaveController {
         List<Comments> commentsList = activitiUtil.selectHistoryComment(taskId);
         model.addAttribute("oaActLeave", oaActLeave);
         model.addAttribute("commentsList", commentsList);
-        model.addAttribute("commentsListSize", commentsList.size());
         return "oa/act/act_leave_details";
     }
 
@@ -293,20 +362,5 @@ public class OaActLeaveController {
             //错误
             return "error";
         }
-    }
-
-    /**
-     * 删除附件
-     *
-     * @param array array
-     * @return jsp
-     */
-    @RequestMapping(value = "/deleteAnnexes")
-    @ResponseBody
-    public String deleteAnnexes(String[] array, String id) {
-        if (oaActLeaveService.updateAnnexes(array, id) < 1) {
-            return "error";
-        }
-        return "success";
     }
 }
