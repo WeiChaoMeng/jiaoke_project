@@ -483,8 +483,8 @@
         quality_monitoring_realtime_data1 AS QMRD
         INNER JOIN quality_proportioning_message AS QPM ON QMRD.produce_proportioning_num = QPM.crew1_modele_id
         WHERE
-#         TO_DAYS(NOW()) - TO_DAYS(QMRD.produce_date) &lt;= 1
-                QMRD.produce_date = '2019-09-15'
+        TO_DAYS(NOW()) - TO_DAYS(QMRD.produce_date) &lt;= 1
+#                 QMRD.produce_date = '2019-09-15'
         )
         UNION ALL
         (
@@ -525,8 +525,8 @@
         quality_monitoring_realtime_data2 AS QMRD
         INNER JOIN quality_proportioning_message AS QPM ON QMRD.produce_proportioning_num = QPM.crew2_modele_id
         WHERE
-#         TO_DAYS(NOW()) - TO_DAYS(QMRD.produce_date) &lt;= 1
-                QMRD.produce_date = '2019-06-11'
+         TO_DAYS(NOW()) - TO_DAYS(QMRD.produce_date) &lt;= 1
+ #               QMRD.produce_date = '2019-06-11'
         )
     </select>
     

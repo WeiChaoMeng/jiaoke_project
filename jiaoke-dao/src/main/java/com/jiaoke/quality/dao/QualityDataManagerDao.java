@@ -123,4 +123,14 @@ public interface QualityDataManagerDao {
     QualityRatioTemplate selectRationById(@Param("ratioNum") String ratioNum,@Param("crewNum") String crewNum);
 
 
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期、用户查看当前用户下的所有工程>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/11/20 9:17
+     */
+    List<Map<String, Object>> selectMsgByUserAndDate(@Param("userNum")String userNum,@Param("proDate") String proDate);
 }

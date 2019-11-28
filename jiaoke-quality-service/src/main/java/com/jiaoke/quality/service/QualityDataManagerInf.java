@@ -96,4 +96,15 @@ public interface QualityDataManagerInf {
      * @date 2019/10/10 9:30
      */
     Map<String, Object> selectWarningMessageById(String crewNum, String produceDate, String produceTime);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据用户日期查询该工程下所有项目>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/11/20 9:14
+     */
+    String getMsgByUserAndDate(String userNum, String proDate);
 }

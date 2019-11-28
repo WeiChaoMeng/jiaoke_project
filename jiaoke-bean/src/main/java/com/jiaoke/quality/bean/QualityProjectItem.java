@@ -23,6 +23,7 @@ public class QualityProjectItem {
     private int clientNum;
     private String projectName;
     private String clientName;
+    private String constructionUnits;
     private String update;
     private String upUser;
     private String remaker;

@@ -171,7 +171,7 @@ public class ReceiveDataImpl implements ReceiveDataInf {
 
         //根据配比号获取配比信息
         QualityRatioTemplate templateRatio = qualityWarningDao.getQualityRatioTemplateById(Integer.parseInt(proportioningNum));
-
+        if (templateRatio == null ) return;
         //根据模板随机比例(6-3仓 2%  2,1仓,矿粉仓 1%  沥青上下3kg  温度 上下5)
         double repertorySixPercentage = positiveAndNegativeRandomDecimals(templateRatio.getRepertorySix(), 2, 4);
         //添加预警表相关信息

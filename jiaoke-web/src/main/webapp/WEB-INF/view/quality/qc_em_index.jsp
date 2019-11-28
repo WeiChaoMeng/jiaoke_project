@@ -26,7 +26,7 @@
                 <div class="item-image">
                     <img src="/static/images/icon/icon-tag002.png" alt="">
                 </div>
-                <h3 class="item-title">试验管理</h3>
+                <h3 class="item-title">委托单管理</h3>
                 <div class="item-text">实验相关流程</div>
                 <span class="item-link" onclick="experimental_management()" >查看相关</span>
             </a>

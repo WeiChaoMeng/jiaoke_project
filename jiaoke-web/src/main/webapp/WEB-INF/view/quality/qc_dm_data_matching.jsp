@@ -169,119 +169,121 @@
 
 
 <%--客户分类--%>
-    <%--<div class="infolist1">--%>
+    <div class="infolist1">
 
-        <%--<div class="infoboxleft">--%>
-            <%--<div class="boxtitle">--%>
-                <%--<span>客户分类产品统计</span>--%>
-                <%--&lt;%&ndash;qc_dm_data_number.jsp&ndash;%&gt;--%>
-                <%--<a href="javascript:;" target="_self">更多--%>
-                    <%--<i class="iconfont">&#xeba8;</i>--%>
-                <%--</a>--%>
-            <%--</div>--%>
+        <div class="infoboxleft">
+            <div class="boxtitle">
+                <span>客户分类产品统计</span>
+                <%--qc_dm_data_number.jsp--%>
+                <a href="javascript:;" target="_self">更多
+                    <i class="iconfont">&#xeba8;</i>
+                </a>
+            </div>
 
-            <%--<div class="boxdown">--%>
-                <%--<table class="simpletable">--%>
+            <div class="boxdown">
+                <table class="simpletable">
 
-                    <%--<thead>--%>
-                        <%--<th>模板号</th>--%>
-                        <%--<th>总盘数</th>--%>
-                        <%--<th>生产时间</th>--%>
-                        <%--<th>客户名</th>--%>
-                        <%--<th>操作</th>--%>
-                    <%--</thead>--%>
+                    <thead>
+                        <th>生产总量(吨)</th>
+                        <th>生产时间</th>
+                        <th>业主</th>
+                        <th>工程名称</th>
+                        <th>施工单位</th>
+                        <th>操作</th>
+                    </thead>
 
-                    <%--<tbody>--%>
-                    <%--<c:forEach items="${userProList}" var="userPro" begin="0" end="7" >--%>
-                        <%--<tr>--%>
-                            <%--<td>${userPro.rationNum}</td>--%>
-                            <%--<td>${userPro.total}</td>--%>
-                            <%--<td>${userPro.startTime}</td>--%>
-                            <%--<td>${userPro.userName}</td>--%>
-                            <%--<td>--%>
-                                <%--<a href="#" class="selected" id="">--%>
-                                    <%--<i class="toolico iconfont">&#xe970;</i>查看</a>--%>
-                            <%--</td>--%>
-                        <%--</tr>--%>
-                    <%--</c:forEach>--%>
+                    <tbody>
+                    <c:forEach items="${userProList}" var="userPro" begin="0" end="7" >
+                        <tr>
+                            <td>${userPro.total}</td>
+                            <td>${userPro.startTime}</td>
+                            <td>${userPro.clientName}</td>
+                            <td>${userPro.projectName}</td>
+                            <td>${userPro.constructionUnits}</td>
+                            <td>
+                                <a href="javascript:void(0)" class="selected" onclick="showMsgByUserAndDate('${userPro.clientNum}','${userPro.produceDate}')">
+                                    <i class="toolico iconfont" >&#xe970;</i>查看</a>
+                            </td>
+                        </tr>
+                    </c:forEach>
 
 
-                    <%--</tbody>--%>
+                    </tbody>
 
-                <%--</table>--%>
-            <%--</div>--%>
+                </table>
+            </div>
 
-        <%--</div>--%>
-    <%--</div>--%>
+        </div>
+    </div>
 
-    <%--<div class="chartbox4">--%>
-        <%--<div class="my_echars_title">--%>
-            <%--<span>当日客户产量占比图</span>--%>
-        <%--</div>--%>
-        <%--<div id="chart500" class="charts"></div>--%>
+    <div class="chartbox4">
+        <div class="my_echars_title">
+            <span>当日客户产量占比图</span>
+        </div>
+        <div id="chart500" class="charts"></div>
 
-        <%--<script type="text/javascript">--%>
-            <%--var myChart500 = echarts.init(document.getElementById('chart500'));--%>
-            <%--// 指定图表的配置项和数据--%>
-            <%--var colors = ['#5793f3', '#d14a61', '#675bba'];--%>
-            <%--var option500 =  {--%>
-                    <%--title: {--%>
-                        <%--text: '',--%>
-                        <%--subtext: '',--%>
-                        <%--x: 'center'--%>
-                    <%--},--%>
-                    <%--tooltip: {--%>
-                        <%--trigger: 'item',--%>
-                        <%--formatter: "{a} <br/>{b} : {c} ({d}%)"--%>
-                    <%--},--%>
-                    <%--legend: {--%>
-                        <%--orient: 'vertical',--%>
-                        <%--left: 'left',--%>
-                        <%--data: [--%>
-                            <%--<c:forEach items="${userProTotal}"  var="userPro" varStatus="sta">--%>
-                                    <%--<c:choose>--%>
-                                        <%--<c:when test="${sta.last}">--%>
-                                            <%--'${userPro.userName}'--%>
-                                        <%--</c:when>--%>
-                                        <%--<c:otherwise>--%>
-                                            <%--'${userPro.userName}',--%>
-                                        <%--</c:otherwise>--%>
-                                    <%--</c:choose>--%>
-                            <%--</c:forEach>--%>
-                        <%--]},--%>
-                    <%--series: [--%>
-                        <%--{--%>
-                            <%--name: '占比总量',--%>
-                            <%--type: 'pie',--%>
-                            <%--radius: '55%',--%>
-                            <%--center: ['50%', '60%'],--%>
-                            <%--data: [--%>
-                                <%--<c:forEach items="${userProTotal}" var="userList" varStatus="stus">--%>
-                                    <%--<c:choose>--%>
-                                        <%--<c:when test="${sta.last}">--%>
-                                            <%--{ value:${userList.userTotal}, name:'${userList.userName}'}--%>
-                                        <%--</c:when>--%>
-                                        <%--<c:otherwise>--%>
-                                            <%--{ value:${userList.userTotal}, name:'${userList.userName}'},--%>
-                                        <%--</c:otherwise>--%>
-                                    <%--</c:choose>--%>
-                                <%--</c:forEach>--%>
-                            <%--],--%>
-                            <%--itemStyle: {--%>
-                                <%--emphasis: {--%>
-                                    <%--shadowBlur: 10,--%>
-                                    <%--shadowOffsetX: 0,--%>
-                                    <%--shadowColor: 'rgba(0, 0, 0, 0.5)'--%>
-                                <%--}--%>
-                            <%--}--%>
-                        <%--}--%>
-                    <%--]--%>
-                <%--};--%>
-            <%--myChart500.setOption(option500);--%>
-            <%--window.addEventListener("resize", function () {--%>
-                <%--myChart500.resize();--%>
-            <%--});--%>
-        <%--</script>--%>
+        <script type="text/javascript">
+            var myChart500 = echarts.init(document.getElementById('chart500'));
+            // 指定图表的配置项和数据
+            var colors = ['#5793f3', '#d14a61', '#675bba'];
+            var option500 =  {
+                    title: {
+                        text: '',
+                        subtext: '',
+                        x: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        left: 'left',
+                        data: [
+                            <c:forEach items="${userProTotal}"  var="userPro" varStatus="sta">
+                                    <c:choose>
+                                        <c:when test="${sta.last}">
+                                            '${userPro.userName}'
+                                        </c:when>
+                                        <c:otherwise>
+                                            '${userPro.userName}',
+                                        </c:otherwise>
+                                    </c:choose>
+                            </c:forEach>
+                        ]},
+                    series: [
+                        {
+                            name: '占比总量',
+                            type: 'pie',
+                            radius: '55%',
+                            center: ['50%', '60%'],
+                            data: [
+                                <c:forEach items="${userProTotal}" var="userList" varStatus="stus">
+                                    <c:choose>
+                                        <c:when test="${sta.last}">
+                                            { value:${userList.userTotal}, name:'${userList.userName}'}
+                                        </c:when>
+                                        <c:otherwise>
+                                            { value:${userList.userTotal}, name:'${userList.userName}'},
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                            ],
+                            itemStyle: {
+                                emphasis: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+                        }
+                    ]
+                };
+            myChart500.setOption(option500);
+            window.addEventListener("resize", function () {
+                myChart500.resize();
+            });
+        </script>
 
         <%--<!--查看模板弹出-->--%>
         <div id="showSVGBrk" class="form_background"  style="display:none;" ></div>
@@ -472,11 +474,61 @@
 
     <div style="width: 100%; height: 125%;" ></div>
 
+        <div class="div_dataMessage" style="display: none;"  id="promessage" >
+
+            <div class="">
+                <div class="">
+                    <div class="boxtitle">
+                        <span>历史产品数据</span>
+                        <a href="#"  onclick="showTwentyProductSVG('1')" >二十盘平均数据<i class="iconfont"></i></a>
+                        <a href="#"  onclick="print()" >打印<i class="iconfont"></i></a>
+                    </div>
+
+                    <div class="boxdown">
+                        <table class="simpletable">
+
+                            <thead>
+                            <th>生产日期</th>
+                            <th>生产时间</th>
+                            <th>产品名称</th>
+                            <th>盘号</th>
+                            <th>骨料6</th>
+                            <th>骨料5</th>
+                            <th>骨料4</th>
+                            <th>骨料3</th>
+                            <th>骨料2</th>
+                            <th>骨料1</th>
+                            <th>石粉1</th>
+                            <th>石粉2</th>
+                            <th>沥青</th>
+                            <th>再生料</th>
+                            <th>添加剂</th>
+                            <th>总计</th>
+                            <th>一仓温度</th>
+                            <th>混合料温度</th>
+                            <th>沥青温度</th>
+                            <th>骨料温度</th>
+                            <th>除尘器温度</th>
+                            </thead>
+
+                            <tbody id="msg">
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <%--js获取路径--%>
+        <input id="path" type="hidden" value="${path}"/>
 </body>
 
 <script type="text/javascript" src="/static/js/jquery.js"></script>
 <script type="text/javascript" src="/static/js/common.js"></script>
 <script type="text/javascript" src="/static/js/skin.js"></script>
+<script type="text/javascript" src="/static/js/layer/layer.js"></script>
 <script language="javascript" src="/static/js/qc/jquery.jqprint-0.3.js"></script>
 <script type="text/javascript">
 
@@ -550,6 +602,28 @@
             printContainer: true, //表示如果原来选择的对象必须被纳入打印（注意：设置为false可能会打破你的CSS规则）。
             operaSupport: true//表示如果插件也必须支持歌opera浏览器，在这种情况下，它提供了建立一个临时的打印选项卡。默认是true
         });
+    }
+
+    function showMsgByUserAndDate(userNum,proDate) {
+        var basePath  = $("#path").val();
+        $.ajax({
+            url: basePath + "/getMsgByUserAndDate.do",
+            dataType:"json",
+            data:{
+                "userNum":userNum,
+                "proDate":proDate
+            },
+            success:function (res) {
+                if (res.message === "success"){
+
+                } else {
+                    layer.alert("获取生产信息失败")
+                }
+            },
+            fail:function (res) {
+                layer.alert("请求失败")
+            }
+        })
     }
 </script>
 

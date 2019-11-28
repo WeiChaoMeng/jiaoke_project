@@ -500,7 +500,12 @@ public class QualityController {
         return "quality/qc_data_manager";
     }
 
-
+    @ResponseBody
+    @RequestMapping(value = "/getMsgByUserAndDate.do",method = RequestMethod.POST)
+    public String getMsgByUserAndDate(String userNum,String proDate){
+        String str = qualityDataManagerInf.getMsgByUserAndDate(userNum,proDate);
+        return str;
+    }
     @RequestMapping("/getProducttionByDate.do")
     public String getProducttionByDate(HttpServletRequest request,String producedDate,String crewNum){
 

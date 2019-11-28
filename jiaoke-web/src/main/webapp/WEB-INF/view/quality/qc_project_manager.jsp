@@ -34,6 +34,7 @@
                 <th class="num"></th>
                 <th>客户号</th>
                 <th>工程名称</th>
+                <th>施工单位</th>
                 <th>业主名称</th>
                 <th>上传时间</th>
                 <th>上传人</th>
@@ -80,6 +81,10 @@
                 <td colspan="3" ><input type="text" id="projectName" style="height:20px;width:98%;outline: none;" required="required"  readonly="readonly" ></td>
             </tr>
             <tr>
+                <td class="tlabel">施工单位：</td>
+                <td colspan="3" ><input type="text" id="constructionUnits"   name="constructionUnits" style="height:20px;width:98%;outline: none;" required="required"  readonly="readonly"  ></td>
+            </tr>
+            <tr>
                 <td class="tlabel">业主名称：</td>
                 <td colspan="3" ><input type="text" id="clientName" style="height:20px;width:98%;outline: none;" required="required" readonly="readonly"  ></td>
             </tr>
@@ -116,6 +121,10 @@
             <tr>
                 <td class="tlabel">工程名称：</td>
                 <td colspan="3" ><input type="text" name="projectName" style="height:20px;width:98%;outline: none;" required="required"   ></td>
+            </tr>
+            <tr>
+                <td class="tlabel">施工单位：</td>
+                <td colspan="3" ><input type="text"   name="constructionUnits" style="height:20px;width:98%;outline: none;" required="required"  ></td>
             </tr>
             <tr>
                 <td class="tlabel">业主名称：</td>
@@ -164,6 +173,11 @@
                 <td class="tlabel">工程名称：</td>
                 <td colspan="3" ><input type="text" id="projectName_edit" name="projectName" style="height:20px;width:98%;outline: none;" required="required"   ></td>
             </tr>
+            <tr>
+                <td class="tlabel">施工单位：</td>
+                <td colspan="3" ><input type="text" id="constructionUnits_edit"  name="constructionUnits" style="height:20px;width:98%;outline: none;" required="required"  ></td>
+            </tr>
+
             <tr>
                 <td class="tlabel">业主名称：</td>
                 <td colspan="3" ><input type="text" id="clientName_edit"  name="clientName" style="height:20px;width:98%;outline: none;" required="required"  ></td>
