@@ -211,7 +211,7 @@
     }
 
     //重载页面
-    function qualityDevisePageReload(page) {
+    function reloadArchivesData(page) {
         window.location.href = "${path}/qualityDevise/toIndex?page=" + page;
     }
 
@@ -236,7 +236,7 @@
         } else {
             var id = $("tbody input:checked").val();
             //主页fun
-            window.top.deleteQualityDevise(id, $('#page').val());
+            window.top.deleteArchivesData('/qualityDevise',id, $('#page').val());
         }
     }
 

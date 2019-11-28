@@ -5,6 +5,7 @@ import com.jiaoke.oa.bean.OaActMaintain;
 import com.jiaoke.oa.bean.OaCollaboration;
 import com.jiaoke.oa.dao.OaActMaintainMapper;
 import com.jiaoke.oa.dao.OaCollaborationMapper;
+import com.jiaoke.oa.dao.UserInfoMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -26,6 +27,9 @@ public class OaActMaintainServiceImpl implements OaActMaintainService {
     @Resource
     private OaCollaborationMapper oaCollaborationMapper;
 
+    @Resource
+    private UserInfoMapper userInfoMapper;
+
     @Override
     public int insert(OaActMaintain oaActMaintain, Integer userId, String randomId, Integer state) {
         oaActMaintain.setId(randomId);
@@ -41,6 +45,9 @@ public class OaActMaintainServiceImpl implements OaActMaintainService {
             oaCollaboration.setTitle(oaActMaintain.getTitle());
             oaCollaboration.setUrl("maintain");
             oaCollaboration.setTable("oa_act_maintain");
+            oaCollaboration.setName("设备维修申请");
+            oaCollaboration.setDataOne("设备名称:" + oaActMaintain.getDeviceName());
+            oaCollaboration.setDataTwo("预估金额:" + oaActMaintain.getAmount());
             oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);
@@ -63,11 +70,17 @@ public class OaActMaintainServiceImpl implements OaActMaintainService {
     public OaActMaintain selectByPrimaryKey(String id) {
         OaActMaintain oaActMaintain = oaActMaintainMapper.selectByPrimaryKey(id);
         oaActMaintain.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActMaintain.getCreateTime()));
+        oaActMaintain.setPromoterStr(userInfoMapper.getNicknameById(oaActMaintain.getPromoter()));
         return oaActMaintain;
     }
 
     @Override
     public int deleteData(String id) {
         return oaActMaintainMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public int updateByPrimaryKeySelective(OaActMaintain oaActMaintain) {
+        return oaActMaintainMapper.updateByPrimaryKeySelective(oaActMaintain);
     }
 }

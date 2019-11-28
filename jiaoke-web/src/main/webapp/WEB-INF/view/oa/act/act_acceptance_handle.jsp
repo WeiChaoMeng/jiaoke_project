@@ -1,6 +1,9 @@
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
 <%@ page language="java" contentType="text/html;charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
@@ -13,93 +16,163 @@
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
 </head>
 
-<body>
+<body id="body">
+
 <div class="table-title">
     <span>${oaActAcceptance.title}</span>
 </div>
-<div class="top_toolbar">
-    <div class="top_toolbar_inside" style="height: 40px;border-bottom: none;">
-        <div style="line-height: 40px;margin: 0 10px;float: left;">
-            <span style="float: left;margin-left: 10px;font-size: 13px;">申请时间：${oaActAcceptance.createTimeStr}</span>
+
+<div class="top_toolbar" id="tool">
+    <div class="top-toolbar-details">
+        <div class="top-info-bar-user">
+            <span>${oaActAcceptance.promoterStr}</span>
         </div>
 
-        <div class="head_left_button" style="float: right;line-height: 40px;">
-            <button type="button" class="cursor_hand" onclick="addUser()" style="font-size: 13px;">&#xea0e; 打印</button>
+        <div class="top-info-bar-time">
+            <span>${oaActAcceptance.createTimeStr}</span>
+        </div>
+
+        <div class="printing-but-style">
+            <button type="button" class="cursor_hand" onclick="printContent()">&#xea0e; 打印</button>
         </div>
     </div>
-</div>
-<!-- -->
-<table class="formTable" style="margin: 0">
-    <tbody>
-    <tr>
-        <td class="tdLabel">维修厂家：</td>
-        <td colspan="3" class="table-td-content">
-            ${oaActAcceptance.factory}
-        </td>
-    </tr>
 
-    <tr>
-        <td class="tdLabel">维修内容：</td>
-        <td colspan="3" class="table-td-content">
-            ${oaActAcceptance.content}
-        </td>
-    </tr>
+    <c:choose>
+        <c:when test="${oaActAcceptance.annex != ''}">
+            <div class="top_toolbar" id="annexList">
+                <div class="top-annexes-details">
 
-    <tr>
-        <td class="tdLabel">总计：</td>
-        <td class="table-td-content">
-            ${oaActAcceptance.amount}
-        </td>
+                    <div class="annexes-icon-details">
+                        <button type="button" class="cursor_hand">&#xeac1;</button>
+                    </div>
 
-        <td class="tdLabel">日期：</td>
-        <td class="table-td-content">
-            ${oaActAcceptance.acceptanceDateStr}
-        </td>
-    </tr>
-
-    <tr>
-        <td class="tdLabel">验收人：</td>
-        <td class="table-td-content">
-            ${oaActAcceptance.accepter}
-        </td>
-
-        <td class="tdLabel">经办人：</td>
-        <td class="table-td-content">
-            ${oaActAcceptance.operator}
-        </td>
-    </tr>
-    </tbody>
-</table>
-
-<div class="handle-container">
-    <div class="handle-title">
-        <div class="handle-title-script">处理意见</div>
-    </div>
-
-    <textarea id="processingOpinion" class="opinion-column" style="height: 72px;"></textarea>
-
-    <div class="form-but" style="margin-top: 20px;">
-        <button type="button" class="return-but" style="margin-right: 10px;" onclick="previousPage()">返回</button>
-        <button type="button" class="commit-but" onclick="commit()">提交</button>
-    </div>
-</div>
-
-<div class="receipt-container">
-    <div class="receipt-title">
-        <div class="receipt-script">回执意见（共条）</div>
-    </div>
-
-    <c:forEach items="${commentsList}" var="comments">
-        <div class="comment-container">
-            <div class="comment-style">
-                <span class="comment-name">${comments.userName}</span>
-                <span class="comment-message">${comments.message}</span>
-                <span class="comment-date">${comments.timeStr}</span>
+                    <c:forTokens items="${oaActAcceptance.annex}" delims="," var="annex">
+                        <div class="table-file">
+                            <div class="table-file-content">
+                                <span class="table-file-title" title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <a class="table-file-download icon"
+                                   href="/fileDownloadHandle/download?fileName=${annex}"
+                                   title="下载">&#xebda;</a>
+                            </div>
+                        </div>
+                    </c:forTokens>
+                </div>
             </div>
-        </div>
-    </c:forEach>
+        </c:when>
+    </c:choose>
+</div>
 
-    <div class="receipt-style"></div>
+<form id="oaActAcceptance">
+    <table class="formTable">
+        <tbody>
+        <tr>
+            <td class="tdLabel">维修厂家：</td>
+            <td colspan="5" class="table-td-content">
+                ${oaActAcceptance.factory}
+                <input type="hidden" name="id" value="${oaActAcceptance.id}">
+                <input type="hidden" name="title" value="${oaActAcceptance.title}">
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">维修内容：</td>
+            <td colspan="5" class="table-td-content">
+                ${oaActAcceptance.content}
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">总计：</td>
+            <td colspan="2" class="table-td-content">
+                ${oaActAcceptance.amount}
+            </td>
+
+            <td class="tdLabel">申请人</td>
+            <td colspan="2" class="table-td-content" colspan="2">
+                ${oaActAcceptance.applicant}
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">验收人</td>
+            <td class="table-td-content" colspan="2">
+                <shiro:hasPermission name="accepter">
+                    <div style="width: 100%;height: 100%;" id="accepterContent">
+                            <%--<input type="text" class="formInput-readonly" name="accepter" value="${nickname}" readonly>--%>
+                    </div>
+                </shiro:hasPermission>
+
+                <shiro:lacksPermission name="accepter">
+                    ${oaActAcceptance.accepter}
+                </shiro:lacksPermission>
+            </td>
+
+            <td class="tdLabel">日期</td>
+            <td class="table-td-content" colspan="2">
+                <shiro:hasPermission name="accepter">
+                    <div style="width: 100%;height: 100%;" id="acceptanceDateContent">
+                            <%--<input type="text" class="formInput-readonly" name="acceptanceDate" value="${nickname}" readonly>--%>
+                    </div>
+                </shiro:hasPermission>
+
+                <shiro:lacksPermission name="accepter">
+                    ${oaActAcceptance.acceptanceDate}
+                </shiro:lacksPermission>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">部门负责人</td>
+            <td class="table-td-content">
+                <shiro:hasPermission name="principal">
+                    <div style="width: 100%;height: 100%;" id="principalContent">
+                            <%--<input type="text" class="formInput-readonly" name="principal" value="${nickname}" readonly="readonly">--%>
+                            <%--<input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">--%>
+                    </div>
+                </shiro:hasPermission>
+
+                <shiro:lacksPermission name="principal">
+                    ${oaActAcceptance.principal}
+                </shiro:lacksPermission>
+            </td>
+
+            <td class="tdLabel">部门主管</td>
+            <td class="table-td-content" style="width: 18.5%;">
+                <shiro:hasPermission name="supervisor">
+                    <div style="width: 100%;height: 100%;" id="supervisorContent">
+                            <%--<input type="text" class="formInput-readonly" name="supervisor" value="${nickname}" readonly="readonly">--%>
+                            <%--<input type="hidden" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">--%>
+                    </div>
+                </shiro:hasPermission>
+
+                <shiro:lacksPermission name="supervisor">
+                    ${oaActAcceptance.supervisor}
+                </shiro:lacksPermission>
+            </td>
+
+            <td class="tdLabel">总经理</td>
+            <td class="table-td-content" style="width: 18.5%;">
+                <shiro:hasPermission name="company_principal">
+                    <div style="width: 100%;height: 100%;" id="companyPrincipalContent">
+                            <%--<input type="text" class="formInput-readonly" name="companyPrincipal" value="${nickname}" readonly="readonly">--%>
+                            <%--<input type="hidden" name="companyPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">--%>
+                    </div>
+                </shiro:hasPermission>
+
+                <shiro:lacksPermission name="company_principal">
+                    ${oaActAcceptance.companyPrincipal}
+                </shiro:lacksPermission>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+
+<div class="form-but" id="return">
+    <shiro:hasAnyPermission name="accepter,principal,supervisor,company_principal">
+        <button type="button" class="return-but" style="margin-right: 10px;" onclick="approvalProcessing(2)">回退</button>
+    </shiro:hasAnyPermission>
+    <button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>
 </div>
 
 </body>
@@ -107,38 +180,90 @@
 <script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
 
+    //流程执行步骤
+    var acceptance = JSON.parse('${oaActAcceptanceJson}');
+    //标记
+    var flag = 0;
+    if (flag === 0) {
+        if (acceptance.accepter === "" || acceptance.accepter === undefined) {
+            $('#accepterContent').append('<input type="text" class="formInput-readonly" name="accepter" value="${nickname}" readonly="readonly">');
+            $('#acceptanceDateContent').append('<input type="text" class="formInput-readonly" name="accepterDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>');
+            flag = 1;
+        } else {
+            $('#accepterContent').append(acceptance.accepter);
+            $('#acceptanceDateContent').append(acceptance.accepterDate);
+        }
+    } else {
+        $('#accepterContent').append(acceptance.accepter);
+        $('#acceptanceDateContent').append(acceptance.accepterDate);
+    }
+
+    if (flag === 0) {
+        if (acceptance.principal === "" || acceptance.principal === undefined) {
+            $('#principalContent').append('<input type="text" class="formInput-readonly" name="principal" value="${nickname}" readonly="readonly"><input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+            flag = 1;
+        } else {
+            $('#principalContent').append(acceptance.principal);
+        }
+    } else {
+        $('#principalContent').append(acceptance.principal);
+    }
+
+    if (flag === 0) {
+        if (acceptance.supervisor === "" || acceptance.supervisor === undefined) {
+            $('#supervisorContent').append('<input type="text" class="formInput-readonly" name="supervisor" value="${nickname}" readonly="readonly"><input type="hidden" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+            flag = 1;
+        } else {
+            $('#supervisorContent').append(acceptance.supervisor);
+        }
+    } else {
+        $('#supervisorContent').append(acceptance.supervisor);
+    }
+
+    if (flag === 0) {
+        if (acceptance.companyPrincipal === "" || acceptance.companyPrincipal === undefined) {
+            $('#companyPrincipalContent').append('<input type="text" class="formInput-readonly" name="companyPrincipal" value="${nickname}" readonly="readonly"><input type="hidden" name="companyPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+            flag = 1;
+        } else {
+            $('#companyPrincipalContent').append(acceptance.companyPrincipal);
+        }
+    } else {
+        $('#companyPrincipalContent').append(acceptance.companyPrincipal);
+    }
+
     //任务Id
     var taskId = JSON.parse('${taskId}');
 
-    //返回上一页
-    function previousPage() {
-        window.history.back();
-    }
-
     //提交
-    function commit() {
-        var processingOpinion = $('#processingOpinion').val();
+    function approvalProcessing(flag) {
         $.ajax({
             type: "post",
             url: '/acceptance/approvalSubmit',
-            data: {
-                'processingOpinion': processingOpinion,
-                'taskId': taskId
-            },
+            data: $('#oaActAcceptance').serialize() + "&taskId=" + taskId + "&flag=" + flag,
             async: false,
             success: function (data) {
                 if (data === 'success') {
                     //返回上一页
                     window.location.href = '${path}/oaHomePage/toOaHomePage';
-                    layer.msg('提交成功！');
+                    window.top.tips("提交成功！", 0, 1, 1000);
                 } else {
-                    layer.msg('提交失败！');
+                    window.top.tips("提交失败！", 0, 2, 1000);
                 }
             },
             error: function (result) {
-                layer.msg("出错！");
+                window.top.tips("出错！", 6, 2, 1000);
             }
         })
+    }
+
+    //打印
+    function printContent() {
+        $('#tool,#return').hide();
+        $('#body').css('width', '100%');
+        //执行打印
+        window.print();
+        $('#tool').show();
+        $('#body,#return').css('width', '80%');
     }
 </script>
 </html>

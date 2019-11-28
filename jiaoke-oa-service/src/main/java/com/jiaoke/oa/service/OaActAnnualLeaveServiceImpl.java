@@ -33,13 +33,11 @@ public class OaActAnnualLeaveServiceImpl implements OaActAnnualLeaveService {
 
     @Override
     public int insert(OaActAnnualLeave oaActAnnualLeave, Integer userId, String randomId, Integer state) {
-        oaActAnnualLeave.setPlanDate(DateUtil.stringConvertYYYYMMDD(oaActAnnualLeave.getPlanDateStr()));
-        oaActAnnualLeave.setActualDate(DateUtil.stringConvertYYYYMMDD(oaActAnnualLeave.getActualDateStr()));
         oaActAnnualLeave.setId(randomId);
         oaActAnnualLeave.setCreateTime(new Date());
         oaActAnnualLeave.setPromoter(userId);
         oaActAnnualLeave.setUrl("annualLeave");
-        if (oaActAnnualLeaveMapper.insert(oaActAnnualLeave) < 0) {
+        if (oaActAnnualLeaveMapper.insertSelective(oaActAnnualLeave) < 0) {
             return -1;
         } else {
             OaCollaboration oaCollaboration = new OaCollaboration();
@@ -48,6 +46,9 @@ public class OaActAnnualLeaveServiceImpl implements OaActAnnualLeaveService {
             oaCollaboration.setTitle(oaActAnnualLeave.getTitle());
             oaCollaboration.setUrl("annualLeave");
             oaCollaboration.setTable("oa_act_annual_leave");
+            oaCollaboration.setName("年休假审批");
+            oaCollaboration.setDataOne("享受休假天数" + oaActAnnualLeave.getPlanDate());
+            oaCollaboration.setDataTwo("累计享受休假天数" + oaActAnnualLeave.getTotal());
             oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);
@@ -57,8 +58,6 @@ public class OaActAnnualLeaveServiceImpl implements OaActAnnualLeaveService {
 
     @Override
     public int edit(OaActAnnualLeave oaActAnnualLeave) {
-        oaActAnnualLeave.setPlanDate(DateUtil.stringConvertYYYYMMDD(oaActAnnualLeave.getPlanDateStr()));
-        oaActAnnualLeave.setActualDate(DateUtil.stringConvertYYYYMMDD(oaActAnnualLeave.getActualDateStr()));
         if (oaActAnnualLeaveMapper.updateByPrimaryKeySelective(oaActAnnualLeave) < 0) {
             return -1;
         } else {
@@ -71,8 +70,6 @@ public class OaActAnnualLeaveServiceImpl implements OaActAnnualLeaveService {
     public OaActAnnualLeave selectByPrimaryKey(String id) {
         OaActAnnualLeave oaActAnnualLeave = oaActAnnualLeaveMapper.selectByPrimaryKey(id);
         oaActAnnualLeave.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActAnnualLeave.getCreateTime()));
-        oaActAnnualLeave.setPlanDateStr(DateUtil.dateConvertYYYYMMDD(oaActAnnualLeave.getPlanDate()));
-        oaActAnnualLeave.setActualDateStr(DateUtil.dateConvertYYYYMMDD(oaActAnnualLeave.getActualDate()));
         oaActAnnualLeave.setPromoterStr(userInfoMapper.getNicknameById(oaActAnnualLeave.getPromoter()));
         return oaActAnnualLeave;
     }
@@ -84,14 +81,7 @@ public class OaActAnnualLeaveServiceImpl implements OaActAnnualLeaveService {
     }
 
     @Override
-    public int updateAnnexes(String[] array, String id) {
-        OaActAnnualLeave oaActAnnualLeave = new OaActAnnualLeave();
-        oaActAnnualLeave.setId(id);
-        if (array != null) {
-            oaActAnnualLeave.setAnnex(StringUtils.join(array));
-        } else {
-            oaActAnnualLeave.setAnnex("");
-        }
+    public int updateByPrimaryKeySelective(OaActAnnualLeave oaActAnnualLeave) {
         return oaActAnnualLeaveMapper.updateByPrimaryKeySelective(oaActAnnualLeave);
     }
 }

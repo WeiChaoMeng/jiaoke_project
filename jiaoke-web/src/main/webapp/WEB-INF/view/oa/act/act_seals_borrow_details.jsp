@@ -105,7 +105,7 @@
     <tr>
         <td class="tdLabel">印章主管领导</td>
         <td class="table-td-content" colspan="3">
-            ${oaActSealsBorrow.sealManage}
+            ${oaActSealsBorrow.sealSupervisor}
         </td>
     </tr>
 

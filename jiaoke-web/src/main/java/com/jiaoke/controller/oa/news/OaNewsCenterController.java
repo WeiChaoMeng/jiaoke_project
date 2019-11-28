@@ -8,6 +8,7 @@ import com.jiaoke.oa.bean.OaNewsCenter;
 import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.service.OaCorporateHonorService;
 import com.jiaoke.oa.service.OaNewsCenterService;
+import com.jiaoke.oa.service.UserInfoService;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +35,9 @@ public class OaNewsCenterController {
     @Resource
     private OaCorporateHonorService oaCorporateHonorService;
 
+    @Resource
+    private UserInfoService userInfoService;
+
     /**
      * 新闻管理
      *
@@ -43,6 +47,10 @@ public class OaNewsCenterController {
     public String toNewsCenter(Model model) {
         List<OaNewsCenter> oaNewsCenterList = oaNewsCenterService.selectLatestData();
         List<OaCorporateHonor> oaCorporateHonorList = oaCorporateHonorService.selectLatestData();
+        List<UserInfo> newsList = userInfoService.selectMultipleByPermission("news:add");
+        List<UserInfo> honourList = userInfoService.selectMultipleByPermission("honour:add");
+        model.addAttribute("newsManagerList", newsList);
+        model.addAttribute("honourManagerList", honourList);
         model.addAttribute("oaCorporateHonorList", oaCorporateHonorList);
         model.addAttribute("oaNewsCenterList", oaNewsCenterList);
         return "oa/culture/oa_news_center";
@@ -125,74 +133,5 @@ public class OaNewsCenterController {
             return "error";
         }
         return "success";
-    }
-
-    /**----------------------------------企业荣誉-----------------------------------------*/
-
-    /**
-     * 跳转企业荣誉列表
-     *
-     * @return jsp
-     */
-    @RequestMapping(value = "/toCorporateHonorList")
-    public String toCorporateHonorList() {
-        return "oa/culture/oa_corporate_honor_list";
-    }
-
-    /**
-     * 加载企业荣誉列表数据
-     *
-     * @return list
-     */
-    @RequestMapping(value = "/corporateHonorListData")
-    @ResponseBody
-    public String corporateHonorListData(int page) {
-        PageHelper.startPage(page, 15);
-        List<OaCorporateHonor> oaCorporateHonorList = oaCorporateHonorService.selectAll();
-        PageInfo<OaCorporateHonor> pageInfo = new PageInfo<>(oaCorporateHonorList);
-        return JsonHelper.toJSONString(pageInfo);
-    }
-
-
-    /**
-     * 跳转企业荣誉发布
-     *
-     * @return jsp
-     */
-    @RequestMapping(value = "/toCorporateHonor")
-    public String toCorporateHonor(Model model) {
-        UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
-        model.addAttribute("userInfo", userInfo);
-        return "oa/culture/oa_corporate_honor_release";
-    }
-
-    /**
-     * 添加企业荣誉
-     *
-     * @param oaCorporateHonor oaCorporateHonor
-     * @return 影响行数
-     */
-    @RequestMapping(value = "/addCorporateHonor")
-    @ResponseBody
-    public String addCorporateHonor(OaCorporateHonor oaCorporateHonor) {
-        if (oaCorporateHonorService.insertSelective(oaCorporateHonor) != 1) {
-            return JsonHelper.toJSONString("error");
-        }
-        return JsonHelper.toJSONString("success");
-    }
-
-
-    /**
-     * 企业荣誉详情
-     *
-     * @param model model
-     * @param id    id
-     * @return jsp
-     */
-    @RequestMapping(value = "/corporateHonorDetails")
-    public String corporateHonorDetails(Model model, Integer id) {
-        OaCorporateHonor oaCorporateHonor = oaCorporateHonorService.selectByPrimaryKey(id);
-        model.addAttribute("oaCorporateHonor", oaCorporateHonor);
-        return "oa/culture/oa_corporate_honor_details";
     }
 }

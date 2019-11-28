@@ -45,6 +45,19 @@ public class OaActLicenceBorrowServiceImpl implements OaActLicenceBorrowService 
             oaCollaboration.setTitle(oaActLicenceBorrow.getTitle());
             oaCollaboration.setUrl("licenceBorrow");
             oaCollaboration.setTable("oa_act_licence_borrow");
+            oaCollaboration.setName("证照借用申请");
+            if (oaActLicenceBorrow.getSeal() == 0) {
+                oaCollaboration.setDataOne("证照种类:路驰营业执照正本");
+            } else if (oaActLicenceBorrow.getSeal() == 1) {
+                oaCollaboration.setDataOne("证照种类:路驰营业执照副本");
+            } else if (oaActLicenceBorrow.getSeal() == 2) {
+                oaCollaboration.setDataOne("证照种类:路驰工会法人资格证书");
+            } else if (oaActLicenceBorrow.getSeal() == 3) {
+                oaCollaboration.setDataOne("证照种类:大兴营业执照正本");
+            } else {
+                oaCollaboration.setDataOne("证照种类:大兴营业执照副本");
+            }
+            oaCollaboration.setDataTwo("用途:" + oaActLicenceBorrow.getPurpose());
             oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);
@@ -59,28 +72,6 @@ public class OaActLicenceBorrowServiceImpl implements OaActLicenceBorrowService 
             return -1;
         } else {
             oaCollaborationMapper.updateStateByCorrelationId(oaActLicenceBorrow.getId(), 1, oaActLicenceBorrow.getTitle());
-            return 1;
-        }
-    }
-
-    @Override
-    public int savePending(OaActLicenceBorrow oaActLicenceBorrow, Integer userId, String randomId) {
-        oaActLicenceBorrow.setId(randomId);
-        oaActLicenceBorrow.setPromoter(userId);
-        oaActLicenceBorrow.setUrl("licenceBorrow");
-        oaActLicenceBorrow.setCreateTime(new Date());
-        if (oaActLicenceBorrowMapper.insertData(oaActLicenceBorrow) < 0) {
-            return -1;
-        } else {
-            OaCollaboration oaCollaboration = new OaCollaboration();
-            oaCollaboration.setCorrelationId(randomId);
-            oaCollaboration.setPromoter(userId);
-            oaCollaboration.setTitle(oaActLicenceBorrow.getTitle());
-            oaCollaboration.setUrl("licenceBorrow");
-            oaCollaboration.setTable("oa_act_licence_borrow");
-            oaCollaboration.setState(1);
-            oaCollaboration.setCreateTime(new Date());
-            oaCollaborationMapper.insertData(oaCollaboration);
             return 1;
         }
     }

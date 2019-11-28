@@ -10,9 +10,6 @@
         <listener>
             <listener-class>com.jiaoke.listener.ContextListener</listener-class>
         </listener>
-        <!--<listener>
-            <listener-class>com.jiaoke.listener.OaDocListener</listener-class>
-        </listener>-->
         <!--&lt;!&ndash;初始化全局参数&ndash;&gt;-->
         <context-param>
             <param-name>contextConfigLocation</param-name>

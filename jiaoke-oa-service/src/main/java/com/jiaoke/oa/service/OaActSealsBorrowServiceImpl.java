@@ -50,6 +50,26 @@ public class OaActSealsBorrowServiceImpl implements OaActSealsBorrowService {
             oaCollaboration.setTitle(oaActSealsBorrow.getTitle());
             oaCollaboration.setUrl("sealsBorrow");
             oaCollaboration.setTable("oa_act_seals_borrow");
+            oaCollaboration.setName("印章借用申请");
+
+            if (oaActSealsBorrow.getSeal() == 0) {
+                oaCollaboration.setDataOne("印章种类:路驰公章");
+            } else if (oaActSealsBorrow.getSeal() == 1) {
+                oaCollaboration.setDataOne("印章种类:路驰合同专用章");
+            } else if (oaActSealsBorrow.getSeal() == 2) {
+                oaCollaboration.setDataOne("印章种类:路驰党支部章");
+            } else if (oaActSealsBorrow.getSeal() == 3) {
+                oaCollaboration.setDataOne("印章种类:路驰工会章");
+            } else if (oaActSealsBorrow.getSeal() == 4) {
+                oaCollaboration.setDataOne("印章种类:路驰法人章");
+            } else if (oaActSealsBorrow.getSeal() == 5) {
+                oaCollaboration.setDataOne("印章种类:路驰财务专用章");
+            } else if (oaActSealsBorrow.getSeal() == 6) {
+                oaCollaboration.setDataOne("印章种类:大兴公章");
+            } else {
+                oaCollaboration.setDataOne("印章种类:大兴合同章");
+            }
+            oaCollaboration.setDataTwo("盖章文件内容:" + oaActSealsBorrow.getContent());
             oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);

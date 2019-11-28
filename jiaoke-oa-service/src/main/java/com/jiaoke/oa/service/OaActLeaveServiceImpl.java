@@ -6,7 +6,6 @@ import com.jiaoke.oa.bean.OaCollaboration;
 import com.jiaoke.oa.dao.OaActLeaveMapper;
 import com.jiaoke.oa.dao.OaCollaborationMapper;
 import com.jiaoke.oa.dao.UserInfoMapper;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -33,7 +32,6 @@ public class OaActLeaveServiceImpl implements OaActLeaveService {
 
     @Override
     public int insert(OaActLeave oaActLeave, Integer userId, String randomId, Integer state) {
-        oaActLeave.setApplyDate(DateUtil.stringConvertYYYYMMDD(oaActLeave.getApplyDateStr()));
         oaActLeave.setId(randomId);
         oaActLeave.setCreateTime(new Date());
         oaActLeave.setPromoter(userId);
@@ -47,6 +45,9 @@ public class OaActLeaveServiceImpl implements OaActLeaveService {
             oaCollaboration.setTitle(oaActLeave.getTitle());
             oaCollaboration.setUrl("leave");
             oaCollaboration.setTable("oa_act_leave");
+            oaCollaboration.setName("请假审请");
+            oaCollaboration.setDataOne("申请时间:" + oaActLeave.getApplyDate());
+            oaCollaboration.setDataTwo("事由:" + oaActLeave.getReason());
             oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);
@@ -56,7 +57,6 @@ public class OaActLeaveServiceImpl implements OaActLeaveService {
 
     @Override
     public int edit(OaActLeave oaActLeave) {
-        oaActLeave.setApplyDate(DateUtil.stringConvertYYYYMMDD(oaActLeave.getApplyDateStr()));
         if (oaActLeaveMapper.updateByPrimaryKeySelective(oaActLeave) < 0) {
             return -1;
         } else {
@@ -69,7 +69,6 @@ public class OaActLeaveServiceImpl implements OaActLeaveService {
     public OaActLeave selectByPrimaryKey(String id) {
         OaActLeave oaActLeave = oaActLeaveMapper.selectByPrimaryKey(id);
         oaActLeave.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActLeave.getCreateTime()));
-        oaActLeave.setApplyDateStr(DateUtil.dateConvertYYYYMMDD(oaActLeave.getApplyDate()));
         oaActLeave.setPromoterStr(userInfoMapper.getNicknameById(oaActLeave.getPromoter()));
         return oaActLeave;
     }
@@ -81,14 +80,7 @@ public class OaActLeaveServiceImpl implements OaActLeaveService {
     }
 
     @Override
-    public int updateAnnexes(String[] array, String id) {
-        OaActLeave oaActLeave = new OaActLeave();
-        oaActLeave.setId(id);
-        if (array != null) {
-            oaActLeave.setAnnex(StringUtils.join(array));
-        } else {
-            oaActLeave.setAnnex("");
-        }
+    public int updateByPrimaryKeySelective(OaActLeave oaActLeave) {
         return oaActLeaveMapper.updateByPrimaryKeySelective(oaActLeave);
     }
 }

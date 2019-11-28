@@ -1,3 +1,5 @@
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
 <%@ page language="java" contentType="text/html;charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -47,7 +49,7 @@
                     <c:forTokens items="${oaActMaintain.annex}" delims="," var="annex">
                         <div class="table-file">
                             <div class="table-file-content">
-                                <span title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <span class="table-file-title" title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
                                 <a class="table-file-download icon"
                                    href="/fileDownloadHandle/download?fileName=${annex}"
                                    title="下载">&#xebda;</a>
@@ -60,104 +62,123 @@
     </c:choose>
 </div>
 
-<table class="formTable" style="margin: 0">
-    <tbody>
-    <tr>
-        <td class="tdLabel">单位</td>
-        <td class="table-td-content" colspan="2">
-            <c:choose>
-                <c:when test="${oaActMaintain.company == 0}">
-                    北京市政路桥建材集团有限公司路驰分公司
-                </c:when>
-            </c:choose>
-        </td>
-
-        <td class="tdLabel">申请日期</td>
-        <td class="table-td-content" colspan="2">
-            ${oaActMaintain.applyTime}
-        </td>
-    </tr>
-
-    <tr>
-        <td class="tdLabel">申请部门</td>
-        <td class="table-td-content" colspan="2">
-            ${oaActMaintain.department}
-        </td>
-
-        <td class="tdLabel">申请人</td>
-        <td class="table-td-content" colspan="2">
-            ${oaActMaintain.applicant}
-        </td>
-    </tr>
-
-    <tr>
-        <td class="tdLabel">设备名称</td>
-        <td class="table-td-content" colspan="2">
-            ${oaActMaintain.deviceName}
-        </td>
-
-        <td class="tdLabel">规格型号</td>
-        <td class="table-td-content" colspan="2">
-            ${oaActMaintain.specification}
-        </td>
-    </tr>
-
-    <tr>
-        <td class="tdLabel">故障描述</td>
-        <td colspan="5" class="table-td-content" style="padding: 10px;height: 60px">
-            ${oaActMaintain.faultDescription}
-        </td>
-    </tr>
-
-    <tr>
-        <td class="tdLabel">维修内容</td>
-        <td colspan="5" class="table-td-content" style="padding: 10px;height: 60px">
-            ${oaActMaintain.content}
-        </td>
-    </tr>
-
-    <tr>
-        <td class="tdLabel">预估金额</td>
-        <td colspan="5" class="table-td-content">
-            ${oaActMaintain.amount}
-        </td>
-    </tr>
-
-    <tr>
-        <td class="tdLabel">部门负责人</td>
-        <td class="table-td-content">
-            ${oaActMaintain.principal}
-        </td>
-
-        <td class="tdLabel">部门主管</td>
-        <td class="table-td-content" style="width: 18.5%;">
-            ${oaActMaintain.supervisor}
-        </td>
-
-        <td class="tdLabel">总经理</td>
-        <td class="table-td-content" style="width: 18.5%;">
-            <shiro:hasPermission name="companyPrincipal">
+<form id="oaActMaintain">
+    <table class="formTable">
+        <tbody>
+        <tr>
+            <td class="tdLabel">单位</td>
+            <td class="table-td-content" colspan="2">
                 <c:choose>
-                    <c:when test="${oaActMaintain.companyPrincipal == null}">
-                        <input type="text" class="formInput-readonly" name="sealOperator" value="${nickname}"
-                               readonly="readonly">
+                    <c:when test="${oaActMaintain.company == 0}">
+                        北京市政路桥建材集团有限公司路驰分公司
                     </c:when>
-                    <c:otherwise>
-                        ${oaActMaintain.companyPrincipal}
-                    </c:otherwise>
                 </c:choose>
-            </shiro:hasPermission>
+            </td>
 
-            <shiro:lacksPermission name="sealOperator">
-                ${oaActMaintain.companyPrincipal}
-            </shiro:lacksPermission>
-        </td>
-    </tr>
-    </tbody>
-</table>
+            <td class="tdLabel">申请日期</td>
+            <td class="table-td-content" colspan="2">
+                ${oaActMaintain.applyTime}
+                <input type="hidden" name="id" value="${oaActMaintain.id}">
+                <input type="hidden" name="title" value="${oaActMaintain.title}">
+            </td>
+        </tr>
 
-<div class="form-but">
-    <button type="button" class="return-but" style="margin-right: 10px;" onclick="approvalProcessing(2)">回退</button>
+        <tr>
+            <td class="tdLabel">申请部门</td>
+            <td class="table-td-content" colspan="2">
+                ${oaActMaintain.department}
+            </td>
+
+            <td class="tdLabel">申请人</td>
+            <td class="table-td-content" colspan="2">
+                ${oaActMaintain.applicant}
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">设备名称</td>
+            <td class="table-td-content" colspan="2">
+                ${oaActMaintain.deviceName}
+            </td>
+
+            <td class="tdLabel">规格型号</td>
+            <td class="table-td-content" colspan="2">
+                ${oaActMaintain.specification}
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">故障描述</td>
+            <td colspan="5" class="table-td-content" style="padding: 10px;height: 60px">
+                ${oaActMaintain.faultDescription}
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">维修内容</td>
+            <td colspan="5" class="table-td-content" style="padding: 10px;height: 60px">
+                ${oaActMaintain.content}
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">预估金额</td>
+            <td colspan="5" class="table-td-content">
+                ${oaActMaintain.amount}
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">部门负责人</td>
+            <td class="table-td-content">
+                <shiro:hasPermission name="principal">
+                    <div style="width: 100%;height: 100%;" id="principalContent">
+                            <%--<input type="text" class="formInput-readonly" name="principal" value="${nickname}" readonly="readonly">--%>
+                            <%--<input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">--%>
+                    </div>
+                </shiro:hasPermission>
+
+                <shiro:lacksPermission name="principal">
+                    ${oaActMaintain.principal}
+                </shiro:lacksPermission>
+            </td>
+
+            <td class="tdLabel">部门主管</td>
+            <td class="table-td-content" style="width: 18.5%;">
+                <shiro:hasPermission name="supervisor">
+                    <div style="width: 100%;height: 100%;" id="supervisorContent">
+                            <%--<input type="text" class="formInput-readonly" name="supervisor" value="${nickname}" readonly="readonly">--%>
+                            <%--<input type="hidden" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">--%>
+                    </div>
+                </shiro:hasPermission>
+
+                <shiro:lacksPermission name="supervisor">
+                    ${oaActMaintain.supervisor}
+                </shiro:lacksPermission>
+            </td>
+
+            <td class="tdLabel">总经理</td>
+            <td class="table-td-content" style="width: 18.5%;">
+                <shiro:hasPermission name="company_principal">
+                    <div style="width: 100%;height: 100%;" id="companyPrincipalContent">
+                            <%--<input type="text" class="formInput-readonly" name="companyPrincipal" value="${nickname}" readonly="readonly">--%>
+                            <%--<input type="hidden" name="companyPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">--%>
+                    </div>
+                </shiro:hasPermission>
+
+                <shiro:lacksPermission name="company_principal">
+                    ${oaActMaintain.companyPrincipal}
+                </shiro:lacksPermission>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+
+<div class="form-but" id="return">
+    <shiro:hasAnyPermission name="principal,supervisor,company_principal">
+        <button type="button" class="return-but" style="margin-right: 10px;" onclick="approvalProcessing(2)">回退</button>
+    </shiro:hasAnyPermission>
     <button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>
 </div>
 
@@ -165,6 +186,49 @@
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
 <script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
+
+    //流程执行步骤
+    var maintain = JSON.parse('${oaActMaintainJson}');
+    //标记
+    var flag = 0;
+    if (flag === 0) {
+        if (maintain.principal === "" || maintain.principal === undefined) {
+            $('#principalContent').append('<input type="text" class="formInput-readonly" name="principal" value="${nickname}" readonly="readonly"><input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+            flag = 1;
+        } else {
+            $('#principalContent').append(maintain.principal);
+        }
+    } else {
+        $('#principalContent').append(maintain.principal);
+    }
+
+    if (flag === 0) {
+        if (maintain.supervisor === "" || maintain.supervisor === undefined) {
+            $('#supervisorContent').append('<input type="text" class="formInput-readonly" name="supervisor" value="${nickname}" readonly="readonly"><input type="hidden" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+            flag = 1;
+        } else {
+            $('#supervisorContent').append(maintain.supervisor);
+        }
+    } else {
+        $('#supervisorContent').append(maintain.supervisor);
+    }
+
+    if (flag === 0) {
+        if (maintain.companyPrincipal === "" || maintain.companyPrincipal === undefined) {
+            $('#companyPrincipalContent').append('<input type="text" class="formInput-readonly" name="companyPrincipal" value="${nickname}" readonly="readonly"><input type="hidden" name="companyPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+            flag = 1;
+        } else {
+            $('#companyPrincipalContent').append(maintain.companyPrincipal);
+        }
+    } else {
+        $('#companyPrincipalContent').append(maintain.companyPrincipal);
+    }
+
+    //知会
+    if(flag === 0){
+        $('#return').html("");
+        $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
+    }
 
     //任务Id
     var taskId = JSON.parse('${taskId}');
@@ -174,7 +238,7 @@
         $.ajax({
             type: "post",
             url: '/maintain/approvalSubmit',
-            data: $('#oaActSealsBorrow').serialize() + "&taskId=" + taskId + "&flag=" + flag,
+            data: $('#oaActMaintain').serialize() + "&taskId=" + taskId + "&flag=" + flag,
             async: false,
             success: function (data) {
                 if (data === 'success') {

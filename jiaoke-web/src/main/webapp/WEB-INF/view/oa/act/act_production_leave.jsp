@@ -16,7 +16,7 @@
     <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
 </head>
 
-<body id="body">
+<body id="body" style="width: 65%">
 
 <div class="table-title">
     <span>生产假审批表</span>
@@ -65,8 +65,8 @@
                     <button type="button" class="table-tab-send" onclick="send()">发送</button>
                 </td>
 
-                <th nowrap="nowrap" class="th_title" style="width: 4%">标题:</th>
-                <td style="width: 44%">
+                <th nowrap="nowrap" class="th_title" style="width: 4%">标题</th>
+                <td style="width: 35%">
                     <div class="common_input_frame">
                         <input type="text" id="title" name="title" placeholder="请输入标题" title="点击此处填写标题"
                                value="生产假审批表(${nickname} <%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>)"
@@ -74,12 +74,10 @@
                     </div>
                 </td>
 
-                <th class="th_title" nowrap="nowrap" style="width: 4%">流程:</th>
+                <th class="th_title" nowrap="nowrap" style="width: 4%">流程</th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text"
-                               placeholder="发起者部门主管领导(审批)、总经理(审批)、人事主管(审批)、发起人(协同)"
-                               readonly="readonly">
+                        <input type="text" placeholder="发起者部门主管领导(审批),总经理(审批),人事主管(审批),发起人、人事(协同)" readonly>
                     </div>
                 </td>
             </tr>
@@ -87,19 +85,12 @@
         </table>
     </div>
 
-    <span class="fill-in-date">填表日期：<%=new SimpleDateFormat("yyyy-MM-dd").format(new Date())%></span>
+    <input type="text" class="filling-date-content" name="fillingDate"
+           value="<%=new SimpleDateFormat("yyyy-MM-dd").format(new Date())%>" readonly>
+    <span class="filling-date">填表日期 </span>
 
     <table class="formTable">
         <tbody>
-        <tr>
-            <td class="tdLabel">单位名称</td>
-            <td colspan="5" class="table-td-content">
-                <select class="select" name="company" style="width: 100%">
-                    <option value="0">北京市政路桥建材集团有限公司路驰分公司</option>
-                </select>
-            </td>
-        </tr>
-
         <tr>
             <td class="tdLabel">部门</td>
             <td class="table-td-content">
@@ -116,24 +107,26 @@
         <tr>
             <td class="tdLabel">生育假天数</td>
             <td class="table-td-content">
-                <input type="text" class="formInput" name="maternityLeave" autocomplete="off">
+                <input type="text" class="formInput" name="maternityLeave"
+                       oninput="value=value.replace(/^(0+)|[^\d]/g,'')" autocomplete="off">
             </td>
 
             <td class="tdLabel">申请休假时间</td>
             <td class="table-td-content">
-                <input type="text" class="formInput apply-date" name="applyDateStr" onfocus="this.blur()">
+                <input type="text" class="formInput apply-date" name="applyDate" onfocus="this.blur()">
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel">晚育假天数</td>
             <td class="table-td-content">
-                <input type="text" class="formInput" name="lateChildbirth" autocomplete="off">
+                <input type="text" class="formInput" name="lateChildbirth"
+                       oninput="value=value.replace(/^(0+)|[^\d]/g,'')" autocomplete="off">
             </td>
 
             <td class="tdLabel">实际休假时间</td>
             <td class="table-td-content">
-                <input type="text" class="formInput actual-date" name="actualDateStr" onfocus="this.blur()">
+                <input type="text" class="formInput actual-date" name="actualDate" onfocus="this.blur()">
             </td>
         </tr>
 
@@ -312,10 +305,11 @@
     //打印
     function printContent() {
         $('#tool,#titleArea,#annexList').hide();
-        // $('#body').css('width','100%');
+        $('#body').css('width', '100%');
         //执行打印
         window.print();
         $('#tool,#titleArea').show();
+        $('#body').css('width', '65%');
 
         //附件列表
         let annexesLen = $('#annexes').children().length;

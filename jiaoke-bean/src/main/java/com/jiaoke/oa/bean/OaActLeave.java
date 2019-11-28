@@ -29,9 +29,9 @@ public class OaActLeave {
     private String title;
 
     /**
-     * 单位名称
+     * 填表日期
      */
-    private Integer company;
+    private String fillingDate;
 
     /**
      * 姓名
@@ -41,14 +41,52 @@ public class OaActLeave {
     /**
      * 申请时间
      */
-    private Date applyDate;
-    @Transient
-    private String applyDateStr;
+    private String applyDate;
 
     /**
      * 事由
      */
     private String reason;
+
+    /**
+     * 本人签字
+     */
+    private String applicantSignature;
+
+    /**
+     * 签字时间
+     */
+    private String applicantSignatureDate;
+
+    /**
+     * 部门负责人
+     */
+    private String principal;
+
+    /**
+     * 部门负责人审批时间
+     */
+    private String principalDate;
+
+    /**
+     * 部门负责人审批内容
+     */
+    private String principalContent;
+
+    /**
+     * 部门主管领导
+     */
+    private String supervisor;
+
+    /**
+     * 部门主管领导审批时间
+     */
+    private String supervisorDate;
+
+    /**
+     * 部门主管领导审批内容
+     */
+    private String supervisorContent;
 
     /**
      * 附件
@@ -98,20 +136,12 @@ public class OaActLeave {
         this.name = name;
     }
 
-    public Date getApplyDate() {
+    public String getApplyDate() {
         return applyDate;
     }
 
-    public void setApplyDate(Date applyDate) {
+    public void setApplyDate(String applyDate) {
         this.applyDate = applyDate;
-    }
-
-    public String getApplyDateStr() {
-        return applyDateStr;
-    }
-
-    public void setApplyDateStr(String applyDateStr) {
-        this.applyDateStr = applyDateStr;
     }
 
     public String getReason() {
@@ -120,6 +150,54 @@ public class OaActLeave {
 
     public void setReason(String reason) {
         this.reason = reason;
+    }
+
+    public String getApplicantSignature() {
+        return applicantSignature;
+    }
+
+    public void setApplicantSignature(String applicantSignature) {
+        this.applicantSignature = applicantSignature;
+    }
+
+    public String getApplicantSignatureDate() {
+        return applicantSignatureDate;
+    }
+
+    public void setApplicantSignatureDate(String applicantSignatureDate) {
+        this.applicantSignatureDate = applicantSignatureDate;
+    }
+
+    public String getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(String principal) {
+        this.principal = principal;
+    }
+
+    public String getPrincipalDate() {
+        return principalDate;
+    }
+
+    public void setPrincipalDate(String principalDate) {
+        this.principalDate = principalDate;
+    }
+
+    public String getSupervisor() {
+        return supervisor;
+    }
+
+    public void setSupervisor(String supervisor) {
+        this.supervisor = supervisor;
+    }
+
+    public String getSupervisorDate() {
+        return supervisorDate;
+    }
+
+    public void setSupervisorDate(String supervisorDate) {
+        this.supervisorDate = supervisorDate;
     }
 
     public String getAnnex() {
@@ -154,14 +232,6 @@ public class OaActLeave {
         this.promoter = promoter;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
     public String getPromoterStr() {
         return promoterStr;
     }
@@ -170,11 +240,35 @@ public class OaActLeave {
         this.promoterStr = promoterStr;
     }
 
-    public Integer getCompany() {
-        return company;
+    public String getUrl() {
+        return url;
     }
 
-    public void setCompany(Integer company) {
-        this.company = company;
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getFillingDate() {
+        return fillingDate;
+    }
+
+    public void setFillingDate(String fillingDate) {
+        this.fillingDate = fillingDate;
+    }
+
+    public String getPrincipalContent() {
+        return principalContent;
+    }
+
+    public void setPrincipalContent(String principalContent) {
+        this.principalContent = principalContent;
+    }
+
+    public String getSupervisorContent() {
+        return supervisorContent;
+    }
+
+    public void setSupervisorContent(String supervisorContent) {
+        this.supervisorContent = supervisorContent;
     }
 }

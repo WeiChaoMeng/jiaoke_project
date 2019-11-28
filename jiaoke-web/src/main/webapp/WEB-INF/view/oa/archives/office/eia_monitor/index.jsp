@@ -118,6 +118,7 @@
             <input type="hidden" id="countindex" runat="server"/>
             <!--设置最多显示的页码数 可以手动设置 默认为10-->
             <input type="hidden" id="visiblePages" runat="server" value="10"/>
+            <input type="hidden" id="page"/>
         </div>
     </div>
 </div>
@@ -129,6 +130,10 @@
 <script type="text/javascript" src="../../../../../../static/js/date_pickers/jquery.date_input.pack.js"></script>
 <script type="text/javascript" src="../../../../../../static/js/paging/jqPaginator.js"></script>
 <script>
+
+    //设置当前页
+    var currentPageNum = JSON.parse('${currentPage}');
+
     //重置页面
     function resetButton() {
         window.location.reload();
@@ -255,29 +260,20 @@
     //删除
     $('#remove').on('click', function () {
         let length = $("tbody input:checked").length;
-        if (length != 1) {
-            alert("一次只能选择一条数据");
+        if (length !== 1) {
+            layer.msg('请选择一条数据！');
             return false;
         } else {
             var id = $("tbody input:checked").val();
-            $.ajax({
-                url: '/eiaMonitor/delete',
-                data: {'id': id},
-                type: 'POST',
-                error: function () {
-                    alert("Connection error");
-                },
-                success: function (result) {
-                    if (result === 'success') {
-                        alert("删除成功");
-                        window.location.reload();
-                    } else {
-                        alert("删除失败");
-                    }
-                }
-            });
+            //主页fun
+            window.top.deleteArchivesData('/eiaMonitor', id, $('#page').val());
         }
     });
+
+    //重载页面
+    function reloadArchivesData(page) {
+        window.location.href = "${path}/eiaMonitor/toEiaMonitor?page=" + page;
+    }
 
     //日期选择器
     $('#datePicker').on('click', function () {
@@ -334,7 +330,8 @@
     }
 
     $(function () {
-        loadData(1);
+        $('#page').val(currentPageNum);
+        loadData(currentPageNum);
         loadPage(1);
     });
 

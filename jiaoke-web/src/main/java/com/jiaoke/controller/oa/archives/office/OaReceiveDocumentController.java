@@ -34,7 +34,8 @@ public class OaReceiveDocumentController {
      * @return receive_document.jsp
      */
     @RequestMapping(value = "/toReceiveDocument")
-    public String toReceiveDocument() {
+    public String toReceiveDocument(int page, Model model) {
+        model.addAttribute("currentPage", JsonHelper.toJSONString(page));
         return "oa/archives/office/receive_document/index";
     }
 
@@ -70,7 +71,7 @@ public class OaReceiveDocumentController {
     @RequestMapping(value = "/addReceiveDocument", method = RequestMethod.POST)
     public String add(OaReceiveDocument oaReceiveDocument) {
         int i = oaReceiveDocumentService.insertSelective(oaReceiveDocument);
-        return "redirect:/receiveDocument/toReceiveDocument";
+        return "redirect:/receiveDocument/toReceiveDocument?page=1";
     }
 
     /**
@@ -141,7 +142,7 @@ public class OaReceiveDocumentController {
     @RequestMapping("/edit")
     public String edit(OaReceiveDocument oaReceiveDocument) {
         int i = oaReceiveDocumentService.updateByPrimaryKeySelective(oaReceiveDocument);
-        return "redirect:/receiveDocument/toReceiveDocument";
+        return "redirect:/receiveDocument/toReceiveDocument?page=1";
     }
 
     /**

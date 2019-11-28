@@ -14,8 +14,6 @@
     <meta charset="utf-8">
     <title>转正申请表审批</title>
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
-    <link href="../../../../static/js/date_pickers/date_picker.css" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
 </head>
 
 <body id="body">
@@ -51,7 +49,7 @@
                     <c:forTokens items="${oaActRegularization.annex}" delims="," var="annex">
                         <div class="table-file">
                             <div class="table-file-content">
-                                <span title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <span class="table-file-title" title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
                                 <a class="table-file-download icon"
                                    href="/fileDownloadHandle/download?fileName=${annex}"
                                    title="下载">&#xebda;</a>
@@ -64,6 +62,11 @@
     </c:choose>
 </div>
 
+<div style="margin-top: 10px">
+    <input type="text" class="filling-date-content" value="${oaActRegularization.fillingDate}" readonly>
+    <span class="filling-date">填表日期 </span>
+</div>
+
 <form id="oaActRegularization">
     <table class="formTable">
         <tbody>
@@ -72,7 +75,7 @@
             <td class="table-td-content">
                 ${oaActRegularization.name}
                 <input type="hidden" name="id" value="${oaActRegularization.id}">
-                <input type="hidden" name="title" value="${oaActRegularization.title}">
+                <input type="hidden" name="promoter" value="${oaActRegularization.promoter}">
             </td>
 
             <td class="tdLabel">部门</td>
@@ -102,12 +105,12 @@
 
             <td class="tdLabel">入职时间</td>
             <td class="table-td-content">
-                ${oaActRegularization.entryDateStr}
+                ${oaActRegularization.entryDate}
             </td>
 
             <td class="tdLabel">试用期时间</td>
-            <td class="table-td-content">
-                ${oaActRegularization.probationPeriodStr}
+            <td class="table-td-content" id="personnelCensorContent">
+                ${oaActRegularization.probationPeriod}
             </td>
         </tr>
 
@@ -122,70 +125,47 @@
             <td class="tdLabel">部门评价</td>
             <td colspan="5" class="table-td-textarea" style="line-height: 0">
                 <div class="opinion-principal">
-                    <label class="opinion-principal-title">部长：</label>
-                    <shiro:hasPermission name="officePrincipal">
-                        <textarea class="opinion-column-Juxtaposition" style="background-color: #ffffff"
-                                  name="principalContent"></textarea>
-                        <div class="approval-date">
-                            <label class="approval-date-label">日期:</label>
-                            <input class="approval-date-input" type="text" name="principalDate"
-                                   value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>
-                        </div>
-                        <div class="approval-signature">
-                            <label class="approval-signature-label">签字:</label>
-                            <input class="approval-signature-input" type="text" name="principalSign" value="${nickname}"
-                                   readonly>
+                    <label class="opinion-principal-title">部长 </label>
+                    <shiro:hasPermission name="principal">
+                        <div style="width: 100%;height: 100%;" id="principalContent">
+
                         </div>
                     </shiro:hasPermission>
 
-                    <shiro:lacksPermission name="officePrincipal">
+                    <shiro:lacksPermission name="principal">
                         <textarea class="opinion-column-Juxtaposition"
                                   readonly>${oaActRegularization.principalContent}</textarea>
                         <div class="approval-date">
-                            <label class="approval-date-label">日期:</label>
+                            <label class="approval-date-label">日期 </label>
                             <input class="approval-date-input" type="text" value="${oaActRegularization.principalDate}"
                                    readonly>
                         </div>
                         <div class="approval-signature">
-                            <label class="approval-signature-label">签字:</label>
+                            <label class="approval-signature-label">签字 </label>
                             <input class="approval-signature-input" type="text"
-                                   value="${oaActRegularization.principalSign}"
-                                   readonly>
+                                   value="${oaActRegularization.principal}" readonly>
                         </div>
                     </shiro:lacksPermission>
                 </div>
 
                 <div class="opinion-supervisor">
-                    <label class="opinion-principal-title">主管：</label>
-                    <shiro:hasPermission name="officeSupervisor">
-                        <textarea class="opinion-column-Juxtaposition" name="supervisorContent"
-                                  style="background-color: #ffffff"></textarea>
-                        <div class="approval-date">
-                            <label class="approval-date-label">日期:</label>
-                            <input class="approval-date-input" type="text" name="supervisorDate"
-                                   value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>
-                        </div>
-                        <div class="approval-signature">
-                            <label class="approval-signature-label">签字:</label>
-                            <input class="approval-signature-input" type="text" name="supervisorSign"
-                                   value="${nickname}"
-                                   readonly>
-                        </div>
+                    <label class="opinion-principal-title">主管 </label>
+                    <shiro:hasPermission name="supervisor">
+                        <div style="width: 100%;height: 100%;" id="supervisorContent"></div>
                     </shiro:hasPermission>
 
-                    <shiro:lacksPermission name="officeSupervisor">
+                    <shiro:lacksPermission name="supervisor">
                         <textarea class="opinion-column-Juxtaposition"
                                   readonly>${oaActRegularization.supervisorContent}</textarea>
                         <div class="approval-date">
-                            <label class="approval-date-label">日期:</label>
+                            <label class="approval-date-label">日期 </label>
                             <input class="approval-date-input" type="text" value="${oaActRegularization.supervisorDate}"
                                    readonly>
                         </div>
                         <div class="approval-signature">
-                            <label class="approval-signature-label">签字:</label>
+                            <label class="approval-signature-label">签字 </label>
                             <input class="approval-signature-input" type="text"
-                                   value="${oaActRegularization.supervisorSign}"
-                                   readonly>
+                                   value="${oaActRegularization.supervisor}" readonly>
                         </div>
                     </shiro:lacksPermission>
                 </div>
@@ -196,32 +176,21 @@
             <td class="tdLabel">组织人事部意见</td>
             <td colspan="5" class="approval-content">
                 <shiro:hasPermission name="personnel">
-                    <textarea class="approval-content-textarea" name="personnelContent"
-                              style="background-color: #ffffff"></textarea>
-                    <div class="approval-date">
-                        <label class="approval-date-label">日期:</label>
-                        <input class="approval-date-input" type="text" name="personnelDate"
-                               value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>
-                    </div>
-                    <div class="approval-signature">
-                        <label class="approval-signature-label">签字:</label>
-                        <input class="approval-signature-input" type="text" name="personnelSign" value="${nickname}"
-                               readonly>
-                    </div>
+                    <div style="width: 100%;height: 100%;" id="personnelContent"></div>
                 </shiro:hasPermission>
 
                 <shiro:lacksPermission name="personnel">
                     <textarea class="approval-content-textarea"
                               readonly>${oaActRegularization.personnelContent}</textarea>
                     <div class="approval-date">
-                        <label class="approval-date-label">日期:</label>
-                        <input class="approval-date-input" type="text" value="${oaActRegularization.personnelDate}"
-                               readonly>
+                        <label class="approval-date-label">日期 </label>
+                        <input class="approval-date-input" type="text"
+                               value="${oaActRegularization.personnelDate}" readonly>
                     </div>
                     <div class="approval-signature">
-                        <label class="approval-signature-label">签字:</label>
-                        <input class="approval-signature-input" type="text" value="${oaActRegularization.personnelSign}"
-                               readonly>
+                        <label class="approval-signature-label">签字 </label>
+                        <input class="approval-signature-input" type="text"
+                               value="${oaActRegularization.personnel}" readonly>
                     </div>
                 </shiro:lacksPermission>
             </td>
@@ -230,33 +199,22 @@
         <tr>
             <td class="tdLabel">总经理审批</td>
             <td colspan="5" class="approval-content">
-                <shiro:hasPermission name="companyPrincipal">
-                    <textarea class="approval-content-textarea" name="presidentContent"
-                              style="background-color: #ffffff"></textarea>
-                    <div class="approval-date">
-                        <label class="approval-date-label">日期:</label>
-                        <input class="approval-date-input" type="text" name="presidentDate"
-                               value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>
-                    </div>
-                    <div class="approval-signature">
-                        <label class="approval-signature-label">签字:</label>
-                        <input class="approval-signature-input" type="text" name="presidentSign" value="${nickname}"
-                               readonly>
-                    </div>
+                <shiro:hasPermission name="company_principal">
+                    <div style="width: 100%;height: 100%;" id="companyPrincipalContent"></div>
                 </shiro:hasPermission>
 
-                <shiro:lacksPermission name="companyPrincipal">
+                <shiro:lacksPermission name="company_principal">
                     <textarea class="approval-content-textarea"
-                              readonly>${oaActRegularization.presidentContent}</textarea>
+                              readonly>${oaActRegularization.companyPrincipalContent}</textarea>
                     <div class="approval-date">
-                        <label class="approval-date-label">日期:</label>
-                        <input class="approval-date-input" type="text" value="${oaActRegularization.presidentDate}"
-                               readonly>
+                        <label class="approval-date-label">日期 </label>
+                        <input class="approval-date-input" type="text"
+                               value="${oaActRegularization.companyPrincipalDate}" readonly>
                     </div>
                     <div class="approval-signature">
-                        <label class="approval-signature-label">签字:</label>
-                        <input class="approval-signature-input" type="text" value="${oaActRegularization.presidentSign}"
-                               readonly>
+                        <label class="approval-signature-label">签字 </label>
+                        <input class="approval-signature-input" type="text"
+                               value="${oaActRegularization.companyPrincipal}" readonly>
                     </div>
                 </shiro:lacksPermission>
             </td>
@@ -266,7 +224,7 @@
 </form>
 
 <div class="form-but" id="return">
-    <shiro:hasAnyPermission name="officePrincipal,officeSupervisor,personnel,companyPrincipal">
+    <shiro:hasAnyPermission name="principal,supervisor,personnel,company_principal">
         <button type="button" class="return-but" style="margin-right: 10px;" onclick="approvalProcessing(2)">回退</button>
     </shiro:hasAnyPermission>
     <button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>
@@ -274,9 +232,121 @@
 
 </body>
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
-<script type="text/javascript" src="../../../../static/js/jeDate/src/jedate.js"></script>
 <script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
+
+    //流程执行步骤
+    var regularization = JSON.parse('${oaActRegularizationJson}');
+    //标记
+    var flag = 0;
+
+    if (regularization.personnelCensor === "" || regularization.personnelCensor === undefined) {
+        $('#personnelCensorContent').append('<input type="hidden" name="personnelCensor" value="${nickname}">');
+        $('#return').html("");
+        $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
+        flag = 1;
+    }
+
+    if (flag === 0) {
+        if (regularization.principal === "" || regularization.principal === undefined) {
+            $('#principalContent').append(
+                '<textarea onkeyup="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="principalContent" style="background-color: #ffffff"></textarea>' +
+                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                '<input class="approval-date-input" type="text" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
+                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                '<input class="approval-signature-input" type="text" name="principal" value="${nickname}" readonly></div>');
+            flag = 1;
+        } else {
+            $('#principalContent').append('<textarea class="approval-content-textarea" readonly>${oaActRegularization.principalContent}</textarea>' +
+                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                '<input class="approval-date-input" type="text" value="${oaActRegularization.principalDate}" readonly></div>' +
+                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                '<input class="approval-signature-input" type="text" value="${oaActRegularization.principal}" readonly></div>');
+        }
+    } else {
+        $('#principalContent').append('<textarea class="approval-content-textarea" readonly>${oaActRegularization.principalContent}</textarea>' +
+            '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+            '<input class="approval-date-input" type="text" value="${oaActRegularization.principalDate}" readonly></div>' +
+            '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+            '<input class="approval-signature-input" type="text" value="${oaActRegularization.principal}" readonly></div>');
+    }
+
+    if (flag === 0) {
+        if (regularization.supervisor === "" || regularization.supervisor === undefined) {
+            $('#supervisorContent').append(
+                '<textarea onkeyup="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="supervisorContent" style="background-color: #ffffff"></textarea>' +
+                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                '<input class="approval-date-input" type="text" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
+                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                '<input class="approval-signature-input" type="text" name="supervisor" value="${nickname}" readonly></div>');
+            flag = 1;
+        } else {
+            $('#supervisorContent').append('<textarea class="approval-content-textarea" readonly>${oaActRegularization.supervisorContent}</textarea>' +
+                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                '<input class="approval-date-input" type="text" value="${oaActRegularization.supervisorDate}" readonly></div>' +
+                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                '<input class="approval-signature-input" type="text" value="${oaActRegularization.supervisor}" readonly></div>');
+        }
+    } else {
+        $('#supervisorContent').append('<textarea class="approval-content-textarea" readonly>${oaActRegularization.supervisorContent}</textarea>' +
+            '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+            '<input class="approval-date-input" type="text" value="${oaActRegularization.supervisorDate}" readonly></div>' +
+            '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+            '<input class="approval-signature-input" type="text" value="${oaActRegularization.supervisor}" readonly></div>');
+    }
+
+    if (flag === 0) {
+        if (regularization.personnel === "" || regularization.personnel === undefined) {
+            $('#personnelContent').append(
+                '<textarea onkeyup="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="personnelContent" style="background-color: #ffffff"></textarea>' +
+                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                '<input class="approval-date-input" type="text" name="personnelDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
+                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                '<input class="approval-signature-input" type="text" name="personnel" value="${nickname}" readonly></div>');
+            flag = 1;
+        } else {
+            $('#personnelContent').append('<textarea class="approval-content-textarea" readonly>${oaActRegularization.personnelContent}</textarea>' +
+                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                '<input class="approval-date-input" type="text" value="${oaActRegularization.personnelDate}" readonly></div>' +
+                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                '<input class="approval-signature-input" type="text" value="${oaActRegularization.personnel}" readonly></div>');
+        }
+    } else {
+        $('#personnelContent').append('<textarea class="approval-content-textarea" readonly>${oaActRegularization.personnelContent}</textarea>' +
+            '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+            '<input class="approval-date-input" type="text" value="${oaActRegularization.personnelDate}" readonly></div>' +
+            '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+            '<input class="approval-signature-input" type="text" value="${oaActRegularization.personnel}" readonly></div>');
+    }
+
+    if (flag === 0) {
+        if (regularization.companyPrincipal === "" || regularization.companyPrincipal === undefined) {
+            $('#companyPrincipalContent').append(
+                '<textarea onkeyup="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="companyPrincipalContent" style="background-color: #ffffff"></textarea>' +
+                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                '<input class="approval-date-input" type="text" name="companyPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
+                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                '<input class="approval-signature-input" type="text" name="companyPrincipal" value="${nickname}" readonly></div>');
+            flag = 1;
+        } else {
+            $('#companyPrincipalContent').append('<textarea class="approval-content-textarea" readonly>${oaActRegularization.companyPrincipalContent}</textarea>' +
+                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                '<input class="approval-date-input" type="text" value="${oaActRegularization.companyPrincipalDate}" readonly></div>' +
+                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                '<input class="approval-signature-input" type="text" value="${oaActRegularization.companyPrincipal}" readonly></div>');
+        }
+    } else {
+        $('#companyPrincipalContent').append('<textarea class="approval-content-textarea" readonly>${oaActRegularization.companyPrincipalContent}</textarea>' +
+            '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+            '<input class="approval-date-input" type="text" value="${oaActRegularization.companyPrincipalDate}" readonly></div>' +
+            '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+            '<input class="approval-signature-input" type="text" value="${oaActRegularization.companyPrincipal}" readonly></div>');
+    }
+
+    if (flag === 0){
+        $('#return').html("");
+        $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
+    }
 
     //任务Id
     var taskId = JSON.parse('${taskId}');

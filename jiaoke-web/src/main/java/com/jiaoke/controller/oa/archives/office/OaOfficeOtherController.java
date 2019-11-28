@@ -34,7 +34,8 @@ public class OaOfficeOtherController {
      * @return jsp
      */
     @RequestMapping(value = "/toOfficeOther")
-    public String toContractAgreement() {
+    public String toContractAgreement(int page, Model model) {
+        model.addAttribute("currentPage", JsonHelper.toJSONString(page));
         return "oa/archives/office/office_other/index";
     }
 
@@ -70,7 +71,7 @@ public class OaOfficeOtherController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String add(OaOfficeOther oaOfficeOther) {
         int i = oaOfficeOtherService.insertSelective(oaOfficeOther);
-        return "redirect:/officeOther/toOfficeOther";
+        return "redirect:/officeOther/toOfficeOther?page=1";
     }
 
     /**
@@ -126,7 +127,7 @@ public class OaOfficeOtherController {
     @RequestMapping("/edit")
     public String edit(OaOfficeOther oaOfficeOther) {
         int i = oaOfficeOtherService.updateByPrimaryKeySelective(oaOfficeOther);
-        return "redirect:/officeOther/toOfficeOther";
+        return "redirect:/officeOther/toOfficeOther?page=1";
     }
 
     /**

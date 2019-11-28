@@ -215,7 +215,7 @@
     }
 
     //重载页面
-    function operateOfferPageReload(page) {
+    function reloadArchivesData(page) {
         window.location.href = "${path}/operateOffer/toIndex?page=" + page;
     }
 
@@ -240,7 +240,7 @@
         } else {
             var id = $("tbody input:checked").val();
             //主页fun
-            window.top.deleteOperateOffer(id, $('#page').val());
+            window.top.deleteArchivesData('/operateOffer',id, $('#page').val());
         }
     }
 

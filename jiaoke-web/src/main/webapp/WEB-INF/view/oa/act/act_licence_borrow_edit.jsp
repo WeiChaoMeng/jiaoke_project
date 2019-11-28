@@ -118,7 +118,7 @@
     <table class="formTable">
         <tbody>
         <tr>
-            <td class="tdLabel">印章种类</td>
+            <td class="tdLabel">证照种类</td>
             <td class="table-td-content">
                 <select class="select" name="seal" style="width: 100%">
                     <c:choose>

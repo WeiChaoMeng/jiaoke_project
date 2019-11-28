@@ -45,6 +45,19 @@ public class OaActLicenceUseServiceImpl implements OaActLicenceUseService {
             oaCollaboration.setTitle(oaActLicenceUse.getTitle());
             oaCollaboration.setUrl("licenceUse");
             oaCollaboration.setTable("oa_act_licence_use");
+            oaCollaboration.setName("证照使用申请");
+            if (oaActLicenceUse.getSeal() == 0) {
+                oaCollaboration.setDataOne("证照种类:路驰营业执照正本");
+            } else if (oaActLicenceUse.getSeal() == 1) {
+                oaCollaboration.setDataOne("证照种类:路驰营业执照副本");
+            } else if (oaActLicenceUse.getSeal() == 2) {
+                oaCollaboration.setDataOne("证照种类:路驰工会法人资格证书");
+            } else if (oaActLicenceUse.getSeal() == 3) {
+                oaCollaboration.setDataOne("证照种类:大兴营业执照正本");
+            } else {
+                oaCollaboration.setDataOne("证照种类:大兴营业执照副本");
+            }
+            oaCollaboration.setDataTwo("用途:" + oaActLicenceUse.getPurpose());
             oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);

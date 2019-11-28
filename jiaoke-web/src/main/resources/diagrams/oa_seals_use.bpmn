@@ -4,8 +4,8 @@
     <startEvent id="start" name="开始"/>
     <userTask activiti:assignee="${principal}" activiti:exclusive="true" id="osu1" name="部门负责人"/>
     <userTask activiti:assignee="${supervisor}" activiti:exclusive="true" id="osu2" name="部门主管领导"/>
-    <userTask activiti:assignee="${sealManage}" activiti:exclusive="true" id="osu3" name="印章主管领导"/>
-    <userTask activiti:assignee="${stamp}" activiti:exclusive="true" id="osu4" name="盖章人"/>
+    <userTask activiti:assignee="${seal_supervisor}" activiti:exclusive="true" id="osu3" name="印章主管领导"/>
+    <userTask activiti:assignee="${seal_operator}" activiti:exclusive="true" id="osu4" name="盖章人"/>
     <endEvent id="end" name="结束"/>
     <sequenceFlow id="_8" sourceRef="start" targetRef="osu1"/>
     <sequenceFlow id="_9" sourceRef="osu1" targetRef="osu2"/>
@@ -66,14 +66,14 @@
           <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge bpmnElement="_3" id="BPMNEdge__3" sourceElement="osu" targetElement="_2">
+      <bpmndi:BPMNEdge bpmnElement="_3" id="BPMNEdge__3" sourceElement="osu4" targetElement="osu5">
         <omgdi:waypoint x="342.5" y="410.0"/>
         <omgdi:waypoint x="342.5" y="440.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_4" id="BPMNEdge__4" sourceElement="_2" targetElement="end">
+      <bpmndi:BPMNEdge bpmnElement="_4" id="BPMNEdge__4" sourceElement="osu5" targetElement="end">
         <omgdi:waypoint x="346.0" y="495.0"/>
         <omgdi:waypoint x="346.0" y="540.0"/>
         <bpmndi:BPMNLabel>
@@ -94,7 +94,7 @@
           <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_11" id="BPMNEdge__11" sourceElement="osu3" targetElement="osu">
+      <bpmndi:BPMNEdge bpmnElement="_11" id="BPMNEdge__11" sourceElement="osu3" targetElement="osu4">
         <omgdi:waypoint x="340.0" y="325.0"/>
         <omgdi:waypoint x="340.0" y="355.0"/>
         <bpmndi:BPMNLabel>

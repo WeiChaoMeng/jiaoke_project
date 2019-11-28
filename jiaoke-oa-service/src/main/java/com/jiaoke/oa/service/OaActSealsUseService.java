@@ -46,5 +46,11 @@ public interface OaActSealsUseService {
      */
     OaActSealsUse selectByPrimaryKey(String id);
 
+    /**
+     * 根据主键选择性更新
+     *
+     * @param oaActSealsUse oaActSealsUse
+     * @return int
+     */
     int updateByPrimaryKeySelective(OaActSealsUse oaActSealsUse);
 }

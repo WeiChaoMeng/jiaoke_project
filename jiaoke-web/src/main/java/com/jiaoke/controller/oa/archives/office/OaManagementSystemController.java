@@ -34,7 +34,8 @@ public class OaManagementSystemController {
      * @return contract_agreement.jsp
      */
     @RequestMapping(value = "/toManagementSystem")
-    public String toContractAgreement() {
+    public String toContractAgreement(int page, Model model) {
+        model.addAttribute("currentPage", JsonHelper.toJSONString(page));
         return "oa/archives/office/management_system/index";
     }
 
@@ -70,7 +71,7 @@ public class OaManagementSystemController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String add(OaManagementSystem oaManagementSystem) {
         int i = oaManagementSystemService.insertSelective(oaManagementSystem);
-        return "redirect:/managementSystem/toManagementSystem";
+        return "redirect:/managementSystem/toManagementSystem?page=1";
     }
 
     /**
@@ -126,7 +127,7 @@ public class OaManagementSystemController {
     @RequestMapping("/edit")
     public String edit(OaManagementSystem oaManagementSystem) {
         int i = oaManagementSystemService.updateByPrimaryKeySelective(oaManagementSystem);
-        return "redirect:/managementSystem/toManagementSystem";
+        return "redirect:/managementSystem/toManagementSystem?page=1";
     }
 
     /**

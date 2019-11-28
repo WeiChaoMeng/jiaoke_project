@@ -62,7 +62,7 @@ public class OaActCard {
     /**
      * 部门负责人签字
      */
-    private String principalSign;
+    private String principal;
 
     /**
      * 部门负责人签字时间
@@ -77,7 +77,7 @@ public class OaActCard {
     /**
      * 部门主管签字
      */
-    private String supervisorSign;
+    private String supervisor;
 
     /**
      * 部门主管签字时间
@@ -87,17 +87,17 @@ public class OaActCard {
     /**
      * 主管部门负责人审批内容
      */
-    private String directorContent;
+    private String cardApprovalContent;
 
     /**
      * 主管部门负责人签字
      */
-    private String directorSign;
+    private String cardApproval;
 
     /**
      * 主管部门负责人签字时间
      */
-    private String directorDate;
+    private String cardApprovalDate;
 
     /**
      * 附件
@@ -195,12 +195,12 @@ public class OaActCard {
         this.principalContent = principalContent;
     }
 
-    public String getPrincipalSign() {
-        return principalSign;
+    public String getPrincipal() {
+        return principal;
     }
 
-    public void setPrincipalSign(String principalSign) {
-        this.principalSign = principalSign;
+    public void setPrincipal(String principal) {
+        this.principal = principal;
     }
 
     public String getPrincipalDate() {
@@ -219,12 +219,12 @@ public class OaActCard {
         this.supervisorContent = supervisorContent;
     }
 
-    public String getSupervisorSign() {
-        return supervisorSign;
+    public String getSupervisor() {
+        return supervisor;
     }
 
-    public void setSupervisorSign(String supervisorSign) {
-        this.supervisorSign = supervisorSign;
+    public void setSupervisor(String supervisor) {
+        this.supervisor = supervisor;
     }
 
     public String getSupervisorDate() {
@@ -235,28 +235,28 @@ public class OaActCard {
         this.supervisorDate = supervisorDate;
     }
 
-    public String getDirectorContent() {
-        return directorContent;
+    public String getCardApprovalContent() {
+        return cardApprovalContent;
     }
 
-    public void setDirectorContent(String directorContent) {
-        this.directorContent = directorContent;
+    public void setCardApprovalContent(String cardApprovalContent) {
+        this.cardApprovalContent = cardApprovalContent;
     }
 
-    public String getDirectorSign() {
-        return directorSign;
+    public String getCardApproval() {
+        return cardApproval;
     }
 
-    public void setDirectorSign(String directorSign) {
-        this.directorSign = directorSign;
+    public void setCardApproval(String cardApproval) {
+        this.cardApproval = cardApproval;
     }
 
-    public String getDirectorDate() {
-        return directorDate;
+    public String getCardApprovalDate() {
+        return cardApprovalDate;
     }
 
-    public void setDirectorDate(String directorDate) {
-        this.directorDate = directorDate;
+    public void setCardApprovalDate(String cardApprovalDate) {
+        this.cardApprovalDate = cardApprovalDate;
     }
 
     public String getAnnex() {

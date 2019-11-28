@@ -227,12 +227,12 @@
         } else {
             var id = $("tbody input:checked").val();
             //主页fun
-            window.top.deleteNotice(id, $('#page').val());
+            window.top.cultureCorporateDelete('/notice', id, $('#page').val());
         }
     }
 
     //重载页面
-    function reloadNoticePage(page) {
+    function reloadCultureCorporateData(page) {
         window.location.href = "${path}/notice/toIndex?page=" + page;
     }
 

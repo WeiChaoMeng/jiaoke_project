@@ -184,7 +184,7 @@
         } else {
             var id = $("tbody input:checked").val();
             //主页fun
-            window.top.deleteNews(id, $('#page').val());
+            window.top.cultureCorporateDelete('/newsCenter', id, $('#page').val());
         }
     }
 
@@ -193,7 +193,7 @@
         window.location.href = '/newsCenter/toNewsRelease';
     }
 
-    function reloadNewsPage() {
+    function reloadCultureCorporateData() {
         window.location.href = '${path}/newsCenter/toNewsList';
     }
 </script>

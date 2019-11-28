@@ -31,16 +31,6 @@ public interface OaActLicenceBorrowService {
     int insert(OaActLicenceBorrow oaActLicenceBorrow, Integer userId, String randomId, Integer state);
 
     /**
-     * 保存待发
-     *
-     * @param oaActLicenceBorrow oaActLicenceBorrow
-     * @param userId             userId
-     * @param randomId           randomId
-     * @return int
-     */
-    int savePending(OaActLicenceBorrow oaActLicenceBorrow, Integer userId, String randomId);
-
-    /**
      * 编辑
      *
      * @param oaActLicenceBorrow oaActLicenceBorrow
@@ -56,5 +46,11 @@ public interface OaActLicenceBorrowService {
      */
     OaActLicenceBorrow selectByPrimaryKey(String id);
 
+    /**
+     * 根据主键选择更新
+     *
+     * @param oaActLicenceBorrow oaActLicenceBorrow
+     * @return int
+     */
     int updateByPrimaryKeySelective(OaActLicenceBorrow oaActLicenceBorrow);
 }

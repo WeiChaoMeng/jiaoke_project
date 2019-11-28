@@ -47,19 +47,10 @@ public interface OaActRegularizationService {
     OaActRegularization selectByPrimaryKey(String id);
 
     /**
-     * 更新附件列表
-     *
-     * @param array array
-     * @param id    id
-     * @return int
-     */
-    int updateAnnexes(String[] array, String id);
-
-    /**
      * 根据主键更新数据
      *
      * @param oaActRegularization oaActRegularization
      * @return int
      */
-    int updateData(OaActRegularization oaActRegularization);
+    int updateByPrimaryKeySelective(OaActRegularization oaActRegularization);
 }

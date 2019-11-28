@@ -59,6 +59,11 @@ public class OaActReview {
     private String principal;
 
     /**
+     * 部门负责人审批时间
+     */
+    private String principalDate;
+
+    /**
      * 法务审查内容
      */
     private String legalAffairsContent;
@@ -66,7 +71,7 @@ public class OaActReview {
     /**
      * 法务审查签字
      */
-    private String legalAffairsSign;
+    private String legalAffairs;
 
     /**
      * 法务审查时间
@@ -81,7 +86,7 @@ public class OaActReview {
     /**
      * 财务部门审查签字
      */
-    private String financeSign;
+    private String finance;
 
     /**
      * 财务部门审查时间
@@ -96,7 +101,7 @@ public class OaActReview {
     /**
      * 主管领导审查签字
      */
-    private String supervisorSign;
+    private String supervisor;
 
     /**
      * 主管领导审查时间
@@ -111,7 +116,7 @@ public class OaActReview {
     /**
      * 主要领导审查签字
      */
-    private String companyPrincipalSign;
+    private String companyPrincipal;
 
     /**
      * 主要领导审查时间
@@ -198,6 +203,118 @@ public class OaActReview {
         this.number = number;
     }
 
+    public String getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(String principal) {
+        this.principal = principal;
+    }
+
+    public String getPrincipalDate() {
+        return principalDate;
+    }
+
+    public void setPrincipalDate(String principalDate) {
+        this.principalDate = principalDate;
+    }
+
+    public String getLegalAffairsContent() {
+        return legalAffairsContent;
+    }
+
+    public void setLegalAffairsContent(String legalAffairsContent) {
+        this.legalAffairsContent = legalAffairsContent;
+    }
+
+    public String getLegalAffairs() {
+        return legalAffairs;
+    }
+
+    public void setLegalAffairs(String legalAffairs) {
+        this.legalAffairs = legalAffairs;
+    }
+
+    public String getLegalAffairsDate() {
+        return legalAffairsDate;
+    }
+
+    public void setLegalAffairsDate(String legalAffairsDate) {
+        this.legalAffairsDate = legalAffairsDate;
+    }
+
+    public String getFinanceContent() {
+        return financeContent;
+    }
+
+    public void setFinanceContent(String financeContent) {
+        this.financeContent = financeContent;
+    }
+
+    public String getFinance() {
+        return finance;
+    }
+
+    public void setFinance(String finance) {
+        this.finance = finance;
+    }
+
+    public String getFinanceDate() {
+        return financeDate;
+    }
+
+    public void setFinanceDate(String financeDate) {
+        this.financeDate = financeDate;
+    }
+
+    public String getSupervisorContent() {
+        return supervisorContent;
+    }
+
+    public void setSupervisorContent(String supervisorContent) {
+        this.supervisorContent = supervisorContent;
+    }
+
+    public String getSupervisor() {
+        return supervisor;
+    }
+
+    public void setSupervisor(String supervisor) {
+        this.supervisor = supervisor;
+    }
+
+    public String getSupervisorDate() {
+        return supervisorDate;
+    }
+
+    public void setSupervisorDate(String supervisorDate) {
+        this.supervisorDate = supervisorDate;
+    }
+
+    public String getCompanyPrincipalContent() {
+        return companyPrincipalContent;
+    }
+
+    public void setCompanyPrincipalContent(String companyPrincipalContent) {
+        this.companyPrincipalContent = companyPrincipalContent;
+    }
+
+    public String getCompanyPrincipal() {
+        return companyPrincipal;
+    }
+
+    public void setCompanyPrincipal(String companyPrincipal) {
+        this.companyPrincipal = companyPrincipal;
+    }
+
+    public String getCompanyPrincipalDate() {
+        return companyPrincipalDate;
+    }
+
+    public void setCompanyPrincipalDate(String companyPrincipalDate) {
+        this.companyPrincipalDate = companyPrincipalDate;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -222,124 +339,20 @@ public class OaActReview {
         this.promoter = promoter;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getPrincipal() {
-        return principal;
-    }
-
-    public void setPrincipal(String principal) {
-        this.principal = principal;
-    }
-
-    public String getLegalAffairsContent() {
-        return legalAffairsContent;
-    }
-
-    public void setLegalAffairsContent(String legalAffairsContent) {
-        this.legalAffairsContent = legalAffairsContent;
-    }
-
-    public String getLegalAffairsSign() {
-        return legalAffairsSign;
-    }
-
-    public void setLegalAffairsSign(String legalAffairsSign) {
-        this.legalAffairsSign = legalAffairsSign;
-    }
-
-    public String getLegalAffairsDate() {
-        return legalAffairsDate;
-    }
-
-    public void setLegalAffairsDate(String legalAffairsDate) {
-        this.legalAffairsDate = legalAffairsDate;
-    }
-
-    public String getFinanceContent() {
-        return financeContent;
-    }
-
-    public void setFinanceContent(String financeContent) {
-        this.financeContent = financeContent;
-    }
-
-    public String getFinanceSign() {
-        return financeSign;
-    }
-
-    public void setFinanceSign(String financeSign) {
-        this.financeSign = financeSign;
-    }
-
-    public String getFinanceDate() {
-        return financeDate;
-    }
-
-    public void setFinanceDate(String financeDate) {
-        this.financeDate = financeDate;
-    }
-
-    public String getSupervisorContent() {
-        return supervisorContent;
-    }
-
-    public void setSupervisorContent(String supervisorContent) {
-        this.supervisorContent = supervisorContent;
-    }
-
-    public String getSupervisorSign() {
-        return supervisorSign;
-    }
-
-    public void setSupervisorSign(String supervisorSign) {
-        this.supervisorSign = supervisorSign;
-    }
-
-    public String getSupervisorDate() {
-        return supervisorDate;
-    }
-
-    public void setSupervisorDate(String supervisorDate) {
-        this.supervisorDate = supervisorDate;
-    }
-
-    public String getCompanyPrincipalContent() {
-        return companyPrincipalContent;
-    }
-
-    public void setCompanyPrincipalContent(String companyPrincipalContent) {
-        this.companyPrincipalContent = companyPrincipalContent;
-    }
-
-    public String getCompanyPrincipalSign() {
-        return companyPrincipalSign;
-    }
-
-    public void setCompanyPrincipalSign(String companyPrincipalSign) {
-        this.companyPrincipalSign = companyPrincipalSign;
-    }
-
-    public String getCompanyPrincipalDate() {
-        return companyPrincipalDate;
-    }
-
-    public void setCompanyPrincipalDate(String companyPrincipalDate) {
-        this.companyPrincipalDate = companyPrincipalDate;
-    }
-
     public String getPromoterStr() {
         return promoterStr;
     }
 
     public void setPromoterStr(String promoterStr) {
         this.promoterStr = promoterStr;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getAnnex() {

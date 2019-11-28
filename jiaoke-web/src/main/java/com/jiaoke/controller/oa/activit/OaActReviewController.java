@@ -1,11 +1,13 @@
 package com.jiaoke.controller.oa.activit;
 
+import com.alibaba.fastjson.JSON;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
 import com.jiaoke.controller.oa.TargetFlowNodeCommand;
 import com.jiaoke.oa.bean.Comments;
 import com.jiaoke.oa.bean.OaActReview;
+import com.jiaoke.oa.bean.OaActSealsBorrow;
 import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.service.DepartmentService;
 import com.jiaoke.oa.service.OaActReviewService;
@@ -117,10 +119,51 @@ public class OaActReviewController {
         //获取批注信息
         List<Comments> commentsList = activitiUtil.selectHistoryComment(activitiUtil.getTaskByTaskId(taskId).getProcessInstanceId());
         model.addAttribute("oaActReview", oaActReview);
+        model.addAttribute("oaActReviewJson", JsonHelper.toJSONString(oaActReview));
         model.addAttribute("taskId", JsonHelper.toJSONString(taskId));
         model.addAttribute("commentsList", commentsList);
         model.addAttribute("nickname", getCurrentUser().getNickname());
         return "oa/act/act_review_handle";
+    }
+
+    /**
+     * app获取审批页面信息
+     *
+     * @param id     id
+     * @param taskId taskId
+     * @return json
+     */
+    @RequestMapping(value = "/approval.api")
+    @ResponseBody
+    public String approvalApi(String id, String taskId) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActReview oaActReview = oaActReviewService.selectByPrimaryKey(id);
+
+        String nickname = getCurrentUser().getNickname();
+        //根据发起者id获取所属部门id
+        String departmentId = userInfoService.selectDepartmentByUserId(oaActReview.getPromoter());
+        //部门负责人
+        String principalId = departmentService.selectEnforcerId("principal", departmentId);
+        String principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        //部门主管领导
+        String supervisorId = departmentService.selectEnforcerId("supervisor", departmentId);
+        String supervisor = userInfoService.getNicknameById(Integer.valueOf(supervisorId));
+        //法务
+        String legalAffairs = userInfoService.getUserInfoByPermission("legal_affairs").getNickname();
+        //财务部门
+        String finance = userInfoService.getUserInfoByPermission("finance").getNickname();
+        //主要领导（总经理）
+        String companyPrincipal = userInfoService.getUserInfoByPermission("company_principal").getNickname();
+
+        map.put("nickname", nickname);
+        map.put("principal", principal);
+        map.put("supervisor", supervisor);
+        map.put("legalAffairs", legalAffairs);
+        map.put("finance", finance);
+        map.put("companyPrincipal", companyPrincipal);
+        map.put("taskId", taskId);
+        map.put("review", oaActReview);
+        return JSON.toJSONString(map);
     }
 
     /**
@@ -143,6 +186,12 @@ public class OaActReviewController {
         String principal = "principal";
         //部门主管领导
         String supervisor = "supervisor";
+        //法务
+        String legalAffairs = "legal_affairs";
+        //财务
+        String finance = "finance";
+        //主要领导
+        String companyPrincipal = "company_principal";
         //更新数据
         if (oaActReviewService.updateByPrimaryKeySelective(oaActReview) < 1) {
             return "error";
@@ -176,6 +225,7 @@ public class OaActReviewController {
                         activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
                         return "success";
 
+                        //负责人、主管领导
                     } else if (principal.equals(enforcer) || supervisor.equals(enforcer)) {
                         String startUserId = activitiUtil.getStartUserId(task.getProcessInstanceId());
                         //根据发起者id获取所属部门id
@@ -184,6 +234,25 @@ public class OaActReviewController {
                         String enforcerId = departmentService.selectEnforcerId(enforcer, departmentId);
                         activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, Integer.valueOf(enforcerId));
                         return "success";
+
+                        //法务
+                    } else if (legalAffairs.equals(enforcer)) {
+                        UserInfo userInfo = userInfoService.getUserInfoByPermission("legal_affairs");
+                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
+                        return "success";
+
+                        //财务
+                    } else if (finance.equals(enforcer)) {
+                        UserInfo userInfo = userInfoService.getUserInfoByPermission("finance");
+                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
+                        return "success";
+
+                        //主要领导
+                    } else if (companyPrincipal.equals(enforcer)) {
+                        UserInfo userInfo = userInfoService.getUserInfoByPermission("company_principal");
+                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
+                        return "success";
+
                     } else {
                         UserInfo userInfo = userInfoService.getUserInfoByPermission(enforcer);
                         activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
@@ -293,6 +362,44 @@ public class OaActReviewController {
         model.addAttribute("oaActReview", oaActReview);
         model.addAttribute("commentsList", commentsList);
         return "oa/act/act_review_details";
+    }
+
+    /**
+     * app获取详细信息
+     *
+     * @param id id
+     * @return json
+     */
+    @RequestMapping(value = "/details.api")
+    @ResponseBody
+    public String cardDetailsApi(String id) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActReview oaActReview = oaActReviewService.selectByPrimaryKey(id);
+
+        String nickname = getCurrentUser().getNickname();
+        //根据发起者id获取所属部门id
+        String departmentId = userInfoService.selectDepartmentByUserId(oaActReview.getPromoter());
+        //部门负责人
+        String principalId = departmentService.selectEnforcerId("principal", departmentId);
+        String principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        //部门主管领导
+        String supervisorId = departmentService.selectEnforcerId("supervisor", departmentId);
+        String supervisor = userInfoService.getNicknameById(Integer.valueOf(supervisorId));
+        //法务
+        String legalAffairs = userInfoService.getUserInfoByPermission("legal_affairs").getNickname();
+        //财务部门
+        String finance = userInfoService.getUserInfoByPermission("finance").getNickname();
+        //主要领导（总经理）
+        String companyPrincipal = userInfoService.getUserInfoByPermission("company_principal").getNickname();
+
+        map.put("nickname", nickname);
+        map.put("principal", principal);
+        map.put("supervisor", supervisor);
+        map.put("legalAffairs", legalAffairs);
+        map.put("finance", finance);
+        map.put("companyPrincipal", companyPrincipal);
+        map.put("review", oaActReview);
+        return JsonHelper.toJSONString(map);
     }
 
     /**

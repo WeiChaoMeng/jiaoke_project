@@ -34,11 +34,6 @@ public class OaActOfficeSupplies {
     private String department;
 
     /**
-     * 序号1
-     */
-    private String serialOne;
-
-    /**
      * 项目1
      */
     private String itemOne;
@@ -57,11 +52,6 @@ public class OaActOfficeSupplies {
      * 金额1
      */
     private String moneyOne;
-
-    /**
-     * 序号2
-     */
-    private String serialTwo;
 
     /**
      * 项目2
@@ -83,12 +73,6 @@ public class OaActOfficeSupplies {
      */
     private String moneyTwo;
 
-
-    /**
-     * 序号3
-     */
-    private String serialThree;
-
     /**
      * 项目3
      */
@@ -109,12 +93,6 @@ public class OaActOfficeSupplies {
      */
     private String moneyThree;
 
-
-    /**
-     * 序号4
-     */
-    private String serialFour;
-
     /**
      * 项目4
      */
@@ -134,11 +112,6 @@ public class OaActOfficeSupplies {
      * 金额4
      */
     private String moneyFour;
-
-    /**
-     * 序号5
-     */
-    private String serialFive;
 
     /**
      * 项目5
@@ -168,12 +141,22 @@ public class OaActOfficeSupplies {
     /**
      * 审批
      */
-    private String approval;
+    private String officeSuppliesApproval;
+
+    /**
+     * 审批时间
+     */
+    private String officeSuppliesApprovalDate;
 
     /**
      * 部门主管
      */
     private String supervisor;
+
+    /**
+     * 部门主管审批时间
+     */
+    private String supervisorDate;
 
     /**
      * 填表人
@@ -183,12 +166,12 @@ public class OaActOfficeSupplies {
     /**
      * 验收
      */
-    private String acceptance;
+    private String officeSuppliesAcceptance;
 
     /**
      * 验收时间
      */
-    private String acceptanceDate;
+    private String officeSuppliesAcceptanceDate;
 
     /**
      * 创建日期
@@ -238,14 +221,6 @@ public class OaActOfficeSupplies {
         this.department = department;
     }
 
-    public String getSerialOne() {
-        return serialOne;
-    }
-
-    public void setSerialOne(String serialOne) {
-        this.serialOne = serialOne;
-    }
-
     public String getItemOne() {
         return itemOne;
     }
@@ -276,14 +251,6 @@ public class OaActOfficeSupplies {
 
     public void setMoneyOne(String moneyOne) {
         this.moneyOne = moneyOne;
-    }
-
-    public String getSerialTwo() {
-        return serialTwo;
-    }
-
-    public void setSerialTwo(String serialTwo) {
-        this.serialTwo = serialTwo;
     }
 
     public String getItemTwo() {
@@ -318,14 +285,6 @@ public class OaActOfficeSupplies {
         this.moneyTwo = moneyTwo;
     }
 
-    public String getSerialThree() {
-        return serialThree;
-    }
-
-    public void setSerialThree(String serialThree) {
-        this.serialThree = serialThree;
-    }
-
     public String getItemThree() {
         return itemThree;
     }
@@ -356,14 +315,6 @@ public class OaActOfficeSupplies {
 
     public void setMoneyThree(String moneyThree) {
         this.moneyThree = moneyThree;
-    }
-
-    public String getSerialFour() {
-        return serialFour;
-    }
-
-    public void setSerialFour(String serialFour) {
-        this.serialFour = serialFour;
     }
 
     public String getItemFour() {
@@ -398,14 +349,6 @@ public class OaActOfficeSupplies {
         this.moneyFour = moneyFour;
     }
 
-    public String getSerialFive() {
-        return serialFive;
-    }
-
-    public void setSerialFive(String serialFive) {
-        this.serialFive = serialFive;
-    }
-
     public String getItemFive() {
         return itemFive;
     }
@@ -438,12 +381,28 @@ public class OaActOfficeSupplies {
         this.moneyFive = moneyFive;
     }
 
-    public String getApproval() {
-        return approval;
+    public String getTotal() {
+        return total;
     }
 
-    public void setApproval(String approval) {
-        this.approval = approval;
+    public void setTotal(String total) {
+        this.total = total;
+    }
+
+    public String getOfficeSuppliesApproval() {
+        return officeSuppliesApproval;
+    }
+
+    public void setOfficeSuppliesApproval(String officeSuppliesApproval) {
+        this.officeSuppliesApproval = officeSuppliesApproval;
+    }
+
+    public String getOfficeSuppliesApprovalDate() {
+        return officeSuppliesApprovalDate;
+    }
+
+    public void setOfficeSuppliesApprovalDate(String officeSuppliesApprovalDate) {
+        this.officeSuppliesApprovalDate = officeSuppliesApprovalDate;
     }
 
     public String getSupervisor() {
@@ -454,6 +413,14 @@ public class OaActOfficeSupplies {
         this.supervisor = supervisor;
     }
 
+    public String getSupervisorDate() {
+        return supervisorDate;
+    }
+
+    public void setSupervisorDate(String supervisorDate) {
+        this.supervisorDate = supervisorDate;
+    }
+
     public String getPreparer() {
         return preparer;
     }
@@ -462,20 +429,20 @@ public class OaActOfficeSupplies {
         this.preparer = preparer;
     }
 
-    public String getAcceptance() {
-        return acceptance;
+    public String getOfficeSuppliesAcceptance() {
+        return officeSuppliesAcceptance;
     }
 
-    public void setAcceptance(String acceptance) {
-        this.acceptance = acceptance;
+    public void setOfficeSuppliesAcceptance(String officeSuppliesAcceptance) {
+        this.officeSuppliesAcceptance = officeSuppliesAcceptance;
     }
 
-    public String getAcceptanceDate() {
-        return acceptanceDate;
+    public String getOfficeSuppliesAcceptanceDate() {
+        return officeSuppliesAcceptanceDate;
     }
 
-    public void setAcceptanceDate(String acceptanceDate) {
-        this.acceptanceDate = acceptanceDate;
+    public void setOfficeSuppliesAcceptanceDate(String officeSuppliesAcceptanceDate) {
+        this.officeSuppliesAcceptanceDate = officeSuppliesAcceptanceDate;
     }
 
     public Date getCreateTime() {
@@ -524,13 +491,5 @@ public class OaActOfficeSupplies {
 
     public void setAnnex(String annex) {
         this.annex = annex;
-    }
-
-    public String getTotal() {
-        return total;
-    }
-
-    public void setTotal(String total) {
-        this.total = total;
     }
 }

@@ -161,7 +161,7 @@
 
             $.ajax({
                 type: "POST",
-                url: '${path}/newsCenter/addCorporateHonor',
+                url: '${path}/corporateHonor/addCorporateHonor',
                 data: $('#oaCorporateHonor').serialize(),
                 async: false,
                 error: function (request) {

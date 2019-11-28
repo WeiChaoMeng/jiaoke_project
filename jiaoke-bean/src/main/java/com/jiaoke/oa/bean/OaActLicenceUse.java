@@ -54,14 +54,29 @@ public class OaActLicenceUse {
     private String principal;
 
     /**
+     * 部门负责人审批时间
+     */
+    private String principalDate;
+
+    /**
      * 证照主管领导
      */
     private String licenceManage;
 
     /**
+     * 证照主管领导审批时间
+     */
+    private String licenceManageDate;
+
+    /**
      * 经办人
      */
     private String licenceOperator;
+
+    /**
+     * 经办人审批时间
+     */
+    private String licenceOperatorDate;
 
     /**
      * 附件
@@ -135,6 +150,62 @@ public class OaActLicenceUse {
         this.user = user;
     }
 
+    public String getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(String principal) {
+        this.principal = principal;
+    }
+
+    public String getPrincipalDate() {
+        return principalDate;
+    }
+
+    public void setPrincipalDate(String principalDate) {
+        this.principalDate = principalDate;
+    }
+
+    public String getLicenceManage() {
+        return licenceManage;
+    }
+
+    public void setLicenceManage(String licenceManage) {
+        this.licenceManage = licenceManage;
+    }
+
+    public String getLicenceManageDate() {
+        return licenceManageDate;
+    }
+
+    public void setLicenceManageDate(String licenceManageDate) {
+        this.licenceManageDate = licenceManageDate;
+    }
+
+    public String getLicenceOperator() {
+        return licenceOperator;
+    }
+
+    public void setLicenceOperator(String licenceOperator) {
+        this.licenceOperator = licenceOperator;
+    }
+
+    public String getLicenceOperatorDate() {
+        return licenceOperatorDate;
+    }
+
+    public void setLicenceOperatorDate(String licenceOperatorDate) {
+        this.licenceOperatorDate = licenceOperatorDate;
+    }
+
+    public String getAnnex() {
+        return annex;
+    }
+
+    public void setAnnex(String annex) {
+        this.annex = annex;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -159,51 +230,19 @@ public class OaActLicenceUse {
         this.promoter = promoter;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getPrincipal() {
-        return principal;
-    }
-
-    public void setPrincipal(String principal) {
-        this.principal = principal;
-    }
-
-    public String getLicenceManage() {
-        return licenceManage;
-    }
-
-    public void setLicenceManage(String licenceManage) {
-        this.licenceManage = licenceManage;
-    }
-
-    public String getLicenceOperator() {
-        return licenceOperator;
-    }
-
-    public void setLicenceOperator(String licenceOperator) {
-        this.licenceOperator = licenceOperator;
-    }
-
-    public String getAnnex() {
-        return annex;
-    }
-
-    public void setAnnex(String annex) {
-        this.annex = annex;
-    }
-
     public String getPromoterStr() {
         return promoterStr;
     }
 
     public void setPromoterStr(String promoterStr) {
         this.promoterStr = promoterStr;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

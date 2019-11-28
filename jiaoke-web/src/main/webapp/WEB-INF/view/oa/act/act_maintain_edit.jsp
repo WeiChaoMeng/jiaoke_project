@@ -166,14 +166,14 @@
         <tr>
             <td class="tdLabel">故障描述</td>
             <td colspan="5" class="table-td-content" style="padding: 10px">
-                <textarea class="write-approval-content-textarea" name="faultDescription" style="width: 100%">${oaActMaintain.faultDescription}</textarea>
+                <textarea onkeyup="value=value.replace(/\s+/g,'')" class="write-approval-content-textarea" name="faultDescription" style="width: 100%">${oaActMaintain.faultDescription}</textarea>
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel">维修内容</td>
             <td colspan="5" class="table-td-content" style="padding: 10px">
-                <textarea class="write-approval-content-textarea" name="content" style="width: 100%">${oaActMaintain.content}</textarea>
+                <textarea onkeyup="value=value.replace(/\s+/g,'')" class="write-approval-content-textarea" name="content" style="width: 100%">${oaActMaintain.content}</textarea>
             </td>
         </tr>
 

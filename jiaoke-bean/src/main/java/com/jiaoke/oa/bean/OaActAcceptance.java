@@ -54,7 +54,7 @@ public class OaActAcceptance {
     private String accepter;
 
     /**
-     * 日期
+     * 验收日期
      */
     private String acceptanceDate;
 
@@ -64,14 +64,29 @@ public class OaActAcceptance {
     private String principal;
 
     /**
+     * 部门负责人审批时间
+     */
+    private String principalDate;
+
+    /**
      * 部门主管领导
      */
     private String supervisor;
 
     /**
+     * 部门主管领导审批时间
+     */
+    private String supervisorDate;
+
+    /**
      * 总经理
      */
     private String companyPrincipal;
+
+    /**
+     * 总经理审批时间
+     */
+    private String companyPrincipalDate;
 
     /**
      * 附件
@@ -169,6 +184,14 @@ public class OaActAcceptance {
         this.principal = principal;
     }
 
+    public String getPrincipalDate() {
+        return principalDate;
+    }
+
+    public void setPrincipalDate(String principalDate) {
+        this.principalDate = principalDate;
+    }
+
     public String getSupervisor() {
         return supervisor;
     }
@@ -177,12 +200,28 @@ public class OaActAcceptance {
         this.supervisor = supervisor;
     }
 
+    public String getSupervisorDate() {
+        return supervisorDate;
+    }
+
+    public void setSupervisorDate(String supervisorDate) {
+        this.supervisorDate = supervisorDate;
+    }
+
     public String getCompanyPrincipal() {
         return companyPrincipal;
     }
 
     public void setCompanyPrincipal(String companyPrincipal) {
         this.companyPrincipal = companyPrincipal;
+    }
+
+    public String getCompanyPrincipalDate() {
+        return companyPrincipalDate;
+    }
+
+    public void setCompanyPrincipalDate(String companyPrincipalDate) {
+        this.companyPrincipalDate = companyPrincipalDate;
     }
 
     public String getAnnex() {

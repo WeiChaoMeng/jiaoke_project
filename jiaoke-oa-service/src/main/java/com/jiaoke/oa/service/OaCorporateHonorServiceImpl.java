@@ -53,4 +53,9 @@ public class OaCorporateHonorServiceImpl implements OaCorporateHonorService {
         }
         return oaCorporateHonorList;
     }
+
+    @Override
+    public int deleteByPrimaryKey(Integer id) {
+        return oaCorporateHonorMapper.deleteByPrimaryKey(id);
+    }
 }

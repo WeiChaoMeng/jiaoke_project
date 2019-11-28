@@ -211,7 +211,7 @@
     }
 
     //重载页面
-    function financeOtherPageReload(page) {
+    function reloadArchivesData(page) {
         window.location.href = "${path}/financeOther/toIndex?page=" + page;
     }
 
@@ -236,7 +236,7 @@
         } else {
             var id = $("tbody input:checked").val();
             //主页fun
-            window.top.deleteFinanceOther(id, $('#page').val());
+            window.top.deleteArchivesData('/financeOther', id, $('#page').val());
         }
     }
 

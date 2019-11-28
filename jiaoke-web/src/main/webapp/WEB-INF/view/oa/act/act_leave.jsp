@@ -16,7 +16,7 @@
     <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
 </head>
 
-<body>
+<body id="body" style="width: 65%">
 
 <div class="table-title">
     <span>请假审批表</span>
@@ -65,8 +65,8 @@
                     <button type="button" class="table-tab-send" onclick="send()">发送</button>
                 </td>
 
-                <th nowrap="nowrap" class="th_title" style="width: 4%">标题:</th>
-                <td style="width: 44%">
+                <th nowrap="nowrap" class="th_title" style="width: 4%">标题</th>
+                <td style="width: 35%">
                     <div class="common_input_frame">
                         <input type="text" id="title" name="title" placeholder="请输入标题" title="点击此处填写标题"
                                value="请假审批表(${nickname} <%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>)"
@@ -74,10 +74,10 @@
                     </div>
                 </td>
 
-                <th class="th_title" nowrap="nowrap" style="width: 4%">流程:</th>
+                <th class="th_title" nowrap="nowrap" style="width: 4%">流程</th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" placeholder="发起者部门负责人(审批)、发起者部门主管领导(审批)、发起人(协同)"
+                        <input type="text" placeholder="发起者部门负责人(审批)、发起者部门主管领导(审批)、发起人、人事(协同)"
                                readonly="readonly">
                     </div>
                 </td>
@@ -86,19 +86,11 @@
         </table>
     </div>
 
-    <span class="fill-in-date">填表日期：<%=new SimpleDateFormat("yyyy-MM-dd").format(new Date())%></span>
+    <input type="text" class="filling-date-content" name="fillingDate" value="<%=new SimpleDateFormat("yyyy-MM-dd").format(new Date())%>">
+    <span class="filling-date">填表日期 </span>
 
     <table class="formTable" style="margin: 0">
         <tbody>
-        <tr>
-            <td class="tdLabel">单位名称</td>
-            <td colspan="5" class="table-td-content">
-                <select class="select" name="company" style="width: 100%">
-                    <option value="0">北京市政路桥建材集团有限公司路驰分公司</option>
-                </select>
-            </td>
-        </tr>
-
         <tr>
             <td class="tdLabel">姓名</td>
             <td class="table-td-content">
@@ -107,7 +99,7 @@
 
             <td class="tdLabel">申请时间</td>
             <td class="table-td-content">
-                <input type="text" class="formInput entry-date" name="applyDateStr" onfocus="this.blur()">
+                <input type="text" class="formInput entry-date" name="applyDate" onfocus="this.blur()">
                 <input type="hidden" id="annex" name="annex">
             </td>
         </tr>
@@ -115,14 +107,17 @@
         <tr>
             <td class="tdLabel">事由</td>
             <td colspan="5" class="table-td-evaluation">
-                <textarea class="evaluation-content" style="height: 90px"  name="reason"></textarea>
+                <textarea class="evaluation-content" onkeyup="value=value.replace(/\s+/g,'')" style="height: 58px"
+                          name="reason"></textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
-                    <input class="approval-date-input" type="text" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" disabled>
+                    <label class="approval-date-label">日期</label>
+                    <input class="approval-date-input" type="text" name="applicantSignatureDate"
+                           value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">本人签字:</label>
-                    <input class="approval-signature-input" type="text" value="${nickname}" disabled>
+                    <label class="approval-signature-label">本人签字</label>
+                    <input class="approval-signature-input" type="text" name="applicantSignature" value="${nickname}"
+                           readonly>
                 </div>
             </td>
         </tr>
@@ -132,12 +127,12 @@
             <td colspan="5" class="approval-content">
                 <textarea disabled="disabled" class="approval-content-textarea"></textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
-                    <input class="approval-date-input" type="text" disabled="disabled">
+                    <label class="approval-date-label">日期</label>
+                    <input class="approval-date-input" type="text" readonly>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">签字:</label>
-                    <input class="approval-signature-input" type="text" disabled="disabled">
+                    <label class="approval-signature-label">签字</label>
+                    <input class="approval-signature-input" type="text" readonly>
                 </div>
             </td>
         </tr>
@@ -147,12 +142,12 @@
             <td colspan="5" class="approval-content">
                 <textarea disabled="disabled" class="approval-content-textarea"></textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
-                    <input class="approval-date-input" type="text" disabled="disabled">
+                    <label class="approval-date-label">日期</label>
+                    <input class="approval-date-input" type="text" readonly>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">签字:</label>
-                    <input class="approval-signature-input" type="text" disabled="disabled">
+                    <label class="approval-signature-label">签字</label>
+                    <input class="approval-signature-input" type="text" readonly>
                 </div>
             </td>
         </tr>
@@ -302,9 +297,11 @@
     //打印
     function printContent() {
         $('#tool,#titleArea,#annexList').hide();
+        $('#body').css('width', '100%');
         //执行打印
         window.print();
         $('#tool,#titleArea').show();
+        $('#body').css('width', '65%');
 
         //附件列表
         let annexesLen = $('#annexes').children().length;

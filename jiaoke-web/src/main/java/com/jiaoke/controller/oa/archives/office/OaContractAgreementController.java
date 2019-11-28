@@ -34,7 +34,8 @@ public class OaContractAgreementController {
      * @return contract_agreement.jsp
      */
     @RequestMapping(value = "/toContractAgreement")
-    public String toContractAgreement() {
+    public String toContractAgreement(int page, Model model) {
+        model.addAttribute("currentPage", JsonHelper.toJSONString(page));
         return "oa/archives/office/contract_agreement/index";
     }
 
@@ -70,7 +71,7 @@ public class OaContractAgreementController {
     @RequestMapping(value = "/addContractAgreement", method = RequestMethod.POST)
     public String add(OaContractAgreement oaContractAgreement) {
         int i = oaContractAgreementService.insertSelective(oaContractAgreement);
-        return "redirect:/contractAgreement/toContractAgreement";
+        return "redirect:/contractAgreement/toContractAgreement?page=1";
     }
 
     /**
@@ -141,7 +142,7 @@ public class OaContractAgreementController {
     @RequestMapping("/edit")
     public String edit(OaContractAgreement oaContractAgreement) {
         int i = oaContractAgreementService.updateByPrimaryKeySelective(oaContractAgreement);
-        return "redirect:/contractAgreement/toContractAgreement";
+        return "redirect:/contractAgreement/toContractAgreement?page=1";
     }
 
     /**

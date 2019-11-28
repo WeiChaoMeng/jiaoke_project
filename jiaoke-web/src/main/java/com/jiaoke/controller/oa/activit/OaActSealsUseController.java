@@ -1,5 +1,6 @@
 package com.jiaoke.controller.oa.activit;
 
+import com.alibaba.fastjson.JSON;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
@@ -117,10 +118,61 @@ public class OaActSealsUseController {
         //获取批注信息
         List<Comments> commentsList = activitiUtil.selectHistoryComment(activitiUtil.getTaskByTaskId(taskId).getProcessInstanceId());
         model.addAttribute("oaActSealsUse", oaActSealsUse);
+        model.addAttribute("oaActSealsUseJson", JsonHelper.toJSONString(oaActSealsUse));
         model.addAttribute("taskId", JsonHelper.toJSONString(taskId));
         model.addAttribute("commentsList", commentsList);
         model.addAttribute("nickname", getCurrentUser().getNickname());
         return "oa/act/act_seals_use_handle";
+    }
+
+    /**
+     * app获取审批页面信息
+     *
+     * @param id     id
+     * @param taskId taskId
+     * @return json
+     */
+    @RequestMapping(value = "/approval.api")
+    @ResponseBody
+    public String approvalApi(String id, String taskId) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActSealsUse oaActSealsUse = oaActSealsUseService.selectByPrimaryKey(id);
+
+        String nickname = getCurrentUser().getNickname();
+        //根据发起者id获取所属部门id
+        String departmentId = userInfoService.selectDepartmentByUserId(oaActSealsUse.getPromoter());
+        //部门负责人
+        String principalId = departmentService.selectEnforcerId("principal", departmentId);
+        String principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        //部门主管领导
+        String supervisorId = departmentService.selectEnforcerId("supervisor", departmentId);
+        String supervisor = userInfoService.getNicknameById(Integer.valueOf(supervisorId));
+        //印章主管领导
+        String sealSupervisor;
+        if (oaActSealsUse.getSeal() == 4 || oaActSealsUse.getSeal() == 5) {
+            sealSupervisor = userInfoService.getUserInfoByPermission("specialChapter").getNickname();
+        } else {
+            sealSupervisor = userInfoService.getUserInfoByPermission("seal_supervisor").getNickname();
+        }
+
+        //印章经办人
+        String sealOperator;
+        if (oaActSealsUse.getSeal() == 4) {
+            sealOperator = userInfoService.getUserInfoByPermission("legalStamp").getNickname();
+        } else if (oaActSealsUse.getSeal() == 5) {
+            sealOperator = userInfoService.getUserInfoByPermission("financeStamp").getNickname();
+        } else {
+            sealOperator = userInfoService.getUserInfoByPermission("seal_operator").getNickname();
+        }
+
+        map.put("nickname", nickname);
+        map.put("principal", principal);
+        map.put("supervisor", supervisor);
+        map.put("sealSupervisor", sealSupervisor);
+        map.put("sealOperator", sealOperator);
+        map.put("sealsUse", oaActSealsUse);
+        map.put("taskId", taskId);
+        return JSON.toJSONString(map);
     }
 
     /**
@@ -143,6 +195,11 @@ public class OaActSealsUseController {
         String principal = "principal";
         //部门主管领导
         String supervisor = "supervisor";
+        //印章主管领导
+        String sealSupervisor = "seal_supervisor";
+        //印章经办人
+        String sealOperator = "seal_operator";
+
         //更新数据
         if (oaActSealsUseService.updateByPrimaryKeySelective(oaActSealsUse) < 1) {
             return "error";
@@ -183,6 +240,29 @@ public class OaActSealsUseController {
                         //选择执行者Id
                         String enforcerId = departmentService.selectEnforcerId(enforcer, departmentId);
                         activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, Integer.valueOf(enforcerId));
+                        return "success";
+                    } else if (sealSupervisor.equals(enforcer)) {
+                        //法人章和财务章的印章主管是总经理
+                        if (oaActSealsUse.getSeal() == 4 || oaActSealsUse.getSeal() == 5) {
+                            UserInfo userInfo = userInfoService.getUserInfoByPermission("specialChapter");
+                            activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
+                        } else {
+                            UserInfo userInfo = userInfoService.getUserInfoByPermission("seal_supervisor");
+                            activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
+                        }
+                        return "success";
+                    } else if (sealOperator.equals(enforcer)) {
+                        //法人章经办人（出纳回凤英）和财务章经办人（李佳）其他印章经办人是（汪宁）
+                        if (oaActSealsUse.getSeal() == 4) {
+                            UserInfo userInfo = userInfoService.getUserInfoByPermission("legalStamp");
+                            activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
+                        } else if (oaActSealsUse.getSeal() == 5) {
+                            UserInfo userInfo = userInfoService.getUserInfoByPermission("financeStamp");
+                            activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
+                        } else {
+                            UserInfo userInfo = userInfoService.getUserInfoByPermission("seal_operator");
+                            activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
+                        }
                         return "success";
                     } else {
                         UserInfo userInfo = userInfoService.getUserInfoByPermission(enforcer);
@@ -296,6 +376,54 @@ public class OaActSealsUseController {
         model.addAttribute("commentsList", commentsList);
         return "oa/act/act_seals_use_details";
     }
+
+
+    /**
+     * app获取详细信息
+     *
+     * @param id id
+     * @return json
+     */
+    @RequestMapping(value = "/details.api")
+    @ResponseBody
+    public String detailsApi(String id) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActSealsUse oaActSealsUse = oaActSealsUseService.selectByPrimaryKey(id);
+
+        //根据发起者id获取所属部门id
+        String departmentId = userInfoService.selectDepartmentByUserId(oaActSealsUse.getPromoter());
+        //部门负责人
+        String principalId = departmentService.selectEnforcerId("principal", departmentId);
+        String principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        //部门主管领导
+        String supervisorId = departmentService.selectEnforcerId("supervisor", departmentId);
+        String supervisor = userInfoService.getNicknameById(Integer.valueOf(supervisorId));
+        //印章主管领导
+        String sealSupervisor;
+        if (oaActSealsUse.getSeal() == 4 || oaActSealsUse.getSeal() == 5) {
+            sealSupervisor = userInfoService.getUserInfoByPermission("specialChapter").getNickname();
+        } else {
+            sealSupervisor = userInfoService.getUserInfoByPermission("seal_supervisor").getNickname();
+        }
+
+        //印章经办人
+        String sealOperator;
+        if (oaActSealsUse.getSeal() == 4) {
+            sealOperator = userInfoService.getUserInfoByPermission("legalStamp").getNickname();
+        } else if (oaActSealsUse.getSeal() == 5) {
+            sealOperator = userInfoService.getUserInfoByPermission("financeStamp").getNickname();
+        } else {
+            sealOperator = userInfoService.getUserInfoByPermission("seal_operator").getNickname();
+        }
+
+        map.put("principal", principal);
+        map.put("supervisor", supervisor);
+        map.put("sealSupervisor", sealSupervisor);
+        map.put("sealOperator", sealOperator);
+        map.put("sealsUse", oaActSealsUse);
+        return JsonHelper.toJSONString(map);
+    }
+
 
     /**
      * 删除

@@ -10,10 +10,8 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>转正申请表</title>
+    <title>转正申请表详情</title>
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
-    <link href="../../../../static/js/date_pickers/date_picker.css" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
 </head>
 
 <body id="body">
@@ -49,7 +47,7 @@
                     <c:forTokens items="${oaActRegularization.annex}" delims="," var="annex">
                         <div class="table-file">
                             <div class="table-file-content">
-                                <span title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <span class="table-file-title" title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
                                 <a class="table-file-download icon"
                                    href="/fileDownloadHandle/download?fileName=${annex}"
                                    title="下载">&#xebda;</a>
@@ -60,6 +58,11 @@
             </div>
         </c:when>
     </c:choose>
+</div>
+
+<div style="margin-top: 10px">
+    <input type="text" class="filling-date-content" value="${oaActRegularization.fillingDate}" readonly>
+    <span class="filling-date">填表日期 </span>
 </div>
 
 <table class="formTable">
@@ -97,12 +100,12 @@
 
         <td class="tdLabel">入职时间</td>
         <td class="table-td-content">
-            ${oaActRegularization.entryDateStr}
+            ${oaActRegularization.entryDate}
         </td>
 
         <td class="tdLabel">试用期时间</td>
         <td class="table-td-content">
-            ${oaActRegularization.probationPeriodStr}
+            ${oaActRegularization.probationPeriod}
         </td>
     </tr>
 
@@ -117,33 +120,33 @@
         <td class="tdLabel">部门评价</td>
         <td colspan="5" class="table-td-textarea" style="line-height: 0">
             <div class="opinion-principal">
-                <label class="opinion-principal-title">部长：</label>
+                <label class="opinion-principal-title">部长 </label>
                 <textarea class="opinion-column-Juxtaposition"
                           readonly>${oaActRegularization.principalContent}</textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
+                    <label class="approval-date-label">日期 </label>
                     <input class="approval-date-input" type="text" value="${oaActRegularization.principalDate}"
                            readonly>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">签字:</label>
-                    <input class="approval-signature-input" type="text" value="${oaActRegularization.principalSign}"
+                    <label class="approval-signature-label">签字 </label>
+                    <input class="approval-signature-input" type="text" value="${oaActRegularization.principal}"
                            readonly>
                 </div>
             </div>
 
             <div class="opinion-supervisor">
-                <label class="opinion-principal-title">主管：</label>
+                <label class="opinion-principal-title">主管 </label>
                 <textarea class="opinion-column-Juxtaposition"
                           readonly>${oaActRegularization.supervisorContent}</textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
+                    <label class="approval-date-label">日期 </label>
                     <input class="approval-date-input" type="text" value="${oaActRegularization.supervisorDate}"
                            readonly>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">签字:</label>
-                    <input class="approval-signature-input" type="text" value="${oaActRegularization.supervisorSign}"
+                    <label class="approval-signature-label">签字 </label>
+                    <input class="approval-signature-input" type="text" value="${oaActRegularization.supervisor}"
                            readonly>
                 </div>
             </div>
@@ -155,12 +158,12 @@
         <td colspan="5" class="approval-content">
             <textarea class="approval-content-textarea" readonly>${oaActRegularization.personnelContent}</textarea>
             <div class="approval-date">
-                <label class="approval-date-label">日期:</label>
+                <label class="approval-date-label">日期 </label>
                 <input class="approval-date-input" type="text" value="${oaActRegularization.personnelDate}" readonly>
             </div>
             <div class="approval-signature">
-                <label class="approval-signature-label">签字:</label>
-                <input class="approval-signature-input" type="text" value="${oaActRegularization.personnelSign}"
+                <label class="approval-signature-label">签字 </label>
+                <input class="approval-signature-input" type="text" value="${oaActRegularization.personnel}"
                        readonly>
             </div>
         </td>
@@ -169,14 +172,14 @@
     <tr>
         <td class="tdLabel">总经理审批</td>
         <td colspan="5" class="approval-content">
-            <textarea class="approval-content-textarea" readonly>${oaActRegularization.presidentContent}</textarea>
+            <textarea class="approval-content-textarea" readonly>${oaActRegularization.companyPrincipalContent}</textarea>
             <div class="approval-date">
-                <label class="approval-date-label">日期:</label>
-                <input class="approval-date-input" type="text" value="${oaActRegularization.presidentDate}" readonly>
+                <label class="approval-date-label">日期 </label>
+                <input class="approval-date-input" type="text" value="${oaActRegularization.companyPrincipalDate}" readonly>
             </div>
             <div class="approval-signature">
-                <label class="approval-signature-label">签字:</label>
-                <input class="approval-signature-input" type="text" value="${oaActRegularization.presidentSign}"
+                <label class="approval-signature-label">签字 </label>
+                <input class="approval-signature-input" type="text" value="${oaActRegularization.companyPrincipal}"
                        readonly>
             </div>
         </td>
@@ -186,8 +189,6 @@
 
 </body>
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
-<script type="text/javascript" src="../../../../static/js/jeDate/src/jedate.js"></script>
-<script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
     //打印
     function printContent() {

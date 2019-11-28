@@ -33,11 +33,11 @@ public class OaActSealsUseServiceImpl implements OaActSealsUseService {
 
     @Override
     public int deleteData(String id) {
-        return oaActSealsUseMapper.deleteByPrimaryKey( id);
+        return oaActSealsUseMapper.deleteByPrimaryKey(id);
     }
 
     @Override
-    public int insert(OaActSealsUse oaActSealsUse,Integer userId, String randomId, Integer state) {
+    public int insert(OaActSealsUse oaActSealsUse, Integer userId, String randomId, Integer state) {
         oaActSealsUse.setCreateTime(new Date());
         oaActSealsUse.setId(randomId);
         oaActSealsUse.setPromoter(userId);
@@ -51,6 +51,25 @@ public class OaActSealsUseServiceImpl implements OaActSealsUseService {
             oaCollaboration.setTitle(oaActSealsUse.getTitle());
             oaCollaboration.setUrl("sealsUse");
             oaCollaboration.setTable("oa_act_seals_use");
+            oaCollaboration.setName("印章使用申请");
+            if (oaActSealsUse.getSeal() == 0) {
+                oaCollaboration.setDataOne("印章种类:路驰公章");
+            } else if (oaActSealsUse.getSeal() == 1) {
+                oaCollaboration.setDataOne("印章种类:路驰合同专用章");
+            } else if (oaActSealsUse.getSeal() == 2) {
+                oaCollaboration.setDataOne("印章种类:路驰党支部章");
+            } else if (oaActSealsUse.getSeal() == 3) {
+                oaCollaboration.setDataOne("印章种类:路驰工会章");
+            } else if (oaActSealsUse.getSeal() == 4) {
+                oaCollaboration.setDataOne("印章种类:路驰法人章");
+            } else if (oaActSealsUse.getSeal() == 5) {
+                oaCollaboration.setDataOne("印章种类:路驰财务专用章");
+            } else if (oaActSealsUse.getSeal() == 6) {
+                oaCollaboration.setDataOne("印章种类:大兴公章");
+            } else {
+                oaCollaboration.setDataOne("印章种类:大兴合同章");
+            }
+            oaCollaboration.setDataTwo("盖章文件内容:" + oaActSealsUse.getName());
             oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);

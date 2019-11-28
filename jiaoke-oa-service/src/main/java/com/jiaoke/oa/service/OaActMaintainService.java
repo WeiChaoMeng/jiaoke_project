@@ -45,4 +45,12 @@ public interface OaActMaintainService {
      * @return OaActSealsUse
      */
     OaActMaintain selectByPrimaryKey(String id);
+
+    /**
+     * 选择性更新
+     *
+     * @param oaActMaintain oaActMaintain
+     * @return int
+     */
+    int updateByPrimaryKeySelective(OaActMaintain oaActMaintain);
 }

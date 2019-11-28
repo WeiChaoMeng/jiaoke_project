@@ -12,11 +12,9 @@
     <meta charset="utf-8">
     <title>生产假审批表</title>
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
-    <link href="../../../../static/js/date_pickers/date_picker.css" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
 </head>
 
-<body id="body">
+<body id="body" style="width: 65%">
 
 <div class="table-title">
     <span>${oaActProductionLeave.title}</span>
@@ -49,7 +47,7 @@
                     <c:forTokens items="${oaActProductionLeave.annex}" delims="," var="annex">
                         <div class="table-file">
                             <div class="table-file-content">
-                                <span title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <span class="table-file-title" title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
                                 <a class="table-file-download icon"
                                    href="/fileDownloadHandle/download?fileName=${annex}"
                                    title="下载">&#xebda;</a>
@@ -62,25 +60,17 @@
     </c:choose>
 </div>
 
+<div style="margin-top: 10px">
+    <input type="text" class="filling-date-content" value="${oaActProductionLeave.fillingDate}" readonly>
+    <span class="filling-date">填表日期 </span>
+</div>
+
 <table class="formTable">
     <tbody>
-    <tr>
-        <td class="tdLabel">单位名称</td>
-        <td colspan="5" class="table-td-content">
-            <c:choose>
-                <c:when test="${oaActProductionLeave.company == 0}">
-                    北京市政路桥建材集团有限公司路驰分公司
-                </c:when>
-            </c:choose>
-        </td>
-    </tr>
-
     <tr>
         <td class="tdLabel">部门</td>
         <td class="table-td-content">
             ${oaActProductionLeave.department}
-            <input type="hidden" id="annex" name="annex">
-            <input type="hidden" id="id" name="id" value="${oaActProductionLeave.id}">
         </td>
 
         <td class="tdLabel">姓名</td>
@@ -97,7 +87,7 @@
 
         <td class="tdLabel">申请休假时间</td>
         <td class="table-td-content">
-            ${oaActProductionLeave.applyDateStr}
+            ${oaActProductionLeave.applyDate}
         </td>
     </tr>
 
@@ -109,7 +99,7 @@
 
         <td class="tdLabel">实际休假时间</td>
         <td class="table-td-content">
-            ${oaActProductionLeave.actualDateStr}
+            ${oaActProductionLeave.actualDate}
         </td>
     </tr>
 
@@ -139,29 +129,17 @@
     </tbody>
 </table>
 
-<div class="form-but" id="return">
-    <button type="button" class="return-but" onclick="previousPage()">返回</button>
-</div>
-
 </body>
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
-<script type="text/javascript" src="../../../../static/js/jeDate/src/jedate.js"></script>
-<script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
-
-    //返回上一页
-    function previousPage() {
-        window.history.back();
-    }
-
     //打印
     function printContent() {
-        $('#tool,#return').hide();
+        $('#tool').hide();
         $('#body').css('width', '100%');
         //执行打印
         window.print();
         $('#tool').show();
-        $('#body,#return').css('width', '80%');
+        $('#body').css('width', '65%');
     }
 </script>
 </html>

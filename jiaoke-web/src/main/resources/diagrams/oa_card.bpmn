@@ -4,7 +4,7 @@
     <startEvent id="start" name="开始"/>
     <userTask activiti:assignee="${principal}" activiti:exclusive="true" id="card1" name="负责人"/>
     <userTask activiti:assignee="${supervisor}" activiti:exclusive="true" id="card2" name="主管领导"/>
-    <userTask activiti:assignee="${cardApproval}" activiti:exclusive="true" id="card3" name="主管部门负责人"/>
+    <userTask activiti:assignee="${card_approval}" activiti:exclusive="true" id="card3" name="主管部门负责人"/>
     <endEvent id="end" name="结束"/>
     <sequenceFlow id="_8" sourceRef="start" targetRef="card1"/>
     <sequenceFlow id="_9" sourceRef="card1" targetRef="card2"/>

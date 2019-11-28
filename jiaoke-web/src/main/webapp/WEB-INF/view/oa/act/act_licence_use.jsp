@@ -90,7 +90,7 @@
     <table class="formTable">
         <tbody>
         <tr>
-            <td class="tdLabel">印章种类</td>
+            <td class="tdLabel">证照种类</td>
             <td class="table-td-content">
                 <select class="select" name="seal">
                     <option value="0">路驰营业执照正本</option>

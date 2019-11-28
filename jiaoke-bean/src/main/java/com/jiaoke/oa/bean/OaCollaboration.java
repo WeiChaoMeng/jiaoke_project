@@ -74,6 +74,9 @@ public class OaCollaboration {
      * 任务Id
      */
     private String taskId;
+    private String name;
+    private String dataOne;
+    private String dataTwo;
 
     /**
      * 发起人
@@ -231,5 +234,29 @@ public class OaCollaboration {
 
     public void setCurrentExecutorList(List<String> currentExecutorList) {
         this.currentExecutorList = currentExecutorList;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDataOne() {
+        return dataOne;
+    }
+
+    public void setDataOne(String dataOne) {
+        this.dataOne = dataOne;
+    }
+
+    public String getDataTwo() {
+        return dataTwo;
+    }
+
+    public void setDataTwo(String dataTwo) {
+        this.dataTwo = dataTwo;
     }
 }

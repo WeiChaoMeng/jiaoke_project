@@ -29,6 +29,10 @@ public class OaActRegularization {
     private String title;
 
     /**
+     * 填表日期
+     */
+    private String fillingDate;
+    /**
      * 姓名
      */
     private String name;
@@ -51,16 +55,17 @@ public class OaActRegularization {
     /**
      * 入职时间
      */
-    private Date entryDate;
-    @Transient
-    private String entryDateStr;
+    private String entryDate;
 
     /**
      * 试用期时间
      */
-    private Date probationPeriod;
-    @Transient
-    private String probationPeriodStr;
+    private String probationPeriod;
+
+    /**
+     * 人事审查（不做审批处理）
+     */
+    private String personnelCensor;
 
     /**
      * 部门负责人审批内容
@@ -70,7 +75,7 @@ public class OaActRegularization {
     /**
      * 部门负责人签字
      */
-    private String principalSign;
+    private String principal;
 
     /**
      * 部门负责人签字时间
@@ -85,7 +90,7 @@ public class OaActRegularization {
     /**
      * 部门管理主管签字
      */
-    private String supervisorSign;
+    private String supervisor;
 
     /**
      * 部门管理主管签字时间
@@ -100,7 +105,7 @@ public class OaActRegularization {
     /**
      * 组织人事部签字
      */
-    private String personnelSign;
+    private String personnel;
 
     /**
      * 组织人事部签字时间
@@ -110,17 +115,17 @@ public class OaActRegularization {
     /**
      * 总经理审批内容
      */
-    private String presidentContent;
+    private String companyPrincipalContent;
 
     /**
      * 总经理签字
      */
-    private String presidentSign;
+    private String companyPrincipal;
 
     /**
      * 总经理签字时间
      */
-    private String presidentDate;
+    private String companyPrincipalDate;
 
     /**
      * 自我评价
@@ -199,36 +204,116 @@ public class OaActRegularization {
         this.education = education;
     }
 
-    public Date getEntryDate() {
+    public String getEntryDate() {
         return entryDate;
     }
 
-    public void setEntryDate(Date entryDate) {
+    public void setEntryDate(String entryDate) {
         this.entryDate = entryDate;
     }
 
-    public String getEntryDateStr() {
-        return entryDateStr;
-    }
-
-    public void setEntryDateStr(String entryDateStr) {
-        this.entryDateStr = entryDateStr;
-    }
-
-    public Date getProbationPeriod() {
+    public String getProbationPeriod() {
         return probationPeriod;
     }
 
-    public void setProbationPeriod(Date probationPeriod) {
+    public void setProbationPeriod(String probationPeriod) {
         this.probationPeriod = probationPeriod;
     }
 
-    public String getProbationPeriodStr() {
-        return probationPeriodStr;
+    public String getPrincipalContent() {
+        return principalContent;
     }
 
-    public void setProbationPeriodStr(String probationPeriodStr) {
-        this.probationPeriodStr = probationPeriodStr;
+    public void setPrincipalContent(String principalContent) {
+        this.principalContent = principalContent;
+    }
+
+    public String getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(String principal) {
+        this.principal = principal;
+    }
+
+    public String getPrincipalDate() {
+        return principalDate;
+    }
+
+    public void setPrincipalDate(String principalDate) {
+        this.principalDate = principalDate;
+    }
+
+    public String getSupervisorContent() {
+        return supervisorContent;
+    }
+
+    public void setSupervisorContent(String supervisorContent) {
+        this.supervisorContent = supervisorContent;
+    }
+
+    public String getSupervisor() {
+        return supervisor;
+    }
+
+    public void setSupervisor(String supervisor) {
+        this.supervisor = supervisor;
+    }
+
+    public String getSupervisorDate() {
+        return supervisorDate;
+    }
+
+    public void setSupervisorDate(String supervisorDate) {
+        this.supervisorDate = supervisorDate;
+    }
+
+    public String getPersonnelContent() {
+        return personnelContent;
+    }
+
+    public void setPersonnelContent(String personnelContent) {
+        this.personnelContent = personnelContent;
+    }
+
+    public String getPersonnel() {
+        return personnel;
+    }
+
+    public void setPersonnel(String personnel) {
+        this.personnel = personnel;
+    }
+
+    public String getPersonnelDate() {
+        return personnelDate;
+    }
+
+    public void setPersonnelDate(String personnelDate) {
+        this.personnelDate = personnelDate;
+    }
+
+    public String getCompanyPrincipalContent() {
+        return companyPrincipalContent;
+    }
+
+    public void setCompanyPrincipalContent(String companyPrincipalContent) {
+        this.companyPrincipalContent = companyPrincipalContent;
+    }
+
+    public String getCompanyPrincipal() {
+        return companyPrincipal;
+    }
+
+    public void setCompanyPrincipal(String companyPrincipal) {
+        this.companyPrincipal = companyPrincipal;
+    }
+
+    public String getCompanyPrincipalDate() {
+        return companyPrincipalDate;
+    }
+
+    public void setCompanyPrincipalDate(String companyPrincipalDate) {
+        this.companyPrincipalDate = companyPrincipalDate;
     }
 
     public String getSelfAssessment() {
@@ -271,14 +356,6 @@ public class OaActRegularization {
         this.promoter = promoter;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
     public String getPromoterStr() {
         return promoterStr;
     }
@@ -287,99 +364,27 @@ public class OaActRegularization {
         this.promoterStr = promoterStr;
     }
 
-    public String getPrincipalContent() {
-        return principalContent;
+    public String getUrl() {
+        return url;
     }
 
-    public void setPrincipalContent(String principalContent) {
-        this.principalContent = principalContent;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    public String getPrincipalSign() {
-        return principalSign;
+    public String getFillingDate() {
+        return fillingDate;
     }
 
-    public void setPrincipalSign(String principalSign) {
-        this.principalSign = principalSign;
+    public void setFillingDate(String fillingDate) {
+        this.fillingDate = fillingDate;
     }
 
-    public String getPrincipalDate() {
-        return principalDate;
+    public String getPersonnelCensor() {
+        return personnelCensor;
     }
 
-    public void setPrincipalDate(String principalDate) {
-        this.principalDate = principalDate;
-    }
-
-    public String getSupervisorContent() {
-        return supervisorContent;
-    }
-
-    public void setSupervisorContent(String supervisorContent) {
-        this.supervisorContent = supervisorContent;
-    }
-
-    public String getSupervisorSign() {
-        return supervisorSign;
-    }
-
-    public void setSupervisorSign(String supervisorSign) {
-        this.supervisorSign = supervisorSign;
-    }
-
-    public String getSupervisorDate() {
-        return supervisorDate;
-    }
-
-    public void setSupervisorDate(String supervisorDate) {
-        this.supervisorDate = supervisorDate;
-    }
-
-    public String getPersonnelContent() {
-        return personnelContent;
-    }
-
-    public void setPersonnelContent(String personnelContent) {
-        this.personnelContent = personnelContent;
-    }
-
-    public String getPersonnelSign() {
-        return personnelSign;
-    }
-
-    public void setPersonnelSign(String personnelSign) {
-        this.personnelSign = personnelSign;
-    }
-
-    public String getPersonnelDate() {
-        return personnelDate;
-    }
-
-    public void setPersonnelDate(String personnelDate) {
-        this.personnelDate = personnelDate;
-    }
-
-    public String getPresidentContent() {
-        return presidentContent;
-    }
-
-    public void setPresidentContent(String presidentContent) {
-        this.presidentContent = presidentContent;
-    }
-
-    public String getPresidentSign() {
-        return presidentSign;
-    }
-
-    public void setPresidentSign(String presidentSign) {
-        this.presidentSign = presidentSign;
-    }
-
-    public String getPresidentDate() {
-        return presidentDate;
-    }
-
-    public void setPresidentDate(String presidentDate) {
-        this.presidentDate = presidentDate;
+    public void setPersonnelCensor(String personnelCensor) {
+        this.personnelCensor = personnelCensor;
     }
 }

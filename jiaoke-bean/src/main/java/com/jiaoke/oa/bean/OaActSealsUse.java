@@ -54,19 +54,39 @@ public class OaActSealsUse {
     private String principal;
 
     /**
+     * 部门负责人审批时间
+     */
+    private String principalDate;
+
+    /**
      * 部门主管领导
      */
     private String supervisor;
 
     /**
+     * 部门主管领导审批时间
+     */
+    private String supervisorDate;
+
+    /**
      * 印章管理部门主管领导
      */
-    private String sealManage;
+    private String sealSupervisor;
+
+    /**
+     * 印章管理部门主管领导审批时间
+     */
+    private String sealSupervisorDate;
 
     /**
      * 盖章人
      */
-    private String stamp;
+    private String sealOperator;
+
+    /**
+     * 盖章人审批时间
+     */
+    private String sealOperatorDate;
 
     /**
      * 创建日期
@@ -140,6 +160,70 @@ public class OaActSealsUse {
         this.name = name;
     }
 
+    public String getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(String principal) {
+        this.principal = principal;
+    }
+
+    public String getPrincipalDate() {
+        return principalDate;
+    }
+
+    public void setPrincipalDate(String principalDate) {
+        this.principalDate = principalDate;
+    }
+
+    public String getSupervisor() {
+        return supervisor;
+    }
+
+    public void setSupervisor(String supervisor) {
+        this.supervisor = supervisor;
+    }
+
+    public String getSupervisorDate() {
+        return supervisorDate;
+    }
+
+    public void setSupervisorDate(String supervisorDate) {
+        this.supervisorDate = supervisorDate;
+    }
+
+    public String getSealSupervisor() {
+        return sealSupervisor;
+    }
+
+    public void setSealSupervisor(String sealSupervisor) {
+        this.sealSupervisor = sealSupervisor;
+    }
+
+    public String getSealSupervisorDate() {
+        return sealSupervisorDate;
+    }
+
+    public void setSealSupervisorDate(String sealSupervisorDate) {
+        this.sealSupervisorDate = sealSupervisorDate;
+    }
+
+    public String getSealOperator() {
+        return sealOperator;
+    }
+
+    public void setSealOperator(String sealOperator) {
+        this.sealOperator = sealOperator;
+    }
+
+    public String getSealOperatorDate() {
+        return sealOperatorDate;
+    }
+
+    public void setSealOperatorDate(String sealOperatorDate) {
+        this.sealOperatorDate = sealOperatorDate;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -164,6 +248,14 @@ public class OaActSealsUse {
         this.promoter = promoter;
     }
 
+    public String getPromoterStr() {
+        return promoterStr;
+    }
+
+    public void setPromoterStr(String promoterStr) {
+        this.promoterStr = promoterStr;
+    }
+
     public String getUrl() {
         return url;
     }
@@ -172,51 +264,11 @@ public class OaActSealsUse {
         this.url = url;
     }
 
-    public String getPrincipal() {
-        return principal;
-    }
-
-    public void setPrincipal(String principal) {
-        this.principal = principal;
-    }
-
-    public String getSupervisor() {
-        return supervisor;
-    }
-
-    public void setSupervisor(String supervisor) {
-        this.supervisor = supervisor;
-    }
-
-    public String getSealManage() {
-        return sealManage;
-    }
-
-    public void setSealManage(String sealManage) {
-        this.sealManage = sealManage;
-    }
-
-    public String getStamp() {
-        return stamp;
-    }
-
-    public void setStamp(String stamp) {
-        this.stamp = stamp;
-    }
-
     public String getAnnex() {
         return annex;
     }
 
     public void setAnnex(String annex) {
         this.annex = annex;
-    }
-
-    public String getPromoterStr() {
-        return promoterStr;
-    }
-
-    public void setPromoterStr(String promoterStr) {
-        this.promoterStr = promoterStr;
     }
 }

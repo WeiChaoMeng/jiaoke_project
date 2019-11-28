@@ -54,9 +54,19 @@ public class OaActSealsBorrow {
     private String principal;
 
     /**
+     * 部门负责人审批日期
+     */
+    private String principalDate;
+
+    /**
      * 印章主管领导
      */
-    private String sealManage;
+    private String sealSupervisor;
+
+    /**
+     * 印章主管领导审批日期
+     */
+    private String sealSupervisorDate;
 
     /**
      * 经办人
@@ -148,12 +158,28 @@ public class OaActSealsBorrow {
         this.principal = principal;
     }
 
-    public String getSealManage() {
-        return sealManage;
+    public String getPrincipalDate() {
+        return principalDate;
     }
 
-    public void setSealManage(String sealManage) {
-        this.sealManage = sealManage;
+    public void setPrincipalDate(String principalDate) {
+        this.principalDate = principalDate;
+    }
+
+    public String getSealSupervisor() {
+        return sealSupervisor;
+    }
+
+    public void setSealSupervisor(String sealSupervisor) {
+        this.sealSupervisor = sealSupervisor;
+    }
+
+    public String getSealSupervisorDate() {
+        return sealSupervisorDate;
+    }
+
+    public void setSealSupervisorDate(String sealSupervisorDate) {
+        this.sealSupervisorDate = sealSupervisorDate;
     }
 
     public String getSealOperator() {

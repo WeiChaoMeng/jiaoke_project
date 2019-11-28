@@ -54,7 +54,8 @@ public interface OaCollaborationMapper {
     /**
      * 查询已办任务
      *
-     * @param list list
+     * @param list  list
+     * @param title title
      * @return list
      */
     List<OaCollaboration> selectDone(@Param("list") List<String> list, @Param("title") String title);
@@ -128,4 +129,14 @@ public interface OaCollaborationMapper {
      * @return list
      */
     List<OaCollaboration> selectMultipleData(@Param("ids") List<String> ids);
+
+    /**
+     * 查询上个审批人信息
+     *
+     * @param field 查询的字段
+     * @param table 表名
+     * @param id    主键
+     * @return string
+     */
+    String selectPreviousNodeInfo(@Param("field") String field, @Param("table") String table, @Param("id") String id);
 }

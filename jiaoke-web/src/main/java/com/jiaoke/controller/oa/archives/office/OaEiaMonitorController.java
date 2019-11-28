@@ -4,9 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jiake.utils.JsonHelper;
 import com.jiaoke.oa.bean.OaEiaMonitor;
-import com.jiaoke.oa.bean.OaManagementSystem;
 import com.jiaoke.oa.service.OaEiaMonitorService;
-import com.jiaoke.oa.service.OaManagementSystemService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,7 +34,8 @@ public class OaEiaMonitorController {
      * @return jsp
      */
     @RequestMapping(value = "/toEiaMonitor")
-    public String toContractAgreement() {
+    public String toContractAgreement(int page, Model model) {
+        model.addAttribute("currentPage", JsonHelper.toJSONString(page));
         return "oa/archives/office/eia_monitor/index";
     }
 
@@ -72,7 +71,7 @@ public class OaEiaMonitorController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String add(OaEiaMonitor oaEiaMonitor) {
         int i = oaEiaMonitorService.insertSelective(oaEiaMonitor);
-        return "redirect:/eiaMonitor/toEiaMonitor";
+        return "redirect:/eiaMonitor/toEiaMonitor?page=1";
     }
 
     /**
@@ -128,7 +127,7 @@ public class OaEiaMonitorController {
     @RequestMapping("/edit")
     public String edit(OaEiaMonitor oaEiaMonitor) {
         int i = oaEiaMonitorService.updateByPrimaryKeySelective(oaEiaMonitor);
-        return "redirect:/eiaMonitor/toEiaMonitor";
+        return "redirect:/eiaMonitor/toEiaMonitor?page=1";
     }
 
     /**

@@ -112,7 +112,7 @@
             </div>
             <div class="approval-signature">
                 <label class="approval-signature-label">签字</label>
-                <input class="approval-signature-input" type="text" value="${oaActReview.legalAffairsSign}"
+                <input class="approval-signature-input" type="text" value="${oaActReview.legalAffairs}"
                        readonly>
             </div>
         </td>
@@ -128,7 +128,7 @@
             </div>
             <div class="approval-signature">
                 <label class="approval-signature-label">签字</label>
-                <input class="approval-signature-input" type="text" value="${oaActReview.financeSign}"
+                <input class="approval-signature-input" type="text" value="${oaActReview.finance}"
                        readonly>
             </div>
         </td>
@@ -144,7 +144,7 @@
             </div>
             <div class="approval-signature">
                 <label class="approval-signature-label">签字</label>
-                <input class="approval-signature-input" type="text" value="${oaActReview.supervisorSign}"
+                <input class="approval-signature-input" type="text" value="${oaActReview.supervisor}"
                        readonly>
             </div>
         </td>
@@ -160,7 +160,7 @@
             </div>
             <div class="approval-signature">
                 <label class="approval-signature-label">签字</label>
-                <input class="approval-signature-input" type="text" value="${oaActReview.companyPrincipalSign}"
+                <input class="approval-signature-input" type="text" value="${oaActReview.companyPrincipal}"
                        readonly>
             </div>
         </td>

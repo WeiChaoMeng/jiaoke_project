@@ -3,8 +3,8 @@
   <process id="oa_licence_use" isClosed="false" isExecutable="true" name="证照借用审批单（原件）" processType="None">
     <startEvent id="start" name="开始"/>
     <userTask activiti:assignee="${principal}" activiti:exclusive="true" id="olu1" name="部门负责人"/>
-    <userTask activiti:assignee="${licenceManage}" activiti:exclusive="true" id="olu2" name="证照主管领导"/>
-    <userTask activiti:assignee="${licenceOperator}" activiti:exclusive="true" id="olu3" name="经办人"/>
+    <userTask activiti:assignee="${licence_manage}" activiti:exclusive="true" id="olu2" name="证照主管领导"/>
+    <userTask activiti:assignee="${licence_operator}" activiti:exclusive="true" id="olu3" name="经办人"/>
     <endEvent id="end" name="结束"/>
     <sequenceFlow id="_7" sourceRef="start" targetRef="olu1"/>
     <sequenceFlow id="_8" sourceRef="olu1" targetRef="olu2"/>

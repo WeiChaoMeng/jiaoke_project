@@ -221,7 +221,7 @@
     }
 
     //重载页面
-    function productionEnergyPageReload(page) {
+    function reloadArchivesData(page) {
         window.location.href = "${path}/productionEnergy/toIndex?page=" + page;
     }
 
@@ -246,7 +246,7 @@
         } else {
             var id = $("tbody input:checked").val();
             //主页fun
-            window.top.deleteProductionEnergy(id, $('#page').val());
+            window.top.deleteArchivesData('/productionEnergy', id, $('#page').val());
         }
     }
 

@@ -1,3 +1,5 @@
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
 <%@ page language="java" contentType="text/html;charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -46,7 +48,7 @@
                     <c:forTokens items="${oaActSealsUse.annex}" delims="," var="annex">
                         <div class="table-file">
                             <div class="table-file-content">
-                                <span title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <span class="table-file-title" title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
                                 <a class="table-file-download icon"
                                    href="/fileDownloadHandle/download?fileName=${annex}"
                                    title="下载">&#xebda;</a>
@@ -61,7 +63,7 @@
 
 <form id="oaActSealsUse">
     <div>
-        <span class="form-number-left" style="float: right;min-width: 140px;">编号  ${oaActSealsUse.number}</span>
+        <span class="form-number-left" style="float: right;min-width: 140px;">编号 ${oaActSealsUse.number}</span>
     </div>
 
     <table class="formTable">
@@ -85,6 +87,7 @@
             <td class="table-td-content">
                 ${oaActSealsUse.applicant}
                 <input type="hidden" name="id" value="${oaActSealsUse.id}">
+                <input type="hidden" name="seal" value="${oaActSealsUse.seal}">
                 <input type="hidden" name="title" value="${oaActSealsUse.title}">
             </td>
         </tr>
@@ -99,38 +102,31 @@
         <tr>
             <td class="tdLabel">部门负责人</td>
             <td class="table-td-content" style="width: 340px">
-                <shiro:hasPermission name="officePrincipal">
-                    <c:choose>
-                        <c:when test="${oaActSealsUse.principal == null}">
-                            <input type="text" class="formInput-readonly" name="principal" value="${nickname}"
-                                   readonly="readonly">
-                        </c:when>
-                        <c:otherwise>
-                            ${oaActSealsUse.principal}
-                        </c:otherwise>
-                    </c:choose>
+                <shiro:hasPermission name="principal">
+                    <div style="width: 100%;height: 100%;" id="principalContent">
+                            <%--<input type="text" class="formInput-readonly" name="principal" value="${nickname}"--%>
+                            <%--readonly="readonly">--%>
+                            <%--<input type="hidden" name="principalDate"--%>
+                            <%--value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">--%>
+                    </div>
                 </shiro:hasPermission>
 
-                <shiro:lacksPermission name="officePrincipal">
+                <shiro:lacksPermission name="principal">
                     ${oaActSealsUse.principal}
                 </shiro:lacksPermission>
             </td>
 
             <td class="tdLabel">部门主管领导</td>
             <td class="table-td-content" style="width: 340px">
-                <shiro:hasPermission name="officeSupervisor">
-                    <c:choose>
-                        <c:when test="${oaActSealsUse.supervisor == null}">
-                            <input type="text" class="formInput-readonly" name="supervisor" value="${nickname}"
-                                   readonly="readonly">
-                        </c:when>
-                        <c:otherwise>
-                            ${oaActSealsUse.supervisor}
-                        </c:otherwise>
-                    </c:choose>
+                <shiro:hasPermission name="supervisor">
+                    <div style="width: 100%;height: 100%;" id="supervisorContent">
+                            <%--<input type="text" class="formInput-readonly" name="supervisor" value="${nickname}" readonly="readonly">--%>
+                            <%--<input type="hidden" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">--%>
+                    </div>
                 </shiro:hasPermission>
 
-                <shiro:lacksPermission name="officeSupervisor">
+
+                <shiro:lacksPermission name="supervisor">
                     ${oaActSealsUse.supervisor}
                 </shiro:lacksPermission>
             </td>
@@ -141,39 +137,28 @@
                 <span style="display: block;padding-top: 15px;">（涉及资金支出以外的文件）</span>
             </td>
             <td class="table-td-content">
-                <shiro:hasPermission name="sealManage">
-                    <c:choose>
-                        <c:when test="${oaActSealsUse.sealManage == null}">
-                            <input type="text" class="formInput-readonly" name="sealManage" value="${nickname}"
-                                   readonly="readonly">
-                        </c:when>
-                        <c:otherwise>
-                            ${oaActSealsUse.sealManage}
-                        </c:otherwise>
-                    </c:choose>
-                </shiro:hasPermission>
-
-                <shiro:lacksPermission name="sealManage">
-                    ${oaActSealsUse.sealManage}
+                <shiro:hasAnyPermission name="seal_supervisor,specialChapter">
+                    <div style="width: 100%;height: 100%;" id="sealSupervisorContent">
+                            <%--<input type="text" class="formInput-readonly" name="sealManage" value="${nickname}" readonly="readonly">--%>
+                            <%--<input type="hidden" name="sealManageDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">--%>
+                    </div>
+                </shiro:hasAnyPermission>
+                <shiro:lacksPermission name="sealOperator">
+                    ${oaActSealsUse.sealSupervisor}
                 </shiro:lacksPermission>
             </td>
 
             <td class="tdLabel">盖章人</td>
             <td class="table-td-content">
-                <shiro:hasPermission name="stamp">
-                    <c:choose>
-                        <c:when test="${oaActSealsUse.stamp == null}">
-                            <input type="text" class="formInput-readonly" name="stamp" value="${nickname}"
-                                   readonly="readonly">
-                        </c:when>
-                        <c:otherwise>
-                            ${oaActSealsUse.stamp}
-                        </c:otherwise>
-                    </c:choose>
-                </shiro:hasPermission>
+                <shiro:hasAnyPermission name="seal_operator,legalStamp,financeStamp">
+                    <div style="width: 100%;height: 100%;" id="sealOperatorContent">
+                            <%--<input type="text" class="formInput-readonly" name="sealOperator" value="${nickname}" readonly="readonly">--%>
+                            <%--<input type="hidden" name="sealOperatorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">--%>
+                    </div>
+                </shiro:hasAnyPermission>
 
-                <shiro:lacksPermission name="stamp">
-                    ${oaActSealsUse.stamp}
+                <shiro:lacksPermission name="sealOperator">
+                    ${oaActSealsUse.sealOperator}
                 </shiro:lacksPermission>
             </td>
         </tr>
@@ -182,7 +167,8 @@
 </form>
 
 <div class="form-but" id="return">
-    <shiro:hasAnyPermission name="officePrincipal,officeSupervisor,sealManage,stamp">
+    <shiro:hasAnyPermission
+            name="principal,supervisor,seal_supervisor,specialChapter,seal_operator,legalStamp,financeStamp">
         <button type="button" class="return-but" style="margin-right: 10px;" onclick="approvalProcessing(2)">回退</button>
     </shiro:hasAnyPermission>
     <button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>
@@ -192,6 +178,56 @@
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
 <script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
+
+    //流程执行步骤
+    var sealsUse = JSON.parse('${oaActSealsUseJson}');
+    //标记
+    var flag = 0;
+    if (flag === 0) {
+        if (sealsUse.principal === "" || sealsUse.principal === undefined) {
+            $('#principalContent').append('<input type="text" class="formInput-readonly" name="principal" value="${nickname}" readonly="readonly"><input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+            flag = 1;
+        } else {
+            $('#principalContent').append(sealsUse.principal);
+        }
+    } else {
+        $('#principalContent').append(sealsUse.principal);
+    }
+
+
+    if (flag === 0) {
+        if (sealsUse.supervisor === "" || sealsUse.supervisor === undefined) {
+            $('#supervisorContent').append('<input type="text" class="formInput-readonly" name="supervisor" value="${nickname}" readonly="readonly"><input type="hidden" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+            flag = 1;
+        } else {
+            $('#supervisorContent').append(sealsUse.supervisor);
+        }
+    } else {
+        $('#supervisorContent').append(sealsUse.supervisor);
+    }
+
+    if (flag === 0) {
+        if (sealsUse.sealSupervisor === "" || sealsUse.sealSupervisor === undefined) {
+            $('#sealSupervisorContent').append('<input type="text" class="formInput-readonly" name="sealSupervisor" value="${nickname}" readonly="readonly"><input type="hidden" name="sealSupervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+            flag = 1;
+        } else {
+            $('#sealSupervisorContent').append(sealsUse.sealSupervisor);
+        }
+    } else {
+        $('#sealSupervisorContent').append(sealsUse.sealSupervisor);
+    }
+
+    if (flag === 0) {
+        if (sealsUse.sealOperator === "" || sealsUse.sealOperator === undefined) {
+            $('#sealOperatorContent').append('<input type="text" class="formInput-readonly" name="sealOperator" value="${nickname}" readonly="readonly"><input type="hidden" name="sealOperatorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+            flag = 1;
+        } else {
+            $('#sealOperatorContent').append(sealsUse.sealOperator);
+        }
+    } else {
+        $('#sealOperatorContent').append(sealsUse.sealOperator);
+    }
+
 
     //任务Id
     var taskId = JSON.parse('${taskId}');

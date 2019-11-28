@@ -47,7 +47,7 @@
                     <c:forTokens items="${oaActCard.annex}" delims="," var="annex">
                         <div class="table-file">
                             <div class="table-file-content">
-                                <span title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <span class="table-file-title" title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
                                 <a class="table-file-download icon"
                                    href="/fileDownloadHandle/download?fileName=${annex}"
                                    title="下载">&#xebda;</a>
@@ -109,7 +109,7 @@
             </div>
             <div class="approval-signature">
                 <label class="approval-signature-label">签字</label>
-                <input class="approval-signature-input" type="text" value="${oaActCard.principalSign}" readonly>
+                <input class="approval-signature-input" type="text" value="${oaActCard.principal}" readonly>
             </div>
         </td>
     </tr>
@@ -124,7 +124,7 @@
             </div>
             <div class="approval-signature">
                 <label class="approval-signature-label">签字</label>
-                <input class="approval-signature-input" type="text" value="${oaActCard.supervisorSign}" readonly>
+                <input class="approval-signature-input" type="text" value="${oaActCard.supervisor}" readonly>
             </div>
         </td>
     </tr>
@@ -132,14 +132,14 @@
     <tr>
         <td class="tdLabel">主管部门负责人</td>
         <td colspan="5" class="approval-content">
-            <textarea class="approval-content-textarea" readonly>${oaActCard.directorContent}</textarea>
+            <textarea class="approval-content-textarea" readonly>${oaActCard.cardApprovalContent}</textarea>
             <div class="approval-date">
                 <label class="approval-date-label">日期</label>
-                <input class="approval-date-input" type="text" value="${oaActCard.directorDate}" readonly>
+                <input class="approval-date-input" type="text" value="${oaActCard.cardApprovalDate}" readonly>
             </div>
             <div class="approval-signature">
                 <label class="approval-signature-label">签字</label>
-                <input class="approval-signature-input" type="text" value="${oaActCard.directorSign}" readonly>
+                <input class="approval-signature-input" type="text" value="${oaActCard.cardApproval}" readonly>
             </div>
         </td>
     </tr>

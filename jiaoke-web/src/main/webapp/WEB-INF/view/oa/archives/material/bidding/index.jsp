@@ -211,7 +211,7 @@
     }
 
     //重载页面
-    function materialBiddingPageReload(page) {
+    function reloadArchivesData(page) {
         window.location.href = "${path}/materialBidding/toIndex?page=" + page;
     }
 
@@ -236,7 +236,7 @@
         } else {
             var id = $("tbody input:checked").val();
             //主页fun
-            window.top.deleteMaterialBidding(id, $('#page').val());
+            window.top.deleteArchivesData('/materialBidding',id, $('#page').val());
         }
     }
 
