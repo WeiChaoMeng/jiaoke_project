@@ -2392,7 +2392,7 @@
     }
 
     //全局质量报警
-    window.setInterval("showGlobalWarningData()", 3000);
+    window.setInterval("showGlobalWarningData()", 6000);
 
     function showGlobalWarningData() {
         var path = $("#path").val();
@@ -2405,7 +2405,6 @@
                 var crew1DiscNum = "";
                 var crew2DiscNum = "";
                 $("#warningData").empty();
-
                 if (res != "" || res != null) {
 
                     /******************渲染基本信息**********************/
@@ -2419,9 +2418,12 @@
                         var deviationRatio = res[i].deviation_ratio;
 
 
-                        if (materialName == "一仓温度" || materialName == "沥青" || materialName == "骨料1") {
-                            if (warningLevel >= 1) {
-
+                        if (materialName != "一仓温度" || materialName != "沥青" || materialName != "骨料1") {
+                            continue;
+                        } else {
+                            if (warningLevel <= 1) {
+                                continue;
+                            } else {
                                 if (crewNum == 1) {
                                     crew1DiscNum = discNum;
                                 } else {
@@ -2454,16 +2456,12 @@
 
 
                                 $("#warningData").append(str);
-                            } else {
-                                continue;
                             }
-                        } else {
-                            continue;
+
                         }
 
 
-                    }
-                    ;
+                    };
 
 
                     var condition = $("#warningData").find("tr").length;
@@ -2478,7 +2476,7 @@
 
     function goCriticalWarningPage() {
         var path = $("#path").val();
-        $("#iframe").attr("src", "/qualityIndex.do");
+        $("#iframe").attr("src", "/qc_critical_warning.do");
     }
 
     function showWaringData(crew1DiscNum, crew2DiscNum) {
@@ -2486,19 +2484,6 @@
         var crew1LastDiscNum = sessionStorage.getItem("crew1LastDiscNum");
         var crew2LastDiscNum = sessionStorage.getItem("crew2LastDiscNum");
 
-        if (crew1LastDiscNum == "undefined" || crew2LastDiscNum == "undefined") {
-            layer.open({
-                type: 1,
-                title: ['生产预警', 'height:auto;line-height: 27px;font-size:11px;'],
-                closeBtn: 0, //不显示关闭按钮
-                shade: 0,
-                area: ['340px', '215px'],
-                offset: 'rb', //右下角弹出
-                time: 5000, //5秒后自动关闭
-                anim: 2,
-                content: $('#showMessage')
-            })
-        }
 
         if (crew1DiscNum == crew1LastDiscNum && crew2DiscNum == crew2LastDiscNum) {
             return;

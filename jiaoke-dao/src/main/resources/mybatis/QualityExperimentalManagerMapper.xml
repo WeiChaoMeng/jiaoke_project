@@ -76,13 +76,15 @@
                 Id = #{id}
     </update>
 
-    <select id="selectOrderTicketCountByDate" resultType="java.util.Map" >
+    <select id="selectLastOrderTicketByDate" resultType="java.util.Map" >
         SELECT
-               count(*) AS counts
+               Id as counts
         FROM
              quality_test_order_ticket
         WHERE
-                date_format(creat_time,'%Y')  = #{date}
+                date_format(creat_time,'%Y')  = '2019'
+        ORDER BY id DESC
+        LIMIT 1
     </select>
 
     <insert id="insertOrderTicketBySampleMssage" useGeneratedKeys="true" parameterType="java.lang.String">
@@ -324,7 +326,11 @@
                QTEID.material_num,
                QTEID.Id AS experimentId,
                QTEID.`name`,
-               QTEID.table_name
+               QTEID.remake,
+               QTEID.table_name,
+               QTEID.unit,
+               QTEID.method,
+               QTLR.sampling_standard
         FROM
              `quality_test_lab_report` AS QTLR
                  INNER JOIN quality_test_experiment_contrast AS QTEC
@@ -400,14 +406,11 @@
         coarse_name,
         coarse_requirements,
         coarse_result,
-        coarse_exper_result10_20,
-        coarse_result10_15,
-        coarse_result5_10,
         coarse_method
         )
         values
         <foreach collection="firstTestList" item="emp" separator=",">
-            (#{experimentNum},#{emp.coarse_name},#{emp.coarse_requirements},#{emp.coarse_result},#{emp.coarse_exper_result10_20},#{emp.coarse_result10_15},#{emp.coarse_result5_10},#{emp.coarse_method})
+            (#{experimentNum},#{emp.coarse_name},#{emp.coarse_requirements},#{emp.coarse_result},#{emp.coarse_method})
         </foreach>
     </insert>
 
@@ -447,6 +450,197 @@
             (#{experimentNum},#{emp.asphalt_name},#{emp.asphalt_unit},#{emp.asphalt_result},#{emp.asphalt_method},#{emp.asphalt_requirements})
         </foreach>
     </insert>
+    <insert id="insertCoarseMilling" useGeneratedKeys="true">
+        insert into `quality_test_coarse_milling`
+        (
+        `experiment_num`,
+        `mill_name`,
+        `mill_requirements`,
+        `mill_result`,
+        `mill_method`
+        )
+        values
+        <foreach collection="firstTestList" item="emp" separator=",">
+            (#{experimentNum},#{emp.milling_name},#{emp.milling_requirements},#{emp.milling_result},#{emp.milling_method})
+        </foreach>
+    </insert>
+    <insert id="insertCoarseMillingBurn" useGeneratedKeys="true">
+        insert into `quality_test_coarse_milling_burn`
+        (
+        `experiment_num`,
+        `mill_sieve_pore`,
+        `mill_sieve_pore_37_5`,
+        `mill_sieve_pore_31_5`,
+        `mill_sieve_pore_26_5`,
+        `mill_sieve_pore_19_0`,
+        `mill_sieve_pore_16_0`,
+        `mill_sieve_pore_13_2`,
+        `mill_sieve_pore_9_5`,
+        `mill_sieve_pore_4_75`,
+        `mill_sieve_pore_2_36`,
+        `mill_sieve_pore_1_18`,
+        `mill_sieve_pore_0_6`,
+        `mill_sieve_pore_0_3`,
+        `mill_sieve_pore_0_15`,
+        `mill_sieve_pore_0_075`
+        )
+        values
+        <foreach collection="coarseMillTestList" item="emp" separator=",">
+            (#{experimentNum},#{emp.mill_sieve_pore},#{emp.mill_sieve_pore_31_5},#{emp.mill_sieve_pore_31_5},#{emp.mill_sieve_pore_26_5},#{emp.mill_sieve_pore_19_0},#{emp.mill_sieve_pore_16_0},#{emp.mill_sieve_pore_13_2},#{emp.mill_sieve_pore_9_5},#{emp.mill_sieve_pore_4_75},#{emp.mill_sieve_pore_2_36},#{emp.mill_sieve_pore_1_18},#{emp.mill_sieve_pore_0_6},#{emp.mill_sieve_pore_0_3},#{emp.mill_sieve_pore_0_15},#{emp.mill_sieve_pore_0_075})
+        </foreach>
+    </insert>
+
+    <insert id="insertRock" useGeneratedKeys="true">
+        insert into `quality_test_rock`
+        (
+        `experiment_num`,
+        `rock_name`,
+        `rock_requirements`,
+        `rock_result`,
+        `rock_method`
+        )
+        values
+        <foreach collection="firstTestList" item="emp" separator=",">
+            (#{experimentNum},#{emp.rock_name},#{emp.rock_requirements},#{emp.rock_result},#{emp.rock_method})
+        </foreach>
+    </insert>
+    <insert id="insertRockBurn" useGeneratedKeys="true">
+        insert into `quality_test_rock_burn`
+        (
+        `experiment_num`,
+        `rock_sieve_pore`,
+        `rock_sieve_pore_37_5`,
+        `rock_sieve_pore_31_5`,
+        `rock_sieve_pore_26_5`,
+        `rock_sieve_pore_19_0`,
+        `rock_sieve_pore_16_0`,
+        `rock_sieve_pore_13_2`,
+        `rock_sieve_pore_9_5`,
+        `rock_sieve_pore_4_75`,
+        `rock_sieve_pore_2_36`,
+        `rock_sieve_pore_1_18`,
+        `rock_sieve_pore_0_6`,
+        `rock_sieve_pore_0_3`,
+        `rock_sieve_pore_0_15`,
+        `rock_sieve_pore_0_075`
+        )
+        values
+        <foreach collection="rockList" item="emp" separator=",">
+            (#{experimentNum},#{emp.rock_sieve_pore},#{emp.rock_sieve_pore_37_5},#{emp.rock_sieve_pore_31_5},#{emp.rock_sieve_pore_26_5},#{emp.rock_sieve_pore_19_0},#{emp.rock_sieve_pore_16_0},#{emp.rock_sieve_pore_13_2},#{emp.rock_sieve_pore_9_5},#{emp.rock_sieve_pore_4_75},#{emp.rock_sieve_pore_2_36},#{emp.rock_sieve_pore_1_18},#{emp.rock_sieve_pore_0_6},#{emp.rock_sieve_pore_0_3},#{emp.rock_sieve_pore_0_15},#{emp.rock_sieve_pore_0_075})
+        </foreach>
+    </insert>
+
+    <insert id="insertFibre" useGeneratedKeys="true">
+        insert into `quality_test_fibre`
+        (
+        `experiment_num`,
+        `fibre_name`,
+        `fibre_requirements`,
+        `fibre_result`,
+        `fibre_method`
+        )
+        values
+        <foreach collection="firstTestList" item="emp" separator=",">
+            (#{experimentNum},#{emp.fibre_name},#{emp.fibre_requirements},#{emp.fibre_result},#{emp.fibre_method})
+        </foreach>
+    </insert>
+
+    <insert id="insertEmulsified" useGeneratedKeys="true">
+        insert into `quality_test_emulsified`
+        (
+        `experiment_num`,
+        `emulsified_name`,
+        `emulsified_requirements`,
+        `emulsified_result`,
+        `emulsified_method`
+        )
+        values
+        <foreach collection="firstTestList" item="emp" separator=",">
+            (#{experimentNum},#{emp.emulsified_name},#{emp.emulsified_requirements},#{emp.emulsified_result},#{emp.emulsified_method})
+        </foreach>
+    </insert>
+
+    <insert id="insertMixture" useGeneratedKeys="true">
+        insert into `quality_test_mixture`
+        (
+        `experiment_num`,
+        `mixture_name`,
+        `mixture_requirements`,
+        `mixture_result`,
+        `mixture_method`
+        )
+        values
+        <foreach collection="firstTestList" item="emp" separator=",">
+            (#{experimentNum},#{emp.mixture_name},#{emp.mixture_requirements},#{emp.mixture_result},#{emp.mixture_method})
+        </foreach>
+    </insert>
+    <insert id="insertMixtureBurn" useGeneratedKeys="true">
+
+        insert into `quality_test_mixture_burn`
+        (
+        `experiment_num`,
+        `mixture_sieve_pore`,
+        `mixture_sieve_pore_37_5`,
+        `mixture_sieve_pore_31_5`,
+        `mixture_sieve_pore_26_5`,
+        `mixture_sieve_pore_19_0`,
+        `mixture_sieve_pore_16_0`,
+        `mixture_sieve_pore_13_2`,
+        `mixture_sieve_pore_9_5`,
+        `mixture_sieve_pore_4_75`,
+        `mixture_sieve_pore_2_36`,
+        `mixture_sieve_pore_1_18`,
+        `mixture_sieve_pore_0_6`,
+        `mixture_sieve_pore_0_3`,
+        `mixture_sieve_pore_0_15`,
+        `mixture_sieve_pore_0_075`
+        )
+        values
+        <foreach collection="mixtureList" item="emp" separator=",">
+            (#{experimentNum},#{emp.mixture_sieve_pore},#{emp.mixture_sieve_pore_37_5},#{emp.mixture_sieve_pore_31_5},#{emp.mixture_sieve_pore_26_5},#{emp.mixture_sieve_pore_19_0},#{emp.mixture_sieve_pore_16_0},#{emp.mixture_sieve_pore_13_2},#{emp.mixture_sieve_pore_9_5},#{emp.mixture_sieve_pore_4_75},#{emp.mixture_sieve_pore_2_36},#{emp.mixture_sieve_pore_1_18},#{emp.mixture_sieve_pore_0_6},#{emp.mixture_sieve_pore_0_3},#{emp.mixture_sieve_pore_0_15},#{emp.mixture_sieve_pore_0_075})
+        </foreach>
+    </insert>
+
+    <insert id="insertFineMilling" useGeneratedKeys="true">
+        insert into `quality_test_fine_milling`
+        (
+        `experiment_num`,
+        `millfine_name`,
+        `millfine_requirements`,
+        `millfine_result`,
+        `millfine_method`
+        )
+        values
+        <foreach collection="firstTestList" item="emp" separator=",">
+            (#{experimentNum},#{emp.millfine_name},#{emp.millfine_requirements},#{emp.millfine_result},#{emp.millfine_method})
+        </foreach>
+    </insert>
+    <insert id="insertFineMillingBurn" useGeneratedKeys="true">
+        insert into `quality_test_fine_milling_burn`
+        (
+        `experiment_num`,
+        `millfine_sieve_pore`,
+        `millfine_sieve_pore_37_5`,
+        `millfine_sieve_pore_31_5`,
+        `millfine_sieve_pore_26_5`,
+        `millfine_sieve_pore_19_0`,
+        `millfine_sieve_pore_16_0`,
+        `millfine_sieve_pore_13_2`,
+        `millfine_sieve_pore_9_5`,
+        `millfine_sieve_pore_4_75`,
+        `millfine_sieve_pore_2_36`,
+        `millfine_sieve_pore_1_18`,
+        `millfine_sieve_pore_0_6`,
+        `millfine_sieve_pore_0_3`,
+        `millfine_sieve_pore_0_15`,
+        `millfine_sieve_pore_0_075`
+        )
+        values
+        <foreach collection="fineMillingList" item="emp" separator=",">
+            (#{experimentNum},#{emp.millfine_sieve_pore},#{emp.millfine_sieve_pore_37_5},#{emp.millfine_sieve_pore_31_5},#{emp.millfine_sieve_pore_26_5},#{emp.millfine_sieve_pore_19_0},#{emp.millfine_sieve_pore_16_0},#{emp.millfine_sieve_pore_13_2},#{emp.millfine_sieve_pore_9_5},#{emp.millfine_sieve_pore_4_75},#{emp.millfine_sieve_pore_2_36},#{emp.millfine_sieve_pore_1_18},#{emp.millfine_sieve_pore_0_6},#{emp.millfine_sieve_pore_0_3},#{emp.millfine_sieve_pore_0_15},#{emp.millfine_sieve_pore_0_075})
+        </foreach>
+    </insert>
+
     <select id="selectExperimentalProjectMessage" resultType="java.util.Map">
         SELECT
                DATE_FORMAT(
@@ -471,7 +665,8 @@
     <select id="selectExperimentalMsgByTableName" resultType="java.util.Map">
         SELECT
                TABA.*,
-               QTLR.materials_num
+               QTLR.materials_num,
+               QTLR.sampling_standard
         FROM
              ${ tableName } AS TABA
                 INNER JOIN
@@ -493,7 +688,17 @@
                 QTFA.*,
                 QTFAS.*,
                 QTA.*,
-                QTB.*
+                QTB.*,
+                QTCM.*,
+                QTCMB.*,
+                QTR.*,
+                QTRB.*,
+                QTF.*,
+                QTE.*,
+                QTFM.*,
+                QTFMB.*,
+                QTMI.*,
+                QTMIB.*
         FROM
              quality_test_lab_report AS QTLR
                  INNER JOIN quality_test_task_list AS QTTL ON QTLR.order_ticket_num = QTTL.ticket_num
@@ -506,6 +711,17 @@
                  LEFT JOIN quality_test_fine_aggregate_sieving AS QTFAS ON QTLR.experiment_num = QTFAS.experiment_num
                  LEFT JOIN quality_test_breeze AS QTB ON QTLR.experiment_num = QTB.experiment_num
                  LEFT JOIN quality_test_asphalt AS QTA ON QTLR.experiment_num = QTA.experiment_num
+                 LEFT JOIN quality_test_coarse_milling AS QTCM ON QTLR.experiment_num = QTCM.experiment_num
+                 LEFT JOIN quality_test_coarse_milling_burn AS QTCMB ON QTLR.experiment_num = QTCMB.experiment_num
+                 LEFT JOIN quality_test_rock AS QTR ON QTLR.experiment_num = QTR.experiment_num
+                 LEFT JOIN quality_test_rock_burn AS QTRB ON QTLR.experiment_num = QTRB.experiment_num
+                 LEFT JOIN quality_test_fibre AS QTF ON QTLR.experiment_num = QTF.experiment_num
+                 LEFT JOIN quality_test_emulsified AS QTE ON QTLR.experiment_num = QTE.experiment_num
+                 LEFT JOIN quality_test_fine_milling AS QTFM ON QTLR.experiment_num = QTFM.experiment_num
+                 LEFT JOIN quality_test_fine_milling_burn AS QTFMB ON QTLR.experiment_num = QTFMB.experiment_num
+                 LEFT JOIN quality_test_mixture AS QTMI ON QTLR.experiment_num = QTMI.experiment_num
+                 LEFT JOIN quality_test_mixture_burn AS QTMIB ON QTLR.experiment_num = QTMIB.experiment_num
+
         WHERE QTLR.Id =  #{id}
     </delete>
 
@@ -527,17 +743,539 @@
         where Id = #{id}
     </update>
 
-    <select id="selectCoarseStandingBook" resultType="java.util.Map">
+
+    <select id="selectSevenDayCoarseBook" resultType="java.util.Map">
+        SELECT
+        DATE_FORMAT(QTLR.test_date,'%Y-%m-%d') AS testDate,
+        QTLR.sampling_standard AS samplingStandard,
+        '粗集料筛分' AS testName,
+        QTMD.`name` AS materialName,
+        QTOT.test_num AS  testNum,
+        (SELECT coarse_result FROM `quality_test_coarse_aggregate` WHERE experiment_num = QTLR.experiment_num AND coarse_name = '磨耗损失') AS coarse_MHSS,
+        (SELECT coarse_result FROM `quality_test_coarse_aggregate` WHERE experiment_num = QTLR.experiment_num AND coarse_name = '压碎值') AS coarse_YSZ,
+        (SELECT coarse_result FROM `quality_test_coarse_aggregate` WHERE experiment_num = QTLR.experiment_num AND coarse_name = '表观相对密度') AS coarse_BGMD,
+        (SELECT coarse_result FROM `quality_test_coarse_aggregate` WHERE experiment_num = QTLR.experiment_num AND coarse_name = '毛体积密度') AS coarse_MTJMD,
+        (SELECT coarse_result FROM `quality_test_coarse_aggregate` WHERE experiment_num = QTLR.experiment_num AND coarse_name = '吸水率') AS coarse_XSL,
+        (SELECT coarse_result FROM `quality_test_coarse_aggregate` WHERE experiment_num = QTLR.experiment_num AND coarse_name = '针片状颗粒含量') AS coarse_ZPZ,
+        ' ' AS sievePore37,
+        ' ' AS sievePore31,
+        ' ' AS sievePore26,
+        QTCA.coarse_sieve_pore_19_0 AS sievePore19,
+        QTCA.coarse_sieve_pore_16_0 AS sievePore16,
+        QTCA.coarse_sieve_pore_13_2 AS sievePore13,
+        QTCA.coarse_sieve_pore_9_5 AS sievePore9,
+        QTCA.coarse_sieve_pore_4_75 AS sievePore4,
+        QTCA.coarse_sieve_pore_2_36 AS sievePore2,
+        QTCA.coarse_sieve_pore_1_18 AS sievePore1,
+        QTCA.coarse_sieve_pore_0_6 AS sievePore06,
+        QTCA.coarse_sieve_pore_0_3 AS sievePore03,
+        QTCA.coarse_sieve_pore_0_15 AS sievePore015,
+        QTCA.coarse_sieve_pore_0_15 AS sievePore007,
+        QTS.remark
+        FROM
+        quality_test_lab_report AS QTLR
+        LEFT JOIN `quality_test_coarse_aggregate_sieving` AS QTCA  ON QTCA.experiment_num = QTLR.experiment_num
+        INNER JOIN quality_test_material_dictionary AS QTMD ON QTLR.materials_num = QTMD.Id
+        INNER JOIN quality_test_order_ticket AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
+        INNER JOIN quality_test_samplingPage AS QTS ON QTOT.sampling_id = QTS.Id
+        WHERE
+        DATE_SUB(CURDATE(), INTERVAL 7 DAY)  &lt;= date(QTLR.test_date) AND
+        QTLR.materials_num = 2
+        GROUP BY testNum
+    </select>
+
+    <select id="selectSevenDayFineStandingBook" resultType="java.util.Map">
+        SELECT
+        DATE_FORMAT(QTLR.test_date,'%Y-%m-%d') AS testDate,
+        QTLR.sampling_standard AS samplingStandard,
+        '细集料筛分' AS testName,
+        QTMD.`name` AS materialName,
+        QTOT.test_num AS  testNum,
+        (SELECT fine_result FROM `quality_test_fine_aggregate` WHERE experiment_num = QTLR.experiment_num AND fine_name = '表观相对密度') AS fine_BGMD,
+        (SELECT fine_result FROM `quality_test_fine_aggregate` WHERE experiment_num = QTLR.experiment_num AND fine_name = '砂当量') AS fine_SDL,
+        (SELECT fine_result FROM `quality_test_fine_aggregate` WHERE experiment_num = QTLR.experiment_num AND fine_name = '毛体积相对密度') AS fine_MTJ,
+        (SELECT fine_result FROM `quality_test_fine_aggregate` WHERE experiment_num = QTLR.experiment_num AND fine_name = '吸水率') AS fine_XSL,
+        ' ' AS sievePore37,
+        ' ' AS sievePore31,
+        ' ' AS sievePore26,
+        ' ' AS sievePore19,
+        ' ' AS sievePore16,
+        ' ' AS sievePore13,
+        ' ' AS sievePore9,
+        QTCA.fine_sieve_pore_4_75 AS sievePore4,
+        QTCA.fine_sieve_pore_2_36 AS sievePore2,
+        QTCA.fine_sieve_pore_1_18 AS sievePore1,
+        QTCA.fine_sieve_pore_0_6 AS sievePore06,
+        QTCA.fine_sieve_pore_0_3 AS sievePore03,
+        QTCA.fine_sieve_pore_0_15 AS sievePore015,
+        ' ' AS sievePore06,
+        fine_sieve_pore_0_075 AS sievePore007,
+        QTS.remark
+        FROM
+        quality_test_lab_report AS QTLR
+        LEFT JOIN `quality_test_fine_aggregate_sieving` AS QTCA  ON QTCA.experiment_num = QTLR.experiment_num
+        INNER JOIN quality_test_material_dictionary AS QTMD ON QTLR.materials_num = QTMD.Id
+        INNER JOIN quality_test_order_ticket AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
+        INNER JOIN quality_test_samplingPage AS QTS ON QTOT.sampling_id = QTS.Id
+        WHERE
+        DATE_SUB(CURDATE(), INTERVAL 7 DAY)  &lt;= date(QTLR.test_date) AND
+        QTLR.materials_num = 1
+        GROUP BY testNum
+    </select>
+
+    <select id="selectFineAggregateStandingBookByDate" resultType="java.util.Map">
         SELECT
                DATE_FORMAT(QTLR.test_date,'%Y-%m-%d') AS testDate,
+               QTLR.sampling_standard AS samplingStandard,
+               '细集料筛分' AS testName,
+               QTMD.`name` AS materialName,
+               QTOT.test_num AS  testNum,
+               (SELECT fine_result FROM `quality_test_fine_aggregate` WHERE experiment_num = QTLR.experiment_num AND fine_name = '表观相对密度') AS fine_BGMD,
+               (SELECT fine_result FROM `quality_test_fine_aggregate` WHERE experiment_num = QTLR.experiment_num AND fine_name = '砂当量') AS fine_SDL,
+               (SELECT fine_result FROM `quality_test_fine_aggregate` WHERE experiment_num = QTLR.experiment_num AND fine_name = '毛体积相对密度') AS fine_MTJ,
+               (SELECT fine_result FROM `quality_test_fine_aggregate` WHERE experiment_num = QTLR.experiment_num AND fine_name = '吸水率') AS fine_XSL,
+               ' ' AS sievePore37,
+               ' ' AS sievePore31,
+               ' ' AS sievePore26,
+               ' ' AS sievePore19,
+               ' ' AS sievePore16,
+               ' ' AS sievePore13,
+               ' ' AS sievePore9,
+               QTCA.fine_sieve_pore_4_75 AS sievePore4,
+               QTCA.fine_sieve_pore_2_36 AS sievePore2,
+               QTCA.fine_sieve_pore_1_18 AS sievePore1,
+               QTCA.fine_sieve_pore_0_6 AS sievePore06,
+               QTCA.fine_sieve_pore_0_3 AS sievePore03,
+               QTCA.fine_sieve_pore_0_15 AS sievePore015,
+               ' ' AS sievePore06,
+               fine_sieve_pore_0_075 AS sievePore007,
+               QTS.remark
+        FROM
+             quality_test_lab_report AS QTLR
+                 LEFT JOIN `quality_test_fine_aggregate_sieving` AS QTCA  ON QTCA.experiment_num = QTLR.experiment_num
+                 INNER JOIN quality_test_material_dictionary AS QTMD ON QTLR.materials_num = QTMD.Id
+                 INNER JOIN quality_test_order_ticket AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
+                 INNER JOIN quality_test_samplingPage AS QTS ON QTOT.sampling_id = QTS.Id
+        WHERE
+                QTLR.sampling_date BETWEEN #{startDate} AND #{endDate}
+          AND
+                QTLR.materials_num = #{materials}
+          AND
+                QTS.manufacturers_num = #{manufacturers}
+          AND
+                QTS.specification_num = #{specification}
+        GROUP BY test_num
+    </select>
+    <select id="selectCoarseAggregateStandingBookByDate" resultType="java.util.Map">
+        SELECT
+               DATE_FORMAT(QTLR.test_date,'%Y-%m-%d') AS testDate,
+               QTLR.sampling_standard AS samplingStandard,
+               '粗集料筛分' AS testName,
+               QTMD.`name` AS materialName,
+               QTOT.test_num AS  testNum,
+               (SELECT coarse_result FROM `quality_test_coarse_aggregate` WHERE experiment_num = QTLR.experiment_num AND coarse_name = '磨耗损失') AS coarse_MHSS,
+               (SELECT coarse_result FROM `quality_test_coarse_aggregate` WHERE experiment_num = QTLR.experiment_num AND coarse_name = '压碎值') AS coarse_YSZ,
+               (SELECT coarse_result FROM `quality_test_coarse_aggregate` WHERE experiment_num = QTLR.experiment_num AND coarse_name = '表观相对密度') AS coarse_BGMD,
+               (SELECT coarse_result FROM `quality_test_coarse_aggregate` WHERE experiment_num = QTLR.experiment_num AND coarse_name = '毛体积密度') AS coarse_MTJMD,
+               (SELECT coarse_result FROM `quality_test_coarse_aggregate` WHERE experiment_num = QTLR.experiment_num AND coarse_name = '吸水率') AS coarse_XSL,
+               (SELECT coarse_result FROM `quality_test_coarse_aggregate` WHERE experiment_num = QTLR.experiment_num AND coarse_name = '针片状颗粒含量') AS coarse_ZPZ,
+               ' ' AS sievePore37,
+               ' ' AS sievePore31,
+               ' ' AS sievePore26,
+               QTCA.coarse_sieve_pore_19_0 AS sievePore19,
+               QTCA.coarse_sieve_pore_16_0 AS sievePore16,
+               QTCA.coarse_sieve_pore_13_2 AS sievePore13,
+               QTCA.coarse_sieve_pore_9_5 AS sievePore9,
+               QTCA.coarse_sieve_pore_4_75 AS sievePore4,
+               QTCA.coarse_sieve_pore_2_36 AS sievePore2,
+               QTCA.coarse_sieve_pore_1_18 AS sievePore1,
+               QTCA.coarse_sieve_pore_0_6 AS sievePore06,
+               QTCA.coarse_sieve_pore_0_3 AS sievePore03,
+               QTCA.coarse_sieve_pore_0_15 AS sievePore015,
+               QTCA.coarse_sieve_pore_0_15 AS sievePore007,
+               QTS.remark
+        FROM
+             quality_test_lab_report AS QTLR
+                 LEFT JOIN `quality_test_coarse_aggregate_sieving` AS QTCA  ON QTCA.experiment_num = QTLR.experiment_num
+                 INNER JOIN quality_test_material_dictionary AS QTMD ON QTLR.materials_num = QTMD.Id
+                 INNER JOIN quality_test_order_ticket AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
+                 INNER JOIN quality_test_samplingPage AS QTS ON QTOT.sampling_id = QTS.Id
+        WHERE
+                QTLR.sampling_date BETWEEN #{startDate} AND #{endDate}
+          AND
+                QTLR.materials_num = #{materials}
+          AND
+                QTS.manufacturers_num = #{manufacturers}
+          AND
+                QTS.specification_num = #{specification}
+        GROUP BY test_num
+    </select>
+    <select id="selectBreezeBookByDate" resultType="java.util.Map">
+        SELECT
+               DATE_FORMAT(QTLR.test_date,'%Y-%m-%d')AS testDate,
+               QTLR.sampling_standard AS samplingStandard,
+               QTMD.`name` AS materialName,
+               QTOT.test_num AS  testNum,
+               (SELECT breeze_result FROM `quality_test_breeze` WHERE experiment_num = QTLR.experiment_num AND breeze_name = '表观相对密度') AS breeze_BGMD,
+               (SELECT breeze_result FROM `quality_test_breeze` WHERE experiment_num = QTLR.experiment_num AND breeze_name = '毛体积密度') AS breeze_MTJ,
+               (SELECT breeze_result FROM `quality_test_breeze` WHERE experiment_num = QTLR.experiment_num AND breeze_name = '吸水率') AS breeze_HSL,
+               (SELECT breeze_result FROM `quality_test_breeze` WHERE experiment_num = QTLR.experiment_num AND breeze_name = '亲水系数') AS breeze_QSXS,
+               (SELECT breeze_result FROM `quality_test_breeze` WHERE experiment_num = QTLR.experiment_num AND breeze_name = '塑性指数') AS breeze_SXZS,
+               (SELECT breeze_result FROM `quality_test_breeze` WHERE experiment_num = QTLR.experiment_num AND breeze_name = '0.6mm') AS breeze_LDFW06,
+               (SELECT breeze_result FROM `quality_test_breeze` WHERE experiment_num = QTLR.experiment_num AND breeze_name = '0.15mm') AS breeze_LDFW015,
+               (SELECT breeze_result FROM `quality_test_breeze` WHERE experiment_num = QTLR.experiment_num AND breeze_name = '0.075mm') AS breeze_LDFW075,
+               (SELECT breeze_result FROM `quality_test_breeze` WHERE experiment_num = QTLR.experiment_num AND breeze_name = '0.3mm') AS breeze_LDFW03,
+               QTS.remark
+        FROM
+             `quality_test_breeze` AS QTCA
+                 INNER JOIN quality_test_lab_report AS QTLR ON QTCA.experiment_num = QTLR.experiment_num
+                 INNER JOIN quality_test_material_dictionary AS QTMD ON QTLR.materials_num = QTMD.Id
+                 INNER JOIN quality_test_order_ticket AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
+                 INNER JOIN quality_test_samplingPage AS QTS ON QTOT.sampling_id = QTS.Id
+            WHERE
+                    QTLR.sampling_date BETWEEN #{startDate} AND #{endDate}
+              AND
+                    QTLR.materials_num = #{materials}
+              AND
+                    QTS.manufacturers_num = #{manufacturers}
+              AND
+                    QTS.specification_num = #{specification}
+            GROUP BY test_num
+    </select>
+    <select id="selectAsphaltStandingByDate" resultType="java.util.Map">
+        SELECT
+               DATE_FORMAT(QTLR.test_date,'%Y-%m-%d')AS testDate,
+               QTLR.sampling_standard AS samplingStandard,
+               QTMD.`name` AS materialName,
+               QTOT.test_num AS  testNum,
+               (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '针入度(100g,5s,25℃)') AS asphalt_ZRD,
+               (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '15℃ 延  度') AS asphalt_YD15,
+               (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '软化点RB') AS asphalt_RHD,
+               (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '质量变化') AS asphalt_ZLBH,
+               (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '残留针入度比(25℃)') AS asphalt_CLZRD25,
+               (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '10℃延度') AS asphalt_YD10,
+               (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '残留针入度比(10℃)') AS asphalt_CLZRD10,
+               (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '残留针入度比(16℃)') AS asphalt_CLZRD16,
+               QTS.remark
+        FROM
+             `quality_test_asphalt` AS QTCA
+                 INNER JOIN quality_test_lab_report AS QTLR ON QTCA.experiment_num = QTLR.experiment_num
+                 INNER JOIN quality_test_material_dictionary AS QTMD ON QTLR.materials_num = QTMD.Id
+                 INNER JOIN quality_test_order_ticket AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
+                 INNER JOIN quality_test_samplingPage AS QTS ON QTOT.sampling_id = QTS.Id
+        WHERE
+                QTLR.sampling_date BETWEEN #{startDate} AND #{endDate}
+          AND
+                QTLR.materials_num = #{materials}
+          AND
+                QTS.manufacturers_num = #{manufacturers}
+          AND
+                QTS.specification_num = #{specification}
+        GROUP BY test_num
+    </select>
+    <select id="selectCoarseMillingStandingByDate" resultType="java.util.Map">
+        SELECT
+               DATE_FORMAT(QTLR.test_date,'%Y-%m-%d') AS testDate,
+               QTLR.sampling_standard AS samplingStandard,
+               '粗铣刨料' AS testName,
+               QTMD.`name` AS materialName,
+               QTOT.test_num AS  testNum,
+               (SELECT mill_result FROM `quality_test_coarse_milling` WHERE experiment_num = QTLR.experiment_num AND mill_name = '含量') AS mill_HL,
+               (SELECT mill_result FROM `quality_test_coarse_milling` WHERE experiment_num = QTLR.experiment_num AND mill_name = '表观相对密度') AS mill_BGXDMD,
+               (SELECT mill_result FROM `quality_test_coarse_milling` WHERE experiment_num = QTLR.experiment_num AND mill_name = '毛体积密度') AS mill_MTJMD,
+               (SELECT mill_result FROM `quality_test_coarse_milling` WHERE experiment_num = QTLR.experiment_num AND mill_name = '吸水率') AS mill_XSL,
+               (SELECT mill_result FROM `quality_test_coarse_milling` WHERE experiment_num = QTLR.experiment_num AND mill_name = '针片状') AS mill_ZPZ,
+               (SELECT mill_result FROM `quality_test_coarse_milling` WHERE experiment_num = QTLR.experiment_num AND mill_name = '压碎值') AS mill_YSZ,
+               QTCA.mill_sieve_pore_37_5 AS sievePore37,
+               QTCA.mill_sieve_pore_31_5 AS sievePore31,
+               QTCA.mill_sieve_pore_26_5 AS sievePore26,
+               QTCA.mill_sieve_pore_19_0 AS sievePore19,
+               QTCA.mill_sieve_pore_16_0 AS sievePore16,
+               QTCA.mill_sieve_pore_13_2 AS sievePore13,
+               QTCA.mill_sieve_pore_9_5 AS sievePore9,
+               QTCA.mill_sieve_pore_4_75 AS sievePore4,
+               QTCA.mill_sieve_pore_2_36 AS sievePore2,
+               QTCA.mill_sieve_pore_1_18 AS sievePore1,
+               QTCA.mill_sieve_pore_0_6 AS sievePore06,
+               QTCA.mill_sieve_pore_0_3 AS sievePore03,
+               QTCA.mill_sieve_pore_0_15 AS sievePore015,
+               QTCA.mill_sieve_pore_0_15 AS sievePore007,
+               QTS.remark
+        FROM
+             quality_test_lab_report AS QTLR
+                 LEFT JOIN `quality_test_coarse_milling_burn` AS QTCA  ON QTCA.experiment_num = QTLR.experiment_num
+                 INNER JOIN quality_test_material_dictionary AS QTMD ON QTLR.materials_num = QTMD.Id
+                 INNER JOIN quality_test_order_ticket AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
+                 INNER JOIN quality_test_samplingPage AS QTS ON QTOT.sampling_id = QTS.Id
+        WHERE
+                QTLR.sampling_date BETWEEN #{startDate} AND #{endDate}
+          AND
+                QTLR.materials_num = #{materials}
+          AND
+                QTS.manufacturers_num = #{manufacturers}
+          AND
+                QTS.specification_num = #{specification}
+        GROUP BY test_num
+    </select>
+    <select id="selectRockStandingByDate" resultType="java.util.Map">
+        SELECT
+               DATE_FORMAT(QTLR.test_date,'%Y-%m-%d') AS testDate,
+               QTLR.sampling_standard AS samplingStandard,
+               '岩沥青' AS testName,
+               QTMD.`name` AS materialName,
+               QTOT.test_num AS  testNum,
+               (SELECT rock_result FROM `quality_test_rock` WHERE experiment_num = QTLR.experiment_num AND rock_name = '油石比') AS rock_YSB,
+               (SELECT rock_result FROM `quality_test_rock` WHERE experiment_num = QTLR.experiment_num AND rock_name = '石料表观相对密度') AS rock_BGXDMD,
+               (SELECT rock_result FROM `quality_test_rock` WHERE experiment_num = QTLR.experiment_num AND rock_name = '石料毛体积相对密度') AS rock_MTJMD,
+               (SELECT rock_result FROM `quality_test_rock` WHERE experiment_num = QTLR.experiment_num AND rock_name = '吸水率') AS rock_XSL,
+               (SELECT rock_result FROM `quality_test_rock` WHERE experiment_num = QTLR.experiment_num AND rock_name = '沥青密度') AS rock_LQMD,
+               QTCA.rock_sieve_pore_37_5 AS sievePore37,
+               QTCA.rock_sieve_pore_31_5 AS sievePore31,
+               QTCA.rock_sieve_pore_26_5 AS sievePore26,
+               QTCA.rock_sieve_pore_19_0 AS sievePore19,
+               QTCA.rock_sieve_pore_16_0 AS sievePore16,
+               QTCA.rock_sieve_pore_13_2 AS sievePore13,
+               QTCA.rock_sieve_pore_9_5 AS sievePore9,
+               QTCA.rock_sieve_pore_4_75 AS sievePore4,
+               QTCA.rock_sieve_pore_2_36 AS sievePore2,
+               QTCA.rock_sieve_pore_1_18 AS sievePore1,
+               QTCA.rock_sieve_pore_0_6 AS sievePore06,
+               QTCA.rock_sieve_pore_0_3 AS sievePore03,
+               QTCA.rock_sieve_pore_0_15 AS sievePore015,
+               QTCA.rock_sieve_pore_0_15 AS sievePore007,
+               QTS.remark
+        FROM
+             quality_test_lab_report AS QTLR
+                 LEFT JOIN `quality_test_rock_burn` AS QTCA  ON QTCA.experiment_num = QTLR.experiment_num
+                 INNER JOIN quality_test_material_dictionary AS QTMD ON QTLR.materials_num = QTMD.Id
+                 INNER JOIN quality_test_order_ticket AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
+                 INNER JOIN quality_test_samplingPage AS QTS ON QTOT.sampling_id = QTS.Id
+        WHERE
+                QTLR.sampling_date BETWEEN #{startDate} AND #{endDate}
+          AND
+                QTLR.materials_num = #{materials}
+          AND
+                QTS.manufacturers_num = #{manufacturers}
+          AND
+                QTS.specification_num = #{specification}
+        GROUP BY test_num
+    </select>
+    <select id="selectFibreStandingByDate" resultType="java.util.Map">
+        SELECT
+               DATE_FORMAT(QTLR.test_date,'%Y-%m-%d')AS testDate,
+               QTLR.sampling_standard AS samplingStandard,
+               QTMD.`name` AS materialName,
+               QTOT.test_num AS  testNum,
+               (SELECT fibre_result FROM `quality_test_fibre` WHERE experiment_num = QTLR.experiment_num AND fibre_name = '纤维长度') AS fibre_XWCD,
+               (SELECT fibre_result FROM `quality_test_fibre` WHERE experiment_num = QTLR.experiment_num AND fibre_name = '灰分含量') AS fibre_HFHL,
+               (SELECT fibre_result FROM `quality_test_fibre` WHERE experiment_num = QTLR.experiment_num AND fibre_name = 'PH值') AS fibre_PHZ,
+               (SELECT fibre_result FROM `quality_test_fibre` WHERE experiment_num = QTLR.experiment_num AND fibre_name = '吸油率') AS fibre_XYL,
+               (SELECT fibre_result FROM `quality_test_fibre` WHERE experiment_num = QTLR.experiment_num AND fibre_name = '含水率') AS fibre_HSL,
+               QTS.remark
+        FROM
+             `quality_test_fibre` AS QTCA
+                 INNER JOIN quality_test_lab_report AS QTLR ON QTCA.experiment_num = QTLR.experiment_num
+                 INNER JOIN quality_test_material_dictionary AS QTMD ON QTLR.materials_num = QTMD.Id
+                 INNER JOIN quality_test_order_ticket AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
+                 INNER JOIN quality_test_samplingPage AS QTS ON QTOT.sampling_id = QTS.Id
+        WHERE
+                QTLR.sampling_date BETWEEN #{startDate} AND #{endDate}
+          AND
+                QTLR.materials_num = #{materials}
+          AND
+                QTS.manufacturers_num = #{manufacturers}
+          AND
+                QTS.specification_num = #{specification}
+        GROUP BY test_num
+    </select>
+    <select id="selectEmulsifiedStandingByDate" resultType="java.util.Map">
+        SELECT
+               DATE_FORMAT(QTLR.test_date,'%Y-%m-%d')AS testDate,
+               QTLR.sampling_standard AS samplingStandard,
+               QTMD.`name` AS materialName,
+               QTOT.test_num AS  testNum,
+               (SELECT emulsified_result FROM `quality_test_emulsified` WHERE experiment_num = QTLR.experiment_num AND emulsified_name = '粘度') AS emulsified_ZD,
+               (SELECT emulsified_result FROM `quality_test_emulsified` WHERE experiment_num = QTLR.experiment_num AND emulsified_name = '蒸发残留物含量') AS emulsified_ZFCLW,
+               (SELECT emulsified_result FROM `quality_test_emulsified` WHERE experiment_num = QTLR.experiment_num AND emulsified_name = '针入度') AS emulsified_ZRD,
+               (SELECT emulsified_result FROM `quality_test_emulsified` WHERE experiment_num = QTLR.experiment_num AND emulsified_name = '延度') AS emulsified_YD,
+               QTS.remark
+        FROM
+             `quality_test_emulsified` AS QTCA
+                 INNER JOIN quality_test_lab_report AS QTLR ON QTCA.experiment_num = QTLR.experiment_num
+                 INNER JOIN quality_test_material_dictionary AS QTMD ON QTLR.materials_num = QTMD.Id
+                 INNER JOIN quality_test_order_ticket AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
+                 INNER JOIN quality_test_samplingPage AS QTS ON QTOT.sampling_id = QTS.Id
+        WHERE
+                QTLR.sampling_date BETWEEN #{startDate} AND #{endDate}
+          AND
+                QTLR.materials_num = #{materials}
+          AND
+                QTS.manufacturers_num = #{manufacturers}
+          AND
+                QTS.specification_num = #{specification}
+        GROUP BY test_num
+    </select>
+    <select id="selectMixtureStandingByDate" resultType="java.util.Map">
+        SELECT
+               DATE_FORMAT(QTLR.test_date,'%Y-%m-%d') AS testDate,
+               QTLR.sampling_standard AS samplingStandard,
+               '沥青混合料' AS testName,
+               QTMD.`name` AS materialName,
+               QTOT.test_num AS  testNum,
+               (SELECT mixture_result FROM `quality_test_mixture` WHERE experiment_num = QTLR.experiment_num AND mixture_name = '油石比') AS mixture_HL,
+               (SELECT mixture_result FROM `quality_test_mixture` WHERE experiment_num = QTLR.experiment_num AND mixture_name = '最大理论密度') AS mixture_ZDLLMD,
+               (SELECT mixture_result FROM `quality_test_mixture` WHERE experiment_num = QTLR.experiment_num AND mixture_name = '稳定度') AS mixture_WDD,
+               (SELECT mixture_result FROM `quality_test_mixture` WHERE experiment_num = QTLR.experiment_num AND mixture_name = '流值') AS mixture_LZ,
+               (SELECT mixture_result FROM `quality_test_mixture` WHERE experiment_num = QTLR.experiment_num AND mixture_name = '残留') AS mixture_CL,
+               (SELECT mixture_result FROM `quality_test_mixture` WHERE experiment_num = QTLR.experiment_num AND mixture_name = '冻融') AS mixture_DW,
+               (SELECT mixture_result FROM `quality_test_mixture` WHERE experiment_num = QTLR.experiment_num AND mixture_name = '动稳定度') AS mixture_DWDD,
+               (SELECT mixture_result FROM `quality_test_mixture` WHERE experiment_num = QTLR.experiment_num AND mixture_name = '渗水系数') AS mixture_SSXS,
+               (SELECT mixture_result FROM `quality_test_mixture` WHERE experiment_num = QTLR.experiment_num AND mixture_name = '构造深度') AS mixture_GZSD,
+               (SELECT mixture_result FROM `quality_test_mixture` WHERE experiment_num = QTLR.experiment_num AND mixture_name = '飞散') AS mixture_FS,
+               (SELECT mixture_result FROM `quality_test_mixture` WHERE experiment_num = QTLR.experiment_num AND mixture_name = '析漏') AS mixture_XL,
+               (SELECT mixture_result FROM `quality_test_mixture` WHERE experiment_num = QTLR.experiment_num AND mixture_name = '毛体积相对密度') AS mixture_MTJXDMD,
+               (SELECT mixture_result FROM `quality_test_mixture` WHERE experiment_num = QTLR.experiment_num AND mixture_name = '吸水率') AS mixture_XSL,
+               QTCA.mixture_sieve_pore_37_5 AS sievePore37,
+               QTCA.mixture_sieve_pore_31_5 AS sievePore31,
+               QTCA.mixture_sieve_pore_26_5 AS sievePore26,
+               QTCA.mixture_sieve_pore_19_0 AS sievePore19,
+               QTCA.mixture_sieve_pore_16_0 AS sievePore16,
+               QTCA.mixture_sieve_pore_13_2 AS sievePore13,
+               QTCA.mixture_sieve_pore_9_5 AS sievePore9,
+               QTCA.mixture_sieve_pore_4_75 AS sievePore4,
+               QTCA.mixture_sieve_pore_2_36 AS sievePore2,
+               QTCA.mixture_sieve_pore_1_18 AS sievePore1,
+               QTCA.mixture_sieve_pore_0_6 AS sievePore06,
+               QTCA.mixture_sieve_pore_0_3 AS sievePore03,
+               QTCA.mixture_sieve_pore_0_15 AS sievePore015,
+               QTCA.mixture_sieve_pore_0_15 AS sievePore007,
+               QTS.remark
+        FROM
+             quality_test_lab_report AS QTLR
+                 LEFT JOIN `quality_test_mixture_burn` AS QTCA  ON QTCA.experiment_num = QTLR.experiment_num
+                 INNER JOIN quality_test_material_dictionary AS QTMD ON QTLR.materials_num = QTMD.Id
+                 INNER JOIN quality_test_order_ticket AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
+                 INNER JOIN quality_test_samplingPage AS QTS ON QTOT.sampling_id = QTS.Id
+        WHERE
+                QTLR.sampling_date BETWEEN #{startDate} AND #{endDate}
+          AND
+                QTLR.materials_num = #{materials}
+          AND
+                QTS.manufacturers_num = #{manufacturers}
+          AND
+                QTS.specification_num = #{specification}
+        GROUP BY test_num
+    </select>
+    <select id="selectFineMillingStandingByDate" resultType="java.util.Map">
+        SELECT
+               DATE_FORMAT(QTLR.test_date,'%Y-%m-%d') AS testDate,
+               QTLR.sampling_standard AS samplingStandard,
+               '细铣刨料' AS testName,
+               QTMD.`name` AS materialName,
+               QTOT.test_num AS  testNum,
+               (SELECT millfine_result FROM `quality_test_fine_milling` WHERE experiment_num = QTLR.experiment_num AND millfine_name = '含量') AS millfine_HL,
+               (SELECT millfine_result FROM `quality_test_fine_milling` WHERE experiment_num = QTLR.experiment_num AND millfine_name = '表观相对密度') AS millfine_BGXDMD,
+               (SELECT millfine_result FROM `quality_test_fine_milling` WHERE experiment_num = QTLR.experiment_num AND millfine_name = '毛体积密度') AS millfine_MTJMD,
+               (SELECT millfine_result FROM `quality_test_fine_milling` WHERE experiment_num = QTLR.experiment_num AND millfine_name = '吸水率') AS millfine_XSL,
+               (SELECT millfine_result FROM `quality_test_fine_milling` WHERE experiment_num = QTLR.experiment_num AND millfine_name = '砂当量') AS millfine_ZPZ,
+               QTCA.millfine_sieve_pore_37_5 AS sievePore37,
+               QTCA.millfine_sieve_pore_31_5 AS sievePore31,
+               QTCA.millfine_sieve_pore_26_5 AS sievePore26,
+               QTCA.millfine_sieve_pore_19_0 AS sievePore19,
+               QTCA.millfine_sieve_pore_16_0 AS sievePore16,
+               QTCA.millfine_sieve_pore_13_2 AS sievePore13,
+               QTCA.millfine_sieve_pore_9_5 AS sievePore9,
+               QTCA.millfine_sieve_pore_4_75 AS sievePore4,
+               QTCA.millfine_sieve_pore_2_36 AS sievePore2,
+               QTCA.millfine_sieve_pore_1_18 AS sievePore1,
+               QTCA.millfine_sieve_pore_0_6 AS sievePore06,
+               QTCA.millfine_sieve_pore_0_3 AS sievePore03,
+               QTCA.millfine_sieve_pore_0_15 AS sievePore015,
+               QTCA.millfine_sieve_pore_0_15 AS sievePore007,
+               QTS.remark
+        FROM
+             quality_test_lab_report AS QTLR
+                 LEFT JOIN `quality_test_fine_milling_burn` AS QTCA  ON QTCA.experiment_num = QTLR.experiment_num
+                 INNER JOIN quality_test_material_dictionary AS QTMD ON QTLR.materials_num = QTMD.Id
+                 INNER JOIN quality_test_order_ticket AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
+                 INNER JOIN quality_test_samplingPage AS QTS ON QTOT.sampling_id = QTS.Id
+        WHERE
+                QTLR.sampling_date BETWEEN #{startDate} AND #{endDate}
+          AND
+                QTLR.materials_num = #{materials}
+          AND
+                QTS.manufacturers_num = #{manufacturers}
+          AND
+                QTS.specification_num = #{specification}
+        GROUP BY test_num
+    </select>
+    
+
+    <select id="getSevenDayBreezeStandingBook" resultType="java.util.Map">
+        SELECT
+        DATE_FORMAT(QTLR.test_date,'%Y-%m-%d')AS testDate,
+        QTLR.sampling_standard AS samplingStandard,
+        QTMD.`name` AS materialName,
+        QTOT.test_num AS  testNum,
+        (SELECT breeze_result FROM `quality_test_breeze` WHERE experiment_num = QTLR.experiment_num AND breeze_name = '表观相对密度') AS breeze_BGMD,
+        (SELECT breeze_result FROM `quality_test_breeze` WHERE experiment_num = QTLR.experiment_num AND breeze_name = '毛体积密度') AS breeze_MTJ,
+        (SELECT breeze_result FROM `quality_test_breeze` WHERE experiment_num = QTLR.experiment_num AND breeze_name = '吸水率') AS breeze_HSL,
+        (SELECT breeze_result FROM `quality_test_breeze` WHERE experiment_num = QTLR.experiment_num AND breeze_name = '亲水系数') AS breeze_QSXS,
+        (SELECT breeze_result FROM `quality_test_breeze` WHERE experiment_num = QTLR.experiment_num AND breeze_name = '塑性指数') AS breeze_SXZS,
+        (SELECT breeze_result FROM `quality_test_breeze` WHERE experiment_num = QTLR.experiment_num AND breeze_name = '0.6mm') AS breeze_LDFW06,
+        (SELECT breeze_result FROM `quality_test_breeze` WHERE experiment_num = QTLR.experiment_num AND breeze_name = '0.15mm') AS breeze_LDFW015,
+        (SELECT breeze_result FROM `quality_test_breeze` WHERE experiment_num = QTLR.experiment_num AND breeze_name = '0.075mm') AS breeze_LDFW075,
+        (SELECT breeze_result FROM `quality_test_breeze` WHERE experiment_num = QTLR.experiment_num AND breeze_name = '0.3mm') AS breeze_LDFW03,
+        QTS.remark
+        FROM
+        `quality_test_breeze` AS QTCA
+        INNER JOIN quality_test_lab_report AS QTLR ON QTCA.experiment_num = QTLR.experiment_num
+        INNER JOIN quality_test_material_dictionary AS QTMD ON QTLR.materials_num = QTMD.Id
+        INNER JOIN quality_test_order_ticket AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
+        INNER JOIN quality_test_samplingPage AS QTS ON QTOT.sampling_id = QTS.Id
+
+        WHERE
+        DATE_SUB(CURDATE(), INTERVAL 7 DAY)  &lt;= date(QTLR.test_date)
+        GROUP BY testNum
+    </select>
+
+    <select id="getSevenDayAsphaltStandingBook" resultType="java.util.Map">
+        SELECT
+        DATE_FORMAT(QTLR.test_date,'%Y-%m-%d')AS testDate,
+        QTLR.sampling_standard AS samplingStandard,
+        QTMD.`name` AS materialName,
+        QTOT.test_num AS  testNum,
+        (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '针入度(100g,5s,25℃)') AS asphalt_ZRD,
+        (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '15℃ 延  度') AS asphalt_YD15,
+        (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '软化点RB') AS asphalt_RHD,
+        (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '质量变化') AS asphalt_ZLBH,
+        (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '残留针入度比(25℃)') AS asphalt_CLZRD25,
+        (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '10℃延度') AS asphalt_YD10,
+        (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '残留针入度比(10℃)') AS asphalt_CLZRD10,
+        (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '残留针入度比(16℃)') AS asphalt_CLZRD16,
+        QTS.remark
+        FROM
+        `quality_test_asphalt` AS QTCA
+        INNER JOIN quality_test_lab_report AS QTLR ON QTCA.experiment_num = QTLR.experiment_num
+        INNER JOIN quality_test_material_dictionary AS QTMD ON QTLR.materials_num = QTMD.Id
+        INNER JOIN quality_test_order_ticket AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
+        INNER JOIN quality_test_samplingPage AS QTS ON QTOT.sampling_id = QTS.Id
+
+        WHERE
+        DATE_SUB(CURDATE(), INTERVAL 7 DAY)  &lt;= date(QTLR.test_date)
+        GROUP BY testNum
+    </select>
+    <select id="selectCoarseStandingBook" resultType="java.util.Map">
+        SELECT
+        DATE_FORMAT(QTLR.test_date,'%Y-%m-%d') AS testDate,
         QTLR.sampling_standard AS samplingStandard,
         QTMD.`name` AS materialName,
         QTCA.coarse_name AS testName,
         QTOT.test_num AS  testNum,
         QTCA.coarse_result AS testResult ,
-        QTCA.coarse_exper_result10_20 AS testResult10_20 ,
-        QTCA.coarse_result10_15 AS testResultt10_15 ,
-        QTCA.coarse_result5_10 AS testResult5_10 ,
+#         QTCA.coarse_exper_result10_20 AS testResult10_20 ,
+#         QTCA.coarse_result10_15 AS testResultt10_15 ,
+#         QTCA.coarse_result5_10 AS testResult5_10 ,
         QTS.remark
         FROM
         `quality_test_coarse_aggregate` AS QTCA
@@ -548,6 +1286,9 @@
         WHERE
         DATE_SUB(CURDATE(), INTERVAL 7 DAY)  &lt;= date(QTLR.test_date)
     </select>
+
+
+
 
     <select id="selectCoarseSievingStandingBook" resultType="java.util.Map">
         SELECT

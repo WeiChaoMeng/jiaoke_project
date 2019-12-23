@@ -243,7 +243,7 @@ table thead {
 
 /*******************上传按钮************************/
 .buttondiv{
-  margin-left: 45%;
+  margin-left: 15%;
 }
 .buttondiv > input{
   background: #FFF;

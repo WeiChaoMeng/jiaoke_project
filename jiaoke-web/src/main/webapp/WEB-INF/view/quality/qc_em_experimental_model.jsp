@@ -24,7 +24,7 @@
 <input type="text" style="display: none;" name="order_ticket_num" value = "No.2019-BLH-0473"  />
 <input type="text" style="display: none;" name="materials_num" value = "No.2019-BLH-0473"  />
 
-<form  class="bootstrap-frm">
+<form id="myFrom"  class="bootstrap-frm">
 
     <label>
         <span>样品名称 :</span>
@@ -74,81 +74,15 @@
         <div class="table">
             <table border="1" cellspacing="0" cellpadding="10" width="100%" id="firstTable" >
                 <thead id="firstThead">
-                <tr class="firstHead">
-                    <th colspan="1" rowspan="2">实验项目</th>
-                    <th colspan="1" rowspan="2">技术要求</th>
-                    <th colspan="3">试验结果</th>
-                    <th colspan="1" rowspan="2">试验方法</th>
+                <tr class="firstHead" id="firstHead">
+
                 </tr>
                 <tr class="twoHead" id="firstTwoHead" >
                     <th>机制砂</th>
                 </tr>
                 </thead>
                 <tbody id="firstTbody" >
-                <tr>
-                    <td>
-                        <input type="text" class="td_input" name="num" placeholder="表观相对密度"
-                               readonly="readonly" />
-                    </td>
-                    <td>
-                        <input type="text" class="td_input" name="num" placeholder="≯26" readonly="readonly" />
-                    </td>
-                    <td colspan="3">
-                        <input type="text" class="td_input" name="num" placeholder="11.0" />
-                    </td>
-                    <td>
-                        <input type="text" class="td_input" name="num" placeholder="T0316"
-                               readonly="readonly" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="text" class="td_input" name="num" placeholder="毛体积相对密度"
-                               readonly="readonly" />
-                    </td>
-                    <td>
-                        <input type="text" class="td_input" name="num" placeholder="≯26" readonly="readonly" />
-                    </td>
-                    <td colspan="3">
-                        <input type="text" class="td_input" name="num" placeholder="11.0" />
-                    </td>
-                    <td>
-                        <input type="text" class="td_input" name="num" placeholder="T0316"
-                               readonly="readonly" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="text" class="td_input" name="num" placeholder="砂当量      %"
-                               readonly="readonly" />
-                    </td>
-                    <td>
-                        <input type="text" class="td_input" name="num" placeholder="≯26" readonly="readonly" />
-                    </td>
-                    <td colspan="3">
-                        <input type="text" class="td_input" name="num" placeholder="11.0" />
-                    </td>
-                    <td>
-                        <input type="text" class="td_input" name="num" placeholder="T0316"
-                               readonly="readonly" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="text" class="td_input" name="num" placeholder="压碎值   %"
-                               readonly="readonly" />
-                    </td>
-                    <td>
-                        <input type="text" class="td_input" name="num" placeholder="≯26" readonly="readonly" />
-                    </td>
-                    <td colspan="3">
-                        <input type="text" class="td_input" name="num" placeholder="11.0" />
-                    </td>
-                    <td>
-                        <input type="text" class="td_input" name="num" placeholder="T0316"
-                               readonly="readonly" />
-                    </td>
-                </tr>
+
                 </tbody>
             </table>
         </div>
@@ -219,11 +153,12 @@
         <span>报告日期 :</span>
         <input type="text" id="report_date" name="report_date" value=" 2017-03-18" />
     </div>
-</form>
+
 <div class="buttondiv">
     <span>&nbsp;</span>
-    <input type="button" onclick="sendFrom()" class="button" value="Send" />
+    <input type="submit" class="button" value="Send" />
 </div>
+</form>
 <input  id="path" value="${path}" type="hidden" >
 <input  id="id" value="${id}" type="hidden" >
 </body>

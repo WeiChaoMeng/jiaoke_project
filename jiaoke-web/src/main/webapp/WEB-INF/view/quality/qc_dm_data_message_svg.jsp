@@ -566,10 +566,18 @@
         for (var i = 0; i < res.length;i++){
 
 
+            var arr = res[i]['crew1'];
+
+            if (res[i]['crew1']){
+
+
                 var arr = returnJsonArray(res[i]['crew1']['moudleList']);
                 var temArray  = returnArrayToJson(res[i]['crew1']['moudleList']);
 
-                option7.xAxis.max = arr[arr.length - 1][0];
+                if(arr){
+                    option7.xAxis.max = arr[arr.length - 1][0];
+                }
+                debugger
                 option7.series[0].markLine.data = temArray;
                 option7.series[1].data = returnJsonArray(res[i]['crew1']['moudleList']);
                 option7.series[2].data = returnJsonArray(res[i]['crew1']['realList']);
@@ -581,10 +589,25 @@
                     myChart7.resize();
                 });
 
+            }else {
+
+                var temArr = returnJsonArray(res[i]['crew2']['moudleList']);
+                if(temArr){
+                    option7.xAxis.max = temArr[temArr.length - 1][0];
+                }
+
+                option7.series[0].markLine.data = returnArrayToJson(res[i]['crew2']['moudleList']);
+                option7.series[1].data = returnJsonArray(res[i]['crew2']['moudleList']);
+                option7.series[2].data = returnJsonArray(res[i]['crew2']['realList']);
+                option7.series[3].data = returnJsonArray(res[i]['crew2']['upList']);
+                option7.series[4].data = returnJsonArray(res[i]['crew2']['midList']);
+                option7.series[5].data = returnJsonArray(res[i]['crew2']['downList']);
+                myChart7.setOption(option7);
+                window.addEventListener("resize", function () {
+                    myChart7.resize();
+                });
+            }
         }
-
-
-
     }
     window.addEventListener("resize", function () {
         myChart7.resize();

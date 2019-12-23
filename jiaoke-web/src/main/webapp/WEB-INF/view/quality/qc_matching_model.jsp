@@ -347,7 +347,7 @@
                     <td>
                         <input type="number" disabled="disabled" data-value="breeze" class="ration_forminput ration_inputstyle" value="5">
                     </td>
-                    <td class="ration_tlabels">油石比：</td>
+                    <td class="ration_tlabels">沥青(含量)：</td>
                     <td>
                         <input type="number" disabled="disabled" data-value="ratioStone" class="ration_forminput ration_inputstyle" value="1">
                     </td>
@@ -355,26 +355,31 @@
 
 
                 <tr>
-                    <td class="ration_tlabels">沥青加热温度：</td>
+                    <td class="tlabels">沥青加热温度 上/下限：</td>
                     <td>
-                        <input type="number" disabled="disabled" data-value="temperatureAsphalt" class="ration_forminput ration_inputstyle" value="157">
+                        <input type="number" disabled="disabled"  data-value="temperatureAsphalt" class="my_form_input" >
+                        <input type="number" disabled="disabled"  data-value="temperatureAsphaltUp" class="my_form_input">
                     </td>
-                    <td class="ration_tlabels">骨料加热温度：</td>
+                    <td class="tlabels">骨料加热温度 上/下限：</td>
                     <td>
-                        <input type="number" disabled="disabled" data-value="temperatureAggregate" class="ration_forminput ration_inputstyle" value="152">
+                        <input type="number" disabled="disabled"  data-value="temperatureAggregate"  class="my_form_input">
+                        <input type="number" disabled="disabled"  data-value="temperatureAggregateUp" class="my_form_input">
                     </td>
                 </tr>
 
                 <tr>
-                    <td class="ration_tlabels">混合料出厂温度：</td>
+                    <td class="tlabels">混合料出厂温度 上/下限：</td>
                     <td>
-                        <input type="number" disabled="disabled" data-value="temperatureMixture" class="ration_forminput ration_inputstyle" value="52">
+                        <input type="number" disabled="disabled"  data-value="temperatureMixture"  class="my_form_input" >
+                        <input type="number" disabled="disabled"  data-value="temperatureMixtureUp"  class="my_form_input" >
                     </td>
-                    <td class="tlabels">一仓温度：</td>
+                    <td class="tlabels">一仓温度 上/下限：</td>
                     <td>
-                        <input type="number" disabled="disabled" data-value="temperatureMilling" class="ration_forminput ration_inputstyle" value="37">
+                        <input type="number" disabled="disabled"  data-value="temperatureMilling"  class="my_form_input" >
+                        <input type="number" disabled="disabled"  data-value="temperatureMillingUp"  class="my_form_input" >
                     </td>
                 </tr>
+
 
                 <tr>
 

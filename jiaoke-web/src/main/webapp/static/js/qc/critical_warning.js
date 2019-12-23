@@ -18,8 +18,13 @@ function getAllCriticalWarning() {
             });
         },
         success:function (res) {
-            dataArray = res;
-            foreachDataArray(1,dataArray);
+            if (res != null){
+                dataArray = res;
+                foreachDataArray(1,dataArray);
+            } else {
+                layer.alert("近期无预警信息")
+            }
+
         },
         complete:function (XMLHttpRequest, status) {
             layer.closeAll()

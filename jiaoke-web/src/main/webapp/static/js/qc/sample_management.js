@@ -139,10 +139,14 @@ function removeSample(id) {
 			data:{"id":id},
             dataType:'json',
             success: function(msg){
-				if (msg.message === 'success'){
-					layer.alert("删除成功");
-                    var res = getAllSamplingPage();
-                    getCount(res);
+				if (msg.message ){
+				    if (msg.message === 'success'){
+                        layer.alert("删除成功");
+                        var res = getAllSamplingPage();
+                        getCount(res);
+                    }else{
+                        layer.alert("删除失败");
+                    }
                 }else {
                     layer.alert("删除失败");
 				}
@@ -167,13 +171,14 @@ function confirm_completed(id) {
         },
         dataType:'JSON',
         success: function(msg){
-            if (msg.message === 'exist'){
-                condition = true;
-                return;
-            }
-            if (msg.message === 'error'){
+            if (msg.message){
+                if (msg.message === 'exist'){
+                    condition = true;
+                }
+            }else {
                 layer.msg("该条数据出现错误");
             }
+
         }
     });
 
@@ -189,9 +194,13 @@ function confirm_completed(id) {
             async: false,
             dataType:'JSON',
             success: function(msg){
-                if (msg.message === 'success'){
-                    layer.msg("添加成功");
-                    getAllSamplingPage();
+                if (msg.message){
+                    if ( msg.message === 'success') {
+                        layer.msg("添加成功");
+                        getAllSamplingPage();
+                    }else {
+                        layer.msg("添加失败");
+                    }
                 } else {
                     layer.msg("添加失败");
                 }
@@ -253,10 +262,14 @@ function addSample(){
             },
             dataType:'JSON',
             success: function(msg){
-                if (msg.message === 'success'){
-                    layer.msg("添加成功");
-                    $("#sampleList").click();
-                    getAllSamplingPage();
+                if (msg.message){
+                    if (msg.message === 'success'){
+                        layer.msg("添加成功");
+                        $("#sampleList").click();
+                        getAllSamplingPage();
+                    } else {
+                        layer.msg("添加失败");
+                    }
                 } else {
                     layer.msg("添加失败");
                 }

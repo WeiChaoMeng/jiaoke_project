@@ -487,7 +487,8 @@
                     show: false
                 },
                 axisLabel: { //轴标签
-                    show: false //不显示
+                    show: false//不显示
+                    // rotate:90
                 },
                 axisTick: { //轴刻度
                     show: false //不显示
@@ -540,6 +541,7 @@
                         symbol: ['none', 'none'],
                         silent: true,
                         label: {
+                            rotate:90,
                             normal: {
                                 position: "start"
                             }

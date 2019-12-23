@@ -38,6 +38,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.annotation.SessionScope;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -125,35 +126,33 @@ public class QualityController {
 
         if (StringUtils.isEmpty(messageStr)) return;
 
-        long startTime = System.currentTimeMillis();
+        try{
+            receiveDataInf.receiveDataToDB(messageStr);
 
-        receiveDataInf.receiveDataToDB(messageStr);
-
-        class MyThread implements Runnable{
-            private  String messageStr;
-            private  ReceiveDataInf receiveDataInf;
-            public void setMessageStr(String messageStr)
-            {
-                this.messageStr = messageStr;
+            class MyThread implements Runnable{
+                private  String messageStr;
+                private  ReceiveDataInf receiveDataInf;
+                public void setMessageStr(String messageStr)
+                {
+                    this.messageStr = messageStr;
+                }
+                public void setReceiveDataInf(ReceiveDataInf receiveDataInf)
+                {
+                    this.receiveDataInf = receiveDataInf;
+                }
+                @Override
+                public void run() {
+                    receiveDataInf.receiveDataToDBSham(messageStr);
+                }
             }
-            public void setReceiveDataInf(ReceiveDataInf receiveDataInf)
-            {
-                this.receiveDataInf = receiveDataInf;
-            }
-            @Override
-            public void run() {
-                receiveDataInf.receiveDataToDBSham(messageStr);
-            }
+            MyThread myThread = new MyThread();
+            myThread.setMessageStr(messageStr);
+            myThread.setReceiveDataInf(receiveDataInf);
+            Thread thread = new Thread(myThread);
+            thread.start();
+        }catch (Exception e){
+            System.out.println(e);
         }
-        MyThread myThread = new MyThread();
-        myThread.setMessageStr(messageStr);
-        myThread.setReceiveDataInf(receiveDataInf);
-        Thread thread = new Thread(myThread);
-        thread.start();
-
-        long endTime = System.currentTimeMillis();
-
-        System.out.println("程序运行时间：" + (endTime - startTime) + "ms");    //输出程序运行时间
 
 
     }
@@ -172,7 +171,12 @@ public class QualityController {
     @RequestMapping("/getLastWeekCrewData.do")
     public String getLastWeekCrewData(){
 
-        String lastWeekCrewDataJson = qualityIndexInf.getLastWeekCrewData();
+        String lastWeekCrewDataJson = "";
+        try{
+            lastWeekCrewDataJson =  qualityIndexInf.getLastWeekCrewData();
+        }catch (Exception e){
+            System.out.println(e);
+        }
 
         return lastWeekCrewDataJson;
     }
@@ -301,28 +305,32 @@ public class QualityController {
     @RequestMapping("/qc_matching_model.do")
     public String gotoMatchingPage(HttpServletRequest request){
 
-        String temp = request.getParameter("currentPageNum");
-        String url = QualityMatchingUtil.getUrl(request);
+        try{
+            String temp = request.getParameter("currentPageNum");
+            String url = QualityMatchingUtil.getUrl(request);
 
 
-        PageBean<QualityRatioModel> pageBean = new PageBean<QualityRatioModel>();
-        if ( temp == null || temp.trim().isEmpty() ){
-            pageBean = qualityMatchingInf.selectMatchingMoudelByLimte(1,url);
-        }else {
-            pageBean = qualityMatchingInf.selectMatchingMoudelByLimte(Integer.parseInt(temp),url);
+            PageBean<QualityRatioModel> pageBean = new PageBean<QualityRatioModel>();
+            if ( temp == null || temp.trim().isEmpty() ){
+                pageBean = qualityMatchingInf.selectMatchingMoudelByLimte(1,url);
+            }else {
+                pageBean = qualityMatchingInf.selectMatchingMoudelByLimte(Integer.parseInt(temp),url);
+            }
+
+            if (null == pageBean) {return null;}
+
+
+            //获取再生料以及添加剂类型
+            List<Map<String,String>> listAdditive = qualityMatchingInf.selectAdditiveTypeList();
+            List<Map<String,String>> listRegenerate = qualityMatchingInf.selectRegenerateTypeList();
+
+            //添加到域对象内
+            request.setAttribute("listAdditive",listAdditive);
+            request.setAttribute("listRegenerate",listRegenerate);
+            request.setAttribute("pageBean",pageBean);
+        }catch (Exception e){
+            System.out.println(e);
         }
-
-        if (null == pageBean) {return null;}
-
-
-        //获取再生料以及添加剂类型
-        List<Map<String,String>> listAdditive = qualityMatchingInf.selectAdditiveTypeList();
-        List<Map<String,String>> listRegenerate = qualityMatchingInf.selectRegenerateTypeList();
-
-        //添加到域对象内
-        request.setAttribute("listAdditive",listAdditive);
-        request.setAttribute("listRegenerate",listRegenerate);
-        request.setAttribute("pageBean",pageBean);
 
         return "quality/qc_matching_model";
     }
@@ -340,7 +348,11 @@ public class QualityController {
     @RequestMapping(value ={"/addRation.do"} , method = RequestMethod.POST)
     public String addRation(QualityRatioTemplate qualityRatioTemplate){
 
-        boolean bo =  qualityMatchingInf.insetRatioTemplate(qualityRatioTemplate);
+        try{
+            boolean bo =  qualityMatchingInf.insetRatioTemplate(qualityRatioTemplate);
+        }catch (Exception e){
+            System.out.println(e);
+        }
 
         return "redirect:qc_index.do";
     }
@@ -357,7 +369,12 @@ public class QualityController {
     @ResponseBody
     @RequestMapping(value ={"/delectRation"} , method = RequestMethod.POST)
     public String delectRation(String idStr){
-        String jsonMessage =  qualityMatchingInf.delectRation(idStr);
+        String jsonMessage = "";
+        try{
+            jsonMessage =  qualityMatchingInf.delectRation(idStr);
+        }catch (Exception e){
+            System.out.println(e);
+        }
         return jsonMessage;
     }
     /**
@@ -372,8 +389,12 @@ public class QualityController {
     @ResponseBody
     @RequestMapping(value ={"/showRatioById.do"} , method = RequestMethod.POST)
     public String showRatioById(String idStr){
-
-        String jsonMessage =  qualityMatchingInf.selectRationById(idStr);
+        String jsonMessage = "";
+        try{
+            jsonMessage =  qualityMatchingInf.selectRationById(idStr);
+        }catch (Exception e){
+            System.out.println(e);
+        }
         return jsonMessage;
     }
 
@@ -382,15 +403,23 @@ public class QualityController {
     @RequestMapping(value ={"/addGrading.do"} , method = RequestMethod.POST)
     public String addGrading(String jsonData,String crew1Id,String crew2Id,String gradingName,String upUser,String gradingRemaker){
 
-        String jsonMessage = qualityMatchingInf.insetGrading(jsonData,crew1Id,crew2Id,gradingName,upUser,gradingRemaker);
-
+        String jsonMessage = "";
+        try{
+            jsonMessage =  qualityMatchingInf.insetGrading(jsonData,crew1Id,crew2Id,gradingName,upUser,gradingRemaker);
+        }catch (Exception e){
+            System.out.println(e);
+        }
         return jsonMessage;
     }
 
 
     @RequestMapping(value ={"/EditRation.do"} , method = RequestMethod.POST)
     public String EditRation(QualityRatioTemplate qualityRatioTemplate){
-      Boolean res =   qualityMatchingInf.EditRationById(qualityRatioTemplate);
+        try{
+            Boolean res =   qualityMatchingInf.EditRationById(qualityRatioTemplate);
+        }catch (Exception e){
+            System.out.println(e);
+        }
 
         return "redirect:qc_index.do";
     }
@@ -417,8 +446,12 @@ public class QualityController {
     @ResponseBody
     @RequestMapping("/getRealTimeData.do")
     public String getRealTimeData(){
-
-        String JsonData = qualityDataMontoringInf.selectProductionData();
+        String JsonData = "";
+        try{
+            JsonData = qualityDataMontoringInf.selectProductionData();
+        }catch (Exception e){
+            System.out.println(e);
+        }
 
         if (JsonData == "") return null;
         return JsonData;
@@ -437,7 +470,12 @@ public class QualityController {
     @RequestMapping(value = "/getRealTimeDataEcharsTemp.do",method = RequestMethod.POST)
     public String getRealTimeDataEcharsTemp(){
 
-        String jsonStr = qualityDataMontoringInf.getRealTimeDataEcharsTemp();
+        String jsonStr = "";
+        try{
+            jsonStr = qualityDataMontoringInf.getRealTimeDataEcharsTemp();
+        }catch (Exception e){
+            System.out.println(e);
+        }
 
         return jsonStr;
 
@@ -456,14 +494,25 @@ public class QualityController {
     @RequestMapping(value = "/getRealTimeDataEcharsMaterial.do",method = RequestMethod.POST)
     public String getRealTimeDataEcharsMaterial(){
 
-        String  jsonStr = qualityDataMontoringInf.getRealTimeDataEcharsMaterial();
+        String jsonStr = "";
+        try{
+            jsonStr = qualityDataMontoringInf.getRealTimeDataEcharsMaterial();
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
         return jsonStr;
     }
 
     @ResponseBody
     @RequestMapping("/getRealTimeThreeProductSVG.do")
     public String getRealTimeThreeProductSVG(){
-       String res =  qualityDataMontoringInf.getRealTimeThreeProductSVG();
+        String res = "";
+        try{
+            res =  qualityDataMontoringInf.getRealTimeThreeProductSVG();
+        }catch (Exception e){
+            System.out.println(e);
+        }
        return res;
     }
 
@@ -485,17 +534,22 @@ public class QualityController {
     @RequestMapping("/qc_data_manager.do")
     public String dataManager(HttpServletRequest request){
 
-        String temp = request.getParameter("currentPageNum");
-        String url = QualityMatchingUtil.getUrl(request);
+        try{
+            String temp = request.getParameter("currentPageNum");
+            String url = QualityMatchingUtil.getUrl(request);
 
-        PageBean<QualityDataManagerDay> pageBean = new PageBean<QualityDataManagerDay>();
-        if ( temp == null || temp.trim().isEmpty() ){
-            pageBean = qualityDataManagerInf.selectHistoryDataToDay(1,url);
-        }else {
-            pageBean = qualityDataManagerInf.selectHistoryDataToDay(Integer.parseInt(temp),url);
+            PageBean<QualityDataManagerDay> pageBean = new PageBean<QualityDataManagerDay>();
+            if ( temp == null || temp.trim().isEmpty() ){
+                pageBean = qualityDataManagerInf.selectHistoryDataToDay(1,url);
+            }else {
+                pageBean = qualityDataManagerInf.selectHistoryDataToDay(Integer.parseInt(temp),url);
+            }
+
+            request.setAttribute("pageBean",pageBean);
+        }catch (Exception e){
+            System.out.println(e);
         }
 
-        request.setAttribute("pageBean",pageBean);
 
         return "quality/qc_data_manager";
     }
@@ -503,7 +557,13 @@ public class QualityController {
     @ResponseBody
     @RequestMapping(value = "/getMsgByUserAndDate.do",method = RequestMethod.POST)
     public String getMsgByUserAndDate(String userNum,String proDate){
-        String str = qualityDataManagerInf.getMsgByUserAndDate(userNum,proDate);
+
+        String str = "";
+        try{
+            str = qualityDataManagerInf.getMsgByUserAndDate(userNum,proDate);
+        }catch (Exception e){
+            System.out.println(e);
+        }
         return str;
     }
     @RequestMapping("/getProducttionByDate.do")
@@ -511,7 +571,11 @@ public class QualityController {
 
         if (Strings.isBlank(producedDate) || Strings.isBlank(crewNum) ) {return null;}
 
-        Map<String,Object> map = qualityDataManagerInf.selectProducttionByDate(producedDate,crewNum, request);
+        try{
+            Map<String,Object> map = qualityDataManagerInf.selectProducttionByDate(producedDate,crewNum, request);
+        }catch (Exception e){
+            System.out.println(e);
+        }
 
         return "quality/qc_dm_data_matching";
     }
@@ -530,9 +594,14 @@ public class QualityController {
 
         if (id.isEmpty()) return "";
 
-        Map<String,Object> map =  qualityDataManagerInf.selectProductMessageById(id,crewNum);
+        try{
+            Map<String,Object> map =  qualityDataManagerInf.selectProductMessageById(id,crewNum);
 
-        request.setAttribute("product",map);
+            request.setAttribute("product",map);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
 
         return "quality/qc_dm_data_detail";
     }
@@ -542,10 +611,15 @@ public class QualityController {
         if (ratioNum.isEmpty() || crewNum.isEmpty() || date.isEmpty()) {return null;}
 
 
-        Map<String,Object> prolist = qualityDataManagerInf.selectProListByRatioNumAndDate(ratioNum,crewNum,date);
+        try{
+            Map<String,Object> prolist = qualityDataManagerInf.selectProListByRatioNumAndDate(ratioNum,crewNum,date);
 
 
-        request.setAttribute("baseMap",prolist);
+            request.setAttribute("baseMap",prolist);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
 
         return "quality/qc_data_message";
     }
@@ -558,14 +632,26 @@ public class QualityController {
     @ResponseBody
     @RequestMapping(value = "getProSVGRationAndModelRation.do",method = RequestMethod.POST)
     public String getProSVGRationAndModelRation(String ProductSVG){
-       String res = qualityDataManagerInf.getProSVGRationAndModelRation(ProductSVG);
+        String res = "";
+        try{
+            res = qualityDataManagerInf.getProSVGRationAndModelRation(ProductSVG);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
        return res;
     }
 
     @ResponseBody
     @RequestMapping(value ="/getProductSvgGrading.do",method = RequestMethod.POST)
     public String getProductSvgGrading(String ProductSVG){
-        String res = qualityDataManagerInf.getProductSvgGrading(ProductSVG);
+
+        String res = "";
+        try{
+             res = qualityDataManagerInf.getProductSvgGrading(ProductSVG);
+        }catch (Exception e){
+            System.out.println(e);
+        }
         return res;
     }
     /********************************  数据管理 end *****************************************/
@@ -582,8 +668,12 @@ public class QualityController {
     @ResponseBody
     @RequestMapping(value = "/getQualityWarningData.do",method = RequestMethod.POST,produces = {"text/html;charset=utf-8"})
     public String getQualityWarningData(){
-
-        String listStr = qualityRealTimeWarningInf.selectLastWarningData();
+        String listStr = "";
+        try{
+            listStr = qualityRealTimeWarningInf.selectLastWarningData();
+        }catch (Exception e){
+            System.out.println(e);
+        }
 
         return listStr;
     }
@@ -592,8 +682,12 @@ public class QualityController {
     @RequestMapping(value = "/getWarningEcharsData.do",method = RequestMethod.POST)
     public String getWarningEcharsData(){
 
-        String jsonStr = qualityRealTimeWarningInf.getWarningEcharsData();
-
+        String jsonStr = "";
+        try{
+            jsonStr = qualityRealTimeWarningInf.getWarningEcharsData();
+        }catch (Exception e){
+            System.out.println(e);
+        }
         return jsonStr;
     }
 
@@ -601,8 +695,13 @@ public class QualityController {
     @ResponseBody
     @RequestMapping("/getGlobalWarningData.do")
     public String getGlobalWarningData(){
-        String res = qualityRealTimeWarningInf.getGlobalWarningData();
 
+        String res = "";
+        try{
+            res = qualityRealTimeWarningInf.getGlobalWarningData();
+        }catch (Exception e){
+            System.out.println(e);
+        }
         return res;
     }
 
@@ -618,37 +717,42 @@ public class QualityController {
     @RequestMapping("/qc_auxiliary_analysis.do")
     public String auxiliaryAnalysis(HttpServletRequest request){
 
-        String temp = request.getParameter("currentPageNum");
-        String warningLive = request.getParameter("warningLive");
-        String proData = request.getParameter("proData");
-        String crew = request.getParameter("crew");
-        String rationId = request.getParameter("rationId");
-        String url = QualityMatchingUtil.getUrl(request);
+        try{
+            String temp = request.getParameter("currentPageNum");
+            String warningLive = request.getParameter("warningLive");
+            String proData = request.getParameter("proData");
+            String crew = request.getParameter("crew");
+            String rationId = request.getParameter("rationId");
+            String url = QualityMatchingUtil.getUrl(request);
 
-        if ("" == warningLive || warningLive == null)  warningLive = "0";
+            if ("" == warningLive || warningLive == null)  warningLive = "0";
 
-        PageBean<Map<String,String>> pageBean = new PageBean<Map<String,String>>();
-        if ( temp == null || temp.trim().isEmpty() ){
-            if (proData != null){
-                pageBean = qualityAuxiliaryAnalysisInf.selelectWarningLiveData(1,url,warningLive,proData,crew, rationId );
+            PageBean<Map<String,String>> pageBean = new PageBean<Map<String,String>>();
+            if ( temp == null || temp.trim().isEmpty() ){
+                if (proData != null){
+                    pageBean = qualityAuxiliaryAnalysisInf.selelectWarningLiveData(1,url,warningLive,proData,crew, rationId );
+                }
+            }else {
+                pageBean = qualityAuxiliaryAnalysisInf.selelectWarningLiveData(Integer.parseInt(temp),url,warningLive,proData,crew, rationId );
             }
-        }else {
-            pageBean = qualityAuxiliaryAnalysisInf.selelectWarningLiveData(Integer.parseInt(temp),url,warningLive,proData,crew, rationId );
-        }
 
-        List<Map<String,String>> list = new ArrayList<>();
+            List<Map<String,String>> list = new ArrayList<>();
 
 //        if (pageBean.getPageData().size() != 0){
 //            list = qualityAuxiliaryAnalysisInf.selectWaringData(pageBean);
 //        }
 
 
-        request.setAttribute("pageBean",pageBean);
+            request.setAttribute("pageBean",pageBean);
 //        request.setAttribute("waringList",list);
-        request.setAttribute("proData",proData);
-        request.setAttribute("crew",crew);
-        request.setAttribute("rationId",rationId);
-        request.setAttribute("warningLive",warningLive);
+            request.setAttribute("proData",proData);
+            request.setAttribute("crew",crew);
+            request.setAttribute("rationId",rationId);
+            request.setAttribute("warningLive",warningLive);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
 
         return "quality/qc_auxiliary_analysis";
     }
@@ -664,7 +768,12 @@ public class QualityController {
     @RequestMapping("/getProductById.do")
     public String getPageByProductId(@RequestParam("producedId") String producedId,@RequestParam("prodate") String prodate,@RequestParam("discNum") String discNum,@RequestParam("crew") String crew,HttpServletRequest request){
 
-       qualityAuxiliaryAnalysisInf.getPageByProductIdAndProdate(producedId,prodate,discNum,crew,request);
+
+        try{
+            qualityAuxiliaryAnalysisInf.getPageByProductIdAndProdate(producedId,prodate,discNum,crew,request);
+        }catch (Exception e){
+            System.out.println(e);
+        }
 
         return "quality/qc_auxiliary_message";
     }
@@ -672,8 +781,13 @@ public class QualityController {
     @ResponseBody
     @RequestMapping("/getProductMessageById.do")
     public String getProductMessageById(@RequestParam("id") String id,@RequestParam("crewNum") String crewNum){
-        String result = qualityAuxiliaryAnalysisInf.getRealTimeDataEcharsMaterial(id,crewNum);
+        String result = "";
 
+        try{
+            result = qualityAuxiliaryAnalysisInf.getRealTimeDataEcharsMaterial(id,crewNum);
+        }catch (Exception e){
+            System.out.println(e);
+        }
         return result;
     }
     /********************************  辅助分析 end *****************************************/
@@ -709,7 +823,14 @@ public class QualityController {
     @RequestMapping("/getMonthStatementToEchars.do")
     public String getMonthStatementToEchars(){
 
-       String res = qualityStatementInf.selectLastMonthStatementToEchars();
+        String res = "";
+
+        try{
+            res = qualityStatementInf.selectLastMonthStatementToEchars();
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
 
        return res;
     }
@@ -718,7 +839,14 @@ public class QualityController {
     @RequestMapping("/getMonthStatementToData.do")
     public String getMonthStatementToData(){
 
-        String res = qualityStatementInf.selectMonthStatementToData();
+        String res = "";
+
+        try{
+            res = qualityStatementInf.selectMonthStatementToData();
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
 
         return res;
     }
@@ -726,15 +854,26 @@ public class QualityController {
     @ResponseBody
     @RequestMapping("/getYearStatementDateAndDate.do")
     public String getYearStatementDateAndDate(){
-        String res = qualityStatementInf.selectYearStatementDateAndDate();
+        String res = "";
+
+        try{
+            res = qualityStatementInf.selectYearStatementDateAndDate();
+        }catch (Exception e){
+            System.out.println(e);
+        }
         return res;
     }
     //返回各个月份集合
     @ResponseBody
     @RequestMapping("/getMonthDateList.do")
     public String getMonthDateList(){
-        String  res = qualityStatementInf.selectMonthDateList();
+        String res = "";
 
+        try{
+            res = qualityStatementInf.selectMonthDateList();
+        }catch (Exception e){
+            System.out.println(e);
+        }
         return res;
     }
 
@@ -766,21 +905,36 @@ public class QualityController {
     @RequestMapping(value = "/getRealTimeSurveillanceFalse.do")
     @ResponseBody
     public String getRealTimeSurveillanceFalse(){
-        List<Map<String,String>> list = qualityTimelyDataFalseService.getTimeSurveillanceFalseData();
+        List<Map<String,String>> list = new ArrayList<>();
+        try{
+            list = qualityTimelyDataFalseService.getTimeSurveillanceFalseData();
+        }catch (Exception e){
+            System.out.println(e);
+        }
         return JsonHelper.toJSONString(list);
     }
 
     @RequestMapping("/getFalseDataToChars.do")
     @ResponseBody
     public String getFalseDataToChars(){
-        String  resoure = qualityTimelyDataFalseService.selectFalseDataToChars();
+        String resoure ="";
+        try{
+            resoure = qualityTimelyDataFalseService.selectFalseDataToChars();
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return  resoure;
     }
 
     @RequestMapping("/getFalseDataEcharsTemp.do")
     @ResponseBody
     public String getFalseDataEcharsTemp(){
-        String  resoure = qualityTimelyDataFalseService.selectFalseDataEcharsTemp();
+        String resoure ="";
+        try{
+            resoure = qualityTimelyDataFalseService.selectFalseDataEcharsTemp();
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return  resoure;
     }
 
@@ -797,25 +951,37 @@ public class QualityController {
      */
     @RequestMapping(value = "/qc_historical_data.do")
     public String toHistoricalData(HttpServletRequest request){
-        String temp = request.getParameter("currentPageNum");
-        String url = QualityMatchingUtil.getUrl(request);
+        try{
+            String temp = request.getParameter("currentPageNum");
+            String url = QualityMatchingUtil.getUrl(request);
 
-        PageBean<QualityDataManagerDay> pageBean = new PageBean<>();
-        if ( temp == null || temp.trim().isEmpty() ){
-            pageBean = qualityHistoricalDataService.selectHistoryDataToDay(1,url);
-        }else {
-            pageBean = qualityHistoricalDataService.selectHistoryDataToDay(Integer.parseInt(temp),url);
+            PageBean<QualityDataManagerDay> pageBean = new PageBean<>();
+            if ( temp == null || temp.trim().isEmpty() ){
+                pageBean = qualityHistoricalDataService.selectHistoryDataToDay(1,url);
+            }else {
+                pageBean = qualityHistoricalDataService.selectHistoryDataToDay(Integer.parseInt(temp),url);
+            }
+
+            request.setAttribute("pageBean",pageBean);
+        }catch (Exception e) {
+            System.out.println(e);
         }
 
-        request.setAttribute("pageBean",pageBean);
         return "quality/qc_historical_data";
     }
 
 
     @RequestMapping(value = "/getFalseDataByDate.do")
     public String getFalseDataByDate( HttpServletRequest request,String producedDate,String crewNum ){
-        List<Map<String,String>> list = qualityHistoricalDataService.selectHistoryByDateAndcrewNum(producedDate,crewNum);
-        request.setAttribute("prolist",list);
+
+        List<Map<String,String>> list;
+        try{
+            list = qualityHistoricalDataService.selectHistoryByDateAndcrewNum(producedDate,crewNum);
+            request.setAttribute("prolist",list);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
+
         return "quality/qc_false_data_list";
     }
 
@@ -826,7 +992,12 @@ public class QualityController {
 
     @RequestMapping("/qc_dynamic_management.do")
     public String getLastDayAsphaltRationToChars (HttpServletRequest request){
-        qualityDynamicInf.getLastDayToChars(request);
+        try{
+            qualityDynamicInf.getLastDayToChars(request);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
+
         return "quality/qc_dynamic_management";
     }
 
@@ -834,14 +1005,24 @@ public class QualityController {
     @RequestMapping(value = "/getEcharsDataByMaterialAndDate.do")
     public String dayToChars(String date,String material,String ratioNum ,String crew,HttpServletRequest request){
 
-        qualityDynamicInf.getEcharsDataByMaterialAndDate(date,material,ratioNum,crew,request);
+        try{
+            qualityDynamicInf.getEcharsDataByMaterialAndDate(date,material,ratioNum,crew,request);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
+
         return "quality/qc_dynamic_management";
     }
 
     @ResponseBody
     @RequestMapping(value = "/getRatioListByDate.do" , method = RequestMethod.POST)
     public  String getRatioListByDate(String proData,String crew){
-        String res =  qualityDynamicInf.getRatioListByDate(proData,crew);
+        String res = "";
+        try{
+            res =  qualityDynamicInf.getRatioListByDate(proData,crew);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
 
@@ -866,7 +1047,12 @@ public class QualityController {
     @ResponseBody
     @RequestMapping("/getThreeDayData.do")
     public String getThreeDayData(){
-        String res = qualityDataSummaryInf.getThreeDayData();
+        String res = "";
+        try{
+            res = qualityDataSummaryInf.getThreeDayData();
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
 
@@ -877,8 +1063,12 @@ public class QualityController {
             return null;
         }
 
-        List<Map<String,Object>> res = qualityDataSummaryInf.getRatioListByDateTimeAndCrew(startDate,endDate,crew);
-
+        List<Map<String,Object>> res = new ArrayList<>();
+        try{
+            res = qualityDataSummaryInf.getRatioListByDateTimeAndCrew(startDate,endDate,crew);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return  JSON.toJSONString(res);
     }
 
@@ -886,14 +1076,23 @@ public class QualityController {
     @RequestMapping(value = "getPromessageByRaionModel.do",method = RequestMethod.POST)
     public String getPromessageByRaionModel(String startDate,String endDate,String crew, String rationId){
 
-        List<Map<String,Object>> list =  qualityDataSummaryInf.getPromessageByRaionModel(startDate,endDate,crew,rationId);
+        List<Map<String,Object>> list = new ArrayList<>();
+        try{
+            list =  qualityDataSummaryInf.getPromessageByRaionModel(startDate,endDate,crew,rationId);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
 
         return JSON.toJSONString(list);
     }
 
     @RequestMapping("/getProSvgmessage.do")
     public String getProSvgmessage(String startDate,String endDate,String crew, String rationId,HttpServletRequest request){
-        qualityDataSummaryInf.getProSvgmessage(startDate,endDate,crew,rationId,request);
+        try{
+            qualityDataSummaryInf.getProSvgmessage(startDate,endDate,crew,rationId,request);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return "quality/qc_ds_message";
     }
 
@@ -908,7 +1107,12 @@ public class QualityController {
     @ResponseBody
     @RequestMapping("/getGradingList.do")
     public String getGradingList(){
-        String res = qualityGradingManagerInf.getGradingModelList();
+        String res = "";
+        try{
+            res = qualityGradingManagerInf.getGradingModelList();
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
 
@@ -916,7 +1120,12 @@ public class QualityController {
     @RequestMapping("/delectGrading.do")
     public String delectGrading(String idStr){
 
-        String res = qualityGradingManagerInf.delectGrading(idStr);
+        String res = "";
+        try{
+            res = qualityGradingManagerInf.delectGrading(idStr);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
 
         return res;
     }
@@ -924,7 +1133,12 @@ public class QualityController {
     @ResponseBody
     @RequestMapping("/getGrading.do")
     public String getGrading(String id){
-        String res = qualityGradingManagerInf.getGrading(id);
+        String res = "";
+        try{
+            res = qualityGradingManagerInf.getGrading(id);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
 
@@ -973,7 +1187,14 @@ public class QualityController {
     @ResponseBody
     @RequestMapping("/getAllSamplingPage.do")
     public String getAllSamplingPage(){
-        String res = qualityExperimentalManagerInf.getAllSamplingPage();
+
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.getAllSamplingPage();
+        }catch (Exception e) {
+            System.out.println(e);
+        }
+
         return res;
     }
 
@@ -989,7 +1210,12 @@ public class QualityController {
     @ResponseBody
     @RequestMapping("/getSamplingPageFromData.do")
     public String getSamplingPageFromData(){
-        String res = qualityExperimentalManagerInf.getSamplingPageFromData();
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.getSamplingPageFromData();
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     };
 
@@ -1005,7 +1231,12 @@ public class QualityController {
     @ResponseBody
     @RequestMapping(value = "/addSample.do",method = RequestMethod.POST)
     public String addSample(String materials,String manufacturers,String specification,String tunnage,String creat_time,String remark ){
-       String res =  qualityExperimentalManagerInf.addSample(materials,manufacturers,specification,tunnage,creat_time,remark);
+        String res = "";
+        try{
+            res =  qualityExperimentalManagerInf.addSample(materials,manufacturers,specification,tunnage,creat_time,remark);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
        return res;
     };
 
@@ -1021,21 +1252,37 @@ public class QualityController {
      @ResponseBody
      @RequestMapping(value = "/removeSampleById.do",method = RequestMethod.POST)
      public String removeSampleById(@RequestParam("id") String id){
-         String res = qualityExperimentalManagerInf.removeSampleById(id);
+         String res = "";
+         try{
+             res = qualityExperimentalManagerInf.removeSampleById(id);
+         }catch (Exception e) {
+             System.out.println(e);
+         }
          return res;
      }
 
      @ResponseBody
      @RequestMapping(value = "/confirmCompletedById.do",method = RequestMethod.POST)
      public String confirmCompletedById(@RequestParam("id") String id){
-        String res = qualityExperimentalManagerInf.confirmCompletedById(id);
+
+         String res = "";
+         try{
+             res = qualityExperimentalManagerInf.confirmCompletedById(id);
+         }catch (Exception e) {
+             System.out.println(e);
+         }
         return res;
      }
 
      @ResponseBody
      @RequestMapping(value = "/getSampleStatusById.do",method = RequestMethod.POST)
      public String getSampleStatusById(@RequestParam("id") String id){
-         String res = qualityExperimentalManagerInf.getSampleStatusById(id);
+         String res = "";
+         try{
+             res = qualityExperimentalManagerInf.getSampleStatusById(id);
+         }catch (Exception e) {
+             System.out.println(e.fillInStackTrace());
+         }
          return res;
      }
 
@@ -1049,14 +1296,24 @@ public class QualityController {
     @ResponseBody
     @RequestMapping(value = "/getAllexperimental.do")
     public String getAllexperimental(){
-       String res =  qualityExperimentalManagerInf.getAllexperimental();
+        String res = "";
+        try{
+            res =  qualityExperimentalManagerInf.getAllexperimental();
+        }catch (Exception e) {
+            System.out.println(e);
+        }
        return res;
     }
 
     @ResponseBody
     @RequestMapping(value = "/getExperimentalMessageById.do",method = RequestMethod.POST)
     public String getExperimentalMessageById(@RequestParam("id") String id){
-         String res = qualityExperimentalManagerInf.getExperimentalMessageById(id);
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.getExperimentalMessageById(id);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
          return res;
     }
     /**
@@ -1071,25 +1328,45 @@ public class QualityController {
     @ResponseBody
     @RequestMapping(value = "/getExperimentalItemByOrderNum.do",method = RequestMethod.POST)
     public String getExperimentalItemByOrderNum(@RequestParam("orderNum") String orderNum){
-        String res = qualityExperimentalManagerInf.getExperimentalItemByOrderNum(orderNum);
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.getExperimentalItemByOrderNum(orderNum);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
     @ResponseBody
     @RequestMapping(value ="/getExperimentalItemById.do",method = RequestMethod.POST)
     public String getExperimentalItemById(@RequestParam("id") String id){
-        String res = qualityExperimentalManagerInf.getExperimentalItemById(id);
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.getExperimentalItemById(id);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
     @ResponseBody
     @RequestMapping(value = "/addExperimentalItemByOrderTicketNum.do",method = RequestMethod.POST)
     public String addExperimentalItemByOrderTicketNum(@RequestParam("orderTicketNum") String orderTicketNum,@RequestParam("experimentalItemId") String experimentalItemId){
-         String res = qualityExperimentalManagerInf.addExperimentalItemByOrderTicketNum(orderTicketNum,experimentalItemId);
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.addExperimentalItemByOrderTicketNum(orderTicketNum,experimentalItemId);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
          return res;
     }
     @ResponseBody
     @RequestMapping(value = "/getExperimentalItemCount.do",method = RequestMethod.POST)
     public String getExperimentalItemCount(@RequestParam("orderTicketNum") String orderTicketNum){
-        String res = qualityExperimentalManagerInf.getExperimentalItemCount(orderTicketNum);
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.getExperimentalItemCount(orderTicketNum);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
     /********************************  实验管理 end *****************************************/
@@ -1103,29 +1380,50 @@ public class QualityController {
     @ResponseBody
     @RequestMapping("/getAllExperimentalItem.do")
     public String getAllExperimentalItem(){
-        String res = qualityExperimentalManagerInf.getAllExperimentalItem();
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.getAllExperimentalItem();
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
 
 
     @RequestMapping("/getExperimentalItemMsgPage.do")
     public String getExperimentalItemMsgPage(@RequestParam("id") String id,HttpServletRequest request){
-        request.setAttribute("id",id);
-        request.setAttribute("nickname",getCurrentUser().getNickname());
+
+        try{
+            request.setAttribute("id",id);
+            request.setAttribute("nickname",getCurrentUser().getNickname());
+        }catch (Exception e) {
+            System.out.println(e.fillInStackTrace());
+        }
+
         return "quality/qc_em_experimental_model";
     }
 
     @ResponseBody
     @RequestMapping("/getExperimentalItemMsgById.do")
     public String getExperimentalItemMsgById(@RequestParam("id") String id){
-        String msg = qualityExperimentalManagerInf.getExperimentalItemMsgById(id);
+        String msg = "";
+        try{
+            msg = qualityExperimentalManagerInf.getExperimentalItemMsgById(id);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return msg;
     }
 
     @ResponseBody
     @RequestMapping("/getExperimentalItemListById.do")
     public String getExperimentalItemListById(@RequestParam("id") String id){
-        String res = qualityExperimentalManagerInf.getExperimentalItemNumList(id);
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.getExperimentalItemNumList(id);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
 
@@ -1140,7 +1438,12 @@ public class QualityController {
     @ResponseBody
     @RequestMapping(value = "/sendFromData.do",method = RequestMethod.POST)
     public String sendFromData(@RequestParam("fromJson") String fromJson,@RequestParam("firstTest") String firstTest,@RequestParam("coarseTest") String coarseTest){
-        String res = qualityExperimentalManagerInf.addExperimentalMsgAndItem(fromJson,firstTest,coarseTest);
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.addExperimentalMsgAndItem(fromJson,firstTest,coarseTest);
+        }catch (Exception e) {
+            System.out.println(e.fillInStackTrace());
+        }
         return res;
     }
 
@@ -1154,17 +1457,23 @@ public class QualityController {
      */
     @RequestMapping(value = "/detailsExperimentalItems.do")
     public String experimentalItemsDetails(String id,String taskId,Model model){
-        if ("undefined".equals(taskId) || "".equals(taskId)){
-            //根据业务键查询流程实例Id
-            taskId = historyService.createHistoricProcessInstanceQuery().processInstanceBusinessKey("quality_test_lab_report:" + id).singleResult().getId();
+
+        try{
+            if ("undefined".equals(taskId) || "".equals(taskId)){
+                //根据业务键查询流程实例Id
+                taskId = historyService.createHistoricProcessInstanceQuery().processInstanceBusinessKey("quality_test_lab_report:" + id).singleResult().getId();
+            }
+
+            //获取批注信息
+            List<Comments> commentsList = activitiUtil.selectHistoryComment(taskId);
+
+            model.addAttribute("id",id);
+            model.addAttribute("commentsList",commentsList);
+            model.addAttribute("commentsSize",commentsList.size());
+        }catch (Exception e) {
+            System.out.println(e);
         }
 
-        //获取批注信息
-        List<Comments> commentsList = activitiUtil.selectHistoryComment(taskId);
-
-        model.addAttribute("id",id);
-        model.addAttribute("commentsList",commentsList);
-        model.addAttribute("commentsSize",commentsList.size());
         return "quality/qc_em_experimental_message";
     }
 
@@ -1177,14 +1486,20 @@ public class QualityController {
      */
     @RequestMapping(value = "/approvalExperimentalItems.do")
     public String experimentalItemsApproval(String id, String taskId, Model model){
-        //获取批注信息
-        List<Comments> commentsList = activitiUtil.selectHistoryComment(activitiUtil.getTaskByTaskId(taskId).getProcessInstanceId());
 
-        model.addAttribute("nickname",getCurrentUser().getNickname());
-        model.addAttribute("id",id);
-        model.addAttribute("taskId",taskId);
-        model.addAttribute("commentsList",commentsList);
-        model.addAttribute("commentsSize",commentsList.size());
+        try{
+            //获取批注信息
+            List<Comments> commentsList = activitiUtil.selectHistoryComment(activitiUtil.getTaskByTaskId(taskId).getProcessInstanceId());
+
+            model.addAttribute("nickname",getCurrentUser().getNickname());
+            model.addAttribute("id",id);
+            model.addAttribute("taskId",taskId);
+            model.addAttribute("commentsList",commentsList);
+            model.addAttribute("commentsSize",commentsList.size());
+        }catch (Exception e) {
+            System.out.println(e);
+        }
+
         return "quality/qc_em_experimental_approval";
     }
 
@@ -1318,6 +1633,7 @@ public class QualityController {
     @RequestMapping(value = "/deleteExperimentalItems.do")
     @ResponseBody
     public String delete(String id, String processInstanceId) {
+
         //删除流程
         if (activitiUtil.deleteByProcessInstanceId(processInstanceId) == 1) {
             //执行删除数据
@@ -1355,33 +1671,52 @@ public class QualityController {
 
     @RequestMapping("/getExperimentalMsgById.do")
     public String getExperimentalMsgById(@RequestParam("id") String id,Model model){
+        try{
+            //根据业务键查询流程实例Id
+            String processInstanceId = historyService.createHistoricProcessInstanceQuery().processInstanceBusinessKey("quality_test_lab_report:" + id).singleResult().getId();
+            //获取批注信息
+            List<Comments> commentsList = activitiUtil.selectHistoryComment(processInstanceId);
 
-        //根据业务键查询流程实例Id
-        String processInstanceId = historyService.createHistoricProcessInstanceQuery().processInstanceBusinessKey("quality_test_lab_report:" + id).singleResult().getId();
-        //获取批注信息
-        List<Comments> commentsList = activitiUtil.selectHistoryComment(processInstanceId);
+            model.addAttribute("id",id);
+            model.addAttribute("commentsList",commentsList);
+            model.addAttribute("commentsSize",commentsList.size());
+        }catch (Exception e) {
+            System.out.println(e);
+        }
 
-        model.addAttribute("id",id);
-        model.addAttribute("commentsList",commentsList);
-        model.addAttribute("commentsSize",commentsList.size());
         return "quality/qc_em_experimental_message";
     }
     @ResponseBody
     @RequestMapping(value = "/getExperimentalProjectMessage.do",method = RequestMethod.POST)
     public String getExperimentalProjectMessage(@RequestParam("id") String  id){
-        String res = qualityExperimentalManagerInf.getExperimentalProjectMessage(id);
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.getExperimentalProjectMessage(id);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
     @ResponseBody
     @RequestMapping(value = "/showExperimentalProjectItem.do",method = RequestMethod.POST)
     public String showExperimentalProjectItem(@RequestParam("tableName") String tableName,@RequestParam("experiment_num") String experiment_num){
-        String res = qualityExperimentalManagerInf.getExperimentalProjectItem(tableName,experiment_num);
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.getExperimentalProjectItem(tableName,experiment_num);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
     @ResponseBody
     @RequestMapping(value = "/removeExperimentalItemById.do",method = RequestMethod.POST)
     public String removeExperimentalItemById(@RequestParam("id") String id){
-        String res = qualityExperimentalManagerInf.removeExperimentalItemById(id);
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.removeExperimentalItemById(id);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
     /********************************  未完实验 end *****************************************/
@@ -1414,10 +1749,89 @@ public class QualityController {
     @ResponseBody
     @RequestMapping("/getSevenDayRawMaterialStandingBook.do")
     public String getSevenDayRawMaterialStandingBook(){
-        String res = qualityExperimentalManagerInf.getSevenDayRawMaterialStandingBook();
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.getSevenDayRawMaterialStandingBook();
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
 
+    /**
+     *
+     * 功能描述: <br>
+     *  <粗集料台账>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/12/10 14:29
+     */
+    @ResponseBody
+    @RequestMapping("/getSevenDayCoarseStandingBook.do")
+    public String getSevenDayCoarseStandingBook(){
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.getSevenDayCoarseStandingBook();
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return res;
+    }
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询细集料台账>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/12/16 13:26
+     */
+    @ResponseBody
+    @RequestMapping("/getSevenDayFineStandingBook.do")
+    public String getSevenDayFineStandingBook(){
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.getSevenDayFineStandingBook();
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return res;
+    }
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询七日内矿粉信息>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/12/16 15:23
+     */
+    @ResponseBody
+    @RequestMapping("/getSevenDayBreezeStandingBook.do")
+    public String getSevenDayBreezeStandingBook(){
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.getSevenDayBreezeStandingBook();
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return res;
+    }
+
+    @ResponseBody
+    @RequestMapping("/getSevenDayAsphaltStandingBook.do")
+    public String getSevenDayAsphaltStandingBook(){
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.getSevenDayAsphaltStandingBook();
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return res;
+    }
     /**
      *
      * 功能描述: <br>
@@ -1430,10 +1844,35 @@ public class QualityController {
     @ResponseBody
     @RequestMapping(value = "/getRawMaterialStandingBookByDate.do",method = RequestMethod.POST)
     public String getRawMaterialStandingBookByDate(@RequestParam("startDate") String startDate,@RequestParam("endDate") String endDate){
-        String res = qualityExperimentalManagerInf.getRawMaterialStandingBookByDate(startDate,endDate);
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.getRawMaterialStandingBookByDate(startDate,endDate);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     };
 
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期、规格、厂家、材料查询台账信息>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/12/19 16:38
+     */
+    @ResponseBody
+    @RequestMapping(value = "/searchStandingBook.do",method = RequestMethod.POST)
+    public String searchStandingBook(@RequestParam("fromData") String fromData){
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.searchStandingBook(fromData);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
+        return res;
+    }
     /**
      *
      * 功能描述: <br>
@@ -1447,27 +1886,47 @@ public class QualityController {
     @ResponseBody
     @RequestMapping(value = "/getAsphaltStandingBook.do")
     public String getAsphaltStandingBook(){
-        String res = qualityExperimentalManagerInf.getAsphaltStandingBook();
+        String res = "";
+        try{
+            res =  qualityExperimentalManagerInf.getAsphaltStandingBook();
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
     @ResponseBody
     @RequestMapping(value = "/getAsphaltStandingBookByDate.do",method = RequestMethod.POST)
     public String getAsphaltStandingBookByDate(@RequestParam("startDate") String startDate,@RequestParam("endDate") String endDate){
-        String res = qualityExperimentalManagerInf.getAsphaltStandingBookByDate(startDate,endDate);
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.getAsphaltStandingBookByDate(startDate,endDate);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
 
     @ResponseBody
     @RequestMapping(value = "/getTestStandingBook.do")
     public String getTestStandingBook(){
-        String res = qualityExperimentalManagerInf.getTestStandingBook();
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.getTestStandingBook();
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
 
     @ResponseBody
     @RequestMapping(value = "/getTestStandingBookByDate.do",method = RequestMethod.POST)
     public String getTestStandingBookByDate(@RequestParam("startDate") String startDate,@RequestParam("endDate") String endDate){
-        String res = qualityExperimentalManagerInf.getTestStandingBookByDate(startDate,endDate);
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.getTestStandingBookByDate(startDate,endDate);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
 
@@ -1482,37 +1941,68 @@ public class QualityController {
     @ResponseBody
     @RequestMapping("/getSpecificationDataAndManufacturersData.do")
     public String getSpecificationDataAndManufacturersData(){
-        String res = qualityExperimentalManagerInf.getSpecificationDataAndManufacturersData();
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.getSpecificationDataAndManufacturersData();
+        }catch (Exception e) {
+            System.out.println(e);
+        }
+
         return res;
     }
     @ResponseBody
     @RequestMapping("/deleteSpecificationOrManufacturersById.do")
     public String deleteSpecificationOrManufacturersById(@RequestParam("id") String id,@RequestParam("make") String make){
-        String res = qualityExperimentalManagerInf.deleteSpecificationOrManufacturersById(id,make);
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.deleteSpecificationOrManufacturersById(id,make);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
     @ResponseBody
     @RequestMapping(value = "/sendSpecificationFrom.do",method = RequestMethod.POST)
     public String sendSpecificationFrom(@RequestParam("specificationName") String specificationName){
-        String res = qualityExperimentalManagerInf.insertSpecificationFrom(specificationName);
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.insertSpecificationFrom(specificationName);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
     @ResponseBody
     @RequestMapping(value = "/sendManufacturersFrom.do",method = RequestMethod.POST)
     public String sendManufacturersFrom(@RequestParam("manufacturersName") String manufacturersName){
-        String res = qualityExperimentalManagerInf.insertManufacturersFrom(manufacturersName);
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.insertManufacturersFrom(manufacturersName);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
     @ResponseBody
     @RequestMapping(value = "/getSpecificationOrManufacturersById.do",method = RequestMethod.POST)
     public String getSpecificationOrManufacturersById(@RequestParam("id") String id,@RequestParam("make") String make){
-        String res = qualityExperimentalManagerInf.getSpecificationOrManufacturersById(id,make);
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.getSpecificationOrManufacturersById(id,make);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
     @ResponseBody
     @RequestMapping(value = "/updateSpecificationOrManufacturersById.do",method = RequestMethod.POST)
     public String updateSpecificationOrManufacturersById(@RequestParam("id") String id,@RequestParam("make") String make,@RequestParam("updateName") String updateName){
-        String res = qualityExperimentalManagerInf.updateSpecificationOrManufacturersById(id,make,updateName);
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.updateSpecificationOrManufacturersById(id,make,updateName);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
      /********************************  设置相关 end *****************************************/
@@ -1548,7 +2038,12 @@ public class QualityController {
     @ResponseBody
     @RequestMapping("/getAllSamplingPageForeign.do")
     public String getAllSamplingPageForeign(){
-        String res = QualityExperimentalManagerForeignInf.getAllSamplingPage();
+        String res = "";
+        try{
+            res = QualityExperimentalManagerForeignInf.getAllSamplingPage();
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
 
@@ -1564,7 +2059,12 @@ public class QualityController {
     @ResponseBody
     @RequestMapping("/getSamplingPageFromDataForeign.do")
     public String getSamplingPageFromDataForeign(){
-        String res = QualityExperimentalManagerForeignInf.getSamplingPageFromData();
+        String res = "";
+        try{
+            res = QualityExperimentalManagerForeignInf.getSamplingPageFromData();
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     };
 
@@ -1580,7 +2080,12 @@ public class QualityController {
     @ResponseBody
     @RequestMapping(value = "/addSampleForeign.do",method = RequestMethod.POST)
     public String addSampleForeign(String materials,String manufacturers,String specification,String tunnage,String creat_time,String remark ){
-        String res =  QualityExperimentalManagerForeignInf.addSample(materials,manufacturers,specification,tunnage,creat_time,remark);
+        String res = "";
+        try{
+            res =  QualityExperimentalManagerForeignInf.addSample(materials,manufacturers,specification,tunnage,creat_time,remark);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     };
 
@@ -1596,21 +2101,37 @@ public class QualityController {
     @ResponseBody
     @RequestMapping(value = "/removeSampleByIdForeign.do",method = RequestMethod.POST)
     public String removeSampleByIdForeign(@RequestParam("id") String id){
-        String res = QualityExperimentalManagerForeignInf.removeSampleById(id);
+        String res = "";
+        try{
+            res = QualityExperimentalManagerForeignInf.removeSampleById(id);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
 
     @ResponseBody
     @RequestMapping(value = "/confirmCompletedByIdForeign.do",method = RequestMethod.POST)
     public String confirmCompletedByIdForeign(@RequestParam("id") String id){
-        String res = QualityExperimentalManagerForeignInf.confirmCompletedById(id);
+        String res = "";
+        try{
+            res = QualityExperimentalManagerForeignInf.confirmCompletedById(id);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
+
         return res;
     }
 
     @ResponseBody
     @RequestMapping(value = "/getSampleStatusByIdForeign.do",method = RequestMethod.POST)
     public String getSampleStatusByIdForeign(@RequestParam("id") String id){
-        String res = QualityExperimentalManagerForeignInf.getSampleStatusById(id);
+        String res = "";
+        try{
+            res = QualityExperimentalManagerForeignInf.getSampleStatusById(id);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
 
@@ -1624,14 +2145,24 @@ public class QualityController {
     @ResponseBody
     @RequestMapping(value = "/getAllexperimentalForeign.do")
     public String getAllexperimentalForeign(){
-        String res =  QualityExperimentalManagerForeignInf.getAllexperimental();
+        String res = "";
+        try{
+            res =  QualityExperimentalManagerForeignInf.getAllexperimental();
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
 
     @ResponseBody
     @RequestMapping(value = "/getExperimentalMessageByIdForeign.do",method = RequestMethod.POST)
     public String getExperimentalMessageByIdForeign(@RequestParam("id") String id){
-        String res = QualityExperimentalManagerForeignInf.getExperimentalMessageById(id);
+        String res = "";
+        try{
+            res = QualityExperimentalManagerForeignInf.getExperimentalMessageById(id);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
     /**
@@ -1646,25 +2177,46 @@ public class QualityController {
     @ResponseBody
     @RequestMapping(value = "/getExperimentalItemByOrderNumForeign.do",method = RequestMethod.POST)
     public String getExperimentalItemByOrderNumForeign(@RequestParam("orderNum") String orderNum){
-        String res = QualityExperimentalManagerForeignInf.getExperimentalItemByOrderNum(orderNum);
+        String res = "";
+        try{
+            res = QualityExperimentalManagerForeignInf.getExperimentalItemByOrderNum(orderNum);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
+
         return res;
     }
     @ResponseBody
     @RequestMapping(value ="/getExperimentalItemByIdForeign.do",method = RequestMethod.POST)
     public String getExperimentalItemByIdForeign(@RequestParam("id") String id){
-        String res = QualityExperimentalManagerForeignInf.getExperimentalItemById(id);
+        String res = "";
+        try{
+            res = QualityExperimentalManagerForeignInf.getExperimentalItemById(id);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
     @ResponseBody
     @RequestMapping(value = "/addExperimentalItemByOrderTicketNumForeign.do",method = RequestMethod.POST)
     public String addExperimentalItemByOrderTicketNumForeign(@RequestParam("orderTicketNum") String orderTicketNum,@RequestParam("experimentalItemId") String experimentalItemId){
-        String res = QualityExperimentalManagerForeignInf.addExperimentalItemByOrderTicketNum(orderTicketNum,experimentalItemId);
+        String res = "";
+        try{
+          res = QualityExperimentalManagerForeignInf.addExperimentalItemByOrderTicketNum(orderTicketNum,experimentalItemId);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
     @ResponseBody
     @RequestMapping(value = "/getExperimentalItemCountForeign.do",method = RequestMethod.POST)
     public String getExperimentalItemCountForeign(@RequestParam("orderTicketNum") String orderTicketNum){
-        String res = QualityExperimentalManagerForeignInf.getExperimentalItemCount(orderTicketNum);
+        String res = "";
+        try{
+            res = QualityExperimentalManagerForeignInf.getExperimentalItemCount(orderTicketNum);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
     /********************************  实验管理 end *****************************************/
@@ -1678,7 +2230,12 @@ public class QualityController {
     @ResponseBody
     @RequestMapping("/getAllExperimentalItemForeign.do")
     public String getAllExperimentalItemForeign(){
-        String res = QualityExperimentalManagerForeignInf.getAllExperimentalItem();
+        String res = "";
+        try{
+            res = QualityExperimentalManagerForeignInf.getAllExperimentalItem();
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
 
@@ -1692,21 +2249,36 @@ public class QualityController {
     @ResponseBody
     @RequestMapping("/getExperimentalItemMsgByIdForeign.do")
     public String getExperimentalItemMsgByIdForeign(@RequestParam("id") String id){
-        String msg = QualityExperimentalManagerForeignInf.getExperimentalItemMsgById(id);
-        return msg;
+        String res = "";
+        try{
+            res = QualityExperimentalManagerForeignInf.getExperimentalItemMsgById(id);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
+        return res;
     }
 
     @ResponseBody
     @RequestMapping("/getExperimentalItemListByIdForeign.do")
     public String getExperimentalItemListByIdForeign(@RequestParam("id") String id){
-        String res = QualityExperimentalManagerForeignInf.getExperimentalItemNumList(id);
+        String res = "";
+        try{
+            res = QualityExperimentalManagerForeignInf.getExperimentalItemNumList(id);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
 
     @ResponseBody
     @RequestMapping(value = "/sendFromDataForeign.do",method = RequestMethod.POST)
     public String sendFromDataForeign(@RequestParam("fromJson") String fromJson,@RequestParam("firstTest") String firstTest,@RequestParam("coarseTest") String coarseTest){
-        String res = QualityExperimentalManagerForeignInf.addExperimentalMsgAndItem(fromJson,firstTest,coarseTest);
+        String res = "";
+        try{
+            res = QualityExperimentalManagerForeignInf.addExperimentalMsgAndItem(fromJson,firstTest,coarseTest);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
 
@@ -1718,19 +2290,34 @@ public class QualityController {
     @ResponseBody
     @RequestMapping(value = "/getExperimentalProjectMessageForeign.do",method = RequestMethod.POST)
     public String getExperimentalProjectMessageForeign(@RequestParam("id") String  id){
-        String res = QualityExperimentalManagerForeignInf.getExperimentalProjectMessage(id);
+        String res = "";
+        try{
+            res = QualityExperimentalManagerForeignInf.getExperimentalProjectMessage(id);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
     @ResponseBody
     @RequestMapping(value = "/showExperimentalProjectItemForeign.do",method = RequestMethod.POST)
     public String showExperimentalProjectItemForeign(@RequestParam("tableName") String tableName,@RequestParam("experiment_num") String experiment_num){
-        String res = QualityExperimentalManagerForeignInf.getExperimentalProjectItem(tableName,experiment_num);
+        String res = "";
+        try{
+            res = QualityExperimentalManagerForeignInf.getExperimentalProjectItem(tableName,experiment_num);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
     @ResponseBody
     @RequestMapping(value = "/removeExperimentalItemByIdForeign.do",method = RequestMethod.POST)
     public String removeExperimentalItemByIdForeign(@RequestParam("id") String id){
-        String res = QualityExperimentalManagerForeignInf.removeExperimentalItemById(id);
+        String res = "";
+        try{
+            res = QualityExperimentalManagerForeignInf.removeExperimentalItemById(id);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
     /********************************  未完实验 end *****************************************/
@@ -1763,7 +2350,12 @@ public class QualityController {
     @ResponseBody
     @RequestMapping("/getSevenDayRawMaterialStandingBookForeign.do")
     public String getSevenDayRawMaterialStandingBookForeign(){
-        String res = QualityExperimentalManagerForeignInf.getSevenDayRawMaterialStandingBook();
+        String res = "";
+        try{
+            res = QualityExperimentalManagerForeignInf.getSevenDayRawMaterialStandingBook();
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
 
@@ -1779,7 +2371,12 @@ public class QualityController {
     @ResponseBody
     @RequestMapping(value = "/getRawMaterialStandingBookByDateForeign.do",method = RequestMethod.POST)
     public String getRawMaterialStandingBookByDateForeign(@RequestParam("startDate") String startDate,@RequestParam("endDate") String endDate){
-        String res = QualityExperimentalManagerForeignInf.getRawMaterialStandingBookByDate(startDate,endDate);
+        String res = "";
+        try{
+            res = QualityExperimentalManagerForeignInf.getRawMaterialStandingBookByDate(startDate,endDate);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     };
 
@@ -1796,27 +2393,47 @@ public class QualityController {
     @ResponseBody
     @RequestMapping(value = "/getAsphaltStandingBookForeign.do")
     public String getAsphaltStandingBookForeign(){
-        String res = QualityExperimentalManagerForeignInf.getAsphaltStandingBook();
+        String res = "";
+        try{
+            res = QualityExperimentalManagerForeignInf.getAsphaltStandingBook();
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
     @ResponseBody
     @RequestMapping(value = "/getAsphaltStandingBookByDateForeign.do",method = RequestMethod.POST)
     public String getAsphaltStandingBookByDateForeign(@RequestParam("startDate") String startDate,@RequestParam("endDate") String endDate){
-        String res = QualityExperimentalManagerForeignInf.getAsphaltStandingBookByDate(startDate,endDate);
+        String res = "";
+        try{
+            res = QualityExperimentalManagerForeignInf.getAsphaltStandingBookByDate(startDate,endDate);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
 
     @ResponseBody
     @RequestMapping(value = "/getTestStandingBookForeign.do")
     public String getTestStandingBookForeign(){
-        String res = QualityExperimentalManagerForeignInf.getTestStandingBook();
+        String res = "";
+        try{
+            res = QualityExperimentalManagerForeignInf.getTestStandingBook();
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
 
     @ResponseBody
     @RequestMapping(value = "/getTestStandingBookByDateForeign.do",method = RequestMethod.POST)
     public String getTestStandingBookByDateForeign(@RequestParam("startDate") String startDate,@RequestParam("endDate") String endDate){
-        String res = QualityExperimentalManagerForeignInf.getTestStandingBookByDate(startDate,endDate);
+        String res = "";
+        try{
+            res = QualityExperimentalManagerForeignInf.getTestStandingBookByDate(startDate,endDate);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
 
@@ -1831,37 +2448,67 @@ public class QualityController {
     @ResponseBody
     @RequestMapping("/getSpecificationDataAndManufacturersDataForeign.do")
     public String getSpecificationDataAndManufacturersDataForeign(){
-        String res = QualityExperimentalManagerForeignInf.getSpecificationDataAndManufacturersData();
+        String res = "";
+        try{
+            res = QualityExperimentalManagerForeignInf.getSpecificationDataAndManufacturersData();
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
     @ResponseBody
     @RequestMapping("/deleteSpecificationOrManufacturersByIdForeign.do")
     public String deleteSpecificationOrManufacturersByIdForeign(@RequestParam("id") String id,@RequestParam("make") String make){
-        String res = QualityExperimentalManagerForeignInf.deleteSpecificationOrManufacturersById(id,make);
+        String res = "";
+        try{
+            res = QualityExperimentalManagerForeignInf.deleteSpecificationOrManufacturersById(id,make);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
     @ResponseBody
     @RequestMapping(value = "/sendSpecificationFromForeign.do",method = RequestMethod.POST)
     public String sendSpecificationFromForeign(@RequestParam("specificationName") String specificationName){
-        String res = QualityExperimentalManagerForeignInf.insertSpecificationFrom(specificationName);
+        String res = "";
+        try{
+            res = QualityExperimentalManagerForeignInf.insertSpecificationFrom(specificationName);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
     @ResponseBody
     @RequestMapping(value = "/sendManufacturersFromForeign.do",method = RequestMethod.POST)
     public String sendManufacturersFromForeign(@RequestParam("manufacturersName") String manufacturersName){
-        String res = QualityExperimentalManagerForeignInf.insertManufacturersFrom(manufacturersName);
+        String res = "";
+        try{
+            res = QualityExperimentalManagerForeignInf.insertManufacturersFrom(manufacturersName);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
     @ResponseBody
     @RequestMapping(value = "/getSpecificationOrManufacturersByIdForeign.do",method = RequestMethod.POST)
     public String getSpecificationOrManufacturersByIdForeign(@RequestParam("id") String id,@RequestParam("make") String make){
-        String res = QualityExperimentalManagerForeignInf.getSpecificationOrManufacturersById(id,make);
+        String res = "";
+        try{
+            res = QualityExperimentalManagerForeignInf.getSpecificationOrManufacturersById(id,make);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
     @ResponseBody
     @RequestMapping(value = "/updateSpecificationOrManufacturersByIdForeign.do",method = RequestMethod.POST)
     public String updateSpecificationOrManufacturersByIdForeign(@RequestParam("id") String id,@RequestParam("make") String make,@RequestParam("updateName") String updateName){
-        String res = QualityExperimentalManagerForeignInf.updateSpecificationOrManufacturersById(id,make,updateName);
+        String res = "";
+        try{
+            res = QualityExperimentalManagerForeignInf.updateSpecificationOrManufacturersById(id,make,updateName);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
     /********************************  设置相关 end *****getExperimentalProjectMessage************************************/
@@ -1876,20 +2523,35 @@ public class QualityController {
     @ResponseBody
     @RequestMapping("/getAllCriticalWarning.do")
     public String getAllCriticalWarning(){
-        String res = qualityDataSummaryInf.getAllCriticalWarning();
+        String res = "";
+        try{
+            res = qualityDataSummaryInf.getAllCriticalWarning();
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
     @ResponseBody
     @RequestMapping(value = "/getAllCriticalWarningByDate.do",method = RequestMethod.POST)
     public String getAllCriticalWarningByDate(@RequestParam("startDate") String startDate,@RequestParam("endDate") String endDate){
-        String res = qualityDataSummaryInf.getAllCriticalWarningByDate(startDate,endDate);
+        String res = "";
+        try{
+            res = qualityDataSummaryInf.getAllCriticalWarningByDate(startDate,endDate);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
 
     @RequestMapping("/getCeiticalWarning.do")
     public String getCeiticalWarning(HttpServletRequest request,@RequestParam("proDate") String proDate,@RequestParam("produceDisc") String produceDisc,@RequestParam("crewNum") String crewNum){
-        Map<String,Object> map = qualityDataSummaryInf.getCeiticalWarning(proDate,produceDisc,crewNum);
-        request.setAttribute("product",map);
+        try{
+            Map<String,Object> map = qualityDataSummaryInf.getCeiticalWarning(proDate,produceDisc,crewNum);
+            request.setAttribute("product",map);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
+
         return "quality/qc_dm_data_detail";
     }
     /********************************  关键预警数据 End *****************************************/
@@ -1911,8 +2573,12 @@ public class QualityController {
         if (startDate.isEmpty() || crew.isEmpty()) {
             return null;
         }
-        List<Map<String,Object>> res = qualityDataSummaryInf.mobileGetRatioListByDate(startDate,crew);
-
+        List<Map<String,Object>> res = new ArrayList<>();
+        try{
+            res = qualityDataSummaryInf.mobileGetRatioListByDate(startDate,crew);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return  JSON.toJSONString(res);
     }
 
@@ -1929,7 +2595,12 @@ public class QualityController {
     @RequestMapping(value = "/getMobilePromessage.do",method = RequestMethod.POST)
     public String getMobilePromessageByRaionModel(String startDate,  String crew, String rationId){
 
-        List<Map<String,Object>> list =  qualityDataSummaryInf.getMobilePromessageByRaionModel(startDate,crew,rationId);
+        List<Map<String,Object>> list = new ArrayList<>();
+        try{
+            list =  qualityDataSummaryInf.getMobilePromessageByRaionModel(startDate,crew,rationId);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
 
         return JSON.toJSONString(list);
     }
@@ -1948,18 +2619,23 @@ public class QualityController {
     public String getMobileProductMessage( String id,String crewNum){
 
         if (id.isEmpty()) return "";
+        Map<String,Object> map = new HashMap<>();
 
-        Map<String,Object> map =  qualityDataManagerInf.selectProductMessageById(id,crewNum);
-        String res = qualityDataManagerInf.selectEchartsDataById(id,crewNum);
-        //json处理
-        String modelMessage = JSON.toJSONString(map.get("modelMessage"));
-        String proBase = JSON.toJSONString(map.get("proBase"));
-        String proMessage = JSON.toJSONString(map.get("proMessage"));
+        try{
+            map =  qualityDataManagerInf.selectProductMessageById(id,crewNum);
+            String res = qualityDataManagerInf.selectEchartsDataById(id,crewNum);
+            //json处理
+            String modelMessage = JSON.toJSONString(map.get("modelMessage"));
+            String proBase = JSON.toJSONString(map.get("proBase"));
+            String proMessage = JSON.toJSONString(map.get("proMessage"));
 
-        map.put("modelMessage",modelMessage);
-        map.put("proBase",proBase);
-        map.put("proMessage",proMessage);
-        map.put("echarts",res);
+            map.put("modelMessage",modelMessage);
+            map.put("proBase",proBase);
+            map.put("proMessage",proMessage);
+            map.put("echarts",res);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
 
         return JSON.toJSONString(map);
     }
@@ -1980,7 +2656,12 @@ public class QualityController {
 
     public String getYesterdayProduct(){
 
-        List<Map<String,Object>> res = qualityDataSummaryInf.mobileGetYesterdayProduct();
+        List<Map<String,Object>> res = new ArrayList<>();
+        try{
+            res = qualityDataSummaryInf.mobileGetYesterdayProduct();
+        }catch (Exception e) {
+            System.out.println(e);
+        }
 
         return  JSON.toJSONString(res);
     }
@@ -1989,27 +2670,35 @@ public class QualityController {
     @ResponseBody
     @RequestMapping(value = "/getYesterdayCriticalWarning.do")
     public String getYesterdayCriticalWarning(){
-        String res = qualityDataSummaryInf.getAllCriticalWarning();
+        String res = "";
+        try{
+            res = qualityDataSummaryInf.getAllCriticalWarning();
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
 
     @ResponseBody
     @RequestMapping(value = "/getMobileWarningMessage.do",method = RequestMethod.POST)
     public String getMobileWarningMessage(String crewNum,String produceDate,String produceTime){
+        Map<String,Object> map = new HashMap<>();
+        try{
+            map =  qualityDataManagerInf.selectWarningMessageById(crewNum,produceDate,produceTime);
+            Map<String,String> pro = (Map<String,String>) map.get("proBase");
+            String res = qualityDataManagerInf.selectEchartsDataById(String.valueOf(pro.get("Id")),crewNum);
+            //json处理
+            String modelMessage = JSON.toJSONString(map.get("modelMessage"));
+            String proBase = JSON.toJSONString(map.get("proBase"));
+            String proMessage = JSON.toJSONString(map.get("proMessage"));
 
-        Map<String,Object> map =  qualityDataManagerInf.selectWarningMessageById(crewNum,produceDate,produceTime);
-        Map<String,String> pro = (Map<String,String>) map.get("proBase");
-        String res = qualityDataManagerInf.selectEchartsDataById(String.valueOf(pro.get("Id")),crewNum);
-        //json处理
-        String modelMessage = JSON.toJSONString(map.get("modelMessage"));
-        String proBase = JSON.toJSONString(map.get("proBase"));
-        String proMessage = JSON.toJSONString(map.get("proMessage"));
-
-        map.put("modelMessage",modelMessage);
-        map.put("proBase",proBase);
-        map.put("proMessage",proMessage);
-        map.put("echarts",res);
-
+            map.put("modelMessage",modelMessage);
+            map.put("proBase",proBase);
+            map.put("proMessage",proMessage);
+            map.put("echarts",res);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return JSON.toJSONString(map);
 
     }
@@ -2017,7 +2706,12 @@ public class QualityController {
     @ResponseBody
     @RequestMapping(value = "/getMobileWarningDataByDate.do",method = RequestMethod.POST)
     public String getMobileWarningDataByDate(  String startDate, String crew ){
-        String res = qualityDataSummaryInf.getWarningDataByDate(crew,startDate);
+        String res = "";
+        try{
+            res = qualityDataSummaryInf.getWarningDataByDate(crew,startDate);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
 
@@ -2033,7 +2727,12 @@ public class QualityController {
     @ResponseBody
     @RequestMapping("/getMobileUnfinishedExperimental.do")
     public String getMobileUnfinishedExperimental(){
-        String res = qualityExperimentalManagerInf.getMobileUnfinishedExperimental();
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.getMobileUnfinishedExperimental();
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
 
@@ -2049,7 +2748,12 @@ public class QualityController {
     @ResponseBody
     @RequestMapping("/getLastWeekExperimentHistory.do")
     public String getLastWeekExperimentHistory(){
-        String res = qualityExperimentalManagerInf.getLastWeekExperimentHistory();
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.getLastWeekExperimentHistory();
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
 
@@ -2065,7 +2769,12 @@ public class QualityController {
     @ResponseBody
     @RequestMapping("/getMobileExperimentByDate.do")
     public String getMobileExperimentByDate(String startDate){
-        String res = qualityExperimentalManagerInf.getMobileExperimentByDate(startDate);
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.getMobileExperimentByDate(startDate);
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         return res;
     }
     /*********************************移动端数据管理end***************************************/
