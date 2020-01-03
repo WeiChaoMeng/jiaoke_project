@@ -33,12 +33,12 @@ import org.apache.logging.log4j.util.Strings;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.annotation.SessionScope;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -1435,15 +1435,15 @@ public class QualityController {
      * @param coarseTest coarseTest
      * @return res
      */
+
     @ResponseBody
     @RequestMapping(value = "/sendFromData.do",method = RequestMethod.POST)
+    @Transactional(rollbackFor=Exception.class)
     public String sendFromData(@RequestParam("fromJson") String fromJson,@RequestParam("firstTest") String firstTest,@RequestParam("coarseTest") String coarseTest){
         String res = "";
-        try{
-            res = qualityExperimentalManagerInf.addExperimentalMsgAndItem(fromJson,firstTest,coarseTest);
-        }catch (Exception e) {
-            System.out.println(e.fillInStackTrace());
-        }
+
+        res = qualityExperimentalManagerInf.addExperimentalMsgAndItem(fromJson,firstTest,coarseTest);
+
         return res;
     }
 

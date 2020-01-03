@@ -623,14 +623,8 @@ function rockAsphalt(msg){
                 + '<td><input type="text" class="td_input" name="rock_method" value="" /></td>'
                 + '</tr>';
             firstTbody += temHtml;
-        }else if(msg[i]['remake'] === "rock_MD"){
+        }else if(msg[i]['remake'] === "rock_MTJMD"){
             temHtml = '<tr>'
-                + '<td><input type="text" class="td_input" name="rock_name"  value="表观密度" readonly="readonly" /></td>'
-                + '<td><input type="text" class="td_input" name="rock_requirements" value="'+ msg[i]['unit'] +'" /></td>'
-                + '<td colspan="3"><input type="text" class="td_input" name="rock_result" value="11.0" /></td>'
-                + '<td><input type="text" class="td_input" name="rock_method" value="'+ msg[i]['method'] +'" /></td>'
-                + '</tr>'
-                + '<tr>'
                 + '<td><input type="text" class="td_input" name="rock_name"  value="毛体积密度" readonly="readonly" /></td>'
                 + '<td><input type="text" class="td_input" name="rock_requirements" value="'+ msg[i]['unit'] +'" /></td>'
                 + '<td colspan="3"><input type="text" class="td_input" name="rock_result" value="11.0" /></td>'

@@ -82,7 +82,7 @@
         FROM
              quality_test_order_ticket
         WHERE
-                date_format(creat_time,'%Y')  = '2019'
+                date_format(creat_time,'%Y')  = #{date}
         ORDER BY id DESC
         LIMIT 1
     </select>
