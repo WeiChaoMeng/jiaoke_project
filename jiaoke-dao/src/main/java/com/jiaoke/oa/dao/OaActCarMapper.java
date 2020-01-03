@@ -1,7 +1,6 @@
 package com.jiaoke.oa.dao;
 
 import com.jiaoke.oa.bean.OaActCar;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -13,14 +12,4 @@ import tk.mybatis.mapper.common.Mapper;
  * @date 2019/1/16 11:08
  */
 @Repository
-public interface OaActCarMapper extends Mapper<OaActCar> {
-
-    /**
-     * 更新状态
-     *
-     * @param id    id
-     * @param state state
-     * @return int
-     */
-    int updateStateById(@Param("id") String id, @Param("state") Integer state);
-}
+public interface OaActCarMapper extends Mapper<OaActCar> {}

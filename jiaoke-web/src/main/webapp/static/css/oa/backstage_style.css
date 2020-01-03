@@ -145,7 +145,6 @@
     display: inline-block;
 }
 
-
 .description-text {
     resize: none;
     width: 100%;
@@ -156,8 +155,102 @@
     outline: none;
 }
 
-.personnel-span-right{
+.personnel-span-right {
     width: 70px;
     text-align: right;
     display: inline-block;
+}
+
+/*修改密码*/
+.psw-new-style {
+    margin-top: 25px;
+    float: left;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.psw-new-name {
+    float: left;
+    display: block;
+    padding: 9px 15px;
+    width: 80px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: right;
+}
+
+.psw-new-input {
+    height: 38px;
+    line-height: 1.3;
+    background-color: #fff;
+    border-radius: 2px;
+    padding-left: 10px;
+    width: 100%;
+    border: 1px solid #cecccc;
+}
+
+.psw-new-tips {
+    color: #797979;
+    display: block;
+    font-size: 10px;
+    margin-top: 5px;
+    text-indent: 5px;
+    min-height: 13px;
+}
+
+.paw-confirm-style {
+    float: left;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.paw-confirm-name {
+    float: left;
+    display: block;
+    padding: 9px 15px;
+    width: 80px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: right;
+}
+
+.paw-confirm-input {
+    height: 38px;
+    line-height: 1.3;
+    background-color: #fff;
+    border-radius: 2px;
+    padding-left: 10px;
+    width: 100%;
+    border: 1px solid #cecccc;
+}
+
+.paw-confirm-tips {
+    color: #797979;
+    display: block;
+    font-size: 10px;
+    margin-top: 5px;
+    text-indent: 5px;
+    min-height: 13px
+}
+
+.confirm-modify-psw-style {
+    float: left;
+    width: 100%;
+    text-align: center
+}
+
+.confirm-modify-psw {
+    outline: none;
+    display: inline-block;
+    height: 38px;
+    line-height: 38px;
+    padding: 0 18px;
+    background-color: #2196F3;
+    color: #fff;
+    white-space: nowrap;
+    text-align: center;
+    font-size: 14px;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
 }

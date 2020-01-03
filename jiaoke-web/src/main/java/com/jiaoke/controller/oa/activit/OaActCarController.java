@@ -115,6 +115,7 @@ public class OaActCarController {
         //获取批注信息
         List<Comments> commentsList = activitiUtil.selectHistoryComment(activitiUtil.getTaskByTaskId(taskId).getProcessInstanceId());
         model.addAttribute("oaActCar", oaActCar);
+        model.addAttribute("oaActCarJson", JsonHelper.toJSONString(oaActCar));
         model.addAttribute("taskId", JsonHelper.toJSONString(taskId));
         model.addAttribute("commentsList", commentsList);
         model.addAttribute("commentsListLength", commentsList.size());
@@ -152,6 +153,8 @@ public class OaActCarController {
         String promoter = "promoter";
         //回退
         String back = "back";
+        //查表计数人
+        String lookup = "lookup";
         //部门负责人
         String principal = "principal";
         //部门主管领导
@@ -191,6 +194,10 @@ public class OaActCarController {
                         activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
                         return "success";
                         //部门负责人、部门主管领导
+                    } else if (lookup.equals(enforcer)) {
+                        UserInfo userInfo = userInfoService.getUserInfoByPermission("lookup");
+                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
+                        return "success";
                     } else if (principal.equals(enforcer) || supervisor.equals(enforcer)) {
                         String startUserId = activitiUtil.getStartUserId(task.getProcessInstanceId());
                         //根据发起者id获取所属部门id

@@ -6,7 +6,6 @@ import com.jiaoke.oa.bean.OaCollaboration;
 import com.jiaoke.oa.dao.OaActLaborContractStopMapper;
 import com.jiaoke.oa.dao.OaCollaborationMapper;
 import com.jiaoke.oa.dao.UserInfoMapper;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -33,13 +32,12 @@ public class OaActLaborContractStopServiceImpl implements OaActLaborContractStop
 
     @Override
     public int insert(OaActLaborContractStop oaActLaborContractStop, Integer userId, String randomId, Integer state) {
-//        oaActLaborContractStop.setStartDate(DateUtil.stringConvertYYYYMMDD(oaActLaborContractStop.getStartDateStr()));
-//        oaActLaborContractStop.setEndDate(DateUtil.stringConvertYYYYMMDD(oaActLaborContractStop.getEndDateStr()));
+        String notifier = userInfoMapper.getNicknameById(oaActLaborContractStop.getPromoter());
         oaActLaborContractStop.setId(randomId);
         oaActLaborContractStop.setCreateTime(new Date());
         oaActLaborContractStop.setPromoter(userId);
         oaActLaborContractStop.setUrl("laborContractStop");
-        if (oaActLaborContractStopMapper.insert(oaActLaborContractStop) < 0) {
+        if (oaActLaborContractStopMapper.insertSelective(oaActLaborContractStop) < 0) {
             return -1;
         } else {
             OaCollaboration oaCollaboration = new OaCollaboration();
@@ -48,6 +46,9 @@ public class OaActLaborContractStopServiceImpl implements OaActLaborContractStop
             oaCollaboration.setTitle(oaActLaborContractStop.getTitle());
             oaCollaboration.setUrl("laborContractStop");
             oaCollaboration.setTable("oa_act_labor_contract_stop");
+            oaCollaboration.setName("劳动合同终止通知书");
+            oaCollaboration.setDataOne("合同剩余天数：" + oaActLaborContractStop.getNumber());
+            oaCollaboration.setDataTwo("通知人：" + notifier);
             oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);
@@ -57,8 +58,6 @@ public class OaActLaborContractStopServiceImpl implements OaActLaborContractStop
 
     @Override
     public int edit(OaActLaborContractStop oaActLaborContractStop) {
-//        oaActLaborContractStop.setStartDate(DateUtil.stringConvertYYYYMMDD(oaActLaborContractStop.getStartDateStr()));
-//        oaActLaborContractStop.setEndDate(DateUtil.stringConvertYYYYMMDD(oaActLaborContractStop.getEndDateStr()));
         if (oaActLaborContractStopMapper.updateByPrimaryKeySelective(oaActLaborContractStop) < 0) {
             return -1;
         } else {
@@ -72,8 +71,7 @@ public class OaActLaborContractStopServiceImpl implements OaActLaborContractStop
         OaActLaborContractStop oaActLaborContractStop = oaActLaborContractStopMapper.selectByPrimaryKey(id);
         oaActLaborContractStop.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActLaborContractStop.getCreateTime()));
         oaActLaborContractStop.setPromoterStr(userInfoMapper.getNicknameById(oaActLaborContractStop.getPromoter()));
-//        oaActLaborContractStop.setStartDateStr(DateUtil.dateConvertYYYYMMDD(oaActLaborContractStop.getStartDate()));
-//        oaActLaborContractStop.setEndDateStr(DateUtil.dateConvertYYYYMMDD(oaActLaborContractStop.getEndDate()));
+        oaActLaborContractStop.setNotifiedPersonStr(userInfoMapper.getNicknameById(oaActLaborContractStop.getNotifiedPerson()));
         return oaActLaborContractStop;
     }
 
@@ -84,14 +82,7 @@ public class OaActLaborContractStopServiceImpl implements OaActLaborContractStop
     }
 
     @Override
-    public int updateAnnexes(String[] array, String id) {
-        OaActLaborContractStop oaActLaborContractStop = new OaActLaborContractStop();
-        oaActLaborContractStop.setId(id);
-        if (array != null) {
-            oaActLaborContractStop.setAnnex(StringUtils.join(array));
-        } else {
-            oaActLaborContractStop.setAnnex("");
-        }
+    public int updateByPrimaryKeySelective(OaActLaborContractStop oaActLaborContractStop) {
         return oaActLaborContractStopMapper.updateByPrimaryKeySelective(oaActLaborContractStop);
     }
 }

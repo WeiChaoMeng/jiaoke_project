@@ -1,3 +1,5 @@
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
 <%@ page language="java" contentType="text/html;charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -14,6 +16,11 @@
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
     <link href="../../../../static/js/date_pickers/date_picker.css" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
+    <style>
+        .tdLabel {
+            width: 10%;
+        }
+    </style>
 </head>
 
 <body id="body">
@@ -24,7 +31,6 @@
 
 <div class="top_toolbar" id="tool">
     <div class="top_toolbar_inside">
-
         <div class="head_left_button">
             <button type="button" class="cursor_hand" onclick="savePending()">&#xea97; 保存待发</button>
         </div>
@@ -41,22 +47,52 @@
             <button type="button" class="cursor_hand" onclick="printContent()">&#xea0e; 打印</button>
         </div>
     </div>
+
+    <%--附件列表--%>
+    <c:choose>
+        <c:when test="${oaActTransfer.annex != ''}">
+            <div class="top_toolbar" id="annexList" style="display: block;">
+                <div class="top-toolbar-annexes">
+
+                    <div class="annexes-icon">
+                        <button type="button" class="cursor_hand">&#xeac1; ：</button>
+                    </div>
+
+                    <div id="annexes">
+                        <c:forTokens items="${oaActTransfer.annex}" delims="," var="annex">
+                            <div id="file${fn:substring(annex,0,annex.indexOf("_"))}" class="table-file">
+                                <div class="table-file-content">
+                                    <a class="table-file-title" href="/fileDownloadHandle/download?fileName=${annex}"
+                                       title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}
+                                    </a>
+                                    <span class="delete-file" title="删除"
+                                          onclick="whether('${annex}')"></span>
+                                    <input type="hidden" value="${annex}">
+                                </div>
+                            </div>
+                        </c:forTokens>
+                    </div>
+
+                </div>
+            </div>
+        </c:when>
+        <c:otherwise>
+            <div class="top_toolbar" id="annexList" style="display: none;">
+                <div class="top-toolbar-annexes">
+
+                    <div class="annexes-icon">
+                        <button type="button" class="cursor_hand">&#xeac1; ：</button>
+                    </div>
+
+                    <div id="annexes"></div>
+
+                </div>
+            </div>
+        </c:otherwise>
+    </c:choose>
 </div>
 
-<%--附件列表--%>
-<div class="top_toolbar" id="annexList" style="display: none;">
-    <div class="top-toolbar-annexes">
-
-        <div class="annexes-icon">
-            <button type="button" class="cursor_hand">&#xeac1; ：</button>
-        </div>
-
-        <div id="annexes"></div>
-
-    </div>
-</div>
-
-<form id="transfer">
+<form id="oaActTransfer">
     <div class="form_area" id="titleArea" style="margin-bottom: 15px">
         <table>
             <tbody>
@@ -65,19 +101,19 @@
                     <button type="button" class="table-tab-send" onclick="send()">发送</button>
                 </td>
 
-                <th nowrap="nowrap" class="th_title" style="width: 4%">标题:</th>
-                <td style="width: 35%">
+                <th nowrap="nowrap" class="th_title" style="width: 4%">标题</th>
+                <td style="width: 20%">
                     <div class="common_input_frame">
                         <input type="text" id="title" name="title" placeholder="请输入标题" title="点击此处填写标题"
-                               value="${transfer.title}" autocomplete="off">
+                               value="${oaActTransfer.title}" autocomplete="off">
                     </div>
                 </td>
 
-                <th class="th_title" nowrap="nowrap" style="width: 4%">流程:</th>
+                <th class="th_title" nowrap="nowrap" style="width: 4%">流程</th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" placeholder="发起者部门负责人(审批)、发起者部门主管领导(审批)、组织人事部门(审批)、总经理(审批)、发起人(协同)"
-                               readonly="readonly">
+                        <input type="text" style="font-size: 11px" readonly
+                               placeholder="人事(审查),现部门负责人(审批),现部门主管领导(审批),转入部门负责人(审批),转入部门主管领导(审批),组织人事部(审批),总经理(审批),发起人、人事(协同)">
                     </div>
                 </td>
             </tr>
@@ -85,81 +121,95 @@
         </table>
     </div>
 
-    <span class="fill-in-date">填表日期：${transfer.createTimeStr}</span>
+    <input type="text" class="filling-date-content" name="fillingDate"
+           value="<%=new SimpleDateFormat("yyyy-MM-dd").format(new Date())%>" readonly>
+    <span class="filling-date">填表日期 </span>
 
     <table class="formTable">
         <tbody>
         <tr>
             <td class="tdLabel">姓名</td>
-            <td class="table-td-content">
-                <input type="text" class="formInput-readonly" name="name" value="${transfer.name}" readonly>
-                <input type="hidden" id="id" name="id" value="${transfer.id}">
+            <td class="table-td-content" colspan="2">
+                <input type="text" class="formInput-readonly" name="name" value="${oaActTransfer.name}" readonly>
+                <input type="hidden" id="id" name="id" value="${oaActTransfer.id}">
             </td>
 
             <td class="tdLabel">年龄</td>
-            <td class="table-td-content">
+            <td class="table-td-content" colspan="2">
                 <input type="text" class="formInput" name="age" oninput="value=value.replace(/^(0+)|[^\d]/g,'')"
-                       value="${transfer.age}" maxlength="2" autocomplete="off">
+                       value="${oaActTransfer.age}" maxlength="2" autocomplete="off">
             </td>
 
             <td class="tdLabel">入职时间</td>
             <td class="table-td-content">
-                    <input type="text" class="formInput entry-date" name="entryDateStr" value="${transfer.entryDateStr}" onfocus="this.blur()">
+                <input type="text" class="formInput entry-date" name="entryDate" value="${oaActTransfer.entryDate}"
+                       onfocus="this.blur()">
             </td>
         </tr>
 
         <tr>
+            <td class="tdLabel">现部门</td>
+            <td class="table-td-content">
+                <input type="text" class="formInput-readonly"  name="presentDepartment" value="${department}" readonly>
+            </td>
+
             <td class="tdLabel">现岗位</td>
-            <td colspan="2" class="table-td-content">
-                    <input type="text" class="formInput" name="presentPost" value="${transfer.presentPost}" autocomplete="off">
+            <td class="table-td-content" style="width: 15%">
+                <input type="text" class="formInput-readonly" name="presentPost" value="${job}" readonly>
+            </td>
+
+            <td class="tdLabel">拟转入部门</td>
+            <td class="table-td-content">
+                <input type="text" class="formInput" id="newDepartmentStr" value="${oaActTransfer.newDepartmentStr}" onclick="selectDepartment(1)" readonly>
+                <input type="hidden" name="newDepartment" id="newDepartment" value="${oaActTransfer.newDepartment}">
             </td>
 
             <td class="tdLabel">拟转入岗位</td>
-            <td colspan="2" class="table-td-content">
-                <input type="text" class="formInput" name="newPost" value="${transfer.newPost}" autocomplete="off">
+            <td class="table-td-content">
+                <input type="text" class="formInput" name="newPost" autocomplete="off" value="${oaActTransfer.newPost}">
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel">转岗事由</td>
-            <td colspan="5" class="table-td-evaluation">
-                <textarea class="evaluation-content" style="height: 90px" name="cause">${transfer.cause}</textarea>
+            <td colspan="7" class="table-td-evaluation">
+                <textarea class="evaluation-content" style="height: 73px" onkeyup="value=value.replace(/\s+/g,'')" name="cause">${oaActTransfer.cause}</textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
-                    <input class="approval-date-input" type="text" value="${transfer.createTimeStr}" disabled>
+                    <label class="approval-date-label">日期 </label>
+                    <input class="approval-date-input" type="text" value="${oaActTransfer.createTimeStr}" disabled>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">本人签字:</label>
-                    <input class="approval-signature-input" type="text" value="${transfer.promoterStr}" disabled>
+                    <label class="approval-signature-label">本人签字 </label>
+                    <input class="approval-signature-input" type="text" value="${oaActTransfer.promoterStr}" disabled>
                 </div>
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel">所在部门评价</td>
-            <td colspan="5" class="table-td-textarea" style="line-height: 0">
+            <td colspan="7" class="table-td-textarea" style="line-height: 0">
                 <div class="opinion-principal">
-                    <label class="opinion-principal-title">部长：</label>
-                    <textarea class="opinion-column-Juxtaposition" name="remarks" disabled></textarea>
+                    <label class="opinion-principal-title">部长</label>
+                    <textarea class="opinion-column-Juxtaposition" disabled></textarea>
                     <div class="approval-date">
-                        <label class="approval-date-label">日期:</label>
+                        <label class="approval-date-label">日期 </label>
                         <input class="approval-date-input" type="text" disabled>
                     </div>
                     <div class="approval-signature">
-                        <label class="approval-signature-label">签字:</label>
+                        <label class="approval-signature-label">签字 </label>
                         <input class="approval-signature-input" type="text" disabled>
                     </div>
                 </div>
 
                 <div class="opinion-supervisor">
-                    <label class="opinion-principal-title">主管：</label>
-                    <textarea class="opinion-column-Juxtaposition" name="remarks" disabled></textarea>
+                    <label class="opinion-principal-title">主管</label>
+                    <textarea class="opinion-column-Juxtaposition" disabled></textarea>
                     <div class="approval-date">
-                        <label class="approval-date-label">日期:</label>
+                        <label class="approval-date-label">日期 </label>
                         <input class="approval-date-input" type="text" disabled>
                     </div>
                     <div class="approval-signature">
-                        <label class="approval-signature-label">签字:</label>
+                        <label class="approval-signature-label">签字 </label>
                         <input class="approval-signature-input" type="text" disabled>
                     </div>
                 </div>
@@ -168,29 +218,29 @@
 
         <tr>
             <td class="tdLabel">转入部门意见</td>
-            <td colspan="5" class="table-td-textarea" style="line-height: 0">
+            <td colspan="7" class="table-td-textarea" style="line-height: 0">
                 <div class="opinion-principal">
-                    <label class="opinion-principal-title">部长：</label>
-                    <textarea class="opinion-column-Juxtaposition" name="remarks" disabled></textarea>
+                    <label class="opinion-principal-title">部长</label>
+                    <textarea class="opinion-column-Juxtaposition" disabled></textarea>
                     <div class="approval-date">
-                        <label class="approval-date-label">日期:</label>
+                        <label class="approval-date-label">日期 </label>
                         <input class="approval-date-input" type="text" disabled>
                     </div>
                     <div class="approval-signature">
-                        <label class="approval-signature-label">签字:</label>
+                        <label class="approval-signature-label">签字 </label>
                         <input class="approval-signature-input" type="text" disabled>
                     </div>
                 </div>
 
                 <div class="opinion-supervisor">
-                    <label class="opinion-principal-title">主管：</label>
-                    <textarea class="opinion-column-Juxtaposition" name="remarks" disabled></textarea>
+                    <label class="opinion-principal-title">主管</label>
+                    <textarea class="opinion-column-Juxtaposition" disabled></textarea>
                     <div class="approval-date">
-                        <label class="approval-date-label">日期:</label>
+                        <label class="approval-date-label">日期 </label>
                         <input class="approval-date-input" type="text" disabled>
                     </div>
                     <div class="approval-signature">
-                        <label class="approval-signature-label">签字:</label>
+                        <label class="approval-signature-label">签字 </label>
                         <input class="approval-signature-input" type="text" disabled>
                     </div>
                 </div>
@@ -199,14 +249,14 @@
 
         <tr>
             <td class="tdLabel">组织人事部意见</td>
-            <td colspan="5" class="approval-content">
+            <td colspan="7" class="approval-content">
                 <textarea class="approval-content-textarea" disabled></textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
+                    <label class="approval-date-label">日期 </label>
                     <input class="approval-date-input" type="text" disabled>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">签字:</label>
+                    <label class="approval-signature-label">签字 </label>
                     <input class="approval-signature-input" type="text" disabled>
                 </div>
             </td>
@@ -214,14 +264,14 @@
 
         <tr>
             <td class="tdLabel">总经理审批</td>
-            <td colspan="5" class="approval-content">
+            <td colspan="7" class="approval-content">
                 <textarea class="approval-content-textarea" disabled></textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
+                    <label class="approval-date-label">日期 </label>
                     <input class="approval-date-input" type="text" disabled>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">签字:</label>
+                    <label class="approval-signature-label">签字 </label>
                     <input class="approval-signature-input" type="text" disabled>
                 </div>
             </td>
@@ -251,6 +301,22 @@
         zIndex: 100000,
     });
 
+    //部门选择
+    function selectDepartment(flag) {
+        var departmentList = JSON.parse('${departmentList}');
+        window.top.selectionDepartment(departmentList, flag);
+    }
+
+    function selectDepartmentComplete(id, name, flag) {
+        if (flag === "0") {
+            $('#presentDepartment').val(id);
+            $('#presentDepartmentStr').val(name);
+        }else{
+            $('#newDepartment').val(id);
+            $('#newDepartmentStr').val(name);
+        }
+    }
+
     //发送
     function send() {
         var array = [];
@@ -267,7 +333,7 @@
             $.ajax({
                 type: "POST",
                 url: '${path}/transfer/editAdd',
-                data: $('#transfer').serialize(),
+                data: $('#oaActTransfer').serialize(),
                 error: function (request) {
                     layer.msg("出错！");
                 },
@@ -299,7 +365,7 @@
             $.ajax({
                 type: "POST",
                 url: '${path}/transfer/edit',
-                data: $('#transfer').serialize(),
+                data: $('#oaActTransfer').serialize(),
                 error: function (request) {
                     layer.msg("出错！");
                 },
@@ -314,31 +380,6 @@
             })
         }
     }
-
-    //加载附件列表
-    $(function () {
-        var annexList = JSON.parse('${annexList}');
-        if (annexList !== "") {
-            var ret = annexList.split(',');
-            $('#annexList').css("display", "block");
-            for (let i = 0; i < ret.length; i++) {
-
-                var annex = '';
-                var uuid = ret[i].substring(0, ret[i].indexOf("_"));
-                var originalName = ret[i].substring(ret[i].lastIndexOf("_") + 1, ret[i].length);
-
-                annex += '<div id="file' + uuid + '" class="table-file">';
-                annex += '<div class="table-file-content">';
-                annex += '<a class="table-file-title" href="/fileDownloadHandle/download?fileName=' + ret[i] + '" title="' + originalName + '">' + originalName + '</a>';
-                annex += '<span class="delete-file" title="删除" onclick="whether(\'' + ret[i] + '\')">&#xeabb;</span>';
-                annex += '<input type="hidden" value="' + ret[i] + '">';
-                annex += '</div>';
-                annex += '</div>';
-                $('#annexes').append(annex);
-            }
-        }
-    });
-
 
     //插入附件
     function insertFile() {
@@ -362,60 +403,33 @@
         }
     }
 
+
     //删除已上传附件
     function whether(fileName) {
         window.top.deleteUploaded(fileName);
     }
 
+
     //执行删除附件
     function delFile(fileName) {
         $.ajax({
-            async: false,
             type: "POST",
             url: '${path}/fileUploadHandle/deleteFile',
             data: {"fileName": fileName},
             error: function (request) {
-                layer.msg("出错！");
+                window.top.tips("出错！", 6, 2, 1000);
             },
             success: function (result) {
                 if (result === "success") {
-
-                    //删除页面中文件
                     $('#file' + fileName.substring(0, fileName.indexOf("_"))).remove();
+                    window.top.tips("删除成功！", 0, 1, 1000);
 
-                    //影藏页面中附件列表
                     let annexesLen = $('#annexes').children().length;
                     if (annexesLen === 0) {
                         $('#annexList').css("display", "none");
                     }
-
-                    //删除数据库中附件
-                    var array = [];
-                    $('#annexes').find('input').each(function () {
-                        array.push($(this).val());
-                    });
-
-                    var id = $('#id').val();
-
-                    $.ajax({
-                        type: "POST",
-                        url: '${path}/transfer/deleteAnnexes',
-                        data: {'array': array, 'id': id},
-                        traditional: true,
-                        async: false,
-                        error: function (request) {
-                            layer.msg("出错！");
-                        },
-                        success: function (result) {
-                            if (result === "success") {
-                                window.top.tips("删除成功！", 0, 1, 2000);
-                            } else {
-                                window.top.tips("删除失败！", 0, 2, 1000);
-                            }
-                        }
-                    });
                 } else {
-                    window.top.tips("文件不存在！", 6, 5, 2000);
+                    window.top.tips("文件不存在！", 6, 5, 1000);
                 }
             }
         });

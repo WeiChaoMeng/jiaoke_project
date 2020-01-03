@@ -3,10 +3,10 @@ package com.jiaoke.oa.service;
 import com.jiake.utils.DateUtil;
 import com.jiaoke.oa.bean.OaActRotation;
 import com.jiaoke.oa.bean.OaCollaboration;
+import com.jiaoke.oa.dao.DepartmentMapper;
 import com.jiaoke.oa.dao.OaActRotationMapper;
 import com.jiaoke.oa.dao.OaCollaborationMapper;
 import com.jiaoke.oa.dao.UserInfoMapper;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -31,14 +31,16 @@ public class OaActRotationServiceImpl implements OaActRotationService {
     @Resource
     private UserInfoMapper userInfoMapper;
 
+    @Resource
+    private DepartmentMapper departmentMapper;
+
     @Override
     public int insert(OaActRotation oaActRotation, Integer userId, String randomId, Integer state) {
-        oaActRotation.setBirthday(DateUtil.stringConvertYYYYMMDD(oaActRotation.getBirthdayStr()));
         oaActRotation.setId(randomId);
         oaActRotation.setCreateTime(new Date());
         oaActRotation.setPromoter(userId);
         oaActRotation.setUrl("rotation");
-        if (oaActRotationMapper.insert(oaActRotation) < 0) {
+        if (oaActRotationMapper.insertSelective(oaActRotation) < 0) {
             return -1;
         } else {
             OaCollaboration oaCollaboration = new OaCollaboration();
@@ -47,6 +49,16 @@ public class OaActRotationServiceImpl implements OaActRotationService {
             oaCollaboration.setTitle(oaActRotation.getTitle());
             oaCollaboration.setUrl("rotation");
             oaCollaboration.setTable("oa_act_rotation");
+            oaCollaboration.setName("员工轮岗审请");
+            oaCollaboration.setDataOne("转入部门：" + departmentMapper.selectDepartmentNameByDepartmentKey(oaActRotation.getNewDepartment()));
+            if (oaActRotation.getAdjust() == 0) {
+                oaCollaboration.setDataTwo("调整原因：关键岗位工作满5年");
+            } else if (oaActRotation.getAdjust() == 1) {
+                oaCollaboration.setDataTwo("调整原因：自愿申请");
+            } else {
+                oaCollaboration.setDataTwo("调整原因：工作需要");
+            }
+
             oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);
@@ -56,7 +68,6 @@ public class OaActRotationServiceImpl implements OaActRotationService {
 
     @Override
     public int edit(OaActRotation oaActRotation) {
-        oaActRotation.setBirthday(DateUtil.stringConvertYYYYMMDD(oaActRotation.getBirthdayStr()));
         if (oaActRotationMapper.updateByPrimaryKeySelective(oaActRotation) < 0) {
             return -1;
         } else {
@@ -68,9 +79,9 @@ public class OaActRotationServiceImpl implements OaActRotationService {
     @Override
     public OaActRotation selectByPrimaryKey(String id) {
         OaActRotation oaActRotation = oaActRotationMapper.selectByPrimaryKey(id);
-        oaActRotation.setBirthdayStr(DateUtil.dateConvertYYYYMMDD(oaActRotation.getBirthday()));
         oaActRotation.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActRotation.getCreateTime()));
         oaActRotation.setPromoterStr(userInfoMapper.getNicknameById(oaActRotation.getPromoter()));
+        oaActRotation.setNewDepartmentStr(departmentMapper.selectDepartmentNameByDepartmentKey(oaActRotation.getNewDepartment()));
         return oaActRotation;
     }
 
@@ -81,14 +92,7 @@ public class OaActRotationServiceImpl implements OaActRotationService {
     }
 
     @Override
-    public int updateAnnexes(String[] array, String id) {
-        OaActRotation oaActRotation = new OaActRotation();
-        oaActRotation.setId(id);
-        if (array != null) {
-            oaActRotation.setAnnex(StringUtils.join(array));
-        } else {
-            oaActRotation.setAnnex("");
-        }
+    public int updateByPrimaryKeySelective(OaActRotation oaActRotation) {
         return oaActRotationMapper.updateByPrimaryKeySelective(oaActRotation);
     }
 }

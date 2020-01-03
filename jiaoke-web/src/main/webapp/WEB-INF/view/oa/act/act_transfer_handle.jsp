@@ -16,6 +16,11 @@
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
     <link href="../../../../static/js/date_pickers/date_picker.css" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
+    <style>
+        .tdLabel {
+            width: 10%;
+        }
+    </style>
 </head>
 
 <body id="body">
@@ -65,149 +70,218 @@
     </c:choose>
 </div>
 
-<table class="formTable">
-    <tbody>
-    <tr>
-        <td class="tdLabel">姓名</td>
-        <td class="table-td-content">
-            ${oaActTransfer.name}
-        </td>
+<div style="margin-top: 10px">
+    <input type="text" class="filling-date-content" value="${oaActTransfer.fillingDate}" readonly>
+    <span class="filling-date">填表日期 </span>
+</div>
 
-        <td class="tdLabel">年龄</td>
-        <td class="table-td-content">
-            ${oaActTransfer.age}
-        </td>
+<form id="oaActTransfer">
+    <table class="formTable">
+        <tbody>
+        <tr>
+            <td class="tdLabel">姓名</td>
+            <td class="table-td-content" colspan="2">
+                ${oaActTransfer.name}
+                <input type="hidden" name="id" value="${oaActTransfer.id}">
+                <input type="hidden" name="promoter" value="${oaActTransfer.promoter}">
+                <input type="hidden" name="newDepartment" value="${oaActTransfer.newDepartment}">
+            </td>
 
-        <td class="tdLabel">入职时间</td>
-        <td class="table-td-content">
-            ${oaActTransfer.entryDateStr}
-        </td>
-    </tr>
+            <td class="tdLabel">年龄</td>
+            <td class="table-td-content" colspan="2">
+                ${oaActTransfer.age}
+            </td>
 
-    <tr>
-        <td class="tdLabel">现岗位</td>
-        <td colspan="2" class="table-td-content">
-            ${oaActTransfer.presentPost}
-        </td>
+            <td class="tdLabel">入职时间</td>
+            <td class="table-td-content" id="personnelCensorContent">
+                ${oaActTransfer.entryDate}
+            </td>
+        </tr>
 
-        <td class="tdLabel">拟转入岗位</td>
-        <td colspan="2" class="table-td-content">
-            ${oaActTransfer.newPost}
-        </td>
-    </tr>
+        <tr>
+            <td class="tdLabel">现部门</td>
+            <td class="table-td-content">
+                ${oaActTransfer.presentDepartment}
+            </td>
 
-    <tr>
-        <td class="tdLabel">转岗事由</td>
-        <td colspan="5" class="table-td-evaluation">
-            <textarea class="evaluation-content-disabled" style="height: 90px" name="cause"
-                      disabled>${oaActTransfer.cause}</textarea>
-            <div class="approval-date">
-                <label class="approval-date-label">日期:</label>
-                <input class="approval-date-input" type="text" value="${oaActTransfer.createTimeStr}" disabled>
-            </div>
-            <div class="approval-signature">
-                <label class="approval-signature-label">本人签字:</label>
-                <input class="approval-signature-input" type="text" value="${oaActTransfer.promoterStr}" disabled>
-            </div>
-        </td>
-    </tr>
+            <td class="tdLabel">现岗位</td>
+            <td class="table-td-content" style="width: 15%">
+                ${oaActTransfer.presentPost}
+            </td>
 
-    <tr>
-        <td class="tdLabel">所在部门评价</td>
-        <td colspan="5" class="table-td-textarea" style="line-height: 0">
-            <div class="opinion-principal">
-                <label class="opinion-principal-title">部长：</label>
-                <textarea class="opinion-column-Juxtaposition" name="remarks" disabled></textarea>
+            <td class="tdLabel">拟转入部门</td>
+            <td class="table-td-content">
+                ${oaActTransfer.newDepartmentStr}
+            </td>
+
+            <td class="tdLabel">拟转入岗位</td>
+            <td class="table-td-content">
+                ${oaActTransfer.newPost}
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">转岗事由</td>
+            <td colspan="7" class="table-td-evaluation">
+                <textarea class="evaluation-content-disabled" style="height: 73px"
+                          disabled>${oaActTransfer.cause}</textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
-                    <input class="approval-date-input" type="text" disabled>
+                    <label class="approval-date-label">日期 </label>
+                    <input class="approval-date-input" type="text" value="${oaActTransfer.createTimeStr}" disabled>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">签字:</label>
-                    <input class="approval-signature-input" type="text" disabled>
+                    <label class="approval-signature-label">本人签字 </label>
+                    <input class="approval-signature-input" type="text" value="${oaActTransfer.promoterStr}" disabled>
                 </div>
-            </div>
+            </td>
+        </tr>
 
-            <div class="opinion-supervisor">
-                <label class="opinion-principal-title">主管：</label>
-                <textarea class="opinion-column-Juxtaposition" name="remarks" disabled></textarea>
-                <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
-                    <input class="approval-date-input" type="text" disabled>
-                </div>
-                <div class="approval-signature">
-                    <label class="approval-signature-label">签字:</label>
-                    <input class="approval-signature-input" type="text" disabled>
-                </div>
-            </div>
-        </td>
-    </tr>
+        <tr>
+            <td class="tdLabel">所在部门评价</td>
+            <td colspan="7" class="table-td-textarea" style="line-height: 0">
+                <div class="opinion-principal">
+                    <label class="opinion-principal-title">部长</label>
+                    <shiro:hasPermission name="principal">
+                        <div style="width: 100%;height: 100%;" id="principalContent"></div>
+                    </shiro:hasPermission>
 
-    <tr>
-        <td class="tdLabel">转入部门意见</td>
-        <td colspan="5" class="table-td-textarea" style="line-height: 0">
-            <div class="opinion-principal">
-                <label class="opinion-principal-title">部长：</label>
-                <textarea class="opinion-column-Juxtaposition" name="remarks" disabled></textarea>
-                <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
-                    <input class="approval-date-input" type="text" disabled>
+                    <shiro:lacksPermission name="principal">
+                        <textarea class="opinion-column-Juxtaposition" disabled>${oaActTransfer.principalContent}</textarea>
+                        <div class="approval-date">
+                            <label class="approval-date-label">日期 </label>
+                            <input class="approval-date-input" type="text" value="${oaActTransfer.principalDate}" disabled>
+                        </div>
+                        <div class="approval-signature">
+                            <label class="approval-signature-label">签字 </label>
+                            <input class="approval-signature-input" type="text" value="${oaActTransfer.principal}" disabled>
+                        </div>
+                    </shiro:lacksPermission>
                 </div>
-                <div class="approval-signature">
-                    <label class="approval-signature-label">签字:</label>
-                    <input class="approval-signature-input" type="text" disabled>
-                </div>
-            </div>
 
-            <div class="opinion-supervisor">
-                <label class="opinion-principal-title">主管：</label>
-                <textarea class="opinion-column-Juxtaposition" name="remarks" disabled></textarea>
-                <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
-                    <input class="approval-date-input" type="text" disabled>
-                </div>
-                <div class="approval-signature">
-                    <label class="approval-signature-label">签字:</label>
-                    <input class="approval-signature-input" type="text" disabled>
-                </div>
-            </div>
-        </td>
-    </tr>
+                <div class="opinion-supervisor">
+                    <label class="opinion-principal-title">主管</label>
+                    <shiro:hasPermission name="supervisor">
+                        <div style="width: 100%;height: 100%;" id="supervisorContent"></div>
+                    </shiro:hasPermission>
 
-    <tr>
-        <td class="tdLabel">组织人事部意见</td>
-        <td colspan="5" class="approval-content">
-            <textarea class="approval-content-textarea" disabled></textarea>
-            <div class="approval-date">
-                <label class="approval-date-label">日期:</label>
-                <input class="approval-date-input" type="text" disabled>
-            </div>
-            <div class="approval-signature">
-                <label class="approval-signature-label">签字:</label>
-                <input class="approval-signature-input" type="text" disabled>
-            </div>
-        </td>
-    </tr>
+                    <shiro:lacksPermission name="supervisor">
+                        <textarea class="opinion-column-Juxtaposition"
+                                  disabled>${oaActTransfer.supervisorContent}</textarea>
+                        <div class="approval-date">
+                            <label class="approval-date-label">日期 </label>
+                            <input class="approval-date-input" type="text" value="${oaActTransfer.supervisorDate}" disabled>
+                        </div>
+                        <div class="approval-signature">
+                            <label class="approval-signature-label">签字 </label>
+                            <input class="approval-signature-input" type="text" value="${oaActTransfer.supervisor}"
+                                   disabled>
+                        </div>
+                    </shiro:lacksPermission>
+                </div>
+            </td>
+        </tr>
 
-    <tr>
-        <td class="tdLabel">总经理审批</td>
-        <td colspan="5" class="approval-content">
-            <textarea class="approval-content-textarea" disabled></textarea>
-            <div class="approval-date">
-                <label class="approval-date-label">日期:</label>
-                <input class="approval-date-input" type="text" disabled>
-            </div>
-            <div class="approval-signature">
-                <label class="approval-signature-label">签字:</label>
-                <input class="approval-signature-input" type="text" disabled>
-            </div>
-        </td>
-    </tr>
-    </tbody>
-</table>
+        <tr>
+            <td class="tdLabel">转入部门意见</td>
+            <td colspan="7" class="table-td-textarea" style="line-height: 0">
+                <div class="opinion-principal">
+                    <label class="opinion-principal-title">部长</label>
+                    <shiro:hasPermission name="principal">
+                        <div style="width: 100%;height: 100%;" id="transferPrincipalContent"></div>
+                    </shiro:hasPermission>
+
+                    <shiro:lacksPermission name="principal">
+                        <textarea class="opinion-column-Juxtaposition"
+                                  disabled>${oaActTransfer.transferPrincipalContent}</textarea>
+                        <div class="approval-date">
+                            <label class="approval-date-label">日期 </label>
+                            <input class="approval-date-input" type="text" value="${oaActTransfer.transferPrincipalDate}"
+                                   disabled>
+                        </div>
+                        <div class="approval-signature">
+                            <label class="approval-signature-label">签字 </label>
+                            <input class="approval-signature-input" type="text" value="${oaActTransfer.transferPrincipal}"
+                                   disabled>
+                        </div>
+                    </shiro:lacksPermission>
+                </div>
+
+                <div class="opinion-supervisor">
+                    <label class="opinion-principal-title">主管</label>
+                    <shiro:hasPermission name="supervisor">
+                        <div style="width: 100%;height: 100%;" id="transferSupervisorContent"></div>
+                    </shiro:hasPermission>
+
+                    <shiro:lacksPermission name="supervisor">
+                        <textarea class="opinion-column-Juxtaposition"
+                                  disabled>${oaActTransfer.transferSupervisorDate}</textarea>
+                        <div class="approval-date">
+                            <label class="approval-date-label">日期 </label>
+                            <input class="approval-date-input" type="text" value="${oaActTransfer.transferSupervisorDate}"
+                                   disabled>
+                        </div>
+                        <div class="approval-signature">
+                            <label class="approval-signature-label">签字 </label>
+                            <input class="approval-signature-input" type="text" value="${oaActTransfer.transferSupervisor}"
+                                   disabled>
+                        </div>
+                    </shiro:lacksPermission>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">组织人事部意见</td>
+            <td colspan="7" class="approval-content">
+                <shiro:hasPermission name="personnel">
+                    <div style="width: 100%;height: 100%;" id="personnelContent"></div>
+                </shiro:hasPermission>
+
+                <shiro:lacksPermission name="personnel">
+                    <textarea class="approval-content-textarea" disabled>${oaActTransfer.personnelContent}</textarea>
+                    <div class="approval-date">
+                        <label class="approval-date-label">日期 </label>
+                        <input class="approval-date-input" type="text" value="${oaActTransfer.personnelDate}" disabled>
+                    </div>
+                    <div class="approval-signature">
+                        <label class="approval-signature-label">签字 </label>
+                        <input class="approval-signature-input" type="text" value="${oaActTransfer.personnel}" disabled>
+                    </div>
+                </shiro:lacksPermission>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">总经理审批</td>
+            <td colspan="7" class="approval-content">
+                <shiro:hasPermission name="company_principal">
+                    <div style="width: 100%;height: 100%;" id="companyPrincipalContent"></div>
+                </shiro:hasPermission>
+
+                <shiro:lacksPermission name="company_principal">
+                    <textarea class="approval-content-textarea" disabled>${oaActTransfer.companyPrincipalContent}</textarea>
+                    <div class="approval-date">
+                        <label class="approval-date-label">日期 </label>
+                        <input class="approval-date-input" type="text" value="${oaActTransfer.companyPrincipalDate}"
+                               disabled>
+                    </div>
+                    <div class="approval-signature">
+                        <label class="approval-signature-label">签字 </label>
+                        <input class="approval-signature-input" type="text" value="${oaActTransfer.companyPrincipal}"
+                               disabled>
+                    </div>
+                </shiro:lacksPermission>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
 
 <div class="form-but" id="return">
-    <button type="button" class="return-but" onclick="previousPage()">返回</button>
+    <shiro:hasAnyPermission name="principal,supervisor,personnel,company_principal">
+        <button type="button" class="return-but" style="margin-right: 10px;" onclick="approvalProcessing(2)">回退</button>
+    </shiro:hasAnyPermission>
+    <button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>
 </div>
 
 </body>
@@ -216,9 +290,190 @@
 <script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
 
-    //返回上一页
-    function previousPage() {
-        window.history.back();
+    //流程执行步骤
+    var transfer = JSON.parse('${oaActTransferJson}');
+    //标记
+    var flag = 0;
+
+    if (transfer.personnelCensor === "" || transfer.personnelCensor === undefined) {
+        $('#personnelCensorContent').append('<input type="hidden" name="personnelCensor" value="${nickname}">');
+        $('#return').html("");
+        $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
+        flag = 1;
+    }
+
+    if (flag === 0) {
+        if (transfer.principal === "" || transfer.principal === undefined) {
+            $('#principalContent').append(
+                '<textarea onkeyup="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="principalContent" style="background-color: #ffffff"></textarea>' +
+                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                '<input class="approval-date-input" type="text" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
+                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                '<input class="approval-signature-input" type="text" name="principal" value="${nickname}" readonly></div>');
+            flag = 1;
+        } else {
+            $('#principalContent').append('<textarea class="approval-content-textarea" readonly>${oaActTransfer.principalContent}</textarea>' +
+                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                '<input class="approval-date-input" type="text" value="${oaActTransfer.principalDate}" readonly></div>' +
+                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                '<input class="approval-signature-input" type="text" value="${oaActTransfer.principal}" readonly></div>');
+        }
+    } else {
+        $('#principalContent').append('<textarea class="approval-content-textarea" readonly>${oaActTransfer.principalContent}</textarea>' +
+            '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+            '<input class="approval-date-input" type="text" value="${oaActTransfer.principalDate}" readonly></div>' +
+            '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+            '<input class="approval-signature-input" type="text" value="${oaActTransfer.principal}" readonly></div>');
+    }
+
+    if (flag === 0) {
+        if (transfer.supervisor === "" || transfer.supervisor === undefined) {
+            $('#supervisorContent').append(
+                '<textarea onkeyup="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="supervisorContent" style="background-color: #ffffff"></textarea>' +
+                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                '<input class="approval-date-input" type="text" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
+                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                '<input class="approval-signature-input" type="text" name="supervisor" value="${nickname}" readonly></div>');
+            flag = 1;
+        } else {
+            $('#supervisorContent').append('<textarea class="approval-content-textarea" readonly>${oaActTransfer.supervisorContent}</textarea>' +
+                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                '<input class="approval-date-input" type="text" value="${oaActTransfer.supervisorDate}" readonly></div>' +
+                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                '<input class="approval-signature-input" type="text" value="${oaActTransfer.supervisor}" readonly></div>');
+        }
+    } else {
+        $('#supervisorContent').append('<textarea class="approval-content-textarea" readonly>${oaActTransfer.supervisorContent}</textarea>' +
+            '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+            '<input class="approval-date-input" type="text" value="${oaActTransfer.supervisorDate}" readonly></div>' +
+            '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+            '<input class="approval-signature-input" type="text" value="${oaActTransfer.supervisor}" readonly></div>');
+    }
+
+    if (flag === 0) {
+        if (transfer.transferPrincipal === "" || transfer.transferPrincipal === undefined) {
+            $('#transferPrincipalContent').append(
+                '<textarea onkeyup="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="transferPrincipalContent" style="background-color: #ffffff"></textarea>' +
+                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                '<input class="approval-date-input" type="text" name="transferPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
+                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                '<input class="approval-signature-input" type="text" name="transferPrincipal" value="${nickname}" readonly></div>');
+            flag = 1;
+        } else {
+            $('#transferPrincipalContent').append('<textarea class="approval-content-textarea" readonly>${oaActTransfer.transferPrincipalContent}</textarea>' +
+                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                '<input class="approval-date-input" type="text" value="${oaActTransfer.transferPrincipalDate}" readonly></div>' +
+                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                '<input class="approval-signature-input" type="text" value="${oaActTransfer.transferPrincipal}" readonly></div>');
+        }
+    } else {
+        $('#transferPrincipalContent').append('<textarea class="approval-content-textarea" readonly>${oaActTransfer.transferPrincipalContent}</textarea>' +
+            '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+            '<input class="approval-date-input" type="text" value="${oaActTransfer.transferPrincipalDate}" readonly></div>' +
+            '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+            '<input class="approval-signature-input" type="text" value="${oaActTransfer.transferPrincipal}" readonly></div>');
+    }
+
+    if (flag === 0) {
+        if (transfer.transferSupervisor === "" || transfer.transferSupervisor === undefined) {
+            $('#transferSupervisorContent').append(
+                '<textarea onkeyup="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="transferSupervisorContent" style="background-color: #ffffff"></textarea>' +
+                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                '<input class="approval-date-input" type="text" name="transferSupervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
+                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                '<input class="approval-signature-input" type="text" name="transferSupervisor" value="${nickname}" readonly></div>');
+            flag = 1;
+        } else {
+            $('#transferSupervisorContent').append('<textarea class="approval-content-textarea" readonly>${oaActTransfer.transferSupervisorContent}</textarea>' +
+                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                '<input class="approval-date-input" type="text" value="${oaActTransfer.transferSupervisorDate}" readonly></div>' +
+                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                '<input class="approval-signature-input" type="text" value="${oaActTransfer.transferSupervisor}" readonly></div>');
+        }
+    } else {
+        $('#transferSupervisorContent').append('<textarea class="approval-content-textarea" readonly>${oaActTransfer.transferSupervisorContent}</textarea>' +
+            '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+            '<input class="approval-date-input" type="text" value="${oaActTransfer.transferSupervisorDate}" readonly></div>' +
+            '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+            '<input class="approval-signature-input" type="text" value="${oaActTransfer.transferSupervisor}" readonly></div>');
+    }
+
+    if (flag === 0) {
+        if (transfer.personnel === "" || transfer.personnel === undefined) {
+            $('#personnelContent').append(
+                '<textarea onkeyup="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="personnelContent" style="background-color: #ffffff"></textarea>' +
+                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                '<input class="approval-date-input" type="text" name="personnelDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
+                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                '<input class="approval-signature-input" type="text" name="personnel" value="${nickname}" readonly></div>');
+            flag = 1;
+        } else {
+            $('#personnelContent').append('<textarea class="approval-content-textarea" readonly>${oaActTransfer.personnelContent}</textarea>' +
+                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                '<input class="approval-date-input" type="text" value="${oaActTransfer.personnelDate}" readonly></div>' +
+                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                '<input class="approval-signature-input" type="text" value="${oaActTransfer.personnel}" readonly></div>');
+        }
+    } else {
+        $('#personnelContent').append('<textarea class="approval-content-textarea" readonly>${oaActTransfer.personnelContent}</textarea>' +
+            '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+            '<input class="approval-date-input" type="text" value="${oaActTransfer.personnelDate}" readonly></div>' +
+            '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+            '<input class="approval-signature-input" type="text" value="${oaActTransfer.personnel}" readonly></div>');
+    }
+
+    if (flag === 0) {
+        if (transfer.companyPrincipal === "" || transfer.companyPrincipal === undefined) {
+            $('#companyPrincipalContent').append(
+                '<textarea onkeyup="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="companyPrincipalContent" style="background-color: #ffffff"></textarea>' +
+                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                '<input class="approval-date-input" type="text" name="companyPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
+                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                '<input class="approval-signature-input" type="text" name="companyPrincipal" value="${nickname}" readonly></div>');
+            flag = 1;
+        } else {
+            $('#companyPrincipalContent').append('<textarea class="approval-content-textarea" readonly>${oaActTransfer.companyPrincipalContent}</textarea>' +
+                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                '<input class="approval-date-input" type="text" value="${oaActTransfer.companyPrincipalDate}" readonly></div>' +
+                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                '<input class="approval-signature-input" type="text" value="${oaActTransfer.companyPrincipal}" readonly></div>');
+        }
+    } else {
+        $('#companyPrincipalContent').append('<textarea class="approval-content-textarea" readonly>${oaActTransfer.companyPrincipalContent}</textarea>' +
+            '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+            '<input class="approval-date-input" type="text" value="${oaActTransfer.companyPrincipalDate}" readonly></div>' +
+            '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+            '<input class="approval-signature-input" type="text" value="${oaActTransfer.companyPrincipal}" readonly></div>');
+    }
+
+    if (flag === 0){
+        $('#return').html("");
+        $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
+    }
+
+    //任务Id
+    var taskId = JSON.parse('${taskId}');
+
+    //提交
+    function approvalProcessing(flag) {
+        $.ajax({
+            type: "post",
+            url: '/transfer/approvalSubmit',
+            data: $('#oaActTransfer').serialize() + "&taskId=" + taskId + "&flag=" + flag,
+            async: false,
+            success: function (data) {
+                if (data === 'success') {
+                    //返回上一页
+                    window.location.href = '${path}/oaHomePage/toOaHomePage';
+                    layer.msg('提交成功！');
+                } else {
+                    layer.msg('提交失败！');
+                }
+            },
+            error: function (result) {
+                layer.msg("出错！");
+            }
+        })
     }
 
     //打印

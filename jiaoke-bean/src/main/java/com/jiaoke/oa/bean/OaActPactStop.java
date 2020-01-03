@@ -31,7 +31,9 @@ public class OaActPactStop {
     /**
      * 名字
      */
-    private String name;
+    private Integer notifiedPerson;
+    @Transient
+    private String notifiedPersonStr;
 
     /**
      * 开始时间
@@ -62,6 +64,16 @@ public class OaActPactStop {
      * 通知时间
      */
     private String noticeDate;
+
+    /**
+     * 接收时间
+     */
+    private String receivingDate;
+
+    /**
+     * 接收人签字
+     */
+    private String receivingSign;
 
     /**
      * 附件
@@ -103,12 +115,20 @@ public class OaActPactStop {
         this.title = title;
     }
 
-    public String getName() {
-        return name;
+    public Integer getNotifiedPerson() {
+        return notifiedPerson;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNotifiedPerson(Integer notifiedPerson) {
+        this.notifiedPerson = notifiedPerson;
+    }
+
+    public String getNotifiedPersonStr() {
+        return notifiedPersonStr;
+    }
+
+    public void setNotifiedPersonStr(String notifiedPersonStr) {
+        this.notifiedPersonStr = notifiedPersonStr;
     }
 
     public String getStartDate() {
@@ -151,12 +171,20 @@ public class OaActPactStop {
         this.supplementDetails = supplementDetails;
     }
 
-    public String getNoticeDate() {
-        return noticeDate;
+    public String getReceivingDate() {
+        return receivingDate;
     }
 
-    public void setNoticeDate(String noticeDate) {
-        this.noticeDate = noticeDate;
+    public void setReceivingDate(String receivingDate) {
+        this.receivingDate = receivingDate;
+    }
+
+    public String getReceivingSign() {
+        return receivingSign;
+    }
+
+    public void setReceivingSign(String receivingSign) {
+        this.receivingSign = receivingSign;
     }
 
     public String getAnnex() {
@@ -205,5 +233,13 @@ public class OaActPactStop {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getNoticeDate() {
+        return noticeDate;
+    }
+
+    public void setNoticeDate(String noticeDate) {
+        this.noticeDate = noticeDate;
     }
 }

@@ -124,11 +124,6 @@
 <script src="../../../static/js/jquery.min.js" type="text/javascript"></script>
 <script src="../../../static/js/oa/layer/layer.js"></script>
 <script>
-
-    $(function () {
-       console.log(${map.education0 == "" ? 0:map.education0})
-       console.log(${map.education4})
-    });
     var myBasic = echarts.init(document.getElementById('basic'));
     var myTalent = echarts.init(document.getElementById('talent'));
     var myJobTitle = echarts.init(document.getElementById('jobTitle'));

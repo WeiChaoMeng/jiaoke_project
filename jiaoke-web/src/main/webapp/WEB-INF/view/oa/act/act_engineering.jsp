@@ -56,7 +56,6 @@
 </div>
 
 <form id="oaActEngineering">
-
     <div class="form_area" id="titleArea">
         <table>
             <tbody>
@@ -65,7 +64,7 @@
                     <button type="button" class="table-tab-send" onclick="send()">发送</button>
                 </td>
 
-                <th nowrap="nowrap" class="th_title" style="width: 4%">标题</th>
+                <th nowrap="nowrap" class="th_title" style="width: 4%">标题 </th>
                 <td style="width: 44%">
                     <div class="common_input_frame">
                         <input type="text" id="title" name="title" placeholder="请输入标题" title="点击此处填写标题"
@@ -74,10 +73,10 @@
                     </div>
                 </td>
 
-                <th class="th_title" nowrap="nowrap" style="width: 4%">流程</th>
+                <th class="th_title" nowrap="nowrap" style="width: 4%">流程 </th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" placeholder="经营部长(审批)、经营负责人(审批)" readonly="readonly">
+                        <input type="text" placeholder="经营部长(审批)、经营负责人(审批)、发起人(知会)" readonly="readonly">
                     </div>
                 </td>
             </tr>
@@ -160,12 +159,12 @@
         </tr>
 
         <tr>
-            <td class="tdLabel">经营部长</td>
+            <td class="tdLabel">经营负责人</td>
             <td class="table-td-content">
                 <input type="text" class="formInput-readonly" readonly>
             </td>
 
-            <td class="tdLabel">经营负责人</td>
+            <td class="tdLabel">经营部长</td>
             <td class="table-td-content">
                 <input type="text" class="formInput-readonly" readonly>
             </td>
@@ -173,8 +172,8 @@
 
         <tr>
             <td class="tdLabel">备注</td>
-            <td colspan="3" class="table-td-content" style="padding: 10px">
-                <textarea class="write-approval-content-textarea" name="remark" style="width: 99%"></textarea>
+            <td colspan="3" class="table-td-content" style="padding: 5px 10px">
+                <textarea class="write-approval-content-textarea" name="remark" style="width: 99%;height: 46px"></textarea>
             </td>
         </tr>
 
@@ -193,7 +192,7 @@
     jeDate(".je-start-date", {
         theme: {bgcolor: "#00A1CB", pnColor: "#00CCFF"},
         festival: false,                    //是否显示节日
-        isinitVal: true,                    //是否初始化
+        isinitVal: false,                    //是否初始化
         isTime: false,                       //是否开始时间选择
         isClear: false,                     //是否开启清空
         minDate: "1900-01-01",              //最小日期
@@ -206,7 +205,7 @@
     jeDate(".je-end-date", {
         theme: {bgcolor: "#00A1CB", pnColor: "#00CCFF"},
         festival: false,                    //是否显示节日
-        isinitVal: true,                    //是否初始化
+        isinitVal: false,                    //是否初始化
         isTime: false,                       //是否开始时间选择
         isClear: false,                     //是否开启清空
         minDate: "1900-01-01",              //最小日期

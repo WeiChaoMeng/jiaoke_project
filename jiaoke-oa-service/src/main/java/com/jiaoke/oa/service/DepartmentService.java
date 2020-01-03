@@ -93,4 +93,11 @@ public interface DepartmentService {
      * @return string
      */
     String selectEnforcerId(String column, String departmentKey);
+
+    /**
+     * 查询部门负责人和主管领导（五部一室）
+     *
+     * @return list
+     */
+    List<Department> selectPrincipalAndSupervisor();
 }

@@ -121,10 +121,10 @@
 
         <div class="topright">
             <div class="user">
-                    <a href="#">
-                        <i class="userico iconfont">&#xe6cb;</i>${userInfo.nickname}
-                        <i class="userdown iconfont">&#xe920;</i>
-                    </a>
+                <a href="#">
+                    <i class="userico iconfont">&#xe6cb;</i>${userInfo.nickname}
+                    <i class="userdown iconfont">&#xe920;</i>
+                </a>
 
                 <ul class="userlist">
                     <li><a href="#"><i class="userxl iconfont">&#xe666;</i>用户信息</a></li>
@@ -340,6 +340,19 @@
     </div>
 </div>
 
+<%--模态窗-OA审批单中使用--%>
+<div id="selectRecipientModel" style="display: none;width: 96%;height: 96%;padding: 2%">
+    <div class="option-window-body-head cursor_hand">
+        <div id="selectDepartmentRecipient" class="selection-content-inside">
+            <ul id="departmentAndUserRecipient"></ul>
+        </div>
+    </div>
+    <div class="option-window-body-bottom">
+        <input type="button" value="确认" onclick="confirmDepartmentRecipient()" class="body-bottom-button">
+        <input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">
+    </div>
+</div>
+
 <%-- 模态窗-选择拟稿人 --%>
 <div id="singleSelection" class="single-option-window" style="display: none">
     <input type="hidden" id="pendingDocumentPage">
@@ -414,36 +427,41 @@
 </div>
 
 <%--修改密码--%>
-<div id="editPassword" style="display: none;">
-    <div style="margin: 10px 0;float: left;width: 100%;">
-        <label style="float: left;display: block;padding: 9px 15px;width: 80px;font-weight: 400;line-height: 20px;text-align: right;">当前密码</label>
-        <div style="float: left;width: 190px;margin-right: 10px;">
-            <input id="currentPassword" autocomplete="off" type="password"
-                   style="outline: none;height: 38px;line-height: 1.3;background-color: #fff;border-radius: 2px;padding-left: 10px;width: 100%;border: 1px solid #e6e6e6;">
+<div id="editPassword" style="height:100%;display: none;">
+    <div class="psw-new-style">
+        <label class="psw-new-name">新密码</label>
+        <div style="float: left;width: 190px;">
+            <input class="psw-new-input" type="password" onfocus="this.removeAttribute('readonly')" id="newPsw"
+                   autocomplete="off" onblur="checkNewPsw()" onclick="newPswTips()" readonly>
+            <span id="newPswTips" class="psw-new-tips"></span>
         </div>
     </div>
 
-    <div style="margin-bottom: 10px;float: left;width: 100%;">
-        <label style="float: left;display: block;padding: 9px 15px;width: 80px;font-weight: 400;line-height: 20px;text-align: right;">新密码</label>
-        <div style="float: left;width: 190px;margin-right: 10px;">
-            <input type="password" id="newPsw" autocomplete="off"
-                   style="outline: none;height: 38px;line-height: 1.3;background-color: #fff;border-radius: 2px;padding-left: 10px;width: 100%;border: 1px solid #e6e6e6;">
+    <div class="paw-confirm-style">
+        <label class="paw-confirm-name">确认密码</label>
+        <div style="float: left;width: 190px;">
+            <input class="paw-confirm-input" type="password" onfocus="this.removeAttribute('readonly')" id="confirmPsw"
+                   autocomplete="off" onblur="checkConfirmPsw()" readonly>
+            <span id="confirmPswTips" class="paw-confirm-tips"></span>
         </div>
     </div>
 
-    <div style="margin-bottom: 20px;float: left;width: 100%;">
-        <label style="float: left;display: block;padding: 9px 15px;width: 80px;font-weight: 400;line-height: 20px;text-align: right;">确认密码</label>
-        <div style="float: left;width: 190px;margin-right: 10px;">
-            <input type="password" id="confirmPsw" autocomplete="off"
-                   style="outline: none;height: 38px;line-height: 1.3;background-color: #fff;border-radius: 2px;padding-left: 10px;width: 100%;border: 1px solid #e6e6e6;">
+    <div class="confirm-modify-psw-style">
+        <button onclick="confirmModifyPsw()" class="confirm-modify-psw">确认修改</button>
+    </div>
+</div>
+
+<%--模态窗-选择部门--%>
+<div id="departmentSelector" style="display: none;width: 96%;height: 96%;padding: 2%">
+    <div class="option-window-body-head cursor_hand">
+        <input type="hidden" id="departmentFlag">
+        <div id="selectionDep" class="selection-content-inside">
+            <ul id="departmentList"></ul>
         </div>
     </div>
-
-    <div style="margin-bottom: 10px;float: left;width: 100%;text-align: center">
-        <button onclick="editPswCom()"
-                style="outline:none;display: inline-block;height: 38px;line-height: 38px;padding: 0 18px;background-color: #2196F3;color: #fff;white-space: nowrap;text-align: center;font-size: 14px;border: none;border-radius: 2px;cursor: pointer;">
-            确认修改
-        </button>
+    <div class="option-window-body-bottom">
+        <input type="button" value="确认" onclick="confirmDepartmentSelection()" class="body-bottom-button">
+        <input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">
     </div>
 </div>
 
@@ -564,6 +582,7 @@
         });
     }
 
+    //修改密码
     function editPsw() {
         window.lar = layer.open({
             title: '修改密码',
@@ -573,21 +592,112 @@
             content: $("#editPassword"),
             offset: "auto"
         });
+
+        //重置新密码输入框
+        $('#newPsw').val('');
+        $('#confirmPsw').val('');
+        //重置边框颜色
+        $('#newPsw').css("border-color", "#cecccc")
+        $('#confirmPsw').css("border-color", "#cecccc")
+        //重置input为readonly
+        $('#newPsw').attr('readonly', 'true');
+        $('#confirmPsw').attr('readonly', 'true');
+        //重置提示
+        $('#newPswTips').text("");
+        $('#confirmPswTips').text("");
     }
 
-    function editPswCom() {
-        if ($.trim($('#currentPassword').val()) === '') {
-            layer.tips('必填项不能为空！', '#currentPassword', {
-                tips: 1
-            });
+    //新密码格式规则提示
+    function newPswTips() {
+        $('#newPswTips').text("长度为4-20个字符,包含大小写字母及数字");
+        $('#newPswTips').css("color", "#797979");
+    }
+
+    //校验新密码
+    function checkNewPsw() {
+        var newPas = $('#confirmPsw').val();
+        var pas = $('#newPsw').val();
+        if (pas === "") {
+            $('#newPswTips').text("请输入新的登录密码");
+            $('#newPswTips').css("color", "#ff0000");
+            $('#newPsw').css("border-color", "#ff0000");
+        } else if (pas.length < 4) {
+            $('#newPswTips').text("长度为4-20个字符");
+            $('#newPswTips').css("color", "#ff0000");
+            $('#newPsw').css("border-color", "#ff0000");
+        } else if (newPas === pas) {
+            $('#confirmPsw').css("border-color", "#cecccc");
+            $('#confirmPswTips').text("");
+            $('#newPsw').css("border-color", "#cecccc");
+            $('#newPswTips').text("");
         } else {
-            if ($('#confirmPsw').val() !== $('#newPsw').val()) {
-                layer.tips('两次密码输入不一致！', '#confirmPsw', {
-                    tips: 1
-                });
-            } else {
-                layer.msg('成功！！！！！');
-            }
+            $('#newPsw').css("border-color", "#cecccc");
+            $('#newPswTips').text("");
+        }
+    }
+
+    //校验确认密码
+    function checkConfirmPsw() {
+        var newPas = $('#newPsw').val();
+        var pas = $('#confirmPsw').val();
+        if (pas === "") {
+            $('#confirmPswTips').text("请输入新的登录密码");
+            $('#confirmPswTips').css("color", "#ff0000");
+            $('#confirmPsw').css("border-color", "#ff0000");
+        } else if (newPas !== pas) {
+            $('#confirmPswTips').text("两次输入的密码不一致");
+            $('#confirmPswTips').css("color", "#ff0000");
+            $('#confirmPsw').css("border-color", "#ff0000");
+        } else {
+            $('#confirmPsw').css("border-color", "#cecccc");
+            $('#confirmPswTips').text("");
+        }
+    }
+
+    //确认修改密码
+    function confirmModifyPsw() {
+        var n = $('#newPsw').val();
+        var c = $('#confirmPsw').val();
+
+        if (n === '') {
+            $('#newPswTips').text("请输入新的登录密码");
+            $('#newPswTips').css("color", "#ff0000");
+            $('#newPsw').css("border-color", "#ff0000");
+        } else if (n === '') {
+            $('#confirmPswTips').text("请输入新的登录密码");
+            $('#confirmPswTips').css("color", "#ff0000");
+            $('#confirmPsw').css("border-color", "#ff0000");
+        } else if (n !== c) {
+            $('#confirmPswTips').text("两次输入的密码不一致");
+            $('#confirmPswTips').css("color", "#ff0000");
+            $('#confirmPsw').css("border-color", "#ff0000");
+        } else {
+            $.ajax({
+                type: "post",
+                url: '/backstageManagement/modifyPassword',
+                data: {'password': c},
+                async: false,
+                success: function (data) {
+                    if (data === 'success') {
+                        cancel();
+                        layer.msg('密码修改成功，3秒后自动跳转登录页面', {
+                            anim: 0,
+                            icon: 1,
+                            time: 3000,
+                            shade: [0.5, '#393D49']
+                        });
+                        //修改成功后，3秒后跳转登录页
+                        setTimeout(function () {
+                            location.href = "${path}logout";
+                        }, 3000)
+                    } else {
+                        tips('修改失败', 1, 2, 2000);
+                    }
+                },
+                error: function (result) {
+                    tips('出错', 1, 2, 2000);
+                }
+            });
         }
     }
 
@@ -1113,7 +1223,7 @@
                 }
             })
         } else {
-            layer.msg('请选择拟稿人！')
+            layer.msg('请选择负责人！')
         }
     }
 
@@ -1798,6 +1908,113 @@
         } else {
             $(own).next().html("");
             return true;
+        }
+    }
+
+    /**---------------OA审批表单-----------------*/
+    //OA审批单，部门选择
+    function selectionDepartment(departmentList, flag) {
+        window.lar = layer.open({
+            title: '选择部门',
+            type: 1,
+            area: ['20%', '50%'],
+            shadeClose: true, //点击遮罩关闭
+            content: $("#departmentSelector"),
+            offset: "20%"
+        });
+        $('#departmentFlag').val(flag);
+        //加载部门
+        var department = "";
+        for (let i = 0; i < departmentList.length; i++) {
+            department += '<li class="selection-box-li">';
+            department += '<img src="../../static/images/icon/department.png">';
+            department += '<span onclick="selectedDepartment(this)" id="' + departmentList[i].departmentKey + '">' + departmentList[i].departmentName + '</span>';
+            department += '<div></div>';
+            department += '</li>';
+        }
+        $("#departmentList").html(department);
+    }
+
+    //部门选择器
+    function selectedDepartment(own) {
+        if ($(own).nextAll('div').hasClass("selection")) {
+            $(own).nextAll('div').removeClass("selection");
+        } else {
+            $('#selectionDep').find('div').removeClass("selection");
+            $(own).nextAll("div").addClass("selection");
+        }
+    }
+
+    //提交
+    function confirmDepartmentSelection() {
+        var lis = $("#selectionDep").find("div");
+        //是否包含selectedDrafter
+        if (lis.hasClass("selection")) {
+            var id = $(".selection").prev().attr('id')
+            var name = $(".selection").prev().text()
+            var flag = $('#departmentFlag').val();
+            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.selectDepartmentComplete(id, name, flag);
+            layer.close(window.lar);
+        } else {
+            layer.msg('请选择部门！')
+        }
+    }
+
+    //OA审批表中使用
+    function selectRecipient(userInfoList, departmentList) {
+        window.lar = layer.open({
+            title: '请选择',
+            type: 1,
+            area: ['20%', '50%'],
+            shadeClose: true, //点击遮罩关闭
+            content: $("#selectRecipientModel"),
+            offset: "20%"
+        });
+        //加载部门和员工
+        var department = "";
+        for (let i = 0; i < departmentList.length; i++) {
+            department += '<li class="selection-box-li">';
+            department += '<img src="../../static/images/icon/department.png">';
+            department += '<span onclick="departmentSelect(this)" id="' + departmentList[i].departmentKey + '">' + departmentList[i].departmentName + '</span>';
+            department += '<div></div>';
+            for (let j = 0; j < userInfoList.length; j++) {
+                if (userInfoList[j].department === departmentList[i].departmentKey) {
+                    department += '<ul class="submenu-ul">';
+                    department += '<li onclick="addSelectionUserRecipient(this)">';
+                    department += '<img src="../../static/images/icon/personnel.png">';
+                    department += '<span id="' + userInfoList[j].id + '">' + userInfoList[j].nickname + '</span>';
+                    department += '<div></div>';
+                    department += '</li>';
+                    department += '</ul>';
+                }
+            }
+            department += '</li>';
+        }
+        $("#departmentAndUserRecipient").html(department);
+    }
+
+    //用户选择器
+    function addSelectionUserRecipient(own) {
+        if ($(own).children('div').hasClass("selection")) {
+            $(own).children('div').removeClass("selection");
+        } else {
+            $('#selectDepartmentRecipient').find('div').removeClass("selection");
+            $(own).find("div").addClass("selection");
+        }
+    }
+
+    //提交
+    function confirmDepartmentRecipient() {
+        var lis = $("#selectDepartmentRecipient").find("div");
+        //是否包含selectedDrafter
+        if (lis.hasClass("selection")) {
+            //选择的用户id
+            var principal = $(".selection").prev().attr('id');
+            var principalStr = $(".selection").prev().text();
+            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.confirmSelectRecipient(principal, principalStr);
+            layer.close(window.lar);
+        } else {
+            layer.msg('请选择被通知人！')
         }
     }
 

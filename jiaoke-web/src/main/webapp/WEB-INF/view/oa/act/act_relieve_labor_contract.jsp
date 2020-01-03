@@ -65,8 +65,8 @@
                     <button type="button" class="table-tab-send" onclick="send()">发送</button>
                 </td>
 
-                <th nowrap="nowrap" class="th_title" style="width: 4%">标题:</th>
-                <td style="width: 44%">
+                <th nowrap="nowrap" class="th_title" style="width: 4%">标题</th>
+                <td style="width: 28%">
                     <div class="common_input_frame">
                         <input type="text" id="title" name="title" placeholder="请输入标题" title="点击此处填写标题"
                                value="解除劳动合同审批表(${nickname} <%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>)"
@@ -74,12 +74,11 @@
                     </div>
                 </td>
 
-                <th class="th_title" nowrap="nowrap" style="width: 4%">流程:</th>
+                <th class="th_title" nowrap="nowrap" style="width: 4%">流程</th>
                 <td>
                     <div class="common_input_frame">
                         <input type="text"
-                               placeholder="发起者部门(审批)、分管部门(审批)、劳资部门(审批)、总经理(审批)、发起人(协同)"
-                               readonly="readonly">
+                               placeholder="人事(查阅),发起者部门负责人(审批),发起者部门主管领导(审批),人事部门(审批),总经理(审批),人事、发起人(协同)" readonly>
                     </div>
                 </td>
             </tr>
@@ -98,19 +97,20 @@
 
             <td class="tdLabel">入职日期</td>
             <td class="table-td-content">
-                <input type="text" class="formInput entry-date" name="entryDateStr" onfocus="this.blur()">
+                <input type="text" class="formInput entry-date" name="entryDate" onfocus="this.blur()">
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel">部门及职位</td>
             <td class="table-td-content">
-                <input type="text" class="formInput" name="departmentPosition" autocomplete="off">
+                <input type="text" class="formInput-readonly" name="departmentPosition" value="${department} - ${job}"
+                       readonly>
             </td>
 
             <td class="tdLabel">申请离职日期</td>
             <td class="table-td-content">
-                <input type="text" class="formInput quit-date" name="applyDepartureDateStr" onfocus="this.blur()">
+                <input type="text" class="formInput quit-date" name="applyDepartureDate" onfocus="this.blur()">
             </td>
         </tr>
 
@@ -121,7 +121,8 @@
                     <input type="checkbox" name="relieveType" value="0" style="vertical-align: middle;margin-left: 5px">
                 </span>
                 <span style="margin-left: 50px">单位解除劳动合同
-                    <input type="checkbox" name="relieveType" value="1" style="vertical-align: middle;margin-left: 5px" checked>
+                    <input type="checkbox" name="relieveType" value="1" style="vertical-align: middle;margin-left: 5px"
+                           checked>
                 </span>
                 <span style="margin-left: 50px">协商一致解除劳动合同
                     <input type="checkbox" name="relieveType" value="2" style="vertical-align: middle;margin-left: 5px">
@@ -132,14 +133,16 @@
         <tr>
             <td class="tdLabel">解除劳动合同原因</td>
             <td colspan="5" class="approval-content">
-                <textarea class="approval-content-textarea" style="height: 90px;background-color: #fff;" name="reason"></textarea>
+                <textarea class="approval-content-textarea" style="height: 90px;background-color: #fff;"
+                          name="reason"></textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
-                    <input class="approval-date-input" type="text" value="${nickname}" readonly>
+                    <label class="approval-date-label">日期 </label>
+                    <input class="approval-date-input" type="text"
+                           value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">职工本人(签字):</label>
-                    <input class="approval-signature-input" type="text" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>
+                    <label class="approval-signature-label">职工本人(签字) </label>
+                    <input class="approval-signature-input" type="text" value="${nickname}" readonly>
                 </div>
             </td>
         </tr>
@@ -148,26 +151,26 @@
             <td class="tdLabel">主管部门审批意见</td>
             <td colspan="5" class="table-td-textarea" style="line-height: 0">
                 <div class="opinion-principal">
-                    <label class="opinion-principal-title">部长：</label>
+                    <label class="opinion-principal-title">部门负责人</label>
                     <textarea class="opinion-column-Juxtaposition" readonly></textarea>
                     <div class="approval-date">
-                        <label class="approval-date-label">日期:</label>
+                        <label class="approval-date-label">日期 </label>
                         <input class="approval-date-input" type="text" readonly>
                     </div>
                     <div class="approval-signature">
-                        <label class="approval-signature-label">部门负责人:</label>
+                        <label class="approval-signature-label">签字 </label>
                         <input class="approval-signature-input" type="text" readonly>
                     </div>
                 </div>
                 <div class="opinion-supervisor">
-                    <label class="opinion-principal-title">主管：</label>
+                    <label class="opinion-principal-title">部门主管领导</label>
                     <textarea class="opinion-column-Juxtaposition" readonly></textarea>
                     <div class="approval-date">
-                        <label class="approval-date-label">日期:</label>
+                        <label class="approval-date-label">日期 </label>
                         <input class="approval-date-input" type="text" readonly>
                     </div>
                     <div class="approval-signature">
-                        <label class="approval-signature-label">主管领导:</label>
+                        <label class="approval-signature-label">签字 </label>
                         <input class="approval-signature-input" type="text" readonly>
                     </div>
                 </div>
@@ -179,11 +182,11 @@
             <td colspan="5" class="approval-content">
                 <textarea class="approval-content-textarea" readonly></textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
+                    <label class="approval-date-label">日期 </label>
                     <input class="approval-date-input" type="text" readonly>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">主管领导(签字):</label>
+                    <label class="approval-signature-label">签字 </label>
                     <input class="approval-signature-input" type="text" readonly>
                 </div>
             </td>
@@ -194,11 +197,11 @@
             <td colspan="5" class="approval-content">
                 <textarea class="approval-content-textarea" readonly></textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
+                    <label class="approval-date-label">日期 </label>
                     <input class="approval-date-input" type="text" readonly>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">总经理(签字或盖章):</label>
+                    <label class="approval-signature-label">签字 </label>
                     <input class="approval-signature-input" type="text" readonly>
                 </div>
             </td>
@@ -362,10 +365,11 @@
     //打印
     function printContent() {
         $('#tool,#titleArea,#annexList').hide();
-        // $('#body').css('width','100%');
+        $('#body').css('width', '100%');
         //执行打印
         window.print();
         $('#tool,#titleArea').show();
+        $('#body').css('width', '80%');
 
         //附件列表
         let annexesLen = $('#annexes').children().length;

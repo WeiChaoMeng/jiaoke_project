@@ -16,15 +16,14 @@
     <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
 </head>
 
-<body id="body">
+<body style="width: 70%" id="body">
 
 <div class="table-title">
-    <span>劳动合同终止通知书</span>
+    <span>编辑劳动合同终止通知书</span>
 </div>
 
 <div class="top_toolbar" id="tool">
     <div class="top_toolbar_inside">
-
         <div class="head_left_button">
             <button type="button" class="cursor_hand" onclick="savePending()">&#xea97; 保存待发</button>
         </div>
@@ -41,19 +40,49 @@
             <button type="button" class="cursor_hand" onclick="printContent()">&#xea0e; 打印</button>
         </div>
     </div>
-</div>
 
-<%--附件列表--%>
-<div class="top_toolbar" id="annexList" style="display: none;">
-    <div class="top-toolbar-annexes">
+    <%--附件列表--%>
+    <c:choose>
+        <c:when test="${oaActLaborContractStop.annex != ''}">
+            <div class="top_toolbar" id="annexList" style="display: block;">
+                <div class="top-toolbar-annexes">
 
-        <div class="annexes-icon">
-            <button type="button" class="cursor_hand">&#xeac1; ：</button>
-        </div>
+                    <div class="annexes-icon">
+                        <button type="button" class="cursor_hand">&#xeac1; ：</button>
+                    </div>
 
-        <div id="annexes"></div>
+                    <div id="annexes">
+                        <c:forTokens items="${oaActLaborContractStop.annex}" delims="," var="annex">
+                            <div id="file${fn:substring(annex,0,annex.indexOf("_"))}" class="table-file">
+                                <div class="table-file-content">
+                                    <a class="table-file-title" href="/fileDownloadHandle/download?fileName=${annex}"
+                                       title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}
+                                    </a>
+                                    <span class="delete-file" title="删除"
+                                          onclick="whether('${annex}')"></span>
+                                    <input type="hidden" value="${annex}">
+                                </div>
+                            </div>
+                        </c:forTokens>
+                    </div>
 
-    </div>
+                </div>
+            </div>
+        </c:when>
+        <c:otherwise>
+            <div class="top_toolbar" id="annexList" style="display: none;">
+                <div class="top-toolbar-annexes">
+
+                    <div class="annexes-icon">
+                        <button type="button" class="cursor_hand">&#xeac1; ：</button>
+                    </div>
+
+                    <div id="annexes"></div>
+
+                </div>
+            </div>
+        </c:otherwise>
+    </c:choose>
 </div>
 
 <form id="oaActLaborContractStop">
@@ -65,17 +94,18 @@
                     <button type="button" class="table-tab-send" onclick="send()">发送</button>
                 </td>
 
-                <th nowrap="nowrap" class="th_title" style="width: 4%">标题:</th>
-                <td style="width: 44%">
+                <th nowrap="nowrap" class="th_title" style="width: 5%">标题</th>
+                <td style="width: 40%">
                     <div class="common_input_frame">
-                        <input type="text" id="title" name="title" placeholder="请输入标题" title="点击此处填写标题" value="${oaActLaborContractStop.title}" autocomplete="off">
+                        <input type="text" id="title" name="title" placeholder="请输入标题" title="点击此处填写标题"
+                               value="${oaActLaborContractStop.title}" autocomplete="off">
                     </div>
                 </td>
 
-                <th class="th_title" nowrap="nowrap" style="width: 4%">流程:</th>
+                <th class="th_title" nowrap="nowrap" style="width: 5%">流程</th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" placeholder="接收人、通知人(协同)" readonly="readonly">
+                        <input type="text" placeholder="人事发起,接收人填写意见,通知人、人事(协同)" readonly>
                     </div>
                 </td>
             </tr>
@@ -85,14 +115,19 @@
 
     <div>
         <div class="notice-personnel">
-            <input type="text" class="notice-personnel-field" name="name" value="${oaActLaborContractStop.name}" autocomplete="off">:
+            <input type="text" class="notice-personnel-field" onclick="recipientSelect()"
+                   value="${oaActLaborContractStop.notifiedPersonStr}" id="recipientName" readonly>:
+            <input type="hidden" id="recipientId" name="notifiedPerson" value="${oaActLaborContractStop.notifiedPerson}">
         </div>
 
         <div class="notice-content">
             你与我公司签订的合同期为
-            <input class="agreement-start-end start-date" type="text" name="startDate" value="${oaActLaborContractStop.startDate}" onfocus="this.blur()">至
-            <input class="agreement-start-end end-date" type="text" name="endDate" value="${oaActLaborContractStop.endDate}" onfocus="this.blur()">的劳动合同将于
-            <input type="text" class="agreement-days" name="number" value="${oaActLaborContractStop.number}" autocomplete="off"
+            <input class="agreement-start-end start-date" type="text" name="startDate"
+                   value="${oaActLaborContractStop.startDate}" onfocus="this.blur()">至
+            <input class="agreement-start-end end-date" type="text" name="endDate"
+                   value="${oaActLaborContractStop.endDate}" onfocus="this.blur()">的劳动合同将于
+            <input type="text" class="agreement-days" name="number" value="${oaActLaborContractStop.number}"
+                   autocomplete="off"
                    oninput="value=value.replace(/^(0+)|[^\d]/g,'')">天后到期。（附《劳动合同续订个人意向》）
             <input type="hidden" id="annex" name="annex">
             <input type="hidden" id="id" name="id" value="${oaActLaborContractStop.id}">
@@ -103,8 +138,10 @@
         <div class="notice-sign">
             <div class="notice-sign-position">
                 <label>通知人：</label>
-                <input class="notice-relevant-personnel" type="text" value="${oaActLaborContractStop.promoterStr}" readonly>
-                <input class="notice-date" type="text" name="noticeDate" value="${oaActLaborContractStop.noticeDate}" readonly>
+                <input class="notice-relevant-personnel" type="text" value="${oaActLaborContractStop.promoterStr}"
+                       readonly>
+                <input class="notice-date" type="text" name="noticeDate" value="${oaActLaborContractStop.noticeDate}"
+                       readonly>
             </div>
         </div>
 
@@ -117,10 +154,9 @@
         <div class="notice-sign">
             <div class="notice-sign-position">
                 <label>接收人：</label>
-                <input class="notice-relevant-personnel" type="text" disabled>
-                <input class="notice-date" type="text"
-                       value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年&nbsp;&nbsp;&nbsp;&nbsp;月&nbsp;&nbsp;&nbsp;&nbsp;日"
-                       disabled>
+                <input class="notice-relevant-personnel" type="text" readonly>
+                <input class="notice-date" type="text" readonly
+                       value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年&nbsp;&nbsp;&nbsp;&nbsp;月&nbsp;&nbsp;&nbsp;&nbsp;日">
             </div>
         </div>
     </div>
@@ -138,57 +174,28 @@
         </tr>
 
         <tr id="renewal">
-            <c:choose>
-                <c:when test="${oaActLaborContractStop.renewal == 0}">
-                    <td colspan="2" style="height: 30px;text-align: center">
-                        <input type="checkbox" name="renewal" value="0" style="vertical-align: middle;margin-left: 5px" checked>
-                    </td>
-                </c:when>
-                <c:otherwise>
-                    <td colspan="2" style="height: 30px;text-align: center">
-                        <input type="checkbox" name="renewal" value="0" style="vertical-align: middle;margin-left: 5px">
-                    </td>
-                </c:otherwise>
-            </c:choose>
-
-            <c:choose>
-                <c:when test="${oaActLaborContractStop.renewal == 1}">
-                    <td colspan="2" style="height: 30px;text-align: center">
-                        <input type="checkbox" name="renewal" value="1" style="vertical-align: middle;margin-left: 5px" checked>
-                    </td>
-                </c:when>
-                <c:otherwise>
-                    <td colspan="2" style="height: 30px;text-align: center">
-                        <input type="checkbox" name="renewal" value="1" style="vertical-align: middle;margin-left: 5px">
-                    </td>
-                </c:otherwise>
-            </c:choose>
-
-            <c:choose>
-                <c:when test="${oaActLaborContractStop.renewal == 2}">
-                    <td colspan="2" style="height: 30px;text-align: center">
-                        <input type="checkbox" name="renewal" value="2" style="vertical-align: middle;margin-left: 5px" checked>
-                    </td>
-                </c:when>
-                <c:otherwise>
-                    <td colspan="2" style="height: 30px;text-align: center">
-                        <input type="checkbox" name="renewal" value="2" style="vertical-align: middle;margin-left: 5px">
-                    </td>
-                </c:otherwise>
-            </c:choose>
+            <td colspan="2" style="height: 30px;text-align: center">
+                <input type="checkbox" value="0" disabled>
+            </td>
+            <td colspan="2" style="height: 30px;text-align: center">
+                <input type="checkbox" value="1" disabled>
+            </td>
+            <td colspan="2" style="height: 30px;text-align: center">
+                <input type="checkbox" value="2" disabled>
+            </td>
         </tr>
 
         <tr>
             <td class="notice-td-label">其他需要补充的内容</td>
             <td colspan="5" class="table-td-evaluation">
-                <textarea class="evaluation-content" style="height: 90px" name="supplementDetails">${oaActLaborContractStop.supplementDetails}</textarea>
+                <textarea class="evaluation-content-disabled" style="height: 90px" readonly></textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
-                    <input class="approval-date-input" type="text" value="${oaActLaborContractStop.createTimeStr}" disabled="disabled">
+                    <label class="approval-date-label">日期 </label>
+                    <input class="approval-date-input" type="text" readonly>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">本人签字:</label>
-                    <input class="approval-signature-input" type="text" value="${oaActLaborContractStop.createTimeStr}" disabled="disabled">
+                    <label class="approval-signature-label">本人签字 </label>
+                    <input class="approval-signature-input" type="text" readonly>
                 </div>
             </td>
         </tr>
@@ -239,6 +246,8 @@
 
         if ($.trim($("#title").val()) === '') {
             window.top.tips("标题不可以为空！", 6, 5, 2000);
+        } else if ($.trim($("#recipientName").val()) === '') {
+            window.top.tips("请选择要通知的人！", 6, 5, 2000);
         } else {
             //发送前将上传好的附件插入form中
             $('#annex').val(array);
@@ -294,31 +303,6 @@
         }
     }
 
-    //附件列表
-    $(function () {
-        var annexList = JSON.parse('${annexList}');
-        if (annexList !== "") {
-            var ret = annexList.split(',');
-            $('#annexList').css("display", "block");
-            for (let i = 0; i < ret.length; i++) {
-
-                var annex = '';
-                var uuid = ret[i].substring(0, ret[i].indexOf("_"));
-                var originalName = ret[i].substring(ret[i].lastIndexOf("_") + 1, ret[i].length);
-
-                annex += '<div id="file' + uuid + '" class="table-file">';
-                annex += '<div class="table-file-content">';
-                annex += '<a class="table-file-title" href="/fileDownloadHandle/download?fileName=' + ret[i] + '" title="' + originalName + '">' + originalName + '</a>';
-                annex += '<span class="delete-file" title="删除" onclick="whether(\'' + ret[i] + '\')">&#xeabb;</span>';
-                annex += '<input type="hidden" value="' + ret[i] + '">';
-                annex += '</div>';
-                annex += '</div>';
-                $('#annexes').append(annex);
-            }
-        }
-    });
-
-
     //插入附件
     function insertFile() {
         window.top.uploadFile();
@@ -341,60 +325,33 @@
         }
     }
 
+
     //删除已上传附件
     function whether(fileName) {
         window.top.deleteUploaded(fileName);
     }
 
+
     //执行删除附件
     function delFile(fileName) {
         $.ajax({
-            async: false,
             type: "POST",
             url: '${path}/fileUploadHandle/deleteFile',
             data: {"fileName": fileName},
             error: function (request) {
-                layer.msg("出错！");
+                window.top.tips("出错！", 6, 2, 1000);
             },
             success: function (result) {
                 if (result === "success") {
-
-                    //删除页面中文件
                     $('#file' + fileName.substring(0, fileName.indexOf("_"))).remove();
+                    window.top.tips("删除成功！", 0, 1, 1000);
 
-                    //影藏页面中附件列表
                     let annexesLen = $('#annexes').children().length;
                     if (annexesLen === 0) {
                         $('#annexList').css("display", "none");
                     }
-
-                    //删除数据库中附件
-                    var array = [];
-                    $('#annexes').find('input').each(function () {
-                        array.push($(this).val());
-                    });
-
-                    var id = $('#id').val();
-
-                    $.ajax({
-                        type: "POST",
-                        url: '${path}/laborContractStop/deleteAnnexes',
-                        data: {'array': array, 'id': id},
-                        traditional: true,
-                        async: false,
-                        error: function (request) {
-                            layer.msg("出错！");
-                        },
-                        success: function (result) {
-                            if (result === "success") {
-                                window.top.tips("删除成功！", 0, 1, 2000);
-                            } else {
-                                window.top.tips("删除失败！", 0, 2, 1000);
-                            }
-                        }
-                    });
                 } else {
-                    window.top.tips("文件不存在！", 6, 5, 2000);
+                    window.top.tips("文件不存在！", 6, 5, 1000);
                 }
             }
         });
@@ -407,7 +364,7 @@
         //执行打印
         window.print();
         $('#tool,#titleArea').show();
-        $('#body').css('width', '80%');
+        $('#body').css('width', '70%');
 
         //附件列表
         let annexesLen = $('#annexes').children().length;
@@ -416,6 +373,21 @@
         } else {
             $('#annexList').css("display", "block");
         }
+    }
+
+    //选择接收人
+    function recipientSelect() {
+        //用户
+        var userInfoList = JSON.parse('${userInfoList}');
+        //部门
+        var departmentList = JSON.parse('${departmentList}');
+        window.top.selectRecipient(userInfoList, departmentList);
+    }
+
+    //确认接收人
+    function confirmSelectRecipient(id, name) {
+        $('#recipientId').val(id);
+        $('#recipientName').val(name);
     }
 </script>
 </html>

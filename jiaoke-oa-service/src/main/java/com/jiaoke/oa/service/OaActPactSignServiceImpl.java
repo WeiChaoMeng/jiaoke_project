@@ -37,7 +37,7 @@ public class OaActPactSignServiceImpl implements OaActPactSignService {
         oaActPactSign.setCreateTime(new Date());
         oaActPactSign.setPromoter(userId);
         oaActPactSign.setUrl("pactSign");
-        if (oaActPactSignMapper.insert(oaActPactSign) < 0) {
+        if (oaActPactSignMapper.insertSelective(oaActPactSign) < 0) {
             return -1;
         } else {
             OaCollaboration oaCollaboration = new OaCollaboration();
@@ -46,6 +46,9 @@ public class OaActPactSignServiceImpl implements OaActPactSignService {
             oaCollaboration.setTitle(oaActPactSign.getTitle());
             oaCollaboration.setUrl("pactSign");
             oaCollaboration.setTable("oa_act_pact_sign");
+            oaCollaboration.setName("劳动合同签订、续订、变更、终止审批表");
+            oaCollaboration.setDataOne("通知时间：" + DateUtil.dateConvertYYYYMMDD(oaActPactSign.getCreateTime()));
+            oaCollaboration.setDataTwo("劳务协议到期时间：" + oaActPactSign.getStartDate());
             oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);
@@ -68,6 +71,7 @@ public class OaActPactSignServiceImpl implements OaActPactSignService {
         OaActPactSign oaActPactSign = oaActPactSignMapper.selectByPrimaryKey(id);
         oaActPactSign.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActPactSign.getCreateTime()));
         oaActPactSign.setPromoterStr(userInfoMapper.getNicknameById(oaActPactSign.getPromoter()));
+        oaActPactSign.setNotifiedPersonStr(userInfoMapper.getNicknameById(oaActPactSign.getNotifiedPerson()));
         return oaActPactSign;
     }
 
@@ -78,14 +82,7 @@ public class OaActPactSignServiceImpl implements OaActPactSignService {
     }
 
     @Override
-    public int updateAnnexes(String[] array, String id) {
-        OaActPactSign oaActPactSign = new OaActPactSign();
-        oaActPactSign.setId(id);
-        if (array != null) {
-            oaActPactSign.setAnnex(StringUtils.join(array));
-        } else {
-            oaActPactSign.setAnnex("");
-        }
+    public int updateByPrimaryKeySelective(OaActPactSign oaActPactSign) {
         return oaActPactSignMapper.updateByPrimaryKeySelective(oaActPactSign);
     }
 }

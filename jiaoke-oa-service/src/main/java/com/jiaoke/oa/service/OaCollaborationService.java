@@ -26,6 +26,7 @@ public interface OaCollaborationService {
      * 查询已发事项
      *
      * @param oaCollaborations oaCollaborations
+     * @param title title
      * @return list
      */
     List<OaCollaboration> selectAlreadySend(List<OaCollaboration> oaCollaborations, String title);

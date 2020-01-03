@@ -135,14 +135,14 @@
     </tr>
 
     <tr>
-        <td class="tdLabel">经营部长</td>
-        <td class="table-td-content">
-            ${oaActEngineering.minister}
-        </td>
-
         <td class="tdLabel">经营负责人</td>
         <td class="table-td-content">
             ${oaActEngineering.principal}
+        </td>
+
+        <td class="tdLabel">经营部长</td>
+        <td class="table-td-content">
+            ${oaActEngineering.supervisor}
         </td>
     </tr>
 

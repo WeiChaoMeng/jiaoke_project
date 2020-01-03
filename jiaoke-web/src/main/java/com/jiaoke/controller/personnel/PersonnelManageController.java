@@ -59,6 +59,18 @@ public class PersonnelManageController {
         return "personnel/index";
     }
 
+    /**
+     * 加载首页数据
+     *
+     * @return jsp
+     */
+    @RequestMapping(value = "/statistics.api")
+    @ResponseBody
+    public String statistics() {
+        Map<String, Integer> map = personnelManageService.getHomePageData();
+        return JsonHelper.toJSONString(map);
+    }
+
     /**--------------基本信息--------------*/
     /**
      * 跳转员工基本信息

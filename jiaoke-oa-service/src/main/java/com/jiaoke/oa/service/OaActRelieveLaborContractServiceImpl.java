@@ -6,7 +6,6 @@ import com.jiaoke.oa.bean.OaCollaboration;
 import com.jiaoke.oa.dao.OaActRelieveLaborContractMapper;
 import com.jiaoke.oa.dao.OaCollaborationMapper;
 import com.jiaoke.oa.dao.UserInfoMapper;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -33,13 +32,11 @@ public class OaActRelieveLaborContractServiceImpl implements OaActRelieveLaborCo
 
     @Override
     public int insert(OaActRelieveLaborContract oaActRelieveLaborContract, Integer userId, String randomId, Integer state) {
-        oaActRelieveLaborContract.setEntryDate(DateUtil.stringConvertYYYYMMDD(oaActRelieveLaborContract.getEntryDateStr()));
-        oaActRelieveLaborContract.setApplyDepartureDate(DateUtil.stringConvertYYYYMMDD(oaActRelieveLaborContract.getApplyDepartureDateStr()));
         oaActRelieveLaborContract.setId(randomId);
         oaActRelieveLaborContract.setCreateTime(new Date());
         oaActRelieveLaborContract.setPromoter(userId);
         oaActRelieveLaborContract.setUrl("relieveLaborContract");
-        if (oaActRelieveLaborContractMapper.insert(oaActRelieveLaborContract) < 0) {
+        if (oaActRelieveLaborContractMapper.insertSelective(oaActRelieveLaborContract) < 0) {
             return -1;
         } else {
             OaCollaboration oaCollaboration = new OaCollaboration();
@@ -48,6 +45,15 @@ public class OaActRelieveLaborContractServiceImpl implements OaActRelieveLaborCo
             oaCollaboration.setTitle(oaActRelieveLaborContract.getTitle());
             oaCollaboration.setUrl("relieveLaborContract");
             oaCollaboration.setTable("oa_act_relieve_labor_contract");
+            oaCollaboration.setName("解除劳动合同审批");
+            if (oaActRelieveLaborContract.getRelieveType() == 0) {
+                oaCollaboration.setDataOne("解除类型：个人提出辞职");
+            } else if (oaActRelieveLaborContract.getRelieveType() == 1) {
+                oaCollaboration.setDataOne("解除类型：单位解除劳动合同");
+            } else {
+                oaCollaboration.setDataOne("解除类型：协商一致解除劳动合同");
+            }
+            oaCollaboration.setDataTwo("申请离职日期：" + oaActRelieveLaborContract.getApplyDepartureDate());
             oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);
@@ -57,8 +63,6 @@ public class OaActRelieveLaborContractServiceImpl implements OaActRelieveLaborCo
 
     @Override
     public int edit(OaActRelieveLaborContract oaActRelieveLaborContract) {
-        oaActRelieveLaborContract.setEntryDate(DateUtil.stringConvertYYYYMMDD(oaActRelieveLaborContract.getEntryDateStr()));
-        oaActRelieveLaborContract.setApplyDepartureDate(DateUtil.stringConvertYYYYMMDD(oaActRelieveLaborContract.getApplyDepartureDateStr()));
         if (oaActRelieveLaborContractMapper.updateByPrimaryKeySelective(oaActRelieveLaborContract) < 0) {
             return -1;
         } else {
@@ -71,8 +75,6 @@ public class OaActRelieveLaborContractServiceImpl implements OaActRelieveLaborCo
     public OaActRelieveLaborContract selectByPrimaryKey(String id) {
         OaActRelieveLaborContract oaActRelieveLaborContract = oaActRelieveLaborContractMapper.selectByPrimaryKey(id);
         oaActRelieveLaborContract.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActRelieveLaborContract.getCreateTime()));
-        oaActRelieveLaborContract.setEntryDateStr(DateUtil.dateConvertYYYYMMDD(oaActRelieveLaborContract.getEntryDate()));
-        oaActRelieveLaborContract.setApplyDepartureDateStr(DateUtil.dateConvertYYYYMMDD(oaActRelieveLaborContract.getApplyDepartureDate()));
         oaActRelieveLaborContract.setPromoterStr(userInfoMapper.getNicknameById(oaActRelieveLaborContract.getPromoter()));
         return oaActRelieveLaborContract;
     }
@@ -84,14 +86,7 @@ public class OaActRelieveLaborContractServiceImpl implements OaActRelieveLaborCo
     }
 
     @Override
-    public int updateAnnexes(String[] array, String id) {
-        OaActRelieveLaborContract oaActRelieveLaborContract = new OaActRelieveLaborContract();
-        oaActRelieveLaborContract.setId(id);
-        if (array != null) {
-            oaActRelieveLaborContract.setAnnex(StringUtils.join(array));
-        } else {
-            oaActRelieveLaborContract.setAnnex("");
-        }
+    public int updateByPrimaryKeySelective(OaActRelieveLaborContract oaActRelieveLaborContract) {
         return oaActRelieveLaborContractMapper.updateByPrimaryKeySelective(oaActRelieveLaborContract);
     }
 }

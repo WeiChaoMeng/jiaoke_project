@@ -76,4 +76,9 @@ public class DepartmentServiceImpl implements DepartmentService {
     public String selectEnforcerId(String column, String departmentKey) {
         return departmentMapper.selectEnforcer(column, departmentKey);
     }
+
+    @Override
+    public List<Department> selectPrincipalAndSupervisor() {
+        return departmentMapper.selectPrincipalAndSupervisor();
+    }
 }

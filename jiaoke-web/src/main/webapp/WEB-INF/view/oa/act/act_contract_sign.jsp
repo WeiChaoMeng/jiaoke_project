@@ -16,10 +16,10 @@
     <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
 </head>
 
-<body id="body">
+<body id="body" style="width: 75%">
 
 <div class="table-title">
-    <span>劳务派遣员工合同签订、续订、变更、终止审批表</span>
+    <span>外包人员合同签订、续订、变更、终止审批表</span>
 </div>
 
 <div class="top_toolbar" id="tool">
@@ -65,8 +65,8 @@
                     <button type="button" class="table-tab-send" onclick="send()">发送</button>
                 </td>
 
-                <th nowrap="nowrap" class="th_title" style="width: 4%">标题:</th>
-                <td style="width: 37%">
+                <th nowrap="nowrap" class="th_title" style="width: 4%">标题 </th>
+                <td style="width: 39%">
                     <div class="common_input_frame">
                         <input type="text" id="title" name="title" placeholder="请输入标题" title="点击此处填写标题"
                                value="外包人员合同签订、续订、变更、终止审批表(${nickname} <%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>)"
@@ -74,10 +74,10 @@
                     </div>
                 </td>
 
-                <th class="th_title" nowrap="nowrap" style="width: 4%">流程:</th>
+                <th class="th_title" nowrap="nowrap" style="width: 4%">流程 </th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" placeholder="发起者部门负责人(审批)、发起者部门主管领导(审批)、劳资部门(审批)、总经理(审批)、发起者(协同)" readonly="readonly">
+                        <input type="text" placeholder="部门负责人(审批),部门主管领导(审批),劳资部门(审批),总经理(审批),通知人、被通知人(协同)" readonly="readonly">
                     </div>
                 </td>
             </tr>
@@ -87,9 +87,10 @@
 
     <div>
         <div class="notice-content">
-            <input type="text" class="notice-personnel-field" name="name" autocomplete="off">与外包公司签订的劳动合同将于
+            <input type="text" class="notice-personnel-field" onclick="recipientSelect()" id="recipientName" readonly>与外包公司签订的劳动合同将于
             <input class="agreement-start-end start-date" type="text" name="startDate" onfocus="this.blur()">到期，请各部门（领导）于
             <input class="agreement-start-end end-date" type="text" name="endDate" onfocus="this.blur()">前签署意见。
+            <input type="hidden" id="recipientId" name="notifiedPerson">
             <input type="hidden" id="annex" name="annex">
         </div>
     </div>
@@ -101,11 +102,11 @@
             <td colspan="5" class="approval-content">
                 <textarea disabled="disabled" class="approval-content-textarea"></textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
+                    <label class="approval-date-label">日期 </label>
                     <input class="approval-date-input" type="text" readonly>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">签字:</label>
+                    <label class="approval-signature-label">签字 </label>
                     <input class="approval-signature-input" type="text" readonly>
                 </div>
             </td>
@@ -116,11 +117,11 @@
             <td colspan="5" class="approval-content">
                 <textarea disabled="disabled" class="approval-content-textarea"></textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
+                    <label class="approval-date-label">日期 </label>
                     <input class="approval-date-input" type="text" readonly>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">签字:</label>
+                    <label class="approval-signature-label">签字 </label>
                     <input class="approval-signature-input" type="text" readonly>
                 </div>
             </td>
@@ -131,11 +132,11 @@
             <td colspan="5" class="approval-content">
                 <textarea disabled="disabled" class="approval-content-textarea"></textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
+                    <label class="approval-date-label">日期 </label>
                     <input class="approval-date-input" type="text" readonly>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">签字:</label>
+                    <label class="approval-signature-label">签字 </label>
                     <input class="approval-signature-input" type="text" readonly>
                 </div>
             </td>
@@ -146,11 +147,11 @@
             <td colspan="5" class="approval-content">
                 <textarea disabled="disabled" class="approval-content-textarea"></textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
+                    <label class="approval-date-label">日期 </label>
                     <input class="approval-date-input" type="text" readonly>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">签字:</label>
+                    <label class="approval-signature-label">签字 </label>
                     <input class="approval-signature-input" type="text" readonly>
                 </div>
             </td>
@@ -307,10 +308,11 @@
     //打印
     function printContent() {
         $('#tool,#titleArea,#annexList').hide();
-        // $('#body').css('width','100%');
+        $('#body').css('width','100%');
         //执行打印
         window.print();
         $('#tool,#titleArea').show();
+        $('#body').css('width','75%');
 
         //附件列表
         let annexesLen = $('#annexes').children().length;
@@ -319,6 +321,21 @@
         } else {
             $('#annexList').css("display", "block");
         }
+    }
+
+    //选择接收人
+    function recipientSelect() {
+        //用户
+        var userInfoList = JSON.parse('${userInfoList}');
+        //部门
+        var departmentList = JSON.parse('${departmentList}');
+        window.top.selectRecipient(userInfoList, departmentList);
+    }
+
+    //确认接收人
+    function confirmSelectRecipient(id, name) {
+        $('#recipientId').val(id);
+        $('#recipientName').val(name);
     }
 </script>
 </html>

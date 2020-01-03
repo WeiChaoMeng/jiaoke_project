@@ -1,6 +1,7 @@
 package com.jiaoke.oa.dao;
 
 import com.jiaoke.oa.bean.UserInfo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -139,4 +140,13 @@ public interface UserInfoMapper {
      * @return UserInfo
      */
     UserInfo getUserInfoByUseId(Integer userInfoId);
+
+    /**
+     * 根据ID修改密码
+     *
+     * @param id       id
+     * @param password password
+     * @return int
+     */
+    int updatePasswordById(@Param("id") Integer id, @Param("password") String password);
 }

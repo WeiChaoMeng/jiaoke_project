@@ -162,12 +162,12 @@
     <tr>
         <td class="tdLabel">审核人</td>
         <td class="table-td-content">
-            ${oaActCar.reviewer}
+            ${oaActCar.principal}
         </td>
 
         <td class="tdLabel">批准人</td>
         <td class="table-td-content">
-            ${oaActCar.approver}
+            ${oaActCar.supervisor}
         </td>
     </tr>
     </tbody>

@@ -52,7 +52,7 @@
                     <button type="button" class="table-tab-send" onclick="send()">发送</button>
                 </td>
 
-                <th nowrap="nowrap" class="th_title" style="width: 4%">标题:</th>
+                <th nowrap="nowrap" class="th_title" style="width: 4%">标题 </th>
                 <td style="width: 44%">
                     <div class="common_input_frame">
                         <input type="text" id="title" name="title" placeholder="请输入标题" title="点击此处填写标题"
@@ -61,7 +61,7 @@
                     </div>
                 </td>
 
-                <th class="th_title" nowrap="nowrap" style="width: 4%">流程:</th>
+                <th class="th_title" nowrap="nowrap" style="width: 4%">流程 </th>
                 <td>
                     <div class="common_input_frame">
                         <input type="text" placeholder="审批人(王玉秋)、发起者(协同)"
@@ -78,7 +78,7 @@
         <tr>
             <td class="tdLabel">点菜人</td>
             <td class="table-td-content">
-                <input type="text" class="formInput" name="applicant" value="${nickname}" readonly="readonly">
+                <input type="text" class="formInput-readonly" name="applicant" value="${nickname}" readonly="readonly">
             </td>
 
             <td class="tdLabel">招待事由</td>

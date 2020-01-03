@@ -1,8 +1,5 @@
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.util.Date" %>
-<%@ page language="java" contentType="text/html;charset=utf-8" pageEncoding="utf-8" %>
-<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html;charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%
     String path = request.getContextPath();
@@ -14,8 +11,11 @@
     <meta charset="utf-8">
     <title>转岗审批表</title>
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
-    <link href="../../../../static/js/date_pickers/date_picker.css" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
+    <style>
+        .tdLabel {
+            width: 10%;
+        }
+    </style>
 </head>
 
 <body id="body">
@@ -65,48 +65,62 @@
     </c:choose>
 </div>
 
+<div style="margin-top: 10px">
+    <input type="text" class="filling-date-content" value="${transfer.fillingDate}" readonly>
+    <span class="filling-date">填表日期 </span>
+</div>
+
 <table class="formTable">
     <tbody>
     <tr>
         <td class="tdLabel">姓名</td>
-        <td class="table-td-content">
+        <td class="table-td-content" colspan="2">
             ${transfer.name}
         </td>
 
         <td class="tdLabel">年龄</td>
-        <td class="table-td-content">
+        <td class="table-td-content" colspan="2">
             ${transfer.age}
         </td>
 
         <td class="tdLabel">入职时间</td>
         <td class="table-td-content">
-            ${transfer.entryDateStr}
+            ${transfer.entryDate}
         </td>
     </tr>
 
     <tr>
+        <td class="tdLabel">现部门</td>
+        <td class="table-td-content">
+            ${transfer.presentDepartment}
+        </td>
+
         <td class="tdLabel">现岗位</td>
-        <td colspan="2" class="table-td-content">
+        <td class="table-td-content" style="width: 15%">
             ${transfer.presentPost}
         </td>
 
+        <td class="tdLabel">拟转入部门</td>
+        <td class="table-td-content">
+            ${transfer.newDepartmentStr}
+        </td>
+
         <td class="tdLabel">拟转入岗位</td>
-        <td colspan="2" class="table-td-content">
+        <td class="table-td-content">
             ${transfer.newPost}
         </td>
     </tr>
 
     <tr>
         <td class="tdLabel">转岗事由</td>
-        <td colspan="5" class="table-td-evaluation">
-            <textarea class="evaluation-content-disabled" style="height: 90px" name="cause"
-                      disabled>${transfer.cause}</textarea>
+        <td colspan="7" class="table-td-evaluation">
+            <textarea class="evaluation-content-disabled" style="height: 73px" disabled>${transfer.cause}</textarea>
             <div class="approval-date">
-                <label class="approval-date-label">日期:</label>
+                <label class="approval-date-label">日期 </label>
                 <input class="approval-date-input" type="text" value="${transfer.createTimeStr}" disabled>
             </div>
             <div class="approval-signature">
-                <label class="approval-signature-label">本人签字:</label>
+                <label class="approval-signature-label">本人签字 </label>
                 <input class="approval-signature-input" type="text" value="${transfer.promoterStr}" disabled>
             </div>
         </td>
@@ -114,30 +128,30 @@
 
     <tr>
         <td class="tdLabel">所在部门评价</td>
-        <td colspan="5" class="table-td-textarea" style="line-height: 0">
+        <td colspan="7" class="table-td-textarea" style="line-height: 0">
             <div class="opinion-principal">
-                <label class="opinion-principal-title">部长：</label>
-                <textarea class="opinion-column-Juxtaposition" name="remarks" disabled></textarea>
+                <label class="opinion-principal-title">部长</label>
+                <textarea class="opinion-column-Juxtaposition" disabled>${transfer.principalContent}</textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
-                    <input class="approval-date-input" type="text" disabled>
+                    <label class="approval-date-label">日期 </label>
+                    <input class="approval-date-input" type="text" value="${transfer.principalDate}" disabled>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">签字:</label>
-                    <input class="approval-signature-input" type="text" disabled>
+                    <label class="approval-signature-label">签字 </label>
+                    <input class="approval-signature-input" type="text" value="${transfer.principal}" disabled>
                 </div>
             </div>
 
             <div class="opinion-supervisor">
-                <label class="opinion-principal-title">主管：</label>
-                <textarea class="opinion-column-Juxtaposition" name="remarks" disabled></textarea>
+                <label class="opinion-principal-title">主管</label>
+                <textarea class="opinion-column-Juxtaposition" disabled>${transfer.supervisorContent}</textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
-                    <input class="approval-date-input" type="text" disabled>
+                    <label class="approval-date-label">日期 </label>
+                    <input class="approval-date-input" type="text" value="${transfer.supervisorDate}" disabled>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">签字:</label>
-                    <input class="approval-signature-input" type="text" disabled>
+                    <label class="approval-signature-label">签字 </label>
+                    <input class="approval-signature-input" type="text" value="${transfer.supervisor}" disabled>
                 </div>
             </div>
         </td>
@@ -145,30 +159,30 @@
 
     <tr>
         <td class="tdLabel">转入部门意见</td>
-        <td colspan="5" class="table-td-textarea" style="line-height: 0">
+        <td colspan="7" class="table-td-textarea" style="line-height: 0">
             <div class="opinion-principal">
-                <label class="opinion-principal-title">部长：</label>
-                <textarea class="opinion-column-Juxtaposition" name="remarks" disabled></textarea>
+                <label class="opinion-principal-title">部长</label>
+                <textarea class="opinion-column-Juxtaposition" disabled>${transfer.transferPrincipalContent}</textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
-                    <input class="approval-date-input" type="text" disabled>
+                    <label class="approval-date-label">日期 </label>
+                    <input class="approval-date-input" type="text" value="${transfer.transferPrincipalDate}" disabled>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">签字:</label>
-                    <input class="approval-signature-input" type="text" disabled>
+                    <label class="approval-signature-label">签字 </label>
+                    <input class="approval-signature-input" type="text" value="${transfer.transferPrincipal}" disabled>
                 </div>
             </div>
 
             <div class="opinion-supervisor">
-                <label class="opinion-principal-title">主管：</label>
-                <textarea class="opinion-column-Juxtaposition" name="remarks" disabled></textarea>
+                <label class="opinion-principal-title">主管</label>
+                <textarea class="opinion-column-Juxtaposition" disabled>${transfer.transferSupervisorDate}</textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
-                    <input class="approval-date-input" type="text" disabled>
+                    <label class="approval-date-label">日期 </label>
+                    <input class="approval-date-input" type="text" value="${transfer.transferSupervisorDate}" disabled>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">签字:</label>
-                    <input class="approval-signature-input" type="text" disabled>
+                    <label class="approval-signature-label">签字 </label>
+                    <input class="approval-signature-input" type="text" value="${transfer.transferSupervisor}" disabled>
                 </div>
             </div>
         </td>
@@ -176,51 +190,39 @@
 
     <tr>
         <td class="tdLabel">组织人事部意见</td>
-        <td colspan="5" class="approval-content">
-            <textarea class="approval-content-textarea" disabled></textarea>
+        <td colspan="7" class="approval-content">
+            <textarea class="approval-content-textarea" disabled>${transfer.personnelContent}</textarea>
             <div class="approval-date">
-                <label class="approval-date-label">日期:</label>
-                <input class="approval-date-input" type="text" disabled>
+                <label class="approval-date-label">日期 </label>
+                <input class="approval-date-input" type="text" value="${transfer.personnelDate}" disabled>
             </div>
             <div class="approval-signature">
-                <label class="approval-signature-label">签字:</label>
-                <input class="approval-signature-input" type="text" disabled>
+                <label class="approval-signature-label">签字 </label>
+                <input class="approval-signature-input" type="text" value="${transfer.personnel}" disabled>
             </div>
         </td>
     </tr>
 
     <tr>
         <td class="tdLabel">总经理审批</td>
-        <td colspan="5" class="approval-content">
-            <textarea class="approval-content-textarea" disabled></textarea>
+        <td colspan="7" class="approval-content">
+            <textarea class="approval-content-textarea" disabled>${transfer.companyPrincipalContent}</textarea>
             <div class="approval-date">
-                <label class="approval-date-label">日期:</label>
-                <input class="approval-date-input" type="text" disabled>
+                <label class="approval-date-label">日期 </label>
+                <input class="approval-date-input" type="text" value="${transfer.companyPrincipalDate}" disabled>
             </div>
             <div class="approval-signature">
-                <label class="approval-signature-label">签字:</label>
-                <input class="approval-signature-input" type="text" disabled>
+                <label class="approval-signature-label">签字 </label>
+                <input class="approval-signature-input" type="text" value="${transfer.companyPrincipal}" disabled>
             </div>
         </td>
     </tr>
     </tbody>
 </table>
 
-<div class="form-but" id="return">
-    <button type="button" class="return-but" onclick="previousPage()">返回</button>
-</div>
-
 </body>
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
-<script type="text/javascript" src="../../../../static/js/jeDate/src/jedate.js"></script>
-<script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
-
-    //返回上一页
-    function previousPage() {
-        window.history.back();
-    }
-
     //打印
     function printContent() {
         $('#tool,#return').hide();

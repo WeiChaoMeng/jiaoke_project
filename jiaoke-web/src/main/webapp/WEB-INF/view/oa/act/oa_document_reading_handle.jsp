@@ -16,7 +16,7 @@
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
 </head>
 
-<body id="body" style="width: 70%">
+<body id="body" style="width: 65%">
 
 
 <div class="table-title">
@@ -50,7 +50,8 @@
                     <c:forTokens items="${oaActRead.annex}" delims="," var="annex">
                         <div class="table-file">
                             <div class="table-file-content">
-                                <span class="table-file-title" title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <span class="table-file-title"
+                                      title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
                                 <a class="table-file-download icon"
                                    href="/fileDownloadHandle/download?fileName=${annex}"
                                    title="下载">&#xebda;</a>
@@ -66,9 +67,9 @@
 <form id="oaActRead">
 
     <div>
-        <span class="fill-in-date" style="min-width: 130px">${oaActRead.departmentNumbering}</span>
+        <span class="fill-in-date" style="float: right;min-width: 130px">${oaActRead.departmentNumbering}</span>
 
-        <span class="form-number-left" style="float: left;min-width: 130px">编号 ${oaActRead.numbering}</span>
+        <span class="form-number-left" style="float: right;min-width: 130px">编号 ${oaActRead.numbering}</span>
     </div>
 
     <table class="formTable">
@@ -77,6 +78,7 @@
             <td class="tdLabel">来文机关</td>
             <td class="table-td-content">
                 ${oaActRead.organ}
+                <input type="hidden" name="id" value="${oaActRead.id}">
             </td>
 
             <td class="tdLabel">来文字号</td>
@@ -107,20 +109,23 @@
         <tr>
             <td class="tdLabel">拟办意见</td>
             <td colspan="3" class="table-td-content" style="padding: 10px">
-                <shiro:hasPermission name="officePrincipal">
-                    <c:choose>
-                        <c:when test="${oaActRead.suggestion == null}">
-                            <input type="text" class="formInput-readonly" name="principal" value="${nickname}"
-                                   readonly="readonly">
-                        </c:when>
-                        <c:otherwise>
-                            ${oaActRead.suggestion}
-                        </c:otherwise>
-                    </c:choose>
+                <shiro:hasPermission name="receipt_proposed">
+                    <textarea class="write-approval-content-textarea" name="receiptProposedContent"></textarea>
+                    <input type="hidden" name="receiptProposed" value="${nickname}">
+                    <input type="hidden" name="receiptProposedDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">
+
+                    <div style="line-height: 20px;margin-top: 5px;">
+                        <input type="radio" name="notifyObject" value="0" checked
+                               style="vertical-align: middle;margin-left: 5px;outline: none;">
+                        <span style="font-size: 13px;margin-right: 15px;">领导班子成员</span>
+                        <input type="radio" name="notifyObject" value="1"
+                               style="vertical-align: middle;outline: none;">
+                        <span style="font-size: 13px;">各部门负责人</span>
+                    </div>
                 </shiro:hasPermission>
 
-                <shiro:lacksPermission name="officePrincipal">
-                    ${oaActRead.suggestion}
+                <shiro:lacksPermission name="receipt_proposed">
+                    <textarea class="approval-content-textarea" readonly>${oaActRead.receiptProposedContent}</textarea>
                 </shiro:lacksPermission>
             </td>
         </tr>
@@ -128,14 +133,30 @@
         <tr>
             <td class="tdLabel">部门意见</td>
             <td colspan="3" class="table-td-content" style="padding: 10px">
-                ${oaActRead.departmentOpinion}
+                <shiro:hasAnyPermission name="dep_opinion">
+                    <textarea class="approval-content-textarea" readonly>${oaActRead.departmentOpinion}</textarea>
+                </shiro:hasAnyPermission>
+
+                <shiro:lacksPermission name="dep_opinion">
+                    <textarea class="approval-content-textarea" name="departmentOpinion" readonly>${oaActRead.departmentOpinion} ${nickname}</textarea>
+                    <input type="hidden" name="departmentOpinionDate">
+                </shiro:lacksPermission>
+
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel">领导批示</td>
             <td colspan="3" class="table-td-content" style="padding: 10px">
-                ${oaActRead.instructions}
+                <shiro:hasPermission name="company_principal">
+                    <textarea class="write-approval-content-textarea" name="companyPrincipalContent"></textarea>
+                    <input type="hidden" name="companyPrincipal" value="${nickname}">
+                    <input type="hidden" name="companyPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">
+                </shiro:hasPermission>
+
+                <shiro:lacksPermission name="company_principal">
+                    <textarea class="approval-content-textarea" readonly>${oaActRead.companyPrincipalContent}</textarea>
+                </shiro:lacksPermission>
             </td>
         </tr>
 
@@ -173,7 +194,7 @@
         $.ajax({
             type: "post",
             url: '/read/approvalSubmit',
-            data: $('#oaActSealsBorrow').serialize() + "&taskId=" + taskId + "&flag=" + flag,
+            data: $('#oaActRead').serialize() + "&taskId=" + taskId + "&flag=" + flag,
             async: false,
             success: function (data) {
                 if (data === 'success') {
@@ -197,7 +218,7 @@
         //执行打印
         window.print();
         $('#tool').show();
-        $('#body,#return').css('width', '70%');
+        $('#body,#return').css('width', '65%');
     }
 </script>
 </html>

@@ -10,14 +10,16 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>轮岗交接表</title>
+    <title>离职会签表</title>
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
+    <link href="../../../../static/js/date_pickers/date_picker.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
 </head>
 
-<body id="body">
+<body id="body" style="width: 60%">
 
 <div class="table-title">
-    <span>轮岗交接表</span>
+    <span>离职会签表</span>
 </div>
 
 <div class="top_toolbar" id="tool">
@@ -54,8 +56,8 @@
     </div>
 </div>
 
-<form id="oaActRotationHandover">
-    <div class="form_area" id="titleArea" style="margin-bottom: 15px">
+<form id="oaActDeparture">
+    <div class="form_area" id="titleArea">
         <table>
             <tbody>
             <tr>
@@ -63,21 +65,19 @@
                     <button type="button" class="table-tab-send" onclick="send()">发送</button>
                 </td>
 
-                <th nowrap="nowrap" class="th_title" style="width: 4%">标题:</th>
-                <td style="width: 44%">
+                <th nowrap="nowrap" class="th_title" style="width: 5%">标题</th>
+                <td style="width: 40%">
                     <div class="common_input_frame">
                         <input type="text" id="title" name="title" placeholder="请输入标题" title="点击此处填写标题"
-                               value="轮岗交接表(${nickname} <%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>)"
+                               value="离职会签表(${nickname} <%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>)"
                                autocomplete="off">
                     </div>
                 </td>
 
-                <th class="th_title" nowrap="nowrap" style="width: 4%">流程:</th>
+                <th class="th_title" nowrap="nowrap" style="width: 5%">流程</th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text"
-                               placeholder="发起者部门主管领导(审批)、总经理(审批)、人事主管(审批)、发起人(协同)"
-                               readonly="readonly">
+                        <input type="text" placeholder="各部门负责人、主管领导(审批),发起人、人事(知会)" readonly>
                     </div>
                 </td>
             </tr>
@@ -85,93 +85,145 @@
         </table>
     </div>
 
-    <span class="fill-in-date">填表日期：<%=new SimpleDateFormat("yyyy-MM-dd").format(new Date())%></span>
-
     <table class="formTable">
         <tbody>
         <tr>
-            <td class="tdLabel">离岗人姓名</td>
-            <td class="table-td-content">
-                <input type="text" class="formInput-readonly" name="departure" value="${nickname}" readonly>
+            <td class="tdLabel">姓名</td>
+            <td class="table-td-content" style="width: 35%">
+                <input type="text" class="formInput-readonly" name="name" value="${nickname}" readonly>
+                <%--暂存附件--%>
                 <input type="hidden" id="annex" name="annex">
             </td>
 
-            <td class="tdLabel">接岗人姓名</td>
+            <td class="tdLabel">离职日期</td>
             <td class="table-td-content">
-                <input type="text" class="formInput" name="receive" autocomplete="off">
+                <input type="text" class="formInput je-date" name="departureDate" onfocus="this.blur()">
             </td>
         </tr>
 
         <tr>
-            <td class="tdLabel">离岗前岗位</td>
-            <td class="table-td-content">
-                <input type="text" class="formInput" name="departureBefore" autocomplete="off">
-            </td>
-
-            <td class="tdLabel">接岗前岗位</td>
-            <td class="table-td-content">
-                <input type="text" class="formInput" name="receiveBefore" autocomplete="off">
-            </td>
+            <td class="tdLabel">部门</td>
+            <td class="tdLabel" style="text-align: center;">签字(部长、主管)</td>
+            <td class="tdLabel" colspan="2" style="text-align: center;">备注</td>
         </tr>
 
         <tr>
-            <td class="tdLabel">离岗后岗位</td>
+            <td class="tdLabel">综合办公室</td>
+            <td class="table-td-content" style="padding: 5px 10px;">
+                <input type="text" class="formInput-readonly" style="margin-bottom: 5px;" readonly>
+                <input type="text" class="formInput-readonly" readonly>
+            </td>
+
+            <td class="tdLabel">备注</td>
             <td class="table-td-content">
-                <input type="text" class="formInput" name="departureAfter" autocomplete="off">
-            </td>
-
-            <td class="tdLabel">接岗后岗位</td>
-            <td class="table-td-content">
-                <input type="text" class="formInput" name="receiveAfter" autocomplete="off">
-            </td>
-        </tr>
-
-        <tr>
-            <td class="tdLabel">交接事项</td>
-            <td colspan="5" class="table-td-evaluation" style="padding: 10px;height: 200px;">
-                <textarea class="evaluation-content" style="height: 100%" name="matter"></textarea>
-            </td>
-        </tr>
-
-        <tr>
-            <td class="tdLabel">交接中存在的问题</td>
-            <td colspan="5" class="table-td-evaluation" style="padding: 10px;height: 94px;">
-                <textarea class="evaluation-content" style="height: 100%" name="problem"></textarea>
-            </td>
-        </tr>
-
-        <tr>
-            <td class="tdLabel">离岗人签字</td>
-            <td class="table-td-content">
-                <input type="text" class="formInput-readonly" value="${nickname}" readonly>
-            </td>
-
-            <td class="tdLabel">接岗人签字</td>
-            <td class="table-td-content">
+                <input type="text" class="formInput-readonly" style="margin-bottom: 5px;" readonly>
                 <input type="text" class="formInput-readonly" readonly>
             </td>
         </tr>
 
         <tr>
-            <td class="tdLabel">监交人签字</td>
-            <td class="table-td-content">
+            <td class="tdLabel">经营开发部</td>
+            <td class="table-td-content" style="padding: 5px 10px;">
+                <input type="text" class="formInput-readonly" style="margin-bottom: 5px;" readonly>
                 <input type="text" class="formInput-readonly" readonly>
             </td>
 
-            <td class="tdLabel">监交人签字</td>
+            <td class="tdLabel">备注</td>
             <td class="table-td-content">
+                <input type="text" class="formInput-readonly" style="margin-bottom: 5px;" readonly>
                 <input type="text" class="formInput-readonly" readonly>
             </td>
         </tr>
 
+        <tr>
+            <td class="tdLabel">生产管理部</td>
+            <td class="table-td-content" style="padding: 5px 10px;">
+                <input type="text" class="formInput-readonly" style="margin-bottom: 5px;" readonly>
+                <input type="text" class="formInput-readonly" readonly>
+            </td>
+
+            <td class="tdLabel">备注</td>
+            <td class="table-td-content">
+                <input type="text" class="formInput-readonly" style="margin-bottom: 5px;" readonly>
+                <input type="text" class="formInput-readonly" readonly>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">质量技术部</td>
+            <td class="table-td-content" style="padding: 5px 10px;">
+                <input type="text" class="formInput-readonly" style="margin-bottom: 5px;" readonly>
+                <input type="text" class="formInput-readonly" readonly>
+            </td>
+
+            <td class="tdLabel">备注</td>
+            <td class="table-td-content">
+                <input type="text" class="formInput-readonly" style="margin-bottom: 5px;" readonly>
+                <input type="text" class="formInput-readonly" readonly>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">物资管理部</td>
+            <td class="table-td-content" style="padding: 5px 10px;">
+                <input type="text" class="formInput-readonly" style="margin-bottom: 5px;" readonly>
+                <input type="text" class="formInput-readonly" readonly>
+            </td>
+
+            <td class="tdLabel">备注</td>
+            <td class="table-td-content">
+                <input type="text" class="formInput-readonly" style="margin-bottom: 5px;" readonly>
+                <input type="text" class="formInput-readonly" readonly>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">财务管理部</td>
+            <td class="table-td-content" style="padding: 5px 10px;">
+                <input type="text" class="formInput-readonly" style="margin-bottom: 5px;" readonly>
+                <input type="text" class="formInput-readonly" readonly>
+            </td>
+
+            <td class="tdLabel">备注</td>
+            <td class="table-td-content">
+                <input type="text" class="formInput-readonly" style="margin-bottom: 5px;" readonly>
+                <input type="text" class="formInput-readonly" readonly>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">总经理</td>
+            <td class="table-td-content" style="padding: 5px 10px;">
+                <input type="text" class="formInput-readonly" readonly>
+            </td>
+
+            <td class="tdLabel">备注</td>
+            <td class="table-td-content">
+                <input type="text" class="formInput-readonly" readonly>
+            </td>
+        </tr>
         </tbody>
     </table>
 </form>
 
 </body>
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
+<script type="text/javascript" src="../../../../static/js/jeDate/src/jedate.js"></script>
 <script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
+
+    //日期选择器
+    jeDate(".je-date", {
+        theme: {bgcolor: "#00A1CB", pnColor: "#00CCFF"},
+        festival: false,
+        isinitVal: true,
+        isClear: false,                     //是否开启清空
+        minDate: "1900-01-01",              //最小日期
+        maxDate: "2099-12-31",              //最大日期
+        format: "YYYY-MM-DD",
+        zIndex: 100000,
+    });
+
     //发送
     function send() {
         var array = [];
@@ -187,8 +239,8 @@
 
             $.ajax({
                 type: "POST",
-                url: '${path}/rotationHandover/add',
-                data: $('#oaActRotationHandover').serialize(),
+                url: '${path}/departure/add',
+                data: $('#oaActDeparture').serialize(),
                 error: function (request) {
                     layer.msg("出错！");
                 },
@@ -219,8 +271,8 @@
 
             $.ajax({
                 type: "POST",
-                url: '${path}/rotationHandover/savePending',
-                data: $('#oaActRotationHandover').serialize(),
+                url: '${path}/departure/savePending',
+                data: $('#oaActDeparture').serialize(),
                 error: function (request) {
                     layer.msg("出错！");
                 },
@@ -287,14 +339,14 @@
             }
         });
     }
-
     //打印
     function printContent() {
         $('#tool,#titleArea,#annexList').hide();
-        // $('#body').css('width','100%');
+        $('#body').css('width', '100%');
         //执行打印
         window.print();
         $('#tool,#titleArea').show();
+        $('#body').css('width', '60%');
 
         //附件列表
         let annexesLen = $('#annexes').children().length;

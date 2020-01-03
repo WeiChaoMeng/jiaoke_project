@@ -10,13 +10,11 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>调资申请表</title>
+    <title>调资审批表</title>
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
-    <link href="../../../../static/js/date_pickers/date_picker.css" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
 </head>
 
-<body id="body">
+<body id="body" style="width: 75%">
 
 <div class="table-title">
     <span>${oaActAdjustWages.title}</span>
@@ -62,6 +60,11 @@
     </c:choose>
 </div>
 
+<div style="margin-top: 10px">
+    <input type="text" class="filling-date-content" value="${oaActAdjustWages.fillingDate}" readonly>
+    <span class="filling-date">填表日期 </span>
+</div>
+
 <table class="formTable">
     <tbody>
     <tr>
@@ -84,7 +87,7 @@
     <tr>
         <td class="tdLabel">入职时间</td>
         <td class="table-td-content">
-            ${oaActAdjustWages.entryDateStr}
+            ${oaActAdjustWages.entryDate}
         </td>
 
         <td class="tdLabel">目前薪资</td>
@@ -101,95 +104,91 @@
     <tr>
         <td class="tdLabel">申请原因</td>
         <td colspan="5" class="table-td-evaluation">
-            <textarea class="evaluation-content" style="height: 90px" readonly>${oaActAdjustWages.reason}</textarea>
+            <textarea class="evaluation-content-disabled" style="height: 90px" readonly>${oaActAdjustWages.reason}</textarea>
             <div class="approval-date">
-                <label class="approval-date-label">日期:</label>
+                <label class="approval-date-label">日期 </label>
                 <input class="approval-date-input" type="text" value="${oaActAdjustWages.createTimeStr}" readonly>
             </div>
             <div class="approval-signature">
-                <label class="approval-signature-label">本人签字:</label>
+                <label class="approval-signature-label">本人签字 </label>
                 <input class="approval-signature-input" type="text" value="${oaActAdjustWages.promoterStr}" readonly>
             </div>
         </td>
     </tr>
 
     <tr>
-        <td class="tdLabel">所在部门评价</td>
+        <td class="tdLabel">所在部门意见</td>
         <td colspan="5" class="table-td-textarea" style="line-height: 0">
             <div class="opinion-principal">
-                <label class="opinion-principal-title">部长：</label>
-                <textarea class="opinion-column-Juxtaposition" readonly></textarea>
+                <label class="opinion-principal-title">部长 </label>
+                <textarea class="opinion-column-Juxtaposition"
+                          readonly>${oaActAdjustWages.principalContent}</textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
-                    <input class="approval-date-input" type="text" readonly>
+                    <label class="approval-date-label">日期 </label>
+                    <input class="approval-date-input" type="text" value="${oaActAdjustWages.principalDate}"
+                           readonly>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">签字:</label>
-                    <input class="approval-signature-input" type="text" readonly>
+                    <label class="approval-signature-label">签字 </label>
+                    <input class="approval-signature-input" type="text" value="${oaActAdjustWages.principal}"
+                           readonly>
                 </div>
             </div>
 
             <div class="opinion-supervisor">
-                <label class="opinion-principal-title">主管：</label>
-                <textarea class="opinion-column-Juxtaposition" readonly></textarea>
+                <label class="opinion-principal-title">主管 </label>
+                <textarea class="opinion-column-Juxtaposition"
+                          readonly>${oaActAdjustWages.supervisorContent}</textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
-                    <input class="approval-date-input" type="text" readonly>
+                    <label class="approval-date-label">日期 </label>
+                    <input class="approval-date-input" type="text" value="${oaActAdjustWages.supervisorDate}"
+                           readonly>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">签字:</label>
-                    <input class="approval-signature-input" type="text" readonly>
+                    <label class="approval-signature-label">签字 </label>
+                    <input class="approval-signature-input" type="text" value="${oaActAdjustWages.supervisor}"
+                           readonly>
                 </div>
             </div>
         </td>
     </tr>
 
     <tr>
-        <td class="tdLabel">组织人事部意见</td>
+        <td class="tdLabel">组织人事部门意见</td>
         <td colspan="5" class="approval-content">
-            <textarea readonly class="approval-content-textarea"></textarea>
+            <textarea class="approval-content-textarea" readonly>${oaActAdjustWages.personnelContent}</textarea>
             <div class="approval-date">
-                <label class="approval-date-label">日期:</label>
-                <input class="approval-date-input" type="text" readonly>
+                <label class="approval-date-label">日期 </label>
+                <input class="approval-date-input" type="text" value="${oaActAdjustWages.personnelDate}" readonly>
             </div>
             <div class="approval-signature">
-                <label class="approval-signature-label">签字:</label>
-                <input class="approval-signature-input" type="text" readonly>
+                <label class="approval-signature-label">签字 </label>
+                <input class="approval-signature-input" type="text" value="${oaActAdjustWages.personnel}"
+                       readonly>
             </div>
         </td>
     </tr>
 
     <tr>
-        <td class="tdLabel">总经理意见</td>
+        <td class="tdLabel">总经理审批</td>
         <td colspan="5" class="approval-content">
-            <textarea readonly class="approval-content-textarea"></textarea>
+            <textarea class="approval-content-textarea" readonly>${oaActAdjustWages.companyPrincipalContent}</textarea>
             <div class="approval-date">
-                <label class="approval-date-label">日期:</label>
-                <input class="approval-date-input" type="text" readonly>
+                <label class="approval-date-label">日期 </label>
+                <input class="approval-date-input" type="text" value="${oaActAdjustWages.companyPrincipalDate}" readonly>
             </div>
             <div class="approval-signature">
-                <label class="approval-signature-label">签字:</label>
-                <input class="approval-signature-input" type="text" readonly>
+                <label class="approval-signature-label">签字 </label>
+                <input class="approval-signature-input" type="text" value="${oaActAdjustWages.companyPrincipal}"
+                       readonly>
             </div>
         </td>
     </tr>
     </tbody>
 </table>
-
-<div class="form-but" id="return">
-    <button type="button" class="return-but" onclick="previousPage()">返回</button>
-</div>
-
 </body>
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
-<script type="text/javascript" src="../../../../static/js/jeDate/src/jedate.js"></script>
-<script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
-
-    //返回上一页
-    function previousPage() {
-        window.history.back();
-    }
 
     //打印
     function printContent() {
@@ -198,7 +197,7 @@
         //执行打印
         window.print();
         $('#tool').show();
-        $('#body,#return').css('width', '80%');
+        $('#body,#return').css('width', '75%');
     }
 </script>
 </html>

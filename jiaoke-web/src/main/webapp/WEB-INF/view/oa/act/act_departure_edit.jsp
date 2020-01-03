@@ -1,3 +1,5 @@
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
 <%@ page language="java" contentType="text/html;charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -10,16 +12,16 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>编辑劳动合同签订、续订、变更、终止审批表</title>
+    <title>离职会签表</title>
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
     <link href="../../../../static/js/date_pickers/date_picker.css" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
 </head>
 
-<body id="body" style="width: 75%">
+<body id="body" style="width: 60%">
 
 <div class="table-title">
-    <span>编辑劳动合同签订、续订、变更、终止审批表</span>
+    <span>编辑离职会签表</span>
 </div>
 
 <div class="top_toolbar" id="tool">
@@ -43,7 +45,7 @@
 
     <%--附件列表--%>
     <c:choose>
-        <c:when test="${oaActLaborContractRenewal.annex != ''}">
+        <c:when test="${oaActDeparture.annex != ''}">
             <div class="top_toolbar" id="annexList" style="display: block;">
                 <div class="top-toolbar-annexes">
 
@@ -52,7 +54,7 @@
                     </div>
 
                     <div id="annexes">
-                        <c:forTokens items="${oaActLaborContractRenewal.annex}" delims="," var="annex">
+                        <c:forTokens items="${oaActDeparture.annex}" delims="," var="annex">
                             <div id="file${fn:substring(annex,0,annex.indexOf("_"))}" class="table-file">
                                 <div class="table-file-content">
                                     <a class="table-file-title" href="/fileDownloadHandle/download?fileName=${annex}"
@@ -85,8 +87,8 @@
     </c:choose>
 </div>
 
-<form id="oaActLaborContractRenewal">
-    <div class="form_area" id="titleArea" style="margin-bottom: 15px">
+<form id="oaActDeparture">
+    <div class="form_area" id="titleArea">
         <table>
             <tbody>
             <tr>
@@ -94,19 +96,18 @@
                     <button type="button" class="table-tab-send" onclick="send()">发送</button>
                 </td>
 
-                <th nowrap="nowrap" class="th_title" style="width: 4%">标题</th>
-                <td style="width: 39%">
+                <th nowrap="nowrap" class="th_title" style="width: 5%">标题</th>
+                <td style="width: 40%">
                     <div class="common_input_frame">
                         <input type="text" id="title" name="title" placeholder="请输入标题" title="点击此处填写标题"
-                               value="${oaActLaborContractRenewal.title}" autocomplete="off">
+                               value="${oaActDeparture.title}" autocomplete="off">
                     </div>
                 </td>
 
-                <th class="th_title" nowrap="nowrap" style="width: 4%">流程</th>
+                <th class="th_title" nowrap="nowrap" style="width: 5%">流程</th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" placeholder="部门负责人(审批),部门主管领导(审批),人事部门(审批),总经理(审批),通知人、被通知人(协同)"
-                               readonly="readonly">
+                        <input type="text" placeholder="各部门负责人、主管领导(审批),发起人、人事(知会)" readonly>
                     </div>
                 </td>
             </tr>
@@ -114,79 +115,122 @@
         </table>
     </div>
 
-    <div>
-        <div class="notice-content">
-            <input type="text" class="notice-personnel-field" onclick="recipientSelect()"
-                   value="${oaActLaborContractRenewal.notifiedPersonStr}" id="recipientName" readonly>与我公司签订的劳动合同将于
-            <input class="agreement-start-end start-date" type="text" name="startDateStr"
-                   value="${oaActLaborContractRenewal.startDate}" onfocus="this.blur()">到期，请各部门（领导）于
-            <input class="agreement-start-end end-date" type="text" name="endDateStr"
-                   value="${oaActLaborContractRenewal.endDate}" onfocus="this.blur()">前签署意见。
-            <input type="hidden" id="annex" name="annex">
-            <input type="hidden" id="id" name="id" value="${oaActLaborContractRenewal.id}">
-            <input type="hidden" id="recipientId" name="notifiedPerson" value="${oaActLaborContractRenewal.notifiedPerson}">
-        </div>
-    </div>
-
     <table class="formTable">
         <tbody>
         <tr>
-            <td class="tdLabel">所在部门意见</td>
-            <td colspan="5" class="approval-content">
-                <textarea disabled="disabled" class="approval-content-textarea"></textarea>
-                <div class="approval-date">
-                    <label class="approval-date-label">日期 </label>
-                    <input class="approval-date-input" type="text" readonly>
-                </div>
-                <div class="approval-signature">
-                    <label class="approval-signature-label">签字 </label>
-                    <input class="approval-signature-input" type="text" readonly>
-                </div>
+            <td class="tdLabel">姓名</td>
+            <td class="table-td-content" style="width: 35%">
+                <input type="text" class="formInput-readonly" name="name" value="${oaActDeparture.name}" readonly>
+                <input type="hidden" name="id" value="${oaActDeparture.id}">
+                <%--暂存附件--%>
+                <input type="hidden" id="annex" name="annex">
+            </td>
+
+            <td class="tdLabel">离职日期</td>
+            <td class="table-td-content">
+                <input type="text" class="formInput je-date" name="departureDate" value="${oaActDeparture.departureDate}" onfocus="this.blur()">
             </td>
         </tr>
 
         <tr>
-            <td class="tdLabel">主管领导意见</td>
-            <td colspan="5" class="approval-content">
-                <textarea disabled="disabled" class="approval-content-textarea"></textarea>
-                <div class="approval-date">
-                    <label class="approval-date-label">日期 </label>
-                    <input class="approval-date-input" type="text" readonly>
-                </div>
-                <div class="approval-signature">
-                    <label class="approval-signature-label">签字 </label>
-                    <input class="approval-signature-input" type="text" readonly>
-                </div>
+            <td class="tdLabel">部门</td>
+            <td class="tdLabel" style="text-align: center;">签字(部长、主管)</td>
+            <td class="tdLabel" colspan="2" style="text-align: center;">备注</td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">综合办公室</td>
+            <td class="table-td-content" style="padding: 5px 10px;">
+                <input type="text" class="formInput-readonly" style="margin-bottom: 5px;" readonly>
+                <input type="text" class="formInput-readonly" readonly>
+            </td>
+
+            <td class="tdLabel">备注</td>
+            <td class="table-td-content">
+                <input type="text" class="formInput-readonly" style="margin-bottom: 5px;" readonly>
+                <input type="text" class="formInput-readonly" readonly>
             </td>
         </tr>
 
         <tr>
-            <td class="tdLabel">组织人事部门意见</td>
-            <td colspan="5" class="approval-content">
-                <textarea disabled="disabled" class="approval-content-textarea"></textarea>
-                <div class="approval-date">
-                    <label class="approval-date-label">日期 </label>
-                    <input class="approval-date-input" type="text" readonly>
-                </div>
-                <div class="approval-signature">
-                    <label class="approval-signature-label">签字 </label>
-                    <input class="approval-signature-input" type="text" readonly>
-                </div>
+            <td class="tdLabel">经营开发部</td>
+            <td class="table-td-content" style="padding: 5px 10px;">
+                <input type="text" class="formInput-readonly" style="margin-bottom: 5px;" readonly>
+                <input type="text" class="formInput-readonly" readonly>
+            </td>
+
+            <td class="tdLabel">备注</td>
+            <td class="table-td-content">
+                <input type="text" class="formInput-readonly" style="margin-bottom: 5px;" readonly>
+                <input type="text" class="formInput-readonly" readonly>
             </td>
         </tr>
 
         <tr>
-            <td class="tdLabel">总经理意见</td>
-            <td colspan="5" class="approval-content">
-                <textarea disabled="disabled" class="approval-content-textarea"></textarea>
-                <div class="approval-date">
-                    <label class="approval-date-label">日期 </label>
-                    <input class="approval-date-input" type="text" readonly>
-                </div>
-                <div class="approval-signature">
-                    <label class="approval-signature-label">签字 </label>
-                    <input class="approval-signature-input" type="text" readonly>
-                </div>
+            <td class="tdLabel">生产管理部</td>
+            <td class="table-td-content" style="padding: 5px 10px;">
+                <input type="text" class="formInput-readonly" style="margin-bottom: 5px;" readonly>
+                <input type="text" class="formInput-readonly" readonly>
+            </td>
+
+            <td class="tdLabel">备注</td>
+            <td class="table-td-content">
+                <input type="text" class="formInput-readonly" style="margin-bottom: 5px;" readonly>
+                <input type="text" class="formInput-readonly" readonly>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">质量技术部</td>
+            <td class="table-td-content" style="padding: 5px 10px;">
+                <input type="text" class="formInput-readonly" style="margin-bottom: 5px;" readonly>
+                <input type="text" class="formInput-readonly" readonly>
+            </td>
+
+            <td class="tdLabel">备注</td>
+            <td class="table-td-content">
+                <input type="text" class="formInput-readonly" style="margin-bottom: 5px;" readonly>
+                <input type="text" class="formInput-readonly" readonly>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">物资管理部</td>
+            <td class="table-td-content" style="padding: 5px 10px;">
+                <input type="text" class="formInput-readonly" style="margin-bottom: 5px;" readonly>
+                <input type="text" class="formInput-readonly" readonly>
+            </td>
+
+            <td class="tdLabel">备注</td>
+            <td class="table-td-content">
+                <input type="text" class="formInput-readonly" style="margin-bottom: 5px;" readonly>
+                <input type="text" class="formInput-readonly" readonly>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">财务管理部</td>
+            <td class="table-td-content" style="padding: 5px 10px;">
+                <input type="text" class="formInput-readonly" style="margin-bottom: 5px;" readonly>
+                <input type="text" class="formInput-readonly" readonly>
+            </td>
+
+            <td class="tdLabel">备注</td>
+            <td class="table-td-content">
+                <input type="text" class="formInput-readonly" style="margin-bottom: 5px;" readonly>
+                <input type="text" class="formInput-readonly" readonly>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">总经理</td>
+            <td class="table-td-content" style="padding: 5px 10px;">
+                <input type="text" class="formInput-readonly" readonly>
+            </td>
+
+            <td class="tdLabel">备注</td>
+            <td class="table-td-content">
+                <input type="text" class="formInput-readonly" readonly>
             </td>
         </tr>
         </tbody>
@@ -200,18 +244,7 @@
 <script>
 
     //日期选择器
-    jeDate(".start-date", {
-        theme: {bgcolor: "#00A1CB", pnColor: "#00CCFF"},
-        festival: false,
-        isinitVal: true,
-        isClear: false,                     //是否开启清空
-        minDate: "1900-01-01",              //最小日期
-        maxDate: "2099-12-31",              //最大日期
-        format: "YYYY-MM-DD",
-        zIndex: 100000,
-    });
-
-    jeDate(".end-date", {
+    jeDate(".je-date", {
         theme: {bgcolor: "#00A1CB", pnColor: "#00CCFF"},
         festival: false,
         isinitVal: true,
@@ -237,8 +270,8 @@
 
             $.ajax({
                 type: "POST",
-                url: '${path}/laborContractRenewal/editAdd',
-                data: $('#oaActLaborContractRenewal').serialize(),
+                url: '${path}/departure/editAdd',
+                data: $('#oaActDeparture').serialize(),
                 error: function (request) {
                     layer.msg("出错！");
                 },
@@ -269,8 +302,8 @@
 
             $.ajax({
                 type: "POST",
-                url: '${path}/laborContractRenewal/edit',
-                data: $('#oaActLaborContractRenewal').serialize(),
+                url: '${path}/departure/edit',
+                data: $('#oaActDeparture').serialize(),
                 error: function (request) {
                     layer.msg("出错！");
                 },
@@ -314,7 +347,6 @@
         window.top.deleteUploaded(fileName);
     }
 
-
     //执行删除附件
     function delFile(fileName) {
         $.ajax({
@@ -347,7 +379,7 @@
         //执行打印
         window.print();
         $('#tool,#titleArea').show();
-        $('#body').css('width', '75%');
+        $('#body').css('width', '60%');
 
         //附件列表
         let annexesLen = $('#annexes').children().length;
@@ -356,21 +388,6 @@
         } else {
             $('#annexList').css("display", "block");
         }
-    }
-
-    //选择接收人
-    function recipientSelect() {
-        //用户
-        var userInfoList = JSON.parse('${userInfoList}');
-        //部门
-        var departmentList = JSON.parse('${departmentList}');
-        window.top.selectRecipient(userInfoList, departmentList);
-    }
-
-    //确认接收人
-    function confirmSelectRecipient(id, name) {
-        $('#recipientId').val(id);
-        $('#recipientName').val(name);
     }
 </script>
 </html>

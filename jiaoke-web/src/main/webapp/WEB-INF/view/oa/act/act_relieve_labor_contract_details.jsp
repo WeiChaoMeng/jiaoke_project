@@ -10,10 +10,8 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>解除劳动合同审批表</title>
+    <title>解除劳动合同审批表详情</title>
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
-    <link href="../../../../static/js/date_pickers/date_picker.css" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
 </head>
 
 <body id="body">
@@ -72,7 +70,7 @@
 
         <td class="tdLabel">入职日期</td>
         <td class="table-td-content">
-            ${oaActRelieveLaborContract.entryDateStr}
+            ${oaActRelieveLaborContract.entryDate}
         </td>
     </tr>
 
@@ -84,7 +82,7 @@
 
         <td class="tdLabel">申请离职日期</td>
         <td class="table-td-content">
-            ${oaActRelieveLaborContract.applyDepartureDateStr}
+            ${oaActRelieveLaborContract.applyDepartureDate}
         </td>
     </tr>
 
@@ -138,12 +136,12 @@
             <textarea class="approval-content-textarea" style="height: 90px"
                       readonly>${oaActRelieveLaborContract.reason}</textarea>
             <div class="approval-date">
-                <label class="approval-date-label">日期:</label>
+                <label class="approval-date-label">日期 </label>
                 <input class="approval-date-input" type="text" value="${oaActRelieveLaborContract.createTimeStr}"
                        readonly>
             </div>
             <div class="approval-signature">
-                <label class="approval-signature-label">职工本人(签字):</label>
+                <label class="approval-signature-label">职工本人(签字) </label>
                 <input class="approval-signature-input" type="text" value="${oaActRelieveLaborContract.promoterStr}"
                        readonly>
             </div>
@@ -154,27 +152,27 @@
         <td class="tdLabel">主管部门审批意见</td>
         <td colspan="5" class="table-td-textarea" style="line-height: 0">
             <div class="opinion-principal">
-                <label class="opinion-principal-title">部长：</label>
-                <textarea class="opinion-column-Juxtaposition" readonly></textarea>
+                <label class="opinion-principal-title">部门负责人</label>
+                <textarea class="opinion-column-Juxtaposition" readonly>${oaActRelieveLaborContract.principalContent}</textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
-                    <input class="approval-date-input" type="text" readonly>
+                    <label class="approval-date-label">日期 </label>
+                    <input class="approval-date-input" type="text" value="${oaActRelieveLaborContract.principalDate}" readonly>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">部门负责人:</label>
-                    <input class="approval-signature-input" type="text" readonly>
+                    <label class="approval-signature-label">签字 </label>
+                    <input class="approval-signature-input" type="text" value="${oaActRelieveLaborContract.principal}" readonly>
                 </div>
             </div>
             <div class="opinion-supervisor">
-                <label class="opinion-principal-title">主管：</label>
-                <textarea class="opinion-column-Juxtaposition" readonly></textarea>
+                <label class="opinion-principal-title">部门主管领导</label>
+                <textarea class="opinion-column-Juxtaposition" readonly>${oaActRelieveLaborContract.supervisorContent}</textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
-                    <input class="approval-date-input" type="text" readonly>
+                    <label class="approval-date-label">日期 </label>
+                    <input class="approval-date-input" type="text" value="${oaActRelieveLaborContract.supervisorDate}" readonly>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">主管领导:</label>
-                    <input class="approval-signature-input" type="text" readonly>
+                    <label class="approval-signature-label">签字 </label>
+                    <input class="approval-signature-input" type="text" value="${oaActRelieveLaborContract.supervisor}" readonly>
                 </div>
             </div>
         </td>
@@ -183,14 +181,14 @@
     <tr>
         <td class="tdLabel">人事部门审批意见</td>
         <td colspan="5" class="approval-content">
-            <textarea class="approval-content-textarea" readonly></textarea>
+            <textarea class="approval-content-textarea" readonly>${oaActRelieveLaborContract.personnelContent}</textarea>
             <div class="approval-date">
-                <label class="approval-date-label">日期:</label>
-                <input class="approval-date-input" type="text" readonly>
+                <label class="approval-date-label">日期 </label>
+                <input class="approval-date-input" type="text" value="${oaActRelieveLaborContract.personnelDate}" readonly>
             </div>
             <div class="approval-signature">
-                <label class="approval-signature-label">主管领导(签字):</label>
-                <input class="approval-signature-input" type="text" readonly>
+                <label class="approval-signature-label">签字 </label>
+                <input class="approval-signature-input" type="text" value="${oaActRelieveLaborContract.personnel}" readonly>
             </div>
         </td>
     </tr>
@@ -198,35 +196,23 @@
     <tr>
         <td class="tdLabel">总经理审批意见</td>
         <td colspan="5" class="approval-content">
-            <textarea class="approval-content-textarea" readonly></textarea>
+            <textarea class="approval-content-textarea" readonly>${oaActRelieveLaborContract.companyPrincipalContent}</textarea>
             <div class="approval-date">
-                <label class="approval-date-label">日期:</label>
-                <input class="approval-date-input" type="text" readonly>
+                <label class="approval-date-label">日期 </label>
+                <input class="approval-date-input" type="text" value="${oaActRelieveLaborContract.companyPrincipalDate}" readonly>
             </div>
             <div class="approval-signature">
-                <label class="approval-signature-label">总经理(签字或盖章):</label>
-                <input class="approval-signature-input" type="text" readonly>
+                <label class="approval-signature-label">签字 </label>
+                <input class="approval-signature-input" type="text" value="${oaActRelieveLaborContract.companyPrincipal}" readonly>
             </div>
         </td>
     </tr>
     </tbody>
 </table>
 
-<div class="form-but" id="return">
-    <button type="button" class="return-but" onclick="previousPage()">返回</button>
-</div>
-
 </body>
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
-<script type="text/javascript" src="../../../../static/js/jeDate/src/jedate.js"></script>
-<script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
-
-    //返回上一页
-    function previousPage() {
-        window.history.back();
-    }
-
     //打印
     function printContent() {
         $('#tool,#return').hide();

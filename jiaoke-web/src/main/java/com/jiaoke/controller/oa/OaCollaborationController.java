@@ -123,8 +123,6 @@ public class OaCollaborationController {
         } else {
             PageHelper.startPage(page, 15);
             List<OaCollaboration> oaCollaborationList = oaCoordinationService.selectAlreadySend(collaborationList, title);
-            //list逆序
-            Collections.reverse(oaCollaborationList);
             PageInfo<OaCollaboration> pageInfo = new PageInfo<>(oaCollaborationList);
             return JsonHelper.toJSONString(pageInfo);
         }
@@ -160,7 +158,6 @@ public class OaCollaborationController {
             List<OaCollaboration> oaCollaborations = activitiUtil.getPendingProcessInstance(taskList);
             PageHelper.startPage(page, 15);
             List<OaCollaboration> oaCollaborationList = oaCoordinationService.selectPending(oaCollaborations, title);
-            Collections.reverse(oaCollaborationList);
             PageInfo<OaCollaboration> pageInfo = new PageInfo<>(oaCollaborationList);
             return JsonHelper.toJSONString(pageInfo);
         }
@@ -225,7 +222,6 @@ public class OaCollaborationController {
         } else {
             PageHelper.startPage(page, 15);
             List<OaCollaboration> oaCollaborationList = oaCoordinationService.selectDone(collaborationList, title);
-            Collections.reverse(oaCollaborationList);
             PageInfo<OaCollaboration> pageInfo = new PageInfo<>(oaCollaborationList);
             return JsonHelper.toJSONString(pageInfo);
         }

@@ -6,7 +6,6 @@ import com.jiaoke.oa.bean.OaCollaboration;
 import com.jiaoke.oa.dao.OaActContractSignMapper;
 import com.jiaoke.oa.dao.OaCollaborationMapper;
 import com.jiaoke.oa.dao.UserInfoMapper;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -37,7 +36,7 @@ public class OaActContractSignServiceImpl implements OaActContractSignService {
         oaActContractSign.setCreateTime(new Date());
         oaActContractSign.setPromoter(userId);
         oaActContractSign.setUrl("contractSign");
-        if (oaActContractSignMapper.insert(oaActContractSign) < 0) {
+        if (oaActContractSignMapper.insertSelective(oaActContractSign) < 0) {
             return -1;
         } else {
             OaCollaboration oaCollaboration = new OaCollaboration();
@@ -46,6 +45,9 @@ public class OaActContractSignServiceImpl implements OaActContractSignService {
             oaCollaboration.setTitle(oaActContractSign.getTitle());
             oaCollaboration.setUrl("contractSign");
             oaCollaboration.setTable("oa_act_contract_sign");
+            oaCollaboration.setName("劳务派遣员工合同签订、续订、变更、终止审批");
+            oaCollaboration.setDataOne("通知时间：" + DateUtil.dateConvertYYYYMMDD(oaActContractSign.getCreateTime()));
+            oaCollaboration.setDataTwo("劳动合同到期时间：" + oaActContractSign.getStartDate());
             oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);
@@ -68,6 +70,7 @@ public class OaActContractSignServiceImpl implements OaActContractSignService {
         OaActContractSign oaActContractSign = oaActContractSignMapper.selectByPrimaryKey(id);
         oaActContractSign.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActContractSign.getCreateTime()));
         oaActContractSign.setPromoterStr(userInfoMapper.getNicknameById(oaActContractSign.getPromoter()));
+        oaActContractSign.setNotifiedPersonStr(userInfoMapper.getNicknameById(oaActContractSign.getNotifiedPerson()));
         return oaActContractSign;
     }
 
@@ -78,14 +81,7 @@ public class OaActContractSignServiceImpl implements OaActContractSignService {
     }
 
     @Override
-    public int updateAnnexes(String[] array, String id) {
-        OaActContractSign oaActContractSign = new OaActContractSign();
-        oaActContractSign.setId(id);
-        if (array != null) {
-            oaActContractSign.setAnnex(StringUtils.join(array));
-        } else {
-            oaActContractSign.setAnnex("");
-        }
+    public int updateByPrimaryKeySelective(OaActContractSign oaActContractSign) {
         return oaActContractSignMapper.updateByPrimaryKeySelective(oaActContractSign);
     }
 }

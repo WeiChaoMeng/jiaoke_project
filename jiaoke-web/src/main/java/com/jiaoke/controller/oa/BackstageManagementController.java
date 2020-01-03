@@ -11,6 +11,8 @@ import com.jiaoke.oa.service.DepartmentService;
 import com.jiaoke.oa.service.PermissionService;
 import com.jiaoke.oa.service.RoleInfoService;
 import com.jiaoke.oa.service.UserInfoService;
+import org.apache.ibatis.ognl.OgnlParserTokenManager;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,6 +45,15 @@ public class BackstageManagementController {
 
     @Resource
     private DepartmentService departmentService;
+
+    /**
+     * 获取当前登录用户信息
+     *
+     * @return userInfo
+     */
+    private UserInfo getCurrentUser() {
+        return (UserInfo) SecurityUtils.getSubject().getPrincipal();
+    }
 
     /**
      * 加载用户数据
@@ -195,6 +206,25 @@ public class BackstageManagementController {
         }
     }
 
+    /**
+     * 修改密码
+     *
+     * @param password password
+     * @return int
+     */
+    @RequestMapping(value = "/modifyPassword")
+    @ResponseBody
+    public String modifyPassword(String password) {
+        //当前登录人ID
+        Integer id = getCurrentUser().getId();
+        if (userInfoService.updatePasswordById(id, password) != 1) {
+            SecurityUtils.getSubject().logout();
+            return "error";
+        } else {
+            return "success";
+        }
+    }
+
     /**--------------------------角色管理--------------------------------*/
     /**
      * 跳转角色管理页面
@@ -285,7 +315,7 @@ public class BackstageManagementController {
     public String toBindingPower(Integer id) {
         Map<String, Object> map = new HashMap<>(16);
         List<Permission> permissionList = roleInfoService.bindingInfo(id);
-        map.put("data",permissionList);
+        map.put("data", permissionList);
         return JsonHelper.toJSONString(map);
     }
 
@@ -370,7 +400,7 @@ public class BackstageManagementController {
     public String permissionsData() {
         HashMap<String, Object> map = new HashMap<>(16);
         List<Permission> permissionList = permissionService.selectAll();
-        map.put("data",permissionList);
+        map.put("data", permissionList);
         return JsonHelper.toJSONString(map);
     }
 

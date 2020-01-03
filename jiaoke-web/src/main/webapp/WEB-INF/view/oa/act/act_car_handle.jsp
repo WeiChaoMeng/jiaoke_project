@@ -1,3 +1,5 @@
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
 <%@ page language="java" contentType="text/html;charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -49,7 +51,8 @@
                     <c:forTokens items="${oaActCar.annex}" delims="," var="annex">
                         <div class="table-file">
                             <div class="table-file-content">
-                                <span class="table-file-title" title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <span class="table-file-title"
+                                      title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
                                 <a class="table-file-download icon"
                                    href="/fileDownloadHandle/download?fileName=${annex}"
                                    title="下载">&#xebda;</a>
@@ -172,8 +175,9 @@
             <td class="tdLabel">查表计数人</td>
             <td class="table-td-content">
                 <shiro:hasPermission name="lookup">
-                    <input type="text" class="formInput-readonly" name="lookup" value="${nickname}" readonly>
+                    <div style="width: 100%;height: 100%;" id="lookupContent"></div>
                 </shiro:hasPermission>
+
                 <shiro:lacksPermission name="lookup">
                     ${oaActCar.lookup}
                 </shiro:lacksPermission>
@@ -182,8 +186,9 @@
             <td class="tdLabel">交车时间</td>
             <td class="table-td-content">
                 <shiro:hasPermission name="lookup">
-                    <input type="text" class="formInput je-end-date" name="endTime" onfocus="this.blur()">
+                    <div style="width: 100%;height: 100%;" id="lookupDateContent"></div>
                 </shiro:hasPermission>
+
                 <shiro:lacksPermission name="lookup">
                     <input type="hidden" class="formInput je-end-date" onfocus="this.blur()">
                     ${oaActCar.endTime}
@@ -195,20 +200,21 @@
             <td class="tdLabel">审核人</td>
             <td class="table-td-content">
                 <shiro:hasPermission name="principal">
-                    <input type="text" class="formInput-readonly" name="reviewer" value="${nickname}" readonly>
+                    <div style="width: 100%;height: 100%;" id="principalContent"></div>
                 </shiro:hasPermission>
+
                 <shiro:lacksPermission name="principal">
-                    ${oaActCar.reviewer}
+                    ${oaActCar.principal}
                 </shiro:lacksPermission>
             </td>
 
             <td class="tdLabel">批准人</td>
             <td class="table-td-content">
                 <shiro:hasPermission name="supervisor">
-                    <input type="text" class="formInput-readonly" name="approver" value="${nickname}" readonly>
+                    <div style="width: 100%;height: 100%;" id="principalContent"></div>
                 </shiro:hasPermission>
                 <shiro:lacksPermission name="supervisor">
-                    ${oaActCar.approver}
+                    ${oaActCar.supervisor}
                 </shiro:lacksPermission>
             </td>
         </tr>
@@ -220,7 +226,6 @@
     <span class="notice-tips-mark">*</span>
     <span class="notice-tips-script">说明：1.每公里2元。使用的车辆为享受车补待遇的，每公里1.2元。2.审核人为使用部门负责人，批准人为使用人部门主管领导。3.多人同时使用时费用均摊。4.费用按月报销或扣除。</span>
 </div>
-
 
 <div class="form-but" id="ret">
     <shiro:hasAnyPermission name="principal,supervisor,lookup">
@@ -241,6 +246,46 @@
 <script type="text/javascript" src="../../../../static/js/jeDate/src/jedate.js"></script>
 <script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
+    //流程执行步骤
+    var car = JSON.parse('${oaActCarJson}');
+    //标记
+    var flag = 0;
+    if (flag === 0) {
+        if (car.lookup === "" || car.lookup === undefined) {
+            $('#lookupContent').append('<input type="text" class="formInput-readonly" name="lookup" value="${nickname}" readonly="readonly">');
+            $('#lookupDateContent').append('<input type="text" class="formInput je-end-date" name="endTime" onfocus="this.blur()">');
+            flag = 1;
+        } else {
+            $('#lookupContent').append(car.lookup);
+            $('#lookupDateContent').append(car.endTime);
+        }
+    } else {
+        $('#lookupContent').append(car.lookup);
+        $('#lookupDateContent').append(car.endTime);
+    }
+
+    if (flag === 0) {
+        if (car.principal === "" || car.principal === undefined) {
+            $('#principalContent').append('<input type="text" class="formInput-readonly" name="principal" value="${nickname}" readonly="readonly"><input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+            flag = 1;
+        } else {
+            $('#principalContent').append(car.principal);
+        }
+    } else {
+        $('#principalContent').append(car.principal);
+    }
+
+    if (flag === 0) {
+        if (car.supervisor === "" || car.supervisor === undefined) {
+            $('#principalContent').append('<input type="text" class="formInput-readonly" name="supervisor" value="${nickname}" readonly="readonly"><input type="hidden" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+            flag = 1;
+        } else {
+            $('#principalContent').append(car.supervisor);
+        }
+    } else {
+        $('#principalContent').append(car.supervisor);
+    }
+
 
     //日期选择器
     jeDate(".je-end-date", {
@@ -250,7 +295,7 @@
         isClear: false,                     //是否开启清空
         minDate: "1900-01-01",              //最小日期
         maxDate: "2099-12-31",              //最大日期
-        format: "YYYY-MM-DD hh:mm",
+        format: "YYYY-MM-DD hh",
         zIndex: 100000,
     });
 
@@ -286,7 +331,7 @@
     function approvalProcessing(flag) {
         $.ajax({
             type: "post",
-            url: '/car/lookupApprovalSubmit',
+            url: '${path}/car/lookupApprovalSubmit',
             data: $('#oaActCar').serialize() + "&taskId=" + taskId + "&flag=" + flag,
             async: false,
             success: function (data) {

@@ -3,12 +3,14 @@ package com.jiaoke.controller.oa.activit;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
-import com.jiaoke.oa.bean.Comments;
-import com.jiaoke.oa.bean.OaActPactStop;
-import com.jiaoke.oa.bean.UserInfo;
+import com.jiaoke.controller.oa.TargetFlowNodeCommand;
+import com.jiaoke.oa.bean.*;
+import com.jiaoke.oa.service.DepartmentService;
 import com.jiaoke.oa.service.OaActPactStopService;
 import com.jiaoke.oa.service.OaCollaborationService;
 import com.jiaoke.oa.service.UserInfoService;
+import org.activiti.bpmn.model.UserTask;
+import org.activiti.engine.ManagementService;
 import org.activiti.engine.task.Task;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +45,13 @@ public class OaActPactStopController {
     private UserInfoService userInfoService;
 
     @Resource
+    private DepartmentService departmentService;
+
+    @Resource
     private OaCollaborationService oaCollaborationService;
+
+    @Resource
+    private ManagementService managementService;
 
     /**
      * 获取当前登录用户信息
@@ -60,6 +69,10 @@ public class OaActPactStopController {
      */
     @RequestMapping("/toIndex")
     public String toMeals(Model model) {
+        List<UserInfo> userInfoList = userInfoService.selectIdAndNicknameAndDepartment();
+        List<Department> departmentList = departmentService.selectKeyAndName();
+        model.addAttribute("userInfoList", JsonHelper.toJSONString(userInfoList));
+        model.addAttribute("departmentList", JsonHelper.toJSONString(departmentList));
         model.addAttribute("nickname", getCurrentUser().getNickname());
         return "oa/act/act_pact_stop";
     }
@@ -77,12 +90,9 @@ public class OaActPactStopController {
         if (oaActPactStopService.insert(oaActPactStop, getCurrentUser().getId(), randomId, 0) < 1) {
             return "error";
         } else {
-            //获取拥有权限的用户
-            UserInfo userInfo = userInfoService.getUserInfoByPermission("mealsApproval");
-            //开启流程
             Map<String, Object> map = new HashMap<>(16);
-            map.put("approval", userInfo.getId());
-            String instance = activitiUtil.startProcessInstanceByKey("oa_meals", "oa_act_meals:" + randomId, map, getCurrentUser().getId().toString());
+            map.put("notified_person", oaActPactStop.getNotifiedPerson());
+            String instance = activitiUtil.startProcessInstanceByKey("oa_pact_stop", "oa_act_pact_stop:" + randomId, map, getCurrentUser().getId().toString());
             if (instance != null) {
                 return "success";
             }
@@ -108,49 +118,85 @@ public class OaActPactStopController {
         model.addAttribute("taskId", JsonHelper.toJSONString(taskId));
         model.addAttribute("commentsList", commentsList);
         model.addAttribute("nickname", getCurrentUser().getNickname());
-        return "oa/act/act_meals_handle";
+        return "oa/act/act_pact_stop_handle";
     }
 
     /**
      * 提交审批
      *
-     * @param processingOpinion 处理意见
-     * @param taskId            任务Id
+     * @param oaActPactStop oaActPactStop
+     * @param taskId        任务Id
+     * @param flag          flag
      * @return s/e
      */
     @RequestMapping(value = "/approvalSubmit")
     @ResponseBody
-    public String approvalSubmit(String processingOpinion, String taskId, Integer flag) {
-        //回退标识
-        String back = "back";
-        //结束标识
+    public String approvalSubmit(OaActPactStop oaActPactStop, String taskId, Integer flag) {
+        //流程终点名称
         String end = "end";
-        //网关标识
-        String eg = "eg";
+        //发起人
+        String promoter = "promoter";
+        //回退
+        String back = "back";
+        //知会人
+        String maintainNotify = "maintainNotify";
+
+        //更新数据
+        if (oaActPactStopService.updateByPrimaryKeySelective(oaActPactStop) < 1) {
+            return "error";
+        }
+
         Task task = activitiUtil.getTaskByTaskId(taskId);
-        Map<String, Object> map = new HashMap<>(16);
         if (task == null) {
             return "error";
-        } else {
+        }
+
+        if (flag == 1) {
+            //同意
             //下个节点
             String nextNode = activitiUtil.getNextNode(task.getProcessDefinitionId(), task.getTaskDefinitionKey());
 
             //下个节点是否为end直接结束
             if (end.equals(nextNode)) {
                 activitiUtil.endProcess(taskId);
+                return "success";
+            } else {
+                //附言
+                String processingOpinion = "";
 
-                //下个节点为back修改表达状态为2并结束流程
-            } else if (back.equals(nextNode)) {
-                String businessId = activitiUtil.getBusinessByTaskId(task.getId());
-                String correlationId = businessId.substring(businessId.lastIndexOf(":") + 1);
-                oaCollaborationService.updateState(correlationId, 3);
-                activitiUtil.endProcess(taskId);
+                UserTask userTask = activitiUtil.getUserTask(task.getProcessDefinitionId(), nextNode);
+                if (nextNode.equals(userTask.getId())) {
+                    String enforcer = userTask.getAssignee().substring(userTask.getAssignee().indexOf("{") + 1, userTask.getAssignee().indexOf("}"));
 
-            } else if (eg.equals(nextNode)) {
-                map.put("result", flag);
-                map.put("notify", activitiUtil.getStartUserId(task.getProcessInstanceId()));
-                activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
+                    if (promoter.equals(enforcer)) {
+                        Map<String, Object> map = new HashMap<>(16);
+                        map.put(promoter, activitiUtil.getStartUserId(task.getProcessInstanceId()));
+                        activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
+                        return "success";
+
+                    } else if (maintainNotify.equals(enforcer)) {
+                        Map<String, Object> map = new HashMap<>(16);
+                        List<Object> maintainNotifyList = new ArrayList<>();
+                        maintainNotifyList.add(oaActPactStop.getPromoter());
+                        maintainNotifyList.add(oaActPactStop.getNotifiedPerson());
+                        map.put("maintainNotifyList", maintainNotifyList);
+                        activitiUtil.designatedCountersignPersonnel(taskId, map);
+                        return "success";
+
+                    } else {
+                        UserInfo userInfo = userInfoService.getUserInfoByPermission(enforcer);
+                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
+                        return "success";
+                    }
+                } else {
+                    return "error";
+                }
             }
+        } else {
+            //驳回
+            managementService.executeCommand(new TargetFlowNodeCommand(task.getId(), back));
+            //修改表单状态
+            oaCollaborationService.updateState(oaActPactStop.getId(), 3);
             return "success";
         }
     }
@@ -182,8 +228,11 @@ public class OaActPactStopController {
     @RequestMapping(value = "/toEdit")
     public String toEdit(String id, Model model) {
         OaActPactStop oaActPactStop = oaActPactStopService.selectByPrimaryKey(id);
+        List<UserInfo> userInfoList = userInfoService.selectIdAndNicknameAndDepartment();
+        List<Department> departmentList = departmentService.selectKeyAndName();
+        model.addAttribute("userInfoList", JsonHelper.toJSONString(userInfoList));
+        model.addAttribute("departmentList", JsonHelper.toJSONString(departmentList));
         model.addAttribute("oaActPactStop", oaActPactStop);
-        model.addAttribute("annexList", JsonHelper.toJSONString(oaActPactStop.getAnnex()));
         return "oa/act/act_pact_stop_edit";
     }
 
@@ -216,11 +265,9 @@ public class OaActPactStopController {
         if (oaActPactStopService.edit(oaActPactStop) < 0) {
             return "error";
         } else {
-            //获取拥有权限的用户
-            UserInfo userInfo = userInfoService.getUserInfoByPermission("mealsApproval");
             Map<String, Object> map = new HashMap<>(16);
-            map.put("mealsApproval", userInfo.getId());
-            String instance = activitiUtil.startProcessInstanceByKey("oa_meals", "oa_act_meals:" + oaActPactStop.getId(), map, getCurrentUser().getId().toString());
+            map.put("notified_person", oaActPactStop.getNotifiedPerson());
+            String instance = activitiUtil.startProcessInstanceByKey("oa_pact_stop", "oa_act_pact_stop:" + oaActPactStop.getId(), map, getCurrentUser().getId().toString());
             if (instance != null) {
                 //发送成功后更新状态
                 oaCollaborationService.updateStateByCorrelationId(oaActPactStop.getId(), 0, oaActPactStop.getTitle());
@@ -293,20 +340,5 @@ public class OaActPactStopController {
             //错误
             return "error";
         }
-    }
-
-    /**
-     * 删除附件
-     *
-     * @param array array
-     * @return jsp
-     */
-    @RequestMapping(value = "/deleteAnnexes")
-    @ResponseBody
-    public String deleteAnnexes(String[] array, String id) {
-        if (oaActPactStopService.updateAnnexes(array, id) < 1) {
-            return "error";
-        }
-        return "success";
     }
 }

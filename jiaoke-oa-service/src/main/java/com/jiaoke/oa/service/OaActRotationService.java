@@ -47,11 +47,10 @@ public interface OaActRotationService {
     OaActRotation selectByPrimaryKey(String id);
 
     /**
-     * 更新附件列表
+     * 选择性更新
      *
-     * @param array array
-     * @param id    id
+     * @param oaActRotation oaActRotation
      * @return int
      */
-    int updateAnnexes(String[] array, String id);
+    int updateByPrimaryKeySelective(OaActRotation oaActRotation);
 }

@@ -45,6 +45,9 @@ public class OaActCarServiceImpl implements OaActCarService {
             oaCollaboration.setTitle(oaActCar.getTitle());
             oaCollaboration.setUrl("car");
             oaCollaboration.setTable("oa_act_car");
+            oaCollaboration.setName("用车审批");
+            oaCollaboration.setDataOne("事由：" + oaActCar.getProperties());
+            oaCollaboration.setDataTwo("用车时间:" + oaActCar.getStartTime());
             oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);
