@@ -6,7 +6,6 @@ import com.jiaoke.oa.bean.OaCollaboration;
 import com.jiaoke.oa.dao.OaActPactStopMapper;
 import com.jiaoke.oa.dao.OaCollaborationMapper;
 import com.jiaoke.oa.dao.UserInfoMapper;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -33,11 +32,12 @@ public class OaActPactStopServiceImpl implements OaActPactStopService {
 
     @Override
     public int insert(OaActPactStop oaActPactStop, Integer userId, String randomId, Integer state) {
+        String notifier = userInfoMapper.getNicknameById(oaActPactStop.getPromoter());
         oaActPactStop.setId(randomId);
         oaActPactStop.setCreateTime(new Date());
         oaActPactStop.setPromoter(userId);
         oaActPactStop.setUrl("pactStop");
-        if (oaActPactStopMapper.insert(oaActPactStop) < 0) {
+        if (oaActPactStopMapper.insertSelective(oaActPactStop) < 0) {
             return -1;
         } else {
             OaCollaboration oaCollaboration = new OaCollaboration();
@@ -46,6 +46,9 @@ public class OaActPactStopServiceImpl implements OaActPactStopService {
             oaCollaboration.setTitle(oaActPactStop.getTitle());
             oaCollaboration.setUrl("pactStop");
             oaCollaboration.setTable("oa_act_pact_stop");
+            oaCollaboration.setName("劳务协议终止通知书");
+            oaCollaboration.setDataOne("合同剩余天数：" + oaActPactStop.getNumber());
+            oaCollaboration.setDataTwo("通知人：" + notifier);
             oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);
@@ -68,6 +71,7 @@ public class OaActPactStopServiceImpl implements OaActPactStopService {
         OaActPactStop oaActPactStop = oaActPactStopMapper.selectByPrimaryKey(id);
         oaActPactStop.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActPactStop.getCreateTime()));
         oaActPactStop.setPromoterStr(userInfoMapper.getNicknameById(oaActPactStop.getPromoter()));
+        oaActPactStop.setNotifiedPersonStr(userInfoMapper.getNicknameById(oaActPactStop.getNotifiedPerson()));
         return oaActPactStop;
     }
 
@@ -78,14 +82,7 @@ public class OaActPactStopServiceImpl implements OaActPactStopService {
     }
 
     @Override
-    public int updateAnnexes(String[] array, String id) {
-        OaActPactStop oaActPactStop = new OaActPactStop();
-        oaActPactStop.setId(id);
-        if (array != null) {
-            oaActPactStop.setAnnex(StringUtils.join(array));
-        } else {
-            oaActPactStop.setAnnex("");
-        }
+    public int updateByPrimaryKeySelective(OaActPactStop oaActPactStop) {
         return oaActPactStopMapper.updateByPrimaryKeySelective(oaActPactStop);
     }
 }

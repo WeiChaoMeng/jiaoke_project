@@ -3,12 +3,11 @@ package com.jiaoke.controller.oa.activit;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
-import com.jiaoke.oa.bean.Comments;
-import com.jiaoke.oa.bean.OaActMeals;
-import com.jiaoke.oa.bean.UserInfo;
-import com.jiaoke.oa.service.OaActMealsService;
-import com.jiaoke.oa.service.OaCollaborationService;
-import com.jiaoke.oa.service.UserInfoService;
+import com.jiaoke.controller.oa.TargetFlowNodeCommand;
+import com.jiaoke.oa.bean.*;
+import com.jiaoke.oa.service.*;
+import org.activiti.bpmn.model.UserTask;
+import org.activiti.engine.ManagementService;
 import org.activiti.engine.task.Task;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
@@ -17,12 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
- * 劳动合同签订通知书
+ * 劳动合同签订审批表
  *
  * @author lihui
  * @version 1.0
@@ -36,13 +36,19 @@ public class OaActLaborContractSignController {
     private ActivitiUtil activitiUtil;
 
     @Resource
-    private OaActMealsService oaActMealsService;
+    private OaActLaborContractSignService oaActLaborContractSignService;
 
     @Resource
     private UserInfoService userInfoService;
 
     @Resource
     private OaCollaborationService oaCollaborationService;
+
+    @Resource
+    private DepartmentService departmentService;
+
+    @Resource
+    private ManagementService managementService;
 
     /**
      * 获取当前登录用户信息
@@ -60,29 +66,34 @@ public class OaActLaborContractSignController {
      */
     @RequestMapping("/toIndex")
     public String toMeals(Model model) {
+        List<UserInfo> userInfoList = userInfoService.selectIdAndNicknameAndDepartment();
+        List<Department> departmentList = departmentService.selectKeyAndName();
+        model.addAttribute("userInfoList", JsonHelper.toJSONString(userInfoList));
+        model.addAttribute("departmentList", JsonHelper.toJSONString(departmentList));
         model.addAttribute("nickname", getCurrentUser().getNickname());
-        return "oa/act/act_labor_contract_renewal";
+        return "oa/act/act_labor_contract_sign";
     }
 
     /**
      * 提交新增
      *
-     * @param oaActMeals oaActMeals
+     * @param oaActLaborContractSign oaActLaborContractSign
      * @return s/e
      */
     @RequestMapping(value = "/add")
     @ResponseBody
-    public String add(OaActMeals oaActMeals) {
+    public String add(OaActLaborContractSign oaActLaborContractSign) {
         String randomId = RandomUtil.randomId();
-        if (oaActMealsService.insert(oaActMeals, getCurrentUser().getId(), randomId, 0) < 1) {
+        if (oaActLaborContractSignService.insert(oaActLaborContractSign, getCurrentUser().getId(), randomId, 0) < 1) {
             return "error";
         } else {
-            //获取拥有权限的用户
-            UserInfo userInfo = userInfoService.getUserInfoByPermission("mealsApproval");
-            //开启流程
+            //用户所在部门id
+            String department = userInfoService.selectDepartmentByUserId(getCurrentUser().getId());
+            //部门负责人
+            String principal = departmentService.selectEnforcerId("principal", department);
             Map<String, Object> map = new HashMap<>(16);
-            map.put("approval", userInfo.getId());
-            String instance = activitiUtil.startProcessInstanceByKey("oa_meals", "oa_act_meals:" + randomId, map, getCurrentUser().getId().toString());
+            map.put("principal", principal);
+            String instance = activitiUtil.startProcessInstanceByKey("oa_labor_contract_sign", "oa_act_labor_contract_sign:" + randomId, map, getCurrentUser().getId().toString());
             if (instance != null) {
                 return "success";
             }
@@ -101,56 +112,116 @@ public class OaActLaborContractSignController {
     @RequestMapping(value = "/approval")
     public String approval(String id, String taskId, Model model) {
         //审批
-        OaActMeals oaActMeals = oaActMealsService.selectByPrimaryKey(id);
+        OaActLaborContractSign oaActLaborContractSign = oaActLaborContractSignService.selectByPrimaryKey(id);
         //获取批注信息
         List<Comments> commentsList = activitiUtil.selectHistoryComment(activitiUtil.getTaskByTaskId(taskId).getProcessInstanceId());
-        model.addAttribute("oaActMeals", oaActMeals);
+        model.addAttribute("oaActLaborContractSign", oaActLaborContractSign);
+        model.addAttribute("oaActLaborContractSignJson", JsonHelper.toJSONString(oaActLaborContractSign));
         model.addAttribute("taskId", JsonHelper.toJSONString(taskId));
         model.addAttribute("commentsList", commentsList);
         model.addAttribute("nickname", getCurrentUser().getNickname());
-        return "oa/act/act_meals_handle";
+        return "oa/act/act_labor_contract_sign_handle";
     }
 
     /**
      * 提交审批
      *
-     * @param processingOpinion 处理意见
-     * @param taskId            任务Id
+     * @param oaActLaborContractSign oaActLaborContractSign
+     * @param taskId                 任务Id
+     * @param flag                   flag
      * @return s/e
      */
     @RequestMapping(value = "/approvalSubmit")
     @ResponseBody
-    public String approvalSubmit(String processingOpinion, String taskId, Integer flag) {
-        //回退标识
-        String back = "back";
+    public String approvalSubmit(OaActLaborContractSign oaActLaborContractSign, String taskId, Integer flag) {
         //结束标识
         String end = "end";
-        //网关标识
-        String eg = "eg";
+        //发起人
+        String promoter = "promoter";
+        //回退
+        String back = "back";
+        //部门负责人
+        String principal = "principal";
+        //部门主管领导
+        String supervisor = "supervisor";
+        //人事
+        String personnel = "personnel";
+        //总经理
+        String companyPrincipal = "company_principal";
+        //知会
+        String maintainNotify = "maintainNotify";
+        //更新数据
+        if (oaActLaborContractSignService.updateByPrimaryKeySelective(oaActLaborContractSign) < 1) {
+            return "error";
+        }
+
         Task task = activitiUtil.getTaskByTaskId(taskId);
-        Map<String, Object> map = new HashMap<>(16);
         if (task == null) {
             return "error";
-        } else {
-            //下个节点
-            String nextNode = activitiUtil.getNextNode(task.getProcessDefinitionId(), task.getTaskDefinitionKey());
+        }
 
-            //下个节点是否为end直接结束
+        if (flag == 1) {
+            String nextNode = activitiUtil.getNextNode(task.getProcessDefinitionId(), task.getTaskDefinitionKey());
             if (end.equals(nextNode)) {
                 activitiUtil.endProcess(taskId);
+                return "success";
+            } else {
+                String processingOpinion = "";
+                UserTask userTask = activitiUtil.getUserTask(task.getProcessDefinitionId(), nextNode);
+                if (nextNode.equals(userTask.getId())) {
+                    String enforcer = userTask.getAssignee().substring(userTask.getAssignee().indexOf("{") + 1, userTask.getAssignee().indexOf("}"));
 
-                //下个节点为back修改表达状态为2并结束流程
-            } else if (back.equals(nextNode)) {
-                String businessId = activitiUtil.getBusinessByTaskId(task.getId());
-                String correlationId = businessId.substring(businessId.lastIndexOf(":") + 1);
-                oaCollaborationService.updateState(correlationId, 3);
-                activitiUtil.endProcess(taskId);
+                    //发起人
+                    if (promoter.equals(enforcer)) {
+                        Map<String, Object> map = new HashMap<>(16);
+                        map.put(promoter, activitiUtil.getStartUserId(task.getProcessInstanceId()));
+                        activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
+                        return "success";
 
-            } else if (eg.equals(nextNode)) {
-                map.put("result", flag);
-                map.put("notify", activitiUtil.getStartUserId(task.getProcessInstanceId()));
-                activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
+                        //部门负责人、主管领导
+                    } else if (principal.equals(enforcer) || supervisor.equals(enforcer)) {
+                        String startUserId = activitiUtil.getStartUserId(task.getProcessInstanceId());
+                        String departmentId = userInfoService.selectDepartmentByUserId(Integer.valueOf(startUserId));
+                        String enforcerId = departmentService.selectEnforcerId(enforcer, departmentId);
+                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, Integer.valueOf(enforcerId));
+                        return "success";
+
+                        //人事部门
+                    } else if (personnel.equals(enforcer)) {
+                        UserInfo userInfo = userInfoService.getUserInfoByPermission("personnel");
+                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
+                        return "success";
+
+                        //总经理
+                    } else if (companyPrincipal.equals(enforcer)) {
+                        UserInfo userInfo = userInfoService.getUserInfoByPermission("company_principal");
+                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
+                        return "success";
+
+                        //知会
+                    } else if (maintainNotify.equals(enforcer)) {
+                        Map<String, Object> map = new HashMap<>(16);
+                        List<Object> maintainNotifyList = new ArrayList<>();
+                        maintainNotifyList.add(oaActLaborContractSign.getPromoter());
+                        maintainNotifyList.add(oaActLaborContractSign.getNotifiedPerson());
+                        map.put("maintainNotifyList", maintainNotifyList);
+                        activitiUtil.designatedCountersignPersonnel(taskId, map);
+                        return "success";
+
+                    } else {
+                        UserInfo userInfo = userInfoService.getUserInfoByPermission(enforcer);
+                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
+                        return "success";
+                    }
+                } else {
+                    return "error";
+                }
             }
+        } else {
+            //驳回
+            managementService.executeCommand(new TargetFlowNodeCommand(task.getId(), back));
+            //修改表单状态
+            oaCollaborationService.updateState(oaActLaborContractSign.getId(), 3);
             return "success";
         }
     }
@@ -158,14 +229,14 @@ public class OaActLaborContractSignController {
     /**
      * 保存待发
      *
-     * @param oaActMeals oaActMeals
+     * @param oaActLaborContractSign oaActLaborContractSign
      * @return s/e
      */
     @RequestMapping(value = "/savePending")
     @ResponseBody
-    public String savePending(OaActMeals oaActMeals) {
+    public String savePending(OaActLaborContractSign oaActLaborContractSign) {
         String randomId = RandomUtil.randomId();
-        if (oaActMealsService.insert(oaActMeals, getCurrentUser().getId(), randomId, 1) < 1) {
+        if (oaActLaborContractSignService.insert(oaActLaborContractSign, getCurrentUser().getId(), randomId, 1) < 1) {
             return "error";
         } else {
             return "success";
@@ -181,21 +252,25 @@ public class OaActLaborContractSignController {
      */
     @RequestMapping(value = "/toEdit")
     public String toEdit(String id, Model model) {
-        OaActMeals oaActMeals = oaActMealsService.selectByPrimaryKey(id);
-        model.addAttribute("oaActMeals", oaActMeals);
-        return "oa/act/act_meals_edit";
+        OaActLaborContractSign oaActLaborContractSign = oaActLaborContractSignService.selectByPrimaryKey(id);
+        List<UserInfo> userInfoList = userInfoService.selectIdAndNicknameAndDepartment();
+        List<Department> departmentList = departmentService.selectKeyAndName();
+        model.addAttribute("userInfoList", JsonHelper.toJSONString(userInfoList));
+        model.addAttribute("departmentList", JsonHelper.toJSONString(departmentList));
+        model.addAttribute("oaActLaborContractSign", oaActLaborContractSign);
+        return "oa/act/act_labor_contract_sign_edit";
     }
 
     /**
      * 编辑后保存
      *
-     * @param oaActMeals oaActMeals
+     * @param oaActLaborContractSign oaActLaborContractSign
      * @return s/e
      */
     @RequestMapping(value = "/edit")
     @ResponseBody
-    public String edit(OaActMeals oaActMeals) {
-        if (oaActMealsService.edit(oaActMeals) < 0) {
+    public String edit(OaActLaborContractSign oaActLaborContractSign) {
+        if (oaActLaborContractSignService.edit(oaActLaborContractSign) < 0) {
             return "error";
         } else {
             return "success";
@@ -205,24 +280,26 @@ public class OaActLaborContractSignController {
     /**
      * 编辑后发送
      *
-     * @param oaActMeals oaActMeals
+     * @param oaActLaborContractSign oaActLaborContractSign
      * @return s/e
      */
     @RequestMapping(value = "/editAdd")
     @ResponseBody
-    public String editAdd(OaActMeals oaActMeals) {
+    public String editAdd(OaActLaborContractSign oaActLaborContractSign) {
         //更新数据
-        if (oaActMealsService.edit(oaActMeals) < 0) {
+        if (oaActLaborContractSignService.edit(oaActLaborContractSign) < 0) {
             return "error";
         } else {
-            //获取拥有权限的用户
-            UserInfo userInfo = userInfoService.getUserInfoByPermission("mealsApproval");
+            //用户所在部门id
+            String department = userInfoService.selectDepartmentByUserId(getCurrentUser().getId());
+            //部门负责人
+            String principal = departmentService.selectEnforcerId("principal", department);
             Map<String, Object> map = new HashMap<>(16);
-            map.put("mealsApproval", userInfo.getId());
-            String instance = activitiUtil.startProcessInstanceByKey("oa_meals", "oa_act_meals:" + oaActMeals.getId(), map, getCurrentUser().getId().toString());
+            map.put("principal", principal);
+            String instance = activitiUtil.startProcessInstanceByKey("oa_labor_contract_sign", "oa_act_labor_contract_sign:" + oaActLaborContractSign.getId(), map, getCurrentUser().getId().toString());
             if (instance != null) {
                 //发送成功后更新状态
-                oaCollaborationService.updateStateByCorrelationId(oaActMeals.getId(), 0, oaActMeals.getTitle());
+                oaCollaborationService.updateStateByCorrelationId(oaActLaborContractSign.getId(), 0, oaActLaborContractSign.getTitle());
                 return "success";
             } else {
                 return "error";
@@ -240,13 +317,12 @@ public class OaActLaborContractSignController {
      */
     @RequestMapping(value = "/details")
     public String details(String id, String taskId, Model model) {
-        OaActMeals oaActMeals = oaActMealsService.selectByPrimaryKey(id);
+        OaActLaborContractSign oaActLaborContractSign = oaActLaborContractSignService.selectByPrimaryKey(id);
         //获取批注信息
         List<Comments> commentsList = activitiUtil.selectHistoryComment(taskId);
-        model.addAttribute("oaActMeals", oaActMeals);
+        model.addAttribute("oaActLaborContractSign", oaActLaborContractSign);
         model.addAttribute("commentsList", commentsList);
-        model.addAttribute("commentsListSize", commentsList.size());
-        return "oa/act/act_meals_details";
+        return "oa/act/act_labor_contract_sign_details";
     }
 
     /**
@@ -262,7 +338,7 @@ public class OaActLaborContractSignController {
         //删除流程
         if (activitiUtil.deleteByProcessInstanceId(processInstanceId) == 1) {
             //执行删除数据
-            oaActMealsService.deleteData(id);
+            oaActLaborContractSignService.deleteData(id);
             oaCollaborationService.deleteByCorrelationId(id);
             return "success";
         } else {

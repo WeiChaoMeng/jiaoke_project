@@ -14,7 +14,7 @@
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
 </head>
 
-<body id="body">
+<body id="body" style="width: 70%">
 
 <div class="table-title">
     <span>${oaActRotation.title}</span>
@@ -60,6 +60,11 @@
     </c:choose>
 </div>
 
+<div style="margin-top: 10px">
+    <input type="text" class="filling-date-content" value="${oaActRotation.fillingDate}" readonly>
+    <span class="filling-date">填表日期 </span>
+</div>
+
 <table class="formTable">
     <tbody>
     <tr>
@@ -82,7 +87,7 @@
 
         <td class="tdLabel">出生年月</td>
         <td class="table-td-content" style="width: 18%;">
-            ${oaActRotation.birthdayStr}
+            ${oaActRotation.birthday}
         </td>
     </tr>
 
@@ -143,8 +148,13 @@
     </tr>
 
     <tr>
+        <td class="tdLabel">转入部门</td>
+        <td class="table-td-content">
+            ${oaActRotation.newDepartmentStr}
+        </td>
+
         <td class="tdLabel">调整原因</td>
-        <td colspan="5" class="table-td-content" id="adjustReasons">
+        <td colspan="3" class="table-td-content" id="adjustReasons">
 
             <c:choose>
                 <c:when test="${oaActRotation.adjust == 0}">
@@ -190,14 +200,14 @@
     <tr>
         <td class="tdLabel">所在部门意见</td>
         <td colspan="5" class="approval-content">
-            <textarea readonly class="approval-content-textarea"></textarea>
+            <textarea readonly class="approval-content-textarea">${oaActRotation.principalContent}</textarea>
             <div class="approval-date">
-                <label class="approval-date-label">日期:</label>
-                <input class="approval-date-input" type="text" readonly>
+                <label class="approval-date-label">日期 </label>
+                <input class="approval-date-input" type="text" value="${oaActRotation.principalDate}" readonly>
             </div>
             <div class="approval-signature">
-                <label class="approval-signature-label">签字:</label>
-                <input class="approval-signature-input" type="text" readonly>
+                <label class="approval-signature-label">签字 </label>
+                <input class="approval-signature-input" type="text" value="${oaActRotation.principal}" readonly>
             </div>
         </td>
     </tr>
@@ -205,14 +215,14 @@
     <tr>
         <td class="tdLabel">分管部门意见</td>
         <td colspan="5" class="approval-content">
-            <textarea readonly class="approval-content-textarea"></textarea>
+            <textarea readonly class="approval-content-textarea">${oaActRotation.transferPrincipalContent}</textarea>
             <div class="approval-date">
-                <label class="approval-date-label">日期:</label>
-                <input class="approval-date-input" type="text" readonly>
+                <label class="approval-date-label">日期 </label>
+                <input class="approval-date-input" type="text" value="${oaActRotation.transferPrincipalDate}" readonly>
             </div>
             <div class="approval-signature">
-                <label class="approval-signature-label">签字:</label>
-                <input class="approval-signature-input" type="text" readonly>
+                <label class="approval-signature-label">签字 </label>
+                <input class="approval-signature-input" type="text" value="${oaActRotation.transferPrincipal}" readonly>
             </div>
         </td>
     </tr>
@@ -220,14 +230,14 @@
     <tr>
         <td class="tdLabel">劳资部门意见</td>
         <td colspan="5" class="approval-content">
-            <textarea readonly class="approval-content-textarea"></textarea>
+            <textarea readonly class="approval-content-textarea">${oaActRotation.personnelContent}</textarea>
             <div class="approval-date">
-                <label class="approval-date-label">日期:</label>
-                <input class="approval-date-input" type="text" readonly>
+                <label class="approval-date-label">日期 </label>
+                <input class="approval-date-input" type="text" value="${oaActRotation.personnelDate}" readonly>
             </div>
             <div class="approval-signature">
-                <label class="approval-signature-label">签字:</label>
-                <input class="approval-signature-input" type="text" readonly>
+                <label class="approval-signature-label">签字 </label>
+                <input class="approval-signature-input" type="text" value="${oaActRotation.personnel}" readonly>
             </div>
         </td>
     </tr>
@@ -235,14 +245,14 @@
     <tr>
         <td class="tdLabel">总经理意见</td>
         <td colspan="5" class="approval-content">
-            <textarea readonly class="approval-content-textarea"></textarea>
+            <textarea readonly class="approval-content-textarea">${oaActRotation.companyPrincipalContent}</textarea>
             <div class="approval-date">
-                <label class="approval-date-label">日期:</label>
-                <input class="approval-date-input" type="text" readonly>
+                <label class="approval-date-label">日期 </label>
+                <input class="approval-date-input" type="text" value="${oaActRotation.companyPrincipalDate}" readonly>
             </div>
             <div class="approval-signature">
-                <label class="approval-signature-label">签字:</label>
-                <input class="approval-signature-input" type="text" readonly>
+                <label class="approval-signature-label">签字 </label>
+                <input class="approval-signature-input" type="text" value="${oaActRotation.companyPrincipal}" readonly>
             </div>
         </td>
     </tr>
@@ -270,7 +280,7 @@
         //执行打印
         window.print();
         $('#tool').show();
-        $('#body,#return').css('width', '80%');
+        $('#body,#return').css('width', '70%');
     }
 </script>
 </html>

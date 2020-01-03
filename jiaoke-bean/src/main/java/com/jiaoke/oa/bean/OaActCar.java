@@ -85,14 +85,24 @@ public class OaActCar {
     private String lookup;
 
     /**
-     * 审核人
+     * 审核人（部门负责人）
      */
-    private String reviewer;
+    private String principal;
 
     /**
-     * 批准人
+     * 部门负责人审批时间
      */
-    private String approver;
+    private String principalDate;
+
+    /**
+     * 批准人（部门主管领导）
+     */
+    private String supervisor;
+
+    /**
+     * 部门主管领导审批时间
+     */
+    private String supervisorDate;
 
     /**
      * 附件
@@ -278,19 +288,35 @@ public class OaActCar {
         this.lookup = lookup;
     }
 
-    public String getReviewer() {
-        return reviewer;
+    public String getPrincipal() {
+        return principal;
     }
 
-    public void setReviewer(String reviewer) {
-        this.reviewer = reviewer;
+    public void setPrincipal(String principal) {
+        this.principal = principal;
     }
 
-    public String getApprover() {
-        return approver;
+    public String getPrincipalDate() {
+        return principalDate;
     }
 
-    public void setApprover(String approver) {
-        this.approver = approver;
+    public void setPrincipalDate(String principalDate) {
+        this.principalDate = principalDate;
+    }
+
+    public String getSupervisor() {
+        return supervisor;
+    }
+
+    public void setSupervisor(String supervisor) {
+        this.supervisor = supervisor;
+    }
+
+    public String getSupervisorDate() {
+        return supervisorDate;
+    }
+
+    public void setSupervisorDate(String supervisorDate) {
+        this.supervisorDate = supervisorDate;
     }
 }

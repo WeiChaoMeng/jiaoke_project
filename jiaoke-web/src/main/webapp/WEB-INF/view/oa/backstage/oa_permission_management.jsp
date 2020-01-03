@@ -13,7 +13,7 @@
 
 <body>
 
-<div class="cursor_hand layui-container layui-text" style="width: 80%">
+<div class="cursor_hand layui-container layui-text" style="width: 81%">
     <table id="table1" class="layui-table" lay-filter="table1"></table>
 </div>
 

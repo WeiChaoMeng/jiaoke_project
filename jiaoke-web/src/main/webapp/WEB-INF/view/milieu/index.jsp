@@ -69,7 +69,7 @@
 
             <div class="alone-data-style">
                 <div class="alone-inner-style">
-                    <p class="content" id="PM10" style="padding-top: 5px;">39</p>
+                    <p class="content" id="PM10" style="padding-top: 5px;">28</p>
                     <img src="../../../static/images/wether/aqi/pm10.png" title="PM10(ug/m3)">
                     <p class="content">PM10指数(ug/m3)</p>
                 </div>
@@ -105,7 +105,7 @@
                     <%--CO--%>
                     <li class="item odd">
                         <div class="ct-sub">
-                            <p class="content" id="CO">1.0</p>
+                            <p class="content" id="CO">3</p>
                             <img src="../../../static/images/wether/aqi/co.png"
                                  title="一氧化碳(mg/m3)">
                             <p class="content">一氧化碳(mg/m3)</p>
@@ -115,7 +115,7 @@
                     <%--NO2--%>
                     <li class="item odd">
                         <div class="ct-sub">
-                            <p class="content" id="NO2">84</p>
+                            <p class="content" id="NO2">8</p>
                             <img src="../../../static/images/wether/aqi/no.png" style="margin: 10px 0 10px 0;"
                                  title="二氧化氮(ug/m3)">
                             <p class="content">二氧化氮(ug/m3)</p>
@@ -125,7 +125,7 @@
                     <%--O3--%>
                     <li class="item odd">
                         <div class="ct-sub">
-                            <p class="content" id="O3">16</p>
+                            <p class="content" id="O3">20</p>
                             <img src="../../../static/images/wether/aqi/o.png" style="margin: 10px 0 10px 0;"
                                  title="臭氧(ug/m3)">
                             <p class="content">臭氧(ug/m3)</p>
@@ -135,7 +135,7 @@
                     <%--SO2--%>
                     <li class="item odd">
                         <div class="ct-sub">
-                            <p class="content" id="SO2">12</p>
+                            <p class="content" id="SO2">1</p>
                             <img src="../../../static/images/wether/aqi/so.png" style="margin: 10px 0 10px 0;"
                                  title="二氧化硫(ug/m3)">
                             <p class="content">二氧化硫(ug/m3)</p>
@@ -266,6 +266,7 @@
                 alert("error");
             },
             success: function (data) {
+                console.log(data.air);
                 var date = new Date();
                 var currentDate = date.getFullYear() + "年" + (date.getMonth() + 1) + "月" + date.getDate() + "日";
 

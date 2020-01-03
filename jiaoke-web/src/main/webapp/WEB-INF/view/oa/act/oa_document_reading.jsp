@@ -15,7 +15,7 @@
     <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
 </head>
 
-<body id="body" style="width: 70%">
+<body id="body" style="width: 65%">
 
 <div class="table-title">
     <span>收文阅办审批单</span>
@@ -56,7 +56,6 @@
 </div>
 
 <form id="oaActRead">
-
     <div class="form_area" id="titleArea">
         <table>
             <tbody>
@@ -66,7 +65,7 @@
                 </td>
 
                 <th nowrap="nowrap" class="th_title" style="width: 4%">标题</th>
-                <td style="width: 44%">
+                <td style="width: 40%">
                     <div class="common_input_frame">
                         <input type="text" id="title" name="title" placeholder="<点击此处填写标题>"
                                value="收文阅办审批单(${nickname} <%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>)"
@@ -77,7 +76,7 @@
                 <th class="th_title" nowrap="nowrap" style="width: 4%">流程</th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" placeholder="王玉秋、根据拟办意见处理、李辉中" readonly="readonly">
+                        <input type="text" placeholder="王玉秋、根据拟办意见处理、李辉中、发起人(知会)" readonly="readonly">
                     </div>
                 </td>
             </tr>
@@ -86,11 +85,12 @@
     </div>
 
     <div>
-        <span class="fill-in-date">
-            <input type="text" class="form-number-content" name="departmentNumbering" value="LC/BGS-" autocomplete="off">
+        <span class="fill-in-date" style="margin-top: 0;float: left;">
+            <input type="text" class="form-number-content" name="departmentNumbering" value="LC/BGS-"
+                   autocomplete="off">
         </span>
 
-        <span class="form-number-left" style="float: left">编号
+        <span class="form-number-left" style="float: right;margin-top: 0;">编号
             <input type="text" class="form-number-content" name="numbering" value="LC" autocomplete="off">
         </span>
     </div>
@@ -308,7 +308,7 @@
         //执行打印
         window.print();
         $('#tool,#titleArea').show();
-        $('#body').css('width', '70%');
+        $('#body').css('width', '65%');
 
         //附件列表
         let annexesLen = $('#annexes').children().length;

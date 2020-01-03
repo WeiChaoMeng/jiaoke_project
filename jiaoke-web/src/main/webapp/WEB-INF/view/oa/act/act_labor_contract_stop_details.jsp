@@ -12,11 +12,9 @@
     <meta charset="utf-8">
     <title>劳动合同终止通知书</title>
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
-    <link href="../../../../static/js/date_pickers/date_picker.css" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
 </head>
 
-<body id="body">
+<body id="body" style="width: 70%">
 
 <div class="table-title">
     <span>${oaActLaborContractStop.title}</span>
@@ -64,7 +62,7 @@
 
 <div style="margin-top: 10px">
     <div class="notice-personnel">
-        <input type="text" class="notice-personnel-field" value="${oaActLaborContractStop.name}" readonly>:
+        <input type="text" class="notice-personnel-field" value="${oaActLaborContractStop.notifiedPersonStr}" readonly>:
     </div>
 
     <div class="notice-content">
@@ -93,10 +91,8 @@
     <div class="notice-sign">
         <div class="notice-sign-position">
             <label>接收人：</label>
-            <input class="notice-relevant-personnel" type="text" readonly>
-            <input class="notice-date" type="text"
-                   value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年&nbsp;&nbsp;&nbsp;&nbsp;月&nbsp;&nbsp;&nbsp;&nbsp;日"
-                   readonly>
+            <input class="notice-relevant-personnel" type="text" value="${oaActLaborContractStop.receivingSign}"  readonly>
+            <input class="notice-date" type="text" ${oaActLaborContractStop.receivingDate} readonly>
         </div>
     </div>
 </div>
@@ -113,7 +109,7 @@
         <td class="td-column-three" colspan="2">申请与公司续订无固定期劳动合同</td>
     </tr>
 
-    <tr id="renewal">
+    <tr>
         <c:choose>
             <c:when test="${oaActLaborContractStop.renewal == 0}">
                 <td class="td-column-three" colspan="2">
@@ -157,15 +153,15 @@
     <tr>
         <td class="notice-td-label">其他需要补充的内容</td>
         <td colspan="5" class="table-td-evaluation">
-            <textarea class="evaluation-content" style="height: 90px"
+            <textarea class="evaluation-content-disabled" style="height: 90px"
                       readonly>${oaActLaborContractStop.supplementDetails}</textarea>
             <div class="approval-date">
-                <label class="approval-date-label">日期:</label>
-                <input class="approval-date-input" type="text" value="${oaActLaborContractStop.createTimeStr}" readonly>
+                <label class="approval-date-label">日期 </label>
+                <input class="approval-date-input" type="text" value="${oaActLaborContractStop.receivingDate}" readonly>
             </div>
             <div class="approval-signature">
-                <label class="approval-signature-label">本人签字:</label>
-                <input class="approval-signature-input" type="text" value="${oaActLaborContractStop.promoterStr}"
+                <label class="approval-signature-label">本人签字 </label>
+                <input class="approval-signature-input" type="text" value="${oaActLaborContractStop.receivingSign}"
                        readonly>
             </div>
         </td>
@@ -178,29 +174,17 @@
     <span class="notice-tips-script">此通知一式两份，接收人、公司各执一份。</span>
 </div>
 
-<div class="form-but" id="return">
-    <button type="button" class="return-but" onclick="previousPage()">返回</button>
-</div>
-
 </body>
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
-<script type="text/javascript" src="../../../../static/js/jeDate/src/jedate.js"></script>
-<script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
-
-    //返回上一页
-    function previousPage() {
-        window.history.back();
-    }
-
     //打印
     function printContent() {
-        $('#tool,#return').hide();
+        $('#tool').hide();
         $('#body').css('width', '100%');
         //执行打印
         window.print();
         $('#tool').show();
-        $('#body,#return').css('width', '80%');
+        $('#body').css('width', '70%');
     }
 </script>
 </html>

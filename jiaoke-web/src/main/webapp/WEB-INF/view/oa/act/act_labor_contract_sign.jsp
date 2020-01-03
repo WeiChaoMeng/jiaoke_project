@@ -10,16 +10,14 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>劳动合同签订通知书</title>
+    <title>劳动合同签订审批表</title>
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
-    <link href="../../../../static/js/date_pickers/date_picker.css" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
 </head>
 
-<body id="body">
+<body id="body" style="width: 70%">
 
 <div class="table-title">
-    <span>劳动合同签订通知书</span>
+    <span>劳动合同签订审批表</span>
 </div>
 
 <div class="top_toolbar" id="tool">
@@ -56,7 +54,7 @@
     </div>
 </div>
 
-<form id="oaActMeals">
+<form id="oaActLaborContractSign">
     <div class="form_area" id="titleArea" style="margin-bottom: 15px">
         <table>
             <tbody>
@@ -65,19 +63,19 @@
                     <button type="button" class="table-tab-send" onclick="send()">发送</button>
                 </td>
 
-                <th nowrap="nowrap" class="th_title" style="width: 4%">标题:</th>
-                <td style="width: 36%">
+                <th nowrap="nowrap" class="th_title" style="width: 4%">标题 </th>
+                <td style="width: 32%">
                     <div class="common_input_frame">
                         <input type="text" id="title" name="title" placeholder="请输入标题" title="点击此处填写标题"
-                               value="劳动合同签订通知书(${nickname} <%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>)"
+                               value="劳动合同签订审批表(${nickname} <%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>)"
                                autocomplete="off">
                     </div>
                 </td>
 
-                <th class="th_title" nowrap="nowrap" style="width: 4%">流程:</th>
+                <th class="th_title" nowrap="nowrap" style="width: 4%">流程 </th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" placeholder="发起者部门负责人(审批)、发起者部门主管领导(审批)、组织人事部门(审批)、总经理(审批)、发起者(协同)" readonly="readonly">
+                        <input type="text" placeholder="部门负责人(审批),部门主管领导(审批),人事部门(审批),总经理(审批),通知人、被通知人(协同)" readonly>
                     </div>
                 </td>
             </tr>
@@ -87,7 +85,9 @@
 
     <div>
         <div class="notice-content">
-            <input type="text" class="notice-personnel-field">将与我公司签订劳动合同，请各部门（领导）签署意见。
+            <input type="text" class="notice-personnel-field" onclick="recipientSelect()" id="recipientName" readonly>将与我公司签订劳动合同，请各部门（领导）签署意见。
+            <input type="hidden" id="recipientId" name="notifiedPerson">
+            <input type="hidden" id="annex" name="annex">
         </div>
     </div>
 
@@ -95,60 +95,60 @@
         <tbody>
         <tr>
             <td class="tdLabel">所在部门意见</td>
-            <td colspan="5" class="table-td-evaluation" style="height: 120px">
-                <textarea class="evaluation-content" style="height: 73px" name="remarks"></textarea>
+            <td colspan="5" class="approval-content">
+                <textarea class="approval-content-textarea" readonly></textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
-                    <input class="approval-date-input" type="text" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" disabled="disabled">
+                    <label class="approval-date-label">日期 </label>
+                    <input class="approval-date-input" type="text" readonly>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">签字:</label>
-                    <input class="approval-signature-input" type="text" value="${nickname}" disabled="disabled">
+                    <label class="approval-signature-label">签字</label>
+                    <input class="approval-signature-input" type="text" readonly>
                 </div>
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel">主管领导意见</td>
-            <td colspan="5" class="table-td-evaluation" style="height: 120px">
-                <textarea class="evaluation-content" style="height: 73px" name="remarks"></textarea>
+            <td colspan="5" class="approval-content">
+                <textarea class="approval-content-textarea" readonly></textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
-                    <input class="approval-date-input" type="text" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" disabled="disabled">
+                    <label class="approval-date-label">日期 </label>
+                    <input class="approval-date-input" type="text" readonly>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">签字:</label>
-                    <input class="approval-signature-input" type="text" value="${nickname}" disabled="disabled">
+                    <label class="approval-signature-label">签字 </label>
+                    <input class="approval-signature-input" type="text" readonly>
                 </div>
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel">组织人事部门意见</td>
-            <td colspan="5" class="table-td-evaluation" style="height: 120px">
-                <textarea class="evaluation-content" style="height: 73px" name="remarks"></textarea>
+            <td colspan="5" class="approval-content">
+                <textarea class="approval-content-textarea" readonly></textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
-                    <input class="approval-date-input" type="text" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" disabled="disabled">
+                    <label class="approval-date-label">日期 </label>
+                    <input class="approval-date-input" type="text" readonly>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">签字:</label>
-                    <input class="approval-signature-input" type="text" value="${nickname}" disabled="disabled">
+                    <label class="approval-signature-label">签字 </label>
+                    <input class="approval-signature-input" type="text" readonly>
                 </div>
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel">总经理意见</td>
-            <td colspan="5" class="table-td-evaluation" style="height: 120px">
-                <textarea class="evaluation-content" style="height: 73px" name="remarks"></textarea>
+            <td colspan="5" class="approval-content">
+                <textarea class="approval-content-textarea" readonly></textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
-                    <input class="approval-date-input" type="text" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" disabled="disabled">
+                    <label class="approval-date-label">日期 </label>
+                    <input class="approval-date-input" type="text" readonly>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">签字:</label>
-                    <input class="approval-signature-input" type="text" value="${nickname}" disabled="disabled">
+                    <label class="approval-signature-label">签字 </label>
+                    <input class="approval-signature-input" type="text" readonly>
                 </div>
             </td>
         </tr>
@@ -158,33 +158,8 @@
 
 </body>
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
-<script type="text/javascript" src="../../../../static/js/jeDate/src/jedate.js"></script>
 <script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
-
-    //日期选择器
-    jeDate(".start-date", {
-        theme: {bgcolor: "#00A1CB", pnColor: "#00CCFF"},
-        festival: false,
-        isinitVal: true,
-        isClear: false,                     //是否开启清空
-        minDate: "1900-01-01",              //最小日期
-        maxDate: "2099-12-31",              //最大日期
-        format: "YYYY年MM月DD日",
-        zIndex: 100000,
-    });
-
-    jeDate(".end-date", {
-        theme: {bgcolor: "#00A1CB", pnColor: "#00CCFF"},
-        festival: false,
-        isinitVal: true,
-        isClear: false,                     //是否开启清空
-        minDate: "1900-01-01",              //最小日期
-        maxDate: "2099-12-31",              //最大日期
-        format: "YYYY年MM月DD日",
-        zIndex: 100000,
-    });
-
     //发送
     function send() {
         var array = [];
@@ -200,8 +175,8 @@
 
             $.ajax({
                 type: "POST",
-                url: '${path}/meals/add',
-                data: $('#oaActMeals').serialize(),
+                url: '${path}/laborContractSign/add',
+                data: $('#oaActLaborContractSign').serialize(),
                 error: function (request) {
                     layer.msg("出错！");
                 },
@@ -219,13 +194,22 @@
 
     //保存待发
     function savePending() {
+        var array = [];
+        $('#annexes').find('input').each(function () {
+            array.push($(this).val());
+        });
+
         if ($.trim($("#title").val()) === '') {
             layer.msg("标题不可以为空！")
+
         } else {
+            //发送前将上传好的附件插入form中
+            $('#annex').val(array);
+
             $.ajax({
                 type: "POST",
-                url: '${path}/meals/savePending',
-                data: $('#oaActMeals').serialize(),
+                url: '${path}/laborContractSign/savePending',
+                data: $('#oaActLaborContractSign').serialize(),
                 error: function (request) {
                     layer.msg("出错！");
                 },
@@ -296,10 +280,11 @@
     //打印
     function printContent() {
         $('#tool,#titleArea,#annexList').hide();
-        // $('#body').css('width','100%');
+        $('#body').css('width','100%');
         //执行打印
         window.print();
         $('#tool,#titleArea').show();
+        $('#body').css('width','70%');
 
         //附件列表
         let annexesLen = $('#annexes').children().length;
@@ -308,6 +293,21 @@
         } else {
             $('#annexList').css("display", "block");
         }
+    }
+
+    //选择接收人
+    function recipientSelect() {
+        //用户
+        var userInfoList = JSON.parse('${userInfoList}');
+        //部门
+        var departmentList = JSON.parse('${departmentList}');
+        window.top.selectRecipient(userInfoList, departmentList);
+    }
+
+    //确认接收人
+    function confirmSelectRecipient(id, name) {
+        $('#recipientId').val(id);
+        $('#recipientName').val(name);
     }
 </script>
 </html>

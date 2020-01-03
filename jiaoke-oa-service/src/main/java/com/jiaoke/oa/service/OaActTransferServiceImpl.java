@@ -3,9 +3,7 @@ package com.jiaoke.oa.service;
 import com.jiake.utils.DateUtil;
 import com.jiaoke.oa.bean.OaActTransfer;
 import com.jiaoke.oa.bean.OaCollaboration;
-import com.jiaoke.oa.dao.OaActTransferMapper;
-import com.jiaoke.oa.dao.OaCollaborationMapper;
-import com.jiaoke.oa.dao.UserInfoMapper;
+import com.jiaoke.oa.dao.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -31,14 +29,16 @@ public class OaActTransferServiceImpl implements OaActTransferService {
     @Resource
     private UserInfoMapper userInfoMapper;
 
+    @Resource
+    private DepartmentMapper departmentMapper;
+
     @Override
     public int insert(OaActTransfer oaActTransfer, Integer userId, String randomId, Integer state) {
-        oaActTransfer.setEntryDate(DateUtil.stringConvertYYYYMMDD(oaActTransfer.getEntryDateStr()));
         oaActTransfer.setId(randomId);
         oaActTransfer.setCreateTime(new Date());
         oaActTransfer.setPromoter(userId);
         oaActTransfer.setUrl("transfer");
-        if (oaActTransferMapper.insert(oaActTransfer) < 0) {
+        if (oaActTransferMapper.insertSelective(oaActTransfer) < 0) {
             return -1;
         } else {
             OaCollaboration oaCollaboration = new OaCollaboration();
@@ -47,6 +47,9 @@ public class OaActTransferServiceImpl implements OaActTransferService {
             oaCollaboration.setTitle(oaActTransfer.getTitle());
             oaCollaboration.setUrl("transfer");
             oaCollaboration.setTable("oa_act_transfer");
+            oaCollaboration.setName("转岗审批");
+            oaCollaboration.setDataOne("现岗位：" + oaActTransfer.getPresentPost());
+            oaCollaboration.setDataTwo("拟转入岗位：" + oaActTransfer.getNewPost());
             oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);
@@ -56,7 +59,6 @@ public class OaActTransferServiceImpl implements OaActTransferService {
 
     @Override
     public int edit(OaActTransfer oaActTransfer) {
-        oaActTransfer.setEntryDate(DateUtil.stringConvertYYYYMMDD(oaActTransfer.getEntryDateStr()));
         if (oaActTransferMapper.updateByPrimaryKeySelective(oaActTransfer) < 0) {
             return -1;
         } else {
@@ -68,9 +70,9 @@ public class OaActTransferServiceImpl implements OaActTransferService {
     @Override
     public OaActTransfer selectByPrimaryKey(String id) {
         OaActTransfer oaActTransfer = oaActTransferMapper.selectByPrimaryKey(id);
-        oaActTransfer.setEntryDateStr(DateUtil.dateConvertYYYYMMDD(oaActTransfer.getEntryDate()));
         oaActTransfer.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActTransfer.getCreateTime()));
         oaActTransfer.setPromoterStr(userInfoMapper.getNicknameById(oaActTransfer.getPromoter()));
+        oaActTransfer.setNewDepartmentStr(departmentMapper.selectDepartmentNameByDepartmentKey(oaActTransfer.getNewDepartment()));
         return oaActTransfer;
     }
 
@@ -81,14 +83,7 @@ public class OaActTransferServiceImpl implements OaActTransferService {
     }
 
     @Override
-    public int updateAnnexes(String[] array, String id) {
-        OaActTransfer oaActTransfer = new OaActTransfer();
-        oaActTransfer.setId(id);
-        if (array != null) {
-            oaActTransfer.setAnnex(StringUtils.join(array));
-        } else {
-            oaActTransfer.setAnnex("");
-        }
+    public int updateByPrimaryKeySelective(OaActTransfer oaActTransfer) {
         return oaActTransferMapper.updateByPrimaryKeySelective(oaActTransfer);
     }
 }

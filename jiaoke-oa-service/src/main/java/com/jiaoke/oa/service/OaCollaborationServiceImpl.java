@@ -130,16 +130,17 @@ public class OaCollaborationServiceImpl implements OaCollaborationService {
                         String enforcer = assignee.substring(assignee.indexOf("{") + 1, assignee.indexOf("}"));
 
                         //部门
-                        if ("principal".equals(enforcer) || "supervisor".equals(enforcer)) {
-                            String userId = departmentMapper.selectEnforcer(enforcer, departmentKey);
-                            String nickname = userInfoMapper.getNicknameById(Integer.valueOf(userId));
-                            oc.setPreviousApprover(nickname);
-                        } else {
-                            //权限
-                            oc.setPreviousApprover(oaCollaborationMapper.selectPreviousNodeInfo(enforcer,collaboration.getTable(),collaboration.getCorrelationId()));
-//                            UserInfo userInfo = userInfoMapper.selectByPermission(enforcer);
-//                            oc.setPreviousApprover(userInfo.getNickname());
-                        }
+//                        if ("principal".equals(enforcer) || "supervisor".equals(enforcer)) {
+//                            String userId = departmentMapper.selectEnforcer(enforcer, departmentKey);
+//                            String nickname = userInfoMapper.getNicknameById(Integer.valueOf(userId));
+//                            oc.setPreviousApprover(nickname);
+//                        } else {
+//                            //权限
+//                            oc.setPreviousApprover(oaCollaborationMapper.selectPreviousNodeInfo(enforcer,collaboration.getTable(),collaboration.getCorrelationId()));
+////                            UserInfo userInfo = userInfoMapper.selectByPermission(enforcer);
+////                            oc.setPreviousApprover(userInfo.getNickname());
+//                        }
+                        oc.setPreviousApprover(oaCollaborationMapper.selectPreviousNodeInfo(enforcer,collaboration.getTable(),collaboration.getCorrelationId()));
                     } else if ("网关".equals(collaboration.getPreviousApprover())) {
                         oc.setPreviousApprover(collaboration.getPreviousApprover());
                     } else {

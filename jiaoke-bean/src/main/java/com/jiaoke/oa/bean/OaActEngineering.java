@@ -89,14 +89,24 @@ public class OaActEngineering {
     private String salesman;
 
     /**
-     * 经营部部长
-     */
-
-    private String minister;
-    /**
-     * 经营部负责人
+     * 经营部门负责人
      */
     private String principal;
+
+    /**
+     * 经营部门负责人审批时间
+     */
+    private String principalDate;
+
+    /**
+     * 经营部门主管领导
+     */
+    private String supervisor;
+
+    /**
+     * 经营部门主管领导审批时间
+     */
+    private String supervisorDate;
 
     /**
      * 备注
@@ -239,12 +249,12 @@ public class OaActEngineering {
         this.salesman = salesman;
     }
 
-    public String getMinister() {
-        return minister;
+    public String getSupervisor() {
+        return supervisor;
     }
 
-    public void setMinister(String minister) {
-        this.minister = minister;
+    public void setSupervisor(String supervisor) {
+        this.supervisor = supervisor;
     }
 
     public String getPrincipal() {
@@ -309,5 +319,21 @@ public class OaActEngineering {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getPrincipalDate() {
+        return principalDate;
+    }
+
+    public void setPrincipalDate(String principalDate) {
+        this.principalDate = principalDate;
+    }
+
+    public String getSupervisorDate() {
+        return supervisorDate;
+    }
+
+    public void setSupervisorDate(String supervisorDate) {
+        this.supervisorDate = supervisorDate;
     }
 }

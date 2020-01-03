@@ -192,12 +192,12 @@
         </tr>
 
         <tr>
-            <td class="tdLabel">经营部长</td>
+            <td class="tdLabel">经营负责人</td>
             <td class="table-td-content">
                 <input type="text" class="formInput-readonly" readonly>
             </td>
 
-            <td class="tdLabel">经营负责人</td>
+            <td class="tdLabel">经营部长</td>
             <td class="table-td-content">
                 <input type="text" class="formInput-readonly" readonly>
             </td>
@@ -205,8 +205,8 @@
 
         <tr>
             <td class="tdLabel">备注</td>
-            <td colspan="3" class="table-td-content">
-                <textarea class="write-approval-content-textarea" name="remark" style="width: 99%">${oaActEngineering.remark}</textarea>
+            <td colspan="3" class="table-td-content" style="padding: 5px 10px">
+                <textarea class="write-approval-content-textarea" name="remark" style="height: 58px">${oaActEngineering.remark}</textarea>
             </td>
 
             <%--暂存附件--%>
@@ -225,7 +225,7 @@
     jeDate(".je-start-date", {
         theme: {bgcolor: "#00A1CB", pnColor: "#00CCFF"},
         festival: false,                    //是否显示节日
-        isinitVal: true,                    //是否初始化
+        isinitVal: false,                    //是否初始化
         isTime: false,                       //是否开始时间选择
         isClear: false,                     //是否开启清空
         minDate: "1900-01-01",              //最小日期
@@ -238,7 +238,7 @@
     jeDate(".je-end-date", {
         theme: {bgcolor: "#00A1CB", pnColor: "#00CCFF"},
         festival: false,                    //是否显示节日
-        isinitVal: true,                    //是否初始化
+        isinitVal: false,                    //是否初始化
         isTime: false,                       //是否开始时间选择
         isClear: false,                     //是否开启清空
         minDate: "1900-01-01",              //最小日期

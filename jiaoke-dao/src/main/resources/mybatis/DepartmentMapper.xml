@@ -67,4 +67,25 @@
         FROM `department`
         WHERE department_key = ${departmentKey}
     </select>
+
+    <select id="selectDepartmentNameByDepartmentKey" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT
+            department_name
+        FROM
+            `department`
+        WHERE
+            department_key = #{departmentKey}
+    </select>
+    
+    <select id="selectPrincipalAndSupervisor"  resultType="com.jiaoke.oa.bean.Department">
+        SELECT
+            id,
+            principal,
+            supervisor
+        FROM
+            `department`
+        ORDER BY
+            id ASC
+            LIMIT 0,6
+    </select>
 </mapper>

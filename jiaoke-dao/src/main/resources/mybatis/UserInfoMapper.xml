@@ -378,4 +378,11 @@
             LEFT JOIN work_nature AS wn ON wn.id = ui.nature
         WHERE ui.id = #{userInfoId}
     </select>
+
+    <update id="updatePasswordById" parameterType="java.util.Map">
+        UPDATE user_info
+        SET password = #{password}
+        WHERE
+            id = #{id}
+    </update>
 </mapper>

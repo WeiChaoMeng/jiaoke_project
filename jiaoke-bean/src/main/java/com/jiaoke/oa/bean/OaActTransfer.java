@@ -29,6 +29,11 @@ public class OaActTransfer {
     private String title;
 
     /**
+     * 申请日期
+     */
+    private String fillingDate;
+
+    /**
      * 姓名
      */
     private String name;
@@ -41,14 +46,25 @@ public class OaActTransfer {
     /**
      * 入职时间
      */
-    private Date entryDate;
-    @Transient
-    private String entryDateStr;
+    private String entryDate;
+
+    /**
+     * 现部门
+     */
+    private String presentDepartment;
 
     /**
      * 现岗位
      */
     private String presentPost;
+
+    /**
+     * 拟转入部门
+     */
+    private String newDepartment;
+    @Transient
+    private String newDepartmentStr;
+
 
     /**
      * 拟转入岗位
@@ -59,6 +75,101 @@ public class OaActTransfer {
      * 转岗事由
      */
     private String cause;
+
+    /**
+     * 人事审查（不做审批处理）
+     */
+    private String personnelCensor;
+
+    /**
+     * 部门负责人审批内容
+     */
+    private String principalContent;
+
+    /**
+     * 部门负责人签字
+     */
+    private String principal;
+
+    /**
+     * 部门负责人签字时间
+     */
+    private String principalDate;
+
+    /**
+     * 部门主管审批内容
+     */
+    private String supervisorContent;
+
+    /**
+     * 部门主管签字
+     */
+    private String supervisor;
+
+    /**
+     * 部门主管签字时间
+     */
+    private String supervisorDate;
+
+    /**
+     * 转入部门负责人审批内容
+     */
+    private String transferPrincipalContent;
+
+    /**
+     * 转入部门负责人签字
+     */
+    private String transferPrincipal;
+
+    /**
+     * 转入部门负责人签字时间
+     */
+    private String transferPrincipalDate;
+
+    /**
+     * 转入部门主管审批内容
+     */
+    private String transferSupervisorContent;
+
+    /**
+     * 转入部门主管签字
+     */
+    private String transferSupervisor;
+
+    /**
+     * 转入部门主管签字时间
+     */
+    private String transferSupervisorDate;
+
+    /**
+     * 组织人事部审批内容
+     */
+    private String personnelContent;
+
+    /**
+     * 组织人事部签字
+     */
+    private String personnel;
+
+    /**
+     * 组织人事部签字时间
+     */
+    private String personnelDate;
+
+    /**
+     * 总经理审批内容
+     */
+    private String companyPrincipalContent;
+
+    /**
+     * 总经理签字
+     */
+    private String companyPrincipal;
+
+    /**
+     * 总经理签字时间
+     */
+    private String companyPrincipalDate;
 
     /**
      * 附件
@@ -100,6 +211,14 @@ public class OaActTransfer {
         this.title = title;
     }
 
+    public String getFillingDate() {
+        return fillingDate;
+    }
+
+    public void setFillingDate(String fillingDate) {
+        this.fillingDate = fillingDate;
+    }
+
     public String getName() {
         return name;
     }
@@ -116,20 +235,20 @@ public class OaActTransfer {
         this.age = age;
     }
 
-    public Date getEntryDate() {
+    public String getEntryDate() {
         return entryDate;
     }
 
-    public void setEntryDate(Date entryDate) {
+    public void setEntryDate(String entryDate) {
         this.entryDate = entryDate;
     }
 
-    public String getEntryDateStr() {
-        return entryDateStr;
+    public String getPresentDepartment() {
+        return presentDepartment;
     }
 
-    public void setEntryDateStr(String entryDateStr) {
-        this.entryDateStr = entryDateStr;
+    public void setPresentDepartment(String presentDepartment) {
+        this.presentDepartment = presentDepartment;
     }
 
     public String getPresentPost() {
@@ -138,6 +257,14 @@ public class OaActTransfer {
 
     public void setPresentPost(String presentPost) {
         this.presentPost = presentPost;
+    }
+
+    public String getNewDepartment() {
+        return newDepartment;
+    }
+
+    public void setNewDepartment(String newDepartment) {
+        this.newDepartment = newDepartment;
     }
 
     public String getNewPost() {
@@ -154,6 +281,150 @@ public class OaActTransfer {
 
     public void setCause(String cause) {
         this.cause = cause;
+    }
+
+    public String getPrincipalContent() {
+        return principalContent;
+    }
+
+    public void setPrincipalContent(String principalContent) {
+        this.principalContent = principalContent;
+    }
+
+    public String getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(String principal) {
+        this.principal = principal;
+    }
+
+    public String getPrincipalDate() {
+        return principalDate;
+    }
+
+    public void setPrincipalDate(String principalDate) {
+        this.principalDate = principalDate;
+    }
+
+    public String getSupervisorContent() {
+        return supervisorContent;
+    }
+
+    public void setSupervisorContent(String supervisorContent) {
+        this.supervisorContent = supervisorContent;
+    }
+
+    public String getSupervisor() {
+        return supervisor;
+    }
+
+    public void setSupervisor(String supervisor) {
+        this.supervisor = supervisor;
+    }
+
+    public String getSupervisorDate() {
+        return supervisorDate;
+    }
+
+    public void setSupervisorDate(String supervisorDate) {
+        this.supervisorDate = supervisorDate;
+    }
+
+    public String getTransferPrincipalContent() {
+        return transferPrincipalContent;
+    }
+
+    public void setTransferPrincipalContent(String transferPrincipalContent) {
+        this.transferPrincipalContent = transferPrincipalContent;
+    }
+
+    public String getTransferPrincipal() {
+        return transferPrincipal;
+    }
+
+    public void setTransferPrincipal(String transferPrincipal) {
+        this.transferPrincipal = transferPrincipal;
+    }
+
+    public String getTransferPrincipalDate() {
+        return transferPrincipalDate;
+    }
+
+    public void setTransferPrincipalDate(String transferPrincipalDate) {
+        this.transferPrincipalDate = transferPrincipalDate;
+    }
+
+    public String getTransferSupervisorContent() {
+        return transferSupervisorContent;
+    }
+
+    public void setTransferSupervisorContent(String transferSupervisorContent) {
+        this.transferSupervisorContent = transferSupervisorContent;
+    }
+
+    public String getTransferSupervisor() {
+        return transferSupervisor;
+    }
+
+    public void setTransferSupervisor(String transferSupervisor) {
+        this.transferSupervisor = transferSupervisor;
+    }
+
+    public String getTransferSupervisorDate() {
+        return transferSupervisorDate;
+    }
+
+    public void setTransferSupervisorDate(String transferSupervisorDate) {
+        this.transferSupervisorDate = transferSupervisorDate;
+    }
+
+    public String getPersonnelContent() {
+        return personnelContent;
+    }
+
+    public void setPersonnelContent(String personnelContent) {
+        this.personnelContent = personnelContent;
+    }
+
+    public String getPersonnel() {
+        return personnel;
+    }
+
+    public void setPersonnel(String personnel) {
+        this.personnel = personnel;
+    }
+
+    public String getPersonnelDate() {
+        return personnelDate;
+    }
+
+    public void setPersonnelDate(String personnelDate) {
+        this.personnelDate = personnelDate;
+    }
+
+    public String getCompanyPrincipalContent() {
+        return companyPrincipalContent;
+    }
+
+    public void setCompanyPrincipalContent(String companyPrincipalContent) {
+        this.companyPrincipalContent = companyPrincipalContent;
+    }
+
+    public String getCompanyPrincipal() {
+        return companyPrincipal;
+    }
+
+    public void setCompanyPrincipal(String companyPrincipal) {
+        this.companyPrincipal = companyPrincipal;
+    }
+
+    public String getCompanyPrincipalDate() {
+        return companyPrincipalDate;
+    }
+
+    public void setCompanyPrincipalDate(String companyPrincipalDate) {
+        this.companyPrincipalDate = companyPrincipalDate;
     }
 
     public String getAnnex() {
@@ -202,5 +473,21 @@ public class OaActTransfer {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getNewDepartmentStr() {
+        return newDepartmentStr;
+    }
+
+    public void setNewDepartmentStr(String newDepartmentStr) {
+        this.newDepartmentStr = newDepartmentStr;
+    }
+
+    public String getPersonnelCensor() {
+        return personnelCensor;
+    }
+
+    public void setPersonnelCensor(String personnelCensor) {
+        this.personnelCensor = personnelCensor;
     }
 }

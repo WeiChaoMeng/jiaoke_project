@@ -10,13 +10,11 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>员工轮岗审批表</title>
+    <title>劳务派遣员工协议签订、续订、变更、终止审批表详情</title>
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
-    <link href="../../../../static/js/date_pickers/date_picker.css" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
 </head>
 
-<body id="body">
+<body id="body" style="width: 75%">
 
 <div class="table-title">
     <span>${oaActPactSign.title}</span>
@@ -64,7 +62,7 @@
 
 <div>
     <div class="notice-content">
-        <input type="text" class="notice-personnel-field" value="${oaActPactSign.name}" readonly>与外包公司签订的劳务协议将于
+        <input type="text" class="notice-personnel-field" value="${oaActPactSign.notifiedPersonStr}" readonly>与外包公司签订的劳务协议将于
         <input class="agreement-start-end start-date" type="text" value="${oaActPactSign.startDate}" readonly>到期，请各部门（领导）于
         <input class="agreement-start-end end-date" type="text" value="${oaActPactSign.endDate}" readonly>前签署意见。
     </div>
@@ -75,14 +73,14 @@
     <tr>
         <td class="tdLabel">所在部门意见</td>
         <td colspan="5" class="approval-content">
-            <textarea disabled="disabled" class="approval-content-textarea"></textarea>
+            <textarea class="approval-content-textarea" readonly>${oaActPactSign.principalContent}</textarea>
             <div class="approval-date">
-                <label class="approval-date-label">日期:</label>
-                <input class="approval-date-input" type="text" readonly>
+                <label class="approval-date-label">日期 </label>
+                <input class="approval-date-input" type="text" value="${oaActPactSign.principalDate}" readonly>
             </div>
             <div class="approval-signature">
-                <label class="approval-signature-label">签字:</label>
-                <input class="approval-signature-input" type="text" readonly>
+                <label class="approval-signature-label">签字</label>
+                <input class="approval-signature-input" type="text" value="${oaActPactSign.principal}" readonly>
             </div>
         </td>
     </tr>
@@ -90,14 +88,14 @@
     <tr>
         <td class="tdLabel">主管领导意见</td>
         <td colspan="5" class="approval-content">
-            <textarea disabled="disabled" class="approval-content-textarea"></textarea>
+            <textarea class="approval-content-textarea" readonly>${oaActPactSign.supervisorContent}</textarea>
             <div class="approval-date">
-                <label class="approval-date-label">日期:</label>
-                <input class="approval-date-input" type="text" readonly>
+                <label class="approval-date-label">日期 </label>
+                <input class="approval-date-input" type="text" value="${oaActPactSign.supervisorDate}" readonly>
             </div>
             <div class="approval-signature">
-                <label class="approval-signature-label">签字:</label>
-                <input class="approval-signature-input" type="text" readonly>
+                <label class="approval-signature-label">签字 </label>
+                <input class="approval-signature-input" type="text" value="${oaActPactSign.supervisor}" readonly>
             </div>
         </td>
     </tr>
@@ -105,14 +103,14 @@
     <tr>
         <td class="tdLabel">人事部门意见</td>
         <td colspan="5" class="approval-content">
-            <textarea disabled="disabled" class="approval-content-textarea"></textarea>
+            <textarea class="approval-content-textarea" readonly>${oaActPactSign.personnelContent}</textarea>
             <div class="approval-date">
-                <label class="approval-date-label">日期:</label>
-                <input class="approval-date-input" type="text" readonly>
+                <label class="approval-date-label">日期 </label>
+                <input class="approval-date-input" type="text" value="${oaActPactSign.personnelDate}" readonly>
             </div>
             <div class="approval-signature">
-                <label class="approval-signature-label">签字:</label>
-                <input class="approval-signature-input" type="text" readonly>
+                <label class="approval-signature-label">签字 </label>
+                <input class="approval-signature-input" type="text" value="${oaActPactSign.personnel}" readonly>
             </div>
         </td>
     </tr>
@@ -120,43 +118,31 @@
     <tr>
         <td class="tdLabel">总经理意见</td>
         <td colspan="5" class="approval-content">
-            <textarea disabled="disabled" class="approval-content-textarea"></textarea>
+            <textarea class="approval-content-textarea" readonly>${oaActPactSign.companyPrincipalContent}</textarea>
             <div class="approval-date">
-                <label class="approval-date-label">日期:</label>
-                <input class="approval-date-input" type="text" readonly>
+                <label class="approval-date-label">日期 </label>
+                <input class="approval-date-input" type="text" value="${oaActPactSign.companyPrincipalDate}" readonly>
             </div>
             <div class="approval-signature">
-                <label class="approval-signature-label">签字:</label>
-                <input class="approval-signature-input" type="text" readonly>
+                <label class="approval-signature-label">签字 </label>
+                <input class="approval-signature-input" type="text" value="${oaActPactSign.companyPrincipal}" readonly>
             </div>
         </td>
     </tr>
     </tbody>
 </table>
 
-<div class="form-but" id="return">
-    <button type="button" class="return-but" onclick="previousPage()">返回</button>
-</div>
-
 </body>
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
-<script type="text/javascript" src="../../../../static/js/jeDate/src/jedate.js"></script>
-<script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
-
-    //返回上一页
-    function previousPage() {
-        window.history.back();
-    }
-
     //打印
     function printContent() {
-        $('#tool,#return').hide();
+        $('#tool').hide();
         $('#body').css('width', '100%');
         //执行打印
         window.print();
         $('#tool').show();
-        $('#body,#return').css('width', '80%');
+        $('#body').css('width', '75%');
     }
 </script>
 </html>

@@ -36,9 +36,7 @@ public class OaActRelieveLaborContract {
     /**
      * 入职时间
      */
-    private Date entryDate;
-    @Transient
-    private String entryDateStr;
+    private String entryDate;
 
     /**
      * 部门及职位
@@ -48,9 +46,7 @@ public class OaActRelieveLaborContract {
     /**
      * 申请离职日期
      */
-    private Date applyDepartureDate;
-    @Transient
-    private String applyDepartureDateStr;
+    private String applyDepartureDate;
 
     /**
      * 解除类型
@@ -61,6 +57,71 @@ public class OaActRelieveLaborContract {
      * 解除劳动合同原因
      */
     private String reason;
+
+    /**
+     * 人事审查（不做审批处理）
+     */
+    private String personnelCensor;
+
+    /**
+     * 部门负责人
+     */
+    private String principal;
+
+    /**
+     * 部门负责人审批内容
+     */
+    private String principalContent;
+
+    /**
+     * 部门负责人审批时间
+     */
+    private String principalDate;
+
+    /**
+     * 部门主管领导
+     */
+    private String supervisor;
+
+    /**
+     * 部门主管领导审批内容
+     */
+    private String supervisorContent;
+
+    /**
+     * 部门主管领导审批时间
+     */
+    private String supervisorDate;
+
+    /**
+     * 人事部门
+     */
+    private String personnel;
+
+    /**
+     * 人事部门审批内容
+     */
+    private String personnelContent;
+
+    /**
+     * 人事部门审批时间
+     */
+    private String personnelDate;
+
+    /**
+     * 总经理
+     */
+    private String companyPrincipal;
+
+    /**
+     * 总经理审批内容
+     */
+    private String companyPrincipalContent;
+
+    /**
+     * 总经理审批时间
+     */
+    private String companyPrincipalDate;
 
     /**
      * 附件
@@ -110,20 +171,12 @@ public class OaActRelieveLaborContract {
         this.name = name;
     }
 
-    public Date getEntryDate() {
+    public String getEntryDate() {
         return entryDate;
     }
 
-    public void setEntryDate(Date entryDate) {
+    public void setEntryDate(String entryDate) {
         this.entryDate = entryDate;
-    }
-
-    public String getEntryDateStr() {
-        return entryDateStr;
-    }
-
-    public void setEntryDateStr(String entryDateStr) {
-        this.entryDateStr = entryDateStr;
     }
 
     public String getDepartmentPosition() {
@@ -134,20 +187,12 @@ public class OaActRelieveLaborContract {
         this.departmentPosition = departmentPosition;
     }
 
-    public Date getApplyDepartureDate() {
+    public String getApplyDepartureDate() {
         return applyDepartureDate;
     }
 
-    public void setApplyDepartureDate(Date applyDepartureDate) {
+    public void setApplyDepartureDate(String applyDepartureDate) {
         this.applyDepartureDate = applyDepartureDate;
-    }
-
-    public String getApplyDepartureDateStr() {
-        return applyDepartureDateStr;
-    }
-
-    public void setApplyDepartureDateStr(String applyDepartureDateStr) {
-        this.applyDepartureDateStr = applyDepartureDateStr;
     }
 
     public Integer getRelieveType() {
@@ -164,6 +209,102 @@ public class OaActRelieveLaborContract {
 
     public void setReason(String reason) {
         this.reason = reason;
+    }
+
+    public String getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(String principal) {
+        this.principal = principal;
+    }
+
+    public String getPrincipalContent() {
+        return principalContent;
+    }
+
+    public void setPrincipalContent(String principalContent) {
+        this.principalContent = principalContent;
+    }
+
+    public String getPrincipalDate() {
+        return principalDate;
+    }
+
+    public void setPrincipalDate(String principalDate) {
+        this.principalDate = principalDate;
+    }
+
+    public String getSupervisor() {
+        return supervisor;
+    }
+
+    public void setSupervisor(String supervisor) {
+        this.supervisor = supervisor;
+    }
+
+    public String getSupervisorContent() {
+        return supervisorContent;
+    }
+
+    public void setSupervisorContent(String supervisorContent) {
+        this.supervisorContent = supervisorContent;
+    }
+
+    public String getSupervisorDate() {
+        return supervisorDate;
+    }
+
+    public void setSupervisorDate(String supervisorDate) {
+        this.supervisorDate = supervisorDate;
+    }
+
+    public String getPersonnel() {
+        return personnel;
+    }
+
+    public void setPersonnel(String personnel) {
+        this.personnel = personnel;
+    }
+
+    public String getPersonnelContent() {
+        return personnelContent;
+    }
+
+    public void setPersonnelContent(String personnelContent) {
+        this.personnelContent = personnelContent;
+    }
+
+    public String getPersonnelDate() {
+        return personnelDate;
+    }
+
+    public void setPersonnelDate(String personnelDate) {
+        this.personnelDate = personnelDate;
+    }
+
+    public String getCompanyPrincipal() {
+        return companyPrincipal;
+    }
+
+    public void setCompanyPrincipal(String companyPrincipal) {
+        this.companyPrincipal = companyPrincipal;
+    }
+
+    public String getCompanyPrincipalContent() {
+        return companyPrincipalContent;
+    }
+
+    public void setCompanyPrincipalContent(String companyPrincipalContent) {
+        this.companyPrincipalContent = companyPrincipalContent;
+    }
+
+    public String getCompanyPrincipalDate() {
+        return companyPrincipalDate;
+    }
+
+    public void setCompanyPrincipalDate(String companyPrincipalDate) {
+        this.companyPrincipalDate = companyPrincipalDate;
     }
 
     public String getAnnex() {
@@ -198,6 +339,14 @@ public class OaActRelieveLaborContract {
         this.promoter = promoter;
     }
 
+    public String getPromoterStr() {
+        return promoterStr;
+    }
+
+    public void setPromoterStr(String promoterStr) {
+        this.promoterStr = promoterStr;
+    }
+
     public String getUrl() {
         return url;
     }
@@ -206,11 +355,11 @@ public class OaActRelieveLaborContract {
         this.url = url;
     }
 
-    public String getPromoterStr() {
-        return promoterStr;
+    public String getPersonnelCensor() {
+        return personnelCensor;
     }
 
-    public void setPromoterStr(String promoterStr) {
-        this.promoterStr = promoterStr;
+    public void setPersonnelCensor(String personnelCensor) {
+        this.personnelCensor = personnelCensor;
     }
 }

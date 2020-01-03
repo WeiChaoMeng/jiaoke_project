@@ -41,6 +41,9 @@ public class OaActReadServiceImpl implements OaActReadService {
             oaCollaboration.setTitle(oaActRead.getTitle());
             oaCollaboration.setUrl("read");
             oaCollaboration.setTable("oa_act_read");
+            oaCollaboration.setName("收文阅办单");
+            oaCollaboration.setDataOne("来文机关" + oaActRead.getOrgan());
+            oaCollaboration.setDataTwo("收文字号" + oaActRead.getReceiptTime());
             oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);
@@ -69,5 +72,10 @@ public class OaActReadServiceImpl implements OaActReadService {
     @Override
     public int deleteData(String id) {
         return oaActReadMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public int updateByPrimaryKeySelective(OaActRead oaActRead) {
+        return oaActReadMapper.updateByPrimaryKeySelective(oaActRead);
     }
 }

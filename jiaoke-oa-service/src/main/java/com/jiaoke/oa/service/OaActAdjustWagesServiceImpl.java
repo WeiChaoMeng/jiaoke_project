@@ -33,7 +33,6 @@ public class OaActAdjustWagesServiceImpl implements OaActAdjustWagesService {
 
     @Override
     public int insert(OaActAdjustWages oaActAdjustWages, Integer userId, String randomId, Integer state) {
-        oaActAdjustWages.setEntryDate(DateUtil.stringConvertYYYYMMDD(oaActAdjustWages.getEntryDateStr()));
         oaActAdjustWages.setId(randomId);
         oaActAdjustWages.setCreateTime(new Date());
         oaActAdjustWages.setPromoter(userId);
@@ -47,6 +46,9 @@ public class OaActAdjustWagesServiceImpl implements OaActAdjustWagesService {
             oaCollaboration.setTitle(oaActAdjustWages.getTitle());
             oaCollaboration.setUrl("adjustWages");
             oaCollaboration.setTable("oa_act_adjust_wages");
+            oaCollaboration.setName("转正申请");
+            oaCollaboration.setDataOne("目前薪资:" + oaActAdjustWages.getCurrentSalary());
+            oaCollaboration.setDataTwo("期望薪资:" + oaActAdjustWages.getSalaryExpectation());
             oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);
@@ -56,7 +58,6 @@ public class OaActAdjustWagesServiceImpl implements OaActAdjustWagesService {
 
     @Override
     public int edit(OaActAdjustWages oaActAdjustWages) {
-        oaActAdjustWages.setEntryDate(DateUtil.stringConvertYYYYMMDD(oaActAdjustWages.getEntryDateStr()));
         if (oaActAdjustWagesMapper.updateByPrimaryKeySelective(oaActAdjustWages) < 0) {
             return -1;
         } else {
@@ -69,7 +70,6 @@ public class OaActAdjustWagesServiceImpl implements OaActAdjustWagesService {
     public OaActAdjustWages selectByPrimaryKey(String id) {
         OaActAdjustWages oaActAdjustWages = oaActAdjustWagesMapper.selectByPrimaryKey(id);
         oaActAdjustWages.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActAdjustWages.getCreateTime()));
-        oaActAdjustWages.setEntryDateStr(DateUtil.dateConvertYYYYMMDD(oaActAdjustWages.getEntryDate()));
         oaActAdjustWages.setPromoterStr(userInfoMapper.getNicknameById(oaActAdjustWages.getPromoter()));
         return oaActAdjustWages;
     }
@@ -81,14 +81,7 @@ public class OaActAdjustWagesServiceImpl implements OaActAdjustWagesService {
     }
 
     @Override
-    public int updateAnnexes(String[] array, String id) {
-        OaActAdjustWages oaActAdjustWages = new OaActAdjustWages();
-        oaActAdjustWages.setId(id);
-        if (array != null) {
-            oaActAdjustWages.setAnnex(StringUtils.join(array));
-        } else {
-            oaActAdjustWages.setAnnex("");
-        }
+    public int updateByPrimaryKeySelective(OaActAdjustWages oaActAdjustWages) {
         return oaActAdjustWagesMapper.updateByPrimaryKeySelective(oaActAdjustWages);
     }
 }

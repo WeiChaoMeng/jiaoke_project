@@ -50,7 +50,7 @@ public interface UserInfoService {
      * 根据名字搜索
      *
      * @param username 用户名
-     * @return
+     * @return list
      */
     List<UserInfo> usernameFilter(String username);
 
@@ -87,6 +87,12 @@ public interface UserInfoService {
      */
     int updateRolePermission(Integer userId, String[] array);
 
+    /**
+     * 更新用户信息
+     *
+     * @param userInfo userInfo
+     * @return int
+     */
     int updateUserInfo(UserInfo userInfo);
 
     /**
@@ -97,6 +103,21 @@ public interface UserInfoService {
      */
     int deleteByPrimaryKey(Integer id);
 
+    /**
+     * 根据ID修改密码
+     *
+     * @param id       id
+     * @param password password
+     * @return int
+     */
+    int updatePasswordById(Integer id,String password);
+
+    /**
+     * 绑定角色
+     *
+     * @param id id
+     * @return map
+     */
     Map<String, Object> bindingInfo(Integer id);
 
     /**

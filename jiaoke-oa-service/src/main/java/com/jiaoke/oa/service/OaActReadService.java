@@ -45,4 +45,12 @@ public interface OaActReadService {
      * @return OaActSealsUse
      */
     OaActRead selectByPrimaryKey(String id);
+
+    /**
+     * 选择性更新
+     *
+     * @param oaActRead oaActRead
+     * @return int
+     */
+    int updateByPrimaryKeySelective(OaActRead oaActRead);
 }

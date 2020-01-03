@@ -42,6 +42,9 @@ public class OaActEngineeringServiceImpl implements OaActEngineeringService {
             oaCollaboration.setTitle(oaActEngineering.getTitle());
             oaCollaboration.setUrl("engineering");
             oaCollaboration.setTable("oa_act_engineering");
+            oaCollaboration.setName("工程名称变更记录");
+            oaCollaboration.setDataOne("变更前工程名称：" + oaActEngineering.getBeforeName());
+            oaCollaboration.setDataTwo("变更前用料单位：" + oaActEngineering.getBeforeCompany());
             oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);
@@ -70,5 +73,10 @@ public class OaActEngineeringServiceImpl implements OaActEngineeringService {
         OaActEngineering oaActEngineering = oaActEngineeringMapper.selectByPrimaryKey(id);
         oaActEngineering.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActEngineering.getCreateTime()));
         return oaActEngineering;
+    }
+
+    @Override
+    public int updateByPrimaryKeySelective(OaActEngineering oaActEngineering) {
+        return oaActEngineeringMapper.updateByPrimaryKeySelective(oaActEngineering);
     }
 }

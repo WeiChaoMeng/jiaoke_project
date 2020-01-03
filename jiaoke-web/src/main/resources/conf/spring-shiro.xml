@@ -76,7 +76,8 @@
     <!-- 自定义Realm -->
     <bean id="shiroSecurityRealm" class="com.jiaoke.controller.oa.ShiroSecurityRealm">
         <property name="cachingEnabled" value="true"/>
-        <property name="authenticationCachingEnabled" value="true"/>
+        <!--false：每次登陆验证都需要查询数据库-->
+        <property name="authenticationCachingEnabled" value="false"/>
         <property name="authorizationCachingEnabled" value="true"/>
         <property name="authenticationCacheName" value="authenticationCache"/>
         <property name="authorizationCacheName" value="authorizationCache"/>

@@ -16,7 +16,7 @@
     <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
 </head>
 
-<body id="body">
+<body id="body" style="width: 70%">
 
 <div class="table-title">
     <span>劳动合同终止通知书</span>
@@ -65,8 +65,8 @@
                     <button type="button" class="table-tab-send" onclick="send()">发送</button>
                 </td>
 
-                <th nowrap="nowrap" class="th_title" style="width: 4%">标题:</th>
-                <td style="width: 44%">
+                <th nowrap="nowrap" class="th_title" style="width: 5%">标题</th>
+                <td style="width: 40%">
                     <div class="common_input_frame">
                         <input type="text" id="title" name="title" placeholder="请输入标题" title="点击此处填写标题"
                                value="劳动合同终止通知书(${nickname} <%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>)"
@@ -74,10 +74,10 @@
                     </div>
                 </td>
 
-                <th class="th_title" nowrap="nowrap" style="width: 4%">流程:</th>
+                <th class="th_title" nowrap="nowrap" style="width: 5%">流程</th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" placeholder="接收人、通知人(协同)" readonly="readonly">
+                        <input type="text" placeholder="人事发起,接收人填写意见,通知人、人事(协同)" readonly>
                     </div>
                 </td>
             </tr>
@@ -87,7 +87,8 @@
 
     <div>
         <div class="notice-personnel">
-            <input type="text" class="notice-personnel-field" name="name" autocomplete="off">:
+            <input type="text" class="notice-personnel-field" onclick="recipientSelect()" id="recipientName" readonly>:
+            <input type="hidden" id="recipientId" name="notifiedPerson">
         </div>
 
         <div class="notice-content">
@@ -139,31 +140,29 @@
             <td class="td-column-three" colspan="2">申请与公司续订无固定期劳动合同</td>
         </tr>
 
-        <tr id="renewal">
+        <tr>
             <td colspan="2" style="height: 30px;text-align: center">
-                <input type="checkbox" name="renewal" value="0" style="vertical-align: middle;margin-left: 5px">
+                <input type="checkbox" value="0" disabled>
             </td>
             <td colspan="2" style="height: 30px;text-align: center">
-                <input type="checkbox" name="renewal" value="1" style="vertical-align: middle;margin-left: 5px">
+                <input type="checkbox" value="1" disabled>
             </td>
             <td colspan="2" style="height: 30px;text-align: center">
-                <input type="checkbox" name="renewal" value="2" style="vertical-align: middle;margin-left: 5px">
+                <input type="checkbox" value="2" disabled>
             </td>
         </tr>
 
         <tr>
             <td class="notice-td-label">其他需要补充的内容</td>
             <td colspan="5" class="table-td-evaluation">
-                <textarea class="evaluation-content" style="height: 90px" name="supplementDetails"></textarea>
+                <textarea class="evaluation-content-disabled" style="height: 90px" readonly></textarea>
                 <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
-                    <input class="approval-date-input" type="text"
-                           value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>"
-                           disabled="disabled">
+                    <label class="approval-date-label">日期 </label>
+                    <input class="approval-date-input" type="text" readonly>
                 </div>
                 <div class="approval-signature">
-                    <label class="approval-signature-label">本人签字:</label>
-                    <input class="approval-signature-input" type="text" value="${nickname}" disabled="disabled">
+                    <label class="approval-signature-label">本人签字 </label>
+                    <input class="approval-signature-input" type="text" readonly>
                 </div>
             </td>
         </tr>
@@ -205,12 +204,6 @@
         zIndex: 100000,
     });
 
-    $(document).ready(function () {
-        $('#renewal').find('input[type=checkbox]').bind('click', function () {
-            $('#renewal').find('input[type=checkbox]').not(this).prop("checked", false);
-        });
-    });
-
     //发送
     function send() {
         var array = [];
@@ -220,6 +213,8 @@
 
         if ($.trim($("#title").val()) === '') {
             window.top.tips("标题不可以为空！", 6, 5, 2000);
+        } else if ($.trim($("#recipientName").val()) === '') {
+            window.top.tips("请选择要通知的人！", 6, 5, 2000);
         } else {
             //发送前将上传好的附件插入form中
             $('#annex').val(array);
@@ -330,10 +325,11 @@
     //打印
     function printContent() {
         $('#tool,#titleArea,#annexList').hide();
-        // $('#body').css('width','100%');
+        $('#body').css('width', '100%');
         //执行打印
         window.print();
         $('#tool,#titleArea').show();
+        $('#body').css('width', '70%');
 
         //附件列表
         let annexesLen = $('#annexes').children().length;
@@ -342,6 +338,21 @@
         } else {
             $('#annexList').css("display", "block");
         }
+    }
+
+    //选择接收人
+    function recipientSelect() {
+        //用户
+        var userInfoList = JSON.parse('${userInfoList}');
+        //部门
+        var departmentList = JSON.parse('${departmentList}');
+        window.top.selectRecipient(userInfoList, departmentList);
+    }
+
+    //确认接收人
+    function confirmSelectRecipient(id, name) {
+        $('#recipientId').val(id);
+        $('#recipientName').val(name);
     }
 </script>
 </html>

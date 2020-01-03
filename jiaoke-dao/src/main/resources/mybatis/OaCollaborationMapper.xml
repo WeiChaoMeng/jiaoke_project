@@ -20,6 +20,8 @@
         <if test="title != ''">
             and title LIKE "%"#{title}"%"
         </if>
+        ORDER BY
+            create_time DESC
     </select>
 
     <select id="selectWaitSend" parameterType="java.util.Map" resultType="com.jiaoke.oa.bean.OaCollaboration">
@@ -30,6 +32,8 @@
         <if test="title != ''">
             and title LIKE "%"#{title}"%"
         </if>
+        ORDER BY
+            create_time DESC
     </select>
 
     <select id="selectPending" parameterType="java.util.List" resultType="com.jiaoke.oa.bean.OaCollaboration">
@@ -42,6 +46,8 @@
         <if test="title != ''">
             and title LIKE "%"#{title}"%"
         </if>
+        ORDER BY
+            create_time DESC
     </select>
 
     <select id="selectDone" parameterType="java.util.List" resultType="com.jiaoke.oa.bean.OaCollaboration">
@@ -54,6 +60,8 @@
         <if test="title != ''">
             and title LIKE "%"#{title}"%"
         </if>
+        ORDER BY
+          create_time DESC
     </select>
 
     <update id="update" parameterType="java.util.Map">

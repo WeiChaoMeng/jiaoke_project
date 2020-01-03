@@ -29,6 +29,11 @@ public class OaActRotation {
     private String title;
 
     /**
+     * 申请日期
+     */
+    private String fillingDate;
+
+    /**
      * 姓名
      */
     private String name;
@@ -41,9 +46,7 @@ public class OaActRotation {
     /**
      * 出生日期
      */
-    private Date birthday;
-    @Transient
-    private String birthdayStr;
+    private String birthday;
 
     /**
      * 名族
@@ -76,9 +79,76 @@ public class OaActRotation {
     private String startingTime;
 
     /**
+     * 拟转入部门
+     */
+    private String newDepartment;
+    @Transient
+    private String newDepartmentStr;
+
+    /**
      * 调整原因
      */
-    private String adjust;
+    private Integer adjust;
+
+    /**
+     * 部门负责人审批内容
+     */
+    private String principalContent;
+
+    /**
+     * 部门负责人签字
+     */
+    private String principal;
+
+    /**
+     * 部门负责人签字时间
+     */
+    private String principalDate;
+
+    /**
+     * 转入部门负责人审批内容
+     */
+    private String transferPrincipalContent;
+
+    /**
+     * 转入部门负责人签字
+     */
+    private String transferPrincipal;
+
+    /**
+     * 转入部门负责人签字时间
+     */
+    private String transferPrincipalDate;
+
+    /**
+     * 组织人事部审批内容
+     */
+    private String personnelContent;
+
+    /**
+     * 组织人事部签字
+     */
+    private String personnel;
+
+    /**
+     * 组织人事部签字时间
+     */
+    private String personnelDate;
+
+    /**
+     * 总经理审批内容
+     */
+    private String companyPrincipalContent;
+
+    /**
+     * 总经理签字
+     */
+    private String companyPrincipal;
+
+    /**
+     * 总经理签字时间
+     */
+    private String companyPrincipalDate;
 
     /**
      * 附件
@@ -120,6 +190,14 @@ public class OaActRotation {
         this.title = title;
     }
 
+    public String getFillingDate() {
+        return fillingDate;
+    }
+
+    public void setFillingDate(String fillingDate) {
+        this.fillingDate = fillingDate;
+    }
+
     public String getName() {
         return name;
     }
@@ -136,20 +214,12 @@ public class OaActRotation {
         this.sex = sex;
     }
 
-    public Date getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
-    }
-
-    public String getBirthdayStr() {
-        return birthdayStr;
-    }
-
-    public void setBirthdayStr(String birthdayStr) {
-        this.birthdayStr = birthdayStr;
     }
 
     public String getEthnic() {
@@ -200,12 +270,124 @@ public class OaActRotation {
         this.startingTime = startingTime;
     }
 
-    public String getAdjust() {
+    public String getNewDepartment() {
+        return newDepartment;
+    }
+
+    public void setNewDepartment(String newDepartment) {
+        this.newDepartment = newDepartment;
+    }
+
+    public String getNewDepartmentStr() {
+        return newDepartmentStr;
+    }
+
+    public void setNewDepartmentStr(String newDepartmentStr) {
+        this.newDepartmentStr = newDepartmentStr;
+    }
+
+    public Integer getAdjust() {
         return adjust;
     }
 
-    public void setAdjust(String adjust) {
+    public void setAdjust(Integer adjust) {
         this.adjust = adjust;
+    }
+
+    public String getPrincipalContent() {
+        return principalContent;
+    }
+
+    public void setPrincipalContent(String principalContent) {
+        this.principalContent = principalContent;
+    }
+
+    public String getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(String principal) {
+        this.principal = principal;
+    }
+
+    public String getPrincipalDate() {
+        return principalDate;
+    }
+
+    public void setPrincipalDate(String principalDate) {
+        this.principalDate = principalDate;
+    }
+
+    public String getTransferPrincipalContent() {
+        return transferPrincipalContent;
+    }
+
+    public void setTransferPrincipalContent(String transferPrincipalContent) {
+        this.transferPrincipalContent = transferPrincipalContent;
+    }
+
+    public String getTransferPrincipal() {
+        return transferPrincipal;
+    }
+
+    public void setTransferPrincipal(String transferPrincipal) {
+        this.transferPrincipal = transferPrincipal;
+    }
+
+    public String getTransferPrincipalDate() {
+        return transferPrincipalDate;
+    }
+
+    public void setTransferPrincipalDate(String transferPrincipalDate) {
+        this.transferPrincipalDate = transferPrincipalDate;
+    }
+
+    public String getPersonnelContent() {
+        return personnelContent;
+    }
+
+    public void setPersonnelContent(String personnelContent) {
+        this.personnelContent = personnelContent;
+    }
+
+    public String getPersonnel() {
+        return personnel;
+    }
+
+    public void setPersonnel(String personnel) {
+        this.personnel = personnel;
+    }
+
+    public String getPersonnelDate() {
+        return personnelDate;
+    }
+
+    public void setPersonnelDate(String personnelDate) {
+        this.personnelDate = personnelDate;
+    }
+
+    public String getCompanyPrincipalContent() {
+        return companyPrincipalContent;
+    }
+
+    public void setCompanyPrincipalContent(String companyPrincipalContent) {
+        this.companyPrincipalContent = companyPrincipalContent;
+    }
+
+    public String getCompanyPrincipal() {
+        return companyPrincipal;
+    }
+
+    public void setCompanyPrincipal(String companyPrincipal) {
+        this.companyPrincipal = companyPrincipal;
+    }
+
+    public String getCompanyPrincipalDate() {
+        return companyPrincipalDate;
+    }
+
+    public void setCompanyPrincipalDate(String companyPrincipalDate) {
+        this.companyPrincipalDate = companyPrincipalDate;
     }
 
     public String getAnnex() {
@@ -240,19 +422,19 @@ public class OaActRotation {
         this.promoter = promoter;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
     public String getPromoterStr() {
         return promoterStr;
     }
 
     public void setPromoterStr(String promoterStr) {
         this.promoterStr = promoterStr;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

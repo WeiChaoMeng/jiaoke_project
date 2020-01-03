@@ -29,28 +29,37 @@ public class OaActLaborContractStop {
     private String title;
 
     /**
-     * 名字
+     * 被通知人
      */
-    private String name;
+    private Integer notifiedPerson;
+    @Transient
+    private String notifiedPersonStr;
 
     /**
      * 开始时间
      */
     private String startDate;
-    @Transient
-    private String startDateStr;
 
     /**
      * 结束时间
      */
     private String endDate;
-    @Transient
-    private String endDateStr;
 
     /**
      * 通知时间
      */
     private String noticeDate;
+
+
+    /**
+     * 接收时间
+     */
+    private String receivingDate;
+
+    /**
+     * 接收人签字
+     */
+    private String receivingSign;
 
     /**
      * 天数
@@ -107,12 +116,36 @@ public class OaActLaborContractStop {
         this.title = title;
     }
 
-    public String getName() {
-        return name;
+    public Integer getNotifiedPerson() {
+        return notifiedPerson;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNotifiedPerson(Integer notifiedPerson) {
+        this.notifiedPerson = notifiedPerson;
+    }
+
+    public String getNotifiedPersonStr() {
+        return notifiedPersonStr;
+    }
+
+    public void setNotifiedPersonStr(String notifiedPersonStr) {
+        this.notifiedPersonStr = notifiedPersonStr;
+    }
+
+    public String getReceivingDate() {
+        return receivingDate;
+    }
+
+    public void setReceivingDate(String receivingDate) {
+        this.receivingDate = receivingDate;
+    }
+
+    public String getReceivingSign() {
+        return receivingSign;
+    }
+
+    public void setReceivingSign(String receivingSign) {
+        this.receivingSign = receivingSign;
     }
 
     public String getStartDate() {
@@ -123,28 +156,12 @@ public class OaActLaborContractStop {
         this.startDate = startDate;
     }
 
-    public String getStartDateStr() {
-        return startDateStr;
-    }
-
-    public void setStartDateStr(String startDateStr) {
-        this.startDateStr = startDateStr;
-    }
-
     public String getEndDate() {
         return endDate;
     }
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
-    }
-
-    public String getEndDateStr() {
-        return endDateStr;
-    }
-
-    public void setEndDateStr(String endDateStr) {
-        this.endDateStr = endDateStr;
     }
 
     public String getNoticeDate() {
@@ -211,19 +228,19 @@ public class OaActLaborContractStop {
         this.promoter = promoter;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
     public String getPromoterStr() {
         return promoterStr;
     }
 
     public void setPromoterStr(String promoterStr) {
         this.promoterStr = promoterStr;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

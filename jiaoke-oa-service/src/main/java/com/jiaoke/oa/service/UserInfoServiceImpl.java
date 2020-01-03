@@ -141,6 +141,11 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
+    public int updatePasswordById(Integer id, String password) {
+        return userInfoMapper.updatePasswordById(id,password);
+    }
+
+    @Override
     public Map<String, Object> bindingInfo(Integer id) {
         HashMap<String, Object> map = new HashMap<>();
         //查询全部角色

@@ -31,7 +31,9 @@ public class OaActPactSign {
     /**
      * 名字
      */
-    private String name;
+    private Integer notifiedPerson;
+    @Transient
+    private String notifiedPersonStr;
 
     /**
      * 开始时间
@@ -42,6 +44,66 @@ public class OaActPactSign {
      * 结束时间
      */
     private String endDate;
+
+    /**
+     * 部门负责人
+     */
+    private String principal;
+
+    /**
+     * 部门负责人审批内容
+     */
+    private String principalContent;
+
+    /**
+     * 部门负责人审批时间
+     */
+    private String principalDate;
+
+    /**
+     * 部门主管领导
+     */
+    private String supervisor;
+
+    /**
+     * 部门主管领导审批内容
+     */
+    private String supervisorContent;
+
+    /**
+     * 部门主管领导审批时间
+     */
+    private String supervisorDate;
+
+    /**
+     * 人事部门
+     */
+    private String personnel;
+
+    /**
+     * 人事部门审批内容
+     */
+    private String personnelContent;
+
+    /**
+     * 人事部门审批时间
+     */
+    private String personnelDate;
+
+    /**
+     * 总经理
+     */
+    private String companyPrincipal;
+
+    /**
+     * 总经理审批内容
+     */
+    private String companyPrincipalContent;
+
+    /**
+     * 总经理审批时间
+     */
+    private String companyPrincipalDate;
 
     /**
      * 附件
@@ -83,12 +145,20 @@ public class OaActPactSign {
         this.title = title;
     }
 
-    public String getName() {
-        return name;
+    public Integer getNotifiedPerson() {
+        return notifiedPerson;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNotifiedPerson(Integer notifiedPerson) {
+        this.notifiedPerson = notifiedPerson;
+    }
+
+    public String getNotifiedPersonStr() {
+        return notifiedPersonStr;
+    }
+
+    public void setNotifiedPersonStr(String notifiedPersonStr) {
+        this.notifiedPersonStr = notifiedPersonStr;
     }
 
     public String getStartDate() {
@@ -105,6 +175,102 @@ public class OaActPactSign {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
+    }
+
+    public String getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(String principal) {
+        this.principal = principal;
+    }
+
+    public String getPrincipalContent() {
+        return principalContent;
+    }
+
+    public void setPrincipalContent(String principalContent) {
+        this.principalContent = principalContent;
+    }
+
+    public String getPrincipalDate() {
+        return principalDate;
+    }
+
+    public void setPrincipalDate(String principalDate) {
+        this.principalDate = principalDate;
+    }
+
+    public String getSupervisor() {
+        return supervisor;
+    }
+
+    public void setSupervisor(String supervisor) {
+        this.supervisor = supervisor;
+    }
+
+    public String getSupervisorContent() {
+        return supervisorContent;
+    }
+
+    public void setSupervisorContent(String supervisorContent) {
+        this.supervisorContent = supervisorContent;
+    }
+
+    public String getSupervisorDate() {
+        return supervisorDate;
+    }
+
+    public void setSupervisorDate(String supervisorDate) {
+        this.supervisorDate = supervisorDate;
+    }
+
+    public String getPersonnel() {
+        return personnel;
+    }
+
+    public void setPersonnel(String personnel) {
+        this.personnel = personnel;
+    }
+
+    public String getPersonnelContent() {
+        return personnelContent;
+    }
+
+    public void setPersonnelContent(String personnelContent) {
+        this.personnelContent = personnelContent;
+    }
+
+    public String getPersonnelDate() {
+        return personnelDate;
+    }
+
+    public void setPersonnelDate(String personnelDate) {
+        this.personnelDate = personnelDate;
+    }
+
+    public String getCompanyPrincipal() {
+        return companyPrincipal;
+    }
+
+    public void setCompanyPrincipal(String companyPrincipal) {
+        this.companyPrincipal = companyPrincipal;
+    }
+
+    public String getCompanyPrincipalContent() {
+        return companyPrincipalContent;
+    }
+
+    public void setCompanyPrincipalContent(String companyPrincipalContent) {
+        this.companyPrincipalContent = companyPrincipalContent;
+    }
+
+    public String getCompanyPrincipalDate() {
+        return companyPrincipalDate;
+    }
+
+    public void setCompanyPrincipalDate(String companyPrincipalDate) {
+        this.companyPrincipalDate = companyPrincipalDate;
     }
 
     public String getAnnex() {

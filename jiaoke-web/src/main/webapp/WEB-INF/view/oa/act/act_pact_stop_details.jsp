@@ -16,7 +16,7 @@
     <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
 </head>
 
-<body id="body">
+<body id="body" style="width: 70%">
 
 <div class="table-title">
     <span>${oaActPactStop.title}</span>
@@ -64,7 +64,7 @@
 
 <div style="margin-top: 10px">
     <div class="notice-personnel">
-        <input type="text" class="notice-personnel-field" value="${oaActPactStop.name}" readonly>:
+        <input type="text" class="notice-personnel-field" value="${oaActPactStop.notifiedPersonStr}" readonly>:
     </div>
 
     <div class="notice-content">
@@ -112,26 +112,45 @@
         <td class="td-column-two" colspan="3">申请与公司续签劳务协议</td>
     </tr>
 
-    <tr>
-        <td colspan="3" style="height: 30px;text-align: center">
-            <input type="checkbox" style="vertical-align: middle;" disabled>
-        </td>
-        <td colspan="3" style="height: 30px;text-align: center">
-            <input type="checkbox" style="vertical-align: middle;" disabled>
-        </td>
+    <tr id="renewal">
+        <c:choose>
+            <c:when test="${oaActPactStop.renewal == 0}">
+                <td colspan="3" style="height: 30px;text-align: center">
+                    <input type="checkbox" style="vertical-align: middle;" checked disabled>
+                </td>
+            </c:when>
+            <c:otherwise>
+                <td colspan="3" style="height: 30px;text-align: center">
+                    <input type="checkbox" style="vertical-align: middle;" disabled>
+                </td>
+            </c:otherwise>
+        </c:choose>
+
+        <c:choose>
+            <c:when test="${oaActPactStop.renewal == 1}">
+                <td colspan="3" style="height: 30px;text-align: center">
+                    <input type="checkbox" style="vertical-align: middle;" checked disabled>
+                </td>
+            </c:when>
+            <c:otherwise>
+                <td colspan="3" style="height: 30px;text-align: center">
+                    <input type="checkbox" style="vertical-align: middle;" disabled>
+                </td>
+            </c:otherwise>
+        </c:choose>
     </tr>
 
     <tr>
         <td class="notice-td-label">其他需要补充的内容</td>
         <td colspan="5" class="table-td-evaluation">
-            <textarea class="evaluation-content-disabled" style="height: 90px" readonly></textarea>
+            <textarea class="evaluation-content-disabled" style="height: 90px" readonly>${oaActPactStop.supplementDetails}</textarea>
             <div class="approval-date">
-                <label class="approval-date-label">日期:</label>
-                <input class="approval-date-input" type="text" readonly>
+                <label class="approval-date-label">日期 </label>
+                <input class="approval-date-input" type="text" value="${oaActLaborContractStop.receivingDate}" readonly>
             </div>
             <div class="approval-signature">
-                <label class="approval-signature-label">本人签字:</label>
-                <input class="approval-signature-input" type="text" readonly>
+                <label class="approval-signature-label">本人签字 </label>
+                <input class="approval-signature-input" type="text" value="${oaActLaborContractStop.receivingSign}" readonly>
             </div>
         </td>
     </tr>
@@ -143,29 +162,17 @@
     <span class="notice-tips-script">此通知一式两份，接收人、公司各执一份。</span>
 </div>
 
-<div class="form-but" id="return">
-    <button type="button" class="return-but" onclick="previousPage()">返回</button>
-</div>
-
 </body>
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
-<script type="text/javascript" src="../../../../static/js/jeDate/src/jedate.js"></script>
-<script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
-
-    //返回上一页
-    function previousPage() {
-        window.history.back();
-    }
-
     //打印
     function printContent() {
-        $('#tool,#return').hide();
+        $('#tool').hide();
         $('#body').css('width', '100%');
         //执行打印
         window.print();
         $('#tool').show();
-        $('#body,#return').css('width', '80%');
+        $('#body').css('width', '70%');
     }
 </script>
 </html>

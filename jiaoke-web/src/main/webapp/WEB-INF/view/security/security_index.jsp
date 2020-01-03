@@ -121,7 +121,7 @@
 
     function guard() {
         $('#video').append('<video width="100%" height="100%" autoplay="autoplay" loop="loop">' +
-            '<source type="video/mp4" src="../../../static/images/security/video1.mp4">' +
+            '<source type="video/mp4" src="../../../static/images/security/video6.mp4">' +
             '<embed src="../../../static/images/security/video3.mp4" width="100%" height="100%">' +
             '</video>');
         $('.popup-window').show();

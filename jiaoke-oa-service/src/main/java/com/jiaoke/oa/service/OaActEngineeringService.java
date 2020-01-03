@@ -45,4 +45,12 @@ public interface OaActEngineeringService {
      * @return int
      */
     int edit(OaActEngineering oaActEngineering);
+
+    /**
+     * 选择性更新
+     *
+     * @param oaActEngineering oaActEngineering
+     * @return int
+     */
+    int updateByPrimaryKeySelective(OaActEngineering oaActEngineering);
 }

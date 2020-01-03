@@ -73,4 +73,19 @@ public interface DepartmentMapper extends Mapper<Department> {
      * @return 用户id
      */
     String selectEnforcer(@Param("column") String column, @Param("departmentKey") String departmentKey);
+
+    /**
+     * 根据部门主键查询部门名称
+     *
+     * @param departmentKey departmentKey
+     * @return String
+     */
+    String selectDepartmentNameByDepartmentKey(String departmentKey);
+
+    /**
+     * 查询部门负责人和主管领导（五部一室）
+     *
+     * @return list
+     */
+    List<Department> selectPrincipalAndSupervisor();
 }

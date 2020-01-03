@@ -3,12 +3,14 @@ package com.jiaoke.controller.oa.activit;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
-import com.jiaoke.oa.bean.Comments;
-import com.jiaoke.oa.bean.OaActRotationHandover;
-import com.jiaoke.oa.bean.UserInfo;
-import com.jiaoke.oa.service.OaActRotationHandoverService;
+import com.jiaoke.controller.oa.TargetFlowNodeCommand;
+import com.jiaoke.oa.bean.*;
+import com.jiaoke.oa.service.DepartmentService;
+import com.jiaoke.oa.service.OaActDepartureService;
 import com.jiaoke.oa.service.OaCollaborationService;
 import com.jiaoke.oa.service.UserInfoService;
+import org.activiti.bpmn.model.UserTask;
+import org.activiti.engine.ManagementService;
 import org.activiti.engine.task.Task;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
@@ -17,32 +19,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
- * 轮岗交接表
+ * 离职会签表
  *
  * @author lihui
  * @version 1.0
  * @date 2019-6-5 1:59
  */
 @Controller
-@RequestMapping("/rotationHandover")
-public class OaActRotationHandoverController {
+@RequestMapping("/departure")
+public class OaActDepartureController {
 
     @Resource
     private ActivitiUtil activitiUtil;
 
     @Resource
-    private OaActRotationHandoverService oaActRotationHandoverService;
+    private OaActDepartureService oaActDepartureService;
 
     @Resource
     private UserInfoService userInfoService;
 
     @Resource
     private OaCollaborationService oaCollaborationService;
+
+    @Resource
+    private DepartmentService departmentService;
+
+    @Resource
+    private ManagementService managementService;
 
     /**
      * 获取当前登录用户信息
@@ -61,28 +67,32 @@ public class OaActRotationHandoverController {
     @RequestMapping("/toIndex")
     public String toMeals(Model model) {
         model.addAttribute("nickname", getCurrentUser().getNickname());
-        return "oa/act/act_rotation_handover";
+        return "oa/act/act_departure";
     }
 
     /**
      * 提交新增
      *
-     * @param oaActRotationHandover oaActRotationHandover
+     * @param oaActDeparture oaActDeparture
      * @return s/e
      */
     @RequestMapping(value = "/add")
     @ResponseBody
-    public String add(OaActRotationHandover oaActRotationHandover) {
+    public String add(OaActDeparture oaActDeparture) {
         String randomId = RandomUtil.randomId();
-        if (oaActRotationHandoverService.insert(oaActRotationHandover, getCurrentUser().getId(), randomId, 0) < 1) {
+        if (oaActDepartureService.insert(oaActDeparture, getCurrentUser().getId(), randomId, 0) < 1) {
             return "error";
         } else {
-            //获取拥有权限的用户
-            UserInfo userInfo = userInfoService.getUserInfoByPermission("mealsApproval");
-            //开启流程
             Map<String, Object> map = new HashMap<>(16);
-            map.put("approval", userInfo.getId());
-            String instance = activitiUtil.startProcessInstanceByKey("oa_meals", "oa_act_meals:" + randomId, map, getCurrentUser().getId().toString());
+            Set<Object> set = new HashSet<>();
+
+            List<Department> departmentList = departmentService.selectPrincipalAndSupervisor();
+            for (Department department : departmentList) {
+                set.add(department.getPrincipal());
+                set.add(department.getSupervisor());
+            }
+            map.put("resignationCountersignList", set);
+            String instance = activitiUtil.startProcessInstanceByKey("oa_departure", "oa_act_departure:" + randomId, map, getCurrentUser().getId().toString());
             if (instance != null) {
                 return "success";
             }
@@ -101,56 +111,88 @@ public class OaActRotationHandoverController {
     @RequestMapping(value = "/approval")
     public String approval(String id, String taskId, Model model) {
         //审批
-        OaActRotationHandover oaActRotationHandover = oaActRotationHandoverService.selectByPrimaryKey(id);
+        OaActDeparture oaActDeparture = oaActDepartureService.selectByPrimaryKey(id);
         //获取批注信息
         List<Comments> commentsList = activitiUtil.selectHistoryComment(activitiUtil.getTaskByTaskId(taskId).getProcessInstanceId());
-        model.addAttribute("oaActRotationHandover", oaActRotationHandover);
+        model.addAttribute("oaActDeparture", oaActDeparture);
         model.addAttribute("taskId", JsonHelper.toJSONString(taskId));
         model.addAttribute("commentsList", commentsList);
         model.addAttribute("nickname", getCurrentUser().getNickname());
-        return "oa/act/act_meals_handle";
+        return "oa/act/act_departure_handle";
     }
 
     /**
      * 提交审批
      *
-     * @param processingOpinion 处理意见
-     * @param taskId            任务Id
+     * @param oaActDeparture oaActDeparture
+     * @param taskId         任务Id
+     * @param flag           flag
      * @return s/e
      */
     @RequestMapping(value = "/approvalSubmit")
     @ResponseBody
-    public String approvalSubmit(String processingOpinion, String taskId, Integer flag) {
-        //回退标识
-        String back = "back";
+    public String approvalSubmit(OaActDeparture oaActDeparture, String taskId, Integer flag) {
         //结束标识
         String end = "end";
-        //网关标识
-        String eg = "eg";
+        //发起人
+        String promoter = "promoter";
+        //回退
+        String back = "back";
+        //部门负责人
+        String principal = "principal";
+        //部门主管领导
+        String supervisor = "supervisor";
+        //总经理
+        String companyPrincipal = "company_principal";
+        //知会
+        String leaveNotify = "leaveNotify";
+        //更新数据
+        if (oaActDepartureService.updateByPrimaryKeySelective(oaActDeparture) < 1) {
+            return "error";
+        }
+
         Task task = activitiUtil.getTaskByTaskId(taskId);
-        Map<String, Object> map = new HashMap<>(16);
         if (task == null) {
             return "error";
-        } else {
-            //下个节点
-            String nextNode = activitiUtil.getNextNode(task.getProcessDefinitionId(), task.getTaskDefinitionKey());
+        }
 
-            //下个节点是否为end直接结束
+        if (flag == 1) {
+            String nextNode = activitiUtil.getNextNode(task.getProcessDefinitionId(), task.getTaskDefinitionKey());
             if (end.equals(nextNode)) {
                 activitiUtil.endProcess(taskId);
+                return "success";
+            } else {
+                String processingOpinion = "";
+                UserTask userTask = activitiUtil.getUserTask(task.getProcessDefinitionId(), nextNode);
+                if (nextNode.equals(userTask.getId())) {
+                    String enforcer = userTask.getAssignee().substring(userTask.getAssignee().indexOf("{") + 1, userTask.getAssignee().indexOf("}"));
 
-                //下个节点为back修改表达状态为2并结束流程
-            } else if (back.equals(nextNode)) {
-                String businessId = activitiUtil.getBusinessByTaskId(task.getId());
-                String correlationId = businessId.substring(businessId.lastIndexOf(":") + 1);
-                oaCollaborationService.updateState(correlationId, 3);
-                activitiUtil.endProcess(taskId);
+                    if (leaveNotify.equals(enforcer)) {
+                        List<UserInfo> userInfoList = userInfoService.selectMultipleByPermission("leaveNotify");
+                        Map<String, Object> map = new HashMap<>(16);
+                        List<Object> leaveNotifyList = new ArrayList<>();
+                        for (UserInfo user : userInfoList) {
+                            leaveNotifyList.add(user.getId());
+                        }
+                        leaveNotifyList.add(oaActDeparture.getPromoter());
+                        map.put("leaveNotifyList", leaveNotifyList);
+                        activitiUtil.designatedCountersignPersonnel(taskId, map);
+                        return "success";
 
-            } else if (eg.equals(nextNode)) {
-                map.put("result", flag);
-                map.put("notify", activitiUtil.getStartUserId(task.getProcessInstanceId()));
-                activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
+                    } else {
+                        UserInfo userInfo = userInfoService.getUserInfoByPermission(enforcer);
+                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
+                        return "success";
+                    }
+                } else {
+                    return "error";
+                }
             }
+        } else {
+            //驳回
+            managementService.executeCommand(new TargetFlowNodeCommand(task.getId(), back));
+            //修改表单状态
+            oaCollaborationService.updateState(oaActDeparture.getId(), 3);
             return "success";
         }
     }
@@ -158,14 +200,14 @@ public class OaActRotationHandoverController {
     /**
      * 保存待发
      *
-     * @param oaActRotationHandover oaActRotationHandover
+     * @param oaActDeparture oaActDeparture
      * @return s/e
      */
     @RequestMapping(value = "/savePending")
     @ResponseBody
-    public String savePending(OaActRotationHandover oaActRotationHandover) {
+    public String savePending(OaActDeparture oaActDeparture) {
         String randomId = RandomUtil.randomId();
-        if (oaActRotationHandoverService.insert(oaActRotationHandover, getCurrentUser().getId(), randomId, 1) < 1) {
+        if (oaActDepartureService.insert(oaActDeparture, getCurrentUser().getId(), randomId, 1) < 1) {
             return "error";
         } else {
             return "success";
@@ -181,22 +223,21 @@ public class OaActRotationHandoverController {
      */
     @RequestMapping(value = "/toEdit")
     public String toEdit(String id, Model model) {
-        OaActRotationHandover oaActRotationHandover = oaActRotationHandoverService.selectByPrimaryKey(id);
-        model.addAttribute("oaActRotationHandover", oaActRotationHandover);
-        model.addAttribute("annexList", JsonHelper.toJSONString(oaActRotationHandover.getAnnex()));
-        return "oa/act/act_rotation_handover_edit";
+        OaActDeparture oaActDeparture = oaActDepartureService.selectByPrimaryKey(id);
+        model.addAttribute("oaActDeparture", oaActDeparture);
+        return "oa/act/act_departure_edit";
     }
 
     /**
      * 编辑后保存
      *
-     * @param oaActRotationHandover oaActRotationHandover
+     * @param oaActDeparture oaActDeparture
      * @return s/e
      */
     @RequestMapping(value = "/edit")
     @ResponseBody
-    public String edit(OaActRotationHandover oaActRotationHandover) {
-        if (oaActRotationHandoverService.edit(oaActRotationHandover) < 0) {
+    public String edit(OaActDeparture oaActDeparture) {
+        if (oaActDepartureService.edit(oaActDeparture) < 0) {
             return "error";
         } else {
             return "success";
@@ -206,24 +247,24 @@ public class OaActRotationHandoverController {
     /**
      * 编辑后发送
      *
-     * @param oaActRotationHandover oaActRotationHandover
+     * @param oaActDeparture oaActDeparture
      * @return s/e
      */
     @RequestMapping(value = "/editAdd")
     @ResponseBody
-    public String editAdd(OaActRotationHandover oaActRotationHandover) {
+    public String editAdd(OaActDeparture oaActDeparture) {
         //更新数据
-        if (oaActRotationHandoverService.edit(oaActRotationHandover) < 0) {
+        if (oaActDepartureService.edit(oaActDeparture) < 0) {
             return "error";
         } else {
             //获取拥有权限的用户
             UserInfo userInfo = userInfoService.getUserInfoByPermission("mealsApproval");
             Map<String, Object> map = new HashMap<>(16);
             map.put("mealsApproval", userInfo.getId());
-            String instance = activitiUtil.startProcessInstanceByKey("oa_meals", "oa_act_meals:" + oaActRotationHandover.getId(), map, getCurrentUser().getId().toString());
+            String instance = activitiUtil.startProcessInstanceByKey("oa_departure", "oa_act_departure:" + oaActDeparture.getId(), map, getCurrentUser().getId().toString());
             if (instance != null) {
                 //发送成功后更新状态
-                oaCollaborationService.updateStateByCorrelationId(oaActRotationHandover.getId(), 0, oaActRotationHandover.getTitle());
+                oaCollaborationService.updateStateByCorrelationId(oaActDeparture.getId(), 0, oaActDeparture.getTitle());
                 return "success";
             } else {
                 return "error";
@@ -241,13 +282,12 @@ public class OaActRotationHandoverController {
      */
     @RequestMapping(value = "/details")
     public String details(String id, String taskId, Model model) {
-        OaActRotationHandover oaActRotationHandover = oaActRotationHandoverService.selectByPrimaryKey(id);
+        OaActDeparture oaActDeparture = oaActDepartureService.selectByPrimaryKey(id);
         //获取批注信息
         List<Comments> commentsList = activitiUtil.selectHistoryComment(taskId);
-        model.addAttribute("oaActRotationHandover", oaActRotationHandover);
+        model.addAttribute("oaActDeparture", oaActDeparture);
         model.addAttribute("commentsList", commentsList);
-        model.addAttribute("commentsListSize", commentsList.size());
-        return "oa/act/act_rotation_handover_details";
+        return "oa/act/act_departure_details";
     }
 
     /**
@@ -263,7 +303,7 @@ public class OaActRotationHandoverController {
         //删除流程
         if (activitiUtil.deleteByProcessInstanceId(processInstanceId) == 1) {
             //执行删除数据
-            oaActRotationHandoverService.deleteData(id);
+            oaActDepartureService.deleteData(id);
             oaCollaborationService.deleteByCorrelationId(id);
             return "success";
         } else {
@@ -293,20 +333,5 @@ public class OaActRotationHandoverController {
             //错误
             return "error";
         }
-    }
-
-    /**
-     * 删除附件
-     *
-     * @param array array
-     * @return jsp
-     */
-    @RequestMapping(value = "/deleteAnnexes")
-    @ResponseBody
-    public String deleteAnnexes(String[] array, String id) {
-        if (oaActRotationHandoverService.updateAnnexes(array, id) < 1) {
-            return "error";
-        }
-        return "success";
     }
 }

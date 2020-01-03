@@ -66,7 +66,17 @@ public class OaActRead {
     /**
      * 拟办意见
      */
-    private String suggestion;
+    private String receiptProposed;
+
+    /**
+     * 拟办意见内容
+     */
+    private String receiptProposedContent;
+
+    /**
+     * 拟办意见时间
+     */
+    private String receiptProposedDate;
 
     /**
      * 部门意见
@@ -74,9 +84,24 @@ public class OaActRead {
     private String departmentOpinion;
 
     /**
+     * 部门意见时间
+     */
+    private String departmentOpinionDate;
+
+    /**
      * 领导批示
      */
-    private String instructions;
+    private String companyPrincipal;
+
+    /**
+     * 领导批示内容
+     */
+    private String companyPrincipalContent;
+
+    /**
+     * 领导批示时间
+     */
+    private String companyPrincipalDate;
 
     /**
      * 办理结果
@@ -184,28 +209,12 @@ public class OaActRead {
         this.fileTitle = fileTitle;
     }
 
-    public String getSuggestion() {
-        return suggestion;
-    }
-
-    public void setSuggestion(String suggestion) {
-        this.suggestion = suggestion;
-    }
-
     public String getDepartmentOpinion() {
         return departmentOpinion;
     }
 
     public void setDepartmentOpinion(String departmentOpinion) {
         this.departmentOpinion = departmentOpinion;
-    }
-
-    public String getInstructions() {
-        return instructions;
-    }
-
-    public void setInstructions(String instructions) {
-        this.instructions = instructions;
     }
 
     public String getOutcome() {
@@ -270,5 +279,61 @@ public class OaActRead {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getReceiptProposed() {
+        return receiptProposed;
+    }
+
+    public void setReceiptProposed(String receiptProposed) {
+        this.receiptProposed = receiptProposed;
+    }
+
+    public String getCompanyPrincipal() {
+        return companyPrincipal;
+    }
+
+    public void setCompanyPrincipal(String companyPrincipal) {
+        this.companyPrincipal = companyPrincipal;
+    }
+
+    public String getReceiptProposedDate() {
+        return receiptProposedDate;
+    }
+
+    public void setReceiptProposedDate(String receiptProposedDate) {
+        this.receiptProposedDate = receiptProposedDate;
+    }
+
+    public String getCompanyPrincipalDate() {
+        return companyPrincipalDate;
+    }
+
+    public void setCompanyPrincipalDate(String companyPrincipalDate) {
+        this.companyPrincipalDate = companyPrincipalDate;
+    }
+
+    public String getDepartmentOpinionDate() {
+        return departmentOpinionDate;
+    }
+
+    public void setDepartmentOpinionDate(String departmentOpinionDate) {
+        this.departmentOpinionDate = departmentOpinionDate;
+    }
+
+    public String getReceiptProposedContent() {
+        return receiptProposedContent;
+    }
+
+    public void setReceiptProposedContent(String receiptProposedContent) {
+        this.receiptProposedContent = receiptProposedContent;
+    }
+
+    public String getCompanyPrincipalContent() {
+        return companyPrincipalContent;
+    }
+
+    public void setCompanyPrincipalContent(String companyPrincipalContent) {
+        this.companyPrincipalContent = companyPrincipalContent;
     }
 }

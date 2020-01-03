@@ -47,11 +47,10 @@ public interface OaActLaborContractStopService {
     OaActLaborContractStop selectByPrimaryKey(String id);
 
     /**
-     * 更新附件列表
+     * 选择性跟新
      *
-     * @param array array
-     * @param id    id
+     * @param oaActLaborContractStop oaActLaborContractStop
      * @return int
      */
-    int updateAnnexes(String[] array, String id);
+    int updateByPrimaryKeySelective(OaActLaborContractStop oaActLaborContractStop);
 }

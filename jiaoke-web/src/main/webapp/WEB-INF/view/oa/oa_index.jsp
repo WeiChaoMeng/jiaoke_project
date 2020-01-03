@@ -217,28 +217,21 @@
                             </td>
 
                             <td class="template" valign="middle">
-                                <a class="check_color" onclick="commonJump('rotationHandover')" title="轮岗交接表">
-                                    <em class="template-icon">&#xe695;</em>轮岗交接表
+                                <a class="check_color" onclick="commonJump('adjustWages')" title="调资审批表">
+                                    <em class="template-icon">&#xe695;</em>调资审批表
                                 </a>
                             </td>
 
                             <td class="template" valign="middle">
-                                <a class="check_color" onclick="commonJump('adjustWages')" title="调资审批表">
-                                    <em class="template-icon">&#xe695;</em>调资审批表
+                                <a class="check_color" onclick="commonJump('productionLeave')" title="生产假审批表">
+                                    <em class="template-icon">&#xe695;</em>生产假审批表
                                 </a>
                             </td>
                         </tr>
 
                         <tr>
                             <td class="template" valign="middle">
-                                <a class="check_color" onclick="commonJump('productionLeave')" title="生产假审批表">
-                                    <em class="template-icon">&#xe695;</em>生产假审批表
-                                </a>
-                            </td>
-
-
-                            <td class="template" valign="middle">
-                                <a class="check_color" onclick="commonJump('dimission')" title="离职会签表">
+                                <a class="check_color" onclick="commonJump('departure')" title="离职会签表">
                                     <em class="template-icon">&#xe695;</em>离职会签表
                                 </a>
                             </td>
@@ -246,6 +239,12 @@
                             <td class="template" valign="middle">
                                 <a class="check_color" onclick="commonJump('pactStop')" title="劳务协议终止通知书">
                                     <em class="template-icon">&#xe695;</em>劳务协议终止通知书
+                                </a>
+                            </td>
+
+                            <td class="template" valign="middle">
+                                <a class="check_color" onclick="commonJump('laborContractStop')" title="劳动合同终止通知书">
+                                    <em class="template-icon">&#xe695;</em>劳动合同终止通知书
                                 </a>
                             </td>
 
@@ -263,19 +262,11 @@
                             </td>
 
                             <td class="template" valign="middle">
-                                <a class="check_color" onclick="commonJump('laborContractStop')" title="劳动合同终止通知书">
-                                    <em class="template-icon">&#xe695;</em>劳动合同终止通知书
-                                </a>
-                            </td>
-
-                            <td class="template" valign="middle">
                                 <a class="check_color" onclick="commonJump('laborContractSign')" title="劳动合同签订通知书">
                                     <em class="template-icon">&#xe695;</em>劳动合同签订通知书
                                 </a>
                             </td>
-                        </tr>
 
-                        <tr>
                             <td class="template" valign="middle">
                                 <a class="check_color" onclick="commonJump('laborContractRenewal')"
                                    title="劳动合同签订、续订、变更、终止审批表">
@@ -288,7 +279,9 @@
                                     <em class="template-icon">&#xe695;</em>解除劳动合同审批表
                                 </a>
                             </td>
+                        </tr>
 
+                        <tr>
                             <%--<td class="template" valign="middle">--%>
                             <%--<a class="check_color" onclick="assets()" title="固定资产投资完成验收单（生产用）">--%>
                             <%--<em class="template-icon">&#xe695;</em>固定资产投资完成验收单（生产用）--%>

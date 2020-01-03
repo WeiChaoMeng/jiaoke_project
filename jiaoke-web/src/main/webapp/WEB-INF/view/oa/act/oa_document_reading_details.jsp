@@ -14,7 +14,7 @@
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
 </head>
 
-<body id="body" style="width: 70%">
+<body id="body" style="width: 65%">
 
 <div class="table-title">
     <span>${oaActRead.title}</span>
@@ -62,9 +62,9 @@
 </div>
 
 <div>
-    <span class="fill-in-date" style="min-width: 130px">${oaActRead.departmentNumbering}</span>
+    <span class="fill-in-date" style="min-width: 130px;float: left">${oaActRead.departmentNumbering}</span>
 
-    <span class="form-number-left" style="float: left;min-width: 130px">编号  ${oaActRead.numbering}</span>
+    <span class="form-number-left" style="min-width: 130px;float: right">编号 ${oaActRead.numbering}</span>
 </div>
 
 <table class="formTable">
@@ -103,7 +103,7 @@
     <tr>
         <td class="tdLabel">拟办意见</td>
         <td colspan="3" class="table-td-content" style="padding: 10px;height: 60px">
-            ${oaActRead.suggestion}
+            ${oaActRead.receiptProposedContent}
         </td>
     </tr>
 
@@ -117,7 +117,7 @@
     <tr>
         <td class="tdLabel">领导批示</td>
         <td colspan="3" class="table-td-content" style="padding: 10px;height: 60px">
-            ${oaActRead.instructions}
+            ${oaActRead.companyPrincipalContent}
         </td>
     </tr>
 
@@ -148,7 +148,7 @@
         //执行打印
         window.print();
         $('#tool').show();
-        $('#body,#return').css('width', '70%');
+        $('#body,#return').css('width', '65%');
     }
 </script>
 </html>
