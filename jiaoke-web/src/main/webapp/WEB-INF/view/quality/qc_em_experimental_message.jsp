@@ -126,7 +126,7 @@
         <div class="table">
             <table border="1" cellspacing="0" cellpadding="10" width="100%" id="firstTable" >
                 <thead id="firstThead">
-                <tr class="firstHead">
+                <tr class="firstHead" id="firstHead">
                     <th colspan="1" rowspan="2">实验项目</th>
                     <th colspan="1" rowspan="2">技术要求</th>
                     <th colspan="3">试验结果</th>
@@ -136,7 +136,7 @@
                     <th>机制砂</th>
                 </tr>
                 </thead>
-                <tbody id="firstTbody" >
+                <tbody id="firstTbody"   >
                 <tr>
                     <td>
                         <input type="text" class="td_input" name="num" placeholder="表观相对密度"

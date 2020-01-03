@@ -487,7 +487,8 @@
                     show: false
                 },
                 axisLabel: { //轴标签
-                    show: false //不显示
+                    show: false//不显示
+                    // rotate:90
                 },
                 axisTick: { //轴刻度
                     show: false //不显示
@@ -496,7 +497,15 @@
                     lineStyle: { //样式
                         color: '#000' //颜色
                     }
-                }
+                },
+                // axisLabel:{
+                //     interval: 0,
+                //     formatter: function (value) {
+                //         //x轴的文字改为竖版显示
+                //         var str = value.split("");
+                //         return str.join("\n");
+                //     }
+                // }
             },
             yAxis: {
                 type: 'value',
@@ -532,6 +541,7 @@
                         symbol: ['none', 'none'],
                         silent: true,
                         label: {
+                            rotate:90,
                             normal: {
                                 position: "start"
                             }

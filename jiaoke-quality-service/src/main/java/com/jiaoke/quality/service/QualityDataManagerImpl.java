@@ -456,4 +456,25 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
 
         return modelMap;
     }
+
+
+    @Override
+    public String getMsgByUserAndDate(String userNum, String proDate) {
+        Map<String,Object> map = new HashMap<>();
+        try{
+            List<Map<String,Object>> list = qualityDataManagerDao.selectMsgByUserAndDate(userNum,proDate);
+            if (list.isEmpty()){
+                map.put("message","fail");
+            }else {
+                map.put("message","success");
+                map.put("list",list);
+            }
+        }catch (Exception e){
+            System.out.println(e.fillInStackTrace());
+            map.put("message","exception");
+        }finally {
+            map.put("message","exception");
+        }
+        return JSON.toJSONString(map);
+    }
 }

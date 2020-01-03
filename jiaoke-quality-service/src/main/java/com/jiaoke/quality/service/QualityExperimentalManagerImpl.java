@@ -175,9 +175,13 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
         //查询本年委托单数量
         String[] dateArray = result.split(" ");
         String year = dateArray[0].split("-")[0];
-        Map<String,Object>  countMap = qualityExperimentalManagerDao.selectOrderTicketCountByDate(year);
 
-        int count = Integer.parseInt(countMap.get("counts").toString());
+        Map<String,Integer> countMap = qualityExperimentalManagerDao.selectLastOrderTicketByDate(year);
+
+        int count = 0 ;
+        if (countMap != null){
+            count = countMap.get("counts");
+        }
 
         //生产委托编号
         String number = count >= 9? "00" + String.valueOf(count + 1): "000" + String.valueOf(count + 1);
@@ -515,7 +519,7 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
         int res = 0;
         //根据材料插入实验
         if (firstTestList.size() != 0 || coarseTestList.size() != 0){
-            switch (materialsNum){
+              switch (materialsNum){
                 //细集料插入方法
                 case 1:
                     if (firstTestList.size() != 0 ){
@@ -547,6 +551,54 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
                     }
                     if (coarseTestList.size() != 0){
                         res = qualityExperimentalManagerDao.insertAsphalt(coarseTestList,experimentNum);
+                    }
+                    break;
+                    //粗刨铣料插入方法
+                case 5:
+                    if (firstTestList.size() != 0 ){
+                        res = qualityExperimentalManagerDao.insertCoarseMilling(firstTestList,experimentNum);
+                    }
+                    if (coarseTestList.size() != 0){
+                        res = qualityExperimentalManagerDao.insertCoarseMillingBurn(coarseTestList,experimentNum);
+                    }
+                    break;
+                //岩沥青插入方法
+                case 6:
+                    if (firstTestList.size() != 0 ){
+                        res = qualityExperimentalManagerDao.insertRock(firstTestList,experimentNum);
+                    }
+                    if (coarseTestList.size() != 0){
+                        res = qualityExperimentalManagerDao.insertRockBurn(coarseTestList,experimentNum);
+                    }
+                    break;
+                //纤维插入方法
+                case 7:
+                    if (firstTestList.size() != 0 ){
+                        res = qualityExperimentalManagerDao.insertFibre(firstTestList,experimentNum);
+                    }
+                    break;
+                //乳化沥青插入方法
+                case 8:
+                    if (firstTestList.size() != 0 ){
+                        res = qualityExperimentalManagerDao.insertEmulsified(firstTestList,experimentNum);
+                    }
+                    break;
+                //沥青混合料插入方法
+                case 9:
+                    if (firstTestList.size() != 0 ){
+                        res = qualityExperimentalManagerDao.insertMixture(firstTestList,experimentNum);
+                    }
+                    if (coarseTestList.size() != 0){
+                        res = qualityExperimentalManagerDao.insertMixtureBurn(coarseTestList,experimentNum);
+                    }
+                    break;
+                //细刨铣料插入方法
+                case 10:
+                    if (firstTestList.size() != 0 ){
+                        res = qualityExperimentalManagerDao.insertFineMilling(firstTestList,experimentNum);
+                    }
+                    if (coarseTestList.size() != 0){
+                        res = qualityExperimentalManagerDao.insertFineMillingBurn(coarseTestList,experimentNum);
                     }
                     break;
                 default:
@@ -627,9 +679,22 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
         return JSON.toJSONString(map);
     }
 
+
+    @Override
+    public String getSevenDayCoarseStandingBook() {
+        List<Map<String,String>> coarse = qualityExperimentalManagerDao.selectSevenDayCoarseBook();
+        return JSON.toJSONString(coarse);
+    }
+
+    @Override
+    public String getSevenDayFineStandingBook() {
+        List<Map<String,String>> fine = qualityExperimentalManagerDao.selectSevenDayFineStandingBook();
+        return JSON.toJSONString(fine);
+    }
+
     @Override
     public String getSevenDayRawMaterialStandingBook() {
-        List<Map<String,String>> res = new ArrayList<>();
+        Map<String,List<Map<String,String>>> res = new HashMap<>();
         //普通试验
         List<Map<String,String>> coarse = qualityExperimentalManagerDao.selectCoarseStandingBook();
         List<Map<String,String>> fine = qualityExperimentalManagerDao.selectFineStandingBook();
@@ -639,11 +704,11 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
         List<Map<String,String>> coarseSieving = qualityExperimentalManagerDao.selectCoarseSievingStandingBook();
         List<Map<String,String>> fineSieving = qualityExperimentalManagerDao.selectFineievingStandingBook();
 
-        res.addAll(coarse);
-        res.addAll(fine);
-        res.addAll(breeze);
-        res.addAll(coarseSieving);
-        res.addAll(fineSieving);
+        res.put("coarse",coarse);
+        res.put("fine",fine);
+        res.put("breeze",breeze);
+        res.put("coarseSieving",coarseSieving);
+        res.put("fineSieving",fineSieving);
 
         return JSON.toJSONString(res);
     }
@@ -673,6 +738,54 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
     }
 
     @Override
+    public String searchStandingBook(String fromData) {
+        List<Map<String,String>> list = JSON.parseObject(fromData,List.class);
+        Map<String,String> map = new HashMap<>();
+        for (int i = 0; i < list.size();i++){
+            map.put(list.get(i).get("name"),list.get(i).get("value"));
+        }
+        List<Map<String,Object>> res = new ArrayList<>();
+        switch (map.get("materials")){
+            case "1":
+                //细集料根据日期查询
+                res = qualityExperimentalManagerDao.selectFineAggregateStandingBookByDate(map.get("startDate"),map.get("endDate"),map.get("materials"),map.get("specification"),map.get("manufacturers"));
+                break;
+            case "2":
+                res = qualityExperimentalManagerDao.selectCoarseAggregateStandingBookByDate(map.get("startDate"),map.get("endDate"),map.get("materials"),map.get("specification"),map.get("manufacturers"));
+                break;
+            case "3":
+                res = qualityExperimentalManagerDao.selectBreezeBookByDate(map.get("startDate"),map.get("endDate"),map.get("materials"),map.get("specification"),map.get("manufacturers"));
+                break;
+            case "4":
+                res = qualityExperimentalManagerDao.selectAsphaltStandingByDate(map.get("startDate"),map.get("endDate"),map.get("materials"),map.get("specification"),map.get("manufacturers"));
+                break;
+            case "5":
+                res = qualityExperimentalManagerDao.selectCoarseMillingStandingByDate(map.get("startDate"),map.get("endDate"),map.get("materials"),map.get("specification"),map.get("manufacturers"));
+                break;
+            case "6":
+                res = qualityExperimentalManagerDao.selectRockStandingByDate(map.get("startDate"),map.get("endDate"),map.get("materials"),map.get("specification"),map.get("manufacturers"));
+                break;
+            case "7":
+                res = qualityExperimentalManagerDao.selectFibreStandingByDate(map.get("startDate"),map.get("endDate"),map.get("materials"),map.get("specification"),map.get("manufacturers"));
+                break;
+            case "8":
+                res = qualityExperimentalManagerDao.selectEmulsifiedStandingByDate(map.get("startDate"),map.get("endDate"),map.get("materials"),map.get("specification"),map.get("manufacturers"));
+                break;
+            case "9":
+                res = qualityExperimentalManagerDao.selectMixtureStandingByDate(map.get("startDate"),map.get("endDate"),map.get("materials"),map.get("specification"),map.get("manufacturers"));
+                break;
+            case "10":
+                res = qualityExperimentalManagerDao.selectFineMillingStandingByDate(map.get("startDate"),map.get("endDate"),map.get("materials"),map.get("specification"),map.get("manufacturers"));
+                break;
+                default:
+                    break;
+
+
+        }
+        return JSON.toJSONString(res);
+    }
+
+    @Override
     public String getAsphaltStandingBook() {
         List<Map<String,String>> asphalt = qualityExperimentalManagerDao.selectAsphaltStandingBook();
         return JSON.toJSONString(asphalt);
@@ -683,6 +796,19 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
         List<Map<String,String>> asphalt = qualityExperimentalManagerDao.selectAsphaltStandingBookByDate(startDate,endDate);
         return JSON.toJSONString(asphalt);
     }
+
+    @Override
+    public String getSevenDayBreezeStandingBook() {
+        List<Map<String,String>> breeze = qualityExperimentalManagerDao.getSevenDayBreezeStandingBook();
+        return JSON.toJSONString(breeze);
+    }
+
+    @Override
+    public String getSevenDayAsphaltStandingBook() {
+        List<Map<String,String>> asphalt = qualityExperimentalManagerDao.getSevenDayAsphaltStandingBook();
+        return JSON.toJSONString(asphalt);
+    }
+
     /*************************************未完实验End****************************************************/
 
     @Override
@@ -808,7 +934,7 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
         Map<String,String> map  =  qualityExperimentalManagerDao.selectSampleStatusById(id);
         Map<String,String> res = new HashMap<>();
 
-        if (map.isEmpty()){
+        if (map == null || map.isEmpty()){
             res.put("message","error");
         }else {
              Object status =(Object)map.get("status") ;
@@ -853,6 +979,9 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
         List<Map<String,String>> list = qualityExperimentalManagerDao.selectMobileExperimentByDate(startDate);
         return JSON.toJSONString(list);
     }
+
+
+
     /*************************************试验设置Start****************************************************/
 
 }

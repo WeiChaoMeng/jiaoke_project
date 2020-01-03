@@ -102,13 +102,13 @@ public interface QualityExperimentalManagerDao {
     /**
      *
      * 功能描述: <br>
-     *  <根据日期查询当天委托单生产的数量，用于生产委托单编号>
+     *  <根据日期查询最后一条的ID，用于生产委托单编号>
      * @param
      * @return
      * @auther Melone
      * @date 2019/6/27 13:00
      */
-    Map<String,Object>  selectOrderTicketCountByDate(@Param("date") String date);
+    Map<String,Integer>  selectLastOrderTicketByDate(@Param("date") String date);
 
     /**
      *
@@ -366,6 +366,112 @@ public interface QualityExperimentalManagerDao {
      * @date 2019/7/16 12:48
      */
     int insertAsphalt(@Param("firstTestList") List<Map<String,String>> firstTestList,@Param("experimentNum") String experimentNum);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <插入粗刨铣料实验>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/12/18 12:44
+     */
+    int insertCoarseMilling(@Param("firstTestList") List<Map<String,String>> firstTestList,@Param("experimentNum") String experimentNum);
+    /**
+     *
+     * 功能描述: <br>
+     *  <插入粗刨铣料燃烧实验>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/12/18 12:45
+     */
+    int insertCoarseMillingBurn(@Param("coarseMillTestList") List<Map<String,String>> coarseTestList,@Param("experimentNum") String experimentNum);
+    /**
+     *
+     * 功能描述: <br>
+     *  <插入岩沥青>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/12/18 13:01
+     */
+    int insertRock(@Param("firstTestList") List<Map<String,String>> firstTestList,@Param("experimentNum") String experimentNum);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <插入岩沥青燃烧>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/12/18 13:01
+     */
+    int insertRockBurn(@Param("rockList") List<Map<String,String>> coarseTestList,@Param("experimentNum") String experimentNum);
+    /**
+     *
+     * 功能描述: <br>
+     *  <插入纤维>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/12/18 13:13
+     */
+    int insertFibre(@Param("firstTestList") List<Map<String,String>> firstTestList,@Param("experimentNum") String experimentNum);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <插入乳化沥青>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/12/18 13:14
+     */
+    int insertEmulsified(@Param("firstTestList") List<Map<String,String>> firstTestList,@Param("experimentNum") String experimentNum);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <插入沥青混合料>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/12/18 13:21
+     */
+    int insertMixture(@Param("firstTestList") List<Map<String,String>> firstTestList,@Param("experimentNum") String experimentNum);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <插入沥青混合料燃烧实验>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/12/18 13:22
+     */
+    int insertMixtureBurn(@Param("mixtureList") List<Map<String,String>> coarseTestList,@Param("experimentNum") String experimentNum);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <插入细洗刨料>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/12/18 13:29
+     */
+    int insertFineMilling(@Param("firstTestList") List<Map<String,String>> firstTestList,@Param("experimentNum") String experimentNum);
+    /**
+     *
+     * 功能描述: <br>
+     *  <插入细洗刨料燃烧>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/12/18 13:31
+     */
+    int insertFineMillingBurn(@Param("fineMillingList") List<Map<String,String>> coarseTestList,@Param("experimentNum") String experimentNum);
 
     /**
      *
@@ -745,4 +851,156 @@ public interface QualityExperimentalManagerDao {
      * @date 2019/10/16 9:59
      */
     Map<String, Object> selectOrderTicketCountByDateAndLogogramName(@Param("year") String year,@Param("logogramName") String logogramName);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询7日内粗集料实验>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/12/16 9:53
+     */
+    List<Map<String, String>> selectSevenDayCoarseBook();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询七日内细集料实验台账>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/12/16 13:27
+     */
+    List<Map<String, String>> selectSevenDayFineStandingBook();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询七日内矿粉实验台账>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/12/16 15:30
+     */
+    List<Map<String, String>> getSevenDayBreezeStandingBook();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询七日内沥青实验台账>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/12/16 16:18
+     */
+    List<Map<String, String>> getSevenDayAsphaltStandingBook();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期等条件查询细集料实验>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/12/19 17:39
+     */
+    List<Map<String, Object>> selectFineAggregateStandingBookByDate(@Param("startDate") String startDate,@Param("endDate")  String endDate,@Param("materials")  String materials,@Param("specification")  String specification,@Param("manufacturers") String manufacturers);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期等条件查询粗集料实验>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/12/19 17:39
+     */
+    List<Map<String, Object>> selectCoarseAggregateStandingBookByDate(@Param("startDate") String startDate,@Param("endDate")  String endDate,@Param("materials")  String materials,@Param("specification")  String specification,@Param("manufacturers") String manufacturers);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期等条件查询矿粉实验>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/12/19 17:39
+     */
+    List<Map<String, Object>> selectBreezeBookByDate(@Param("startDate") String startDate,@Param("endDate")  String endDate,@Param("materials")  String materials,@Param("specification")  String specification,@Param("manufacturers") String manufacturers);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期等条件查询沥青实验>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/12/19 17:39
+     */
+    List<Map<String, Object>> selectAsphaltStandingByDate(@Param("startDate") String startDate,@Param("endDate")  String endDate,@Param("materials")  String materials,@Param("specification")  String specification,@Param("manufacturers") String manufacturers);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期等条件查询沥青实验>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/12/19 17:39
+     */
+    List<Map<String, Object>> selectCoarseMillingStandingByDate(@Param("startDate") String startDate,@Param("endDate")  String endDate,@Param("materials")  String materials,@Param("specification")  String specification,@Param("manufacturers") String manufacturers);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期等条件查询石料实验>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/12/19 19:14
+     */
+    List<Map<String, Object>> selectRockStandingByDate(@Param("startDate") String startDate,@Param("endDate")  String endDate,@Param("materials")  String materials,@Param("specification")  String specification,@Param("manufacturers") String manufacturers);
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期等条件查询纤维实验>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/12/19 19:14
+     */
+    List<Map<String, Object>> selectFibreStandingByDate(@Param("startDate") String startDate,@Param("endDate")  String endDate,@Param("materials")  String materials,@Param("specification")  String specification,@Param("manufacturers") String manufacturers);
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期等条件查询乳化沥青实验>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/12/19 19:14
+     */
+    List<Map<String, Object>> selectEmulsifiedStandingByDate(@Param("startDate") String startDate,@Param("endDate")  String endDate,@Param("materials")  String materials,@Param("specification")  String specification,@Param("manufacturers") String manufacturers);
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期等条件查询沥青混合料实验>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/12/19 19:14
+     */
+    List<Map<String, Object>> selectMixtureStandingByDate(@Param("startDate") String startDate,@Param("endDate")  String endDate,@Param("materials")  String materials,@Param("specification")  String specification,@Param("manufacturers") String manufacturers);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期等条件查询细刨铣料实验>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/12/19 19:14
+     */
+    List<Map<String, Object>> selectFineMillingStandingByDate(@Param("startDate") String startDate,@Param("endDate")  String endDate,@Param("materials")  String materials,@Param("specification")  String specification,@Param("manufacturers") String manufacturers);
+
 }

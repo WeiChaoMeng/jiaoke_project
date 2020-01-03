@@ -219,9 +219,12 @@
                                             axisLabel: {
                                                 formatter: '{value} %'
                                             },
-                                            Interval:0.05,
-                                            max: 'dataMax',
-                                            min: 'dataMin',
+                                            max: function (v) {
+                                                return (v.max + 5).toFixed(1)
+                                            },
+                                            min: function (v) {
+                                                return v.min - 5 < 0? 0:(v.min - 5).toFixed(1);
+                                            },
 
                                         },
                                         series: [
@@ -376,9 +379,12 @@
                                             axisLabel: {
                                                 formatter: '{value} %'
                                             },
-                                            Interval:0.05,
-                                            max: 'dataMax',
-                                            min: 'dataMin',
+                                            max: function (v) {
+                                                return (v.max + 5).toFixed(1)
+                                            },
+                                            min: function (v) {
+                                                return v.min - 5 < 0? 0:(v.min - 5).toFixed(1);
+                                            },
                                         },
                                         series: [
                                             {
@@ -394,6 +400,7 @@
                                                 data:
                                                 <c:forEach items="${maxMin}" var="maxMinRation">
                                                 <c:if test="${maxMinRation.key == keys}" >
+                                                //极差是偏差值*2
                                                 ${maxMinRation.value},
                                                 </c:if>
                                                 </c:forEach>
@@ -413,11 +420,28 @@
                                                         }
                                                     }
                                                 },
+                                                markLine:{
+                                                    silent: true,
+                                                    data: [
+                                                        <c:choose>
+                                                        <c:when test="${material == '油石比' || material == '石粉' ||empty material}">
+                                                        { yAxis: '${(moudelRatio[keys] + 0.2)/2}', xAxis: '${fn:length(allItem[keys])}'},
+                                                        { yAxis: '${(moudelRatio[keys] - 0.2)/2}', xAxis: '${fn:length(allItem[keys])}'}
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                        { yAxis: '${(moudelRatio[keys] + 3)/2}', xAxis: '${fn:length(allItem[keys])}'},
+                                                        { yAxis: '${(moudelRatio[keys] - 3)/2}', xAxis: '${fn:length(allItem[keys])}'}
+                                                        </c:otherwise>
+                                                        </c:choose>
+                                                    ]
+                                                },
                                                 data:[
+                                                    //极差是偏差值*2
                                                     <c:forEach items="${maxMinUp[keys]}" var="maxMinUpRation" varStatus="statusMaxMin">
                                                     ${maxMinUpRation}, ${maxMinUpRation}, ${maxMinUpRation}, ${maxMinUpRation}, ${maxMinUpRation},
                                                     </c:forEach>
                                                 ]},
+
                                         ]
                                     };
                                     myChart${status.index + 200}.setOption(option${status.index + 200});
@@ -491,7 +515,7 @@
                                                 var times = params[0].name;
                                                 //  var times = "2017-11-23 11:00:18";
                                                 res = "<div style='border-top:5px solid #0066cc;background:#010204;padding:0 30px 10px 20px;font-weight:700;font-size:14;'><p>序号："
-                                                    + times+ "</p><p>数量："
+                                                    + times+ "</p><p>含量："
                                                     + value+ "</p></div>";
                                                 return res;
                                             }
@@ -536,8 +560,12 @@
                                                 formatter: '{value} %'
                                             },
                                             Interval:0.05,
-                                            max: 'dataMax',
-                                            min: 'dataMin',
+                                            max: function (v) {
+                                                return (v.max + 5).toFixed(1)
+                                            },
+                                            min: function (v) {
+                                                return v.min - 5 < 0? 0:(v.min - 5).toFixed(1);
+                                            },
                                         },
                                         series: [
 
@@ -592,6 +620,21 @@
                                                             type:'dotted'  //'dotted'虚线 'solid'实线
                                                         }
                                                     }
+                                                },
+                                                markLine:{
+                                                    silent: true,
+                                                    data: [
+                                                        <c:choose>
+                                                        <c:when test="${material == '油石比' || material == '石粉' ||empty material}">
+                                                        { yAxis: '${moudelRatio[keys] + 0.2}', xAxis: '${fn:length(allItem[keys])}'},
+                                                        { yAxis: '${moudelRatio[keys] - 0.2}', xAxis: '${fn:length(allItem[keys])}'}
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                        { yAxis: '${moudelRatio[keys] + 3}', xAxis: '${fn:length(allItem[keys])}'},
+                                                        { yAxis: '${moudelRatio[keys] - 3}', xAxis: '${fn:length(allItem[keys])}'}
+                                                        </c:otherwise>
+                                                        </c:choose>
+                                                    ]
                                                 },
                                                 data:[
                                                     <c:forEach items="${svg5down[keys]}" var="svg5downRation">

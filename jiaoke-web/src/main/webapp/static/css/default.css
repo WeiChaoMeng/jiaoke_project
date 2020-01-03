@@ -779,6 +779,34 @@ table {
     width: 100%;
 }
 
+.text-adaption {
+    width: 97%;
+    height: 200px;
+    overflow: hidden;
+    padding: 5px 10px;
+    resize: none;
+    line-height: 24px;
+    font-size: 12px;
+    color: #666;
+    border: 1px solid #ccc;
+    outline: 0 none;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+.button-click{
+    padding: 10px 30px 10px 30px;
+    background: #66C1E4;
+    border: none;
+    color: #FFF;
+    box-shadow: 1px 1px 1px #4C6E91;
+    -webkit-box-shadow: 1px 1px 1px #4C6E91;
+    -moz-box-shadow: 1px 1px 1px #4C6E91;
+    text-shadow: 1px 1px 1px #5079A3;
+
+}
+.button-click:hover{
+    background: #3EB1DD;
+}
 .textlist li a {
     display: block;
     float: left;
@@ -938,7 +966,7 @@ table {
 }
 
 .charts1 {
-    height: 250px;
+    height: 260px;
 }
 .charts_2 {
     height: 250px;

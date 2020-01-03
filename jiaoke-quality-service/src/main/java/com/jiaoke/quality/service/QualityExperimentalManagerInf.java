@@ -265,6 +265,16 @@ public interface QualityExperimentalManagerInf {
     /**
      *
      * 功能描述: <br>
+     *  <根据日期、规格、厂家、材料查询台账信息>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/12/19 16:38
+     */
+    String searchStandingBook(String fromData);
+    /**
+     *
+     * 功能描述: <br>
      *  <查询七日内沥青试验台账>
      * @param
      * @return
@@ -413,4 +423,47 @@ public interface QualityExperimentalManagerInf {
      * @date 2019/10/12 10:40
      */
     String getMobileExperimentByDate(String startDate);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <返回七日内粗集料台账>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/12/10 14:33
+     */
+    String getSevenDayCoarseStandingBook();
+    /**
+     *
+     * 功能描述: <br>
+     *  <返回七日内细集料台账>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/12/16 13:27
+     */
+    String getSevenDayFineStandingBook();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <返回七日内矿粉料台账>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/12/16 13:27
+     */
+    String getSevenDayBreezeStandingBook();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询七日内沥青实验台账>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2019/12/16 16:17
+     */
+    String getSevenDayAsphaltStandingBook();
 }

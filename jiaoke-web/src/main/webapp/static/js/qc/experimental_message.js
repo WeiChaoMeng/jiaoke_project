@@ -17,6 +17,7 @@ function getExperimentalProjectMessage(id) {
         },
         dataType:'JSON',
         success:function (res) {
+            debugger
             if (res){
                 for (var i = 0 ; i < res.length;i++) {
                     for (var p in  res[i]){
@@ -71,6 +72,24 @@ function showExperimentalProjectItem(tem) {
                     case 4:
                         showAsphalt(res);
                         break;
+                    case 5:
+                        coarseMilling(res);
+                        break;
+                    case 6:
+                        rockAsphalt(res);
+                        break;
+                    case 7:
+                        showFibre(res);
+                        break;
+                    case 8:
+                        showEmulsified(res);
+                        break;
+                    case 9:
+                        showMixture(res);
+                        break;
+                    case 10:
+                        fineMilling(res);
+                        break;
                 }
             }
         }
@@ -107,7 +126,7 @@ function showAsphalt(msg) {
     var firstHead = '<th>项目</th>'
         + '<th>单位</th>'
         + '<th>试验结果</th>'
-        + '<th>试验方法</th>'
+        + '<th >试验方法</th>'
         + '<th>技术要求</th>';
 
     var firstTbody = '';
@@ -200,12 +219,8 @@ function showCoarseAggregate(msg) {
 
     var firstHead = '<th>实验项目</th>'
         + '<th>技术要求</th>'
-        + '<th>试验结果</th>'
+        + '<th colspan="3">试验结果</th>'
         + '<th>试验方法</th>';
-
-    var firstTwoHead = '<th>10-20mm</th>'
-        + '<th>10-15mm</th>'
-        + '<th>5-10mm</th>';
 
     var secondTwoHead ='<th>筛孔mm</th>'
         +'<th>19.0</th>'
@@ -243,7 +258,7 @@ function showCoarseAggregate(msg) {
                     + '</tr>';
                 secondTable += temHtml;
             }else {
-                    if (msg[i][j].coarse_name.indexOf("压碎值") != -1 || msg[i][j].coarse_name.indexOf("磨耗损失") != -1){
+
                         temHtml = '<tr>'
                             + '<td><input type="text" class="td_input" name="coarse_name"  value="' +  msg[i][j]['coarse_name']  + '" readonly="readonly" /></td>'
                             + '<td><input type="text" class="td_input" name="coarse_requirements" value="' +  msg[i][j]['coarse_requirements']  + '"/></td>'
@@ -251,17 +266,6 @@ function showCoarseAggregate(msg) {
                             + '<td><input type="text" class="td_input" name="coarse_method" value="' +  msg[i][j]['coarse_method']  + '" /></td>'
                             + '</tr>';
                         firstTbody += temHtml;
-                    }else {
-                        temHtml = '<tr>'
-                            + '<td><input type="text" class="td_input" name="coarse_name"  value="' +  msg[i][j]['coarse_name']  + '" readonly="readonly" /></td>'
-                            + '<td><input type="text" class="td_input" name="coarse_requirements"  value="' +  msg[i][j]['coarse_requirements']  + '" /></td>'
-                            + '<td ><input type="text" class="td_input" name="coarse_exper_result10_20"  value="' +  msg[i][j]['coarse_exper_result10_20']  + '" /></td>'
-                            + '<td ><input type="text" class="td_input" name="coarse_result10_15"  value="' +  msg[i][j]['coarse_result10_15']  + '" /></td>'
-                            + '<td ><input type="text" class="td_input" name="coarse_result5_10" value="' +  msg[i][j]['coarse_result5_10']  + '" /></td>'
-                            + '<td><input type="text" class="td_input" name="coarse_method"  value="' +  msg[i][j]['coarse_method']  + '" /></td>'
-                            + '</tr>';
-                        firstTbody += temHtml;
-                    }
 
             }
         }
@@ -277,7 +281,7 @@ function showCoarseAggregate(msg) {
         $("#secondTbody").empty().append(secondTable);
     }
 
-    $("#firstTwoHead").empty().append(firstTwoHead);
+     $("#firstTwoHead").remove();
     $("#firstHead").empty().append(firstHead);
     $("#firstTbody").empty().append(firstTbody);
 }
@@ -312,4 +316,386 @@ function showBrzzez(msg) {
 
     //修改样式
     $("#firstTable").css("margin","30 0 0 0");
+}
+
+//编写显示粗刨铣料
+function coarseMilling(msg){
+    var firstHead = '<th>实验项目</th>'
+        + '<th>技术要求</th>'
+        + '<th colspan="3">试验结果</th>'
+        + '<th>试验方法</th>';
+
+    var firstTbody = '';
+
+    var secondTwoHead ='<th>筛孔mm</th>'
+        +'<th>37.5</th>'
+        +'<th>31.5</th>'
+        +'<th>26.5</th>'
+        +'<th>19.0</th>'
+        +'<th>16.0</th>'
+        +'<th>13.2</th>'
+        +'<th>9.5</th>'
+        +'<th>4.75</th>'
+        + '<th>2.36</th>'
+        +'<th>1.18</th>'
+        +'<th>0.6</th>'
+        +'<th>0.3</th>'
+        +'<th>0.15</th>'
+        +'<th>0.075</th>';
+
+
+    var secondTable = '';
+
+    for (var i = 0; i < msg.length; i++){
+        for (var j = 0;j < msg[i].length;j++) {
+            var  temHtml= "";
+            if (msg[i][j].mill_sieve_pore){
+                temHtml = '<tr>'
+                    + '<td><input type="text" class="td_input" name="mill_sieve_pore" value="' + msg[i][j].mill_sieve_pore +'" readonly="readonly" /> </td>'
+                    + '<td><input type="text" class="td_input" name="mill_sieve_pore_37_5"   value="' + msg[i][j].mill_sieve_pore_37_5+'"  /> </td>'
+                    + '<td><input type="text" class="td_input" name="mill_sieve_pore_31_5" value="' + msg[i][j].mill_sieve_pore_31_5+'"   /> </td>'
+                    + '<td><input type="text" class="td_input" name="mill_sieve_pore_26_5"  value="' + msg[i][j].mill_sieve_pore_26_5 +'" /> </td>'
+                    + '<td><input type="text" class="td_input" name="mill_sieve_pore_19_0" value="' + msg[i][j].mill_sieve_pore_19_0+'"  /> </td>'
+                    + '<td><input type="text" class="td_input" name="mill_sieve_pore_16_0" value="' + msg[i][j].mill_sieve_pore_16_0 +'"  /> </td>'
+                    + '<td><input type="text" class="td_input" name="mill_sieve_pore_13_2"  value="' + msg[i][j].mill_sieve_pore_13_2 +'"  /> </td>'
+                    + '<td><input type="text" class="td_input" name="mill_sieve_pore_9_5" value="' + msg[i][j].mill_sieve_pore_9_5 +'"  /> </td>'
+                    + '<td><input type="text" class="td_input" name="mill_sieve_pore_4_75"   value="' + msg[i][j].mill_sieve_pore_4_75 +'"  /> </td>'
+                    + '<td><input type="text" class="td_input" name="mill_sieve_pore_2_36" value="' + msg[i][j].mill_sieve_pore_2_36 +'"   /> </td>'
+                    + '<td><input type="text" class="td_input" name="mill_sieve_pore_1_18"  value="' + msg[i][j].mill_sieve_pore_1_18 +'" /> </td>'
+                    + '<td><input type="text" class="td_input" name="mill_sieve_pore_0_6" value="' + msg[i][j].mill_sieve_pore_0_6 +'"  /> </td>'
+                    + '<td><input type="text" class="td_input" name="mill_sieve_pore_0_3" value="' + msg[i][j].mill_sieve_pore_0_3 +'"  /> </td>'
+                    + '<td><input type="text" class="td_input" name="mill_sieve_pore_0_15"  value="' + msg[i][j].mill_sieve_pore_0_15 +'"  /> </td>'
+                    + '<td><input type="text" class="td_input" name="mill_sieve_pore_0_075" value="' + msg[i][j].mill_sieve_pore_0_075 +'"  /> </td>'
+                    + '</tr>';
+
+                secondTable += temHtml;
+            } else {
+                temHtml = '<tr>'
+                    + '<td><input type="text" class="td_input" name="mill_name"  value="' + msg[i][j]['mill_name']  + '" readonly="readonly" /></td>'
+                    + '<td><input type="text" class="td_input" name="mill_requirements" value="' + msg[i][j]['mill_requirements']  + '"  /></td>'
+                    + '<td colspan="3"><input type="text" class="td_input" name="mill_result" value="' + msg[i][j]['mill_result']  + '"  /></td>'
+                    + '<td><input type="text" class="td_input" name="mill_method" value="' + msg[i][j]['mill_method']  + '"  /></td>'
+                    + '</tr>';
+
+                firstTbody += temHtml;
+            }
+        }
+
+    }
+
+
+    if (secondTable.isBlank()){
+        $("#secondDiv").remove();
+    }else {
+        $("#secondTwoHead").empty().append(secondTwoHead);
+        $("#secondTbody").empty().append(secondTable);
+    }
+
+    $("#firstTwoHead").remove();
+    $("#firstHead").empty().append(firstHead);
+    $("#firstTbody").empty().append(firstTbody);
+}
+//编写显示细刨铣料
+function fineMilling(msg){
+    var firstHead = '<th>实验项目</th>'
+        + '<th>技术要求</th>'
+        + '<th colspan="3">试验结果</th>'
+        + '<th>试验方法</th>';
+
+    var firstTbody = '';
+
+    var secondTwoHead ='<th>筛孔mm</th>'
+        +'<th>37.5</th>'
+        +'<th>31.5</th>'
+        +'<th>26.5</th>'
+        +'<th>19.0</th>'
+        +'<th>16.0</th>'
+        +'<th>13.2</th>'
+        +'<th>9.5</th>'
+        +'<th>4.75</th>'
+        + '<th>2.36</th>'
+        +'<th>1.18</th>'
+        +'<th>0.6</th>'
+        +'<th>0.3</th>'
+        +'<th>0.15</th>'
+        +'<th>0.075</th>';
+
+
+    var secondTable = '';
+
+    for (var i = 0; i < msg.length; i++){
+        for (var j = 0;j < msg[i].length;j++) {
+            var  temHtml= "";
+            if (msg[i][j].millfine_sieve_pore){
+                temHtml = '<tr>'
+                    + '<td><input type="text" class="td_input" name="millfine_sieve_pore" value="' + msg[i][j].millfine_sieve_pore +'" readonly="readonly" /> </td>'
+                    + '<td><input type="text" class="td_input" name="millfine_sieve_pore_37_5"   value="' + msg[i][j].millfine_sieve_pore_37_5+'"  /> </td>'
+                    + '<td><input type="text" class="td_input" name="millfine_sieve_pore_31_5" value="' + msg[i][j].millfine_sieve_pore_31_5+'"   /> </td>'
+                    + '<td><input type="text" class="td_input" name="millfine_sieve_pore_26_5"  value="' + msg[i][j].millfine_sieve_pore_26_5 +'" /> </td>'
+                    + '<td><input type="text" class="td_input" name="millfine_sieve_pore_19_0" value="' + msg[i][j].millfine_sieve_pore_19_0+'"  /> </td>'
+                    + '<td><input type="text" class="td_input" name="millfine_sieve_pore_16_0" value="' + msg[i][j].millfine_sieve_pore_16_0 +'"  /> </td>'
+                    + '<td><input type="text" class="td_input" name="millfine_sieve_pore_13_2"  value="' + msg[i][j].millfine_sieve_pore_13_2 +'"  /> </td>'
+                    + '<td><input type="text" class="td_input" name="millfine_sieve_pore_9_5" value="' + msg[i][j].millfine_sieve_pore_9_5 +'"  /> </td>'
+                    + '<td><input type="text" class="td_input" name="millfine_sieve_pore_4_75"   value="' + msg[i][j].millfine_sieve_pore_4_75 +'"  /> </td>'
+                    + '<td><input type="text" class="td_input" name="millfine_sieve_pore_2_36" value="' + msg[i][j].millfine_sieve_pore_2_36 +'"   /> </td>'
+                    + '<td><input type="text" class="td_input" name="millfine_sieve_pore_1_18"  value="' + msg[i][j].millfine_sieve_pore_1_18 +'" /> </td>'
+                    + '<td><input type="text" class="td_input" name="millfine_sieve_pore_0_6" value="' + msg[i][j].millfine_sieve_pore_0_6 +'"  /> </td>'
+                    + '<td><input type="text" class="td_input" name="millfine_sieve_pore_0_3" value="' + msg[i][j].millfine_sieve_pore_0_3 +'"  /> </td>'
+                    + '<td><input type="text" class="td_input" name="millfine_sieve_pore_0_15"  value="' + msg[i][j].millfine_sieve_pore_0_15 +'"  /> </td>'
+                    + '<td><input type="text" class="td_input" name="millfine_sieve_pore_0_075" value="' + msg[i][j].millfine_sieve_pore_0_075 +'"  /> </td>'
+                    + '</tr>';
+
+                secondTable += temHtml;
+            } else {
+                temHtml = '<tr>'
+                    + '<td><input type="text" class="td_input" name="millfine_name"  value="' + msg[i][j]['millfine_name']  + '" readonly="readonly" /></td>'
+                    + '<td><input type="text" class="td_input" name="millfine_requirements" value="' + msg[i][j]['millfine_requirements']  + '"  /></td>'
+                    + '<td colspan="3"><input type="text" class="td_input" name="millfine_result" value="' + msg[i][j]['millfine_result']  + '"  /></td>'
+                    + '<td><input type="text" class="td_input" name="millfine_method" value="' + msg[i][j]['millfine_method']  + '"  /></td>'
+                    + '</tr>';
+
+                firstTbody += temHtml;
+            }
+        }
+
+    }
+
+
+    if (secondTable.isBlank()){
+        $("#secondDiv").remove();
+    }else {
+        $("#secondTwoHead").empty().append(secondTwoHead);
+        $("#secondTbody").empty().append(secondTable);
+    }
+
+    $("#firstTwoHead").remove();
+    $("#firstHead").empty().append(firstHead);
+    $("#firstTbody").empty().append(firstTbody);
+}
+//编写岩沥青
+function rockAsphalt(msg){
+    var firstHead = '<th>实验项目</th>'
+        + '<th>技术要求</th>'
+        + '<th colspan="3">试验结果</th>'
+        + '<th>试验方法</th>';
+
+    var firstTbody = '';
+
+    var secondTwoHead ='<th>筛孔mm</th>'
+        +'<th>37.5</th>'
+        +'<th>31.5</th>'
+        +'<th>26.5</th>'
+        +'<th>19.0</th>'
+        +'<th>16.0</th>'
+        +'<th>13.2</th>'
+        +'<th>9.5</th>'
+        +'<th>4.75</th>'
+        + '<th>2.36</th>'
+        +'<th>1.18</th>'
+        +'<th>0.6</th>'
+        +'<th>0.3</th>'
+        +'<th>0.15</th>'
+        +'<th>0.075</th>';
+
+
+    var secondTable = '';
+
+    for (var i = 0; i < msg.length; i++){
+        for (var j = 0;j < msg[i].length;j++) {
+            var  temHtml= "";
+            if (msg[i][j].rock_sieve_pore){
+                temHtml = '<tr>'
+                    + '<td><input type="text" class="td_input" name="rock_sieve_pore" value="' + msg[i][j].rock_sieve_pore +'" readonly="readonly" /> </td>'
+                    + '<td><input type="text" class="td_input" name="rock_sieve_pore_37_5"   value="' + msg[i][j].rock_sieve_pore_37_5+'"  /> </td>'
+                    + '<td><input type="text" class="td_input" name="rock_sieve_pore_31_5" value="' + msg[i][j].rock_sieve_pore_31_5+'"   /> </td>'
+                    + '<td><input type="text" class="td_input" name="rock_sieve_pore_26_5"  value="' + msg[i][j].rock_sieve_pore_26_5 +'" /> </td>'
+                    + '<td><input type="text" class="td_input" name="rock_sieve_pore_19_0" value="' + msg[i][j].rock_sieve_pore_19_0+'"  /> </td>'
+                    + '<td><input type="text" class="td_input" name="rock_sieve_pore_16_0" value="' + msg[i][j].rock_sieve_pore_16_0 +'"  /> </td>'
+                    + '<td><input type="text" class="td_input" name="rock_sieve_pore_13_2"  value="' + msg[i][j].rock_sieve_pore_13_2 +'"  /> </td>'
+                    + '<td><input type="text" class="td_input" name="rock_sieve_pore_9_5" value="' + msg[i][j].rock_sieve_pore_9_5 +'"  /> </td>'
+                    + '<td><input type="text" class="td_input" name="rock_sieve_pore_4_75"   value="' + msg[i][j].rock_sieve_pore_4_75 +'"  /> </td>'
+                    + '<td><input type="text" class="td_input" name="rock_sieve_pore_2_36" value="' + msg[i][j].rock_sieve_pore_2_36 +'"   /> </td>'
+                    + '<td><input type="text" class="td_input" name="rock_sieve_pore_1_18"  value="' + msg[i][j].rock_sieve_pore_1_18 +'" /> </td>'
+                    + '<td><input type="text" class="td_input" name="rock_sieve_pore_0_6" value="' + msg[i][j].rock_sieve_pore_0_6 +'"  /> </td>'
+                    + '<td><input type="text" class="td_input" name="rock_sieve_pore_0_3" value="' + msg[i][j].rock_sieve_pore_0_3 +'"  /> </td>'
+                    + '<td><input type="text" class="td_input" name="rock_sieve_pore_0_15"  value="' + msg[i][j].rock_sieve_pore_0_15 +'"  /> </td>'
+                    + '<td><input type="text" class="td_input" name="rock_sieve_pore_0_075" value="' + msg[i][j].rock_sieve_pore_0_075 +'"  /> </td>'
+                    + '</tr>';
+
+                secondTable += temHtml;
+            } else {
+                temHtml = '<tr>'
+                    + '<td><input type="text" class="td_input" name="rock_name"  value="' + msg[i][j]['rock_name']  + '" readonly="readonly" /></td>'
+                    + '<td><input type="text" class="td_input" name="rock_requirements" value="' + msg[i][j]['rock_requirements']  + '"  /></td>'
+                    + '<td colspan="3"><input type="text" class="td_input" name="rock_result" value="' + msg[i][j]['rock_result']  + '"  /></td>'
+                    + '<td><input type="text" class="td_input" name="rock_method" value="' + msg[i][j]['rock_method']  + '"  /></td>'
+                    + '</tr>';
+
+                firstTbody += temHtml;
+            }
+        }
+
+    }
+
+
+    if (secondTable.isBlank()){
+        $("#secondDiv").remove();
+    }else {
+        $("#secondTwoHead").empty().append(secondTwoHead);
+        $("#secondTbody").empty().append(secondTable);
+    }
+
+    $("#firstTwoHead").remove();
+    $("#firstHead").empty().append(firstHead);
+    $("#firstTbody").empty().append(firstTbody);
+}
+//显示纤维
+function showFibre(msg) {
+
+    var firstHead = '<th>实验项目</th>'
+        + '<th>技术要求</th>'
+        + '<th>试验结果</th>'
+        + '<th>试验方法</th>';
+
+    var firstTbody = '';
+    var secondTable = '';
+    var secondTwoHead = '';
+
+    for (var i = 0; i < msg.length; i++){
+        for (var j = 0;j < msg[i].length;j++) {
+            var  temHtml = '<tr>'
+                + '<td><input type="text" class="td_input" name="fibre_name"  value="' + msg[i][j]['fibre_name']  + '" readonly="readonly" /></td>'
+                + '<td><input type="text" class="td_input" name="fibre_requirements" value="' + msg[i][j]['fibre_requirements']  + '"/></td>'
+                + '<td><input type="text" class="td_input" name="fibre_result" value="' + msg[i][j]['fibre_result']  + '" /></td>'
+                + '<td><input type="text" class="td_input" name="fibre_method" value="' + msg[i][j]['fibre_method']  + '"/></td>'
+                + '</tr>';
+                firstTbody += temHtml;
+
+        }
+    }
+
+    if (secondTable.isBlank()){
+        $("#secondDiv").remove();
+    }else {
+        $("#secondTwoHead").empty().append(secondTwoHead);
+        $("#secondTbody").empty().append(secondTable);
+    }
+
+    $("#firstTwoHead").remove();
+    $("#firstHead").empty().append(firstHead);
+    $("#firstTbody").empty().append(firstTbody);
+}
+//编写乳化沥青
+function showEmulsified(msg) {
+
+    var firstHead = '<th>实验项目</th>'
+        + '<th>技术要求</th>'
+        + '<th>试验结果</th>'
+        + '<th>试验方法</th>';
+
+    var firstTbody = '';
+    var secondTable = '';
+    for (var i = 0; i < msg.length; i++){
+        for (var j = 0;j < msg[i].length;j++) {
+            var  temHtml = '<tr>'
+                + '<td><input type="text" class="td_input" name="emulsified_name"  value="' + msg[i][j]['emulsified_name']  + '" readonly="readonly" /></td>'
+                + '<td><input type="text" class="td_input" name="emulsified_requirements" value="' + msg[i][j]['emulsified_requirements']  + '"/></td>'
+                + '<td><input type="text" class="td_input" name="emulsified_result" value="' + msg[i][j]['emulsified_result']  + '" /></td>'
+                + '<td><input type="text" class="td_input" name="emulsified_method" value="' + msg[i][j]['emulsified_method']  + '"/></td>'
+                + '</tr>';
+            firstTbody += temHtml;
+
+        }
+    }
+
+    if (secondTable.isBlank()){
+        $("#secondDiv").remove();
+    }else {
+        $("#secondTwoHead").empty().append(secondTwoHead);
+        $("#secondTbody").empty().append(secondTable);
+    }
+
+    $("#firstTwoHead").remove();
+    $("#firstHead").empty().append(firstHead);
+    $("#firstTbody").empty().append(firstTbody);
+
+    //修改样式
+    $("#firstTable").css("margin","30 0 0 0");
+}
+//编写沥青混合料
+function showMixture(msg){
+    var firstHead = '<th>实验项目</th>'
+        + '<th>技术要求</th>'
+        + '<th colspan="3">试验结果</th>'
+        + '<th>试验方法</th>';
+
+    var firstTbody = '';
+
+    var secondTwoHead ='<th>筛孔mm</th>'
+        +'<th>37.5</th>'
+        +'<th>31.5</th>'
+        +'<th>26.5</th>'
+        +'<th>19.0</th>'
+        +'<th>16.0</th>'
+        +'<th>13.2</th>'
+        +'<th>9.5</th>'
+        +'<th>4.75</th>'
+        + '<th>2.36</th>'
+        +'<th>1.18</th>'
+        +'<th>0.6</th>'
+        +'<th>0.3</th>'
+        +'<th>0.15</th>'
+        +'<th>0.075</th>';
+
+
+    var secondTable = '';
+
+    for (var i = 0; i < msg.length; i++){
+        for (var j = 0;j < msg[i].length;j++) {
+            var  temHtml= "";
+            if (msg[i][j].mixture_sieve_pore){
+                temHtml = '<tr>'
+                    + '<td><input type="text" class="td_input" name="mixture_sieve_pore" value="' + msg[i][j].mixture_sieve_pore +'" readonly="readonly" /> </td>'
+                    + '<td><input type="text" class="td_input" name="mixture_sieve_pore_37_5"   value="' + msg[i][j].mixture_sieve_pore_37_5+'"  /> </td>'
+                    + '<td><input type="text" class="td_input" name="mixture_sieve_pore_31_5" value="' + msg[i][j].mixture_sieve_pore_31_5+'"   /> </td>'
+                    + '<td><input type="text" class="td_input" name="mixture_sieve_pore_26_5"  value="' + msg[i][j].mixture_sieve_pore_26_5 +'" /> </td>'
+                    + '<td><input type="text" class="td_input" name="mixture_sieve_pore_19_0" value="' + msg[i][j].mixture_sieve_pore_19_0+'"  /> </td>'
+                    + '<td><input type="text" class="td_input" name="mixture_sieve_pore_16_0" value="' + msg[i][j].mixture_sieve_pore_16_0 +'"  /> </td>'
+                    + '<td><input type="text" class="td_input" name="mixture_sieve_pore_13_2"  value="' + msg[i][j].mixture_sieve_pore_13_2 +'"  /> </td>'
+                    + '<td><input type="text" class="td_input" name="mixture_sieve_pore_9_5" value="' + msg[i][j].mixture_sieve_pore_9_5 +'"  /> </td>'
+                    + '<td><input type="text" class="td_input" name="mixture_sieve_pore_4_75"   value="' + msg[i][j].mixture_sieve_pore_4_75 +'"  /> </td>'
+                    + '<td><input type="text" class="td_input" name="mixture_sieve_pore_2_36" value="' + msg[i][j].mixture_sieve_pore_2_36 +'"   /> </td>'
+                    + '<td><input type="text" class="td_input" name="mixture_sieve_pore_1_18"  value="' + msg[i][j].mixture_sieve_pore_1_18 +'" /> </td>'
+                    + '<td><input type="text" class="td_input" name="mixture_sieve_pore_0_6" value="' + msg[i][j].mixture_sieve_pore_0_6 +'"  /> </td>'
+                    + '<td><input type="text" class="td_input" name="mixture_sieve_pore_0_3" value="' + msg[i][j].mixture_sieve_pore_0_3 +'"  /> </td>'
+                    + '<td><input type="text" class="td_input" name="mixture_sieve_pore_0_15"  value="' + msg[i][j].mixture_sieve_pore_0_15 +'"  /> </td>'
+                    + '<td><input type="text" class="td_input" name="mixture_sieve_pore_0_075" value="' + msg[i][j].mixture_sieve_pore_0_075 +'"  /> </td>'
+                    + '</tr>';
+
+                secondTable += temHtml;
+            } else {
+                temHtml = '<tr>'
+                    + '<td><input type="text" class="td_input" name="mixture_name"  value="' + msg[i][j]['mixture_name']  + '" readonly="readonly" /></td>'
+                    + '<td><input type="text" class="td_input" name="mixture_requirements" value="' + msg[i][j]['mixture_requirements']  + '"  /></td>'
+                    + '<td colspan="3"><input type="text" class="td_input" name="mixture_result" value="' + msg[i][j]['mixture_result']  + '"  /></td>'
+                    + '<td><input type="text" class="td_input" name="mixture_method" value="' + msg[i][j]['mixture_method']  + '"  /></td>'
+                    + '</tr>';
+
+                firstTbody += temHtml;
+            }
+        }
+
+    }
+
+
+    if (secondTable.isBlank()){
+        $("#secondDiv").remove();
+    }else {
+        $("#secondTwoHead").empty().append(secondTwoHead);
+        $("#secondTbody").empty().append(secondTable);
+    }
+
+    $("#firstTwoHead").remove();
+    $("#firstHead").empty().append(firstHead);
+    $("#firstTbody").empty().append(firstTbody);
 }

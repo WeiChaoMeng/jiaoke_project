@@ -169,16 +169,21 @@ public class QualityDataSummaryImpl implements QualityDataSummaryInf {
         Map<String,String> map =  qualityDataSummaryDao.selectProductMessageById(proDate,produceDisc,crewStr);
 
         //根据日期与盘号查询各材料百分比、预警信息
-        Object date =  map.get("produce_date");
-        String discNum =  map.get("produce_disc_num");
+        if(map != null){
+            Object date =  map.get("produce_date");
+            String discNum =  map.get("produce_disc_num");
 
-        List<Map<String,String>>  waringData =  qualityDataSummaryDao.selectProduceByDateAndDiscNum(String.valueOf(date),discNum,crewNum);
+            List<Map<String,String>>  waringData =  qualityDataSummaryDao.selectProduceByDateAndDiscNum(String.valueOf(date),discNum,crewNum);
 
-        QualityRatioTemplate ratioMap = qualityDataSummaryDao.selectRationById(map.get("produce_proportioning_num"),crewNum);
+            QualityRatioTemplate ratioMap = qualityDataSummaryDao.selectRationById(map.get("produce_proportioning_num"),crewNum);
 
-        modelMap.put("proBase",map);
-        modelMap.put("proMessage",waringData);
-        modelMap.put("modelMessage",ratioMap);
+            modelMap.put("proBase",map);
+            modelMap.put("proMessage",waringData);
+            modelMap.put("modelMessage",ratioMap);
+        }else {
+            modelMap.put("message","error");
+        }
+
 
         return modelMap;
     }

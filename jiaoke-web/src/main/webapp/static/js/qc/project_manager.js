@@ -60,6 +60,7 @@ function getDateByPageNum(currentNum){
                 + "<td class='tdnum'><input name='projectId' type='checkbox' value='" + jsonList[i].id   +"'></td>"
                 + "<td>" + jsonList[i].clientNum  + "</td>"
                 + "<td>" + jsonList[i].projectName  + "</td>"
+                + "<td>" + jsonList[i].constructionUnits  + "</td>"
                 + "<td>" + jsonList[i].clientName + "</td>"
                 + "<td>" + jsonList[i].update  + "</td>"
                 + "<td>" + jsonList[i].upUser  + "</td>"

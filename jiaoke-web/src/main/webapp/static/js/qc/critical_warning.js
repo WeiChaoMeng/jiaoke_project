@@ -11,9 +11,23 @@ function getAllCriticalWarning() {
         type:"get",
         async:false,
         dataType:"json",
+        beforeSend: function (XMLHttpRequest) {
+            // 过滤某种条件下才控制loading效果
+            var index = layer.load(3, {
+                shade: [0.8,'#fff'] //0.1透明度的白色背景
+            });
+        },
         success:function (res) {
-            dataArray = res;
-            foreachDataArray(1,dataArray);
+            if (res != null){
+                dataArray = res;
+                foreachDataArray(1,dataArray);
+            } else {
+                layer.alert("近期无预警信息")
+            }
+
+        },
+        complete:function (XMLHttpRequest, status) {
+            layer.closeAll()
         }
     })
     return dataArray;
@@ -53,6 +67,8 @@ function foreachDataArray(currentNum,dataArray) {
 }
 
 function limitList(dataAray) {
+    debugger
+    foreachDataArray(1,dataAray);
     //翻页
     $(".zxf_pagediv").createPage({
         pageNum: Math.ceil(dataAray.length/15),
@@ -68,7 +84,6 @@ function selectCeiticalWarning() {
     var startDate = $("#inpstart").val();
     var endDate = $("#inpend").val();
     var basePath = $("#path").val();
-    debugger
     if (startDate && endDate){
         $.ajax({
             url:basePath + "/getAllCriticalWarningByDate.do",
@@ -78,8 +93,21 @@ function selectCeiticalWarning() {
                 "startDate":startDate,
                 "endDate":endDate
             },
+            beforeSend: function (XMLHttpRequest) {
+                // 过滤某种条件下才控制loading效果
+                var index = layer.load(3, {
+                    shade: [0.8,'#fff'] //0.1透明度的白色背景
+                });
+            },
             success:function (res) {
-                limitList(res);
+                if(!res){
+                    layer.alert("未查询到结果")
+                }else {
+                    limitList(res);
+                }
+            },
+            complete:function (XMLHttpRequest, status) {
+                layer.closeAll()
             }
         })
     }else {

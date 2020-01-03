@@ -10,7 +10,7 @@
              (SELECT
                      'crew1' as crewNum,
                      date_format(produce_date, '%Y-%m-%d') AS produceDate,
-                     SUM(material_total) DIV 100 AS materialTotal,
+                     SUM(material_total) DIV 1000 AS materialTotal,
                      date_format(MIN(produce_time), '%T') AS startTime,
                      date_format(MAX(produce_time), '%T') AS endTime
               FROM
@@ -23,7 +23,7 @@
              (SELECT
                      'crew2' as crewNum,
                      date_format(produce_date, '%Y-%m-%d') AS produceDate,
-                     SUM(material_total) DIV 100 AS materialTotal,
+                     SUM(material_total) DIV 1000 AS materialTotal,
                      date_format(MIN(produce_time), '%T') AS startTime,
                      date_format(MAX(produce_time), '%T') AS endTime
               FROM
@@ -192,22 +192,26 @@
 
     <select id="selectProduceMessageByDate" resultType="java.util.Map">
         SELECT
-               produce_proportioning_num as rationNum,
-               count(*) as total,
-               MIN(produce_time) as startTime,
-               produce_custom_num as userName
+               SUM(T1.material_total)/1000 AS total,
+               MIN(T1.produce_time) AS startTime,
+               T1.produce_date AS produceDate,
+               T2.client_num AS clientNum,
+               T2.client_name AS clientName,
+               T2.project_name AS projectName,
+               T2.construction_units AS constructionUnits
         FROM
-             quality_monitoring_realtime_${crewNum}
+             quality_monitoring_realtime_${crewNum} AS T1
+                 INNER JOIN quality_test_project AS T2
         WHERE
-                produce_date = &apos;${producedDate}&apos;
+                T1.produce_date = &apos;${producedDate}&apos;
         GROUP BY
-                 produce_custom_num,produce_proportioning_num
+        T1.produce_custom_num;
     </select>
 
     <select id="selectUserProTotalByDate" resultType="java.util.Map">
         SELECT
                produce_custom_num as userName,
-               SUM(material_total) as userTotal
+               SUM(material_total)/1000 as userTotal
         FROM
              quality_monitoring_realtime_${crewNum}
         WHERE
@@ -310,5 +314,29 @@
         <if test="crewNum=='crew2'.toString()">
             limit 1
         </if>
+    </select>
+
+    <select id="selectMsgByUserAndDate" resultType="java.util.Map">
+        (SELECT
+                T1.*,
+                T2.project_name
+         FROM
+              quality_monitoring_realtime_data1 AS T1
+                  LEFT JOIN quality_test_project AS T2
+                      ON T1.produce_custom_num = T2.client_num
+         WHERE
+                 T1.produce_date = #{proDate}
+           AND T1.produce_custom_num = #{proDate})
+        UNION ALL
+                (SELECT
+                        T1.*,
+                        T2.project_name
+                 FROM
+                      quality_monitoring_realtime_data2 AS T1
+                          LEFT JOIN quality_test_project AS T2
+                              ON T1.produce_custom_num = T2.client_num
+                 WHERE
+                         T1.produce_date = #{proDate}
+                   AND T1.produce_custom_num = #{proDate})
     </select>
 </mapper>
