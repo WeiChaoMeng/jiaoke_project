@@ -44,7 +44,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>4.3.13.RELEASE</version>
+            <version>5.2.3.RELEASE</version>
             <scope>compile</scope>
         </dependency>
         <!--加入MyBatis 依赖 start -->
