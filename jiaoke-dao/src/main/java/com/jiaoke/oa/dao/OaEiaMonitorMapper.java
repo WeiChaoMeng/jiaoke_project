@@ -31,4 +31,11 @@ public interface OaEiaMonitorMapper extends Mapper<OaEiaMonitor> {
      * @return list
      */
     List<OaEiaMonitor> getSelectByTestingDate(Date testingDate);
+
+    /**
+     * 查询所有数据
+     *
+     * @return list
+     */
+    List<OaEiaMonitor> selectAllData();
 }

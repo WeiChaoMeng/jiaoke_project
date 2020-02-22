@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jiaoke.oa.dao.OaContractAgreementMapper">
 
-    <select id="getSelectByContractAgreementName" parameterType="java.lang.String" resultType="com.jiaoke.oa.bean.OaContractAgreement">
+    <select id="getSelectByContractAgreementName" parameterType="java.lang.String"
+            resultType="com.jiaoke.oa.bean.OaContractAgreement">
         SELECT
             id as id,
             `date` as `date`,
@@ -16,6 +17,8 @@
         FROM oa_contract_agreement
         WHERE
             contract_agreement_name LIKE "%"#{contractAgreementName}"%"
+        ORDER BY
+	        create_time DESC
     </select>
 
     <select id="getSelectByDate" parameterType="java.util.Date" resultType="com.jiaoke.oa.bean.OaContractAgreement">
@@ -32,5 +35,23 @@
         FROM oa_contract_agreement
         WHERE
             `date` = #{date}
+        ORDER BY
+	        create_time DESC
+    </select>
+
+    <select id="selectAllData" resultType="com.jiaoke.oa.bean.OaContractAgreement">
+        SELECT
+            id as id,
+            `date` as `date`,
+            contract_label as contractLabel,
+            contract_agreement_name as contractAgreementName,
+            `type`  as `type`,
+            years as years,
+            remarks as remarks,
+            rich_text as richText,
+            create_time as createTime
+        FROM oa_contract_agreement
+        ORDER BY
+	        create_time DESC
     </select>
 </mapper>

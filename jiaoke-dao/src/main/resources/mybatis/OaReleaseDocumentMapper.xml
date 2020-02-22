@@ -16,6 +16,8 @@
         FROM oa_release_document
         WHERE
             document_name LIKE "%"#{documentName}"%"
+        ORDER BY
+	        create_time DESC
     </select>
 
     <select id="getSelectByVisitDate" parameterType="java.util.Map" resultType="com.jiaoke.oa.bean.OaReleaseDocument">
@@ -32,5 +34,23 @@
         FROM oa_release_document
         WHERE
             visit_date = #{date}
+        ORDER BY
+	        create_time DESC
+    </select>
+
+    <select id="selectAllData" resultType="com.jiaoke.oa.bean.OaReleaseDocument">
+        SELECT
+            id as id,
+            document_number as DocumentNumber,
+            document_type as DocumentType,
+            document_name as documentName,
+            visit_date as visitDate,
+            main_delivery_department as mainDeliveryDepartment,
+            remarks as remarks,
+            rich_text as richText,
+            create_time as createTime
+        FROM oa_release_document
+        ORDER BY
+	        create_time DESC
     </select>
 </mapper>

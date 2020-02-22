@@ -32,4 +32,11 @@ public interface OaOfficeOtherMapper extends Mapper<OaOfficeOther> {
      * @return list
      */
     List<OaOfficeOther> getSelectByDate(Date date);
+
+    /**
+     * 查询所有数据
+     *
+     * @return list
+     */
+    List<OaOfficeOther> selectAllData();
 }

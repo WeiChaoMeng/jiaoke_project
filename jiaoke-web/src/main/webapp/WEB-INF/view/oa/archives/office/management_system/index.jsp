@@ -17,96 +17,58 @@
     <meta charset="utf-8">
     <title>管理体系相关</title>
     <link href="../../../../../../static/css/oa/oa_common.css" rel="stylesheet" type="text/css">
-    <link href="../../../../../../static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
-    <link href="../../../../../../static/js/date_pickers/date_picker.css" rel="stylesheet">
     <link href="../../../../../../static/css/paging/htmleaf-demo.css" rel="stylesheet" type="text/css">
     <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body style="padding:15px 8px 0px 8px;">
 
-<div class="cursor_hand">
-    <div class="page_head">
-        <table style="width:100%;height:100%">
-            <tbody>
-            <tr>
-                <td>
-                    <div class="head_left_button" id="newlyBuild" onmousemove="select_color(this)"
-                         onmouseout="unselected_color(this)">
-                        &#xeb86; 新建
+<div class="page-head">
+    <table>
+        <tbody>
+        <tr>
+            <td>
+                <div class="head-left-button">
+                    <button type="button" class="cursor_hand" onclick="add()">&#xeb86; 新建</button>
+                </div>
+
+                <div class="separation_line"></div>
+
+                <div class="head-left-button">
+                    <button type="button" class="cursor_hand" onclick="edit()">&#xe7e9; 编辑</button>
+                </div>
+
+                <div class="separation_line"></div>
+
+                <div class="head-left-button">
+                    <button type="button" class="cursor_hand" onclick="remove()">&#xeaa5; 删除</button>
+                </div>
+            </td>
+
+            <td>
+                <div>
+                    <div class="conditional-query cursor_hand">
+                        <input type="text" id="fileName" class="search-bar" placeholder="文件名称" autocomplete="off">
+                        <i onclick="searchButton(1,2)" class="iconfont search-icon-size" id="conditional_search">&#xe7e7;</i>
                     </div>
-
-                    <div class="separation_line">
-
-                    </div>
-
-                    <div class="head_left_button" id="edit" onmousemove="select_color(this)"
-                         onmouseout="unselected_color(this)">
-                        &#xe7e9; 编辑
-                    </div>
-
-                    <div class="separation_line">
-
-                    </div>
-
-                    <div class="head_left_button" id="remove" onmousemove="select_color(this)"
-                         onmouseout="unselected_color(this)">
-                        &#xeaa5; 删除
-                    </div>
-                </td>
-                <td>
-                    <div class="conditional_query">
-                        <%--重置页面--%>
-                        <i class="iconfont search" onmousemove="select_color(this)"
-                           onmouseout="unselected_color(this)" onclick="resetButton()" style="font-size: 13px;padding: 2px 6px">&#xe69d;</i>
-
-                        <!--搜索按钮-->
-                        <i class="iconfont search" id="conditional_search" onmousemove="select_color(this)"
-                           onmouseout="unselected_color(this)" onclick="searchButton(1,0)">&#xe7e7;</i>
-
-                        <!--标题-->
-                        <div id="div2" class="head_right_side_input matter_title">
-                            <input type="text" id="titleName" value="">
-                        </div>
-
-                        <!--日期选择-->
-                        <div id="div3" class="head_right_side_input matter_importance" style="height: 30px;">
-                            <input type="text" id="datePicker" name="datePicker" value=""
-                                   onfocus="this.blur()" style="width: 200px">
-                        </div>
-
-                        <!--条件查询-->
-                        <div id="div1" class="head_right_side">
-                            <select id="condition">
-                                <option value="0">- -查询条件- -</option>
-                                <option value="1">文件名称</option>
-                                <option value="2">访问日期</option>
-                            </select>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <table class="simpletable">
-
-        <thead>
-        <th style="width: 3%;"><input type="checkbox"></th>
-        <th style="width: 3%;">序号</th>
-        <th style="width: 35%;">文件名称</th>
-        <th style="width: 27%;">录入日期</th>
-        <th style="width: 32%;">备注</th>
-        </thead>
-
-        <tbody id="tbody">
-
+                </div>
+            </td>
+        </tr>
         </tbody>
-
     </table>
-
 </div>
+
+<table class="simpletable">
+    <thead>
+    <th style="width: 3%;"><input type="checkbox"></th>
+    <th style="width: 3%;">序号</th>
+    <th style="width: 35%;">文件名称</th>
+    <th style="width: 27%;">录入日期</th>
+    <th style="width: 32%;">备注</th>
+    </thead>
+
+    <tbody id="tbody"></tbody>
+</table>
 
 <div id="fenye" style="right: 10px;height: 35px;position: absolute;bottom: 10px;">
     <div class="">
@@ -124,28 +86,12 @@
 
 </body>
 <script type="text/javascript" src="../../../../../../static/js/jquery.js"></script>
-<script type="text/javascript" src="../../../../../../static/js/common.js"></script>
-<script type="text/javascript" src="../../../../../../static/js/oa/oa_common.js"></script>
-<script type="text/javascript" src="../../../../../../static/js/date_pickers/jquery.date_input.pack.js"></script>
 <script type="text/javascript" src="../../../../../../static/js/paging/jqPaginator.js"></script>
+<script src="../../../../../../static/js/oa/layer/layer.js"></script>
 <script>
     //设置当前页
     var currentPageNum = JSON.parse('${currentPage}');
 
-    //重置页面
-    function resetButton() {
-        window.location.reload();
-    }
-
-    //新建
-    $("#newlyBuild").on("click", function () {
-        window.location.href = '${path}/managementSystem/toNewManagementSystem';
-    });
-
-    //详情
-    function particulars(id) {
-        window.location.href = "${path}/managementSystem/toManagementSystemDetails?id=" + id;
-    }
 
     function loadData(page) {
         $.ajax({
@@ -162,58 +108,35 @@
                 parseList(oaManagementSystems);
             },
             error: function (result) {
-                alert("出错！");
+                window.top.tips("出错！", 6, 2, 1000);
             }
         })
     }
 
     //搜索按钮
     function searchButton(page, parameter) {
-        //名称搜索
-        var fileName = $('#titleName').val();
-        if (fileName !== '' || parameter === 3) {
-            $.ajax({
-                url: '/managementSystem/fileNameFilter',
-                data: {'fileName': fileName, 'page': page},
-                type: 'POST',
-                success: function (result) {
-                    $('#tbody').empty();
-                    var oaManagementSystems = JSON.parse(result);
-                    //总数
-                    $("#PageCount").val(oaManagementSystems.total);
-                    //每页显示条数
-                    $("#PageSize").val("15");
-                    parseList(oaManagementSystems);
-                    loadPage(3);
-                },
-                error: function () {
-                    alert("Connection error");
-                }
-            })
-        }
+        var fileName = $('#fileName').val();
+        currentPageNum = page;
 
-        //访问时间搜索
-        var date = $('#datePicker').val();
-        if (date != '' || parameter === 4) {
-            $.ajax({
-                url: '/managementSystem/dateFilter',
-                data: {'date': date, 'page': page},
-                type: 'POST',
-                success: function (result) {
-                    $('#tbody').empty();
-                    var oaManagementSystems = JSON.parse(result);
-                    //总数
-                    $("#PageCount").val(oaManagementSystems.total);
-                    //每页显示条数
-                    $("#PageSize").val("15");
-                    parseList(oaManagementSystems);
-                    loadPage(4);
-                },
-                error: function () {
-                    alert("Connection error");
-                }
-            })
-        }
+        $.ajax({
+            type: 'POST',
+            url: '/managementSystem/fileNameFilter',
+            data: {'fileName': fileName, 'page': page},
+            async: false,
+            success: function (result) {
+                $('#tbody').empty();
+                var oaManagementSystems = JSON.parse(result);
+                //总数
+                $("#PageCount").val(oaManagementSystems.total);
+                //每页显示条数
+                $("#PageSize").val("15");
+                parseList(oaManagementSystems);
+                loadPage(parameter);
+            },
+            error: function () {
+                window.top.tips("出错！", 6, 2, 1000);
+            }
+        })
     }
 
     //解析筛选后的list
@@ -242,41 +165,6 @@
         $('#tbody').html(oaManagementSystem);
     }
 
-    //修改
-    $('#edit').on('click', function () {
-        let length = $("tbody input:checked").length;
-        if (length != 1) {
-            alert("一次只能选择一条数据");
-            return false;
-        } else {
-            var id = $("tbody input:checked").val();
-            window.location.href = "${path}/managementSystem/toEdit?id=" + id;
-        }
-    });
-
-    //删除
-    $('#remove').on('click', function () {
-        let length = $("tbody input:checked").length;
-        if (length !== 1) {
-            layer.msg('请选择一条数据！');
-            return false;
-        } else {
-            var id = $("tbody input:checked").val();
-            //主页fun
-            window.top.deleteArchivesData('/managementSystem', id, $('#page').val());
-        }
-    });
-
-    //重载页面
-    function reloadArchivesData(page) {
-        window.location.href = "${path}/managementSystem/toManagementSystem?page=" + page;
-    }
-
-    //日期选择器
-    $('#datePicker').on('click', function () {
-        $('#datePicker').date_input();
-    });
-
     //内容列表选中颜色
     $("#tbody").on('click', 'tr', function () {
         if ($(this).hasClass("clickColor")) {
@@ -296,7 +184,7 @@
             loadPage(parameter);
 
             //搜索
-        }  else if (parameter === 3 || parameter === 4) {
+        } else if (parameter === 2) {
             searchButton(page);
             loadPage(parameter);
         }
@@ -306,13 +194,13 @@
     function loadPage(parameter) {
         var myPageCount = parseInt($("#PageCount").val());
         var myPageSize = parseInt($("#PageSize").val());
-        var countindex = Math.ceil(myPageCount / myPageSize);
+        var countindex = myPageCount === 0 ? 1 : Math.ceil(myPageCount / myPageSize);
         $("#countindex").val(countindex);
 
         $.jqPaginator('#pagination', {
             totalPages: parseInt($("#countindex").val()),
             visiblePages: parseInt($("#visiblePages").val()),
-            currentPage: 1,
+            currentPage: currentPageNum,
             first: '<li class="first"><a href="javascript:;">首页</a></li>',
             prev: '<li class="prev"><a href="javascript:;"><i class="arrow arrow2"></i>上一页</a></li>',
             next: '<li class="next"><a href="javascript:;">下一页<i class="arrow arrow3"></i></a></li>',
@@ -320,6 +208,7 @@
             page: '<li class="page"><a href="javascript:;">{{page}}</a></li>',
             onPageChange: function (page, type) {
                 if (type == "change") {
+                    $('#page').val(page);
                     exeData(page, type, parameter);
                 }
             }
@@ -332,5 +221,47 @@
         loadPage(1);
     });
 
+    //新建
+    function add() {
+        var prev = $('#page').val();
+        window.location.href = '${path}/managementSystem/toNewManagementSystem?prev=' + prev;
+    }
+
+    //详情
+    function particulars(id) {
+        var prev = $('#page').val();
+        window.location.href = "${path}/managementSystem/toManagementSystemDetails?id=" + id + "&prev=" + prev;
+    }
+
+    //修改
+    function edit() {
+        let length = $("tbody input:checked").length;
+        if (length != 1) {
+            layer.msg('请选择一条数据！');
+            return false;
+        } else {
+            var id = $("tbody input:checked").val();
+            var prev = $('#page').val();
+            window.location.href = "${path}/managementSystem/toEdit?id=" + id + "&prev=" + prev;
+        }
+    }
+
+    //删除
+    function remove() {
+        let length = $("tbody input:checked").length;
+        if (length !== 1) {
+            layer.msg('请选择一条数据！');
+            return false;
+        } else {
+            var id = $("tbody input:checked").val();
+            //主页fun
+            window.top.deleteArchivesData('/managementSystem', id, $('#page').val());
+        }
+    }
+
+    //重载页面
+    function reloadArchivesData(page) {
+        window.location.href = "${path}/managementSystem/toManagementSystem?page=" + page;
+    }
 </script>
 </html>

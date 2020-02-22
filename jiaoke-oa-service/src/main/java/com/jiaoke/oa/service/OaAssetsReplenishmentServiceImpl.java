@@ -55,11 +55,18 @@ public class OaAssetsReplenishmentServiceImpl implements OaAssetsReplenishmentSe
 
     @Override
     public List<OaAssetReplenishment> replenishmentTimeFilter(String createTime, Integer assetManagementId) {
-        String startTimeStr = createTime + " 00:00:00";
-        String endTimeStr = createTime + " 23:59:59";
-        Date startTime = DateUtil.stringConvertYYYYMMDDHHMMSS(startTimeStr);
-        Date endTime = DateUtil.stringConvertYYYYMMDDHHMMSS(endTimeStr);
-        List<OaAssetReplenishment> oaAssetReplenishmentList = oaAssetsReplenishmentMapper.replenishmentTimeFilter(startTime, endTime, assetManagementId);
+
+        List<OaAssetReplenishment> oaAssetReplenishmentList =null;
+        if ("".equals(createTime)){
+            oaAssetReplenishmentList = oaAssetsReplenishmentMapper.selectAllDataById(assetManagementId);
+        }else {
+            String startTimeStr = createTime + " 00:00:00";
+            String endTimeStr = createTime + " 23:59:59";
+            Date startTime = DateUtil.stringConvertYYYYMMDDHHMMSS(startTimeStr);
+            Date endTime = DateUtil.stringConvertYYYYMMDDHHMMSS(endTimeStr);
+            oaAssetReplenishmentList = oaAssetsReplenishmentMapper.replenishmentTimeFilter(startTime, endTime, assetManagementId);
+        }
+
         for (OaAssetReplenishment oaAssetReplenishment : oaAssetReplenishmentList) {
             oaAssetReplenishment.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaAssetReplenishment.getCreateTime()));
         }

@@ -112,8 +112,8 @@
         </div>
 
         <div class="form-but">
-            <button type="button" class="return-but" onclick="previousPage()">返回</button>
-            <button type="button" class="commit-but" onclick="commit()">提交</button>
+            <button type="button" class="confirm-btn-style" onclick="commit()">提交</button>
+            <button type="button" class="cancel-btn-style left-spacing" onclick="previousPage()">返回</button>
         </div>
     </form>
 </div>

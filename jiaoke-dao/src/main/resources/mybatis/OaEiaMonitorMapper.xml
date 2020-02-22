@@ -14,6 +14,8 @@
         FROM oa_eia_monitor
         WHERE
             sample_name LIKE "%"#{sampleName}"%"
+        ORDER BY
+	        create_time DESC
     </select>
 
     <select id="getSelectByTestingDate" parameterType="java.util.Date" resultType="com.jiaoke.oa.bean.OaEiaMonitor">
@@ -28,5 +30,21 @@
         FROM oa_eia_monitor
         WHERE
             testing_date = #{testingDate}
+        ORDER BY
+	        create_time DESC
+    </select>
+
+    <select id="selectAllData" resultType="com.jiaoke.oa.bean.OaEiaMonitor">
+        SELECT
+            id as id,
+            report_number as reportNumber,
+            sample_name as sampleName,
+            testing_company as testingCompany,
+            testing_date as testingDate,
+            rich_text as richText,
+            create_time as createTime
+        FROM oa_eia_monitor
+        ORDER BY
+	        create_time DESC
     </select>
 </mapper>

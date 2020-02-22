@@ -5,8 +5,11 @@ import com.github.pagehelper.PageInfo;
 import com.jiake.utils.JsonHelper;
 import com.jiaoke.oa.bean.OaAssetManagement;
 import com.jiaoke.oa.bean.OaAssetReplenishment;
+import com.jiaoke.oa.bean.Permission;
+import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.service.OaAssetsManagementService;
 import com.jiaoke.oa.service.OaAssetsReplenishmentService;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,12 +36,22 @@ public class OaAssetsManagementController {
     private OaAssetsReplenishmentService oaAssetsReplenishmentService;
 
     /**
+     * 获取当前登录用户信息
+     *
+     * @return userInfo
+     */
+    private UserInfo getCurrentUser() {
+        return (UserInfo) SecurityUtils.getSubject().getPrincipal();
+    }
+
+    /**
      * 跳转资产入库
      *
      * @return oa_asset_management.jsp
      */
     @RequestMapping("/toAssetsManagement")
-    public String toAssetsManagement() {
+    public String toAssetsManagement(Model model) {
+        model.addAttribute("nickname", getCurrentUser().getNickname());
         return "oa/assets/oa_asset_management";
     }
 
@@ -80,7 +93,8 @@ public class OaAssetsManagementController {
      * @return oa_assets_archives.jsp
      */
     @RequestMapping("/toAssetsArchives")
-    public String toAssetsArchives() {
+    public String toAssetsArchives(Model model, int page) {
+        model.addAttribute("currentPage", JsonHelper.toJSONString(page));
         return "oa/assets/oa_assets_archives";
     }
 
@@ -122,9 +136,10 @@ public class OaAssetsManagementController {
      * @return jsp
      */
     @RequestMapping(value = "/toAssetReplenishmentPage")
-    public String toAssetReplenishmentPage(Model model, Integer id) {
+    public String toAssetReplenishmentPage(Model model, Integer id,int page) {
         OaAssetManagement oaAssetManagement = oaAssetsManagementService.selectByPrimaryKey(id);
         model.addAttribute("oaAssetManagement", oaAssetManagement);
+        model.addAttribute("currentPage", JsonHelper.toJSONString(page));
         return "oa/assets/oa_asset_replenishment";
     }
 
@@ -150,8 +165,9 @@ public class OaAssetsManagementController {
      * @return jsp
      */
     @RequestMapping(value = "/toAssetReplenishmentRecordPage")
-    public String toAssetReplenishmentRecordPage(Model model, Integer assetManagementId) {
+    public String toAssetReplenishmentRecordPage(Model model, Integer assetManagementId,int archivesPage) {
         model.addAttribute("assetManagementId", assetManagementId);
+        model.addAttribute("archivesPage", JsonHelper.toJSONString(archivesPage));
         return "oa/assets/oa_assets_replenishment_record";
     }
 

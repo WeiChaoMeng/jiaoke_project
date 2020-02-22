@@ -16,78 +16,52 @@
     <meta charset="utf-8">
     <title>补货记录</title>
     <link href="../../../../static/css/oa/resource_management.css" rel="stylesheet" type="text/css">
-    <link href="../../../../static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
-    <link href="../../../../static/js/date_pickers/date_picker.css" rel="stylesheet">
-    <link href="../../../../static/css/paging/htmleaf-demo.css" rel="stylesheet" type="text/css">
     <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
 </head>
 
 <body>
 
-<div class="cursor_hand">
-    <div class="page_head">
-        <table>
-            <tbody>
-            <tr>
-                <td>
-                    <div class="conditional_query">
-                        <%--刷新--%>
-                        <i class="iconfont search" id="refresh" onmousemove="select_color(this)"
-                           onmouseout="unselected_color(this)" onclick="refresh()">&#xe69d;</i>
-                        <!--搜索按钮-->
-                        <i class="iconfont search" id="conditional_search" onmousemove="select_color(this)"
-                           onmouseout="unselected_color(this)" onclick="searchButton(1,2)">&#xe7e7;</i>
-                        <!--日期选择-->
-                        <div id="div3" class="head_right_side_input matter_importance" style="height: 30px;">
-                            <input type="text" id="datePicker" name="datePicker" value=""
-                                   onfocus="this.blur()" style="width: 200px">
-                        </div>
-
-                        <!--条件查询-->
-                        <div id="div1" class="head_right_side">
-                            <select id="condition">
-                                <option value="0">- -查询条件- -</option>
-                                <option value="1">补货时间</option>
-                            </select>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <input type="hidden" value="${assetManagementId}" id="assetManagementId">
-    <table class="simple_table">
-
-        <thead>
-        <th style="width: 3%;">序号</th>
-        <th style="width: 17%;">资产名字</th>
-        <th style="width: 10%;">保管人</th>
-        <th style="width: 10%;">补货前剩余数量</th>
-        <th style="width: 10%;">补货数量</th>
-        <th style="width: 10%;">补货人员</th>
-        <th style="width: 15%;">补货存放地点</th>
-        <th style="width: 15%;">备注</th>
-        <th style="width: 10%;">补货时间</th>
-        </thead>
-
-        <tbody id="tbody">
-
+<div class="page_head">
+    <table>
+        <tbody>
         <tr>
-            <td>1</td>
-            <td>得力打印纸</td>
-            <td>张三</td>
-            <td>2</td>
-            <td>7</td>
-            <td>李四</td>
-            <td>办公室</td>
-            <td>无</td>
-            <td>2019-01-21 12:12:10</td>
+            <td>
+                <div>
+                    <div class="conditional-query cursor_hand">
+                        <input type="text" id="datePicker" class="search-bar cursor_hand je-replenish-date"
+                               placeholder="补货时间"
+                               readonly>
+                        <i onclick="searchButton(1,2)" class="iconfont search-icon-size">&#xe7e7;</i>
+                    </div>
+                </div>
+            </td>
         </tr>
         </tbody>
-
     </table>
 </div>
+
+<input type="hidden" value="${assetManagementId}" id="assetManagementId">
+
+<table class="simple_table">
+    <thead>
+    <th style="width: 3%;">序号</th>
+    <th style="width: 17%;">资产名字</th>
+    <th style="width: 10%;">保管人</th>
+    <th style="width: 10%;">补货前剩余数量</th>
+    <th style="width: 10%;">补货数量</th>
+    <th style="width: 10%;">补货人员</th>
+    <th style="width: 15%;">补货存放地点</th>
+    <th style="width: 15%;">备注</th>
+    <th style="width: 10%;">补货时间</th>
+    </thead>
+
+    <tbody id="tbody">
+    <tr>
+        <td colspan="9">暂无数据</td>
+    </tr>
+    </tbody>
+</table>
 
 <div class="replenishment_record_btn">
     <input type="button" value="返回" onclick="previousPage()" class="btn_save">
@@ -108,36 +82,57 @@
 
 </body>
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
-<script type="text/javascript" src="../../../../static/js/common.js"></script>
-<script type="text/javascript" src="../../../../static/js/skin.js"></script>
-<script type="text/javascript" src="../../../../static/js/date_pickers/jquery.date_input.pack.js"></script>
 <script type="text/javascript" src="../../../../static/js/paging/jqPaginator.js"></script>
+<script type="text/javascript" src="../../../../static/js/jeDate/src/jedate.js"></script>
 <script>
+
+    //日期选择器
+    jeDate(".je-replenish-date", {
+        theme: {bgcolor: "#00A1CB", pnColor: "#00CCFF"},
+        festival: false,                    //是否显示节日
+        isinitVal: false,                   //是否初始化
+        isTime: true,                        //是否开启时间选择
+        isClear: true,                       //是否显示清空
+        minDate: "1900-01-01",              //最小日期
+        maxDate: "2099-12-31",              //最大日期
+        format: "YYYY-MM-DD",
+        zIndex: 100000,
+    });
+
+    //记录档案页
+    var archivesPage = '${archivesPage}';
+    var archivesPageNum = JSON.parse(archivesPage);
 
     //返回上一页
     function previousPage() {
-        window.history.back();
+        window.location.href = '${path}/assetsManagement/toAssetsArchives?page=' + archivesPageNum;
     }
 
-    //刷新
-    function refresh(){
-        location.reload();
+    $(function () {
+        loadData(1);
+        loadPage(1);
+    });
+
+    function loadData(page) {
+        var assetManagementId = $('#assetManagementId').val();
+        $.ajax({
+            type: "post",
+            url: '/assetsManagement/assetReplenishmentRecord',
+            data: {'page': page, 'assetManagementId': assetManagementId},
+            async: false,
+            success: function (data) {
+                var oaAssetReplenishment = JSON.parse(data);
+                //总数
+                $("#PageCount").val(oaAssetReplenishment.total);
+                //每页显示条数
+                $("#PageSize").val("14");
+                parseResult(oaAssetReplenishment);
+            },
+            error: function (result) {
+                alert("出错！");
+            }
+        })
     }
-
-    //搜索
-    $("#condition").on("change", function () {
-        var opt = $("#condition").val();
-        if (opt == 1) {
-            $(".matter_importance").css("display", "block");
-        } else {
-            $(".head_right_side_select").css("display", "none");
-        }
-    });
-
-    //日期选择器
-    $('#datePicker').on('click', function () {
-        $('#datePicker').date_input();
-    });
 
     //时间搜索
     function searchButton(page, parameter) {
@@ -146,7 +141,8 @@
         $.ajax({
             type: "post",
             url: '/assetsManagement/replenishmentTimeFilter',
-            data: {'page': page, 'createTime': createTime,'assetManagementId':assetManagementId},
+            data: {'page': page, 'createTime': createTime, 'assetManagementId': assetManagementId},
+            async: false,
             success: function (data) {
                 var oaAssetReplenishment = JSON.parse(data);
                 //总数
@@ -176,16 +172,10 @@
         }
     }
 
-
-    $(function () {
-        loadData(1);
-        loadPage(1);
-    });
-
     function loadPage(parameter) {
         var myPageCount = parseInt($("#PageCount").val());
         var myPageSize = parseInt($("#PageSize").val());
-        var countindex = Math.ceil(myPageCount / myPageSize);
+        var countindex = myPageCount === 0 ? 1 : Math.ceil(myPageCount / myPageSize);
         $("#countindex").val(countindex);
 
         $.jqPaginator('#pagination', {
@@ -203,27 +193,6 @@
                 }
             }
         });
-    }
-
-    function loadData(page) {
-        var assetManagementId = $('#assetManagementId').val();
-        $.ajax({
-            type: "post",
-            url: '/assetsManagement/assetReplenishmentRecord',
-            data: {'page': page, 'assetManagementId': assetManagementId},
-            async: false,
-            success: function (data) {
-                var oaAssetReplenishment = JSON.parse(data);
-                //总数
-                $("#PageCount").val(oaAssetReplenishment.total);
-                //每页显示条数
-                $("#PageSize").val("14");
-                parseResult(oaAssetReplenishment);
-            },
-            error: function (result) {
-                alert("出错！");
-            }
-        })
     }
 
     //解析list
@@ -253,7 +222,6 @@
                 assetReplenishment += '</tr>';
             }
         }
-
         $('#tbody').html(assetReplenishment);
     }
 </script>

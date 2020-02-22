@@ -307,12 +307,12 @@
             <tr>
                 <td class="table-td-name">在岗情况</td>
                 <td>
-                    <input type="text" name="postSituation" autocomplete="off">
+                    <input type="text" name="postSituation" value="在岗" autocomplete="off">
                 </td>
 
                 <td class="table-td-name">身体情况</td>
                 <td>
-                    <input type="text" name="physicalCondition" autocomplete="off">
+                    <input type="text" name="physicalCondition" value="健康" autocomplete="off">
                 </td>
 
                 <td class="table-td-name">其他证书</td>
@@ -511,7 +511,7 @@
 
     //身份证校验
     function idCardCheck() {
-        var validateRules = /^[1-9][0-9]{5}(19|20)[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|31)|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|[1-2][0-9]))[0-9]{3}([0-9]|x|X)$/
+        var validateRules = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
         var idCardNumber = $("#idCard").val();
         if (validateRules.test(idCardNumber)) {
             //身份证17位奇数：男，偶数：女

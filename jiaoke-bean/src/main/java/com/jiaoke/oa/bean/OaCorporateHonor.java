@@ -53,11 +53,6 @@ public class OaCorporateHonor {
      */
     private String richText;
 
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-
     public Integer getId() {
         return id;
     }
@@ -120,13 +115,5 @@ public class OaCorporateHonor {
 
     public void setRichText(String richText) {
         this.richText = richText;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
     }
 }

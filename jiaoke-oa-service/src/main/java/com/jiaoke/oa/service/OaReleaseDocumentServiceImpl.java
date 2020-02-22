@@ -42,7 +42,7 @@ public class OaReleaseDocumentServiceImpl implements OaReleaseDocumentService {
      */
     @Override
     public List<OaReleaseDocument> selectAll() {
-        List<OaReleaseDocument> oaReleaseDocumentList = oaReleaseDocumentMapper.selectAll();
+        List<OaReleaseDocument> oaReleaseDocumentList = oaReleaseDocumentMapper.selectAllData();
         for (OaReleaseDocument oaReleaseDocument : oaReleaseDocumentList) {
             oaReleaseDocument.setVisitDateStr(DateUtil.dateConvertYYYYMMDD(oaReleaseDocument.getVisitDate()));
         }

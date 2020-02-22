@@ -16,6 +16,8 @@
         FROM oa_receive_document
         WHERE
             document_name LIKE "%"#{documentName}"%"
+        ORDER BY
+	        create_time DESC
     </select>
 
     <select id="getSelectByReceiveDate" parameterType="java.util.Map" resultType="com.jiaoke.oa.bean.OaReceiveDocument">
@@ -32,5 +34,23 @@
         FROM oa_receive_document
         WHERE
             receive_date = #{date}
+        ORDER BY
+	        create_time DESC
+    </select>
+
+    <select id="selectAllData" resultType="com.jiaoke.oa.bean.OaReceiveDocument">
+        SELECT
+            id as id,
+            receive_date as receiveDate,
+            document_number as documentNumber,
+            document_received_number as documentReceivedNumber,
+            document_name as documentName,
+            remarks as remarks,
+            publishing_department as publishingDepartment,
+            rich_text as richText,
+            create_time as createTime
+        FROM oa_receive_document
+        ORDER BY
+	        create_time DESC
     </select>
 </mapper>

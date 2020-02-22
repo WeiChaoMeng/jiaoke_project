@@ -13,6 +13,8 @@
         FROM oa_management_system
         WHERE
             file_name LIKE "%"#{fileName}"%"
+        ORDER BY
+	        create_time DESC
     </select>
 
     <select id="getSelectByDate" parameterType="java.util.Date" resultType="com.jiaoke.oa.bean.OaManagementSystem">
@@ -26,5 +28,20 @@
         FROM oa_management_system
         WHERE
             `date` = #{date}
+        ORDER BY
+	        create_time DESC
+    </select>
+
+    <select id="selectAllData" resultType="com.jiaoke.oa.bean.OaManagementSystem">
+        SELECT
+            id as id,
+            file_name as fileName,
+            `date` as `date`,
+            remarks as remarks,
+            rich_text as richText,
+            create_time as createTime
+        FROM oa_management_system
+        ORDER BY
+	        create_time DESC
     </select>
 </mapper>

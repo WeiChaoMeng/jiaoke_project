@@ -112,13 +112,14 @@
                 <shiro:hasPermission name="receipt_proposed">
                     <textarea class="write-approval-content-textarea" name="receiptProposedContent"></textarea>
                     <input type="hidden" name="receiptProposed" value="${nickname}">
-                    <input type="hidden" name="receiptProposedDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">
+                    <input type="hidden" name="receiptProposedDate"
+                           value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">
 
                     <div style="line-height: 20px;margin-top: 5px;">
-                        <input type="radio" name="notifyObject" value="0" checked
+                        <input type="radio" name="receiptDepartment" value="0" checked
                                style="vertical-align: middle;margin-left: 5px;outline: none;">
                         <span style="font-size: 13px;margin-right: 15px;">领导班子成员</span>
-                        <input type="radio" name="notifyObject" value="1"
+                        <input type="radio" name="receiptDepartment" value="1"
                                style="vertical-align: middle;outline: none;">
                         <span style="font-size: 13px;">各部门负责人</span>
                     </div>
@@ -138,7 +139,8 @@
                 </shiro:hasAnyPermission>
 
                 <shiro:lacksPermission name="dep_opinion">
-                    <textarea class="approval-content-textarea" name="departmentOpinion" readonly>${oaActRead.departmentOpinion} ${nickname}</textarea>
+                    <textarea class="approval-content-textarea" name="departmentOpinion"
+                              readonly>${oaActRead.departmentOpinion} ${nickname}</textarea>
                     <input type="hidden" name="departmentOpinionDate">
                 </shiro:lacksPermission>
 
@@ -151,7 +153,8 @@
                 <shiro:hasPermission name="company_principal">
                     <textarea class="write-approval-content-textarea" name="companyPrincipalContent"></textarea>
                     <input type="hidden" name="companyPrincipal" value="${nickname}">
-                    <input type="hidden" name="companyPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">
+                    <input type="hidden" name="companyPrincipalDate"
+                           value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">
                 </shiro:hasPermission>
 
                 <shiro:lacksPermission name="company_principal">
@@ -163,14 +166,26 @@
         <tr>
             <td class="tdLabel">办理结果</td>
             <td colspan="3" class="table-td-content" style="padding: 10px">
-                ${oaActRead.outcome}
+                <shiro:hasPermission name="handling_result">
+                    <textarea class="write-approval-content-textarea" name="outcome"></textarea>
+                </shiro:hasPermission>
+
+                <shiro:lacksPermission name="handling_result">
+                    <textarea class="approval-content-textarea" readonly>${oaActRead.outcome}</textarea>
+                </shiro:lacksPermission>
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel">保存期限</td>
             <td colspan="3" class="table-td-content" style="padding: 10px">
-                ${oaActRead.deadline}
+                <shiro:hasPermission name="handling_result">
+                    <textarea class="write-approval-content-textarea" name="deadline"></textarea>
+                </shiro:hasPermission>
+
+                <shiro:lacksPermission name="handling_result">
+                    <textarea class="approval-content-textarea" readonly>${oaActRead.deadline}</textarea>
+                </shiro:lacksPermission>
             </td>
         </tr>
         </tbody>

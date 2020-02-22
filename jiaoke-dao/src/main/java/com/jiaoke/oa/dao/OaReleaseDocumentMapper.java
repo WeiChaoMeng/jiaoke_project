@@ -31,4 +31,11 @@ public interface OaReleaseDocumentMapper extends Mapper<OaReleaseDocument> {
      * @return list
      */
     List<OaReleaseDocument> getSelectByVisitDate(Date date);
+
+    /**
+     * 查询所有数据
+     *
+     * @return list
+     */
+    List<OaReleaseDocument> selectAllData();
 }

@@ -22,4 +22,21 @@
         AND
             asset_management_id = #{assetManagementId}
     </select>
+
+    <select id="selectAllDataById" parameterType="java.lang.Integer" resultType="com.jiaoke.oa.bean.OaAssetReplenishment">
+        SELECT
+            id as id,
+            assets_name as assetsName,
+            assets_custodian as assetsCustodian,
+            replenishment_before_quantity as replenishmentBeforeQuantity,
+            replenishment_quantity as replenishmentQuantity,
+            replenishment_person as replenishmentPerson,
+            replenishment_storage_location as replenishmentStorageLocation,
+            replenishment_remarks as replenishmentRemarks,
+            create_time as createTime,
+            asset_management_id as assetManagementId
+        FROM oa_asset_replenishment
+        WHERE
+            asset_management_id = #{assetManagementId}
+    </select>
 </mapper>

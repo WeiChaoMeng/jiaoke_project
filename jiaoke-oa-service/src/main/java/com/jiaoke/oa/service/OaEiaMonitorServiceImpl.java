@@ -42,7 +42,7 @@ public class OaEiaMonitorServiceImpl implements OaEiaMonitorService {
      */
     @Override
     public List<OaEiaMonitor> selectAll() {
-        List<OaEiaMonitor> oaEiaMonitorList = oaEiaMonitorMapper.selectAll();
+        List<OaEiaMonitor> oaEiaMonitorList = oaEiaMonitorMapper.selectAllData();
         for (OaEiaMonitor oaEiaMonitor: oaEiaMonitorList) {
             oaEiaMonitor.setTestingDateStr(DateUtil.dateConvertYYYYMMDD(oaEiaMonitor.getTestingDate()));
         }

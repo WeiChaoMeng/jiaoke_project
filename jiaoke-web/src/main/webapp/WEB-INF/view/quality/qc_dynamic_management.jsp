@@ -48,11 +48,11 @@
                         <div style="float: left" >
 
                             <div class="jeitem">
-                                <label class="jelabel">开始日期：</label>
+                                <label class="jelabel">开始日期</label>
                                 <div class="dy_select_div"   >
                                     <input type="date" class="jeinput moredate" id="inpstart"  placeholder="选择开始日期" >
                                 </div>
-                                <label class="jelabel">结束日期：</label>
+                                <label class="jelabel">结束日期</label>
                                 <div class="dy_select_div"   >
                                    <input type="date" class="jeinput moredate" id="inpend" placeholder="选择开始日期" >
                                 </div>

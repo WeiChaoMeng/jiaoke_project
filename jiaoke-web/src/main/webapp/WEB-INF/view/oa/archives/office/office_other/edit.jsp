@@ -17,140 +17,52 @@
 <head>
     <meta charset="UTF-8">
     <title>修改管理体系相关</title>
-    <link href="../../../../../../static/js/datepicker/css/bootstrap-datepicker.css" rel="stylesheet">
-    <link href="../../../../../../static/js/date_pickers/date_picker.css" rel="stylesheet">
-    <style>
-        * {
-            font-size: 12px;
-            border: 0;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: '微软雅黑';
-            margin: 0 auto;
-            /*min-width: 980px;*/
-        }
-
-        .contract-new-page {
-            width: 735px;
-            margin: 0 auto;
-            height: auto;
-            margin-top: 20px;
-        }
-
-        .contract-block-title {
-            text-align: left;
-            font-size: 17px;
-            font-weight: 500;
-            margin-bottom: 10px;
-            text-decoration: none;
-        }
-
-        .contract-form {
-            width: 100%;
-            padding: 0;
-            border: 0;
-            float: left;
-            margin-bottom: 30px;
-        }
-
-        .contract-form-title {
-            text-align: right;
-            float: left;
-            font-size: 14px;
-            width: 20%;
-            padding-top: 9px;
-        }
-
-        .contract-form-title i {
-            color: red;
-            font-style: normal;
-            float: right;
-            margin-right: 3px;
-        }
-
-        .contract-form-title span {
-            float: right;
-            margin-right: 3px;
-        }
-
-        .contract-form-input {
-            padding-left: 10px;
-            width: 70%;
-            float: left;
-        }
-
-        .contract-form-input input, select {
-            width: 60%;
-            height: 30px;
-            padding: 6px 12px;
-            font-size: 12px;
-            color: #555;
-            background-color: #fff;
-            background-image: none;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            overflow: auto;
-            line-height: 20px;
-            outline: none;
-        }
-    </style>
+    <link type="text/css" rel="stylesheet" href="../../../../../../static/css/oa/office-archives-style.css">
+    <link type="text/css" rel="stylesheet" href="../../../../../../static/js/jeDate/skin/jedate.css">
 </head>
 <body>
-<form action="${path}/officeOther/edit" name="oaOfficeOther" method="post">
+<form id="oaOfficeOther">
     <!-- 表单内容 -->
     <div class="contract-new-page">
         <div class="contract-block-title">
-            <span>表单内容:</span>
+            <span>表单内容</span>
         </div>
 
         <div class="contract-form">
             <label class="contract-form-title">
-                <span>:</span>
                 <span>编号</span>
-                <i>*</i>
             </label>
             <div class="contract-form-input">
                 <input type="hidden" name="id" value="${oaOfficeOther.id}">
-                <input type="text" name="numbering" value="${oaOfficeOther.numbering}" required autocomplete="off">
+                <input type="text" name="numbering" value="${oaOfficeOther.numbering}"  autocomplete="off">
             </div>
         </div>
 
         <div class="contract-form">
             <label class="contract-form-title">
-                <span>:</span>
                 <span>名称</span>
                 <i>*</i>
             </label>
             <div class="contract-form-input">
-                <input type="text" name="name" value="${oaOfficeOther.name}" required autocomplete="off">
+                <input type="text" name="name" id="name" value="${oaOfficeOther.name}"  autocomplete="off">
             </div>
         </div>
 
         <div class="contract-form">
             <label class="contract-form-title">
-                <span>:</span>
                 <span>接收日期</span>
-                <i>*</i>
             </label>
             <div class="contract-form-input">
-                <input type="text" name="dateStr" value="${oaOfficeOther.dateStr}" class="forminput"
-                       id="datePicker" readonly="readonly"
-                       required>
+                <input type="text" name="dateStr" class="je-date"  value="${oaOfficeOther.dateStr}" readonly>
             </div>
         </div>
 
         <div class="contract-form">
             <label class="contract-form-title">
-                <span>:</span>
                 <span>存档人</span>
-                <i>*</i>
             </label>
             <div class="contract-form-input">
-                <input type="text" name="archivingPerson" value="${oaOfficeOther.archivingPerson}" required
-                       autocomplete="off">
+                <input type="text" name="archivingPerson" value="${oaOfficeOther.archivingPerson}" autocomplete="off">
             </div>
         </div>
 
@@ -159,11 +71,8 @@
         </div>
         <div style="text-align: center;padding-top: 20px;">
             <input type="hidden" name="richText" value="" id="editorHTNL">
-            <input type="submit" id="submit" value="提交"
-                   style="padding: 7px 20px; background: #92ebff;border: 1px #a5a5a5 solid;">
-            <input type="button" value="返回"
-                   style="margin-left:20px;padding: 7px 20px; background: #92ebff;border: 1px #a5a5a5 solid;"
-                   onclick="javascript:history.back()">
+            <input type="button" value="提交" onclick="commitForm()" class="confirm-btn-style">
+            <input type="button" value="返回" onclick="returnPrev()" class="cancel-btn-style left-spacing">
         </div>
 
     </div>
@@ -171,15 +80,13 @@
 </body>
 
 <script type="text/javascript" src="../../../../../../static/js/jquery.js"></script>
-<script type="text/javascript" src="../../../../../../static/js/date_pickers/jquery.date_input.pack.js"></script>
+<script type="text/javascript" src="../../../../../../static/js/jeDate/src/jedate.js"></script>
+<script src="../../../../../../static/js/oa/layer/layer.js"></script>
 <!-- 注意， 只需要引用 JS，无需引用任何 CSS ！！！-->
 <script type="text/javascript" src="../../../../../../static/editor/release/wangEditor.min.js"></script>
 <script type="text/javascript">
     var E = window.wangEditor;
     var editor = new E('#editor');
-    // 或者 var editor = new E( document.getElementById('editor') )
-    // editor.customConfig.uploadImgShowBase64 = true;   // 使用 base64 保存图片
-    // editor.customConfig.uploadImgServer = '/upload'  // 上传图片到服务器
 
     // 自定义菜单配置
     editor.customConfig.menus = [
@@ -195,12 +102,9 @@
         'link',  // 插入链接
         'list',  // 列表
         'justify',  // 对齐方式
-        // 'quote',  // 引用
         'emoticon',  // 表情
         'image',  // 插入图片
         'table',  // 表格
-        // 'video',  // 插入视频
-        // 'code',  // 插入代码
         'undo',  // 撤销
         'redo'  // 重复
     ];
@@ -227,11 +131,11 @@
                     insert(ret.imageFilePaths);
                     $("#editorHTNL").val(editor.txt.html());
                 } else {
-                    alert("失败");
+                    window.top.tips("出错！", 6, 2, 1000);
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("上传失败，请检查网络后重试");
+                window.top.tips("上传失败，请检查网络后重试！", 6, 2, 1000);
             }
         });
     };
@@ -242,9 +146,48 @@
 
     editor.create();
 
-    //日期选择器
-    $(function () {
-        $('#datePicker').date_input();
+    //申请时间选择器
+    jeDate(".je-date", {
+        theme: {bgcolor: "#00A1CB", pnColor: "#00CCFF"},
+        festival: false,                    //是否显示节日
+        isinitVal: true,                    //是否初始化
+        isTime: false,                        //是否开启时间选择
+        isClear: false,                      //是否显示清空
+        minDate: "1900-01-01",              //最小日期
+        maxDate: "2099-12-31",              //最大日期
+        format: "YYYY-MM-DD",
+        zIndex: 100000,
     });
+
+    //记录上页
+    var prevNum = JSON.parse('${prev}');
+
+    function commitForm() {
+        if ($.trim($("#name").val()) === '') {
+            top.window.tips("名称为必填项", 6, 5, 1500);
+        } else {
+            $.ajax({
+                type: "POST",
+                url: '${path}/officeOther/edit',
+                data: $('#oaOfficeOther').serialize(),
+                error: function (request) {
+                    window.top.tips("出错！", 6, 2, 1000);
+                },
+                success: function (data) {
+                    var result = JSON.parse(data);
+                    if (result === "success") {
+                        window.top.tips("提交成功！", 0, 1, 1000);
+                        window.location.href = '${path}/officeOther/toOfficeOther?page=' + prevNum;
+                    } else {
+                        window.top.tips("提交失败！", 0, 2, 1000);
+                    }
+                }
+            })
+        }
+    }
+
+    function returnPrev() {
+        window.location.href = '${path}/officeOther/toOfficeOther?page=' + prevNum;
+    }
 </script>
 </html>

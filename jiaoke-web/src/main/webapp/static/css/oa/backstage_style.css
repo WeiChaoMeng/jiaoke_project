@@ -8,7 +8,7 @@
 .form_title {
     font-size: 13px;
     text-align: right;
-    padding: 8px;
+    padding: 0 10px 25px 10px;
 }
 
 .form_content_check {
@@ -20,7 +20,7 @@
 .form_content {
     width: 220px;
     float: left;
-    padding: 8px 0;
+    margin-bottom: 25px;
 }
 
 .font_input {
@@ -66,8 +66,8 @@
 
 .window-body-add {
     text-align: center;
-    padding: 10px 20px;
-    height: 93%;
+    padding: 15px 20px;
+    /*height: 91%;*/
 }
 
 .window-table {
@@ -245,7 +245,7 @@
     height: 38px;
     line-height: 38px;
     padding: 0 18px;
-    background-color: #2196F3;
+    background-color: #2ca4f9;
     color: #fff;
     white-space: nowrap;
     text-align: center;
@@ -253,4 +253,37 @@
     border: none;
     border-radius: 2px;
     cursor: pointer;
+}
+
+.confirm-modify-psw:hover{
+    background: #42acf9;
+}
+
+/*确认按钮*/
+.confirm-btn-style{
+    border-radius: 5px;
+    padding: 8px 21px;
+    background: #2ca4f9;
+    outline: none;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.confirm-btn-style:hover{
+    background: #42acf9;
+}
+
+/*取消按钮*/
+.cancel-btn-style{
+    border-radius: 5px;
+    padding: 7px 20px;
+    border: 1px #a5a5a5 solid;
+    outline: none;
+    background: #ffffff;
+    color: #000;
+    cursor: pointer;
+}
+
+.cancel-btn-style:hover{
+    color: #5d5d5d;
 }

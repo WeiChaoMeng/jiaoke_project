@@ -22,107 +22,89 @@
 
 <body>
 
-<div class="cursor_hand">
-    <div class="page_head">
-        <table>
-            <tbody>
-            <tr>
-                <td>
-                    <div class="head_left_button" id="newContractAgreement" onmousemove="select_color(this)"
-                         onmouseout="unselected_color(this)">
-                        &#xeb86; 新建
-                    </div>
-
-                    <div class="separation_line">
-
-                    </div>
-
-                    <div class="head_left_button" id="replenishment" onmousemove="select_color(this)"
-                         onmouseout="unselected_color(this)">
-                        &#xe7e9; 补货
-                    </div>
-
-                    <div class="separation_line">
-
-                    </div>
-
-                    <div class="head_left_button" id="replenishmentRecord" onmousemove="select_color(this)"
-                         onmouseout="unselected_color(this)" style="width: 70px;">
-                        &#xe7e9; 补货记录
-                    </div>
-
-                </td>
-                <td>
-                    <div class="conditional_query">
-                        <%--刷新--%>
-                        <i class="iconfont search" id="refresh" onmousemove="select_color(this)"
-                           onmouseout="unselected_color(this)" onclick="refresh()">&#xe69d;</i>
-                        <!--搜索按钮-->
-                        <i class="iconfont search" id="conditional_search" onmousemove="select_color(this)"
-                           onmouseout="unselected_color(this)" onclick="searchButton(1,3)">&#xe7e7;</i>
-                        <!--标题-->
-                        <div id="div2" class="head_right_side_input matter_title">
-                            <input type="text" id="titleName" value="">
-                        </div>
-
-                        <!--条件查询-->
-                        <div id="div1" class="head_right_side">
-                            <select id="condition">
-                                <option value="0">- -查询条件- -</option>
-                                <option value="1">文件名称</option>
-                            </select>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <table class="simple_table">
-
-        <thead>
-        <th style="width: 3%;"><input type="checkbox"></th>
-        <th style="width: 3%;">序号</th>
-        <th style="width: 17%;">资产名字</th>
-        <th style="width: 10%;">
-            <select id="asset" onchange="typeFilter(1)">
-                <option style="background: #fff;" value="888">资产类别</option>
-                <option style="background: #fff;" value="0">办公用品</option>
-                <option style="background: #fff;" value="1">生产设备</option>
-            </select>
-        </th>
-        <th style="width: 17%;">规格型号</th>
-        <th style="width: 10%;">购买数量</th>
-        <th style="width: 10%;">
-            <select id="source" onchange="typeFilter(1)">
-                <option style="background: #fff;" value="888">来源</option>
-                <option style="background: #fff;" value="0">行政购置</option>
-                <option style="background: #fff;" value="1">设备购置</option>
-            </select>
-        </th>
-        <th style="width: 10%;">录入人员</th>
-        <th style="width: 10%;">存放地点</th>
-        <th style="width: 10%;">保管人员</th>
-        </thead>
-
-        <tbody id="tbody">
+<div class="page_head">
+    <table>
+        <tbody>
         <tr>
-            <td><input type="checkbox"></td>
-            <td>1</td>
-            <td>得力打印纸</td>
-            <td>办公用品</td>
-            <td>A4</td>
-            <td>1</td>
-            <td>行政购置</td>
-            <td>张三</td>
-            <td>办公室</td>
-            <td>李四</td>
+            <td>
+                <div class="head_left_button">
+                    <button type="button" class="cursor_hand" onclick="newContractAgreement()">&#xeb86; 新建</button>
+                </div>
+
+                <div class="separation_line"></div>
+
+                <div class="head_left_button">
+                    <button type="button" class="cursor_hand" onclick="replenishment()">&#xe7e9; 补货</button>
+                </div>
+
+                <div class="separation_line"></div>
+
+                <div class="head_left_button">
+                    <button type="button" class="cursor_hand" onclick="replenishmentRecord()">&#xe7e9; 补货记录</button>
+                </div>
+
+                <div class="separation_line"></div>
+
+                <div class="head_left_button">
+                    <button type="button" class="cursor_hand" onclick="binding()">&#xeb14; 删除</button>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <div class="conditional-query cursor_hand">
+                        <input type="text" id="assetName" class="search-bar" placeholder="资产名称" autocomplete="off">
+                        <i onclick="searchButton(1,2)" class="iconfont search-icon-size" id="conditional_search">&#xe7e7;</i>
+                    </div>
+                </div>
+            </td>
         </tr>
         </tbody>
-
     </table>
 </div>
+
+<table class="simple_table">
+
+    <thead>
+    <th style="width: 3%;"><input type="checkbox"></th>
+    <th style="width: 3%;">序号</th>
+    <th style="width: 17%;">资产名字</th>
+    <th style="width: 10%;">
+        <select id="asset" onchange="typeFilter(1)">
+            <option style="background: #fff;" value="888">资产类别</option>
+            <option style="background: #fff;" value="0">办公用品</option>
+            <option style="background: #fff;" value="1">生产设备</option>
+        </select>
+    </th>
+    <th style="width: 17%;">规格型号</th>
+    <th style="width: 10%;">购买数量</th>
+    <th style="width: 10%;">
+        <select id="source" onchange="typeFilter(1)">
+            <option style="background: #fff;" value="888">来源</option>
+            <option style="background: #fff;" value="0">行政购置</option>
+            <option style="background: #fff;" value="1">设备购置</option>
+        </select>
+    </th>
+    <th style="width: 10%;">录入人员</th>
+    <th style="width: 10%;">存放地点</th>
+    <th style="width: 10%;">保管人员</th>
+    </thead>
+
+    <tbody id="tbody">
+    <tr>
+        <td><input type="checkbox"></td>
+        <td>1</td>
+        <td>得力打印纸</td>
+        <td>办公用品</td>
+        <td>A4</td>
+        <td>1</td>
+        <td>行政购置</td>
+        <td>张三</td>
+        <td>办公室</td>
+        <td>李四</td>
+    </tr>
+    </tbody>
+
+</table>
 
 <div id="fenye" style="right: 10px;height: 35px;position: absolute;bottom: 10px;">
     <div class="">
@@ -133,142 +115,28 @@
             <input type="hidden" id="countindex" runat="server"/>
             <!--设置最多显示的页码数 可以手动设置 默认为10-->
             <input type="hidden" id="visiblePages" runat="server" value="10"/>
+            <input type="hidden" id="page" value="1"/>
         </div>
     </div>
 </div>
 
 </body>
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
-<script type="text/javascript" src="../../../../static/js/common.js"></script>
-<script type="text/javascript" src="../../../../static/js/skin.js"></script>
-<script type="text/javascript" src="../../../../static/js/date_pickers/jquery.date_input.pack.js"></script>
 <script type="text/javascript" src="../../../../static/js/paging/jqPaginator.js"></script>
+<script type="text/javascript" src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
-    //功能选中颜色
-    function select_color(itself) {
-        itself.style.background = "#fff";
-    }
 
-    //功能未选中颜色
-    function unselected_color(itself) {
-        itself.style.background = "#f1f1f1";
-    }
-
-    //新增
-    $('#newContractAgreement').on('click', function () {
-        window.location.href = '${path}/assetsManagement/toAssetsManagement';
-    });
-
-    //补货
-    $('#replenishment').on('click', function () {
-        let length = $("tbody input:checked").length;
-        if (length != 1) {
-            alert("请选择一条数据！");
-            return false;
-        } else {
-            var id = $("tbody input:checked").val();
-            window.location.href = "${path}/assetsManagement/toAssetReplenishmentPage?id=" + id;
-        }
-    });
-
-    //补货记录
-    $('#replenishmentRecord').on('click', function () {
-        let length = $("tbody input:checked").length;
-        if (length != 1) {
-            alert("请选择一条数据！");
-            return false;
-        } else {
-            var assetManagementId = $("tbody input:checked").val();
-            window.location.href = "${path}/assetsManagement/toAssetReplenishmentRecordPage?assetManagementId=" + assetManagementId;
-        }
-    });
-
-    //刷新
-    function refresh(){
-        location.reload();
-    }
-
-    //搜索
-    $("#condition").on("change", function () {
-        var opt = $("#condition").val();
-        if (opt == 1) {
-            $(".matter_title").css("display", "block");
-        } else {
-            $(".head_right_side_input").css("display", "none");
-        }
-    });
-
-    //名字搜索
-    function searchButton(page,parameter) {
-        var assetsName = $('#titleName').val();
-        $.ajax({
-            type: "post",
-            url: '/assetsManagement/assetsNameFilter',
-            data: {'page': page, 'assetsName': assetsName},
-            success: function (data) {
-                var oaAssetsManagements = JSON.parse(data);
-                //总数
-                $("#PageCount").val(oaAssetsManagements.total);
-                //每页显示条数
-                $("#PageSize").val("15");
-                parseResult(oaAssetsManagements);
-                loadPage(parameter);
-            },
-            error: function (result) {
-                alert("出错！");
-            }
-        })
-    }
-
+    //设置当前页
+    var currentPage = '${currentPage}';
+    var currentPageNum = JSON.parse(currentPage);
 
     //分页
     $(function () {
-        loadData(1);
+        //设置当前页
+        $('#page').val(currentPageNum);
+        loadData(currentPageNum);
         loadPage(1);
     });
-
-    //分页
-    function exeData(page, type, parameter) {
-        //全部
-        if (parameter === 1) {
-            loadData(page);
-            loadPage(parameter);
-
-            //类型
-        } else if (parameter === 2) {
-            typeFilter(page);
-            loadPage(parameter);
-
-            //搜索
-        } else if (parameter === 3) {
-            searchButton(page);
-            loadPage(parameter);
-        }
-
-    }
-
-    function loadPage(parameter) {
-        var myPageCount = parseInt($("#PageCount").val());
-        var myPageSize = parseInt($("#PageSize").val());
-        var countindex = Math.ceil(myPageCount / myPageSize);
-        $("#countindex").val(countindex);
-
-        $.jqPaginator('#pagination', {
-            totalPages: parseInt($("#countindex").val()),
-            visiblePages: parseInt($("#visiblePages").val()),
-            currentPage: 1,
-            first: '<li class="first"><a href="javascript:;">首页</a></li>',
-            prev: '<li class="prev"><a href="javascript:;"><i class="arrow arrow2"></i>上一页</a></li>',
-            next: '<li class="next"><a href="javascript:;">下一页<i class="arrow arrow3"></i></a></li>',
-            last: '<li class="last"><a href="javascript:;">末页</a></li>',
-            page: '<li class="page"><a href="javascript:;">{{page}}</a></li>',
-            onPageChange: function (page, type) {
-                if (type == "change") {
-                    exeData(page, type, parameter);
-                }
-            }
-        });
-    }
 
     //加载数据
     function loadData(page) {
@@ -286,10 +154,73 @@
                 parseResult(oaAssetsManagements);
             },
             error: function (result) {
-                alert("出错！");
+                layer.msg("出错！");
             }
         })
     }
+
+    //名字搜索
+    function searchButton(page, parameter) {
+        var assetsName = $('#assetName').val();
+        $.ajax({
+            type: "post",
+            url: '/assetsManagement/assetsNameFilter',
+            data: {'page': page, 'assetsName': assetsName},
+            async: false,
+            success: function (data) {
+                var oaAssetsManagements = JSON.parse(data);
+                //总数
+                $("#PageCount").val(oaAssetsManagements.total);
+                //每页显示条数
+                $("#PageSize").val("15");
+                parseResult(oaAssetsManagements);
+                loadPage(parameter);
+            },
+            error: function (result) {
+                layer.msg("出错！");
+            }
+        })
+    }
+
+    //分页
+    function exeData(page, type, parameter) {
+        //全部
+        if (parameter === 1) {
+            loadData(page);
+            loadPage(parameter);
+
+            //搜索
+        } else if (parameter === 2) {
+            searchButton(page);
+            loadPage(parameter);
+        }
+
+    }
+
+    function loadPage(parameter) {
+        var myPageCount = parseInt($("#PageCount").val());
+        var myPageSize = parseInt($("#PageSize").val());
+        var countindex = myPageCount === 0 ? 1 : Math.ceil(myPageCount / myPageSize);
+        $("#countindex").val(countindex);
+
+        $.jqPaginator('#pagination', {
+            totalPages: parseInt($("#countindex").val()),
+            visiblePages: parseInt($("#visiblePages").val()),
+            currentPage: currentPageNum,
+            first: '<li class="first"><a href="javascript:;">首页</a></li>',
+            prev: '<li class="prev"><a href="javascript:;"><i class="arrow arrow2"></i>上一页</a></li>',
+            next: '<li class="next"><a href="javascript:;">下一页<i class="arrow arrow3"></i></a></li>',
+            last: '<li class="last"><a href="javascript:;">末页</a></li>',
+            page: '<li class="page"><a href="javascript:;">{{page}}</a></li>',
+            onPageChange: function (page, type) {
+                if (type == "change") {
+                    $('#page').val(page);
+                    exeData(page, type, parameter);
+                }
+            }
+        });
+    }
+
 
     //解析list
     function parseResult(oaAssetsManagements) {
@@ -305,7 +236,7 @@
             oaAssetsManagement += '</tr>';
         } else {
             for (let i = 0; i < oaAssetsManagementList.length; i++) {
-                oaAssetsManagement += '<tr>';
+                oaAssetsManagement += '<tr onclick="checkboxEvent(this)">';
                 oaAssetsManagement += '<td><input type="checkbox" value="' + oaAssetsManagementList[i].id + '" onclick="window.event.cancelBubble=true;"></td>';
                 oaAssetsManagement += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 15 + i + 1) + '</td>';
                 oaAssetsManagement += '<td>' + oaAssetsManagementList[i].assetsName + '</td>';
@@ -329,6 +260,47 @@
         }
 
         $('#tbody').html(oaAssetsManagement);
+    }
+
+    //新增
+    function newContractAgreement() {
+        window.location.href = '${path}/assetsManagement/toAssetsManagement';
+    }
+
+    //补货
+    function replenishment() {
+        let length = $("tbody input:checked").length;
+        if (length != 1) {
+            layer.msg("请选择一条数据！");
+            return false;
+        } else {
+            var page = $('#page').val();
+            var id = $("tbody input:checked").val();
+            window.location.href = "${path}/assetsManagement/toAssetReplenishmentPage?id=" + id + '&page=' + page;
+        }
+    }
+
+    //补货记录
+    function replenishmentRecord() {
+        let length = $("tbody input:checked").length;
+        if (length != 1) {
+            layer.msg("请选择一条数据！");
+            return false;
+        } else {
+            var page = $('#page').val();
+            var assetManagementId = $("tbody input:checked").val();
+            window.location.href = "${path}/assetsManagement/toAssetReplenishmentRecordPage?assetManagementId=" + assetManagementId + '&archivesPage=' + page;
+        }
+    }
+
+    //checkbox选中事件
+    function checkboxEvent(own) {
+        var checkbox = $(own).children('td').children('input').prop('checked');
+        if (checkbox) {
+            $(own).children('td').children('input').attr("checked", false);
+        } else {
+            $(own).children('td').children('input').attr("checked", true);
+        }
     }
 </script>
 </html>

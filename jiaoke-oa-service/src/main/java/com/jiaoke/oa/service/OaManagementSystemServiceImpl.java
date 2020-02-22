@@ -42,7 +42,7 @@ public class OaManagementSystemServiceImpl implements OaManagementSystemService 
      */
     @Override
     public List<OaManagementSystem> selectAll() {
-        List<OaManagementSystem> managementSystemList = oaManagementSystemMapper.selectAll();
+        List<OaManagementSystem> managementSystemList = oaManagementSystemMapper.selectAllData();
         for (OaManagementSystem oaManagementSystem : managementSystemList) {
             oaManagementSystem.setDateStr(DateUtil.dateConvertYYYYMMDD(oaManagementSystem.getDate()));
         }

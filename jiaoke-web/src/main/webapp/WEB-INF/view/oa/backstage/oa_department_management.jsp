@@ -45,8 +45,15 @@
 
                 <div class="separation_line"></div>
 
-                <div class="head_left_button">
-                    <button type="button" class="cursor_hand" onclick="binding()" style="width: 100px">&#xeb14; 绑定负责人
+                <div class="head_left_button" style="width: 85px">
+                    <button type="button" class="cursor_hand" onclick="binding(1)" style="width: 85px">&#xeb14; 绑定负责人
+                    </button>
+                </div>
+
+                <div class="separation_line"></div>
+
+                <div class="head_left_button" style="width: 90px">
+                    <button type="button" class="cursor_hand" onclick="binding(2)" style="width: 90px">&#xe90a; 绑定主管领导
                     </button>
                 </div>
 
@@ -272,7 +279,7 @@
     }
 
     //绑定部门主管
-    function binding() {
+    function binding(target) {
         let length = $("#tbody input:checked").length;
         if (length !== 1) {
             layer.msg("请选择一条数据！");
@@ -284,7 +291,7 @@
             var userInfoList = JSON.parse('${userInfoList}');
             //部门
             var departmentList = JSON.parse('${departmentList}');
-            window.top.bindingDepartmentHead(userInfoList, departmentList, id, page);
+            window.top.bindingDepartmentHead(userInfoList, departmentList, id, page, target);
         }
     }
 

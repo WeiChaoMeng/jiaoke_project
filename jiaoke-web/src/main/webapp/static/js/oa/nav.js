@@ -124,7 +124,7 @@ $(function () {
     $("#resources_archives").on("click", function () {
         removeOwnName();
         resources(this);
-        $('#oa-iframe').attr("src", "assetsManagement/toAssetsArchives");
+        $('#oa-iframe').attr("src", "assetsManagement/toAssetsArchives?page=1");
     });
 
     //申领记录

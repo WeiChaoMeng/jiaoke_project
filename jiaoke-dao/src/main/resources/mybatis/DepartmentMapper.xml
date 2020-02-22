@@ -36,9 +36,15 @@
             department_name = #{departmentName}
     </select>
 
-    <update id="bindingDepartmentHead" parameterType="java.util.Map">
+    <update id="bindingDepartmentPrincipal" parameterType="java.util.Map">
         update department
         set principal = #{principal}
+        where id = #{id}
+    </update>
+
+    <update id="bindingDepartmentSupervisor" parameterType="java.util.Map">
+        update department
+        set supervisor = #{supervisor}
         where id = #{id}
     </update>
 
@@ -51,8 +57,8 @@
             ui2.nickname AS supervisor
         FROM
             `department` AS dep
-            INNER JOIN user_info AS ui1 ON dep.principal = ui1.id
-            INNER JOIN user_info AS ui2 ON dep.supervisor = ui2.id
+            LEFT JOIN user_info AS ui1 ON dep.principal = ui1.id
+            LEFT JOIN user_info AS ui2 ON dep.supervisor = ui2.id
     </select>
 
     <update id="updateDepartmentName" parameterType="java.util.Map">

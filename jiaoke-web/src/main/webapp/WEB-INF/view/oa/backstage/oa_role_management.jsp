@@ -192,7 +192,7 @@
         $.jqPaginator('#pagination', {
             totalPages: parseInt($("#countindex").val()),
             visiblePages: parseInt($("#visiblePages").val()),
-            currentPage: 1,
+            currentPage: currentPageNum,
             first: '<li class="first"><a href="javascript:;">首页</a></li>',
             prev: '<li class="prev"><a href="javascript:;"><i class="arrow arrow2"></i>上一页</a></li>',
             next: '<li class="next"><a href="javascript:;">下一页<i class="arrow arrow3"></i></a></li>',
@@ -265,7 +265,7 @@
 
     }
 
-    //绑定角色
+    //绑定权限
     function binding() {
         let length = $("#tbody input:checked").length;
         if (length !== 1) {

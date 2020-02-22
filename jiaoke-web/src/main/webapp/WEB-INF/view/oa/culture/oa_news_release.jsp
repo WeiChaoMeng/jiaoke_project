@@ -32,31 +32,31 @@
         <tbody>
 
         <tr>
-            <td class="table_td">新闻标题：</td>
+            <td class="table_td">新闻标题</td>
             <td colspan="4" class="table_content">
                 <input type="text" class="form_input" name="newsHeadlines" id="newsHeadlines" autocomplete="off">
             </td>
 
-            <td class="table_td">发布日期：</td>
+            <td class="table_td">发布时间</td>
             <td class="table_content">
-                <input type="text" class="form_input" name="releaseDateStr"
+                <input type="text" class="form-input-readonly" name="releaseDateStr"
                        value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly="readonly">
             </td>
         </tr>
 
         <tr>
-            <td class="table_td">发布部门：</td>
+            <td class="table_td">发布部门</td>
             <td class="table_content">
-                <input type="text" class="form_input" name="releaseDepartment" value="${userInfo.department}"
+                <input type="text" class="form-input-readonly" name="releaseDepartment" value="${userInfo.department}"
                        readonly="readonly">
             </td>
 
-            <td class="table_td">发布人：</td>
+            <td class="table_td">发布人</td>
             <td class="table_content">
-                <input type="text" class="form_input" name="publisher" value="${userInfo.nickname}" readonly="readonly">
+                <input type="text" class="form-input-readonly" name="publisher" value="${userInfo.nickname}" readonly="readonly">
             </td>
 
-            <td class="table_td">摘要：</td>
+            <td class="table_td">摘要</td>
             <td colspan="2" class="table_content">
                 <input type="text" class="form_input" name="summary" id="summary" autocomplete="off">
             </td>
@@ -70,8 +70,8 @@
 
     <div class="form_but">
         <input type="hidden" name="richText" value="" id="editorHTNL">
-        <input type="button" class="return-but-inp" value="返回" onclick="previousPage()">
         <input type="button" class="commit-but-inp" value="提交" onclick="commit()">
+        <input type="button" class="return-but-inp left-spacing" value="返回" onclick="previousPage()">
     </div>
 
     </tbody>

@@ -58,8 +58,13 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public int bindingDepartmentHead(Integer id,String principal) {
-        return departmentMapper.bindingDepartmentHead(id,principal);
+    public int bindingDepartmentPrincipal(Integer id,String principal) {
+        return departmentMapper.bindingDepartmentPrincipal(id,principal);
+    }
+
+    @Override
+    public int bindingDepartmentSupervisor(Integer id,String supervisor) {
+        return departmentMapper.bindingDepartmentSupervisor(id,supervisor);
     }
 
     @Override

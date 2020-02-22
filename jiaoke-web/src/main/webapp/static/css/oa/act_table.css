@@ -699,28 +699,31 @@ img {
     margin-bottom: 20px;
 }
 
-.return-but {
+.commit-but{
+    border-radius: 5px;
+    padding: 8px 21px;
+    background: #2ca4f9;
+    outline: none;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.commit-but:hover{
+    background: #42acf9;
+}
+
+.return-but{
+    border-radius: 5px;
     padding: 7px 20px;
     border: 1px #a5a5a5 solid;
-    cursor: pointer;
+    outline: none;
     background: #ffffff;
-    outline: none;
-    border-radius: 5px;
-}
-
-.commit-but {
-    padding: 7px 20px;
-    border: 1px #a5a5a5 solid;
+    color: #000;
     cursor: pointer;
-    background: #38adff;
-    outline: none;
-    border-radius: 5px;
-    color: #FFFFFF;
 }
 
-.commit-but:hover, .return-but:hover {
-    background: #6dbff9;
-    color: #FFFFFF;
+.return-but:hover{
+    color: #5d5d5d;
 }
 
 .handle-container {

@@ -545,15 +545,30 @@ public class BackstageManagementController {
     }
 
     /**
-     * 绑定部门主管
+     * 绑定部门负责人
      *
      * @param id id
      * @return success/error
      */
-    @RequestMapping(value = "/bindingDepartmentHead")
+    @RequestMapping(value = "/bindingDepartmentPrincipal")
     @ResponseBody
-    public String bindingDepartmentHead(Integer id, String principal) {
-        if (departmentService.bindingDepartmentHead(id, principal) < 0) {
+    public String bindingDepartmentPrincipal(Integer id, String principal) {
+        if (departmentService.bindingDepartmentPrincipal(id, principal) < 0) {
+            return "error";
+        }
+        return "success";
+    }
+
+    /**
+     * 绑定部门主管领导
+     *
+     * @param id id
+     * @return success/error
+     */
+    @RequestMapping(value = "/bindingDepartmentSupervisor")
+    @ResponseBody
+    public String bindingDepartmentHead(Integer id, String supervisor) {
+        if (departmentService.bindingDepartmentSupervisor(id, supervisor) < 0) {
             return "error";
         }
         return "success";

@@ -24,7 +24,7 @@ public class OaNoticeServiceImpl implements OaNoticeService {
 
     @Override
     public List<OaNotice> selectAllData() {
-        List<OaNotice> oaNoticeList = oaNoticeMapper.selectAll();
+        List<OaNotice> oaNoticeList = oaNoticeMapper.selectAllData();
         for (OaNotice oaNotice : oaNoticeList) {
             oaNotice.setReleaseDateStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaNotice.getReleaseDate()));
         }
@@ -42,8 +42,7 @@ public class OaNoticeServiceImpl implements OaNoticeService {
 
     @Override
     public int insertSelective(OaNotice oaNotice) {
-        oaNotice.setCreateTime(new Date());
-        oaNotice.setReleaseDate(DateUtil.stringConvertYYYYMMDDHHMMSS(oaNotice.getReleaseDateStr()));
+        oaNotice.setReleaseDate(new Date());
         return oaNoticeMapper.insertSelective(oaNotice);
     }
 

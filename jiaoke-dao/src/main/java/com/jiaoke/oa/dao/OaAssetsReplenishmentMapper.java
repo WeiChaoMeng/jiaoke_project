@@ -29,4 +29,12 @@ public interface OaAssetsReplenishmentMapper extends Mapper<OaAssetReplenishment
     List<OaAssetReplenishment> replenishmentTimeFilter(@Param("startTime") Date startTime,
                                                        @Param("endTime") Date endTime,
                                                        @Param("assetManagementId") Integer assetManagementId);
+
+    /**
+     * 根据ID查询全部数据
+     *
+     * @param assetManagementId 资产id
+     * @return list
+     */
+    List<OaAssetReplenishment> selectAllDataById(Integer assetManagementId);
 }

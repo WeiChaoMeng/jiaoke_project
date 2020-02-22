@@ -41,13 +41,22 @@ public interface DepartmentMapper extends Mapper<Department> {
     Department checkDepartmentName(String departmentName);
 
     /**
-     * 绑定部门主管
+     * 绑定部门负责人
      *
      * @param id        id
      * @param principal principal
      * @return int
      */
-    int bindingDepartmentHead(@Param("id") Integer id, @Param("principal") String principal);
+    int bindingDepartmentPrincipal(@Param("id") Integer id, @Param("principal") String principal);
+
+    /**
+     * 绑定部门主管领导
+     *
+     * @param id        id
+     * @param supervisor supervisor
+     * @return int
+     */
+    int bindingDepartmentSupervisor(@Param("id") Integer id, @Param("supervisor") String supervisor);
 
     /**
      * 查询所有部门

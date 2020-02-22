@@ -59,7 +59,8 @@ public class OaContractAgreementController {
      * @return add.jsp
      */
     @RequestMapping(value = "/toNewContractAgreement")
-    public String toNewReleaseDocument() {
+    public String toNewReleaseDocument(int prev, Model model) {
+        model.addAttribute("prev", JsonHelper.toJSONString(prev));
         return "oa/archives/office/contract_agreement/add";
     }
 
@@ -69,9 +70,12 @@ public class OaContractAgreementController {
      * @return add.jsp
      */
     @RequestMapping(value = "/addContractAgreement", method = RequestMethod.POST)
+    @ResponseBody
     public String add(OaContractAgreement oaContractAgreement) {
-        int i = oaContractAgreementService.insertSelective(oaContractAgreement);
-        return "redirect:/contractAgreement/toContractAgreement?page=1";
+        if (oaContractAgreementService.insertSelective(oaContractAgreement) < 0) {
+            return JsonHelper.toJSONString("error");
+        }
+        return JsonHelper.toJSONString("success");
     }
 
     /**
@@ -127,8 +131,9 @@ public class OaContractAgreementController {
      * @return edit.jsp
      */
     @RequestMapping("/toEdit")
-    public String toEdit(Model model, int id) {
+    public String toEdit(Model model, int prev, int id) {
         OaContractAgreement oaContractAgreement = oaContractAgreementService.selectByPrimaryKey(id);
+        model.addAttribute("prev", JsonHelper.toJSONString(prev));
         model.addAttribute("oaContractAgreement", oaContractAgreement);
         return "oa/archives/office/contract_agreement/edit";
     }
@@ -140,9 +145,12 @@ public class OaContractAgreementController {
      * @return 影响行数
      */
     @RequestMapping("/edit")
+    @ResponseBody
     public String edit(OaContractAgreement oaContractAgreement) {
-        int i = oaContractAgreementService.updateByPrimaryKeySelective(oaContractAgreement);
-        return "redirect:/contractAgreement/toContractAgreement?page=1";
+        if (oaContractAgreementService.updateByPrimaryKeySelective(oaContractAgreement) < 0) {
+            return JsonHelper.toJSONString("error");
+        }
+        return JsonHelper.toJSONString("success");
     }
 
     /**
@@ -168,8 +176,9 @@ public class OaContractAgreementController {
      * @return edit.jsp
      */
     @RequestMapping(value = "/toContractAgreementDetails")
-    public String particulars(int id, Model model) {
+    public String particulars(int id, int prev, Model model) {
         OaContractAgreement oaContractAgreement = oaContractAgreementService.selectByPrimaryKey(id);
+        model.addAttribute("prev", JsonHelper.toJSONString(prev));
         model.addAttribute("oaContractAgreement", oaContractAgreement);
         return "oa/archives/office/contract_agreement/details";
     }

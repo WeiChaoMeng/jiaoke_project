@@ -18,28 +18,27 @@
     <meta charset="utf-8">
     <title>资产补货</title>
     <link href="../../../../static/css/oa/resource_management.css" rel="stylesheet" type="text/css">
-    <link href="../../../../static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
 </head>
 
 <body>
 
 <div class="replenishment_div_1">
 
-    <div>
-        <span class="replenishment_title">资产信息：</span>
+    <div style="margin: 2px 0;">
+        <span class="replenishment_title">资产信息</span>
     </div>
 
     <table class="form_table replenishment_table">
         <tbody>
         <tr>
-            <td class="table_field">资产名称：</td>
+            <td class="table_field">资产名称</td>
             <td class="table_input_field">
                 ${oaAssetManagement.assetsName}
             </td>
         </tr>
 
         <tr>
-            <td class="table_field">资产类别：</td>
+            <td class="table_field">资产类别</td>
             <td class="table_input_field">
                 <c:choose>
                     <c:when test="${oaAssetManagement.assetsCategory == 0}">
@@ -53,28 +52,28 @@
         </tr>
 
         <tr>
-            <td class="table_field">规格型号：</td>
+            <td class="table_field">规格型号</td>
             <td class="table_input_field">
                 ${oaAssetManagement.productSpecification}
             </td>
         </tr>
 
         <tr>
-            <td class="table_field">剩余数量：</td>
+            <td class="table_field">剩余数量</td>
             <td class="table_input_field">
                 ${oaAssetManagement.productQuantity}
             </td>
         </tr>
 
         <tr>
-            <td class="table_field">包装清单：</td>
+            <td class="table_field">包装清单</td>
             <td class="table_input_field">
                 ${oaAssetManagement.packingList}
             </td>
         </tr>
 
         <tr>
-            <td class="table_field">来&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源：</td>
+            <td class="table_field">来&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;源</td>
             <td class="table_input_field">
                 <c:choose>
                     <c:when test="${oaAssetManagement.productSource == 0}">
@@ -88,28 +87,28 @@
         </tr>
 
         <tr>
-            <td class="table_field">录入人员：</td>
+            <td class="table_field">录入人员</td>
             <td class="table_input_field">
                 ${oaAssetManagement.entryPerson}
             </td>
         </tr>
 
         <tr>
-            <td class="table_field">存放地点：</td>
+            <td class="table_field">存放地点</td>
             <td class="table_input_field">
                 ${oaAssetManagement.storageLocation}
             </td>
         </tr>
 
         <tr>
-            <td class="table_field">保管人员：</td>
+            <td class="table_field">保管人员</td>
             <td class="table_input_field">
                 ${oaAssetManagement.custodian}
             </td>
         </tr>
 
         <tr>
-            <td class="table_field">备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：</td>
+            <td class="table_field">备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注</td>
             <td class="table_input_field">
                 ${oaAssetManagement.remarks}
             </td>
@@ -119,7 +118,7 @@
 </div>
 
 <div class="replenishment_div_2">
-    <div>
+    <div style="margin: 2px 0;">
         <span class="replenishment_title">领取记录</span>
     </div>
     <div>
@@ -182,97 +181,96 @@
 
 <div class="replenishment_div_3">
     <form id="assetReplenishment">
-        <div>
-            <span class="replenishment_title">补货信息：</span>
+        <div style="margin-top: 16px;margin-bottom: 2px;">
+            <span class="replenishment_title">补货信息</span>
         </div>
 
         <table class="form_table replenishment_table">
-
             <tbody>
             <tr>
-                <td class="table_field">资产名称：</td>
+                <td class="table_field">资产名称</td>
                 <td class="table_input_field">
                     <input type="hidden" id="assetManagementId" name="assetManagementId"
                            value="${oaAssetManagement.id}">
                     <input type="hidden" name="assetsCustodian"
                            value="${oaAssetManagement.custodian}">
-                    <input type="text" class="form_input" name="assetsName"
-                           value="${oaAssetManagement.assetsName}" readonly="readonly">
+                    <input type="text" class="form-input-readonly" name="assetsName"
+                           value="${oaAssetManagement.assetsName}" readonly>
                 </td>
             </tr>
 
             <tr>
-                <td class="table_field"><i>*</i>补货数量：</td>
+                <td class="table_field"><i>*</i>补货数量</td>
                 <td class="table_input_field">
                     <input type="text" class="form_input" name="replenishmentQuantity" id="replenishmentQuantity"
-                           value="" oninput="value=value.replace(/[^\d]/g,'')" required>
+                           onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')" autocomplete="off">
                 </td>
             </tr>
 
             <tr>
-                <td class="table_field"><i>*</i>补货人员：</td>
+                <td class="table_field"><i>*</i>补货人员</td>
                 <td class="table_input_field">
-                    <input type="text" class="form_input" name="replenishmentPerson" id="replenishmentPerson" value=""
-                           required>
+                    <input type="text" class="form_input" name="replenishmentPerson" id="replenishmentPerson"
+                           onkeyup="this.value=this.value.replace(/^\s+|\s+$/g,'')" autocomplete="off">
                 </td>
             </tr>
 
             <tr>
-                <td class="table_field">存放地点：</td>
+                <td class="table_field">存放地点</td>
                 <td class="table_input_field">
                     <input type="text" class="form_input" name="replenishmentStorageLocation"
-                           value="" required>
+                           autocomplete="off">
                 </td>
             </tr>
 
             <tr>
-                <td class="table_field">备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：</td>
+                <td class="table_field">备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注</td>
                 <td class="table_input_field">
-                    <input type="text" class="form_input" name="replenishmentRemarks" value="">
+                    <input type="text" class="form_input" name="replenishmentRemarks" autocomplete="off">
                 </td>
             </tr>
             </tbody>
         </table>
-
-        <div class="replenishment_btn">
-            <input type="button" value="保存" onclick="submitReplenishment()" class="btn_save">
-            <input type="button" value="返回" onclick="previousPage()" class="btn_save">
-        </div>
-
     </form>
 </div>
 
+<div class="replenishment_btn">
+    <input type="button" value="确定" onclick="submitReplenishment()" class="btn_save">
+    <input type="button" value="返回" onclick="previousPage()" class="return-btn-style left-spacing">
+</div>
 
 </body>
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
-<script type="text/javascript" src="../../../../static/js/common.js"></script>
-<script type="text/javascript" src="../../../../static/js/skin.js"></script>
+<script type="text/javascript" src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
+    //记录分页
+    var currentPage = '${currentPage}';
+    var currentPageNum = JSON.parse(currentPage);
+
     //提交表单
     function submitReplenishment() {
         if ($('#replenishmentQuantity').val() === '') {
-            alert("补货数量必填！");
+            top.window.tips("补货数量为必填项", 6, 5, 1500);
         } else {
             if ($('#replenishmentPerson').val() === '') {
-                alert('补货人员必填！');
+                top.window.tips("补货人员为必填项", 6, 5, 1500);
             } else {
                 $.ajax({
                     type: "POST",
                     url: '${path}/assetsManagement/commitAssetReplenishment',
                     data: $('#assetReplenishment').serialize(),
-                    async: false,
                     error: function (request) {
                         alert("Connection error");
                     },
                     success: function (data) {
                         var result = JSON.parse(data);
                         if (result === "success") {
-                            alert("成功");
-                            window.location.href = "${path}/assetsManagement/toAssetsArchives";
+                            window.top.tips("提交成功！", 0, 1, 1000);
+                            window.location.href = "${path}/assetsManagement/toAssetsArchives?page=" + currentPageNum;
                         } else {
-                            alert('失败');
-                            var id = $('#assetManagementId').val();
-                            window.location.href = "${path}/assetsManagement/toAssetReplenishmentPage?id=" + id;
+                            window.top.tips("提交失败！", 0, 2, 1000);
+                            // var id = $('#assetManagementId').val();
+                            <%--window.location.href = "${path}/assetsManagement/toAssetReplenishmentPage?id=" + id;--%>
                         }
                     }
                 })
@@ -282,7 +280,7 @@
 
     //返回上一页
     function previousPage() {
-        window.history.back();
+        window.location.href = "${path}/assetsManagement/toAssetsArchives?page=" + currentPageNum;
     }
 </script>
 </html>
