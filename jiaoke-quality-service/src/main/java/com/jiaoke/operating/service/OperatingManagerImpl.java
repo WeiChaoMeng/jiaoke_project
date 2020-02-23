@@ -103,6 +103,12 @@ public class OperatingManagerImpl implements OperatingManagerInf {
         Map<String,Object> lastMonth =  operatingManagerDao.selectMonthContrast();
         Map<String,Object> monthBeforeLat = operatingManagerDao.selectmonthBeforeLatContrast();
 
+        if (Integer.parseInt(lastMonth.get("counts").toString()) == 0){
+            map.put("lastMonthPercent","0");
+            map.put("lastMonthCountPercent","0");
+            return JSON.toJSONString(map);
+        }
+
         float lastMonthTotal = Float.parseFloat(lastMonth.get("totals").toString());
         int lastMonthCount =  Integer.parseInt(lastMonth.get("counts").toString());
 
@@ -115,7 +121,6 @@ public class OperatingManagerImpl implements OperatingManagerInf {
 
         map.put("lastMonthPercent",String.valueOf(lastMonthPercent));
         map.put("lastMonthCountPercent",String.valueOf(lastMonthCountPercent));
-
         return JSON.toJSONString(map);
     }
 
@@ -137,7 +142,7 @@ public class OperatingManagerImpl implements OperatingManagerInf {
 
         Map<String,String> map = operatingManagerDao.selectDataByDate(dates);
 
-        if (!map.isEmpty()){
+        if (!(map == null)){
             res.put("message","error");
             return JSON.toJSONString(res);
         }
@@ -158,14 +163,21 @@ public class OperatingManagerImpl implements OperatingManagerInf {
         Map<String,Object> res = new HashMap<>();
 
         Map<String,Object> map1 = operatingManagerDao.selectThisYearPlan();
-        if (map1.isEmpty()){
+        if (map1 == null){
             res.put("message","error");
             return JSON.toJSONString(res);
         }
         Map<String,Object> map = operatingManagerDao.selectThisYearTwoCrewData();
 
         res.putAll(map1);
-        res.putAll(map);
+        if (map != null){
+            res.putAll(map);
+        }else {
+            Map<String,Object> temp = new HashMap<>();
+            temp.put("total",0);
+            res.putAll(temp);
+        };
+
 
         return JSON.toJSONString(res);
     }

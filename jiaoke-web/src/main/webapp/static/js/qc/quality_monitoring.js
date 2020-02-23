@@ -319,7 +319,7 @@ function eachresList(res){
     option1.series[2].data = crew1asphalt;
     option1.series[3].data = crew1aggregate;
     option1.series[4].data = crew1duster;
-    myChart1.setOption(option1,true);
+    myChart1.setOption(option1);
 
     option5.xAxis.data = crew2discNum;
     option5.series[0].data = crew2warehouse;
@@ -327,15 +327,15 @@ function eachresList(res){
     option5.series[2].data = crew2asphalt;
     option5.series[3].data = crew2aggregate;
     option5.series[4].data = crew2duster;
-    myChart5.setOption(option5,true);
+    myChart5.setOption(option5);
 }
 
-window.addEventListener("resize", function () {
-    myChart1.resize();
-});
-window.addEventListener("resize", function () {
-    myChart5.resize();
-});
+// window.addEventListener("resize", function () {
+//     myChart1.resize();
+// });
+// window.addEventListener("resize", function () {
+//     myChart5.resize();
+// });
 /******************************** Echart温度图表渲染nd********************************************/
 window.setInterval(getRealTimeData,3000);
 

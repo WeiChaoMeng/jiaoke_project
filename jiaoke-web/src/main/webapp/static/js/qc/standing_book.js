@@ -704,14 +704,17 @@ function getTestStandingBookByDate() {
                     + '所选日期并无试验检测'
                     + '</span>';
                 $("#testTable").remove();
-                $("#testDiv").append(rawMaterialHtml);
-
-            } else {
-
-                //判断当前是否有表格，没有就添加
-                if (!$("#testTable").length > 0){
-                    $("#testDiv").append(returnAsphaltHtml());
+                if ($("#asphaltTable").length === 0){
+                    $("#testDiv").append(rawMaterialHtml);
                 }
+            } else {
+                debugger
+                //判断当前是否有表格，没有就添加
+                $("#testTable").remove();
+                $("#testDiv").append(returnTestBookHtml());
+                // if ($("#testTable").length === 0){
+                //     $("#testDiv").append(returnAsphaltHtml());
+                // }
 
                 for (var i = 0; i < res.length;i++){
 
@@ -1162,7 +1165,7 @@ function returnTestBookHtml() {
     var testHtml = '<table class="standingBookTable" id="testTable" border="1" >'
         +'<thead>'
         +'<tr class="firstHead">'
-        +'<th colspan="7">试验检测台账</th>'
+        +'<th colspan="8">试验检测台账</th>'
         +'</tr>'
         +'<tr class="twoHead">'
         +'<th>日期</th>'

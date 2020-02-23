@@ -769,7 +769,7 @@
                             yAxisIndex: 'none'
                         },
                         dataView: {readOnly: false},
-                        magicType: {type: ['line', 'bar']},
+                        // magicType: {type: ['line', 'bar']},
                         restore: {},
                         saveAsImage: {}
                     }
@@ -866,7 +866,7 @@
                             yAxisIndex: 'none'
                         },
                         dataView: {readOnly: false},
-                        magicType: {type: ['line', 'bar']},
+                        // magicType: {type: ['line', 'bar']},
                         restore: {},
                         saveAsImage: {}
                     }

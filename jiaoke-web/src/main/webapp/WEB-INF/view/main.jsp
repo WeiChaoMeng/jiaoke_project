@@ -147,7 +147,7 @@
 </div>
 
 <div class="footer">
-    <span class="fleft">信息管理系统v2.3.2019.6.24</span>
+    <span class="fleft">信息管理系统v2.4.2020.2.22</span>
     <span class="fright">路驰版权所有<i class="infoicon iconfont">&#xe620;</i></span>
 </div>
 

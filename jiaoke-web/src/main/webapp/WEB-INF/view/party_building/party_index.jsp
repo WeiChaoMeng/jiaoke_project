@@ -28,7 +28,7 @@
 
 <ul id="tabs">
     <li><a href="#" title="tab1">学习强国</a></li>
-    <li><a href="#" title="tab2">北京长城网</a></li>
+    <li><a href="#" title="tab2">共产党员网</a></li>
     <li><a href="#" title="tab3">组织架构</a></li>
 </ul>
 <div id="content">
@@ -36,7 +36,7 @@
         <iframe src="https://www.xuexi.cn/" frameborder="0" style="width: 100%;height: 13521px;min-height: 13520px" name="iframe_a"  frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"></iframe>
     </div>
     <div id="tab2">
-        <iframe src="https://www.bjcc.gov.cn/index.html" frameborder="0" style="width: 100%;height: 3320px;min-height: 3320px" name="iframe_a"  frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"></iframe>
+        <iframe src="http://www.12371.cn/" frameborder="0" style="width: 100%;height: 3320px;min-height: 3320px" name="iframe_a"  sandbox="allow-scripts" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"></iframe>
     </div>
     <div id="tab3">
         <div id="chart-container"></div>

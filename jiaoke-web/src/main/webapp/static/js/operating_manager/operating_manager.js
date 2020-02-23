@@ -223,15 +223,28 @@ function allMonthPercent() {
         dataType:"json",
         async: false,
         success:function (res) {
-
-            if (res){
+            if (res && !(res.length === 0)){
                 option3.series[0].data = res;
                 // 使用刚指定的配置项和数据显示图表。
-                myChart3.setOption(option3);
-                window.addEventListener("resize", function () {
-                    myChart3.resize();
-                });
+
+            }else {
+                var date=new Date();
+                var months = date.getMonth() + 1;
+                var data = [];
+                var item = new Object();
+                for (var i = 1;i < months;i++ ) {
+                    item.value = 0;
+                    item.name = i + '月份';
+                    data.push(item);
+                }
+                option3.series[0].data = data;
+
             }
+            // 使用刚指定的配置项和数据显示图表。
+            myChart3.setOption(option3);
+            window.addEventListener("resize", function () {
+                myChart3.resize();
+            });
         }
     })
 }
@@ -245,22 +258,27 @@ function getEveryMonthDays() {
         dataType:"json",
         async: false,
         success:function (res) {
-
-            if (res){
-                var xArray = [];
-                var yArray = [];
+            debugger
+            var xArray = [];
+            var yArray = [];
+            if (res && !(res.length === 0)){
                 for (var i = 0; i < res.length;i++){
                     yArray.push(res[i].totals);
                     xArray.push(res[i].dates);
                 }
-                option4.xAxis[0].data = xArray;
-                option4.series[0].data = yArray;
-                // 使用刚指定的配置项和数据显示图表。
-                myChart4.setOption(option4);
-                window.addEventListener("resize", function () {
-                    myChart4.resize();
-                });
+            }else {
+                for (var j = 1; j < 13;j++){
+                    yArray.push(0);
+                    xArray.push(j);
+                }
             }
+            option4.xAxis[0].data = xArray;
+            option4.series[0].data = yArray;
+            // 使用刚指定的配置项和数据显示图表。
+            myChart4.setOption(option4);
+            window.addEventListener("resize", function () {
+                myChart4.resize();
+            });
         }
     })
 }
@@ -282,7 +300,7 @@ function getThisYearDataAndPlan() {
         type:"get",
         dataType:"json",
         success:function (res) {
-            if (res.messages == 'error'){
+            if (res.message === 'error'){
                 layer.msg("生成计划与对比产量图失败");
             } else {
                 var plan = res.totals;
@@ -317,7 +335,7 @@ function sendFromData() {
             },
             dataType:"json",
             success:function (res) {
-                if (res.messages == 'success'){
+                if (res.message == 'success'){
                     layer.msg("添加成功");
                 } else {
                     layer.msg("添加失败,该日期产量已添加");
