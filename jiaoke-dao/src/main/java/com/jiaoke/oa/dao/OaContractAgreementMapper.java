@@ -31,4 +31,11 @@ public interface OaContractAgreementMapper extends Mapper<OaContractAgreement> {
      * @return list
      */
     List<OaContractAgreement> getSelectByDate(Date date);
+
+    /**
+     * 查询所有数据
+     *
+     * @return list
+     */
+    List<OaContractAgreement> selectAllData();
 }

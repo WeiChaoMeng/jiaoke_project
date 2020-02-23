@@ -44,7 +44,7 @@ public class OaOfficeOtherServiceImpl implements OaOfficeOtherService {
      */
     @Override
     public List<OaOfficeOther> selectAll() {
-        List<OaOfficeOther> oaOfficeOtherList = oaOfficeOtherMapper.selectAll();
+        List<OaOfficeOther> oaOfficeOtherList = oaOfficeOtherMapper.selectAllData();
         for (OaOfficeOther oaOfficeOther : oaOfficeOtherList) {
             oaOfficeOther.setDateStr(DateUtil.dateConvertYYYYMMDD(oaOfficeOther.getDate()));
         }

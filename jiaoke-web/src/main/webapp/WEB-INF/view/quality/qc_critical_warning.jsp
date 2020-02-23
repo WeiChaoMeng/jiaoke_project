@@ -24,15 +24,15 @@
                 <div style="width: 100%;height: 10%;" >
                     <div class="jeitem">
                         <div class="jeitem">
-                            <label class="jelabel">开始日期：</label>
+                            <label class="jelabel" style="width: 90px;">开始日期</label>
                             <div class="dy_select_div"   >
                                 <input type="text" class="dy_select_date" id="inpstart"  placeholder="选择开始日期" >
                             </div>
-                            <label class="jelabel">结束日期：</label>
+                            <label class="jelabel" style="width: 90px;">结束日期</label>
                             <div class="dy_select_div"   >
                                 <input type="text" class="dy_select_date" id="inpend" placeholder="选择开始日期" >
                             </div>
-                            <button style="width: 160px;height: 36px;margin-left: 5%;" onclick="selectCeiticalWarning()" >查询</button>
+                            <button style="width: 160px;height: 36px;margin-left: 5%;border: none;" class="query-but" onclick="selectCeiticalWarning()" >查询</button>
                         </div>
                     </div>
                 </div>

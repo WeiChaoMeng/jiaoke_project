@@ -316,3 +316,6 @@ a {
     padding-left: 10px;
 }
 
+.query-but:hover{
+    background: #e4e4e4;
+}

@@ -205,7 +205,7 @@
                 <td class="form_title_check"><i class="required_mark">*</i>岗&nbsp;&nbsp;&nbsp;位:</td>
                 <td class="form_content_check">
                     <input class="font_input" id="position" value="" name="position" type="text"
-                           placeholder="请输入岗位" maxlength="16" autocomplete="off" onblur="checkPosition(this)">
+                           placeholder="请输入岗位" maxlength="16" onkeyup="this.value=this.value.replace(/^\s+|\s+$/g,'')" autocomplete="off" onblur="checkPosition(this)">
                     <span class="prompt-span"></span>
                 </td>
             </tr>
@@ -214,8 +214,8 @@
     </form>
 
     <div>
-        <input type="button" value="确认" onclick="confirm()" class="body-bottom-button">
-        <input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">
+        <input type="button" value="确认" onclick="confirm()" class="confirm-btn-style">
+        <input type="button" value="取消" onclick="cancel()" class="cancel-btn-style left-spacing">
     </div>
 </div>
 
@@ -223,9 +223,9 @@
 <div id="modifyUser" class="window-body-add" style="display: none">
     <form id="userInformation"></form>
 
-    <div style="padding-top: 30px">
-        <input type="button" value="确认" onclick="submissionEdit()" class="body-bottom-button">
-        <input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">
+    <div>
+        <input type="button" value="确认" onclick="submissionEdit()" class="confirm-btn-style">
+        <input type="button" value="取消" onclick="cancel()" class="cancel-btn-style  left-spacing">
     </div>
 </div>
 
@@ -242,7 +242,7 @@
                 <td class="form_content_check">
                     <input type="hidden" id="rolePage">
                     <input class="font_input" name="name" id="name" value="" type="text"
-                           placeholder="请输入角色名称" maxlength="16" onblur="checkRoleName(this)"
+                           placeholder="请输入角色名称" maxlength="16" onkeyup="this.value=this.value.replace(/^\s+|\s+$/g,'')"  onblur="checkRoleName(this)"
                            onclick="clickPromptRole(this)"
                            autocomplete="off">
                     <span class="prompt-span"></span>
@@ -253,7 +253,7 @@
                 <td class="form_title_check">角色说明:</td>
                 <td class="form_content_check">
                         <textarea class="description-text" placeholder="请输入角色说明" name="description"
-                                  id="description"></textarea>
+                                  id="description" onkeyup="this.value=this.value.replace(/^\s+|\s+$/g,'')" ></textarea>
                     <span class="prompt-span"></span>
                 </td>
             </tr>
@@ -262,8 +262,8 @@
     </form>
 
     <div style="padding-top: 20px">
-        <input type="button" value="确认" onclick="commitRole()" class="body-bottom-button">
-        <input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">
+        <input type="button" value="确认" onclick="commitRole()" class="confirm-btn-style">
+        <input type="button" value="取消" onclick="cancel()" class="cancel-btn-style left-spacing">
     </div>
 </div>
 
@@ -272,16 +272,13 @@
     <form id="roleInformation"></form>
 
     <div style="padding-top: 20px">
-        <input type="button" value="确认" onclick="commitRoleEdit()" class="body-bottom-button">
-        <input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">
+        <input type="button" value="确认" onclick="commitRoleEdit()" class="confirm-btn-style">
+        <input type="button" value="取消" onclick="cancel()" class="cancel-btn-style  left-spacing">
     </div>
 </div>
 
-<%--模态窗-角色绑定权限--%>
-<div id="bindingPermission" class="tab-right-div" style="display: none"></div>
-
 <%--模态窗-添加部门--%>
-<div id="addDepartment" class="window-body-add" style="display: none">
+<div id="addDepartment" class="window-body-add"  style="display: none">
     <table class="window-table">
         <tbody>
         <tr>
@@ -298,8 +295,8 @@
     </table>
 
     <div style="padding-top: 20px">
-        <input type="button" value="确认" onclick="commitDepartment()" class="body-bottom-button">
-        <input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">
+        <input type="button" value="确认" onclick="commitDepartment()" class="confirm-btn-style">
+        <input type="button" value="取消" onclick="cancel()" class="cancel-btn-style left-spacing">
     </div>
 </div>
 
@@ -321,8 +318,8 @@
     </table>
 
     <div style="padding-top: 20px">
-        <input type="button" value="确认" onclick="commitEditDepartment()" class="body-bottom-button">
-        <input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">
+        <input type="button" value="确认" onclick="commitEditDepartment()" class="confirm-btn-style">
+        <input type="button" value="取消" onclick="cancel()" class="cancel-btn-style left-spacing">
     </div>
 </div>
 
@@ -330,13 +327,14 @@
 <div id="bindingDepartment" style="display: none;width: 96%;height: 96%;padding: 2%">
     <div class="option-window-body-head cursor_hand">
         <input type="hidden" id="departmentId">
+        <input type="hidden" id="bindingTarget">
         <div id="selectDepartment" class="selection-content-inside">
             <ul id="departmentAndUser"></ul>
         </div>
     </div>
     <div class="option-window-body-bottom">
-        <input type="button" value="确认" onclick="confirmDepartmentHead()" class="body-bottom-button">
-        <input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">
+        <input type="button" value="确认" onclick="confirmDepartmentHead()" class="confirm-btn-style">
+        <input type="button" value="取消" onclick="cancel()" class="cancel-btn-style left-spacing">
     </div>
 </div>
 
@@ -348,8 +346,8 @@
         </div>
     </div>
     <div class="option-window-body-bottom">
-        <input type="button" value="确认" onclick="confirmDepartmentRecipient()" class="body-bottom-button">
-        <input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">
+        <input type="button" value="确认" onclick="confirmDepartmentRecipient()" class="confirm-btn-style">
+        <input type="button" value="取消" onclick="cancel()" class="cancel-btn-style left-spacing">
     </div>
 </div>
 
@@ -361,8 +359,8 @@
         <ul id="singleSelectionContent"></ul>
     </div>
     <div class="option-window-body-bottom">
-        <input type="button" value="确认" onclick="confirmReviewers()" class="body-bottom-button">
-        <input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">
+        <input type="button" value="确认" onclick="confirmReviewers()" class="confirm-btn-style">
+        <input type="button" value="取消" onclick="cancel()" class="cancel-btn-style  left-spacing">
     </div>
 </div>
 
@@ -400,8 +398,8 @@
     <%--js获取路径--%>
     <input id="path" type="hidden" value="${path}"/>
     <div class="option-window-body-bottom">
-        <input type="button" value="确认" onclick="consentNotifyPerson()" class="body-bottom-button">
-        <input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">
+        <input type="button" value="确认" onclick="consentNotifyPerson()" class="confirm-btn-style">
+        <input type="button" value="取消" onclick="cancel()" class="cancel-btn-style  left-spacing">
     </div>
 </div>
 
@@ -421,8 +419,8 @@
     </div>
 
     <div class="option-window-body-bottom" style="padding: 0;">
-        <input type="button" value="确认" onclick="fileConfirm()" class="body-bottom-button">
-        <input type="button" value="取消" onclick="fileCancel()" class="body-bottom-button left-spacing">
+        <input type="button" value="确认" onclick="fileConfirm()" class="confirm-btn-style">
+        <input type="button" value="取消" onclick="fileCancel()" class="cancel-btn-style  left-spacing">
     </div>
 </div>
 
@@ -460,8 +458,8 @@
         </div>
     </div>
     <div class="option-window-body-bottom">
-        <input type="button" value="确认" onclick="confirmDepartmentSelection()" class="body-bottom-button">
-        <input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">
+        <input type="button" value="确认" onclick="confirmDepartmentSelection()" class="confirm-btn-style">
+        <input type="button" value="取消" onclick="cancel()" class="cancel-btn-style left-spacing">
     </div>
 </div>
 
@@ -1058,7 +1056,7 @@
         window.lar = layer.open({
             title: '添加部门',
             type: 1,
-            area: ['25%', '35%'],
+            area: ['25%', '30%'],
             shadeClose: true, //点击遮罩关闭
             content: $("#addDepartment"),
             offset: "20%"
@@ -1150,7 +1148,7 @@
     }
 
     //部门绑定主管
-    function bindingDepartmentHead(userInfoList, departmentList, id, page) {
+    function bindingDepartmentHead(userInfoList, departmentList, id, page, target) {
         window.lar = layer.open({
             title: '绑定负责人',
             type: 1,
@@ -1163,6 +1161,8 @@
         $('#departmentPage').val(page);
         //部门id
         $('#departmentId').val(id);
+        //绑定的目标：1、部门负责人，2、部门主管领导
+        $('#bindingTarget').val(target);
         //加载部门和员工
         var department = "";
         for (let i = 0; i < departmentList.length; i++) {
@@ -1202,28 +1202,50 @@
         //是否包含selectedDrafter
         if (lis.hasClass("selection")) {
             //选择的用户id
-            var principal = $(".selection").prev().attr('id')
+            var principal = $(".selection").prev().attr('id');
             //部门id
             var id = $('#departmentId').val();
-            $.ajax({
-                type: "post",
-                url: '/backstageManagement/bindingDepartmentHead',
-                data: {'id': id, 'principal': principal},
-                success: function (data) {
-                    if (data === 'success') {
-                        layer.close(window.lar);
-                        layer.msg("绑定部门主管成功!");
-                        $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.departmentInfoPageReload($('#departmentPage').val());
-                    } else {
-                        layer.msg("绑定部门主管失败!");
+            //绑定的目标：1、部门负责人，2、部门主管领导
+            var target = $('#bindingTarget').val();
+            if(target == 1){
+                $.ajax({
+                    type: "post",
+                    url: '/backstageManagement/bindingDepartmentPrincipal',
+                    data: {'id': id, 'principal': principal},
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.close(window.lar);
+                            layer.msg("绑定部门负责人成功!");
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.departmentInfoPageReload($('#departmentPage').val());
+                        } else {
+                            layer.msg("绑定部门负责人失败!");
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
                     }
-                },
-                error: function (result) {
-                    layer.msg("出错！");
-                }
-            })
+                })
+            }else{
+                $.ajax({
+                    type: "post",
+                    url: '/backstageManagement/bindingDepartmentSupervisor',
+                    data: {'id': id, 'supervisor': principal},
+                    success: function (data) {
+                        if (data === 'success') {
+                            layer.close(window.lar);
+                            layer.msg("绑定部门主管成功!");
+                            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.departmentInfoPageReload($('#departmentPage').val());
+                        } else {
+                            layer.msg("绑定部门主管失败!");
+                        }
+                    },
+                    error: function (result) {
+                        layer.msg("出错！");
+                    }
+                })
+            }
         } else {
-            layer.msg('请选择负责人！')
+            layer.msg('请先选择')
         }
     }
 
@@ -1403,7 +1425,7 @@
         resultRoleInfo += '<tr>';
         resultRoleInfo += '<td class="form_title">角色说明:</td>';
         resultRoleInfo += '<td class="form_content">';
-        resultRoleInfo += '<textarea class="description-text" name="description" id="descriptionEdit" placeholder="请输入角色说明">';
+        resultRoleInfo += '<textarea class="description-text" name="description" id="descriptionEdit" placeholder="请输入角色说明" onkeyup="this.value=this.value.replace(/^\\s+|\\s+$/g,\'\')" >';
         resultRoleInfo += roleInfo.description;
         resultRoleInfo += '</textarea>';
         resultRoleInfo += '</td>';
@@ -1414,7 +1436,7 @@
         $('#roleInformation').html(resultRoleInfo);
     }
 
-    //提交编辑后的用户
+    //提交编辑后的角色
     function commitRoleEdit() {
         //角色id
         var description = $('#descriptionEdit').val();
@@ -1580,7 +1602,7 @@
         resultsInfo += '</tr>';
         resultsInfo += '<tr>';
         resultsInfo += '<td class="form_title_check" style="padding-top: 8px">密码:</td>';
-        resultsInfo += '<td class="form_content_check" style="padding-top: 8px">';
+        resultsInfo += '<td class="form_content_check">';
         resultsInfo += '<input class="font_input" name="password" id="passwordEdit" value="' + userInfo.password + '" type="text" autocomplete="off" onblur="checkPassword(this)">';
         resultsInfo += '<span class="prompt-span"></span>';
         resultsInfo += '</td>';
@@ -1609,7 +1631,7 @@
         resultsInfo += '<tr>';
         resultsInfo += '<td class="form_title_check">岗位:</td>';
         resultsInfo += '<td class="form_content_check">';
-        resultsInfo += '<input class="font_input" name="position" id="positionEdit" value="' + userInfo.position + '" type="text" autocomplete="off" onblur="checkPosition(this)">';
+        resultsInfo += '<input class="font_input" name="position" id="positionEdit" value="' + userInfo.position + '" type="text" onkeyup="this.value=this.value.replace(/^\\s+|\\s+$/g,\'\')" autocomplete="off" onblur="checkPosition(this)">';
         resultsInfo += '<span class="prompt-span"></span>';
         resultsInfo += '</td>';
         resultsInfo += '</tr>';
@@ -1638,9 +1660,9 @@
                     if (!nick) {
                         return;
                     } else {
-                        if ($('#position').val() === '') {
-                            $('#position').next().html("请输入岗位");
-                            $('#position').next().css("color", "#ff0202");
+                        if ($('#positionEdit').val() === '') {
+                            $('#positionEdit').next().html("请输入岗位");
+                            $('#positionEdit').next().css("color", "#ff0202");
                         } else {
                             $.ajax({
                                 type: "post",
@@ -1702,8 +1724,8 @@
         roleInfoList += '</table>';
         roleInfoList += '</div>';
         roleInfoList += '<div style="padding-top: 20px;text-align: center">';
-        roleInfoList += '<input type="button" value="确认" onclick="submissionBinding()" class="body-bottom-button">';
-        roleInfoList += '<input type="button" value="取消" onclick="cancel()" class="body-bottom-button left-spacing">';
+        roleInfoList += '<input type="button" value="确认" onclick="submissionBinding()" class="confirm-btn-style">';
+        roleInfoList += '<input type="button" value="取消" onclick="cancel()" class="cancel-btn-style left-spacing">';
         roleInfoList += '</div>';
 
         $('#bindingRole').html(roleInfoList);

@@ -59,7 +59,8 @@ public class OaReleaseDocumentController {
      * @return add.jsp
      */
     @RequestMapping(value = "/toNewReleaseDocument")
-    public String toNewReleaseDocument() {
+    public String toNewReleaseDocument(int prev, Model model) {
+        model.addAttribute("prev", JsonHelper.toJSONString(prev));
         return "oa/archives/office/release_document/add";
     }
 
@@ -69,9 +70,12 @@ public class OaReleaseDocumentController {
      * @return add.jsp
      */
     @RequestMapping(value = "/addReleaseDocument", method = RequestMethod.POST)
+    @ResponseBody
     public String add(OaReleaseDocument oaReleaseDocument) {
-        int i = oaReleaseDocumentService.insertSelective(oaReleaseDocument);
-        return "redirect:/releaseDocument/toReleaseDocument?page=1";
+        if (oaReleaseDocumentService.insertSelective(oaReleaseDocument) < 0) {
+            return JsonHelper.toJSONString("error");
+        }
+        return JsonHelper.toJSONString("success");
     }
 
     /**
@@ -127,9 +131,10 @@ public class OaReleaseDocumentController {
      * @return edit.jsp
      */
     @RequestMapping("/toEdit")
-    public String toEdit(Model model, int id) {
+    public String toEdit(Model model, int prev, int id) {
         OaReleaseDocument oaReleaseDocument = oaReleaseDocumentService.selectByPrimaryKey(id);
         model.addAttribute("oaReleaseDocument", oaReleaseDocument);
+        model.addAttribute("prev", JsonHelper.toJSONString(prev));
         return "oa/archives/office/release_document/edit";
     }
 
@@ -140,9 +145,12 @@ public class OaReleaseDocumentController {
      * @return 影响行数
      */
     @RequestMapping("/edit")
+    @ResponseBody
     public String edit(OaReleaseDocument oaReleaseDocument) {
-        int i = oaReleaseDocumentService.updateByPrimaryKeySelective(oaReleaseDocument);
-        return "redirect:/releaseDocument/toReleaseDocument?page=1";
+        if (oaReleaseDocumentService.updateByPrimaryKeySelective(oaReleaseDocument) < 0) {
+            return JsonHelper.toJSONString("error");
+        }
+        return JsonHelper.toJSONString("success");
     }
 
     /**
@@ -168,8 +176,9 @@ public class OaReleaseDocumentController {
      * @return edit.jsp
      */
     @RequestMapping(value = "/toReleaseDocumentDetails")
-    public String particulars(int id, Model model) {
+    public String particulars(int id, int prev, Model model) {
         OaReleaseDocument oaReleaseDocument = oaReleaseDocumentService.selectByPrimaryKey(id);
+        model.addAttribute("prev", JsonHelper.toJSONString(prev));
         model.addAttribute("oaReleaseDocument", oaReleaseDocument);
         return "oa/archives/office/release_document/details";
     }

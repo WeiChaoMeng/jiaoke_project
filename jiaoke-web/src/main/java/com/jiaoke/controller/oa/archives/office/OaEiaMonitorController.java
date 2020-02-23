@@ -59,7 +59,8 @@ public class OaEiaMonitorController {
      * @return add.jsp
      */
     @RequestMapping(value = "/toNewEiaMonitor")
-    public String toNewReleaseDocument() {
+    public String toNewReleaseDocument(int prev, Model model) {
+        model.addAttribute("prev", JsonHelper.toJSONString(prev));
         return "oa/archives/office/eia_monitor/add";
     }
 
@@ -69,9 +70,12 @@ public class OaEiaMonitorController {
      * @return add.jsp
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @ResponseBody
     public String add(OaEiaMonitor oaEiaMonitor) {
-        int i = oaEiaMonitorService.insertSelective(oaEiaMonitor);
-        return "redirect:/eiaMonitor/toEiaMonitor?page=1";
+        if (oaEiaMonitorService.insertSelective(oaEiaMonitor) < 0) {
+            return JsonHelper.toJSONString("error");
+        }
+        return JsonHelper.toJSONString("success");
     }
 
     /**
@@ -112,8 +116,9 @@ public class OaEiaMonitorController {
      * @return edit.jsp
      */
     @RequestMapping("/toEdit")
-    public String toEdit(Model model, int id) {
+    public String toEdit(Model model, int prev, int id) {
         OaEiaMonitor oaEiaMonitor = oaEiaMonitorService.selectByPrimaryKey(id);
+        model.addAttribute("prev", JsonHelper.toJSONString(prev));
         model.addAttribute("oaEiaMonitor", oaEiaMonitor);
         return "oa/archives/office/eia_monitor/edit";
     }
@@ -125,9 +130,12 @@ public class OaEiaMonitorController {
      * @return 影响行数
      */
     @RequestMapping("/edit")
+    @ResponseBody
     public String edit(OaEiaMonitor oaEiaMonitor) {
-        int i = oaEiaMonitorService.updateByPrimaryKeySelective(oaEiaMonitor);
-        return "redirect:/eiaMonitor/toEiaMonitor?page=1";
+        if (oaEiaMonitorService.updateByPrimaryKeySelective(oaEiaMonitor) < 0) {
+            return JsonHelper.toJSONString("error");
+        }
+        return JsonHelper.toJSONString("success");
     }
 
     /**
@@ -153,8 +161,9 @@ public class OaEiaMonitorController {
      * @return edit.jsp
      */
     @RequestMapping(value = "/details")
-    public String particulars(int id, Model model) {
+    public String particulars(int id, int prev, Model model) {
         OaEiaMonitor oaEiaMonitor = oaEiaMonitorService.selectByPrimaryKey(id);
+        model.addAttribute("prev", JsonHelper.toJSONString(prev));
         model.addAttribute("oaEiaMonitor", oaEiaMonitor);
         return "oa/archives/office/eia_monitor/details";
     }

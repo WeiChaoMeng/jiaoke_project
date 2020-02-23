@@ -44,7 +44,7 @@ public class OaReceiveDocumentServiceImpl implements OaReceiveDocumentService {
      */
     @Override
     public List<OaReceiveDocument> selectAll() {
-        List<OaReceiveDocument> oaReceiveDocumentList = oaReceiveDocumentMapper.selectAll();
+        List<OaReceiveDocument> oaReceiveDocumentList = oaReceiveDocumentMapper.selectAllData();
         for (OaReceiveDocument oaReceiveDocument : oaReceiveDocumentList) {
             oaReceiveDocument.setReceiveDateStr(DateUtil.dateConvertYYYYMMDD(oaReceiveDocument.getReceiveDate()));
         }

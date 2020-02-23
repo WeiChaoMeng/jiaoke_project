@@ -80,30 +80,34 @@ table {
 }
 
 .commit-but-inp{
-    padding: 7px 20px;
-    background: #92ebff;
-    border: 1px #a5a5a5 solid;
-    cursor: pointer;
-    outline: none;
     border-radius: 5px;
-    margin-left: 10px;
+    padding: 8px 21px;
+    background: #2ca4f9;
+    outline: none;
+    color: #ffffff;
+    cursor: pointer;
 }
 
 .commit-but-inp:hover {
-    background: #00BCD4;
+    background: #42acf9;
 }
 
 .return-but-inp{
-    background: #FFFFFF;
+    border-radius: 5px;
     padding: 7px 20px;
     border: 1px #a5a5a5 solid;
-    cursor: pointer;
     outline: none;
-    border-radius: 5px;
+    background: #ffffff;
+    color: #000;
+    cursor: pointer;
 }
 
 .return-but-inp:hover {
-    background: #00BCD4;
+    color: #5d5d5d;
+}
+
+.left-spacing{
+    margin-left: 10px;
 }
 
 .form_input {
@@ -114,6 +118,17 @@ table {
     line-height: 26px;
     text-indent: 8px;
     outline: none;
+}
+
+.form-input-readonly {
+    width: 100%;
+    color: #000;
+    height: 30px;
+    border: solid 1px #c6c6c6;
+    line-height: 26px;
+    text-indent: 8px;
+    outline: none;
+    background-color: #e8e8e8;
 }
 
 .table_content {

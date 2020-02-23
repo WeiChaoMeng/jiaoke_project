@@ -64,6 +64,11 @@ public class OaActRead {
     private String fileTitle;
 
     /**
+     * 拟办部门0.领导班子，1.各部门负责人
+     */
+    private Integer receiptDepartment;
+
+    /**
      * 拟办意见
      */
     private String receiptProposed;
@@ -335,5 +340,13 @@ public class OaActRead {
 
     public void setCompanyPrincipalContent(String companyPrincipalContent) {
         this.companyPrincipalContent = companyPrincipalContent;
+    }
+
+    public Integer getReceiptDepartment() {
+        return receiptDepartment;
+    }
+
+    public void setReceiptDepartment(Integer receiptDepartment) {
+        this.receiptDepartment = receiptDepartment;
     }
 }

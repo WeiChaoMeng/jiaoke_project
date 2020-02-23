@@ -59,7 +59,8 @@ public class OaManagementSystemController {
      * @return add.jsp
      */
     @RequestMapping(value = "/toNewManagementSystem")
-    public String toNewReleaseDocument() {
+    public String toNewReleaseDocument(int prev, Model model) {
+        model.addAttribute("prev", JsonHelper.toJSONString(prev));
         return "oa/archives/office/management_system/add";
     }
 
@@ -69,9 +70,12 @@ public class OaManagementSystemController {
      * @return add.jsp
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @ResponseBody
     public String add(OaManagementSystem oaManagementSystem) {
-        int i = oaManagementSystemService.insertSelective(oaManagementSystem);
-        return "redirect:/managementSystem/toManagementSystem?page=1";
+        if (oaManagementSystemService.insertSelective(oaManagementSystem) < 0) {
+            return JsonHelper.toJSONString("error");
+        }
+        return JsonHelper.toJSONString("success");
     }
 
     /**
@@ -112,8 +116,9 @@ public class OaManagementSystemController {
      * @return edit.jsp
      */
     @RequestMapping("/toEdit")
-    public String toEdit(Model model, int id) {
+    public String toEdit(Model model, int prev, int id) {
         OaManagementSystem oaManagementSystem = oaManagementSystemService.selectByPrimaryKey(id);
+        model.addAttribute("prev", JsonHelper.toJSONString(prev));
         model.addAttribute("oaManagementSystem", oaManagementSystem);
         return "oa/archives/office/management_system/edit";
     }
@@ -125,9 +130,12 @@ public class OaManagementSystemController {
      * @return 影响行数
      */
     @RequestMapping("/edit")
+    @ResponseBody
     public String edit(OaManagementSystem oaManagementSystem) {
-        int i = oaManagementSystemService.updateByPrimaryKeySelective(oaManagementSystem);
-        return "redirect:/managementSystem/toManagementSystem?page=1";
+        if (oaManagementSystemService.updateByPrimaryKeySelective(oaManagementSystem) < 0) {
+            return JsonHelper.toJSONString("error");
+        }
+        return JsonHelper.toJSONString("success");
     }
 
     /**
@@ -153,8 +161,9 @@ public class OaManagementSystemController {
      * @return edit.jsp
      */
     @RequestMapping(value = "/toManagementSystemDetails")
-    public String particulars(int id, Model model) {
+    public String particulars(int id, int prev, Model model) {
         OaManagementSystem oaManagementSystem = oaManagementSystemService.selectByPrimaryKey(id);
+        model.addAttribute("prev", JsonHelper.toJSONString(prev));
         model.addAttribute("oaManagementSystem", oaManagementSystem);
         return "oa/archives/office/management_system/details";
     }

@@ -10,11 +10,10 @@
             release_department as releaseDepartment,
             release_date as releaseDate,
             summary as summary,
-            rich_text as richText,
-            create_time as createTime
+            rich_text as richText
         FROM oa_corporate_honor
         ORDER BY
-            create_time DESC
+            release_date desc
         LIMIT 5
     </select>
 
@@ -26,10 +25,9 @@
             release_department as releaseDepartment,
             release_date as releaseDate,
             summary as summary,
-            rich_text as richText,
-            create_time as createTime
+            rich_text as richText
         FROM oa_corporate_honor
         ORDER BY
-            create_time DESC
+            release_date desc
     </select>
 </mapper>

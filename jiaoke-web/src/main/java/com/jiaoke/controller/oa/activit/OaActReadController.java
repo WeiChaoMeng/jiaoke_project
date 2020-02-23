@@ -114,6 +114,7 @@ public class OaActReadController {
         model.addAttribute("oaActRead", oaActRead);
         model.addAttribute("taskId", JsonHelper.toJSONString(taskId));
         model.addAttribute("commentsList", commentsList);
+        model.addAttribute("nickname", getCurrentUser().getNickname());
         return "oa/act/oa_document_reading_handle";
     }
 
@@ -193,8 +194,25 @@ public class OaActReadController {
 
                         Map<String, Object> map = new HashMap<>(16);
                         List<Object> leaveNotifyList = new ArrayList<>();
-                        leaveNotifyList.add("5");
-                        leaveNotifyList.add("6");
+
+                        if (oaActRead.getReceiptDepartment() == 0){
+                            leaveNotifyList.add("3");
+                            leaveNotifyList.add("4");
+                        }else {
+                            leaveNotifyList.add("5");
+                            leaveNotifyList.add("22");
+                            leaveNotifyList.add("23");
+                            leaveNotifyList.add("24");
+                            leaveNotifyList.add("25");
+                            leaveNotifyList.add("34");
+                            leaveNotifyList.add("38");
+                            leaveNotifyList.add("47");
+                            leaveNotifyList.add("48");
+                            leaveNotifyList.add("58");
+                            leaveNotifyList.add("59");
+                            leaveNotifyList.add("60");
+                        }
+
                         map.put("leaveNotifyList", leaveNotifyList);
                         activitiUtil.designatedCountersignPersonnel(taskId,map);
                         return "success";

@@ -59,7 +59,8 @@ public class OaReceiveDocumentController {
      * @return add.jsp
      */
     @RequestMapping(value = "/toNewReceiveDocument")
-    public String toNewReleaseDocument() {
+    public String toNewReleaseDocument(int prev, Model model) {
+        model.addAttribute("prev", JsonHelper.toJSONString(prev));
         return "oa/archives/office/receive_document/add";
     }
 
@@ -69,9 +70,12 @@ public class OaReceiveDocumentController {
      * @return add.jsp
      */
     @RequestMapping(value = "/addReceiveDocument", method = RequestMethod.POST)
+    @ResponseBody
     public String add(OaReceiveDocument oaReceiveDocument) {
-        int i = oaReceiveDocumentService.insertSelective(oaReceiveDocument);
-        return "redirect:/receiveDocument/toReceiveDocument?page=1";
+        if (oaReceiveDocumentService.insertSelective(oaReceiveDocument) < 0) {
+            return JsonHelper.toJSONString("error");
+        }
+        return JsonHelper.toJSONString("success");
     }
 
     /**
@@ -127,9 +131,10 @@ public class OaReceiveDocumentController {
      * @return edit.jsp
      */
     @RequestMapping("/toEdit")
-    public String toEdit(Model model, int id) {
+    public String toEdit(Model model, int id, int prev) {
         OaReceiveDocument oaReceiveDocument = oaReceiveDocumentService.selectByPrimaryKey(id);
         model.addAttribute("oaReceiveDocument", oaReceiveDocument);
+        model.addAttribute("prev", JsonHelper.toJSONString(prev));
         return "oa/archives/office/receive_document/edit";
     }
 
@@ -140,9 +145,12 @@ public class OaReceiveDocumentController {
      * @return 影响行数
      */
     @RequestMapping("/edit")
+    @ResponseBody
     public String edit(OaReceiveDocument oaReceiveDocument) {
-        int i = oaReceiveDocumentService.updateByPrimaryKeySelective(oaReceiveDocument);
-        return "redirect:/receiveDocument/toReceiveDocument?page=1";
+        if (oaReceiveDocumentService.updateByPrimaryKeySelective(oaReceiveDocument) < 0) {
+            return JsonHelper.toJSONString("error");
+        }
+        return JsonHelper.toJSONString("success");
     }
 
     /**
@@ -168,9 +176,10 @@ public class OaReceiveDocumentController {
      * @return edit.jsp
      */
     @RequestMapping(value = "/toReceiveDocumentDetails")
-    public String particulars(int id, Model model) {
+    public String particulars(int id, int prev,Model model) {
         OaReceiveDocument oaReceiveDocument = oaReceiveDocumentService.selectByPrimaryKey(id);
         model.addAttribute("oaReceiveDocument", oaReceiveDocument);
+        model.addAttribute("prev", JsonHelper.toJSONString(prev));
         return "oa/archives/office/receive_document/details";
     }
 }

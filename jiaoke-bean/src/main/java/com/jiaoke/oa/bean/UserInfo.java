@@ -56,28 +56,9 @@ public class UserInfo implements Serializable {
     private Integer age;
 
     /**
-     * 入职日期
-     */
-    private Date entryDate;
-    @Transient
-    private String entryDateStr;
-
-    /**
-     * 转正日期
-     */
-    private Date positiveDate;
-    @Transient
-    private String positiveDateStr;
-
-    /**
      * 性别：0男，1女
      */
     private Integer sex;
-
-    /**
-     * 工作性质
-     */
-    private String nature;
 
     /**
      * 手机号
@@ -103,11 +84,6 @@ public class UserInfo implements Serializable {
      * 部门编码
      */
     private String department;
-
-    /**
-     * 部门负责人
-     */
-    private String deptPrincipal;
 
     private static final long serialVersionUID = 1L;
 
@@ -143,64 +119,12 @@ public class UserInfo implements Serializable {
         this.nickname = nickname;
     }
 
-    public String getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department;
-    }
-
     public String getPosition() {
         return position;
     }
 
     public void setPosition(String position) {
         this.position = position;
-    }
-
-    public Integer getSex() {
-        return sex;
-    }
-
-    public void setSex(Integer sex) {
-        this.sex = sex;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Date getRegisterTime() {
-        return registerTime;
-    }
-
-    public void setRegisterTime(Date registerTime) {
-        this.registerTime = registerTime;
-    }
-
-    public String getDeptPrincipal() {
-        return deptPrincipal;
-    }
-
-    public void setDeptPrincipal(String deptPrincipal) {
-        this.deptPrincipal = deptPrincipal;
-    }
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
     }
 
     public String getJob() {
@@ -227,6 +151,30 @@ public class UserInfo implements Serializable {
         this.birthdayStr = birthdayStr;
     }
 
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public Integer getSex() {
+        return sex;
+    }
+
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public String getTelephone() {
         return telephone;
     }
@@ -235,51 +183,31 @@ public class UserInfo implements Serializable {
         this.telephone = telephone;
     }
 
-    public String getNature() {
-        return nature;
+    public String getEmail() {
+        return email;
     }
 
-    public void setNature(String nature) {
-        this.nature = nature;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public Date getEntryDate() {
-        return entryDate;
+    public Date getRegisterTime() {
+        return registerTime;
     }
 
-    public void setEntryDate(Date entryDate) {
-        this.entryDate = entryDate;
+    public void setRegisterTime(Date registerTime) {
+        this.registerTime = registerTime;
     }
 
-    public String getEntryDateStr() {
-        return entryDateStr;
+    public String getDepartment() {
+        return department;
     }
 
-    public void setEntryDateStr(String entryDateStr) {
-        this.entryDateStr = entryDateStr;
+    public void setDepartment(String department) {
+        this.department = department;
     }
 
-    public Date getPositiveDate() {
-        return positiveDate;
-    }
-
-    public void setPositiveDate(Date positiveDate) {
-        this.positiveDate = positiveDate;
-    }
-
-    public String getPositiveDateStr() {
-        return positiveDateStr;
-    }
-
-    public void setPositiveDateStr(String positiveDateStr) {
-        this.positiveDateStr = positiveDateStr;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 }

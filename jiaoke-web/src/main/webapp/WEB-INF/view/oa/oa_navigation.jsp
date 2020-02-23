@@ -459,7 +459,7 @@
     </div>
 
     <div style="margin-top: 15px;text-align: center">
-        <input type="button" value="确认" onclick="confirmTest()" class="body-bottom-button">
+        <input type="button" value="确认" onclick="confirmTest()" class="confirm-btn-style">
     </div>
 
     <input type="hidden" id="rolePage">

@@ -1494,7 +1494,7 @@ table {
     padding: 5px 15px;
     border: 0;
     cursor: pointer;
-    background: #38adff;
+    background: #2ca4f9;
     outline: none;
     border-radius: 5px;
     color: #FFFFFF;
@@ -1503,5 +1503,56 @@ table {
 }
 
 .publish-new-content:hover {
-    background-color: #0284df;
+    background: #42acf9;
+}
+
+/*取消按钮*/
+.cancel-btn-style{
+    border-radius: 5px;
+    padding: 7px 20px;
+    border: 1px #a5a5a5 solid;
+    outline: none;
+    background: #ffffff;
+    color: #000;
+    cursor: pointer;
+}
+
+.cancel-btn-style:hover{
+    color: #5d5d5d;
+}
+
+/*新样式*/
+.head-left-button {
+    font-family: "iconfont" !important;
+    display: table-cell;
+    height: 20px;
+    width: 70px;
+    vertical-align: middle;
+    text-align: center;
+    float: left;
+    padding-top: 2px;
+}
+
+.head-left-button button {
+    border: 0;
+    height: 100%;
+    background: none;
+    padding: 0;
+    margin: 0;
+    outline: none;
+}
+
+.head-left-button button:hover {
+    color: #0089f7;
+}
+
+.page-head {
+    height: 30px;
+    width: 100%;
+    background: #f1f1f1;
+}
+
+.page-head table {
+    width: 100%;
+    height: 100%;
 }

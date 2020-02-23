@@ -7,6 +7,11 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
+    request.setAttribute("path", basePath);
+%>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -22,36 +27,36 @@
     <tbody>
 
     <tr>
-        <td class="tlabel">收文时间：</td>
+        <td class="tlabel">收文时间</td>
         <td colspan="5">
             ${oaReceiveDocument.receiveDateStr}
         </td>
 
-        <td class="tlabel">收文编号：</td>
+        <td class="tlabel">收文编号</td>
         <td colspan="5">
             ${oaReceiveDocument.documentNumber}
         </td>
     </tr>
 
     <tr>
-        <td class="tlabel">来文字号：</td>
+        <td class="tlabel">来文字号</td>
         <td colspan="5">
             ${oaReceiveDocument.documentReceivedNumber}
         </td>
 
-        <td class="tlabel">标题：</td>
+        <td class="tlabel">标题</td>
         <td colspan="5">
             ${oaReceiveDocument.documentName}
         </td>
     </tr>
 
     <tr>
-        <td class="tlabel">备注：</td>
+        <td class="tlabel">备注</td>
         <td colspan="5">
             ${oaReceiveDocument.remarks}
         </td>
 
-        <td class="tlabel">发文部门：</td>
+        <td class="tlabel">发文部门</td>
         <td colspan="5">
             <c:choose>
                 <c:when test="${oaReceiveDocument.publishingDepartment == 0}">
@@ -104,19 +109,19 @@
 </div>
 
 <div style="text-align: center;padding-top: 20px;">
-    <input type="button" value="返回" onclick="previousPage()"
-           style="padding: 7px 20px; background: #92ebff;border: 1px #a5a5a5 solid;">
+    <input type="button" value="返回" onclick="previousPage()" class="cancel-btn-style">
 </div>
 
 </body>
 
 <script type="text/javascript" src="../../../../../../static/js/jquery.js"></script>
-<script type="text/javascript"
-        src="../../../../../../static/js/datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
 <script>
+    //记录上页
+    var prevNum = JSON.parse('${prev}');
+
     //返回上一页
     function previousPage() {
-        window.history.back();
+        window.location.href = '${path}/receiveDocument/toReceiveDocument?page=' + prevNum;
     }
 </script>
 </html>

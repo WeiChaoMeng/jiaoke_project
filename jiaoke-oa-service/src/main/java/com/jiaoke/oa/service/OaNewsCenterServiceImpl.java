@@ -24,8 +24,7 @@ public class OaNewsCenterServiceImpl implements OaNewsCenterService {
 
     @Override
     public int insertSelective(OaNewsCenter oaNewsCenter) {
-        oaNewsCenter.setReleaseDate(DateUtil.stringConvertYYYYMMDDHHMMSS(oaNewsCenter.getReleaseDateStr()));
-        oaNewsCenter.setCreateTime(new Date());
+        oaNewsCenter.setReleaseDate(new Date());
         return oaNewsCenterMapper.insertSelective(oaNewsCenter);
     }
 
@@ -49,7 +48,7 @@ public class OaNewsCenterServiceImpl implements OaNewsCenterService {
     public List<OaNewsCenter> selectLatestData() {
         List<OaNewsCenter> oaNewsCenterList = oaNewsCenterMapper.selectLatestData();
         for (OaNewsCenter oaNewsCenter : oaNewsCenterList) {
-            oaNewsCenter.setReleaseDateStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaNewsCenter.getReleaseDate()));
+            oaNewsCenter.setReleaseDateStr(DateUtil.dateConvertYYYYMMDDHHMM(oaNewsCenter.getReleaseDate()));
         }
         return oaNewsCenterList;
     }

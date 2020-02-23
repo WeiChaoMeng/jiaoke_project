@@ -42,7 +42,7 @@ public class OaContractAgreementServiceImpl implements OaContractAgreementServic
      */
     @Override
     public List<OaContractAgreement> selectAll() {
-        List<OaContractAgreement> oaContractAgreementList = oaContractAgreementMapper.selectAll();
+        List<OaContractAgreement> oaContractAgreementList = oaContractAgreementMapper.selectAllData();
         for (OaContractAgreement oaContractAgreement : oaContractAgreementList) {
             oaContractAgreement.setDateStr(DateUtil.dateConvertYYYYMMDD(oaContractAgreement.getDate()));
         }

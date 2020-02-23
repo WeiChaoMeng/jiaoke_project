@@ -59,7 +59,7 @@
                                         <option value="select" >请选择</option>
                                     </select>
                                 </div>
-                                <button style="width: 160px;height: 36px;margin-left: 5%;" onclick="selectPromessageByRaionModel()" >查询</button>
+                                <button style="width: 160px;height: 36px;margin-left: 5%;" class="query-but" onclick="selectPromessageByRaionModel()" >查询</button>
                             </div>
                     </div>
                 </div>

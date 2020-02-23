@@ -521,3 +521,17 @@ table {
     background: #92ebff;
     border: 1px #a5a5a5 solid;
 }
+
+/*确认按钮*/
+.confirm-btn-style{
+    border-radius: 5px;
+    padding: 8px 21px;
+    background: #2ca4f9;
+    outline: none;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.confirm-btn-style:hover{
+    background: #42acf9;
+}

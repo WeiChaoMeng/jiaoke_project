@@ -7,6 +7,11 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
+    request.setAttribute("path", basePath);
+%>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -22,24 +27,24 @@
     <tbody>
 
     <tr>
-        <td class="tlabel">编号：</td>
+        <td class="tlabel">编号</td>
         <td colspan="5">
             ${oaOfficeOther.numbering}
         </td>
 
-        <td class="tlabel">名称：</td>
+        <td class="tlabel">名称</td>
         <td colspan="5">
             ${oaOfficeOther.name}
         </td>
     </tr>
 
     <tr>
-        <td class="tlabel">日期：</td>
+        <td class="tlabel">日期</td>
         <td colspan="5">
             ${oaOfficeOther.dateStr}
         </td>
 
-        <td class="tlabel">存档人：</td>
+        <td class="tlabel">存档人</td>
         <td colspan="5">
             ${oaOfficeOther.archivingPerson}
         </td>
@@ -55,19 +60,19 @@
 </div>
 
 <div style="text-align: center;padding-top: 20px;">
-    <input type="button" value="返回" onclick="previousPage()"
-           style="padding: 7px 20px; background: #92ebff;border: 1px #a5a5a5 solid;">
+    <input type="button" value="返回" onclick="previousPage()" class="cancel-btn-style">
 </div>
 
 </body>
 
 <script type="text/javascript" src="../../../../../../static/js/jquery.js"></script>
-<script type="text/javascript"
-        src="../../../../../../static/js/datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
 <script>
+    //记录上页
+    var prevNum = JSON.parse('${prev}');
+
     //返回上一页
     function previousPage() {
-        window.history.back();
+        window.location.href = '${path}/officeOther/toOfficeOther?page=' + prevNum;
     }
 </script>
 </html>

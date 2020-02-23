@@ -24,8 +24,7 @@ public class OaCorporateHonorServiceImpl implements OaCorporateHonorService {
 
     @Override
     public int insertSelective(OaCorporateHonor oaCorporateHonor) {
-        oaCorporateHonor.setReleaseDate(DateUtil.stringConvertYYYYMMDDHHMMSS(oaCorporateHonor.getReleaseDateStr()));
-        oaCorporateHonor.setCreateTime(new Date());
+        oaCorporateHonor.setReleaseDate(new Date());
         return oaCorporateHonorMapper.insertSelective(oaCorporateHonor);
     }
 
@@ -49,7 +48,7 @@ public class OaCorporateHonorServiceImpl implements OaCorporateHonorService {
     public List<OaCorporateHonor> selectLatestData() {
         List<OaCorporateHonor> oaCorporateHonorList = oaCorporateHonorMapper.selectLatestData();
         for (OaCorporateHonor oaCorporateHonor : oaCorporateHonorList) {
-            oaCorporateHonor.setReleaseDateStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaCorporateHonor.getReleaseDate()));
+            oaCorporateHonor.setReleaseDateStr(DateUtil.dateConvertYYYYMMDDHHMM(oaCorporateHonor.getReleaseDate()));
         }
         return oaCorporateHonorList;
     }

@@ -1,7 +1,6 @@
 package com.jiaoke.oa.dao;
 
 import com.jiaoke.oa.bean.OaReceiveDocument;
-import com.jiaoke.oa.bean.OaReleaseDocument;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
@@ -32,4 +31,11 @@ public interface OaReceiveDocumentMapper extends Mapper<OaReceiveDocument> {
      * @return list
      */
     List<OaReceiveDocument> getSelectByReceiveDate(Date date);
+
+    /**
+     * 查询所有数据
+     *
+     * @return list
+     */
+    List<OaReceiveDocument> selectAllData();
 }

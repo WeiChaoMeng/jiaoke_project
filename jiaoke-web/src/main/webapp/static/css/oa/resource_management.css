@@ -33,12 +33,6 @@ img {
     border: 0;
 }
 
-dl, dt, dd, span {
-    margin: 0;
-    padding: 0;
-    display: block;
-}
-
 table {
     border-collapse: collapse;
     border-spacing: 0;
@@ -97,6 +91,17 @@ table {
     outline: none;
 }
 
+.form-input-readonly {
+    width: 100%;
+    color: #000;
+    height: 30px;
+    border: solid 1px #c6c6c6;
+    line-height: 26px;
+    text-indent: 8px;
+    outline: none;
+    background-color: #e8e8e8;
+}
+
 .form_select {
     width: 100%;
     position: relative;
@@ -109,19 +114,38 @@ table {
 }
 
 .btn_save {
+    border-radius: 5px;
+    padding: 8px 21px;
+    background: #2ca4f9;
+    outline: none;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.btn_save:hover{
+    background: #42acf9;
+}
+
+.return-btn-style{
+    border-radius: 5px;
     padding: 7px 20px;
-    background: #92ebff;
     border: 1px #a5a5a5 solid;
+    outline: none;
+    background: #ffffff;
+    color: #000;
+    cursor: pointer;
+}
+
+.return-btn-style:hover{
+    color: #5d5d5d;
+}
+
+.left-spacing {
+    margin-left: 10px;
 }
 
 .cursor_hand {
     cursor: pointer;
-}
-
-.page_head {
-    height: 30px;
-    width: 100%;
-    background: #f1f1f1;
 }
 
 .page_head {
@@ -139,11 +163,24 @@ table {
     font-family: "iconfont" !important;
     display: table-cell;
     height: 20px;
-    width: 60px;
+    width: 70px;
     vertical-align: middle;
     text-align: center;
     float: left;
     padding-top: 2px;
+}
+
+.head_left_button button {
+    border: 0;
+    height: 100%;
+    background: none;
+    padding: 0;
+    margin: 0;
+    outline: none;
+}
+
+.head_left_button button:hover {
+    color: #0089f7;
 }
 
 .separation_line {
@@ -256,13 +293,13 @@ button, input, select, textarea {
 
 /*oa_asset_replenishment*/
 .replenishment_div_1 {
-    width: 40%;
+    width: 46%;
     float: left;
-    margin-right: 50px
+    margin: 0 2%;
 }
 
 .replenishment_title {
-    font-size: 13px;
+    font-size: 14px;
     margin: 10px 0;
 }
 
@@ -274,7 +311,8 @@ button, input, select, textarea {
 
 .replenishment_div_2 {
     float: left;
-    width: 46%
+    width: 44%;
+    margin: 0 2%;
 }
 
 .replenishment_table_other thead {
@@ -297,13 +335,18 @@ button, input, select, textarea {
 }
 
 .replenishment_div_3 {
-    width: 46%;
     float: left;
+    width: 44%;
+    margin: 0 2%;
 }
 
 .replenishment_btn {
-    padding-top: 25px;
-    text-align: left;
+    /*padding-top: 25px;*/
+    /*text-align: left;*/
+    text-align: center;
+    position: absolute;
+    bottom: 30px;
+    left: 45%;
 }
 
 /*replenishment_record*/
@@ -312,4 +355,23 @@ button, input, select, textarea {
     position: absolute;
     bottom: 50px;
     left: 45%;
+}
+
+.conditional-query {
+    float: right;
+    margin-right: 20px;
+    height: 23px;
+    border: 1px #000 solid;
+    border-radius: 10px;
+    padding: 0 10px;
+    background: #fff
+}
+
+.search-bar {
+    outline: none;
+    height: 100%;
+}
+
+.search-icon-size {
+    font-size: 18px
 }

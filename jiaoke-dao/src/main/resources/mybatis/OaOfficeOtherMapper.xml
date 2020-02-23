@@ -14,6 +14,8 @@
         FROM oa_office_other
         WHERE
             `name` LIKE "%"#{name}"%"
+        ORDER BY
+	        create_time DESC
     </select>
 
     <select id="getSelectByDate" parameterType="java.util.Date" resultType="com.jiaoke.oa.bean.OaOfficeOther">
@@ -28,5 +30,21 @@
         FROM oa_office_other
         WHERE
             `date` = #{date}
+        ORDER BY
+	        create_time DESC
+    </select>
+
+    <select id="selectAllData" resultType="com.jiaoke.oa.bean.OaOfficeOther">
+        SELECT
+            id as id,
+            numbering as numbering,
+            `name` as name,
+            `date` as `date`,
+            archiving_person as archivingPerson,
+            rich_text as richText,
+            create_time as createTime
+        FROM oa_office_other
+        ORDER BY
+	        create_time DESC
     </select>
 </mapper>

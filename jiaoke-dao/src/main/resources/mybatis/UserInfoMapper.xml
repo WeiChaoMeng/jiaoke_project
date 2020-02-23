@@ -7,7 +7,6 @@
         <result column="password" jdbcType="VARCHAR" property="password"/>
         <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
         <result column="phone" jdbcType="VARCHAR" property="phone"/>
-        <result column="nature" jdbcType="VARCHAR" property="nature"/>
         <result column="telephone" jdbcType="VARCHAR" property="telephone"/>
         <result column="job" jdbcType="VARCHAR" property="job"/>
         <result column="birthday" jdbcType="TIMESTAMP" property="birthday"/>
@@ -15,13 +14,10 @@
         <result column="email" jdbcType="VARCHAR" property="email"/>
         <result column="position" jdbcType="VARCHAR" property="position"/>
         <result column="register_time" jdbcType="TIMESTAMP" property="registerTime"/>
-        <result column="entry_date" jdbcType="TIMESTAMP" property="entryDate"/>
-        <result column="positive_date" jdbcType="TIMESTAMP" property="positiveDate"/>
         <result column="department" jdbcType="VARCHAR" property="department"/>
-        <result column="dept_principal" jdbcType="VARCHAR" property="deptPrincipal"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, username, `password`, nickname, phone, job, birthday, telephone,  nature, sex, email, `position`, register_time, entry_date, positive_date, department, dept_principal
+    id, username, `password`, nickname, phone, job, birthday, telephone, sex, email, `position`, register_time, department
   </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -54,9 +50,6 @@
             <if test="phone != null">
                 phone,
             </if>
-            <if test="nature != null">
-                nature,
-            </if>
             <if test="telephone != null">
                 telephone,
             </if>
@@ -78,17 +71,8 @@
             <if test="registerTime != null">
                 register_time,
             </if>
-            <if test="entryDate != null">
-                entry_date,
-            </if>
-            <if test="positiveDate != null">
-                positive_date,
-            </if>
             <if test="department != null">
                 department,
-            </if>
-            <if test="deptPrincipal != null">
-                dept_principal,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -106,9 +90,6 @@
             </if>
             <if test="phone != null">
                 #{phone,jdbcType=VARCHAR},
-            </if>
-            <if test="nature != null">
-                #{nature,jdbcType=VARCHAR},
             </if>
             <if test="telephone != null">
                 #{telephone,jdbcType=VARCHAR},
@@ -131,17 +112,8 @@
             <if test="registerTime != null">
                 #{registerTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="entryDate != null">
-                #{entryDate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="positiveDate != null">
-                #{positiveDate,jdbcType=TIMESTAMP},
-            </if>
             <if test="department != null">
                 #{department,jdbcType=VARCHAR},
-            </if>
-            <if test="deptPrincipal != null">
-                #{deptPrincipal,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -152,7 +124,6 @@
       `password` = #{password,jdbcType=VARCHAR},
       nickname = #{nickname,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
-      nature = #{nature,jdbcType=VARCHAR},
       telephone = #{telephone,jdbcType=VARCHAR},
       job = #{job,jdbcType=VARCHAR},
       birthday = #{birthday,jdbcType=TIMESTAMP},
@@ -160,10 +131,7 @@
       email = #{email,jdbcType=VARCHAR},
       `position` = #{position,jdbcType=VARCHAR},
       register_time = #{registerTime,jdbcType=TIMESTAMP},
-      entry_date = #{entryDate,jdbcType=TIMESTAMP},
-      positive_date = #{positiveDate,jdbcType=TIMESTAMP},
       department = #{department,jdbcType=VARCHAR},
-      dept_principal = #{deptPrincipal,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 
@@ -181,8 +149,7 @@
             user_info.email,
             user_info.position,
             user_info.register_time,
-            department.department_name AS department ,
-            user_info.dept_principal
+            department.department_name AS department
         FROM
             user_info
             LEFT JOIN department ON department.department_key = user_info.department
@@ -196,13 +163,6 @@
           department
         from user_info
         where department = #{department,jdbcType=VARCHAR}
-    </select>
-
-    <select id="getIdByNickName" parameterType="java.lang.String" resultType="java.lang.Integer">
-        select
-          dept_principal
-        from user_info
-        where nickname = #{nickname,jdbcType=VARCHAR}
     </select>
 
     <select id="selectAll" resultType="com.jiaoke.oa.bean.UserInfo">
@@ -219,8 +179,7 @@
             user_info.email,
             user_info.position,
             user_info.register_time,
-            department.department_name AS department ,
-            user_info.dept_principal
+            department.department_name AS department
         FROM
             user_info
             LEFT JOIN department ON department.department_key = user_info.department
@@ -242,8 +201,7 @@
             user_info.email,
             user_info.position,
             user_info.register_time,
-            department.department_name AS department ,
-            user_info.dept_principal
+            department.department_name AS department
         FROM
             user_info
             LEFT JOIN department ON department.department_key = user_info.department
@@ -276,9 +234,6 @@
             <if test="phone != null">
                 phone = #{phone,jdbcType=VARCHAR},
             </if>
-            <if test="nature != null">
-                nature = #{nature,jdbcType=VARCHAR},
-            </if>
             <if test="telephone != null">
                 telephone = #{telephone,jdbcType=VARCHAR},
             </if>
@@ -300,17 +255,8 @@
             <if test="registerTime != null">
                 register_time = #{registerTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="entryDate != null">
-                entry_date = #{entryDate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="positiveDate != null">
-                positive_date = #{positiveDate,jdbcType=TIMESTAMP},
-            </if>
             <if test="department != null">
                 department = #{department,jdbcType=VARCHAR},
-            </if>
-            <if test="deptPrincipal != null">
-                dept_principal = #{deptPrincipal,jdbcType=VARCHAR},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
@@ -357,26 +303,6 @@
 
     <select id="getNicknameById" parameterType="java.lang.Integer" resultType="java.lang.String">
         select nickname from user_info where id = #{id}
-    </select>
-
-    <select id="getUserInfoByUseId" parameterType="java.lang.Integer" resultType="com.jiaoke.oa.bean.UserInfo">
-        SELECT
-            ui.id,
-            ui.nickname,
-            ui.phone,
-            ui.telephone,
-            ui.job,
-            ui.birthday,
-            ui.sex,
-            ui.email,
-            ui.position,
-            wn.name AS nature,
-            dt.department_name AS department
-        FROM
-            user_info AS ui
-            LEFT JOIN department AS dt ON dt.department_key = ui.department
-            LEFT JOIN work_nature AS wn ON wn.id = ui.nature
-        WHERE ui.id = #{userInfoId}
     </select>
 
     <update id="updatePasswordById" parameterType="java.util.Map">

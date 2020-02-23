@@ -60,13 +60,22 @@ public interface DepartmentService {
     int deleteByPrimaryKey(Integer id);
 
     /**
-     * 绑定部门主管
+     * 绑定部门负责人
      *
      * @param id        id
      * @param principal principal
      * @return int
      */
-    int bindingDepartmentHead(Integer id, String principal);
+    int bindingDepartmentPrincipal(Integer id, String principal);
+
+    /**
+     * 绑定部门主管领导
+     *
+     * @param id        id
+     * @param supervisor supervisor
+     * @return int
+     */
+    int bindingDepartmentSupervisor(Integer id, String supervisor);
 
     /**
      * 根据主键查询

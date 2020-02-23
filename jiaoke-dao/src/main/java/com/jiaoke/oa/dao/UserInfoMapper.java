@@ -40,14 +40,6 @@ public interface UserInfoMapper {
     List<UserInfo> getUserByDepartmentKey(String departmentKey);
 
     /**
-     * 根据昵称获取id
-     *
-     * @param nickname 昵称
-     * @return id
-     */
-    Integer getIdByNickName(String nickname);
-
-    /**
      * 获取全部
      *
      * @return list
@@ -132,14 +124,6 @@ public interface UserInfoMapper {
      * @return nickname
      */
     String getNicknameById(Integer id);
-
-    /**
-     * 根据主键查询
-     *
-     * @param userInfoId id
-     * @return UserInfo
-     */
-    UserInfo getUserInfoByUseId(Integer userInfoId);
 
     /**
      * 根据ID修改密码

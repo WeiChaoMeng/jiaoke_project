@@ -31,4 +31,11 @@ public interface OaManagementSystemMapper extends Mapper<OaManagementSystem> {
      * @return list
      */
     List<OaManagementSystem> getSelectByDate(Date date);
+
+    /**
+     * 查询所有数据
+     *
+     * @return list
+     */
+    List<OaManagementSystem> selectAllData();
 }

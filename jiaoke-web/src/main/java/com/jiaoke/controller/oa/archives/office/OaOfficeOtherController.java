@@ -59,7 +59,8 @@ public class OaOfficeOtherController {
      * @return add.jsp
      */
     @RequestMapping(value = "/toNewOfficeOther")
-    public String toNewReleaseDocument() {
+    public String toNewReleaseDocument(int prev, Model model) {
+        model.addAttribute("prev", JsonHelper.toJSONString(prev));
         return "oa/archives/office/office_other/add";
     }
 
@@ -69,9 +70,12 @@ public class OaOfficeOtherController {
      * @return add.jsp
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @ResponseBody
     public String add(OaOfficeOther oaOfficeOther) {
-        int i = oaOfficeOtherService.insertSelective(oaOfficeOther);
-        return "redirect:/officeOther/toOfficeOther?page=1";
+        if (oaOfficeOtherService.insertSelective(oaOfficeOther) < 0) {
+            return JsonHelper.toJSONString("error");
+        }
+        return JsonHelper.toJSONString("success");
     }
 
     /**
@@ -112,8 +116,9 @@ public class OaOfficeOtherController {
      * @return edit.jsp
      */
     @RequestMapping("/toEdit")
-    public String toEdit(Model model, int id) {
+    public String toEdit(Model model, int prev, int id) {
         OaOfficeOther oaOfficeOther = oaOfficeOtherService.selectByPrimaryKey(id);
+        model.addAttribute("prev", JsonHelper.toJSONString(prev));
         model.addAttribute("oaOfficeOther", oaOfficeOther);
         return "oa/archives/office/office_other/edit";
     }
@@ -125,9 +130,12 @@ public class OaOfficeOtherController {
      * @return 影响行数
      */
     @RequestMapping("/edit")
+    @ResponseBody
     public String edit(OaOfficeOther oaOfficeOther) {
-        int i = oaOfficeOtherService.updateByPrimaryKeySelective(oaOfficeOther);
-        return "redirect:/officeOther/toOfficeOther?page=1";
+        if (oaOfficeOtherService.updateByPrimaryKeySelective(oaOfficeOther) < 0) {
+            return JsonHelper.toJSONString("error");
+        }
+        return JsonHelper.toJSONString("success");
     }
 
     /**
@@ -153,8 +161,9 @@ public class OaOfficeOtherController {
      * @return edit.jsp
      */
     @RequestMapping(value = "/details")
-    public String particulars(int id, Model model) {
+    public String particulars(int id, int prev, Model model) {
         OaOfficeOther oaOfficeOther = oaOfficeOtherService.selectByPrimaryKey(id);
+        model.addAttribute("prev", JsonHelper.toJSONString(prev));
         model.addAttribute("oaOfficeOther", oaOfficeOther);
         return "oa/archives/office/office_other/details";
     }
