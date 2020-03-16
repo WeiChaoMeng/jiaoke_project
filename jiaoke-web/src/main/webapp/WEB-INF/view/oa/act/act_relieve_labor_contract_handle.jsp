@@ -264,6 +264,7 @@
 </div>
 </body>
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
+<script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
     //流程执行步骤
     var relieveLaborContract = JSON.parse('${oaActRelieveLaborContractJson}');

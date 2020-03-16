@@ -102,14 +102,15 @@
                 <label>接收人：</label>
                 <c:choose>
                     <c:when test="${oaActPactStop.receivingSign == '' || oaActPactStop.receivingSign == null}">
-                        <input class="notice-relevant-personnel" type="text" value="${nickname}" disabled>
+                        <input class="notice-relevant-personnel" type="text" value="${nickname}" readonly>
                         <input class="notice-date" type="text"
-                               value="<%=new SimpleDateFormat("yyyy 年 MM 月 dd 日").format(new Date())%>" disabled>
+                               value="<%=new SimpleDateFormat("yyyy 年 MM 月 dd 日").format(new Date())%>" readonly>
                     </c:when>
+
                     <c:otherwise>
                         <input class="notice-relevant-personnel" type="text" value="${oaActPactStop.receivingSign}"
-                               disabled>
-                        <input class="notice-date" type="text" value="${oaActPactStop.receivingDate}" disabled>
+                               readonly>
+                        <input class="notice-date" type="text" value="${oaActPactStop.receivingDate}" readonly>
                     </c:otherwise>
                 </c:choose>
             </div>
@@ -144,12 +145,12 @@
                     <c:choose>
                         <c:when test="${oaActPactStop.renewal == 0}">
                             <td colspan="3" style="height: 30px;text-align: center">
-                                <input type="checkbox" checked disabled>
+                                <input type="checkbox" checked readonly>
                             </td>
                         </c:when>
                         <c:otherwise>
                             <td colspan="3" style="height: 30px;text-align: center">
-                                <input type="checkbox" disabled>
+                                <input type="checkbox" readonly>
                             </td>
                         </c:otherwise>
                     </c:choose>
@@ -157,12 +158,12 @@
                     <c:choose>
                         <c:when test="${oaActPactStop.renewal == 1}">
                             <td colspan="3" style="height: 30px;text-align: center">
-                                <input type="checkbox" checked disabled>
+                                <input type="checkbox" checked readonly>
                             </td>
                         </c:when>
                         <c:otherwise>
                             <td colspan="3" style="height: 30px;text-align: center">
-                                <input type="checkbox" disabled>
+                                <input type="checkbox" readonly>
                             </td>
                         </c:otherwise>
                     </c:choose>
@@ -175,7 +176,7 @@
             <c:choose>
                 <c:when test="${oaActPactStop.receivingSign == '' || oaActPactStop.receivingSign == null}">
                     <td colspan="5" class="table-td-evaluation">
-                        <textarea class="evaluation-content" style="height: 90px" name="supplementDetails"></textarea>
+                        <textarea class="evaluation-content" onkeyup="value=value.replace(/\s+/g,'')" style="height: 90px" name="supplementDetails"></textarea>
                         <div class="approval-date">
                             <label class="approval-date-label">日期 </label>
                             <input class="approval-date-input" type="text" name="receivingDate"

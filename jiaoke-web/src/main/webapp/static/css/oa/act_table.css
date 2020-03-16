@@ -43,6 +43,24 @@ img {
     src: url('../../fonts/font_1/iconfont.eot#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('../../fonts/font_1/iconfont.woff') format('woff'), /* chrome, firefox */ url('../../fonts/font_1/iconfont.ttf') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/ url('../../fonts/font_1/iconfont.svg#iconfont') format('svg'); /* iOS 4.1- */
 }
 
+/*overflow滚动条样式*/
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #E5E8EC;
+    background-clip: padding-box;
+    border: 1px solid #E6E5E6;
+    min-height: 28px;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-track-piece {
+    background-color: #fff;
+}
+
 .top_toolbar {
     background: #f7f6f6;
     padding: 0;

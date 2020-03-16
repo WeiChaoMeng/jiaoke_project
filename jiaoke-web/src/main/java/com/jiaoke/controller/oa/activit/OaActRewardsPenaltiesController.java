@@ -3,12 +3,17 @@ package com.jiaoke.controller.oa.activit;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
+import com.jiaoke.controller.oa.TargetFlowNodeCommand;
 import com.jiaoke.oa.bean.Comments;
+import com.jiaoke.oa.bean.OaActRelieveLaborContract;
 import com.jiaoke.oa.bean.OaActRewardsPenalties;
 import com.jiaoke.oa.bean.UserInfo;
+import com.jiaoke.oa.service.DepartmentService;
 import com.jiaoke.oa.service.OaActRewardsPenaltiesService;
 import com.jiaoke.oa.service.OaCollaborationService;
 import com.jiaoke.oa.service.UserInfoService;
+import org.activiti.bpmn.model.UserTask;
+import org.activiti.engine.ManagementService;
 import org.activiti.engine.task.Task;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
@@ -17,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +49,12 @@ public class OaActRewardsPenaltiesController {
 
     @Resource
     private OaCollaborationService oaCollaborationService;
+
+    @Resource
+    private DepartmentService departmentService;
+
+    @Resource
+    private ManagementService managementService;
 
     /**
      * 获取当前登录用户信息
@@ -77,12 +89,10 @@ public class OaActRewardsPenaltiesController {
         if (oaActRewardsPenaltiesService.insert(oaActRewardsPenalties, getCurrentUser().getId(), randomId, 0) < 1) {
             return "error";
         } else {
-            //获取拥有权限的用户
-            UserInfo userInfo = userInfoService.getUserInfoByPermission("mealsApproval");
-            //开启流程
+            String enforcerId = departmentService.selectEnforcerId("supervisor", "10");
             Map<String, Object> map = new HashMap<>(16);
-            map.put("approval", userInfo.getId());
-            String instance = activitiUtil.startProcessInstanceByKey("oa_meals", "oa_act_meals:" + randomId, map, getCurrentUser().getId().toString());
+            map.put("officeSupervisor", enforcerId);
+            String instance = activitiUtil.startProcessInstanceByKey("oa_rewards_penalties", "oa_act_rewards_penalties:" + randomId, map, getCurrentUser().getId().toString());
             if (instance != null) {
                 return "success";
             }
@@ -105,52 +115,112 @@ public class OaActRewardsPenaltiesController {
         //获取批注信息
         List<Comments> commentsList = activitiUtil.selectHistoryComment(activitiUtil.getTaskByTaskId(taskId).getProcessInstanceId());
         model.addAttribute("oaActRewardsPenalties", oaActRewardsPenalties);
+        model.addAttribute("oaActRewardsPenaltiesJson", JsonHelper.toJSONString(oaActRewardsPenalties));
         model.addAttribute("taskId", JsonHelper.toJSONString(taskId));
         model.addAttribute("commentsList", commentsList);
         model.addAttribute("nickname", getCurrentUser().getNickname());
-        return "oa/act/act_meals_handle";
+        return "oa/act/act_rewards_penalties_handle";
     }
 
     /**
      * 提交审批
      *
-     * @param processingOpinion 处理意见
-     * @param taskId            任务Id
+     * @param taskId 任务Id
      * @return s/e
      */
     @RequestMapping(value = "/approvalSubmit")
     @ResponseBody
-    public String approvalSubmit(String processingOpinion, String taskId, Integer flag) {
-        //回退标识
-        String back = "back";
+    public String approvalSubmit(OaActRewardsPenalties oaActRewardsPenalties, String taskId, Integer flag) {
         //结束标识
         String end = "end";
-        //网关标识
-        String eg = "eg";
+        //发起人
+        String promoter = "promoter";
+        //回退
+        String back = "back";
+
+        //部门主管领导
+        String qualitySupervisor = "qualitySupervisor";
+        String businessSupervisor = "businessSupervisor";
+        String productionSupervisor = "productionSupervisor";
+        String suppliesSupervisor = "suppliesSupervisor";
+        String financialSupervisor = "financialSupervisor";
+
+        //总经理
+        String companyPrincipal = "company_principal";
+        //更新数据
+        if (oaActRewardsPenaltiesService.updateByPrimaryKeySelective(oaActRewardsPenalties) < 1) {
+            return "error";
+        }
+
         Task task = activitiUtil.getTaskByTaskId(taskId);
-        Map<String, Object> map = new HashMap<>(16);
         if (task == null) {
             return "error";
-        } else {
-            //下个节点
-            String nextNode = activitiUtil.getNextNode(task.getProcessDefinitionId(), task.getTaskDefinitionKey());
+        }
 
-            //下个节点是否为end直接结束
+        if (flag == 1) {
+            String nextNode = activitiUtil.getNextNode(task.getProcessDefinitionId(), task.getTaskDefinitionKey());
             if (end.equals(nextNode)) {
                 activitiUtil.endProcess(taskId);
+                return "success";
+            } else {
+                String processingOpinion = "";
+                UserTask userTask = activitiUtil.getUserTask(task.getProcessDefinitionId(), nextNode);
+                if (nextNode.equals(userTask.getId())) {
+                    String enforcer = userTask.getAssignee().substring(userTask.getAssignee().indexOf("{") + 1, userTask.getAssignee().indexOf("}"));
 
-                //下个节点为back修改表达状态为2并结束流程
-            } else if (back.equals(nextNode)) {
-                String businessId = activitiUtil.getBusinessByTaskId(task.getId());
-                String correlationId = businessId.substring(businessId.lastIndexOf(":") + 1);
-                oaCollaborationService.updateState(correlationId, 3);
-                activitiUtil.endProcess(taskId);
+                    //发起人
+                    if (promoter.equals(enforcer)) {
+                        Map<String, Object> map = new HashMap<>(16);
+                        map.put(promoter, activitiUtil.getStartUserId(task.getProcessInstanceId()));
+                        activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
+                        return "success";
 
-            } else if (eg.equals(nextNode)) {
-                map.put("result", flag);
-                map.put("notify", activitiUtil.getStartUserId(task.getProcessInstanceId()));
-                activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
+                        //部门主管领导
+                    } else if (qualitySupervisor.equals(enforcer)) {
+                        String enforcerId = departmentService.selectEnforcerId("supervisor", "15");
+                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), "qualitySupervisor", Integer.valueOf(enforcerId));
+                        return "success";
+
+                    } else if (businessSupervisor.equals(enforcer)) {
+                        String enforcerId = departmentService.selectEnforcerId("supervisor", "11");
+                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), "businessSupervisor", Integer.valueOf(enforcerId));
+                        return "success";
+
+                    } else if (productionSupervisor.equals(enforcer)) {
+                        String enforcerId = departmentService.selectEnforcerId("supervisor", "12");
+                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), "productionSupervisor", Integer.valueOf(enforcerId));
+                        return "success";
+
+                    } else if (suppliesSupervisor.equals(enforcer)) {
+                        String enforcerId = departmentService.selectEnforcerId("supervisor", "14");
+                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), "suppliesSupervisor", Integer.valueOf(enforcerId));
+                        return "success";
+
+                    } else if (financialSupervisor.equals(enforcer)) {
+                        String enforcerId = departmentService.selectEnforcerId("supervisor", "13");
+                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), "financialSupervisor", Integer.valueOf(enforcerId));
+                        return "success";
+
+                        //总经理
+                    } else if (companyPrincipal.equals(enforcer)) {
+                        UserInfo userInfo = userInfoService.getUserInfoByPermission("company_principal");
+                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
+                        return "success";
+
+                    } else {
+                        UserInfo userInfo = userInfoService.getUserInfoByPermission(enforcer);
+                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
+                        return "success";
+                    }
+                } else {
+                    return "error";
+                }
             }
+        } else {
+            //驳回
+            managementService.executeCommand(new TargetFlowNodeCommand(task.getId(), back));
+            //修改表单状态
+            oaCollaborationService.updateState(oaActRewardsPenalties.getId(), 3);
             return "success";
         }
     }
@@ -183,7 +253,7 @@ public class OaActRewardsPenaltiesController {
     public String toEdit(String id, Model model) {
         OaActRewardsPenalties oaActRewardsPenalties = oaActRewardsPenaltiesService.selectByPrimaryKey(id);
         model.addAttribute("oaActRewardsPenalties", oaActRewardsPenalties);
-        return "oa/act/act_meals_edit";
+        return "oa/act/act_rewards_penalties_edit";
     }
 
     /**
@@ -215,11 +285,10 @@ public class OaActRewardsPenaltiesController {
         if (oaActRewardsPenaltiesService.edit(oaActRewardsPenalties) < 0) {
             return "error";
         } else {
-            //获取拥有权限的用户
-            UserInfo userInfo = userInfoService.getUserInfoByPermission("mealsApproval");
+            String enforcerId = departmentService.selectEnforcerId("supervisor", "10");
             Map<String, Object> map = new HashMap<>(16);
-            map.put("mealsApproval", userInfo.getId());
-            String instance = activitiUtil.startProcessInstanceByKey("oa_meals", "oa_act_meals:" + oaActRewardsPenalties.getId(), map, getCurrentUser().getId().toString());
+            map.put("officeSupervisor", enforcerId);
+            String instance = activitiUtil.startProcessInstanceByKey("oa_rewards_penalties", "oa_act_rewards_penalties:" + oaActRewardsPenalties.getId(), map, getCurrentUser().getId().toString());
             if (instance != null) {
                 //发送成功后更新状态
                 oaCollaborationService.updateStateByCorrelationId(oaActRewardsPenalties.getId(), 0, oaActRewardsPenalties.getTitle());
@@ -245,8 +314,7 @@ public class OaActRewardsPenaltiesController {
         List<Comments> commentsList = activitiUtil.selectHistoryComment(taskId);
         model.addAttribute("oaActRewardsPenalties", oaActRewardsPenalties);
         model.addAttribute("commentsList", commentsList);
-        model.addAttribute("commentsListSize", commentsList.size());
-        return "oa/act/act_meals_details";
+        return "oa/act/act_rewards_penalties_details";
     }
 
     /**

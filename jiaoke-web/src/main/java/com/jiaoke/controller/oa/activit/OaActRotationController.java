@@ -73,7 +73,7 @@ public class OaActRotationController {
         model.addAttribute("departmentList", JsonHelper.toJSONString(departmentList));
         model.addAttribute("nickname", getCurrentUser().getNickname());
         model.addAttribute("department", getCurrentUser().getDepartment());
-        model.addAttribute("job", getCurrentUser().getJob());
+        model.addAttribute("position", getCurrentUser().getPosition());
         return "oa/act/act_rotation";
     }
 

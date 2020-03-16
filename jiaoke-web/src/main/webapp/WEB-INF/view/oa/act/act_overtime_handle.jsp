@@ -1,3 +1,5 @@
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%@ page language="java" contentType="text/html;charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -116,57 +118,87 @@
     </c:choose>
 </div>
 
-<div style="margin-top: 10px">
+<form id="oaActOvertime">
+    <div style="margin-top: 10px">
     <span class="fill-in-date" style="margin-top: 0;float: left;">部门
-        <input type="text" class="form-number-content" style="cursor: no-drop" value="${oaActOvertime.department}" readonly>
+        <input type="text" class="form-number-content" style="cursor: no-drop" value="${oaActOvertime.department}"
+               readonly>
     </span>
 
-    <span class="form-number-left" style="float: right;margin-top: 0;">日期
-        <input type="text" class="form-number-content" style="cursor: no-drop" value="${oaActOvertime.statisticalDate}" readonly>
+        <span class="form-number-left" style="float: right;margin-top: 0;">日期
+        <input type="text" class="form-number-content" style="cursor: no-drop" value="${oaActOvertime.statisticalDate}"
+               readonly>
+            <input type="hidden" name="id" value="${oaActOvertime.id}">
+            <input type="hidden" name="title" value="${oaActOvertime.title}">
     </span>
-</div>
+    </div>
 
-<table class="formTable">
-    <thead>
-    <tr>
-        <th style="width: 10%">姓名</th>
-        <th style="width: 35%">周六、周日</th>
-        <th style="width: 15%">法定节假日</th>
-        <th style="width: 10%">倒休</th>
-        <th style="width: 15%">周六日加班合计</th>
-        <th style="width: 15%">法定节假日加班合计</th>
-    </tr>
-    </thead>
-
-    <tbody id="tbo">
-    <c:forEach items="${oaActOvertime.oaOvertimeStatisticsList}" var="list">
+    <table class="formTable">
+        <thead>
         <tr>
-            <td>${list.name}</td>
-            <td>${list.weekend}</td>
-            <td>${list.legalHolidays}</td>
-            <td>${list.restDown}</td>
-            <td>${list.weekendTotal}</td>
-            <td>${list.legalTotal}</td>
+            <th style="width: 10%">姓名</th>
+            <th style="width: 35%">周六、周日</th>
+            <th style="width: 15%">法定节假日</th>
+            <th style="width: 10%">倒休</th>
+            <th style="width: 15%">周六日加班合计</th>
+            <th style="width: 15%">法定节假日加班合计</th>
         </tr>
-    </c:forEach>
-    </tbody>
-</table>
+        </thead>
 
-<div class="approval-div-style">
-    <div class="approval-input">
-        <span class="approval-input-span">主管领导</span>
-        <input type="text" class="approval-input-input" value="${oaActOvertime.supervisor}" readonly>
-    </div>
+        <tbody id="tbo">
+        <c:forEach items="${oaActOvertime.oaOvertimeStatisticsList}" var="list">
+            <tr>
+                <td>${list.name}</td>
+                <td>${list.weekend}</td>
+                <td>${list.legalHolidays}</td>
+                <td>${list.restDown}</td>
+                <td>${list.weekendTotal}</td>
+                <td>${list.legalTotal}</td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
 
-    <div class="approval-input">
-        <span class="approval-input-span">部门领导</span>
-        <input type="text" class="approval-input-input" value="${oaActOvertime.principal}" readonly>
-    </div>
+    <div class="approval-div-style" style="margin-bottom: 30px">
+        <div class="approval-input">
+            <span class="approval-input-span">主管领导</span>
+            <shiro:hasPermission name="supervisor">
+                <input type="text" class="approval-input-input" name="principal" value="${nickname}" readonly>
+                <input type="hidden" name="principalDate"
+                       value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">
+            </shiro:hasPermission>
 
-    <div class="approval-input">
-        <span class="approval-input-span">考勤员</span>
-        <input type="text" class="approval-input-input" value="${oaActOvertime.preparer}" readonly>
+            <shiro:lacksPermission name="supervisor">
+                <input type="text" class="approval-input-input" value="${oaActOvertime.principal}" readonly>
+            </shiro:lacksPermission>
+
+        </div>
+
+        <div class="approval-input">
+            <span class="approval-input-span">部门领导</span>
+            <shiro:hasPermission name="principal">
+                <input type="text" class="approval-input-input" name="supervisor" value="${nickname}" readonly>
+                <input type="hidden" name="supervisorDate"
+                       value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">
+            </shiro:hasPermission>
+
+            <shiro:lacksPermission name="principal">
+                <input type="text" class="approval-input-input" value="${oaActOvertime.supervisor}" readonly>
+            </shiro:lacksPermission>
+        </div>
+
+        <div class="approval-input">
+            <span class="approval-input-span">考勤员</span>
+            <input type="text" class="approval-input-input" value="${oaActOvertime.preparer}" readonly>
+        </div>
     </div>
+</form>
+
+<div class="form-but" id="return">
+    <shiro:hasAnyPermission name="principal,supervisor">
+        <button type="button" class="return-but" style="margin-right: 10px;" onclick="approvalProcessing(2)">回退</button>
+    </shiro:hasAnyPermission>
+    <button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>
 </div>
 
 </body>
@@ -174,6 +206,31 @@
 <script type="text/javascript" src="../../../../static/js/jeDate/src/jedate.js"></script>
 <script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
+
+    //任务Id
+    var taskId = JSON.parse('${taskId}');
+
+    //提交
+    function approvalProcessing(flag) {
+        $.ajax({
+            type: "post",
+            url: '/overtime/approvalSubmit',
+            data: $('#oaActOvertime').serialize() + "&taskId=" + taskId + "&flag=" + flag,
+            async: false,
+            success: function (data) {
+                if (data === 'success') {
+                    //返回上一页
+                    window.location.href = '${path}/oaHomePage/toOaHomePage';
+                    window.top.tips("提交成功！", 0, 1, 1000);
+                } else {
+                    window.top.tips("提交失败！", 0, 2, 1000);
+                }
+            },
+            error: function (result) {
+                window.top.tips("出错！", 6, 2, 1000);
+            }
+        })
+    }
 
     //打印
     function printContent() {

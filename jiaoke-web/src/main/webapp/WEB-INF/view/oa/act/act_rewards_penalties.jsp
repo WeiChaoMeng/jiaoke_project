@@ -16,7 +16,7 @@
     <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
 </head>
 
-<body>
+<body id="body" style="width: 60%">
 
 <div class="table-title">
     <span>奖罚意见表</span>
@@ -43,7 +43,20 @@
     </div>
 </div>
 
-<form id="oaActMeals">
+<%--附件列表--%>
+<div class="top_toolbar" id="annexList" style="display: none;">
+    <div class="top-toolbar-annexes">
+
+        <div class="annexes-icon">
+            <button type="button" class="cursor_hand">&#xeac1; ：</button>
+        </div>
+
+        <div id="annexes"></div>
+
+    </div>
+</div>
+
+<form id="oaActRewardsPenalties">
     <div class="form_area" id="titleArea">
         <table>
             <tbody>
@@ -52,20 +65,19 @@
                     <button type="button" class="table-tab-send" onclick="send()">发送</button>
                 </td>
 
-                <th nowrap="nowrap" class="th_title" style="width: 4%">标题:</th>
-                <td style="width: 44%">
+                <th nowrap="nowrap" class="th_title" style="width: 5%">标题</th>
+                <td style="width: 42%">
                     <div class="common_input_frame">
                         <input type="text" id="title" name="title" placeholder="请输入标题" title="点击此处填写标题"
-                               value="客饭审批单(${nickname} <%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>)"
-                               autocomplete="off">
+                               autocomplete="off"
+                               value="奖罚意见表(${nickname} <%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>)">
                     </div>
                 </td>
 
-                <th class="th_title" nowrap="nowrap" style="width: 4%">流程:</th>
+                <th class="th_title" nowrap="nowrap" style="width: 5%">流程</th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" placeholder="审批人(王玉秋)、发起者(协同)"
-                               readonly="readonly">
+                        <input type="text" placeholder="各部门主管领导、总经理、发起者(协同)" readonly>
                     </div>
                 </td>
             </tr>
@@ -76,107 +88,72 @@
     <table class="formTable">
         <tbody>
         <tr>
-            <td class="tdLabel">点菜人</td>
-            <td class="table-td-content">
-                <input type="text" class="formInput" name="applicant" value="${nickname}" readonly="readonly">
-            </td>
-
-            <td class="tdLabel">招待事由</td>
-            <td colspan="3" class="table-td-content">
-                <input type="text" class="formInput" name="entertain" autocomplete="off">
+            <td class="tdLabel" style="padding: 0;text-align: center">奖罚月份</td>
+            <td colspan="2" class="table-td-content">
+                <input type="text" class="formInput je-date" name="month" onfocus="this.blur()">
+                <input type="hidden" id="annex" name="annex">
             </td>
         </tr>
 
         <tr>
-            <td class="tdLabel">用餐时间</td>
-            <td class="table-td-content">
-                <input type="text" class="formInput je-date" name="diningTimeStr" onfocus="this.blur()">
+            <td colspan="2" class="tdLabel" style="padding: 0;text-align: center">奖罚事项</td>
+            <td class="tdLabel" style="padding: 0;text-align: center">主管签字</td>
+        </tr>
+
+        <tr>
+            <td colspan="2" class="table-td-textarea">
+                <textarea class="approval-content-textarea" style="height: 75px" readonly></textarea>
             </td>
 
-            <td class="tdLabel">标准</td>
-            <td class="table-td-content">
-                <select class="select" name="standard">
-                    <option value="0">10元</option>
-                    <option value="1">20元</option>
-                    <option value="2">30元</option>
-                    <option value="3">40元</option>
-                    <option value="4">50元</option>
-                    <option value="5">60元</option>
-                </select>
-            </td>
-
-            <td class="tdLabel">厨师选择</td>
-            <td class="table-td-content">
-                <select class="select" name="chef">
-                    <option value="0">大厨</option>
-                    <option value="1">二厨</option>
-                </select>
+            <td class="table-td-textarea">
+                <input type="text" class="formInput-readonly" readonly>
             </td>
         </tr>
 
         <tr>
-            <td class="tdLabel">人数</td>
-            <td class="table-td-content">
-                <input type="text" class="formInput" name="number" autocomplete="off">
+            <td colspan="2" class="table-td-textarea">
+                <textarea class="approval-content-textarea" style="height: 75px" readonly></textarea>
             </td>
 
-            <td class="tdLabel">地点</td>
-            <td class="table-td-content">
-                <input type="text" class="formInput" name="place" autocomplete="off">
-            </td>
-
-            <td class="tdLabel">桌数</td>
-            <td class="table-td-content">
-                <input type="text" class="formInput" name="tableNumber" autocomplete="off">
+            <td class="table-td-textarea">
+                <input type="text" class="formInput-readonly" readonly>
             </td>
         </tr>
 
         <tr>
-            <td class="tdLabel">菜品</td>
-            <td class="table-td-content">
-                <select class="select" name="dishes">
-                    <option value="0">A类</option>
-                    <option value="1">B类</option>
-                    <option value="2">C类</option>
-                    <option value="3">D类</option>
-                    <option value="4">E类</option>
-                    <option value="5">F类</option>
-                    <option value="6">G类</option>
-                    <option value="7">其他菜品</option>
-                </select>
+            <td colspan="2" class="table-td-textarea">
+                <textarea class="approval-content-textarea" style="height: 75px" readonly></textarea>
             </td>
 
-            <td class="tdLabel">菜品内容</td>
-            <td colspan="3" class="table-td-content">
-                <input type="text" class="formInput" name="dishesContent" autocomplete="off">
+            <td class="table-td-textarea">
+                <input type="text" class="formInput-readonly" readonly>
             </td>
         </tr>
 
         <tr>
-            <td class="tdLabel">附件</td>
-            <td colspan="5" id="annexes"></td>
-            <input type="hidden" name="annex" id="annex">
+            <td colspan="2" class="table-td-textarea">
+                <textarea class="approval-content-textarea" style="height: 75px" readonly></textarea>
+            </td>
+
+            <td class="table-td-textarea">
+                <input type="text" class="formInput-readonly" readonly>
+            </td>
         </tr>
 
         <tr>
-            <td class="tdLabel">备注</td>
+            <td colspan="2" class="table-td-textarea">
+                <textarea class="approval-content-textarea" style="height: 75px" readonly></textarea>
+            </td>
+
+            <td class="table-td-textarea">
+                <input type="text" class="formInput-readonly" readonly>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel" style="padding: 0;text-align: center">总经理意见</td>
             <td colspan="5" class="table-td-textarea">
-                <textarea class="opinion-column" style="width: 100%" name="remarks"></textarea>
-            </td>
-        </tr>
-
-        <tr>
-            <td class="tdLabel">审批人意见</td>
-            <td colspan="5" class="approval-content">
-                <textarea disabled="disabled" class="approval-content-textarea"></textarea>
-                <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
-                    <input class="approval-date-input" type="text" disabled="disabled">
-                </div>
-                <div class="approval-signature">
-                    <label class="approval-signature-label">签字:</label>
-                    <input class="approval-signature-input" type="text" disabled="disabled">
-                </div>
+                <textarea class="approval-content-textarea" style="height: 75px" readonly></textarea>
             </td>
         </tr>
         </tbody>
@@ -197,7 +174,7 @@
         isClear: false,                     //是否开启清空
         minDate: "1900-01-01",              //最小日期
         maxDate: "2099-12-31",              //最大日期
-        format: "YYYY-MM-DD hh:mm",
+        format: "YYYY年MM月",
         zIndex: 100000,
     });
 
@@ -216,8 +193,8 @@
 
             $.ajax({
                 type: "POST",
-                url: '${path}/meals/add',
-                data: $('#oaActMeals').serialize(),
+                url: '${path}/rewardsPenalties/add',
+                data: $('#oaActRewardsPenalties').serialize(),
                 error: function (request) {
                     layer.msg("出错！");
                 },
@@ -240,8 +217,8 @@
         } else {
             $.ajax({
                 type: "POST",
-                url: '${path}/meals/savePending',
-                data: $('#oaActMeals').serialize(),
+                url: '${path}/rewardsPenalties/savePending',
+                data: $('#oaActRewardsPenalties').serialize(),
                 error: function (request) {
                     layer.msg("出错！");
                 },
@@ -305,9 +282,20 @@
 
     //打印
     function printContent() {
-        $('#tool,#titleArea').hide();
+        $('#tool,#titleArea,#annexList').hide();
+        $('#body').css('width', '100%');
+        //执行打印
         window.print();
         $('#tool,#titleArea').show();
+        $('#body').css('width', '60%');
+
+        //附件列表
+        let annexesLen = $('#annexes').children().length;
+        if (annexesLen === 0) {
+            $('#annexList').css("display", "none");
+        } else {
+            $('#annexList').css("display", "block");
+        }
     }
 </script>
 </html>

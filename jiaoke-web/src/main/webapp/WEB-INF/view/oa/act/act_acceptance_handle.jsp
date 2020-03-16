@@ -187,15 +187,15 @@
     if (flag === 0) {
         if (acceptance.accepter === "" || acceptance.accepter === undefined) {
             $('#accepterContent').append('<input type="text" class="formInput-readonly" name="accepter" value="${nickname}" readonly="readonly">');
-            $('#acceptanceDateContent').append('<input type="text" class="formInput-readonly" name="accepterDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>');
+            $('#acceptanceDateContent').append('<input type="text" class="formInput-readonly" name="acceptanceDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>');
             flag = 1;
         } else {
             $('#accepterContent').append(acceptance.accepter);
-            $('#acceptanceDateContent').append(acceptance.accepterDate);
+            $('#acceptanceDateContent').append(acceptance.acceptanceDate);
         }
     } else {
         $('#accepterContent').append(acceptance.accepter);
-        $('#acceptanceDateContent').append(acceptance.accepterDate);
+        $('#acceptanceDateContent').append(acceptance.acceptanceDate);
     }
 
     if (flag === 0) {

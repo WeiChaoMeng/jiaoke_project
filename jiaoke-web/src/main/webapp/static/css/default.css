@@ -1380,7 +1380,7 @@ table {
 }
 
 ::-webkit-scrollbar-thumb {
-    /*background-color: #E5E8EC;*/
+    background-color: #E5E8EC;
     background-clip: padding-box;
     border: 1px solid #E6E5E6;
     min-height: 28px;

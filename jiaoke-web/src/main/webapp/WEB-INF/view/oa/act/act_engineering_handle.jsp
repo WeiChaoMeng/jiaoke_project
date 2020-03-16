@@ -68,81 +68,81 @@
         <table class="formTable">
             <tbody>
             <tr>
-                <td class="tdLabel">变更前工程名称：</td>
+                <td class="tdLabel">变更前工程名称</td>
                 <td class="table-td-content">
                     ${oaActEngineering.beforeName}
                     <input type="hidden" name="id" value="${oaActEngineering.id}">
                     <input type="hidden" name="promoter" value="${oaActEngineering.promoter}">
                 </td>
 
-                <td class="tdLabel">变更后工程名称：</td>
+                <td class="tdLabel">变更后工程名称</td>
                 <td class="table-td-content">
                     ${oaActEngineering.afterName}
                 </td>
             </tr>
 
             <tr>
-                <td class="tdLabel">变更前用料单位：</td>
+                <td class="tdLabel">变更前用料单位</td>
                 <td class="table-td-content">
                     ${oaActEngineering.beforeCompany}
                 </td>
 
-                <td class="tdLabel">变更后用料单位：</td>
+                <td class="tdLabel">变更后用料单位</td>
                 <td class="table-td-content">
                     ${oaActEngineering.afterCompany}
                 </td>
             </tr>
 
             <tr>
-                <td class="tdLabel">变更前所用混合料品种：</td>
+                <td class="tdLabel">变更前所用混合料品种</td>
                 <td class="table-td-content">
                     ${oaActEngineering.beforeVariety}
                 </td>
 
-                <td class="tdLabel">变更后所用混合料品种：</td>
+                <td class="tdLabel">变更后所用混合料品种</td>
                 <td class="table-td-content">
                     ${oaActEngineering.afterVariety}
                 </td>
             </tr>
 
             <tr>
-                <td class="tdLabel">变更前用料日期：</td>
+                <td class="tdLabel">变更前用料日期</td>
                 <td class="table-td-content">
                     ${oaActEngineering.beforeData}
                 </td>
 
-                <td class="tdLabel">变更后用料日期：</td>
+                <td class="tdLabel">变更后用料日期</td>
                 <td class="table-td-content">
                     ${oaActEngineering.afterData}
                 </td>
             </tr>
 
             <tr>
-                <td class="tdLabel">变更前用料数量：</td>
+                <td class="tdLabel">变更前用料数量</td>
                 <td class="table-td-content">
                     ${oaActEngineering.beforeNumber}
                 </td>
 
-                <td class="tdLabel">变更后用料数量：</td>
+                <td class="tdLabel">变更后用料数量</td>
                 <td class="table-td-content">
                     ${oaActEngineering.afterNumber}
                 </td>
             </tr>
 
             <tr>
-                <td class="tdLabel">用料单位：</td>
+                <td class="tdLabel">用料单位</td>
                 <td class="table-td-content">
                     ${oaActEngineering.useCompany}
                 </td>
 
-                <td class="tdLabel">业务员：</td>
+                <td class="tdLabel">业务员</td>
                 <td class="table-td-content">
                     ${oaActEngineering.salesman}
                 </td>
             </tr>
 
             <tr>
-                <td class="tdLabel">经营负责人：</td>
+                <td class="tdLabel">经营负责人</td>
                 <td class="table-td-content" style="width: 340px">
                     <shiro:hasPermission name="principal">
                         <div style="width: 100%;height: 100%;" id="principalContent"></div>
@@ -166,7 +166,7 @@
             </tr>
 
             <tr>
-                <td class="tdLabel">备注：</td>
+                <td class="tdLabel">备注</td>
                 <td colspan="3" class="table-td-content">
                     ${oaActEngineering.remark}
                 </td>

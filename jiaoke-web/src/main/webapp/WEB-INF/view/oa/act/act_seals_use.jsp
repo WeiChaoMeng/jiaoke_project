@@ -136,7 +136,7 @@
         <tr>
             <td class="tdLabel">申请文件名称</td>
             <td class="table-td-content" colspan="3" style="padding: 10px">
-                <textarea class="write-approval-content-textarea" name="name"></textarea>
+                <textarea class="write-approval-content-textarea" onkeyup="value=value.replace(/\s+/g,'')" name="name"></textarea>
             </td>
         </tr>
 

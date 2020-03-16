@@ -54,4 +54,12 @@ public interface OaActRewardsPenaltiesService {
      * @return int
      */
     int updateAnnexes(String[] array, String id);
+
+    /**
+     * 由主键选择性更新
+     *
+     * @param oaActRewardsPenalties oaActRewardsPenalties
+     * @return int
+     */
+    int updateByPrimaryKeySelective(OaActRewardsPenalties oaActRewardsPenalties);
 }

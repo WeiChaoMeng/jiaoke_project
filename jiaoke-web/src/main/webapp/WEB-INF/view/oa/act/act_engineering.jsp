@@ -173,7 +173,7 @@
         <tr>
             <td class="tdLabel">备注</td>
             <td colspan="3" class="table-td-content" style="padding: 5px 10px">
-                <textarea class="write-approval-content-textarea" name="remark" style="width: 99%;height: 46px"></textarea>
+                <textarea class="write-approval-content-textarea" onkeyup="value=value.replace(/\s+/g,'')" name="remark" style="width: 99%;height: 46px"></textarea>
             </td>
         </tr>
 

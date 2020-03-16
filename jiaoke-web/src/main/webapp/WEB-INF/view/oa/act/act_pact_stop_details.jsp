@@ -49,7 +49,8 @@
                     <c:forTokens items="${oaActPactStop.annex}" delims="," var="annex">
                         <div class="table-file">
                             <div class="table-file-content">
-                                <span class="table-file-title" title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <span class="table-file-title"
+                                      title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
                                 <a class="table-file-download icon"
                                    href="/fileDownloadHandle/download?fileName=${annex}"
                                    title="下载">&#xebda;</a>
@@ -93,10 +94,8 @@
     <div class="notice-sign">
         <div class="notice-sign-position">
             <label>接收人：</label>
-            <input class="notice-relevant-personnel" type="text" disabled>
-            <input class="notice-date" type="text"
-                   value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年&nbsp;&nbsp;&nbsp;&nbsp;月&nbsp;&nbsp;&nbsp;&nbsp;日"
-                   disabled>
+            <input class="notice-relevant-personnel" type="text" value="${oaActPactStop.receivingSign}" readonly>
+            <input class="notice-date" type="text" value="${oaActPactStop.receivingDate}" readonly>
         </div>
     </div>
 </div>
@@ -143,14 +142,16 @@
     <tr>
         <td class="notice-td-label">其他需要补充的内容</td>
         <td colspan="5" class="table-td-evaluation">
-            <textarea class="evaluation-content-disabled" style="height: 90px" readonly>${oaActPactStop.supplementDetails}</textarea>
+            <textarea class="evaluation-content-disabled" style="height: 90px"
+                      readonly>${oaActPactStop.supplementDetails}</textarea>
             <div class="approval-date">
                 <label class="approval-date-label">日期 </label>
-                <input class="approval-date-input" type="text" value="${oaActLaborContractStop.receivingDate}" readonly>
+                <input class="approval-date-input" type="text" value="${oaActPactStop.receivingDate}" readonly>
             </div>
             <div class="approval-signature">
                 <label class="approval-signature-label">本人签字 </label>
-                <input class="approval-signature-input" type="text" value="${oaActLaborContractStop.receivingSign}" readonly>
+                <input class="approval-signature-input" type="text" value="${oaActPactStop.receivingSign}"
+                       readonly>
             </div>
         </td>
     </tr>

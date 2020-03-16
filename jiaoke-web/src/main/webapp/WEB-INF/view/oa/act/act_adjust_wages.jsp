@@ -106,7 +106,7 @@
 
             <td class="tdLabel">职务</td>
             <td class="table-td-content">
-                <input type="text" class="formInput-readonly" name="position" value="${job}" readonly>
+                <input type="text" class="formInput-readonly" name="position" value="${position}" readonly>
             </td>
         </tr>
 
@@ -130,7 +130,7 @@
         <tr>
             <td class="tdLabel">申请原因</td>
             <td colspan="5" class="table-td-evaluation">
-                <textarea class="evaluation-content" style="height: 90px" name="reason"></textarea>
+                <textarea class="evaluation-content" onkeyup="value=value.replace(/\s+/g,'')" style="height: 90px" name="reason"></textarea>
                 <div class="approval-date">
                     <label class="approval-date-label">日期 </label>
                     <input class="approval-date-input" type="text"

@@ -72,7 +72,7 @@ public class OaActTransferController {
         List<Department> departmentList = departmentService.selectKeyAndName();
         model.addAttribute("nickname", getCurrentUser().getNickname());
         model.addAttribute("department", getCurrentUser().getDepartment());
-        model.addAttribute("job", getCurrentUser().getJob());
+        model.addAttribute("position", getCurrentUser().getPosition());
         model.addAttribute("departmentList", JsonHelper.toJSONString(departmentList));
         return "oa/act/act_transfer";
     }

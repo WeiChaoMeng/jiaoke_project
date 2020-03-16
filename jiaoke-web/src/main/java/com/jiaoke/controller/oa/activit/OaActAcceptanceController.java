@@ -316,12 +316,10 @@ public class OaActAcceptanceController {
         if (oaActAcceptanceService.edit(oaActAcceptance) < 0) {
             return "error";
         } else {
-            //用户所在部门id
-            String department = userInfoService.selectDepartmentByUserId(getCurrentUser().getId());
-            //部门负责人
-            String principal = departmentService.selectEnforcerId("principal", department);
+            //验收人
+            UserInfo userInfo = userInfoService.getUserInfoByPermission("accepter");
             Map<String, Object> map = new HashMap<>(16);
-            map.put("principal", principal);
+            map.put("accepter", userInfo.getId());
             String instance = activitiUtil.startProcessInstanceByKey("oa_acceptance", "oa_act_acceptance:" + oaActAcceptance.getId(), map, getCurrentUser().getId().toString());
             if (instance != null) {
                 //发送成功后更新状态

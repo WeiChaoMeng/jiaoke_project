@@ -88,7 +88,7 @@ public class OaActLaborContractSignController {
             return "error";
         } else {
             //用户所在部门id
-            String department = userInfoService.selectDepartmentByUserId(getCurrentUser().getId());
+            String department = userInfoService.selectDepartmentByUserId(oaActLaborContractSign.getNotifiedPerson());
             //部门负责人
             String principal = departmentService.selectEnforcerId("principal", department);
             Map<String, Object> map = new HashMap<>(16);
@@ -180,8 +180,7 @@ public class OaActLaborContractSignController {
 
                         //部门负责人、主管领导
                     } else if (principal.equals(enforcer) || supervisor.equals(enforcer)) {
-                        String startUserId = activitiUtil.getStartUserId(task.getProcessInstanceId());
-                        String departmentId = userInfoService.selectDepartmentByUserId(Integer.valueOf(startUserId));
+                        String departmentId = userInfoService.selectDepartmentByUserId(oaActLaborContractSign.getNotifiedPerson());
                         String enforcerId = departmentService.selectEnforcerId(enforcer, departmentId);
                         activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, Integer.valueOf(enforcerId));
                         return "success";
@@ -291,7 +290,7 @@ public class OaActLaborContractSignController {
             return "error";
         } else {
             //用户所在部门id
-            String department = userInfoService.selectDepartmentByUserId(getCurrentUser().getId());
+            String department = userInfoService.selectDepartmentByUserId(oaActLaborContractSign.getNotifiedPerson());
             //部门负责人
             String principal = departmentService.selectEnforcerId("principal", department);
             Map<String, Object> map = new HashMap<>(16);

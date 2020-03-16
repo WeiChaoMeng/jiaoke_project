@@ -199,7 +199,7 @@
     if (flag === 0) {
         if (licenceBorrow.licenceOperator === "" || licenceBorrow.licenceOperator === undefined) {
             $('#licenceOperatorContent').append('<input type="text" class="formInput-readonly" name="licenceOperator" value="${nickname}" readonly="readonly">');
-            $('#returnTimeContent').append('<input type="text" class="formInput-readonly" name="returnTime" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly="readonly">');
+            $('#returnTimeContent').append('<input type="text" class="formInput-readonly" name="returnTime" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date())%>" readonly="readonly">');
             flag = 1;
         } else {
             $('#licenceOperatorContent').append(licenceBorrow.licenceOperator);

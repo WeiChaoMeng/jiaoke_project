@@ -160,7 +160,7 @@
         <tr>
             <td class="tdLabel">申请原因</td>
             <td colspan="5" class="table-td-evaluation">
-                <textarea class="evaluation-content" style="height: 90px" name="reason">${oaActAdjustWages.reason}</textarea>
+                <textarea class="evaluation-content" onkeyup="value=value.replace(/\s+/g,'')" style="height: 90px" name="reason">${oaActAdjustWages.reason}</textarea>
                 <div class="approval-date">
                     <label class="approval-date-label">日期 </label>
                     <input class="approval-date-input" type="text"

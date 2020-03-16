@@ -105,7 +105,7 @@
 
             <td class="tdLabel">职务</td>
             <td class="table-td-content">
-                <input type="text" class="formInput-readonly" name="position" value="${job}" readonly>
+                <input type="text" class="formInput-readonly" name="position" value="${position}" readonly>
             </td>
         </tr>
 

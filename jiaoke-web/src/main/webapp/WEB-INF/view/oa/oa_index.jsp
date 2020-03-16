@@ -86,9 +86,9 @@
                             </td>
 
                             <%--<td class="template" valign="middle">--%>
-                                <%--<a class="check_color" onclick="commonJump('meals')" title="客饭审批单">--%>
-                                    <%--<em class="template-icon">&#xe695;</em>客饭审批单--%>
-                                <%--</a>--%>
+                            <%--<a class="check_color" onclick="commonJump('meals')" title="客饭审批单">--%>
+                            <%--<em class="template-icon">&#xe695;</em>客饭审批单--%>
+                            <%--</a>--%>
                             <%--</td>--%>
 
                             <td class="template" valign="middle">
@@ -171,16 +171,9 @@
                                 </a>
                             </td>
 
-                            <%--<td class="template" valign="middle">--%>
-                                <%--<a class="check_color" onclick="commonJump('confirm')" title="确认单审批单">--%>
-                                    <%--<em class="template-icon">&#xe695;</em>确认单审批单--%>
-                                <%--</a>--%>
-                            <%--</td>--%>
-
                             <td class="template" valign="middle">
-                                <a class="check_color" onclick="commonJump('contractSign')"
-                                   title="劳务派遣员工合同签订、续订、变更、终止审批表">
-                                    <em class="template-icon">&#xe695;</em>劳务派遣员工合同签订、续订、变更、终止审批表
+                                <a class="check_color" onclick="commonJump('confirm')" title="确认单审批单">
+                                    <em class="template-icon">&#xe695;</em>确认单审批单
                                 </a>
                             </td>
 
@@ -193,18 +186,6 @@
 
                         <%--new--%>
                         <tr>
-                            <%--<td class="template" valign="middle">--%>
-                                <%--<a class="check_color" onclick="assetUse()" title="资产领用申请单">--%>
-                                    <%--<em class="template-icon">&#xe695;</em>资产领用申请单--%>
-                                <%--</a>--%>
-                            <%--</td>--%>
-
-                            <%--<td class="template" valign="middle">--%>
-                                <%--<a class="check_color" onclick="conferenceRoom()" title="会议室申请单">--%>
-                                    <%--<em class="template-icon">&#xe695;</em>会议室申请单--%>
-                                <%--</a>--%>
-                            <%--</td>--%>
-
                             <td class="template" valign="middle">
                                 <a class="check_color" onclick="commonJump('laborContractSign')" title="劳动合同签订通知书">
                                     <em class="template-icon">&#xe695;</em>劳动合同签订通知书
@@ -287,12 +268,32 @@
                                 </a>
                             </td>
 
+                            <td class="template" valign="middle">
+                                <a class="check_color" onclick="commonJump('rewardsPenalties')" title="奖罚意见表">
+                                    <em class="template-icon">&#xe695;</em>奖罚意见表
+                                </a>
+                            </td>
 
-
-
+                            <td class="template" valign="middle">
+                                <a class="check_color" onclick="commonJump('overtime')" title="加班审批表、统计表">
+                                    <em class="template-icon">&#xe695;</em>加班统计表
+                                </a>
+                            </td>
                         </tr>
 
                         <tr>
+                            <%--<td class="template" valign="middle">--%>
+                                <%--<a class="check_color" onclick="assetUse()" title="资产领用申请单">--%>
+                                    <%--<em class="template-icon">&#xe695;</em>资产领用申请单--%>
+                                <%--</a>--%>
+                            <%--</td>--%>
+
+                            <%--<td class="template" valign="middle">--%>
+                                <%--<a class="check_color" onclick="conferenceRoom()" title="会议室申请单">--%>
+                                    <%--<em class="template-icon">&#xe695;</em>会议室申请单--%>
+                                <%--</a>--%>
+                            <%--</td>--%>
+
                             <%--<td class="template" valign="middle">--%>
                             <%--<a class="check_color" onclick="assets()" title="固定资产投资完成验收单（生产用）">--%>
                             <%--<em class="template-icon">&#xe695;</em>固定资产投资完成验收单（生产用）--%>
@@ -306,17 +307,6 @@
                             <%--</td>--%>
 
                             <%--未完成--%>
-                            <%--<td class="template" valign="middle">--%>
-                            <%--<a class="check_color" onclick="commonJump('rewardsPenalties')" title="奖罚意见表">--%>
-                            <%--<em class="template-icon">&#xe695;</em>奖罚意见表--%>
-                            <%--</a>--%>
-                            <%--</td>--%>
-
-                            <%--<td class="template" valign="middle">--%>
-                            <%--<a class="check_color" onclick="commonJump('overtime')" title="加班审批表、统计表">--%>
-                            <%--<em class="template-icon">&#xe695;</em>加班统计表--%>
-                            <%--</a>--%>
-                            <%--</td>--%>
                         </tr>
                         </tbody>
                     </table>
