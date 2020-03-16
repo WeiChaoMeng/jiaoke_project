@@ -412,17 +412,14 @@ function searchFrom(){
             success:function (res) {
                 var rawMaterialHtml = '';
                 $(".messageSpan").remove();
+                debugger
                 if (res.length === 0){
                     rawMaterialHtml = '<span class="messageSpan">'
                         + '所选日期并无试验'
                         + '</span>';
-                    $("#searchTable").remove();
+                    $("#searchTable").empty();
                     $("#searchDiv").append(rawMaterialHtml);
                 } else {
-                    if (!$("#searchTable")){
-                        var tableHtml = '<table  class="standingBookTable" border="1" id="searchTable" ></table>';
-                        $("#searchDiv").append(tableHtml);
-                    }
                     var tem = $("#materials").val();
                     $("#searchTable").empty().append(searchTableHtml(tem));
                     $("#searchTbody").empty().append(eachArrayToHtml(res,tem));
@@ -1797,7 +1794,6 @@ function eachArrayToHtml(res,id) {
 
 
 function returnSvgHtml(id,res) {
-    debugger
     var temHtml = "";
     var sievePore37Count = 0,
         sievePore31Count= 0,

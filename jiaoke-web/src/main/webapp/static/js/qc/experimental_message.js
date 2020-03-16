@@ -318,6 +318,7 @@ function showBrzzez(msg) {
 
 //编写显示粗刨铣料
 function coarseMilling(msg){
+    debugger
     var firstHead = '<th>实验项目</th>'
         + '<th>技术要求</th>'
         + '<th colspan="3">试验结果</th>'

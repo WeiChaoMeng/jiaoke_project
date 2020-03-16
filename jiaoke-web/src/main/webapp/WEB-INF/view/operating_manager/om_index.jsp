@@ -537,7 +537,7 @@
 <%--js获取路径--%>
 <input id="path" type="hidden" value="${path}"/>
 
-<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.js"></script>
 <script type="text/javascript" src="/static/js/layer/layer.js"></script>
 <script type="text/javascript" src="/static/js/operating_manager/operating_manager.js"></script>
 

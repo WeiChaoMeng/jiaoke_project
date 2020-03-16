@@ -228,11 +228,12 @@ function allMonthPercent() {
                 // 使用刚指定的配置项和数据显示图表。
 
             }else {
+                debugger
                 var date=new Date();
                 var months = date.getMonth() + 1;
                 var data = [];
-                var item = new Object();
                 for (var i = 1;i < months;i++ ) {
+                    var item = new Object();
                     item.value = 0;
                     item.name = i + '月份';
                     data.push(item);

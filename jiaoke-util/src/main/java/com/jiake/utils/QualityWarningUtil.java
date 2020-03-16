@@ -207,7 +207,7 @@ public class QualityWarningUtil {
                 qualityWarningData = compareDifference(2, 4, 6, materialRationReal, materialRationMoudel, id, name);
                 break;
             case "沥青":
-                qualityWarningData = compareDifference(2, 4, 6, materialRationReal, materialRationMoudel, id, name);
+                qualityWarningData = compareDifference(1, 2, 3, materialRationReal, materialRationMoudel, id, name);
                 break;
             case "再生料":
                 qualityWarningData = compareDifference(2, 4, 6, materialRationReal, materialRationMoudel, id, name);

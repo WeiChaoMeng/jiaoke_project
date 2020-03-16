@@ -409,9 +409,9 @@
                 }],
                 yAxis: [{
                     type: 'value',
-                    interval :0.2,
-                    max:parseInt(${baseMap.template.ratioStone + 2}),
-                    min:parseInt(${baseMap.template.ratioStone - 1.2}),
+                    interval :0.1,
+                    max:parseInt(${baseMap.template.ratioStone + 0.5}),
+                    min:parseInt(${baseMap.template.ratioStone - 0.5}),
                     axisLabel: {
                         formatter: '{value} %'
                     },

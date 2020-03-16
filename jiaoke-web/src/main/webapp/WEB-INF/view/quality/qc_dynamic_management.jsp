@@ -219,12 +219,14 @@
                                             axisLabel: {
                                                 formatter: '{value} %'
                                             },
-                                            max: function (v) {
-                                                return (v.max + 5).toFixed(1)
-                                            },
-                                            min: function (v) {
-                                                return v.min - 5 < 0? 0:(v.min - 5).toFixed(1);
-                                            },
+                                            max:${moudelRatio[keys] + 7},
+                                            min:${moudelRatio[keys] - 7}
+                                            // max: function (v) {
+                                            //     return (v.max + v.min)/2
+                                            // },
+                                            // min: function (v) {
+                                            //     return v.min - 5 < 0? 0:(v.min - 5).toFixed(1);
+                                            // },
 
                                         },
                                         series: [
@@ -380,10 +382,10 @@
                                                 formatter: '{value} %'
                                             },
                                             max: function (v) {
-                                                return (v.max + 5).toFixed(1)
+                                                return (v.max).toFixed(1)
                                             },
                                             min: function (v) {
-                                                return v.min - 5 < 0? 0:(v.min - 5).toFixed(1);
+                                                return v.min - 1 < 0? 0:(v.min - 5).toFixed(1);
                                             },
                                         },
                                         series: [
@@ -559,13 +561,15 @@
                                             axisLabel: {
                                                 formatter: '{value} %'
                                             },
-                                            Interval:0.05,
-                                            max: function (v) {
-                                                return (v.max + 5).toFixed(1)
-                                            },
-                                            min: function (v) {
-                                                return v.min - 5 < 0? 0:(v.min - 5).toFixed(1);
-                                            },
+                                            Interval:0.5,
+                                            max:${moudelRatio[keys] + 7},
+                                            min:${moudelRatio[keys] - 7}
+                                            // max: function (v) {
+                                            //     return (v.max + 0.5).toFixed(1)
+                                            // },
+                                            // min: function (v) {
+                                            //     return v.min - 0.5 < 0? 0:(v.min - 5).toFixed(1);
+                                            // },
                                         },
                                         series: [
 
