@@ -205,7 +205,7 @@
     if (flag === 0) {
         if (sealsBorrow.sealOperator === "" || sealsBorrow.sealOperator === undefined) {
             $('#sealOperatorContent').append('<input type="text" class="formInput-readonly" name="sealOperator" value="${nickname}" readonly="readonly">');
-            $('#returnTimeContent').append('<input type="text" class="formInput-readonly" name="returnTime" value="<%=new SimpleDateFormat("yyyy-MM-dd HH").format(new Date())%>" readonly="readonly">');
+            $('#returnTimeContent').append('<input type="text" class="formInput-readonly" name="returnTime" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date())%>" readonly="readonly">');
             flag = 1;
         } else {
             $('#sealOperatorContent').append(sealsBorrow.sealOperator);

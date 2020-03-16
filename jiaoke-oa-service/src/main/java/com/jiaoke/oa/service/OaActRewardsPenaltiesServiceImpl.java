@@ -5,6 +5,7 @@ import com.jiaoke.oa.bean.OaActRewardsPenalties;
 import com.jiaoke.oa.bean.OaCollaboration;
 import com.jiaoke.oa.dao.OaActRewardsPenaltiesMapper;
 import com.jiaoke.oa.dao.OaCollaborationMapper;
+import com.jiaoke.oa.dao.UserInfoMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -27,14 +28,16 @@ public class OaActRewardsPenaltiesServiceImpl implements OaActRewardsPenaltiesSe
     @Resource
     private OaCollaborationMapper oaCollaborationMapper;
 
+    @Resource
+    private UserInfoMapper userInfoMapper;
+
     @Override
     public int insert(OaActRewardsPenalties oaActRewardsPenalties, Integer userId, String randomId, Integer state) {
-        oaActRewardsPenalties.setMonth(DateUtil.stringConvertYYYYMMDD(oaActRewardsPenalties.getMonthStr()));
         oaActRewardsPenalties.setId(randomId);
         oaActRewardsPenalties.setCreateTime(new Date());
         oaActRewardsPenalties.setPromoter(userId);
         oaActRewardsPenalties.setUrl("rewardsPenalties");
-        if (oaActRewardsPenaltiesMapper.insert(oaActRewardsPenalties) < 0) {
+        if (oaActRewardsPenaltiesMapper.insertSelective(oaActRewardsPenalties) < 0) {
             return -1;
         } else {
             OaCollaboration oaCollaboration = new OaCollaboration();
@@ -52,7 +55,6 @@ public class OaActRewardsPenaltiesServiceImpl implements OaActRewardsPenaltiesSe
 
     @Override
     public int edit(OaActRewardsPenalties oaActRewardsPenalties) {
-        oaActRewardsPenalties.setMonth(DateUtil.stringConvertYYYYMMDD(oaActRewardsPenalties.getMonthStr()));
         if (oaActRewardsPenaltiesMapper.updateByPrimaryKeySelective(oaActRewardsPenalties) < 0) {
             return -1;
         } else {
@@ -65,7 +67,7 @@ public class OaActRewardsPenaltiesServiceImpl implements OaActRewardsPenaltiesSe
     public OaActRewardsPenalties selectByPrimaryKey(String id) {
         OaActRewardsPenalties oaActRewardsPenalties = oaActRewardsPenaltiesMapper.selectByPrimaryKey(id);
         oaActRewardsPenalties.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActRewardsPenalties.getCreateTime()));
-        oaActRewardsPenalties.setMonthStr(DateUtil.dateConvertYYYYMMDD(oaActRewardsPenalties.getMonth()));
+        oaActRewardsPenalties.setPromoterStr(userInfoMapper.getNicknameById(oaActRewardsPenalties.getPromoter()));
         return oaActRewardsPenalties;
     }
 
@@ -84,6 +86,11 @@ public class OaActRewardsPenaltiesServiceImpl implements OaActRewardsPenaltiesSe
         } else {
             oaActRewardsPenalties.setAnnex("");
         }
+        return oaActRewardsPenaltiesMapper.updateByPrimaryKeySelective(oaActRewardsPenalties);
+    }
+
+    @Override
+    public int updateByPrimaryKeySelective(OaActRewardsPenalties oaActRewardsPenalties) {
         return oaActRewardsPenaltiesMapper.updateByPrimaryKeySelective(oaActRewardsPenalties);
     }
 }

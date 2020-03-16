@@ -124,7 +124,7 @@
 
             <td class="tdLabel">现岗位</td>
             <td class="table-td-content" style="width: 15%">
-                <input type="text" class="formInput-readonly" name="presentPost" value="${job}" readonly>
+                <input type="text" class="formInput-readonly" name="presentPost" value="${position}" readonly>
             </td>
 
             <td class="tdLabel">拟转入部门</td>

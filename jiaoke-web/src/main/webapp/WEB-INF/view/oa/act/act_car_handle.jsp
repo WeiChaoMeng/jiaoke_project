@@ -211,7 +211,7 @@
             <td class="tdLabel">批准人</td>
             <td class="table-td-content">
                 <shiro:hasPermission name="supervisor">
-                    <div style="width: 100%;height: 100%;" id="principalContent"></div>
+                    <div style="width: 100%;height: 100%;" id="supervisorContent"></div>
                 </shiro:hasPermission>
                 <shiro:lacksPermission name="supervisor">
                     ${oaActCar.supervisor}
@@ -277,13 +277,13 @@
 
     if (flag === 0) {
         if (car.supervisor === "" || car.supervisor === undefined) {
-            $('#principalContent').append('<input type="text" class="formInput-readonly" name="supervisor" value="${nickname}" readonly="readonly"><input type="hidden" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+            $('#supervisorContent').append('<input type="text" class="formInput-readonly" name="supervisor" value="${nickname}" readonly="readonly"><input type="hidden" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
             flag = 1;
         } else {
-            $('#principalContent').append(car.supervisor);
+            $('#supervisorContent').append(car.supervisor);
         }
     } else {
-        $('#principalContent').append(car.supervisor);
+        $('#supervisorContent').append(car.supervisor);
     }
 
 
@@ -295,7 +295,7 @@
         isClear: false,                     //是否开启清空
         minDate: "1900-01-01",              //最小日期
         maxDate: "2099-12-31",              //最大日期
-        format: "YYYY-MM-DD hh",
+        format: "YYYY-MM-DD hh:mm",
         zIndex: 100000,
     });
 

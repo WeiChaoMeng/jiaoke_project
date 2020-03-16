@@ -114,7 +114,7 @@
         <tr>
             <td class="tdLabel">盖章文件内容</td>
             <td class="table-td-content" colspan="3" style="padding: 10px">
-                <textarea class="write-approval-content-textarea" name="content"></textarea>
+                <textarea class="write-approval-content-textarea" onkeyup="value=value.replace(/\s+/g,'')" name="content"></textarea>
             </td>
         </tr>
 
@@ -169,7 +169,7 @@
         isClear: false,                     //是否开启清空
         minDate: "1900-01-01",              //最小日期
         maxDate: "2099-12-31",              //最大日期
-        format: "YYYY-MM-DD hh",
+        format: "YYYY-MM-DD hh:mm",
         zIndex: 100000,
     });
 

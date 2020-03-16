@@ -73,7 +73,7 @@ public class OaActRegularizationController {
     public String toMeals(Model model) {
         model.addAttribute("nickname", getCurrentUser().getNickname());
         model.addAttribute("department", getCurrentUser().getDepartment());
-        model.addAttribute("job", getCurrentUser().getJob());
+        model.addAttribute("position", getCurrentUser().getPosition());
         return "oa/act/act_regularization";
     }
 

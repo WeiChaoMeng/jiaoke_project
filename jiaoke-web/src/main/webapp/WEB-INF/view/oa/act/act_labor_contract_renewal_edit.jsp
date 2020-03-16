@@ -124,7 +124,8 @@
                    value="${oaActLaborContractRenewal.endDate}" onfocus="this.blur()">前签署意见。
             <input type="hidden" id="annex" name="annex">
             <input type="hidden" id="id" name="id" value="${oaActLaborContractRenewal.id}">
-            <input type="hidden" id="recipientId" name="notifiedPerson" value="${oaActLaborContractRenewal.notifiedPerson}">
+            <input type="hidden" id="recipientId" name="notifiedPerson"
+                   value="${oaActLaborContractRenewal.notifiedPerson}">
         </div>
     </div>
 
@@ -224,33 +225,37 @@
 
     //发送
     function send() {
-        var array = [];
-        $('#annexes').find('input').each(function () {
-            array.push($(this).val());
-        });
-
         if ($.trim($("#title").val()) === '') {
             window.top.tips("标题不可以为空！", 6, 5, 2000);
         } else {
-            //发送前将上传好的附件插入form中
-            $('#annex').val(array);
+            if ($.trim($("#recipientId").val()) === '') {
+                window.top.tips("请选择要通知的人！", 6, 5, 2000);
+            } else {
+                var array = [];
+                $('#annexes').find('input').each(function () {
+                    array.push($(this).val());
+                });
 
-            $.ajax({
-                type: "POST",
-                url: '${path}/laborContractRenewal/editAdd',
-                data: $('#oaActLaborContractRenewal').serialize(),
-                error: function (request) {
-                    layer.msg("出错！");
-                },
-                success: function (result) {
-                    if (result === "success") {
-                        window.location.href = "${path}/oaIndex.do";
-                        window.top.tips("发送成功！", 0, 1, 1000);
-                    } else {
-                        window.top.tips('发送失败！', 0, 2, 1000);
+                //发送前将上传好的附件插入form中
+                $('#annex').val(array);
+
+                $.ajax({
+                    type: "POST",
+                    url: '${path}/laborContractRenewal/editAdd',
+                    data: $('#oaActLaborContractRenewal').serialize(),
+                    error: function (request) {
+                        layer.msg("出错！");
+                    },
+                    success: function (result) {
+                        if (result === "success") {
+                            window.location.href = "${path}/oaIndex.do";
+                            window.top.tips("发送成功！", 0, 1, 1000);
+                        } else {
+                            window.top.tips('发送失败！', 0, 2, 1000);
+                        }
                     }
-                }
-            })
+                })
+            }
         }
     }
 

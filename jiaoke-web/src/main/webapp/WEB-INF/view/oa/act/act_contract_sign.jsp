@@ -65,7 +65,7 @@
                     <button type="button" class="table-tab-send" onclick="send()">发送</button>
                 </td>
 
-                <th nowrap="nowrap" class="th_title" style="width: 4%">标题 </th>
+                <th nowrap="nowrap" class="th_title" style="width: 4%">标题</th>
                 <td style="width: 39%">
                     <div class="common_input_frame">
                         <input type="text" id="title" name="title" placeholder="请输入标题" title="点击此处填写标题"
@@ -74,10 +74,11 @@
                     </div>
                 </td>
 
-                <th class="th_title" nowrap="nowrap" style="width: 4%">流程 </th>
+                <th class="th_title" nowrap="nowrap" style="width: 4%">流程</th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" placeholder="部门负责人(审批),部门主管领导(审批),劳资部门(审批),总经理(审批),通知人、被通知人(协同)" readonly="readonly">
+                        <input type="text" placeholder="部门负责人(审批),部门主管领导(审批),劳资部门(审批),总经理(审批),通知人、被通知人(协同)"
+                               readonly="readonly">
                     </div>
                 </td>
             </tr>
@@ -191,46 +192,52 @@
 
     //发送
     function send() {
-        var array = [];
-        $('#annexes').find('input').each(function () {
-            array.push($(this).val());
-        });
-
         if ($.trim($("#title").val()) === '') {
-            window.top.tips("标题不可以为空！", 6, 5, 2000);
+            window.top.tips("标题不可以为空！", 6, 5, 1000);
         } else {
-            //发送前将上传好的附件插入form中
-            $('#annex').val(array);
+            if ($.trim($("#recipientId").val()) === '') {
+                window.top.tips("请选择要通知的人！", 6, 5, 1000);
+            } else {
 
-            $.ajax({
-                type: "POST",
-                url: '${path}/contractSign/add',
-                data: $('#oaActContractSign').serialize(),
-                error: function (request) {
-                    layer.msg("出错！");
-                },
-                success: function (result) {
-                    if (result === "success") {
-                        window.location.href = "${path}/oaIndex.do";
-                        window.top.tips("发送成功！", 0, 1, 2000);
-                    } else {
-                        window.top.tips('发送失败！', 0, 2, 2000);
+                var array = [];
+                $('#annexes').find('input').each(function () {
+                    array.push($(this).val());
+                });
+
+                //发送前将上传好的附件插入form中
+                $('#annex').val(array);
+
+                $.ajax({
+                    type: "POST",
+                    url: '${path}/contractSign/add',
+                    data: $('#oaActContractSign').serialize(),
+                    error: function (request) {
+                        layer.msg("出错！");
+                    },
+                    success: function (result) {
+                        if (result === "success") {
+                            window.location.href = "${path}/oaIndex.do";
+                            window.top.tips("发送成功！", 0, 1, 2000);
+                        } else {
+                            window.top.tips('发送失败！', 0, 2, 2000);
+                        }
                     }
-                }
-            })
+                })
+            }
         }
     }
 
     //保存待发
     function savePending() {
-        var array = [];
-        $('#annexes').find('input').each(function () {
-            array.push($(this).val());
-        });
-
         if ($.trim($("#title").val()) === '') {
             layer.msg("标题不可以为空！")
         } else {
+
+            var array = [];
+            $('#annexes').find('input').each(function () {
+                array.push($(this).val());
+            });
+
             //发送前将上传好的附件插入form中
             $('#annex').val(array);
 
@@ -308,11 +315,11 @@
     //打印
     function printContent() {
         $('#tool,#titleArea,#annexList').hide();
-        $('#body').css('width','100%');
+        $('#body').css('width', '100%');
         //执行打印
         window.print();
         $('#tool,#titleArea').show();
-        $('#body').css('width','75%');
+        $('#body').css('width', '75%');
 
         //附件列表
         let annexesLen = $('#annexes').children().length;

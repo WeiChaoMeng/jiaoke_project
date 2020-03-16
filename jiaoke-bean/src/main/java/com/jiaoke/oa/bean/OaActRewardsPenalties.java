@@ -31,14 +31,112 @@ public class OaActRewardsPenalties {
     /**
      * 月份
      */
-    private Date month;
-    @Transient
-    private String monthStr;
+    private String month;
 
     /**
-     * 奖罚事项
+     * 综合办公室主管领导签字
      */
-    private String matter;
+    private String office;
+
+    /**
+     * 综合办公室主管领导内容
+     */
+    private String officeContent;
+
+    /**
+     * 综合办公室主管领导时间
+     */
+    private String officeDate;
+
+    /**
+     * 质量技术部主管领导签字
+     */
+    private String quality;
+
+    /**
+     * 质量技术部主管领导内容
+     */
+    private String qualityContent;
+
+    /**
+     * 质量技术部主管领导时间
+     */
+    private String qualityDate;
+
+    /**
+     * 经营开发部主管领导签字
+     */
+    private String business;
+
+    /**
+     * 经营开发部主管领导内容
+     */
+    private String businessContent;
+
+    /**
+     * 经营开发部主管领导时间
+     */
+    private String businessDate;
+
+    /**
+     * 生产管理部主管领导签字
+     */
+    private String production;
+
+    /**
+     * 生产管理部主管领导内容
+     */
+    private String productionContent;
+
+    /**
+     * 生产管理部主管领导时间
+     */
+    private String productionDate;
+
+    /**
+     * 物资管理部主管领导签字
+     */
+    private String supplies;
+
+    /**
+     * 物资管理部主管领导内容
+     */
+    private String suppliesContent;
+
+    /**
+     * 物资管理部主管领导时间
+     */
+    private String suppliesDate;
+
+    /**
+     * 财务管理部主管领导签字
+     */
+    private String financial;
+
+    /**
+     * 财务管理部主管领导内容
+     */
+    private String financialContent;
+
+    /**
+     * 财务管理部主管领导时间
+     */
+    private String financialDate;
+
+    /**
+     * 总经理签字
+     */
+    private String companyPrincipal;
+
+    /**
+     * 总经理内容
+     */
+    private String companyPrincipalContent;
+
+    /**
+     * 总经理时间
+     */
+    private String companyPrincipalDate;
 
     /**
      * 附件
@@ -56,6 +154,8 @@ public class OaActRewardsPenalties {
      * 发起人
      */
     private Integer promoter;
+    @Transient
+    private String promoterStr;
 
     /**
      * 查询路径
@@ -78,28 +178,180 @@ public class OaActRewardsPenalties {
         this.title = title;
     }
 
-    public Date getMonth() {
+    public String getMonth() {
         return month;
     }
 
-    public void setMonth(Date month) {
+    public void setMonth(String month) {
         this.month = month;
     }
 
-    public String getMonthStr() {
-        return monthStr;
+    public String getOffice() {
+        return office;
     }
 
-    public void setMonthStr(String monthStr) {
-        this.monthStr = monthStr;
+    public void setOffice(String office) {
+        this.office = office;
     }
 
-    public String getMatter() {
-        return matter;
+    public String getOfficeContent() {
+        return officeContent;
     }
 
-    public void setMatter(String matter) {
-        this.matter = matter;
+    public void setOfficeContent(String officeContent) {
+        this.officeContent = officeContent;
+    }
+
+    public String getOfficeDate() {
+        return officeDate;
+    }
+
+    public void setOfficeDate(String officeDate) {
+        this.officeDate = officeDate;
+    }
+
+    public String getQuality() {
+        return quality;
+    }
+
+    public void setQuality(String quality) {
+        this.quality = quality;
+    }
+
+    public String getQualityContent() {
+        return qualityContent;
+    }
+
+    public void setQualityContent(String qualityContent) {
+        this.qualityContent = qualityContent;
+    }
+
+    public String getQualityDate() {
+        return qualityDate;
+    }
+
+    public void setQualityDate(String qualityDate) {
+        this.qualityDate = qualityDate;
+    }
+
+    public String getBusiness() {
+        return business;
+    }
+
+    public void setBusiness(String business) {
+        this.business = business;
+    }
+
+    public String getBusinessContent() {
+        return businessContent;
+    }
+
+    public void setBusinessContent(String businessContent) {
+        this.businessContent = businessContent;
+    }
+
+    public String getBusinessDate() {
+        return businessDate;
+    }
+
+    public void setBusinessDate(String businessDate) {
+        this.businessDate = businessDate;
+    }
+
+    public String getProduction() {
+        return production;
+    }
+
+    public void setProduction(String production) {
+        this.production = production;
+    }
+
+    public String getProductionContent() {
+        return productionContent;
+    }
+
+    public void setProductionContent(String productionContent) {
+        this.productionContent = productionContent;
+    }
+
+    public String getProductionDate() {
+        return productionDate;
+    }
+
+    public void setProductionDate(String productionDate) {
+        this.productionDate = productionDate;
+    }
+
+    public String getSupplies() {
+        return supplies;
+    }
+
+    public void setSupplies(String supplies) {
+        this.supplies = supplies;
+    }
+
+    public String getSuppliesContent() {
+        return suppliesContent;
+    }
+
+    public void setSuppliesContent(String suppliesContent) {
+        this.suppliesContent = suppliesContent;
+    }
+
+    public String getSuppliesDate() {
+        return suppliesDate;
+    }
+
+    public void setSuppliesDate(String suppliesDate) {
+        this.suppliesDate = suppliesDate;
+    }
+
+    public String getFinancial() {
+        return financial;
+    }
+
+    public void setFinancial(String financial) {
+        this.financial = financial;
+    }
+
+    public String getFinancialContent() {
+        return financialContent;
+    }
+
+    public void setFinancialContent(String financialContent) {
+        this.financialContent = financialContent;
+    }
+
+    public String getFinancialDate() {
+        return financialDate;
+    }
+
+    public void setFinancialDate(String financialDate) {
+        this.financialDate = financialDate;
+    }
+
+    public String getCompanyPrincipal() {
+        return companyPrincipal;
+    }
+
+    public void setCompanyPrincipal(String companyPrincipal) {
+        this.companyPrincipal = companyPrincipal;
+    }
+
+    public String getCompanyPrincipalContent() {
+        return companyPrincipalContent;
+    }
+
+    public void setCompanyPrincipalContent(String companyPrincipalContent) {
+        this.companyPrincipalContent = companyPrincipalContent;
+    }
+
+    public String getCompanyPrincipalDate() {
+        return companyPrincipalDate;
+    }
+
+    public void setCompanyPrincipalDate(String companyPrincipalDate) {
+        this.companyPrincipalDate = companyPrincipalDate;
     }
 
     public String getAnnex() {
@@ -140,5 +392,13 @@ public class OaActRewardsPenalties {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getPromoterStr() {
+        return promoterStr;
+    }
+
+    public void setPromoterStr(String promoterStr) {
+        this.promoterStr = promoterStr;
     }
 }

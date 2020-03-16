@@ -331,10 +331,14 @@ public class OaActReviewController {
         if (oaActReviewService.edit(oaActReview) < 0) {
             return "error";
         } else {
-            //获取拥有权限的用户
-            UserInfo userInfo = userInfoService.getUserInfoByPermission("mealsApproval");
+            //用户所在部门id
+            String department = userInfoService.selectDepartmentByUserId(getCurrentUser().getId());
+            //部门负责人
+            String principal = departmentService.selectEnforcerId("principal", department);
+
             Map<String, Object> map = new HashMap<>(16);
-            map.put("mealsApproval", userInfo.getId());
+            map.put("principal", principal);
+
             String instance = activitiUtil.startProcessInstanceByKey("oa_review", "oa_act_review:" + oaActReview.getId(), map, getCurrentUser().getId().toString());
             if (instance != null) {
                 //发送成功后更新状态

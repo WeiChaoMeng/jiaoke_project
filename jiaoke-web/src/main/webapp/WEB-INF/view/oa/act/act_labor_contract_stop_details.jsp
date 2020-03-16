@@ -92,7 +92,7 @@
         <div class="notice-sign-position">
             <label>接收人：</label>
             <input class="notice-relevant-personnel" type="text" value="${oaActLaborContractStop.receivingSign}"  readonly>
-            <input class="notice-date" type="text" ${oaActLaborContractStop.receivingDate} readonly>
+            <input class="notice-date" type="text" value="${oaActLaborContractStop.receivingDate}" readonly>
         </div>
     </div>
 </div>

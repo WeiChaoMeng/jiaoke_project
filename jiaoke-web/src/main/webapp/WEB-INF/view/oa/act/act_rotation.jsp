@@ -146,7 +146,7 @@
 
             <td class="tdLabel">现工作岗位</td>
             <td class="table-td-content">
-                <input type="text" class="formInput-readonly" name="presentPost" value="${job}" readonly>
+                <input type="text" class="formInput-readonly" name="presentPost" value="${position}" readonly>
             </td>
 
             <td class="tdLabel">担任本岗位起始时间</td>

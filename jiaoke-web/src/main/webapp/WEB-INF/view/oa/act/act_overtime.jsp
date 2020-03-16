@@ -10,16 +10,69 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>加班审批表、统计表</title>
+    <title>加班统计表</title>
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
     <link href="../../../../static/js/date_pickers/date_picker.css" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
+    <style>
+        .formTable thead tr th {
+            width: 10%;
+            height: 30px;
+            text-align: center;
+            white-space: nowrap;
+            border: solid 1px #e5e5e5;
+            font-size: 13px;
+            font-weight: 600;
+            background: #f6f6f6;
+            line-height: 40px;
+        }
+
+        .formTable tbody tr td {
+            padding: 5px 10px;
+        }
+
+        .approval-div-style {
+            width: 70%;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .approval-input {
+            width: 33%;
+            float: left;
+        }
+
+        .approval-input-span {
+            font-size: 13px;
+            width: 25%;
+            display: inline-block;
+            float: left;
+            line-height: 29px;
+            text-align: right;
+            text-indent: 5px;
+        }
+
+        .approval-input-input {
+            border: 0;
+            border-bottom: 1px #000 solid;
+            width: 35%;
+            outline: none;
+            height: 28px;
+            text-align: left;
+            font-weight: 500;
+            color: #000;
+            text-indent: 10px;
+            font-size: 13px;
+            float: left;
+            cursor: no-drop;
+        }
+    </style>
 </head>
 
-<body>
+<body id="body">
 
 <div class="table-title">
-    <span>加班审批表、统计表</span>
+    <span>加班统计表</span>
 </div>
 
 <div class="top_toolbar" id="tool">
@@ -43,7 +96,21 @@
     </div>
 </div>
 
-<form id="oaActMeals">
+<%--附件列表--%>
+<div class="top_toolbar" id="annexList" style="display: none;">
+    <div class="top-toolbar-annexes">
+
+        <div class="annexes-icon">
+            <button type="button" class="cursor_hand">&#xeac1; ：</button>
+        </div>
+
+        <div id="annexes"></div>
+
+    </div>
+</div>
+
+
+<form id="oaActOvertime">
     <div class="form_area" id="titleArea">
         <table>
             <tbody>
@@ -52,20 +119,19 @@
                     <button type="button" class="table-tab-send" onclick="send()">发送</button>
                 </td>
 
-                <th nowrap="nowrap" class="th_title" style="width: 4%">标题:</th>
+                <th nowrap="nowrap" class="th_title" style="width: 4%">标题</th>
                 <td style="width: 44%">
                     <div class="common_input_frame">
                         <input type="text" id="title" name="title" placeholder="请输入标题" title="点击此处填写标题"
-                               value="客饭审批单(${nickname} <%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>)"
+                               value="加班统计表(${nickname} <%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>)"
                                autocomplete="off">
                     </div>
                 </td>
 
-                <th class="th_title" nowrap="nowrap" style="width: 4%">流程:</th>
+                <th class="th_title" nowrap="nowrap" style="width: 4%">流程</th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" placeholder="审批人(王玉秋)、发起者(协同)"
-                               readonly="readonly">
+                        <input type="text" placeholder="部门负责人(审批)、部门主管领导(审批)、发起者(协同)" readonly>
                     </div>
                 </td>
             </tr>
@@ -73,114 +139,74 @@
         </table>
     </div>
 
+    <div>
+        <span class="fill-in-date" style="margin-top: 0;float: left;">部门
+            <input type="text" class="form-number-content" name="department" id="department" style="cursor: no-drop;"
+                   value="${department}" readonly>
+        </span>
+
+        <span class="form-number-left" style="float: right;margin-top: 0;">日期
+            <input type="text" class="form-number-content je-date" name="statisticalDate" id="statisticalDate"
+                   onfocus="this.blur()">
+            <input type="hidden" id="annex" name="annex">
+            <%--<input type="hidden" id="overtimeStatistics" name="overtimeStatistics">--%>
+        </span>
+    </div>
+
     <table class="formTable">
-        <tbody>
+        <thead>
         <tr>
-            <td class="tdLabel">点菜人</td>
-            <td class="table-td-content">
-                <input type="text" class="formInput" name="applicant" value="${nickname}" readonly="readonly">
-            </td>
-
-            <td class="tdLabel">招待事由</td>
-            <td colspan="3" class="table-td-content">
-                <input type="text" class="formInput" name="entertain" autocomplete="off">
-            </td>
+            <th style="width: 10%">姓名</th>
+            <th style="width: 35%">周六、周日</th>
+            <th style="width: 15%">法定节假日</th>
+            <th style="width: 10%">倒休</th>
+            <th style="width: 15%">周六日加班合计</th>
+            <th style="width: 15%">法定节假日加班合计</th>
         </tr>
+        </thead>
 
+        <tbody id="tbo">
         <tr>
-            <td class="tdLabel">用餐时间</td>
-            <td class="table-td-content">
-                <input type="text" class="formInput je-date" name="diningTimeStr" onfocus="this.blur()">
-            </td>
-
-            <td class="tdLabel">标准</td>
-            <td class="table-td-content">
-                <select class="select" name="standard">
-                    <option value="0">10元</option>
-                    <option value="1">20元</option>
-                    <option value="2">30元</option>
-                    <option value="3">40元</option>
-                    <option value="4">50元</option>
-                    <option value="5">60元</option>
-                </select>
-            </td>
-
-            <td class="tdLabel">厨师选择</td>
-            <td class="table-td-content">
-                <select class="select" name="chef">
-                    <option value="0">大厨</option>
-                    <option value="1">二厨</option>
-                </select>
-            </td>
-        </tr>
-
-        <tr>
-            <td class="tdLabel">人数</td>
-            <td class="table-td-content">
-                <input type="text" class="formInput" name="number" autocomplete="off">
-            </td>
-
-            <td class="tdLabel">地点</td>
-            <td class="table-td-content">
-                <input type="text" class="formInput" name="place" autocomplete="off">
-            </td>
-
-            <td class="tdLabel">桌数</td>
-            <td class="table-td-content">
-                <input type="text" class="formInput" name="tableNumber" autocomplete="off">
-            </td>
-        </tr>
-
-        <tr>
-            <td class="tdLabel">菜品</td>
-            <td class="table-td-content">
-                <select class="select" name="dishes">
-                    <option value="0">A类</option>
-                    <option value="1">B类</option>
-                    <option value="2">C类</option>
-                    <option value="3">D类</option>
-                    <option value="4">E类</option>
-                    <option value="5">F类</option>
-                    <option value="6">G类</option>
-                    <option value="7">其他菜品</option>
-                </select>
-            </td>
-
-            <td class="tdLabel">菜品内容</td>
-            <td colspan="3" class="table-td-content">
-                <input type="text" class="formInput" name="dishesContent" autocomplete="off">
-            </td>
-        </tr>
-
-        <tr>
-            <td class="tdLabel">附件</td>
-            <td colspan="5" id="annexes"></td>
-            <input type="hidden" name="annex" id="annex">
-        </tr>
-
-        <tr>
-            <td class="tdLabel">备注</td>
-            <td colspan="5" class="table-td-textarea">
-                <textarea class="opinion-column" style="width: 100%" name="remarks"></textarea>
-            </td>
-        </tr>
-
-        <tr>
-            <td class="tdLabel">审批人意见</td>
-            <td colspan="5" class="approval-content">
-                <textarea disabled="disabled" class="approval-content-textarea"></textarea>
-                <div class="approval-date">
-                    <label class="approval-date-label">日期:</label>
-                    <input class="approval-date-input" type="text" disabled="disabled">
-                </div>
-                <div class="approval-signature">
-                    <label class="approval-signature-label">签字:</label>
-                    <input class="approval-signature-input" type="text" disabled="disabled">
-                </div>
-            </td>
+            <td><input type="text" class="formInput" name="name" id="name" autocomplete="off"></td>
+            <td><input type="text" class="formInput" name="weekend" id="weekend" autocomplete="off"></td>
+            <td><input type="text" class="formInput" name="legalHolidays" id="legalHolidays" autocomplete="off"></td>
+            <td><input type="text" class="formInput" name="restDown" id="restDown" autocomplete="off"></td>
+            <td><input type="text" class="formInput" name="weekendTotal" id="weekendTotal" autocomplete="off"></td>
+            <td><input type="text" class="formInput" name="legalTotal" id="legalTotal" autocomplete="off"></td>
         </tr>
         </tbody>
     </table>
+
+    <div class="approval-div-style">
+        <div class="approval-input">
+            <span class="approval-input-span">主管领导</span>
+            <input type="text" class="approval-input-input" readonly>
+        </div>
+
+        <div class="approval-input">
+            <span class="approval-input-span">部门领导</span>
+            <input type="text" class="approval-input-input" readonly>
+        </div>
+
+        <div class="approval-input">
+            <span class="approval-input-span">考勤员</span>
+            <input type="text" class="approval-input-input" value="${nickname}" name="preparer" id="preparer" readonly>
+        </div>
+    </div>
+
+    <div id="addRow" style="width: 30%;float: right;">
+        <div style="width: 33%;float: right">
+            <input type="button" value="添加数据行(10)" onclick="addRow(10)" class="table-tab-send">
+        </div>
+
+        <div style="width: 33%;float: right">
+            <input type="button" value="添加数据行(3)" onclick="addRow(3)" class="table-tab-send">
+        </div>
+
+        <div style="width: 33%;float: right">
+            <input type="button" value="添加数据行(1)" onclick="addRow(1)" class="table-tab-send">
+        </div>
+    </div>
 </form>
 
 </body>
@@ -197,27 +223,78 @@
         isClear: false,                     //是否开启清空
         minDate: "1900-01-01",              //最小日期
         maxDate: "2099-12-31",              //最大日期
-        format: "YYYY-MM-DD hh:mm",
+        format: "YYYY年MM月",
         zIndex: 100000,
     });
 
+    //添加数据行
+    function addRow(row) {
+
+        var content = '';
+        for (let i = 0; i < row; i++) {
+            content += '<tr>\n' +
+                '            <td><input type="text" class="formInput" name="name" id="name" autocomplete="off"></td>\n' +
+                '            <td><input type="text" class="formInput" name="weekend" id="weekend" autocomplete="off"></td>\n' +
+                '            <td><input type="text" class="formInput" name="legalHolidays" id="legalHolidays" autocomplete="off"></td>\n' +
+                '            <td><input type="text" class="formInput" name="restDown" id="restDown" autocomplete="off"></td>\n' +
+                '            <td><input type="text" class="formInput" name="weekendTotal" id="weekendTotal" autocomplete="off"></td>\n' +
+                '            <td><input type="text" class="formInput" name="legalTotal" id="legalTotal" autocomplete="off"></td>\n' +
+                '        </tr>'
+        }
+        $('#tbo').append(content);
+    }
+
     //发送
     function send() {
+        var actOvertimeList = [];
+        var tel = $('#tbo').find('tr');
+        for (let i = 0; i < tel.length; i++) {
+            var n = $(tel[i]).find('td').find('#name').val();
+            var w = $(tel[i]).find('td').find('#weekend').val();
+            var lh = $(tel[i]).find('td').find('#legalHolidays').val();
+            var r = $(tel[i]).find('td').find('#restDown').val();
+            var wt = $(tel[i]).find('td').find('#weekendTotal').val();
+            var lt = $(tel[i]).find('td').find('#legalTotal').val();
+            actOvertimeList.push({
+                name: n,
+                weekend: w,
+                legalHolidays: lh,
+                restDown: r,
+                weekendTotal: wt,
+                legalTotal: lt
+            })
+        }
+
         var array = [];
         $('#annexes').find('input').each(function () {
             array.push($(this).val());
         });
 
+        //发送前将上传好的附件插入form中
+        $('#annex').val(array);
+
         if ($.trim($("#title").val()) === '') {
             window.top.tips("标题不可以为空！", 6, 5, 2000);
         } else {
-            //发送前将上传好的附件插入form中
-            $('#annex').val(array);
+            var tit = $('#title').val();
+            var dep = $('#department').val();
+            var sd = $('#statisticalDate').val();
+            var pp = $('#preparer').val();
+            var an = $('#annex').val();
+            var oaActOvertime = {
+                title: tit,
+                department: dep,
+                statisticalDate: sd,
+                oaOvertimeStatisticsList: actOvertimeList,
+                preparer: pp,
+                annex: an
+            };
 
             $.ajax({
                 type: "POST",
-                url: '${path}/meals/add',
-                data: $('#oaActMeals').serialize(),
+                url: '${path}/overtime/add',
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify(oaActOvertime),
                 error: function (request) {
                     layer.msg("出错！");
                 },
@@ -235,13 +312,55 @@
 
     //保存待发
     function savePending() {
+        var actOvertimeList = [];
+        var tel = $('#tbo').find('tr');
+        for (let i = 0; i < tel.length; i++) {
+            var n = $(tel[i]).find('td').find('#name').val();
+            var w = $(tel[i]).find('td').find('#weekend').val();
+            var lh = $(tel[i]).find('td').find('#legalHolidays').val();
+            var r = $(tel[i]).find('td').find('#restDown').val();
+            var wt = $(tel[i]).find('td').find('#weekendTotal').val();
+            var lt = $(tel[i]).find('td').find('#legalTotal').val();
+            actOvertimeList.push({
+                name: n,
+                weekend: w,
+                legalHolidays: lh,
+                restDown: r,
+                weekendTotal: wt,
+                legalTotal: lt
+            })
+        }
+
+        var array = [];
+        $('#annexes').find('input').each(function () {
+            array.push($(this).val());
+        });
+
+        //发送前将上传好的附件插入form中
+        $('#annex').val(array);
+
         if ($.trim($("#title").val()) === '') {
-            layer.msg("标题不可以为空！")
+            window.top.tips("标题不可以为空！", 6, 5, 2000);
         } else {
+            var tit = $('#title').val();
+            var dep = $('#department').val();
+            var sd = $('#statisticalDate').val();
+            var pp = $('#preparer').val();
+            var an = $('#annex').val();
+            var oaActOvertime = {
+                title: tit,
+                department: dep,
+                statisticalDate: sd,
+                oaOvertimeStatisticsList: actOvertimeList,
+                preparer: pp,
+                annex: an
+            };
+
             $.ajax({
                 type: "POST",
-                url: '${path}/meals/savePending',
-                data: $('#oaActMeals').serialize(),
+                url: '${path}/overtime/savePending',
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify(oaActOvertime),
                 error: function (request) {
                     layer.msg("出错！");
                 },
@@ -264,6 +383,7 @@
 
     //上传附件成功后插入form
     function writeFile(ret) {
+        $('#annexList').css("display", "block");
         for (let i = 0; i < ret.length; i++) {
             var annex = '';
             var fileId = ret[i].filePaths.substring(0, ret[i].filePaths.indexOf("_"));
@@ -278,10 +398,12 @@
         }
     }
 
+
     //删除已上传附件
     function whether(fileName) {
         window.top.deleteUploaded(fileName);
     }
+
 
     //执行删除附件
     function delFile(fileName) {
@@ -290,14 +412,19 @@
             url: '${path}/fileUploadHandle/deleteFile',
             data: {"fileName": fileName},
             error: function (request) {
-                layer.msg("出错！");
+                window.top.tips("出错！", 6, 2, 1000);
             },
             success: function (result) {
                 if (result === "success") {
                     $('#file' + fileName.substring(0, fileName.indexOf("_"))).remove();
-                    window.top.tips("删除成功！", 0, 1, 2000);
+                    window.top.tips("删除成功！", 0, 1, 1000);
+
+                    let annexesLen = $('#annexes').children().length;
+                    if (annexesLen === 0) {
+                        $('#annexList').css("display", "none");
+                    }
                 } else {
-                    window.top.tips("文件不存在！", 6, 5, 2000);
+                    window.top.tips("文件不存在！", 6, 5, 1000);
                 }
             }
         });
@@ -305,9 +432,20 @@
 
     //打印
     function printContent() {
-        $('#tool,#titleArea').hide();
+        $('#tool,#titleArea,#annexList,#addRow').hide();
+        $('#body').css('width', '100%');
+        //执行打印
         window.print();
-        $('#tool,#titleArea').show();
+        $('#tool,#titleArea,#addRow').show();
+        $('#body').css('width', '80%');
+
+        //附件列表
+        let annexesLen = $('#annexes').children().length;
+        if (annexesLen === 0) {
+            $('#annexList').css("display", "none");
+        } else {
+            $('#annexList').css("display", "block");
+        }
     }
 </script>
 </html>

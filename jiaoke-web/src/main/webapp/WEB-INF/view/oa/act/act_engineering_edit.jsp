@@ -187,7 +187,7 @@
 
             <td class="tdLabel">业务员</td>
             <td class="table-td-content">
-                <input type="text" class="formInput" name="salesman" value="${oaActEngineering.salesman}" readonly="readonly">
+                <input type="text" class="formInput-readonly" name="salesman" value="${oaActEngineering.salesman}" readonly="readonly">
             </td>
         </tr>
 

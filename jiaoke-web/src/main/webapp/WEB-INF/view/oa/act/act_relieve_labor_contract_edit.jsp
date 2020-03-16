@@ -12,16 +12,16 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>编辑解除劳动合同审批表</title>
+    <title>员工轮岗审批表</title>
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
     <link href="../../../../static/js/date_pickers/date_picker.css" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
 </head>
 
-<body id="body">
+<body id="body" style="width: 60%;">
 
 <div class="table-title">
-    <span>编辑解除劳动合同审批表</span>
+    <span>员工轮岗审批表</span>
 </div>
 
 <div class="top_toolbar" id="tool">
@@ -201,7 +201,7 @@
         <tr>
             <td class="tdLabel">解除劳动合同原因</td>
             <td colspan="5" class="approval-content">
-                <textarea class="approval-content-textarea" style="height: 90px;background-color: #ffffff"
+                <textarea class="approval-content-textarea" style="height: 90px;background-color: #ffffff" onkeyup="value=value.replace(/\s+/g,'')"
                           name="reason">${oaActRelieveLaborContract.reason}</textarea>
                 <div class="approval-date">
                     <label class="approval-date-label">日期 </label>

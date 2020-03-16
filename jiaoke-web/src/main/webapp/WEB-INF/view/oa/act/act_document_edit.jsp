@@ -436,24 +436,24 @@
         <tr>
             <td class="tdLabel">内容</td>
             <td class="table-td-content" colspan="5">
-                <textarea class="content-textarea-style" name="content">${oaActDocument.content}</textarea>
+                <textarea class="content-textarea-style" onkeyup="value=value.replace(/\s+/g,'')" name="content">${oaActDocument.content}</textarea>
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel">印制</td>
             <td class="table-td-content">
-                <input type="text" class="formInput"  value="${oaActDocument.print}" name="print" readonly>
+                <input type="text" class="formInput-readonly"  value="${oaActDocument.print}" name="print" readonly>
             </td>
 
             <td class="tdLabel">校对</td>
             <td class="table-td-content">
-                <input type="text" class="formInput" value="${oaActDocument.proofreading}" name="proofreading" readonly>
+                <input type="text" class="formInput-readonly" value="${oaActDocument.proofreading}" name="proofreading" readonly>
             </td>
 
             <td class="tdLabel">份数</td>
             <td class="table-td-content">
-                <input type="text" class="formInput" name="attachmentNumber" id="attachmentNumber" value="${oaActDocument.attachmentNumber}" readonly>
+                <input type="text" class="formInput-readonly" name="attachmentNumber" id="attachmentNumber" value="${oaActDocument.attachmentNumber}" readonly>
                 <%--暂存附件--%>
                 <input type="hidden" id="annex" name="annex">
             </td>

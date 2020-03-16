@@ -159,7 +159,7 @@
         <tr>
             <td class="tdLabel">文件标题</td>
             <td colspan="3" class="table-td-content" style="padding: 10px">
-                <textarea class="write-approval-content-textarea" name="fileTitle">${oaActRead.fileTitle}</textarea>
+                <textarea class="write-approval-content-textarea" onkeyup="value=value.replace(/\s+/g,'')" name="fileTitle">${oaActRead.fileTitle}</textarea>
             </td>
         </tr>
 

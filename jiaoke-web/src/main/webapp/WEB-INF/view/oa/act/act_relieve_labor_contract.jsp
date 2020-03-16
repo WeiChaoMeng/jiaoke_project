@@ -104,7 +104,7 @@
         <tr>
             <td class="tdLabel">部门及职位</td>
             <td class="table-td-content">
-                <input type="text" class="formInput-readonly" name="departmentPosition" value="${department} - ${job}"
+                <input type="text" class="formInput-readonly" name="departmentPosition" value="${department} - ${position}"
                        readonly>
             </td>
 
@@ -133,7 +133,7 @@
         <tr>
             <td class="tdLabel">解除劳动合同原因</td>
             <td colspan="5" class="approval-content">
-                <textarea class="approval-content-textarea" style="height: 90px;background-color: #fff;"
+                <textarea class="approval-content-textarea" style="height: 90px;background-color: #fff;" onkeyup="value=value.replace(/\s+/g,'')"
                           name="reason"></textarea>
                 <div class="approval-date">
                     <label class="approval-date-label">日期 </label>

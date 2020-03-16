@@ -94,7 +94,7 @@
                     <button type="button" class="table-tab-send" onclick="send()">发送</button>
                 </td>
 
-                <th nowrap="nowrap" class="th_title" style="width: 4%">标题 </th>
+                <th nowrap="nowrap" class="th_title" style="width: 4%">标题</th>
                 <td style="width: 32%">
                     <div class="common_input_frame">
                         <input type="text" id="title" name="title" placeholder="请输入标题" title="点击此处填写标题"
@@ -102,7 +102,7 @@
                     </div>
                 </td>
 
-                <th class="th_title" nowrap="nowrap" style="width: 4%">流程 </th>
+                <th class="th_title" nowrap="nowrap" style="width: 4%">流程</th>
                 <td>
                     <div class="common_input_frame">
                         <input type="text" placeholder="部门负责人(审批),部门主管领导(审批),人事部门(审批),总经理(审批),通知人、被通知人(协同)" readonly>
@@ -197,33 +197,37 @@
 
     //发送
     function send() {
-        var array = [];
-        $('#annexes').find('input').each(function () {
-            array.push($(this).val());
-        });
-
         if ($.trim($("#title").val()) === '') {
             window.top.tips("标题不可以为空！", 6, 5, 2000);
         } else {
-            //发送前将上传好的附件插入form中
-            $('#annex').val(array);
+            if ($.trim($("#recipientId").val()) === '') {
+                window.top.tips("请选择要通知的人！", 6, 5, 2000);
+            } else {
+                var array = [];
+                $('#annexes').find('input').each(function () {
+                    array.push($(this).val());
+                });
 
-            $.ajax({
-                type: "POST",
-                url: '${path}/laborContractSign/editAdd',
-                data: $('#oaActLaborContractSign').serialize(),
-                error: function (request) {
-                    layer.msg("出错！");
-                },
-                success: function (result) {
-                    if (result === "success") {
-                        window.location.href = "${path}/oaIndex.do";
-                        window.top.tips("发送成功！", 0, 1, 1000);
-                    } else {
-                        window.top.tips('发送失败！', 0, 2, 1000);
+                //发送前将上传好的附件插入form中
+                $('#annex').val(array);
+
+                $.ajax({
+                    type: "POST",
+                    url: '${path}/laborContractSign/editAdd',
+                    data: $('#oaActLaborContractSign').serialize(),
+                    error: function (request) {
+                        layer.msg("出错！");
+                    },
+                    success: function (result) {
+                        if (result === "success") {
+                            window.location.href = "${path}/oaIndex.do";
+                            window.top.tips("发送成功！", 0, 1, 1000);
+                        } else {
+                            window.top.tips('发送失败！', 0, 2, 1000);
+                        }
                     }
-                }
-            })
+                })
+            }
         }
     }
 

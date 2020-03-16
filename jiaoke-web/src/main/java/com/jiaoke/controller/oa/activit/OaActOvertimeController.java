@@ -3,16 +3,16 @@ package com.jiaoke.controller.oa.activit;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
-import com.jiaoke.oa.bean.Comments;
-import com.jiaoke.oa.bean.OaActMeals;
-import com.jiaoke.oa.bean.UserInfo;
-import com.jiaoke.oa.service.OaActMealsService;
-import com.jiaoke.oa.service.OaCollaborationService;
-import com.jiaoke.oa.service.UserInfoService;
+import com.jiaoke.controller.oa.TargetFlowNodeCommand;
+import com.jiaoke.oa.bean.*;
+import com.jiaoke.oa.service.*;
+import org.activiti.bpmn.model.UserTask;
+import org.activiti.engine.ManagementService;
 import org.activiti.engine.task.Task;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 加班审批表、统计表
+ * 加班统计表
  *
  * @author lihui
  * @version 1.0
@@ -36,13 +36,19 @@ public class OaActOvertimeController {
     private ActivitiUtil activitiUtil;
 
     @Resource
-    private OaActMealsService oaActMealsService;
+    private OaActOvertimeService oaActOvertimeService;
 
     @Resource
     private UserInfoService userInfoService;
 
     @Resource
     private OaCollaborationService oaCollaborationService;
+
+    @Resource
+    private DepartmentService departmentService;
+
+    @Resource
+    private ManagementService managementService;
 
     /**
      * 获取当前登录用户信息
@@ -61,28 +67,30 @@ public class OaActOvertimeController {
     @RequestMapping("/toIndex")
     public String toMeals(Model model) {
         model.addAttribute("nickname", getCurrentUser().getNickname());
+        model.addAttribute("department", getCurrentUser().getDepartment());
         return "oa/act/act_overtime";
     }
 
     /**
      * 提交新增
      *
-     * @param oaActMeals oaActMeals
+     * @param oaActOvertime oaActOvertime
      * @return s/e
      */
     @RequestMapping(value = "/add")
     @ResponseBody
-    public String add(OaActMeals oaActMeals) {
+    public String add(@RequestBody OaActOvertime oaActOvertime) {
         String randomId = RandomUtil.randomId();
-        if (oaActMealsService.insert(oaActMeals, getCurrentUser().getId(), randomId, 0) < 1) {
+        if (oaActOvertimeService.insert(oaActOvertime, getCurrentUser().getId(), randomId, 0) < 1) {
             return "error";
         } else {
-            //获取拥有权限的用户
-            UserInfo userInfo = userInfoService.getUserInfoByPermission("mealsApproval");
-            //开启流程
+            //用户所在部门id
+            String department = userInfoService.selectDepartmentByUserId(getCurrentUser().getId());
+            //部门负责人
+            String principal = departmentService.selectEnforcerId("principal", department);
             Map<String, Object> map = new HashMap<>(16);
-            map.put("approval", userInfo.getId());
-            String instance = activitiUtil.startProcessInstanceByKey("oa_meals", "oa_act_meals:" + randomId, map, getCurrentUser().getId().toString());
+            map.put("principal", principal);
+            String instance = activitiUtil.startProcessInstanceByKey("oa_overtime", "oa_act_overtime:" + randomId, map, getCurrentUser().getId().toString());
             if (instance != null) {
                 return "success";
             }
@@ -101,56 +109,104 @@ public class OaActOvertimeController {
     @RequestMapping(value = "/approval")
     public String approval(String id, String taskId, Model model) {
         //审批
-        OaActMeals oaActMeals = oaActMealsService.selectByPrimaryKey(id);
+        OaActOvertime oaActOvertime = oaActOvertimeService.selectByPrimaryKey(id);
         //获取批注信息
         List<Comments> commentsList = activitiUtil.selectHistoryComment(activitiUtil.getTaskByTaskId(taskId).getProcessInstanceId());
-        model.addAttribute("oaActMeals", oaActMeals);
+        model.addAttribute("oaActOvertime", oaActOvertime);
         model.addAttribute("taskId", JsonHelper.toJSONString(taskId));
         model.addAttribute("commentsList", commentsList);
         model.addAttribute("nickname", getCurrentUser().getNickname());
-        return "oa/act/act_meals_handle";
+        return "oa/act/act_overtime_handle";
     }
 
     /**
      * 提交审批
      *
-     * @param processingOpinion 处理意见
-     * @param taskId            任务Id
+     * @param oaActOvertime oaActOvertime
+     * @param taskId        任务Id
      * @return s/e
      */
     @RequestMapping(value = "/approvalSubmit")
     @ResponseBody
-    public String approvalSubmit(String processingOpinion, String taskId, Integer flag) {
-        //回退标识
-        String back = "back";
+    public String approvalSubmit(OaActOvertime oaActOvertime, String taskId, Integer flag) {
         //结束标识
         String end = "end";
-        //网关标识
-        String eg = "eg";
+        //发起人
+        String promoter = "promoter";
+        //回退
+        String back = "back";
+        //部门负责人
+        String principal = "principal";
+        //部门主管领导
+        String supervisor = "supervisor";
+
+        //更新数据
+        if (oaActOvertimeService.updateByPrimaryKeySelective(oaActOvertime) < 1) {
+            return "error";
+        }
+
         Task task = activitiUtil.getTaskByTaskId(taskId);
-        Map<String, Object> map = new HashMap<>(16);
         if (task == null) {
             return "error";
-        } else {
+        }
+
+        if (flag == 1) {
+            //同意
             //下个节点
             String nextNode = activitiUtil.getNextNode(task.getProcessDefinitionId(), task.getTaskDefinitionKey());
 
             //下个节点是否为end直接结束
             if (end.equals(nextNode)) {
                 activitiUtil.endProcess(taskId);
+                return "success";
+            } else {
+                //附言
+                String processingOpinion = "";
 
-                //下个节点为back修改表达状态为2并结束流程
-            } else if (back.equals(nextNode)) {
-                String businessId = activitiUtil.getBusinessByTaskId(task.getId());
-                String correlationId = businessId.substring(businessId.lastIndexOf(":") + 1);
-                oaCollaborationService.updateState(correlationId, 3);
-                activitiUtil.endProcess(taskId);
+                UserTask userTask = activitiUtil.getUserTask(task.getProcessDefinitionId(), nextNode);
+                if (nextNode.equals(userTask.getId())) {
+                    String enforcer = userTask.getAssignee().substring(userTask.getAssignee().indexOf("{") + 1, userTask.getAssignee().indexOf("}"));
 
-            } else if (eg.equals(nextNode)) {
-                map.put("result", flag);
-                map.put("notify", activitiUtil.getStartUserId(task.getProcessInstanceId()));
-                activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
+                    if (promoter.equals(enforcer)) {
+                        Map<String, Object> map = new HashMap<>(16);
+                        map.put(promoter, activitiUtil.getStartUserId(task.getProcessInstanceId()));
+                        activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
+                        return "success";
+
+                        //部门负责人
+                    } else if (principal.equals(enforcer)) {
+                        String startUserId = activitiUtil.getStartUserId(task.getProcessInstanceId());
+                        //根据发起者id获取所属部门id
+                        String departmentId = userInfoService.selectDepartmentByUserId(Integer.valueOf(startUserId));
+                        //选择执行者Id
+                        String enforcerId = departmentService.selectEnforcerId(enforcer, departmentId);
+                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, Integer.valueOf(enforcerId));
+                        return "success";
+
+                        //印章主管领导
+                    } else if (supervisor.equals(enforcer)) {
+                        String startUserId = activitiUtil.getStartUserId(task.getProcessInstanceId());
+                        //根据发起者id获取所属部门id
+                        String departmentId = userInfoService.selectDepartmentByUserId(Integer.valueOf(startUserId));
+                        //选择执行者Id
+                        String enforcerId = departmentService.selectEnforcerId(enforcer, departmentId);
+                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, Integer.valueOf(enforcerId));
+                        return "success";
+
+                    } else {
+                        UserInfo userInfo = userInfoService.getUserInfoByPermission(enforcer);
+                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
+                        return "success";
+                    }
+                } else {
+                    return "error";
+                }
             }
+        } else {
+            //驳回
+            managementService.executeCommand(new TargetFlowNodeCommand(task.getId(), back));
+            //修改表单状态
+            oaCollaborationService.updateState(oaActOvertime.getId(), 3);
             return "success";
         }
     }
@@ -158,14 +214,14 @@ public class OaActOvertimeController {
     /**
      * 保存待发
      *
-     * @param oaActMeals oaActMeals
+     * @param oaActOvertime oaActOvertime
      * @return s/e
      */
     @RequestMapping(value = "/savePending")
     @ResponseBody
-    public String savePending(OaActMeals oaActMeals) {
+    public String savePending(@RequestBody OaActOvertime oaActOvertime) {
         String randomId = RandomUtil.randomId();
-        if (oaActMealsService.insert(oaActMeals, getCurrentUser().getId(), randomId, 1) < 1) {
+        if (oaActOvertimeService.insert(oaActOvertime, getCurrentUser().getId(), randomId, 1) < 1) {
             return "error";
         } else {
             return "success";
@@ -181,21 +237,21 @@ public class OaActOvertimeController {
      */
     @RequestMapping(value = "/toEdit")
     public String toEdit(String id, Model model) {
-        OaActMeals oaActMeals = oaActMealsService.selectByPrimaryKey(id);
-        model.addAttribute("oaActMeals", oaActMeals);
-        return "oa/act/act_meals_edit";
+        OaActOvertime oaActOvertime = oaActOvertimeService.selectByPrimaryKey(id);
+        model.addAttribute("oaActOvertime", oaActOvertime);
+        return "oa/act/act_overtime_edit";
     }
 
     /**
      * 编辑后保存
      *
-     * @param oaActMeals oaActMeals
+     * @param oaActOvertime oaActOvertime
      * @return s/e
      */
     @RequestMapping(value = "/edit")
     @ResponseBody
-    public String edit(OaActMeals oaActMeals) {
-        if (oaActMealsService.edit(oaActMeals) < 0) {
+    public String edit(@RequestBody OaActOvertime oaActOvertime) {
+        if (oaActOvertimeService.edit(oaActOvertime) < 0) {
             return "error";
         } else {
             return "success";
@@ -205,24 +261,27 @@ public class OaActOvertimeController {
     /**
      * 编辑后发送
      *
-     * @param oaActMeals oaActMeals
+     * @param oaActOvertime oaActOvertime
      * @return s/e
      */
     @RequestMapping(value = "/editAdd")
     @ResponseBody
-    public String editAdd(OaActMeals oaActMeals) {
+    public String editAdd(@RequestBody OaActOvertime oaActOvertime) {
         //更新数据
-        if (oaActMealsService.edit(oaActMeals) < 0) {
+        if (oaActOvertimeService.edit(oaActOvertime) < 0) {
             return "error";
         } else {
-            //获取拥有权限的用户
-            UserInfo userInfo = userInfoService.getUserInfoByPermission("mealsApproval");
+
+            //用户所在部门id
+            String department = userInfoService.selectDepartmentByUserId(getCurrentUser().getId());
+            //部门负责人
+            String principal = departmentService.selectEnforcerId("principal", department);
             Map<String, Object> map = new HashMap<>(16);
-            map.put("mealsApproval", userInfo.getId());
-            String instance = activitiUtil.startProcessInstanceByKey("oa_meals", "oa_act_meals:" + oaActMeals.getId(), map, getCurrentUser().getId().toString());
+            map.put("principal", principal);
+            String instance = activitiUtil.startProcessInstanceByKey("oa_overtime", "oa_act_overtime:" + oaActOvertime.getId(), map, getCurrentUser().getId().toString());
             if (instance != null) {
                 //发送成功后更新状态
-                oaCollaborationService.updateStateByCorrelationId(oaActMeals.getId(), 0, oaActMeals.getTitle());
+                oaCollaborationService.updateStateByCorrelationId(oaActOvertime.getId(), 0, oaActOvertime.getTitle());
                 return "success";
             } else {
                 return "error";
@@ -240,13 +299,12 @@ public class OaActOvertimeController {
      */
     @RequestMapping(value = "/details")
     public String details(String id, String taskId, Model model) {
-        OaActMeals oaActMeals = oaActMealsService.selectByPrimaryKey(id);
+        OaActOvertime oaActOvertime = oaActOvertimeService.selectByPrimaryKey(id);
         //获取批注信息
         List<Comments> commentsList = activitiUtil.selectHistoryComment(taskId);
-        model.addAttribute("oaActMeals", oaActMeals);
+        model.addAttribute("oaActOvertime", oaActOvertime);
         model.addAttribute("commentsList", commentsList);
-        model.addAttribute("commentsListSize", commentsList.size());
-        return "oa/act/act_meals_details";
+        return "oa/act/act_overtime_details";
     }
 
     /**
@@ -262,7 +320,7 @@ public class OaActOvertimeController {
         //删除流程
         if (activitiUtil.deleteByProcessInstanceId(processInstanceId) == 1) {
             //执行删除数据
-            oaActMealsService.deleteData(id);
+            oaActOvertimeService.deleteData(id);
             oaCollaborationService.deleteByCorrelationId(id);
             return "success";
         } else {

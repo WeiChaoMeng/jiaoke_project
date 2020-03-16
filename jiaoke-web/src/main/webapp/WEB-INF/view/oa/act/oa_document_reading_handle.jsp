@@ -110,7 +110,7 @@
             <td class="tdLabel">拟办意见</td>
             <td colspan="3" class="table-td-content" style="padding: 10px">
                 <shiro:hasPermission name="receipt_proposed">
-                    <textarea class="write-approval-content-textarea" name="receiptProposedContent"></textarea>
+                    <textarea class="write-approval-content-textarea" onkeyup="value=value.replace(/\s+/g,'')" name="receiptProposedContent"></textarea>
                     <input type="hidden" name="receiptProposed" value="${nickname}">
                     <input type="hidden" name="receiptProposedDate"
                            value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">
@@ -151,7 +151,7 @@
             <td class="tdLabel">领导批示</td>
             <td colspan="3" class="table-td-content" style="padding: 10px">
                 <shiro:hasPermission name="company_principal">
-                    <textarea class="write-approval-content-textarea" name="companyPrincipalContent"></textarea>
+                    <textarea class="write-approval-content-textarea" onkeyup="value=value.replace(/\s+/g,'')" name="companyPrincipalContent"></textarea>
                     <input type="hidden" name="companyPrincipal" value="${nickname}">
                     <input type="hidden" name="companyPrincipalDate"
                            value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">
@@ -167,7 +167,7 @@
             <td class="tdLabel">办理结果</td>
             <td colspan="3" class="table-td-content" style="padding: 10px">
                 <shiro:hasPermission name="handling_result">
-                    <textarea class="write-approval-content-textarea" name="outcome"></textarea>
+                    <textarea class="write-approval-content-textarea" onkeyup="value=value.replace(/\s+/g,'')" name="outcome"></textarea>
                 </shiro:hasPermission>
 
                 <shiro:lacksPermission name="handling_result">
@@ -180,7 +180,7 @@
             <td class="tdLabel">保存期限</td>
             <td colspan="3" class="table-td-content" style="padding: 10px">
                 <shiro:hasPermission name="handling_result">
-                    <textarea class="write-approval-content-textarea" name="deadline"></textarea>
+                    <textarea class="write-approval-content-textarea" onkeyup="value=value.replace(/\s+/g,'')" name="deadline"></textarea>
                 </shiro:hasPermission>
 
                 <shiro:lacksPermission name="handling_result">

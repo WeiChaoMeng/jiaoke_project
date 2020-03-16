@@ -73,7 +73,7 @@ public class OaActRelieveLaborContractController {
     public String toMeals(Model model) {
         model.addAttribute("nickname", getCurrentUser().getNickname());
         model.addAttribute("department", getCurrentUser().getDepartment());
-        model.addAttribute("job", getCurrentUser().getJob());
+        model.addAttribute("position", getCurrentUser().getPosition());
         return "oa/act/act_relieve_labor_contract";
     }
 
@@ -113,12 +113,9 @@ public class OaActRelieveLaborContractController {
     public String approval(String id, String taskId, Model model) {
         //审批
         OaActRelieveLaborContract oaActRelieveLaborContract = oaActRelieveLaborContractService.selectByPrimaryKey(id);
-        //获取批注信息
-        List<Comments> commentsList = activitiUtil.selectHistoryComment(activitiUtil.getTaskByTaskId(taskId).getProcessInstanceId());
         model.addAttribute("oaActRelieveLaborContract", oaActRelieveLaborContract);
         model.addAttribute("oaActRelieveLaborContractJson", JsonHelper.toJSONString(oaActRelieveLaborContract));
         model.addAttribute("taskId", JsonHelper.toJSONString(taskId));
-        model.addAttribute("commentsList", commentsList);
         model.addAttribute("nickname", getCurrentUser().getNickname());
         return "oa/act/act_relieve_labor_contract_handle";
     }

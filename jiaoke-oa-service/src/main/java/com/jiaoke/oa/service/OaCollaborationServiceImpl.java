@@ -3,9 +3,11 @@ package com.jiaoke.oa.service;
 import com.jiake.utils.DateUtil;
 import com.jiake.utils.FileUploadUtil;
 import com.jiaoke.oa.bean.OaCollaboration;
+import com.jiaoke.oa.bean.OaOvertimeStatistics;
 import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.dao.DepartmentMapper;
 import com.jiaoke.oa.dao.OaCollaborationMapper;
+import com.jiaoke.oa.dao.OaOvertimeStatisticsMapper;
 import com.jiaoke.oa.dao.UserInfoMapper;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +33,9 @@ public class OaCollaborationServiceImpl implements OaCollaborationService {
 
     @Resource
     private OaCollaborationMapper oaCollaborationMapper;
+
+    @Resource
+    private OaOvertimeStatisticsMapper oaOvertimeStatisticsMapper;
 
     @Override
     public List<OaCollaboration> selectDone(List<OaCollaboration> oaCollaborations, String title) {
@@ -140,7 +145,7 @@ public class OaCollaborationServiceImpl implements OaCollaborationService {
 ////                            UserInfo userInfo = userInfoMapper.selectByPermission(enforcer);
 ////                            oc.setPreviousApprover(userInfo.getNickname());
 //                        }
-                        oc.setPreviousApprover(oaCollaborationMapper.selectPreviousNodeInfo(enforcer,collaboration.getTable(),collaboration.getCorrelationId()));
+                        oc.setPreviousApprover(oaCollaborationMapper.selectPreviousNodeInfo(enforcer, collaboration.getTable(), collaboration.getCorrelationId()));
                     } else if ("网关".equals(collaboration.getPreviousApprover())) {
                         oc.setPreviousApprover(collaboration.getPreviousApprover());
                     } else {
@@ -174,6 +179,8 @@ public class OaCollaborationServiceImpl implements OaCollaborationService {
     public int delete(String correlationId, String table) {
         //分隔符
         String delimiter = ",";
+        //加班统计表关联表
+        String overtime = "oa_act_overtime";
         //删除待发数据
         if (oaCollaborationMapper.deleteByCorrelationId(correlationId) < 0) {
             return -1;
@@ -193,6 +200,10 @@ public class OaCollaborationServiceImpl implements OaCollaborationService {
             if (oaCollaborationMapper.deleteCorrelationTable(correlationId, table) < 0) {
                 return -1;
             } else {
+                //删除加班统计表关联表
+                if (overtime.equals(table)) {
+                    oaOvertimeStatisticsMapper.deleteByOvertimeId(correlationId);
+                }
                 return 1;
             }
         }
