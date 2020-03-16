@@ -15,7 +15,7 @@
         FROM
              quality_proportioning_model AS QPM
                  INNER JOIN quality_proportioning_message AS QPMS ON QPM.message_id = QPMS.id
-        ORDER BY QPMS.crew1_modele_id
+        ORDER BY QPMS.id DESC
         limit #{startLineNum},#{endLineNum};
     </select>
     <!--start-->

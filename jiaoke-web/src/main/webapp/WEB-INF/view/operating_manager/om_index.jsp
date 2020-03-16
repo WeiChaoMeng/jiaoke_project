@@ -316,20 +316,35 @@
                                         center: ['50%', '50%'],
                                         clockwise: false,
                                         data: [{
-                                            value: 45,
-                                            name: 'CARD'
+                                            value: 0,
+                                            name: '1'
                                         }, {
-                                            value: 25,
-                                            name: 'SSD'
+                                            value: 0,
+                                            name: '2'
                                         }, {
-                                            value: 15,
-                                            name: 'U盘'
+                                            value: 0,
+                                            name: '3'
                                         }, {
-                                            value: 8,
-                                            name: '嵌入式'
+                                            value:0,
+                                            name: '4'
                                         }, {
-                                            value: 7,
-                                            name: 'FLASH'
+                                            value: 0,
+                                            name: '5'
+                                        }, {
+                                            value: 0,
+                                            name: '6'
+                                        }, {
+                                            value: 0,
+                                            name: '7'
+                                        }, {
+                                            value:0,
+                                            name: '8'
+                                        }, {
+                                            value: 0,
+                                            name: '9'
+                                        }, {
+                                            value: 0,
+                                            name: '10'
                                         }],
                                         label: {
                                             normal: {

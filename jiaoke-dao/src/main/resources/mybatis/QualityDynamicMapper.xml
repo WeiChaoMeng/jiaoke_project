@@ -32,6 +32,7 @@
     </select>
 
     <select id="selectRatioListByDate" resultType="java.util.Map">
+
         SELECT
                pro_name,
                ${crewNum}_modele_id as modele_id
@@ -47,7 +48,8 @@
                       BETWEEN  &apos;${startDate}&apos;
                       AND &apos;${endDate}&apos;
         GROUP BY
-                 produce_proportioning_num)
+                 produce_proportioning_num
+         HAVING count(Id) > 20)
     </select>
 
     <select id="selectProductByMaterialAndDate" resultType="java.util.Map">

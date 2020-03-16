@@ -149,11 +149,10 @@ function showAsphalt(msg) {
             }
         }
     }
-
     $("#firstTwoHead").remove();
     $("#firstThead").empty().append(firstHead);
     $("#firstTbody").empty().append(firstTbody);
-    $("#secondTbody").empty().append(secondTable);
+    $("#secondTable").empty().append(secondTable);
 
     if (secondTable != ''){
         $("#secondDiv").before('<span class="asphalt_span">沥青薄膜烘箱试验 TFOT </span>');
@@ -163,7 +162,6 @@ function showAsphalt(msg) {
     //修改样式
     $("#secondTable").css("margin","0");
     $("#firstTable").css("margin","30 0 0 0");
-
 }
 
 //编写显示细集料   实验信息

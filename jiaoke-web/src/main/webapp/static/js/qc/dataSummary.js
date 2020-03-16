@@ -102,6 +102,9 @@ function  getModelByDateTimeAndCrew(rationNum) {
                 $("#ratio_id").empty();
                 for (var i = 0; i < res.length;i++){
                     var modId = res[i].modele_id;
+                    if (modId === 0 || modId === '0'){
+                        continue
+                    }
                     if (rationNum != null){
                         if (Number(rationNum) ===  modId ) {
                             $("#ratio_id").append("<option selected = 'selected' value=" + modId + ">" + res[i].pro_name + "</option>");
