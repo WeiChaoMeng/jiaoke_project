@@ -182,7 +182,7 @@
                                     <td>${map.produce_time}</td>
                                     <td>${map.produce_custom_num}</td>
                                     <td>${map.crew1}</td>
-                                    <td><a href="${path}/getProductMessage.do?id=${map.Id}&crewNum=crew1" target="_self">查看</a></td>
+                                    <td><a href="${path}/getProductMessage.do?id=${map.Id}&crewNum=crew1&proDate=${map.produce_date}" target="_self">查看</a></td>
                                 </tr>
                             </c:if>
                         </c:forEach>
@@ -221,7 +221,7 @@
                                 <td>${map.produce_time}</td>
                                 <td>${map.produce_custom_num}</td>
                                 <td>${map.crew1}</td>
-                                <td><a href="${path}/getProductMessage.do?id=${map.Id}&crewNum=crew2" target="_self">查看</a></td>
+                                <td><a href="${path}/getProductMessage.do?id=${map.Id}&crewNum=crew2&proDate=${map.produce_date}" target="_self">查看</a></td>
                             </tr>
                         </c:if>
                     </c:forEach>

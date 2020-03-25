@@ -105,4 +105,26 @@ public interface QualityMatchingDao {
      * @date 2019/6/3 12:52
      */
     void insetGradingModel(@Param("map") Map<String,Object> map);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询除去今年，一共有几个年份有模板>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/3/19 23:05
+     */
+    List<Map<String, String>> selectRationYear();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询除本年历史模板>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/3/19 23:13
+     */
+    List<QualityRatioModel> selectAllRation();
 }

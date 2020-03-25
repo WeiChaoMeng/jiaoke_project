@@ -15,12 +15,44 @@
         FROM
              quality_proportioning_model AS QPM
                  INNER JOIN quality_proportioning_message AS QPMS ON QPM.message_id = QPMS.id
+        WHERE YEAR(QPM.create_time) = YEAR(NOW())
         ORDER BY QPMS.id DESC
         limit #{startLineNum},#{endLineNum};
     </select>
+
+    <select id="selectRationYear" resultType="java.util.Map">
+        SELECT
+               YEAR(QPM.create_time) AS `year`
+        FROM
+             quality_proportioning_model AS QPM
+                 INNER JOIN quality_proportioning_message AS QPMS ON QPM.message_id = QPMS.id
+        WHERE YEAR(QPM.create_time) != YEAR(NOW())
+        GROUP BY YEAR(QPM.create_time)
+    </select>
+    <select id="selectAllRation" resultType="com.jiaoke.quality.bean.QualityRatioModel">
+        SELECT
+               QPM.id,
+               QPM.message_id AS messageId,
+               QPM.model_name AS modelName,
+               QPM.create_time AS createTime,
+               QPM.remaker AS remaker,
+               QPM.create_user AS createUser,
+               QPMS.crew1_modele_id AS crew1Id,
+               QPMS.crew2_modele_id AS crew2Id
+        FROM
+             quality_proportioning_model AS QPM
+                 INNER JOIN quality_proportioning_message AS QPMS ON QPM.message_id = QPMS.id
+        where QPM.create_time != YEAR(NOW())
+        ORDER BY QPMS.id DESC
+    </select>
     <!--start-->
     <select id="selectMatchingMoudelDataCount" resultType="int" >
-        select  count(*) from quality_proportioning_model;
+        SELECT
+               COUNT(*)
+        FROM
+             quality_proportioning_model AS QPM
+                 INNER JOIN quality_proportioning_message AS QPMS ON QPM.message_id = QPMS.id
+        where  YEAR(QPM.create_time) = YEAR(NOW())
     </select>
     <!--end-->
     

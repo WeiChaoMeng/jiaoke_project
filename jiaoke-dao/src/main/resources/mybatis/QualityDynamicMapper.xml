@@ -18,38 +18,43 @@
     <select id="getAggregateRatioByMoudelId" resultType="java.util.Map">
 
         SELECT
-              pro_name,
-              ${crew}_modele_id,
-               ${ratioName}
+        QPM.pro_name AS pro_name,
+        QPM.${crew}_modele_id,
+        QPM.${ratioName}
         FROM
-             quality_proportioning_message
+        quality_proportioning_message AS QPM
+        INNER JOIN quality_proportioning_model AS QPMD
+        ON QPM.id = QPMD.message_id
         WHERE
-                ${crew}_modele_id in
+        ${crew}_modele_id in
         <foreach collection="moudelId"  separator="," open="(" close=")" item="item">
             ${item}
         </foreach>
-
+        AND YEAR(QPMD.create_time) = YEAR(&apos;${strDate}&apos;)
     </select>
 
     <select id="selectRatioListByDate" resultType="java.util.Map">
 
         SELECT
-               pro_name,
-               ${crewNum}_modele_id as modele_id
+               QPM.pro_name,
+               QPM.${crewNum}_modele_id as modele_id
         FROM
-             quality_proportioning_message
+             quality_proportioning_message AS QPM
+                 INNER JOIN quality_proportioning_model AS QPMD
+                     ON QPM.id = QPMD.message_id
         WHERE
-                ${crewNum}_modele_id IN
-        (SELECT
-               produce_proportioning_num
-        FROM
-             quality_monitoring_realtime_${crew}
-        WHERE produce_date
-                      BETWEEN  &apos;${startDate}&apos;
-                      AND &apos;${endDate}&apos;
-        GROUP BY
-                 produce_proportioning_num
-         HAVING count(Id) > 20)
+                QPM.${crewNum}_modele_id IN
+                (SELECT
+                        produce_proportioning_num
+                 FROM
+                      quality_monitoring_realtime_${crew}
+                 WHERE produce_date
+                               BETWEEN  &apos;${startDate}&apos;
+                               AND &apos;${endDate}&apos;
+                 GROUP BY
+                          produce_proportioning_num
+                 HAVING count(Id) > 20)
+          AND YEAR(QPMD.create_time) = YEAR(&apos;${startDate}&apos;)
     </select>
 
     <select id="selectProductByMaterialAndDate" resultType="java.util.Map">

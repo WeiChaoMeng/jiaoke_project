@@ -368,8 +368,18 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
         String result = sdf.format(new Date());
         Map<String,Object> countMap = qualityExperimentalManagerDao.selectLabReportConuntByDateAndMaterials(result,String.valueOf(map.get("materials_num")));
-        int count = Integer.parseInt(String.valueOf(countMap.get("counts")));
+
+        String countStr;
         String experimentNum;
+        int count = 0;
+
+        if (countMap != null ){
+            countStr = countMap.get("experiment_num").toString();
+            String[] countArray = countStr.split("-");
+            countStr = countArray[countArray.length -1];
+            count = Integer.parseInt(countStr);
+        }
+
         if (count < 10){
             experimentNum = result + "-B" + String.valueOf(map.get("logogram_name")) + "-000" + ++count;
         }else if (count < 100){
@@ -459,11 +469,15 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
         List<Map<String,String>> listObjectSec = JSONArray.parseObject(fromJson,List.class);
         List<Map<String,String>> firstTestList = JSONArray.parseObject(firstTest,List.class);
         List<Map<String,String>> coarseTestList;
+        System.out.println(listObjectSec);
+        System.out.println(firstTestList);
+
         if (coarseTest.isEmpty()){
             coarseTestList = new ArrayList<>();
         }else {
             coarseTestList = JSONArray.parseObject(coarseTest,List.class);
         }
+
 
 
         Map<String,String> insertMap = new HashMap<>();
@@ -481,6 +495,8 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
         }
 
         int upRes = qualityExperimentalManagerDao.updateLabReport(insertMap);
+
+        System.out.println(upRes);
 
         /**--------------审批使用s--------------------*/
         if (upRes > 0) {
@@ -514,7 +530,7 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
 
         int materialsNum = Integer.parseInt(insertMap.get("materials_num"));
         String experimentNum = insertMap.get("experiment_num");
-
+        System.out.println("权限完成");
         //结果集
         int res = 0;
         //根据材料插入实验
@@ -606,7 +622,7 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
                     break;
             }
         }
-
+        System.out.println("插入完成");
         //返回结果集
         Map<String,String> map = new HashMap<>();
 

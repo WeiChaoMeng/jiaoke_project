@@ -25,32 +25,34 @@
     </insert>
 
     <select id="selectRatioTemplateByCrew1MoudelId" resultType="com.jiaoke.quality.bean.QualityRatioTemplate" statementType="STATEMENT" >
-
-        select id,
-               pro_name as proName,
-               repertory_one as repertoryOne,
-               repertory_two as repertoryTwo,
-               repertory_three as repertoryThree,
-               repertory_four as repertoryFour,
-               repertory_five as repertoryFive,
-               repertory_six as repertorySix,
-               breeze as breeze,
-               ratio_stone as ratioStone,
-               ratio_regenerate1 as ratioRegenerate1,
-               ratio_regenerate2 as ratioRegenerate2,
-               ratio_additive as ratioAdditive,
-               regenerate as regenerate,
-               additive as additive,
-               temperature_asphalt as temperatureAsphalt,
-               temperature_aggregate as temperatureAggregate,
-               temperature_mixture as temperatureMixture,
-               temperature_milling as temperatureMilling,
-               temperature_asphalt_up as temperatureAsphaltUp,
-               temperature_aggregate_up as temperatureAggregateUp,
-               temperature_mixture_up as temperatureMixtureUp,
-               temperature_milling_up as temperatureMillingUp
-        from quality_proportioning_message
+        select QPM.id,
+               QPM.pro_name as proName,
+               QPM.repertory_one as repertoryOne,
+               QPM.repertory_two as repertoryTwo,
+               QPM.repertory_three as repertoryThree,
+               QPM.repertory_four as repertoryFour,
+               QPM.repertory_five as repertoryFive,
+               QPM.repertory_six as repertorySix,
+               QPM.breeze as breeze,
+               QPM.ratio_stone as ratioStone,
+               QPM.ratio_regenerate1 as ratioRegenerate1,
+               QPM.ratio_regenerate2 as ratioRegenerate2,
+               QPM.ratio_additive as ratioAdditive,
+               QPM.regenerate as regenerate,
+               QPM.additive as additive,
+               QPM.temperature_asphalt as temperatureAsphalt,
+               QPM.temperature_aggregate as temperatureAggregate,
+               QPM.temperature_mixture as temperatureMixture,
+               QPM.temperature_milling as temperatureMilling,
+               QPM.temperature_asphalt_up as temperatureAsphaltUp,
+               QPM.temperature_aggregate_up as temperatureAggregateUp,
+               QPM.temperature_mixture_up as temperatureMixtureUp,
+               QPM.temperature_milling_up as temperatureMillingUp
+        from quality_proportioning_message AS QPM
+        INNER JOIN  quality_proportioning_model AS QPMD
+        ON QPM.id = QPMD.message_id
         where ${columeName} = ${crewMoudelId}
+        AND YEAR(QPMD.create_time) = YEAR(&apos;${proDate}&apos;)
 
     </select>
     
@@ -72,31 +74,34 @@
     </insert>
 
     <select id="getQualityRatioTemplateById" parameterType="java.lang.Integer" resultType="com.jiaoke.quality.bean.QualityRatioTemplate">
-        select id,
-               pro_name as proName,
-               repertory_one as repertoryOne,
-               repertory_two as repertoryTwo,
-               repertory_three as repertoryThree,
-               repertory_four as repertoryFour,
-               repertory_five as repertoryFive,
-               repertory_six as repertorySix,
-               breeze as breeze,
-               ratio_stone as ratioStone,
-               ratio_regenerate1 as ratioRegenerate1,
-               ratio_regenerate2 as ratioRegenerate2,
-               ratio_additive as ratioAdditive,
-               regenerate as regenerate,
-               additive as additive,
-               temperature_asphalt as temperatureAsphalt,
-               temperature_aggregate as temperatureAggregate,
-               temperature_mixture as temperatureMixture,
-               temperature_milling as temperatureMilling,
-               temperature_asphalt_up as temperatureAsphaltUp,
-               temperature_aggregate_up as temperatureAggregateUp,
-               temperature_mixture_up as temperatureMixtureUp,
-               temperature_milling_up as temperatureMillingUp
-        from quality_proportioning_message
-        where id = #{id}
+        select QPM.id,
+               QPM.pro_name as proName,
+               QPM.repertory_one as repertoryOne,
+               QPM.repertory_two as repertoryTwo,
+               QPM.repertory_three as repertoryThree,
+               QPM.repertory_four as repertoryFour,
+               QPM.repertory_five as repertoryFive,
+               QPM.repertory_six as repertorySix,
+               QPM.breeze as breeze,
+               QPM.ratio_stone as ratioStone,
+               QPM.ratio_regenerate1 as ratioRegenerate1,
+               QPM.ratio_regenerate2 as ratioRegenerate2,
+               QPM.ratio_additive as ratioAdditive,
+               QPM.regenerate as regenerate,
+               QPM.additive as additive,
+               QPM.temperature_asphalt as temperatureAsphalt,
+               QPM.temperature_aggregate as temperatureAggregate,
+               QPM.temperature_mixture as temperatureMixture,
+               QPM.temperature_milling as temperatureMilling,
+               QPM.temperature_asphalt_up as temperatureAsphaltUp,
+               QPM.temperature_aggregate_up as temperatureAggregateUp,
+               QPM.temperature_mixture_up as temperatureMixtureUp,
+               QPM.temperature_milling_up as temperatureMillingUp
+        from quality_proportioning_message AS QPM
+                 INNER JOIN quality_proportioning_model AS QPMD
+                     ON QPM.id = QPMS.message_id
+        where QPM.${crewNum}_modele_id = ${id} AND
+              YEAR(QPMD.create_time) = YEAR(NOW());
 
     </select>
     

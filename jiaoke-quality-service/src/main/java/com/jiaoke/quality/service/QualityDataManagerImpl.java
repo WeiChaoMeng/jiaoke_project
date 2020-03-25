@@ -245,7 +245,7 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
      * @return
      */
     @Override
-    public Map<String, Object> selectProductMessageById( String id, String crewNum) {
+    public Map<String, Object> selectProductMessageById( String id, String crewNum,String proDate) {
 
         Map<String,Object> modelMap = new HashMap<>();
         //根据id与机组查询基本信息
@@ -278,7 +278,7 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
         }
        List<Map<String,String>>  waringData =  qualityDataManagerDao.selectProduceByDateAndDiscNum(String.valueOf(date),discNum,crew);
 
-        QualityRatioTemplate ratioMap = qualityDataManagerDao.selectRationById(map.get("produce_proportioning_num"),crewNum);
+        QualityRatioTemplate ratioMap = qualityDataManagerDao.selectRationById(map.get("produce_proportioning_num"),crewNum,proDate);
 
         modelMap.put("proBase",map);
         modelMap.put("proMessage",waringData);
@@ -306,7 +306,7 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
         List<String> dateList = new ArrayList<>();
         List<String> asphaltRatio = new ArrayList<>();
 
-        QualityRatioTemplate template = qualityDataManagerDao.selectRationById(ratioNum,crewNum);
+        QualityRatioTemplate template = qualityDataManagerDao.selectRationById(ratioNum,crewNum,date);
 
         String crew = "data1";
         switch (crewNum){
@@ -448,7 +448,7 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
         }
         List<Map<String,String>>  waringData =  qualityDataManagerDao.selectProduceByDateAndDiscNum(String.valueOf(date),discNum,crew);
 
-        QualityRatioTemplate ratioMap = qualityDataManagerDao.selectRationById(map.get("produce_proportioning_num"),crewNum);
+        QualityRatioTemplate ratioMap = qualityDataManagerDao.selectRationById(map.get("produce_proportioning_num"),crewNum,produceDate);
 
         modelMap.put("proBase",map);
         modelMap.put("proMessage",waringData);

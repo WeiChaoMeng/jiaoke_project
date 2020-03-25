@@ -51,6 +51,25 @@ public class QualityMatchingImpl implements QualityMatchingInf{
 
         return pageBean;
     }
+
+    @Override
+    public String getOldRation() {
+        Map<String,String> map = new HashMap<>();
+        //查询除去今年，一共有几个年份有模板
+        List<Map<String,String>> years =  qualityMatchingDao.selectRationYear();
+        //查询历史模板
+        List<QualityRatioModel> rationArr = qualityMatchingDao.selectAllRation();
+
+        if (rationArr == null || rationArr.size() == 0){
+            map.put("message","error");
+            return JSON.toJSONString(map);
+        }
+        map.put("message","success");
+        map.put("rationYear",JSON.toJSONString(years));
+        map.put("rationList",JSON.toJSONString(rationArr));
+        return JSON.toJSONString(map);
+    }
+
     @Override
     public List<Map<String, String>> selectAdditiveTypeList() {
         List<Map<String, String>> list = qualityMatchingDao.selectAdditiveTypeList();

@@ -222,7 +222,7 @@
 
     <select id="selectLabReportConuntByDateAndMaterials" resultType="java.util.Map">
         SELECT
-               count(*) AS counts,
+               QTLR.experiment_num,
                QTMD.logogram_name
         FROM
              quality_test_lab_report AS QTLR
@@ -230,6 +230,8 @@
         WHERE
                 DATE_FORMAT(test_date, '%Y') =  #{dates}
           AND materials_num = #{materials_num}
+        ORDER BY QTLR.Id DESC
+        LIMIT 1
     </select>
 
     <insert id="insertLabReport">

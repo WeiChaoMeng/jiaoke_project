@@ -24,7 +24,7 @@ import java.util.*;
 public class QualityDynamicUtil {
 
 
-    public static void setRequestAttributeUtil(List<Map<String,String>> list, QualityDynamicDao qualityDynamicDao, String ratioName, String material, String crew, HttpServletRequest request){
+    public static void setRequestAttributeUtil(List<Map<String,String>> list, QualityDynamicDao qualityDynamicDao, String ratioName, String material, String crew, HttpServletRequest request,String date){
 
 
 
@@ -64,7 +64,9 @@ public class QualityDynamicUtil {
             discNumMap.get(key).add(discNum);
         }
 
-        List<Map<String,Object>> ratioMap =  qualityDynamicDao.getAggregateRatioByMoudelId(ratioName,ratios,crew);
+        date = date.split("to")[0];
+
+        List<Map<String,Object>> ratioMap =  qualityDynamicDao.getAggregateRatioByMoudelId(ratioName,ratios,crew,date);
 
 
 

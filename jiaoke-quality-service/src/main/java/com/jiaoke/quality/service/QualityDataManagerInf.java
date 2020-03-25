@@ -42,7 +42,7 @@ public interface QualityDataManagerInf {
      * @param id
      * @return
      */
-    Map<String, Object> selectProductMessageById(String id,String crewNum);
+    Map<String, Object> selectProductMessageById(String id,String crewNum,String proDate);
 
     /**
      * 根据配比号、日期、机组查询所有产品

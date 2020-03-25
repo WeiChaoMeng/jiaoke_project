@@ -23,6 +23,7 @@
     <ul class="toolbar">
         <li><a href="#" id="from_click" ><i class="toolico iconfont">&#xe7e9;</i>新建配比</a></li>
         <li><a href="#" id="btn_click"><i class="toolico iconfont">&#xe7ea;</i>删除</a></li>
+        <li><a href="#" onclick="showOldRaio()" id="former_years"><i class="toolico iconfont">&#xe64c;</i>查看往年配比</a></li>
 
     </ul>
     <!--toolbar end-->
@@ -67,76 +68,86 @@
     <!--tablebox end-->
 
     <!--pagination start-->
-    <div class="pagination">
-        <ul class="pagelist">
-            <%--首页--%>
-            <c:choose>
-                <c:when test="${pageBean.currentPageNum == 1}">
-                    <li><a href="javascript:;" class="first">首页</a></li>
-                </c:when>
-                <c:otherwise>
-                    <li><a href="<c:url value="${pageBean.url}"></c:url> " >首页</a></li>
-                </c:otherwise>
-            </c:choose>
-
-            <%-- 上一页 --%>
-            <c:if test="${pageBean.currentPageNum > 1}">
-                <li><a href="<c:url value="${pageBean.url}currentPageNum=${pageBean.currentPageNum - 1 }"></c:url> "><i class="iconfont">&#xe68a;</i></a></li>
-            </c:if>
-
-            <c:choose>
-                <c:when test="${pageBean.pageCount <= 10 }">
-                    <c:set var="begin" value="1"></c:set>
-                    <c:set var="end" value="${pageBean.pageCount}"></c:set>
-                </c:when>
-                <c:otherwise>
-                    <c:set var="begin" value="${pageBean.currentPageNum - 4}"></c:set>
-                    <c:set var="end" value="${pageBean.currentPageNum + 5}"></c:set>
+    <c:choose>
+        <c:when test="${pageBean.dataCountNum > 0}">
+            <div class="pagination">
+                <ul class="pagelist">
+                        <%--首页--%>
                     <c:choose>
-
-                        <c:when test="${begin < 1}">
-                            <c:set var="begin" value="1"/>
-                            <c:set var="end" value="10"/>
+                        <c:when test="${pageBean.currentPageNum == 1}">
+                            <li><a href="javascript:;" class="first">首页</a></li>
                         </c:when>
+                        <c:otherwise>
+                            <li><a href="<c:url value="${pageBean.url}"></c:url> " >首页</a></li>
+                        </c:otherwise>
+                    </c:choose>
 
-                        <c:when test="${end > pageBean.pageCount}">
-                            <c:set var="begin" value="${pageBean.pageCount - 9}"></c:set>
+                        <%-- 上一页 --%>
+                    <c:if test="${pageBean.currentPageNum > 1}">
+                        <li><a href="<c:url value="${pageBean.url}currentPageNum=${pageBean.currentPageNum - 1 }"></c:url> "><i class="iconfont">&#xe68a;</i></a></li>
+                    </c:if>
+
+                    <c:choose>
+                        <c:when test="${pageBean.pageCount <= 10 }">
+                            <c:set var="begin" value="1"></c:set>
                             <c:set var="end" value="${pageBean.pageCount}"></c:set>
                         </c:when>
+                        <c:otherwise>
+                            <c:set var="begin" value="${pageBean.currentPageNum - 4}"></c:set>
+                            <c:set var="end" value="${pageBean.currentPageNum + 5}"></c:set>
+                            <c:choose>
+
+                                <c:when test="${begin < 1}">
+                                    <c:set var="begin" value="1"/>
+                                    <c:set var="end" value="10"/>
+                                </c:when>
+
+                                <c:when test="${end > pageBean.pageCount}">
+                                    <c:set var="begin" value="${pageBean.pageCount - 9}"></c:set>
+                                    <c:set var="end" value="${pageBean.pageCount}"></c:set>
+                                </c:when>
+                            </c:choose>
+                        </c:otherwise>
                     </c:choose>
-                </c:otherwise>
-            </c:choose>
-            <c:forEach begin="${begin}" end="${end}" var="i">
-                <c:choose>
-                    <c:when test="${i == pageBean.currentPageNum }">
-                        <li><a href="javascript:;" class="selected pageico" >${i}</a></li>
-                    </c:when>
-                    <c:otherwise>
-                        <li><a href="<c:url value="${pageBean.url}currentPageNum=${i}"></c:url>">${i}</a></li>
-                    </c:otherwise>
-                </c:choose>
-            </c:forEach>
+                    <c:forEach begin="${begin}" end="${end}" var="i">
+                        <c:choose>
+                            <c:when test="${i == pageBean.currentPageNum }">
+                                <li><a href="javascript:;" class="selected pageico" >${i}</a></li>
+                            </c:when>
+                            <c:otherwise>
+                                <li><a href="<c:url value="${pageBean.url}currentPageNum=${i}"></c:url>">${i}</a></li>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
 
-                <%--下一页--%>
-            <c:if test="${pageBean.currentPageNum < pageBean.pageCount}">
-                <li><a href="<c:url value="${pageBean.url}currentPageNum=${pageBean.currentPageNum + 1 }"></c:url> " class="pageico"><i class="iconfont">&#xe673;</i></a></li>
-            </c:if>
+                        <%--下一页--%>
+                    <c:if test="${pageBean.currentPageNum < pageBean.pageCount}">
+                        <li><a href="<c:url value="${pageBean.url}currentPageNum=${pageBean.currentPageNum + 1 }"></c:url> " class="pageico"><i class="iconfont">&#xe673;</i></a></li>
+                    </c:if>
 
-             <%--尾页--%>
-                <c:choose>
-                    <c:when test="${pageBean.currentPageNum == pageBean.pageCount}">
-                        <li><a href="javascript:;" class="first">尾页</a></li>
-                    </c:when>
-                    <c:otherwise>
-                        <li><a href="<c:url value="${pageBean.url}currentPageNum=${pageBean.pageCount}"></c:url>  " >尾页</a></li>
-                    </c:otherwise>
-                </c:choose>
-        </ul>
+                        <%--尾页--%>
+                    <c:choose>
+                        <c:when test="${pageBean.currentPageNum == pageBean.pageCount}">
+                            <li><a href="javascript:;" class="first">尾页</a></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li><a href="<c:url value="${pageBean.url}currentPageNum=${pageBean.pageCount}"></c:url>  " >尾页</a></li>
+                        </c:otherwise>
+                    </c:choose>
+                </ul>
 
-        <span class="pageinfo">共 ${pageBean.dataCountNum} 条记录，每页 ${pageBean.eachPageDataNum} 条，当前第 ${pageBean.currentPageNum} 页，共 ${pageBean.pageCount} 页</span>
-    </div>
+                <span class="pageinfo">共 ${pageBean.dataCountNum} 条记录，每页 ${pageBean.eachPageDataNum} 条，当前第 ${pageBean.currentPageNum} 页，共 ${pageBean.pageCount} 页</span>
+            </div>
+        </c:when>
+        <c:otherwise>
+            <span style="position: absolute;top: 45%;left: 45%;font: 14px/1.5 'Microsoft YaHei',arial,tahoma,\5b8b\4f53,sans-serif;color: #a29c9c;">本年暂无配比</span>
+        </c:otherwise>
+    </c:choose>
     <!--pagination end-->
 
+    <div id="showOldRation" style="padding-top: 8px;display: none;">
+
+    </div>
     <!--删除弹出-->
     <div class="popup_back" style="display:none;">
     </div>
@@ -419,11 +430,6 @@
                 </tbody>
 
             </table>
-
-            <div class="form_btn">
-                <input type="button" style="margin-left: 10%;" onclick="closeShowRatio()" value="关闭" class="ration_btn_cancel">
-            </div>
-
         </form>
     </div>
 
@@ -572,7 +578,6 @@
 
         <div class="form_btn">
             <input type="submit"  id="edit"  value="修改" class="btn_save">
-            <input type="button" style="margin-left: 10px;" onclick="closeEditRatio()" value="关闭" class="ration_btn_cancel">
         </div>
 
         </form>

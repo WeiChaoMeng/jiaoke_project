@@ -832,7 +832,7 @@ function showMixture(msg){
     $("#firstTbody").empty().append(firstTbody);
 }
 //表单提交
-$("#myFrom").submit(function () {
+$("#myFrom").submit(function(){
     var basePath = $("#path").val();
     var data = [];
     $('input[type=text]').each(function (i) {
@@ -860,7 +860,7 @@ $("#myFrom").submit(function () {
 
 
     $.ajax({
-        type: "POST",
+        type: "post",
         url: basePath + "/sendFromData.do",
         data:{"fromJson":json_str,
             "firstTest":firstTest,
@@ -868,9 +868,9 @@ $("#myFrom").submit(function () {
         dataType:'json',
         async: false,
         success:function (res) {
-            debugger
+
             if(res){
-                if (res.message == 'success'){
+                if (res.message === 'success'){
                     parent.location.reload(); // 父页面刷新
                     var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
                     parent.layer.close(index);

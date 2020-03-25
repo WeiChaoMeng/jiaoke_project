@@ -24,6 +24,7 @@ import com.jiaoke.quality.bean.QualityProjectItem;
 import com.jiaoke.quality.bean.QualityRatioModel;
 import com.jiaoke.quality.bean.QualityRatioTemplate;
 import com.jiaoke.quality.service.*;
+import lombok.experimental.var;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.ManagementService;
 import org.activiti.engine.TaskService;
@@ -335,7 +336,21 @@ public class QualityController {
         return "quality/qc_matching_model";
     }
 
-
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询往年配比>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/3/19 22:01
+     */
+      @ResponseBody
+      @RequestMapping("/getOldRation.do")
+      public String getOldRation(){
+          String str = qualityMatchingInf.getOldRation();
+          return str;
+      }
     /**
      *
      * 功能描述: <br>
@@ -590,12 +605,12 @@ public class QualityController {
      * @date 2018/11/13 9:52
      */
     @RequestMapping(value = "/getProductMessage.do",method = RequestMethod.GET )
-    public String getProductMessage(HttpServletRequest request,@RequestParam("id") String id,@RequestParam("crewNum") String crewNum){
+    public String getProductMessage(HttpServletRequest request,@RequestParam("id") String id,@RequestParam("crewNum") String crewNum,@RequestParam("proDate") String proDate){
 
         if (id.isEmpty()) return "";
 
         try{
-            Map<String,Object> map =  qualityDataManagerInf.selectProductMessageById(id,crewNum);
+            Map<String,Object> map =  qualityDataManagerInf.selectProductMessageById(id,crewNum,proDate);
 
             request.setAttribute("product",map);
         }catch (Exception e){
@@ -1251,6 +1266,7 @@ public class QualityController {
      */
      @ResponseBody
      @RequestMapping(value = "/removeSampleById.do",method = RequestMethod.POST)
+     @Transactional(rollbackFor=Exception.class)
      public String removeSampleById(@RequestParam("id") String id){
          String res = "";
          try{
@@ -1276,6 +1292,7 @@ public class QualityController {
 
      @ResponseBody
      @RequestMapping(value = "/getSampleStatusById.do",method = RequestMethod.POST)
+     @Transactional(rollbackFor=Exception.class)
      public String getSampleStatusById(@RequestParam("id") String id){
          String res = "";
          try{
@@ -1349,12 +1366,13 @@ public class QualityController {
     }
     @ResponseBody
     @RequestMapping(value = "/addExperimentalItemByOrderTicketNum.do",method = RequestMethod.POST)
+    @Transactional(rollbackFor=Exception.class)
     public String addExperimentalItemByOrderTicketNum(@RequestParam("orderTicketNum") String orderTicketNum,@RequestParam("experimentalItemId") String experimentalItemId){
         String res = "";
         try{
             res = qualityExperimentalManagerInf.addExperimentalItemByOrderTicketNum(orderTicketNum,experimentalItemId);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
          return res;
     }
@@ -1377,6 +1395,7 @@ public class QualityController {
     public String getExperimentMessagePage(){
         return "quality/qc_em_unfinished_experimental";
     }
+
     @ResponseBody
     @RequestMapping("/getAllExperimentalItem.do")
     public String getAllExperimentalItem(){
@@ -1439,12 +1458,14 @@ public class QualityController {
     @ResponseBody
     @RequestMapping(value = "/sendFromData.do",method = RequestMethod.POST)
     @Transactional(rollbackFor=Exception.class)
-    public String sendFromData(@RequestParam("fromJson") String fromJson,@RequestParam("firstTest") String firstTest,@RequestParam("coarseTest") String coarseTest){
-        String res = "";
+    public String sendFromData(@RequestParam("fromJson") String fromJson,
+                                   @RequestParam("firstTest") String firstTest,
+                                       @RequestParam("coarseTest") String coarseTest,
+                               HttpServletRequest request){
 
-        res = qualityExperimentalManagerInf.addExperimentalMsgAndItem(fromJson,firstTest,coarseTest);
 
-        return res;
+
+        return qualityExperimentalManagerInf.addExperimentalMsgAndItem(fromJson,firstTest,coarseTest);
     }
 
     /********************************  实验审批 Start *****************************************/
@@ -2616,13 +2637,13 @@ public class QualityController {
      */
     @ResponseBody
     @RequestMapping(value = "/getMobileProductMessage.do",method = RequestMethod.POST )
-    public String getMobileProductMessage( String id,String crewNum){
+    public String getMobileProductMessage( String id,String crewNum,String proDate){
 
         if (id.isEmpty()) return "";
         Map<String,Object> map = new HashMap<>();
 
         try{
-            map =  qualityDataManagerInf.selectProductMessageById(id,crewNum);
+            map =  qualityDataManagerInf.selectProductMessageById(id,crewNum,proDate);
             String res = qualityDataManagerInf.selectEchartsDataById(id,crewNum);
             //json处理
             String modelMessage = JSON.toJSONString(map.get("modelMessage"));

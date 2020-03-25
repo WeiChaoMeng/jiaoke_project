@@ -10,6 +10,13 @@ function  getProduceRatioByCrew(rationNum) {
         layer.alert('请先选择日期');
         return false;
     }else {
+        debugger
+        var  startYear = dateStart.split("-")[0];
+        var  endYear = dateEnd.split("-")[0];
+        if (startYear != endYear ) {
+            layer.alert('生产时间请不要跨年');
+            return false;
+        }
         proDate = dateStart + "to" + dateEnd;
     }
     var crew = $("#crew_num option:selected").val();

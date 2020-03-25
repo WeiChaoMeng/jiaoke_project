@@ -83,4 +83,15 @@ public interface QualityMatchingInf {
      * @date 2019/5/28 11:26
      */
     Boolean EditRationById(QualityRatioTemplate qualityRatioTemplate);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询所有非本年历史模板>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/3/19 22:53
+     */
+    String getOldRation();
 }

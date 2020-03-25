@@ -25,7 +25,7 @@ public interface QualityDynamicDao {
 
     List<Map<String, String>> getLastDayToChars();
 
-    List<Map<String,Object>> getAggregateRatioByMoudelId(@Param("ratioName")  String ratioName,@Param("moudelId") Set moudelId ,@Param("crew")String crew);
+    List<Map<String,Object>> getAggregateRatioByMoudelId(@Param("ratioName")  String ratioName,@Param("moudelId") Set moudelId ,@Param("crew")String crew ,@Param("strDate")String strDate);
 
     List<Map<String,String>> selectRatioListByDate(@Param("startDate") String startDate, @Param("endDate")String endDate, @Param("crew")String crew,@Param("crewNum")String crewNum);
 

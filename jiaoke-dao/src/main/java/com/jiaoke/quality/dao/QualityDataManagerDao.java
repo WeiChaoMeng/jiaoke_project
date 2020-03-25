@@ -120,7 +120,7 @@ public interface QualityDataManagerDao {
      * @param ratioNum
      * @return
      */
-    QualityRatioTemplate selectRationById(@Param("ratioNum") String ratioNum,@Param("crewNum") String crewNum);
+    QualityRatioTemplate selectRationById(@Param("ratioNum") String ratioNum,@Param("crewNum") String crewNum,@Param("proDate") String proDate);
 
 
     /**

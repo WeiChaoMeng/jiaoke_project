@@ -89,8 +89,10 @@ public class ReceiveDataImpl implements ReceiveDataInf {
         map.put("produce_custom_num",messageArray[5]);
         map.put("produce_crewNum",crewNum);
 
+        //获取生产时间，确定所使用得模板
+        String proDate = map.get("produce_date");
         //根据配比号，获取模板数据
-        QualityRatioTemplate ratioTemplate = qualityWarningDao.selectRatioTemplateByCrew1MoudelId(map.get("produce_ratio_id"), fieldName);
+        QualityRatioTemplate ratioTemplate = qualityWarningDao.selectRatioTemplateByCrew1MoudelId(map.get("produce_ratio_id"), fieldName,proDate);
 
         if (null == ratioTemplate) return;
 
@@ -159,8 +161,8 @@ public class ReceiveDataImpl implements ReceiveDataInf {
         //分解出机组号
         String crewNum = messageArray[messageArray.length - 1];
 //
-//        //临时逻辑
-//        crewNum = "1";
+//        //查看机组
+        crewNum =  "1".equals(crewNum)?  "crew1":"crew2";
 
         //分解出总重量
         String materialTotal = messageArray[17];
@@ -170,7 +172,7 @@ public class ReceiveDataImpl implements ReceiveDataInf {
 
 
         //根据配比号获取配比信息
-        QualityRatioTemplate templateRatio = qualityWarningDao.getQualityRatioTemplateById(Integer.parseInt(proportioningNum));
+        QualityRatioTemplate templateRatio = qualityWarningDao.getQualityRatioTemplateById(Integer.parseInt(proportioningNum),crewNum);
         if (templateRatio == null ) return;
         //根据模板随机比例(6-3仓 2%  2,1仓,矿粉仓 1%  沥青上下3kg  温度 上下5)
         double repertorySixPercentage = positiveAndNegativeRandomDecimals(templateRatio.getRepertorySix(), 2, 4);

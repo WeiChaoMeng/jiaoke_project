@@ -37,12 +37,12 @@ public interface QualityWarningDao {
      * @param columeName
      * @return
      */
-    QualityRatioTemplate selectRatioTemplateByCrew1MoudelId(@Param("crewMoudelId") String crewMoudelId, @Param("columeName")String columeName);
+    QualityRatioTemplate selectRatioTemplateByCrew1MoudelId(@Param("crewMoudelId") String crewMoudelId, @Param("columeName")String columeName,@Param("proDate") String produceDate);
 
 
     void insertQualityWarningData( @Param("warningDataList") List<QualityWarningData> warningDataList);
 
-    QualityRatioTemplate getQualityRatioTemplateById(int id);
+    QualityRatioTemplate getQualityRatioTemplateById(@Param("id") int id,@Param("crewNum") String crewNum);
 
     /**
      *

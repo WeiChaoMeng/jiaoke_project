@@ -36,12 +36,14 @@
                  left JOIN
                      quality_proportioning_message AS QM
                      ON QR.produce_proportioning_num = QM.crew1_modele_id
+                 LEFT JOIN
+                     quality_proportioning_model AS QPM
+                     ON QM.id = QPM.message_id
                  left JOIN
                      quality_test_project AS QTP
                      ON QR.produce_custom_num = QTP.client_num
-        ORDER BY
-                 QR.id DESC
-        LIMIT 1
+        WHERE  QR.Id = (SELECT Id FROM quality_monitoring_realtime_data1 ORDER BY Id DESC LIMIT 1)
+          AND	YEAR(QPM.create_time) = YEAR(QR.produce_date)
         )
         UNION ALL
                 (
@@ -67,8 +69,8 @@
                        QR.material_additive,
                        QR.material_total,
                        QR.temperature_warehouse_1 ,
-                       QR.temperature_mixture,
-                       QR.temperature_duster,
+                       QR.temperature_mixture ,
+                       QR.temperature_duster ,
                        QR.temperature_asphalt ,
                        QR.temperature_aggregate,
                        QTP.project_name
@@ -76,15 +78,16 @@
                      quality_monitoring_realtime_data2 AS QR
                          left JOIN
                              quality_proportioning_message AS QM
-                             ON QR.produce_proportioning_num = QM.crew2_modele_id
+                             ON QR.produce_proportioning_num = QM.crew1_modele_id
+                         LEFT JOIN
+                             quality_proportioning_model AS QPM
+                             ON QM.id = QPM.message_id
                          left JOIN
                              quality_test_project AS QTP
                              ON QR.produce_custom_num = QTP.client_num
-                ORDER BY
-                         QR.id DESC
-                LIMIT 1
+                WHERE  QR.Id = (SELECT Id FROM quality_monitoring_realtime_data2 ORDER BY Id DESC LIMIT 1)
+                  AND	YEAR(QPM.create_time) = YEAR(QR.produce_date)
                 )
-
 
 #         (
 #         SELECT
@@ -162,108 +165,79 @@
     </select>
 
     <select id="selectRealTimeDataEcharsMaterial" resultType="java.util.HashMap">
-        (SELECT
-                t1.*,
-                'crew1' AS 'crewNum',
-                t2.produce_proportioning_num,
-                t2.material_aggregate_1,
-                t2.material_aggregate_2,
-                t2.material_aggregate_3,
-                t2.material_aggregate_4,
-                t2.material_aggregate_5,
-                t2.material_aggregate_6,
-                t2.material_stone_1,
-                t2.material_stone_2,
-                t2.material_asphalt,
-                t2.material_regenerate,
-                t2.material_additive,
-                t2.temperature_warehouse_1 as tem_warehouse_1,
-                t2.temperature_mixture as tem_mixture,
-                t2.temperature_duster as tem_duster,
-                t2.temperature_asphalt as tem_asphalt ,
-                t2.temperature_aggregate as tem_aggregate,
-                t2.material_total
-         FROM
-              quality_proportioning_message AS t1
-                  INNER JOIN (
-                             SELECT
-                                    produce_proportioning_num,
-                                    material_aggregate_1,
-                                    material_aggregate_2,
-                                    material_aggregate_3,
-                                    material_aggregate_4,
-                                    material_aggregate_5,
-                                    material_aggregate_6,
-                                    material_stone_1,
-                                    material_stone_2,
-                                    material_asphalt,
-                                    material_regenerate,
-                                    material_additive,
-                                    temperature_warehouse_1,
-                                    temperature_mixture,
-                                    temperature_duster,
-                                    temperature_asphalt,
-                                    temperature_aggregate,
-                                    material_total
-                             FROM
-                                  quality_monitoring_realtime_data1
-                             ORDER BY
-                                      id DESC
-                             LIMIT 1
-                             ) as t2
-                      on t1.crew1_modele_id = t2.produce_proportioning_num)
+        (
+        SELECT
+               QM.*,
+               'crew1' AS 'crewNum',
+               QR.produce_proportioning_num,
+               QR.material_aggregate_1,
+               QR.material_aggregate_2,
+               QR.material_aggregate_3,
+               QR.material_aggregate_4,
+               QR.material_aggregate_5,
+               QR.material_aggregate_6,
+               QR.material_stone_1,
+               QR.material_stone_2,
+               QR.material_asphalt,
+               QR.material_regenerate,
+               QR.material_additive,
+               QR.temperature_warehouse_1 as tem_warehouse_1,
+               QR.temperature_mixture as tem_mixture,
+               QR.temperature_duster as tem_duster,
+               QR.temperature_asphalt as tem_asphalt ,
+               QR.temperature_aggregate as tem_aggregate,
+               QR.material_total
+        FROM
+             quality_monitoring_realtime_data1 AS QR
+                 left JOIN
+                     quality_proportioning_message AS QM
+                     ON QR.produce_proportioning_num = QM.crew1_modele_id
+                 LEFT JOIN
+                     quality_proportioning_model AS QPM
+                     ON QM.id = QPM.message_id
+                 left JOIN
+                     quality_test_project AS QTP
+                     ON QR.produce_custom_num = QTP.client_num
+        WHERE  QR.Id = (SELECT Id FROM quality_monitoring_realtime_data1 ORDER BY Id DESC LIMIT 1)
+          AND	YEAR(QPM.create_time) = YEAR(QR.produce_date)
+        )
         UNION ALL
-                (SELECT
-                        t1.*,
-                        'crew2' AS 'crewNum',
-                        t2.produce_proportioning_num,
-                        t2.material_aggregate_1,
-                        t2.material_aggregate_2,
-                        t2.material_aggregate_3,
-                        t2.material_aggregate_4,
-                        t2.material_aggregate_5,
-                        t2.material_aggregate_6,
-                        t2.material_stone_1,
-                        t2.material_stone_2,
-                        t2.material_asphalt,
-                        t2.material_regenerate,
-                        t2.material_additive,
-                        t2.temperature_warehouse_1 as tem_warehouse_1,
-                        t2.temperature_mixture as tem_mixture,
-                        t2.temperature_duster as tem_duster,
-                        t2.temperature_asphalt as tem_asphalt ,
-                        t2.temperature_aggregate as tem_aggregate,
-                        t2.material_total
-                 FROM
-                      quality_proportioning_message AS t1
-                          INNER JOIN (
-                                     SELECT
-                                            produce_proportioning_num,
-                                            material_aggregate_1,
-                                            material_aggregate_2,
-                                            material_aggregate_3,
-                                            material_aggregate_4,
-                                            material_aggregate_5,
-                                            material_aggregate_6,
-                                            material_stone_1,
-                                            material_stone_2,
-                                            material_asphalt,
-                                            material_regenerate,
-                                            material_additive,
-                                            temperature_warehouse_1,
-                                            temperature_mixture,
-                                            temperature_duster,
-                                            temperature_asphalt,
-                                            temperature_aggregate,
-                                            material_total
-                                     FROM
-                                          quality_monitoring_realtime_data2
-                                     ORDER BY
-                                              id DESC
-                                     LIMIT 1
-                                     ) as t2
-                              on t1.crew1_modele_id = t2.produce_proportioning_num)
-
+                (
+                SELECT
+                       QM.*,
+                       'crew2' AS 'crewNum',
+                       QR.produce_proportioning_num,
+                       QR.material_aggregate_1,
+                       QR.material_aggregate_2,
+                       QR.material_aggregate_3,
+                       QR.material_aggregate_4,
+                       QR.material_aggregate_5,
+                       QR.material_aggregate_6,
+                       QR.material_stone_1,
+                       QR.material_stone_2,
+                       QR.material_asphalt,
+                       QR.material_regenerate,
+                       QR.material_additive,
+                       QR.temperature_warehouse_1 as tem_warehouse_1,
+                       QR.temperature_mixture as tem_mixture,
+                       QR.temperature_duster as tem_duster,
+                       QR.temperature_asphalt as tem_asphalt ,
+                       QR.temperature_aggregate as tem_aggregate,
+                       QR.material_total
+                FROM
+                     quality_monitoring_realtime_data2 AS QR
+                         left JOIN
+                             quality_proportioning_message AS QM
+                             ON QR.produce_proportioning_num = QM.crew1_modele_id
+                         LEFT JOIN
+                             quality_proportioning_model AS QPM
+                             ON QM.id = QPM.message_id
+                         left JOIN
+                             quality_test_project AS QTP
+                             ON QR.produce_custom_num = QTP.client_num
+                WHERE  QR.Id = (SELECT Id FROM quality_monitoring_realtime_data2 ORDER BY Id DESC LIMIT 1)
+                  AND	YEAR(QPM.create_time) = YEAR(QR.produce_date)
+                )
 
     </select>
 
