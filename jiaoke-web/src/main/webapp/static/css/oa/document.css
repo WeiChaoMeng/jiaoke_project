@@ -15,7 +15,7 @@
     left: 0;
 }
 
-.left-spacing{
+.left-spacing {
     margin-left: 30px;
 }
 
@@ -87,7 +87,7 @@
     height: 5%;
 }
 
-.selection-box-title>span{
+.selection-box-title > span {
     font-size: 14px;
     font-weight: 600;
 }
@@ -108,7 +108,7 @@
     overflow: auto;
 }
 
-.selection-content-inside>ul {
+.selection-content-inside > ul {
     padding: 10px 0;
 }
 
@@ -116,11 +116,11 @@
     border-bottom: 1.5px solid #000;
 }
 
-.cursor_hand{
+.cursor_hand {
     cursor: pointer;
 }
 
-.selection-box-li>span:hover {
+.selection-box-li > span:hover {
     color: #2196F3;
 }
 
@@ -158,4 +158,119 @@
 
 .selected-box-content ul li:hover {
     background: #e6e6e6;
+}
+
+/*关联表单样式*/
+.relevance-table {
+    border: solid 1px #d4d4d4;
+    width: 100%;
+}
+
+.relevance-table thead tr th {
+    height: 40px;
+    text-align: center;
+    white-space: nowrap;
+    border: solid 1px #e5e5e5;
+    font-size: 13px;
+    font-weight: 600;
+    background: #2ca4f9;
+    line-height: 40px;
+    color: #ffffff;
+}
+
+.relevance-table tbody tr td {
+    line-height: 35px;
+    border: solid 1px #e5e5e5;
+    text-align: center;
+}
+
+/*首页嵌套办公用品需求计划表样式*/
+.formTable {
+    border: solid 1px #d4d4d4;
+    width: 100%;
+    margin: 0 auto 20px;
+}
+
+.formTable td {
+    line-height: 40px;
+    border: solid 1px #e5e5e5;
+}
+
+.formTable thead tr th {
+    line-height: 40px;
+    border: solid 1px #e5e5e5;
+    text-align: center;
+    background: #f6f6f6;
+    white-space: nowrap;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.tdLabel {
+    background: #f6f6f6;
+    text-align: right;
+    white-space: nowrap;
+    width: 15%;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.table-td-content {
+    padding: 0 10px;
+}
+
+.approval-content {
+    height: 78px;
+    padding: 10px 10px 4px;
+}
+
+.approval-content-textarea {
+    resize: none;
+    width: 100%;
+    margin: 0;
+    padding: 5px;
+    font-size: 14px;
+    outline: none;
+    display: block;
+    background: #e8e8e8;
+    border: solid 1px #c6c6c6;
+    height: 60px
+}
+
+.approval-date {
+    float: right;
+    line-height: 35px;
+}
+
+.approval-date-label {
+    font-size: 13px;
+}
+
+.approval-date-input {
+    border: 1px solid #c6c6c6;
+    height: 25px;
+    width: 130px;
+    outline: none;
+    padding: 0 5px;
+    background: #e8e8e8;
+}
+
+.approval-signature {
+    float: right;
+    margin-right: 15px;
+    line-height: 35px;
+}
+
+.approval-signature-label {
+    font-size: 13px;
+}
+
+.approval-signature-input {
+    border: 1px solid #c6c6c6;
+    height: 25px;
+    width: 55px;
+    outline: none;
+    padding: 0 5px;
+    background: #e8e8e8;
 }

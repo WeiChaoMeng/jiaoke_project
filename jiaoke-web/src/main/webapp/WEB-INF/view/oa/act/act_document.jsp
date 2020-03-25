@@ -251,8 +251,6 @@
             window.top.tips("标题不能为空！", 6, 5, 1000);
         } else if ($('#draftedPerson').val() === "") {
             window.top.tips("拟稿人不可以为空！", 6, 5, 1000);
-        } else if ($('#copyGive').val() === "") {
-            window.top.tips("抄送人不可以为空！", 6, 5, 1000);
         } else {
             //发送前将上传好的附件插入form中
             $('#annex').val(array);

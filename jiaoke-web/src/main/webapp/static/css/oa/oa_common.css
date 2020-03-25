@@ -321,6 +321,14 @@ table {
     cursor: pointer;
 }
 
+.content-exceeded{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 90px;
+
+}
+
 .list-content-time {
     width: 12%;
     text-indent: 5px;

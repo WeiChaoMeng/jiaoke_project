@@ -1,6 +1,7 @@
 package com.jiaoke.oa.dao;
 
 import com.jiaoke.oa.bean.OaAssetManagement;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -23,4 +24,44 @@ public interface OaAssetsManagementMapper extends Mapper<OaAssetManagement> {
      * @return list
      */
     List<OaAssetManagement> fuzzyQueryByName(String assetsName);
+
+    /**
+     * 批量插入数据
+     *
+     * @param list OaAssetManagement
+     * @return id
+     */
+    int batchInsertData(List<OaAssetManagement> list);
+
+    /**
+     * 查询资产名称和资产数量
+     *
+     * @return list
+     */
+    List<OaAssetManagement> selectNameAndNumber();
+
+    /**
+     * 根据id更新产品数量
+     *
+     * @param id              id
+     * @param productQuantity productQuantity
+     * @return int
+     */
+    int updateProductQuantityById(@Param("id") Integer id, @Param("productQuantity") Integer productQuantity);
+
+    /**
+     * 根据资产名称查询id、product_quantity
+     *
+     * @param assetsName assetsName
+     * @return OaAssetManagement
+     */
+    OaAssetManagement selectByAssetsName(String assetsName);
+
+    /**
+     * 插入并返回主键
+     *
+     * @param oaAssetManagement oaAssetManagement
+     * @return id
+     */
+    int insertReturnId(OaAssetManagement oaAssetManagement);
 }

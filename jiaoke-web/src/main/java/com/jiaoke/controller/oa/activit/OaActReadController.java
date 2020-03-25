@@ -5,7 +5,6 @@ import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
 import com.jiaoke.controller.oa.TargetFlowNodeCommand;
 import com.jiaoke.oa.bean.Comments;
-import com.jiaoke.oa.bean.OaActCar;
 import com.jiaoke.oa.bean.OaActRead;
 import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.service.OaActReadService;
@@ -195,10 +194,10 @@ public class OaActReadController {
                         Map<String, Object> map = new HashMap<>(16);
                         List<Object> leaveNotifyList = new ArrayList<>();
 
-                        if (oaActRead.getReceiptDepartment() == 0){
+                        if (oaActRead.getReceiptDepartment() == 0) {
                             leaveNotifyList.add("3");
                             leaveNotifyList.add("4");
-                        }else {
+                        } else {
                             leaveNotifyList.add("5");
                             leaveNotifyList.add("22");
                             leaveNotifyList.add("23");
@@ -214,7 +213,7 @@ public class OaActReadController {
                         }
 
                         map.put("leaveNotifyList", leaveNotifyList);
-                        activitiUtil.designatedCountersignPersonnel(taskId,map);
+                        activitiUtil.designatedCountersignPersonnel(taskId, map);
                         return "success";
 
                     } else {

@@ -17,49 +17,23 @@
             padding: 10px;
         }
 
+        .formTable td{
+            line-height: 0;
+        }
+
         .tdLabel {
-            text-align: left;
+            text-align: right;
             padding-left: 10px;
         }
 
-        .approval-div-style {
-            width: 100%;
-            margin-bottom: 10px;
-            display: inline-block;
-        }
-
-        .approval-input {
-            width: 20%;
-            float: left;
-        }
-
-        .approval-input-span {
+        .formTable thead tr th {
+            line-height: 40px;
+            border: solid 1px #e5e5e5;
+            text-align: center;
+            background: #f6f6f6;
+            white-space: nowrap;
             font-size: 13px;
-            width: 40%;
-            display: inline-block;
-            float: left;
-            line-height: 29px;
-            text-align: right;
-            text-indent: 5px;
-        }
-
-        .approval-input-input {
-            border: 0;
-            border-bottom: 1px #000 solid;
-            width: 60%;
-            outline: none;
-            height: 28px;
-            text-align: left;
-            font-weight: 500;
-            color: #000;
-            text-indent: 5px;
-            font-size: 13px;
-            float: left;
-            cursor: no-drop;
-        }
-
-        .order-number-style{
-            height: 28px;display: inline-block;line-height: 28px;font-size: 14px;
+            font-weight: 600;
         }
     </style>
 </head>
@@ -127,7 +101,7 @@
                 <th class="th_title" nowrap="nowrap" style="width: 4%">流程</th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" placeholder="王玉秋(审批)、发起者部门负责人(审批)、卢静(审批)"
+                        <input type="text" placeholder="审核,发起者部门负责人(审批),办公室主管领导(审批),发起人、审核人(知会)"
                                readonly="readonly">
                     </div>
                 </td>
@@ -138,186 +112,171 @@
 
     <div>
         <span class="form-number-left" style="margin-top: 0">部门
-            <input type="text" class="form-number-content" style="cursor: no-drop" name="department"
+            <input type="text" class="form-number-content" style="cursor: no-drop" name="department" id="department"
                    value="${department}" readonly>
         </span>
+
+        <div id="addRow" style="float: right;">
+            <div style="float: right">
+                <input type="button" value="添加数据行(10)" onclick="addRow(10)" class="table-tab-send">
+            </div>
+
+            <div style="margin-right: 10px;float: right">
+                <input type="button" value="添加数据行(3)" onclick="addRow(3)" class="table-tab-send">
+            </div>
+
+            <div style="margin-right: 10px;float: right">
+                <input type="button" value="添加数据行(1)" onclick="addRow(1)" class="table-tab-send">
+            </div>
+        </div>
     </div>
 
-    <table class="formTable">
-        <tbody>
+    <table class="formTable" style="margin: 0">
+        <thead>
         <tr>
-            <td class="tdLabel" style="width: 7%">序号</td>
-            <td class="tdLabel" style="width: 45%">项目</td>
-            <td class="tdLabel" style="width: 16%">数量</td>
-            <td class="tdLabel" style="width: 16%">单价</td>
-            <td class="tdLabel" style="width: 16%">金额(元)</td>
+            <th style="width: 7%">序号</th>
+            <th style="width: 45%">项目</th>
+            <th style="width: 16%">数量</th>
+            <th style="width: 16%">单价</th>
+            <th style="width: 16%">金额(元)</th>
         </tr>
+        </thead>
 
+        <tbody id="tbo">
         <tr>
             <td class="table-td-content" style="text-align: center;"><span class="order-number-style">1</span></td>
-            <td class="table-td-content"><input type="text" class="formInput" name="itemOne" autocomplete="off"></td>
+
             <td class="table-td-content">
-                <input type="text" class="formInput" name="numberOne" id="numberOne" onchange="dataOne()"
+                <input type="text" class="formInput" name="item" id="item1" autocomplete="off">
+            </td>
+
+            <td class="table-td-content">
+                <input type="text" class="formInput" name="number" id="number1" onchange="amountCalculation(this)"
                        onkeyup="value=value.replace(/[^\d]/g,'').replace(/^0{1,}/g,'')" autocomplete="off">
             </td>
+
             <td class="table-td-content">
-                <input type="text" class="formInput" name="priceOne" id="priceOne" onchange="dataOne()"
+                <input type="text" class="formInput" name="price" id="price1" onchange="amountCalculation(this)"
                        onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')" autocomplete="off">
             </td>
-            <td class="table-td-content">
-                <input type="text" class="formInput-readonly" name="moneyOne" id="moneyOne" readonly>
-            </td>
-        </tr>
 
-        <tr>
-            <td class="table-td-content" style="text-align: center;"><span class="order-number-style">2</span></td>
-            <td class="table-td-content"><input type="text" class="formInput" name="itemTwo" autocomplete="off"></td>
             <td class="table-td-content">
-                <input type="text" class="formInput" name="numberTwo" id="numberTwo" onchange="dataTwo()"
-                       onkeyup="value=value.replace(/[^\d]/g,'').replace(/^0{1,}/g,'')" autocomplete="off">
+                <input type="text" class="formInput-readonly" name="money" id="money1" readonly>
             </td>
-            <td class="table-td-content">
-                <input type="text" class="formInput" name="priceTwo" id="priceTwo" onchange="dataTwo()"
-                       onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')" autocomplete="off">
-            </td>
-            <td class="table-td-content">
-                <input type="text" class="formInput-readonly" name="moneyTwo" id="moneyTwo" readonly>
-            </td>
-        </tr>
-
-        <tr>
-            <td class="table-td-content" style="text-align: center;"><span class="order-number-style">3</span></td>
-            </td>
-            <td class="table-td-content"><input type="text" class="formInput" name="itemThree" autocomplete="off"></td>
-            <td class="table-td-content">
-                <input type="text" class="formInput" name="numberThree" id="numberThree" onchange="dataThree()"
-                       onkeyup="value=value.replace(/[^\d]/g,'').replace(/^0{1,}/g,'')" autocomplete="off">
-            </td>
-            <td class="table-td-content">
-                <input type="text" class="formInput" name="priceThree" id="priceThree" onchange="dataThree()"
-                       onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')" autocomplete="off">
-            </td>
-            <td class="table-td-content">
-                <input type="text" class="formInput-readonly" name="moneyThree" id="moneyThree" readonly>
-            </td>
-        </tr>
-
-        <tr>
-            <td class="table-td-content" style="text-align: center;"><span class="order-number-style">4</span></td>
-            <td class="table-td-content"><input type="text" class="formInput" name="itemFour" autocomplete="off"></td>
-            <td class="table-td-content">
-                <input type="text" class="formInput" name="numberFour" id="numberFour" onchange="dataFour()"
-                       onkeyup="value=value.replace(/[^\d]/g,'').replace(/^0{1,}/g,'')" autocomplete="off">
-            </td>
-            <td class="table-td-content">
-                <input type="text" class="formInput" name="priceFour" id="priceFour" onchange="dataFour()"
-                       onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')" autocomplete="off">
-            </td>
-            <td class="table-td-content">
-                <input type="text" class="formInput-readonly" name="moneyFour" id="moneyFour" readonly>
-            </td>
-        </tr>
-
-        <tr>
-            <td class="table-td-content" style="text-align: center;"><span class="order-number-style">5</span></td>
-            <td class="table-td-content"><input type="text" class="formInput" name="itemFive" autocomplete="off"></td>
-            <td class="table-td-content">
-                <input type="text" class="formInput" name="numberFive" id="numberFive" onchange="dataFive()"
-                       onkeyup="value=value.replace(/[^\d]/g,'').replace(/^0{1,}/g,'')" autocomplete="off">
-            </td>
-            <td class="table-td-content">
-                <input type="text" class="formInput" name="priceFive" id="priceFive" onchange="dataFive()"
-                       onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')" autocomplete="off">
-            </td>
-            <td class="table-td-content">
-                <input type="text" class="formInput-readonly" name="moneyFive" id="moneyFive" readonly>
-            </td>
-        </tr>
-
-        <tr>
-            <td class="tdLabel" style="width: 0;text-align: right;">合计</td>
-            <td class="table-td-content" colspan="4">
-                <input type="text" class="formInput-readonly" name="total" id="total" readonly>
-            </td>
-            <%--暂存附件--%>
-            <input type="hidden" id="annex" name="annex">
         </tr>
         </tbody>
+
+        <table class="formTable">
+            <tr>
+                <td class="tdLabel">填表人</td>
+                <td class="table-td-content">
+                    <input type="text" class="formInput-readonly" name="preparer" id="preparer" value="${nickname}" readonly>
+                </td>
+
+                <td class="tdLabel">填表日期</td>
+                <td class="table-td-content">
+                    <input type="text" class="formInput-readonly" name="fillingDate" id="fillingDate"
+                           value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date())%>" readonly>
+                </td>
+
+                <td class="tdLabel">合计(元)</td>
+                <td class="table-td-content">
+                    <input type="text" class="formInput-readonly" name="total" id="total" readonly>
+                </td>
+
+                <%--暂存附件--%>
+                <input type="hidden" id="annex" name="annex">
+            </tr>
+
+            <tr>
+                <td class="tdLabel">审核</td>
+                <td colspan="5" class="approval-content">
+                    <textarea class="approval-content-textarea" readonly></textarea>
+                    <div class="approval-date">
+                        <label class="approval-date-label">日期 </label>
+                        <input class="approval-date-input" type="text" readonly>
+                    </div>
+                    <div class="approval-signature">
+                        <label class="approval-signature-label">签字 </label>
+                        <input class="approval-signature-input" type="text" readonly>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="tdLabel">部门负责人</td>
+                <td colspan="5" class="approval-content">
+                    <textarea class="approval-content-textarea" readonly></textarea>
+                    <div class="approval-date">
+                        <label class="approval-date-label">日期 </label>
+                        <input class="approval-date-input" type="text" readonly>
+                    </div>
+                    <div class="approval-signature">
+                        <label class="approval-signature-label">签字 </label>
+                        <input class="approval-signature-input" type="text" readonly>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="tdLabel">审批</td>
+                <td colspan="5" class="approval-content">
+                    <textarea class="approval-content-textarea" readonly></textarea>
+                    <div class="approval-date">
+                        <label class="approval-date-label">日期 </label>
+                        <input class="approval-date-input" type="text" readonly>
+                    </div>
+                    <div class="approval-signature">
+                        <label class="approval-signature-label">签字 </label>
+                        <input class="approval-signature-input" type="text" readonly>
+                    </div>
+                </td>
+            </tr>
+        </table>
     </table>
-
-    <div class="approval-div-style">
-        <div class="approval-input">
-            <span class="approval-input-span">审批</span>
-            <input type="text" class="approval-input-input" readonly>
-        </div>
-
-        <div class="approval-input">
-            <span class="approval-input-span">部门主管</span>
-            <input type="text" class="approval-input-input" readonly>
-        </div>
-
-        <div class="approval-input">
-            <span class="approval-input-span">填表人</span>
-            <input type="text" class="approval-input-input" value="${nickname}" name="preparer" readonly>
-        </div>
-
-        <div class="approval-input">
-            <span class="approval-input-span">验收</span>
-            <input type="text" class="approval-input-input" readonly>
-        </div>
-
-        <div class="approval-input">
-            <span class="approval-input-span">验收时间</span>
-            <input type="text" class="approval-input-input" readonly>
-        </div>
-    </div>
 </form>
 </body>
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
 <script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
 
-    function dataOne() {
-        var s1 = $('#numberOne').val().toString();
-        var s2 = $('#priceOne').val().toString();
-        if (s1 !== "" & s2 !== "") {
-            $('#moneyOne').val(calculate(s1, s2));
-            $('#total').val(sum());
+    //数据行id递增
+    let rowId = 1;
+
+    //添加数据行
+    function addRow(row) {
+        var content = '';
+        for (let i = 0; i < row; i++) {
+            rowId++;
+            content +=
+                '<tr>\n' +
+                '  <td class="table-td-content" style="text-align: center;"><span class="order-number-style">' + rowId + '</span></td>' +
+                '  <td class="table-td-content"><input type="text" class="formInput" name="item" id="item' + rowId + '" autocomplete="off"></td>\n' +
+                '  <td class="table-td-content">\n' +
+                '     <input type="text" class="formInput" name="number" id="number' + rowId + '" onchange="amountCalculation(this)"\n' +
+                '           onkeyup="value=value.replace(/[^\\d]/g,\'\').replace(/^0{1,}/g,\'\')" autocomplete="off">\n' +
+                '  </td>\n' +
+                '  <td class="table-td-content">\n' +
+                '       <input type="text" class="formInput" name="price" id="price' + rowId + '" onchange="amountCalculation(this)"\n' +
+                '           onkeyup="value=value.replace(/^\\D*(\\d*(?:\\.\\d{0,2})?).*$/g, \'$1\')" autocomplete="off">\n' +
+                '  </td>\n' +
+                '  <td class="table-td-content">\n' +
+                '       <input type="text" class="formInput-readonly" name="money" id="money' + rowId + '" readonly>\n' +
+                '  </td>\n' +
+                '</tr>';
         }
+        $('#tbo').append(content);
     }
 
-    function dataTwo() {
-        var s1 = $('#numberTwo').val().toString();
-        var s2 = $('#priceTwo').val().toString();
-        if (s1 !== "" & s2 !== "") {
-            $('#moneyTwo').val(calculate(s1, s2));
-            $('#total').val(sum());
-        }
-    }
+    //计算金额
+    function amountCalculation(self) {
+        var currentRowId = self.id;
+        var id = currentRowId.charAt(currentRowId.length - 1);
 
-    function dataThree() {
-        var s1 = $('#numberThree').val().toString();
-        var s2 = $('#priceThree').val().toString();
+        var s1 = $('#number' + id).val().toString();
+        var s2 = $('#price' + id).val().toString();
         if (s1 !== "" & s2 !== "") {
-            $('#moneyThree').val(calculate(s1, s2));
-            $('#total').val(sum());
-        }
-    }
-
-    function dataFour() {
-        var s1 = $('#numberFour').val().toString();
-        var s2 = $('#priceFour').val().toString();
-        if (s1 !== "" & s2 !== "") {
-            $('#moneyFour').val(calculate(s1, s2));
-            $('#total').val(sum());
-        }
-    }
-
-    function dataFive() {
-        var s1 = $('#numberFive').val().toString();
-        var s2 = $('#priceFive').val().toString();
-        if (s1 !== "" & s2 !== "") {
-            $('#moneyFive').val(calculate(s1, s2));
+            $('#money' + id).val(calculate(s1, s2));
             $('#total').val(sum());
         }
     }
@@ -338,67 +297,66 @@
         return Number(number.replace(".", "")) * Number(money.replace(".", "")) / Math.pow(10, m);
     }
 
-    //合计
+    //总和
     function sum() {
-        var m1 = $('#moneyOne').val();
-        var m2 = $('#moneyTwo').val();
-        var m3 = $('#moneyThree').val();
-        var m4 = $('#moneyFour').val();
-        var m5 = $('#moneyFive').val();
-
-        var r1, r2, r3, r4, r5, m;
-
-        try {
-            r1 = m1.toString().split(".")[1].length
-        } catch (e) {
-            r1 = 0
+        var sum = 0;
+        for (let i = 1; i <= rowId; i++) {
+            var money = $('#money' + i).val();
+            sum = (money * 1000 + sum * 1000) / 1000;
         }
-
-        try {
-            r2 = m2.toString().split(".")[1].length
-        } catch (e) {
-            r2 = 0
-        }
-
-        try {
-            r3 = m3.toString().split(".")[1].length
-        } catch (e) {
-            r3 = 0
-        }
-
-        try {
-            r4 = m4.toString().split(".")[1].length
-        } catch (e) {
-            r4 = 0
-        }
-
-        try {
-            r5 = m5.toString().split(".")[1].length
-        } catch (e) {
-            r5 = 0
-        }
-
-        m = Math.pow(10, Math.max(r1, r2, r3, r4, r5));
-        return (m1 * m + m2 * m + m3 * m + m4 * m + m5 * m) / m
+        return sum;
     }
 
     //发送
     function send() {
+        var officeSupplies = [];
+        var tel = $('#tbo').find('tr');
+        for (let i = 0; i < tel.length; i++) {
+            var it = $(tel[i]).find('td').find('#item' + (i + 1)).val();
+            var nb = $(tel[i]).find('td').find('#number' + (i + 1)).val();
+            var pr = $(tel[i]).find('td').find('#price' + (i + 1)).val();
+            var mo = $(tel[i]).find('td').find('#money' + (i + 1)).val();
+            officeSupplies.push({
+                item: it,
+                number: nb,
+                price: pr,
+                money: mo
+            })
+        }
+
         var array = [];
         $('#annexes').find('input').each(function () {
             array.push($(this).val());
         });
 
+        //发送前将上传好的附件插入form中
+        $('#annex').val(array);
+
         if ($.trim($("#title").val()) === '') {
             window.top.tips("标题不能为空！", 6, 5, 1000);
         } else {
-            //发送前将上传好的附件插入form中
-            $('#annex').val(array);
+
+            var tit = $('#title').val();
+            var dep = $('#department').val();
+            var pp = $('#preparer').val();
+            var fd = $('#fillingDate').val();
+            var tt = $('#total').val();
+            var an = $('#annex').val();
+            var oaActOfficeSupplies = {
+                title: tit,
+                department: dep,
+                preparer: pp,
+                fillingDate: fd,
+                total: tt,
+                oaOfficeSuppliesList: officeSupplies,
+                annex: an
+            };
 
             $.ajax({
                 type: "POST",
                 url: '${path}/officeSupplies/add',
-                data: $('#oaActOfficeSupplies').serialize(),
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify(oaActOfficeSupplies),
                 error: function (request) {
                     window.top.tips("出错！", 6, 2, 1000);
                 },
@@ -416,21 +374,54 @@
 
     //保存待发
     function savePending() {
+        var officeSupplies = [];
+        var tel = $('#tbo').find('tr');
+        for (let i = 0; i < tel.length; i++) {
+            var it = $(tel[i]).find('td').find('#item' + (i + 1)).val();
+            var nb = $(tel[i]).find('td').find('#number' + (i + 1)).val();
+            var pr = $(tel[i]).find('td').find('#price' + (i + 1)).val();
+            var mo = $(tel[i]).find('td').find('#money' + (i + 1)).val();
+            officeSupplies.push({
+                item: it,
+                number: nb,
+                price: pr,
+                money: mo
+            })
+        }
+
         var array = [];
         $('#annexes').find('input').each(function () {
             array.push($(this).val());
         });
 
+        //发送前将上传好的附件插入form中
+        $('#annex').val(array);
+
         if ($.trim($("#title").val()) === '') {
             window.top.tips("标题不能为空！", 6, 5, 1000);
         } else {
-            //发送前将上传好的附件插入form中
-            $('#annex').val(array);
+
+            var tit = $('#title').val();
+            var dep = $('#department').val();
+            var pp = $('#preparer').val();
+            var fd = $('#fillingDate').val();
+            var tt = $('#total').val();
+            var an = $('#annex').val();
+            var oaActOfficeSupplies = {
+                title: tit,
+                department: dep,
+                preparer: pp,
+                fillingDate: fd,
+                total: tt,
+                oaOfficeSuppliesList: officeSupplies,
+                annex: an
+            };
 
             $.ajax({
                 type: "POST",
                 url: '${path}/officeSupplies/savePending',
-                data: $('#oaActOfficeSupplies').serialize(),
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify(oaActOfficeSupplies),
                 error: function (request) {
                     window.top.tips("出错！", 6, 2, 1000);
                 },
@@ -502,11 +493,11 @@
 
     //打印
     function printContent() {
-        $('#tool,#titleArea,#annexList').hide();
+        $('#tool,#titleArea,#annexList,#addRow').hide();
         $('#body').css('width', '100%');
         //执行打印
         window.print();
-        $('#tool,#titleArea').show();
+        $('#tool,#titleArea,#addRow').show();
         $('#body').css('width', '80%');
 
         //附件列表

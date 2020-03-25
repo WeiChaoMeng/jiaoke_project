@@ -79,7 +79,10 @@
                 <shiro:hasPermission name="teamwork:already">
                     <li><a id="managed_matter"><span>已办事项</span></a></li>
                 </shiro:hasPermission>
-                <%--<li><a id="supervision_matters"><span>督办事项</span></a></li>--%>
+
+                <shiro:hasPermission name="teamwork:contract">
+                    <li><a id="contract_management"><span>合同管理</span></a></li>
+                </shiro:hasPermission>
             </ul>
         </li>
 
@@ -364,16 +367,12 @@
             </shiro:hasPermission>
 
             <ul>
-                <shiro:hasPermission name="resource:storage">
-                    <li><a id="resource_storage"><span>资源入库</span></a></li>
-                </shiro:hasPermission>
-
                 <shiro:hasPermission name="resource:file">
                     <li><a id="resources_archives"><span>资源档案</span></a></li>
                 </shiro:hasPermission>
 
                 <shiro:hasPermission name="resource:annal">
-                    <li><a id="receive_record"><span>领用记录</span></a></li>
+                    <li><a id="resources_use"><span>领用记录</span></a></li>
                 </shiro:hasPermission>
             </ul>
         </li>

@@ -172,14 +172,14 @@
                             </td>
 
                             <td class="template" valign="middle">
-                                <a class="check_color" onclick="commonJump('confirm')" title="确认单审批单">
-                                    <em class="template-icon">&#xe695;</em>确认单审批单
+                                <a class="check_color" onclick="commonJump('acceptanceWarehousing')" title="办公用品需求计划">
+                                    <em class="template-icon">&#xe695;</em>验收入库单
                                 </a>
                             </td>
 
                             <td class="template" valign="middle">
-                                <a class="check_color" onclick="commonJump('leave')" title="请假审批表">
-                                    <em class="template-icon">&#xe695;</em>请假审批表
+                                <a class="check_color" onclick="commonJump('officeSuppliesUse')" title="办公用品需求计划">
+                                    <em class="template-icon">&#xe695;</em>办公用品领用
                                 </a>
                             </td>
                         </tr>
@@ -279,9 +279,21 @@
                                     <em class="template-icon">&#xe695;</em>加班统计表
                                 </a>
                             </td>
+
+                            <td class="template" valign="middle">
+                                <a class="check_color" onclick="commonJump('confirm')" title="确认单审批单">
+                                    <em class="template-icon">&#xe695;</em>确认单审批单
+                                </a>
+                            </td>
                         </tr>
 
                         <tr>
+                            <td class="template" valign="middle">
+                                <a class="check_color" onclick="commonJump('leave')" title="请假审批表">
+                                    <em class="template-icon">&#xe695;</em>请假审批表
+                                </a>
+                            </td>
+
                             <%--<td class="template" valign="middle">--%>
                                 <%--<a class="check_color" onclick="assetUse()" title="资产领用申请单">--%>
                                     <%--<em class="template-icon">&#xe695;</em>资产领用申请单--%>
@@ -386,7 +398,7 @@
                         trackList += '        </span>';
                         trackList += '    </td>';
                         trackList += '    <td class="list-content-proposer" style="width: 15%">';
-                        trackList += '        <span class="list_content_sponsor">';
+                        trackList += '        <span class="list_content_sponsor content-exceeded">';
                         trackList += '            <a style="color: #2196F3;font-weight: 600;" title="当前待办人">' + alreadyIssued[i].currentExecutor + '</a>';
                         trackList += '        </span>';
                         trackList += '    </td>';

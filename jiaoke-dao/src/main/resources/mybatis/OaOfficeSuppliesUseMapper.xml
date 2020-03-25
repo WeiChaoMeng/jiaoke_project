@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.oa.dao.OaOfficeSuppliesUseMapper">
+
+    <insert id="batchInsertData" parameterType="com.jiaoke.oa.bean.OaOfficeSuppliesUse">
+        insert into oa_office_supplies_use
+        (asset_id,`name`,`number`,office_supplies_use_id)
+        values
+        <foreach collection="list" item="list" separator=",">
+            (#{list.assetId},#{list.name},#{list.number},#{list.officeSuppliesUseId})
+        </foreach>
+    </insert>
+
+    <select id="selectByOfficeSuppliesUseId" parameterType="java.lang.String"
+            resultType="com.jiaoke.oa.bean.OaOfficeSuppliesUse">
+        SELECT
+            `name`,`number`
+        FROM `oa_office_supplies_use`
+        WHERE office_supplies_use_id = #{officeSuppliesUseId}
+    </select>
+
+    <delete id="deleteByOfficeSuppliesUseId" parameterType="java.lang.String">
+        delete from oa_office_supplies_use
+        where office_supplies_use_id = #{officeSuppliesUseId}
+    </delete>
+</mapper>

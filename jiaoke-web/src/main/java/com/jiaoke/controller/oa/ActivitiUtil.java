@@ -749,4 +749,22 @@ public class ActivitiUtil {
         //指定下个执行人
         taskService.complete(taskId, map);
     }
+
+    /**
+     * 根据表名获取已完成的审批表单id
+     *
+     * @param tableName 表名称
+     * @return id列表
+     */
+    public List<String> selectCompletedForm(String tableName) {
+        List<String> idList = new ArrayList<>();
+        List<HistoricProcessInstance> historicProcessInstanceList = historyService.createHistoricProcessInstanceQuery().finished().list();
+        for (HistoricProcessInstance processInstance : historicProcessInstanceList) {
+            String businessKey = processInstance.getBusinessKey();
+            if (businessKey.contains(tableName)) {
+                idList.add(businessKey.substring(businessKey.indexOf(":") + 1));
+            }
+        }
+        return idList;
+    }
 }

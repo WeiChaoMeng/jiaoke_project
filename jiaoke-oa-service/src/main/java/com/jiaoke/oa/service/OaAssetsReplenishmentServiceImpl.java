@@ -28,21 +28,6 @@ public class OaAssetsReplenishmentServiceImpl implements OaAssetsReplenishmentSe
     private OaAssetsManagementMapper oaAssetsManagementMapper;
 
     @Override
-    public int insertSelective(OaAssetReplenishment oaAssetReplenishment) {
-        //根据id查询资产剩余数量
-        OaAssetManagement assetManagement = oaAssetsManagementMapper.selectByPrimaryKey(oaAssetReplenishment.getAssetManagementId());
-        //更新资产数量
-        OaAssetManagement oaAssetManagement = new OaAssetManagement();
-        oaAssetManagement.setId(oaAssetReplenishment.getAssetManagementId());
-        oaAssetManagement.setProductQuantity(assetManagement.getProductQuantity() + oaAssetReplenishment.getReplenishmentQuantity());
-        oaAssetsManagementMapper.updateByPrimaryKeySelective(oaAssetManagement);
-        //保存补货数据
-        oaAssetReplenishment.setReplenishmentBeforeQuantity(assetManagement.getProductQuantity());
-        oaAssetReplenishment.setCreateTime(new Date());
-        return oaAssetsReplenishmentMapper.insertSelective(oaAssetReplenishment);
-    }
-
-    @Override
     public List<OaAssetReplenishment> select(Integer assetManagementId) {
         OaAssetReplenishment assetReplenishment = new OaAssetReplenishment();
         assetReplenishment.setAssetManagementId(assetManagementId);

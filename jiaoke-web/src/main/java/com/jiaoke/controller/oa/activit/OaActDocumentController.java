@@ -238,10 +238,13 @@ public class OaActDocumentController {
                         Map<String, Object> map = new HashMap<>(16);
                         List<Object> informedList = new ArrayList<>();
                         String copyGive = oaActDocument.getCopyGiveId();
-                        String[] users = copyGive.split(",");
-                        for (String user : users) {
-                            informedList.add(user);
+                        if (!"".equals(copyGive)){
+                            String[] users = copyGive.split(",");
+                            for (String user : users) {
+                                informedList.add(user);
+                            }
                         }
+                        informedList.add(oaActDocument.getPromoter());
                         map.put("informedList", informedList);
                         activitiUtil.designatedCountersignPersonnel(taskId,map);
                         return "success";

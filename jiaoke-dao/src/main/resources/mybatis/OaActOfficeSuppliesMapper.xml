@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.oa.dao.OaActOfficeSuppliesMapper">
+
+    <select id="selectMultipleData" parameterType="java.util.List" resultType="com.jiaoke.oa.bean.OaActOfficeSupplies">
+        select id,title,department,preparer,total,filling_date as fillingDate
+        from oa_act_office_supplies
+        where id in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+        ORDER BY
+        create_time DESC
+    </select>
+
+    <select id="selectTitleById" parameterType="java.lang.String" resultType="java.lang.String">
+        select title
+        from oa_act_office_supplies
+        where id = #{id}
+    </select>
+</mapper>

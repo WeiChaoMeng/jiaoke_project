@@ -2,13 +2,11 @@ package com.jiaoke.oa.service;
 
 import com.jiake.utils.DateUtil;
 import com.jiake.utils.FileUploadUtil;
+import com.jiaoke.oa.bean.OaAcceptanceWarehousing;
 import com.jiaoke.oa.bean.OaCollaboration;
 import com.jiaoke.oa.bean.OaOvertimeStatistics;
 import com.jiaoke.oa.bean.UserInfo;
-import com.jiaoke.oa.dao.DepartmentMapper;
-import com.jiaoke.oa.dao.OaCollaborationMapper;
-import com.jiaoke.oa.dao.OaOvertimeStatisticsMapper;
-import com.jiaoke.oa.dao.UserInfoMapper;
+import com.jiaoke.oa.dao.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -36,6 +34,12 @@ public class OaCollaborationServiceImpl implements OaCollaborationService {
 
     @Resource
     private OaOvertimeStatisticsMapper oaOvertimeStatisticsMapper;
+
+    @Resource
+    private OaOfficeSuppliesMapper oaOfficeSuppliesMapper;
+
+    @Resource
+    private OaAcceptanceWarehousingMapper oaAcceptanceWarehousingMapper;
 
     @Override
     public List<OaCollaboration> selectDone(List<OaCollaboration> oaCollaborations, String title) {
@@ -181,6 +185,10 @@ public class OaCollaborationServiceImpl implements OaCollaborationService {
         String delimiter = ",";
         //加班统计表关联表
         String overtime = "oa_act_overtime";
+        //办公用品计划表
+        String officeSupplies = "oa_act_office_supplies";
+        //验收入库表
+        String acceptanceWarehousing = "oa_act_acceptance_warehousing";
         //删除待发数据
         if (oaCollaborationMapper.deleteByCorrelationId(correlationId) < 0) {
             return -1;
@@ -203,6 +211,14 @@ public class OaCollaborationServiceImpl implements OaCollaborationService {
                 //删除加班统计表关联表
                 if (overtime.equals(table)) {
                     oaOvertimeStatisticsMapper.deleteByOvertimeId(correlationId);
+
+                    //删除办公用品关联表数据
+                }else if (officeSupplies.equals(table)) {
+                    oaOfficeSuppliesMapper.deleteByOfficeSuppliesId(correlationId);
+
+                    //删除验收入库表关联表数据
+                }else if (acceptanceWarehousing.equals(table)) {
+                    oaAcceptanceWarehousingMapper.deleteByAcceptanceWarehousingId(correlationId);
                 }
                 return 1;
             }
