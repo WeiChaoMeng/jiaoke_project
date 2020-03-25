@@ -5,6 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 办公用品需求计划
@@ -34,119 +35,55 @@ public class OaActOfficeSupplies {
     private String department;
 
     /**
-     * 项目1
+     * 填表人
      */
-    private String itemOne;
+    private String preparer;
 
     /**
-     * 数量1
+     * 填表日期
      */
-    private String numberOne;
+    private String fillingDate;
 
     /**
-     * 单价1
-     */
-    private String priceOne;
-
-    /**
-     * 金额1
-     */
-    private String moneyOne;
-
-    /**
-     * 项目2
-     */
-    private String itemTwo;
-
-    /**
-     * 数量2
-     */
-    private String numberTwo;
-
-    /**
-     * 单价2
-     */
-    private String priceTwo;
-
-    /**
-     * 金额2
-     */
-    private String moneyTwo;
-
-    /**
-     * 项目3
-     */
-    private String itemThree;
-
-    /**
-     * 数量3
-     */
-    private String numberThree;
-
-    /**
-     * 单价3
-     */
-    private String priceThree;
-
-    /**
-     * 金额3
-     */
-    private String moneyThree;
-
-    /**
-     * 项目4
-     */
-    private String itemFour;
-
-    /**
-     * 数量4
-     */
-    private String numberFour;
-
-    /**
-     * 单价4
-     */
-    private String priceFour;
-
-    /**
-     * 金额4
-     */
-    private String moneyFour;
-
-    /**
-     * 项目5
-     */
-    private String itemFive;
-
-    /**
-     * 数量5
-     */
-    private String numberFive;
-
-    /**
-     * 单价5
-     */
-    private String priceFive;
-
-    /**
-     * 金额5
-     */
-    private String moneyFive;
-
-    /**
-     * 金额5
+     * 合计
      */
     private String total;
 
     /**
-     * 审批
+     * 办公用品详情
      */
-    private String officeSuppliesApproval;
+    @Transient
+    private List<OaOfficeSupplies> oaOfficeSuppliesList;
 
     /**
-     * 审批时间
+     * 审核内容
      */
-    private String officeSuppliesApprovalDate;
+    private String reviewContent;
+
+    /**
+     * 审核
+     */
+    private String review;
+
+    /**
+     * 审核时间
+     */
+    private String reviewDate;
+
+    /**
+     * 部门负责人内容
+     */
+    private String principalContent;
+
+    /**
+     * 部门负责人
+     */
+    private String principal;
+
+    /**
+     * 部门负责人时间
+     */
+    private String principalDate;
 
     /**
      * 部门主管
@@ -154,24 +91,14 @@ public class OaActOfficeSupplies {
     private String supervisor;
 
     /**
-     * 部门主管审批时间
+     * 部门主管内容
+     */
+    private String supervisorContent;
+
+    /**
+     * 部门主管时间
      */
     private String supervisorDate;
-
-    /**
-     * 填表人
-     */
-    private String preparer;
-
-    /**
-     * 验收
-     */
-    private String officeSuppliesAcceptance;
-
-    /**
-     * 验收时间
-     */
-    private String officeSuppliesAcceptanceDate;
 
     /**
      * 创建日期
@@ -221,164 +148,20 @@ public class OaActOfficeSupplies {
         this.department = department;
     }
 
-    public String getItemOne() {
-        return itemOne;
+    public String getPreparer() {
+        return preparer;
     }
 
-    public void setItemOne(String itemOne) {
-        this.itemOne = itemOne;
+    public void setPreparer(String preparer) {
+        this.preparer = preparer;
     }
 
-    public String getNumberOne() {
-        return numberOne;
+    public String getFillingDate() {
+        return fillingDate;
     }
 
-    public void setNumberOne(String numberOne) {
-        this.numberOne = numberOne;
-    }
-
-    public String getPriceOne() {
-        return priceOne;
-    }
-
-    public void setPriceOne(String priceOne) {
-        this.priceOne = priceOne;
-    }
-
-    public String getMoneyOne() {
-        return moneyOne;
-    }
-
-    public void setMoneyOne(String moneyOne) {
-        this.moneyOne = moneyOne;
-    }
-
-    public String getItemTwo() {
-        return itemTwo;
-    }
-
-    public void setItemTwo(String itemTwo) {
-        this.itemTwo = itemTwo;
-    }
-
-    public String getNumberTwo() {
-        return numberTwo;
-    }
-
-    public void setNumberTwo(String numberTwo) {
-        this.numberTwo = numberTwo;
-    }
-
-    public String getPriceTwo() {
-        return priceTwo;
-    }
-
-    public void setPriceTwo(String priceTwo) {
-        this.priceTwo = priceTwo;
-    }
-
-    public String getMoneyTwo() {
-        return moneyTwo;
-    }
-
-    public void setMoneyTwo(String moneyTwo) {
-        this.moneyTwo = moneyTwo;
-    }
-
-    public String getItemThree() {
-        return itemThree;
-    }
-
-    public void setItemThree(String itemThree) {
-        this.itemThree = itemThree;
-    }
-
-    public String getNumberThree() {
-        return numberThree;
-    }
-
-    public void setNumberThree(String numberThree) {
-        this.numberThree = numberThree;
-    }
-
-    public String getPriceThree() {
-        return priceThree;
-    }
-
-    public void setPriceThree(String priceThree) {
-        this.priceThree = priceThree;
-    }
-
-    public String getMoneyThree() {
-        return moneyThree;
-    }
-
-    public void setMoneyThree(String moneyThree) {
-        this.moneyThree = moneyThree;
-    }
-
-    public String getItemFour() {
-        return itemFour;
-    }
-
-    public void setItemFour(String itemFour) {
-        this.itemFour = itemFour;
-    }
-
-    public String getNumberFour() {
-        return numberFour;
-    }
-
-    public void setNumberFour(String numberFour) {
-        this.numberFour = numberFour;
-    }
-
-    public String getPriceFour() {
-        return priceFour;
-    }
-
-    public void setPriceFour(String priceFour) {
-        this.priceFour = priceFour;
-    }
-
-    public String getMoneyFour() {
-        return moneyFour;
-    }
-
-    public void setMoneyFour(String moneyFour) {
-        this.moneyFour = moneyFour;
-    }
-
-    public String getItemFive() {
-        return itemFive;
-    }
-
-    public void setItemFive(String itemFive) {
-        this.itemFive = itemFive;
-    }
-
-    public String getNumberFive() {
-        return numberFive;
-    }
-
-    public void setNumberFive(String numberFive) {
-        this.numberFive = numberFive;
-    }
-
-    public String getPriceFive() {
-        return priceFive;
-    }
-
-    public void setPriceFive(String priceFive) {
-        this.priceFive = priceFive;
-    }
-
-    public String getMoneyFive() {
-        return moneyFive;
-    }
-
-    public void setMoneyFive(String moneyFive) {
-        this.moneyFive = moneyFive;
+    public void setFillingDate(String fillingDate) {
+        this.fillingDate = fillingDate;
     }
 
     public String getTotal() {
@@ -389,20 +172,60 @@ public class OaActOfficeSupplies {
         this.total = total;
     }
 
-    public String getOfficeSuppliesApproval() {
-        return officeSuppliesApproval;
+    public List<OaOfficeSupplies> getOaOfficeSuppliesList() {
+        return oaOfficeSuppliesList;
     }
 
-    public void setOfficeSuppliesApproval(String officeSuppliesApproval) {
-        this.officeSuppliesApproval = officeSuppliesApproval;
+    public void setOaOfficeSuppliesList(List<OaOfficeSupplies> oaOfficeSuppliesList) {
+        this.oaOfficeSuppliesList = oaOfficeSuppliesList;
     }
 
-    public String getOfficeSuppliesApprovalDate() {
-        return officeSuppliesApprovalDate;
+    public String getReviewContent() {
+        return reviewContent;
     }
 
-    public void setOfficeSuppliesApprovalDate(String officeSuppliesApprovalDate) {
-        this.officeSuppliesApprovalDate = officeSuppliesApprovalDate;
+    public void setReviewContent(String reviewContent) {
+        this.reviewContent = reviewContent;
+    }
+
+    public String getReview() {
+        return review;
+    }
+
+    public void setReview(String review) {
+        this.review = review;
+    }
+
+    public String getReviewDate() {
+        return reviewDate;
+    }
+
+    public void setReviewDate(String reviewDate) {
+        this.reviewDate = reviewDate;
+    }
+
+    public String getPrincipalContent() {
+        return principalContent;
+    }
+
+    public void setPrincipalContent(String principalContent) {
+        this.principalContent = principalContent;
+    }
+
+    public String getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(String principal) {
+        this.principal = principal;
+    }
+
+    public String getPrincipalDate() {
+        return principalDate;
+    }
+
+    public void setPrincipalDate(String principalDate) {
+        this.principalDate = principalDate;
     }
 
     public String getSupervisor() {
@@ -413,36 +236,20 @@ public class OaActOfficeSupplies {
         this.supervisor = supervisor;
     }
 
+    public String getSupervisorContent() {
+        return supervisorContent;
+    }
+
+    public void setSupervisorContent(String supervisorContent) {
+        this.supervisorContent = supervisorContent;
+    }
+
     public String getSupervisorDate() {
         return supervisorDate;
     }
 
     public void setSupervisorDate(String supervisorDate) {
         this.supervisorDate = supervisorDate;
-    }
-
-    public String getPreparer() {
-        return preparer;
-    }
-
-    public void setPreparer(String preparer) {
-        this.preparer = preparer;
-    }
-
-    public String getOfficeSuppliesAcceptance() {
-        return officeSuppliesAcceptance;
-    }
-
-    public void setOfficeSuppliesAcceptance(String officeSuppliesAcceptance) {
-        this.officeSuppliesAcceptance = officeSuppliesAcceptance;
-    }
-
-    public String getOfficeSuppliesAcceptanceDate() {
-        return officeSuppliesAcceptanceDate;
-    }
-
-    public void setOfficeSuppliesAcceptanceDate(String officeSuppliesAcceptanceDate) {
-        this.officeSuppliesAcceptanceDate = officeSuppliesAcceptanceDate;
     }
 
     public Date getCreateTime() {

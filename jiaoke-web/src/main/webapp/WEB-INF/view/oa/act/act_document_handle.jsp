@@ -72,6 +72,7 @@
                 <input type="hidden" name="id" value="${oaActDocument.id}">
                 <input type="hidden" name="title" value="${oaActDocument.title}">
                 <input type="hidden" name="copyGiveId" value="${oaActDocument.copyGiveId}">
+                <input type="hidden" name="promoter" value="${oaActDocument.promoter}">
             </td>
         </tr>
 

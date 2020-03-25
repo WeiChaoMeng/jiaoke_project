@@ -27,26 +27,8 @@
         <tbody>
         <tr>
             <td>
-                <div class="head_left_button">
-                    <button type="button" class="cursor_hand" onclick="newContractAgreement()">&#xeb86; 新建</button>
-                </div>
-
-                <div class="separation_line"></div>
-
-                <div class="head_left_button">
-                    <button type="button" class="cursor_hand" onclick="replenishment()">&#xe7e9; 补货</button>
-                </div>
-
-                <div class="separation_line"></div>
-
-                <div class="head_left_button">
+                <div class="head_left_button" style="width: 100px">
                     <button type="button" class="cursor_hand" onclick="replenishmentRecord()">&#xe7e9; 补货记录</button>
-                </div>
-
-                <div class="separation_line"></div>
-
-                <div class="head_left_button">
-                    <button type="button" class="cursor_hand" onclick="binding()">&#xeb14; 删除</button>
                 </div>
             </td>
             <td>
@@ -65,28 +47,18 @@
 <table class="simple_table">
 
     <thead>
-    <th style="width: 3%;"><input type="checkbox"></th>
-    <th style="width: 3%;">序号</th>
-    <th style="width: 17%;">资产名字</th>
-    <th style="width: 10%;">
-        <select id="asset" onchange="typeFilter(1)">
-            <option style="background: #fff;" value="888">资产类别</option>
-            <option style="background: #fff;" value="0">办公用品</option>
-            <option style="background: #fff;" value="1">生产设备</option>
-        </select>
-    </th>
-    <th style="width: 17%;">规格型号</th>
-    <th style="width: 10%;">购买数量</th>
-    <th style="width: 10%;">
-        <select id="source" onchange="typeFilter(1)">
-            <option style="background: #fff;" value="888">来源</option>
-            <option style="background: #fff;" value="0">行政购置</option>
-            <option style="background: #fff;" value="1">设备购置</option>
-        </select>
-    </th>
-    <th style="width: 10%;">录入人员</th>
-    <th style="width: 10%;">存放地点</th>
-    <th style="width: 10%;">保管人员</th>
+    <tr>
+        <th style="width: 3%;"><input type="checkbox"></th>
+        <th style="width: 3%;">序号</th>
+        <th style="width: 17%;">资产名字</th>
+        <th style="width: 10%;">资产类别</th>
+        <th style="width: 17%;">规格型号</th>
+        <th style="width: 10%;">库存数量</th>
+        <th style="width: 10%;">来源</th>
+        <th style="width: 10%;">录入人员</th>
+        <th style="width: 10%;">存放地点</th>
+        <th style="width: 10%;">保管人员</th>
+    </tr>
     </thead>
 
     <tbody id="tbody">
@@ -239,7 +211,7 @@
                 oaAssetsManagement += '<tr onclick="checkboxEvent(this)">';
                 oaAssetsManagement += '<td><input type="checkbox" value="' + oaAssetsManagementList[i].id + '" onclick="window.event.cancelBubble=true;"></td>';
                 oaAssetsManagement += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 15 + i + 1) + '</td>';
-                oaAssetsManagement += '<td>' + oaAssetsManagementList[i].assetsName + '</td>';
+                oaAssetsManagement += '<td style="text-align: left;text-indent: 10px;">' + oaAssetsManagementList[i].assetsName + '</td>';
                 if (oaAssetsManagementList[i].assetsCategory === 0) {
                     oaAssetsManagement += '<td>' + '办公用品' + '</td>';
                 } else if (oaAssetsManagementList[i].assetsCategory === 1) {
@@ -260,24 +232,6 @@
         }
 
         $('#tbody').html(oaAssetsManagement);
-    }
-
-    //新增
-    function newContractAgreement() {
-        window.location.href = '${path}/assetsManagement/toAssetsManagement';
-    }
-
-    //补货
-    function replenishment() {
-        let length = $("tbody input:checked").length;
-        if (length != 1) {
-            layer.msg("请选择一条数据！");
-            return false;
-        } else {
-            var page = $('#page').val();
-            var id = $("tbody input:checked").val();
-            window.location.href = "${path}/assetsManagement/toAssetReplenishmentPage?id=" + id + '&page=' + page;
-        }
     }
 
     //补货记录

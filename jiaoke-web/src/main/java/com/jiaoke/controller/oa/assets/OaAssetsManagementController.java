@@ -5,8 +5,9 @@ import com.github.pagehelper.PageInfo;
 import com.jiake.utils.JsonHelper;
 import com.jiaoke.oa.bean.OaAssetManagement;
 import com.jiaoke.oa.bean.OaAssetReplenishment;
-import com.jiaoke.oa.bean.Permission;
+import com.jiaoke.oa.bean.OaAssetUse;
 import com.jiaoke.oa.bean.UserInfo;
+import com.jiaoke.oa.service.OaAssetUseService;
 import com.jiaoke.oa.service.OaAssetsManagementService;
 import com.jiaoke.oa.service.OaAssetsReplenishmentService;
 import org.apache.shiro.SecurityUtils;
@@ -35,6 +36,9 @@ public class OaAssetsManagementController {
     @Resource
     private OaAssetsReplenishmentService oaAssetsReplenishmentService;
 
+    @Resource
+    private OaAssetUseService oaAssetUseService;
+
     /**
      * 获取当前登录用户信息
      *
@@ -42,49 +46,6 @@ public class OaAssetsManagementController {
      */
     private UserInfo getCurrentUser() {
         return (UserInfo) SecurityUtils.getSubject().getPrincipal();
-    }
-
-    /**
-     * 跳转资产入库
-     *
-     * @return oa_asset_management.jsp
-     */
-    @RequestMapping("/toAssetsManagement")
-    public String toAssetsManagement(Model model) {
-        model.addAttribute("nickname", getCurrentUser().getNickname());
-        return "oa/assets/oa_asset_management";
-    }
-
-    /**
-     * 根据资产名字查询
-     *
-     * @param assetsName name
-     * @return list ? none（无）
-     */
-    @RequestMapping(value = "/selectByName")
-    @ResponseBody
-    public String selectByName(String assetsName) {
-        List<OaAssetManagement> oaAssetManagementList = oaAssetsManagementService.selectByName(assetsName);
-        if (oaAssetManagementList.size() > 0) {
-            return JsonHelper.toJSONString(oaAssetManagementList);
-        }
-        return JsonHelper.toJSONString("none");
-    }
-
-    /**
-     * 新增
-     *
-     * @param oaAssetManagement oaAssetManagement
-     * @return 影响行数
-     */
-    @RequestMapping(value = "/add")
-    @ResponseBody
-    public String add(OaAssetManagement oaAssetManagement) {
-        if (oaAssetsManagementService.insertSelective(oaAssetManagement) == 1) {
-            return JsonHelper.toJSONString("success");
-        } else {
-            return JsonHelper.toJSONString("error");
-        }
     }
 
     /**
@@ -130,34 +91,6 @@ public class OaAssetsManagementController {
     }
 
     /**
-     * 跳转补货页面
-     *
-     * @param id id
-     * @return jsp
-     */
-    @RequestMapping(value = "/toAssetReplenishmentPage")
-    public String toAssetReplenishmentPage(Model model, Integer id,int page) {
-        OaAssetManagement oaAssetManagement = oaAssetsManagementService.selectByPrimaryKey(id);
-        model.addAttribute("oaAssetManagement", oaAssetManagement);
-        model.addAttribute("currentPage", JsonHelper.toJSONString(page));
-        return "oa/assets/oa_asset_replenishment";
-    }
-
-    /**
-     * 提交补货
-     *
-     * @return 影响行数
-     */
-    @RequestMapping(value = "/commitAssetReplenishment")
-    @ResponseBody
-    public String commitAssetReplenishment(OaAssetReplenishment oaAssetReplenishment) {
-        if (oaAssetsReplenishmentService.insertSelective(oaAssetReplenishment) != 1) {
-            return JsonHelper.toJSONString("error");
-        }
-        return JsonHelper.toJSONString("success");
-    }
-
-    /**
      * 跳转补货记录
      *
      * @param model             model
@@ -165,7 +98,7 @@ public class OaAssetsManagementController {
      * @return jsp
      */
     @RequestMapping(value = "/toAssetReplenishmentRecordPage")
-    public String toAssetReplenishmentRecordPage(Model model, Integer assetManagementId,int archivesPage) {
+    public String toAssetReplenishmentRecordPage(Model model, Integer assetManagementId, int archivesPage) {
         model.addAttribute("assetManagementId", assetManagementId);
         model.addAttribute("archivesPage", JsonHelper.toJSONString(archivesPage));
         return "oa/assets/oa_assets_replenishment_record";
@@ -209,8 +142,40 @@ public class OaAssetsManagementController {
      *
      * @return oa_schedule_planning.jsp
      */
-    @RequestMapping("/OAReceiveRecord.do")
-    public String receiveRecord() {
-        return "oa/assets/oa_receive_record";
+    @RequestMapping("/toAssetUse")
+    public String toAssetUse(Model model, int page) {
+        model.addAttribute("currentPage", JsonHelper.toJSONString(page));
+        return "oa/assets/oa_resources_use";
+    }
+
+    /**
+     * 加载申请记录表数据
+     *
+     * @param page page
+     * @return 分页数据
+     */
+    @RequestMapping(value = "/assetUse")
+    @ResponseBody
+    public String assetUse(int page) {
+        PageHelper.startPage(page, 15);
+        List<OaAssetUse> oaAssetUseList = oaAssetUseService.selectAll();
+        PageInfo<OaAssetUse> pageInfo = new PageInfo<>(oaAssetUseList);
+        return JsonHelper.toJSONString(pageInfo);
+    }
+
+    /**
+     * 根据名字筛选
+     *
+     * @param page      page
+     * @param assetName assetName
+     * @return list
+     */
+    @RequestMapping(value = "/assetNameFilter")
+    @ResponseBody
+    public String usernameFilter(int page, String assetName) {
+        PageHelper.startPage(page, 15);
+        List<OaAssetUse> oaAssetUseList = oaAssetUseService.fuzzyQueryByName(assetName);
+        PageInfo<OaAssetUse> pageInfo = new PageInfo<>(oaAssetUseList);
+        return JsonHelper.toJSONString(pageInfo);
     }
 }

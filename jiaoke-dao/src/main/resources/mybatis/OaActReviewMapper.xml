@@ -1,3 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jiaoke.oa.dao.OaActReviewMapper"></mapper>
+<mapper namespace="com.jiaoke.oa.dao.OaActReviewMapper">
+
+    <select id="selectAllByIdList" parameterType="java.util.List" resultType="com.jiaoke.oa.bean.OaActReview">
+        select id,`name`,numbering,`relative`,amount,`number`,promoter
+        from oa_act_review
+        where id in
+        <foreach collection="idList" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+        ORDER BY
+        create_time DESC
+    </select>
+</mapper>

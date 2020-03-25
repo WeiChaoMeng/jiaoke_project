@@ -5,7 +5,6 @@ import com.jiaoke.oa.dao.OaAssetsManagementMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,26 +21,8 @@ public class OaAssetsManagementServiceImpl implements OaAssetsManagementService 
     private OaAssetsManagementMapper oaAssetsManagementMapper;
 
     @Override
-    public int insertSelective(OaAssetManagement oaAssetManagement) {
-        oaAssetManagement.setCreateTime(new Date());
-        return oaAssetsManagementMapper.insertSelective(oaAssetManagement);
-    }
-
-    @Override
     public List<OaAssetManagement> selectAll() {
         return oaAssetsManagementMapper.selectAll();
-    }
-
-    @Override
-    public List<OaAssetManagement> selectByName(String assetsName) {
-        OaAssetManagement oaAssetManagement = new OaAssetManagement();
-        oaAssetManagement.setAssetsName(assetsName);
-        return oaAssetsManagementMapper.select(oaAssetManagement);
-    }
-
-    @Override
-    public OaAssetManagement selectByPrimaryKey(Integer id) {
-        return oaAssetsManagementMapper.selectByPrimaryKey(id);
     }
 
     @Override

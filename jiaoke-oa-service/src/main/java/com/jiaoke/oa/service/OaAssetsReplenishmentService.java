@@ -14,14 +14,6 @@ import java.util.List;
 public interface OaAssetsReplenishmentService {
 
     /**
-     * 选择性添加
-     *
-     * @param oaAssetReplenishment oaAssetReplenishment
-     * @return 影响行数
-     */
-    int insertSelective(OaAssetReplenishment oaAssetReplenishment);
-
-    /**
      * 根据资产id查询
      *
      * @param assetManagementId 资产id

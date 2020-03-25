@@ -2,6 +2,8 @@ package com.jiaoke.oa.service;
 
 import com.jiaoke.oa.bean.OaActReview;
 
+import java.util.List;
+
 /**
  * 合同审查表
  *
@@ -53,4 +55,12 @@ public interface OaActReviewService {
      * @return OaActMeals
      */
     OaActReview selectByPrimaryKey(String id);
+
+    /**
+     * 根据idList查询多条
+     *
+     * @param idList idList
+     * @return list
+     */
+    List<OaActReview> selectAllByIdList(List<String> idList);
 }

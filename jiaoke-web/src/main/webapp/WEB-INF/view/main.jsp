@@ -424,6 +424,37 @@
     </div>
 </div>
 
+<%--关联表单--%>
+<div id="relevanceForms" style="display: none;">
+    <div style="padding: 10px 15px">
+        <div style="height: 79%;overflow: auto;margin-bottom: 20px;">
+            <table class="relevance-table">
+                <thead>
+                <tr>
+                    <th colspan="2" style="width: 50%">表单名称</th>
+                    <th style="width: 15%">部门</th>
+                    <th style="width: 15%">填表日期</th>
+                    <th style="width: 10%">总金额(元)</th>
+                    <th style="width: 10%">填表人</th>
+                </tr>
+                </thead>
+
+                <tbody id="relevanceFormsTbo">
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="confirm-modify-psw-style">
+            <button onclick="confirmRelevanceForms()" class="confirm-modify-psw">确认</button>
+        </div>
+    </div>
+</div>
+
+<div id="relevanceFormsPreview" style="display: none;">
+    <div id="relevanceFormsPreviewContent" style="padding:10px 15px"></div>
+</div>
+
 <%--修改密码--%>
 <div id="editPassword" style="height:100%;display: none;">
     <div class="psw-new-style">
@@ -813,6 +844,96 @@
                 btn: ['确认', '取消']
             }, function () {
                 $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.delFile(fileName);
+            }
+        );
+    }
+
+    /**-----------------------关联表单----------------------*/
+    //关联表单-选择
+    function selectRelevanceForms(list) {
+        window.lar = layer.open({
+            title: '选择关联的表单',
+            type: 1,
+            area: ['60%', '60%'],
+            shadeClose: false, //点击遮罩关闭
+            content: $("#relevanceForms"),
+            offset: "auto",
+        });
+
+        var relevanceFormsContent = '';
+        for (let i = 0; i < list.length; i++) {
+            relevanceFormsContent += '<tr>';
+            relevanceFormsContent += '<td style="width:30px;"><input type="checkbox" value="' + list[i].id + ',' + list[i].title + '" onclick="relevanceFormsCheckbox()" style="zoom: 130%;"></td>';
+            relevanceFormsContent += '<td style="text-align: left;text-indent: 8px;">'+ list[i].title +'</td>';
+            relevanceFormsContent += '<td>'+ list[i].department +'</td>';
+            relevanceFormsContent += '<td>'+ list[i].fillingDate +'</td>';
+            relevanceFormsContent += '<td>'+ list[i].total +'</td>';
+            relevanceFormsContent += '<td>'+ list[i].preparer +'</td>';
+            relevanceFormsContent += '</tr>';
+        }
+        $('#relevanceFormsTbo').html(relevanceFormsContent)
+    }
+
+    //关联表单-复选框
+    function relevanceFormsCheckbox(){
+        $('#relevanceFormsTbo').find('input[type=checkbox]').bind('click', function(){
+            $("#relevanceFormsTbo").find('input[type=checkbox]').not(this).attr("checked", false);
+        });
+    }
+
+    //关联表单-提交
+    function confirmRelevanceForms() {
+        let length = $("#relevanceFormsTbo input:checked").length;
+        if (length !== 1) {
+            tips("请选择一条数据！！", 6, 0, 1000);
+            return false;
+        } else {
+            var val = $("#relevanceFormsTbo input:checked").val();
+            var id = val.substring(0,val.indexOf(','));
+            var name = val.substring(val.indexOf(',') + 1);
+            $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.relevanceFormsBinding(id,name);
+        }
+
+        //关闭弹窗
+        cancel()
+    }
+
+    //关联表单-预览
+    function relevanceFormsDetailsPreview(id) {
+        window.lar = layer.open({
+            title: '预览',
+            type: 1,
+            area: ['60%', '60%'],
+            shadeClose: false, //点击遮罩关闭
+            content: $("#relevanceFormsPreview"),
+            offset: "auto",
+        });
+
+        $.ajax({
+            type: "POST",
+            url: '${path}officeSupplies/details',
+            data: {'id': id},
+            cache: false,
+            dataType: 'html',
+            error: function (request) {
+                alert("出错了");
+            },
+            success: function (data) {
+                //截取需要展示的部分
+                var newHtml = data.substring(data.indexOf('<flag>'),data.indexOf('</flag>'));
+                $("#relevanceFormsPreviewContent").html(newHtml);
+            }
+        });
+    }
+    
+    //关联表单-删除
+    function relevanceFormsDelete(fileName,id) {
+        //提示窗
+        layer.confirm('确定要删除"' + fileName + '"吗？', {
+                btn: ['确认', '取消']
+            }, function (index) {
+                $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.executeRelevanceFormsDelete(id);
+                layer.close(index);
             }
         );
     }

@@ -261,8 +261,8 @@
         $('#body').css('width', '100%');
         //执行打印
         window.print();
-        $('#tool').show();
-        $('#body,#return').css('width', '80%');
+        $('#tool,#return').show();
+        $('#body').css('width', '80%');
     }
 </script>
 </html>

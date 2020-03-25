@@ -1,13 +1,14 @@
 package com.jiaoke.controller.oa.activit;
 
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
 import com.jiaoke.controller.oa.TargetFlowNodeCommand;
 import com.jiaoke.oa.bean.Comments;
 import com.jiaoke.oa.bean.OaActReview;
-import com.jiaoke.oa.bean.OaActSealsBorrow;
 import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.service.DepartmentService;
 import com.jiaoke.oa.service.OaActReviewService;
@@ -449,5 +450,34 @@ public class OaActReviewController {
             //错误
             return "error";
         }
+    }
+
+    /**
+     * 跳转合同管理首页
+     *
+     * @param model model
+     * @param page  page
+     * @return jsp
+     */
+    @RequestMapping(value = "/toContractManagement")
+    public String toContractManagement(Model model, int page) {
+        model.addAttribute("currentPage", JsonHelper.toJSONString(page));
+        return "oa/collaboration/oa_contract_management";
+    }
+
+    /**
+     * 加载合同数据
+     *
+     * @param page page
+     * @return list
+     */
+    @RequestMapping(value = "/contractManagement")
+    @ResponseBody
+    public String userManager(int page) {
+        List<String> idList = activitiUtil.selectCompletedForm("oa_act_review");
+        PageHelper.startPage(page, 15);
+        List<OaActReview> oaActReviewList = oaActReviewService.selectAllByIdList(idList);
+        PageInfo<OaActReview> pageInfo = new PageInfo<>(oaActReviewList);
+        return JsonHelper.toJSONString(pageInfo);
     }
 }

@@ -76,6 +76,13 @@ $(function () {
         $("#oa-iframe").attr("src", "collaboration/done?page=1")
     });
 
+    //合同管理
+    $("#contract_management").on("click", function () {
+        removeOwnName();
+        synergetic_work(this);
+        $("#oa-iframe").attr("src", "review/toContractManagement?page=1")
+    });
+
     /*--- 会议管理 ---*/
     //新建会议
     $("#new_meeting").on("click", function () {
@@ -113,13 +120,6 @@ $(function () {
     });
 
     /*--- 资源管理 ---*/
-    //资产入库
-    $("#resource_storage").on("click", function () {
-        removeOwnName();
-        resources(this);
-        $('#oa-iframe').attr("src", "assetsManagement/toAssetsManagement");
-    });
-
     //资产档案
     $("#resources_archives").on("click", function () {
         removeOwnName();
@@ -128,10 +128,10 @@ $(function () {
     });
 
     //申领记录
-    $("#receive_record").on("click", function () {
+    $("#resources_use").on("click", function () {
         removeOwnName();
         resources(this);
-        $('#oa-iframe').attr("src", "assetsManagement/OAReceiveRecord.do");
+        $('#oa-iframe').attr("src", "assetsManagement/toAssetUse?page=1");
     });
 
     /*--- 文化建设 ---*/

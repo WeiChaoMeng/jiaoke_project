@@ -20,48 +20,22 @@
         }
 
         .tdLabel {
-            text-align: left;
+            text-align: right;
             padding-left: 10px;
         }
 
-        .approval-div-style {
-            width: 100%;
-            margin-bottom: 15px;
-            display: inline-block;
-        }
-
-        .approval-input {
-            width: 20%;
-            float: left;
-        }
-
-        .approval-input-span {
+        .formTable thead tr th {
+            line-height: 40px;
+            border: solid 1px #e5e5e5;
+            text-align: center;
+            background: #f6f6f6;
+            white-space: nowrap;
             font-size: 13px;
-            width: 40%;
-            display: inline-block;
-            float: left;
-            line-height: 29px;
-            text-align: right;
-            text-indent: 5px;
+            font-weight: 600;
         }
 
-        .approval-input-input {
-            border: 0;
-            border-bottom: 1px #000 solid;
-            width: 60%;
-            outline: none;
-            height: 28px;
-            text-align: left;
-            font-weight: 500;
-            color: #000;
-            text-indent: 5px;
-            font-size: 13px;
-            float: left;
-            cursor: no-drop;
-        }
-
-        .order-number-style{
-            height: 28px;display: inline-block;line-height: 28px;font-size: 14px;
+        .formTable td{
+            line-height: 20px;
         }
     </style>
 </head>
@@ -99,7 +73,8 @@
                     <c:forTokens items="${oaActOfficeSupplies.annex}" delims="," var="annex">
                         <div class="table-file">
                             <div class="table-file-content">
-                                <span class="table-file-title" title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <span class="table-file-title"
+                                      title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
                                 <a class="table-file-download icon"
                                    href="/fileDownloadHandle/download?fileName=${annex}"
                                    title="下载">&#xebda;</a>
@@ -116,133 +91,130 @@
 <form id="oaActOfficeSupplies">
     <div style="margin-top: 10px">
         <span class="form-number-left" style="margin-top: 0">部门
-            <input type="text" class="form-number-content" style="cursor: no-drop" value="${oaActOfficeSupplies.department}" readonly>
+            <input type="text" class="form-number-content" style="cursor: no-drop"
+                   value="${oaActOfficeSupplies.department}" readonly>
             <input type="hidden" name="id" value="${oaActOfficeSupplies.id}">
-            <input type="hidden" name="title" value="${oaActOfficeSupplies.title}">
+            <input type="hidden" name="promoter" value="${oaActOfficeSupplies.promoter}">
         </span>
     </div>
 
-    <table class="formTable">
+    <table class="formTable" style="margin: 0">
+        <thead>
+        <tr>
+            <th style="width: 7%">序号</th>
+            <th style="width: 45%">项目</th>
+            <th style="width: 16%">数量</th>
+            <th style="width: 16%">单价</th>
+            <th style="width: 16%">金额(元)</th>
+        </tr>
+        </thead>
+
         <tbody>
-        <tr>
-            <td class="tdLabel" style="width: 7%">序号</td>
-            <td class="tdLabel" style="width: 45%">项目</td>
-            <td class="tdLabel" style="width: 16%">数量</td>
-            <td class="tdLabel" style="width: 16%">单价</td>
-            <td class="tdLabel" style="width: 16%">金额(元)</td>
-        </tr>
-
-        <tr>
-            <td class="table-td-content" style="text-align: center;"><span class="order-number-style">1</span></td>
-            <td class="table-td-content">${oaActOfficeSupplies.itemOne}</td>
-            <td class="table-td-content">${oaActOfficeSupplies.numberOne}</td>
-            <td class="table-td-content">${oaActOfficeSupplies.priceOne}</td>
-            <td class="table-td-content">${oaActOfficeSupplies.moneyOne}</td>
-        </tr>
-
-        <tr>
-            <td class="table-td-content" style="text-align: center;"><span class="order-number-style">2</span></td>
-            <td class="table-td-content">${oaActOfficeSupplies.itemTwo}</td>
-            <td class="table-td-content">${oaActOfficeSupplies.numberTwo}</td>
-            <td class="table-td-content">${oaActOfficeSupplies.priceTwo}</td>
-            <td class="table-td-content">${oaActOfficeSupplies.moneyTwo}</td>
-        </tr>
-
-        <tr>
-            <td class="table-td-content" style="text-align: center;"><span class="order-number-style">3</span></td>
-            <td class="table-td-content">${oaActOfficeSupplies.itemThree}</td>
-            <td class="table-td-content">${oaActOfficeSupplies.numberThree}</td>
-            <td class="table-td-content">${oaActOfficeSupplies.priceThree}</td>
-            <td class="table-td-content">${oaActOfficeSupplies.moneyThree}</td>
-        </tr>
-
-        <tr>
-            <td class="table-td-content" style="text-align: center;"><span class="order-number-style">4</span></td>
-            <td class="table-td-content">${oaActOfficeSupplies.itemFour}</td>
-            <td class="table-td-content">${oaActOfficeSupplies.numberFour}</td>
-            <td class="table-td-content">${oaActOfficeSupplies.priceFour}</td>
-            <td class="table-td-content">${oaActOfficeSupplies.moneyFour}</td>
-        </tr>
-
-        <tr>
-            <td class="table-td-content" style="text-align: center;"><span class="order-number-style">5</span></td>
-            <td class="table-td-content">${oaActOfficeSupplies.itemFive}</td>
-            <td class="table-td-content">${oaActOfficeSupplies.numberFive}</td>
-            <td class="table-td-content">${oaActOfficeSupplies.priceFive}</td>
-            <td class="table-td-content">${oaActOfficeSupplies.priceFive}</td>
-        </tr>
-
-        <tr>
-            <td class="tdLabel" style="width: 0;text-align: right;">合计</td>
-            <td class="table-td-content" colspan="4">${oaActOfficeSupplies.total}</td>
-        </tr>
+        <c:forEach items="${oaActOfficeSupplies.oaOfficeSuppliesList}" var="list" varStatus="status">
+            <tr>
+                <td class="table-td-content" style="text-align: center">${status.index+1}</td>
+                <td class="table-td-content">${list.item}</td>
+                <td class="table-td-content">${list.number}</td>
+                <td class="table-td-content">${list.price}</td>
+                <td class="table-td-content">${list.money}</td>
+            </tr>
+        </c:forEach>
         </tbody>
     </table>
 
-    <div class="approval-div-style">
-        <div class="approval-input">
-            <span class="approval-input-span">审批</span>
-            <shiro:hasPermission name="office_supplies_approval">
-                <div id="officeSuppliesApprovalContent">
-                    <%--<input type="text" class="approval-input-input" name="officeSuppliesApproval" value="${nickname}" readonly>--%>
-                    <%--<input type="hidden" name="officeSuppliesApprovalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">--%>
-                </div>
-            </shiro:hasPermission>
+    <table class="formTable">
+        <tr>
+            <td class="tdLabel">填表人</td>
+            <td class="table-td-content" style="width: 194px;">
+                ${oaActOfficeSupplies.preparer}
+            </td>
 
-            <shiro:lacksPermission name="office_supplies_approval">
-                <input type="text" class="approval-input-input" value="${oaActOfficeSupplies.officeSuppliesApproval}" readonly>
-            </shiro:lacksPermission>
-        </div>
+            <td class="tdLabel">填表日期</td>
+            <td class="table-td-content" style="width: 194px;">
+                ${oaActOfficeSupplies.fillingDate}
+            </td>
 
-        <div class="approval-input">
-            <span class="approval-input-span">部门主管</span>
-            <shiro:hasPermission name="supervisor">
-                <div id="supervisorContent">
-                    <%--<input type="text" class="approval-input-input" name="supervisor" value="${nickname}"  readonly>--%>
-                    <%--<input type="hidden" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">--%>
-                </div>
-            </shiro:hasPermission>
+            <td class="tdLabel">合计(元)</td>
+            <td class="table-td-content">
+                ${oaActOfficeSupplies.total}
+            </td>
+        </tr>
 
-            <shiro:lacksPermission name="supervisor">
-                <input type="text" class="approval-input-input" value="${oaActOfficeSupplies.supervisor}" readonly>
-            </shiro:lacksPermission>
-        </div>
+        <tr>
+            <td class="tdLabel">审核</td>
+            <td colspan="5" class="approval-content">
+                <shiro:hasPermission name="office_supplies_review">
+                    <div style="width: 100%;height: 100%;" id="officeSuppliesReviewContent"></div>
+                </shiro:hasPermission>
 
-        <div class="approval-input">
-            <span class="approval-input-span">填表人</span>
-            <input type="text" class="approval-input-input" value="${oaActOfficeSupplies.preparer}" readonly>
-        </div>
+                <shiro:lacksPermission name="office_supplies_review">
+                    <textarea class="approval-content-textarea" readonly>${oaActOfficeSupplies.reviewContent}</textarea>
+                    <div class="approval-date">
+                        <label class="approval-date-label">日期 </label>
+                        <input class="approval-date-input" type="text" value="${oaActOfficeSupplies.reviewDate}"
+                               readonly>
+                    </div>
+                    <div class="approval-signature">
+                        <label class="approval-signature-label">签字 </label>
+                        <input class="approval-signature-input" type="text" value="${oaActOfficeSupplies.review}"
+                               readonly>
+                    </div>
+                </shiro:lacksPermission>
+            </td>
+        </tr>
 
-        <div class="approval-input">
-            <span class="approval-input-span">验收</span>
-            <shiro:hasPermission name="office_supplies_acceptance">
-                <div id="officeSuppliesAcceptanceContent">
-                    <%--<input type="text" class="approval-input-input" name="officeSuppliesAcceptance" value="${nickname}"  readonly>--%>
-                </div>
-            </shiro:hasPermission>
+        <tr>
+            <td class="tdLabel">部门负责人</td>
+            <td colspan="5" class="approval-content">
+                <shiro:hasPermission name="principal">
+                    <div style="width: 100%;height: 100%;" id="principalContent"></div>
+                </shiro:hasPermission>
 
-            <shiro:lacksPermission name="office_supplies_acceptance">
-                <input type="text" class="approval-input-input" value="${oaActOfficeSupplies.officeSuppliesAcceptance}" readonly>
-            </shiro:lacksPermission>
-        </div>
+                <shiro:lacksPermission name="principal">
+                    <textarea class="approval-content-textarea"
+                              readonly>${oaActOfficeSupplies.principalContent}</textarea>
+                    <div class="approval-date">
+                        <label class="approval-date-label">日期 </label>
+                        <input class="approval-date-input" type="text" value="${oaActOfficeSupplies.principalDate}"
+                               readonly>
+                    </div>
+                    <div class="approval-signature">
+                        <label class="approval-signature-label">签字 </label>
+                        <input class="approval-signature-input" type="text" value="${oaActOfficeSupplies.principal}"
+                               readonly>
+                    </div>
+                </shiro:lacksPermission>
+            </td>
+        </tr>
 
-        <div class="approval-input">
-            <span class="approval-input-span">验收时间</span>
-            <shiro:hasPermission name="office_supplies_acceptance">
-                <div id="officeSuppliesAcceptanceDateContent">
-                    <%--<input type="hidden" name="officeSuppliesAcceptanceDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">--%>
-                </div>
-            </shiro:hasPermission>
+        <tr>
+            <td class="tdLabel">审批</td>
+            <td colspan="5" class="approval-content">
+                <shiro:hasPermission name="office_supplies_supervisor">
+                    <div style="width: 100%;height: 100%;" id="officeSuppliesSupervisorContent"></div>
+                </shiro:hasPermission>
 
-            <shiro:lacksPermission name="office_supplies_acceptance">
-                <input type="text" class="approval-input-input" value="${oaActOfficeSupplies.officeSuppliesAcceptanceDate}" readonly>
-            </shiro:lacksPermission>
-        </div>
-    </div>
+                <shiro:lacksPermission name="office_supplies_supervisor">
+                    <textarea class="approval-content-textarea"
+                              readonly>${oaActOfficeSupplies.supervisorContent}</textarea>
+                    <div class="approval-date">
+                        <label class="approval-date-label">日期 </label>
+                        <input class="approval-date-input" type="text" value="${oaActOfficeSupplies.supervisorDate}"
+                               readonly>
+                    </div>
+                    <div class="approval-signature">
+                        <label class="approval-signature-label">签字 </label>
+                        <input class="approval-signature-input" type="text" value="${oaActOfficeSupplies.supervisor}"
+                               readonly>
+                    </div>
+                </shiro:lacksPermission>
+            </td>
+        </tr>
+    </table>
 </form>
 
 <div class="form-but" id="return">
-    <shiro:hasAnyPermission name="office_supplies_approval,supervisor,office_supplies_acceptance">
+    <shiro:hasAnyPermission name="office_supplies_review,principal,office_supplies_supervisor">
         <button type="button" class="return-but" style="margin-right: 10px;" onclick="approvalProcessing(2)">回退</button>
     </shiro:hasAnyPermission>
     <button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>
@@ -254,42 +226,90 @@
 
     //流程执行步骤
     var officeSupplies = JSON.parse('${oaActOfficeSuppliesJson}');
+
     //标记
     var flag = 0;
     if (flag === 0) {
-        if (officeSupplies.officeSuppliesApproval === "" || officeSupplies.officeSuppliesApproval === undefined) {
-            $('#officeSuppliesApprovalContent').append('<input type="text" class="approval-input-input" name="officeSuppliesApproval" value="${nickname}" readonly="readonly"><input type="hidden" name="officeSuppliesApprovalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+        if (officeSupplies.review === "" || officeSupplies.review === undefined) {
+            $('#officeSuppliesReviewContent').append(
+                '<div id="officeSuppliesReview"><textarea class="write-approval-content-textarea" onkeyup="value=value.replace(/\\s+/g,\'\')" name="reviewContent"></textarea>\n' +
+                '<div class="approval-date"><label class="approval-date-label">日期 </label>\n' +
+                '<input class="approval-date-input" type="text" name="reviewDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>\n' +
+                '</div><div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                '<input class="approval-signature-input" type="text" name="review" value="${nickname}" readonly></div></div>');
             flag = 1;
         } else {
-            $('#officeSuppliesApprovalContent').append('<input type="text" class="approval-input-input" value="${oaActOfficeSupplies.officeSuppliesApproval}" readonly>');
+            $('#officeSuppliesReviewContent').append(
+                '<textarea class="approval-content-textarea" readonly>${oaActOfficeSupplies.reviewContent}</textarea>\n' +
+                '<div class="approval-date"><label class="approval-date-label">日期 </label>\n' +
+                '<input class="approval-date-input" type="text" value="${oaActOfficeSupplies.reviewDate}" readonly>\n' +
+                '</div><div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                '<input class="approval-signature-input" type="text" value="${oaActOfficeSupplies.review}" readonly></div>');
         }
     } else {
-        $('#officeSuppliesApprovalContent').append('<input type="text" class="approval-input-input" value="${oaActOfficeSupplies.officeSuppliesApproval}" readonly>');
+        $('#officeSuppliesReviewContent').append(
+            '<textarea class="approval-content-textarea" readonly>${oaActOfficeSupplies.reviewContent}</textarea>\n' +
+            '<div class="approval-date"><label class="approval-date-label">日期 </label>\n' +
+            '<input class="approval-date-input" type="text" value="${oaActOfficeSupplies.reviewDate}" readonly>\n' +
+            '</div><div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+            '<input class="approval-signature-input" type="text" value="${oaActOfficeSupplies.review}" readonly></div>');
+    }
+
+    if (flag === 0) {
+        if (officeSupplies.principal === "" || officeSupplies.principal === undefined) {
+            $('#principalContent').append(
+                '<div id="officeSuppliesReview"><textarea class="write-approval-content-textarea" onkeyup="value=value.replace(/\\s+/g,\'\')" name="principalContent"></textarea>\n' +
+                '<div class="approval-date"><label class="approval-date-label">日期 </label>\n' +
+                '<input class="approval-date-input" type="text" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>\n' +
+                '</div><div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                '<input class="approval-signature-input" type="text" name="principal" value="${nickname}" readonly></div></div>');
+            flag = 1;
+        } else {
+            $('#principalContent').append(
+                '<textarea class="approval-content-textarea" readonly>${oaActOfficeSupplies.principalContent}</textarea>\n' +
+                '<div class="approval-date"><label class="approval-date-label">日期 </label>\n' +
+                '<input class="approval-date-input" type="text" value="${oaActOfficeSupplies.principalDate}" readonly>\n' +
+                '</div><div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                '<input class="approval-signature-input" type="text" value="${oaActOfficeSupplies.principal}" readonly></div>');
+        }
+    } else {
+        $('#principalContent').append(
+            '<textarea class="approval-content-textarea" readonly>${oaActOfficeSupplies.principalContent}</textarea>\n' +
+            '<div class="approval-date"><label class="approval-date-label">日期 </label>\n' +
+            '<input class="approval-date-input" type="text" value="${oaActOfficeSupplies.principalDate}" readonly>\n' +
+            '</div><div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+            '<input class="approval-signature-input" type="text" value="${oaActOfficeSupplies.principal}" readonly></div>');
     }
 
     if (flag === 0) {
         if (officeSupplies.supervisor === "" || officeSupplies.supervisor === undefined) {
-            $('#supervisorContent').append('<input type="text" class="approval-input-input" name="supervisor" value="${nickname}" readonly="readonly"><input type="hidden" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+            $('#officeSuppliesSupervisorContent').append(
+                '<div id="officeSuppliesReview"><textarea class="write-approval-content-textarea" onkeyup="value=value.replace(/\\s+/g,\'\')" name="supervisorContent"></textarea>\n' +
+                '<div class="approval-date"><label class="approval-date-label">日期 </label>\n' +
+                '<input class="approval-date-input" type="text" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>\n' +
+                '</div><div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                '<input class="approval-signature-input" type="text" name="supervisor" value="${nickname}" readonly></div></div>');
             flag = 1;
         } else {
-            $('#supervisorContent').append('<input type="text" class="approval-input-input" value="${oaActOfficeSupplies.supervisor}" readonly>');
+            $('#officeSuppliesSupervisorContent').append(
+                '<textarea class="approval-content-textarea" readonly>${oaActOfficeSupplies.supervisorContent}</textarea>\n<div class="approval-date">\n' +
+                '<label class="approval-date-label">日期 </label>\n' +
+                '<input class="approval-date-input" type="text" value="${oaActOfficeSupplies.supervisorDate}" readonly>\n' +
+                '</div><div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                '<input class="approval-signature-input" type="text" value="${oaActOfficeSupplies.supervisor}" readonly></div>');
         }
     } else {
-        $('#supervisorContent').append('<input type="text" class="approval-input-input" value="${oaActOfficeSupplies.supervisor}" readonly>');
+        $('#officeSuppliesSupervisorContent').append(
+            '<textarea class="approval-content-textarea" readonly>${oaActOfficeSupplies.supervisorContent}</textarea>\n' +
+            '<div class="approval-date"><label class="approval-date-label">日期 </label>\n' +
+            '<input class="approval-date-input" type="text" value="${oaActOfficeSupplies.supervisorDate}" readonly></div>\n' +
+            '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+            '<input class="approval-signature-input" type="text" value="${oaActOfficeSupplies.supervisor}" readonly></div>');
     }
 
-    if (flag === 0) {
-        if (officeSupplies.officeSuppliesAcceptance === "" || officeSupplies.officeSuppliesAcceptance === undefined) {
-            $('#officeSuppliesAcceptanceContent').append('<input type="text" class="approval-input-input" name="officeSuppliesAcceptance" value="${nickname}" readonly="readonly">');
-            $('#officeSuppliesAcceptanceDateContent').append('<input type="text" class="approval-input-input" name="officeSuppliesAcceptanceDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
-            flag = 1;
-        } else {
-            $('#officeSuppliesAcceptanceContent').append('<input type="text" class="approval-input-input" value="${oaActOfficeSupplies.officeSuppliesAcceptance}" readonly>');
-            $('#officeSuppliesAcceptanceDateContent').append('<input type="text" class="approval-input-input" value="${oaActOfficeSupplies.officeSuppliesAcceptanceDate}" readonly>')
-        }
-    } else {
-        $('#officeSuppliesAcceptanceContent').append('<input type="text" class="approval-input-input" value="${oaActOfficeSupplies.officeSuppliesAcceptance}" readonly>');
-        $('#officeSuppliesAcceptanceDateContent').append('<input type="text" class="approval-input-input" value="${oaActOfficeSupplies.officeSuppliesAcceptanceDate}" readonly>')
+    if (flag === 0){
+        $('#return').html("");
+        $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
     }
 
     //任务Id
@@ -323,8 +343,8 @@
         $('#body').css('width', '100%');
         //执行打印
         window.print();
-        $('#tool').show();
-        $('#body,#return').css('width', '80%');
+        $('#tool,#return').show();
+        $('#body').css('width', '80%');
     }
 </script>
 </html>

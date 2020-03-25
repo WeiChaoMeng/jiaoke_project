@@ -30,7 +30,7 @@ public class OaAssetManagement {
     private String assetsName;
 
     /**
-     * 资产类别
+     * 资产类别:0、办公用品，1、生产设备
      */
     private Integer assetsCategory;
 
@@ -45,10 +45,9 @@ public class OaAssetManagement {
     private Integer productQuantity;
 
     /**
-     * 产品来源
+     * 产品来源:0、行政购置，1、设备购置
      */
     private Integer productSource;
-
 
     /**
      * 存储位置

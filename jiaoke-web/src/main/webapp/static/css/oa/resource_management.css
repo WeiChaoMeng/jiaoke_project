@@ -375,3 +375,11 @@ button, input, select, textarea {
 .search-icon-size {
     font-size: 18px
 }
+
+/*分页*/
+.paging-div {
+    right: 10px;
+    height: 35px;
+    position: absolute;
+    bottom: 10px;
+}

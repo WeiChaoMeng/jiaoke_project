@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 合同审查表
@@ -82,5 +83,14 @@ public class OaActReviewServiceImpl implements OaActReviewService {
     @Override
     public int updateByPrimaryKeySelective(OaActReview oaActReview) {
         return oaActReviewMapper.updateByPrimaryKeySelective(oaActReview);
+    }
+
+    @Override
+    public List<OaActReview> selectAllByIdList(List<String> idList) {
+        List<OaActReview> oaActReviewList = oaActReviewMapper.selectAllByIdList(idList);
+        for (OaActReview oaActReview : oaActReviewList) {
+            oaActReview.setPromoterStr(userInfoMapper.getNicknameById(oaActReview.getPromoter()));
+        }
+        return oaActReviewList;
     }
 }

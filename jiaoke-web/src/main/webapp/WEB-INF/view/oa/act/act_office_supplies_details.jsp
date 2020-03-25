@@ -20,51 +20,23 @@
         }
 
         .tdLabel {
-            text-align: left;
+            text-align: right;
             padding-left: 10px;
         }
 
-        .approval-div-style {
-            width: 100%;
-            margin-bottom: 10px;
-            display: inline-block;
-        }
-
-        .approval-input {
-            width: 20%;
-            float: left;
-        }
-
-        .approval-input-span {
-            font-size: 13px;
-            width: 50%;
-            display: inline-block;
-            float: left;
-            line-height: 29px;
-            text-align: right;
-            text-indent: 5px;
-        }
-
-        .approval-input-input {
-            border: 0;
-            width: 50%;
-            outline: none;
-            line-height: 29px;
-            text-align: left;
-            font-weight: 500;
-            color: #000;
-            text-indent: 5px;
-            font-size: 13px;
-            float: left;
-        }
-
-        .table-td-content{
+        .table-td-content {
             line-height: 35px;
             padding: 0 10px;
         }
 
-        .order-number-style{
-            height: 28px;display: inline-block;line-height: 28px;font-size: 14px;
+        .formTable thead tr th {
+            line-height: 40px;
+            border: solid 1px #e5e5e5;
+            text-align: center;
+            background: #f6f6f6;
+            white-space: nowrap;
+            font-size: 13px;
+            font-weight: 600;
         }
     </style>
 </head>
@@ -116,95 +88,109 @@
     </c:choose>
 </div>
 
-<div style="margin: 10px 10px 5px;float: left;font-size: 13px;">
-    <span style="font-size: 13px">部门：</span>
-    <span style="font-size: 13px">${oaActOfficeSupplies.department}</span>
-</div>
+<flag>
 
-<table class="formTable">
-    <tbody>
-    <tr>
-        <td class="tdLabel" style="width: 7%">序号</td>
-        <td class="tdLabel" style="width: 45%">项目</td>
-        <td class="tdLabel" style="width: 16%">数量</td>
-        <td class="tdLabel" style="width: 16%">单价</td>
-        <td class="tdLabel" style="width: 16%">金额(元)</td>
-    </tr>
-
-    <tr>
-        <td class="table-td-content" style="text-align: center;"><span class="order-number-style">1</span></td>
-        <td class="table-td-content">${oaActOfficeSupplies.itemOne}</td>
-        <td class="table-td-content">${oaActOfficeSupplies.numberOne}</td>
-        <td class="table-td-content">${oaActOfficeSupplies.priceOne}</td>
-        <td class="table-td-content">${oaActOfficeSupplies.moneyOne}</td>
-    </tr>
-
-    <tr>
-        <td class="table-td-content" style="text-align: center;"><span class="order-number-style">2</span></td>
-        <td class="table-td-content">${oaActOfficeSupplies.itemTwo}</td>
-        <td class="table-td-content">${oaActOfficeSupplies.numberTwo}</td>
-        <td class="table-td-content">${oaActOfficeSupplies.priceTwo}</td>
-        <td class="table-td-content">${oaActOfficeSupplies.moneyTwo}</td>
-    </tr>
-
-    <tr>
-        <td class="table-td-content" style="text-align: center;"><span class="order-number-style">3</span></td>
-        <td class="table-td-content">${oaActOfficeSupplies.itemThree}</td>
-        <td class="table-td-content">${oaActOfficeSupplies.numberThree}</td>
-        <td class="table-td-content">${oaActOfficeSupplies.priceThree}</td>
-        <td class="table-td-content">${oaActOfficeSupplies.moneyThree}</td>
-    </tr>
-
-    <tr>
-        <td class="table-td-content" style="text-align: center;"><span class="order-number-style">4</span></td>
-        <td class="table-td-content">${oaActOfficeSupplies.itemFour}</td>
-        <td class="table-td-content">${oaActOfficeSupplies.numberFour}</td>
-        <td class="table-td-content">${oaActOfficeSupplies.priceFour}</td>
-        <td class="table-td-content">${oaActOfficeSupplies.moneyFour}</td>
-    </tr>
-
-    <tr>
-        <td class="table-td-content" style="text-align: center;"><span class="order-number-style">5</span></td>
-        <td class="table-td-content">${oaActOfficeSupplies.itemFive}</td>
-        <td class="table-td-content">${oaActOfficeSupplies.numberFive}</td>
-        <td class="table-td-content">${oaActOfficeSupplies.priceFive}</td>
-        <td class="table-td-content">${oaActOfficeSupplies.priceFive}</td>
-    </tr>
-
-    <tr>
-        <td class="tdLabel" style="width: 0;text-align: right;">合计</td>
-        <td class="table-td-content" colspan="4">${oaActOfficeSupplies.total}</td>
-    </tr>
-    </tbody>
-</table>
-
-<div class="approval-div-style">
-    <div class="approval-input" style="width: 15%;">
-        <span class="approval-input-span">审批：</span>
-        <span class="approval-input-input">${oaActOfficeSupplies.officeSuppliesApproval}</span>
+    <div style="margin: 10px 10px 5px;float: left;font-size: 13px;">
+        <span style="font-size: 13px">部门：</span>
+        <span style="font-size: 13px">${oaActOfficeSupplies.department}</span>
     </div>
 
-    <div class="approval-input" style="width: 20%;">
-        <span class="approval-input-span">部门主管：</span>
-        <span class="approval-input-input">${oaActOfficeSupplies.supervisor}</span>
-    </div>
+    <table class="formTable" style="margin: 0">
+        <thead>
+        <tr>
+            <th style="width: 7%">序号</th>
+            <th style="width: 45%">项目</th>
+            <th style="width: 16%">数量</th>
+            <th style="width: 16%">单价</th>
+            <th style="width: 16%">金额(元)</th>
+        </tr>
+        </thead>
 
-    <div class="approval-input" style="width: 17%;">
-        <span class="approval-input-span">填表人：</span>
-        <span class="approval-input-input">${oaActOfficeSupplies.preparer}</span>
-    </div>
+        <tbody>
+        <c:forEach items="${oaActOfficeSupplies.oaOfficeSuppliesList}" var="list" varStatus="status">
+            <tr>
+                <td class="table-td-content" style="text-align: center">${status.index+1}</td>
+                <td class="table-td-content">${list.item}</td>
+                <td class="table-td-content" style="text-align: center;">${list.number}</td>
+                <td class="table-td-content" style="text-align: center;">${list.price}</td>
+                <td class="table-td-content" style="text-align: center;">${list.money}</td>
+            </tr>
+        </c:forEach>
+        </tbody>
 
-    <div class="approval-input" style="width: 15%;">
-        <span class="approval-input-span">验收：</span>
-        <span class="approval-input-input">${oaActOfficeSupplies.officeSuppliesAcceptance}</span>
-    </div>
+        <table class="formTable">
+            <tr>
+                <td class="tdLabel">填表人</td>
+                <td class="table-td-content" style="width: 18%;">
+                    ${oaActOfficeSupplies.preparer}
+                </td>
 
-    <div class="approval-input" style="width: 33%;">
-        <span class="approval-input-span" style="width: 40%;">验收时间：</span>
-        <span class="approval-input-input" style="width: 60%;">${oaActOfficeSupplies.officeSuppliesAcceptanceDate}</span>
+                <td class="tdLabel">填表日期</td>
+                <td class="table-td-content" style="width: 18%;">
+                    ${oaActOfficeSupplies.fillingDate}
+                </td>
 
-    </div>
-</div>
+                <td class="tdLabel">合计(元)</td>
+                <td class="table-td-content">
+                    ${oaActOfficeSupplies.total}
+                </td>
+            </tr>
+
+            <tr>
+                <td class="tdLabel">审核</td>
+                <td colspan="5" class="approval-content">
+                    <textarea class="approval-content-textarea" readonly>${oaActOfficeSupplies.reviewContent}</textarea>
+                    <div class="approval-date">
+                        <label class="approval-date-label">日期 </label>
+                        <input class="approval-date-input" type="text" value="${oaActOfficeSupplies.reviewDate}"
+                               readonly>
+                    </div>
+                    <div class="approval-signature">
+                        <label class="approval-signature-label">签字 </label>
+                        <input class="approval-signature-input" type="text" value="${oaActOfficeSupplies.review}"
+                               readonly>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="tdLabel">部门负责人</td>
+                <td colspan="5" class="approval-content">
+                    <textarea class="approval-content-textarea"
+                              readonly>${oaActOfficeSupplies.principalContent}</textarea>
+                    <div class="approval-date">
+                        <label class="approval-date-label">日期 </label>
+                        <input class="approval-date-input" type="text" value="${oaActOfficeSupplies.principalDate}"
+                               readonly>
+                    </div>
+                    <div class="approval-signature">
+                        <label class="approval-signature-label">签字 </label>
+                        <input class="approval-signature-input" type="text" value="${oaActOfficeSupplies.principal}"
+                               readonly>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="tdLabel">审批</td>
+                <td colspan="5" class="approval-content">
+                    <textarea class="approval-content-textarea"
+                              readonly>${oaActOfficeSupplies.supervisorContent}</textarea>
+                    <div class="approval-date">
+                        <label class="approval-date-label">日期 </label>
+                        <input class="approval-date-input" type="text" value="${oaActOfficeSupplies.supervisorDate}"
+                               readonly>
+                    </div>
+                    <div class="approval-signature">
+                        <label class="approval-signature-label">签字 </label>
+                        <input class="approval-signature-input" type="text" value="${oaActOfficeSupplies.supervisor}"
+                               readonly>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </table>
+</flag>
 
 </body>
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>

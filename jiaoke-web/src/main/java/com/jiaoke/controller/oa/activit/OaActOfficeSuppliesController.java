@@ -17,10 +17,12 @@ import org.activiti.engine.task.Task;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,14 +85,14 @@ public class OaActOfficeSuppliesController {
      */
     @RequestMapping(value = "/add")
     @ResponseBody
-    public String add(OaActOfficeSupplies oaActOfficeSupplies) {
+    public String add(@RequestBody OaActOfficeSupplies oaActOfficeSupplies) {
         String randomId = RandomUtil.randomId();
         if (oaActOfficeSuppliesService.insert(oaActOfficeSupplies, getCurrentUser().getId(), randomId, 0) < 1) {
             return "error";
         } else {
-            UserInfo userInfo = userInfoService.getUserInfoByPermission("office_supplies_approval");
+            UserInfo userInfo = userInfoService.getUserInfoByPermission("office_supplies_review");
             Map<String, Object> map = new HashMap<>(16);
-            map.put("office_supplies_approval", userInfo.getId());
+            map.put("office_supplies_review", userInfo.getId());
             String instance = activitiUtil.startProcessInstanceByKey("oa_office_supplies", "oa_act_office_supplies:" + randomId, map, getCurrentUser().getId().toString());
             if (instance != null) {
                 return "success";
@@ -138,11 +140,11 @@ public class OaActOfficeSuppliesController {
         //回退
         String back = "back";
         //部门负责人
-        String supervisor = "supervisor";
-        //审批人
-        String officeSuppliesApproval = "office_supplies_approval";
-        //验收人
-        String officeSuppliesAcceptance = "office_supplies_acceptance";
+        String principal = "principal";
+        //主管领导
+        String officeSuppliesSupervisor = "office_supplies_supervisor";
+        //知会
+        String leaveNotify = "leaveNotify";
 
         //更新数据
         if (oaActOfficeSuppliesService.updateByPrimaryKeySelective(oaActOfficeSupplies) < 1) {
@@ -177,25 +179,31 @@ public class OaActOfficeSuppliesController {
                         activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
                         return "success";
 
-                    } else if (supervisor.equals(enforcer)) {
+                        //部门负责人
+                    } else if (principal.equals(enforcer)){
                         String startUserId = activitiUtil.getStartUserId(task.getProcessInstanceId());
-                        //根据发起者id获取所属部门id
                         String departmentId = userInfoService.selectDepartmentByUserId(Integer.valueOf(startUserId));
-                        //选择执行者Id
                         String enforcerId = departmentService.selectEnforcerId(enforcer, departmentId);
                         activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, Integer.valueOf(enforcerId));
                         return "success";
 
-                        //审批人
-                    }  else if (officeSuppliesApproval.equals(enforcer)) {
-                        UserInfo userInfo = userInfoService.getUserInfoByPermission("office_supplies_approval");
+                        //主管领导
+                    } else if (officeSuppliesSupervisor.equals(enforcer)) {
+                        UserInfo userInfo = userInfoService.getUserInfoByPermission("office_supplies_supervisor");
                         activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
                         return "success";
 
-                        //验收人
-                    } else if (officeSuppliesAcceptance.equals(enforcer)) {
-                        UserInfo userInfo = userInfoService.getUserInfoByPermission("office_supplies_acceptance");
-                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
+                        //知会
+                    }else if (leaveNotify.equals(enforcer)) {
+                        List<UserInfo> userInfoList = userInfoService.selectMultipleByPermission("officeSuppliesNotify");
+                        Map<String, Object> map = new HashMap<>(16);
+                        List<Object> officeSuppliesNotifyList = new ArrayList<>();
+                        for (UserInfo user : userInfoList) {
+                            officeSuppliesNotifyList.add(user.getId());
+                        }
+                        officeSuppliesNotifyList.add(oaActOfficeSupplies.getPromoter());
+                        map.put("leaveNotifyList", officeSuppliesNotifyList);
+                        activitiUtil.designatedCountersignPersonnel(taskId,map);
                         return "success";
 
                     } else {
@@ -224,7 +232,7 @@ public class OaActOfficeSuppliesController {
      */
     @RequestMapping(value = "/savePending")
     @ResponseBody
-    public String savePending(OaActOfficeSupplies oaActOfficeSupplies) {
+    public String savePending(@RequestBody OaActOfficeSupplies oaActOfficeSupplies) {
         String randomId = RandomUtil.randomId();
         if (oaActOfficeSuppliesService.insert(oaActOfficeSupplies, getCurrentUser().getId(), randomId, 1) < 1) {
             return "error";
@@ -255,7 +263,7 @@ public class OaActOfficeSuppliesController {
      */
     @RequestMapping(value = "/edit")
     @ResponseBody
-    public String edit(OaActOfficeSupplies oaActOfficeSupplies) {
+    public String edit(@RequestBody OaActOfficeSupplies oaActOfficeSupplies) {
         if (oaActOfficeSuppliesService.edit(oaActOfficeSupplies) < 0) {
             return "error";
         } else {
@@ -271,18 +279,15 @@ public class OaActOfficeSuppliesController {
      */
     @RequestMapping(value = "/editAdd")
     @ResponseBody
-    public String editAdd(OaActOfficeSupplies oaActOfficeSupplies) {
+    public String editAdd(@RequestBody OaActOfficeSupplies oaActOfficeSupplies) {
         //更新数据
         if (oaActOfficeSuppliesService.edit(oaActOfficeSupplies) < 0) {
             return "error";
         } else {
-            //用户所在部门id
-            String department = userInfoService.selectDepartmentByUserId(getCurrentUser().getId());
-            //部门负责人
-            String principal = departmentService.selectEnforcerId("principal", department);
+            UserInfo userInfo = userInfoService.getUserInfoByPermission("office_supplies_review");
             Map<String, Object> map = new HashMap<>(16);
-            map.put("principal", principal);
-            String instance = activitiUtil.startProcessInstanceByKey("oa_seals_borrow", "oa_act_seals_borrow:" + oaActOfficeSupplies.getId(), map, getCurrentUser().getId().toString());
+            map.put("office_supplies_review", userInfo.getId());
+            String instance = activitiUtil.startProcessInstanceByKey("oa_office_supplies", "oa_act_office_supplies:" + oaActOfficeSupplies.getId(), map, getCurrentUser().getId().toString());
             if (instance != null) {
                 //发送成功后更新状态
                 oaCollaborationService.updateStateByCorrelationId(oaActOfficeSupplies.getId(), 0, oaActOfficeSupplies.getTitle());
