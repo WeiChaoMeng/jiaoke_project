@@ -1,9 +1,6 @@
 package com.jiaoke.oa.bean;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -30,24 +27,9 @@ public class OaAssetManagement {
     private String assetsName;
 
     /**
-     * 资产类别:0、办公用品，1、生产设备
-     */
-    private Integer assetsCategory;
-
-    /**
-     * 规格型号
-     */
-    private String productSpecification;
-
-    /**
      * 产品数量
      */
     private Integer productQuantity;
-
-    /**
-     * 产品来源:0、行政购置，1、设备购置
-     */
-    private Integer productSource;
 
     /**
      * 存储位置
@@ -65,18 +47,27 @@ public class OaAssetManagement {
     private String custodian;
 
     /**
-     * 包装清单
-     */
-    private String packingList;
-
-    /**
      * 备注
      */
     private String remarks;
+
+    /**
+     * 状态
+     */
+    private Integer state;
+
     /**
      * 创建时间
      */
     private Date createTime;
+    @Transient
+    private String createTimeStr;
+
+    /**
+     * 编辑说明
+     */
+    @Transient
+    private String editExplain;
 
     public Integer getId() {
         return id;
@@ -94,36 +85,12 @@ public class OaAssetManagement {
         this.assetsName = assetsName;
     }
 
-    public Integer getAssetsCategory() {
-        return assetsCategory;
-    }
-
-    public void setAssetsCategory(Integer assetsCategory) {
-        this.assetsCategory = assetsCategory;
-    }
-
-    public String getProductSpecification() {
-        return productSpecification;
-    }
-
-    public void setProductSpecification(String productSpecification) {
-        this.productSpecification = productSpecification;
-    }
-
     public Integer getProductQuantity() {
         return productQuantity;
     }
 
     public void setProductQuantity(Integer productQuantity) {
         this.productQuantity = productQuantity;
-    }
-
-    public Integer getProductSource() {
-        return productSource;
-    }
-
-    public void setProductSource(Integer productSource) {
-        this.productSource = productSource;
     }
 
     public String getStorageLocation() {
@@ -150,14 +117,6 @@ public class OaAssetManagement {
         this.custodian = custodian;
     }
 
-    public String getPackingList() {
-        return packingList;
-    }
-
-    public void setPackingList(String packingList) {
-        this.packingList = packingList;
-    }
-
     public String getRemarks() {
         return remarks;
     }
@@ -172,5 +131,29 @@ public class OaAssetManagement {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getEditExplain() {
+        return editExplain;
+    }
+
+    public void setEditExplain(String editExplain) {
+        this.editExplain = editExplain;
+    }
+
+    public String getCreateTimeStr() {
+        return createTimeStr;
+    }
+
+    public void setCreateTimeStr(String createTimeStr) {
+        this.createTimeStr = createTimeStr;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
 }

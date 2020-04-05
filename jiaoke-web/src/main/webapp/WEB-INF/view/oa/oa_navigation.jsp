@@ -339,16 +339,14 @@
         </shiro:hasPermission>
 
         <li class="nav-item">
-            <shiro:hasPermission name="meetingManagement">
+            <shiro:hasPermission name="meeting">
                 <a><i class="iconfont icon-huiyiguanli"></i>
                     <span class="parent-menu-span">会议管理</span>
                     <i class="my-icon nav-more"></i>
                 </a>
             </shiro:hasPermission>
             <ul>
-                <shiro:hasPermission name="newMeeting">
-                    <li><a id="new_meeting"><span>新建会议</span></a></li>
-                </shiro:hasPermission>
+                <li><a id="new_meeting"><span>新建会议</span></a></li>
                 <%--<li><a id="conference_calendar"><span>会议日历</span></a></li>--%>
                 <li><a id="not_open_meeting"><span>待开会议</span></a></li>
                 <li><a id="history_meeting"><span>已开会议</span></a></li>

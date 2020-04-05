@@ -3,16 +3,14 @@ package com.jiaoke.controller.oa.assets;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jiake.utils.JsonHelper;
-import com.jiaoke.oa.bean.OaAssetManagement;
-import com.jiaoke.oa.bean.OaAssetReplenishment;
-import com.jiaoke.oa.bean.OaAssetUse;
-import com.jiaoke.oa.bean.UserInfo;
+import com.jiaoke.oa.bean.*;
 import com.jiaoke.oa.service.OaAssetUseService;
 import com.jiaoke.oa.service.OaAssetsManagementService;
 import com.jiaoke.oa.service.OaAssetsReplenishmentService;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -75,6 +73,94 @@ public class OaAssetsManagementController {
     }
 
     /**
+     * 根据id查询
+     *
+     * @param id id
+     * @return list
+     */
+    @RequestMapping(value = "/selectById")
+    @ResponseBody
+    public String selectByPrimaryKey(Integer id) {
+        OaAssetManagement oaAssetManagement = oaAssetsManagementService.selectByPrimaryKey(id);
+        return JsonHelper.toJSONString(oaAssetManagement);
+    }
+
+    /**
+     * 编辑后保存
+     *
+     * @param oaAssetManagement oaAssetManagement
+     * @return s/e
+     */
+    @RequestMapping(value = "/edit")
+    @ResponseBody
+    public String edit(OaAssetManagement oaAssetManagement) {
+        if (oaAssetsManagementService.edit(oaAssetManagement) < 0) {
+            return "error";
+        } else {
+            return "success";
+        }
+    }
+
+    /**
+     * 删除
+     *
+     * @param id id
+     * @return list
+     */
+    @RequestMapping(value = "/delete")
+    @ResponseBody
+    public String delete(Integer id, String deleteReason) {
+        if (oaAssetsManagementService.delete(id, deleteReason) < 0) {
+            return "error";
+        } else {
+            return "success";
+        }
+    }
+
+    /**
+     * 更新状态
+     *
+     * @param id    id
+     * @param state state
+     * @return list
+     */
+    @RequestMapping(value = "/updateState")
+    @ResponseBody
+    public String updateState(Integer id, Integer state) {
+        if (oaAssetsManagementService.updateState(id, state) < 0) {
+            return "error";
+        } else {
+            return "success";
+        }
+    }
+
+    /**
+     * 跳转新增资产档案
+     *
+     * @return oa_assets_archives.jsp
+     */
+    @RequestMapping("/toAddAssetsArchives")
+    public String toAddAssetsArchives() {
+        return "oa/assets/oa_add_assets_archives";
+    }
+
+    /**
+     * 新增资产档案
+     *
+     * @param oaAssetManagements oaAssetManagements
+     * @return list
+     */
+    @RequestMapping(value = "/addAssetsArchives")
+    @ResponseBody
+    public String addAssetsArchives(@RequestBody List<OaAssetManagement> oaAssetManagements) {
+        if (oaAssetsManagementService.addAssetsArchives(oaAssetManagements) < 0) {
+            return "error";
+        } else {
+            return "success";
+        }
+    }
+
+    /**
      * 根据名字筛选
      *
      * @param page       page
@@ -90,6 +176,7 @@ public class OaAssetsManagementController {
         return JsonHelper.toJSONString(pageInfo);
     }
 
+    /**--------------资产档案-补货记录---------------*/
     /**
      * 跳转补货记录
      *
@@ -137,6 +224,7 @@ public class OaAssetsManagementController {
         return JsonHelper.toJSONString(pageInfo);
     }
 
+    /**--------------资产档案-领用记录---------------*/
     /**
      * 申领记录
      *
@@ -176,6 +264,48 @@ public class OaAssetsManagementController {
         PageHelper.startPage(page, 15);
         List<OaAssetUse> oaAssetUseList = oaAssetUseService.fuzzyQueryByName(assetName);
         PageInfo<OaAssetUse> pageInfo = new PageInfo<>(oaAssetUseList);
+        return JsonHelper.toJSONString(pageInfo);
+    }
+
+    /**--------------资产档案-操作记录---------------*/
+    /**
+     * 跳转操作记录
+     *
+     * @return jsp
+     */
+    @RequestMapping(value = "/toAssetOperatingRecordPage")
+    public String toAssetOperatingRecordPage() {
+        return "oa/assets/oa_asset_operating_record";
+    }
+
+    /**
+     * 加载操作记录数据
+     *
+     * @param page page
+     * @return 分页数据
+     */
+    @RequestMapping(value = "/assetOperatingRecord")
+    @ResponseBody
+    public String assetOperatingRecord(int page) {
+        PageHelper.startPage(page, 14);
+        List<OaAssetOperatingRecord> oaAssetOperatingRecordList = oaAssetsManagementService.selectOperatingRecordAll();
+        PageInfo<OaAssetOperatingRecord> pageInfo = new PageInfo<>(oaAssetOperatingRecordList);
+        return JsonHelper.toJSONString(pageInfo);
+    }
+
+    /**
+     * 根据名字筛选
+     *
+     * @param page           page
+     * @param operatorPerson operatorPerson
+     * @return list
+     */
+    @RequestMapping(value = "/operatorPersonFilter")
+    @ResponseBody
+    public String operatorPersonFilter(int page, String operatorPerson) {
+        PageHelper.startPage(page, 15);
+        List<OaAssetOperatingRecord> oaAssetOperatingRecordList = oaAssetsManagementService.operatorPersonFilter(operatorPerson);
+        PageInfo<OaAssetOperatingRecord> pageInfo = new PageInfo<>(oaAssetOperatingRecordList);
         return JsonHelper.toJSONString(pageInfo);
     }
 }

@@ -36,7 +36,7 @@ public class OaActLeaveServiceImpl implements OaActLeaveService {
         oaActLeave.setCreateTime(new Date());
         oaActLeave.setPromoter(userId);
         oaActLeave.setUrl("leave");
-        if (oaActLeaveMapper.insert(oaActLeave) < 0) {
+        if (oaActLeaveMapper.insertSelective(oaActLeave) < 0) {
             return -1;
         } else {
             OaCollaboration oaCollaboration = new OaCollaboration();

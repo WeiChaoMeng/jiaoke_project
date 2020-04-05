@@ -159,7 +159,7 @@
     </div>
 
     <div class="approval-input">
-        <span class="approval-input-span">部门领导</span>
+        <span class="approval-input-span">部门负责人</span>
         <input type="text" class="approval-input-input" value="${oaActOvertime.principal}" readonly>
     </div>
 

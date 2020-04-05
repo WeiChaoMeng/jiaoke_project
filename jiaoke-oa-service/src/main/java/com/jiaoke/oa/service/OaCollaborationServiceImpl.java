@@ -2,10 +2,7 @@ package com.jiaoke.oa.service;
 
 import com.jiake.utils.DateUtil;
 import com.jiake.utils.FileUploadUtil;
-import com.jiaoke.oa.bean.OaAcceptanceWarehousing;
-import com.jiaoke.oa.bean.OaCollaboration;
-import com.jiaoke.oa.bean.OaOvertimeStatistics;
-import com.jiaoke.oa.bean.UserInfo;
+import com.jiaoke.oa.bean.*;
 import com.jiaoke.oa.dao.*;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +37,12 @@ public class OaCollaborationServiceImpl implements OaCollaborationService {
 
     @Resource
     private OaAcceptanceWarehousingMapper oaAcceptanceWarehousingMapper;
+
+    @Resource
+    private OaConfirmMapper oaConfirmMapper;
+
+    @Resource
+    private OaUnitPriceMapper oaUnitPriceMapper;
 
     @Override
     public List<OaCollaboration> selectDone(List<OaCollaboration> oaCollaborations, String title) {
@@ -189,6 +192,10 @@ public class OaCollaborationServiceImpl implements OaCollaborationService {
         String officeSupplies = "oa_act_office_supplies";
         //验收入库表
         String acceptanceWarehousing = "oa_act_acceptance_warehousing";
+        //确认单
+        String confirm = "oa_act_confirm";
+        //单价审批单
+        String unitPrice = "oa_act_unit_price";
         //删除待发数据
         if (oaCollaborationMapper.deleteByCorrelationId(correlationId) < 0) {
             return -1;
@@ -219,6 +226,15 @@ public class OaCollaborationServiceImpl implements OaCollaborationService {
                     //删除验收入库表关联表数据
                 }else if (acceptanceWarehousing.equals(table)) {
                     oaAcceptanceWarehousingMapper.deleteByAcceptanceWarehousingId(correlationId);
+                }
+
+                    //删除确认单关联表数据
+                else if (confirm.equals(table)) {
+                    oaConfirmMapper.deleteByConfirmId(correlationId);
+                }
+                    //删除单价审批表关联表数据
+                else if (unitPrice.equals(table)) {
+                    oaUnitPriceMapper.deleteByUnitPriceId(correlationId);
                 }
                 return 1;
             }

@@ -14,6 +14,17 @@
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
     <link href="../../../../static/js/date_pickers/date_picker.css" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
+    <style>
+        .formTable thead tr th {
+            line-height: 40px;
+            border: solid 1px #e5e5e5;
+            text-align: center;
+            background: #f6f6f6;
+            white-space: nowrap;
+            font-size: 13px;
+            font-weight: 600;
+        }
+    </style>
 </head>
 
 <body id="body">
@@ -56,7 +67,7 @@
     </div>
 </div>
 
-<form id="oaActMeals">
+<form id="oaActConfirm">
     <div class="form_area" id="titleArea" style="margin-bottom: 15px">
         <table>
             <tbody>
@@ -87,18 +98,34 @@
         </table>
     </div>
 
-    <table class="formTable">
+    <div>
+        <div id="addRow" style="float: right;margin-bottom: 10px">
+            <div style="float: right">
+                <input type="button" value="添加数据行(10)" onclick="addRow(10)" class="table-tab-send">
+            </div>
+
+            <div style="margin-right: 10px;float: right">
+                <input type="button" value="添加数据行(3)" onclick="addRow(3)" class="table-tab-send">
+            </div>
+
+            <div style="margin-right: 10px;float: right">
+                <input type="button" value="添加数据行(1)" onclick="addRow(1)" class="table-tab-send">
+            </div>
+        </div>
+    </div>
+
+    <table class="formTable" style="margin: 0">
         <tbody>
         <tr>
             <td class="tdLabel">经办部门</td>
             <td colspan="2" class="table-td-content">
-                <input type="text" class="formInput" name="entertain" value="${department}"
+                <input type="text" class="formInput" name="department" id="department" value="${department}"
                        style="background-color: #f6f6f6;" readonly>
             </td>
 
             <td class="tdLabel">经办人</td>
             <td colspan="2" class="table-td-content">
-                <input type="text" class="formInput" name="applicant" value="${nickname}"
+                <input type="text" class="formInput" name="operator" id="operator" value="${nickname}"
                        style="background-color: #f6f6f6;" readonly>
             </td>
         </tr>
@@ -106,64 +133,69 @@
         <tr>
             <td class="tdLabel">确认名称</td>
             <td colspan="2" class="table-td-content">
-                <input type="text" class="formInput" name="entertain" autocomplete="off">
+                <input type="text" class="formInput" name="name" id="name" autocomplete="off">
             </td>
 
             <td class="tdLabel">确认金额（元）</td>
             <td colspan="2" class="table-td-content">
-                <input type="text" class="formInput" name="entertain" autocomplete="off">
+                <input type="text" class="formInput" name="money" id="money" autocomplete="off">
             </td>
         </tr>
+        </tbody>
 
+        <tbody id="tbo">
         <tr>
             <td class="tdLabel">品种</td>
             <td class="table-td-content">
-                <input type="text" class="formInput" name="entertain" autocomplete="off">
+                <input type="text" class="formInput" name="variety" id="variety" autocomplete="off">
             </td>
 
             <td class="tdLabel">单价（元/吨）</td>
             <td class="table-td-content">
-                <input type="text" class="formInput" name="entertain" autocomplete="off">
+                <input type="text" class="formInput" name="univalent" id="univalent" autocomplete="off">
             </td>
 
             <td class="tdLabel">数量（吨）</td>
             <td class="table-td-content">
-                <input type="text" class="formInput" name="entertain" autocomplete="off">
+                <input type="text" class="formInput" name="number" id="number" autocomplete="off">
+            </td>
+        </tr>
+        </tbody>
+
+        <tbody>
+        <tr>
+            <td class="tdLabel">数量是否与ERP一致</td>
+            <td colspan="5" class="table-td-content">
+                <input type="text" class="formInput" name="erp" id="erp" autocomplete="off">
             </td>
         </tr>
 
         <tr>
-            <td class="tdLabel">是否与ERP一致</td>
+            <td class="tdLabel">单价是否与合同一致</td>
             <td colspan="5" class="table-td-content">
-                <input type="text" class="formInput" name="entertain" autocomplete="off">
-            </td>
-        </tr>
-
-        <tr>
-            <td class="tdLabel">是否与合同一致</td>
-            <td colspan="5" class="table-td-content">
-                <input type="text" class="formInput" name="entertain" autocomplete="off">
+                <input type="text" class="formInput" name="contract" id="contract" autocomplete="off">
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel">单位（全称）</td>
             <td colspan="5" class="table-td-content">
-                <input type="text" class="formInput" name="entertain" autocomplete="off">
+                <input type="text" class="formInput" name="unit" id="unit" autocomplete="off">
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel">工程名称（全称）</td>
             <td colspan="5" class="table-td-content">
-                <input type="text" class="formInput" name="entertain" autocomplete="off">
+                <input type="text" class="formInput" name="projectName" id="projectName" autocomplete="off">
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel">审批时间</td>
             <td colspan="5" class="table-td-content">
-                <input type="text" class="formInput apply-date" name="applicant" onfocus="this.blur()">
+                <input type="text" class="formInput apply-date" name="approvalTime" id="approvalTime"
+                       onfocus="this.blur()">
             </td>
         </tr>
 
@@ -178,29 +210,31 @@
 
         <tr>
             <td class="table-td-content" style="padding: 5px 10px">
-                <input type="text" class="formInput" name="entertain" autocomplete="off">
+                <input type="text" class="formInput-readonly" readonly>
             </td>
             <td class="table-td-content" style="padding: 5px 10px">
-                <input type="text" class="formInput" name="entertain" autocomplete="off">
+                <input type="text" class="formInput-readonly" readonly>
             </td>
             <td class="table-td-content" style="padding: 5px 10px">
-                <input type="text" class="formInput" name="entertain" autocomplete="off">
+                <input type="text" class="formInput-readonly" readonly>
             </td>
             <td class="table-td-content" style="padding: 5px 10px">
-                <input type="text" class="formInput" name="entertain" autocomplete="off">
+                <input type="text" class="formInput-readonly" readonly>
             </td>
             <td class="table-td-content" style="padding: 5px 10px">
-                <input type="text" class="formInput" name="entertain" autocomplete="off">
+                <input type="text" class="formInput-readonly" readonly>
             </td>
             <td class="table-td-content" style="padding: 5px 10px">
-                <input type="text" class="formInput" name="entertain" autocomplete="off">
+                <input type="text" class="formInput-readonly" readonly>
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel">备注</td>
             <td colspan="5" class="table-td-textarea">
-                <textarea class="table-remark" name="remarks"></textarea>
+                    <textarea class="table-remark" onkeyup="value=value.replace(/\s+/g,'')" name="remarks"
+                              id="remarks"></textarea>
+                <input type="hidden" id="annex">
             </td>
         </tr>
         </tbody>
@@ -225,6 +259,31 @@
         zIndex: 100000,
     });
 
+    //添加数据行
+    function addRow(row) {
+        var content = '';
+        for (let i = 0; i < row; i++) {
+            content +=
+                '<tr>\n' +
+                '            <td class="tdLabel">品种</td>\n' +
+                '            <td class="table-td-content">\n' +
+                '                <input type="text" class="formInput" name="variety" id="variety" autocomplete="off">\n' +
+                '            </td>\n' +
+                '\n' +
+                '            <td class="tdLabel">单价（元/吨）</td>\n' +
+                '            <td class="table-td-content">\n' +
+                '                <input type="text" class="formInput" name="univalent" id="univalent" autocomplete="off">\n' +
+                '            </td>\n' +
+                '\n' +
+                '            <td class="tdLabel">数量（吨）</td>\n' +
+                '            <td class="table-td-content">\n' +
+                '                <input type="text" class="formInput" name="number" id="number" autocomplete="off">\n' +
+                '            </td>\n' +
+                '        </tr>';
+        }
+        $('#tbo').append(content);
+    }
+
     //发送
     function send() {
         var array = [];
@@ -240,7 +299,7 @@
 
             $.ajax({
                 type: "POST",
-                url: '${path}/meals/add',
+                url: '${path}/confirm/add',
                 data: $('#oaActMeals').serialize(),
                 error: function (request) {
                     layer.msg("出错！");
@@ -259,22 +318,73 @@
 
     //保存待发
     function savePending() {
+        var confirm = [];
+        var tel = $('#tbo').find('tr');
+        for (let i = 0; i < tel.length; i++) {
+            var va = $(tel[i]).find('td').find('#variety').val();
+            var un = $(tel[i]).find('td').find('#univalent').val();
+            var nu = $(tel[i]).find('td').find('#number').val();
+            confirm.push({
+                variety: va,
+                univalent: un,
+                number: nu
+            })
+        }
+
+        var array = [];
+        $('#annexes').find('input').each(function () {
+            array.push($(this).val());
+        });
+
+        //发送前将上传好的附件插入form中
+        $('#annex').val(array);
+
         if ($.trim($("#title").val()) === '') {
             layer.msg("标题不可以为空！")
         } else {
+
+            var tit = $('#title').val();
+            var dep = $('#department').val();
+            var ope = $('#operator').val();
+            var nam = $('#name').val();
+            var mon = $('#money').val();
+            var erp = $('#erp').val();
+            var con = $('#contract').val();
+            var uni = $('#unit').val();
+            var pro = $('#projectName').val();
+            var app = $('#approvalTime').val();
+            var rem = $('#remarks').val();
+            var an = $('#annex').val();
+            var oaActConfirm = {
+                title: tit,
+                department: dep,
+                operator: ope,
+                name: nam,
+                money: mon,
+                oaConfirmList: confirm,
+                erp: erp,
+                contract: con,
+                unit: uni,
+                projectName: pro,
+                approvalTime: app,
+                remarks: rem,
+                annex: an
+            };
+
             $.ajax({
                 type: "POST",
-                url: '${path}/meals/savePending',
-                data: $('#oaActMeals').serialize(),
+                url: '${path}/confirm/savePending',
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify(oaActConfirm),
                 error: function (request) {
                     layer.msg("出错！");
                 },
                 success: function (result) {
                     if (result === "success") {
                         window.location.href = "${path}/oaIndex.do";
-                        window.top.tips("保存成功！");
+                        window.top.tips("保存成功！", 0, 1, 1000);
                     } else {
-                        window.top.tips("保存失败！");
+                        window.top.tips("保存失败！", 0, 2, 1000);
                     }
                 }
             })

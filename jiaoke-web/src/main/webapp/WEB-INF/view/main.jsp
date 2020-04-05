@@ -351,6 +351,16 @@
     </div>
 </div>
 
+<%--模态窗-修改资产档案信息--%>
+<div id="modifyAssetsInfo" class="window-body-add" style="display: none">
+    <form id="oaAssetManagement"></form>
+
+    <div>
+        <input type="button" value="确认" onclick="submissionAssetEdit()" class="confirm-btn-style">
+        <input type="button" value="取消" onclick="cancel()" class="cancel-btn-style  left-spacing">
+    </div>
+</div>
+
 <%-- 模态窗-选择拟稿人 --%>
 <div id="singleSelection" class="single-option-window" style="display: none">
     <input type="hidden" id="pendingDocumentPage">
@@ -2158,6 +2168,116 @@
             layer.close(window.lar);
         } else {
             layer.msg('请选择被通知人！')
+        }
+    }
+
+    /**---------------资源管理----------------*/
+    //删除
+    function deleteAssetsArchivs(assetsArchivsId, currentPage) {
+        layer.prompt({
+            formType: 2,
+            value: '',
+            title: '删除原因',
+            area: ['300px', '150px'] //自定义文本域宽高
+        }, function (value, index, elem) {
+            // alert(value); //得到value
+            layer.confirm('该操作不能恢复,是否进行删除操作？', {
+                    btn: ['确认', '取消']
+                }, function () {
+                console.log(value);
+                console.log(assetsArchivsId);
+                    $.ajax({
+                        type: "post",
+                        url: "/assetsManagement/delete",
+                        data: {'id': assetsArchivsId, 'deleteReason': value},
+                        async: false,
+                        success: function (data) {
+                            if (data === 'success') {
+                                layer.msg('删除成功！');
+                                $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.reloadAssetsArchivs(currentPage);
+                            } else {
+                                layer.msg('删除失败！')
+                            }
+                        },
+                        error: function (result) {
+                            layer.msg("出错！");
+                        }
+                    });
+                });
+            layer.close(index);
+        });
+    }
+
+    //编辑
+    function editAssetsArchivs(assetsData) {
+        window.lar = layer.open({
+            title: '编辑资产信息',
+            type: 1,
+            area: ['25%', '45%'],
+            shadeClose: true, //点击遮罩关闭
+            content: $("#modifyAssetsInfo"),
+            offset: "20%"
+        });
+
+        var assetsInfo = '';
+
+        assetsInfo += '<table class="window-table">';
+        assetsInfo += '<tbody>';
+        assetsInfo += '<tr>';
+        assetsInfo += '<td class="form_title">资产名称:</td>';
+        assetsInfo += '<td class="form_content">';
+        assetsInfo += '<input name="id" value="' + assetsData.id + '" type="hidden">';
+        assetsInfo += '<input class="font_input" name="assetsName" id="assetsNameEdit" value="' + assetsData.assetsName + '" type="text" autocomplete="off">';
+        assetsInfo += '</td>';
+        assetsInfo += '</tr>';
+        assetsInfo += '<tr>';
+        assetsInfo += '<td class="form_title_check" style="padding-top: 8px">库存数量:</td>';
+        assetsInfo += '<td class="form_content_check">';
+        assetsInfo += '<input class="font_input" name="productQuantity" id="productQuantityEdit" value="' + assetsData.productQuantity + '" type="text" onkeyup="value=value.replace(/^(-+)|[^\\d]+/g,\'\')" autocomplete="off">';
+        assetsInfo += '</td>';
+        assetsInfo += '</tr>';
+        assetsInfo += '<tr>';
+        assetsInfo += '<td class="form_title">编辑说明:</td>';
+        assetsInfo += '<td class="form_content">';
+        assetsInfo += '<textarea class="description-text" name="editExplain" id="editExplainEdit" onkeyup="this.value=this.value.replace(/^\\s+|\\s+$/g,\'\')" ></textarea>';
+        assetsInfo += '</td>';
+        assetsInfo += '</tr>';
+        assetsInfo += '</tbody>';
+        assetsInfo += '</table>';
+
+        $('#oaAssetManagement').html(assetsInfo);
+    }
+
+    //提交编辑
+    function submissionAssetEdit() {
+        if ($.trim($("#assetsNameEdit").val()) === '') {
+            window.top.tips("资产名称不能为空！", 6, 5, 1000);
+        }else {
+            if ($.trim($("#productQuantityEdit").val()) === '') {
+                window.top.tips("库存数量不能为空！", 6, 5, 1000);
+            }else {
+                if ($.trim($("#editExplainEdit").val()) === '') {
+                    window.top.tips("编辑说明不能为空！", 6, 5, 1000);
+                }else {
+                    $.ajax({
+                        type: "post",
+                        url: '/assetsManagement/edit',
+                        data: $('#oaAssetManagement').serialize(),
+                        success: function (data) {
+                            if (data === 'success') {
+                                layer.close(window.lar);
+                                $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.reloadAssetsArchivs(1);
+                                layer.msg('修改成功！');
+                            } else {
+                                layer.msg('修改失败！');
+                            }
+                        },
+                        error: function (result) {
+                            layer.msg("出错！");
+                        }
+                    })
+                }
+            }
         }
     }
 

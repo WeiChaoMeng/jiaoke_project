@@ -38,6 +38,12 @@ public interface OaActConfirmService {
      */
     int edit(OaActConfirm oaActConfirm);
 
+    /**
+     * 根据主键更新
+     *
+     * @param oaActConfirm oaActConfirm
+     * @return int
+     */
     int updateByPrimaryKeySelective(OaActConfirm oaActConfirm);
 
     /**

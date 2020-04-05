@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.oa.dao.OaAssetOperatingRecordMapper">
+
+    <select id="operatorPersonFilter" parameterType="java.lang.String"
+            resultType="com.jiaoke.oa.bean.OaAssetOperatingRecord">
+        SELECT
+            id,
+            before_assets_name AS beforeAssetsName,
+            after_assets_name AS afterAssetsName,
+            before_assets_number AS beforeAssetsNumber,
+            after_assets_number AS afterAssetsNumber,
+            operator_type AS operatorType,
+            operator_description AS operatorDescription,
+            operator_person AS operatorPerson,
+            operator_time AS operatorTime
+        FROM
+            `oa_asset_operating_record`
+        WHERE
+            operator_person LIKE "%"#{operatorPerson}"%"
+    </select>
+
+    <select id="selectAllDate" resultType="com.jiaoke.oa.bean.OaAssetOperatingRecord">
+        SELECT
+            id,
+            before_assets_name AS beforeAssetsName,
+            after_assets_name AS afterAssetsName,
+            before_assets_number AS beforeAssetsNumber,
+            after_assets_number AS afterAssetsNumber,
+            operator_type AS operatorType,
+            operator_description AS operatorDescription,
+            operator_person AS operatorPerson,
+            operator_time AS operatorTime
+        FROM
+            `oa_asset_operating_record`
+        ORDER BY
+            operator_time DESC
+    </select>
+</mapper>

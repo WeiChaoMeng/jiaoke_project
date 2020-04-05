@@ -475,6 +475,9 @@ public class OaActReviewController {
     @ResponseBody
     public String userManager(int page) {
         List<String> idList = activitiUtil.selectCompletedForm("oa_act_review");
+        if (idList.size() == 0){
+            return JsonHelper.toJSONString("noData");
+        }
         PageHelper.startPage(page, 15);
         List<OaActReview> oaActReviewList = oaActReviewService.selectAllByIdList(idList);
         PageInfo<OaActReview> pageInfo = new PageInfo<>(oaActReviewList);

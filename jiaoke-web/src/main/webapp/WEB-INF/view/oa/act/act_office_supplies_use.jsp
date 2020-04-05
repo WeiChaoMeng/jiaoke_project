@@ -18,7 +18,7 @@
             padding: 10px;
         }
 
-        .formTable td{
+        .formTable td {
             line-height: 0;
         }
 
@@ -115,37 +115,54 @@
         </thead>
 
         <tbody id="tbo">
-        <c:forEach items="${assetManagementList}" var="assetManagement" varStatus="status">
-            <tr>
-                <td class="table-td-content" style="text-align: center;">${status.index+1}</td>
 
-                <td class="table-td-content">
-                        <input type="text" class="formInput-readonly" name="name" id="name" value="${assetManagement.assetsName}" readonly>
-                        <input type="hidden" name="id" id="assetId" value="${assetManagement.id}">
-                </td>
+        <c:choose>
+            <c:when test="${assetManagementList.size() == 0}">
+                <tr>
+                    <td colspan="4" class="table-td-content" style="height: 40px;text-align: center;">暂无库存</td>
+                </tr>
+            </c:when>
 
-                <td class="table-td-content" style="text-align: center">
-                    <span>${assetManagement.productQuantity}</span>
-                </td>
+            <c:otherwise>
+                <c:forEach items="${assetManagementList}" var="assetManagement" varStatus="status">
+                    <tr>
+                        <td class="table-td-content" style="text-align: center;">${status.index+1}</td>
 
-                <td class="table-td-content">
-                    <input type="number"  class="formInput" style="line-height: 28px;" name="number" id="number" onkeydown="return false;" max="${assetManagement.productQuantity}" min="0" value="0" autocomplete="off">
-                </td>
+                        <td class="table-td-content">
+                            <input type="text" class="formInput-readonly" name="name" id="name"
+                                   value="${assetManagement.assetsName}" readonly>
+                            <input type="hidden" name="id" id="assetId" value="${assetManagement.id}">
+                        </td>
 
-            </tr>
-        </c:forEach>
+                        <td class="table-td-content" style="text-align: center">
+                            <span>${assetManagement.productQuantity}</span>
+                        </td>
+
+                        <td class="table-td-content">
+                            <input type="number" class="formInput" style="line-height: 28px;" name="number" id="number"
+                                   onkeydown="return false;" max="${assetManagement.productQuantity}" min="0" value="0"
+                                   autocomplete="off">
+                        </td>
+
+                    </tr>
+                </c:forEach>
+            </c:otherwise>
+        </c:choose>
+
         </tbody>
 
         <table class="formTable">
             <tr>
                 <td class="tdLabel">领用部门</td>
                 <td class="table-td-content">
-                    <input type="text" class="formInput-readonly" name="recipientsDepartment" id="recipientsDepartment" value="${department}" readonly>
+                    <input type="text" class="formInput-readonly" name="recipientsDepartment" id="recipientsDepartment"
+                           value="${department}" readonly>
                 </td>
 
                 <td class="tdLabel">领用人签字</td>
                 <td class="table-td-content">
-                    <input type="text" class="formInput-readonly" name="recipientsPreparer" id="recipientsPreparer" value="${nickname}" readonly>
+                    <input type="text" class="formInput-readonly" name="recipientsPreparer" id="recipientsPreparer"
+                           value="${nickname}" readonly>
 
                 </td>
 

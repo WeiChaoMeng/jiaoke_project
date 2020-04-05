@@ -59,6 +59,21 @@ public class OaMeetingController {
      *
      * @return jsp
      */
+    @RequestMapping(value = "/toIndex")
+    public String toIndex(Model model) {
+        List<UserInfo> userInfoList = userInfoService.selectIdAndNicknameAndDepartment();
+        List<Department> departmentList = departmentService.selectKeyAndName();
+        model.addAttribute("nickname", getCurrentUser().getNickname());
+        model.addAttribute("userInfoList", JsonHelper.toJSONString(userInfoList));
+        model.addAttribute("departmentList", JsonHelper.toJSONString(departmentList));
+        return "oa/meeting/act_meeting";
+    }
+
+    /**
+     * 跳转新增
+     *
+     * @return jsp
+     */
     @RequestMapping(value = "/toAdd")
     public String toAdd(Model model) {
         List<UserInfo> userInfoList = userInfoService.selectIdAndNicknameAndDepartment();

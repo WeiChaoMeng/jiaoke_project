@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.oa.dao.OaConfirmMapper">
+
+    <insert id="batchInsertData" parameterType="com.jiaoke.oa.bean.OaConfirm">
+        insert into oa_confirm
+        (variety,univalent,`number`,confirm_id)
+        values
+        <foreach collection="list" item="list" separator=",">
+            (#{list.variety},#{list.univalent},#{list.number},#{list.confirmId})
+        </foreach>
+    </insert>
+
+    <select id="selectByConfirmId" parameterType="java.lang.String"
+            resultType="com.jiaoke.oa.bean.OaConfirm">
+        SELECT
+            variety,
+            univalent,
+            `number`
+        FROM `oa_confirm`
+        WHERE confirm_id = #{confirmId}
+    </select>
+
+    <delete id="deleteByConfirmId" parameterType="java.lang.String">
+        delete from oa_confirm
+        where confirm_id = #{confirmId}
+    </delete>
+</mapper>

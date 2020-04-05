@@ -281,27 +281,39 @@
                             </td>
 
                             <td class="template" valign="middle">
-                                <a class="check_color" onclick="commonJump('confirm')" title="确认单审批单">
-                                    <em class="template-icon">&#xe695;</em>确认单审批单
+                                <a class="check_color" onclick="commonJump('leave')" title="请假审批表">
+                                    <em class="template-icon">&#xe695;</em>请假审批表
                                 </a>
                             </td>
                         </tr>
 
                         <tr>
                             <td class="template" valign="middle">
-                                <a class="check_color" onclick="commonJump('leave')" title="请假审批表">
-                                    <em class="template-icon">&#xe695;</em>请假审批表
+                                <a class="check_color" onclick="commonJump('taxiUse')" title="用车申请表(出租车)">
+                                    <em class="template-icon">&#xe695;</em>用车申请表(出租车)
                                 </a>
                             </td>
 
                             <%--<td class="template" valign="middle">--%>
-                                <%--<a class="check_color" onclick="assetUse()" title="资产领用申请单">--%>
-                                    <%--<em class="template-icon">&#xe695;</em>资产领用申请单--%>
+                                <%--<a class="check_color" onclick="commonJump('confirm')" title="确认单审批单">--%>
+                                    <%--<em class="template-icon">&#xe695;</em>确认单审批单--%>
                                 <%--</a>--%>
                             <%--</td>--%>
 
+                            <td class="template" valign="middle">
+                                <a class="check_color" onclick="commonJump('unitPrice')" title="单价审批单">
+                                    <em class="template-icon">&#xe695;</em>单价审批单
+                                </a>
+                            </td>
+
+                            <td class="template" valign="middle">
+                                <a class="check_color" onclick="commonJump('contractReview')" title="合同评审表">
+                                    <em class="template-icon">&#xe695;</em>合同评审表
+                                </a>
+                            </td>
+
                             <%--<td class="template" valign="middle">--%>
-                                <%--<a class="check_color" onclick="conferenceRoom()" title="会议室申请单">--%>
+                                <%--<a class="check_color" onclick="commonJump('meeting')" title="会议室申请单">--%>
                                     <%--<em class="template-icon">&#xe695;</em>会议室申请单--%>
                                 <%--</a>--%>
                             <%--</td>--%>
@@ -423,11 +435,6 @@
     //固定资产投资完成验收单（生产用）
     function assets() {
         window.location.href = "${path}/actTab/toFixedAssets";
-    }
-
-    //办公用品需求计划
-    function supplies() {
-        window.location.href = "${path}/actTab/toOfficeSupplies";
     }
 
     //信息联络处理单

@@ -21,10 +21,10 @@
         <tr>
             <td>
                 <%--<div>--%>
-                    <%--<div class="conditional-query cursor_hand">--%>
-                        <%--<input type="text" id="logonName" class="search-bar" placeholder="合同名称" autocomplete="off">--%>
-                        <%--<i onclick="searchButton(1,2)" class="iconfont search-icon-size" id="conditional_search">&#xe7e7;</i>--%>
-                    <%--</div>--%>
+                <%--<div class="conditional-query cursor_hand">--%>
+                <%--<input type="text" id="logonName" class="search-bar" placeholder="合同名称" autocomplete="off">--%>
+                <%--<i onclick="searchButton(1,2)" class="iconfont search-icon-size" id="conditional_search">&#xe7e7;</i>--%>
+                <%--</div>--%>
                 <%--</div>--%>
             </td>
         </tr>
@@ -91,6 +91,13 @@
             async: false,
             success: function (data) {
                 var userInfos = JSON.parse(data);
+                if (userInfos === "noData") {
+                    var noDataContent = "";
+                    noDataContent += '<tr>';
+                    noDataContent += '<td colspan="7">' + '暂无数据' + '</td>';
+                    noDataContent += '</tr>';
+                    $('#tbody').html(noDataContent);
+                }
                 //总数
                 $("#PageCount").val(userInfos.total);
                 //每页显示条数
