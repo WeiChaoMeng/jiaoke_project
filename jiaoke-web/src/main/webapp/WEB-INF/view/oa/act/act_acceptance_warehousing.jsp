@@ -194,7 +194,7 @@
             </td>
 
             <td class="table-td-content">
-                <input type="text" class="formInput-readonly" name="date" id="date" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date())%>">
+                <input type="text" class="formInput-readonly" name="date" id="date" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">
             </td>
 
             <td class="table-td-content">
@@ -256,7 +256,7 @@
                 '                <input type="text" class="formInput" name="number" id="number" onkeyup="value=value.replace(/^(0+)|[^\\d]+/g,\'\')" autocomplete="off">\n' +
                 '            </td>\n' +
                 '            <td class="table-td-content">\n' +
-                '                <input type="text" class="formInput-readonly" name="date" id="date" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date())%>">\n' +
+                '                <input type="text" class="formInput-readonly" name="date" id="date" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">\n' +
                 '            </td>\n' +
                 '            <td class="table-td-content">\n' +
                 '                <input type="text" class="formInput" name="remark" id="remark" autocomplete="off">\n' +

@@ -2,78 +2,80 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jiaoke.oa.dao.OaAssetsManagementMapper">
 
+    <select id="selectAllDate" resultType="com.jiaoke.oa.bean.OaAssetManagement">
+        SELECT
+            id as id,
+            assets_name as assetsName,
+            product_quantity as productQuantity,
+            storage_location as storageLocation,
+            entry_person as entryPerson,
+            custodian as custodian,
+            remarks as remarks,
+            create_time as createTime
+        FROM
+            oa_asset_management
+        WHERE
+	        state = 0
+        ORDER BY
+            create_time DESC
+    </select>
+
     <select id="fuzzyQueryByName" parameterType="java.lang.String" resultType="com.jiaoke.oa.bean.OaAssetManagement">
         SELECT
             id as id,
             assets_name as assetsName,
-            assets_category as assetsCategory,
-            product_specification as productSpecification,
             product_quantity as productQuantity,
-            product_source as productSource,
             storage_location as storageLocation,
             entry_person as entryPerson,
             custodian as custodian,
-            packing_list as packingList,
             remarks as remarks,
             create_time as createTime
         FROM oa_asset_management
         WHERE
             assets_name LIKE "%"#{assetsName}"%"
+            AND state = 0
+        ORDER BY
+            create_time DESC
     </select>
 
     <insert id="batchInsertData" parameterType="com.jiaoke.oa.bean.OaAssetManagement">
         insert into oa_asset_management
         (assets_name,
-        assets_category,
-        product_specification,
         product_quantity,
-        product_source,
         storage_location,
         entry_person,
         custodian,
-        packing_list,
         remarks,
         create_time)
         values
         <foreach collection="list" item="list" separator=",">
             (#{list.assetsName},
-            #{list.assetsCategory},
-            #{list.productSpecification},
             #{list.productQuantity},
-            #{list.productSource},
             #{list.storageLocation},
             #{list.entryPerson},
             #{list.custodian},
-            #{list.packingList},
             #{list.remarks},
             #{list.createTime}
             )
         </foreach>
     </insert>
 
-    <insert id="insertReturnId" parameterType="com.jiaoke.oa.bean.OaAssetManagement" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertReturnId" parameterType="com.jiaoke.oa.bean.OaAssetManagement" useGeneratedKeys="true"
+            keyProperty="id">
         insert into oa_asset_management
         (assets_name,
-        assets_category,
-        product_specification,
         product_quantity,
-        product_source,
         storage_location,
         entry_person,
         custodian,
-        packing_list,
         remarks,
         create_time)
         values
             (#{assetsName},
-            #{assetsCategory},
-            #{productSpecification},
             #{productQuantity},
-            #{productSource},
             #{storageLocation},
             #{entryPerson},
             #{custodian},
-            #{packingList},
             #{remarks},
             #{createTime})
     </insert>
@@ -84,6 +86,10 @@
             assets_name as assetsName,
             product_quantity as productQuantity
         FROM oa_asset_management
+        WHERE
+            state = 0
+        ORDER BY
+            create_time DESC
     </select>
 
     <update id="updateProductQuantityById" parameterType="java.lang.Integer">
@@ -97,4 +103,8 @@
         FROM oa_asset_management
         where assets_name = #{assetsName}
     </select>
+
+    <update id="updateStateById" parameterType="java.lang.Integer">
+        update oa_asset_management set state = #{state} where id = #{id}
+    </update>
 </mapper>

@@ -13,6 +13,7 @@ import org.activiti.engine.task.Task;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -164,7 +165,7 @@ public class OaActConfirmController {
      */
     @RequestMapping(value = "/savePending")
     @ResponseBody
-    public String savePending(OaActConfirm oaActConfirm) {
+    public String savePending(@RequestBody OaActConfirm oaActConfirm) {
         String randomId = RandomUtil.randomId();
         if (oaActConfirmService.insert(oaActConfirm, getCurrentUser().getId(), randomId, 1) < 1) {
             return "error";
@@ -184,7 +185,7 @@ public class OaActConfirmController {
     public String toEdit(String id, Model model) {
         OaActConfirm oaActConfirm = oaActConfirmService.selectByPrimaryKey(id);
         model.addAttribute("oaActConfirm", oaActConfirm);
-        return "oa/act/act_meals_edit";
+        return "oa/act/act_confirm_edit";
     }
 
     /**
@@ -195,7 +196,7 @@ public class OaActConfirmController {
      */
     @RequestMapping(value = "/edit")
     @ResponseBody
-    public String edit(OaActConfirm oaActConfirm) {
+    public String edit(@RequestBody OaActConfirm oaActConfirm) {
         if (oaActConfirmService.edit(oaActConfirm) < 0) {
             return "error";
         } else {
@@ -242,12 +243,10 @@ public class OaActConfirmController {
     @RequestMapping(value = "/details")
     public String details(String id, String taskId, Model model) {
         OaActConfirm oaActConfirm = oaActConfirmService.selectByPrimaryKey(id);
-        //获取批注信息
         List<Comments> commentsList = activitiUtil.selectHistoryComment(taskId);
         model.addAttribute("oaActConfirm", oaActConfirm);
         model.addAttribute("commentsList", commentsList);
-        model.addAttribute("commentsListSize", commentsList.size());
-        return "oa/act/act_meals_details";
+        return "oa/act/act_confirm_details";
     }
 
     /**

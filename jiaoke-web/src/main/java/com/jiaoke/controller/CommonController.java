@@ -10,9 +10,11 @@ package com.jiaoke.controller;
 
 import com.jiaoke.oa.bean.OaNewsCenter;
 import com.jiaoke.oa.bean.OaNotice;
+import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.service.OaNewsCenterService;
 import com.jiaoke.oa.service.OaNoticeService;
 import com.jiaoke.quality.service.QualityIndexInf;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -52,6 +54,20 @@ public class CommonController {
     @RequestMapping("/")
     public String index(){
         return "login";
+        //新ui框架主页
+//        return "new/login";
+    }
+
+    /**
+     * 登录成功后进入首页
+     *
+     * @return security_index.jsp
+     */
+    @RequestMapping("/homePage.do")
+    public String homePage(Model model) {
+        UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
+        model.addAttribute("userInfo", userInfo);
+        return "new/index";
     }
 
     /**

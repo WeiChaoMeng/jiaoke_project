@@ -18,6 +18,13 @@ import java.util.List;
 public interface OaAssetsManagementMapper extends Mapper<OaAssetManagement> {
 
     /**
+     * 查询全部数据
+     *
+     * @return list
+     */
+    List<OaAssetManagement> selectAllDate();
+
+    /**
      * 更具名字模糊查询
      *
      * @param assetsName 资产名称
@@ -64,4 +71,13 @@ public interface OaAssetsManagementMapper extends Mapper<OaAssetManagement> {
      * @return id
      */
     int insertReturnId(OaAssetManagement oaAssetManagement);
+
+    /**
+     * 更新状态
+     *
+     * @param id    id
+     * @param state s
+     * @return int
+     */
+    int updateStateById(@Param("id") Integer id, @Param("state") Integer state);
 }

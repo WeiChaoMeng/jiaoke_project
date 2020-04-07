@@ -105,7 +105,7 @@
                 <th class="th_title" nowrap="nowrap" style="width: 4%">流程</th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" placeholder="发起者部门主管领导、[王玉秋,李宝琦,杨德秀]（会签）、总经理（审批）" readonly>
+                        <input type="text" placeholder="发起者部门主管领导、[王玉秋,李保奇,杨德秀,李达维]（会签）、总经理（审批）" readonly>
                     </div>
                 </td>
             </tr>

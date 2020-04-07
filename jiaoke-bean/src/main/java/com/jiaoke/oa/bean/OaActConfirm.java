@@ -5,6 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 确认单审批单
@@ -49,19 +50,9 @@ public class OaActConfirm {
     private String money;
 
     /**
-     * 品种
+     * 确认单详情
      */
-    private String variety;
-
-    /**
-     * 单价
-     */
-    private String univalent;
-
-    /**
-     * 数量
-     */
-    private String number;
+    private List<OaConfirm> oaConfirmList;
 
     /**
      * 是否与ERP一致
@@ -94,9 +85,19 @@ public class OaActConfirm {
     private String companyPrincipal;
 
     /**
+     * 总经理审批时间
+     */
+    private String companyPrincipalDate;
+
+    /**
      * 经营主管
      */
     private String businessSupervisor;
+
+    /**
+     * 经营主管审批时间
+     */
+    private String businessSupervisorDate;
 
     /**
      * 财务主管
@@ -104,9 +105,19 @@ public class OaActConfirm {
     private String financeSupervisor;
 
     /**
+     * 财务主管审批时间
+     */
+    private String financeSupervisorDate;
+
+    /**
      * 财务审核
      */
     private String financialAudit;
+
+    /**
+     * 财务审核时间
+     */
+    private String financialAuditDate;
 
     /**
      * 经营统计
@@ -114,9 +125,24 @@ public class OaActConfirm {
     private String operatingStatistics;
 
     /**
+     * 经营统计时间
+     */
+    private String operatingStatisticsDate;
+
+    /**
      * 业务
      */
     private String business;
+
+    /**
+     * 业务审批时间
+     */
+    private String businessDate;
+
+    /**
+     * 备注
+     */
+    private String remarks;
 
     /**
      * 创建日期
@@ -190,30 +216,6 @@ public class OaActConfirm {
         this.money = money;
     }
 
-    public String getVariety() {
-        return variety;
-    }
-
-    public void setVariety(String variety) {
-        this.variety = variety;
-    }
-
-    public String getUnivalent() {
-        return univalent;
-    }
-
-    public void setUnivalent(String univalent) {
-        this.univalent = univalent;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
     public String getErp() {
         return erp;
     }
@@ -262,12 +264,28 @@ public class OaActConfirm {
         this.companyPrincipal = companyPrincipal;
     }
 
+    public String getCompanyPrincipalDate() {
+        return companyPrincipalDate;
+    }
+
+    public void setCompanyPrincipalDate(String companyPrincipalDate) {
+        this.companyPrincipalDate = companyPrincipalDate;
+    }
+
     public String getBusinessSupervisor() {
         return businessSupervisor;
     }
 
     public void setBusinessSupervisor(String businessSupervisor) {
         this.businessSupervisor = businessSupervisor;
+    }
+
+    public String getBusinessSupervisorDate() {
+        return businessSupervisorDate;
+    }
+
+    public void setBusinessSupervisorDate(String businessSupervisorDate) {
+        this.businessSupervisorDate = businessSupervisorDate;
     }
 
     public String getFinanceSupervisor() {
@@ -278,12 +296,28 @@ public class OaActConfirm {
         this.financeSupervisor = financeSupervisor;
     }
 
+    public String getFinanceSupervisorDate() {
+        return financeSupervisorDate;
+    }
+
+    public void setFinanceSupervisorDate(String financeSupervisorDate) {
+        this.financeSupervisorDate = financeSupervisorDate;
+    }
+
     public String getFinancialAudit() {
         return financialAudit;
     }
 
     public void setFinancialAudit(String financialAudit) {
         this.financialAudit = financialAudit;
+    }
+
+    public String getFinancialAuditDate() {
+        return financialAuditDate;
+    }
+
+    public void setFinancialAuditDate(String financialAuditDate) {
+        this.financialAuditDate = financialAuditDate;
     }
 
     public String getOperatingStatistics() {
@@ -294,12 +328,28 @@ public class OaActConfirm {
         this.operatingStatistics = operatingStatistics;
     }
 
+    public String getOperatingStatisticsDate() {
+        return operatingStatisticsDate;
+    }
+
+    public void setOperatingStatisticsDate(String operatingStatisticsDate) {
+        this.operatingStatisticsDate = operatingStatisticsDate;
+    }
+
     public String getBusiness() {
         return business;
     }
 
     public void setBusiness(String business) {
         this.business = business;
+    }
+
+    public String getBusinessDate() {
+        return businessDate;
+    }
+
+    public void setBusinessDate(String businessDate) {
+        this.businessDate = businessDate;
     }
 
     public Date getCreateTime() {
@@ -348,5 +398,21 @@ public class OaActConfirm {
 
     public void setAnnex(String annex) {
         this.annex = annex;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public List<OaConfirm> getOaConfirmList() {
+        return oaConfirmList;
+    }
+
+    public void setOaConfirmList(List<OaConfirm> oaConfirmList) {
+        this.oaConfirmList = oaConfirmList;
     }
 }

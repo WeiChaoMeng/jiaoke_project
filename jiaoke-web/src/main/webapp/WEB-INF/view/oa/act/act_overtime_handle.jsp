@@ -175,7 +175,7 @@
         </div>
 
         <div class="approval-input">
-            <span class="approval-input-span">部门领导</span>
+            <span class="approval-input-span">部门负责人</span>
             <shiro:hasPermission name="principal">
                 <input type="text" class="approval-input-input" name="supervisor" value="${nickname}" readonly>
                 <input type="hidden" name="supervisorDate"

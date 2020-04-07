@@ -30,7 +30,38 @@
                 <div class="head_left_button" style="width: 100px">
                     <button type="button" class="cursor_hand" onclick="replenishmentRecord()">&#xe7e9; 补货记录</button>
                 </div>
+
+                <div class="separation_line"></div>
+
+                <div class="head_left_button">
+                    <button type="button" class="cursor_hand" onclick="addAssets()">&#xeb86; 添加</button>
+                </div>
+
+                <div class="separation_line"></div>
+
+                <div class="head_left_button">
+                    <button type="button" class="cursor_hand" onclick="edit()">&#xe7e9; 编辑</button>
+                </div>
+
+                <div class="separation_line"></div>
+
+                <div class="head_left_button">
+                    <button type="button" class="cursor_hand" onclick="del()">&#xeaa5; 删除</button>
+                </div>
+
+                <div class="separation_line"></div>
+
+                <div class="head_left_button">
+                    <button type="button" class="cursor_hand" onclick="switchState()">&#xea67; 关闭</button>
+                </div>
+
+                <div class="separation_line"></div>
+
+                <div class="head_left_button">
+                    <button type="button" class="cursor_hand" onclick="operatingRecord()">&#xe8db; 操作记录</button>
+                </div>
             </td>
+
             <td>
                 <div>
                     <div class="conditional-query cursor_hand">
@@ -50,31 +81,15 @@
     <tr>
         <th style="width: 3%;"><input type="checkbox"></th>
         <th style="width: 3%;">序号</th>
-        <th style="width: 17%;">资产名字</th>
-        <th style="width: 10%;">资产类别</th>
-        <th style="width: 17%;">规格型号</th>
-        <th style="width: 10%;">库存数量</th>
-        <th style="width: 10%;">来源</th>
-        <th style="width: 10%;">录入人员</th>
-        <th style="width: 10%;">存放地点</th>
-        <th style="width: 10%;">保管人员</th>
+        <th style="width: 42%;">资产名字</th>
+        <th style="width: 13%;">库存数量</th>
+        <th style="width: 13%;">录入人员</th>
+        <th style="width: 13%;">存放地点</th>
+        <th style="width: 13%;">保管人员</th>
     </tr>
     </thead>
 
-    <tbody id="tbody">
-    <tr>
-        <td><input type="checkbox"></td>
-        <td>1</td>
-        <td>得力打印纸</td>
-        <td>办公用品</td>
-        <td>A4</td>
-        <td>1</td>
-        <td>行政购置</td>
-        <td>张三</td>
-        <td>办公室</td>
-        <td>李四</td>
-    </tr>
-    </tbody>
+    <tbody id="tbody"></tbody>
 
 </table>
 
@@ -126,7 +141,7 @@
                 parseResult(oaAssetsManagements);
             },
             error: function (result) {
-                layer.msg("出错！");
+                window.top.tips("出错！", 6, 2, 1000);
             }
         })
     }
@@ -149,7 +164,7 @@
                 loadPage(parameter);
             },
             error: function (result) {
-                layer.msg("出错！");
+                window.top.tips("出错！", 6, 2, 1000);
             }
         })
     }
@@ -204,7 +219,7 @@
         var oaAssetsManagement = '';
         if (oaAssetsManagementList.length === 0) {
             oaAssetsManagement += '<tr>';
-            oaAssetsManagement += '<td colspan="10">' + '暂无数据' + '</td>';
+            oaAssetsManagement += '<td colspan="7">' + '暂无数据' + '</td>';
             oaAssetsManagement += '</tr>';
         } else {
             for (let i = 0; i < oaAssetsManagementList.length; i++) {
@@ -212,18 +227,7 @@
                 oaAssetsManagement += '<td><input type="checkbox" value="' + oaAssetsManagementList[i].id + '" onclick="window.event.cancelBubble=true;"></td>';
                 oaAssetsManagement += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 15 + i + 1) + '</td>';
                 oaAssetsManagement += '<td style="text-align: left;text-indent: 10px;">' + oaAssetsManagementList[i].assetsName + '</td>';
-                if (oaAssetsManagementList[i].assetsCategory === 0) {
-                    oaAssetsManagement += '<td>' + '办公用品' + '</td>';
-                } else if (oaAssetsManagementList[i].assetsCategory === 1) {
-                    oaAssetsManagement += '<td>' + '生产设备' + '</td>';
-                }
-                oaAssetsManagement += '<td>' + oaAssetsManagementList[i].productSpecification + '</td>';
                 oaAssetsManagement += '<td>' + oaAssetsManagementList[i].productQuantity + '</td>';
-                if (oaAssetsManagementList[i].productSource === 0) {
-                    oaAssetsManagement += '<td>' + '行政购置' + '</td>';
-                } else if (oaAssetsManagementList[i].productSource === 1) {
-                    oaAssetsManagement += '<td>' + '设备购置' + '</td>';
-                }
                 oaAssetsManagement += '<td>' + oaAssetsManagementList[i].entryPerson + '</td>';
                 oaAssetsManagement += '<td>' + oaAssetsManagementList[i].storageLocation + '</td>';
                 oaAssetsManagement += '<td>' + oaAssetsManagementList[i].custodian + '</td>';
@@ -232,6 +236,10 @@
         }
 
         $('#tbody').html(oaAssetsManagement);
+    }
+
+    function addAssets() {
+        window.location.href = "${path}/assetsManagement/toAddAssetsArchives";
     }
 
     //补货记录
@@ -245,6 +253,82 @@
             var assetManagementId = $("tbody input:checked").val();
             window.location.href = "${path}/assetsManagement/toAssetReplenishmentRecordPage?assetManagementId=" + assetManagementId + '&archivesPage=' + page;
         }
+    }
+
+    //操作记录
+    function operatingRecord() {
+        window.location.href = "${path}/assetsManagement/toAssetOperatingRecordPage";
+    }
+
+    //删除
+    function del() {
+        let length = $("#tbody input:checked").length;
+        if (length !== 1) {
+            layer.msg("请选择一条数据！");
+            return false;
+        } else {
+            var val = $("#tbody input:checked").val();
+            //主页fun
+            window.top.deleteAssetsArchivs(val, $('#page').val());
+        }
+    }
+
+    //切换状态
+    function switchState() {
+        let length = $("#tbody input:checked").length;
+        if (length !== 1) {
+            layer.msg("请选择一条数据！");
+            return false;
+        } else {
+            var id = $("#tbody input:checked").val();
+
+            $.ajax({
+                type: "post",
+                url: '/assetsManagement/updateState',
+                data: {'id': id, 'state': 1},
+                success: function (data) {
+                    if (data === 'success') {
+                        window.top.tips("处理成功！", 0, 1, 1000);
+                        window.location.href = "${path}/assetsManagement/toAssetsArchives?page=1";
+                    } else {
+                        window.top.tips("处理失败！", 0, 1, 1000);
+                    }
+                },
+                error: function (result) {
+                    window.top.tips("出错！", 6, 2, 1000);
+                }
+            });
+        }
+    }
+
+    //编辑
+    function edit() {
+        let length = $("#tbody input:checked").length;
+        if (length !== 1) {
+            layer.msg("请选择一条数据！");
+            return false;
+        } else {
+            var id = $("#tbody input:checked").val();
+
+            $.ajax({
+                type: "post",
+                url: '/assetsManagement/selectById',
+                data: {'id': id},
+                async: false,
+                success: function (data) {
+                    //主页fun
+                    window.top.editAssetsArchivs(JSON.parse(data));
+                },
+                error: function (result) {
+                    window.top.tips("出错！", 6, 2, 1000);
+                }
+            });
+        }
+    }
+
+    //重载页面
+    function reloadAssetsArchivs(page) {
+        window.location.href = "${path}/assetsManagement/toAssetsArchives?page=" + page;
     }
 
     //checkbox选中事件
