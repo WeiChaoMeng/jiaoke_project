@@ -36,10 +36,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -413,7 +410,12 @@ public class QualityController {
         return jsonMessage;
     }
 
-
+    @ResponseBody
+    @RequestMapping("/getOldGrading.do")
+    public String getOldGrading(){
+        String str = qualityMatchingInf.getOldGrading();
+        return str;
+    }
     @ResponseBody
     @RequestMapping(value ={"/addGrading.do"} , method = RequestMethod.POST)
     public String addGrading(String jsonData,String crew1Id,String crew2Id,String gradingName,String upUser,String gradingRemaker){
@@ -724,6 +726,19 @@ public class QualityController {
     public String getWarningPage(){
         return "quality/qc_warning_page";
     }
+
+    @ResponseBody
+    @RequestMapping("/getWarningLevelData.do")
+    public String getWarningLevelData(){
+        Map<String,Object> res = qualityRealTimeWarningInf.getWarningLevelData();
+        return JSON.toJSONString(res);
+    }
+    @ResponseBody
+    @RequestMapping(value = "/editWarningLevel.do",method = RequestMethod.POST)
+    public String editWarningLevel(@RequestParam("fromData") String fromData){
+        Map<String,Object> res = qualityRealTimeWarningInf.editWarningLevel(fromData);
+        return JSON.toJSONString(res);
+    }
     /********************************  质量预警 end *****************************************/
 
 
@@ -790,7 +805,7 @@ public class QualityController {
             System.out.println(e);
         }
 
-        return "quality/qc_auxiliary_message";
+         return "quality/qc_auxiliary_message";
     }
 
     @ResponseBody

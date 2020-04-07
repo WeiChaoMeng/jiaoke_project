@@ -11,6 +11,7 @@ package com.jiake.utils;
 import com.alibaba.fastjson.JSON;
 import com.jiaoke.quality.dao.QualityDataMontoringDao;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -60,8 +61,17 @@ public class QualityGradingUtil {
             String regenerate = String.valueOf(list.get(i).get("material_regenerate"));
             String additive = String.valueOf(list.get(i).get("material_additive"));
 
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            String proDate;
+            try{
+                proDate = sdf.format(list.get(i).get("produce_date"));
+            }catch (Exception e){
+                proDate = list.get(i).get("produce_date");
+            }
+
+
             //获取 级配比
-            List<Map<String,String>> gradingList =  qualityDataMontoringDao.selectGradingBycrewNumAndRationNum(crewNum,rationNum);
+            List<Map<String,String>> gradingList =  qualityDataMontoringDao.selectGradingBycrewNumAndRationNum(crewNum,rationNum,proDate);
 
 
             //取出粗的再生，细的再生，添加剂 通知单配比

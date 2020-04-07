@@ -387,8 +387,7 @@
                             <th>骨料4</th>
                             <th>骨料5</th>
                             <th>骨料6</th>
-                            <th>石粉1</th>
-                            <th>石粉2</th>
+                            <th>石粉</th>
                             <th>沥青</th>
                             <th>再生料</th>
                             <th>添加剂</th>
@@ -405,8 +404,7 @@
                             <td id="aggregate_4_svg" ><i>%</i></td>
                             <td id="aggregate_5_svg" ><i>%</i></td>
                             <td id="aggregate_6_svg" ><i>%</i></td>
-                            <td id="stone_1_svg" ><i>%</i></td>
-                            <td id="stone_2_svg" ><i>%</i></td>
+                            <td id="breeze_svg" ><i>%</i></td>
                             <td id="asphalt_svg" ><i>%</i></td>
                             <td id="regenerate_svg" ><i>%</i></td>
                             <td id="additive_svg" ><i>%</i></td>

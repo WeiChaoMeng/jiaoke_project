@@ -170,10 +170,13 @@ public class ReceiveDataImpl implements ReceiveDataInf {
         //用于写入假预警数据表
         List<QualityWaringDataFalse> myWaringDataList = new ArrayList<>();
 
+        //分析出日期
+        String proDate = messageArray[0];
 
         //根据配比号获取配比信息
-        QualityRatioTemplate templateRatio = qualityWarningDao.getQualityRatioTemplateById(Integer.parseInt(proportioningNum),crewNum);
+        QualityRatioTemplate templateRatio = qualityWarningDao.getQualityRatioTemplateById(Integer.parseInt(proportioningNum),crewNum,proDate);
         if (templateRatio == null ) return;
+        crewNum = "crew1".equals(crewNum)? "1":"2";
         //根据模板随机比例(6-3仓 2%  2,1仓,矿粉仓 1%  沥青上下3kg  温度 上下5)
         double repertorySixPercentage = positiveAndNegativeRandomDecimals(templateRatio.getRepertorySix(), 2, 4);
         //添加预警表相关信息

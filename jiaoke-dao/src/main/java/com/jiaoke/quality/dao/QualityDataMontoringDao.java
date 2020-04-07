@@ -48,7 +48,7 @@ public interface QualityDataMontoringDao {
      * @param rationNum
      * @return
      */
-    List<Map<String, String>> selectGradingBycrewNumAndRationNum(@Param("crewNum") String crewNum, @Param("rationNum") String rationNum);
+    List<Map<String, String>> selectGradingBycrewNumAndRationNum(@Param("crewNum") String crewNum, @Param("rationNum") String rationNum, @Param("proDate") String produce_date);
 
     /**
      * 根据机组与配比号获取配比通知单相关数据

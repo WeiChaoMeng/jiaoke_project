@@ -179,6 +179,7 @@
                QR.material_stone_1,
                QR.material_stone_2,
                QR.material_asphalt,
+               QR.produce_date,
                QR.material_regenerate,
                QR.material_additive,
                QR.temperature_warehouse_1 as tem_warehouse_1,
@@ -216,6 +217,7 @@
                        QR.material_stone_1,
                        QR.material_stone_2,
                        QR.material_asphalt,
+                       QR.produce_date,
                        QR.material_regenerate,
                        QR.material_additive,
                        QR.temperature_warehouse_1 as tem_warehouse_1,
@@ -243,11 +245,14 @@
 
     <select id="selectGradingBycrewNumAndRationNum" resultType="java.util.Map">
         SELECT
-                *
+               QPG.*
         FROM
-             quality_proportioning_grading
+             quality_proportioning_grading AS QPG
+                 INNER JOIN quality_proportioning_grading_model AS QPGM
+                     ON QPG.model_id = QPGM.id
         WHERE
-                ${crewNum}_id = ${rationNum};
+                ${crewNum}_id = ${rationNum}
+          AND YEAR(QPGM.create_time) = year(&apos;${proDate}&apos;)
     </select>
 
     <select id="selectRationByCrewAndRotinNum" resultType="java.util.Map">

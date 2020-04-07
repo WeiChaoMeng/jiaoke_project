@@ -337,7 +337,7 @@ function eachresList(res){
 //     myChart5.resize();
 // });
 /******************************** Echart温度图表渲染nd********************************************/
-window.setInterval(getRealTimeData,3000);
+window.setInterval(getRealTimeData,20000);
 
 
 //遍历json，返回指定格式数据

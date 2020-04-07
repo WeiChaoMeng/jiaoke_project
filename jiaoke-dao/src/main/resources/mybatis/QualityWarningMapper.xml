@@ -98,10 +98,10 @@
                QPM.temperature_mixture_up as temperatureMixtureUp,
                QPM.temperature_milling_up as temperatureMillingUp
         from quality_proportioning_message AS QPM
-                 INNER JOIN quality_proportioning_model AS QPMD
-                     ON QPM.id = QPMS.message_id
-        where QPM.${crewNum}_modele_id = ${id} AND
-              YEAR(QPMD.create_time) = YEAR(NOW());
+                 INNER JOIN  quality_proportioning_model AS QPMD
+                     ON QPM.id = QPMD.message_id
+        where ${crewNum}_modele_id = ${id}
+          AND YEAR(QPMD.create_time) = YEAR(&apos;${proDate}&apos;)
 
     </select>
     
@@ -110,4 +110,7 @@
         VALUES
                (#{id})
     </insert>
+    <select id="selectWarningLevel" resultType="java.util.Map">
+        SELECT * FROM `quality_warning_level`;
+    </select>
 </mapper>

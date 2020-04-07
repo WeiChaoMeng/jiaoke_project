@@ -221,7 +221,7 @@ public class QualityMatchingImpl implements QualityMatchingInf{
         }
 
         if (list.size() != 0){
-            qualityMatchingDao.insetGrading(list,String.valueOf(id));
+            qualityMatchingDao.insetGrading(list,id);
             result.put("messages","success");
         }else {
             result.put("messages","error");
@@ -241,5 +241,23 @@ public class QualityMatchingImpl implements QualityMatchingInf{
         qualityMatchingDao.updateRatioById(qualityRatioTemplate);
         map.put("res","success");
         return true;
+    }
+
+    @Override
+    public String getOldGrading() {
+        Map<String,String> map = new HashMap<>();
+        //查询除去今年，一共有几个年份有模板
+        List<Map<String,String>> years =  qualityMatchingDao.selectGradingYear();
+        //查询历史模板
+        List<QualityRatioModel> rationArr = qualityMatchingDao.selectAllGrading();
+
+        if (rationArr == null || rationArr.size() == 0){
+            map.put("message","error");
+            return JSON.toJSONString(map);
+        }
+        map.put("message","success");
+        map.put("rationYear",JSON.toJSONString(years));
+        map.put("rationList",JSON.toJSONString(rationArr));
+        return JSON.toJSONString(map);
     }
 }

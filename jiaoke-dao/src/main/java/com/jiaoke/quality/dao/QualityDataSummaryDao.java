@@ -37,7 +37,7 @@ public interface QualityDataSummaryDao {
 
     List<Map<String,Object>> selectPromessageByRaionModel(@Param("startDate") String startDate, @Param("endDate")String endDate,@Param("crew") String crew,@Param("rationId") String rationId);
 
-    Map<String, String> selectRaionModelById(@Param("crewNum")String crew, @Param("rationNum")String rationId);
+    Map<String, String> selectRaionModelById(@Param("crewNum")String crew, @Param("rationNum")String rationId,@Param("proDate") String proDate);
 
     /**
      *
@@ -81,7 +81,7 @@ public interface QualityDataSummaryDao {
      * @auther Melone
      * @date 2019/8/21 8:59
      */
-    QualityRatioTemplate selectRationById(@Param("ratioNum") String ratioNum,@Param("crewNum") String crewNum);
+    QualityRatioTemplate selectRationById(@Param("ratioNum") String ratioNum,@Param("crewNum") String crewNum,@Param("proDate") String proDate);
 
     /**
      *

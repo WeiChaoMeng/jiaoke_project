@@ -23,6 +23,8 @@
     <ul class="toolbar">
         <li><a href="#" id="showBrk" ><i class="toolico iconfont">&#xe7e9;</i>新建级配</a></li>
         <li><a href="#" id="btn_click"><i class="toolico iconfont">&#xe7ea;</i>删除</a></li>
+        <li><a href="#" onclick="showOldGrading()" id="former_years"><i class="toolico iconfont">&#xe64c;</i>查看往年级配</a></li>
+
     </ul>
     <!--toolbar end-->
 
@@ -50,7 +52,7 @@
     <!--tablebox end-->
 
     <!--pagination start-->
-    <div class="zxf_pagediv"></div>
+    <div  class="zxf_pagediv"></div>
     <!--pagination end-->
 
     <!--删除弹出-->
@@ -69,7 +71,7 @@
     <!--展示级配模板弹出-->
     <div id="GradingBrk" class="form_background"  style="display:none;" ></div>
     <div id="Grading" class="ration_form_model" style="display:none;" >
-        <table class="my_form_table">
+        <table class="my_form_table" style="margin-top: 1%;">
             <tbody>
             <tr>
                 <td class="my_grading_tlables">一号机组模板号：</td>
@@ -120,7 +122,7 @@
         </div>
 
         <div class="form_btn">
-            <input type="button" onclick="closeGradingModel()" value="关闭" class="ration_btn_cancel">
+            <%--<input type="button" onclick="closeGradingModel()" value="关闭" class="ration_btn_cancel">--%>
         </div>
 
         </form>
@@ -243,7 +245,9 @@
     <input type="text" value="${path}" id="path" style="display: none" >
 
 </body>
+<div id="showOldGrading" style="padding-top: 8px;display: none;">
 
+</div>
 <script type="text/javascript" src="/static/js/jquery.js"></script>
 <script type="text/javascript" src="/static/js/jquery.select.js"></script>
 <script src="/static/js/layer/layer.js"></script>

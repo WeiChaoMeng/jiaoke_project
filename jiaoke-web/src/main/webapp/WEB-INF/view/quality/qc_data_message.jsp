@@ -410,8 +410,12 @@
                 yAxis: [{
                     type: 'value',
                     interval :0.1,
-                    max:parseInt(${baseMap.template.ratioStone + 0.5}),
-                    min:parseInt(${baseMap.template.ratioStone - 0.5}),
+                    max:function (v) {
+                        return (v.max).toFixed(1)
+                    },
+                    min:function (v) {
+                        return (v.min).toFixed(1)
+                    },
                     axisLabel: {
                         formatter: '{value} %'
                     },
@@ -552,6 +556,7 @@
     }
     
     function getSvgByList(jsonList,index) {
+        debugger
         var endArrIndex = Number(index) * 20;
         var strtArrIndex = (Number(index) - 1) * 20;
         //循环次数
@@ -559,6 +564,7 @@
         //各材料参数
         var crewNum;
         var pro_name;
+        var proDate;
         var produce_proportioning_num ;
         var material_aggregate_6_total = 0;
         var material_aggregate_5_total = 0;
@@ -585,6 +591,7 @@
             forCount ++;
             crewNum = jsonList[i].crewNums;
             pro_name = jsonList[i].pro_name;
+            proDate = jsonList[i].produce_date;
             produce_proportioning_num = jsonList[i].produce_proportioning_num;
             material_aggregate_6_total += Number(jsonList[i].material_aggregate_6);
             material_aggregate_5_total += Number(jsonList[i].material_aggregate_5);
@@ -608,6 +615,7 @@
 
         svgPro.crewNum = crewNum;
         svgPro.pro_name = pro_name;
+        svgPro.proDate = proDate;
         svgPro.produce_proportioning_num = produce_proportioning_num;
         svgPro.material_aggregate_6 = material_aggregate_6_total/forCount;
         svgPro.material_aggregate_5 = material_aggregate_5_total/forCount;

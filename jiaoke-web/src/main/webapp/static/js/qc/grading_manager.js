@@ -31,12 +31,96 @@ function getGradingList() {
     })
 }
 
+function showOldGrading() {
+    var basePath = $("#path").val();
+    $.ajax({
+        url:basePath + "/getOldGrading.do",
+        type: "get",
+        dataType:"json",
+        success:function (res) {
+
+            if (res.message === 'error' || res === null){
+                layer.msg("无往年级配")
+                return
+            }
+
+            //取出年份数组与全部配比数组
+            var years = JSON.parse(res.rationYear);
+            var rationArr =  JSON.parse(res.rationList);
+
+            for(var i = 0;i < years.length;i++){
+
+                var tem = '<a class="matching_p" href="javascript:;" name="'+ years[i]["year"] +'" onclick="showRationDiv(this.name)"><i class="toolico iconfont"></i>' + years[i]["year"] + '年级配</a>'
+                    + '<div class="tablebox" id="' + years[i]["year"]  + '_div" style="display: none">'
+                    + '<table>'
+                    + '<thead>'
+                    + '<th class="num"></th>'
+                    + '<th>一号机组编号</th>'
+                    + '<th>二号机组编号</th>'
+                    + '<th>级配名称</th>'
+                    + '<th>上传时间</th>'
+                    + '<th>备注信息</th>'
+                    + '<th>上传人</th>'
+                    + '<th>操作</th>'
+                    + '</thead>'
+                    + '<tbody id="' +years[i]["year"] + '_body">'
+                    + '</tbody>'
+                    + '</table>'
+                    + '</div>';
+
+                $("#showOldGrading").append(tem);
+            }
+
+            var year;
+            var temH;
+            for (var j = 0; j < rationArr.length;j++){
+
+                year = rationArr[j]['create_time'].split("-")[0];
+
+                temH = '<tr>'
+                    + '<td class="tdnum"></td>'
+                    + '<td>' + rationArr[j].crew1Id + '</td>'
+                    + '<td>' + rationArr[j].crew2Id + '</td>'
+                    +'<td>' + rationArr[j].grading_name + '</td>'
+                    +'<td>' + rationArr[j].create_time + '</td>'
+                    +'<td>' + rationArr[j].grading_remaker + '</td>'
+                    +'<td>' + rationArr[j].up_user + '</td>'
+                    +'<td>'
+                    +'<a  href="javascript:;"   name="'+ rationArr[j].id + '" onclick="showGrading(this.name)" class="selected"  id=""><i class="toolico iconfont">&#xe649;</i>查看</a>'
+                    +'</td>'
+                    +'</tr>';
+
+                $("#" + year +"_body").append(temH)
+            }
+        }
+    })
+    layer.open({
+        type: 1,
+        skin: '历史级配', //加上边框
+        area: ['90%', '90%'], //宽高
+        content: $("#showOldGrading")
+    });
+}
+
+function showRationDiv(id) {
+    var jqeryId = "#" + id + "_div";
+    if ($(jqeryId).is(":hidden") ){
+        $(jqeryId).attr("style","display:block");
+    }else {
+        $(jqeryId).attr("style","display:none");
+    }
+}
 /**
  * 渲染到页面
  * @param currentNum
  */
 function getDateByPageNum(currentNum){
 
+    if (jsonList.length == 0) {
+        $(".zxf_pagediv").remove();
+        layer.alert("本年暂无级配");
+        return
+    }
     var arrayStart = (currentNum - 1) * 15;
     var arrayEnd = arrayStart + 15;
     $("#gradingList").empty();
@@ -100,8 +184,13 @@ function showGrading(id) {
 
                 $("#message").append(htmlStr);
             }
-
-            $('#GradingBrk,#Grading').show();
+            layer.open({
+                type: 1,
+                skin: '级配信息', //加上边框
+                area: ['90%', '90%'], //宽高
+                content: $('#Grading')
+            })
+            // $('#GradingBrk,#Grading').show();
         }
     })
 }
@@ -184,7 +273,13 @@ function showEditGrading(id) {
                 $("#editMessage").append(htmlStr);
             }
 
-            $('#editGradingBrk,#editGrading').show();
+            layer.open({
+                type: 1,
+                skin: '编辑级配', //加上边框
+                area: ['90%', '90%'], //宽高
+                content: $('#editGrading')
+            })
+            // $('#editGradingBrk,#editGrading').show();
         }
     })
 }

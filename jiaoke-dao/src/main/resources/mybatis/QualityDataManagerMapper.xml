@@ -80,7 +80,8 @@
                      </choose>
 
         WHERE
-                QR.produce_date = date &apos;${producedDate}&apos;
+                QR.produce_date = &apos;${producedDate}&apos;
+        AND  QR.produce_proportioning_num != 0
         GROUP BY QR.produce_proportioning_num;
 
     </select>
@@ -101,6 +102,7 @@
                SUM(material_regenerate) as regenerate,
                SUM(material_additive) as additive,
                SUM(material_total) as total,
+               SUM(material_total) as total,
                SUM(temperature_warehouse_1) as warehouse_1,
                SUM(temperature_mixture) as mixture,
                SUM(temperature_duster) as duster,
@@ -111,34 +113,39 @@
         WHERE
                 produce_date = &apos;${producedDate}&apos;
         GROUP BY
-                 produce_proportioning_num
+                 produce_proportioning_num;
     </select>
 
     <select id="selectRatioMessageById" resultType="com.jiaoke.quality.bean.QualityRatioTemplate">
         SELECT
-        pro_name AS proName,
-        repertory_one AS repertoryOne,
-        repertory_two AS repertoryTwo,
-        repertory_three AS repertoryThree,
-        repertory_four AS repertoryFour,
-        repertory_five AS repertoryFive,
-        repertory_six AS repertorySix,
-        breeze AS breeze,
-        ratio_stone AS ratioStone,
-        ratio_regenerate1 AS ratioRegenerate1,
-        ratio_regenerate2 AS ratioRegenerate2,
-        ratio_additive AS ratioAdditive,
-        temperature_asphalt AS temperatureAsphalt,
-        temperature_asphalt AS temperatureAggregate,
-        temperature_mixture AS temperaturemixture,
-        temperature_milling AS temperatureMilling,
-        crew1_modele_id AS crew1ModeleId,
-        crew2_modele_id AS crew2ModeleId
+        QPM.pro_name AS proName,
+        QPM.repertory_one AS repertoryOne,
+        QPM.repertory_two AS repertoryTwo,
+        QPM.repertory_three AS repertoryThree,
+        QPM.repertory_four AS repertoryFour,
+        QPM.repertory_five AS repertoryFive,
+        QPM.repertory_six AS repertorySix,
+        QPM.breeze AS breeze,
+        QPM.ratio_stone AS ratioStone,
+        QPM.ratio_regenerate1 AS ratioRegenerate1,
+        QPM.ratio_regenerate2 AS ratioRegenerate2,
+        QPM.ratio_additive AS ratioAdditive,
+        QPM.temperature_asphalt AS temperatureAsphalt,
+        QPM.temperature_asphalt_up AS temperatureAsphaltUp,
+        QPM.temperature_aggregate AS temperatureAggregate,
+        QPM.temperature_aggregate_up AS temperatureAggregateUp,
+        QPM.temperature_mixture AS temperatureMixture,
+        QPM.temperature_mixture_up AS temperatureMixtureUp,
+        QPM.temperature_milling AS temperatureMilling,
+        QPM.temperature_milling_up AS temperatureMillingUp,
+        QPM.crew1_modele_id AS crew1ModeleId,
+        QPM.crew2_modele_id AS crew2ModeleId
         FROM
-        quality_proportioning_message
-        WHERE
-        ${crewNum}_modele_id IN
-
+        quality_proportioning_message AS QPM
+        INNER JOIN quality_proportioning_model AS QPMD
+        ON QPM.id = QPMD.message_id
+        WHERE  YEAR(QPMD.create_time) = YEAR(&apos;${proDate}&apos;)
+        AND  ${crewNum}_modele_id IN
         <foreach collection="ratioNumList" item="item" open="(" close=")" separator=",">
             ${item.produce_proportioning_num}
         </foreach>
@@ -313,7 +320,7 @@
         from quality_proportioning_message AS QPM
         INNER JOIN quality_proportioning_model AS QPMD
         ON QPM.id = QPMD.message_id
-        where QPM.${crewNum}_modele_id = ${ratioNum} AND
+        where ${crewNum}_modele_id = ${ratioNum} AND
         YEAR(QPMD.create_time) = YEAR(&apos;${proDate}&apos;);
     </select>
 

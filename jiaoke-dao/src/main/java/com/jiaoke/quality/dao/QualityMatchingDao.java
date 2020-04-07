@@ -127,4 +127,26 @@ public interface QualityMatchingDao {
      * @date 2020/3/19 23:13
      */
     List<QualityRatioModel> selectAllRation();
+
+        /**
+         *
+         * 功能描述: <br>
+         *  <查询除去今年，一共有几个年份的级配>
+         * @param
+         * @return
+         * @auther Melone
+         * @date 2020/3/25 15:43
+         */
+    List<Map<String, String>> selectGradingYear();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询所有历史级配>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/3/25 15:52
+     */
+    List<QualityRatioModel> selectAllGrading();
 }

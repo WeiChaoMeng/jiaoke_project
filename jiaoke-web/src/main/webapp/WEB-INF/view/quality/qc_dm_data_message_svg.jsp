@@ -488,7 +488,7 @@
 
         $("#material_stone_1_svg").prepend(obj.material_stone_1.toFixed(2));
         $("#material_stone_2_svg").prepend(obj.material_stone_2.toFixed(2));
-        var breeze = obj.material_stone_1 + obj.material_stone_2;
+        var breeze = obj.material_stone_1 > obj.material_stone_2? obj.material_stone_1:obj.material_stone_2;
 
         $("#breeze_real").prepend((breeze/obj.material_total *100).toFixed(2));
         $("#breeze_real_up").prepend((breeze/obj.material_total *100).toFixed(2));
@@ -561,7 +561,7 @@
     }
 
     function eachMaterialList(res) {
-
+        debugger
 
         for (var i = 0; i < res.length;i++){
 

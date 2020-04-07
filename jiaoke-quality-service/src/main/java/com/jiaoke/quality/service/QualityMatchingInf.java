@@ -94,4 +94,15 @@ public interface QualityMatchingInf {
      * @date 2020/3/19 22:53
      */
     String getOldRation();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询历史级配>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/3/25 15:30
+     */
+    String getOldGrading();
 }

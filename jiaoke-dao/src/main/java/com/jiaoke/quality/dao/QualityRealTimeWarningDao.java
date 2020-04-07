@@ -8,6 +8,8 @@
  **/
 package com.jiaoke.quality.dao;
 
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 import java.util.Map;
 
@@ -53,4 +55,26 @@ public interface QualityRealTimeWarningDao {
      * @date 2019/5/15 11:20
      */
     List<Map<String, Object>> selectGlobalWarningData();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询所有预警级别数据>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/4/1 11:02
+     */
+    List<Map<String, String>>  selectWarningLevelData();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <更新预警级别>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/4/3 12:30
+     */
+    int updataWarningLevel(@Param("map") Map<String, String> map);
 }

@@ -42,7 +42,7 @@ public interface QualityWarningDao {
 
     void insertQualityWarningData( @Param("warningDataList") List<QualityWarningData> warningDataList);
 
-    QualityRatioTemplate getQualityRatioTemplateById(@Param("id") int id,@Param("crewNum") String crewNum);
+    QualityRatioTemplate getQualityRatioTemplateById(@Param("id") int id,@Param("crewNum") String crewNum,@Param("proDate") String produceDate);
 
     /**
      *
@@ -54,4 +54,15 @@ public interface QualityWarningDao {
      * @date 2019/8/19 17:22
      */
     void insertCriticalWarning(@Param("id") int id);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询预警级别>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/3/31 8:41
+     */
+    List<Map<String, String>> selectWarningLevel();
 }

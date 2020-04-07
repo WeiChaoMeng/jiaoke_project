@@ -9,6 +9,7 @@
 package com.jiake.utils;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,12 +48,15 @@ public class QualityProsvg {
         Double regenerate = 0.00;
         Double additive = 0.00;
         Double total = 0.00;
+        String produce_date = "";
 
         Double TemWarehouse1 = 0.00;
         Double TemMixture = 0.00;
         Double TemDuster = 0.00;
         Double TemAsphalt = 0.00;
         Double TemAggregate = 0.00;
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
         for (int i = 0; i < list.size(); i++){
             rationNum = list.get(i).get("produce_proportioning_num").toString();
@@ -68,6 +72,12 @@ public class QualityProsvg {
             regenerate += Double.parseDouble(list.get(i).get("material_regenerate").toString());
             additive += Double.parseDouble(list.get(i).get("material_additive").toString());
             total += Double.parseDouble(list.get(i).get("material_total").toString());
+            try {
+                produce_date = sdf.format(list.get(i).get("produce_date"));
+            }catch (Exception e){
+                produce_date = list.get(i).get("produce_date").toString();
+            }
+
 
             TemWarehouse1 += Double.parseDouble(list.get(i).get("temperature_warehouse_1").toString());
             TemMixture += Double.parseDouble(list.get(i).get("temperature_mixture").toString());
@@ -99,7 +109,7 @@ public class QualityProsvg {
         map.put("temperature_duster",df.format(TemDuster/list.size()));
         map.put("temperature_asphalt",df.format(TemAsphalt/list.size()));
         map.put("temperature_aggregate",df.format(TemAggregate/list.size()));
-
+        map.put("produce_date",produce_date);
         //如果有配比放入map中
         if (!list.isEmpty()){
             if (list.get(0).containsKey("ratio_regenerate1")){

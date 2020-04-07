@@ -18,5 +18,4 @@ package com.jiake.utils;
 public class CommonUtil {
 
 
-
 }

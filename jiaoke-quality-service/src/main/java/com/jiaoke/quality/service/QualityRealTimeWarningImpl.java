@@ -138,4 +138,47 @@ public class QualityRealTimeWarningImpl implements  QualityRealTimeWarningInf {
 
         return JSON.toJSONString(list);
     }
+
+    @Override
+    public Map<String, Object> getWarningLevelData() {
+        Map<String,Object> map = new HashMap<>();
+        List<Map<String,String>> list = qualityRealTimeWarningDao.selectWarningLevelData();
+        if (null == list || list.isEmpty()){
+            map.put("code",0);
+            map.put("msg","当前无预设预警级别");
+            map.put("count",0);
+            return map;
+        }
+        map.put("code",0);
+        map.put("msg","查询成果");
+        map.put("count",list.size());
+        map.put("data",list);
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> editWarningLevel(String warningData) {
+        Map<String,Object> map = new HashMap<>();
+        int tem = 0;
+
+        try {
+            List<Map<String,String>>  list = (List<Map<String,String>>) JSONArray.parse(warningData);
+
+            for (int i = 0; i < list.size();i++){
+                tem = qualityRealTimeWarningDao.updataWarningLevel(list.get(i));
+            }
+
+        }catch (Exception e){
+            map.put("message","error");
+            e.printStackTrace();
+        }
+
+        if (tem > 0){
+            map.put("message","success");
+        }else {
+            map.put("message","fail");
+        }
+
+        return map;
+    }
 }

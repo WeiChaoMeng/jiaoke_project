@@ -90,6 +90,7 @@
                                 <li class="function"><a href="" onclick="chengeHref(this.id)" id="material_aggregate_6">六仓材料</a></li>
                                 <li class="function"><a href="" onclick="chengeHref(this.id)" id="material_asphalt">油石比</a></li>
                                 <li class="function"><a href="" onclick="chengeHref(this.id)" id="material_stone">石粉比</a></li>
+                                <li class="function"><a href="" onclick="chengeHref(this.id)" id="material_regenerate">铣刨料</a></li>
                             </ul>
                         </div>
                     </div>
@@ -219,8 +220,12 @@
                                             axisLabel: {
                                                 formatter: '{value} %'
                                             },
-                                            max:${moudelRatio[keys] + 7},
-                                            min:${moudelRatio[keys] - 7}
+                                            max: function (value) {
+                                                return (value.max + 0.25).toFixed(2);
+                                            },
+                                            min:function (value) {
+                                                return (value.min - 0.25) < 0? 0:(value.min - 0.25).toFixed(2);
+                                            },
                                             // max: function (v) {
                                             //     return (v.max + v.min)/2
                                             // },
@@ -381,11 +386,11 @@
                                             axisLabel: {
                                                 formatter: '{value} %'
                                             },
-                                            max: function (v) {
-                                                return (v.max).toFixed(1)
+                                            max: function (value) {
+                                                return (value.max + 0.25).toFixed(2);
                                             },
-                                            min: function (v) {
-                                                return v.min - 1 < 0? 0:(v.min - 5).toFixed(1);
+                                            min:function (value) {
+                                                return (value.min - 0.25) < 0? 0:(value.min - 0.25).toFixed(2);
                                             },
                                         },
                                         series: [
@@ -422,21 +427,21 @@
                                                         }
                                                     }
                                                 },
-                                                markLine:{
-                                                    silent: true,
-                                                    data: [
-                                                        <c:choose>
-                                                        <c:when test="${material == '油石比' || material == '石粉' ||empty material}">
-                                                        { yAxis: '${(moudelRatio[keys] + 0.2)/2}', xAxis: '${fn:length(allItem[keys])}'},
-                                                        { yAxis: '${(moudelRatio[keys] - 0.2)/2}', xAxis: '${fn:length(allItem[keys])}'}
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                        { yAxis: '${(moudelRatio[keys] + 3)/2}', xAxis: '${fn:length(allItem[keys])}'},
-                                                        { yAxis: '${(moudelRatio[keys] - 3)/2}', xAxis: '${fn:length(allItem[keys])}'}
-                                                        </c:otherwise>
-                                                        </c:choose>
-                                                    ]
-                                                },
+                                                <%--markLine:{--%>
+                                                    <%--silent: true,--%>
+                                                    <%--data: [--%>
+                                                        <%--<c:choose>--%>
+                                                        <%--<c:when test="${material == '油石比' || material == '石粉' ||empty material}">--%>
+                                                        <%--{ yAxis: '${(moudelRatio[keys] + 0.2)/2}', xAxis: '${fn:length(allItem[keys])}'},--%>
+                                                        <%--{ yAxis: '${(moudelRatio[keys] - 0.2)/2}', xAxis: '${fn:length(allItem[keys])}'}--%>
+                                                        <%--</c:when>--%>
+                                                        <%--<c:otherwise>--%>
+                                                        <%--{ yAxis: '${(moudelRatio[keys] + 3)/2}', xAxis: '${fn:length(allItem[keys])}'},--%>
+                                                        <%--{ yAxis: '${(moudelRatio[keys] - 3)/2}', xAxis: '${fn:length(allItem[keys])}'}--%>
+                                                        <%--</c:otherwise>--%>
+                                                        <%--</c:choose>--%>
+                                                    <%--]--%>
+                                                <%--},--%>
                                                 data:[
                                                     //极差是偏差值*2
                                                     <c:forEach items="${maxMinUp[keys]}" var="maxMinUpRation" varStatus="statusMaxMin">
@@ -562,8 +567,12 @@
                                                 formatter: '{value} %'
                                             },
                                             Interval:0.5,
-                                            max:${moudelRatio[keys] + 7},
-                                            min:${moudelRatio[keys] - 7}
+                                            max: function (value) {
+                                                return (value.max + 0.25).toFixed(2);
+                                            },
+                                            min:function (value) {
+                                                return (value.min - 0.25) < 0? 0:(value.min - 0.25).toFixed(2);
+                                            },
                                             // max: function (v) {
                                             //     return (v.max + 0.5).toFixed(1)
                                             // },

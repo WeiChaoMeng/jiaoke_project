@@ -12,16 +12,27 @@
     <meta charset="utf-8">
     <title>数据预警</title>
     <link href="/static/css/default.css" rel="stylesheet" type="text/css">
-    <script src="/static/js/echarts/echarts.js"></script>
+    <link href="/static/layui/css/layui.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/static/js/echarts/echarts.js"></script>
+
 </head>
 
 <body style="padding:15px 8px 500px 8px;">
 
     <div class="my_echars_div_block" >
-
         <div>
             <div class="boxtitle">
                 <span>一号机组实时数据预警</span>
+                <div style="height: 100%;padding-left: 60%;float: left;">
+                    <p style="float: left;font-size: 12px;" >无预警：</p>
+                    <span class="example_span" style="background-color: green;"></span>
+                    <p style="float: left;font-size: 12px;" >一级预警：</p>
+                     <span class="example_span" style="background-color: blue;"></span>
+                    <p style="float: left;font-size: 12px;" >二级预警：</p>
+                    <span class="example_span" style="background-color: yellow;" ></span>
+                    <p style="float: left;font-size: 12px;" >三级预警：</p>
+                    <span class="example_span" style="background-color: red;" ></span>
+                </div>
             </div>
         </div>
         <div>
@@ -81,6 +92,7 @@
 
                     <div class="boxtitle">
                         <span>一号机组三盘产品平均级配曲线图</span>
+                        <button  onclick="editWarningLevel()" class="layui-btn" style="margin-left: 170px;margin-top: 3px;color: #0e0e0e;background-color: #cde6e2;" >预警设置</button>
                     </div>
                     <div id="chart7" class="charts_2"></div>
 
@@ -424,14 +436,48 @@
                 </script>
             </li>
         </div>
-
-
     </div>
 
+    <div  id="formDiv" style="display: none;">
+    <form class="layui-form layui-form-pane" style="height: 80%" id="fromData">
+        <%--<input id="storeId" name="storeId" type="hidden">--%>
+        <div class="layui-form-item" id="fromHerd" style="margin-top: 15px;margin-left: 30px;margin-bottom: 0px;">
+            <div class="layui-inline">
+                <label class="layui-form-label" style="margin-right: 30px;">材料</label>
+                <div class="layui-input-inline" style="width: 100px;margin-right: 20px;">
+                    <input type="text" name="id" placeholder="id" autocomplete="off" class="layui-input" style="display: none;">
+                    <label class="layui-form-label" style="margin-right: 30px;">一级预警上限</label>
+                </div>
+                <div class="layui-input-inline" style="width: 100px;margin-right: 20px;">
+                    <label class="layui-form-label" style="margin-right: 30px;">一级预警下限</label>
+                </div>
+                <div class="layui-input-inline" style="width: 100px;margin-right: 20px;">
+                    <label class="layui-form-label" style="margin-right: 30px;">二级预警上限</label>
+                </div>
+                <div class="layui-input-inline" style="width: 100px;margin-right: 20px;">
+                    <label class="layui-form-label" style="margin-right: 30px;">二级预警下限</label>
+                </div>
+                <div class="layui-input-inline" style="width: 100px;margin-right: 20px;">
+                    <label class="layui-form-label" style="margin-right: 30px;">三级预警上限</label>
+                </div>
+                <div class="layui-input-inline" style="width: 100px;margin-right: 20px;">
+                    <label class="layui-form-label" style="margin-right: 30px;">三级预警下限</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item" >
+            <div class="layui-input-block">
+                <button class="layui-btn" type="button" id="saveLevel">保存</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+    </div>
     <%--js获取路径--%>
     <input id="path" type="hidden" value="${path}"/>
 </body>
 <script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/layui/layui.js"></script>
 <script type="text/javascript" src="/static/js/qc/quality_warning.js"></script>
-
 </html>

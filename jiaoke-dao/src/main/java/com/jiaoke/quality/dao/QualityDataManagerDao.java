@@ -64,7 +64,7 @@ public interface QualityDataManagerDao {
      * @param ratioNumList
      * @return
      */
-    List<QualityRatioTemplate> selectRatioMessageById(@Param("crewNum") String crewNum, @Param("ratioNumList") List<Map<String,Object>> ratioNumList);
+    List<QualityRatioTemplate> selectRatioMessageById(@Param("crewNum") String crewNum, @Param("ratioNumList") List<Map<String,Object>> ratioNumList ,@Param("proDate")  String date);
 
     /**
      *  根据传入日期返回当天所有项目

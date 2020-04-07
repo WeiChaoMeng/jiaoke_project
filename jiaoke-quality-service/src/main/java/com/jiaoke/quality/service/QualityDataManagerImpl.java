@@ -100,9 +100,9 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
         long DBstartTime = System.currentTimeMillis();
         //当天使用的模板集合
         List<Map<String,Object>> ratioNumList  = qualityDataManagerDao.selectRatioNumListByDate(date,crew);
-
+//        if (ratioNumList == null || ratioNumList.size() == 0)
         //获取当天使用模板的模板数据
-        List<QualityRatioTemplate> rationMessageList =  qualityDataManagerDao.selectRatioMessageById(crewNum,ratioNumList);
+        List<QualityRatioTemplate> rationMessageList =  qualityDataManagerDao.selectRatioMessageById(crewNum,ratioNumList,date);
         //当天每种模板产品各材料总和
         List<Map<String,String>> list =  qualityDataManagerDao.selectProducedSVG(date,crew);
         long SEstartTime = System.currentTimeMillis();
@@ -212,6 +212,12 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
 
         }
 
+        for (int i = 0; i < SVGList.size();i++){
+            Double breeze1 = Double.parseDouble(SVGList.get(i).get("stone_1"));
+            Double breeze2 = Double.parseDouble(SVGList.get(i).get("stone_2"));
+            String breeze = breeze2 > breeze1 ? String.valueOf(breeze2):String.valueOf(breeze1);
+            SVGList.get(i).put("breeze",breeze);
+        }
 
         String total = JSON.toJSONString(list);
         String SVG = JSON.toJSONString(SVGList);
@@ -368,7 +374,7 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
 
         String crewNum = "data1".equals(crew)? "crew1":"crew2";
         //获取配比占比信息
-        Map<String,String> modelRationMap = qualityDataSummaryDao.selectRaionModelById(crewNum, itemMap.get("produce_proportioning_num").toString());
+        Map<String,String> modelRationMap = qualityDataSummaryDao.selectRaionModelById(crewNum, itemMap.get("produce_proportioning_num").toString(),itemMap.get("proDate").toString());
 
         return JSON.toJSONString(modelRationMap);
     }
@@ -379,12 +385,13 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
         JSONObject jsStr = JSONObject.parseObject(productSVG);
 
         Map<String, String> itemMap = JSONObject.toJavaObject(jsStr, Map.class);
-
+        //放入日期查询级配用 product_date 键需要与getGradingResultJson 方法内部对应
+        itemMap.put("produce_date",itemMap.get("proDate"));
         String crew = itemMap.get("crewNum").toString();
 
         String crewNum = "data1".equals(crew)? "crew1":"crew2";
         //获取配比占比信息
-        Map<String,String> modelRationMap = qualityDataSummaryDao.selectRaionModelById(crewNum, itemMap.get("produce_proportioning_num").toString());
+        Map<String,String> modelRationMap = qualityDataSummaryDao.selectRaionModelById(crewNum, itemMap.get("produce_proportioning_num"),itemMap.get("proDate"));
         Map<String,String> map = new HashMap<>();
         map.putAll(modelRationMap);
         map.putAll(itemMap);

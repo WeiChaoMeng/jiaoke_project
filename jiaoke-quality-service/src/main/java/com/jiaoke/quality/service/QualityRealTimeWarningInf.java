@@ -8,6 +8,8 @@
  **/
 package com.jiaoke.quality.service;
 
+import java.util.Map;
+
 /**
  *  <一句话功能描述>
  *
@@ -39,4 +41,25 @@ public interface QualityRealTimeWarningInf {
      * @date 2019/5/15 11:16
      */
     String getGlobalWarningData();
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询预警级别数据>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/4/1 10:54
+     */
+    Map<String,Object> getWarningLevelData();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <修改预警级别>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/4/3 12:12
+     */
+    Map<String, Object> editWarningLevel(String warningData);
 }

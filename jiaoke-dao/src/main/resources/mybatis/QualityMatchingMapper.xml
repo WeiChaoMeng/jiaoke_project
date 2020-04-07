@@ -42,7 +42,7 @@
         FROM
              quality_proportioning_model AS QPM
                  INNER JOIN quality_proportioning_message AS QPMS ON QPM.message_id = QPMS.id
-        where QPM.create_time != YEAR(NOW())
+        where YEAR(QPM.create_time) != YEAR(NOW())
         ORDER BY QPMS.id DESC
     </select>
     <!--start-->
@@ -277,4 +277,29 @@
             SELECT LAST_INSERT_ID() as id
         </selectKey>
     </insert>
+
+    <select id="selectGradingYear" resultType="java.util.Map">
+        SELECT
+               YEAR(QPM.create_time) AS `year`
+        FROM
+             quality_proportioning_grading_model AS QPM
+                 INNER JOIN quality_proportioning_grading AS QPMS ON QPM.id = QPMS.model_id
+        WHERE YEAR(QPM.create_time) != YEAR(NOW())
+        GROUP BY YEAR(QPM.create_time)
+    </select>
+    <select id="selectAllGrading" resultType="java.util.Map">
+        SELECT
+               QPGM.id,
+               QPG.crew1_id AS crew1Id,
+               QPG.crew2_id AS crew2Id,
+               QPGM.grading_name,
+               DATE_FORMAT(QPGM.create_time, '%Y-%m-%d') AS create_time,
+               QPGM.grading_remaker,
+               QPGM.up_user
+        FROM
+             quality_proportioning_grading_model AS QPGM
+                 INNER JOIN quality_proportioning_grading AS QPG ON QPGM.id = QPG.model_id
+        where YEAR(QPGM.create_time) != YEAR(NOW())
+        GROUP BY QPGM.id
+    </select>
 </mapper>

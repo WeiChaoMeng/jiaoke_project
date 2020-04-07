@@ -5,10 +5,11 @@ var basePath = "";
     getWarningData();
     getRealTimeDataEcharsMaterial();
     basePath = $("#path").val();
+
 })(jQuery);
 
 /***********************间隔执行Start*****************************/
-setInterval(getWarningData, 3000);
+setInterval(getWarningData, 20000);
 
 /***********************间隔执行End*****************************/
 
@@ -41,16 +42,16 @@ function getWarningData() {
 
                     switch (res[i].warning_level) {
                         case 0:
-                            warningLeve = "无预警";
+                            warningLeve = '<div  style="background-color: green;width: 35px;margin-left: 13%;height: 20px;border-radius: 5px;"></div>';
                             break;
                         case 1:
-                            warningLeve = "一级预警";
+                            warningLeve = '<div  style="background-color: blue;width: 35px;margin-left: 13%;height: 20px;border-radius: 5px;"></div>';
                             break;
                         case 2:
-                            warningLeve = "二级预警";
+                            warningLeve = '<div  style="background-color: yellow;width: 35px;height: 20px;margin-left: 13%;border-radius: 5px;"></div>';
                             break;
                         case 3:
-                            warningLeve = "三级预警";
+                            warningLeve = '<div  style="background-color: red;width: 35px;height: 20px;margin-left: 13%;border-radius: 5px;"></div>';
                             break;
                     }
 
@@ -87,82 +88,6 @@ function getWarningData() {
     getRealTimeDataEcharsMaterial();
     // getEcharsData();
 }
-
-// function getEcharsData() {
-//
-//     $.ajax({
-//         url: basePath + "/getWarningEcharsData.do",
-//         // url: "http://47.105.114.70/getWarningEcharsData.do",
-//         type: "post",
-//         dataType: "json",
-//         success:function (res) {
-//
-//             var crew1nameArray = new Array();
-//             var crew1topArray = new Array();
-//             var crew1downArray = new Array();
-//             var crew1realArray = new Array();
-//
-//             var crew2nameArray = new Array();
-//             var crew2topArray = new Array();
-//             var crew2downArray = new Array();
-//             var crew2realArray = new Array();
-//
-//             for (var k in res){
-//                 switch (k) {
-//                     case "crew1nameList":
-//                         eachList(res[k],crew1nameArray);
-//                         break;
-//                     case "crew1topList":
-//                         eachList(res[k],crew1topArray);
-//                         break;
-//                     case "crew1downList":
-//                         eachList(res[k],crew1downArray);
-//                         break;
-//                     case "crew1realList":
-//                         eachList(res[k],crew1realArray);
-//                         break;
-//
-//                     case "crew2nameList":
-//                         eachList(res[k],crew2nameArray);
-//                         break;
-//                     case "crew2topList":
-//                         eachList(res[k],crew2topArray);
-//                         break;
-//                     case "crew2downList":
-//                         eachList(res[k],crew2downArray);
-//                         break;
-//                     case "crew2realList":
-//                         eachList(res[k],crew2realArray);
-//                         break;
-//                 }
-//             }
-//
-//
-//
-//
-//             option.xAxis[0].data = crew1nameArray;
-//             option.series[0].data = crew1topArray;
-//             option.series[1].data = crew1realArray;
-//             option.series[2].data = crew1downArray;
-//             myChart.setOption(option,true);
-//             window.onresize = myChart.resize();
-//
-//             option2.xAxis[0].data = crew2nameArray;
-//             option2.series[0].data = crew2topArray;
-//             option2.series[1].data = crew2realArray;
-//             option2.series[2].data = crew2downArray;
-//             myChart2.setOption(option2,true);
-//             window.onresize = myChart2.resize();
-//         }
-//     })
-// }
-//
-// /********遍历方法*********/
-// function eachList(inArray,toArray) {
-//
-//     for (var i = 0; i < inArray.length; i++) {
-//         toArray[i] = inArray[i];
-//     }
 
 
 /******************************** Echart材料比渲染Start********************************************/
@@ -230,6 +155,126 @@ window.addEventListener("resize", function () {
 window.addEventListener("resize", function () {
     myChart4.resize();
 });
+
+
+/******************************** 预警级别修改Start********************************************/
+function  editWarningLevel(){
+
+    $.ajax({
+        url:basePath + "/getWarningLevelData.do",
+        dataType:"json",
+        success:function (res) {
+            if (!res){
+                layui.use('layer', function() {
+                    var layer = layui.layer;
+                    layer.msg("预警信息查询错误");
+                });
+                return
+            }
+
+            layui.use('layer', function() {
+                var layer = layui.layer;
+                layer.open({
+                    type: 1,
+                    area: ['90%', '80%'], //宽高
+                    offset: '30px',
+                    scrollbar:true,
+                    shadeClose: true, //开启遮罩关闭
+                    content: $('#formDiv')//捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
+                });
+            });
+
+            var htmlStr = "";
+            for (var i = 0; i < res.data.length;i++) {
+                var warningLeve = res.data[i];
+                htmlStr += '<div class="layui-form-item" id="' + warningLeve.material_name + '" style="margin-top: 0px;margin-left: 30px;margin-bottom: 0px;">'
+                + '<div class="layui-inline">'
+                + '<label class="layui-form-label" style="margin-right: 30px;">' + warningLeve.remark + '</label>'
+                + '<div class="layui-input-inline" style="width: 110px;">'
+                    + '<input type="text" name="id" placeholder="id" autocomplete="off" value="' + warningLeve.id + '" class="layui-input" style="display: none;">'
+                + '<input type="text" name="level_one_up" value="' + warningLeve.level_one_up +'" autocomplete="off" class="layui-input">'
+                + '</div>'
+                + '<div class="layui-input-inline" style="width: 110px;">'
+                + '<input type="text" name="level_one_down" value="' + warningLeve.level_one_down +'"  autocomplete="off" class="layui-input">'
+                + '</div>'
+                + '<div class="layui-input-inline" style="width: 110px;">'
+                + '<input type="text" name="level_two_up" value="' + warningLeve.level_two_up +'" autocomplete="off" class="layui-input">'
+                + '</div>'
+                + '<div class="layui-input-inline" style="width: 110px;">'
+                + '<input type="text" name="level_two_down" value="' + warningLeve.level_two_down +'" autocomplete="off" class="layui-input">'
+                + '</div>'
+                + '<div class="layui-input-inline" style="width: 110px;">'
+                + '<input type="text" name="level_three_up" value="' + warningLeve.level_three_up +'" autocomplete="off" class="layui-input">'
+                + '</div>'
+                + '<div class="layui-input-inline" style="width: 110px;">'
+                + '<input type="text" name="level_three_down" value="' + warningLeve.level_three_down +'"  autocomplete="off" class="layui-input">'
+                + '</div>'
+                + '</div>'
+                + '</div>';
+            }
+
+            $("#fromHerd").after(htmlStr);
+
+        }
+    })
+
+    // $(".layui-layer-content").css("height","500px");
+
+}
+
+
+$("#saveLevel").click(function () {
+    var fromData = reFromJsonData();
+    $.ajax({
+        type:'POST',
+        url:basePath + "/editWarningLevel.do",
+        dataType:"json",
+        data:{
+            "fromData":JSON.stringify(fromData)
+        },
+        success:function (res) {
+            layui.use('layer', function() {
+                var layer = layui.layer;
+                if (res.message === 'success'){
+                        layer.closeAll();
+                        layer.msg("修改完成");
+                }else if (res.message === 'fail') {
+                        layer.msg("修改失败");
+                }else {
+                        layer.msg("后台错误");
+                   }
+            })
+        }
+    })
+
+}) ;
+
+function geiValueByDiv(divId) {
+    var res = {};
+    $("#" + divId + " input").each(function (i,n) {
+        var tem = $(this).attr('name');
+        var val = $(this).val();
+            res[''+ tem] = val;
+    })
+    return res;
+}
+
+function reFromJsonData() {
+    var nameArray = ['aggregate1','aggregate2','aggregate3','aggregate4','aggregate5','aggregate6','breeze','asphalt','regenerate','additive','warehouse_1','temperature_mixture','temperature_asphalt','temperature_aggregate'];
+    var objArray = [];
+    for(var i = 0; i < nameArray.length;i++){
+        var obj = geiValueByDiv(nameArray[i]);
+        if (obj != null) {
+            objArray.push(obj);
+        }
+    }
+
+    return objArray;
+}
+
+/******************************** 预警级别修改End********************************************/
+
+
 
 
 //遍历json，返回指定格式数据
@@ -340,61 +385,61 @@ function returnArrayToJson(json) {
         for (var key in json[i]){
             switch (key) {
                 case '0.075':
-                    array.push({xAxis:0.312,label: {normal: {formatter:'\n' +  key+""}}});
+                    array.push({xAxis:0.312,label: {rotate:90, formatter:key}});
                     break;
                 case '0.15':
-                    array.push({xAxis:0.426,label: {normal: {formatter: key+"" }}});
+                    array.push({xAxis:0.426,label: {rotate:90, normal: {formatter:key}}});
                     break;
                 case '0.3':
-                    array.push({xAxis:0.582,label: {normal: {formatter:'\n\n' +  key+""}}});
+                    array.push({xAxis:0.582,label: {rotate:90, normal: {formatter:key}}});
                     break;
                 case '0.6':
-                    array.push({xAxis:0.795,label: {normal: {formatter: key+""}}});
+                    array.push({xAxis:0.795,label: {rotate:90, normal: {formatter:key}}});
                     break;
                 case '1.18':
-                    array.push({xAxis:1.007,label: {normal: {formatter:'\n\n' +  key+""}}});
+                    array.push({xAxis:1.007,label: {rotate:90, normal: {formatter:key}}});
                     break;
                 case '2.36':
-                    array.push({xAxis:1.472,label: {normal: {formatter: key+"" }}});
+                    array.push({xAxis:1.472,label: {rotate:90, normal: {formatter:key}}});
                     break;
                 case '4.75':
-                    array.push({xAxis:2.016,label: {normal: {formatter:'\n\n' +  key+""}}});
+                    array.push({xAxis:2.016,label: {rotate:90, normal: {formatter:key}}});
                     break;
                 case '6.7':
-                    array.push({xAxis:2.354,label: {normal: {formatter: key+""}}});
+                    array.push({xAxis:2.354,label: {rotate:90, normal: {formatter:key}}});
                     break;
                 case '7.0':
-                    array.push({xAxis:2.400,label: {normal: {formatter:'\n\n' +  key+""}}});
+                    array.push({xAxis:2.400,label: {rotate:90, normal: {formatter:key}}});
                     break;
                 case '7.2':
-                    array.push({xAxis:2.431,label: {normal: {formatter: key+""}}});
+                    array.push({xAxis:2.431,label: {rotate:90, normal: {formatter:key}}});
                     break;
                 case '9.5':
-                    array.push({xAxis:2.754,label: {normal: {formatter:'\n\n' +  key+""}}});
+                    array.push({xAxis:2.754,label: {rotate:90, normal: {formatter:key}}});
                     break;
                 case '13.2':
-                    array.push({xAxis:3.193,label: {normal: {formatter: key+""}}});
+                    array.push({xAxis:3.193,label: {rotate:90, normal: {formatter:key}}});
                     break;
                 case '16':
-                    array.push({xAxis:3.482,label: {normal: {formatter:'\n\n' + key+""}}});
+                    array.push({xAxis:3.482,label: {rotate:90, normal: {formatter:key}}});
                     break;
                 case '19':
-                    array.push({xAxis:3.762,label: {normal: {formatter: key+""}}});
+                    array.push({xAxis:3.762,label: {rotate:90, normal: {formatter:key}}});
                     break;
                 case '26.5':
-                    array.push({xAxis:4.370,label: {normal: {formatter: '\n\n' + key+"" }}});
+                    array.push({xAxis:4.370,label: {rotate:90, normal: {formatter:key}}});
                     break;
                 case '31.5':
-                    array.push({xAxis:4.723,label: {normal: {formatter: key+""}}});
+                    array.push({xAxis:4.723,label: {rotate:90, normal: {formatter:key}}});
                     break;
                 case '37.5':
-                    array.push({xAxis:5.109,label: {normal: {formatter:'\n\n' + key}}});
+                    array.push({xAxis:5.109,label: {rotate:90, normal: {formatter:key}}});
                     break;
                 case '53':
-                    array.push({xAxis:5.969,label: {normal: {formatter: key+""}}});
+                    array.push({xAxis:5.969,label: {rotate:90, normal: {formatter:key}}});
                     break;
                 case '63':
-                    array.push({xAxis:6.452,label: {normal: {formatter:'\n\n' + key}}});
+                    array.push({xAxis:6.452,label: {rotate:90, normal: {formatter:key}}});
                     break;
             }
 

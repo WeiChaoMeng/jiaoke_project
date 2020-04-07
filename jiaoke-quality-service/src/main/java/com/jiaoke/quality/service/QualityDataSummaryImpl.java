@@ -78,7 +78,7 @@ public class QualityDataSummaryImpl implements QualityDataSummaryInf {
         svgMap.put("crewNum",crewNum);
 
         //获取配比占比信息
-        Map<String,String> modelRationMap = qualityDataSummaryDao.selectRaionModelById(crewNum, svgMap.get("produce_proportioning_num"));
+        Map<String,String> modelRationMap = qualityDataSummaryDao.selectRaionModelById(crewNum, svgMap.get("produce_proportioning_num"),endDate);
 
         //创建新得map合并平均值map与模板Map用于调用getGradingResultJson 方法
         List<Map<String,String>> list = new ArrayList<>();
@@ -175,7 +175,7 @@ public class QualityDataSummaryImpl implements QualityDataSummaryInf {
 
             List<Map<String,String>>  waringData =  qualityDataSummaryDao.selectProduceByDateAndDiscNum(String.valueOf(date),discNum,crewNum);
 
-            QualityRatioTemplate ratioMap = qualityDataSummaryDao.selectRationById(map.get("produce_proportioning_num"),crewNum);
+            QualityRatioTemplate ratioMap = qualityDataSummaryDao.selectRationById(map.get("produce_proportioning_num"),crewNum,proDate);
 
             modelMap.put("proBase",map);
             modelMap.put("proMessage",waringData);
