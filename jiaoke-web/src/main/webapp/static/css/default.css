@@ -738,6 +738,9 @@ table {
     border-top: solid 1px #d4d4d4;
     page-break-after:always;
     cellspacing:0;
+    table-layout:fixed;
+    word-wrap:break-word;
+
 }
 
 .simpletable thead tr th {
@@ -756,6 +759,8 @@ table {
     text-indent: 15px;
     border: none;
     white-space: nowrap;
+    overflow:hidden;
+    text-overflow: ellipsis;
 }
 
 .simpletable a:hover {

@@ -341,29 +341,42 @@ function getAsphaltStandingBook(id) {
                 $("#asphaltDiv").append(rawMaterialHtml);
 
             } else {
-                //根据材料生成台账表格
+                //根据材料生成台账表格 asphaltThead
                 $("#asphaltDiv").empty().append(returnTableHtml(id));
                 //判断当前是否有表格，没有就添加
                 if (!$("#asphaltTable").length > 0){
                     $("#asphaltDiv").append(returnAsphaltHtml());
                 }
-                for (var i = 0; i < res.length;i++){
-                    rawMaterialHtml += '<tr>'
-                        +'<td>' + res[i].testDate +'</td>'
-                        +'<td>' + res[i].samplingStandard + res[i].materialName +'</td>'
-                        +'<td>' + res[i].testNum +'</td>'
-                        +'<td>' + (blank(res[i].asphalt_ZRD) ? " " : res[i].asphalt_ZRD) +'</td>'
-                        +'<td>' + (blank(res[i].asphalt_YD10)  ? " "  : res[i].asphalt_YD10)+'</td>'
-                        +'<td>' + (blank(res[i].asphalt_YD15) ? " " : res[i].asphalt_YD15) +'</td>'
-                        +'<td>' + (blank(res[i].asphalt_RHD)  ? " "  : res[i].asphalt_RHD)+'</td>'
-                        +'<td>' + (blank(res[i].asphalt_ZLBH) ? " " : res[i].asphalt_ZLBH) +'</td>'
-                        +'<td>' + (blank(res[i].asphalt_CLZRD10)  ? " "  : res[i].asphalt_CLZRD10)+'</td>'
-                        +'<td>' + (blank(res[i].asphalt_CLZRD16) ? " " : res[i].asphalt_CLZRD16) +'</td>'
-                        +'<td>' + (blank(res[i].asphalt_CLZRD25)  ? " "  : res[i].asphalt_CLZRD25)+'</td>'
-                        +'<td>' + res[i].remark+'</td>'
-                        +'</tr>';
+
+                //确定沥青实验头
+                var tatelName = res.tatleArry;
+                $("#asphaltTatle").attr("colSpan",tatelName.length + 8);
+                $("#asphaltReslu").attr("colSpan",tatelName.length);
+                var temHtml = '<tr class="twoHead">';
+                for (var i = 0; i < tatelName.length; i++){
+                    temHtml += '<th>' + tatelName[i].asphaltName  + '</th>';
                 }
-                $('#asphaltTbody').empty().append(rawMaterialHtml);
+                temHtml += '</tr>';
+                $("#asphaltThead").append(temHtml);
+
+                //展示沥青实验内容
+                var asphaltArry = res.asphaltArry;
+                var tBoday = "";
+
+                for (var i = 0; i < asphaltArry.length;i++){
+                    tBoday += '<tr>'
+                        +'<td>' + asphaltArry[i].testDate +'</td>'
+                        +'<td>' + asphaltArry[i].samplingStandard + asphaltArry[i].materialName +'</td>'
+                        +'<td>' + asphaltArry[i].testNum +'</td>';
+
+                    for(var j = 0; j < tatelName.length;j ++){
+                        var key = tatelName[j].remake;
+                        tBoday += (blank(asphaltArry[i][key])  ? '<td></td>':'<td>' + asphaltArry[i][key] +'</td>');
+                    }
+                    tBoday += '<td>' + asphaltArry[i].remark+'</td>' +'</tr>';
+                    debugger
+                }
+                $('#asphaltTbody').empty().append(tBoday);
             }
 
 
@@ -1101,26 +1114,16 @@ function returnTableHtml(id) {
                 + '<button style="width: 160px;height: 36px;" onclick="table2excel(\'asphaltTable\',\'sheet1\',\'沥青原材试验台账\')" >生成Excel</button>'
                 +'</div>'
                 + '<table class="standingBookTable" id="asphaltTable" border="1" >'
-                + '<thead>'
+                + '<thead id="asphaltThead">'
                 + '<tr class="firstHead">'
-                + '<th colspan="12">沥青实验台账</th>'
+                + '<th  id="asphaltTatle"  colspan="12" >沥青实验台账</th>'
                 + '</tr>'
                 +  '<tr class="firstHead">'
                 + '<th rowspan="2">实验日期</th>'
                 + '<th rowspan="2">试样名称</th>'
                 + '<th rowspan="2">试验编号</th>'
-                + '<th colspan="8">试验结果</th>'
+                + '<th id="asphaltReslu" colspan="8">试验结果</th>'
                 + '<th rowspan="2">备注</th>'
-                + '</tr>'
-                + '<tr class="twoHead">'
-                + '<th>针入度(100g,5s,25℃)</th>'
-                + '<th>10℃延度</th>'
-                + '<th>15℃延度</th>'
-                + '<th>软化点 R&B</th>'
-                + '<th>质量变化</th>'
-                + '<th>残留针入度比(10℃)</th>'
-                + '<th>残留针入度比(16℃)</th>'
-                + '<th>残留针入度比(25℃)</th>'
                 + '</tr>'
                 + '</thead>'
                 + '<tbody id="asphaltTbody">'

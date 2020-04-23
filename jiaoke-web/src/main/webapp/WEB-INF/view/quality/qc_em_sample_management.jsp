@@ -68,7 +68,7 @@
             </h1>
             <label>
                 <span>材料 :</span>
-                <select  id="materials" name="materials">
+                <select  id="materials" onchange="getManufacturersByMaterials(this.options[this.options.selectedIndex].value);" name="materials">
                     <option value="Job Inquiry">Job Inquiry</option>
                     <option value="General Question">General Question</option>
                 </select>

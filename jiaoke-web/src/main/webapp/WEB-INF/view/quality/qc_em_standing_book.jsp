@@ -29,7 +29,6 @@
         <li class="yyui_tab_title" id="3" onclick="getBreezeStandingBook(this.id)">矿料台账</li>
         <li class="yyui_tab_title" id="4" onclick="getAsphaltStandingBook(this.id)">沥青原材台账</li>
         <li class="yyui_tab_title" id="search" onclick="searchStandingBook()">台账检索 </li>
-
     </ul>
     <%--取样单台账--%>
     <div class="yyui_tab_content_this" id="testDiv">

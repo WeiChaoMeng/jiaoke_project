@@ -122,12 +122,42 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
         //计算平均值
         String[] array1 = {"rationNum","procount"};
         String[] array2 = {"total","warehouse_1","mixture","duster","temAsphalt","aggregate"};
+        DecimalFormat df = new DecimalFormat("#.00");
+
+        //计算平均矿粉占比
+        List<Map<String,String>> percentList = new ArrayList<>();
+        for (int i = 0; i < ratioNumList.size();i++){
+            String rationNum = ratioNumList.get(i).get("produce_proportioning_num").toString();
+            Map<String,String> percentMap = new HashMap<>();
+            double stoneTotal  = 0;
+            int count = 0 ;
+            for (int j = 0; j < producedList.size();j++ ){
+                String proRationNum = producedList.get(j).get("produce_proportioning_num");
+                if (rationNum.equals(proRationNum)){
+                    String materia1 = String.valueOf(producedList.get(j).get("material_stone_1"));
+                    String materia2 = String.valueOf(producedList.get(j).get("material_stone_2"));
+                    String materiaTotal = String.valueOf(producedList.get(j).get("material_total"));
+                    double stone1 = Double.parseDouble(materia1);
+                    double stone2 = Double.parseDouble(materia2);
+                    double total = Double.parseDouble(materiaTotal);
+                    double stone = stone1 > stone2 ? stone1:stone2;
+                    stoneTotal += (stone/total) * 100;
+                    count++;
+                }
+            }
+            percentMap.put("stone",df.format(stoneTotal/count));
+            percentMap.put("ratioNum",rationNum);
+            percentList.add(percentMap);
+        }
+
 
         for (int i = 0; i < list.size();i++){
 
             SVGList.add(new HashMap<>());
             String total = String.valueOf(list.get(i).get("total"));
             String count = String.valueOf(list.get(i).get("procount"));
+
+
             Iterator<Map.Entry<String, String>> entries = list.get(i).entrySet().iterator();
             while (entries.hasNext()){
                 Map.Entry entry = (Map.Entry) entries.next();
@@ -144,7 +174,6 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
                     String  temSVG =  QualityDataMontoringUtil.calculateSVG(count,value);
                     SVGList.get(i).put(key,temSVG);
                 }else {
-
                     //获取平均值后计算百分比
                     String  materialsSVG =  QualityDataMontoringUtil.calculateSVG(count,total,value);
                     SVGList.get(i).put(key,materialsSVG);
@@ -180,6 +209,8 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
                             materialsSVG =  QualityDataMontoringUtil.calculateSVG(count,total,String.valueOf(temp5));
                             SVGList.get(i).put(key,materialsSVG);
                             break;
+                            default:
+                                break;
                     }
 
 
@@ -213,10 +244,12 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
         }
 
         for (int i = 0; i < SVGList.size();i++){
-            Double breeze1 = Double.parseDouble(SVGList.get(i).get("stone_1"));
-            Double breeze2 = Double.parseDouble(SVGList.get(i).get("stone_2"));
-            String breeze = breeze2 > breeze1 ? String.valueOf(breeze2):String.valueOf(breeze1);
-            SVGList.get(i).put("breeze",breeze);
+            String rationNum = SVGList.get(i).get("rationNum");
+            for (int j = 0; j <percentList.size();j++ ){
+                if (percentList.get(j).get("ratioNum").equals(rationNum)){
+                    SVGList.get(i).put("breeze",percentList.get(j).get("stone"));
+                }
+            }
         }
 
         String total = JSON.toJSONString(list);

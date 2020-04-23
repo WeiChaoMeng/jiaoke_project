@@ -94,6 +94,7 @@
 				if(o.className=="col666"){return}
 				oInput.value=ids['y'].innerHTML+"-"+ids['m'].innerHTML+"-"+ fillzero(o.innerHTML) 
 							+" "+ids['h'].innerHTML+":"+ids['i'].innerHTML+":"+ids['s'].innerHTML;
+                getProjectNameByData(oInput.id);
 				hide();
 			})
 		})
@@ -355,5 +356,48 @@
 	
 	//var iframeObj=isIE?ff:f;
 	//var iframeObj=isIE?ff:f;
-	addEvent(isIE?ff:f,"blur",function(e){hide()})
-})()
+	addEvent(isIE?ff:f,"blur",function(e){hide();})
+})();
+
+function getProjectNameByData(id) {
+	if (!(id === "inpend")) return false;
+    var path = $("#path").val();
+    var start = $("#inpstart").val();
+    var end = $("#inpend").val();
+    if (start.isBlanks() || end.isBlanks() ){
+        layer.alert('请先选择先日期');
+        return false;
+    }
+    $("#project_id").empty();
+    $.ajax({
+        url: path + "/getProjectNameByDate.do",
+        type:"post",
+        dataType: "json",
+        data:{"startDate":start,"endDate":end},
+        success:function (res) {
+            //判断后台是否出错
+            if (res.message === "error"){
+                layer.alert("查询工程错误");
+                return false;
+            }
+            var proNameList = res.projectList;
+            //判断该日期内是否有工程
+            if (proNameList.length === 0){
+                layer.alert("该日期范围内无工程");
+                return false;
+            }
+            //渲染selcet
+            for (var i = 0; i < proNameList.length;i++){
+                $("#project_id").append("<option selected = 'selected' value=" + proNameList[i].project_name + ">" + proNameList[i].project_name + "</option>")
+            }
+        }
+    })
+}
+
+String.prototype.isBlanks = function () {
+    var s = $.trim(this);
+    if (s == "undefined" || s == null || s == "" || s.length == 0) {
+        return true;
+    }
+    return false;
+};

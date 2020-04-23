@@ -10,6 +10,7 @@ package com.jiaoke.quality.service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.oa.bean.OaCollaboration;
 import com.jiaoke.oa.bean.UserInfo;
@@ -821,8 +822,12 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
 
     @Override
     public String getSevenDayAsphaltStandingBook() {
+        Map<String,Object> map = new HashMap<>();
         List<Map<String,String>> asphalt = qualityExperimentalManagerDao.getSevenDayAsphaltStandingBook();
-        return JSON.toJSONString(asphalt);
+        List<Map<String,String>> tatleArry = qualityExperimentalManagerDao.getSevenDayAsphaltStandingBookTatle();
+        map.put("asphaltArry",asphalt);
+        map.put("tatleArry",tatleArry);
+        return JSON.toJSONString(map);
     }
 
     /*************************************未完实验End****************************************************/
@@ -996,8 +1001,79 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
         return JSON.toJSONString(list);
     }
 
+    @Override
+    public String getMaterialsAndManufacturersMsg() {
+        Map<String,String> map = new HashMap<>();
+        List<Map<String,String>> materialsList = qualityExperimentalManagerDao.selectMaterials();
+        List<Map<String,String>> manufacturersList = qualityExperimentalManagerDao.selectManufacturers();
+        map.put("materials",JSON.toJSONString(materialsList));
+        map.put("manufacturers",JSON.toJSONString(manufacturersList));
+        return JSON.toJSONString(map);
+    }
 
+    @Override
+    public String addMaterialsAndManufacturers(String fromData) {
+        Map<String,String> map = new HashMap<>();
+        JSONObject jsonObject = JSONObject.parseObject(fromData);
+        HashMap<String, String> maps = JSONObject.parseObject(jsonObject.toString(), HashMap.class);
+        List<Map<String,String>> list = new ArrayList<>();
+        List<Map<String,String>> manufacturersList = qualityExperimentalManagerDao.selectManufacturers();
+        String materialsId = String.valueOf(maps.get("materialsSelect"));
+        for (int i = 0; i < manufacturersList.size();i++){
+            Map<String,String> map1 = new HashMap<>();
+            String check =  String.valueOf(maps.get("check_" + i));
+            if ( "null".equals(check) ){
+                continue;
+            }
+            map1.put("materialsId",materialsId);
+            map1.put("checkId",check);
+            list.add(map1);
+        }
 
+        if (list.size() == 0){
+            map.put("message","error");
+            return JSON.toJSONString(map);
+        }
+
+        int res = qualityExperimentalManagerDao.insertMaterialsAndManufacturers(list);
+        if (res > 0){
+            map.put("message","success");
+        }else {
+            map.put("message","error");
+        }
+        return JSON.toJSONString(map);
+    }
+
+    @Override
+    public String getMaterialsMatchupManufacturers() {
+        List<Map<String,String>> list = qualityExperimentalManagerDao.selectMaterialsMatchupManufacturers();
+        return JSON.toJSONString(list);
+    }
+
+    @Override
+    public String deleteMaterialAndManufacturersById(String id) {
+        Map<String,String> map = new HashMap<>();
+        int res = qualityExperimentalManagerDao.deleteMaterialAndManufacturersById(id);
+        if (res > 0){
+            map.put("message","success");
+        }else {
+            map.put("message","error");
+        }
+        return JSON.toJSONString(map);
+    }
+
+    @Override
+    public String getManufacturersByMaterials(String id) {
+        Map<String,Object> map = new HashMap<>();
+        List<Map<String,String>> list = qualityExperimentalManagerDao.selectManufacturersByMaterials(id);
+        if (list == null || list.size() == 0){
+            map.put("message","error");
+        }else {
+            map.put("message","success");
+            map.put("dataArry",list);
+        }
+        return JSON.toJSONString(map);
+    }
     /*************************************试验设置Start****************************************************/
 
 }

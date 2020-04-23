@@ -143,8 +143,12 @@
                                         yAxis: {
                                             name:'单位：吨',
                                             type: 'value',
-                                            min:0,
-                                            max:8000
+                                            min:function (v) {
+                                                return v.min
+                                            },
+                                            max:function (v) {
+                                                return v.max + 200
+                                            },
                                         },
                                         series: [{
                                             data: [1820, 932, 1901, 2934, 1290, 1330, 320, 423, 1289, 2345, 2235, 3234, 3200, 234, 123, 1465, 67, 78, 435, 824, 354, 546, 446, 346, 46, 673, 36, 903, 2896, 3534],
@@ -310,7 +314,7 @@
                                         formatter: "{a} <br/>{b} : {c} ({d}%)"
                                     },
                                     series: [{
-                                        name: '库存情况',
+                                        name: '产量',
                                         type: 'pie',
                                         radius: '68%',
                                         center: ['50%', '50%'],

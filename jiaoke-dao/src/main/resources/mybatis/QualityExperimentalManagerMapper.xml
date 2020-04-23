@@ -420,6 +420,9 @@
         INSERT INTO quality_test_coarse_aggregate_sieving (
         experiment_num,
         coarse_sieve_pore,
+        coarse_sieve_pore_37_5,
+        coarse_sieve_pore_31_5,
+        coarse_sieve_pore_26_5,
         coarse_sieve_pore_19_0,
         coarse_sieve_pore_16_0,
         coarse_sieve_pore_13_2,
@@ -434,7 +437,7 @@
         )
         values
         <foreach collection="coarseTestList" item="emp" separator=",">
-            (#{experimentNum},#{emp.coarse_sieve_pore},#{emp.coarse_sieve_pore_19_0},#{emp.coarse_sieve_pore_16_0},#{emp.coarse_sieve_pore_13_2},#{emp.coarse_sieve_pore_9_5},#{emp.coarse_sieve_pore_4_75},#{emp.coarse_sieve_pore_2_36},#{emp.coarse_sieve_pore_1_18},#{emp.coarse_sieve_pore_0_6},#{emp.coarse_sieve_pore_0_3},#{emp.coarse_sieve_pore_0_15},#{emp.coarse_sieve_pore_0_075})
+            (#{experimentNum},#{emp.coarse_sieve_pore},#{emp.coarse_sieve_pore_26_5},#{emp.coarse_sieve_pore_31_5},#{emp.coarse_sieve_pore_37_5},#{emp.coarse_sieve_pore_19_0},#{emp.coarse_sieve_pore_16_0},#{emp.coarse_sieve_pore_13_2},#{emp.coarse_sieve_pore_9_5},#{emp.coarse_sieve_pore_4_75},#{emp.coarse_sieve_pore_2_36},#{emp.coarse_sieve_pore_1_18},#{emp.coarse_sieve_pore_0_6},#{emp.coarse_sieve_pore_0_3},#{emp.coarse_sieve_pore_0_15},#{emp.coarse_sieve_pore_0_075})
         </foreach>
     </insert>
 
@@ -1240,6 +1243,22 @@
         DATE_SUB(CURDATE(), INTERVAL 7 DAY)  &lt;= date(QTLR.test_date)
         GROUP BY testNum
     </select>
+    <select id="getSevenDayAsphaltStandingBookTatle" resultType="java.util.Map">
+        SELECT
+        QTCA.asphalt_name AS asphaltName,
+        QTEID.remake AS remake
+        FROM
+        `quality_test_asphalt` AS QTCA
+        INNER JOIN quality_test_lab_report AS QTLR ON QTCA.experiment_num = QTLR.experiment_num
+        INNER JOIN quality_test_material_dictionary AS QTMD ON QTLR.materials_num = QTMD.Id
+        INNER JOIN quality_test_experiment_ietm_dictionary AS QTEID ON QTCA.asphalt_name = QTEID.`name`
+        INNER JOIN quality_test_order_ticket AS QTOT ON QTLR.order_ticket_num = QTOT.order_ticket_num
+        INNER JOIN quality_test_samplingPage AS QTS ON QTOT.sampling_id = QTS.Id
+        WHERE
+        DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(QTLR.test_date)
+        GROUP BY
+        QTCA.asphalt_name
+    </select>
 
     <select id="getSevenDayAsphaltStandingBook" resultType="java.util.Map">
         SELECT
@@ -1247,14 +1266,33 @@
         QTLR.sampling_standard AS samplingStandard,
         QTMD.`name` AS materialName,
         QTOT.test_num AS  testNum,
-        (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '针入度(100g,5s,25℃)') AS asphalt_ZRD,
-        (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '15℃ 延  度') AS asphalt_YD15,
-        (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '软化点RB') AS asphalt_RHD,
+        (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '25℃针入度') AS asphalt_25ZRD,
+        (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '延  度 15℃') AS asphalt_YD15,
+        (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '软化点 TR&amp;B') AS asphalt_RHD,
         (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '质量变化') AS asphalt_ZLBH,
-        (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '残留针入度比(25℃)') AS asphalt_CLZRD25,
-        (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '10℃延度') AS asphalt_YD10,
+        (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '25℃残留针入度比') AS asphalt_25CLZRD,
+        (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '延  度 10℃') AS asphalt_YD10,
         (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '残留针入度比(10℃)') AS asphalt_CLZRD10,
         (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '残留针入度比(16℃)') AS asphalt_CLZRD16,
+        (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '延  度 5℃') AS asphalt_YD5,
+        (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '延  度 25℃') AS asphalt_YD25,
+        (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '残留延度5℃') AS asphalt_CLYD5,
+        (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '残留延度10℃') AS asphalt_CLYD10,
+        (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '残留延度15℃') AS asphalt_CLYD15,
+        (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '残留延度25℃') AS asphalt_CLYD25,
+        (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '针入度(100g,5s)5℃') AS asphalt_ZRD5,
+        (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '针入度(100g,5s)30℃') AS asphalt_ZRD30,
+        (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '针入度(100g,5s)10℃') AS asphalt_ZRD10,
+        (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '针入度(100g,5s)25℃') AS asphalt_ZRD25,
+        (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '质量损失') AS asphalt_ZLSS,
+        (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '残留针入度比') AS asphalt_CLZRDB,
+        (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '弹性恢复25℃') AS asphalt_TXHF25,
+        (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '闪  点 （COC）') AS asphalt_SD,
+        (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '溶解度（三氯乙烯）') AS asphalt_RJD,
+        (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '沥青相对密度25℃') AS asphalt_XDMD25,
+        (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '沥青动力黏度试验') AS asphalt_DLND,
+        (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '沥青旋转粘度试验') AS asphalt_XZND,
+        (SELECT asphalt_result FROM `quality_test_asphalt` WHERE experiment_num = QTLR.experiment_num AND asphalt_name = '沥青旋转粘度试验（布氏）') AS asphalt_BSXZND,
         QTS.remark
         FROM
         `quality_test_asphalt` AS QTCA
@@ -1705,5 +1743,54 @@
                 QTMD.logogram_name = #{logogramName}
           AND
                 date_format(QTOT.creat_time, '%Y') = #{year};
+    </select>
+
+    <select id="selectMaterials" resultType="java.util.Map">
+        SELECT Id,`name` FROM `quality_test_material_dictionary`;
+    </select>
+    <select id="selectManufacturers" resultType="java.util.Map">
+        SELECT Id,`name` FROM `quality_test_manufacturers_dictionaries`;
+    </select>
+    <insert id="insertMaterialsAndManufacturers" useGeneratedKeys="true" parameterType="java.util.Map">
+        <selectKey resultType ="java.lang.Integer" keyProperty= "id"
+                   order= "AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey >
+        insert into quality_test_materials_intermediate
+        (materials_id, manufacturers_id)
+        values
+        <foreach collection ="list" item="reddemCode" index= "index" separator =",">
+            (
+            #{reddemCode.materialsId}, #{reddemCode.checkId}
+            )
+        </foreach >
+    </insert>
+
+    <select id="selectMaterialsMatchupManufacturers" resultType="java.util.Map" >
+        SELECT
+               QTMI.Id,
+               QTMD.`name` AS materialName,
+               QTMDC.`name` AS manufacturersName
+        FROM
+             quality_test_materials_intermediate AS QTMI
+                 INNER JOIN quality_test_material_dictionary AS QTMD
+                     ON QTMI.materials_id = QTMD.Id
+                 INNER JOIN quality_test_manufacturers_dictionaries AS QTMDC
+                     ON QTMI.manufacturers_id = QTMDC.Id
+    </select>
+
+    <delete id="deleteMaterialAndManufacturersById" >
+        DELETE  FROM quality_test_materials_intermediate WHERE Id = #{id}
+    </delete>
+    <select id="selectManufacturersByMaterials" resultType="java.util.Map">
+        SELECT
+               QTMD.Id AS id,
+               QTMD.`name` AS `name`
+        FROM
+             `quality_test_materials_intermediate` AS QTMI
+                 INNER JOIN quality_test_manufacturers_dictionaries AS QTMD
+                     ON QTMI.manufacturers_id = QTMD.Id
+        WHERE
+                QTMI.materials_id = #{id};
     </select>
 </mapper>

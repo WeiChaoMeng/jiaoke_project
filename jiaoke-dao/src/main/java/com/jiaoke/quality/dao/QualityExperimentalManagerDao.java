@@ -1003,4 +1003,79 @@ public interface QualityExperimentalManagerDao {
      */
     List<Map<String, Object>> selectFineMillingStandingByDate(@Param("startDate") String startDate,@Param("endDate")  String endDate,@Param("materials")  String materials,@Param("specification")  String specification,@Param("manufacturers") String manufacturers);
 
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询所有材料>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/4/13 11:00
+     */
+    List<Map<String, String>> selectMaterials();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询所有厂家>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/4/13 11:00
+     */
+    List<Map<String, String>> selectManufacturers();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <插入厂家对应材料>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/4/13 17:38
+     */
+    int insertMaterialsAndManufacturers(@Param("list") List<Map<String, String>> list);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询所有材料对应厂家>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/4/13 18:06
+     */
+    List<Map<String, String>> selectMaterialsMatchupManufacturers();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据ID删除材料对应厂家>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/4/13 18:29
+     */
+    int deleteMaterialAndManufacturersById(@Param("id") String id);
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据材料ID查询厂家>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/4/14 18:43
+     */
+    List<Map<String, String>> selectManufacturersByMaterials(@Param("id")  String id);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询七日内实验抬头>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/4/15 9:31
+     */
+    List<Map<String, String>> getSevenDayAsphaltStandingBookTatle();
 }

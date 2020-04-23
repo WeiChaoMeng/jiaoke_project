@@ -3,11 +3,11 @@
 <mapper namespace="com.jiaoke.quality.dao.QualityDataSummaryDao">
 
     <select id="selectThreeDayData" resultType="java.util.Map">
-
         (SELECT
         'data1' AS crewNums,
         date_format(QMRD.produce_date,'%Y-%m-%d') as  produce_date,
-        date_format(QMRD.produce_time,'%H:%i:%s') as produce_time,
+        date_format(QMRD.produce_time,'%H:%i:%S') as produce_time,
+        QMRD.produce_car_num,
         QMRD.produce_disc_num,
         QMRD.produce_proportioning_num,
         QPM.pro_name,
@@ -35,15 +35,20 @@
         INNER JOIN
         quality_proportioning_message AS QPM
         ON QMRD.produce_proportioning_num = QPM.crew1_modele_id
+        INNER JOIN
+        quality_proportioning_model AS QPMD
+        ON QPMD.message_id = QPM.id
         WHERE
-        DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(QMRD.produce_date)
-        order by QMRD.produce_date,QMRD.produce_time)
+        DATE_SUB(CURDATE(), INTERVAL 2 DAY) &lt;= date(QMRD.produce_date)
+        AND YEAR(QPMD.create_time) = YEAR(NOW())
+        order by QMRD.id DESC )
         Union ALL
         (SELECT
         'data2' AS crewNums,
         date_format(QMRD.produce_date,'%Y-%m-%d') as  produce_date,
-        date_format(QMRD.produce_time,'%H:%I:%S') as produce_time,
+        date_format(QMRD.produce_time,'%H:%i:%S') as produce_time,
         QMRD.produce_disc_num,
+        QMRD.produce_car_num,
         QMRD.produce_proportioning_num,
         QPM.pro_name,
         QMRD.produce_car_num,
@@ -70,9 +75,13 @@
         INNER JOIN
         quality_proportioning_message AS QPM
         ON QMRD.produce_proportioning_num = QPM.crew2_modele_id
+        INNER JOIN
+        quality_proportioning_model AS QPMD
+        ON QPMD.message_id = QPM.id
         WHERE
-        DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(QMRD.produce_date)
-        order by QMRD.produce_date,QMRD.produce_time)
+        DATE_SUB(CURDATE(), INTERVAL 2 DAY) &lt;= date(QMRD.produce_date)
+        AND YEAR(QPMD.create_time) = YEAR(NOW())
+        order by QMRD.id DESC)
     </select>
 
     <select id="selectRatioListByDateTimeAndCrew" resultType="java.util.Map">
@@ -102,6 +111,32 @@
         QM.pro_name,modele_id;
     </select>
 
+    <select id="selectProjectByDateAndCrewNum" resultType="java.util.Map">
+        SELECT
+               project_name
+        FROM
+             quality_leave_factory_history
+        WHERE
+                crewNum = #{crewNum}
+          AND CONCAT(
+                  finish_date,
+                  ' ',
+                  finish_time
+                        ) BETWEEN #{startDate}
+                        AND #{endDate}
+        GROUP BY project_name
+    </select>
+
+    <select id="selectProjectNameByDate" resultType="java.util.Map">
+        SELECT
+               project_name
+        FROM
+             quality_leave_factory_history
+        WHERE
+                finish_date between #{startDate} AND #{endDate}
+        GROUP BY project_name
+
+    </select>
     <select id="selectPromessageByRaionModel" resultType="java.util.Map">
         SELECT
                &apos;${crew}&apos; as crewNums,
@@ -142,8 +177,12 @@
                       ON QMRD.produce_proportioning_num = QPM.crew2_modele_id
                   </otherwise>
               </choose>
+        INNER JOIN
+        quality_proportioning_model AS QPMD
+        ON QPMD.message_id = QPM.id
         WHERE
           QMRD.produce_proportioning_num = ${rationId}
+         AND YEAR(QPMD.create_time) = YEAR(&apos;${startDate}&apos;)
           AND
                 CONCAT(
                   QMRD.produce_date,
@@ -151,6 +190,70 @@
                   QMRD.produce_time
                         ) BETWEEN &apos;${startDate}&apos;
                         AND &apos;${endDate}&apos;
+    </select>
+
+    <select id="selectPromessageByRaionModelAndProject" resultType="java.util.Map">
+        SELECT
+        &apos;${crew}&apos; AS crewNums,
+        date_format(
+        QMRD.produce_date,
+        '%Y-%m-%d'
+        ) AS produce_date,
+        date_format(
+        QMRD.produce_time,
+        '%H:%i:%s'
+        ) AS produce_time,
+        QMRD.produce_disc_num,
+        QPM.pro_name,
+        QMRD.produce_proportioning_num,
+        QLFH.project_name,
+        QMRD.produce_custom_num,
+        QMRD.material_aggregate_6,
+        QMRD.material_aggregate_5,
+        QMRD.material_aggregate_4,
+        QMRD.material_aggregate_3,
+        QMRD.material_aggregate_2,
+        QMRD.material_aggregate_1,
+        QMRD.material_stone_1,
+        QMRD.material_stone_2,
+        QMRD.material_asphalt,
+        QMRD.material_regenerate,
+        QMRD.material_additive,
+        QMRD.material_total,
+        QMRD.temperature_warehouse_1,
+        QMRD.temperature_mixture,
+        QMRD.temperature_duster,
+        QMRD.temperature_asphalt,
+        QMRD.temperature_aggregate
+        FROM
+        quality_monitoring_realtime_${crew} AS QMRD
+        INNER JOIN quality_proportioning_message AS QPM
+        <choose>
+            <when test="crew=='data1'.toString()">
+                ON QMRD.produce_proportioning_num = QPM.crew1_modele_id
+            </when>
+            <otherwise>
+                ON QMRD.produce_proportioning_num = QPM.crew2_modele_id
+            </otherwise>
+        </choose>
+        INNER JOIN quality_proportioning_model AS QPMD ON QPMD.message_id = QPM.id
+        LEFT JOIN quality_leave_factory_history AS QLFH ON QMRD.produce_car_num = QLFH.car_num
+        WHERE
+        QLFH.project_name = &apos;${projectName}&apos;
+        <choose>
+            <when test="select=='rationId'.toString()">
+            </when>
+            <otherwise>
+                AND QMRD.produce_proportioning_num = ${rationId}
+            </otherwise>
+        </choose>
+        AND YEAR(QPMD.create_time) = YEAR(&apos;${startDate}&apos;)
+        AND CONCAT(
+        QMRD.produce_date,
+        ' ',
+        QMRD.produce_time
+        ) BETWEEN &apos;${startDate}&apos;
+        AND &apos;${endDate}&apos;
     </select>
     <select id="selectRaionModelById" resultType="java.util.Map">
         SELECT

@@ -29,6 +29,7 @@
                 /static/** = anon
                 <!--质量数据写入-->
                 /qualityData.do = anon
+                /getCarNum.do = anon
                 <!--登录-->
                 /login/login.do = anon
                 /login/*.do = authc

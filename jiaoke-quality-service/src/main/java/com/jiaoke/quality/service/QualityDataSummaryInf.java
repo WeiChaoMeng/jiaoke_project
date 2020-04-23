@@ -40,9 +40,9 @@ public interface QualityDataSummaryInf {
      * @auther Melone
      * @date 2019/4/30 14:44
      */
-    List<Map<String, Object>> getRatioListByDateTimeAndCrew(String startDate, String endDate, String crew);
+    Map<String,Object> getRatioListByDateTimeAndCrew(String startDate, String endDate, String crew);
 
-    List<Map<String,Object>> getPromessageByRaionModel(String startDate, String endDate, String crew, String rationId);
+    List<Map<String,Object>> getPromessageByRaionModel(String startDate, String endDate, String crew, String rationId, String projectName);
 
     void getProSvgmessage(String startDate, String endDate, String crew, String rationId, HttpServletRequest request);
 
@@ -123,4 +123,15 @@ public interface QualityDataSummaryInf {
      * @date 2019/10/16 13:16
      */
     String getAllCriticalWarningByDate(String startDate, String endDate);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期查询工程名称、产品类型>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/4/21 14:22
+     */
+    Map<String,Object> getProjectNameByDate(String startDate, String endDate);
 }

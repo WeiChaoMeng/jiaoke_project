@@ -306,7 +306,6 @@ function getThisYearDataAndPlan() {
             } else {
                 var plan = res.totals;
                 var yearTotal = res.total;
-
                 option2.series[0].data[0].value = Math.round(yearTotal);
                 option2.series[0].data[1].value = Math.round(plan - yearTotal);
                 option2.series[1].data[0].value = Math.round(plan) ;

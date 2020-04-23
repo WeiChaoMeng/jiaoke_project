@@ -466,4 +466,59 @@ public interface QualityExperimentalManagerInf {
      * @date 2019/12/16 16:17
      */
     String getSevenDayAsphaltStandingBook();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询厂家及材料信息>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/4/13 10:56
+     */
+    String getMaterialsAndManufacturersMsg();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <添加材料绑定厂家>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/4/13 16:45
+     */
+    String addMaterialsAndManufacturers(String fromData);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询材料对应厂家>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/4/13 18:04
+     */
+    String getMaterialsMatchupManufacturers();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据Id删除材料对应厂家>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/4/13 18:27
+     */
+    String deleteMaterialAndManufacturersById(String id);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据材料ID查询生产厂家>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/4/14 18:38
+     */
+    String getManufacturersByMaterials(String id);
 }

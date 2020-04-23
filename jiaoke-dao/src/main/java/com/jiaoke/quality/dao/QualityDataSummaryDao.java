@@ -159,4 +159,43 @@ public interface QualityDataSummaryDao {
      * @date 2019/10/16 13:19
      */
     List<Map<String, String>> getAllCriticalWarningByDate(@Param("startDate") String startDate,@Param("endDate") String endDate);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期查询工程名称、产品类型>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/4/21 14:32
+     */
+    List<Map<String, String>> selectProjectNameByDate(@Param("startDate") String startDate,@Param("endDate") String endDate);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询工程根据日期与机组>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/4/23 9:34
+     */
+    List<Map<String, Object>> selectProjectByDateAndCrewNum(@Param("startDate") String startDate,
+                                                            @Param("endDate")  String endDate,
+                                                            @Param("crewNum") String crewNum);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询生产数据根据工程名与配比>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/4/23 10:31
+     */
+    List<Map<String, Object>> selectPromessageByRaionModelAndProject(@Param("startDate") String startDate,
+                                                                     @Param("endDate")   String endDate,
+                                                                     @Param("crew")  String crew,
+                                                                     @Param("rationId")  String rationId,
+                                                                     @Param("projectName") String projectName);
 }

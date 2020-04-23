@@ -546,8 +546,12 @@
                                 position: "start"
                             }
                         },
-                        lineStyle:{
-                            color: '#000'
+                        lineStyle: {
+                            normal: {
+                                type: 'solid',
+                                width:0.6,
+                                color: '#000000'
+                            }
                         },
                         data: []
                     }
@@ -633,11 +637,15 @@
                 name: '筛孔',
                 nameGap: 16,
                 nameTextStyle: {
-                    color: '#000',
+                    color: '#000000',
                     fontSize: 14
                 },
                 min:0,
                 max:7,
+                lineStyle:{
+                    color: '#000000',
+                    type : 'solid'
+                },
                 splitLine: {
                     show: false
                 },
@@ -649,7 +657,7 @@
                 },
                 axisLine: { //轴线
                     lineStyle: { //样式
-                        color: '#000' //颜色
+                        color: '#000000' //颜色
                     }
                 }
             },
@@ -670,13 +678,14 @@
                 axisLine: {
                     onZero: false,
                     lineStyle: {
-                        color: '#000'
+                        color: '#000000'
                     }
                 },
                 splitLine: {
                     show: true,
                     lineStyle: {
-                        color: '#000'
+
+                        color: '#000000'
                     }
                 }
             },
@@ -691,8 +700,12 @@
                                 position: "start"
                             }
                         },
-                        lineStyle:{
-                            color: '#000'
+                        lineStyle: {
+                            normal: {
+                                type: 'solid',
+                                width:0.6,
+                                color: '#000000'
+                            }
                         },
                         data: []
                     }

@@ -41,7 +41,7 @@
                                     </div>
                                     <label class="jelabel">结束日期：</label>
                                     <div class="dy_select_div"   >
-                                        <input type="text" class="dy_select_date" data-ajax="false" id="inpend" placeholder="选择开始日期" >
+                                        <input type="text"  class="dy_select_date"  id="inpend" placeholder="选择开始日期"  >
                                     </div>
 
                                 <label class="jelabel">机组选择</label>
@@ -59,6 +59,12 @@
                                         <option value="select" >请选择</option>
                                     </select>
                                 </div>
+                                    <label class="jelabel">工程选择</label>
+                                    <div class="dy_select_div" >
+                                        <select  id="project_id" class="dy_select">
+                                            <option value="select" >请选择</option>
+                                        </select>
+                                    </div>
                                 <button style="width: 160px;height: 36px;margin-left: 5%;" class="query-but" onclick="selectPromessageByRaionModel()" >查询</button>
                             </div>
                     </div>
@@ -83,6 +89,7 @@
                             <th>生产时间</th>
                             <th>机组号</th>
                             <th>盘号</th>
+                            <th>工程名称</th>
                             <th>产品名称</th>
                             <th>骨料6</th>
                             <th>骨料5</th>

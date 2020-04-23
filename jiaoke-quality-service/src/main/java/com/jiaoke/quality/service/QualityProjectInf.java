@@ -10,7 +10,9 @@ package com.jiaoke.quality.service;
 
 import com.jiaoke.quality.bean.QualityProjectItem;
 
+import java.text.ParseException;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  *  <一句话功能描述>
@@ -41,7 +43,7 @@ public interface QualityProjectInf {
      * @auther Melone
      * @date 2019/11/14 19:08
      */
-    List<QualityProjectItem> getUserProjectList();
+    List<QualityProjectItem> getUserProjectList() throws Exception;
 
     /**
      *
@@ -86,4 +88,15 @@ public interface QualityProjectInf {
      * @date 2019/11/15 13:27
      */
     int editProjectItem(QualityProjectItem fromData);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <车牌号绑定生产信息>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/4/16 9:34
+     */
+    void  editProductionDataByCarNum(String carNum) throws ExecutionException, InterruptedException, ParseException;
 }

@@ -80,7 +80,6 @@ function getAllSamplingPage() {
 
 
 function echaSamplingPage(currentNum,amplingArray) {
-    debugger
     var arrayStart = (currentNum - 1) * 10;
     var arrayEnd = arrayStart + 10;
     $("#samplingData").empty();
@@ -156,10 +155,34 @@ function removeSample(id) {
 
     });
 }
-
+// $("#materials").change(function () {
+//
+// })
+function getManufacturersByMaterials(id) {
+    $.ajax({
+        type: "POST",
+        url: basePath + "/getManufacturersByMaterials.do",
+        data: {
+            "id":id
+        },
+        dataType:'JSON',
+        success: function(msg){
+            if (msg.message === 'error'){
+                layer.msg("当前材料无厂家");
+                $("#manufacturers").empty();
+            }else {
+                var temHtml = "";
+                var arry = msg.dataArry;
+                for (var i = 0; i < arry.length;i++){
+                    temHtml += "<option value='" + arry[i].id +"'>" + arry[i].name + "</option>";
+                }
+                $("#manufacturers").empty().append(temHtml);
+            }
+        }
+    });
+}
 //点击确认完成按钮时相关逻辑
 function confirm_completed(id) {
-    debugger
     //查询状态是否已是完成
     var condition = false;
     $.ajax({
@@ -219,7 +242,6 @@ function getFromData() {
         url: basePath + "/getSamplingPageFromData.do",
         dataType:'json',
         success: function(msg){
-            debugger
             for(p in msg){
                 $("#" + p).empty();
             	for (var i=0; i < msg[p].length;i++){
@@ -227,7 +249,7 @@ function getFromData() {
                     $("#" + p).append(htmlStr);
 				}
 			}
-
+            $("#manufacturers").empty();
 			//加载时间
             var time2 = new Date().Format("yyyy-MM-dd HH:mm:ss");
             $("#creat_time").val(time2);

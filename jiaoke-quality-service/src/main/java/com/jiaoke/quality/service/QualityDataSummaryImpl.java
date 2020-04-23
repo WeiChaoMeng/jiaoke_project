@@ -44,14 +44,32 @@ public class QualityDataSummaryImpl implements QualityDataSummaryInf {
     }
 
     @Override
-    public List<Map<String, Object>> getRatioListByDateTimeAndCrew(String startDate, String endDate, String crew) {
-
-        return qualityDataSummaryDao.selectRatioListByDateTimeAndCrew(startDate,endDate,crew);
+    public Map<String,Object> getRatioListByDateTimeAndCrew(String startDate, String endDate, String crew) {
+        Map<String,Object> res = new HashMap<>();
+        List<Map<String, Object>> rationList = qualityDataSummaryDao.selectRatioListByDateTimeAndCrew(startDate,endDate,crew);
+        String crewNum = "data1".equals(crew) ? "1":"2";
+        List<Map<String, Object>> projectList = qualityDataSummaryDao.selectProjectByDateAndCrewNum(startDate,endDate,crewNum);
+        res.put("rationList",rationList);
+        res.put("projectList",projectList);
+        return res;
     }
 
     @Override
-    public List<Map<String,Object>> getPromessageByRaionModel(String startDate, String endDate, String crew, String rationId) {
-        List<Map<String,Object>> proList = qualityDataSummaryDao.selectPromessageByRaionModel(startDate,endDate,crew,rationId);
+    public Map<String,Object> getProjectNameByDate(String startDateTime, String endDateTime) {
+        Map<String,Object> map = new HashMap<>();
+        String startDate = startDateTime.split(" ")[0];
+        String endDate = endDateTime.split(" ")[0];
+        //查询工程名称列表
+        List<Map<String,String>> list = qualityDataSummaryDao.selectProjectNameByDate(startDate,endDate);
+        map.put("message","success");
+        map.put("projectList",list);
+
+        return map;
+    }
+
+    @Override
+    public List<Map<String,Object>> getPromessageByRaionModel(String startDate, String endDate, String crew, String rationId, String projectName) {
+        List<Map<String,Object>> proList = qualityDataSummaryDao.selectPromessageByRaionModelAndProject(startDate,endDate,crew,rationId,projectName);
         return proList;
     }
 

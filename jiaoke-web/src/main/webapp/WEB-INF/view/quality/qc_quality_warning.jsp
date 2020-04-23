@@ -16,7 +16,41 @@
     <script type="text/javascript" src="/static/js/echarts/echarts.js"></script>
 
 </head>
-
+<style>
+    .container{
+        position:absolute;
+        left:100px;
+        top:10px;
+        height:160px;
+        border:1px solid #ccc;
+    }
+    s{
+        display:block;
+        height:0px;      // 为了取出border中间的空隙
+        width:0px;        // 为了取出border中间的空隙
+    position:absolute;
+        left:-20px;
+        top:10px;
+        border-width:10px;
+        border-color:transparent black transparent transparent;
+        font-size:0;    //为了清除ie6浏览器中上下不是三角形的情况
+    line-height:0;  //为了清除ie6浏览器中上下不是三角形的情况
+    border-style:dashed solid dashed dashed;
+    }
+    i{
+        display:block;
+        height:0px;
+        width:0px;
+        position:absolute;
+        left:-10px;
+        top:-10px;
+        border-width:10px;
+        border-color:transparent white transparent transparent;
+        font-size:0;
+        line-height:0;
+        border-style:dashed solid dashed dashed;
+    }
+</style>
 <body style="padding:15px 8px 500px 8px;">
 
     <div class="my_echars_div_block" >
@@ -25,13 +59,13 @@
                 <span>一号机组实时数据预警</span>
                 <div style="height: 100%;padding-left: 60%;float: left;">
                     <p style="float: left;font-size: 12px;" >无预警：</p>
-                    <span class="example_span" style="background-color: green;"></span>
+                    <span class="example_span" style="background-color: green;    display: block;width: 15px;height: 50%;margin-right: 10px;margin-top: 10px;border-radius: 5px;"></span>
                     <p style="float: left;font-size: 12px;" >一级预警：</p>
-                     <span class="example_span" style="background-color: blue;"></span>
+                     <span  style="background-color: blue;    display: block;width: 15px;height: 50%;margin-right: 10px;margin-top: 10px;border-radius: 5px;"></span>
                     <p style="float: left;font-size: 12px;" >二级预警：</p>
-                    <span class="example_span" style="background-color: yellow;" ></span>
+                    <span  style="background-color: yellow;    display: block;width: 15px;height: 50%;margin-right: 10px;margin-top: 10px;border-radius: 5px;" ></span>
                     <p style="float: left;font-size: 12px;" >三级预警：</p>
-                    <span class="example_span" style="background-color: red;" ></span>
+                    <span style="background-color: red;    display: block;width: 15px;height: 50%;margin-right: 10px;margin-top: 10px;border-radius: 5px;" ></span>
                 </div>
             </div>
         </div>
@@ -184,8 +218,12 @@
                                             position: "start"
                                         }
                                     },
-                                    lineStyle:{
-                                        color: '#000'
+                                    lineStyle: {
+                                        normal: {
+                                            type: 'solid',
+                                            width:0.6,
+                                            color: '#000000'
+                                        }
                                     },
                                     data: []
                                 }
@@ -389,8 +427,12 @@
                                             position: "start"
                                         }
                                     },
-                                    lineStyle:{
-                                        color: '#000'
+                                    lineStyle: {
+                                        normal: {
+                                            type: 'solid',
+                                            width:0.6,
+                                            color: '#000000'
+                                        }
                                     },
                                     data: []
                                 }
@@ -474,6 +516,7 @@
         </div>
     </form>
     </div>
+    <div class="layui-layer layui-layer-tips" id="warning" type="tips" times="10" showtime="4000" contype="object" style="z-index: 19891024; position:absolute; width: 210px; display: none;"><div id="" class="layui-layer-content" style="background-color: rgb(53, 149, 204);">我是另外一个tips，只不过我长得跟之前那位稍有些不一样。<i class="layui-layer-TipsG layui-layer-TipsT" style="border-right-color: rgb(53, 149, 204);"></i></div><span class="layui-layer-setwin"></span></div>
     <%--js获取路径--%>
     <input id="path" type="hidden" value="${path}"/>
 </body>

@@ -458,8 +458,12 @@
                                 position: "start"
                             }
                         },
-                        lineStyle:{
-                            color: '#000'
+                        lineStyle: {
+                            normal: {
+                                type: 'solid',
+                                width:0.6,
+                                color: '#000000'
+                            }
                         },
                         data: []
                     }
@@ -661,53 +665,61 @@
             for (var key in json[i]){
                 switch (key) {
                     case '0.075':
-                        array.push({xAxis:0.312,label: {normal: {formatter: key+""}}});
+                        array.push({xAxis:0.312,label: {rotate:90, formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}});
                         break;
                     case '0.15':
-                        array.push({xAxis:0.426,label: {normal: {formatter: key+""}}});
+                        array.push({xAxis:0.426,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
                         break;
                     case '0.3':
-                        array.push({xAxis:0.582,label: {normal: {formatter: key+""}}});
+                        array.push({xAxis:0.582,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
                         break;
                     case '0.6':
-                        array.push({xAxis:0.795,label: {normal: {formatter: key+""}}});
+                        array.push({xAxis:0.795,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
                         break;
                     case '1.18':
-                        array.push({xAxis:1.007,label: {normal: {formatter: key+""}}});
+                        array.push({xAxis:1.007,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
                         break;
                     case '2.36':
-                        array.push({xAxis:1.472,label: {normal: {formatter: key+""}}});
+                        array.push({xAxis:1.472,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
                         break;
                     case '4.75':
-                        array.push({xAxis:2.016,label: {normal: {formatter: key+""}}});
+                        array.push({xAxis:2.016,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                        break;
+                    case '6.7':
+                        array.push({xAxis:2.354,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                        break;
+                    case '7.0':
+                        array.push({xAxis:2.400,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                        break;
+                    case '7.2':
+                        array.push({xAxis:2.431,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
                         break;
                     case '9.5':
-                        array.push({xAxis:2.754,label: {normal: {formatter: key+""}}});
+                        array.push({xAxis:2.754,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
                         break;
                     case '13.2':
-                        array.push({xAxis:3.193,label: {normal: {formatter: key+""}}});
+                        array.push({xAxis:3.193,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
                         break;
-
                     case '16':
-                        array.push({xAxis:3.482,label: {normal: {formatter: key+""}}});
+                        array.push({xAxis:3.482,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
                         break;
                     case '19':
-                        array.push({xAxis:3.762,label: {normal: {formatter: key+""}}});
+                        array.push({xAxis:3.762,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
                         break;
                     case '26.5':
-                        array.push({xAxis:4.370,label: {normal: {formatter: key+""}}});
+                        array.push({xAxis:4.370,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
                         break;
                     case '31.5':
-                        array.push({xAxis:4.723,label: {normal: {formatter: key+""}}});
+                        array.push({xAxis:4.723,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
                         break;
                     case '37.5':
-                        array.push({xAxis:5.109,label: {normal: {formatter: key+""}}});
+                        array.push({xAxis:5.109,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
                         break;
                     case '53':
-                        array.push({xAxis:5.969,label: {normal: {formatter: key+""}}});
+                        array.push({xAxis:5.969,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
                         break;
                     case '63':
-                        array.push({xAxis:6.452,label: {normal: {formatter: key+""}}});
+                        array.push({xAxis:6.452,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
                         break;
                 }
 

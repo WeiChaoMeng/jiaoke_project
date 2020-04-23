@@ -108,6 +108,11 @@ public class OperatingManagerImpl implements OperatingManagerInf {
             map.put("lastMonthCountPercent","0");
             return JSON.toJSONString(map);
         }
+        if (Integer.parseInt(monthBeforeLat.get("counts").toString()) == 0){
+            map.put("lastMonthPercent","100");
+            map.put("lastMonthCountPercent","100");
+            return JSON.toJSONString(map);
+        }
 
         float lastMonthTotal = Float.parseFloat(lastMonth.get("totals").toString());
         int lastMonthCount =  Integer.parseInt(lastMonth.get("counts").toString());

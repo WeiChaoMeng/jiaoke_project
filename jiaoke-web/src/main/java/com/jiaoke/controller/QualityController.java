@@ -10,6 +10,7 @@ package com.jiaoke.controller;
 
 import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.QualityMatchingUtil;
 import com.jiaoke.common.bean.PageBean;
@@ -24,7 +25,6 @@ import com.jiaoke.quality.bean.QualityProjectItem;
 import com.jiaoke.quality.bean.QualityRatioModel;
 import com.jiaoke.quality.bean.QualityRatioTemplate;
 import com.jiaoke.quality.service.*;
-import lombok.experimental.var;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.ManagementService;
 import org.activiti.engine.TaskService;
@@ -40,6 +40,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -149,8 +151,68 @@ public class QualityController {
             Thread thread = new Thread(myThread);
             thread.start();
         }catch (Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
+
+
+    }
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <车盘接收程序>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/4/15 15:50
+     */
+
+    @RequestMapping(value = {"/getCarNum.do"} ,method = RequestMethod.POST)
+    public void  getCarNum(HttpServletRequest request, HttpServletResponse response){
+
+        try{
+            InputStream in=request.getInputStream();
+            int size=request.getContentLength();
+            String charset=null;
+            int readCount = 0; // 已经成功读取的字节的个数
+            int nRead = 0;
+            byte[] buf = new byte[size];
+
+            while (readCount < size) {
+                nRead = in.read(buf, readCount, size - readCount);
+                if( nRead == -1) // 到末尾
+                {
+                    break;
+                }
+                readCount += nRead;
+                //readCount += in.read(buf, readCount, size - readCount);
+            }
+
+            if ((charset == null || charset.length() == 0) && (size ==readCount))
+            {
+                qualityprojectInf.editProductionDataByCarNum(new String(buf,"UTF-8"));
+
+                show_json(new String(buf));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void show_json(String m_str)
+    {
+        //获取设备名称
+        JSONObject Json = JSONObject.parseObject(m_str);
+        String deviceName= Json.getJSONObject("AlarmInfoPlate").getString("result");
+        System.out.println(deviceName);
+
+        //设备IP地址
+//        String ipaddr= Json.getJSONObject("AlarmInfoPlate").getString("ipaddr");
+//        System.out.println(ipaddr);
+//        //获取识别车牌号
+//        String license= Json.getJSONObject("AlarmInfoPlate").getJSONObject("result").getJSONObject("PlateResult").getString("license");
+//        System.out.println(license);
 
 
     }
@@ -173,7 +235,7 @@ public class QualityController {
         try{
             lastWeekCrewDataJson =  qualityIndexInf.getLastWeekCrewData();
         }catch (Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         return lastWeekCrewDataJson;
@@ -327,7 +389,7 @@ public class QualityController {
             request.setAttribute("listRegenerate",listRegenerate);
             request.setAttribute("pageBean",pageBean);
         }catch (Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         return "quality/qc_matching_model";
@@ -363,7 +425,7 @@ public class QualityController {
         try{
             boolean bo =  qualityMatchingInf.insetRatioTemplate(qualityRatioTemplate);
         }catch (Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         return "redirect:qc_index.do";
@@ -385,7 +447,7 @@ public class QualityController {
         try{
             jsonMessage =  qualityMatchingInf.delectRation(idStr);
         }catch (Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
         return jsonMessage;
     }
@@ -405,7 +467,7 @@ public class QualityController {
         try{
             jsonMessage =  qualityMatchingInf.selectRationById(idStr);
         }catch (Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
         return jsonMessage;
     }
@@ -424,7 +486,7 @@ public class QualityController {
         try{
             jsonMessage =  qualityMatchingInf.insetGrading(jsonData,crew1Id,crew2Id,gradingName,upUser,gradingRemaker);
         }catch (Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
         return jsonMessage;
     }
@@ -435,7 +497,7 @@ public class QualityController {
         try{
             Boolean res =   qualityMatchingInf.EditRationById(qualityRatioTemplate);
         }catch (Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         return "redirect:qc_index.do";
@@ -467,7 +529,7 @@ public class QualityController {
         try{
             JsonData = qualityDataMontoringInf.selectProductionData();
         }catch (Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         if (JsonData == "") return null;
@@ -491,7 +553,7 @@ public class QualityController {
         try{
             jsonStr = qualityDataMontoringInf.getRealTimeDataEcharsTemp();
         }catch (Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         return jsonStr;
@@ -515,7 +577,7 @@ public class QualityController {
         try{
             jsonStr = qualityDataMontoringInf.getRealTimeDataEcharsMaterial();
         }catch (Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         return jsonStr;
@@ -528,7 +590,7 @@ public class QualityController {
         try{
             res =  qualityDataMontoringInf.getRealTimeThreeProductSVG();
         }catch (Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
        return res;
     }
@@ -564,7 +626,7 @@ public class QualityController {
 
             request.setAttribute("pageBean",pageBean);
         }catch (Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
 
 
@@ -579,7 +641,7 @@ public class QualityController {
         try{
             str = qualityDataManagerInf.getMsgByUserAndDate(userNum,proDate);
         }catch (Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
         return str;
     }
@@ -591,7 +653,7 @@ public class QualityController {
         try{
             Map<String,Object> map = qualityDataManagerInf.selectProducttionByDate(producedDate,crewNum, request);
         }catch (Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         return "quality/qc_dm_data_matching";
@@ -616,7 +678,7 @@ public class QualityController {
 
             request.setAttribute("product",map);
         }catch (Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
 
 
@@ -634,7 +696,7 @@ public class QualityController {
 
             request.setAttribute("baseMap",prolist);
         }catch (Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
 
 
@@ -653,7 +715,7 @@ public class QualityController {
         try{
             res = qualityDataManagerInf.getProSVGRationAndModelRation(ProductSVG);
         }catch (Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
 
        return res;
@@ -667,7 +729,7 @@ public class QualityController {
         try{
              res = qualityDataManagerInf.getProductSvgGrading(ProductSVG);
         }catch (Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -689,7 +751,7 @@ public class QualityController {
         try{
             listStr = qualityRealTimeWarningInf.selectLastWarningData();
         }catch (Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         return listStr;
@@ -703,7 +765,7 @@ public class QualityController {
         try{
             jsonStr = qualityRealTimeWarningInf.getWarningEcharsData();
         }catch (Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
         return jsonStr;
     }
@@ -717,7 +779,7 @@ public class QualityController {
         try{
             res = qualityRealTimeWarningInf.getGlobalWarningData();
         }catch (Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -780,7 +842,7 @@ public class QualityController {
             request.setAttribute("rationId",rationId);
             request.setAttribute("warningLive",warningLive);
         }catch (Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
 
 
@@ -802,7 +864,7 @@ public class QualityController {
         try{
             qualityAuxiliaryAnalysisInf.getPageByProductIdAndProdate(producedId,prodate,discNum,crew,request);
         }catch (Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
 
          return "quality/qc_auxiliary_message";
@@ -816,7 +878,7 @@ public class QualityController {
         try{
             result = qualityAuxiliaryAnalysisInf.getRealTimeDataEcharsMaterial(id,crewNum);
         }catch (Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
         return result;
     }
@@ -858,7 +920,7 @@ public class QualityController {
         try{
             res = qualityStatementInf.selectLastMonthStatementToEchars();
         }catch (Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
 
 
@@ -874,7 +936,7 @@ public class QualityController {
         try{
             res = qualityStatementInf.selectMonthStatementToData();
         }catch (Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
 
 
@@ -889,7 +951,7 @@ public class QualityController {
         try{
             res = qualityStatementInf.selectYearStatementDateAndDate();
         }catch (Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -902,7 +964,7 @@ public class QualityController {
         try{
             res = qualityStatementInf.selectMonthDateList();
         }catch (Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -939,7 +1001,7 @@ public class QualityController {
         try{
             list = qualityTimelyDataFalseService.getTimeSurveillanceFalseData();
         }catch (Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
         return JsonHelper.toJSONString(list);
     }
@@ -951,7 +1013,7 @@ public class QualityController {
         try{
             resoure = qualityTimelyDataFalseService.selectFalseDataToChars();
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return  resoure;
     }
@@ -963,7 +1025,7 @@ public class QualityController {
         try{
             resoure = qualityTimelyDataFalseService.selectFalseDataEcharsTemp();
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return  resoure;
     }
@@ -994,7 +1056,7 @@ public class QualityController {
 
             request.setAttribute("pageBean",pageBean);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         return "quality/qc_historical_data";
@@ -1009,7 +1071,7 @@ public class QualityController {
             list = qualityHistoricalDataService.selectHistoryByDateAndcrewNum(producedDate,crewNum);
             request.setAttribute("prolist",list);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         return "quality/qc_false_data_list";
@@ -1025,7 +1087,7 @@ public class QualityController {
         try{
             qualityDynamicInf.getLastDayToChars(request);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         return "quality/qc_dynamic_management";
@@ -1038,7 +1100,7 @@ public class QualityController {
         try{
             qualityDynamicInf.getEcharsDataByMaterialAndDate(date,material,ratioNum,crew,request);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         return "quality/qc_dynamic_management";
@@ -1051,7 +1113,7 @@ public class QualityController {
         try{
             res =  qualityDynamicInf.getRatioListByDate(proData,crew);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -1081,7 +1143,7 @@ public class QualityController {
         try{
             res = qualityDataSummaryInf.getThreeDayData();
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -1093,35 +1155,50 @@ public class QualityController {
             return null;
         }
 
-        List<Map<String,Object>> res = new ArrayList<>();
+        Map<String,Object> map = new HashMap<>();
         try{
-            res = qualityDataSummaryInf.getRatioListByDateTimeAndCrew(startDate,endDate,crew);
+            map = qualityDataSummaryInf.getRatioListByDateTimeAndCrew(startDate,endDate,crew);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
-        return  JSON.toJSONString(res);
+        return  JSON.toJSONString(map);
     }
 
     @ResponseBody
+    @RequestMapping(value = "/getProjectNameByDate.do",method = RequestMethod.POST)
+    public String getProjectNameByDate(@RequestParam("startDate") String startDate,@RequestParam("endDate") String endDate){
+        Map<String,Object> res = new HashMap<>();
+        try {
+            res =  qualityDataSummaryInf.getProjectNameByDate(startDate,endDate);
+        }catch (Exception e){
+            res.put("success","error");
+            e.printStackTrace();
+        }
+        return JSON.toJSONString(res);
+    }
+
+
+    @ResponseBody
     @RequestMapping(value = "getPromessageByRaionModel.do",method = RequestMethod.POST)
-    public String getPromessageByRaionModel(String startDate,String endDate,String crew, String rationId){
+    public String getPromessageByRaionModel(String startDate,String endDate,String crew, String rationId,String projectName){
 
         List<Map<String,Object>> list = new ArrayList<>();
         try{
-            list =  qualityDataSummaryInf.getPromessageByRaionModel(startDate,endDate,crew,rationId);
+            list =  qualityDataSummaryInf.getPromessageByRaionModel(startDate,endDate,crew,rationId,projectName);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         return JSON.toJSONString(list);
     }
+
 
     @RequestMapping("/getProSvgmessage.do")
     public String getProSvgmessage(String startDate,String endDate,String crew, String rationId,HttpServletRequest request){
         try{
             qualityDataSummaryInf.getProSvgmessage(startDate,endDate,crew,rationId,request);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return "quality/qc_ds_message";
     }
@@ -1141,7 +1218,7 @@ public class QualityController {
         try{
             res = qualityGradingManagerInf.getGradingModelList();
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -1154,7 +1231,7 @@ public class QualityController {
         try{
             res = qualityGradingManagerInf.delectGrading(idStr);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         return res;
@@ -1167,7 +1244,7 @@ public class QualityController {
         try{
             res = qualityGradingManagerInf.getGrading(id);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -1222,7 +1299,7 @@ public class QualityController {
         try{
             res = qualityExperimentalManagerInf.getAllSamplingPage();
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         return res;
@@ -1244,7 +1321,7 @@ public class QualityController {
         try{
             res = qualityExperimentalManagerInf.getSamplingPageFromData();
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     };
@@ -1265,7 +1342,7 @@ public class QualityController {
         try{
             res =  qualityExperimentalManagerInf.addSample(materials,manufacturers,specification,tunnage,creat_time,remark);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
        return res;
     };
@@ -1287,7 +1364,7 @@ public class QualityController {
          try{
              res = qualityExperimentalManagerInf.removeSampleById(id);
          }catch (Exception e) {
-             System.out.println(e);
+             e.printStackTrace();
          }
          return res;
      }
@@ -1300,7 +1377,7 @@ public class QualityController {
          try{
              res = qualityExperimentalManagerInf.confirmCompletedById(id);
          }catch (Exception e) {
-             System.out.println(e);
+             e.printStackTrace();
          }
         return res;
      }
@@ -1332,7 +1409,7 @@ public class QualityController {
         try{
             res =  qualityExperimentalManagerInf.getAllexperimental();
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
        return res;
     }
@@ -1344,7 +1421,7 @@ public class QualityController {
         try{
             res = qualityExperimentalManagerInf.getExperimentalMessageById(id);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
          return res;
     }
@@ -1364,7 +1441,7 @@ public class QualityController {
         try{
             res = qualityExperimentalManagerInf.getExperimentalItemByOrderNum(orderNum);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -1375,7 +1452,7 @@ public class QualityController {
         try{
             res = qualityExperimentalManagerInf.getExperimentalItemById(id);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -1398,7 +1475,66 @@ public class QualityController {
         try{
             res = qualityExperimentalManagerInf.getExperimentalItemCount(orderTicketNum);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+    @ResponseBody
+    @RequestMapping("/getMaterialsAndManufacturersMsg.do")
+    public String getMaterialsAndManufacturersMsg (){
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.getMaterialsAndManufacturersMsg();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/addMaterialsAndManufacturers.do",method = RequestMethod.POST)
+    @Transactional(rollbackFor=Exception.class)
+    public String addMaterialsAndManufacturers(@RequestParam("fromData") String fromData){
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.addMaterialsAndManufacturers(fromData);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+    @ResponseBody
+    @RequestMapping("/getMaterialsMatchupManufacturers.do")
+    public String getMaterialsMatchupManufacturers(){
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.getMaterialsMatchupManufacturers();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/deleteMaterialAndManufacturersById.do",method = RequestMethod.POST)
+    public String deleteMaterialAndManufacturersById(@RequestParam("id") String id){
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.deleteMaterialAndManufacturersById(id);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getManufacturersByMaterials.do",method = RequestMethod.POST)
+    public String getManufacturersByMaterials(@RequestParam("id") String id){
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.getManufacturersByMaterials(id);
+        }catch (Exception e) {
+            e.printStackTrace();
         }
         return res;
     }
@@ -1418,7 +1554,7 @@ public class QualityController {
         try{
             res = qualityExperimentalManagerInf.getAllExperimentalItem();
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -1444,7 +1580,7 @@ public class QualityController {
         try{
             msg = qualityExperimentalManagerInf.getExperimentalItemMsgById(id);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return msg;
     }
@@ -1456,7 +1592,7 @@ public class QualityController {
         try{
             res = qualityExperimentalManagerInf.getExperimentalItemNumList(id);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -1507,7 +1643,7 @@ public class QualityController {
             model.addAttribute("commentsList",commentsList);
             model.addAttribute("commentsSize",commentsList.size());
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         return "quality/qc_em_experimental_message";
@@ -1533,7 +1669,7 @@ public class QualityController {
             model.addAttribute("commentsList",commentsList);
             model.addAttribute("commentsSize",commentsList.size());
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         return "quality/qc_em_experimental_approval";
@@ -1717,7 +1853,7 @@ public class QualityController {
             model.addAttribute("commentsList",commentsList);
             model.addAttribute("commentsSize",commentsList.size());
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         return "quality/qc_em_experimental_message";
@@ -1729,7 +1865,7 @@ public class QualityController {
         try{
             res = qualityExperimentalManagerInf.getExperimentalProjectMessage(id);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -1740,7 +1876,7 @@ public class QualityController {
         try{
             res = qualityExperimentalManagerInf.getExperimentalProjectItem(tableName,experiment_num);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -1751,7 +1887,7 @@ public class QualityController {
         try{
             res = qualityExperimentalManagerInf.removeExperimentalItemById(id);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -1789,7 +1925,7 @@ public class QualityController {
         try{
             res = qualityExperimentalManagerInf.getSevenDayRawMaterialStandingBook();
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -1810,7 +1946,7 @@ public class QualityController {
         try{
             res = qualityExperimentalManagerInf.getSevenDayCoarseStandingBook();
         }catch (Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -1831,7 +1967,7 @@ public class QualityController {
         try{
             res = qualityExperimentalManagerInf.getSevenDayFineStandingBook();
         }catch (Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -1852,7 +1988,7 @@ public class QualityController {
         try{
             res = qualityExperimentalManagerInf.getSevenDayBreezeStandingBook();
         }catch (Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -1864,7 +2000,7 @@ public class QualityController {
         try{
             res = qualityExperimentalManagerInf.getSevenDayAsphaltStandingBook();
         }catch (Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -1884,7 +2020,7 @@ public class QualityController {
         try{
             res = qualityExperimentalManagerInf.getRawMaterialStandingBookByDate(startDate,endDate);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     };
@@ -1905,7 +2041,7 @@ public class QualityController {
         try{
             res = qualityExperimentalManagerInf.searchStandingBook(fromData);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -1926,7 +2062,7 @@ public class QualityController {
         try{
             res =  qualityExperimentalManagerInf.getAsphaltStandingBook();
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -1937,7 +2073,7 @@ public class QualityController {
         try{
             res = qualityExperimentalManagerInf.getAsphaltStandingBookByDate(startDate,endDate);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -1949,7 +2085,7 @@ public class QualityController {
         try{
             res = qualityExperimentalManagerInf.getTestStandingBook();
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -1961,7 +2097,7 @@ public class QualityController {
         try{
             res = qualityExperimentalManagerInf.getTestStandingBookByDate(startDate,endDate);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -1981,7 +2117,7 @@ public class QualityController {
         try{
             res = qualityExperimentalManagerInf.getSpecificationDataAndManufacturersData();
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         return res;
@@ -1993,7 +2129,7 @@ public class QualityController {
         try{
             res = qualityExperimentalManagerInf.deleteSpecificationOrManufacturersById(id,make);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -2004,7 +2140,7 @@ public class QualityController {
         try{
             res = qualityExperimentalManagerInf.insertSpecificationFrom(specificationName);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -2015,7 +2151,7 @@ public class QualityController {
         try{
             res = qualityExperimentalManagerInf.insertManufacturersFrom(manufacturersName);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -2026,7 +2162,7 @@ public class QualityController {
         try{
             res = qualityExperimentalManagerInf.getSpecificationOrManufacturersById(id,make);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -2037,7 +2173,7 @@ public class QualityController {
         try{
             res = qualityExperimentalManagerInf.updateSpecificationOrManufacturersById(id,make,updateName);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -2078,7 +2214,7 @@ public class QualityController {
         try{
             res = QualityExperimentalManagerForeignInf.getAllSamplingPage();
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -2099,7 +2235,7 @@ public class QualityController {
         try{
             res = QualityExperimentalManagerForeignInf.getSamplingPageFromData();
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     };
@@ -2120,7 +2256,7 @@ public class QualityController {
         try{
             res =  QualityExperimentalManagerForeignInf.addSample(materials,manufacturers,specification,tunnage,creat_time,remark);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     };
@@ -2141,7 +2277,7 @@ public class QualityController {
         try{
             res = QualityExperimentalManagerForeignInf.removeSampleById(id);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -2153,7 +2289,7 @@ public class QualityController {
         try{
             res = QualityExperimentalManagerForeignInf.confirmCompletedById(id);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         return res;
@@ -2166,7 +2302,7 @@ public class QualityController {
         try{
             res = QualityExperimentalManagerForeignInf.getSampleStatusById(id);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -2185,7 +2321,7 @@ public class QualityController {
         try{
             res =  QualityExperimentalManagerForeignInf.getAllexperimental();
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -2197,7 +2333,7 @@ public class QualityController {
         try{
             res = QualityExperimentalManagerForeignInf.getExperimentalMessageById(id);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -2217,7 +2353,7 @@ public class QualityController {
         try{
             res = QualityExperimentalManagerForeignInf.getExperimentalItemByOrderNum(orderNum);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         return res;
@@ -2229,7 +2365,7 @@ public class QualityController {
         try{
             res = QualityExperimentalManagerForeignInf.getExperimentalItemById(id);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -2240,7 +2376,7 @@ public class QualityController {
         try{
           res = QualityExperimentalManagerForeignInf.addExperimentalItemByOrderTicketNum(orderTicketNum,experimentalItemId);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -2251,7 +2387,7 @@ public class QualityController {
         try{
             res = QualityExperimentalManagerForeignInf.getExperimentalItemCount(orderTicketNum);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -2270,7 +2406,7 @@ public class QualityController {
         try{
             res = QualityExperimentalManagerForeignInf.getAllExperimentalItem();
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -2289,7 +2425,7 @@ public class QualityController {
         try{
             res = QualityExperimentalManagerForeignInf.getExperimentalItemMsgById(id);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -2301,7 +2437,7 @@ public class QualityController {
         try{
             res = QualityExperimentalManagerForeignInf.getExperimentalItemNumList(id);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -2313,7 +2449,7 @@ public class QualityController {
         try{
             res = QualityExperimentalManagerForeignInf.addExperimentalMsgAndItem(fromJson,firstTest,coarseTest);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -2330,7 +2466,7 @@ public class QualityController {
         try{
             res = QualityExperimentalManagerForeignInf.getExperimentalProjectMessage(id);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -2341,7 +2477,7 @@ public class QualityController {
         try{
             res = QualityExperimentalManagerForeignInf.getExperimentalProjectItem(tableName,experiment_num);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -2352,7 +2488,7 @@ public class QualityController {
         try{
             res = QualityExperimentalManagerForeignInf.removeExperimentalItemById(id);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -2390,7 +2526,7 @@ public class QualityController {
         try{
             res = QualityExperimentalManagerForeignInf.getSevenDayRawMaterialStandingBook();
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -2411,7 +2547,7 @@ public class QualityController {
         try{
             res = QualityExperimentalManagerForeignInf.getRawMaterialStandingBookByDate(startDate,endDate);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     };
@@ -2433,7 +2569,7 @@ public class QualityController {
         try{
             res = QualityExperimentalManagerForeignInf.getAsphaltStandingBook();
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -2444,7 +2580,7 @@ public class QualityController {
         try{
             res = QualityExperimentalManagerForeignInf.getAsphaltStandingBookByDate(startDate,endDate);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -2456,7 +2592,7 @@ public class QualityController {
         try{
             res = QualityExperimentalManagerForeignInf.getTestStandingBook();
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -2468,7 +2604,7 @@ public class QualityController {
         try{
             res = QualityExperimentalManagerForeignInf.getTestStandingBookByDate(startDate,endDate);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -2488,7 +2624,7 @@ public class QualityController {
         try{
             res = QualityExperimentalManagerForeignInf.getSpecificationDataAndManufacturersData();
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -2499,7 +2635,7 @@ public class QualityController {
         try{
             res = QualityExperimentalManagerForeignInf.deleteSpecificationOrManufacturersById(id,make);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -2510,7 +2646,7 @@ public class QualityController {
         try{
             res = QualityExperimentalManagerForeignInf.insertSpecificationFrom(specificationName);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -2521,7 +2657,7 @@ public class QualityController {
         try{
             res = QualityExperimentalManagerForeignInf.insertManufacturersFrom(manufacturersName);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -2532,7 +2668,7 @@ public class QualityController {
         try{
             res = QualityExperimentalManagerForeignInf.getSpecificationOrManufacturersById(id,make);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -2543,7 +2679,7 @@ public class QualityController {
         try{
             res = QualityExperimentalManagerForeignInf.updateSpecificationOrManufacturersById(id,make,updateName);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -2563,7 +2699,7 @@ public class QualityController {
         try{
             res = qualityDataSummaryInf.getAllCriticalWarning();
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -2574,7 +2710,7 @@ public class QualityController {
         try{
             res = qualityDataSummaryInf.getAllCriticalWarningByDate(startDate,endDate);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -2585,7 +2721,7 @@ public class QualityController {
             Map<String,Object> map = qualityDataSummaryInf.getCeiticalWarning(proDate,produceDisc,crewNum);
             request.setAttribute("product",map);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         return "quality/qc_dm_data_detail";
@@ -2613,7 +2749,7 @@ public class QualityController {
         try{
             res = qualityDataSummaryInf.mobileGetRatioListByDate(startDate,crew);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return  JSON.toJSONString(res);
     }
@@ -2635,7 +2771,7 @@ public class QualityController {
         try{
             list =  qualityDataSummaryInf.getMobilePromessageByRaionModel(startDate,crew,rationId);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         return JSON.toJSONString(list);
@@ -2670,7 +2806,7 @@ public class QualityController {
             map.put("proMessage",proMessage);
             map.put("echarts",res);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         return JSON.toJSONString(map);
@@ -2696,7 +2832,7 @@ public class QualityController {
         try{
             res = qualityDataSummaryInf.mobileGetYesterdayProduct();
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         return  JSON.toJSONString(res);
@@ -2710,7 +2846,7 @@ public class QualityController {
         try{
             res = qualityDataSummaryInf.getAllCriticalWarning();
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -2733,7 +2869,7 @@ public class QualityController {
             map.put("proMessage",proMessage);
             map.put("echarts",res);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return JSON.toJSONString(map);
 
@@ -2746,7 +2882,7 @@ public class QualityController {
         try{
             res = qualityDataSummaryInf.getWarningDataByDate(crew,startDate);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -2767,7 +2903,7 @@ public class QualityController {
         try{
             res = qualityExperimentalManagerInf.getMobileUnfinishedExperimental();
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -2788,7 +2924,7 @@ public class QualityController {
         try{
             res = qualityExperimentalManagerInf.getLastWeekExperimentHistory();
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }
@@ -2809,7 +2945,7 @@ public class QualityController {
         try{
             res = qualityExperimentalManagerInf.getMobileExperimentByDate(startDate);
         }catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return res;
     }

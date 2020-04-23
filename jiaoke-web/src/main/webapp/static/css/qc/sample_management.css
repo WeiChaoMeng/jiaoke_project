@@ -404,7 +404,7 @@ td{
 	margin-left: 40px;
 	min-height: 327px;
 	float: left;
-	width: 45%;
+	width: 28%;
 }
 
 .experiment_boxtitle {
@@ -424,7 +424,7 @@ td{
 	float: right;
 	font-style: normal;
 	color: #7e7e7e;
-	padding-right: 15px;
+	padding-right: 27px;
 }
 
 .experiment_boxtitle a i {
@@ -525,6 +525,15 @@ td{
 	padding-right: 10px;
 }
 
+.input-content select {
+	width: 330px;
+	height: 40px;
+	border: 1px solid #dad9d6;
+	background: #ffffff;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-top: 10px;
+}
 .enter-btn {
 	width: 350px;
 	height: 40px;
@@ -536,7 +545,7 @@ td{
 }
 
 .foor{
-	width: 100%;
+	width: 65%;
 	height: auto;
 	color: #9b9c98;
 	font-size: 12px;
@@ -562,11 +571,11 @@ td{
 }
 .experiment_from_span{
 	line-height: 30px;
-	width: 80%;
+	width: 70%;
 	text-align: left;
 	white-space: nowrap;
 	text-overflow: ellipsis;
-	padding-left: 40px;
+	padding-left: 20px;
 	float: left;
 	border-width: initial;
 	border-style: none;

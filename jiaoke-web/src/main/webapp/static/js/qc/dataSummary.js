@@ -23,6 +23,9 @@ $(function () {
  */
 function getThreeDayData() {
     var basePath = $("#path").val();
+    var index = layer.load(3, {
+        shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });
     $.ajax({
         url:basePath + "/getThreeDayData.do",
         type:"get",
@@ -32,6 +35,7 @@ function getThreeDayData() {
             dataArray = res;
         }
     })
+    layer.close(index);
 }
 
 /**
@@ -42,35 +46,38 @@ function getDateByPageNum(currentNum){
 
     var arrayStart = (currentNum - 1) * 50;
     var arrayEnd = arrayStart + 50;
-    $("#productData").empty();
+    var htmlStr;
     for (var i = arrayStart; i < arrayEnd; i++ ){
-        var htmlStr = "<tr>"
-            + "<td>" + dataArray[i].produce_date + "</td>"
-            + "<td>" + dataArray[i].produce_time  + "</td>"
-            + "<td>" + (dataArray[i].crewNums === 'data1'? '机组1':'机组2')  + "</td>"
-            + "<td>" + dataArray[i].produce_disc_num  + "</td>"
-            + "<td>" + dataArray[i].pro_name  + "</td>"
-            + "<td>" + dataArray[i].material_aggregate_6  + "</td>"
-            + "<td>" + dataArray[i].material_aggregate_5  + "</td>"
-            + "<td>" + dataArray[i].material_aggregate_4  + "</td>"
-            + "<td>" + dataArray[i].material_aggregate_3  + "</td>"
-            + "<td>" + dataArray[i].material_aggregate_2  + "</td>"
-            + "<td>" + dataArray[i].material_aggregate_1  + "</td>"
-            + "<td>" + dataArray[i].material_stone_1  + "</td>"
-            + "<td>" + dataArray[i].material_stone_2  + "</td>"
-            + "<td>" + dataArray[i].material_asphalt  + "</td>"
-            + "<td>" + dataArray[i].material_regenerate  + "</td>"
-            + "<td>" + dataArray[i].material_additive  + "</td>"
-            + "<td>" + dataArray[i].material_total  + "</td>"
-            + "<td>" + dataArray[i].temperature_warehouse_1  + "</td>"
-            + "<td>" + dataArray[i].temperature_mixture  + "</td>"
-            + "<td>" + dataArray[i].temperature_asphalt  + "</td>"
-            + "<td>" + dataArray[i].temperature_aggregate  + "</td>"
-            + "<td>" + dataArray[i].temperature_duster  + "</td>"
-        + "</tr>"
+        if (dataArray[i]){
+            htmlStr += "<tr>"
+                + "<td title=" + dataArray[i].produce_date + " >" + dataArray[i].produce_date + "</td>"
+                + "<td>" + dataArray[i].produce_time  + "</td>"
+                + "<td>" + (dataArray[i].crewNums === 'data1'? '机组1':'机组2')  + "</td>"
+                + "<td>" + dataArray[i].produce_disc_num  + "</td>"
+                + "<td title=" + dataArray[i].project_name + ">" + dataArray[i].project_name  + "</td>"
+                + "<td>" + dataArray[i].pro_name  + "</td>"
+                + "<td>" + dataArray[i].material_aggregate_6  + "</td>"
+                + "<td>" + dataArray[i].material_aggregate_5  + "</td>"
+                + "<td>" + dataArray[i].material_aggregate_4  + "</td>"
+                + "<td>" + dataArray[i].material_aggregate_3  + "</td>"
+                + "<td>" + dataArray[i].material_aggregate_2  + "</td>"
+                + "<td>" + dataArray[i].material_aggregate_1  + "</td>"
+                + "<td>" + dataArray[i].material_stone_1  + "</td>"
+                + "<td>" + dataArray[i].material_stone_2  + "</td>"
+                + "<td>" + dataArray[i].material_asphalt  + "</td>"
+                + "<td>" + dataArray[i].material_regenerate  + "</td>"
+                + "<td>" + dataArray[i].material_additive  + "</td>"
+                + "<td>" + dataArray[i].material_total  + "</td>"
+                + "<td>" + dataArray[i].temperature_warehouse_1  + "</td>"
+                + "<td>" + dataArray[i].temperature_mixture  + "</td>"
+                + "<td>" + dataArray[i].temperature_asphalt  + "</td>"
+                + "<td>" + dataArray[i].temperature_aggregate  + "</td>"
+                + "<td>" + dataArray[i].temperature_duster  + "</td>"
+                + "</tr>";
+        }
 
-        $("#productData").append(htmlStr);
     }
+    $("#productData").empty().append(htmlStr);
 }
 
 
@@ -95,32 +102,83 @@ function  getModelByDateTimeAndCrew(rationNum) {
         dataType:"json",
         data:{"startDateTime":start,"endDateTime":end,"crew":crew},
         success:function (res) {
-            if (res.length === 0){
+            var rationArry = res.rationList;
+            var projectArry = res.projectList;
+            debugger
+            if (rationArry.length === 0){
                 layer.alert('该日期并无生产');
                 $("#pro_message").text("该日期并无生产");
             }else {
-                $("#ratio_id").empty();
-                for (var i = 0; i < res.length;i++){
-                    var modId = res[i].modele_id;
+                $("#ratio_id").empty().append('<option value="select" >请选择</option>');
+                for (var i = 0; i < rationArry.length;i++){
+                    var modId = rationArry[i].modele_id;
                     if (modId === 0 || modId === '0'){
                         continue
                     }
                     if (rationNum != null){
                         if (Number(rationNum) ===  modId ) {
-                            $("#ratio_id").append("<option selected = 'selected' value=" + modId + ">" + res[i].pro_name + "</option>");
+                            $("#ratio_id").append("<option selected = 'selected' value=" + modId + ">" + rationArry[i].pro_name + "</option>");
                         }else {
-                            $("#ratio_id").append("<option  value=" + modId + ">" + res[i].pro_name + "</option>");
+                            $("#ratio_id").append("<option  value=" + modId + ">" + rationArry[i].pro_name + "</option>");
                         }
                     } else {
-                        $("#ratio_id").append("<option value=" + modId + ">" + res[i].pro_name + "</option>");
+                        $("#ratio_id").append("<option value=" + modId + ">" + rationArry[i].pro_name + "</option>");
                     }
 
+                }
+
+                //渲染工程
+                if (projectArry.length > 0){
+                    $("#project_id").empty();
+                    for (var j = 0; j < projectArry.length;j++ ){
+                        $("#project_id").append("<option value=" +  projectArry[j].project_name + ">" + projectArry[j].project_name + "</option>");
+                    }
                 }
             }
         }
     })
 
 }
+
+// document.getElementById("inpend").addEventListener("click",
+//     function(event) {
+//         event.stopPropagation();
+//     },
+//     false);
+
+// function getProjectNameByData() {
+//     var path = $("#path").val();
+//     var start = $("#inpstart").val();
+//     var end = $("#inpend").val();
+//     if (start.isBlanks() || end.isBlanks() ){
+//         layer.alert('请先选择先日期');
+//         return false;
+//     }
+//     $("#project_id").empty();
+//     $.ajax({
+//         url: path + "/getProjectNameByDate.do",
+//         type:"post",
+//         dataType: "json",
+//         data:{"startDate":start,"endDate":end},
+//         success:function (res) {
+//             //判断后台是否出错
+//             if (res.message === "error"){
+//                 layer.alert("查询工程错误");
+//                 return false;
+//             }
+//             var proNameList = res.projectList;
+//             //判断该日期内是否有工程
+//             if (proNameList.length === 0){
+//                 layer.alert("该日期范围内无工程");
+//                 return false;
+//             }
+//             //渲染selcet
+//             for (var i = 0; i < proNameList.length;i++){
+//                 $("#project_id").append("<option selected = 'selected' value=" + proNameList[i].project_name + ">" + proNameList[i].project_name + "</option>")
+//             }
+//         }
+//     })
+// }
 
 
 function selectPromessageByRaionModel(){
@@ -134,23 +192,97 @@ function selectPromessageByRaionModel(){
 
     var crew = $("#crew_num option:selected").val();
     var rationId = $("#ratio_id option:selected").val();
+    var projectName = $("#project_id option:selected").val();
 
-    if (crew.isBlanks() || rationId.isBlanks()){
-        layer.alert('请选择机组或配比号');
-        return false;
-    }
+    //判断机组号和配比是否存在。弃用的逻辑，必选项
+    // if (crew.isBlanks() || rationId.isBlanks()){
+    //     layer.alert('请选择机组或配比号');
+    //     return false;
+    // }
 
     $.ajax({
         url: path + "/getPromessageByRaionModel.do",
         type:"post",
         dataType: "json",
-        data:{"startDate":start,"endDate":end,"crew":crew,"rationId":rationId},
+        data:{"startDate":start,
+                "endDate":end,
+                "crew":crew,
+                "rationId":rationId,
+                "projectName":projectName},
         success:function (res) {
             dataArray = res;
             var htmlStr = '<a href="#" id="submits"  onclick="showPromessageSVG()" >更多<i class="iconfont"></i></a>';
             $("#submits").remove();
             $(".boxtitle").append(htmlStr);
+
+            //计算平均值
+            // var proDate = "";
+            var crew = "";
+            var proName = "";
+            var aggregate6 = 0;
+            var aggregate5 = 0;
+            var aggregate4 = 0;
+            var aggregate3 = 0;
+            var aggregate2 = 0;
+            var aggregate1 = 0;
+            var stone1 = 0;
+            var stone2 = 0;
+            var asphalt = 0;
+            var regenerate = 0;
+            var additive = 0;
+            var total = 0;
+            var warehouse1 = 0;
+            var mixture = 0;
+            var temasphalt = 0;
+            var aggregate = 0;
+            var duster = 0;
+            for (var i = 0; i < res.length;i++){
+                crew = res[i].crewNums === 'data1'? '机组1':'机组2';
+                proName = res[i].pro_name;
+                aggregate6 += res[i].material_aggregate_6;
+                aggregate5 += res[i].material_aggregate_5;
+                aggregate4 += res[i].material_aggregate_4;
+                aggregate3 += res[i].material_aggregate_3;
+                aggregate2 += res[i].material_aggregate_2;
+                aggregate1 += res[i].material_aggregate_1;
+                stone1 += res[i].material_stone_1;
+                stone2 += res[i].material_stone_2;
+                asphalt += res[i].material_asphalt;
+                regenerate += res[i].material_regenerate;
+                additive += res[i].material_additive;
+                total += res[i].material_total;
+                warehouse1 += res[i].temperature_warehouse_1;
+                mixture += res[i].temperature_mixture;
+                temasphalt += res[i].temperature_asphalt;
+                aggregate += res[i].temperature_aggregate;
+                duster += res[i].temperature_duster;
+            }
+            var svgHtmlStr = "<tr>"
+                + "<td>" + "平均值" + "</td>"
+                + "<td>" +  " " + "</td>"
+                + "<td>" + crew + "</td>"
+                + "<td>" +  " " + "</td>"
+                + "<td>" + proName  + "</td>"
+                + "<td>" +( aggregate6/res.length).toFixed(2) + "</td>"
+                + "<td>" + ( aggregate5/res.length).toFixed(2)+ "</td>"
+                + "<td>" + ( aggregate4/res.length).toFixed(2) + "</td>"
+                + "<td>" + ( aggregate3/res.length).toFixed(2) + "</td>"
+                + "<td>" + ( aggregate2/res.length).toFixed(2)  + "</td>"
+                + "<td>" + ( aggregate1/res.length).toFixed(2)  + "</td>"
+                + "<td>" + ( stone1/res.length).toFixed(2)  + "</td>"
+                + "<td>" + ( stone2/res.length).toFixed(2) + "</td>"
+                + "<td>" + ( asphalt/res.length).toFixed(2)  + "</td>"
+                + "<td>" +  ( regenerate/res.length).toFixed(2) + "</td>"
+                + "<td>" +  ( additive/res.length).toFixed(2) + "</td>"
+                + "<td>" + ( total/res.length).toFixed(2)  + "</td>"
+                + "<td>" + ( warehouse1/res.length).toFixed(2) + "</td>"
+                + "<td>" +  ( mixture/res.length).toFixed(2) + "</td>"
+                + "<td>" + ( temasphalt/res.length).toFixed(2)  + "</td>"
+                + "<td>" + ( aggregate/res.length).toFixed(2) + "</td>"
+                + "<td>" +  ( duster/res.length).toFixed(2) + "</td>"
+                + "</tr>";
             getDateByPageNum(1);
+            $("#productData").append(svgHtmlStr);
         }
     })
 
@@ -204,7 +336,7 @@ function getExplorer() {
 }
 
 function method5(tableid) {
-    if(getExplorer() == 'ie') {
+    if(getExplorer() === 'ie') {
         var curTbl = document.getElementById(tableid);
         var oXL = new ActiveXObject("Excel.Application");
         var oWB = oXL.Workbooks.Add();
@@ -257,7 +389,7 @@ var tableToExcel = (function() {
             worksheet: name || 'Worksheet',
             table: table.innerHTML
         }
-        // window.location.href = uri + base64(format(template, ctx))
+         window.location.href = uri + base64(format(template, ctx))
     }
 })()
 

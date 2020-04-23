@@ -221,6 +221,9 @@ function showCoarseAggregate(msg) {
         + '<th>试验方法</th>';
 
     var secondTwoHead ='<th>筛孔mm</th>'
+        +'<th>37.5</th>'
+        +'<th>31.5</th>'
+        +'<th>26.5</th>'
         +'<th>19.0</th>'
         +'<th>16.0</th>'
         +'<th>13.2</th>'
@@ -242,6 +245,9 @@ function showCoarseAggregate(msg) {
             if (msg[i][j].coarse_sieve_pore){
                 temHtml = '<tr>'
                     + '<td><input type="text" class="td_input" name="coarse_sieve_pore"  value="'+ msg[i][j].coarse_sieve_pore +'"  /></td>'
+                    + '<td><input type="text" class="td_input" name="coarse_sieve_pore_37_5" value="'+ msg[i][j].coarse_sieve_pore_37_5 +'" /></td>'
+                    + '<td><input type="text" class="td_input" name="coarse_sieve_pore_31_5" value="'+ msg[i][j].coarse_sieve_pore_31_5 +'" /></td>'
+                    + '<td><input type="text" class="td_input" name="coarse_sieve_pore_26_5" value="'+ msg[i][j].coarse_sieve_pore_26_5 +'" /></td>'
                     + '<td><input type="text" class="td_input" name="coarse_sieve_pore_19_0" value="'+ msg[i][j].coarse_sieve_pore_19_0 +'"  /></td>'
                     + '<td><input type="text" class="td_input" name="coarse_sieve_pore_16_0" value="'+ msg[i][j].coarse_sieve_pore_16_0 +'"  /></td>'
                     + '<td><input type="text" class="td_input" name="coarse_sieve_pore_13_2" value="'+ msg[i][j].coarse_sieve_pore_13_2 +'" /></td>'

@@ -1,4 +1,9 @@
 var basePath = "";
+//三级预警信息装载
+var war1Name = "";
+var war1Vla = "";
+var war2Name = "";
+var war2Vla = "";
 // 初始化
 (function ($) {
     // getEcharsData();
@@ -7,7 +12,6 @@ var basePath = "";
     basePath = $("#path").val();
 
 })(jQuery);
-
 /***********************间隔执行Start*****************************/
 setInterval(getWarningData, 20000);
 
@@ -26,6 +30,10 @@ function getWarningData() {
             var messageStr = "";
             var warningLeve = "";
 
+             war1Name = "";
+             war1Vla = "";
+             war2Name = "";
+             war2Vla = "";
             if (res != "" || res != null) {
 
                 /******************渲染基本信息**********************/
@@ -52,35 +60,75 @@ function getWarningData() {
                             break;
                         case 3:
                             warningLeve = '<div  style="background-color: red;width: 35px;height: 20px;margin-left: 13%;border-radius: 5px;"></div>';
+                            if (res[i].produce_crewNum  === 1){
+                                if (war1Name === ""){
+                                    war1Name += res[i].material_name;
+                                    war1Vla += res[i].deviation_ratio;
+                                }else {
+                                    war1Name += "、" + res[i].material_name;
+                                    war1Vla += "、" + res[i].deviation_ratio;
+                                }
+                            }else {
+                                if (war2Name === ""){
+                                    war2Name += res[i].material_name;
+                                    war2Vla += res[i].deviation_ratio;
+                                }else {
+                                    war2Name += "、" + res[i].material_name;
+                                    war2Vla += "、" + res[i].deviation_ratio;
+                                }
+                            }
                             break;
                     }
 
                     /****************渲染材料数据*****************/
                     if (res[i].material_name == '沥青温度' || res[i].material_name == '混合料温度' || res[i].material_name == '骨料温度'||res[i].material_name == '一仓温度') {
-                        $(materialStr).append(
-                            '<tr class="warning_table_even">'
-                            + '<td>' + res[i].material_name + '</td>'
-                            + '<td>' + res[i].moudle_ratio + '<i>℃</i></td>'
-                            + '<td>' + res[i].actual_ratio + '<i>℃</i></td>'
-                            + '<td>' + res[i].deviation_ratio + '<i>℃</i></td>'
-                            + '<td>' + warningLeve + '</td>'
-                            + '<td>' + res[i].avg_real_ration + '<i>℃</i></td>'
-                            + '</tr>'
-                        )
+                        var tempHtml = "";
+                        if (res[i].warning_level === 3){
+                            tempHtml = '<tr class="warning_table_even" style="background-color: #e494a4">'
+                                + '<td>' + res[i].material_name + '</td>'
+                                + '<td>' + res[i].moudle_ratio + '<i>℃</i></td>'
+                                + '<td>' + res[i].actual_ratio + '<i>℃</i></td>'
+                                + '<td>' + res[i].deviation_ratio + '<i>℃</i></td>'
+                                + '<td>' + warningLeve + '</td>'
+                                + '<td>' + res[i].avg_real_ration + '<i>℃</i></td>'
+                                + '</tr>';
+                        }else {
+                            tempHtml = '<tr class="warning_table_even" >'
+                                + '<td>' + res[i].material_name + '</td>'
+                                + '<td>' + res[i].moudle_ratio + '<i>℃</i></td>'
+                                + '<td>' + res[i].actual_ratio + '<i>℃</i></td>'
+                                + '<td>' + res[i].deviation_ratio + '<i>℃</i></td>'
+                                + '<td>' + warningLeve + '</td>'
+                                + '<td>' + res[i].avg_real_ration + '<i>℃</i></td>'
+                                + '</tr>';
+                        }
+                        $(materialStr).append(tempHtml)
                     } else {
-                        $(materialStr).append(
-                            '<tr class="warning_table_even">'
-                            + '<td>' + res[i].material_name + '</td>'
-                            + '<td>' + res[i].moudle_ratio + '<i>%</i></td>'
-                            + '<td>' + res[i].actual_ratio + '<i>%</i></td>'
-                            + '<td>' + res[i].deviation_ratio + '<i>%</i></td>'
-                            + '<td>' + warningLeve + '</td>'
-                            + '<td>' + res[i].avg_real_ration + '<i>%</i></td>'
-                            + '</tr>'
-                        )
+                        var subHtml = "";
+                        if (res[i].warning_level === 3){
+                            subHtml = '<tr class="warning_table_even" style="background-color: #e494a4">'
+                                + '<td>' + res[i].material_name + '</td>'
+                                + '<td>' + res[i].moudle_ratio + '<i>℃</i></td>'
+                                + '<td>' + res[i].actual_ratio + '<i>℃</i></td>'
+                                + '<td>' + res[i].deviation_ratio + '<i>℃</i></td>'
+                                + '<td>' + warningLeve + '</td>'
+                                + '<td>' + res[i].avg_real_ration + '<i>%</i></td>'
+                                + '</tr>';
+                        }else {
+                            subHtml = '<tr class="warning_table_even" >'
+                                + '<td>' + res[i].material_name + '</td>'
+                                + '<td>' + res[i].moudle_ratio + '<i>℃</i></td>'
+                                + '<td>' + res[i].actual_ratio + '<i>℃</i></td>'
+                                + '<td>' + res[i].deviation_ratio + '<i>℃</i></td>'
+                                + '<td>' + warningLeve + '</td>'
+                                + '<td>' + res[i].avg_real_ration + '<i>%</i></td>'
+                                + '</tr>';
+                        }
+                        $(materialStr).append(subHtml);
                     }
 
                 }
+
             }
         }
     })
@@ -89,7 +137,52 @@ function getWarningData() {
     // getEcharsData();
 }
 
+//显示预警信息
 
+
+
+$("#crew1_material").hover(
+    function () {
+        var msg = "一号机组材料：" + war1Name + "偏差较大，已经构成三级报警。偏差值为："+ war1Vla ;
+        layui.use('layer', function() {
+            var layer = layui.layer;
+            layer.tips(msg, $("#warning"), {
+                tips: [2, '#3595CC'],
+                time: 0,
+                area: ['auto', 'auto']
+            });
+        });
+    },
+    function () {
+        layui.use('layer', function() {
+            var layer = layui.layer;
+            layer.closeAll();
+        });
+
+    }
+);
+
+
+$("#crew2_material").hover(
+    function () {
+        var msg = "二号机组材料：" + war2Name + "偏差较大，已经构成三级报警。偏差值为："+ war2Vla ;
+        layui.use('layer', function() {
+            var layer = layui.layer;
+            layer.tips(msg, $("#warning"), {
+                tips: [2, '#3595CC'],
+                time: 0,
+                area: ['auto', 'auto']
+            });
+        });
+    },
+    function () {
+        layui.use('layer', function() {
+            var layer = layui.layer;
+            layer.closeAll();
+        });
+
+    }
+);
 /******************************** Echart材料比渲染Start********************************************/
 function getRealTimeDataEcharsMaterial() {
     $.ajax({
@@ -385,61 +478,61 @@ function returnArrayToJson(json) {
         for (var key in json[i]){
             switch (key) {
                 case '0.075':
-                    array.push({xAxis:0.312,label: {rotate:90, formatter:key}});
+                    array.push({xAxis:0.312,label: {rotate:90, formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}});
                     break;
                 case '0.15':
-                    array.push({xAxis:0.426,label: {rotate:90, normal: {formatter:key}}});
+                    array.push({xAxis:0.426,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
                     break;
                 case '0.3':
-                    array.push({xAxis:0.582,label: {rotate:90, normal: {formatter:key}}});
+                    array.push({xAxis:0.582,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
                     break;
                 case '0.6':
-                    array.push({xAxis:0.795,label: {rotate:90, normal: {formatter:key}}});
+                    array.push({xAxis:0.795,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
                     break;
                 case '1.18':
-                    array.push({xAxis:1.007,label: {rotate:90, normal: {formatter:key}}});
+                    array.push({xAxis:1.007,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
                     break;
                 case '2.36':
-                    array.push({xAxis:1.472,label: {rotate:90, normal: {formatter:key}}});
+                    array.push({xAxis:1.472,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
                     break;
                 case '4.75':
-                    array.push({xAxis:2.016,label: {rotate:90, normal: {formatter:key}}});
+                    array.push({xAxis:2.016,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
                     break;
                 case '6.7':
-                    array.push({xAxis:2.354,label: {rotate:90, normal: {formatter:key}}});
+                    array.push({xAxis:2.354,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
                     break;
                 case '7.0':
-                    array.push({xAxis:2.400,label: {rotate:90, normal: {formatter:key}}});
+                    array.push({xAxis:2.400,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
                     break;
                 case '7.2':
-                    array.push({xAxis:2.431,label: {rotate:90, normal: {formatter:key}}});
+                    array.push({xAxis:2.431,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
                     break;
                 case '9.5':
-                    array.push({xAxis:2.754,label: {rotate:90, normal: {formatter:key}}});
+                    array.push({xAxis:2.754,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
                     break;
                 case '13.2':
-                    array.push({xAxis:3.193,label: {rotate:90, normal: {formatter:key}}});
+                    array.push({xAxis:3.193,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
                     break;
                 case '16':
-                    array.push({xAxis:3.482,label: {rotate:90, normal: {formatter:key}}});
+                    array.push({xAxis:3.482,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
                     break;
                 case '19':
-                    array.push({xAxis:3.762,label: {rotate:90, normal: {formatter:key}}});
+                    array.push({xAxis:3.762,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
                     break;
                 case '26.5':
-                    array.push({xAxis:4.370,label: {rotate:90, normal: {formatter:key}}});
+                    array.push({xAxis:4.370,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
                     break;
                 case '31.5':
-                    array.push({xAxis:4.723,label: {rotate:90, normal: {formatter:key}}});
+                    array.push({xAxis:4.723,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
                     break;
                 case '37.5':
-                    array.push({xAxis:5.109,label: {rotate:90, normal: {formatter:key}}});
+                    array.push({xAxis:5.109,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
                     break;
                 case '53':
-                    array.push({xAxis:5.969,label: {rotate:90, normal: {formatter:key}}});
+                    array.push({xAxis:5.969,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
                     break;
                 case '63':
-                    array.push({xAxis:6.452,label: {rotate:90, normal: {formatter:key}}});
+                    array.push({xAxis:6.452,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
                     break;
             }
 

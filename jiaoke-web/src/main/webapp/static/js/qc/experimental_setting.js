@@ -44,29 +44,44 @@ function yyui_menu(ulclass){
 
 /*******************************************************************************/
 (function () {
+    //查询厂家与规格信息
     getSpecificationDataAndManufacturersData();
+    //查询材料对应厂家信息
+    getMaterialsMatchupManufacturers();
+    layui.use('from',function () {
+        var from = layui.from;
+
+    })
 })(jQuery)
 
 /**
  * 弹出新建规格页面
  */
 function getSpecificationPage() {
-    layer.open({
-        type: 1,
-        skin: '规格添加', //加上边框
-        area: ['700px', '500px'], //宽高
-        shadeClose: true, //开启遮罩关闭
-        content: $("#specificationFrom")
-    });
+    layui.use('layer',function () {
+        var layer = layui.layer;
+        layer.open({
+            type: 1,
+            skin: '规格添加', //加上边框
+            area: ['700px', '500px'], //宽高
+            shadeClose: true, //开启遮罩关闭
+            content: $("#specificationFrom")
+        });
+    })
+
 }
 function getManufacturersPage() {
-    layer.open({
-        type: 1,
-        skin: '规格添加', //加上边框
-        area: ['700px', '500px'], //宽高
-        shadeClose: true, //开启遮罩关闭
-        content: $("#manufacturersFrom")
-    });
+    layui.use('layer',function () {
+        var layer = layui.layer;
+        layer.open({
+            type: 1,
+            skin: '规格添加', //加上边框
+            area: ['700px', '500px'], //宽高
+            shadeClose: true, //开启遮罩关闭
+            content: $("#manufacturersFrom")
+        });
+    })
+
 }
 /**
  * 首页加载时查询规格或厂家
@@ -80,7 +95,11 @@ function getSpecificationDataAndManufacturersData() {
         async: false,
         success:function (res) {
             if (res.length === 0){
-                layer.alert("当前并无材料规格与材料厂家信息");
+                layui.use('layer',function () {
+                    var layer = layui.layer;
+                    layer.alert("当前并无材料规格与材料厂家信息");
+                })
+
             } else {
                 var specificationHtml= '';
                 var manufacturersHtml= '';
@@ -112,37 +131,184 @@ function getSpecificationDataAndManufacturersData() {
 }
 
 /**
- * 删除方法
+ * 首页加载时查询材料对应厂家
  */
-function deleteSpecificationOrManufacturersById(id,make) {
-    debugger
+function getMaterialsMatchupManufacturers() {
     var basePath = $("#path").val();
-    layer.confirm('确认删除？', {
-        btn: ['确认','取消'] //按钮
-    }, function(){
+    $.ajax({
+        type:"get",
+        url:basePath + "/getMaterialsMatchupManufacturers.do",
+        dataType:"json",
+        success:function (res) {
+            if (res.length === 0){
+                layui.use('layer',function () {
+                    var layer = layui.layer;
+                    layer.alert("当前无材料对应厂家信息");
+                });
+            } else {
+                var manufacturersHtml= '';
+                for (var i = 0 ; i < res.length; i++) {
+                        manufacturersHtml += '<li>'
+                            +'<span class="experiment_from_span">' + res[i].materialName + "               " + res[i].manufacturersName + '</span>'
+                            +'<div>'
+                            +'<a href="javascript:void(0)" style="margin-left: 30px;" onclick="deleteMaterialAndManufacturersById('+ res[i].Id +');">删除</a>'
+                            +'</div>'
+                            + '</li>';
+
+                }
+                $("#materialsUl").empty().append(manufacturersHtml);
+            }
+        }
+    });
+}
+
+/**
+ * 根据Id删除材料对应厂家
+ */
+function deleteMaterialAndManufacturersById(id) {
+
+    var basePath = $("#path").val();
+    $.ajax({
+        type:"POST",
+        url:basePath + "/deleteMaterialAndManufacturersById.do",
+        data:{
+            "id":id
+        },
+        dataType:"json",
+        success:function (res) {
+            if (res.message === "success"){
+                layui.use('layer',function () {
+                    var layer = layui.layer;
+                    getMaterialsMatchupManufacturers();
+                    layer.alert("删除成功");
+                })
+            } else {
+                layui.use('layer',function () {
+                    var layer = layui.layer;
+                    layer.alert("删除失败");
+                })
+            }
+        }
+    });
+}
+/**
+ * 展示添加材料对应厂家信息页面
+ */
+function getMaterialsPage() {
+    var basePath = $("#path").val();
+    $.ajax({
+        type:"get",
+        url:basePath + "/getMaterialsAndManufacturersMsg.do",
+        dataType:"json",
+        async: false,
+        success:function (res) {
+            if (res.length === 0){
+                layui.use('layer',function(){
+                    var layer = layui.layer;
+                    layer.alert("当前无材料或厂家信息");
+                });
+            }else {
+                $("#materialsSelect").empty();
+                $("#checkDiv").empty();
+                var materialsArry = JSON.parse(res.materials);
+                var manufacturersArry = JSON.parse(res.manufacturers);
+
+                for (var i = 0; i < materialsArry.length;i++){
+                    $("#materialsSelect").append('<option value="' + materialsArry[i].Id + '">' + materialsArry[i].name + '</option>')
+                }
+                for (var i = 0; i < manufacturersArry.length;i++){
+                    $("#checkDiv").append('<input type="checkbox" name="check_'+ i +'" value="'+ manufacturersArry[i].Id +'" title="' + manufacturersArry[i].name + '">')
+                }
+                layui.use('form', function(){
+                    var form = layui.form;//高版本建议把括号去掉，有的低版本，需要加()
+                    // form.render('select', 'sele');
+                    // form.render('checkbox', 'check');
+                    form.render();
+                });
+            }
+        }
+    });
+
+    layui.use('layer',function () {
+        var layer = layui.layer;
+        layer.open({
+            type: 1,
+            skin: '材料厂家', //加上边框
+            area: ['700px', '500px'], //宽高
+            shadeClose: true, //开启遮罩关闭
+            content: $("#materialsFrom")
+        });
+    })
+
+}
+// function  sendMaterialsFrom(){
+//     //Materials当前材料值
+//
+// }
+layui.use('form', function() {
+    var basePath = $("#path").val();
+    var form = layui.form;//高版本建议把括号去掉，有的低版本，需要加()
+    form.on('submit(subFrom)', function(data){
         $.ajax({
             type:"POST",
-            url:basePath + "/deleteSpecificationOrManufacturersById.do",
+            url:basePath + "/addMaterialsAndManufacturers.do",
             dataType:"json",
             data:{
-                'id':id,
-                'make':make
+               'fromData': JSON.stringify(data.field)
             },
             async: false,
             success:function (res) {
-                if (res.message === 'success'){
-                    layer.msg('删除成功');
-                    getSpecificationDataAndManufacturersData();
-                } else {
-                    layer.msg('删除失败');
-                }
+                layui.use('layer',function(){
+                    var layer = layui.layer;
+                    if (res.message === 'error'){
+                            layer.alert("当前无材料或厂家信息");
+                    } else {
+                        layer.closeAll();
+                        getMaterialsMatchupManufacturers();
+                        layer.alert("添加完成");
+                    }
+                });
             }
-        })
-
-    }, function(){
-
+        });
+        // console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
+        // console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
+        // console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
+        return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
     });
+})
+/**
+ * 删除方法
+ */
+function deleteSpecificationOrManufacturersById(id,make) {
+    var basePath = $("#path").val();
+    layui.use('layer',function () {
+        var layer = layui.layer;
+        layer.confirm('确认删除？', {
+            btn: ['确认','取消'] //按钮
+        }, function(){
+            $.ajax({
+                type:"POST",
+                url:basePath + "/deleteSpecificationOrManufacturersById.do",
+                dataType:"json",
+                data:{
+                    'id':id,
+                    'make':make
+                },
+                async: false,
+                success:function (res) {
+                    if (res.message === 'success'){
+                        layer.msg('删除成功');
+                        getSpecificationDataAndManufacturersData();
+                    } else {
+                        layer.msg('删除失败');
+                    }
+                }
+            })
 
+        }, function(){
+
+        });
+    })
 }
 
 
@@ -165,18 +331,26 @@ function updateSpecificationOrManufacturersById(id,make) {
                 $("#tableName").val(res.marks);
                 $("#newName").val(res.name);
             }else {
-                layer.msg('查询相关信息失败');
+                layui.use('layer',function () {
+                    var layer = layui.layer;
+                    layer.msg('查询相关信息失败');
+                })
+
             }
         }
     })
 
-    layer.open({
-        type: 1,
-        skin: '规格添加', //加上边框
-        area: ['700px', '500px'], //宽高
-        shadeClose: true, //开启遮罩关闭
-        content: $("#updateFrom")
-    });
+    layui.use('layer',function () {
+        var layer = layui.layer;
+        layer.open({
+            type: 1,
+            skin: '规格添加', //加上边框
+            area: ['700px', '500px'], //宽高
+            shadeClose: true, //开启遮罩关闭
+            content: $("#updateFrom")
+        });
+    })
+
 }
 
 /**
@@ -188,9 +362,12 @@ function updateSpecificationOrManufacturers(){
     var make = $("#tableName").val();
     var updateName = $("#newName").val();
     var basePath = $("#path").val();
-debugger
     if (updateName.isBlank()){
-        layer.msg("请填写更新数据");
+        layui.use('layer',function () {
+            var layer = layui.layer;
+            layer.msg("请填写更新数据");
+        })
+
     }else {
         $.ajax({
             type:"POST",
@@ -203,11 +380,19 @@ debugger
             },
             success:function (res) {
                 if (res.message === 'success'){
-                    layer.close(layer.index);
-                    layer.msg('修改成功');
+                    layui.use('layer',function () {
+                        var layer = layui.layer;
+                        layer.close(layer.index);
+                        layer.msg('修改成功');
+                    })
+
                     getSpecificationDataAndManufacturersData();
                 }else {
-                    layer.msg('修改失败');
+                    layui.use('layer',function () {
+                        var layer = layui.layer;
+                        layer.msg('修改失败');
+                    })
+
                 }
             }
         })
@@ -223,7 +408,11 @@ function sendSpecificationFrom() {
     var basePath = $("#path").val();
     var specificationName =  $('#specificationInput').val();
     if (specificationName.isBlank()){
-        layer.msg("请填写规格");
+        layui.use('layer',function () {
+            var layer = layui.layer;
+            layer.msg("请填写规格");
+        })
+
     }else {
         $.ajax({
             type:"POST",
@@ -234,11 +423,18 @@ function sendSpecificationFrom() {
             },
             success:function (res) {
                 if (res.message === 'success'){
-                    layer.close(layer.index);
-                    layer.msg("添加成功");
+                    layui.use('layer',function () {
+                        var layer = layui.layer;
+                        layer.close(layer.index);
+                        layer.msg("添加成功");
+                    })
                     getSpecificationDataAndManufacturersData();
                 }else {
-                    layer.msg("添加失败");
+                    layui.use('layer',function () {
+                        var layer = layui.layer;
+                        layer.msg("添加失败");
+                    })
+
                 }
             }
         })
@@ -250,9 +446,12 @@ function sendSpecificationFrom() {
 function sendManufacturersFrom(){
     var basePath = $("#path").val();
     var manufacturersName =  $('#manufacturersInput').val();
-    debugger
     if (manufacturersName.isBlank()){
-        layer.msg("请填写厂家名称");
+        layui.use('layer',function () {
+            var layer = layui.layer;
+            layer.msg("请填写厂家名称");
+        })
+
     }else {
         $.ajax({
             type:"POST",
@@ -263,11 +462,19 @@ function sendManufacturersFrom(){
             },
             success:function (res) {
                 if (res.message === 'success'){
-                    layer.close(layer.index);
-                    layer.msg("添加成功");
+                    layui.use('layer',function () {
+                        var layer = layui.layer;
+                        layer.close(layer.index);
+                        layer.msg("添加成功");
+                    })
+
                     getSpecificationDataAndManufacturersData();
                 }else {
-                    layer.msg("添加失败");
+                    layui.use('layer',function () {
+                        var layer = layui.layer;
+                        layer.msg("添加失败");
+                    })
+
                 }
             }
         })

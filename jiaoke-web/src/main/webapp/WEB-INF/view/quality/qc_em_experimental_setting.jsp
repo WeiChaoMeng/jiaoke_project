@@ -8,11 +8,14 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-
+<style>
+    body .layui-layer-content{height: 90% !important;overflow: scroll;}
+</style>
 <head>
     <meta charset="utf-8">
     <title>实验模板</title>
     <link href="/static/css/qc/sample_management.css" rel="stylesheet" type="text/css">
+    <link href="/static/layui/css/layui.css" rel="stylesheet" type="text/css">
 </head>
 <body style="padding:30px; ">
 
@@ -38,6 +41,17 @@
                 </a>
             </div>
             <ul class="experiment_textlist" id="manufacturersUl">
+
+            </ul>
+        </div>
+
+
+        <div class="experiment_infoboxleft" id="materials">
+            <div class="experiment_boxtitle">
+                <span>材料对应厂家</span>
+                <a href="#" onclick="getMaterialsPage();">新建</a>
+            </div>
+            <ul class="experiment_textlist" id="materialsUl">
 
             </ul>
         </div>
@@ -96,6 +110,35 @@
     </form>
 
 </div>
+<%--材料对应厂家--%>
+<div class="experiment_from_div" id="materialsFrom" lay-filter="materials" style="display:none;">
+    <div class="title">
+        <span>新建厂家</span>
+    </div>
+
+    <form class="layui-form"  style="margin-bottom: 20px;">
+            <!--autoFocus-->
+        <div class="layui-form-item">
+            <label class="layui-form-label" >选择框</label>
+            <div class="layui-input-block">
+                <select name="materialsSelect" id="materialsSelect"  lay-filter="sele" lay-verify="" lay-search>
+                    <option value="">请选择一个城市</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" >复选框</label>
+            <div class="layui-input-block" lay-filter="check"  id="checkDiv">
+
+            </div>
+        </div>
+        <!--登入按钮-->
+        <div style="text-align: center">
+            <button type="button" lay-submit lay-filter="subFrom" class="enter-btn" >确定</button>
+        </div>
+    </form>
+
+</div>
 <%--修改方法--%>
 <div class="experiment_from_div" id="updateFrom" style="display:none;">
     <div class="title">
@@ -131,7 +174,8 @@
 <input  id="path" value="${path}" type="hidden" >
 </body>
 <script type="text/javascript" src="/static/js/jquery.js"></script>
-<script type="text/javascript" src="/static/js/layer/layer.js"></script>
+<%--<script type="text/javascript" src="/static/js/layer/layer.js"></script>--%>
+<script type="text/javascript" src="/static/layui/layui.js"></script>
 <script type="text/javascript" src="/static/js/qc/experimental_setting.js"></script>
 
 </html>

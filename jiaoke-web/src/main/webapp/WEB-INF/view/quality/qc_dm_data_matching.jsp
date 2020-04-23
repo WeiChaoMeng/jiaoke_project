@@ -243,10 +243,10 @@
                             <c:forEach items="${userProTotal}"  var="userPro" varStatus="sta">
                                     <c:choose>
                                         <c:when test="${sta.last}">
-                                            '${userPro.userName}'
+                                            '${userPro.clientName}'
                                         </c:when>
                                         <c:otherwise>
-                                            '${userPro.userName}',
+                                            '${userPro.clientName}',
                                         </c:otherwise>
                                     </c:choose>
                             </c:forEach>
@@ -261,10 +261,10 @@
                                 <c:forEach items="${userProTotal}" var="userList" varStatus="stus">
                                     <c:choose>
                                         <c:when test="${sta.last}">
-                                            { value:${userList.userTotal}, name:'${userList.userName}'}
+                                            { value:${userList.userTotal}, name:'${userList.clientName}'}
                                         </c:when>
                                         <c:otherwise>
-                                            { value:${userList.userTotal}, name:'${userList.userName}'},
+                                            { value:${userList.userTotal}, name:'${userList.clientName}'},
                                         </c:otherwise>
                                     </c:choose>
                                 </c:forEach>
@@ -578,7 +578,8 @@
                         var temUp = y + "Up";
                         $("#" + y).html(modelRaion[i][y] + "-" +  modelRaion[i][temUp] + "<i>℃</i>");
                     }else {
-                        $("#" + y).html(modelRaion[i][y] + "<i>%</i>");
+                        var num = modelRaion[i][y];
+                        $("#" + y).html( num + "<i>%</i>");
                     }
                 }
             }

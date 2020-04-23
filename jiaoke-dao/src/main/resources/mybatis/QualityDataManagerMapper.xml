@@ -209,6 +209,7 @@
         FROM
              quality_monitoring_realtime_${crewNum} AS T1
                  INNER JOIN quality_test_project AS T2
+                     ON T1.produce_custom_num = T2.client_num
         WHERE
                 T1.produce_date = &apos;${producedDate}&apos;
         GROUP BY
@@ -217,14 +218,17 @@
 
     <select id="selectUserProTotalByDate" resultType="java.util.Map">
         SELECT
-               produce_custom_num as userName,
-               SUM(material_total)/1000 as userTotal
+               T1.produce_custom_num as userName,
+               T2.client_name AS clientName,
+               SUM(T1.material_total)/1000 as userTotal
         FROM
-             quality_monitoring_realtime_${crewNum}
+             quality_monitoring_realtime_${crewNum} as T1
+                 INNER JOIN quality_test_project AS T2
+                     ON T1.produce_custom_num = T2.client_num
         WHERE
-                produce_date = &apos;${producedDate}&apos;
+                T1.produce_date = &apos;${producedDate}&apos;
         GROUP BY
-                 produce_custom_num
+                 T1.produce_custom_num
 
     </select>
 
@@ -288,10 +292,15 @@
                 ON QMRD.produce_proportioning_num = QPM.crew2_modele_id
             </otherwise>
         </choose>
+        INNER JOIN
+        quality_proportioning_model AS QPMD
+        ON QPMD.message_id =  QPM.id
         WHERE
         QMRD.produce_proportioning_num = ${ratioNum}
         AND
-        QMRD.produce_date = date ${date};
+        QMRD.produce_date = date ${date}
+        AND
+        YEAR(QPMD.create_time) = YEAR(${date});
     </select>
     <select id="selectRationById" resultType="com.jiaoke.quality.bean.QualityRatioTemplate">
         select QPM.id,
