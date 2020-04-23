@@ -3,12 +3,12 @@ package com.jiaoke.oa.service;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.oa.bean.Department;
 import com.jiaoke.oa.dao.DepartmentMapper;
+import com.jiaoke.oa.dao.UserInfoMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 /**
  * 部门
@@ -23,9 +23,25 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Resource
     private DepartmentMapper departmentMapper;
 
+    @Resource
+    private UserInfoMapper userInfoMapper;
+
     @Override
     public List<Department> selectAll() {
-        return departmentMapper.selectAllDepartment();
+        List<Department> departmentList = departmentMapper.selectAllDepartment();
+        for (Department department : departmentList) {
+            if (department.getPrincipal().contains(",")){
+                StringBuilder stringBuilder = new StringBuilder();
+                for (String s : department.getPrincipal().split(",")) {
+                    stringBuilder.append(userInfoMapper.getNicknameById(Integer.valueOf(s))).append(",");
+                }
+                department.setPrincipal(stringBuilder.substring(0,stringBuilder.length()-1));
+            }else {
+                String nickname = userInfoMapper.getNicknameById(Integer.valueOf(department.getPrincipal()));
+                department.setPrincipal(nickname);
+            }
+        }
+        return departmentList;
     }
 
     @Override

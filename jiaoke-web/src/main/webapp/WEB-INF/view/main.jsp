@@ -277,6 +277,15 @@
     </div>
 </div>
 
+<%--部门负责人选择--%>
+<div id="selectPrincipal" class="window-body-add" style="display: none">
+    <div id="principalContent"></div>
+    <div style="padding-top: 20px">
+        <input type="button" value="确认" onclick="commitPrincipal()" class="confirm-btn-style">
+        <input type="button" value="取消" onclick="cancel()" class="cancel-btn-style  left-spacing">
+    </div>
+</div>
+
 <%--模态窗-添加部门--%>
 <div id="addDepartment" class="window-body-add"  style="display: none">
     <table class="window-table">
@@ -370,6 +379,15 @@
     </div>
     <div class="option-window-body-bottom">
         <input type="button" value="确认" onclick="confirmReviewers()" class="confirm-btn-style">
+        <input type="button" value="取消" onclick="cancel()" class="cancel-btn-style  left-spacing">
+    </div>
+</div>
+
+<%--模态窗-选择公文主送--%>
+<div id="selectMainGive" class="window-body-add" style="display: none">
+    <div id="mainGiveContent"></div>
+    <div style="padding-top: 20px">
+        <input type="button" value="确认" onclick="commitMainGive()" class="confirm-btn-style">
         <input type="button" value="取消" onclick="cancel()" class="cancel-btn-style  left-spacing">
     </div>
 </div>
@@ -978,6 +996,39 @@
         );
     }
 
+    //公文-选择主送人员
+    function selectMainGive(principalList) {
+        window.lar = layer.open({
+            title: '所在部门负责人',
+            type: 1,
+            area: ['20%', '30%'],
+            shadeClose: true, //点击遮罩关闭
+            content: $("#selectMainGive"),
+            offset: "20%"
+        });
+
+        var principal = "";
+        // principal += '<div id="radioChecked" style="text-align: left;">';
+        // principal += '<div style="margin: 10px;"><input type="radio" name="abc" value="'+principalList[1]+','+principalList[3]+'" checked style="zoom: 120%;vertical-align: middle;margin-right: 10px;"><span>全部</span></div>';
+        // principal += '<div style="margin: 10px;"><input type="radio" name="abc" value="'+principalList[1]+'" style="zoom: 120%;vertical-align: middle;margin-right: 10px;"><span>'+principalList[0]+'</span></div>';
+        // principal += '<div style="margin: 10px;"><input type="radio" name="abc" value="'+principalList[3]+'" style="zoom: 120%;vertical-align: middle;margin-right: 10px;"><span>'+principalList[2]+'</span></div>';
+        // principal += '</div>';
+        principal += '<div id="radioChecked" style="text-align: left;">';
+        principal += '<div style="margin: 10px;"><input type="radio" name="name" value="1" checked style="zoom: 120%;vertical-align: middle;margin-right: 10px;"><span>领导班子</span></div>';
+        principal += '<div style="margin: 10px;"><input type="radio" name="name" value="2" style="zoom: 120%;vertical-align: middle;margin-right: 10px;"><span>各部室负责人</span></div>';
+        principal += '<div style="margin: 10px;"><input type="radio" name="name" value="0" style="zoom: 120%;vertical-align: middle;margin-right: 10px;"><span>无</span></div>';
+        principal += '</div>';
+        $('#mainGiveContent').html(principal);
+    }
+
+    //提交-表单发送前选择部门负责人
+    function commitMainGive() {
+        let val = $('#radioChecked input[type="radio"]:checked').val();
+        var text = $('#radioChecked input[type="radio"]:checked').next('span').html();
+        $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.insetMainGive(val,text);
+        layer.close(window.lar);
+    }
+
     //公文-选择抄送人员
     function selectNotifyPerson(userInfoList, departmentList, flag) {
         window.lar = layer.open({
@@ -1181,6 +1232,32 @@
         }
     }
 
+    //表单发送前选择部门负责人
+    function selectPrincipal(principalList) {
+        window.lar = layer.open({
+            title: '所在部门负责人',
+            type: 1,
+            area: ['20%', '30%'],
+            shadeClose: true, //点击遮罩关闭
+            content: $("#selectPrincipal"),
+            offset: "20%"
+        });
+
+        var principal = "";
+        principal += '<div id="radioChecked" style="text-align: left;">';
+        principal += '<div style="margin: 10px;"><input type="radio" name="abc" value="'+principalList[1]+','+principalList[3]+'" checked style="zoom: 120%;vertical-align: middle;margin-right: 10px;"><span>全部</span></div>';
+        principal += '<div style="margin: 10px;"><input type="radio" name="abc" value="'+principalList[1]+'" style="zoom: 120%;vertical-align: middle;margin-right: 10px;"><span>'+principalList[0]+'</span></div>';
+        principal += '<div style="margin: 10px;"><input type="radio" name="abc" value="'+principalList[3]+'" style="zoom: 120%;vertical-align: middle;margin-right: 10px;"><span>'+principalList[2]+'</span></div>';
+        principal += '</div>';
+        $('#principalContent').html(principal);
+    }
+
+    //提交-表单发送前选择部门负责人
+    function commitPrincipal() {
+        let val = $('#radioChecked input[type="radio"]:checked').val();
+        $("#iframe")[0].contentWindow.$("#oa-iframe")[0].contentWindow.selectionPrincipal(val);
+        layer.close(window.lar);
+    }
     /**-----------------------部门管理---------------------------*/
     //添加部门
     function addDepartment(currentPage) {

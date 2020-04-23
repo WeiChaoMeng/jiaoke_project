@@ -89,6 +89,16 @@ public class OaActSealsUse {
     private String sealOperatorDate;
 
     /**
+     * 部门负责人
+     */
+    private String departmentPrincipal;
+
+    /**
+     * 状态
+     */
+    private Integer state;
+
+    /**
      * 创建日期
      */
     private Date createTime;
@@ -270,5 +280,21 @@ public class OaActSealsUse {
 
     public void setAnnex(String annex) {
         this.annex = annex;
+    }
+
+    public String getDepartmentPrincipal() {
+        return departmentPrincipal;
+    }
+
+    public void setDepartmentPrincipal(String departmentPrincipal) {
+        this.departmentPrincipal = departmentPrincipal;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
 }

@@ -16,7 +16,7 @@
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
 </head>
 
-<body id="body" style="width: 75%">
+<body id="body" style="width: 70%">
 
 <div class="table-title">
     <span>${oaActPactSign.title}</span>
@@ -72,6 +72,7 @@
             <input type="hidden" name="id" value="${oaActPactSign.id}">
             <input type="hidden" name="promoter" value="${oaActPactSign.promoter}">
             <input type="hidden" name="notifiedPerson" value="${oaActPactSign.notifiedPerson}">
+            <input type="hidden" name="departmentPrincipal" value="${oaActPactSign.departmentPrincipal}">
         </div>
     </div>
 
@@ -113,7 +114,8 @@
                     </div>
                     <div class="approval-signature">
                         <label class="approval-signature-label">签字 </label>
-                        <input class="approval-signature-input" type="text" value="${oaActPactSign.supervisor}" readonly>
+                        <input class="approval-signature-input" type="text" value="${oaActPactSign.supervisor}"
+                               readonly>
                     </div>
                 </shiro:lacksPermission>
             </td>
@@ -148,7 +150,8 @@
                 </shiro:hasPermission>
 
                 <shiro:lacksPermission name="company_principal">
-                    <textarea class="approval-content-textarea" readonly>${oaActPactSign.companyPrincipalContent}</textarea>
+                    <textarea class="approval-content-textarea"
+                              readonly>${oaActPactSign.companyPrincipalContent}</textarea>
                     <div class="approval-date">
                         <label class="approval-date-label">日期 </label>
                         <input class="approval-date-input" type="text" value="${oaActPactSign.companyPrincipalDate}"
@@ -182,15 +185,23 @@
     //标记
     var flag = 0;
 
-    if (flag === 0) {
-        if (pactSign.principal === "" || pactSign.principal === undefined) {
-            $('#principalContent').append(
-                '<textarea onkeyup="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="principalContent" style="background-color: #ffffff"></textarea>' +
-                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
-                '<input class="approval-date-input" type="text" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
-                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
-                '<input class="approval-signature-input" type="text" name="principal" value="${nickname}" readonly></div>');
-            flag = 1;
+    if (pactSign.state === 0) {
+        if (flag === 0) {
+            if (pactSign.principal === "" || pactSign.principal === undefined) {
+                $('#principalContent').append(
+                    '<textarea oninput="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="principalContent" style="background-color: #ffffff"></textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                    '<input class="approval-date-input" type="text" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                    '<input class="approval-signature-input" type="text" name="principal" value="${nickname}" readonly></div>');
+                flag = 1;
+            } else {
+                $('#principalContent').append('<textarea class="approval-content-textarea" readonly>${oaActPactSign.principalContent}</textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                    '<input class="approval-date-input" type="text" value="${oaActPactSign.principalDate}" readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                    '<input class="approval-signature-input" type="text" value="${oaActPactSign.principal}" readonly></div>');
+            }
         } else {
             $('#principalContent').append('<textarea class="approval-content-textarea" readonly>${oaActPactSign.principalContent}</textarea>' +
                 '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
@@ -198,23 +209,23 @@
                 '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
                 '<input class="approval-signature-input" type="text" value="${oaActPactSign.principal}" readonly></div>');
         }
-    } else {
-        $('#principalContent').append('<textarea class="approval-content-textarea" readonly>${oaActPactSign.principalContent}</textarea>' +
-            '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
-            '<input class="approval-date-input" type="text" value="${oaActPactSign.principalDate}" readonly></div>' +
-            '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
-            '<input class="approval-signature-input" type="text" value="${oaActPactSign.principal}" readonly></div>');
-    }
 
-    if (flag === 0) {
-        if (pactSign.supervisor === "" || pactSign.supervisor === undefined) {
-            $('#supervisorContent').append(
-                '<textarea onkeyup="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="supervisorContent" style="background-color: #ffffff"></textarea>' +
-                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
-                '<input class="approval-date-input" type="text" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
-                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
-                '<input class="approval-signature-input" type="text" name="supervisor" value="${nickname}" readonly></div>');
-            flag = 1;
+        if (flag === 0) {
+            if (pactSign.supervisor === "" || pactSign.supervisor === undefined) {
+                $('#supervisorContent').append(
+                    '<textarea oninput="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="supervisorContent" style="background-color: #ffffff"></textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                    '<input class="approval-date-input" type="text" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                    '<input class="approval-signature-input" type="text" name="supervisor" value="${nickname}" readonly></div>');
+                flag = 1;
+            } else {
+                $('#supervisorContent').append('<textarea class="approval-content-textarea" readonly>${oaActPactSign.supervisorContent}</textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                    '<input class="approval-date-input" type="text" value="${oaActPactSign.supervisorDate}" readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                    '<input class="approval-signature-input" type="text" value="${oaActPactSign.supervisor}" readonly></div>');
+            }
         } else {
             $('#supervisorContent').append('<textarea class="approval-content-textarea" readonly>${oaActPactSign.supervisorContent}</textarea>' +
                 '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
@@ -222,23 +233,23 @@
                 '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
                 '<input class="approval-signature-input" type="text" value="${oaActPactSign.supervisor}" readonly></div>');
         }
-    } else {
-        $('#supervisorContent').append('<textarea class="approval-content-textarea" readonly>${oaActPactSign.supervisorContent}</textarea>' +
-            '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
-            '<input class="approval-date-input" type="text" value="${oaActPactSign.supervisorDate}" readonly></div>' +
-            '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
-            '<input class="approval-signature-input" type="text" value="${oaActPactSign.supervisor}" readonly></div>');
-    }
 
-    if (flag === 0) {
-        if (pactSign.personnel === "" || pactSign.personnel === undefined) {
-            $('#personnelContent').append(
-                '<textarea onkeyup="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="personnelContent" style="background-color: #ffffff"></textarea>' +
-                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
-                '<input class="approval-date-input" type="text" name="personnelDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
-                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
-                '<input class="approval-signature-input" type="text" name="personnel" value="${nickname}" readonly></div>');
-            flag = 1;
+        if (flag === 0) {
+            if (pactSign.personnel === "" || pactSign.personnel === undefined) {
+                $('#personnelContent').append(
+                    '<textarea oninput="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="personnelContent" style="background-color: #ffffff"></textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                    '<input class="approval-date-input" type="text" name="personnelDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                    '<input class="approval-signature-input" type="text" name="personnel" value="${nickname}" readonly></div>');
+                flag = 1;
+            } else {
+                $('#personnelContent').append('<textarea class="approval-content-textarea" readonly>${oaActPactSign.personnelContent}</textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                    '<input class="approval-date-input" type="text" value="${oaActPactSign.personnelDate}" readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                    '<input class="approval-signature-input" type="text" value="${oaActPactSign.personnel}" readonly></div>');
+            }
         } else {
             $('#personnelContent').append('<textarea class="approval-content-textarea" readonly>${oaActPactSign.personnelContent}</textarea>' +
                 '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
@@ -246,23 +257,23 @@
                 '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
                 '<input class="approval-signature-input" type="text" value="${oaActPactSign.personnel}" readonly></div>');
         }
-    } else {
-        $('#personnelContent').append('<textarea class="approval-content-textarea" readonly>${oaActPactSign.personnelContent}</textarea>' +
-            '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
-            '<input class="approval-date-input" type="text" value="${oaActPactSign.personnelDate}" readonly></div>' +
-            '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
-            '<input class="approval-signature-input" type="text" value="${oaActPactSign.personnel}" readonly></div>');
-    }
 
-    if (flag === 0) {
-        if (pactSign.companyPrincipal === "" || pactSign.companyPrincipal === undefined) {
-            $('#companyPrincipalContent').append(
-                '<textarea onkeyup="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="companyPrincipalContent" style="background-color: #ffffff"></textarea>' +
-                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
-                '<input class="approval-date-input" type="text" name="companyPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
-                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
-                '<input class="approval-signature-input" type="text" name="companyPrincipal" value="${nickname}" readonly></div>');
-            flag = 1;
+        if (flag === 0) {
+            if (pactSign.companyPrincipal === "" || pactSign.companyPrincipal === undefined) {
+                $('#companyPrincipalContent').append(
+                    '<textarea oninput="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="companyPrincipalContent" style="background-color: #ffffff"></textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                    '<input class="approval-date-input" type="text" name="companyPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                    '<input class="approval-signature-input" type="text" name="companyPrincipal" value="${nickname}" readonly></div>');
+                flag = 1;
+            } else {
+                $('#companyPrincipalContent').append('<textarea class="approval-content-textarea" readonly>${oaActPactSign.companyPrincipalContent}</textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                    '<input class="approval-date-input" type="text" value="${oaActPactSign.companyPrincipalDate}" readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                    '<input class="approval-signature-input" type="text" value="${oaActPactSign.companyPrincipal}" readonly></div>');
+            }
         } else {
             $('#companyPrincipalContent').append('<textarea class="approval-content-textarea" readonly>${oaActPactSign.companyPrincipalContent}</textarea>' +
                 '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
@@ -270,15 +281,28 @@
                 '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
                 '<input class="approval-signature-input" type="text" value="${oaActPactSign.companyPrincipal}" readonly></div>');
         }
+
     } else {
+        $('#principalContent').append('<textarea class="approval-content-textarea" readonly>${oaActPactSign.principalContent}</textarea>' +
+            '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+            '<input class="approval-date-input" type="text" value="${oaActPactSign.principalDate}" readonly></div>' +
+            '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+            '<input class="approval-signature-input" type="text" value="${oaActPactSign.principal}" readonly></div>');
+        $('#supervisorContent').append('<textarea class="approval-content-textarea" readonly>${oaActPactSign.supervisorContent}</textarea>' +
+            '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+            '<input class="approval-date-input" type="text" value="${oaActPactSign.supervisorDate}" readonly></div>' +
+            '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+            '<input class="approval-signature-input" type="text" value="${oaActPactSign.supervisor}" readonly></div>');
+        $('#personnelContent').append('<textarea class="approval-content-textarea" readonly>${oaActPactSign.personnelContent}</textarea>' +
+            '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+            '<input class="approval-date-input" type="text" value="${oaActPactSign.personnelDate}" readonly></div>' +
+            '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+            '<input class="approval-signature-input" type="text" value="${oaActPactSign.personnel}" readonly></div>');
         $('#companyPrincipalContent').append('<textarea class="approval-content-textarea" readonly>${oaActPactSign.companyPrincipalContent}</textarea>' +
             '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
             '<input class="approval-date-input" type="text" value="${oaActPactSign.companyPrincipalDate}" readonly></div>' +
             '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
             '<input class="approval-signature-input" type="text" value="${oaActPactSign.companyPrincipal}" readonly></div>');
-    }
-
-    if (flag === 0){
         $('#return').html("");
         $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
     }
@@ -298,7 +322,10 @@
                     //返回上一页
                     window.location.href = '${path}/oaHomePage/toOaHomePage';
                     window.top.tips("提交成功！", 0, 1, 1000);
-                } else {
+                }else if (data === 'backSuccess') {
+                    window.location.href = '${path}/oaHomePage/toOaHomePage';
+                    window.top.tips("提交成功,并将数据转存到待发事项中！", 6, 1, 2000);
+                }  else {
                     window.top.tips("提交失败！", 0, 2, 1000);
                 }
             },
@@ -315,7 +342,7 @@
         //执行打印
         window.print();
         $('#tool,#return').show();
-        $('#body').css('width', '75%');
+        $('#body').css('width', '70%');
     }
 </script>
 </html>

@@ -423,6 +423,21 @@ public class ActivitiUtil {
         return userTask;
     }
 
+    public ExclusiveGateway getExclusiveGateway(String processDefinitionId, String nextNode) {
+        ExclusiveGateway exclusiveGateway = null;
+        BpmnModel bpmnModel = repositoryService.getBpmnModel(processDefinitionId);
+        Collection<FlowElement> flowElements = bpmnModel.getProcesses().get(0).getFlowElements();
+        for (FlowElement flowElement : flowElements) {
+            if (flowElement instanceof ExclusiveGateway) {
+                ExclusiveGateway exclusiveGateways = (ExclusiveGateway) flowElement;
+                if (exclusiveGateways.getId().equals(nextNode)) {
+                    exclusiveGateway = exclusiveGateways;
+                }
+            }
+        }
+        return exclusiveGateway;
+    }
+
     /**
      * 完成审批
      *
@@ -660,13 +675,31 @@ public class ActivitiUtil {
                 //上个节点是发起人
                 if ("start".equals(sourceRef)) {
                     oaCollaboration.setPreviousApprover(startUser);
+
+                    //上个节点是网关
+                } else if (sourceRef.contains("EG")) {
+                    ExclusiveGateway exclusiveGateway = getExclusiveGateway(task.getProcessDefinitionId(), flow.getSourceRef());
+                    List<SequenceFlow> incomingFlows = exclusiveGateway.getIncomingFlows();
+                    for (SequenceFlow incomingFlow : incomingFlows) {
+                        UserTask userTask = getUserTask(task.getProcessDefinitionId(), incomingFlow.getSourceRef());
+                        oaCollaboration.setPreviousApprover(userTask.getAssignee());
+                    }
+//                    UserTask userTask = getUserTask(task.getProcessDefinitionId(), flow.getSourceRef());
+//                    if (userTask != null) {
+//                        oaCollaboration.setPreviousApprover(userTask.getAssignee());
+//                    } else {
+//                        oaCollaboration.setPreviousApprover("网关");
+//                    }
+
+//                    ExclusiveGateway exclusiveGateway = getExclusiveGateway(task.getProcessDefinitionId(), flow.getSourceRef());
+//                    if (exclusiveGateway != null) {
+//                        oaCollaboration.setPreviousApprover(exclusiveGateway.getId());
+//                    } else {
+//                        oaCollaboration.setPreviousApprover("网关");
+//                    }
                 } else {
                     UserTask userTask = getUserTask(task.getProcessDefinitionId(), flow.getSourceRef());
-                    if (userTask != null) {
-                        oaCollaboration.setPreviousApprover(userTask.getAssignee());
-                    } else {
-                        oaCollaboration.setPreviousApprover("网关");
-                    }
+                    oaCollaboration.setPreviousApprover(userTask.getAssignee());
                 }
             }
             list.add(oaCollaboration);
@@ -766,5 +799,37 @@ public class ActivitiUtil {
             }
         }
         return idList;
+    }
+
+    /**-----------------第三阶段------------------*/
+    /**
+     * 完成并指定下一个节点(无批注)
+     *
+     * @param taskId 任务Id
+     * @param map    变量
+     */
+    public void approvalComplete(String taskId, Map<String, Object> map) {
+        //指定下个执行人
+        taskService.complete(taskId, map);
+    }
+
+    /**
+     * 通过流程实例Id获取任务
+     *
+     * @param processInstanceId processInstanceId
+     * @return list
+     */
+    public List<Task> getTaskListByProcessInstanceId(String processInstanceId) {
+        return taskService.createTaskQuery().processInstanceId(processInstanceId).list();
+    }
+
+    /**
+     * 通过任务Id获取流程实例Id
+     *
+     * @param taskId taskId
+     * @return task
+     */
+    public Task getProcessInstanceIdByTaskId(String taskId) {
+        return taskService.createTaskQuery().taskId(taskId).singleResult();
     }
 }

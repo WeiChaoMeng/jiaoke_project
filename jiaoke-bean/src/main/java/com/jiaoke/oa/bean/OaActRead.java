@@ -84,16 +84,6 @@ public class OaActRead {
     private String receiptProposedDate;
 
     /**
-     * 部门意见
-     */
-    private String departmentOpinion;
-
-    /**
-     * 部门意见时间
-     */
-    private String departmentOpinionDate;
-
-    /**
      * 领导批示
      */
     private String companyPrincipal;
@@ -112,11 +102,18 @@ public class OaActRead {
      * 办理结果
      */
     private String outcome;
+    private String outcomeContent;
+    private String outcomeDate;
 
     /**
      * 保存期限（10年，30年，永久）
      */
     private Integer deadline;
+
+    /**
+     * 状态
+     */
+    private Integer state;
 
     /**
      * 附件
@@ -212,14 +209,6 @@ public class OaActRead {
 
     public void setFileTitle(String fileTitle) {
         this.fileTitle = fileTitle;
-    }
-
-    public String getDepartmentOpinion() {
-        return departmentOpinion;
-    }
-
-    public void setDepartmentOpinion(String departmentOpinion) {
-        this.departmentOpinion = departmentOpinion;
     }
 
     public String getOutcome() {
@@ -318,14 +307,6 @@ public class OaActRead {
         this.companyPrincipalDate = companyPrincipalDate;
     }
 
-    public String getDepartmentOpinionDate() {
-        return departmentOpinionDate;
-    }
-
-    public void setDepartmentOpinionDate(String departmentOpinionDate) {
-        this.departmentOpinionDate = departmentOpinionDate;
-    }
-
     public String getReceiptProposedContent() {
         return receiptProposedContent;
     }
@@ -348,5 +329,29 @@ public class OaActRead {
 
     public void setReceiptDepartment(Integer receiptDepartment) {
         this.receiptDepartment = receiptDepartment;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
+    public String getOutcomeContent() {
+        return outcomeContent;
+    }
+
+    public void setOutcomeContent(String outcomeContent) {
+        this.outcomeContent = outcomeContent;
+    }
+
+    public String getOutcomeDate() {
+        return outcomeDate;
+    }
+
+    public void setOutcomeDate(String outcomeDate) {
+        this.outcomeDate = outcomeDate;
     }
 }

@@ -49,7 +49,8 @@
                     <c:forTokens items="${oaActAnnualLeave.annex}" delims="," var="annex">
                         <div class="table-file">
                             <div class="table-file-content">
-                                <span class="table-file-title" title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <span class="table-file-title"
+                                      title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
                                 <a class="table-file-download icon"
                                    href="/fileDownloadHandle/download?fileName=${annex}"
                                    title="下载">&#xebda;</a>
@@ -72,7 +73,7 @@
         <tbody>
         <tr>
             <td class="tdLabel">部门</td>
-            <td class="table-td-content">
+            <td class="table-td-content" style="width: 315px;">
                 ${oaActAnnualLeave.department}
                 <input type="hidden" name="id" value="${oaActAnnualLeave.id}">
                 <input type="hidden" name="promoter" value="${oaActAnnualLeave.promoter}">
@@ -127,17 +128,6 @@
         </tr>
 
         <tr>
-            <td class="tdLabel">总经理</td>
-            <td class="table-td-content">
-                <shiro:hasPermission name="company_principal">
-                    <div style="width: 100%;height: 100%;" id="companyPrincipalContent"></div>
-                </shiro:hasPermission>
-
-                <shiro:lacksPermission name="company_principal">
-                    ${oaActAnnualLeave.companyPrincipal}
-                </shiro:lacksPermission>
-            </td>
-
             <td class="tdLabel">人事主管</td>
             <td class="table-td-content">
                 <shiro:hasPermission name="personnel">
@@ -146,6 +136,17 @@
 
                 <shiro:lacksPermission name="personnel">
                     ${oaActAnnualLeave.personnel}
+                </shiro:lacksPermission>
+            </td>
+
+            <td class="tdLabel">总经理</td>
+            <td class="table-td-content">
+                <shiro:hasPermission name="company_principal">
+                    <div style="width: 100%;height: 100%;" id="companyPrincipalContent"></div>
+                </shiro:hasPermission>
+
+                <shiro:lacksPermission name="company_principal">
+                    ${oaActAnnualLeave.companyPrincipal}
                 </shiro:lacksPermission>
             </td>
         </tr>
@@ -162,49 +163,59 @@
 
 </body>
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
+<script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
 
     //流程执行步骤
     var annualLeave = JSON.parse('${oaActAnnualLeaveJson}');
     //标记
     var flag = 0;
-    if (flag === 0) {
-        if (annualLeave.supervisor === "" || annualLeave.supervisor === undefined) {
-            $('#supervisorContent').append('<input type="text" class="formInput-readonly" name="supervisor" value="${nickname}" readonly="readonly">' +
-                '<input type="hidden" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
-            flag = 1;
+
+    if (annualLeave.state === 0) {
+        if (flag === 0) {
+            if (annualLeave.supervisor === "" || annualLeave.supervisor === undefined) {
+                $('#supervisorContent').append('<input type="text" class="formInput-readonly" name="supervisor" value="${nickname}" readonly="readonly">' +
+                    '<input type="hidden" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                flag = 1;
+            } else {
+                $('#supervisorContent').append(annualLeave.supervisor);
+            }
         } else {
             $('#supervisorContent').append(annualLeave.supervisor);
         }
-    } else {
-        $('#supervisorContent').append(annualLeave.supervisor);
-    }
 
-    if (flag === 0) {
-        if (annualLeave.companyPrincipal === "" || annualLeave.companyPrincipal === undefined) {
-            $('#companyPrincipalContent').append('<input type="text" class="formInput-readonly" name="companyPrincipal" value="${nickname}" readonly="readonly">' +
-                '<input type="hidden" name="companyPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
-            flag = 1;
-        } else {
-            $('#companyPrincipalContent').append(annualLeave.companyPrincipal);
-        }
-    } else {
-        $('#companyPrincipalContent').append(annualLeave.companyPrincipal);
-    }
-
-    if (flag === 0) {
-        if (annualLeave.personnel === "" || annualLeave.personnel === undefined) {
-            $('#personnelContent').append('<input type="text" class="formInput-readonly" name="personnel" value="${nickname}" readonly="readonly">' +
-                '<input type="hidden" name="personnelDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
-            flag = 1;
+        if (flag === 0) {
+            if (annualLeave.personnel === "" || annualLeave.personnel === undefined) {
+                $('#personnelContent').append('<input type="text" class="formInput-readonly" name="personnel" value="${nickname}" readonly="readonly">' +
+                    '<input type="hidden" name="personnelDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                flag = 1;
+            } else {
+                $('#personnelContent').append(annualLeave.personnel);
+            }
         } else {
             $('#personnelContent').append(annualLeave.personnel);
         }
-    } else {
-        $('#personnelContent').append(annualLeave.personnel);
-    }
 
-    if (flag === 0) {
+        if (flag === 0) {
+            if (annualLeave.companyPrincipal === "" || annualLeave.companyPrincipal === undefined) {
+                $('#companyPrincipalContent').append('<input type="text" class="formInput-readonly" name="companyPrincipal" value="${nickname}" readonly="readonly">' +
+                    '<input type="hidden" name="companyPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                flag = 1;
+            } else {
+                $('#companyPrincipalContent').append(annualLeave.companyPrincipal);
+            }
+        } else {
+            $('#companyPrincipalContent').append(annualLeave.companyPrincipal);
+        }
+
+        if (flag === 0) {
+            $('#return').html("");
+            $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
+        }
+    } else {
+        $('#supervisorContent').append(annualLeave.supervisor);
+        $('#companyPrincipalContent').append(annualLeave.companyPrincipal);
+        $('#personnelContent').append(annualLeave.personnel);
         $('#return').html("");
         $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
     }
@@ -224,6 +235,9 @@
                     //返回上一页
                     window.location.href = '${path}/oaHomePage/toOaHomePage';
                     layer.msg('提交成功！');
+                } else if (data === 'backSuccess') {
+                    window.location.href = '${path}/oaHomePage/toOaHomePage';
+                    window.top.tips("提交成功,并将数据转存到待发事项中！", 6, 1, 2000);
                 } else {
                     layer.msg('提交失败！');
                 }

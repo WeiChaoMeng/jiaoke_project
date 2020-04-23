@@ -38,6 +38,7 @@ public class OaActTransferServiceImpl implements OaActTransferService {
         oaActTransfer.setCreateTime(new Date());
         oaActTransfer.setPromoter(userId);
         oaActTransfer.setUrl("transfer");
+        oaActTransfer.setState(0);
         if (oaActTransferMapper.insertSelective(oaActTransfer) < 0) {
             return -1;
         } else {
@@ -47,6 +48,7 @@ public class OaActTransferServiceImpl implements OaActTransferService {
             oaCollaboration.setTitle(oaActTransfer.getTitle());
             oaCollaboration.setUrl("transfer");
             oaCollaboration.setTable("oa_act_transfer");
+            oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("转岗审批");
             oaCollaboration.setDataOne("现岗位：" + oaActTransfer.getPresentPost());
             oaCollaboration.setDataTwo("拟转入岗位：" + oaActTransfer.getNewPost());
@@ -59,10 +61,29 @@ public class OaActTransferServiceImpl implements OaActTransferService {
 
     @Override
     public int edit(OaActTransfer oaActTransfer) {
+        oaActTransfer.setState(0);
+        oaActTransfer.setPrincipal("");
+        oaActTransfer.setPrincipalDate("");
+        oaActTransfer.setPrincipalContent("");
+        oaActTransfer.setSupervisor("");
+        oaActTransfer.setSupervisorDate("");
+        oaActTransfer.setSupervisorContent("");
+        oaActTransfer.setTransferPrincipal("");
+        oaActTransfer.setTransferPrincipalDate("");
+        oaActTransfer.setTransferPrincipalContent("");
+        oaActTransfer.setTransferSupervisor("");
+        oaActTransfer.setTransferSupervisorDate("");
+        oaActTransfer.setTransferSupervisorContent("");
+        oaActTransfer.setPersonnel("");
+        oaActTransfer.setPersonnelDate("");
+        oaActTransfer.setPersonnelContent("");
+        oaActTransfer.setCompanyPrincipal("");
+        oaActTransfer.setCompanyPrincipalDate("");
+        oaActTransfer.setCompanyPrincipalContent("");
+        oaActTransfer.setCreateTime(new Date());
         if (oaActTransferMapper.updateByPrimaryKeySelective(oaActTransfer) < 0) {
             return -1;
         } else {
-            oaCollaborationMapper.updateStateByCorrelationId(oaActTransfer.getId(), 1, oaActTransfer.getTitle());
             return 1;
         }
     }

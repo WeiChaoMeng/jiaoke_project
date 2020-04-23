@@ -36,6 +36,7 @@ public class OaActDepartureServiceImpl implements OaActDepartureService {
         oaActDeparture.setCreateTime(new Date());
         oaActDeparture.setPromoter(userId);
         oaActDeparture.setUrl("departure");
+        oaActDeparture.setState(0);
         if (oaActDepartureMapper.insertSelective(oaActDeparture) < 0) {
             return -1;
         } else {
@@ -45,6 +46,7 @@ public class OaActDepartureServiceImpl implements OaActDepartureService {
             oaCollaboration.setTitle(oaActDeparture.getTitle());
             oaCollaboration.setUrl("departure");
             oaCollaboration.setTable("oa_act_departure");
+            oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("离职会签");
             oaCollaboration.setDataOne("姓名：" + oaActDeparture.getName());
             oaCollaboration.setDataTwo("离职日期：" + oaActDeparture.getDepartureDate());
@@ -57,10 +59,41 @@ public class OaActDepartureServiceImpl implements OaActDepartureService {
 
     @Override
     public int edit(OaActDeparture oaActDeparture) {
+        oaActDeparture.setState(0);
+        oaActDeparture.setOfficePrincipal("");
+        oaActDeparture.setOfficePrincipalRemark("");
+        oaActDeparture.setOfficePrincipalT("");
+        oaActDeparture.setOfficePrincipalRemarkT("");
+        oaActDeparture.setOfficeSupervisor("");
+        oaActDeparture.setOfficeSupervisorRemark("");
+        oaActDeparture.setOperatingPrincipal("");
+        oaActDeparture.setOperatingPrincipalRemark("");
+        oaActDeparture.setOperatingSupervisor("");
+        oaActDeparture.setOperatingSupervisorRemark("");
+        oaActDeparture.setProducePrincipal("");
+        oaActDeparture.setProducePrincipalRemark("");
+        oaActDeparture.setProduceSupervisor("");
+        oaActDeparture.setProduceSupervisorRemark("");
+        oaActDeparture.setQualityPrincipal("");
+        oaActDeparture.setQualityPrincipalRemark("");
+        oaActDeparture.setQualityPrincipalT("");
+        oaActDeparture.setQualityPrincipalRemarkT("");
+        oaActDeparture.setQualitySupervisor("");
+        oaActDeparture.setQualitySupervisorRemark("");
+        oaActDeparture.setMaterialPrincipal("");
+        oaActDeparture.setMaterialPrincipalRemark("");
+        oaActDeparture.setMaterialSupervisor("");
+        oaActDeparture.setMaterialSupervisorRemark("");
+        oaActDeparture.setFinancePrincipal("");
+        oaActDeparture.setFinancePrincipalRemark("");
+        oaActDeparture.setFinanceSupervisor("'");
+        oaActDeparture.setFinanceSupervisorRemark("'");
+        oaActDeparture.setCompanyPrincipal("");
+        oaActDeparture.setCompanyPrincipalRemark("");
+        oaActDeparture.setCreateTime(new Date());
         if (oaActDepartureMapper.updateByPrimaryKeySelective(oaActDeparture) < 0) {
             return -1;
         } else {
-            oaCollaborationMapper.updateStateByCorrelationId(oaActDeparture.getId(), 1, oaActDeparture.getTitle());
             return 1;
         }
     }

@@ -16,7 +16,7 @@
     <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
 </head>
 
-<body id="body">
+<body id="body" style="width: 70%">
 
 <div class="table-title">
     <span>编辑工程名称变更记录表</span>
@@ -106,7 +106,7 @@
                 <th class="th_title" nowrap="nowrap" style="width: 4%">流程</th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" placeholder="经营部长(审批)、经营负责人(审批)" readonly="readonly">
+                        <input type="text" placeholder="经营负责人→经营部长→发起人(知会)" readonly="readonly">
                     </div>
                 </td>
             </tr>
@@ -206,7 +206,7 @@
         <tr>
             <td class="tdLabel">备注</td>
             <td colspan="3" class="table-td-content" style="padding: 5px 10px">
-                <textarea class="write-approval-content-textarea" name="remark" style="height: 58px">${oaActEngineering.remark}</textarea>
+                <textarea class="write-approval-content-textarea" name="remark" oninput="value=value.replace(/\s+/g,'')" style="height: 58px">${oaActEngineering.remark}</textarea>
             </td>
 
             <%--暂存附件--%>
@@ -372,7 +372,7 @@
         //执行打印
         window.print();
         $('#tool,#titleArea').show();
-        $('#body').css('width', '80%');
+        $('#body').css('width', '70%');
 
         //附件列表
         let annexesLen = $('#annexes').children().length;

@@ -426,6 +426,14 @@
         </tr>
 
         <tr>
+            <td class="tdLabel">主送</td>
+            <td class="table-td-content" colspan="5">
+                <input type="text" name="mainGive" id="mainGive" class="formInput" onfocus="this.blur()" onclick="mainCopy()" value="${oaActDocument.mainGive}">
+                <input type="hidden" name="mainGiveId" id="mainGiveId" value="${oaActDocument.mainGiveId}">
+            </td>
+        </tr>
+
+        <tr>
             <td class="tdLabel">抄送</td>
             <td class="table-td-content" colspan="5">
                 <input type="text" class="formInput" name="copyGive" id="copyGive" onclick="carbonCopy()" value="${oaActDocument.copyGive}"  onfocus="this.blur()">
@@ -436,7 +444,7 @@
         <tr>
             <td class="tdLabel">内容</td>
             <td class="table-td-content" colspan="5">
-                <textarea class="content-textarea-style" onkeyup="value=value.replace(/\s+/g,'')" name="content">${oaActDocument.content}</textarea>
+                <textarea class="content-textarea-style" oninput="value=value.replace(/\s+/g,'')" name="content">${oaActDocument.content}</textarea>
             </td>
         </tr>
 
@@ -593,9 +601,27 @@
     }
 
     //插入已选抄送人员
-    function insertCopyGive(array) {
+    function insertCopyGive(array, arrayId) {
         $('#copyGive').val(array);
+        $('#copyGiveId').val(arrayId);
     }
+
+    //主送
+    function mainCopy() {
+        window.top.selectMainGive();
+    }
+
+    //插入已选主送人员
+    function insetMainGive(id,text) {
+        if (id === "0"){
+            $('#mainGive').val(text);
+            $('#mainGiveId').val("");
+        } else{
+            $('#mainGive').val(text);
+            $('#mainGiveId').val(id);
+        }
+    }
+
 
     //插入附件
     function insertFile() {

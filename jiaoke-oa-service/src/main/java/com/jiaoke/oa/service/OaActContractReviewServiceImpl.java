@@ -36,6 +36,7 @@ public class OaActContractReviewServiceImpl implements OaActContractReviewServic
         oaActContractReview.setCreateTime(new Date());
         oaActContractReview.setPromoter(userId);
         oaActContractReview.setUrl("contractReview");
+        oaActContractReview.setState(0);
         if (oaActContractReviewMapper.insertSelective(oaActContractReview) < 0) {
             return -1;
         } else {
@@ -45,6 +46,7 @@ public class OaActContractReviewServiceImpl implements OaActContractReviewServic
             oaCollaboration.setTitle(oaActContractReview.getTitle());
             oaCollaboration.setUrl("contractReview");
             oaCollaboration.setTable("oa_act_contract_review");
+            oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("合同评审表");
             oaCollaboration.setDataOne("合同名称:" + oaActContractReview.getContractName());
             oaCollaboration.setDataTwo("客户名称:" + oaActContractReview.getCustomerName());
@@ -57,11 +59,29 @@ public class OaActContractReviewServiceImpl implements OaActContractReviewServic
 
     @Override
     public int edit(OaActContractReview oaActContractReview) {
+        oaActContractReview.setState(0);
+        oaActContractReview.setMaterialPrincipal("");
+        oaActContractReview.setMaterialPrincipalDate("");
+        oaActContractReview.setMaterialPrincipalContent("");
+        oaActContractReview.setFinancePrincipal("");
+        oaActContractReview.setFinancePrincipalDate("");
+        oaActContractReview.setFinancePrincipalContent("");
+        oaActContractReview.setQualityPrincipal("");
+        oaActContractReview.setQualityPrincipalDate("");
+        oaActContractReview.setQualityPrincipalContent("");
+        oaActContractReview.setOperatingPrincipal("");
+        oaActContractReview.setOperatingPrincipalDate("");
+        oaActContractReview.setOperatingPrincipalContent("");
+        oaActContractReview.setLegalAffairs("");
+        oaActContractReview.setLegalAffairsDate("");
+        oaActContractReview.setLegalAffairsContent("");
+        oaActContractReview.setCompanyPrincipal("");
+        oaActContractReview.setCompanyPrincipalDate("");
+        oaActContractReview.setCompanyPrincipalContent("");
         oaActContractReview.setCreateTime(new Date());
         if (oaActContractReviewMapper.updateByPrimaryKey(oaActContractReview) < 0) {
             return -1;
         } else {
-            oaCollaborationMapper.updateStateByCorrelationId(oaActContractReview.getId(), 1, oaActContractReview.getTitle());
             return 1;
         }
     }

@@ -35,6 +35,7 @@ public class OaActCarServiceImpl implements OaActCarService {
         oaActCar.setId(randomId);
         oaActCar.setPromoter(userId);
         oaActCar.setUrl("car");
+        oaActCar.setState(0);
         oaActCar.setCreateTime(new Date());
         if (oaActCarMapper.insertSelective(oaActCar) < 0) {
             return -1;
@@ -45,6 +46,7 @@ public class OaActCarServiceImpl implements OaActCarService {
             oaCollaboration.setTitle(oaActCar.getTitle());
             oaCollaboration.setUrl("car");
             oaCollaboration.setTable("oa_act_car");
+            oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("用车审批");
             oaCollaboration.setDataOne("事由：" + oaActCar.getProperties());
             oaCollaboration.setDataTwo("用车时间:" + oaActCar.getStartTime());
@@ -57,11 +59,18 @@ public class OaActCarServiceImpl implements OaActCarService {
 
     @Override
     public int edit(OaActCar oaActCar) {
+        oaActCar.setState(0);
+        oaActCar.setAfter("");
+        oaActCar.setDrivingNumber("");
+        oaActCar.setBilling("");
+        oaActCar.setLookup("");
+        oaActCar.setEndTime("");
+        oaActCar.setPrincipal("");
+        oaActCar.setPrincipalDate("");
         oaActCar.setCreateTime(new Date());
         if (oaActCarMapper.updateByPrimaryKey(oaActCar) < 0) {
             return -1;
         } else {
-            oaCollaborationMapper.updateStateByCorrelationId(oaActCar.getId(), 1, oaActCar.getTitle());
             return 1;
         }
     }

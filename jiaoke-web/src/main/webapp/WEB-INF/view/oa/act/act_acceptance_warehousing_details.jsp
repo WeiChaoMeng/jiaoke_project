@@ -67,7 +67,7 @@
     </style>
 </head>
 
-<body id="body">
+<body id="body" style="width: 70%">
 
 <div class="table-title">
     <span>${oaActAcceptanceWarehousing.title}</span>
@@ -89,32 +89,32 @@
     </div>
 
     <c:choose>
-        <c:when test="${oaActAcceptanceWarehousing.annex != ''}">
-            <div class="top_toolbar" id="annexList">
-                <div class="top-annexes-details">
+        <c:when test="${oaActAcceptanceWarehousing.annex != '' }">
+                <div class="top_toolbar" id="annexList">
+                    <div class="top-annexes-details">
 
-                    <div class="annexes-icon-details">
-                        <button type="button" class="cursor_hand">&#xeac1;</button>
-                    </div>
+                        <div class="annexes-icon-details">
+                            <button type="button" class="cursor_hand">&#xeac1;</button>
+                        </div>
 
-                    <c:forTokens items="${oaActAcceptanceWarehousing.annex}" delims="," var="annex">
-                        <div class="table-file">
-                            <div class="table-file-content">
+                        <c:forTokens items="${oaActAcceptanceWarehousing.annex}" delims="," var="annex">
+                            <div class="table-file">
+                                <div class="table-file-content">
                                 <span class="table-file-title"
                                       title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
-                                <a class="table-file-download icon"
-                                   href="/fileDownloadHandle/download?fileName=${annex}"
-                                   title="下载">&#xebda;</a>
+                                    <a class="table-file-download icon"
+                                       href="/fileDownloadHandle/download?fileName=${annex}"
+                                       title="下载">&#xebda;</a>
+                                </div>
                             </div>
-                        </div>
-                    </c:forTokens>
+                        </c:forTokens>
+                    </div>
                 </div>
-            </div>
         </c:when>
     </c:choose>
 
     <c:choose>
-        <c:when test="${oaActAcceptanceWarehousing.associatedId != null}">
+        <c:when test="${oaActAcceptanceWarehousing.associatedId != null} || ${oaActAcceptanceWarehousing.associatedId != ''}">
             <div class="relevance-tool" id="relevanceList">
                 <div class="relevance-tool-padding">
 
@@ -199,7 +199,7 @@
         //执行打印
         window.print();
         $('#tool').show();
-        $('#body,#return').css('width', '80%');
+        $('#body,#return').css('width', '70%');
     }
 </script>
 </html>

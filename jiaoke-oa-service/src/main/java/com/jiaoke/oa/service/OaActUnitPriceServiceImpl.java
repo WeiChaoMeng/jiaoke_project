@@ -47,6 +47,7 @@ public class OaActUnitPriceServiceImpl implements OaActUnitPriceService {
         oaActUnitPrice.setCreateTime(new Date());
         oaActUnitPrice.setPromoter(userId);
         oaActUnitPrice.setUrl("unitPrice");
+        oaActUnitPrice.setState(0);
         if (oaActUnitPriceMapper.insertSelective(oaActUnitPrice) < 0) {
             return -1;
         } else {
@@ -56,6 +57,7 @@ public class OaActUnitPriceServiceImpl implements OaActUnitPriceService {
             oaCollaboration.setTitle(oaActUnitPrice.getTitle());
             oaCollaboration.setUrl("unitPrice");
             oaCollaboration.setTable("oa_act_unit_price");
+            oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("单价审批单");
             oaCollaboration.setDataOne("客户名称:" + oaActUnitPrice.getCustomer());
             oaCollaboration.setDataTwo("工程名称:" + oaActUnitPrice.getEngineering());
@@ -68,6 +70,13 @@ public class OaActUnitPriceServiceImpl implements OaActUnitPriceService {
 
     @Override
     public int edit(OaActUnitPrice oaActUnitPrice) {
+        oaActUnitPrice.setState(0);
+        oaActUnitPrice.setBusinessPrincipal("");
+        oaActUnitPrice.setBusinessPrincipalDate("");
+        oaActUnitPrice.setBusinessSupervisor("");
+        oaActUnitPrice.setBusinessSupervisorDate("");
+        oaActUnitPrice.setCompanyPrincipal("");
+        oaActUnitPrice.setCompanyPrincipalDate("");
         oaActUnitPrice.setCreateTime(new Date());
         if (oaActUnitPriceMapper.updateByPrimaryKey(oaActUnitPrice) < 0) {
             return -1;

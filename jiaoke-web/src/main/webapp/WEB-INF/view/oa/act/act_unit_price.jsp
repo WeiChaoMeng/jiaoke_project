@@ -108,7 +108,7 @@
                 <th class="th_title" nowrap="nowrap" style="width: 4%">流程</th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" placeholder="经营部长(审批)、经营主管(审批)、总经理(审批)、发起人(知会)"
+                        <input type="text" placeholder="经营部长→经营主管→总经理→发起人(知会)"
                                readonly="readonly">
                     </div>
                 </td>
@@ -169,12 +169,12 @@
 
             <td class="table-td-content">
                 <input type="text" class="formInput" name="number" id="number1" onchange="amountCalculation(this)"
-                       onkeyup="value=value.replace(/[^\d]/g,'').replace(/^0{1,}/g,'')" autocomplete="off">
+                       oninput="value=value.replace(/[^\d]/g,'').replace(/^0{1,}/g,'')" autocomplete="off">
             </td>
 
             <td class="table-td-content">
                 <input type="text" class="formInput" name="price" id="price1" onchange="amountCalculation(this)"
-                       onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')" autocomplete="off">
+                       oninput="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')" autocomplete="off">
             </td>
 
             <td class="table-td-content">
@@ -357,11 +357,11 @@
                 '  <td class="table-td-content"><input type="text" class="formInput" name="item" id="item' + rowId + '" autocomplete="off"></td>\n' +
                 '  <td class="table-td-content">\n' +
                 '     <input type="text" class="formInput" name="number" id="number' + rowId + '" onchange="amountCalculation(this)"\n' +
-                '           onkeyup="value=value.replace(/[^\\d]/g,\'\').replace(/^0{1,}/g,\'\')" autocomplete="off">\n' +
+                '           oninput="value=value.replace(/[^\\d]/g,\'\').replace(/^0{1,}/g,\'\')" autocomplete="off">\n' +
                 '  </td>\n' +
                 '  <td class="table-td-content">\n' +
                 '       <input type="text" class="formInput" name="price" id="price' + rowId + '" onchange="amountCalculation(this)"\n' +
-                '           onkeyup="value=value.replace(/^\\D*(\\d*(?:\\.\\d{0,2})?).*$/g, \'$1\')" autocomplete="off">\n' +
+                '           oninput="value=value.replace(/^\\D*(\\d*(?:\\.\\d{0,2})?).*$/g, \'$1\')" autocomplete="off">\n' +
                 '  </td>\n' +
                 '  <td class="table-td-content">\n' +
                 '       <input type="text" class="formInput-readonly" name="money" id="money' + rowId + '" readonly>\n' +

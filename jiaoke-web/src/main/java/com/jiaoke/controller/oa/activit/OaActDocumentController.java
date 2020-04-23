@@ -163,38 +163,169 @@ public class OaActDocumentController {
         String promoter = "promoter";
         //回退
         String back = "back";
-        //部门主管领导
-        String supervisor = "supervisor";
-        //总经理
-        String companyPrincipal = "company_principal";
-        //会签
-        String countersign = "countersign";
-        //知会
-        String informed = "informed";
-
-        //更新数据
-        if (oaActDocumentService.updateByPrimaryKeySelective(oaActDocument) < 1) {
-            return "error";
-        }
+        //核稿人网关
+        String supervisorEG = "supervisorEG";
+        //会签网关
+        String countersignEG = "countersignEG";
+        //签发网关
+        String companyEG = "companyEG";
+        //主送网关
+        String mainGiveEG = "mainGiveEG";
 
         Task task = activitiUtil.getTaskByTaskId(taskId);
         if (task == null) {
             return "error";
-        }
-
-        if (flag == 1) {
-            //同意
-            //下个节点
+        }else {
             String nextNode = activitiUtil.getNextNode(task.getProcessDefinitionId(), task.getTaskDefinitionKey());
 
-            //下个节点是否为end直接结束
-            if (end.equals(nextNode)) {
+            //网关
+            if (supervisorEG.equals(nextNode)) {
+                //同意
+                if (flag.equals(1)) {
+
+                    List<UserInfo> userInfoList = userInfoService.selectMultipleByPermission("countersign");
+                    Map<String, Object> map = new HashMap<>(16);
+                    List<Object> countersignList = new ArrayList<>();
+                    for (UserInfo user : userInfoList) {
+                        countersignList.add(user.getId());
+                    }
+                    map.put("whether", 0);
+                    map.put("countersignList", countersignList);
+                    activitiUtil.approvalComplete(taskId, map);
+                    return updateByPrimaryKeySelective(oaActDocument);
+                } else {
+                    Map<String, Object> map = new HashMap<>(16);
+                    map.put("whether", 1);
+                    map.put("promoter", oaActDocument.getPromoter());
+                    activitiUtil.approvalComplete(taskId, map);
+                    oaCollaborationService.updateStatusCode(oaActDocument.getId(), "被回退");
+                    oaActDocument.setState(1);
+                    return updateByPrimaryKeySelective(oaActDocument);
+                }
+
+                //会签
+            } else if (countersignEG.equals(nextNode)) {
+                //同意
+                if (flag.equals(1)) {
+                    UserInfo userInfo = userInfoService.getUserInfoByPermission("company_principal");
+                    Map<String, Object> map = new HashMap<>(16);
+                    map.put("whether", 0);
+                    map.put("company_principal", userInfo.getId());
+                    activitiUtil.approvalComplete(taskId, map);
+                    return updateByPrimaryKeySelective(oaActDocument);
+                } else {
+                    Task task1 = activitiUtil.getProcessInstanceIdByTaskId(taskId);
+                    List<Task> taskList = activitiUtil.getTaskListByProcessInstanceId(task1.getProcessInstanceId());
+                    for (Task tasks : taskList) {
+                        Map<String, Object> map = new HashMap<>(16);
+                        map.put("whether", 1);
+                        map.put("promoter", oaActDocument.getPromoter());
+                        activitiUtil.approvalComplete(tasks.getId(), map);
+                    }
+                    oaCollaborationService.updateStatusCode(oaActDocument.getId(), "被回退");
+                    oaActDocument.setState(1);
+                    return updateByPrimaryKeySelective(oaActDocument);
+                }
+            } else if (companyEG.equals(nextNode)) {
+                //同意
+                if (flag.equals(1)) {
+
+                    //主送
+                    if (!"".equals(oaActDocument.getMainGiveId())){
+                        Map<String, Object> map = new HashMap<>(16);
+                        List<Object> mainGiveList = new ArrayList<>();
+
+                        //领导班子
+                        if ("1".equals(oaActDocument.getMainGiveId())){
+                            mainGiveList.add(1);
+                            mainGiveList.add(2);
+                            mainGiveList.add(3);
+                            mainGiveList.add(4);
+                            mainGiveList.add(23);
+                        }else{
+                            mainGiveList.add(5);
+                            mainGiveList.add(6);
+                            mainGiveList.add(22);
+                            mainGiveList.add(34);
+                            mainGiveList.add(38);
+                            mainGiveList.add(47);
+                            mainGiveList.add(48);
+                            mainGiveList.add(58);
+                        }
+//                         String mainGive = oaActDocument.getMainGiveId();
+//                        String[] users = mainGive.split(",");
+//                        for (String user : users) {
+//                            mainGiveList.add(user);
+//                        }
+                        map.put("whether", 0);
+                        map.put("mainGiveList", mainGiveList);
+                        activitiUtil.approvalComplete(taskId, map);
+                        return updateByPrimaryKeySelective(oaActDocument);
+                    }else{
+                        //抄送
+                        if (!"".equals(oaActDocument.getCopyGiveId())){
+                            Map<String, Object> map = new HashMap<>(16);
+                            List<Object> copyGiveList = new ArrayList<>();
+                            String copyGive = oaActDocument.getCopyGiveId();
+                            String[] users = copyGive.split(",");
+                            for (String user : users) {
+                                copyGiveList.add(user);
+                            }
+                            map.put("whether", 1);
+                            map.put("copyGiveList", copyGiveList);
+                            activitiUtil.approvalComplete(taskId, map);
+                            return updateByPrimaryKeySelective(oaActDocument);
+                        }else{
+                            //发起人
+                            Map<String, Object> map = new HashMap<>(16);
+                            map.put("whether", 2);
+                            map.put("promoter", oaActDocument.getPromoter());
+                            activitiUtil.approvalComplete(taskId, map);
+                            return updateByPrimaryKeySelective(oaActDocument);
+                        }
+                    }
+                } else {
+                    Map<String, Object> map = new HashMap<>(16);
+                    map.put("whether", 3);
+                    map.put("promoter", oaActDocument.getPromoter());
+                    activitiUtil.approvalComplete(taskId, map);
+                    oaCollaborationService.updateStatusCode(oaActDocument.getId(), "被回退");
+                    oaActDocument.setState(1);
+                    return updateByPrimaryKeySelective(oaActDocument);
+                }
+
+            }else if (mainGiveEG.equals(nextNode)) {
+                if (!"".equals(oaActDocument.getCopyGiveId())){
+                    Map<String, Object> map = new HashMap<>(16);
+                    List<Object> copyGiveList = new ArrayList<>();
+                    String copyGive = oaActDocument.getCopyGiveId();
+                    String[] users = copyGive.split(",");
+                    for (String user : users) {
+                        copyGiveList.add(user);
+                    }
+                    map.put("whether", 0);
+                    map.put("copyGiveList", copyGiveList);
+                    activitiUtil.approvalComplete(taskId, map);
+                    return updateByPrimaryKeySelective(oaActDocument);
+                }else{
+                    //发起人
+                    Map<String, Object> map = new HashMap<>(16);
+                    map.put("whether", 1);
+                    map.put("promoter", oaActDocument.getPromoter());
+                    activitiUtil.approvalComplete(taskId, map);
+                    return updateByPrimaryKeySelective(oaActDocument);
+                }
+
+            } else if (back.equals(nextNode)) {
+                //驳回
+                managementService.executeCommand(new TargetFlowNodeCommand(task.getId(), back));
+                //修改表单状态
+                oaCollaborationService.updateState(oaActDocument.getId(), 3);
+                return "backSuccess";
+            } else if (end.equals(nextNode)) {
                 activitiUtil.endProcess(taskId);
                 return "success";
             } else {
-                //附言
-                String processingOpinion = "";
-
                 UserTask userTask = activitiUtil.getUserTask(task.getProcessDefinitionId(), nextNode);
                 if (nextNode.equals(userTask.getId())) {
                     String enforcer = userTask.getAssignee().substring(userTask.getAssignee().indexOf("{") + 1, userTask.getAssignee().indexOf("}"));
@@ -202,70 +333,37 @@ public class OaActDocumentController {
                     if (promoter.equals(enforcer)) {
                         Map<String, Object> map = new HashMap<>(16);
                         map.put(promoter, activitiUtil.getStartUserId(task.getProcessInstanceId()));
-                        activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
-                        return "success";
+                        activitiUtil.approvalComplete(taskId, map);
+                        return updateByPrimaryKeySelective(oaActDocument);
 
-                        //部门主管领导
-                    } else if (supervisor.equals(enforcer)) {
-                        String startUserId = activitiUtil.getStartUserId(task.getProcessInstanceId());
-                        //根据发起者id获取所属部门id
-                        String departmentId = userInfoService.selectDepartmentByUserId(Integer.valueOf(startUserId));
-                        //选择执行者Id
-                        String enforcerId = departmentService.selectEnforcerId(enforcer, departmentId);
-                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, Integer.valueOf(enforcerId));
-                        return "success";
-
-                        //总经理
-                    } else if (companyPrincipal.equals(enforcer)) {
-                        UserInfo userInfo = userInfoService.getUserInfoByPermission("company_principal");
-                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
-                        return "success";
-
-                        //会签
-                    }else if (countersign.equals(enforcer)) {
-                        List<UserInfo> userInfoList = userInfoService.selectMultipleByPermission("countersign");
-                        Map<String, Object> map = new HashMap<>(16);
-                        List<Object> countersignList = new ArrayList<>();
-                        for (UserInfo user : userInfoList) {
-                            countersignList.add(user.getId());
-                        }
-                        map.put("countersignList", countersignList);
-                        activitiUtil.designatedCountersignPersonnel(taskId,map);
-                        return "success";
-
-                        //知会
-                    }else if (informed.equals(enforcer)) {
-                        Map<String, Object> map = new HashMap<>(16);
-                        List<Object> informedList = new ArrayList<>();
-                        String copyGive = oaActDocument.getCopyGiveId();
-                        if (!"".equals(copyGive)){
-                            String[] users = copyGive.split(",");
-                            for (String user : users) {
-                                informedList.add(user);
-                            }
-                        }
-                        informedList.add(oaActDocument.getPromoter());
-                        map.put("informedList", informedList);
-                        activitiUtil.designatedCountersignPersonnel(taskId,map);
-                        return "success";
                     } else {
-                        UserInfo userInfo = userInfoService.getUserInfoByPermission(enforcer);
-                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
-                        return "success";
+                        //直接结束
+                        activitiUtil.endProcess(taskId);
+                        return updateByPrimaryKeySelective(oaActDocument);
                     }
                 } else {
-                    return "error";
+                    //直接结束
+                    activitiUtil.endProcess(taskId);
+                    return updateByPrimaryKeySelective(oaActDocument);
                 }
             }
-        } else {
-            //驳回
-            managementService.executeCommand(new TargetFlowNodeCommand(task.getId(), back));
-            //修改表单状态
-            oaCollaborationService.updateState(oaActDocument.getId(), 3);
-            return "success";
         }
     }
 
+    /**
+     * 根据主键更新
+     *
+     * @param oaActDocument oaActDocument
+     * @return int
+     */
+    public String updateByPrimaryKeySelective(OaActDocument oaActDocument) {
+        if (oaActDocumentService.updateByPrimaryKeySelective(oaActDocument) < 1) {
+            return "error";
+        } else {
+            return "success";
+        }
+    }
+    
     /**
      * 保存待发
      *
@@ -340,6 +438,7 @@ public class OaActDocumentController {
             String instance = activitiUtil.startProcessInstanceByKey("oa_document", "oa_act_document:" + oaActDocument.getId(), map, getCurrentUser().getId().toString());
             if (instance != null) {
                 //发送成功后更新状态
+                oaCollaborationService.updateStatusCode(oaActDocument.getId(), "协同");
                 oaCollaborationService.updateStateByCorrelationId(oaActDocument.getId(), 0, oaActDocument.getTitle());
                 return "success";
             } else {

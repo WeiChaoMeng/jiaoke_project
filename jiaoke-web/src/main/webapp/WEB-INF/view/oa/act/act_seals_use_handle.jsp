@@ -16,7 +16,7 @@
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
 </head>
 
-<body style="width: 75%" id="body">
+<body style="width: 70%" id="body">
 <div class="table-title">
     <span>${oaActSealsUse.title}</span>
 </div>
@@ -48,7 +48,8 @@
                     <c:forTokens items="${oaActSealsUse.annex}" delims="," var="annex">
                         <div class="table-file">
                             <div class="table-file-content">
-                                <span class="table-file-title" title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <span class="table-file-title"
+                                      title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
                                 <a class="table-file-download icon"
                                    href="/fileDownloadHandle/download?fileName=${annex}"
                                    title="下载">&#xebda;</a>
@@ -89,6 +90,8 @@
                 <input type="hidden" name="id" value="${oaActSealsUse.id}">
                 <input type="hidden" name="seal" value="${oaActSealsUse.seal}">
                 <input type="hidden" name="title" value="${oaActSealsUse.title}">
+                <input type="hidden" name="promoter" value="${oaActSealsUse.promoter}">
+                <input type="hidden" name="departmentPrincipal" value="${oaActSealsUse.departmentPrincipal}">
             </td>
         </tr>
 
@@ -103,12 +106,7 @@
             <td class="tdLabel">部门负责人</td>
             <td class="table-td-content" style="width: 340px">
                 <shiro:hasPermission name="principal">
-                    <div style="width: 100%;height: 100%;" id="principalContent">
-                            <%--<input type="text" class="formInput-readonly" name="principal" value="${nickname}"--%>
-                            <%--readonly="readonly">--%>
-                            <%--<input type="hidden" name="principalDate"--%>
-                            <%--value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">--%>
-                    </div>
+                    <div style="width: 100%;height: 100%;" id="principalContent"></div>
                 </shiro:hasPermission>
 
                 <shiro:lacksPermission name="principal">
@@ -119,10 +117,7 @@
             <td class="tdLabel">部门主管领导</td>
             <td class="table-td-content" style="width: 340px">
                 <shiro:hasPermission name="supervisor">
-                    <div style="width: 100%;height: 100%;" id="supervisorContent">
-                            <%--<input type="text" class="formInput-readonly" name="supervisor" value="${nickname}" readonly="readonly">--%>
-                            <%--<input type="hidden" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">--%>
-                    </div>
+                    <div style="width: 100%;height: 100%;" id="supervisorContent"></div>
                 </shiro:hasPermission>
 
 
@@ -138,10 +133,7 @@
             </td>
             <td class="table-td-content">
                 <shiro:hasAnyPermission name="seal_supervisor,specialChapter">
-                    <div style="width: 100%;height: 100%;" id="sealSupervisorContent">
-                            <%--<input type="text" class="formInput-readonly" name="sealManage" value="${nickname}" readonly="readonly">--%>
-                            <%--<input type="hidden" name="sealManageDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">--%>
-                    </div>
+                    <div style="width: 100%;height: 100%;" id="sealSupervisorContent"></div>
                 </shiro:hasAnyPermission>
                 <shiro:lacksPermission name="sealOperator">
                     ${oaActSealsUse.sealSupervisor}
@@ -149,12 +141,9 @@
             </td>
 
             <td class="tdLabel">盖章人</td>
-            <td class="table-td-content">
+            <td class="table-td-content" style="vertical-align: baseline;">
                 <shiro:hasAnyPermission name="seal_operator,legalStamp,financeStamp">
-                    <div style="width: 100%;height: 100%;" id="sealOperatorContent">
-                            <%--<input type="text" class="formInput-readonly" name="sealOperator" value="${nickname}" readonly="readonly">--%>
-                            <%--<input type="hidden" name="sealOperatorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">--%>
-                    </div>
+                    <div id="sealOperatorContent"></div>
                 </shiro:hasAnyPermission>
 
                 <shiro:lacksPermission name="sealOperator">
@@ -183,49 +172,79 @@
     var sealsUse = JSON.parse('${oaActSealsUseJson}');
     //标记
     var flag = 0;
-    if (flag === 0) {
-        if (sealsUse.principal === "" || sealsUse.principal === undefined) {
-            $('#principalContent').append('<input type="text" class="formInput-readonly" name="principal" value="${nickname}" readonly="readonly"><input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
-            flag = 1;
+
+    if (sealsUse.state === 0) {
+        if (flag === 0) {
+            var principalNums = JSON.parse('${principalNum}');
+            //单个审批人
+            if (principalNums === "noPrincipalNum") {
+                if (sealsUse.principal === "" || sealsUse.principal === undefined) {
+                    $('#principalContent').append('<input type="text" class="formInput-readonly" name="principal" value="${oaActSealsUse.principal} ${nickname}" readonly="readonly"><input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                    flag = 1;
+                } else {
+                    $('#principalContent').append(sealsUse.principal);
+                }
+            } else {
+                if (sealsUse.principal === undefined) {
+                    $('#principalContent').append('<input type="text" class="formInput-readonly" name="principal" value="${oaActSealsUse.principal} ${nickname}" readonly="readonly"><input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                    flag = 1;
+                } else if ((sealsUse.principal).length === principalNums.length) {
+                    $('#principalContent').append(sealsUse.principal);
+                } else {
+                    $('#principalContent').append('<input type="text" class="formInput-readonly" name="principal" value="${oaActSealsUse.principal} ${nickname}" readonly="readonly"><input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                    flag = 1;
+                }
+            }
         } else {
             $('#principalContent').append(sealsUse.principal);
         }
-    } else {
-        $('#principalContent').append(sealsUse.principal);
-    }
 
-
-    if (flag === 0) {
-        if (sealsUse.supervisor === "" || sealsUse.supervisor === undefined) {
-            $('#supervisorContent').append('<input type="text" class="formInput-readonly" name="supervisor" value="${nickname}" readonly="readonly"><input type="hidden" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
-            flag = 1;
+        if (flag === 0) {
+            if (sealsUse.supervisor === "" || sealsUse.supervisor === undefined) {
+                $('#supervisorContent').append('<input type="text" class="formInput-readonly" name="supervisor" value="${nickname}" readonly="readonly"><input type="hidden" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                flag = 1;
+            } else {
+                $('#supervisorContent').append(sealsUse.supervisor);
+            }
         } else {
             $('#supervisorContent').append(sealsUse.supervisor);
         }
-    } else {
-        $('#supervisorContent').append(sealsUse.supervisor);
-    }
 
-    if (flag === 0) {
-        if (sealsUse.sealSupervisor === "" || sealsUse.sealSupervisor === undefined) {
-            $('#sealSupervisorContent').append('<input type="text" class="formInput-readonly" name="sealSupervisor" value="${nickname}" readonly="readonly"><input type="hidden" name="sealSupervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
-            flag = 1;
+        if (flag === 0) {
+            if (sealsUse.sealSupervisor === "" || sealsUse.sealSupervisor === undefined) {
+                $('#sealSupervisorContent').append('<input type="text" class="formInput-readonly" name="sealSupervisor" value="${nickname}" readonly="readonly"><input type="hidden" name="sealSupervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                flag = 1;
+            } else {
+                $('#sealSupervisorContent').append(sealsUse.sealSupervisor);
+            }
         } else {
             $('#sealSupervisorContent').append(sealsUse.sealSupervisor);
         }
-    } else {
-        $('#sealSupervisorContent').append(sealsUse.sealSupervisor);
-    }
 
-    if (flag === 0) {
-        if (sealsUse.sealOperator === "" || sealsUse.sealOperator === undefined) {
-            $('#sealOperatorContent').append('<input type="text" class="formInput-readonly" name="sealOperator" value="${nickname}" readonly="readonly"><input type="hidden" name="sealOperatorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
-            flag = 1;
+        if (flag === 0) {
+            if (sealsUse.sealOperator === "" || sealsUse.sealOperator === undefined) {
+                $('#sealOperatorContent').append('<input type="text" class="formInput-readonly" name="sealOperator" value="${nickname}" readonly="readonly"><input type="hidden" name="sealOperatorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                $('#sealOperatorContent').css('margin-top','6px');
+                flag = 1;
+            } else {
+                $('#sealOperatorContent').append(sealsUse.sealOperator);
+                $('#sealOperatorContent').css('position','absolute');
+            }
         } else {
             $('#sealOperatorContent').append(sealsUse.sealOperator);
         }
+
+        if (flag === 0) {
+            $('#return').html("");
+            $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
+        }
     } else {
+        $('#principalContent').append(sealsUse.principal);
+        $('#supervisorContent').append(sealsUse.supervisor);
+        $('#sealSupervisorContent').append(sealsUse.sealSupervisor);
         $('#sealOperatorContent').append(sealsUse.sealOperator);
+        $('#return').html("");
+        $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
     }
 
 
@@ -244,6 +263,9 @@
                     //返回上一页
                     window.location.href = '${path}/oaHomePage/toOaHomePage';
                     window.top.tips("提交成功！", 0, 1, 1000);
+                } else if (data === 'backSuccess') {
+                    window.location.href = '${path}/oaHomePage/toOaHomePage';
+                    window.top.tips("提交成功,并将数据转存到待发事项中！", 6, 1, 2000);
                 } else {
                     window.top.tips("提交失败！", 0, 2, 1000);
                 }
@@ -261,7 +283,7 @@
         //执行打印
         window.print();
         $('#tool,#return').show();
-        $('#body').css('width', '75%');
+        $('#body').css('width', '70%');
     }
 </script>
 </html>

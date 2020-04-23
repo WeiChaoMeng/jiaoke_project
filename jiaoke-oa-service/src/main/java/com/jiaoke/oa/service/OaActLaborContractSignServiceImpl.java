@@ -37,6 +37,7 @@ public class OaActLaborContractSignServiceImpl implements OaActLaborContractSign
         oaActLaborContractSign.setCreateTime(new Date());
         oaActLaborContractSign.setPromoter(userId);
         oaActLaborContractSign.setUrl("laborContractSign");
+        oaActLaborContractSign.setState(0);
         if (oaActLaborContractSignMapper.insertSelective(oaActLaborContractSign) < 0) {
             return -1;
         } else {
@@ -46,6 +47,7 @@ public class OaActLaborContractSignServiceImpl implements OaActLaborContractSign
             oaCollaboration.setTitle(oaActLaborContractSign.getTitle());
             oaCollaboration.setUrl("laborContractSign");
             oaCollaboration.setTable("oa_act_labor_contract_sign");
+            oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("劳动合同签订审批表");
             oaCollaboration.setDataOne("通知人：：" + notifier);
             oaCollaboration.setDataTwo("通知时间：" + DateUtil.dateConvertYYYYMMDD(oaActLaborContractSign.getCreateTime()));
@@ -58,10 +60,22 @@ public class OaActLaborContractSignServiceImpl implements OaActLaborContractSign
 
     @Override
     public int edit(OaActLaborContractSign oaActLaborContractSign) {
+        oaActLaborContractSign.setState(0);
+        oaActLaborContractSign.setPrincipal("");
+        oaActLaborContractSign.setPrincipalDate("");
+        oaActLaborContractSign.setPrincipalContent("");
+        oaActLaborContractSign.setSupervisor("");
+        oaActLaborContractSign.setSupervisorDate("");
+        oaActLaborContractSign.setSupervisorContent("");
+        oaActLaborContractSign.setPersonnel("");
+        oaActLaborContractSign.setPersonnelDate("");
+        oaActLaborContractSign.setPersonnelContent("");
+        oaActLaborContractSign.setCompanyPrincipal("");
+        oaActLaborContractSign.setCompanyPrincipalDate("");
+        oaActLaborContractSign.setCompanyPrincipalContent("");
         if (oaActLaborContractSignMapper.updateByPrimaryKeySelective(oaActLaborContractSign) < 0) {
             return -1;
         } else {
-            oaCollaborationMapper.updateStateByCorrelationId(oaActLaborContractSign.getId(), 1, oaActLaborContractSign.getTitle());
             return 1;
         }
     }

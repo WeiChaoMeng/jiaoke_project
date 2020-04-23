@@ -130,14 +130,9 @@ public class OaActConfirm {
     private String operatingStatisticsDate;
 
     /**
-     * 业务
+     * 状态
      */
-    private String business;
-
-    /**
-     * 业务审批时间
-     */
-    private String businessDate;
+    private Integer state;
 
     /**
      * 备注
@@ -336,22 +331,6 @@ public class OaActConfirm {
         this.operatingStatisticsDate = operatingStatisticsDate;
     }
 
-    public String getBusiness() {
-        return business;
-    }
-
-    public void setBusiness(String business) {
-        this.business = business;
-    }
-
-    public String getBusinessDate() {
-        return businessDate;
-    }
-
-    public void setBusinessDate(String businessDate) {
-        this.businessDate = businessDate;
-    }
-
     public Date getCreateTime() {
         return createTime;
     }
@@ -414,5 +393,13 @@ public class OaActConfirm {
 
     public void setOaConfirmList(List<OaConfirm> oaConfirmList) {
         this.oaConfirmList = oaConfirmList;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
 }

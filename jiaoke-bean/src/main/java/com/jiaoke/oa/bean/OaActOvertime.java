@@ -71,6 +71,16 @@ public class OaActOvertime {
     private String supervisorDate;
 
     /**
+     * 部门负责人
+     */
+    private String departmentPrincipal;
+
+    /**
+     * 状态
+     */
+    private Integer state;
+
+    /**
      * 创建日期
      */
     private Date createTime;
@@ -220,5 +230,21 @@ public class OaActOvertime {
 
     public void setSupervisorDate(String supervisorDate) {
         this.supervisorDate = supervisorDate;
+    }
+
+    public String getDepartmentPrincipal() {
+        return departmentPrincipal;
+    }
+
+    public void setDepartmentPrincipal(String departmentPrincipal) {
+        this.departmentPrincipal = departmentPrincipal;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
 }

@@ -17,7 +17,7 @@
     <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
 </head>
 
-<body id="body">
+<body id="body" style="width: 70%">
 
 <div class="table-title">
     <span>用车审批单</span>
@@ -66,7 +66,7 @@
                     <button type="button" class="table-tab-send" onclick="send()">发送</button>
                 </td>
 
-                <th nowrap="nowrap" class="th_title" style="width: 4%">标题 </th>
+                <th nowrap="nowrap" class="th_title" style="width: 4%">标题</th>
                 <td style="width: 44%">
                     <div class="common_input_frame">
                         <input type="text" id="title" name="title" placeholder="请输入标题" title="点击此处填写标题"
@@ -75,11 +75,10 @@
                     </div>
                 </td>
 
-                <th class="th_title" nowrap="nowrap" style="width: 4%">流程 </th>
+                <th class="th_title" nowrap="nowrap" style="width: 4%">流程</th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" placeholder="查表计数人(芦静)、发起者部门负责人(审批)、发起者部门主管领导(审批)"
-                               readonly="readonly">
+                        <input type="text" placeholder="发起者部门负责人→查表计数人→发起者、查表计数人(知会)" readonly>
                     </div>
                 </td>
             </tr>
@@ -93,11 +92,14 @@
             <td class="tdLabel">使用人</td>
             <td class="table-td-content">
                 <input type="text" class="formInput-readonly" name="user" value="${nickname}" readonly>
+                <input type="hidden" id="departmentPrincipal" name="departmentPrincipal">
+                <%--暂存附件--%>
+                <input type="hidden" id="annex" name="annex">
             </td>
 
             <td class="tdLabel">事由</td>
             <td colspan="5" class="table-td-reason">
-                <textarea class="table-reason" name="cause"></textarea>
+                <textarea class="table-reason" oninput="value=value.replace(/\s+/g,'')" name="cause"></textarea>
             </td>
         </tr>
 
@@ -135,7 +137,7 @@
             <td class="tdLabel">公里基数</td>
             <td class="table-td-content">
                 <input type="text" class="formInput" name="cardinalNumber" id="cardinalNumber"
-                       onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')" autocomplete="off">
+                       oninput="value=value.replace(/^(0+)|[^\d]/g,'')" autocomplete="off">
             </td>
 
             <td class="tdLabel">使用后数</td>
@@ -170,14 +172,8 @@
 
         <tr>
             <td class="tdLabel">审核人</td>
-            <td class="table-td-content">
+            <td class="table-td-content" colspan="3">
                 <input type="text" class="formInput-readonly" readonly>
-            </td>
-
-            <td class="tdLabel">批准人</td>
-            <td class="table-td-content">
-                <input type="text" class="formInput-readonly" readonly>
-                <input type="hidden" name="annex" id="annex">
             </td>
         </tr>
         </tbody>
@@ -185,7 +181,7 @@
 
     <div class="notice-tips">
         <span class="notice-tips-mark">*</span>
-        <span class="notice-tips-script">说明：1.每公里2元。使用的车辆为享受车补待遇的，每公里1.2元。2.审核人为使用部门负责人，批准人为使用人部门主管领导。3.多人同时使用时费用均摊。4.费用按月报销或扣除。</span>
+        <span class="notice-tips-script">说明：1.每公里2元。使用的车辆为享受车补待遇的，每公里1.2元。2.审核人为使用部门负责人。3.多人同时使用时费用均摊。4.费用按月报销或扣除。</span>
     </div>
 </form>
 </body>
@@ -206,37 +202,109 @@
         zIndex: 100000,
     });
 
-    //发送
     function send() {
         if ($.trim($("#title").val()) === '' || $.trim($("#cardinalNumber").val()) === '') {
-            top.window.tips("标题和公里基数不可以为空！", 6, 5, 1000);
+            window.top.tips("标题或公里基数不可以为空！", 6, 5, 2000);
         } else {
-            var array = [];
-            $('#annexes').find('input').each(function () {
-                array.push($(this).val());
-            });
+            var principalGroup = '${principalGroup}';
+            //部门负责人是多个
+            if (principalGroup !== '') {
+                var principalList = JSON.parse(principalGroup);
+                window.top.selectPrincipal(principalList);
 
-            //发送前将上传好的附件插入form中
-            $('#annex').val(array);
+                //部门负责人是单个
+            } else {
+                $('#departmentPrincipal').val("single");
 
-            $.ajax({
-                type: "POST",
-                url: '${path}/car/add',
-                data: $('#oaActCar').serialize(),
-                error: function (request) {
-                    window.top.tips("出错！", 6, 2, 1000);
-                },
-                success: function (result) {
-                    if (result === "success") {
-                        window.location.href = "${path}/oaIndex.do";
-                        window.top.tips("发送成功！", 0, 1, 1000);
-                    } else {
-                        window.top.tips("发送失败！", 0, 2, 1000);
+                var array = [];
+                $('#annexes').find('input').each(function () {
+                    array.push($(this).val());
+                });
+
+                //发送前将上传好的附件插入form中
+                $('#annex').val(array);
+
+                $.ajax({
+                    type: "POST",
+                    url: '${path}/car/add',
+                    data: $('#oaActCar').serialize(),
+                    error: function (request) {
+                        layer.msg("出错！");
+                    },
+                    success: function (result) {
+                        if (result === "success") {
+                            window.location.href = "${path}/oaIndex.do";
+                            window.top.tips("发送成功！", 0, 1, 2000);
+                        } else {
+                            window.top.tips('发送失败！', 0, 2, 2000);
+                        }
                     }
-                }
-            })
+                })
+            }
         }
     }
+
+    //根据勾选的部门负责人发送
+    function selectionPrincipal(principalId) {
+        $('#departmentPrincipal').val(principalId);
+
+        var array = [];
+        $('#annexes').find('input').each(function () {
+            array.push($(this).val());
+        });
+
+        //发送前将上传好的附件插入form中
+        $('#annex').val(array);
+
+        $.ajax({
+            type: "POST",
+            url: '${path}/car/add',
+            data: $('#oaActCar').serialize(),
+            error: function (request) {
+                layer.msg("出错！");
+            },
+            success: function (result) {
+                if (result === "success") {
+                    window.location.href = "${path}/oaIndex.do";
+                    window.top.tips("发送成功！", 0, 1, 2000);
+                } else {
+                    window.top.tips('发送失败！', 0, 2, 2000);
+                }
+            }
+        })
+    }
+
+    //发送
+    <%--function send() {--%>
+    <%--if ($.trim($("#title").val()) === '' || $.trim($("#cardinalNumber").val()) === '') {--%>
+    <%--top.window.tips("标题和公里基数不可以为空！", 6, 5, 1000);--%>
+    <%--} else {--%>
+    <%--var array = [];--%>
+    <%--$('#annexes').find('input').each(function () {--%>
+    <%--array.push($(this).val());--%>
+    <%--});--%>
+
+    <%--//发送前将上传好的附件插入form中--%>
+    <%--$('#annex').val(array);--%>
+
+    <%--$.ajax({--%>
+    <%--type: "POST",--%>
+    <%--url: '${path}/car/add',--%>
+    <%--data: $('#oaActCar').serialize(),--%>
+    <%--error: function (request) {--%>
+    <%--window.top.tips("出错！", 6, 2, 1000);--%>
+    <%--},--%>
+    <%--success: function (result) {--%>
+    <%--if (result === "success") {--%>
+    <%--window.location.href = "${path}/oaIndex.do";--%>
+    <%--window.top.tips("发送成功！", 0, 1, 1000);--%>
+    <%--} else {--%>
+    <%--window.top.tips("发送失败！", 0, 2, 1000);--%>
+    <%--}--%>
+    <%--}--%>
+    <%--})--%>
+    <%--}--%>
+    <%--}--%>
 
     //保存待发
     function savePending() {
@@ -329,7 +397,7 @@
         //执行打印
         window.print();
         $('#tool,#titleArea').show();
-        $('#body').css('width', '80%');
+        $('#body').css('width', '70%');
 
         //附件列表
         let annexesLen = $('#annexes').children().length;

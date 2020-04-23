@@ -182,7 +182,7 @@
         //执行打印
         window.print();
         $('#tool').show();
-        $('#body').css('width', '70%');
+        $('#body').css('width', '80%');
     }
 </script>
 </html>

@@ -94,6 +94,11 @@ public class OaActProductionLeave {
     private String personnelDate;
 
     /**
+     * 状态
+     */
+    private Integer state;
+
+    /**
      * 附件
      */
     private String annex;
@@ -283,5 +288,13 @@ public class OaActProductionLeave {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
 }

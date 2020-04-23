@@ -90,6 +90,16 @@ public class OaActDocument implements Serializable {
     private String countersign;
 
     /**
+     * 主送
+     */
+    private String mainGive;
+
+    /**
+     * 主送
+     */
+    private String mainGiveId;
+
+    /**
      * 抄送
      */
     private String copyGive;
@@ -118,6 +128,11 @@ public class OaActDocument implements Serializable {
      * 附件份数
      */
     private Integer attachmentNumber;
+
+    /**
+     * 状态
+     */
+    private Integer state;
 
     /**
      * 附件
@@ -349,5 +364,29 @@ public class OaActDocument implements Serializable {
 
     public void setCopyGiveId(String copyGiveId) {
         this.copyGiveId = copyGiveId;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
+    public String getMainGive() {
+        return mainGive;
+    }
+
+    public void setMainGive(String mainGive) {
+        this.mainGive = mainGive;
+    }
+
+    public String getMainGiveId() {
+        return mainGiveId;
+    }
+
+    public void setMainGiveId(String mainGiveId) {
+        this.mainGiveId = mainGiveId;
     }
 }

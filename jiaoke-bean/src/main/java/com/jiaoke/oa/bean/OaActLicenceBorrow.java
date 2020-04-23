@@ -79,6 +79,17 @@ public class OaActLicenceBorrow {
     private String returnTime;
 
     /**
+     * 部门负责人
+     */
+    private String departmentPrincipal;
+
+    /**
+     * 状态
+     */
+    private Integer state;
+
+
+    /**
      * 附件
      */
     private String annex;
@@ -244,5 +255,21 @@ public class OaActLicenceBorrow {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getDepartmentPrincipal() {
+        return departmentPrincipal;
+    }
+
+    public void setDepartmentPrincipal(String departmentPrincipal) {
+        this.departmentPrincipal = departmentPrincipal;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
 }

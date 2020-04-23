@@ -16,7 +16,7 @@
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
 </head>
 
-<body id="body">
+<body id="body" style="width: 70%">
 
 <div class="table-title">
     <span>${oaActMaintain.title}</span>
@@ -49,7 +49,8 @@
                     <c:forTokens items="${oaActMaintain.annex}" delims="," var="annex">
                         <div class="table-file">
                             <div class="table-file-content">
-                                <span class="table-file-title" title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <span class="table-file-title"
+                                      title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
                                 <a class="table-file-download icon"
                                    href="/fileDownloadHandle/download?fileName=${annex}"
                                    title="下载">&#xebda;</a>
@@ -80,6 +81,8 @@
                 ${oaActMaintain.applyTime}
                 <input type="hidden" name="id" value="${oaActMaintain.id}">
                 <input type="hidden" name="title" value="${oaActMaintain.title}">
+                <input type="hidden" name="promoter" value="${oaActMaintain.promoter}">
+                <input type="hidden" name="departmentPrincipal" value="${oaActMaintain.departmentPrincipal}">
             </td>
         </tr>
 
@@ -191,41 +194,64 @@
     var maintain = JSON.parse('${oaActMaintainJson}');
     //标记
     var flag = 0;
-    if (flag === 0) {
-        if (maintain.principal === "" || maintain.principal === undefined) {
-            $('#principalContent').append('<input type="text" class="formInput-readonly" name="principal" value="${nickname}" readonly="readonly"><input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
-            flag = 1;
+
+    if (maintain.state === 0) {
+        if (flag === 0) {
+            var principalNums = JSON.parse('${principalNum}');
+            //单个审批人
+            if (principalNums === "noPrincipalNum") {
+                if (maintain.principal === "" || maintain.principal === undefined) {
+                    $('#principalContent').append('<input type="text" class="formInput-readonly" name="principal" value="${oaActMaintain.principal} ${nickname}" readonly="readonly"><input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                    flag = 1;
+                } else {
+                    $('#principalContent').append(maintain.principal);
+                }
+            } else {
+                if (maintain.principal === undefined) {
+                    $('#principalContent').append('<input type="text" class="formInput-readonly" name="principal" value="${oaActMaintain.principal} ${nickname}" readonly="readonly"><input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                    flag = 1;
+                } else if ((maintain.principal).length === principalNums.length) {
+                    $('#principalContent').append(maintain.principal);
+                } else {
+                    $('#principalContent').append('<input type="text" class="formInput-readonly" name="principal" value="${oaActMaintain.principal} ${nickname}" readonly="readonly"><input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                    flag = 1;
+                }
+            }
         } else {
             $('#principalContent').append(maintain.principal);
         }
-    } else {
-        $('#principalContent').append(maintain.principal);
-    }
 
-    if (flag === 0) {
-        if (maintain.supervisor === "" || maintain.supervisor === undefined) {
-            $('#supervisorContent').append('<input type="text" class="formInput-readonly" name="supervisor" value="${nickname}" readonly="readonly"><input type="hidden" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
-            flag = 1;
+        if (flag === 0) {
+            if (maintain.supervisor === "" || maintain.supervisor === undefined) {
+                $('#supervisorContent').append('<input type="text" class="formInput-readonly" name="supervisor" value="${nickname}" readonly="readonly"><input type="hidden" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                flag = 1;
+            } else {
+                $('#supervisorContent').append(maintain.supervisor);
+            }
         } else {
             $('#supervisorContent').append(maintain.supervisor);
         }
-    } else {
-        $('#supervisorContent').append(maintain.supervisor);
-    }
 
-    if (flag === 0) {
-        if (maintain.companyPrincipal === "" || maintain.companyPrincipal === undefined) {
-            $('#companyPrincipalContent').append('<input type="text" class="formInput-readonly" name="companyPrincipal" value="${nickname}" readonly="readonly"><input type="hidden" name="companyPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
-            flag = 1;
+        if (flag === 0) {
+            if (maintain.companyPrincipal === "" || maintain.companyPrincipal === undefined) {
+                $('#companyPrincipalContent').append('<input type="text" class="formInput-readonly" name="companyPrincipal" value="${nickname}" readonly="readonly"><input type="hidden" name="companyPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                flag = 1;
+            } else {
+                $('#companyPrincipalContent').append(maintain.companyPrincipal);
+            }
         } else {
             $('#companyPrincipalContent').append(maintain.companyPrincipal);
         }
-    } else {
-        $('#companyPrincipalContent').append(maintain.companyPrincipal);
-    }
 
-    //知会
-    if(flag === 0){
+        if (flag === 0) {
+            $('#return').html("");
+            $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
+        }
+
+    } else {
+        $('#principalContent').append(maintain.principal);
+        $('#supervisorContent').append(maintain.supervisor);
+        $('#companyPrincipalContent').append(maintain.companyPrincipal);
         $('#return').html("");
         $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
     }
@@ -245,6 +271,9 @@
                     //返回上一页
                     window.location.href = '${path}/oaHomePage/toOaHomePage';
                     window.top.tips("提交成功！", 0, 1, 1000);
+                } else if (data === 'backSuccess') {
+                    window.location.href = '${path}/oaHomePage/toOaHomePage';
+                    window.top.tips("提交成功,并将数据转存到待发事项中！", 6, 1, 2000);
                 } else {
                     window.top.tips("提交失败！", 0, 2, 1000);
                 }
@@ -262,7 +291,7 @@
         //执行打印
         window.print();
         $('#tool,#return').show();
-        $('#body').css('width', '80%');
+        $('#body').css('width', '70%');
     }
 </script>
 </html>

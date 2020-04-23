@@ -120,7 +120,7 @@
                 <td>
                     <div class="common_input_frame">
                         <input type="text"
-                               placeholder="总经理(审批)、经营主管(审批)、财务主管(审批)、财务审核(审批)、经营统计(审批)、业务(审批)、发起人(协同)"
+                               placeholder="经营统计→财务审核→财务主管→经营主管→总经理→发起人(知会)"
                                readonly="readonly">
                     </div>
                 </td>
@@ -154,6 +154,7 @@
                        value="${oaActConfirm.department}"
                        style="background-color: #f6f6f6;" readonly>
                 <input type="hidden" name="id" id="id" value="${oaActConfirm.id}">
+                <input type="hidden" name="promoter" id="promoter" value="${oaActConfirm.promoter}">
             </td>
 
             <td class="tdLabel">经办人</td>
@@ -327,30 +328,77 @@
 
     //发送
     function send() {
+        var confirm = [];
+        var tel = $('#tbo').find('tr');
+        for (let i = 0; i < tel.length; i++) {
+            var va = $(tel[i]).find('td').find('#variety').val();
+            var un = $(tel[i]).find('td').find('#univalent').val();
+            var nu = $(tel[i]).find('td').find('#number').val();
+            confirm.push({
+                variety: va,
+                univalent: un,
+                number: nu
+            })
+        }
+
         var array = [];
         $('#annexes').find('input').each(function () {
             array.push($(this).val());
         });
 
+        //发送前将上传好的附件插入form中
+        $('#annex').val(array);
+
         if ($.trim($("#title").val()) === '') {
-            window.top.tips("标题不可以为空！", 6, 5, 2000);
+            layer.msg("标题不可以为空！")
         } else {
-            //发送前将上传好的附件插入form中
-            $('#annex').val(array);
+
+            var id = $('#id').val();
+            var tit = $('#title').val();
+            var dep = $('#department').val();
+            var ope = $('#operator').val();
+            var nam = $('#name').val();
+            var mon = $('#money').val();
+            var erp = $('#erp').val();
+            var con = $('#contract').val();
+            var uni = $('#unit').val();
+            var pro = $('#projectName').val();
+            var app = $('#approvalTime').val();
+            var rem = $('#remarks').val();
+            var pmr = $('#promoter').val();
+            var an = $('#annex').val();
+            var oaActConfirm = {
+                id: id,
+                title: tit,
+                department: dep,
+                operator: ope,
+                name: nam,
+                money: mon,
+                oaConfirmList: confirm,
+                erp: erp,
+                contract: con,
+                unit: uni,
+                projectName: pro,
+                approvalTime: app,
+                remarks: rem,
+                promoter: pmr,
+                annex: an
+            };
 
             $.ajax({
                 type: "POST",
-                url: '${path}/confirm/add',
-                data: $('#oaActMeals').serialize(),
+                url: '${path}/confirm/editAdd',
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify(oaActConfirm),
                 error: function (request) {
                     layer.msg("出错！");
                 },
                 success: function (result) {
                     if (result === "success") {
                         window.location.href = "${path}/oaIndex.do";
-                        window.top.tips("发送成功！", 0, 1, 2000);
+                        window.top.tips("保存成功！", 0, 1, 1000);
                     } else {
-                        window.top.tips('发送失败！', 0, 2, 2000);
+                        window.top.tips("保存失败！", 0, 2, 1000);
                     }
                 }
             })
@@ -489,10 +537,11 @@
     //打印
     function printContent() {
         $('#tool,#titleArea,#annexList').hide();
-        // $('#body').css('width','100%');
+        $('#body').css('width','100%');
         //执行打印
         window.print();
         $('#tool,#titleArea').show();
+        $('#body').css('width','80%');
 
         //附件列表
         let annexesLen = $('#annexes').children().length;

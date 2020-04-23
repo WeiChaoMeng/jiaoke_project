@@ -47,8 +47,8 @@ public class OaNewsCenterController {
     public String toNewsCenter(Model model) {
         List<OaNewsCenter> oaNewsCenterList = oaNewsCenterService.selectLatestData();
         List<OaCorporateHonor> oaCorporateHonorList = oaCorporateHonorService.selectLatestData();
-        List<UserInfo> newsList = userInfoService.selectMultipleByPermission("news:add");
-        List<UserInfo> honourList = userInfoService.selectMultipleByPermission("honour:add");
+        List<UserInfo> newsList = userInfoService.selectMultipleByPermission("news_administrator");
+        List<UserInfo> honourList = userInfoService.selectMultipleByPermission("enterprise_honor_administrator");
         model.addAttribute("newsManagerList", newsList);
         model.addAttribute("honourManagerList", honourList);
         model.addAttribute("oaCorporateHonorList", oaCorporateHonorList);

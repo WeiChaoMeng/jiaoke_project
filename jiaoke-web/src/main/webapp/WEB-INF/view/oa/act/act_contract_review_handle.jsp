@@ -49,7 +49,8 @@
                     <c:forTokens items="${oaActContractReview.annex}" delims="," var="annex">
                         <div class="table-file">
                             <div class="table-file-content">
-                                <span class="table-file-title" title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <span class="table-file-title"
+                                      title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
                                 <a class="table-file-download icon"
                                    href="/fileDownloadHandle/download?fileName=${annex}"
                                    title="下载">&#xebda;</a>
@@ -64,7 +65,8 @@
 
 <form id="oaActContractReview">
     <span class="fill-in-date">
-        合同编号<input type="text" value="${oaActContractReview.contractNumber}" style="cursor: no-drop" class="form-number-content" readonly>
+        合同编号<input type="text" value="${oaActContractReview.contractNumber}" style="cursor: no-drop"
+                   class="form-number-content" readonly>
     </span>
 
     <table class="formTable" style="margin: 0;">
@@ -123,27 +125,22 @@
         <tr>
             <td class="tdLabel">物资部门审核意见</td>
             <td colspan="3" class="approval-content">
-                <shiro:hasPermission name="material_principal">
-                    <textarea class="write-approval-content-textarea" onkeyup="value=value.replace(/\s+/g,'')" name="materialPrincipalContent"></textarea>
-                    <div class="approval-date">
-                        <label class="approval-date-label">日期</label>
-                        <input class="approval-date-input" type="text" name="materialPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>
-                    </div>
-                    <div class="approval-signature">
-                        <label class="approval-signature-label">签字</label>
-                        <input class="approval-signature-input" type="text"  name="materialPrincipal" value="${nickname}" readonly>
-                    </div>
+                <shiro:hasPermission name="HTPS_material">
+                    <div style="width: 100%;height: 100%;" id="materialContent"></div>
                 </shiro:hasPermission>
 
-                <shiro:lacksPermission name="material_principal">
-                    <textarea readonly class="approval-content-textarea">${oaActContractReview.materialPrincipalContent}</textarea>
+                <shiro:lacksPermission name="HTPS_material">
+                    <textarea readonly
+                              class="approval-content-textarea">${oaActContractReview.materialPrincipalContent}</textarea>
                     <div class="approval-date">
                         <label class="approval-date-label">日期</label>
-                        <input class="approval-date-input" type="text" value="${oaActContractReview.materialPrincipalDate}" readonly>
+                        <input class="approval-date-input" type="text"
+                               value="${oaActContractReview.materialPrincipalDate}" readonly>
                     </div>
                     <div class="approval-signature">
                         <label class="approval-signature-label">签字</label>
-                        <input class="approval-signature-input" type="text" value="${oaActContractReview.materialPrincipal}" readonly>
+                        <input class="approval-signature-input" type="text"
+                               value="${oaActContractReview.materialPrincipal}" readonly>
                     </div>
                 </shiro:lacksPermission>
             </td>
@@ -152,27 +149,22 @@
         <tr>
             <td class="tdLabel">财务部门审核意见</td>
             <td colspan="3" class="approval-content">
-                <shiro:hasPermission name="finance_principal">
-                    <textarea class="write-approval-content-textarea" onkeyup="value=value.replace(/\s+/g,'')" name="financePrincipalContent"></textarea>
-                    <div class="approval-date">
-                        <label class="approval-date-label">日期</label>
-                        <input class="approval-date-input" type="text" name="financePrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>
-                    </div>
-                    <div class="approval-signature">
-                        <label class="approval-signature-label">签字</label>
-                        <input class="approval-signature-input" type="text" name="financePrincipal" value="${nickname}" readonly>
-                    </div>
+                <shiro:hasPermission name="HTPS_finance">
+                    <div style="width: 100%;height: 100%;" id="financeContent"></div>
                 </shiro:hasPermission>
 
-                <shiro:lacksPermission name="finance_principal">
-                    <textarea readonly class="approval-content-textarea">${oaActContractReview.financePrincipalContent}</textarea>
+                <shiro:lacksPermission name="HTPS_finance">
+                    <textarea readonly
+                              class="approval-content-textarea">${oaActContractReview.financePrincipalContent}</textarea>
                     <div class="approval-date">
                         <label class="approval-date-label">日期</label>
-                        <input class="approval-date-input" type="text" value="${oaActContractReview.financePrincipalDate}" readonly>
+                        <input class="approval-date-input" type="text"
+                               value="${oaActContractReview.financePrincipalDate}" readonly>
                     </div>
                     <div class="approval-signature">
                         <label class="approval-signature-label">签字</label>
-                        <input class="approval-signature-input" type="text" value="${oaActContractReview.financePrincipal}" readonly>
+                        <input class="approval-signature-input" type="text"
+                               value="${oaActContractReview.financePrincipal}" readonly>
                     </div>
                 </shiro:lacksPermission>
             </td>
@@ -181,27 +173,22 @@
         <tr>
             <td class="tdLabel">质量技术审核意见</td>
             <td colspan="3" class="approval-content">
-                <shiro:hasPermission name="quality_principal">
-                    <textarea class="write-approval-content-textarea" onkeyup="value=value.replace(/\s+/g,'')" name="qualityPrincipalContent"></textarea>
-                    <div class="approval-date">
-                        <label class="approval-date-label">日期</label>
-                        <input class="approval-date-input" type="text" name="qualityPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>
-                    </div>
-                    <div class="approval-signature">
-                        <label class="approval-signature-label">签字</label>
-                        <input class="approval-signature-input" type="text" name="qualityPrincipal" value="${nickname}" readonly>
-                    </div>
+                <shiro:hasPermission name="HTPS_quality">
+                    <div style="width: 100%;height: 100%;" id="qualityContent"></div>
                 </shiro:hasPermission>
 
-                <shiro:lacksPermission name="quality_principal">
-                    <textarea readonly class="approval-content-textarea">${oaActContractReview.qualityPrincipalContent}</textarea>
+                <shiro:lacksPermission name="HTPS_quality">
+                    <textarea readonly
+                              class="approval-content-textarea">${oaActContractReview.qualityPrincipalContent}</textarea>
                     <div class="approval-date">
                         <label class="approval-date-label">日期</label>
-                        <input class="approval-date-input" type="text" value="${oaActContractReview.qualityPrincipalDate}" readonly>
+                        <input class="approval-date-input" type="text"
+                               value="${oaActContractReview.qualityPrincipalDate}" readonly>
                     </div>
                     <div class="approval-signature">
                         <label class="approval-signature-label">签字</label>
-                        <input class="approval-signature-input" type="text" value="${oaActContractReview.qualityPrincipal}" readonly>
+                        <input class="approval-signature-input" type="text"
+                               value="${oaActContractReview.qualityPrincipal}" readonly>
                     </div>
                 </shiro:lacksPermission>
             </td>
@@ -210,27 +197,22 @@
         <tr>
             <td class="tdLabel">经营部门审核意见</td>
             <td colspan="3" class="approval-content">
-                <shiro:hasPermission name="operating_principal">
-                    <textarea class="write-approval-content-textarea" onkeyup="value=value.replace(/\s+/g,'')" name="operatingPrincipalContent"></textarea>
-                    <div class="approval-date">
-                        <label class="approval-date-label">日期</label>
-                        <input class="approval-date-input" type="text" name="operatingPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>
-                    </div>
-                    <div class="approval-signature">
-                        <label class="approval-signature-label">签字</label>
-                        <input class="approval-signature-input" type="text" name="operatingPrincipal" value="${nickname}" readonly>
-                    </div>
+                <shiro:hasPermission name="HTPS_operating">
+                    <div style="width: 100%;height: 100%;" id="operatingContent"></div>
                 </shiro:hasPermission>
 
-                <shiro:lacksPermission name="operating_principal">
-                    <textarea readonly class="approval-content-textarea">${oaActContractReview.operatingPrincipalContent}</textarea>
+                <shiro:lacksPermission name="HTPS_operating">
+                    <textarea readonly
+                              class="approval-content-textarea">${oaActContractReview.operatingPrincipalContent}</textarea>
                     <div class="approval-date">
                         <label class="approval-date-label">日期</label>
-                        <input class="approval-date-input" type="text" value="${oaActContractReview.operatingPrincipalDate}" readonly>
+                        <input class="approval-date-input" type="text"
+                               value="${oaActContractReview.operatingPrincipalDate}" readonly>
                     </div>
                     <div class="approval-signature">
                         <label class="approval-signature-label">签字</label>
-                        <input class="approval-signature-input" type="text" value="${oaActContractReview.operatingPrincipal}" readonly>
+                        <input class="approval-signature-input" type="text"
+                               value="${oaActContractReview.operatingPrincipal}" readonly>
                     </div>
                 </shiro:lacksPermission>
             </td>
@@ -240,26 +222,21 @@
             <td class="tdLabel">法务审核意见</td>
             <td colspan="3" class="approval-content">
                 <shiro:hasPermission name="legal_affairs">
-                    <textarea class="write-approval-content-textarea" onkeyup="value=value.replace(/\s+/g,'')" name="legalAffairsContent"></textarea>
-                    <div class="approval-date">
-                        <label class="approval-date-label">日期</label>
-                        <input class="approval-date-input" type="text" name="legalAffairsDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>
-                    </div>
-                    <div class="approval-signature">
-                        <label class="approval-signature-label">签字</label>
-                        <input class="approval-signature-input" type="text" name="legalAffairs" value="${nickname}" readonly>
-                    </div>
+                    <div style="width: 100%;height: 100%;" id="legalAffairsContent"></div>
                 </shiro:hasPermission>
 
                 <shiro:lacksPermission name="legal_affairs">
-                    <textarea readonly class="approval-content-textarea">${oaActContractReview.legalAffairsContent}</textarea>
+                    <textarea readonly
+                              class="approval-content-textarea">${oaActContractReview.legalAffairsContent}</textarea>
                     <div class="approval-date">
                         <label class="approval-date-label">日期</label>
-                        <input class="approval-date-input" type="text" value="${oaActContractReview.legalAffairsDate}" readonly>
+                        <input class="approval-date-input" type="text" value="${oaActContractReview.legalAffairsDate}"
+                               readonly>
                     </div>
                     <div class="approval-signature">
                         <label class="approval-signature-label">签字</label>
-                        <input class="approval-signature-input" type="text" value="${oaActContractReview.legalAffairs}" readonly>
+                        <input class="approval-signature-input" type="text" value="${oaActContractReview.legalAffairs}"
+                               readonly>
                     </div>
                 </shiro:lacksPermission>
             </td>
@@ -269,31 +246,23 @@
             <td class="tdLabel">总经理审核意见</td>
             <td colspan="3" class="approval-content">
                 <shiro:hasPermission name="company_principal">
-                    <textarea class="write-approval-content-textarea" onkeyup="value=value.replace(/\s+/g,'')" name="companyPrincipalContent"></textarea>
-                    <div class="approval-date">
-                        <label class="approval-date-label">日期</label>
-                        <input class="approval-date-input" type="text" name="companyPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>
-                    </div>
-                    <div class="approval-signature">
-                        <label class="approval-signature-label">签字</label>
-                        <input class="approval-signature-input" type="text" name="companyPrincipal" value="${nickname}" readonly>
-                    </div>
+                    <div style="width: 100%;height: 100%;" id="companyPrincipalContent"></div>
                 </shiro:hasPermission>
 
                 <shiro:lacksPermission name="company_principal">
-                    <textarea readonly class="approval-content-textarea">${oaActContractReview.companyPrincipalContent}</textarea>
+                    <textarea readonly
+                              class="approval-content-textarea">${oaActContractReview.companyPrincipalContent}</textarea>
                     <div class="approval-date">
                         <label class="approval-date-label">日期</label>
-                        <input class="approval-date-input" type="text" value="${oaActContractReview.companyPrincipalDate}" readonly>
+                        <input class="approval-date-input" type="text"
+                               value="${oaActContractReview.companyPrincipalDate}" readonly>
                     </div>
                     <div class="approval-signature">
                         <label class="approval-signature-label">签字</label>
-                        <input class="approval-signature-input" type="text" value="${oaActContractReview.companyPrincipal}" readonly>
+                        <input class="approval-signature-input" type="text"
+                               value="${oaActContractReview.companyPrincipal}" readonly>
                     </div>
                 </shiro:lacksPermission>
-
-                <%--暂存附件--%>
-                <input type="hidden" id="annex" name="annex">
             </td>
         </tr>
         </tbody>
@@ -301,16 +270,18 @@
 
     <div style="height: 50px;">
         <span class="fill-in-date" style="float: left;margin: 5px 0 20px 10px;">
-            利润中心：<input type="text" class="form-number-content" style="cursor: not-allowed;" value="${oaActContractReview.profitCenter}" readonly>
+            利润中心：<input type="text" class="form-number-content" style="cursor: not-allowed;"
+                        value="${oaActContractReview.profitCenter}" readonly>
         </span>
         <span class="fill-in-date" style="margin: 5px 10px 20px 0;">
-            制表人：<input type="text" class="form-number-content" style="cursor: not-allowed;"  value="${oaActContractReview.promoterStr}" readonly>
+            制表人：<input type="text" class="form-number-content" style="cursor: not-allowed;"
+                       value="${oaActContractReview.promoterStr}" readonly>
         </span>
     </div>
 </form>
 
 <div class="form-but" id="return">
-    <shiro:hasAnyPermission name="material_principal,finance_principal,quality_principal,operating_principal,legal_affairs,company_principal">
+    <shiro:hasAnyPermission name="HTPS_material,HTPS_finance,HTPS_quality,HTPS_operating,legal_affairs,company_principal">
         <button type="button" class="return-but" style="margin-right: 10px;" onclick="approvalProcessing(2)">回退</button>
     </shiro:hasAnyPermission>
     <button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>
@@ -319,6 +290,144 @@
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
 <script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
+
+    //流程执行步骤
+    var contractReview = JSON.parse('${oaActContractReviewJson}');
+    //标记
+    var flag = 0;
+
+    if (contractReview.state === 0) {
+        if (flag === 0) {
+            if (contractReview.materialPrincipal === "" || contractReview.materialPrincipal === undefined) {
+                flag = 1;
+                $('#materialContent').append('<textarea class="write-approval-content-textarea" oninput="value=value.replace(/\\s+/g,\'\')" name="materialPrincipalContent"></textarea>\n' +
+                    '<div class="approval-date"><label class="approval-date-label">日期</label>\n' +
+                    '<input class="approval-date-input" type="text" name="materialPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>\n' +
+                    '</div><div class="approval-signature"><label class="approval-signature-label">签字</label><input class="approval-signature-input" type="text"  name="materialPrincipal" value="${nickname}" readonly></div>');
+            } else {
+                $('#materialContent').append('<textarea readonly class="approval-content-textarea">${oaActContractReview.materialPrincipalContent}</textarea>\n' +
+                    '<div class="approval-date"><label class="approval-date-label">日期</label><input class="approval-date-input" type="text" value="${oaActContractReview.materialPrincipalDate}" readonly></div>\n' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字</label><input class="approval-signature-input" type="text" value="${oaActContractReview.materialPrincipal}" readonly></div>');
+            }
+        } else {
+            $('#materialContent').append('<textarea readonly class="approval-content-textarea">${oaActContractReview.materialPrincipalContent}</textarea><div class="approval-date">\n' +
+                '<label class="approval-date-label">日期</label><input class="approval-date-input" type="text" value="${oaActContractReview.materialPrincipalDate}" readonly>\n' +
+                '</div><div class="approval-signature"><label class="approval-signature-label">签字</label><input class="approval-signature-input" type="text" value="${oaActContractReview.materialPrincipal}" readonly></div>');
+        }
+
+        if (flag === 0) {
+            if (contractReview.financePrincipal === "" || contractReview.financePrincipal === undefined) {
+                flag = 1;
+                $('#financeContent').append('<textarea class="write-approval-content-textarea" oninput="value=value.replace(/\\s+/g,\'\')" name="financePrincipalContent"></textarea><div class="approval-date">\n' +
+                    '<label class="approval-date-label">日期</label><input class="approval-date-input" type="text" name="financePrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>\n' +
+                    '</div><div class="approval-signature"><label class="approval-signature-label">签字</label><input class="approval-signature-input" type="text" name="financePrincipal" value="${nickname}" readonly></div>');
+            } else {
+                $('#financeContent').append('<textarea readonly class="approval-content-textarea">${oaActContractReview.financePrincipalContent}</textarea><div class="approval-date">\n' +
+                    '<label class="approval-date-label">日期</label><input class="approval-date-input" type="text" value="${oaActContractReview.financePrincipalDate}" readonly></div>\n' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字</label><input class="approval-signature-input" type="text" value="${oaActContractReview.financePrincipal}" readonly></div>');
+            }
+        } else {
+            $('#financeContent').append('<textarea readonly class="approval-content-textarea">${oaActContractReview.financePrincipalContent}</textarea><div class="approval-date">\n' +
+                '<label class="approval-date-label">日期</label><input class="approval-date-input" type="text" value="${oaActContractReview.financePrincipalDate}" readonly></div>\n' +
+                '<div class="approval-signature"><label class="approval-signature-label">签字</label><input class="approval-signature-input" type="text" value="${oaActContractReview.financePrincipal}" readonly></div>');
+        }
+
+        if (flag === 0) {
+            if (contractReview.qualityPrincipal === "" || contractReview.qualityPrincipal === undefined) {
+                flag = 1;
+                $('#qualityContent').append('<textarea class="write-approval-content-textarea" oninput="value=value.replace(/\\s+/g,\'\')" name="qualityPrincipalContent"></textarea><div class="approval-date">\n' +
+                    '<label class="approval-date-label">日期</label><input class="approval-date-input" type="text" name="qualityPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>\n' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字</label><input class="approval-signature-input" type="text" name="qualityPrincipal" value="${nickname}" readonly></div>');
+            } else {
+                $('#qualityContent').append('<textarea readonly class="approval-content-textarea">${oaActContractReview.qualityPrincipalContent}</textarea><div class="approval-date">\n' +
+                    '<label class="approval-date-label">日期</label><input class="approval-date-input" type="text" value="${oaActContractReview.qualityPrincipalDate}" readonly></div>\n' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字</label><input class="approval-signature-input" type="text" value="${oaActContractReview.qualityPrincipal}" readonly></div>');
+            }
+        } else {
+            $('#qualityContent').append('<textarea readonly class="approval-content-textarea">${oaActContractReview.qualityPrincipalContent}</textarea><div class="approval-date">\n' +
+                '<label class="approval-date-label">日期</label><input class="approval-date-input" type="text" value="${oaActContractReview.qualityPrincipalDate}" readonly></div>\n' +
+                '<div class="approval-signature"><label class="approval-signature-label">签字</label><input class="approval-signature-input" type="text" value="${oaActContractReview.qualityPrincipal}" readonly></div>');
+        }
+
+        if (flag === 0) {
+            if (contractReview.operatingPrincipal === "" || contractReview.operatingPrincipal === undefined) {
+                flag = 1;
+                $('#operatingContent').append('<textarea class="write-approval-content-textarea" oninput="value=value.replace(/\\s+/g,\'\')" name="operatingPrincipalContent"></textarea><div class="approval-date">\n' +
+                    '<label class="approval-date-label">日期</label><input class="approval-date-input" type="text" name="operatingPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>\n' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字</label><input class="approval-signature-input" type="text" name="operatingPrincipal" value="${nickname}" readonly></div>');
+            } else {
+                $('#operatingContent').append('<textarea readonly class="approval-content-textarea">${oaActContractReview.operatingPrincipalContent}</textarea><div class="approval-date">\n' +
+                    '<label class="approval-date-label">日期</label><input class="approval-date-input" type="text" value="${oaActContractReview.operatingPrincipalDate}" readonly></div>\n' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字</label><input class="approval-signature-input" type="text" value="${oaActContractReview.operatingPrincipal}" readonly></div>');
+            }
+        } else {
+            $('#operatingContent').append('<textarea readonly class="approval-content-textarea">${oaActContractReview.operatingPrincipalContent}</textarea><div class="approval-date">\n' +
+                '<label class="approval-date-label">日期</label><input class="approval-date-input" type="text" value="${oaActContractReview.operatingPrincipalDate}" readonly></div>\n' +
+                '<div class="approval-signature"><label class="approval-signature-label">签字</label><input class="approval-signature-input" type="text" value="${oaActContractReview.operatingPrincipal}" readonly></div>');
+        }
+
+        if (flag === 0) {
+            if (contractReview.legalAffairs === "" || contractReview.legalAffairs === undefined) {
+                flag = 1;
+                $('#legalAffairsContent').append('<textarea class="write-approval-content-textarea" oninput="value=value.replace(/\\s+/g,\'\')" name="legalAffairsContent"></textarea><div class="approval-date">\n' +
+                    '<label class="approval-date-label">日期</label><input class="approval-date-input" type="text" name="legalAffairsDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>\n' +
+                    '</div><div class="approval-signature"><label class="approval-signature-label">签字</label><input class="approval-signature-input" type="text" name="legalAffairs" value="${nickname}" readonly></div>');
+            } else {
+                $('#legalAffairsContent').append('<textarea readonly class="approval-content-textarea">${oaActContractReview.legalAffairsContent}</textarea><div class="approval-date">\n' +
+                    '<label class="approval-date-label">日期</label><input class="approval-date-input" type="text" value="${oaActContractReview.legalAffairsDate}" readonly></div><div class="approval-signature">\n' +
+                    '<label class="approval-signature-label">签字</label><input class="approval-signature-input" type="text" value="${oaActContractReview.legalAffairs}" readonly></div>');
+            }
+        } else {
+            $('#legalAffairsContent').append('<textarea readonly class="approval-content-textarea">${oaActContractReview.legalAffairsContent}</textarea><div class="approval-date">\n' +
+                '<label class="approval-date-label">日期</label><input class="approval-date-input" type="text" value="${oaActContractReview.legalAffairsDate}" readonly></div>\n' +
+                '<div class="approval-signature"><label class="approval-signature-label">签字</label><input class="approval-signature-input" type="text" value="${oaActContractReview.legalAffairs}" readonly></div>');
+        }
+
+        if (flag === 0) {
+            if (contractReview.companyPrincipal === "" || contractReview.companyPrincipal === undefined) {
+                flag = 1;
+                $('#companyPrincipalContent').append(' <textarea class="write-approval-content-textarea" oninput="value=value.replace(/\\s+/g,\'\')" name="companyPrincipalContent"></textarea>\n' +
+                    '<div class="approval-date"><label class="approval-date-label">日期</label><input class="approval-date-input" type="text" name="companyPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>\n' +
+                    '</div><div class="approval-signature"><label class="approval-signature-label">签字</label><input class="approval-signature-input" type="text" name="companyPrincipal" value="${nickname}" readonly></div>');
+            } else {
+                $('#companyPrincipalContent').append('<textarea readonly class="approval-content-textarea">${oaActContractReview.companyPrincipalContent}</textarea>\n' +
+                    '<div class="approval-date"><label class="approval-date-label">日期</label>\n' +
+                    '<input class="approval-date-input" type="text" value="${oaActContractReview.companyPrincipalDate}" readonly></div><div class="approval-signature">\n' +
+                    '<label class="approval-signature-label">签字</label><input class="approval-signature-input" type="text" value="${oaActContractReview.companyPrincipal}" readonly></div>');
+            }
+        } else {
+            $('#companyPrincipalContent').append('<textarea readonly class="approval-content-textarea">${oaActContractReview.companyPrincipalContent}</textarea>\n' +
+                '<div class="approval-date"><label class="approval-date-label">日期</label><input class="approval-date-input" type="text" value="${oaActContractReview.companyPrincipalDate}" readonly></div><div class="approval-signature">\n' +
+                '<label class="approval-signature-label">签字</label><input class="approval-signature-input" type="text" value="${oaActContractReview.companyPrincipal}" readonly></div>');
+        }
+
+        if (flag === 0) {
+            $('#return').html("");
+            $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
+        }
+    } else {
+        $('#materialContent').append('<textarea readonly class="approval-content-textarea">${oaActContractReview.materialPrincipalContent}</textarea><div class="approval-date">\n' +
+            '<label class="approval-date-label">日期</label><input class="approval-date-input" type="text" value="${oaActContractReview.materialPrincipalDate}" readonly>\n' +
+            '</div><div class="approval-signature"><label class="approval-signature-label">签字</label><input class="approval-signature-input" type="text" value="${oaActContractReview.materialPrincipal}" readonly></div>');
+        $('#financeContent').append('<textarea readonly class="approval-content-textarea">${oaActContractReview.financePrincipalContent}</textarea><div class="approval-date">\n' +
+            '<label class="approval-date-label">日期</label><input class="approval-date-input" type="text" value="${oaActContractReview.financePrincipalDate}" readonly></div>\n' +
+            '<div class="approval-signature"><label class="approval-signature-label">签字</label><input class="approval-signature-input" type="text" value="${oaActContractReview.financePrincipal}" readonly></div>');
+        $('#qualityContent').append('<textarea readonly class="approval-content-textarea">${oaActContractReview.qualityPrincipalContent}</textarea><div class="approval-date">\n' +
+            '<label class="approval-date-label">日期</label><input class="approval-date-input" type="text" value="${oaActContractReview.qualityPrincipalDate}" readonly></div>\n' +
+            '<div class="approval-signature"><label class="approval-signature-label">签字</label><input class="approval-signature-input" type="text" value="${oaActContractReview.qualityPrincipal}" readonly></div>');
+        $('#operatingContent').append('<textarea readonly class="approval-content-textarea">${oaActContractReview.operatingPrincipalContent}</textarea><div class="approval-date">\n' +
+            '<label class="approval-date-label">日期</label><input class="approval-date-input" type="text" value="${oaActContractReview.operatingPrincipalDate}" readonly></div>\n' +
+            '<div class="approval-signature"><label class="approval-signature-label">签字</label><input class="approval-signature-input" type="text" value="${oaActContractReview.operatingPrincipal}" readonly></div>');
+        $('#legalAffairsContent').append('<textarea readonly class="approval-content-textarea">${oaActContractReview.legalAffairsContent}</textarea><div class="approval-date">\n' +
+            '<label class="approval-date-label">日期</label><input class="approval-date-input" type="text" value="${oaActContractReview.legalAffairsDate}" readonly></div>\n' +
+            '<div class="approval-signature"><label class="approval-signature-label">签字</label><input class="approval-signature-input" type="text" value="${oaActContractReview.legalAffairs}" readonly></div>');
+        $('#companyPrincipalContent').append('<textarea readonly class="approval-content-textarea">${oaActContractReview.companyPrincipalContent}</textarea>\n' +
+            '<div class="approval-date"><label class="approval-date-label">日期</label><input class="approval-date-input" type="text" value="${oaActContractReview.companyPrincipalDate}" readonly></div><div class="approval-signature">\n' +
+            '<label class="approval-signature-label">签字</label><input class="approval-signature-input" type="text" value="${oaActContractReview.companyPrincipal}" readonly></div>');
+        $('#return').html("");
+        $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
+    }
+
     //任务Id
     var taskId = JSON.parse('${taskId}');
 
@@ -334,6 +443,9 @@
                     //返回上一页
                     window.location.href = '${path}/oaHomePage/toOaHomePage';
                     window.top.tips("提交成功！", 0, 1, 1000);
+                } else if (data === 'backSuccess') {
+                    window.location.href = '${path}/oaHomePage/toOaHomePage';
+                    window.top.tips("提交成功,并将数据转存到待发事项中！", 6, 1, 2000);
                 } else {
                     window.top.tips("提交失败！", 0, 2, 1000);
                 }

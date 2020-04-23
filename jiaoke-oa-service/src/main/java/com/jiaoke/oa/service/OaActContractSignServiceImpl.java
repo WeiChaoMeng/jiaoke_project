@@ -36,6 +36,7 @@ public class OaActContractSignServiceImpl implements OaActContractSignService {
         oaActContractSign.setCreateTime(new Date());
         oaActContractSign.setPromoter(userId);
         oaActContractSign.setUrl("contractSign");
+        oaActContractSign.setState(0);
         if (oaActContractSignMapper.insertSelective(oaActContractSign) < 0) {
             return -1;
         } else {
@@ -45,6 +46,7 @@ public class OaActContractSignServiceImpl implements OaActContractSignService {
             oaCollaboration.setTitle(oaActContractSign.getTitle());
             oaCollaboration.setUrl("contractSign");
             oaCollaboration.setTable("oa_act_contract_sign");
+            oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("劳务派遣员工合同签订、续订、变更、终止审批");
             oaCollaboration.setDataOne("通知时间：" + DateUtil.dateConvertYYYYMMDD(oaActContractSign.getCreateTime()));
             oaCollaboration.setDataTwo("劳动合同到期时间：" + oaActContractSign.getStartDate());
@@ -57,10 +59,22 @@ public class OaActContractSignServiceImpl implements OaActContractSignService {
 
     @Override
     public int edit(OaActContractSign oaActContractSign) {
+        oaActContractSign.setState(0);
+        oaActContractSign.setPrincipal("");
+        oaActContractSign.setPrincipalDate("");
+        oaActContractSign.setPrincipalContent("");
+        oaActContractSign.setSupervisor("");
+        oaActContractSign.setSupervisorDate("");
+        oaActContractSign.setSupervisorContent("");
+        oaActContractSign.setPersonnel("");
+        oaActContractSign.setPersonnelDate("");
+        oaActContractSign.setPersonnelContent("");
+        oaActContractSign.setCompanyPrincipal("");
+        oaActContractSign.setCompanyPrincipalDate("");
+        oaActContractSign.setCompanyPrincipalContent("");
         if (oaActContractSignMapper.updateByPrimaryKeySelective(oaActContractSign) < 0) {
             return -1;
         } else {
-            oaCollaborationMapper.updateStateByCorrelationId(oaActContractSign.getId(), 1, oaActContractSign.getTitle());
             return 1;
         }
     }

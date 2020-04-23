@@ -88,11 +88,18 @@
             <td class="tdLabel">综合办公室</td>
             <td class="table-td-content" style="padding: 5px 10px;">
                 <shiro:hasPermission name="office_principal">
-                    <input type="text" class="formInput-readonly" name="officePrincipal" style="margin-bottom: 5px;" value="${nickname}" readonly>
+                    <c:choose>
+                        <c:when test="${oaActDeparture.officePrincipal == null || oaActDeparture.officePrincipal == ''}">
+                            <input type="text" class="formInput-readonly" name="officePrincipal" style="margin-bottom: 5px;" value="${nickname}" readonly>
+                        </c:when>
+                        <c:otherwise>
+                            <input type="text" class="formInput-readonly" name="officePrincipalT" style="margin-bottom: 5px;" value="${nickname}" readonly>
+                        </c:otherwise>
+                    </c:choose>
                 </shiro:hasPermission>
                 <shiro:lacksPermission name="office_principal">
-                    <input type="text" class="formInput-readonly" style="margin-bottom: 5px;"
-                           value="${oaActDeparture.officePrincipal}" readonly>
+                    <input type="text" class="formInput-readonly" style="margin-bottom: 5px;width: 50%;border-right: 0;float: left;" value="${oaActDeparture.officePrincipal}" readonly>
+                    <input type="text" class="formInput-readonly" style="margin-bottom: 5px;width: 50%;border-left: 0;float: left;" value="${oaActDeparture.officePrincipalT}" readonly>
                 </shiro:lacksPermission>
 
                 <shiro:hasPermission name="office_supervisor">
@@ -106,13 +113,18 @@
             <td class="tdLabel">备注</td>
             <td class="table-td-content">
                 <shiro:hasPermission name="office_principal">
-                    <input type="text" class="formInput" style="margin-bottom: 5px;" name="officePrincipalRemark"
-                           autocomplete="off">
+                    <c:choose>
+                        <c:when test="${oaActDeparture.officePrincipal == null || oaActDeparture.officePrincipal == ''}">
+                            <input type="text" class="formInput" style="margin-bottom: 5px;" name="officePrincipalRemark" autocomplete="off">
+                        </c:when>
+                        <c:otherwise>
+                            <input type="text" class="formInput" style="margin-bottom: 5px;" name="officePrincipalRemarkT" autocomplete="off">
+                        </c:otherwise>
+                    </c:choose>
                 </shiro:hasPermission>
                 <shiro:lacksPermission name="office_principal">
-                    <input type="text" class="formInput-readonly" style="margin-bottom: 5px;"
-                           value="${oaActDeparture.officePrincipalRemark}"
-                           readonly>
+                    <input type="text" class="formInput-readonly" style="margin-bottom: 5px;width: 50%;border-right: 0;float: left;" value="${oaActDeparture.officePrincipalRemark}" readonly>
+                    <input type="text" class="formInput-readonly" style="margin-bottom: 5px;width: 50%;border-left: 0;float: left;" value="${oaActDeparture.officePrincipalRemarkT}" readonly>
                 </shiro:lacksPermission>
 
                 <shiro:hasPermission name="office_supervisor">
@@ -212,11 +224,18 @@
             <td class="tdLabel">质量技术部</td>
             <td class="table-td-content" style="padding: 5px 10px;">
                 <shiro:hasPermission name="quality_principal">
-                    <input type="text" class="formInput-readonly" style="margin-bottom: 5px;" name="qualityPrincipal" value="${nickname}" readonly>
+                    <c:choose>
+                        <c:when test="${oaActDeparture.qualityPrincipal == null || oaActDeparture.qualityPrincipal == ''}">
+                            <input type="text" class="formInput-readonly" name="qualityPrincipal" style="margin-bottom: 5px;" value="${nickname}" readonly>
+                        </c:when>
+                        <c:otherwise>
+                            <input type="text" class="formInput-readonly" name="qualityPrincipalT" style="margin-bottom: 5px;" value="${nickname}" readonly>
+                        </c:otherwise>
+                    </c:choose>
                 </shiro:hasPermission>
                 <shiro:lacksPermission name="quality_principal">
-                    <input type="text" class="formInput-readonly" style="margin-bottom: 5px;"
-                           value="${oaActDeparture.qualityPrincipal}" readonly>
+                    <input type="text" class="formInput-readonly" style="margin-bottom: 5px;width: 50%;border-right: 0;float: left;" value="${oaActDeparture.qualityPrincipal}" readonly>
+                    <input type="text" class="formInput-readonly" style="margin-bottom: 5px;width: 50%;border-left: 0;float: left;" value="${oaActDeparture.qualityPrincipalT}" readonly>
                 </shiro:lacksPermission>
 
                 <shiro:hasPermission name="quality_supervisor">
@@ -230,13 +249,18 @@
             <td class="tdLabel">备注</td>
             <td class="table-td-content">
                 <shiro:hasPermission name="quality_principal">
-                    <input type="text" class="formInput" style="margin-bottom: 5px;" name="qualityPrincipalRemark"
-                           autocomplete="off">
+                    <c:choose>
+                        <c:when test="${oaActDeparture.qualityPrincipal == null || oaActDeparture.qualityPrincipal == ''}">
+                            <input type="text" class="formInput" style="margin-bottom: 5px;" name="qualityPrincipalRemark" autocomplete="off">
+                        </c:when>
+                        <c:otherwise>
+                            <input type="text" class="formInput" style="margin-bottom: 5px;" name="qualityPrincipalRemarkT" autocomplete="off">
+                        </c:otherwise>
+                    </c:choose>
                 </shiro:hasPermission>
                 <shiro:lacksPermission name="quality_principal">
-                    <input type="text" class="formInput-readonly" style="margin-bottom: 5px;"
-                           value="${oaActDeparture.qualityPrincipalRemark}"
-                           readonly>
+                    <input type="text" class="formInput-readonly" style="margin-bottom: 5px;width: 50%;border-right: 0;float: left;" value="${oaActDeparture.qualityPrincipalRemark}" readonly>
+                    <input type="text" class="formInput-readonly" style="margin-bottom: 5px;width: 50%;border-left: 0;float: left;" value="${oaActDeparture.qualityPrincipalRemarkT}" readonly>
                 </shiro:lacksPermission>
 
                 <shiro:hasPermission name="quality_supervisor">
@@ -383,6 +407,9 @@
                     //返回上一页
                     window.location.href = '${path}/oaHomePage/toOaHomePage';
                     window.top.tips("提交成功！", 0, 1, 1000);
+                } else if (data === 'backSuccess') {
+                    window.location.href = '${path}/oaHomePage/toOaHomePage';
+                    window.top.tips("提交成功,并将数据转存到待发事项中！", 6, 1, 2000);
                 } else {
                     window.top.tips("提交失败！", 0, 2, 1000);
                 }

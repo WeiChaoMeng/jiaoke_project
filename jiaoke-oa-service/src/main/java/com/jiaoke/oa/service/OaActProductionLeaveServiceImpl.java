@@ -36,6 +36,7 @@ public class OaActProductionLeaveServiceImpl implements OaActProductionLeaveServ
         oaActProductionLeave.setCreateTime(new Date());
         oaActProductionLeave.setPromoter(userId);
         oaActProductionLeave.setUrl("productionLeave");
+        oaActProductionLeave.setState(0);
         if (oaActProductionLeaveMapper.insertSelective(oaActProductionLeave) < 0) {
             return -1;
         } else {
@@ -45,6 +46,7 @@ public class OaActProductionLeaveServiceImpl implements OaActProductionLeaveServ
             oaCollaboration.setTitle(oaActProductionLeave.getTitle());
             oaCollaboration.setUrl("productionLeave");
             oaCollaboration.setTable("oa_act_production_leave");
+            oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("生产假审批");
             oaCollaboration.setDataOne("生育假天数" + oaActProductionLeave.getMaternityLeave());
             oaCollaboration.setDataTwo("申请休假时间" + oaActProductionLeave.getApplyDate());
@@ -57,10 +59,17 @@ public class OaActProductionLeaveServiceImpl implements OaActProductionLeaveServ
 
     @Override
     public int edit(OaActProductionLeave oaActProductionLeave) {
+        oaActProductionLeave.setState(0);
+        oaActProductionLeave.setPersonnel("");
+        oaActProductionLeave.setPersonnelDate("");
+        oaActProductionLeave.setSupervisor("");
+        oaActProductionLeave.setSupervisorDate("");
+        oaActProductionLeave.setCompanyPrincipal("");
+        oaActProductionLeave.setCompanyPrincipalDate("");
+        oaActProductionLeave.setCreateTime(new Date());
         if (oaActProductionLeaveMapper.updateByPrimaryKeySelective(oaActProductionLeave) < 0) {
             return -1;
         } else {
-            oaCollaborationMapper.updateStateByCorrelationId(oaActProductionLeave.getId(), 1, oaActProductionLeave.getTitle());
             return 1;
         }
     }

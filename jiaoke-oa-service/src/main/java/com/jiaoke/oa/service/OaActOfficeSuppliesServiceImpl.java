@@ -59,6 +59,7 @@ public class OaActOfficeSuppliesServiceImpl implements OaActOfficeSuppliesServic
         oaActOfficeSupplies.setId(randomId);
         oaActOfficeSupplies.setPromoter(userId);
         oaActOfficeSupplies.setUrl("officeSupplies");
+        oaActOfficeSupplies.setState(0);
         if (oaActOfficeSuppliesMapper.insertSelective(oaActOfficeSupplies) < 0) {
             return -1;
         } else {
@@ -68,6 +69,7 @@ public class OaActOfficeSuppliesServiceImpl implements OaActOfficeSuppliesServic
             oaCollaboration.setTitle(oaActOfficeSupplies.getTitle());
             oaCollaboration.setUrl("officeSupplies");
             oaCollaboration.setTable("oa_act_office_supplies");
+            oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("办公用品需求计划");
             oaCollaboration.setDataOne("申请部门:" + oaActOfficeSupplies.getDepartment());
             oaCollaboration.setDataTwo("合计:" + oaActOfficeSupplies.getTotal());
@@ -80,6 +82,16 @@ public class OaActOfficeSuppliesServiceImpl implements OaActOfficeSuppliesServic
 
     @Override
     public int edit(OaActOfficeSupplies oaActOfficeSupplies) {
+        oaActOfficeSupplies.setState(0);
+        oaActOfficeSupplies.setReview("");
+        oaActOfficeSupplies.setReviewDate("");
+        oaActOfficeSupplies.setReviewContent("");
+        oaActOfficeSupplies.setPrincipal("");
+        oaActOfficeSupplies.setPrincipalDate("");
+        oaActOfficeSupplies.setPrincipalContent("");
+        oaActOfficeSupplies.setSupervisor("");
+        oaActOfficeSupplies.setSupervisorDate("");
+        oaActOfficeSupplies.setSupervisorContent("");
         oaActOfficeSupplies.setCreateTime(new Date());
         if (oaActOfficeSuppliesMapper.updateByPrimaryKey(oaActOfficeSupplies) < 0) {
             return -1;

@@ -111,19 +111,19 @@
 
         <td class="tdLabel">主管</td>
         <td class="table-td-content">
-            <input type="text" class="formInput-readonly" readonly>
+            ${oaActProductionLeave.supervisor}
         </td>
     </tr>
 
     <tr>
-        <td class="tdLabel">总经理</td>
-        <td class="table-td-content">
-            <input type="text" class="formInput-readonly" readonly>
-        </td>
-
         <td class="tdLabel">人事主管</td>
         <td class="table-td-content">
-            <input type="text" class="formInput-readonly" readonly>
+            ${oaActProductionLeave.personnel}
+        </td>
+
+        <td class="tdLabel">总经理</td>
+        <td class="table-td-content">
+            ${oaActProductionLeave.companyPrincipal}
         </td>
     </tr>
     </tbody>

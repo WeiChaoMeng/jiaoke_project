@@ -83,6 +83,21 @@ public class OaActRegularization {
     private String principalDate;
 
     /**
+     * 部门负责人审批内容
+     */
+    private String principalContentT;
+
+    /**
+     * 部门负责人签字
+     */
+    private String principalT;
+
+    /**
+     * 部门负责人签字时间
+     */
+    private String principalDateT;
+
+    /**
      * 部门管理主管审批内容
      */
     private String supervisorContent;
@@ -126,6 +141,16 @@ public class OaActRegularization {
      * 总经理签字时间
      */
     private String companyPrincipalDate;
+
+    /**
+     * 部门负责人
+     */
+    private String departmentPrincipal;
+
+    /**
+     * 状态
+     */
+    private Integer state;
 
     /**
      * 自我评价
@@ -386,5 +411,45 @@ public class OaActRegularization {
 
     public void setPersonnelCensor(String personnelCensor) {
         this.personnelCensor = personnelCensor;
+    }
+
+    public String getDepartmentPrincipal() {
+        return departmentPrincipal;
+    }
+
+    public void setDepartmentPrincipal(String departmentPrincipal) {
+        this.departmentPrincipal = departmentPrincipal;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
+    public String getPrincipalContentT() {
+        return principalContentT;
+    }
+
+    public void setPrincipalContentT(String principalContentT) {
+        this.principalContentT = principalContentT;
+    }
+
+    public String getPrincipalT() {
+        return principalT;
+    }
+
+    public void setPrincipalT(String principalT) {
+        this.principalT = principalT;
+    }
+
+    public String getPrincipalDateT() {
+        return principalDateT;
+    }
+
+    public void setPrincipalDateT(String principalDateT) {
+        this.principalDateT = principalDateT;
     }
 }

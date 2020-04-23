@@ -40,8 +40,10 @@ public class OaActDeparture {
      *办公室负责人和主管领导
      */
     private String officePrincipal;
+    private String officePrincipalT;
     private String officeSupervisor;
     private String officePrincipalRemark;
+    private String officePrincipalRemarkT;
     private String officeSupervisorRemark;
 
     /**
@@ -64,8 +66,10 @@ public class OaActDeparture {
      *质量技术部负责人和主管领导
      */
     private String qualityPrincipal;
+    private String qualityPrincipalT;
     private String qualitySupervisor;
     private String qualityPrincipalRemark;
+    private String qualityPrincipalRemarkT;
     private String qualitySupervisorRemark;
 
     /**
@@ -89,6 +93,11 @@ public class OaActDeparture {
      */
     private String companyPrincipal;
     private String companyPrincipalRemark;
+
+    /**
+     * 状态
+     */
+    private Integer state;
 
     /**
      * 附件
@@ -400,5 +409,45 @@ public class OaActDeparture {
 
     public void setCompanyPrincipalRemark(String companyPrincipalRemark) {
         this.companyPrincipalRemark = companyPrincipalRemark;
+    }
+
+    public String getOfficePrincipalT() {
+        return officePrincipalT;
+    }
+
+    public void setOfficePrincipalT(String officePrincipalT) {
+        this.officePrincipalT = officePrincipalT;
+    }
+
+    public String getOfficePrincipalRemarkT() {
+        return officePrincipalRemarkT;
+    }
+
+    public void setOfficePrincipalRemarkT(String officePrincipalRemarkT) {
+        this.officePrincipalRemarkT = officePrincipalRemarkT;
+    }
+
+    public String getQualityPrincipalT() {
+        return qualityPrincipalT;
+    }
+
+    public void setQualityPrincipalT(String qualityPrincipalT) {
+        this.qualityPrincipalT = qualityPrincipalT;
+    }
+
+    public String getQualityPrincipalRemarkT() {
+        return qualityPrincipalRemarkT;
+    }
+
+    public void setQualityPrincipalRemarkT(String qualityPrincipalRemarkT) {
+        this.qualityPrincipalRemarkT = qualityPrincipalRemarkT;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
 }

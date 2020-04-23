@@ -95,14 +95,14 @@ public class OaActCar {
     private String principalDate;
 
     /**
-     * 批准人（部门主管领导）
+     * 部门负责人
      */
-    private String supervisor;
+    private String departmentPrincipal;
 
     /**
-     * 部门主管领导审批时间
+     * 状态
      */
-    private String supervisorDate;
+    private Integer state;
 
     /**
      * 附件
@@ -304,19 +304,19 @@ public class OaActCar {
         this.principalDate = principalDate;
     }
 
-    public String getSupervisor() {
-        return supervisor;
+    public String getDepartmentPrincipal() {
+        return departmentPrincipal;
     }
 
-    public void setSupervisor(String supervisor) {
-        this.supervisor = supervisor;
+    public void setDepartmentPrincipal(String departmentPrincipal) {
+        this.departmentPrincipal = departmentPrincipal;
     }
 
-    public String getSupervisorDate() {
-        return supervisorDate;
+    public Integer getState() {
+        return state;
     }
 
-    public void setSupervisorDate(String supervisorDate) {
-        this.supervisorDate = supervisorDate;
+    public void setState(Integer state) {
+        this.state = state;
     }
 }

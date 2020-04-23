@@ -141,18 +141,37 @@ public class OaCollaborationServiceImpl implements OaCollaborationService {
                         String assignee = collaboration.getPreviousApprover();
                         String enforcer = assignee.substring(assignee.indexOf("{") + 1, assignee.indexOf("}"));
 
-                        //部门
-//                        if ("principal".equals(enforcer) || "supervisor".equals(enforcer)) {
-//                            String userId = departmentMapper.selectEnforcer(enforcer, departmentKey);
-//                            String nickname = userInfoMapper.getNicknameById(Integer.valueOf(userId));
-//                            oc.setPreviousApprover(nickname);
-//                        } else {
-//                            //权限
-//                            oc.setPreviousApprover(oaCollaborationMapper.selectPreviousNodeInfo(enforcer,collaboration.getTable(),collaboration.getCorrelationId()));
-////                            UserInfo userInfo = userInfoMapper.selectByPermission(enforcer);
-////                            oc.setPreviousApprover(userInfo.getNickname());
-//                        }
-                        oc.setPreviousApprover(oaCollaborationMapper.selectPreviousNodeInfo(enforcer, collaboration.getTable(), collaboration.getCorrelationId()));
+                        String previousNodeInfo = oaCollaborationMapper.selectPreviousNodeInfo(enforcer, collaboration.getTable(), collaboration.getCorrelationId());
+                        //上个节点不为空
+                        if (!("".equals(previousNodeInfo ) || previousNodeInfo == null)){
+                            oc.setPreviousApprover(previousNodeInfo);
+
+                        }else{
+                            if ("principal".equals(enforcer)) {
+                                String userId = departmentMapper.selectEnforcer(enforcer, departmentKey);
+                                if (userId.contains(",")){
+                                    StringBuilder stringBuilder = new StringBuilder();
+                                    String[] split = userId.split(",");
+                                    for (String s : split) {
+                                        stringBuilder.append(userInfoMapper.getNicknameById(Integer.valueOf(s))).append(",");
+                                    }
+                                    oc.setPreviousApprover(stringBuilder.substring(0,stringBuilder.length()-1));
+                                }else{
+                                    String nickname = userInfoMapper.getNicknameById(Integer.valueOf(userId));
+                                    oc.setPreviousApprover(nickname);
+                                }
+                            }else if ("supervisor".equals(enforcer)) {
+                                String userId = departmentMapper.selectEnforcer(enforcer, departmentKey);
+                                String nickname = userInfoMapper.getNicknameById(Integer.valueOf(userId));
+                                oc.setPreviousApprover(nickname);
+                            } else {
+                                //权限
+                                oc.setPreviousApprover(oaCollaborationMapper.selectPreviousNodeInfo(enforcer,collaboration.getTable(),collaboration.getCorrelationId()));
+                                UserInfo userInfo = userInfoMapper.selectByPermission(enforcer);
+                                oc.setPreviousApprover(userInfo.getNickname());
+                            }
+                        }
+//                        oc.setPreviousApprover(oaCollaborationMapper.selectPreviousNodeInfo(enforcer, collaboration.getTable(), collaboration.getCorrelationId()));
                     } else if ("网关".equals(collaboration.getPreviousApprover())) {
                         oc.setPreviousApprover(collaboration.getPreviousApprover());
                     } else {
@@ -249,5 +268,10 @@ public class OaCollaborationServiceImpl implements OaCollaborationService {
     @Override
     public int updateState(String correlationId, Integer state) {
         return oaCollaborationMapper.updateState(correlationId, state);
+    }
+
+    @Override
+    public int updateStatusCode(String correlationId, String statusCode) {
+        return oaCollaborationMapper.updateStatusCode(correlationId,statusCode);
     }
 }

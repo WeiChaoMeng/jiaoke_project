@@ -1,109 +1,281 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.activiti.org/test" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" expressionLanguage="http://www.w3.org/1999/XPath" id="m1559580139465" name="" targetNamespace="http://www.activiti.org/test" typeLanguage="http://www.w3.org/2001/XMLSchema">
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.activiti.org/test" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" expressionLanguage="http://www.w3.org/1999/XPath" id="m1587313057430" name="" targetNamespace="http://www.activiti.org/test" typeLanguage="http://www.w3.org/2001/XMLSchema">
   <process id="oa_seals_use" isClosed="false" isExecutable="true" name="印章使用审批单" processType="None">
     <startEvent id="start" name="开始"/>
-    <userTask activiti:assignee="${principal}" activiti:exclusive="true" id="osu1" name="部门负责人"/>
-    <userTask activiti:assignee="${supervisor}" activiti:exclusive="true" id="osu2" name="部门主管领导"/>
-    <userTask activiti:assignee="${seal_supervisor}" activiti:exclusive="true" id="osu3" name="印章主管领导"/>
-    <userTask activiti:assignee="${seal_operator}" activiti:exclusive="true" id="osu4" name="盖章人"/>
+    <userTask activiti:assignee="${principal}" activiti:exclusive="true" id="su1" name="部门负责人">
+      <multiInstanceLoopCharacteristics activiti:collection="${principalList}" activiti:elementVariable="principal" isSequential="false">
+        <completionCondition><![CDATA[${nrOfCompletedInstances/nrOfInstances >= 1}]]></completionCondition>
+      </multiInstanceLoopCharacteristics>
+    </userTask>
+    <userTask activiti:assignee="${supervisor}" activiti:exclusive="true" id="su2" name="部门主管领导"/>
+    <userTask activiti:assignee="${seal_supervisor}" activiti:exclusive="true" id="su3" name="印章主管领导"/>
+    <userTask activiti:assignee="${seal_operator}" activiti:exclusive="true" id="su4" name="盖章人"/>
+    <userTask activiti:assignee="${promoter}" activiti:exclusive="true" id="su5" name="知会"/>
     <endEvent id="end" name="结束"/>
-    <sequenceFlow id="_8" sourceRef="start" targetRef="osu1"/>
-    <sequenceFlow id="_9" sourceRef="osu1" targetRef="osu2"/>
-    <sequenceFlow id="_10" sourceRef="osu2" targetRef="osu3"/>
-    <sequenceFlow id="_11" sourceRef="osu3" targetRef="osu4"/>
-    <userTask activiti:assignee="${promoter}" activiti:exclusive="true" id="osu5" name="发起人"/>
-    <sequenceFlow id="_3" sourceRef="osu4" targetRef="osu5"/>
-    <sequenceFlow id="_4" sourceRef="osu5" targetRef="end"/>
+    <exclusiveGateway gatewayDirection="Unspecified" id="principalEG" name="负责人网关"/>
+    <exclusiveGateway gatewayDirection="Unspecified" id="supervisorEG" name="主管领导网关"/>
+    <exclusiveGateway gatewayDirection="Unspecified" id="sealSupervisorEG" name="印章主管网关"/>
+    <exclusiveGateway gatewayDirection="Unspecified" id="operatorEG" name="盖章人网关"/>
+    <userTask activiti:assignee="${promoter}" activiti:exclusive="true" id="su6" name="发起人"/>
+    <userTask activiti:assignee="${promoter}" activiti:exclusive="true" id="su7" name="发起人"/>
+    <userTask activiti:assignee="${promoter}" activiti:exclusive="true" id="su8" name="发起人"/>
+    <userTask activiti:assignee="${promoter}" activiti:exclusive="true" id="su9" name="发起人"/>
     <endEvent id="back" name="回退"/>
+    <sequenceFlow id="_18" sourceRef="start" targetRef="su1"/>
+    <sequenceFlow id="_19" sourceRef="su1" targetRef="principalEG"/>
+    <sequenceFlow id="_20" name="同意" sourceRef="principalEG" targetRef="su2">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${whether == 0}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_21" name="不同意" sourceRef="principalEG" targetRef="su6">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${whether == 1}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_22" sourceRef="su2" targetRef="supervisorEG"/>
+    <sequenceFlow id="_23" name="同意" sourceRef="supervisorEG" targetRef="su3">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${whether == 0}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_24" sourceRef="su3" targetRef="sealSupervisorEG"/>
+    <sequenceFlow id="_25" name="同意" sourceRef="sealSupervisorEG" targetRef="su4">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${whether == 0}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_26" sourceRef="su4" targetRef="operatorEG"/>
+    <sequenceFlow id="_27" name="同意" sourceRef="operatorEG" targetRef="su5">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${whether == 0}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_28" sourceRef="su5" targetRef="end"/>
+    <sequenceFlow id="_29" name="不同意" sourceRef="supervisorEG" targetRef="su7">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${whether == 1}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_30" name="不同意" sourceRef="sealSupervisorEG" targetRef="su8">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${whether == 1}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_31" name="不同意" sourceRef="operatorEG" targetRef="su9">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${whether == 1}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_32" sourceRef="su6" targetRef="back"/>
+    <sequenceFlow id="_33" sourceRef="su7" targetRef="back"/>
+    <sequenceFlow id="_34" sourceRef="su8" targetRef="back"/>
+    <sequenceFlow id="_35" sourceRef="su9" targetRef="back"/>
   </process>
   <bpmndi:BPMNDiagram documentation="background=#3C3F41;count=1;horizontalcount=1;orientation=0;width=842.4;height=1195.2;imageableWidth=832.4;imageableHeight=1185.2;imageableX=5.0;imageableY=5.0" id="Diagram-_1" name="New Diagram">
     <bpmndi:BPMNPlane bpmnElement="oa_seals_use">
       <bpmndi:BPMNShape bpmnElement="start" id="Shape-start">
-        <omgdc:Bounds height="32.0" width="32.0" x="320.0" y="15.0"/>
+        <omgdc:Bounds height="32.0" width="32.0" x="75.0" y="0.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="osu1" id="Shape-osu1">
-        <omgdc:Bounds height="55.0" width="85.0" x="295.0" y="90.0"/>
+      <bpmndi:BPMNShape bpmnElement="su1" id="Shape-su1">
+        <omgdc:Bounds height="55.0" width="85.0" x="45.0" y="80.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="osu2" id="Shape-osu2">
-        <omgdc:Bounds height="55.0" width="85.0" x="295.0" y="180.0"/>
+      <bpmndi:BPMNShape bpmnElement="su2" id="Shape-su2">
+        <omgdc:Bounds height="55.0" width="85.0" x="45.0" y="170.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="osu3" id="Shape-osu3">
-        <omgdc:Bounds height="55.0" width="85.0" x="295.0" y="270.0"/>
+      <bpmndi:BPMNShape bpmnElement="su3" id="Shape-su3">
+        <omgdc:Bounds height="55.0" width="85.0" x="45.0" y="265.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="osu4" id="Shape-osu4">
-        <omgdc:Bounds height="55.0" width="85.0" x="300.0" y="355.0"/>
+      <bpmndi:BPMNShape bpmnElement="su4" id="Shape-su4">
+        <omgdc:Bounds height="55.0" width="85.0" x="50.0" y="355.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="su5" id="Shape-su5">
+        <omgdc:Bounds height="55.0" width="85.0" x="50.0" y="450.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="end" id="Shape-end">
-        <omgdc:Bounds height="32.0" width="32.0" x="330.0" y="540.0"/>
+        <omgdc:Bounds height="32.0" width="32.0" x="75.0" y="540.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="osu5" id="Shape-osu5">
-        <omgdc:Bounds height="55.0" width="85.0" x="300.0" y="440.0"/>
+      <bpmndi:BPMNShape bpmnElement="principalEG" id="Shape-principalEG" isMarkerVisible="false">
+        <omgdc:Bounds height="32.0" width="32.0" x="270.0" y="140.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="supervisorEG" id="Shape-supervisorEG" isMarkerVisible="false">
+        <omgdc:Bounds height="32.0" width="32.0" x="270.0" y="220.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sealSupervisorEG" id="Shape-sealSupervisorEG" isMarkerVisible="false">
+        <omgdc:Bounds height="32.0" width="32.0" x="265.0" y="315.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="operatorEG" id="Shape-operatorEG" isMarkerVisible="false">
+        <omgdc:Bounds height="32.0" width="32.0" x="265.0" y="410.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="su6" id="Shape-su6">
+        <omgdc:Bounds height="55.0" width="85.0" x="410.0" y="125.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="su7" id="Shape-su7">
+        <omgdc:Bounds height="55.0" width="85.0" x="410.0" y="210.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="su8" id="Shape-su8">
+        <omgdc:Bounds height="55.0" width="85.0" x="410.0" y="300.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="su9" id="Shape-su9">
+        <omgdc:Bounds height="55.0" width="85.0" x="410.0" y="395.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="back" id="Shape-back">
-        <omgdc:Bounds height="32.0" width="32.0" x="465.0" y="525.0"/>
+        <omgdc:Bounds height="32.0" width="32.0" x="585.0" y="265.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge bpmnElement="_3" id="BPMNEdge__3" sourceElement="osu4" targetElement="osu5">
-        <omgdi:waypoint x="342.5" y="410.0"/>
-        <omgdi:waypoint x="342.5" y="440.0"/>
+      <bpmndi:BPMNEdge bpmnElement="_35" id="BPMNEdge__35" sourceElement="_16" targetElement="_17">
+        <omgdi:waypoint x="495.0" y="422.5"/>
+        <omgdi:waypoint x="585.0" y="281.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_4" id="BPMNEdge__4" sourceElement="osu5" targetElement="end">
-        <omgdi:waypoint x="346.0" y="495.0"/>
-        <omgdi:waypoint x="346.0" y="540.0"/>
+      <bpmndi:BPMNEdge bpmnElement="_34" id="BPMNEdge__34" sourceElement="_15" targetElement="_17">
+        <omgdi:waypoint x="495.0" y="327.5"/>
+        <omgdi:waypoint x="585.0" y="281.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_8" id="BPMNEdge__8" sourceElement="start" targetElement="osu1">
-        <omgdi:waypoint x="336.0" y="47.0"/>
-        <omgdi:waypoint x="336.0" y="90.0"/>
+      <bpmndi:BPMNEdge bpmnElement="_19" id="BPMNEdge__19" sourceElement="_3" targetElement="_9">
+        <omgdi:waypoint x="130.0" y="107.5"/>
+        <omgdi:waypoint x="270.0" y="156.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_9" id="BPMNEdge__9" sourceElement="osu1" targetElement="osu2">
-        <omgdi:waypoint x="337.5" y="145.0"/>
-        <omgdi:waypoint x="337.5" y="180.0"/>
+      <bpmndi:BPMNEdge bpmnElement="_18" id="BPMNEdge__18" sourceElement="_2" targetElement="_3">
+        <omgdi:waypoint x="91.0" y="32.0"/>
+        <omgdi:waypoint x="91.0" y="80.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_11" id="BPMNEdge__11" sourceElement="osu3" targetElement="osu4">
-        <omgdi:waypoint x="340.0" y="325.0"/>
-        <omgdi:waypoint x="340.0" y="355.0"/>
+      <bpmndi:BPMNEdge bpmnElement="_20" id="BPMNEdge__20" sourceElement="_9" targetElement="_4">
+        <omgdi:waypoint x="270.0" y="156.0"/>
+        <omgdi:waypoint x="130.0" y="197.5"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_10" id="BPMNEdge__10" sourceElement="osu2" targetElement="osu3">
-        <omgdi:waypoint x="337.5" y="235.0"/>
-        <omgdi:waypoint x="337.5" y="270.0"/>
+      <bpmndi:BPMNEdge bpmnElement="_22" id="BPMNEdge__22" sourceElement="_4" targetElement="_10">
+        <omgdi:waypoint x="130.0" y="197.5"/>
+        <omgdi:waypoint x="270.0" y="236.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_21" id="BPMNEdge__21" sourceElement="_9" targetElement="_13">
+        <omgdi:waypoint x="302.0" y="156.0"/>
+        <omgdi:waypoint x="410.0" y="152.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_24" id="BPMNEdge__24" sourceElement="_5" targetElement="_11">
+        <omgdi:waypoint x="130.0" y="292.5"/>
+        <omgdi:waypoint x="265.0" y="331.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_23" id="BPMNEdge__23" sourceElement="_10" targetElement="_5">
+        <omgdi:waypoint x="270.0" y="236.0"/>
+        <omgdi:waypoint x="130.0" y="292.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_26" id="BPMNEdge__26" sourceElement="_6" targetElement="_12">
+        <omgdi:waypoint x="135.0" y="382.5"/>
+        <omgdi:waypoint x="265.0" y="426.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_25" id="BPMNEdge__25" sourceElement="_11" targetElement="_6">
+        <omgdi:waypoint x="265.0" y="331.0"/>
+        <omgdi:waypoint x="135.0" y="382.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_28" id="BPMNEdge__28" sourceElement="_7" targetElement="_8">
+        <omgdi:waypoint x="91.0" y="505.0"/>
+        <omgdi:waypoint x="91.0" y="540.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_27" id="BPMNEdge__27" sourceElement="_12" targetElement="_7">
+        <omgdi:waypoint x="265.0" y="426.0"/>
+        <omgdi:waypoint x="135.0" y="477.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_29" id="BPMNEdge__29" sourceElement="_10" targetElement="_14">
+        <omgdi:waypoint x="302.0" y="236.0"/>
+        <omgdi:waypoint x="410.0" y="237.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_31" id="BPMNEdge__31" sourceElement="_12" targetElement="_16">
+        <omgdi:waypoint x="297.0" y="426.0"/>
+        <omgdi:waypoint x="410.0" y="422.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_30" id="BPMNEdge__30" sourceElement="_11" targetElement="_15">
+        <omgdi:waypoint x="297.0" y="331.0"/>
+        <omgdi:waypoint x="410.0" y="327.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_33" id="BPMNEdge__33" sourceElement="_14" targetElement="_17">
+        <omgdi:waypoint x="495.0" y="237.5"/>
+        <omgdi:waypoint x="585.0" y="281.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_32" id="BPMNEdge__32" sourceElement="_13" targetElement="_17">
+        <omgdi:waypoint x="495.0" y="152.5"/>
+        <omgdi:waypoint x="585.0" y="281.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>

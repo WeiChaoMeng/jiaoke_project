@@ -72,6 +72,7 @@
                 <input type="hidden" name="id" value="${oaActDocument.id}">
                 <input type="hidden" name="title" value="${oaActDocument.title}">
                 <input type="hidden" name="copyGiveId" value="${oaActDocument.copyGiveId}">
+                <input type="hidden" name="mainGiveId" value="${oaActDocument.mainGiveId}">
                 <input type="hidden" name="promoter" value="${oaActDocument.promoter}">
             </td>
         </tr>
@@ -282,6 +283,9 @@
                     //返回上一页
                     window.location.href = '${path}/oaHomePage/toOaHomePage';
                     window.top.tips("提交成功！", 0, 1, 1000);
+                } else if (data === 'backSuccess') {
+                    window.location.href = '${path}/oaHomePage/toOaHomePage';
+                    window.top.tips("提交成功,并将数据转存到待发事项中！", 6, 1, 2000);
                 } else {
                     window.top.tips("提交失败！", 0, 2, 1000);
                 }

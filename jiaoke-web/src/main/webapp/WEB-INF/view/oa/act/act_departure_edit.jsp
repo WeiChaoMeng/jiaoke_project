@@ -122,6 +122,7 @@
             <td class="table-td-content" style="width: 35%">
                 <input type="text" class="formInput-readonly" name="name" value="${oaActDeparture.name}" readonly>
                 <input type="hidden" name="id" value="${oaActDeparture.id}">
+                <input type="hidden" name="promoter" value="${oaActDeparture.promoter}">
                 <%--暂存附件--%>
                 <input type="hidden" id="annex" name="annex">
             </td>

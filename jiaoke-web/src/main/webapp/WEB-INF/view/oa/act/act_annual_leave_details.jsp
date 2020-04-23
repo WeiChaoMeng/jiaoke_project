@@ -111,19 +111,19 @@
 
         <td class="tdLabel">主管</td>
         <td class="table-td-content">
-            <input type="text" class="formInput-readonly" value="${oaActAnnualLeave.supervisor}" readonly>
+            ${oaActAnnualLeave.supervisor}
         </td>
     </tr>
 
     <tr>
-        <td class="tdLabel">总经理</td>
-        <td class="table-td-content">
-            <input type="text" class="formInput-readonly" value="${oaActAnnualLeave.companyPrincipal}" readonly>
-        </td>
-
         <td class="tdLabel">人事主管</td>
         <td class="table-td-content">
-            <input type="text" class="formInput-readonly" value="${oaActAnnualLeave.personnel}" readonly>
+            ${oaActAnnualLeave.personnel}
+        </td>
+
+        <td class="tdLabel">总经理</td>
+        <td class="table-td-content">
+            ${oaActAnnualLeave.companyPrincipal}
         </td>
     </tr>
     </tbody>

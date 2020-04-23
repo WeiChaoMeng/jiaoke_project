@@ -36,6 +36,7 @@ public class OaActLaborContractRenewalServiceImpl implements OaActLaborContractR
         oaActLaborContractRenewal.setCreateTime(new Date());
         oaActLaborContractRenewal.setPromoter(userId);
         oaActLaborContractRenewal.setUrl("laborContractRenewal");
+        oaActLaborContractRenewal.setState(0);
         if (oaActLaborContractRenewalMapper.insert(oaActLaborContractRenewal) < 0) {
             return -1;
         } else {
@@ -45,6 +46,7 @@ public class OaActLaborContractRenewalServiceImpl implements OaActLaborContractR
             oaCollaboration.setTitle(oaActLaborContractRenewal.getTitle());
             oaCollaboration.setUrl("laborContractRenewal");
             oaCollaboration.setTable("oa_act_labor_contract_renewal");
+            oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("劳务派遣员工协议签订、续订、变更、终止审批");
             oaCollaboration.setDataOne("通知时间：" + DateUtil.dateConvertYYYYMMDD(oaActLaborContractRenewal.getCreateTime()));
             oaCollaboration.setDataTwo("劳动合同到期时间：" + oaActLaborContractRenewal.getStartDate());
@@ -57,10 +59,22 @@ public class OaActLaborContractRenewalServiceImpl implements OaActLaborContractR
 
     @Override
     public int edit(OaActLaborContractRenewal oaActLaborContractRenewal) {
+        oaActLaborContractRenewal.setState(0);
+        oaActLaborContractRenewal.setPrincipal("");
+        oaActLaborContractRenewal.setPrincipalDate("");
+        oaActLaborContractRenewal.setPrincipalContent("");
+        oaActLaborContractRenewal.setSupervisor("");
+        oaActLaborContractRenewal.setSupervisorDate("");
+        oaActLaborContractRenewal.setSupervisorContent("");
+        oaActLaborContractRenewal.setPersonnel("");
+        oaActLaborContractRenewal.setPersonnelDate("");
+        oaActLaborContractRenewal.setPersonnelContent("");
+        oaActLaborContractRenewal.setCompanyPrincipal("");
+        oaActLaborContractRenewal.setCompanyPrincipalDate("");
+        oaActLaborContractRenewal.setCompanyPrincipalContent("");
         if (oaActLaborContractRenewalMapper.updateByPrimaryKeySelective(oaActLaborContractRenewal) < 0) {
             return -1;
         } else {
-            oaCollaborationMapper.updateStateByCorrelationId(oaActLaborContractRenewal.getId(), 1, oaActLaborContractRenewal.getTitle());
             return 1;
         }
     }

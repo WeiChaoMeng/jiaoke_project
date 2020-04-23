@@ -106,6 +106,7 @@ public class OaActOfficeSuppliesUseServiceImpl implements OaActOfficeSuppliesUse
             oaCollaboration.setUrl("officeSuppliesUse");
             oaCollaboration.setTable("oa_act_office_supplies_use");
             oaCollaboration.setName("办公用品领用");
+            oaCollaboration.setStatusCode("协同");
             oaCollaboration.setDataOne("领用人:" + oaActOfficeSuppliesUse.getRecipientsPreparer());
             oaCollaboration.setDataTwo("领用日期:" + oaActOfficeSuppliesUse.getRecipientsDate());
             oaCollaboration.setState(state);

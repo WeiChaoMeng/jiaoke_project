@@ -14,7 +14,7 @@
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
 </head>
 
-<body id="body">
+<body id="body" style="width: 70%">
 
 <div class="table-title">
     <span>编辑设备维修验收单</span>
@@ -103,8 +103,7 @@
                 <th class="th_title" nowrap="nowrap" style="width: 4%">流程:</th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" placeholder="验收人(审批)、发起者部门负责人(审批)、发起者部门主管领导(审批)、总经理(审批)"
-                               readonly="readonly">
+                        <input type="text" placeholder="验收人→发起者部门负责人→发起者部门主管领导→总经理→知会" readonly>
                     </div>
                 </td>
             </tr>
@@ -121,13 +120,14 @@
                 <input type="hidden" name="promoter" value="${oaActAcceptance.promoter}">
                 <input type="hidden" name="url" value="${oaActAcceptance.url}">
                 <input type="text" class="formInput" name="factory" value="${oaActAcceptance.factory}" autocomplete="off">
+                <input type="hidden" id="departmentPrincipal" name="departmentPrincipal">
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel">维修内容</td>
             <td colspan="5" class="table-td-content" style="padding: 10px">
-                <textarea onkeyup="value=value.replace(/\s+/g,'')" class="write-approval-content-textarea" name="content">${oaActAcceptance.content}</textarea>
+                <textarea oninput="value=value.replace(/\s+/g,'')" class="write-approval-content-textarea" name="content">${oaActAcceptance.content}</textarea>
             </td>
         </tr>
 
@@ -182,36 +182,76 @@
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
 <script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
-    //发送
     function send() {
+        if ($.trim($("#title").val()) === '') {
+            window.top.tips("标题不可以为空！", 6, 5, 2000);
+        } else {
+            var principalGroup = '${principalGroup}';
+            //部门负责人是多个
+            if (principalGroup !== '') {
+                var principalList = JSON.parse(principalGroup);
+                window.top.selectPrincipal(principalList);
+
+                //部门负责人是单个
+            } else {
+                $('#departmentPrincipal').val("single");
+
+                var array = [];
+                $('#annexes').find('input').each(function () {
+                    array.push($(this).val());
+                });
+
+                //发送前将上传好的附件插入form中
+                $('#annex').val(array);
+
+                $.ajax({
+                    type: "POST",
+                    url: '${path}/acceptance/editAdd',
+                    data: $('#oaActAcceptance').serialize(),
+                    error: function (request) {
+                        layer.msg("出错！");
+                    },
+                    success: function (result) {
+                        if (result === "success") {
+                            window.location.href = "${path}/oaIndex.do";
+                            window.top.tips("发送成功！", 0, 1, 2000);
+                        } else {
+                            window.top.tips('发送失败！', 0, 2, 2000);
+                        }
+                    }
+                })
+            }
+        }
+    }
+
+    //根据勾选的部门负责人发送
+    function selectionPrincipal(principalId) {
+        $('#departmentPrincipal').val(principalId);
+
         var array = [];
         $('#annexes').find('input').each(function () {
             array.push($(this).val());
         });
 
-        if ($.trim($("#title").val()) === '') {
-            window.top.tips("标题不能为空！", 6, 5, 1000);
-        } else {
-            //发送前将上传好的附件插入form中
-            $('#annex').val(array);
+        //发送前将上传好的附件插入form中
+        $('#annex').val(array);
 
-            $.ajax({
-                type: "POST",
-                url: '${path}/acceptance/editAdd',
-                data: $('#oaActAcceptance').serialize(),
-                error: function (request) {
-                    window.top.tips("出错！", 6, 2, 1000);
-                },
-                success: function (result) {
-                    if (result === "success") {
-                        window.location.href = "${path}/oaIndex.do";
-                        window.top.tips("发送成功！", 0, 1, 1000);
-                    } else {
-                        window.top.tips("发送失败！", 0, 2, 1000);
-                    }
+        $.ajax({
+            type: "POST",
+            url: '${path}/acceptance/editAdd',
+            data: $('#oaActAcceptance').serialize(),
+            error: function (request) {
+                layer.msg("出错！");
+            },
+            success: function (result) {
+                if (result === "success") {
+                    window.location.href = "${path}/oaIndex.do";
+                    window.top.tips("发送成功！", 0, 1, 2000);
+                } else {
+                    window.top.tips('发送失败！', 0, 2, 2000);
                 }
-            })
-        }
+            }
+        })
     }
 
     //保存待发
@@ -307,7 +347,7 @@
         //执行打印
         window.print();
         $('#tool,#titleArea').show();
-        $('#body').css('width', '80%');
+        $('#body').css('width', '70%');
 
         //附件列表
         let annexesLen = $('#annexes').children().length;

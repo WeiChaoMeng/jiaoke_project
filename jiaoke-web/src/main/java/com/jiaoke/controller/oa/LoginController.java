@@ -32,13 +32,14 @@ public class LoginController {
 
     @Resource
     private UserInfoService userInfoService;
+
     /**
      * 登录
      *
      * @param username userInfo
      * @return result
      */
-    @RequestMapping(value = "/login.do",method = RequestMethod.POST)
+    @RequestMapping(value = "/login.do", method = RequestMethod.POST)
     @ResponseBody
     public String login(String username, String password) {
 //    public String login(@RequestBody UserInfo userInfo) {

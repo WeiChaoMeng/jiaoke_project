@@ -32,9 +32,9 @@
 	clear: both;
 }
 
-body{
-	font-family: "Microsoft YaHei","Segoe UI", "Lucida Grande", Helvetica, Arial,sans-serif;
-}
+/*body{*/
+	/*font-family: "Microsoft YaHei","Segoe UI", "Lucida Grande", Helvetica, Arial,sans-serif;*/
+/*}*/
 .htmleaf-links a{ color: rgba(255, 255, 255, 0.6);outline: none;text-decoration: none;-webkit-transition: 0.2s;transition: 0.2s;}
 .htmleaf-links a:hover,.htmleaf-links a:focus{color:#74777b;text-decoration: none;}
 .htmleaf-container{

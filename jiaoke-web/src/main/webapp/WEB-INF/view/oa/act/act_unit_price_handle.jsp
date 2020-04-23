@@ -319,9 +319,7 @@
             <td class="tdLabel">经营部长审核</td>
             <td class="table-td-content" colspan="3">
                 <shiro:hasPermission name="operating_principal">
-                    <input type="text" class="formInput-readonly" name="businessPrincipal" value="${nickname}" readonly>
-                    <input type="hidden" name="businessPrincipalDate"
-                           value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">
+                    <div style="width: 100%;height: 100%;" id="operatingPrincipalContent"></div>
                 </shiro:hasPermission>
 
                 <shiro:lacksPermission name="operating_principal">
@@ -334,10 +332,7 @@
             <td class="tdLabel">经营主管审核</td>
             <td class="table-td-content" colspan="3">
                 <shiro:hasPermission name="operating_supervisor">
-                    <input type="text" class="formInput-readonly" name="businessSupervisor" value="${nickname}"
-                           readonly>
-                    <input type="hidden" name="businessSupervisorDate"
-                           value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">
+                    <div style="width: 100%;height: 100%;" id="operatingSupervisorContent"></div>
                 </shiro:hasPermission>
 
                 <shiro:lacksPermission name="operating_supervisor">
@@ -350,9 +345,7 @@
             <td class="tdLabel">总经理</td>
             <td class="table-td-content" colspan="3">
                 <shiro:hasPermission name="company_principal">
-                    <input type="text" class="formInput-readonly" name="companyPrincipal" value="${nickname}" readonly>
-                    <input type="hidden" name="companyPrincipalDate"
-                           value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">
+                    <div style="width: 100%;height: 100%;" id="companyPrincipalContent"></div>
                 </shiro:hasPermission>
 
                 <shiro:lacksPermission name="company_principal">
@@ -381,6 +374,60 @@
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
 <script>
 
+    //流程执行步骤
+    var unitPrice = JSON.parse('${oaActUnitPriceJson}');
+    //标记
+    var flag = 0;
+
+    if (unitPrice.state === 0) {
+        if (flag === 0) {
+            if (unitPrice.businessPrincipal === "" || unitPrice.businessPrincipal === undefined) {
+                $('#operatingPrincipalContent').append('<input type="text" class="formInput-readonly" name="businessPrincipal" value="${nickname}" readonly>\n' +
+                    '                    <input type="hidden" name="businessPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                flag = 1;
+            } else {
+                $('#operatingPrincipalContent').append(unitPrice.businessPrincipal);
+            }
+        } else {
+            $('#operatingPrincipalContent').append(unitPrice.businessPrincipal);
+        }
+
+        if (flag === 0) {
+            if (unitPrice.businessSupervisor === "" || unitPrice.businessSupervisor === undefined) {
+                $('#operatingSupervisorContent').append('<input type="text" class="formInput-readonly" name="businessSupervisor" value="${nickname}" readonly>\n' +
+                    '                    <input type="hidden" name="businessSupervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                flag = 1;
+            } else {
+                $('#operatingSupervisorContent').append(unitPrice.businessSupervisor);
+            }
+        } else {
+            $('#operatingSupervisorContent').append(unitPrice.businessSupervisor);
+        }
+
+        if (flag === 0) {
+            if (unitPrice.companyPrincipal === "" || unitPrice.companyPrincipal === undefined) {
+                $('#companyPrincipalContent').append('<input type="text" class="formInput-readonly" name="companyPrincipal" value="${nickname}" readonly>\n' +
+                    '                    <input type="hidden" name="companyPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                flag = 1;
+            } else {
+                $('#companyPrincipalContent').append(unitPrice.companyPrincipal);
+            }
+        } else {
+            $('#companyPrincipalContent').append(unitPrice.companyPrincipal);
+        }
+
+        if (flag === 0) {
+            $('#return').html("");
+            $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
+        }
+    } else {
+        $('#operatingPrincipalContent').append(unitPrice.businessPrincipal);
+        $('#operatingSupervisorContent').append(unitPrice.businessSupervisor);
+        $('#companyPrincipalContent').append(unitPrice.companyPrincipal);
+        $('#return').html("");
+        $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
+    }
+
     //任务Id
     var taskId = JSON.parse('${taskId}');
 
@@ -396,6 +443,9 @@
                     //返回上一页
                     window.location.href = '${path}/oaHomePage/toOaHomePage';
                     window.top.tips("提交成功！", 0, 1, 1000);
+                } else if (data === 'backSuccess') {
+                    window.location.href = '${path}/oaHomePage/toOaHomePage';
+                    window.top.tips("提交成功,并将数据转存到待发事项中！", 6, 1, 2000);
                 } else {
                     window.top.tips("提交失败！", 0, 2, 1000);
                 }

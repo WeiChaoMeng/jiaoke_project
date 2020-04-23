@@ -37,6 +37,7 @@ public class OaActTaxiUseServiceImpl implements OaActTaxiUseService {
         oaActTaxiUse.setCreateTime(new Date());
         oaActTaxiUse.setPromoter(userId);
         oaActTaxiUse.setUrl("taxiUse");
+        oaActTaxiUse.setState(0);
         if (oaActTaxiUseMapper.insertSelective(oaActTaxiUse) < 0) {
             return -1;
         } else {
@@ -46,6 +47,7 @@ public class OaActTaxiUseServiceImpl implements OaActTaxiUseService {
             oaCollaboration.setTitle(oaActTaxiUse.getTitle());
             oaCollaboration.setUrl("taxiUse");
             oaCollaboration.setTable("oa_act_taxi_Use");
+            oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("用车审批表（出租车）");
             oaCollaboration.setDataOne("用车时间:" + oaActTaxiUse.getUseTime());
             oaCollaboration.setDataTwo("事由:" + oaActTaxiUse.getReason());
@@ -58,10 +60,14 @@ public class OaActTaxiUseServiceImpl implements OaActTaxiUseService {
 
     @Override
     public int edit(OaActTaxiUse oaActTaxiUse) {
+        oaActTaxiUse.setState(0);
+        oaActTaxiUse.setPrincipal("");
+        oaActTaxiUse.setPrincipalDate("");
+        oaActTaxiUse.setSupervisor("");
+        oaActTaxiUse.setSupervisorDate("");
         if (oaActTaxiUseMapper.updateByPrimaryKeySelective(oaActTaxiUse) < 0) {
             return -1;
         } else {
-            oaCollaborationMapper.updateStateByCorrelationId(oaActTaxiUse.getId(), 1, oaActTaxiUse.getTitle());
             return 1;
         }
     }

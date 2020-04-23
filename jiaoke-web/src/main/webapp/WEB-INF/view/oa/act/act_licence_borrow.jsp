@@ -79,8 +79,7 @@
                 <th class="th_title" nowrap="nowrap" style="width: 4%">流程</th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" placeholder="部门负责人(审批)、证照主管领导(审批)、经办人"
-                               readonly="readonly">
+                        <input type="text" placeholder="发起者部门负责人→证照主管领导→经办人→发起者(知会)" readonly>
                     </div>
                 </td>
             </tr>
@@ -105,13 +104,14 @@
             <td class="tdLabel">借用时间</td>
             <td class="table-td-content">
                 <input type="text" class="formInput je-date" name="borrowTime" onfocus="this.blur()">
+                <input type="hidden" id="departmentPrincipal" name="departmentPrincipal">
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel">用途</td>
             <td class="table-td-content" colspan="3" style="padding: 10px">
-                <textarea class="write-approval-content-textarea" onkeyup="value=value.replace(/\s+/g,'')" name="purpose"></textarea>
+                <textarea class="write-approval-content-textarea" oninput="value=value.replace(/\s+/g,'')" name="purpose"></textarea>
             </td>
         </tr>
 
@@ -169,36 +169,76 @@
         zIndex: 100000,
     });
 
-    //发送
     function send() {
+        if ($.trim($("#title").val()) === '') {
+            window.top.tips("标题不可以为空！", 6, 5, 2000);
+        } else {
+            var principalGroup = '${principalGroup}';
+            //部门负责人是多个
+            if (principalGroup !== '') {
+                var principalList = JSON.parse(principalGroup);
+                window.top.selectPrincipal(principalList);
+
+                //部门负责人是单个
+            } else {
+                $('#departmentPrincipal').val("single");
+
+                var array = [];
+                $('#annexes').find('input').each(function () {
+                    array.push($(this).val());
+                });
+
+                //发送前将上传好的附件插入form中
+                $('#annex').val(array);
+
+                $.ajax({
+                    type: "POST",
+                    url: '${path}/licenceBorrow/add',
+                    data: $('#oaActLicenceBorrow').serialize(),
+                    error: function (request) {
+                        layer.msg("出错！");
+                    },
+                    success: function (result) {
+                        if (result === "success") {
+                            window.location.href = "${path}/oaIndex.do";
+                            window.top.tips("发送成功！", 0, 1, 2000);
+                        } else {
+                            window.top.tips('发送失败！', 0, 2, 2000);
+                        }
+                    }
+                })
+            }
+        }
+    }
+
+    //根据勾选的部门负责人发送
+    function selectionPrincipal(principalId) {
+        $('#departmentPrincipal').val(principalId);
+
         var array = [];
         $('#annexes').find('input').each(function () {
             array.push($(this).val());
         });
 
-        if ($.trim($("#title").val()) === '') {
-            window.top.tips("标题不能为空！", 6, 5, 1000);
-        } else {
-            //发送前将上传好的附件插入form中
-            $('#annex').val(array);
+        //发送前将上传好的附件插入form中
+        $('#annex').val(array);
 
-            $.ajax({
-                type: "POST",
-                url: '${path}/licenceBorrow/add',
-                data: $('#oaActLicenceBorrow').serialize(),
-                error: function (request) {
-                    window.top.tips("出错！", 6, 2, 1000);
-                },
-                success: function (result) {
-                    if (result === "success") {
-                        window.top.tips("发送成功！", 0, 1, 1000);
-                        window.location.href = "${path}/oaIndex.do";
-                    } else {
-                        window.top.tips("发送失败！", 0, 2, 1000);
-                    }
+        $.ajax({
+            type: "POST",
+            url: '${path}/licenceBorrow/add',
+            data: $('#oaActLicenceBorrow').serialize(),
+            error: function (request) {
+                layer.msg("出错！");
+            },
+            success: function (result) {
+                if (result === "success") {
+                    window.location.href = "${path}/oaIndex.do";
+                    window.top.tips("发送成功！", 0, 1, 2000);
+                } else {
+                    window.top.tips('发送失败！', 0, 2, 2000);
                 }
-            })
-        }
+            }
+        })
     }
 
     //保存待发

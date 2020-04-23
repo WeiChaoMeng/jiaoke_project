@@ -14,7 +14,7 @@
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
 </head>
 
-<body id="body">
+<body id="body" style="width: 70%">
 
 <div class="table-title">
     <span>${oaActReview.title}</span>
@@ -80,7 +80,7 @@
 
     <tr>
         <td class="tdLabel">合同金额</td>
-        <td class="table-td-content">
+        <td class="table-td-content" style="width: 340px;">
             ${oaActReview.amount}
         </td>
 
@@ -184,7 +184,7 @@
         //执行打印
         window.print();
         $('#tool').show();
-        $('#body').css('width', '80%');
+        $('#body').css('width', '70%');
     }
 </script>
 </html>

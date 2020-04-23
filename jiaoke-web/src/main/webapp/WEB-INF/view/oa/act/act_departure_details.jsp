@@ -83,13 +83,15 @@
     <tr>
         <td class="tdLabel">综合办公室</td>
         <td class="table-td-content" style="padding: 5px 10px;">
-            <input type="text" class="formInput-readonly" style="margin-bottom: 5px;" value="${oaActDeparture.officePrincipal}" readonly>
+            <input type="text" class="formInput-readonly" style="margin-bottom: 5px;width: 50%;border-right: 0;float: left;" value="${oaActDeparture.officePrincipal}" readonly>
+            <input type="text" class="formInput-readonly" style="margin-bottom: 5px;width: 50%;border-left: 0;float: left;" value="${oaActDeparture.officePrincipalT}" readonly>
             <input type="text" class="formInput-readonly" value="${oaActDeparture.officeSupervisor}" readonly>
         </td>
 
         <td class="tdLabel">备注</td>
         <td class="table-td-content">
-            <input type="text" class="formInput-readonly" style="margin-bottom: 5px;" value="${oaActDeparture.officePrincipalRemark}" readonly>
+            <input type="text" class="formInput-readonly" style="margin-bottom: 5px;width: 50%;border-right: 0;float: left;" value="${oaActDeparture.officePrincipalRemark}" readonly>
+            <input type="text" class="formInput-readonly" style="margin-bottom: 5px;width: 50%;border-left: 0;float: left;" value="${oaActDeparture.officePrincipalRemarkT}" readonly>
             <input type="text" class="formInput-readonly" value="${oaActDeparture.officeSupervisorRemark}" readonly>
         </td>
     </tr>
@@ -134,16 +136,15 @@
     <tr>
         <td class="tdLabel">质量技术部</td>
         <td class="table-td-content" style="padding: 5px 10px;">
-            <input type="text" class="formInput-readonly" style="margin-bottom: 5px;"
-                   value="${oaActDeparture.qualityPrincipal}" readonly>
+            <input type="text" class="formInput-readonly" style="margin-bottom: 5px;width: 50%;border-right: 0;float: left;" value="${oaActDeparture.qualityPrincipal}" readonly>
+            <input type="text" class="formInput-readonly" style="margin-bottom: 5px;width: 50%;border-left: 0;float: left;" value="${oaActDeparture.qualityPrincipalT}" readonly>
             <input type="text" class="formInput-readonly" value="${oaActDeparture.qualitySupervisor}" readonly>
         </td>
 
         <td class="tdLabel">备注</td>
         <td class="table-td-content">
-            <input type="text" class="formInput-readonly" style="margin-bottom: 5px;"
-                   value="${oaActDeparture.qualityPrincipalRemark}"
-                   readonly>
+            <input type="text" class="formInput-readonly" style="margin-bottom: 5px;width: 50%;border-right: 0;float: left;" value="${oaActDeparture.qualityPrincipalRemark}" readonly>
+            <input type="text" class="formInput-readonly" style="margin-bottom: 5px;width: 50%;border-left: 0;float: left;" value="${oaActDeparture.qualityPrincipalRemarkT}" readonly>
             <input type="text" class="formInput-readonly" value="${oaActDeparture.qualitySupervisorRemark}"
                    readonly>
         </td>

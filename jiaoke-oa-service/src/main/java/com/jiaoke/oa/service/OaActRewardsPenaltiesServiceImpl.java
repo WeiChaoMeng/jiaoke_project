@@ -37,6 +37,7 @@ public class OaActRewardsPenaltiesServiceImpl implements OaActRewardsPenaltiesSe
         oaActRewardsPenalties.setCreateTime(new Date());
         oaActRewardsPenalties.setPromoter(userId);
         oaActRewardsPenalties.setUrl("rewardsPenalties");
+        oaActRewardsPenalties.setState(0);
         if (oaActRewardsPenaltiesMapper.insertSelective(oaActRewardsPenalties) < 0) {
             return -1;
         } else {
@@ -46,6 +47,7 @@ public class OaActRewardsPenaltiesServiceImpl implements OaActRewardsPenaltiesSe
             oaCollaboration.setTitle(oaActRewardsPenalties.getTitle());
             oaCollaboration.setUrl("rewardsPenalties");
             oaCollaboration.setTable("oa_act_rewards_penalties");
+            oaCollaboration.setStatusCode("协同");
             oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);
@@ -55,10 +57,35 @@ public class OaActRewardsPenaltiesServiceImpl implements OaActRewardsPenaltiesSe
 
     @Override
     public int edit(OaActRewardsPenalties oaActRewardsPenalties) {
+        oaActRewardsPenalties.setState(0);
+        oaActRewardsPenalties.setOffice("");
+        oaActRewardsPenalties.setOfficeDate("");
+        oaActRewardsPenalties.setOfficeContent("");
+        oaActRewardsPenalties.setQuality("");
+        oaActRewardsPenalties.setQualityDate("");
+        oaActRewardsPenalties.setQualityContent("");
+        oaActRewardsPenalties.setBusiness("");
+        oaActRewardsPenalties.setBusinessDate("");
+        oaActRewardsPenalties.setBusinessContent("");
+        oaActRewardsPenalties.setProduction("");
+        oaActRewardsPenalties.setProductionDate("");
+        oaActRewardsPenalties.setProductionContent("");
+        oaActRewardsPenalties.setFinancial("");
+        oaActRewardsPenalties.setFinancialDate("");
+        oaActRewardsPenalties.setFinancialContent("");
+        oaActRewardsPenalties.setPersonnelCensor("");
+        oaActRewardsPenalties.setPersonnelCensorDate("");
+        oaActRewardsPenalties.setPersonnelCensorContent("");
+        oaActRewardsPenalties.setPersonnel("");
+        oaActRewardsPenalties.setPersonnelDate("");
+        oaActRewardsPenalties.setPersonnelContent("");
+        oaActRewardsPenalties.setCompanyPrincipal("");
+        oaActRewardsPenalties.setCompanyPrincipalDate("");
+        oaActRewardsPenalties.setCompanyPrincipalContent("");
+        oaActRewardsPenalties.setCreateTime(new Date());
         if (oaActRewardsPenaltiesMapper.updateByPrimaryKeySelective(oaActRewardsPenalties) < 0) {
             return -1;
         } else {
-            oaCollaborationMapper.updateStateByCorrelationId(oaActRewardsPenalties.getId(), 1, oaActRewardsPenalties.getTitle());
             return 1;
         }
     }

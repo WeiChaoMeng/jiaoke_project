@@ -36,6 +36,7 @@ public class OaActRelieveLaborContractServiceImpl implements OaActRelieveLaborCo
         oaActRelieveLaborContract.setCreateTime(new Date());
         oaActRelieveLaborContract.setPromoter(userId);
         oaActRelieveLaborContract.setUrl("relieveLaborContract");
+        oaActRelieveLaborContract.setState(0);
         if (oaActRelieveLaborContractMapper.insertSelective(oaActRelieveLaborContract) < 0) {
             return -1;
         } else {
@@ -45,6 +46,7 @@ public class OaActRelieveLaborContractServiceImpl implements OaActRelieveLaborCo
             oaCollaboration.setTitle(oaActRelieveLaborContract.getTitle());
             oaCollaboration.setUrl("relieveLaborContract");
             oaCollaboration.setTable("oa_act_relieve_labor_contract");
+            oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("解除劳动合同审批");
             if (oaActRelieveLaborContract.getRelieveType() == 0) {
                 oaCollaboration.setDataOne("解除类型：个人提出辞职");
@@ -63,10 +65,23 @@ public class OaActRelieveLaborContractServiceImpl implements OaActRelieveLaborCo
 
     @Override
     public int edit(OaActRelieveLaborContract oaActRelieveLaborContract) {
+        oaActRelieveLaborContract.setState(0);
+        oaActRelieveLaborContract.setPrincipal("");
+        oaActRelieveLaborContract.setPrincipalDate("");
+        oaActRelieveLaborContract.setPrincipalContent("");
+        oaActRelieveLaborContract.setSupervisor("");
+        oaActRelieveLaborContract.setSupervisorDate("");
+        oaActRelieveLaborContract.setSupervisorContent("");
+        oaActRelieveLaborContract.setPersonnel("");
+        oaActRelieveLaborContract.setPersonnelDate("");
+        oaActRelieveLaborContract.setPersonnelContent("");
+        oaActRelieveLaborContract.setCompanyPrincipal("");
+        oaActRelieveLaborContract.setCompanyPrincipalDate("");
+        oaActRelieveLaborContract.setCompanyPrincipalContent("");
+        oaActRelieveLaborContract.setCreateTime(new Date());
         if (oaActRelieveLaborContractMapper.updateByPrimaryKeySelective(oaActRelieveLaborContract) < 0) {
             return -1;
         } else {
-            oaCollaborationMapper.updateStateByCorrelationId(oaActRelieveLaborContract.getId(), 1, oaActRelieveLaborContract.getTitle());
             return 1;
         }
     }

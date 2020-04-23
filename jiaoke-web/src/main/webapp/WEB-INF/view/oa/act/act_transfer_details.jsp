@@ -114,14 +114,14 @@
     <tr>
         <td class="tdLabel">转岗事由</td>
         <td colspan="7" class="table-td-evaluation">
-            <textarea class="evaluation-content-disabled" style="height: 73px" disabled>${transfer.cause}</textarea>
+            <textarea class="evaluation-content-disabled" style="height: 73px" readonly>${transfer.cause}</textarea>
             <div class="approval-date">
                 <label class="approval-date-label">日期 </label>
-                <input class="approval-date-input" type="text" value="${transfer.createTimeStr}" disabled>
+                <input class="approval-date-input" type="text" value="${transfer.createTimeStr}" readonly>
             </div>
             <div class="approval-signature">
                 <label class="approval-signature-label">本人签字 </label>
-                <input class="approval-signature-input" type="text" value="${transfer.promoterStr}" disabled>
+                <input class="approval-signature-input" type="text" value="${transfer.promoterStr}" readonly>
             </div>
         </td>
     </tr>
@@ -131,27 +131,27 @@
         <td colspan="7" class="table-td-textarea" style="line-height: 0">
             <div class="opinion-principal">
                 <label class="opinion-principal-title">部长</label>
-                <textarea class="opinion-column-Juxtaposition" disabled>${transfer.principalContent}</textarea>
+                <textarea class="opinion-column-Juxtaposition" readonly>${transfer.principalContent}</textarea>
                 <div class="approval-date">
                     <label class="approval-date-label">日期 </label>
-                    <input class="approval-date-input" type="text" value="${transfer.principalDate}" disabled>
+                    <input class="approval-date-input" type="text" value="${transfer.principalDate}" readonly>
                 </div>
                 <div class="approval-signature">
                     <label class="approval-signature-label">签字 </label>
-                    <input class="approval-signature-input" type="text" value="${transfer.principal}" disabled>
+                    <input class="approval-signature-input" type="text" value="${transfer.principal}" readonly>
                 </div>
             </div>
 
             <div class="opinion-supervisor">
                 <label class="opinion-principal-title">主管</label>
-                <textarea class="opinion-column-Juxtaposition" disabled>${transfer.supervisorContent}</textarea>
+                <textarea class="opinion-column-Juxtaposition" readonly>${transfer.supervisorContent}</textarea>
                 <div class="approval-date">
                     <label class="approval-date-label">日期 </label>
-                    <input class="approval-date-input" type="text" value="${transfer.supervisorDate}" disabled>
+                    <input class="approval-date-input" type="text" value="${transfer.supervisorDate}" readonly>
                 </div>
                 <div class="approval-signature">
                     <label class="approval-signature-label">签字 </label>
-                    <input class="approval-signature-input" type="text" value="${transfer.supervisor}" disabled>
+                    <input class="approval-signature-input" type="text" value="${transfer.supervisor}" readonly>
                 </div>
             </div>
         </td>
@@ -162,27 +162,27 @@
         <td colspan="7" class="table-td-textarea" style="line-height: 0">
             <div class="opinion-principal">
                 <label class="opinion-principal-title">部长</label>
-                <textarea class="opinion-column-Juxtaposition" disabled>${transfer.transferPrincipalContent}</textarea>
+                <textarea class="opinion-column-Juxtaposition" readonly>${transfer.transferPrincipalContent}</textarea>
                 <div class="approval-date">
                     <label class="approval-date-label">日期 </label>
-                    <input class="approval-date-input" type="text" value="${transfer.transferPrincipalDate}" disabled>
+                    <input class="approval-date-input" type="text" value="${transfer.transferPrincipalDate}" readonly>
                 </div>
                 <div class="approval-signature">
                     <label class="approval-signature-label">签字 </label>
-                    <input class="approval-signature-input" type="text" value="${transfer.transferPrincipal}" disabled>
+                    <input class="approval-signature-input" type="text" value="${transfer.transferPrincipal}" readonly>
                 </div>
             </div>
 
             <div class="opinion-supervisor">
                 <label class="opinion-principal-title">主管</label>
-                <textarea class="opinion-column-Juxtaposition" disabled>${transfer.transferSupervisorDate}</textarea>
+                <textarea class="opinion-column-Juxtaposition" readonly>${transfer.transferSupervisorDate}</textarea>
                 <div class="approval-date">
                     <label class="approval-date-label">日期 </label>
-                    <input class="approval-date-input" type="text" value="${transfer.transferSupervisorDate}" disabled>
+                    <input class="approval-date-input" type="text" value="${transfer.transferSupervisorDate}" readonly>
                 </div>
                 <div class="approval-signature">
                     <label class="approval-signature-label">签字 </label>
-                    <input class="approval-signature-input" type="text" value="${transfer.transferSupervisor}" disabled>
+                    <input class="approval-signature-input" type="text" value="${transfer.transferSupervisor}" readonly>
                 </div>
             </div>
         </td>
@@ -191,14 +191,14 @@
     <tr>
         <td class="tdLabel">组织人事部意见</td>
         <td colspan="7" class="approval-content">
-            <textarea class="approval-content-textarea" disabled>${transfer.personnelContent}</textarea>
+            <textarea class="approval-content-textarea" readonly>${transfer.personnelContent}</textarea>
             <div class="approval-date">
                 <label class="approval-date-label">日期 </label>
-                <input class="approval-date-input" type="text" value="${transfer.personnelDate}" disabled>
+                <input class="approval-date-input" type="text" value="${transfer.personnelDate}" readonly>
             </div>
             <div class="approval-signature">
                 <label class="approval-signature-label">签字 </label>
-                <input class="approval-signature-input" type="text" value="${transfer.personnel}" disabled>
+                <input class="approval-signature-input" type="text" value="${transfer.personnel}" readonly>
             </div>
         </td>
     </tr>
@@ -206,14 +206,14 @@
     <tr>
         <td class="tdLabel">总经理审批</td>
         <td colspan="7" class="approval-content">
-            <textarea class="approval-content-textarea" disabled>${transfer.companyPrincipalContent}</textarea>
+            <textarea class="approval-content-textarea" readonly>${transfer.companyPrincipalContent}</textarea>
             <div class="approval-date">
                 <label class="approval-date-label">日期 </label>
-                <input class="approval-date-input" type="text" value="${transfer.companyPrincipalDate}" disabled>
+                <input class="approval-date-input" type="text" value="${transfer.companyPrincipalDate}" readonly>
             </div>
             <div class="approval-signature">
                 <label class="approval-signature-label">签字 </label>
-                <input class="approval-signature-input" type="text" value="${transfer.companyPrincipal}" disabled>
+                <input class="approval-signature-input" type="text" value="${transfer.companyPrincipal}" readonly>
             </div>
         </td>
     </tr>
@@ -229,8 +229,8 @@
         $('#body').css('width', '100%');
         //执行打印
         window.print();
-        $('#tool').show();
-        $('#body,#return').css('width', '80%');
+        $('#tool,#return').show();
+        $('#body').css('width', '80%');
     }
 </script>
 </html>

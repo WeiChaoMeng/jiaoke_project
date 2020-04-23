@@ -52,6 +52,7 @@ public class OaActConfirmServiceImpl implements OaActConfirmService {
         oaActConfirm.setCreateTime(new Date());
         oaActConfirm.setPromoter(userId);
         oaActConfirm.setUrl("confirm");
+        oaActConfirm.setState(0);
         if (oaActConfirmMapper.insertSelective(oaActConfirm) < 0) {
             return -1;
         } else {
@@ -61,6 +62,7 @@ public class OaActConfirmServiceImpl implements OaActConfirmService {
             oaCollaboration.setTitle(oaActConfirm.getTitle());
             oaCollaboration.setUrl("confirm");
             oaCollaboration.setTable("oa_act_confirm");
+            oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("确认单审批");
             oaCollaboration.setDataOne("确认名称:" + oaActConfirm.getName());
             oaCollaboration.setDataTwo("确认金额(员):" + oaActConfirm.getMoney());
@@ -73,6 +75,15 @@ public class OaActConfirmServiceImpl implements OaActConfirmService {
 
     @Override
     public int edit(OaActConfirm oaActConfirm) {
+        oaActConfirm.setState(0);
+        oaActConfirm.setCompanyPrincipal("");
+        oaActConfirm.setCompanyPrincipalDate("");
+        oaActConfirm.setFinanceSupervisor("");
+        oaActConfirm.setFinanceSupervisorDate("");
+        oaActConfirm.setFinancialAudit("");
+        oaActConfirm.setFinancialAuditDate("");
+        oaActConfirm.setOperatingStatistics("");
+        oaActConfirm.setOperatingStatisticsDate("");
         oaActConfirm.setCreateTime(new Date());
         if (oaActConfirmMapper.updateByPrimaryKey(oaActConfirm) < 0) {
             return -1;

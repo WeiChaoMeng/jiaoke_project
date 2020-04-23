@@ -34,13 +34,13 @@
             font-weight: 600;
         }
 
-        .formTable td{
+        .formTable td {
             line-height: 20px;
         }
     </style>
 </head>
 
-<body id="body">
+<body id="body" style="width: 70%">
 
 <div class="table-title">
     <span>${oaActOfficeSupplies.title}</span>
@@ -127,6 +127,7 @@
             <td class="tdLabel">填表人</td>
             <td class="table-td-content" style="width: 194px;">
                 ${oaActOfficeSupplies.preparer}
+                <input type="hidden" name="departmentPrincipal" value="${oaActOfficeSupplies.departmentPrincipal}">
             </td>
 
             <td class="tdLabel">填表日期</td>
@@ -229,15 +230,25 @@
 
     //标记
     var flag = 0;
-    if (flag === 0) {
-        if (officeSupplies.review === "" || officeSupplies.review === undefined) {
-            $('#officeSuppliesReviewContent').append(
-                '<div id="officeSuppliesReview"><textarea class="write-approval-content-textarea" onkeyup="value=value.replace(/\\s+/g,\'\')" name="reviewContent"></textarea>\n' +
-                '<div class="approval-date"><label class="approval-date-label">日期 </label>\n' +
-                '<input class="approval-date-input" type="text" name="reviewDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>\n' +
-                '</div><div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
-                '<input class="approval-signature-input" type="text" name="review" value="${nickname}" readonly></div></div>');
-            flag = 1;
+
+    if (officeSupplies.state === 0) {
+        if (flag === 0) {
+            if (officeSupplies.review === "" || officeSupplies.review === undefined) {
+                $('#officeSuppliesReviewContent').append(
+                    '<div id="officeSuppliesReview"><textarea class="write-approval-content-textarea" onkeyup="value=value.replace(/\\s+/g,\'\')" name="reviewContent"></textarea>\n' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>\n' +
+                    '<input class="approval-date-input" type="text" name="reviewDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>\n' +
+                    '</div><div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                    '<input class="approval-signature-input" type="text" name="review" value="${nickname}" readonly></div></div>');
+                flag = 1;
+            } else {
+                $('#officeSuppliesReviewContent').append(
+                    '<textarea class="approval-content-textarea" readonly>${oaActOfficeSupplies.reviewContent}</textarea>\n' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>\n' +
+                    '<input class="approval-date-input" type="text" value="${oaActOfficeSupplies.reviewDate}" readonly>\n' +
+                    '</div><div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                    '<input class="approval-signature-input" type="text" value="${oaActOfficeSupplies.review}" readonly></div>');
+            }
         } else {
             $('#officeSuppliesReviewContent').append(
                 '<textarea class="approval-content-textarea" readonly>${oaActOfficeSupplies.reviewContent}</textarea>\n' +
@@ -246,24 +257,24 @@
                 '</div><div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
                 '<input class="approval-signature-input" type="text" value="${oaActOfficeSupplies.review}" readonly></div>');
         }
-    } else {
-        $('#officeSuppliesReviewContent').append(
-            '<textarea class="approval-content-textarea" readonly>${oaActOfficeSupplies.reviewContent}</textarea>\n' +
-            '<div class="approval-date"><label class="approval-date-label">日期 </label>\n' +
-            '<input class="approval-date-input" type="text" value="${oaActOfficeSupplies.reviewDate}" readonly>\n' +
-            '</div><div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
-            '<input class="approval-signature-input" type="text" value="${oaActOfficeSupplies.review}" readonly></div>');
-    }
 
-    if (flag === 0) {
-        if (officeSupplies.principal === "" || officeSupplies.principal === undefined) {
-            $('#principalContent').append(
-                '<div id="officeSuppliesReview"><textarea class="write-approval-content-textarea" onkeyup="value=value.replace(/\\s+/g,\'\')" name="principalContent"></textarea>\n' +
-                '<div class="approval-date"><label class="approval-date-label">日期 </label>\n' +
-                '<input class="approval-date-input" type="text" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>\n' +
-                '</div><div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
-                '<input class="approval-signature-input" type="text" name="principal" value="${nickname}" readonly></div></div>');
-            flag = 1;
+        if (flag === 0) {
+            if (officeSupplies.principal === "" || officeSupplies.principal === undefined) {
+                $('#principalContent').append(
+                    '<div id="officeSuppliesReview"><textarea class="write-approval-content-textarea" onkeyup="value=value.replace(/\\s+/g,\'\')" name="principalContent"></textarea>\n' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>\n' +
+                    '<input class="approval-date-input" type="text" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>\n' +
+                    '</div><div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                    '<input class="approval-signature-input" type="text" name="principal" value="${nickname}" readonly></div></div>');
+                flag = 1;
+            } else {
+                $('#principalContent').append(
+                    '<textarea class="approval-content-textarea" readonly>${oaActOfficeSupplies.principalContent}</textarea>\n' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>\n' +
+                    '<input class="approval-date-input" type="text" value="${oaActOfficeSupplies.principalDate}" readonly>\n' +
+                    '</div><div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                    '<input class="approval-signature-input" type="text" value="${oaActOfficeSupplies.principal}" readonly></div>');
+            }
         } else {
             $('#principalContent').append(
                 '<textarea class="approval-content-textarea" readonly>${oaActOfficeSupplies.principalContent}</textarea>\n' +
@@ -272,42 +283,56 @@
                 '</div><div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
                 '<input class="approval-signature-input" type="text" value="${oaActOfficeSupplies.principal}" readonly></div>');
         }
+
+        if (flag === 0) {
+            if (officeSupplies.supervisor === "" || officeSupplies.supervisor === undefined) {
+                $('#officeSuppliesSupervisorContent').append(
+                    '<div id="officeSuppliesReview"><textarea class="write-approval-content-textarea" onkeyup="value=value.replace(/\\s+/g,\'\')" name="supervisorContent"></textarea>\n' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>\n' +
+                    '<input class="approval-date-input" type="text" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>\n' +
+                    '</div><div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                    '<input class="approval-signature-input" type="text" name="supervisor" value="${nickname}" readonly></div></div>');
+                flag = 1;
+            } else {
+                $('#officeSuppliesSupervisorContent').append(
+                    '<textarea class="approval-content-textarea" readonly>${oaActOfficeSupplies.supervisorContent}</textarea>\n<div class="approval-date">\n' +
+                    '<label class="approval-date-label">日期 </label>\n' +
+                    '<input class="approval-date-input" type="text" value="${oaActOfficeSupplies.supervisorDate}" readonly>\n' +
+                    '</div><div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                    '<input class="approval-signature-input" type="text" value="${oaActOfficeSupplies.supervisor}" readonly></div>');
+            }
+        } else {
+            $('#officeSuppliesSupervisorContent').append(
+                '<textarea class="approval-content-textarea" readonly>${oaActOfficeSupplies.supervisorContent}</textarea>\n' +
+                '<div class="approval-date"><label class="approval-date-label">日期 </label>\n' +
+                '<input class="approval-date-input" type="text" value="${oaActOfficeSupplies.supervisorDate}" readonly></div>\n' +
+                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                '<input class="approval-signature-input" type="text" value="${oaActOfficeSupplies.supervisor}" readonly></div>');
+        }
+
+        if (flag === 0 ){
+            $('#return').html("");
+            $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
+        }
     } else {
+        $('#officeSuppliesReviewContent').append(
+            '<textarea class="approval-content-textarea" readonly>${oaActOfficeSupplies.reviewContent}</textarea>\n' +
+            '<div class="approval-date"><label class="approval-date-label">日期 </label>\n' +
+            '<input class="approval-date-input" type="text" value="${oaActOfficeSupplies.reviewDate}" readonly>\n' +
+            '</div><div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+            '<input class="approval-signature-input" type="text" value="${oaActOfficeSupplies.review}" readonly></div>');
         $('#principalContent').append(
             '<textarea class="approval-content-textarea" readonly>${oaActOfficeSupplies.principalContent}</textarea>\n' +
             '<div class="approval-date"><label class="approval-date-label">日期 </label>\n' +
             '<input class="approval-date-input" type="text" value="${oaActOfficeSupplies.principalDate}" readonly>\n' +
             '</div><div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
             '<input class="approval-signature-input" type="text" value="${oaActOfficeSupplies.principal}" readonly></div>');
-    }
-
-    if (flag === 0) {
-        if (officeSupplies.supervisor === "" || officeSupplies.supervisor === undefined) {
-            $('#officeSuppliesSupervisorContent').append(
-                '<div id="officeSuppliesReview"><textarea class="write-approval-content-textarea" onkeyup="value=value.replace(/\\s+/g,\'\')" name="supervisorContent"></textarea>\n' +
-                '<div class="approval-date"><label class="approval-date-label">日期 </label>\n' +
-                '<input class="approval-date-input" type="text" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>\n' +
-                '</div><div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
-                '<input class="approval-signature-input" type="text" name="supervisor" value="${nickname}" readonly></div></div>');
-            flag = 1;
-        } else {
-            $('#officeSuppliesSupervisorContent').append(
-                '<textarea class="approval-content-textarea" readonly>${oaActOfficeSupplies.supervisorContent}</textarea>\n<div class="approval-date">\n' +
-                '<label class="approval-date-label">日期 </label>\n' +
-                '<input class="approval-date-input" type="text" value="${oaActOfficeSupplies.supervisorDate}" readonly>\n' +
-                '</div><div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
-                '<input class="approval-signature-input" type="text" value="${oaActOfficeSupplies.supervisor}" readonly></div>');
-        }
-    } else {
         $('#officeSuppliesSupervisorContent').append(
             '<textarea class="approval-content-textarea" readonly>${oaActOfficeSupplies.supervisorContent}</textarea>\n' +
             '<div class="approval-date"><label class="approval-date-label">日期 </label>\n' +
             '<input class="approval-date-input" type="text" value="${oaActOfficeSupplies.supervisorDate}" readonly></div>\n' +
             '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
             '<input class="approval-signature-input" type="text" value="${oaActOfficeSupplies.supervisor}" readonly></div>');
-    }
-
-    if (flag === 0){
         $('#return').html("");
         $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
     }
@@ -327,6 +352,9 @@
                     //返回上一页
                     window.location.href = '${path}/oaHomePage/toOaHomePage';
                     window.top.tips("提交成功！", 0, 1, 1000);
+                } else if (data === 'backSuccess') {
+                    window.location.href = '${path}/oaHomePage/toOaHomePage';
+                    window.top.tips("提交成功,并将数据转存到待发事项中！", 6, 1, 2000);
                 } else {
                     window.top.tips("提交失败！", 0, 2, 1000);
                 }
@@ -344,7 +372,7 @@
         //执行打印
         window.print();
         $('#tool,#return').show();
-        $('#body').css('width', '80%');
+        $('#body').css('width', '70%');
     }
 </script>
 </html>

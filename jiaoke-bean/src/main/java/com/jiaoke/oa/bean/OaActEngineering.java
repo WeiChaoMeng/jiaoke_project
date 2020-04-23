@@ -109,6 +109,16 @@ public class OaActEngineering {
     private String supervisorDate;
 
     /**
+     * 部门负责人
+     */
+    private String departmentPrincipal;
+
+    /**
+     * 状态
+     */
+    private Integer state;
+
+    /**
      * 备注
      */
     private String remark;
@@ -335,5 +345,21 @@ public class OaActEngineering {
 
     public void setSupervisorDate(String supervisorDate) {
         this.supervisorDate = supervisorDate;
+    }
+
+    public String getDepartmentPrincipal() {
+        return departmentPrincipal;
+    }
+
+    public void setDepartmentPrincipal(String departmentPrincipal) {
+        this.departmentPrincipal = departmentPrincipal;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
 }

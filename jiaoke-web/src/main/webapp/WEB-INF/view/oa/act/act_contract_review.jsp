@@ -76,7 +76,7 @@
                 <th class="th_title" nowrap="nowrap" style="width: 4%">流程</th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" placeholder="物资部门(审批)、财务部门(审批)、质量技术(审批)、经营部门(审批)、法务(审批)、总经理(审批)、发起人(协同)"
+                        <input type="text" placeholder="物资部门→财务部门→质量技术→经营部门→法务→总经理(审批)→发起人(知会)"
                                readonly="readonly">
                     </div>
                 </td>

@@ -107,7 +107,7 @@
                 <th class="th_title" nowrap="nowrap" style="width: 4%">流程</th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" placeholder="物资部门(审批)、财务部门(审批)、质量技术(审批)、经营部门(审批)、法务(审批)、总经理(审批)、发起人(协同)"
+                        <input type="text" placeholder="物资部门→财务部门→质量技术→经营部门→法务→总经理(审批)→发起人(知会)"
                                readonly="readonly">
                     </div>
                 </td>
@@ -127,6 +127,7 @@
             <td colspan="3" class="table-td-content">
                 <input type="text" class="formInput" name="contractName" value="${oaActContractReview.contractName}" autocomplete="off">
                 <input type="hidden" id="id" name="id" value="${oaActContractReview.id}">
+                <input type="hidden" id="promoter" name="promoter" value="${oaActContractReview.promoter}">
             </td>
         </tr>
 
@@ -310,7 +311,7 @@
 
             $.ajax({
                 type: "POST",
-                url: '${path}/contractReview/add',
+                url: '${path}/contractReview/editAdd',
                 data: $('#oaActContractReview').serialize(),
                 error: function (request) {
                     window.top.tips("出错！", 6, 2, 1000);

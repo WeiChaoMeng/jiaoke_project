@@ -66,7 +66,7 @@
     </style>
 </head>
 
-<body id="body">
+<body id="body" style="width: 70%">
 
 <div class="table-title">
     <span>编辑验收入库单</span>
@@ -140,7 +140,7 @@
     </c:choose>
 
     <c:choose>
-        <c:when test="${oaActAcceptanceWarehousing.associatedId != ''}">
+        <c:when test="${oaActAcceptanceWarehousing.associatedId != null} || ${oaActAcceptanceWarehousing.associatedId != ''}">
             <div class="relevance-tool" id="relevanceList">
                 <div class="relevance-tool-padding">
 
@@ -198,7 +198,7 @@
                 <th class="th_title" nowrap="nowrap" style="width: 4%">流程</th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" placeholder="验收人(审批)、发起人(知会)" readonly="readonly">
+                        <input type="text" placeholder="验收人→发起人(知会)" readonly="readonly">
                     </div>
                 </td>
             </tr>
@@ -240,11 +240,11 @@
                 <td class="table-td-content" style="text-align: center;">${status.index+1}</td>
 
                 <td class="table-td-content">
-                    <input type="text" class="formInput" name="name" id="name" value="${list.name}" autocomplete="off">
+                    <input type="text" class="formInput" name="name" id="name" oninput="value=value.replace(/\s+/g,'')" value="${list.name}" autocomplete="off">
                 </td>
 
                 <td class="table-td-content">
-                    <input type="text" class="formInput" name="number" id="number" value="${list.number}" autocomplete="off">
+                    <input type="text" class="formInput" name="number" id="number" oninput="value=value.replace(/^(0+)|[^\d]+/g,'')" value="${list.number}" autocomplete="off">
                 </td>
 
                 <td class="table-td-content">
@@ -265,6 +265,7 @@
                     <input type="text" class="formInput-readonly" name="purchaser" id="purchaser" value="${oaActAcceptanceWarehousing.purchaser}"
                            readonly>
                     <input type="hidden" name="id" id="id" value="${oaActAcceptanceWarehousing.id}">
+                    <input type="hidden" name="promoter" id="promoter" value="${oaActAcceptanceWarehousing.promoter}">
                     <input type="hidden" id="listSize" value="${oaActAcceptanceWarehousing.oaAcceptanceWarehousingList.size()}">
                 </td>
 
@@ -307,10 +308,10 @@
                 '<tr>\n' +
                 '            <td class="table-td-content" style="text-align: center;">' + rowId + '</td>\n' +
                 '            <td class="table-td-content">\n' +
-                '                <input type="text" class="formInput" name="name" id="name" autocomplete="off">\n' +
+                '                <input type="text" class="formInput" name="name" id="name" oninput="value=value.replace(/\\s+/g,\'\')" autocomplete="off">\n' +
                 '            </td>\n' +
                 '            <td class="table-td-content">\n' +
-                '                <input type="text" class="formInput" name="number" id="number" autocomplete="off">\n' +
+                '                <input type="text" class="formInput" name="number" id="number" oninput="value=value.replace(/^(0+)|[^\\d]+/g,\'\')" autocomplete="off">\n' +
                 '            </td>\n' +
                 '            <td class="table-td-content">\n' +
                 '                <input type="text" class="formInput-readonly" name="date" id="date" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date())%>">\n' +
@@ -358,12 +359,14 @@
             var id = $('#id').val();
             var pu = $('#purchaser').val();
             var pud = $('#purchaserDate').val();
+            var pro = $('#promoter').val();
             var an = $('#annex').val();
             var oaActAcceptanceWarehousing = {
                 title: tit,
                 id: id,
                 purchaser: pu,
                 purchaserDate: pud,
+                promoter: pro,
                 associatedId: associatedId,
                 oaAcceptanceWarehousingList: acceptanceWarehousing,
                 annex: an
@@ -424,11 +427,13 @@
             var id = $('#id').val();
             var pu = $('#purchaser').val();
             var pud = $('#purchaserDate').val();
+            var pro = $('#promoter').val();
             var an = $('#annex').val();
             var oaActAcceptanceWarehousing = {
                 title: tit,
                 id: id,
                 purchaser: pu,
+                promoter: pro,
                 purchaserDate: pud,
                 associatedId: associatedId,
                 oaAcceptanceWarehousingList: acceptanceWarehousing,
@@ -564,7 +569,7 @@
         //执行打印
         window.print();
         $('#tool,#titleArea,#addRow').show();
-        $('#body').css('width', '80%');
+        $('#body').css('width', '70%');
 
         //附件列表
         let annexesLen = $('#annexes').children().length;

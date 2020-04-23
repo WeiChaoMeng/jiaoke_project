@@ -49,7 +49,8 @@
                     <c:forTokens items="${oaActRegularization.annex}" delims="," var="annex">
                         <div class="table-file">
                             <div class="table-file-content">
-                                <span class="table-file-title" title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <span class="table-file-title"
+                                      title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
                                 <a class="table-file-download icon"
                                    href="/fileDownloadHandle/download?fileName=${annex}"
                                    title="下载">&#xebda;</a>
@@ -76,6 +77,7 @@
                 ${oaActRegularization.name}
                 <input type="hidden" name="id" value="${oaActRegularization.id}">
                 <input type="hidden" name="promoter" value="${oaActRegularization.promoter}">
+                <input type="hidden" name="departmentPrincipal" value="${oaActRegularization.departmentPrincipal}">
             </td>
 
             <td class="tdLabel">部门</td>
@@ -245,107 +247,133 @@
         $('#return').html("");
         $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
         flag = 1;
-    }
+    } else {
+        if (regularization.state === 0) {
+            if (flag === 0) {
+                if (regularization.principal === "" || regularization.principal === undefined) {
+                    $('#principalContent').append(
+                        '<textarea oninput="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="principalContent" style="background-color: #ffffff"></textarea>' +
+                        '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                        '<input class="approval-date-input" type="text" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
+                        '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                        '<input class="approval-signature-input" type="text" name="principal" value="${nickname}" readonly></div>');
+                    flag = 1;
+                } else {
+                    $('#principalContent').append('<textarea class="approval-content-textarea" readonly>${oaActRegularization.principalContent}</textarea>' +
+                        '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                        '<input class="approval-date-input" type="text" value="${oaActRegularization.principalDate}" readonly></div>' +
+                        '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                        '<input class="approval-signature-input" type="text" value="${oaActRegularization.principal}" readonly></div>');
+                }
+            } else {
+                $('#principalContent').append('<textarea class="approval-content-textarea" readonly>${oaActRegularization.principalContent}</textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                    '<input class="approval-date-input" type="text" value="${oaActRegularization.principalDate}" readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                    '<input class="approval-signature-input" type="text" value="${oaActRegularization.principal}" readonly></div>');
+            }
 
-    if (flag === 0) {
-        if (regularization.principal === "" || regularization.principal === undefined) {
-            $('#principalContent').append(
-                '<textarea onkeyup="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="principalContent" style="background-color: #ffffff"></textarea>' +
-                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
-                '<input class="approval-date-input" type="text" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
-                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
-                '<input class="approval-signature-input" type="text" name="principal" value="${nickname}" readonly></div>');
-            flag = 1;
+            if (flag === 0) {
+                if (regularization.supervisor === "" || regularization.supervisor === undefined) {
+                    $('#supervisorContent').append(
+                        '<textarea oninput="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="supervisorContent" style="background-color: #ffffff"></textarea>' +
+                        '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                        '<input class="approval-date-input" type="text" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
+                        '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                        '<input class="approval-signature-input" type="text" name="supervisor" value="${nickname}" readonly></div>');
+                    flag = 1;
+                } else {
+                    $('#supervisorContent').append('<textarea class="approval-content-textarea" readonly>${oaActRegularization.supervisorContent}</textarea>' +
+                        '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                        '<input class="approval-date-input" type="text" value="${oaActRegularization.supervisorDate}" readonly></div>' +
+                        '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                        '<input class="approval-signature-input" type="text" value="${oaActRegularization.supervisor}" readonly></div>');
+                }
+            } else {
+                $('#supervisorContent').append('<textarea class="approval-content-textarea" readonly>${oaActRegularization.supervisorContent}</textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                    '<input class="approval-date-input" type="text" value="${oaActRegularization.supervisorDate}" readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                    '<input class="approval-signature-input" type="text" value="${oaActRegularization.supervisor}" readonly></div>');
+            }
+
+            if (flag === 0) {
+                if (regularization.personnel === "" || regularization.personnel === undefined) {
+                    $('#personnelContent').append(
+                        '<textarea oninput="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="personnelContent" style="background-color: #ffffff"></textarea>' +
+                        '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                        '<input class="approval-date-input" type="text" name="personnelDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
+                        '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                        '<input class="approval-signature-input" type="text" name="personnel" value="${nickname}" readonly></div>');
+                    flag = 1;
+                } else {
+                    $('#personnelContent').append('<textarea class="approval-content-textarea" readonly>${oaActRegularization.personnelContent}</textarea>' +
+                        '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                        '<input class="approval-date-input" type="text" value="${oaActRegularization.personnelDate}" readonly></div>' +
+                        '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                        '<input class="approval-signature-input" type="text" value="${oaActRegularization.personnel}" readonly></div>');
+                }
+            } else {
+                $('#personnelContent').append('<textarea class="approval-content-textarea" readonly>${oaActRegularization.personnelContent}</textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                    '<input class="approval-date-input" type="text" value="${oaActRegularization.personnelDate}" readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                    '<input class="approval-signature-input" type="text" value="${oaActRegularization.personnel}" readonly></div>');
+            }
+
+            if (flag === 0) {
+                if (regularization.companyPrincipal === "" || regularization.companyPrincipal === undefined) {
+                    $('#companyPrincipalContent').append(
+                        '<textarea oninput="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="companyPrincipalContent" style="background-color: #ffffff"></textarea>' +
+                        '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                        '<input class="approval-date-input" type="text" name="companyPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
+                        '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                        '<input class="approval-signature-input" type="text" name="companyPrincipal" value="${nickname}" readonly></div>');
+                    flag = 1;
+                } else {
+                    $('#companyPrincipalContent').append('<textarea class="approval-content-textarea" readonly>${oaActRegularization.companyPrincipalContent}</textarea>' +
+                        '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                        '<input class="approval-date-input" type="text" value="${oaActRegularization.companyPrincipalDate}" readonly></div>' +
+                        '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                        '<input class="approval-signature-input" type="text" value="${oaActRegularization.companyPrincipal}" readonly></div>');
+                }
+            } else {
+                $('#companyPrincipalContent').append('<textarea class="approval-content-textarea" readonly>${oaActRegularization.companyPrincipalContent}</textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                    '<input class="approval-date-input" type="text" value="${oaActRegularization.companyPrincipalDate}" readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                    '<input class="approval-signature-input" type="text" value="${oaActRegularization.companyPrincipal}" readonly></div>');
+            }
+
+            if (flag === 0) {
+                $('#return').html("");
+                $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
+            }
+
         } else {
             $('#principalContent').append('<textarea class="approval-content-textarea" readonly>${oaActRegularization.principalContent}</textarea>' +
                 '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
                 '<input class="approval-date-input" type="text" value="${oaActRegularization.principalDate}" readonly></div>' +
                 '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
                 '<input class="approval-signature-input" type="text" value="${oaActRegularization.principal}" readonly></div>');
-        }
-    } else {
-        $('#principalContent').append('<textarea class="approval-content-textarea" readonly>${oaActRegularization.principalContent}</textarea>' +
-            '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
-            '<input class="approval-date-input" type="text" value="${oaActRegularization.principalDate}" readonly></div>' +
-            '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
-            '<input class="approval-signature-input" type="text" value="${oaActRegularization.principal}" readonly></div>');
-    }
-
-    if (flag === 0) {
-        if (regularization.supervisor === "" || regularization.supervisor === undefined) {
-            $('#supervisorContent').append(
-                '<textarea onkeyup="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="supervisorContent" style="background-color: #ffffff"></textarea>' +
-                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
-                '<input class="approval-date-input" type="text" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
-                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
-                '<input class="approval-signature-input" type="text" name="supervisor" value="${nickname}" readonly></div>');
-            flag = 1;
-        } else {
             $('#supervisorContent').append('<textarea class="approval-content-textarea" readonly>${oaActRegularization.supervisorContent}</textarea>' +
                 '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
                 '<input class="approval-date-input" type="text" value="${oaActRegularization.supervisorDate}" readonly></div>' +
                 '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
                 '<input class="approval-signature-input" type="text" value="${oaActRegularization.supervisor}" readonly></div>');
-        }
-    } else {
-        $('#supervisorContent').append('<textarea class="approval-content-textarea" readonly>${oaActRegularization.supervisorContent}</textarea>' +
-            '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
-            '<input class="approval-date-input" type="text" value="${oaActRegularization.supervisorDate}" readonly></div>' +
-            '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
-            '<input class="approval-signature-input" type="text" value="${oaActRegularization.supervisor}" readonly></div>');
-    }
-
-    if (flag === 0) {
-        if (regularization.personnel === "" || regularization.personnel === undefined) {
-            $('#personnelContent').append(
-                '<textarea onkeyup="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="personnelContent" style="background-color: #ffffff"></textarea>' +
-                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
-                '<input class="approval-date-input" type="text" name="personnelDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
-                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
-                '<input class="approval-signature-input" type="text" name="personnel" value="${nickname}" readonly></div>');
-            flag = 1;
-        } else {
             $('#personnelContent').append('<textarea class="approval-content-textarea" readonly>${oaActRegularization.personnelContent}</textarea>' +
                 '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
                 '<input class="approval-date-input" type="text" value="${oaActRegularization.personnelDate}" readonly></div>' +
                 '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
                 '<input class="approval-signature-input" type="text" value="${oaActRegularization.personnel}" readonly></div>');
-        }
-    } else {
-        $('#personnelContent').append('<textarea class="approval-content-textarea" readonly>${oaActRegularization.personnelContent}</textarea>' +
-            '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
-            '<input class="approval-date-input" type="text" value="${oaActRegularization.personnelDate}" readonly></div>' +
-            '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
-            '<input class="approval-signature-input" type="text" value="${oaActRegularization.personnel}" readonly></div>');
-    }
-
-    if (flag === 0) {
-        if (regularization.companyPrincipal === "" || regularization.companyPrincipal === undefined) {
-            $('#companyPrincipalContent').append(
-                '<textarea onkeyup="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="companyPrincipalContent" style="background-color: #ffffff"></textarea>' +
-                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
-                '<input class="approval-date-input" type="text" name="companyPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
-                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
-                '<input class="approval-signature-input" type="text" name="companyPrincipal" value="${nickname}" readonly></div>');
-            flag = 1;
-        } else {
             $('#companyPrincipalContent').append('<textarea class="approval-content-textarea" readonly>${oaActRegularization.companyPrincipalContent}</textarea>' +
                 '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
                 '<input class="approval-date-input" type="text" value="${oaActRegularization.companyPrincipalDate}" readonly></div>' +
                 '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
                 '<input class="approval-signature-input" type="text" value="${oaActRegularization.companyPrincipal}" readonly></div>');
+            $('#return').html("");
+            $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
         }
-    } else {
-        $('#companyPrincipalContent').append('<textarea class="approval-content-textarea" readonly>${oaActRegularization.companyPrincipalContent}</textarea>' +
-            '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
-            '<input class="approval-date-input" type="text" value="${oaActRegularization.companyPrincipalDate}" readonly></div>' +
-            '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
-            '<input class="approval-signature-input" type="text" value="${oaActRegularization.companyPrincipal}" readonly></div>');
-    }
-
-    if (flag === 0){
-        $('#return').html("");
-        $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
     }
 
     //任务Id
@@ -363,6 +391,9 @@
                     //返回上一页
                     window.location.href = '${path}/oaHomePage/toOaHomePage';
                     layer.msg('提交成功！');
+                } else if (data === 'backSuccess') {
+                    window.location.href = '${path}/oaHomePage/toOaHomePage';
+                    window.top.tips("提交成功,并将数据转存到待发事项中！", 6, 1, 2000);
                 } else {
                     layer.msg('提交失败！');
                 }

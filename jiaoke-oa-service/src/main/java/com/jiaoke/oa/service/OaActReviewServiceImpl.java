@@ -37,6 +37,7 @@ public class OaActReviewServiceImpl implements OaActReviewService {
         oaActReview.setCreateTime(new Date());
         oaActReview.setPromoter(userId);
         oaActReview.setUrl("review");
+        oaActReview.setState(0);
         if (oaActReviewMapper.insertSelective(oaActReview) < 0) {
             return -1;
         } else {
@@ -46,6 +47,7 @@ public class OaActReviewServiceImpl implements OaActReviewService {
             oaCollaboration.setTitle(oaActReview.getTitle());
             oaCollaboration.setUrl("review");
             oaCollaboration.setTable("oa_act_review");
+            oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("合同审查申请");
             oaCollaboration.setDataOne("合同名称:" + oaActReview.getName());
             oaCollaboration.setDataTwo("合同金额:" + oaActReview.getAmount());
@@ -58,11 +60,25 @@ public class OaActReviewServiceImpl implements OaActReviewService {
 
     @Override
     public int edit(OaActReview oaActReview) {
+        oaActReview.setState(0);
+        oaActReview.setPrincipal("");
+        oaActReview.setPrincipalDate("");
+        oaActReview.setLegalAffairs("");
+        oaActReview.setLegalAffairsDate("");
+        oaActReview.setLegalAffairsContent("");
+        oaActReview.setFinance("");
+        oaActReview.setFinanceDate("");
+        oaActReview.setFinanceContent("");
+        oaActReview.setSupervisor("");
+        oaActReview.setSupervisorDate("");
+        oaActReview.setSupervisorContent("");
+        oaActReview.setCompanyPrincipal("");
+        oaActReview.setCompanyPrincipalDate("");
+        oaActReview.setCompanyPrincipalContent("");
         oaActReview.setCreateTime(new Date());
         if (oaActReviewMapper.updateByPrimaryKey(oaActReview) < 0) {
             return -1;
         } else {
-            oaCollaborationMapper.updateStateByCorrelationId(oaActReview.getId(), 1, oaActReview.getTitle());
             return 1;
         }
     }

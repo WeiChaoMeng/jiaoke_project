@@ -1,13 +1,15 @@
 package com.jiaoke;
 
 import com.jiaoke.controller.SpringHelper;
+import com.jiaoke.oa.bean.OaActReview;
+import com.jiaoke.oa.bean.OaAssetManagement;
 import com.jiaoke.oa.bean.UserInfo;
-import com.jiaoke.oa.dao.OaCollaborationMapper;
-import com.jiaoke.oa.dao.PersonnelManageMapper;
-import com.jiaoke.oa.dao.UserInfoMapper;
+import com.jiaoke.oa.dao.*;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,27 +19,28 @@ import java.util.List;
  */
 public class qualityTest {
 
-    private OaCollaborationMapper oaCollaborationMapper;
+    private OaActReviewMapper oaActReviewMapper;
 
     @Before
     public void setUp() {
-        oaCollaborationMapper = SpringHelper.getBean("oaCollaborationMapper");
+        oaActReviewMapper = SpringHelper.getBean("oaActReviewMapper");
     }
 
     @Test
-    public void testUser() {//
-        String annex = oaCollaborationMapper.selectAnnex("2019110515543971996543", "oa_act_seals_borrow");
-        if (annex.equals("")){
-            System.out.println("空的");
-        }else if (annex.contains(",")){
-            System.out.println("多个");
-            String[] strings = annex.split(",");
-            for (String string : strings) {
-                System.out.println(string);
-            }
+    public void testUser() {
+//        ArrayList<String> list = new ArrayList<>();
+//        list.add("2020031320210936010192");
+//        list.add("2020032503532929552846");
+//        List<OaActReview> oaActReviews = oaActReviewMapper.selectAllByIdList(list);
+//        for (OaActReview oaActReview : oaActReviews) {
+//            System.out.println(oaActReview.getName());
+//        }
+//
+        Integer integer = 000;
+        if (integer.equals(0)){
+            System.out.println("ok");
         }else {
-            System.out.println("单个");
-            System.out.println(annex);
+            System.out.println("no");
         }
     }
 }

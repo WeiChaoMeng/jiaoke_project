@@ -130,6 +130,7 @@
                readonly>
             <input type="hidden" name="id" value="${oaActOvertime.id}">
             <input type="hidden" name="title" value="${oaActOvertime.title}">
+            <input type="hidden" name="departmentPrincipal" value="${oaActOvertime.departmentPrincipal}">
     </span>
     </div>
 
@@ -163,13 +164,14 @@
         <div class="approval-input">
             <span class="approval-input-span">主管领导</span>
             <shiro:hasPermission name="supervisor">
-                <input type="text" class="approval-input-input" name="principal" value="${nickname}" readonly>
-                <input type="hidden" name="principalDate"
-                       value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">
+                <div id="supervisorContent"></div>
+
+                <%--<input type="text" class="approval-input-input" name="principal" value="${nickname}" readonly>--%>
+                <%--<input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">--%>
             </shiro:hasPermission>
 
             <shiro:lacksPermission name="supervisor">
-                <input type="text" class="approval-input-input" value="${oaActOvertime.principal}" readonly>
+                <input type="text" class="approval-input-input" value="${oaActOvertime.supervisor}" readonly>
             </shiro:lacksPermission>
 
         </div>
@@ -177,13 +179,14 @@
         <div class="approval-input">
             <span class="approval-input-span">部门负责人</span>
             <shiro:hasPermission name="principal">
-                <input type="text" class="approval-input-input" name="supervisor" value="${nickname}" readonly>
-                <input type="hidden" name="supervisorDate"
-                       value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">
+                <div id="principalContent"></div>
+
+                <%--<input type="text" class="approval-input-input" name="supervisor" value="${nickname}" readonly>--%>
+                <%--<input type="hidden" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">--%>
             </shiro:hasPermission>
 
             <shiro:lacksPermission name="principal">
-                <input type="text" class="approval-input-input" value="${oaActOvertime.supervisor}" readonly>
+                <input type="text" class="approval-input-input" value="${oaActOvertime.principal}" readonly>
             </shiro:lacksPermission>
         </div>
 
@@ -207,6 +210,70 @@
 <script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
 
+    //流程执行步骤
+    var overtime = JSON.parse('${oaActOvertimeJson}');
+    //标记
+    var flag = 0;
+
+    //被回退
+    if (overtime.state === 0) {
+        if (flag === 0) {
+
+            var principalNums = JSON.parse('${principalNum}');
+            //单个审批人
+            if (principalNums === "noPrincipalNum") {
+                if (overtime.principal === "" || overtime.principal === undefined) {
+                    $('#principalContent').append(
+                        '<input type="text" class="approval-input-input" name="principal" value="${oaActOvertime.principal} ${nickname}" readonly>\n' +
+                        '                <input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                    flag = 1;
+                } else {
+                    $('#principalContent').append('<input type="text" class="approval-input-input" value="${oaActOvertime.principal}" readonly>');
+                }
+            } else {
+                if (overtime.principal === undefined) {
+                    $('#principalContent').append(
+                        '<input type="text" class="approval-input-input" name="principal" value="${oaActOvertime.principal} ${nickname}" readonly>\n' +
+                        '                <input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                    flag = 1;
+                } else if ((overtime.principal).length === principalNums.length) {
+                    $('#principalContent').append('<input type="text" class="approval-input-input" value="${oaActOvertime.principal}" readonly>');
+                } else {
+                    $('#principalContent').append(
+                        '<input type="text" class="approval-input-input" name="principal" value="${oaActOvertime.principal} ${nickname}" readonly>\n' +
+                        '                <input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                    flag = 1;
+                }
+            }
+
+        } else {
+            $('#principalContent').append('<input type="text" class="approval-input-input" value="${oaActOvertime.principal}" readonly>');
+        }
+
+        if (flag === 0) {
+            if (overtime.supervisor === "" || overtime.supervisor === undefined) {
+                $('#supervisorContent').append(
+                    '<input type="text" class="approval-input-input" name="supervisor" value="${nickname}" readonly>\n' +
+                    '                <input type="hidden" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                flag = 1;
+            } else {
+                $('#supervisorContent').append('<input type="text" class="approval-input-input" value="${oaActOvertime.supervisor}" readonly>');
+            }
+        } else {
+            $('#supervisorContent').append('<input type="text" class="approval-input-input" value="${oaActOvertime.supervisor}" readonly>');
+        }
+
+        if (flag === 0) {
+            $('#return').html("");
+            $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
+        }
+    } else {
+        $('#principalContent').append('<input type="text" class="approval-input-input" value="${oaActOvertime.principal}" readonly>');
+        $('#supervisorContent').append('<input type="text" class="approval-input-input" value="${oaActOvertime.supervisor}" readonly>');
+        $('#return').html("");
+        $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
+    }
+
     //任务Id
     var taskId = JSON.parse('${taskId}');
 
@@ -222,6 +289,9 @@
                     //返回上一页
                     window.location.href = '${path}/oaHomePage/toOaHomePage';
                     window.top.tips("提交成功！", 0, 1, 1000);
+                } else if (data === 'backSuccess') {
+                    window.location.href = '${path}/oaHomePage/toOaHomePage';
+                    window.top.tips("提交成功,并将数据转存到待发事项中！", 6, 1, 2000);
                 } else {
                     window.top.tips("提交失败！", 0, 2, 1000);
                 }
@@ -234,12 +304,12 @@
 
     //打印
     function printContent() {
-        $('#tool').hide();
+        $('#tool,#return').hide();
         $('#body').css('width', '100%');
         //执行打印
         window.print();
-        $('#tool').show();
-        $('#body').css('width', '70%');
+        $('#tool,#return').show();
+        $('#body').css('width', '80%');
     }
 </script>
 </html>

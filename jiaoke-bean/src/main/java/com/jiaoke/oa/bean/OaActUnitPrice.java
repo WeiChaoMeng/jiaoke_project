@@ -135,6 +135,11 @@ public class OaActUnitPrice {
     private String remarks;
 
     /**
+     * 状态
+     */
+    private Integer state;
+
+    /**
      * 创建日期
      */
     private Date createTime;
@@ -388,5 +393,13 @@ public class OaActUnitPrice {
 
     public void setAnnex(String annex) {
         this.annex = annex;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
 }

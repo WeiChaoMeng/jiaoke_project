@@ -176,7 +176,7 @@
             <c:choose>
                 <c:when test="${oaActPactStop.receivingSign == '' || oaActPactStop.receivingSign == null}">
                     <td colspan="5" class="table-td-evaluation">
-                        <textarea class="evaluation-content" onkeyup="value=value.replace(/\s+/g,'')" style="height: 90px" name="supplementDetails"></textarea>
+                        <textarea class="evaluation-content" oninput="value=value.replace(/\s+/g,'')" style="height: 90px" name="supplementDetails"></textarea>
                         <div class="approval-date">
                             <label class="approval-date-label">日期 </label>
                             <input class="approval-date-input" type="text" name="receivingDate"

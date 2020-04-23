@@ -26,7 +26,7 @@ public interface OaCollaborationService {
      * 查询已发事项
      *
      * @param oaCollaborations oaCollaborations
-     * @param title title
+     * @param title            title
      * @return list
      */
     List<OaCollaboration> selectAlreadySend(List<OaCollaboration> oaCollaborations, String title);
@@ -84,4 +84,13 @@ public interface OaCollaborationService {
      * @return int
      */
     int updateState(String correlationId, Integer state);
+
+    /**
+     * 更新状态码
+     *
+     * @param correlationId correlationId
+     * @param statusCode    statusCode
+     * @return int
+     */
+    int updateStatusCode(String correlationId, String statusCode);
 }

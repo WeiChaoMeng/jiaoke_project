@@ -63,6 +63,16 @@ public class OaActAcceptanceWarehousing {
     private String createTimeStr;
 
     /**
+     * 部门负责人
+     */
+    private String departmentPrincipal;
+
+    /**
+     * 状态
+     */
+    private Integer state;
+
+    /**
      * 发起人
      */
     private Integer promoter;
@@ -208,5 +218,21 @@ public class OaActAcceptanceWarehousing {
 
     public void setAssociatedName(String associatedName) {
         this.associatedName = associatedName;
+    }
+
+    public String getDepartmentPrincipal() {
+        return departmentPrincipal;
+    }
+
+    public void setDepartmentPrincipal(String departmentPrincipal) {
+        this.departmentPrincipal = departmentPrincipal;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
 }

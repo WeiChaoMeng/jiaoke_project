@@ -15,7 +15,7 @@
     <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
 </head>
 
-<body id="body" style="width: 65%">
+<body id="body" style="width: 70%">
 
 <div class="table-title">
     <span>收文阅办审批单</span>
@@ -76,7 +76,7 @@
                 <th class="th_title" nowrap="nowrap" style="width: 4%">流程</th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" placeholder="王玉秋、根据拟办意见处理、李辉中、发起人(知会)" readonly="readonly">
+                        <input type="text" placeholder="王玉秋→李辉中→杨永强→知会" readonly>
                     </div>
                 </td>
             </tr>
@@ -101,6 +101,7 @@
             <td class="tdLabel">来文机关</td>
             <td class="table-td-content">
                 <input type="text" class="formInput" name="organ" autocomplete="off">
+                <input type="hidden" name="annex" id="annex">
             </td>
 
             <td class="tdLabel">来文字号</td>
@@ -124,45 +125,53 @@
         <tr>
             <td class="tdLabel">文件标题</td>
             <td colspan="3" class="table-td-content" style="padding: 10px">
-                <textarea class="write-approval-content-textarea" onkeyup="value=value.replace(/\s+/g,'')" name="fileTitle"></textarea>
+                <textarea class="write-approval-content-textarea" oninput="value=value.replace(/\s+/g,'')" name="fileTitle"></textarea>
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel">拟办意见</td>
-            <td colspan="3" class="table-td-content" style="padding: 10px">
+            <td colspan="5" class="approval-content">
                 <textarea class="approval-content-textarea" readonly></textarea>
-            </td>
-        </tr>
-
-        <tr>
-            <td class="tdLabel">部门意见</td>
-            <td colspan="3" class="table-td-content" style="padding: 10px">
-                <textarea class="approval-content-textarea" readonly></textarea>
+                <div class="approval-date">
+                    <label class="approval-date-label">日期 </label>
+                    <input class="approval-date-input" type="text" readonly>
+                </div>
+                <div class="approval-signature">
+                    <label class="approval-signature-label">签字 </label>
+                    <input class="approval-signature-input" type="text" readonly>
+                </div>
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel">领导批示</td>
-            <td colspan="3" class="table-td-content" style="padding: 10px">
+            <td colspan="5" class="approval-content">
                 <textarea class="approval-content-textarea" readonly></textarea>
+                <div class="approval-date">
+                    <label class="approval-date-label">日期 </label>
+                    <input class="approval-date-input" type="text" readonly>
+                </div>
+                <div class="approval-signature">
+                    <label class="approval-signature-label">签字 </label>
+                    <input class="approval-signature-input" type="text" readonly>
+                </div>
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel">办理结果</td>
-            <td colspan="3" class="table-td-content" style="padding: 10px">
+            <td colspan="5" class="approval-content">
                 <textarea class="approval-content-textarea" readonly></textarea>
+                <div class="approval-date">
+                    <label class="approval-date-label">日期 </label>
+                    <input class="approval-date-input" type="text" readonly>
+                </div>
+                <div class="approval-signature">
+                    <label class="approval-signature-label">签字 </label>
+                    <input class="approval-signature-input" type="text" readonly>
+                </div>
             </td>
-        </tr>
-
-        <tr>
-            <td class="tdLabel">保存期限</td>
-            <td colspan="3" class="table-td-content" style="padding: 10px">
-                <textarea class="approval-content-textarea" readonly></textarea>
-            </td>
-
-            <input type="hidden" name="annex" id="annex">
         </tr>
         </tbody>
     </table>
@@ -308,7 +317,7 @@
         //执行打印
         window.print();
         $('#tool,#titleArea').show();
-        $('#body').css('width', '65%');
+        $('#body').css('width', '70%');
 
         //附件列表
         let annexesLen = $('#annexes').children().length;

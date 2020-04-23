@@ -88,8 +88,17 @@ public class OaActDepartureController {
 
             List<Department> departmentList = departmentService.selectPrincipalAndSupervisor();
             for (Department department : departmentList) {
-                set.add(department.getPrincipal());
-                set.add(department.getSupervisor());
+                String principal = department.getPrincipal();
+                if (principal.contains(",")){
+                    String[] split = principal.split(",");
+                    for (String s : split) {
+                        set.add(s);
+                    }
+                    set.add(department.getSupervisor());
+                }else{
+                    set.add(department.getPrincipal());
+                    set.add(department.getSupervisor());
+                }
             }
             map.put("resignationCountersignList", set);
             String instance = activitiUtil.startProcessInstanceByKey("oa_departure", "oa_act_departure:" + randomId, map, getCurrentUser().getId().toString());
@@ -112,11 +121,8 @@ public class OaActDepartureController {
     public String approval(String id, String taskId, Model model) {
         //审批
         OaActDeparture oaActDeparture = oaActDepartureService.selectByPrimaryKey(id);
-        //获取批注信息
-        List<Comments> commentsList = activitiUtil.selectHistoryComment(activitiUtil.getTaskByTaskId(taskId).getProcessInstanceId());
         model.addAttribute("oaActDeparture", oaActDeparture);
         model.addAttribute("taskId", JsonHelper.toJSONString(taskId));
-        model.addAttribute("commentsList", commentsList);
         model.addAttribute("nickname", getCurrentUser().getNickname());
         return "oa/act/act_departure_handle";
     }
@@ -146,53 +152,129 @@ public class OaActDepartureController {
         String companyPrincipal = "company_principal";
         //知会
         String leaveNotify = "leaveNotify";
-        //更新数据
-        if (oaActDepartureService.updateByPrimaryKeySelective(oaActDeparture) < 1) {
-            return "error";
-        }
+        //会签网关
+        String countersignEG = "countersignEG";
 
         Task task = activitiUtil.getTaskByTaskId(taskId);
         if (task == null) {
             return "error";
-        }
-
-        if (flag == 1) {
+        }else {
             String nextNode = activitiUtil.getNextNode(task.getProcessDefinitionId(), task.getTaskDefinitionKey());
-            if (end.equals(nextNode)) {
+
+            if (countersignEG.equals(nextNode)) {
+                //同意
+                if (flag.equals(1)) {
+
+                    List<UserInfo> userInfoList = userInfoService.selectMultipleByPermission("leaveNotify");
+                    Map<String, Object> map = new HashMap<>(16);
+                    List<Object> leaveNotifyList = new ArrayList<>();
+                    for (UserInfo user : userInfoList) {
+                        leaveNotifyList.add(user.getId());
+                    }
+                    leaveNotifyList.add(oaActDeparture.getPromoter());
+                    map.put("whether", 0);
+                    map.put("leaveNotifyList", leaveNotifyList);
+                    activitiUtil.approvalComplete(taskId, map);
+                    return updateByPrimaryKeySelective(oaActDeparture);
+                } else {
+                    UserInfo userInfo = userInfoService.getUserInfoByPermission("notifyHumanAffairs");
+                    Task task1 = activitiUtil.getProcessInstanceIdByTaskId(taskId);
+                    List<Task> taskList = activitiUtil.getTaskListByProcessInstanceId(task1.getProcessInstanceId());
+                    for (Task tasks : taskList) {
+                        Map<String, Object> map = new HashMap<>(16);
+                        map.put("whether", 1);
+                        map.put("humanAffairs", userInfo.getId());
+                        activitiUtil.approvalComplete(tasks.getId(), map);
+                    }
+                    oaCollaborationService.updateStatusCode(oaActDeparture.getId(), "被回退");
+                    oaActDeparture.setState(1);
+                    return updateByPrimaryKeySelective(oaActDeparture);
+                }
+
+            } else if (back.equals(nextNode)) {
+                //驳回
+                managementService.executeCommand(new TargetFlowNodeCommand(task.getId(), back));
+                //修改表单状态
+                oaCollaborationService.updateState(oaActDeparture.getId(), 3);
+                return "backSuccess";
+            } else if (end.equals(nextNode)) {
                 activitiUtil.endProcess(taskId);
                 return "success";
             } else {
-                String processingOpinion = "";
                 UserTask userTask = activitiUtil.getUserTask(task.getProcessDefinitionId(), nextNode);
                 if (nextNode.equals(userTask.getId())) {
                     String enforcer = userTask.getAssignee().substring(userTask.getAssignee().indexOf("{") + 1, userTask.getAssignee().indexOf("}"));
 
-                    if (leaveNotify.equals(enforcer)) {
-                        List<UserInfo> userInfoList = userInfoService.selectMultipleByPermission("leaveNotify");
+                    if (promoter.equals(enforcer)) {
                         Map<String, Object> map = new HashMap<>(16);
-                        List<Object> leaveNotifyList = new ArrayList<>();
-                        for (UserInfo user : userInfoList) {
-                            leaveNotifyList.add(user.getId());
-                        }
-                        leaveNotifyList.add(oaActDeparture.getPromoter());
-                        map.put("leaveNotifyList", leaveNotifyList);
-                        activitiUtil.designatedCountersignPersonnel(taskId, map);
-                        return "success";
+                        map.put(promoter, activitiUtil.getStartUserId(task.getProcessInstanceId()));
+                        activitiUtil.approvalComplete(taskId, map);
+                        return updateByPrimaryKeySelective(oaActDeparture);
 
                     } else {
-                        UserInfo userInfo = userInfoService.getUserInfoByPermission(enforcer);
-                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
-                        return "success";
+                        //直接结束
+                        activitiUtil.endProcess(taskId);
+                        return updateByPrimaryKeySelective(oaActDeparture);
                     }
                 } else {
-                    return "error";
+                    //直接结束
+                    activitiUtil.endProcess(taskId);
+                    return updateByPrimaryKeySelective(oaActDeparture);
                 }
             }
+        }
+
+//        if (flag == 1) {
+//            String nextNode = activitiUtil.getNextNode(task.getProcessDefinitionId(), task.getTaskDefinitionKey());
+//            if (end.equals(nextNode)) {
+//                activitiUtil.endProcess(taskId);
+//                return "success";
+//            } else {
+//                String processingOpinion = "";
+//                UserTask userTask = activitiUtil.getUserTask(task.getProcessDefinitionId(), nextNode);
+//                if (nextNode.equals(userTask.getId())) {
+//                    String enforcer = userTask.getAssignee().substring(userTask.getAssignee().indexOf("{") + 1, userTask.getAssignee().indexOf("}"));
+//
+//                    if (leaveNotify.equals(enforcer)) {
+//                        List<UserInfo> userInfoList = userInfoService.selectMultipleByPermission("leaveNotify");
+//                        Map<String, Object> map = new HashMap<>(16);
+//                        List<Object> leaveNotifyList = new ArrayList<>();
+//                        for (UserInfo user : userInfoList) {
+//                            leaveNotifyList.add(user.getId());
+//                        }
+//                        leaveNotifyList.add(oaActDeparture.getPromoter());
+//                        map.put("leaveNotifyList", leaveNotifyList);
+//                        activitiUtil.designatedCountersignPersonnel(taskId, map);
+//                        return "success";
+//
+//                    } else {
+//                        UserInfo userInfo = userInfoService.getUserInfoByPermission(enforcer);
+//                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
+//                        return "success";
+//                    }
+//                } else {
+//                    return "error";
+//                }
+//            }
+//        } else {
+//            //驳回
+//            managementService.executeCommand(new TargetFlowNodeCommand(task.getId(), back));
+//            //修改表单状态
+//            oaCollaborationService.updateState(oaActDeparture.getId(), 3);
+//            return "success";
+//        }
+    }
+
+    /**
+     * 根据主键更新
+     *
+     * @param oaActDeparture oaActDeparture
+     * @return int
+     */
+    public String updateByPrimaryKeySelective(OaActDeparture oaActDeparture) {
+        if (oaActDepartureService.updateByPrimaryKeySelective(oaActDeparture) < 1) {
+            return "error";
         } else {
-            //驳回
-            managementService.executeCommand(new TargetFlowNodeCommand(task.getId(), back));
-            //修改表单状态
-            oaCollaborationService.updateState(oaActDeparture.getId(), 3);
             return "success";
         }
     }
@@ -257,13 +339,28 @@ public class OaActDepartureController {
         if (oaActDepartureService.edit(oaActDeparture) < 0) {
             return "error";
         } else {
-            //获取拥有权限的用户
-            UserInfo userInfo = userInfoService.getUserInfoByPermission("mealsApproval");
             Map<String, Object> map = new HashMap<>(16);
-            map.put("mealsApproval", userInfo.getId());
+            Set<Object> set = new HashSet<>();
+
+            List<Department> departmentList = departmentService.selectPrincipalAndSupervisor();
+            for (Department department : departmentList) {
+                String principal = department.getPrincipal();
+                if (principal.contains(",")){
+                    String[] split = principal.split(",");
+                    for (String s : split) {
+                        set.add(s);
+                    }
+                    set.add(department.getSupervisor());
+                }else{
+                    set.add(department.getPrincipal());
+                    set.add(department.getSupervisor());
+                }
+            }
+            map.put("resignationCountersignList", set);
             String instance = activitiUtil.startProcessInstanceByKey("oa_departure", "oa_act_departure:" + oaActDeparture.getId(), map, getCurrentUser().getId().toString());
             if (instance != null) {
                 //发送成功后更新状态
+                oaCollaborationService.updateStatusCode(oaActDeparture.getId(), "协同");
                 oaCollaborationService.updateStateByCorrelationId(oaActDeparture.getId(), 0, oaActDeparture.getTitle());
                 return "success";
             } else {
