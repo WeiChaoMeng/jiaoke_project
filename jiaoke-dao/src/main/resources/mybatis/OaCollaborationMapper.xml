@@ -4,9 +4,9 @@
 
     <insert id="insertData" parameterType="com.jiaoke.oa.bean.OaCollaboration" useGeneratedKeys="true" keyProperty="id">
         insert into oa_collaboration
-            (id,title,`table`,promoter,correlation_id,url,state,create_time,name,data_one,data_two)
+            (id,title,`table`,promoter,correlation_id,url,state,create_time,name,data_one,data_two,status_code)
         values
-            (#{id},#{title},#{table},#{promoter},#{correlationId},#{url},#{state},#{createTime},#{name},#{dataOne},#{dataTwo})
+            (#{id},#{title},#{table},#{promoter},#{correlationId},#{url},#{state},#{createTime},#{name},#{dataOne},#{dataTwo},#{statusCode})
     </insert>
 
     <select id="selectAlreadySend" parameterType="java.util.List" resultType="com.jiaoke.oa.bean.OaCollaboration">
@@ -37,7 +37,7 @@
     </select>
 
     <select id="selectPending" parameterType="java.util.List" resultType="com.jiaoke.oa.bean.OaCollaboration">
-        select id,title,`table`,correlation_id as correlationId,url,name,data_one as dataOne,data_two as dataTwo
+        select id,title,`table`,correlation_id as correlationId,url,name,data_one as dataOne,data_two as dataTwo,status_code as statusCode
         from oa_collaboration
         where correlation_id in
         <foreach collection="list" item="item" open="(" close=")" separator=",">
@@ -94,6 +94,12 @@
         where correlation_id = #{correlationId}
     </update>
 
+    <update id="updateStatusCode" parameterType="java.util.Map">
+        update oa_collaboration
+        set status_code = #{statusCode}
+        where correlation_id = #{correlationId}
+    </update>
+
     <select id="selectOne" parameterType="java.lang.String" resultType="com.jiaoke.oa.bean.OaCollaboration">
         SELECT id,title,`table`,correlation_id as correlationId,url,state,create_time as createTime
          FROM oa_collaboration
@@ -101,7 +107,7 @@
     </select>
 
     <select id="selectMultipleData" parameterType="java.util.List" resultType="com.jiaoke.oa.bean.OaCollaboration">
-        select id,title,`table`,promoter,correlation_id as correlationId,url,state,create_time as createTime
+        select id,title,`table`,promoter,correlation_id as correlationId,url,state,create_time as createTime,status_code as statusCode
         from oa_collaboration
         where correlation_id in
         <foreach collection="ids" item="item" open="(" close=")" separator=",">

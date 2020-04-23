@@ -31,6 +31,7 @@ public class OaActEngineeringServiceImpl implements OaActEngineeringService {
         oaActEngineering.setId(randomId);
         oaActEngineering.setPromoter(userId);
         oaActEngineering.setUrl("engineering");
+        oaActEngineering.setState(0);
         oaActEngineering.setCreateTime(new Date());
 
         if (oaActEngineeringMapper.insertSelective(oaActEngineering) < 0) {
@@ -42,6 +43,7 @@ public class OaActEngineeringServiceImpl implements OaActEngineeringService {
             oaCollaboration.setTitle(oaActEngineering.getTitle());
             oaCollaboration.setUrl("engineering");
             oaCollaboration.setTable("oa_act_engineering");
+            oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("工程名称变更记录");
             oaCollaboration.setDataOne("变更前工程名称：" + oaActEngineering.getBeforeName());
             oaCollaboration.setDataTwo("变更前用料单位：" + oaActEngineering.getBeforeCompany());
@@ -54,11 +56,15 @@ public class OaActEngineeringServiceImpl implements OaActEngineeringService {
 
     @Override
     public int edit(OaActEngineering oaActEngineering) {
+        oaActEngineering.setState(0);
+        oaActEngineering.setPrincipal("");
+        oaActEngineering.setPrincipalDate("");
+        oaActEngineering.setSupervisor("");
+        oaActEngineering.setSupervisorDate("");
         oaActEngineering.setCreateTime(new Date());
         if (oaActEngineeringMapper.updateByPrimaryKey(oaActEngineering) < 0) {
             return -1;
         } else {
-            oaCollaborationMapper.updateStateByCorrelationId(oaActEngineering.getId(), 1, oaActEngineering.getTitle());
             return 1;
         }
     }

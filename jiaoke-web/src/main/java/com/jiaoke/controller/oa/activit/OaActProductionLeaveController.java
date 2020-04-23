@@ -113,12 +113,9 @@ public class OaActProductionLeaveController {
     public String approval(String id, String taskId, Model model) {
         //审批
         OaActProductionLeave oaActProductionLeave = oaActProductionLeaveService.selectByPrimaryKey(id);
-        //获取批注信息
-        List<Comments> commentsList = activitiUtil.selectHistoryComment(activitiUtil.getTaskByTaskId(taskId).getProcessInstanceId());
         model.addAttribute("oaActProductionLeave", oaActProductionLeave);
         model.addAttribute("oaActProductionLeaveJson", JsonHelper.toJSONString(oaActProductionLeave));
         model.addAttribute("taskId", JsonHelper.toJSONString(taskId));
-        model.addAttribute("commentsList", commentsList);
         model.addAttribute("nickname", getCurrentUser().getNickname());
         return "oa/act/act_production_leave_handle";
     }
@@ -148,85 +145,140 @@ public class OaActProductionLeaveController {
         String companyPrincipal = "company_principal";
         //知会
         String leaveNotify = "leaveNotify";
-        //更新数据
-        if (oaActProductionLeaveService.updateByPrimaryKeySelective(oaActProductionLeave) < 1) {
-            return "error";
-        }
+
+        //网关-部门主管领导
+        String supervisorEG = "supervisorEG";
+        //网关-人事
+        String personnelEG = "personnelEG";
+        //网关-总经理
+        String companyEG = "companyEG";
 
         Task task = activitiUtil.getTaskByTaskId(taskId);
         if (task == null) {
             return "error";
-        }
-
-        if (flag == 1) {
+        }else {
             String nextNode = activitiUtil.getNextNode(task.getProcessDefinitionId(), task.getTaskDefinitionKey());
-            if (end.equals(nextNode)) {
+
+            if (supervisorEG.equals(nextNode)) {
+                //同意
+                if (flag.equals(1)) {
+
+                    UserInfo userInfo = userInfoService.getUserInfoByPermission("personnel");
+                    Map<String, Object> map = new HashMap<>(16);
+                    map.put("whether", 0);
+                    map.put("personnel", userInfo.getId());
+                    activitiUtil.approvalComplete(taskId, map);
+                    return updateByPrimaryKeySelective(oaActProductionLeave);
+                } else {
+                    UserInfo userInfo = userInfoService.getUserInfoByPermission("notifyHumanAffairs");
+                    Map<String, Object> map = new HashMap<>(16);
+                    map.put("whether", 1);
+                    map.put("humanAffairs", userInfo.getId());
+                    activitiUtil.approvalComplete(taskId, map);
+                    oaCollaborationService.updateStatusCode(oaActProductionLeave.getId(), "被回退");
+                    oaActProductionLeave.setSupervisor(null);
+                    oaActProductionLeave.setSupervisorDate(null);
+                    oaActProductionLeave.setState(1);
+                    return updateByPrimaryKeySelective(oaActProductionLeave);
+                }
+
+            } else if (personnelEG.equals(nextNode)) {
+                //同意
+                if (flag.equals(1)) {
+                    UserInfo userInfo = userInfoService.getUserInfoByPermission("company_principal");
+                    Map<String, Object> map = new HashMap<>(16);
+                    map.put("whether", 0);
+                    map.put("company_principal", userInfo.getId());
+                    activitiUtil.approvalComplete(taskId, map);
+                    return updateByPrimaryKeySelective(oaActProductionLeave);
+                } else {
+                    UserInfo userInfo = userInfoService.getUserInfoByPermission("notifyHumanAffairs");
+                    Map<String, Object> map = new HashMap<>(16);
+                    map.put("whether", 1);
+                    map.put("humanAffairs", userInfo.getId());
+                    activitiUtil.approvalComplete(taskId, map);
+                    oaCollaborationService.updateStatusCode(oaActProductionLeave.getId(), "被回退");
+                    oaActProductionLeave.setPersonnel(null);
+                    oaActProductionLeave.setPersonnelDate(null);
+                    oaActProductionLeave.setState(1);
+                    return updateByPrimaryKeySelective(oaActProductionLeave);
+                }
+
+                //回退结束
+            }else if (companyEG.equals(nextNode)) {
+                //同意
+                if (flag.equals(1)) {
+                    UserInfo userInfo = userInfoService.getUserInfoByPermission("notifyHumanAffairs");
+                    Map<String, Object> map = new HashMap<>(16);
+                    List<Object> normalList = new ArrayList<>();
+                    normalList.add(userInfo.getId());
+                    normalList.add(oaActProductionLeave.getPromoter());
+                    map.put("whether", 0);
+                    map.put("normalList", normalList);
+                    activitiUtil.approvalComplete(taskId, map);
+                    return updateByPrimaryKeySelective(oaActProductionLeave);
+                } else {
+                    UserInfo userInfo = userInfoService.getUserInfoByPermission("notifyHumanAffairs");
+                    Map<String, Object> map = new HashMap<>(16);
+                    map.put("whether", 1);
+                    map.put("humanAffairs", userInfo.getId());
+                    activitiUtil.approvalComplete(taskId, map);
+                    oaCollaborationService.updateStatusCode(oaActProductionLeave.getId(), "被回退");
+                    oaActProductionLeave.setCompanyPrincipal(null);
+                    oaActProductionLeave.setCompanyPrincipalDate(null);
+                    oaActProductionLeave.setState(1);
+                    return updateByPrimaryKeySelective(oaActProductionLeave);
+                }
+
+                //回退结束
+            } else if (back.equals(nextNode)) {
+                //驳回
+                managementService.executeCommand(new TargetFlowNodeCommand(task.getId(), back));
+                //修改表单状态
+                oaCollaborationService.updateState(oaActProductionLeave.getId(), 3);
+                return "backSuccess";
+            } else if (end.equals(nextNode)) {
                 activitiUtil.endProcess(taskId);
                 return "success";
             } else {
-                String processingOpinion = "";
                 UserTask userTask = activitiUtil.getUserTask(task.getProcessDefinitionId(), nextNode);
                 if (nextNode.equals(userTask.getId())) {
                     String enforcer = userTask.getAssignee().substring(userTask.getAssignee().indexOf("{") + 1, userTask.getAssignee().indexOf("}"));
 
-                    //发起人
                     if (promoter.equals(enforcer)) {
                         Map<String, Object> map = new HashMap<>(16);
                         map.put(promoter, activitiUtil.getStartUserId(task.getProcessInstanceId()));
-                        activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
-                        return "success";
-
-                        //主管领导
-                    } else if (supervisor.equals(enforcer)) {
-                        String startUserId = activitiUtil.getStartUserId(task.getProcessInstanceId());
-                        String departmentId = userInfoService.selectDepartmentByUserId(Integer.valueOf(startUserId));
-                        String enforcerId = departmentService.selectEnforcerId(enforcer, departmentId);
-                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, Integer.valueOf(enforcerId));
-                        return "success";
-
-                        //人事部门
-                    } else if (personnel.equals(enforcer)) {
-                        UserInfo userInfo = userInfoService.getUserInfoByPermission("personnel");
-                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
-                        return "success";
-
-                        //总经理
-                    } else if (companyPrincipal.equals(enforcer)) {
-                        UserInfo userInfo = userInfoService.getUserInfoByPermission("company_principal");
-                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
-                        return "success";
-
-                        //知会
-                    } else if (leaveNotify.equals(enforcer)) {
-                        List<UserInfo> userInfoList = userInfoService.selectMultipleByPermission("leaveNotify");
-                        Map<String, Object> map = new HashMap<>(16);
-                        List<Object> leaveNotifyList = new ArrayList<>();
-                        for (UserInfo user : userInfoList) {
-                            leaveNotifyList.add(user.getId());
-                        }
-                        leaveNotifyList.add(oaActProductionLeave.getPromoter());
-                        map.put("leaveNotifyList", leaveNotifyList);
-                        activitiUtil.designatedCountersignPersonnel(taskId, map);
-                        return "success";
+                        activitiUtil.approvalComplete(taskId, map);
+                        return updateByPrimaryKeySelective(oaActProductionLeave);
 
                     } else {
-                        UserInfo userInfo = userInfoService.getUserInfoByPermission(enforcer);
-                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
-                        return "success";
+                        //直接结束
+                        activitiUtil.endProcess(taskId);
+                        return updateByPrimaryKeySelective(oaActProductionLeave);
                     }
                 } else {
-                    return "error";
+                    //直接结束
+                    activitiUtil.endProcess(taskId);
+                    return updateByPrimaryKeySelective(oaActProductionLeave);
                 }
             }
-        } else {
-            //驳回
-            managementService.executeCommand(new TargetFlowNodeCommand(task.getId(), back));
-            //修改表单状态
-            oaCollaborationService.updateState(oaActProductionLeave.getId(), 3);
-            return "success";
         }
     }
 
+    /**
+     * 根据主键更新
+     *
+     * @param oaActProductionLeave oaActProductionLeave
+     * @return int
+     */
+    public String updateByPrimaryKeySelective(OaActProductionLeave oaActProductionLeave) {
+        if (oaActProductionLeaveService.updateByPrimaryKeySelective(oaActProductionLeave) < 1) {
+            return "error";
+        } else {
+            return "success";
+        }
+    }
+    
     /**
      * 保存待发
      *
@@ -294,6 +346,7 @@ public class OaActProductionLeaveController {
             String instance = activitiUtil.startProcessInstanceByKey("oa_production_leave", "oa_act_production_leave:" + oaActProductionLeave.getId(), map, getCurrentUser().getId().toString());
             if (instance != null) {
                 //发送成功后更新状态
+                oaCollaborationService.updateStatusCode(oaActProductionLeave.getId(), "协同");
                 oaCollaborationService.updateStateByCorrelationId(oaActProductionLeave.getId(), 0, oaActProductionLeave.getTitle());
                 return "success";
             } else {

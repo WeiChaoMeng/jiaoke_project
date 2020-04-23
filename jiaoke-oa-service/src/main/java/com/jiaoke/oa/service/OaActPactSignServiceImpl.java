@@ -37,6 +37,7 @@ public class OaActPactSignServiceImpl implements OaActPactSignService {
         oaActPactSign.setCreateTime(new Date());
         oaActPactSign.setPromoter(userId);
         oaActPactSign.setUrl("pactSign");
+        oaActPactSign.setState(0);
         if (oaActPactSignMapper.insertSelective(oaActPactSign) < 0) {
             return -1;
         } else {
@@ -46,6 +47,7 @@ public class OaActPactSignServiceImpl implements OaActPactSignService {
             oaCollaboration.setTitle(oaActPactSign.getTitle());
             oaCollaboration.setUrl("pactSign");
             oaCollaboration.setTable("oa_act_pact_sign");
+            oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("劳动合同签订、续订、变更、终止审批表");
             oaCollaboration.setDataOne("通知时间：" + DateUtil.dateConvertYYYYMMDD(oaActPactSign.getCreateTime()));
             oaCollaboration.setDataTwo("劳务协议到期时间：" + oaActPactSign.getStartDate());
@@ -58,10 +60,22 @@ public class OaActPactSignServiceImpl implements OaActPactSignService {
 
     @Override
     public int edit(OaActPactSign oaActPactSign) {
+        oaActPactSign.setState(0);
+        oaActPactSign.setPrincipal("");
+        oaActPactSign.setPrincipalDate("");
+        oaActPactSign.setPrincipalContent("");
+        oaActPactSign.setSupervisor("");
+        oaActPactSign.setSupervisorDate("");
+        oaActPactSign.setSupervisorContent("");
+        oaActPactSign.setPersonnel("");
+        oaActPactSign.setPersonnelDate("");
+        oaActPactSign.setPersonnelContent("");
+        oaActPactSign.setCompanyPrincipal("");
+        oaActPactSign.setCompanyPrincipalDate("");
+        oaActPactSign.setCompanyPrincipalContent("");
         if (oaActPactSignMapper.updateByPrimaryKeySelective(oaActPactSign) < 0) {
             return -1;
         } else {
-            oaCollaborationMapper.updateStateByCorrelationId(oaActPactSign.getId(), 1, oaActPactSign.getTitle());
             return 1;
         }
     }

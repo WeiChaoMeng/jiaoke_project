@@ -14,7 +14,7 @@
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
 </head>
 
-<body id="body" style="width: 75%">
+<body id="body" style="width: 70%">
 
 <div class="table-title">
     <span>${oaActLaborContractRenewal.title}</span>
@@ -141,8 +141,8 @@
         $('#body').css('width', '100%');
         //执行打印
         window.print();
-        $('#tool').show();
-        $('#body,#return').css('width', '75%');
+        $('#tool,#return').show();
+        $('#body').css('width', '70%');
     }
 </script>
 </html>

@@ -18,7 +18,7 @@
     <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
 </head>
 
-<body id="body">
+<body id="body" style="width: 70%">
 
 <div class="table-title">
     <span>${oaActCar.title}</span>
@@ -73,6 +73,8 @@
             <td class="table-td-content">
                 <input type="hidden" id="id" name="id" value="${oaActCar.id}">
                 <input type="hidden" id="title" name="title" value="${oaActCar.title}">
+                <input type="hidden" name="promoter" value="${oaActCar.promoter}">
+                <input type="hidden" name="departmentPrincipal" value="${oaActCar.departmentPrincipal}">
                 ${oaActCar.user}
             </td>
 
@@ -140,8 +142,7 @@
             <td class="tdLabel">使用后数</td>
             <td class="table-td-content">
                 <shiro:hasPermission name="lookup">
-                    <input type="text" class="formInput" name="after" id="after"
-                           onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')" onblur="resultNum()" autocomplete="off">
+                    <div style="width: 100%;height: 100%;" id="afterDateContent"></div>
                 </shiro:hasPermission>
                 <shiro:lacksPermission name="lookup">
                     ${oaActCar.after}
@@ -153,7 +154,7 @@
             <td class="tdLabel">行驶数</td>
             <td class="table-td-content">
                 <shiro:hasPermission name="lookup">
-                    <input type="text" class="formInput-readonly" id="drivingNumber" name="drivingNumber" readonly>
+                    <div style="width: 100%;height: 100%;" id="drivingNumberDateContent"></div>
                 </shiro:hasPermission>
                 <shiro:lacksPermission name="lookup">
                     ${oaActCar.drivingNumber}
@@ -163,7 +164,7 @@
             <td class="tdLabel">计费(元)</td>
             <td class="table-td-content">
                 <shiro:hasPermission name="lookup">
-                    <input type="text" class="formInput-readonly" id="billing" name="billing" readonly>
+                    <div style="width: 100%;height: 100%;" id="billingDateContent"></div>
                 </shiro:hasPermission>
                 <shiro:lacksPermission name="lookup">
                     ${oaActCar.billing}
@@ -198,23 +199,13 @@
 
         <tr>
             <td class="tdLabel">审核人</td>
-            <td class="table-td-content">
+            <td class="table-td-content" colspan="3">
                 <shiro:hasPermission name="principal">
                     <div style="width: 100%;height: 100%;" id="principalContent"></div>
                 </shiro:hasPermission>
 
                 <shiro:lacksPermission name="principal">
                     ${oaActCar.principal}
-                </shiro:lacksPermission>
-            </td>
-
-            <td class="tdLabel">批准人</td>
-            <td class="table-td-content">
-                <shiro:hasPermission name="supervisor">
-                    <div style="width: 100%;height: 100%;" id="supervisorContent"></div>
-                </shiro:hasPermission>
-                <shiro:lacksPermission name="supervisor">
-                    ${oaActCar.supervisor}
                 </shiro:lacksPermission>
             </td>
         </tr>
@@ -224,11 +215,11 @@
 
 <div class="notice-tips">
     <span class="notice-tips-mark">*</span>
-    <span class="notice-tips-script">说明：1.每公里2元。使用的车辆为享受车补待遇的，每公里1.2元。2.审核人为使用部门负责人，批准人为使用人部门主管领导。3.多人同时使用时费用均摊。4.费用按月报销或扣除。</span>
+    <span class="notice-tips-script">说明：1.每公里2元。使用的车辆为享受车补待遇的，每公里1.2元。2.审核人为使用部门负责人。3.多人同时使用时费用均摊。4.费用按月报销或扣除。</span>
 </div>
 
 <div class="form-but" id="ret">
-    <shiro:hasAnyPermission name="principal,supervisor,lookup">
+    <shiro:hasAnyPermission name="principal,lookup">
         <button type="button" class="return-but" style="margin-right: 10px;" onclick="approvalProcessing(2)">回退</button>
     </shiro:hasAnyPermission>
 
@@ -250,40 +241,69 @@
     var car = JSON.parse('${oaActCarJson}');
     //标记
     var flag = 0;
-    if (flag === 0) {
-        if (car.lookup === "" || car.lookup === undefined) {
-            $('#lookupContent').append('<input type="text" class="formInput-readonly" name="lookup" value="${nickname}" readonly="readonly">');
-            $('#lookupDateContent').append('<input type="text" class="formInput je-end-date" name="endTime" onfocus="this.blur()">');
-            flag = 1;
+
+    if (car.state === 0) {
+        if (flag === 0) {
+            var principalNums = JSON.parse('${principalNum}');
+            //单个审批人
+            if (principalNums === "noPrincipalNum") {
+                if (car.principal === "" || car.principal === undefined) {
+                    $('#principalContent').append('<input type="text" class="formInput-readonly" name="principal" value="${oaActCar.principal} ${nickname}" readonly="readonly"><input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                    flag = 1;
+                } else {
+                    $('#principalContent').append(car.principal);
+                }
+            }else {
+                if (car.principal === undefined) {
+                    $('#principalContent').append('<input type="text" class="formInput-readonly" name="principal" value="${oaActCar.principal} ${nickname}" readonly="readonly"><input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                    flag = 1;
+                } else if ((car.principal).length === principalNums.length) {
+                    $('#principalContent').append(car.principal);
+                } else {
+                    $('#principalContent').append('<input type="text" class="formInput-readonly" name="principal" value="${oaActCar.principal} ${nickname}" readonly="readonly"><input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                    flag = 1;
+                }
+            }
+
         } else {
+            $('#principalContent').append(car.principal);
+        }
+
+        if (flag === 0) {
+            if (car.lookup === "" || car.lookup === undefined) {
+                $('#drivingNumberDateContent').append('<input type="text" class="formInput-readonly" id="drivingNumber" name="drivingNumber" readonly>');
+                $('#afterDateContent').append('<input type="text" class="formInput" name="after" id="after" oninput="value=value.replace(/^(0+)|[^\\d]/g,\'\')" onblur="resultNum()" autocomplete="off">');
+                $('#billingDateContent').append('<input type="text" class="formInput-readonly" id="billing" name="billing" readonly>');
+                $('#lookupContent').append('<input type="text" class="formInput-readonly" name="lookup" value="${nickname}" readonly="readonly">');
+                $('#lookupDateContent').append('<input type="text" class="formInput je-end-date" name="endTime" onfocus="this.blur()">');
+                flag = 1;
+            } else {
+                $('#drivingNumberDateContent').append(car.drivingNumber);
+                $('#afterDateContent').append(car.after);
+                $('#billingDateContent').append(car.billing);
+                $('#lookupContent').append(car.lookup);
+                $('#lookupDateContent').append(car.endTime);
+                $('#lookupDateContent').append('<input type="hidden" class="formInput je-end-date" onfocus="this.blur()">');
+            }
+        } else {
+            $('#drivingNumberDateContent').append(car.drivingNumber);
+            $('#afterDateContent').append(car.after);
+            $('#billingDateContent').append(car.billing);
             $('#lookupContent').append(car.lookup);
             $('#lookupDateContent').append(car.endTime);
+            $('#lookupDateContent').append('<input type="hidden" class="formInput je-end-date" onfocus="this.blur()">');
+        }
+
+        if (flag === 0) {
+            $('#ret').html("");
+            $('#ret').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
         }
     } else {
         $('#lookupContent').append(car.lookup);
         $('#lookupDateContent').append(car.endTime);
-    }
-
-    if (flag === 0) {
-        if (car.principal === "" || car.principal === undefined) {
-            $('#principalContent').append('<input type="text" class="formInput-readonly" name="principal" value="${nickname}" readonly="readonly"><input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
-            flag = 1;
-        } else {
-            $('#principalContent').append(car.principal);
-        }
-    } else {
         $('#principalContent').append(car.principal);
-    }
-
-    if (flag === 0) {
-        if (car.supervisor === "" || car.supervisor === undefined) {
-            $('#supervisorContent').append('<input type="text" class="formInput-readonly" name="supervisor" value="${nickname}" readonly="readonly"><input type="hidden" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
-            flag = 1;
-        } else {
-            $('#supervisorContent').append(car.supervisor);
-        }
-    } else {
-        $('#supervisorContent').append(car.supervisor);
+        $('#ret').html("");
+        $('#ret').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
     }
 
 
@@ -339,6 +359,9 @@
                     //返回上一页
                     window.location.href = '${path}/oaHomePage/toOaHomePage';
                     window.top.tips("处理成功！", 0, 1, 1000);
+                } else if (data === 'backSuccess') {
+                    window.location.href = '${path}/oaHomePage/toOaHomePage';
+                    window.top.tips("提交成功,并将数据转存到待发事项中！", 6, 1, 2000);
                 } else {
                     window.top.tips("处理失败！", 0, 1, 1000);
                 }
@@ -376,7 +399,7 @@
         //执行打印
         window.print();
         $('#tool,#ret').show();
-        $('#body').css('width', '80%');
+        $('#body').css('width', '70%');
     }
 </script>
 </html>

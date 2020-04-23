@@ -94,6 +94,11 @@ public class OaActAnnualLeave {
     private String personnelDate;
 
     /**
+     * 状态
+     */
+    private Integer state;
+
+    /**
      * 附件
      */
     private String annex;
@@ -283,5 +288,13 @@ public class OaActAnnualLeave {
 
     public void setPersonnelDate(String personnelDate) {
         this.personnelDate = personnelDate;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
 }

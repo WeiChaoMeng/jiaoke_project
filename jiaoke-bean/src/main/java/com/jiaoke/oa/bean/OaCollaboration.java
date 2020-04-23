@@ -48,6 +48,11 @@ public class OaCollaboration {
     private Integer state;
 
     /**
+     * 状态码
+     */
+    private String statusCode;
+
+    /**
      * 创建时间
      */
     private Date createTime;
@@ -258,5 +263,13 @@ public class OaCollaboration {
 
     public void setDataTwo(String dataTwo) {
         this.dataTwo = dataTwo;
+    }
+
+    public String getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
     }
 }

@@ -38,10 +38,11 @@
     <th style="width: 3%;"><input type="checkbox"></th>
     <th style="width: 3%;">序号</th>
     <th style="width: 34%;">标题</th>
-    <th style="width: 15%;">发起人</th>
-    <th style="width: 15%;">上一个处理人</th>
-    <th style="width: 15%;">发起时间</th>
-    <th style="width: 15%;">接收时间</th>
+    <th style="width: 12%;">发起人</th>
+    <th style="width: 12%;">上一个处理人</th>
+    <th style="width: 12%;">状态</th>
+    <th style="width: 12%;">发起时间</th>
+    <th style="width: 12%;">接收时间</th>
     </thead>
 
     <tbody id="tbody">
@@ -162,7 +163,7 @@
 
         if (resultLists === 'noData') {
             result += '<tr>';
-            result += '<td colspan="7">' + '没有查询到匹配记录' + '</td>';
+            result += '<td colspan="8">' + '没有查询到匹配记录' + '</td>';
             result += '</tr>';
             $("#PageCount").val(0);
             //每页显示条数
@@ -184,6 +185,11 @@
                 result += '<td style="text-align:left;text-indent:10px" title="' + resultList[i].title + '">' + resultList[i].title + '</td>';
                 result += '<td style="color: #2196F3;font-weight: 600;">' + resultList[i].promoterStr + '</td>';
                 result += '<td style="color: #2196F3;font-weight: 600;">' + resultList[i].previousApprover + '</td>';
+                if (resultList[i].statusCode === "被回退") {
+                    result += '<td style="color: #ff0000;font-weight: 600;">' + resultList[i].statusCode + '</td>';
+                }else{
+                    result += '<td style="color: #2196F3;font-weight: 600;">' + resultList[i].statusCode + '</td>';
+                }
                 result += '<td>' + resultList[i].createTimeStr + '</td>';
                 result += '<td>' + resultList[i].receiptTimeStr + '</td>';
                 result += '</tr>';

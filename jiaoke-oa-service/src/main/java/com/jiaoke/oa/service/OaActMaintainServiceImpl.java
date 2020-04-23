@@ -35,6 +35,7 @@ public class OaActMaintainServiceImpl implements OaActMaintainService {
         oaActMaintain.setId(randomId);
         oaActMaintain.setPromoter(userId);
         oaActMaintain.setUrl("maintain");
+        oaActMaintain.setState(0);
         oaActMaintain.setCreateTime(new Date());
         if (oaActMaintainMapper.insertSelective(oaActMaintain) < 0) {
             return -1;
@@ -45,6 +46,7 @@ public class OaActMaintainServiceImpl implements OaActMaintainService {
             oaCollaboration.setTitle(oaActMaintain.getTitle());
             oaCollaboration.setUrl("maintain");
             oaCollaboration.setTable("oa_act_maintain");
+            oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("设备维修申请");
             oaCollaboration.setDataOne("设备名称:" + oaActMaintain.getDeviceName());
             oaCollaboration.setDataTwo("预估金额:" + oaActMaintain.getAmount());
@@ -57,11 +59,17 @@ public class OaActMaintainServiceImpl implements OaActMaintainService {
 
     @Override
     public int edit(OaActMaintain oaActMaintain) {
+        oaActMaintain.setState(0);
+        oaActMaintain.setPrincipal("");
+        oaActMaintain.setPrincipalDate("");
+        oaActMaintain.setSupervisor("");
+        oaActMaintain.setSupervisorDate("");
+        oaActMaintain.setCompanyPrincipal("");
+        oaActMaintain.setCompanyPrincipalDate("");
         oaActMaintain.setCreateTime(new Date());
         if (oaActMaintainMapper.updateByPrimaryKey(oaActMaintain) < 0) {
             return -1;
         } else {
-            oaCollaborationMapper.updateStateByCorrelationId(oaActMaintain.getId(), 1, oaActMaintain.getTitle());
             return 1;
         }
     }

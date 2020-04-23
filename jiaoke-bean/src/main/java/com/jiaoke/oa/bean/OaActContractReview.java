@@ -164,6 +164,11 @@ public class OaActContractReview {
     private String profitCenter;
 
     /**
+     * 状态
+     */
+    private Integer state;
+
+    /**
      * 创建日期
      */
     private Date createTime;
@@ -465,5 +470,13 @@ public class OaActContractReview {
 
     public void setProfitCenter(String profitCenter) {
         this.profitCenter = profitCenter;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
 }

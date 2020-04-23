@@ -138,7 +138,7 @@
                 <th class="th_title" nowrap="nowrap" style="width: 4%">流程</th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" placeholder="经营部长(审批)、经营主管(审批)、总经理(审批)、发起人(知会)"
+                        <input type="text" placeholder="经营部长→经营主管→总经理→发起人(知会)"
                                readonly="readonly">
                     </div>
                 </td>
@@ -168,8 +168,10 @@
         <tr>
             <td class="tdLabel">客户名称</td>
             <td class="table-td-content" colspan="3">
-                <input type="text" class="formInput" name="customer" id="customer" value="${oaActUnitPrice.customer}" autocomplete="off">
+                <input type="text" class="formInput" name="customer" id="customer" value="${oaActUnitPrice.customer}"
+                       autocomplete="off">
                 <input type="hidden" name="id" id="id" value="${oaActUnitPrice.id}">
+                <input type="hidden" name="promoter" id="promoter" value="${oaActUnitPrice.promoter}">
                 <input type="hidden" id="listSize" value="${oaActUnitPrice.oaUnitPriceList.size()}">
             </td>
         </tr>
@@ -177,7 +179,8 @@
         <tr>
             <td class="tdLabel">工程名称</td>
             <td class="table-td-content" colspan="3">
-                <input type="text" class="formInput" name="engineering" id="engineering" value="${oaActUnitPrice.engineering}" autocomplete="off">
+                <input type="text" class="formInput" name="engineering" id="engineering"
+                       value="${oaActUnitPrice.engineering}" autocomplete="off">
             </td>
         </tr>
         </tbody>
@@ -197,21 +200,25 @@
         <c:forEach items="${oaActUnitPrice.oaUnitPriceList}" var="list" varStatus="status">
             <tr>
                 <td class="table-td-content">
-                    <input type="text" class="formInput" name="item" id="item${status.index+1}" value="${list.item}"  autocomplete="off">
+                    <input type="text" class="formInput" name="item" id="item${status.index+1}" value="${list.item}"
+                           autocomplete="off">
                 </td>
 
                 <td class="table-td-content">
-                    <input type="text" class="formInput" name="number" id="number${status.index+1}" value="${list.number}" onchange="amountCalculation(this)"
-                           onkeyup="value=value.replace(/[^\d]/g,'').replace(/^0{1,}/g,'')" autocomplete="off">
+                    <input type="text" class="formInput" name="number" id="number${status.index+1}"
+                           value="${list.number}" onchange="amountCalculation(this)"
+                           oninput="value=value.replace(/[^\d]/g,'').replace(/^0{1,}/g,'')" autocomplete="off">
                 </td>
 
                 <td class="table-td-content">
-                    <input type="text" class="formInput" name="price" id="price${status.index+1}" value="${list.price}" onchange="amountCalculation(this)"
-                           onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')" autocomplete="off">
+                    <input type="text" class="formInput" name="price" id="price${status.index+1}" value="${list.price}"
+                           onchange="amountCalculation(this)"
+                           oninput="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')" autocomplete="off">
                 </td>
 
                 <td class="table-td-content">
-                    <input type="text" class="formInput-readonly" name="money" id="money${status.index+1}" value="${list.money}" readonly>
+                    <input type="text" class="formInput-readonly" name="money" id="money${status.index+1}"
+                           value="${list.money}" readonly>
                 </td>
             </tr>
         </c:forEach>
@@ -238,19 +245,19 @@
 
                 <c:choose>
                     <c:when test="${oaActUnitPrice.creditRating == 1}">
-                        二级客户<input type="checkbox" checked class="checked-box-style"  name="creditRating" value="1">
+                        二级客户<input type="checkbox" checked class="checked-box-style" name="creditRating" value="1">
                     </c:when>
                     <c:otherwise>
-                        二级客户<input type="checkbox" class="checked-box-style"  name="creditRating" value="1">
+                        二级客户<input type="checkbox" class="checked-box-style" name="creditRating" value="1">
                     </c:otherwise>
                 </c:choose>
 
                 <c:choose>
                     <c:when test="${oaActUnitPrice.creditRating == 2}">
-                        三级客户<input type="checkbox" checked class="checked-box-style"  name="creditRating" value="2">
+                        三级客户<input type="checkbox" checked class="checked-box-style" name="creditRating" value="2">
                     </c:when>
                     <c:otherwise>
-                        三级客户<input type="checkbox" class="checked-box-style"  name="creditRating" value="2">
+                        三级客户<input type="checkbox" class="checked-box-style" name="creditRating" value="2">
                     </c:otherwise>
                 </c:choose>
             </td>
@@ -348,10 +355,10 @@
                 投&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;标：
                 <c:choose>
                     <c:when test="${oaActUnitPrice.tender == 0}">
-                        重大工程<input type="checkbox" class="checked-box-style" checked  name="tender" value="0">
+                        重大工程<input type="checkbox" class="checked-box-style" checked name="tender" value="0">
                     </c:when>
                     <c:otherwise>
-                        重大工程<input type="checkbox" class="checked-box-style"  name="tender" value="0">
+                        重大工程<input type="checkbox" class="checked-box-style" name="tender" value="0">
                     </c:otherwise>
                 </c:choose>
             </td>
@@ -360,14 +367,16 @@
         <tr>
             <td class="tdLabel">合同总价¥</td>
             <td class="table-td-content" colspan="3">
-                <input type="text" class="formInput-readonly" name="contractValue" value="${oaActUnitPrice.contractValue}" id="contractValue" readonly>
+                <input type="text" class="formInput-readonly" name="contractValue"
+                       value="${oaActUnitPrice.contractValue}" id="contractValue" readonly>
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel">结清时间</td>
             <td class="table-td-content" colspan="3">
-                <input type="text" class="formInput entry-date" name="settleTime" value="${oaActUnitPrice.settleTime}" id="settleTime"
+                <input type="text" class="formInput entry-date" name="settleTime" value="${oaActUnitPrice.settleTime}"
+                       id="settleTime"
                        onfocus="this.blur()">
             </td>
         </tr>
@@ -375,28 +384,32 @@
         <tr>
             <td class="tdLabel">预付款¥</td>
             <td class="table-td-content" colspan="3">
-                <input type="text" class="formInput" name="advanceCharge" id="advanceCharge" value="${oaActUnitPrice.advanceCharge}" autocomplete="off">
+                <input type="text" class="formInput" name="advanceCharge" id="advanceCharge"
+                       value="${oaActUnitPrice.advanceCharge}" autocomplete="off">
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel">联系人及电话</td>
             <td class="table-td-content" colspan="3">
-                <input type="text" class="formInput" name="contactNumber" id="contactNumber" value="${oaActUnitPrice.contactNumber}" autocomplete="off">
+                <input type="text" class="formInput" name="contactNumber" id="contactNumber"
+                       value="${oaActUnitPrice.contactNumber}" autocomplete="off">
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel">利润中心</td>
             <td class="table-td-content" colspan="3">
-                <input type="text" class="formInput" name="profitCenter" id="profitCenter" value="${oaActUnitPrice.profitCenter}" autocomplete="off">
+                <input type="text" class="formInput" name="profitCenter" id="profitCenter"
+                       value="${oaActUnitPrice.profitCenter}" autocomplete="off">
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel">运输方式及运距</td>
             <td class="table-td-content" colspan="3">
-                <input type="text" class="formInput" name="modeShipping" id="modeShipping" value="${oaActUnitPrice.modeShipping}" autocomplete="off">
+                <input type="text" class="formInput" name="modeShipping" id="modeShipping"
+                       value="${oaActUnitPrice.modeShipping}" autocomplete="off">
             </td>
         </tr>
 
@@ -424,7 +437,8 @@
         <tr>
             <td class="tdLabel">备注</td>
             <td class="table-td-content" colspan="3">
-                <input type="text" class="formInput" name="remarks" id="remarks" value="${oaActUnitPrice.remarks}" autocomplete="off">
+                <input type="text" class="formInput" name="remarks" id="remarks" value="${oaActUnitPrice.remarks}"
+                       autocomplete="off">
             </td>
             <%--暂存附件--%>
             <input type="hidden" id="annex" name="annex">
@@ -482,11 +496,11 @@
                 '  <td class="table-td-content"><input type="text" class="formInput" name="item" id="item' + rowId + '" autocomplete="off"></td>\n' +
                 '  <td class="table-td-content">\n' +
                 '     <input type="text" class="formInput" name="number" id="number' + rowId + '" onchange="amountCalculation(this)"\n' +
-                '           onkeyup="value=value.replace(/[^\\d]/g,\'\').replace(/^0{1,}/g,\'\')" autocomplete="off">\n' +
+                '           oninput="value=value.replace(/[^\\d]/g,\'\').replace(/^0{1,}/g,\'\')" autocomplete="off">\n' +
                 '  </td>\n' +
                 '  <td class="table-td-content">\n' +
                 '       <input type="text" class="formInput" name="price" id="price' + rowId + '" onchange="amountCalculation(this)"\n' +
-                '           onkeyup="value=value.replace(/^\\D*(\\d*(?:\\.\\d{0,2})?).*$/g, \'$1\')" autocomplete="off">\n' +
+                '           oninput="value=value.replace(/^\\D*(\\d*(?:\\.\\d{0,2})?).*$/g, \'$1\')" autocomplete="off">\n' +
                 '  </td>\n' +
                 '  <td class="table-td-content">\n' +
                 '       <input type="text" class="formInput-readonly" name="money" id="money' + rowId + '" readonly>\n' +
@@ -580,6 +594,7 @@
             var pro = $('#profitCenter').val();
             var mod = $('#modeShipping').val();
             var rem = $('#remarks').val();
+            var pmr = $('#promoter').val();
             var an = $('#annex').val();
             var oaActUnitPrice = {
                 title: tit,
@@ -599,6 +614,7 @@
                 profitCenter: pro,
                 modeShipping: mod,
                 remarks: rem,
+                promoter: pmr,
                 annex: an
             };
 
@@ -667,6 +683,7 @@
             var pro = $('#profitCenter').val();
             var mod = $('#modeShipping').val();
             var rem = $('#remarks').val();
+            var pmr = $('#promoter').val();
             var an = $('#annex').val();
             var oaActUnitPrice = {
                 title: tit,
@@ -686,6 +703,7 @@
                 profitCenter: pro,
                 modeShipping: mod,
                 remarks: rem,
+                promoter: pmr,
                 annex: an
             };
 

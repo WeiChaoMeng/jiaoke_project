@@ -17,7 +17,7 @@
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
 </head>
 
-<body id="body">
+<body id="body" style="width: 70%">
 
 <div class="table-title">
     <span>${oaActCard.title}</span>
@@ -50,7 +50,8 @@
                     <c:forTokens items="${oaActCard.annex}" delims="," var="annex">
                         <div class="table-file">
                             <div class="table-file-content">
-                                <span class="table-file-title" title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <span class="table-file-title"
+                                      title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
                                 <a class="table-file-download icon"
                                    href="/fileDownloadHandle/download?fileName=${annex}"
                                    title="下载">&#xebda;</a>
@@ -72,6 +73,8 @@
                 ${oaActCard.applicant}
                 <input type="hidden" name="id" value="${oaActCard.id}">
                 <input type="hidden" name="title" value="${oaActCard.title}">
+                <input type="hidden" name="promoter" value="${oaActCard.promoter}">
+                <input type="hidden" name="departmentPrincipal" value="${oaActCard.departmentPrincipal}">
             </td>
 
             <td class="tdLabel">申请时间</td>
@@ -109,17 +112,7 @@
             <td class="tdLabel">关联部门负责人</td>
             <td colspan="5" class="approval-content">
                 <shiro:hasPermission name="principal">
-                    <div style="width: 100%;height: 100%;" id="principalContent">
-                            <%--<textarea class="approval-content-textarea" style="background-color: #ffffff" name="principalContent"></textarea>--%>
-                            <%--<div class="approval-date">--%>
-                            <%--<label class="approval-date-label">日期</label>--%>
-                            <%--<input class="approval-date-input" type="text" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>--%>
-                            <%--</div>--%>
-                            <%--<div class="approval-signature">--%>
-                            <%--<label class="approval-signature-label">签字</label>--%>
-                            <%--<input class="approval-signature-input" type="text" name="principalSign" value="${nickname}" readonly>--%>
-                            <%--</div>--%>
-                    </div>
+                    <div style="width: 100%;height: 100%;" id="principalContent"></div>
                 </shiro:hasPermission>
 
                 <shiro:lacksPermission name="principal">
@@ -140,21 +133,7 @@
             <td class="tdLabel">关联部门领导主管</td>
             <td colspan="5" class="approval-content">
                 <shiro:hasPermission name="supervisor">
-                    <div style="width: 100%;height: 100%;" id="supervisorContent">
-                            <%--<textarea class="approval-content-textarea" style="background-color: #ffffff"--%>
-                            <%--name="supervisorContent"></textarea>--%>
-                            <%--<div class="approval-date">--%>
-                            <%--<label class="approval-date-label">日期</label>--%>
-                            <%--<input class="approval-date-input" type="text" name="supervisorDate"--%>
-                            <%--value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>"--%>
-                            <%--readonly>--%>
-                            <%--</div>--%>
-                            <%--<div class="approval-signature">--%>
-                            <%--<label class="approval-signature-label">签字</label>--%>
-                            <%--<input class="approval-signature-input" type="text" name="supervisorSign"--%>
-                            <%--value="${nickname}" readonly>--%>
-                            <%--</div>--%>
-                    </div>
+                    <div style="width: 100%;height: 100%;" id="supervisorContent"></div>
                 </shiro:hasPermission>
 
                 <shiro:lacksPermission name="supervisor">
@@ -176,20 +155,7 @@
             <td class="tdLabel">主管部门负责人</td>
             <td colspan="5" class="approval-content">
                 <shiro:hasPermission name="card_approval">
-                    <div style="width: 100%;height: 100%;" id="cardApprovalContent">
-                        <%--<textarea class="approval-content-textarea" style="background-color: #ffffff" name="directorContent"></textarea>--%>
-                        <%--<div class="approval-date">--%>
-                            <%--<label class="approval-date-label">日期</label>--%>
-                            <%--<input class="approval-date-input" type="text" name="directorDate"--%>
-                                   <%--value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>"--%>
-                                   <%--readonly>--%>
-                        <%--</div>--%>
-                        <%--<div class="approval-signature">--%>
-                            <%--<label class="approval-signature-label">签字</label>--%>
-                            <%--<input class="approval-signature-input" type="text" name="directorSign"--%>
-                                   <%--value="${nickname}" readonly>--%>
-                        <%--</div>--%>
-                    </div>
+                    <div style="width: 100%;height: 100%;" id="cardApprovalContent"></div>
                 </shiro:hasPermission>
 
                 <shiro:lacksPermission name="card_approval">
@@ -224,14 +190,23 @@
     var card = JSON.parse('${oaActCardJson}');
     //标记
     var flag = 0;
-    if (flag === 0) {
-        if (card.principal === "" || card.principal === undefined) {
-            $('#principalContent').append('<textarea onkeyup="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" style="background-color: #ffffff" name="principalContent"></textarea>' +
-                '<div class="approval-date"><label class="approval-date-label">日期</label>' +
-                '<input class="approval-date-input" type="text" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
-                '<div class="approval-signature"><label class="approval-signature-label">签字</label>' +
-                '<input class="approval-signature-input" type="text" name="principal" value="${nickname}" readonly></div>');
-            flag = 1;
+
+    if (card.state === 0) {
+        if (flag === 0) {
+            if (card.principal === "" || card.principal === undefined) {
+                $('#principalContent').append('<textarea oninput="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" style="background-color: #ffffff" name="principalContent"></textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期</label>' +
+                    '<input class="approval-date-input" type="text" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字</label>' +
+                    '<input class="approval-signature-input" type="text" name="principal" value="${nickname}" readonly></div>');
+                flag = 1;
+            } else {
+                $('#principalContent').append('<textarea readonly class="approval-content-textarea">${oaActCard.principalContent}</textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期</label>' +
+                    '<input class="approval-date-input" type="text" value="${oaActCard.principalDate}" readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字</label>' +
+                    '<input class="approval-signature-input" type="text" value="${oaActCard.principal}" readonly></div>');
+            }
         } else {
             $('#principalContent').append('<textarea readonly class="approval-content-textarea">${oaActCard.principalContent}</textarea>' +
                 '<div class="approval-date"><label class="approval-date-label">日期</label>' +
@@ -239,56 +214,70 @@
                 '<div class="approval-signature"><label class="approval-signature-label">签字</label>' +
                 '<input class="approval-signature-input" type="text" value="${oaActCard.principal}" readonly></div>');
         }
+
+        if (flag === 0) {
+            if (card.supervisor === "" || card.supervisor === undefined) {
+                $('#supervisorContent').append('<textarea oninput="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" style="background-color: #ffffff" name="supervisorContent"></textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期</label>' +
+                    '<input class="approval-date-input" type="text" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字</label>' +
+                    '<input class="approval-signature-input" type="text" name="supervisor" value="${nickname}" readonly></div>');
+                flag = 1;
+            } else {
+                $('#supervisorContent').append('<textarea readonly class="approval-content-textarea">${oaActCard.supervisorContent}</textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期</label><input class="approval-date-input" type="text" value="${oaActCard.supervisorDate}" readonly>' +
+                    '</div><div class="approval-signature"><label class="approval-signature-label">签字</label>' +
+                    '<input class="approval-signature-input" type="text" value="${oaActCard.supervisor}"readonly></div>');
+            }
+        } else {
+            $('#supervisorContent').append('<textarea readonly class="approval-content-textarea">${oaActCard.supervisorContent}</textarea>' +
+                '<div class="approval-date"><label class="approval-date-label">日期</label><input class="approval-date-input" type="text" value="${oaActCard.supervisorDate}" readonly>' +
+                '</div><div class="approval-signature"><label class="approval-signature-label">签字</label>' +
+                '<input class="approval-signature-input" type="text" value="${oaActCard.supervisor}"readonly></div>');
+
+        }
+
+        if (flag === 0) {
+            if (card.cardApproval === "" || card.cardApproval === undefined) {
+                $('#cardApprovalContent').append('<textarea oninput="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" style="background-color: #ffffff" name="cardApprovalContent"></textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期</label><input class="approval-date-input" type="text" name="cardApprovalDate"' +
+                    'value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>"readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字</label>' +
+                    '<input class="approval-signature-input" type="text" name="cardApproval"value="${nickname}" readonly></div>');
+                flag = 1;
+            } else {
+                $('#cardApprovalContent').append('<textarea readonly class="approval-content-textarea">${oaActCard.cardApprovalContent}</textarea><div class="approval-date">' +
+                    '<label class="approval-date-label">日期</label><input class="approval-date-input" type="text" value="${oaActCard.cardApprovalDate}" readonly>' +
+                    '</div><div class="approval-signature"><label class="approval-signature-label">签字</label>' +
+                    '<input class="approval-signature-input" type="text" value="${oaActCard.cardApproval}" readonly></div>');
+            }
+        } else {
+            $('#cardApprovalContent').append('<textarea readonly class="approval-content-textarea">${oaActCard.cardApprovalContent}</textarea><div class="approval-date">' +
+                '<label class="approval-date-label">日期</label><input class="approval-date-input" type="text" value="${oaActCard.cardApprovalDate}" readonly>' +
+                '</div><div class="approval-signature"><label class="approval-signature-label">签字</label>' +
+                '<input class="approval-signature-input" type="text" value="${oaActCard.cardApproval}" readonly></div>');
+
+        }
+        if (flag === 0) {
+            $('#return').html("");
+            $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
+        }
     } else {
         $('#principalContent').append('<textarea readonly class="approval-content-textarea">${oaActCard.principalContent}</textarea>' +
             '<div class="approval-date"><label class="approval-date-label">日期</label>' +
             '<input class="approval-date-input" type="text" value="${oaActCard.principalDate}" readonly></div>' +
             '<div class="approval-signature"><label class="approval-signature-label">签字</label>' +
             '<input class="approval-signature-input" type="text" value="${oaActCard.principal}" readonly></div>');
-    }
-
-    if (flag === 0) {
-        if (card.supervisor === "" || card.supervisor === undefined) {
-            $('#supervisorContent').append('<textarea onkeyup="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" style="background-color: #ffffff" name="supervisorContent"></textarea>' +
-                '<div class="approval-date"><label class="approval-date-label">日期</label>' +
-                '<input class="approval-date-input" type="text" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
-                '<div class="approval-signature"><label class="approval-signature-label">签字</label>' +
-                '<input class="approval-signature-input" type="text" name="supervisor" value="${nickname}" readonly></div>');
-            flag = 1;
-        } else {
-            $('#supervisorContent').append('<textarea readonly class="approval-content-textarea">${oaActCard.supervisorContent}</textarea>' +
-                '<div class="approval-date"><label class="approval-date-label">日期</label><input class="approval-date-input" type="text" value="${oaActCard.supervisorDate}" readonly>' +
-                '</div><div class="approval-signature"><label class="approval-signature-label">签字</label>' +
-                '<input class="approval-signature-input" type="text" value="${oaActCard.supervisor}"readonly></div>');
-        }
-    } else {
         $('#supervisorContent').append('<textarea readonly class="approval-content-textarea">${oaActCard.supervisorContent}</textarea>' +
             '<div class="approval-date"><label class="approval-date-label">日期</label><input class="approval-date-input" type="text" value="${oaActCard.supervisorDate}" readonly>' +
             '</div><div class="approval-signature"><label class="approval-signature-label">签字</label>' +
             '<input class="approval-signature-input" type="text" value="${oaActCard.supervisor}"readonly></div>');
-
-    }
-
-    if (flag === 0) {
-        if (card.cardApproval === "" || card.cardApproval === undefined) {
-            $('#cardApprovalContent').append('<textarea onkeyup="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" style="background-color: #ffffff" name="cardApprovalContent"></textarea>' +
-                '<div class="approval-date"><label class="approval-date-label">日期</label><input class="approval-date-input" type="text" name="cardApprovalDate"' +
-                'value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>"readonly></div>' +
-                '<div class="approval-signature"><label class="approval-signature-label">签字</label>' +
-                '<input class="approval-signature-input" type="text" name="cardApproval"value="${nickname}" readonly></div>');
-            flag = 1;
-        } else {
-            $('#cardApprovalContent').append('<textarea readonly class="approval-content-textarea">${oaActCard.cardApprovalContent}</textarea><div class="approval-date">' +
-                '<label class="approval-date-label">日期</label><input class="approval-date-input" type="text" value="${oaActCard.cardApprovalDate}" readonly>' +
-                '</div><div class="approval-signature"><label class="approval-signature-label">签字</label>' +
-                '<input class="approval-signature-input" type="text" value="${oaActCard.cardApproval}" readonly></div>');
-        }
-    } else {
         $('#cardApprovalContent').append('<textarea readonly class="approval-content-textarea">${oaActCard.cardApprovalContent}</textarea><div class="approval-date">' +
             '<label class="approval-date-label">日期</label><input class="approval-date-input" type="text" value="${oaActCard.cardApprovalDate}" readonly>' +
             '</div><div class="approval-signature"><label class="approval-signature-label">签字</label>' +
             '<input class="approval-signature-input" type="text" value="${oaActCard.cardApproval}" readonly></div>');
-
+        $('#return').html("");
+        $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
     }
 
 
@@ -307,6 +296,9 @@
                     //返回上一页
                     window.location.href = '${path}/oaHomePage/toOaHomePage';
                     layer.msg('提交成功！');
+                } else if (data === 'backSuccess') {
+                    window.location.href = '${path}/oaHomePage/toOaHomePage';
+                    window.top.tips("提交成功,并将数据转存到待发事项中！", 6, 1, 2000);
                 } else {
                     layer.msg('提交失败！');
                 }
@@ -324,7 +316,7 @@
         //执行打印
         window.print();
         $('#tool,#return').show();
-        $('#body').css('width', '80%');
+        $('#body').css('width', '70%');
     }
 </script>
 </html>

@@ -109,7 +109,7 @@
                 <td>
                     <div class="common_input_frame">
                         <input type="text"
-                               placeholder="所在部门(审批),分管部门(审批),劳资部门(审批),总经理(审批),发起人、人事(协同)" readonly>
+                               placeholder="所在部门→分管部门→劳资部门→总经理→发起人、人事(知会)" readonly>
                     </div>
                 </td>
             </tr>
@@ -129,6 +129,8 @@
                 <input type="text" class="formInput-readonly" name="name" value="${oaActRotation.name}" readonly>
                 <input type="hidden" id="annex" name="annex">
                 <input type="hidden" id="id" name="id" value="${oaActRotation.id}">
+                <input type="hidden" name="promoter" id="promoter" value="${oaActRotation.promoter}">
+                <input type="hidden" id="departmentPrincipal" name="departmentPrincipal">
             </td>
 
             <td class="tdLabel">性别</td>
@@ -161,7 +163,7 @@
         </tr>
 
         <tr>
-            <td class="tdLabel">名族</td>
+            <td class="tdLabel">民族</td>
             <td class="table-td-content">
                 <input type="text" class="formInput" name="ethnic" value="${oaActRotation.ethnic}" autocomplete="off">
             </td>
@@ -340,7 +342,7 @@
         </tr>
 
         <tr>
-            <td class="tdLabel">劳资部门意见</td>
+            <td class="tdLabel">组织人事部门意见</td>
             <td colspan="5" class="approval-content">
                 <textarea readonly class="approval-content-textarea"></textarea>
                 <div class="approval-date">
@@ -428,34 +430,75 @@
 
     //发送
     function send() {
+        if ($.trim($("#title").val()) === '') {
+            window.top.tips("标题不可以为空！", 6, 5, 2000);
+        } else {
+            var principalGroup = '${principalGroup}';
+            //部门负责人是多个
+            if (principalGroup !== '') {
+                var principalList = JSON.parse(principalGroup);
+                window.top.selectPrincipal(principalList);
+
+                //部门负责人是单个
+            } else {
+                $('#departmentPrincipal').val("single");
+
+                var array = [];
+                $('#annexes').find('input').each(function () {
+                    array.push($(this).val());
+                });
+
+                //发送前将上传好的附件插入form中
+                $('#annex').val(array);
+
+                $.ajax({
+                    type: "POST",
+                    url: '${path}/rotation/editAdd',
+                    data: $('#oaActRotation').serialize(),
+                    error: function (request) {
+                        layer.msg("出错！");
+                    },
+                    success: function (result) {
+                        if (result === "success") {
+                            window.location.href = "${path}/oaIndex.do";
+                            window.top.tips("发送成功！", 0, 1, 2000);
+                        } else {
+                            window.top.tips('发送失败！', 0, 2, 2000);
+                        }
+                    }
+                })
+            }
+        }
+    }
+
+    //根据勾选的部门负责人发送
+    function selectionPrincipal(principalId) {
+        $('#departmentPrincipal').val(principalId);
+
         var array = [];
         $('#annexes').find('input').each(function () {
             array.push($(this).val());
         });
 
-        if ($.trim($("#title").val()) === '') {
-            window.top.tips("标题不可以为空！", 6, 5, 2000);
-        } else {
-            //发送前将上传好的附件插入form中
-            $('#annex').val(array);
+        //发送前将上传好的附件插入form中
+        $('#annex').val(array);
 
-            $.ajax({
-                type: "POST",
-                url: '${path}/rotation/editAdd',
-                data: $('#oaActRotation').serialize(),
-                error: function (request) {
-                    layer.msg("出错！");
-                },
-                success: function (result) {
-                    if (result === "success") {
-                        window.location.href = "${path}/oaIndex.do";
-                        window.top.tips("发送成功！", 0, 1, 1000);
-                    } else {
-                        window.top.tips('发送失败！', 0, 2, 1000);
-                    }
+        $.ajax({
+            type: "POST",
+            url: '${path}/rotation/editAdd',
+            data: $('#oaActRotation').serialize(),
+            error: function (request) {
+                layer.msg("出错！");
+            },
+            success: function (result) {
+                if (result === "success") {
+                    window.location.href = "${path}/oaIndex.do";
+                    window.top.tips("发送成功！", 0, 1, 2000);
+                } else {
+                    window.top.tips('发送失败！', 0, 2, 2000);
                 }
-            })
-        }
+            }
+        })
     }
 
     //保存待发

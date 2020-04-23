@@ -118,18 +118,63 @@
 
     <tr>
         <td colspan="2" class="table-td-textarea">
-            <textarea class="approval-content-textarea" style="height: 75px" readonly>${oaActRewardsPenalties.suppliesContent}</textarea>
+            <textarea class="approval-content-textarea" style="height: 75px" readonly>${oaActRewardsPenalties.financialContent}</textarea>
         </td>
 
         <td class="table-td-textarea">
-            ${oaActRewardsPenalties.supplies}
+            ${oaActRewardsPenalties.financial}
         </td>
     </tr>
 
     <tr>
-        <td class="tdLabel" style="padding: 0;text-align: center">总经理意见</td>
-        <td colspan="5" class="table-td-textarea">
-            <textarea class="approval-content-textarea" style="height: 75px" readonly>${oaActRewardsPenalties.financialContent}</textarea>
+        <td class="tdLabel">人事专员</td>
+        <td colspan="5" class="approval-content">
+            <textarea class="approval-content-textarea"
+                      readonly>${oaActRewardsPenalties.personnelCensorContent}</textarea>
+            <div class="approval-date">
+                <label class="approval-date-label">日期 </label>
+                <input class="approval-date-input" type="text" value="${oaActRewardsPenalties.personnelCensorDate}"
+                       readonly>
+            </div>
+            <div class="approval-signature">
+                <label class="approval-signature-label">签字 </label>
+                <input class="approval-signature-input" type="text" value="${oaActRewardsPenalties.personnelCensor}"
+                       readonly>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="tdLabel">人事主管领导</td>
+        <td colspan="5" class="approval-content">
+            <textarea class="approval-content-textarea" readonly>${oaActRewardsPenalties.personnelContent}</textarea>
+            <div class="approval-date">
+                <label class="approval-date-label">日期 </label>
+                <input class="approval-date-input" type="text" value="${oaActRewardsPenalties.personnelDate}" readonly>
+            </div>
+            <div class="approval-signature">
+                <label class="approval-signature-label">签字 </label>
+                <input class="approval-signature-input" type="text" value="${oaActRewardsPenalties.personnel}"
+                       readonly>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="tdLabel">总经理审批</td>
+        <td colspan="5" class="approval-content">
+            <textarea class="approval-content-textarea"
+                      readonly>${oaActRewardsPenalties.companyPrincipalContent}</textarea>
+            <div class="approval-date">
+                <label class="approval-date-label">日期 </label>
+                <input class="approval-date-input" type="text" value="${oaActRewardsPenalties.companyPrincipalDate}"
+                       readonly>
+            </div>
+            <div class="approval-signature">
+                <label class="approval-signature-label">签字 </label>
+                <input class="approval-signature-input" type="text" value="${oaActRewardsPenalties.companyPrincipal}"
+                       readonly>
+            </div>
         </td>
     </tr>
     </tbody>

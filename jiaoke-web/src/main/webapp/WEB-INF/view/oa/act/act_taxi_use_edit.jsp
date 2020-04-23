@@ -106,7 +106,7 @@
                 <th class="th_title" nowrap="nowrap" style="width: 4%">流程</th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" placeholder="发起者部门负责人(审批)、发起者部门主管领导(审批)、发起人(协同)" readonly>
+                        <input type="text" placeholder="发起者部门负责人→发起者部门主管领导→发起人(知会)" readonly>
                     </div>
                 </td>
             </tr>
@@ -119,13 +119,16 @@
         <tr>
             <td class="tdLabel">申请使用人</td>
             <td class="table-td-content">
-                <input type="text" class="formInput-readonly" name="applicant" value="${oaActTaxiUse.applicant}" readonly>
+                <input type="text" class="formInput-readonly" name="applicant" value="${oaActTaxiUse.applicant}"
+                       readonly>
                 <input type="hidden" id="id" name="id" value="${oaActTaxiUse.id}">
+                <input type="hidden" id="departmentPrincipal" name="departmentPrincipal">
             </td>
 
             <td class="tdLabel">填表日期</td>
             <td class="table-td-content">
-                <input type="text" class="formInput-readonly" name="fillingDate" value="${oaActTaxiUse.fillingDate}" readonly>
+                <input type="text" class="formInput-readonly" name="fillingDate" value="${oaActTaxiUse.fillingDate}"
+                       readonly>
                 <input type="hidden" id="annex" name="annex">
             </td>
         </tr>
@@ -133,31 +136,36 @@
         <tr>
             <td class="tdLabel">事由</td>
             <td class="table-td-content" colspan="3" style="padding: 10px">
-                <textarea class="write-approval-content-textarea" onkeyup="value=value.replace(/\s+/g,'')" name="reason">${oaActTaxiUse.reason}</textarea>
+                <textarea class="write-approval-content-textarea" oninput="value=value.replace(/\s+/g,'')"
+                          name="reason">${oaActTaxiUse.reason}</textarea>
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel">用车时间</td>
             <td class="table-td-content">
-                <input type="text" class="formInput entry-date" name="useTime" value="${oaActTaxiUse.useTime}" onfocus="this.blur()">
+                <input type="text" class="formInput entry-date" name="useTime" value="${oaActTaxiUse.useTime}"
+                       onfocus="this.blur()">
             </td>
 
             <td class="tdLabel">目的地</td>
             <td class="table-td-content">
-                <input type="text" class="formInput" name="destination" value="${oaActTaxiUse.destination}" autocomplete="off">
+                <input type="text" class="formInput" name="destination" value="${oaActTaxiUse.destination}"
+                       autocomplete="off">
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel">审核人</td>
             <td class="table-td-content">
-                <input type="text" class="formInput-readonly" readonly="readonly">
+                <input type="text" class="formInput-readonly" name="principal" readonly="readonly">
+                <input type="hidden" name="principalDate">
             </td>
 
             <td class="tdLabel">批准人</td>
             <td class="table-td-content">
-                <input type="text" class="formInput-readonly" readonly="readonly">
+                <input type="text" class="formInput-readonly" name="supervisor" readonly="readonly">
+                <input type="hidden" name="supervisorDate">
             </td>
         </tr>
         </tbody>
@@ -165,7 +173,8 @@
 
     <div class="notice-tips" style="text-align: left">
         <span class="notice-tips-script" style="display: block">说明：1.审核人为使用人部门负责人，批准人为使用人部门主管领导。</span>
-        <span class="notice-tips-script" style="display: block;text-indent: 39px;">2.出租车票连同此审批单一并交综合办公室，通过综合办公室报销。</span>
+        <span class="notice-tips-script"
+              style="display: block;text-indent: 39px;">2.出租车票连同此审批单一并交综合办公室，通过综合办公室报销。</span>
     </div>
 </form>
 
@@ -189,34 +198,75 @@
 
     //发送
     function send() {
+        if ($.trim($("#title").val()) === '') {
+            window.top.tips("标题不可以为空！", 6, 5, 2000);
+        } else {
+            var principalGroup = '${principalGroup}';
+            //部门负责人是多个
+            if (principalGroup !== '') {
+                var principalList = JSON.parse(principalGroup);
+                window.top.selectPrincipal(principalList);
+
+                //部门负责人是单个
+            } else {
+                $('#departmentPrincipal').val("single");
+
+                var array = [];
+                $('#annexes').find('input').each(function () {
+                    array.push($(this).val());
+                });
+
+                //发送前将上传好的附件插入form中
+                $('#annex').val(array);
+
+                $.ajax({
+                    type: "POST",
+                    url: '${path}/taxiUse/editAdd',
+                    data: $('#oaActTaxiUse').serialize(),
+                    error: function (request) {
+                        layer.msg("出错！");
+                    },
+                    success: function (result) {
+                        if (result === "success") {
+                            window.location.href = "${path}/oaIndex.do";
+                            window.top.tips("发送成功！", 0, 1, 2000);
+                        } else {
+                            window.top.tips('发送失败！', 0, 2, 2000);
+                        }
+                    }
+                })
+            }
+        }
+    }
+
+    //根据勾选的部门负责人发送
+    function selectionPrincipal(principalId) {
+        $('#departmentPrincipal').val(principalId);
+
         var array = [];
         $('#annexes').find('input').each(function () {
             array.push($(this).val());
         });
 
-        if ($.trim($("#title").val()) === '') {
-            window.top.tips("标题不可以为空！", 6, 5, 2000);
-        } else {
-            //发送前将上传好的附件插入form中
-            $('#annex').val(array);
+        //发送前将上传好的附件插入form中
+        $('#annex').val(array);
 
-            $.ajax({
-                type: "POST",
-                url: '${path}/taxiUse/editAdd',
-                data: $('#oaActTaxiUse').serialize(),
-                error: function (request) {
-                    layer.msg("出错！");
-                },
-                success: function (result) {
-                    if (result === "success") {
-                        window.location.href = "${path}/oaIndex.do";
-                        window.top.tips("发送成功！", 0, 1, 1000);
-                    } else {
-                        window.top.tips('发送失败！', 0, 2, 1000);
-                    }
+        $.ajax({
+            type: "POST",
+            url: '${path}/taxiUse/editAdd',
+            data: $('#oaActTaxiUse').serialize(),
+            error: function (request) {
+                layer.msg("出错！");
+            },
+            success: function (result) {
+                if (result === "success") {
+                    window.location.href = "${path}/oaIndex.do";
+                    window.top.tips("发送成功！", 0, 1, 2000);
+                } else {
+                    window.top.tips('发送失败！', 0, 2, 2000);
                 }
-            })
-        }
+            }
+        })
     }
 
     //保存待发

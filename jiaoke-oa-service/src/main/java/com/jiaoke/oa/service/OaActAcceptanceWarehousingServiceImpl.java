@@ -65,6 +65,7 @@ public class OaActAcceptanceWarehousingServiceImpl implements OaActAcceptanceWar
         oaActAcceptanceWarehousing.setId(randomId);
         oaActAcceptanceWarehousing.setPromoter(userId);
         oaActAcceptanceWarehousing.setUrl("acceptanceWarehousing");
+        oaActAcceptanceWarehousing.setState(0);
         if (oaActAcceptanceWarehousingMapper.insertSelective(oaActAcceptanceWarehousing) < 0) {
             return -1;
         } else {
@@ -74,6 +75,7 @@ public class OaActAcceptanceWarehousingServiceImpl implements OaActAcceptanceWar
             oaCollaboration.setTitle(oaActAcceptanceWarehousing.getTitle());
             oaCollaboration.setUrl("acceptanceWarehousing");
             oaCollaboration.setTable("oa_act_acceptance_warehousing");
+            oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("验收入库");
             oaCollaboration.setDataOne("购买人:" + oaActAcceptanceWarehousing.getPurchaser());
             oaCollaboration.setDataTwo("填写时间:" + oaActAcceptanceWarehousing.getPurchaserDate());
@@ -86,6 +88,9 @@ public class OaActAcceptanceWarehousingServiceImpl implements OaActAcceptanceWar
 
     @Override
     public int edit(OaActAcceptanceWarehousing oaActAcceptanceWarehousing) {
+        oaActAcceptanceWarehousing.setState(0);
+        oaActAcceptanceWarehousing.setAcceptor("");
+        oaActAcceptanceWarehousing.setAcceptorDate("");
         oaActAcceptanceWarehousing.setCreateTime(new Date());
         if (oaActAcceptanceWarehousingMapper.updateByPrimaryKey(oaActAcceptanceWarehousing) < 0) {
             return -1;

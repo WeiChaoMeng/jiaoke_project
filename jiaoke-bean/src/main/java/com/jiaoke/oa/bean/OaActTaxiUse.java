@@ -74,6 +74,16 @@ public class OaActTaxiUse {
     private String supervisorDate;
 
     /**
+     * 部门负责人
+     */
+    private String departmentPrincipal;
+
+    /**
+     * 状态
+     */
+    private Integer state;
+
+    /**
      * 附件
      */
     private String annex;
@@ -231,5 +241,21 @@ public class OaActTaxiUse {
 
     public void setFillingDate(String fillingDate) {
         this.fillingDate = fillingDate;
+    }
+
+    public String getDepartmentPrincipal() {
+        return departmentPrincipal;
+    }
+
+    public void setDepartmentPrincipal(String departmentPrincipal) {
+        this.departmentPrincipal = departmentPrincipal;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
 }

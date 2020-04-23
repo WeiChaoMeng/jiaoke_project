@@ -37,6 +37,7 @@ public class OaActAdjustWagesServiceImpl implements OaActAdjustWagesService {
         oaActAdjustWages.setCreateTime(new Date());
         oaActAdjustWages.setPromoter(userId);
         oaActAdjustWages.setUrl("adjustWages");
+        oaActAdjustWages.setState(0);
         if (oaActAdjustWagesMapper.insert(oaActAdjustWages) < 0) {
             return -1;
         } else {
@@ -46,6 +47,7 @@ public class OaActAdjustWagesServiceImpl implements OaActAdjustWagesService {
             oaCollaboration.setTitle(oaActAdjustWages.getTitle());
             oaCollaboration.setUrl("adjustWages");
             oaCollaboration.setTable("oa_act_adjust_wages");
+            oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("转正申请");
             oaCollaboration.setDataOne("目前薪资:" + oaActAdjustWages.getCurrentSalary());
             oaCollaboration.setDataTwo("期望薪资:" + oaActAdjustWages.getSalaryExpectation());
@@ -58,10 +60,22 @@ public class OaActAdjustWagesServiceImpl implements OaActAdjustWagesService {
 
     @Override
     public int edit(OaActAdjustWages oaActAdjustWages) {
+        oaActAdjustWages.setState(0);
+        oaActAdjustWages.setPrincipal("");
+        oaActAdjustWages.setPrincipalDate("");
+        oaActAdjustWages.setPrincipalContent("");
+        oaActAdjustWages.setSupervisor("");
+        oaActAdjustWages.setSupervisorDate("");
+        oaActAdjustWages.setSupervisorContent("");
+        oaActAdjustWages.setPersonnel("");
+        oaActAdjustWages.setPersonnelDate("");
+        oaActAdjustWages.setPersonnelContent("");
+        oaActAdjustWages.setCompanyPrincipal("");
+        oaActAdjustWages.setCompanyPrincipalDate("");
+        oaActAdjustWages.setCompanyPrincipalContent("");
         if (oaActAdjustWagesMapper.updateByPrimaryKeySelective(oaActAdjustWages) < 0) {
             return -1;
         } else {
-            oaCollaborationMapper.updateStateByCorrelationId(oaActAdjustWages.getId(), 1, oaActAdjustWages.getTitle());
             return 1;
         }
     }

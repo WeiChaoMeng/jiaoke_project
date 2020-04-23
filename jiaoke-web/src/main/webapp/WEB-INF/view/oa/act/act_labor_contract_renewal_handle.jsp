@@ -16,7 +16,7 @@
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
 </head>
 
-<body id="body" style="width: 75%">
+<body id="body" style="width: 70%">
 
 <div class="table-title">
     <span>${oaActLaborContractRenewal.title}</span>
@@ -75,6 +75,7 @@
             <input type="hidden" name="id" value="${oaActLaborContractRenewal.id}">
             <input type="hidden" name="promoter" value="${oaActLaborContractRenewal.promoter}">
             <input type="hidden" name="notifiedPerson" value="${oaActLaborContractRenewal.notifiedPerson}">
+            <input type="hidden" name="departmentPrincipal" value="${oaActLaborContractRenewal.departmentPrincipal}">
         </div>
     </div>
 
@@ -195,15 +196,23 @@
     //标记
     var flag = 0;
 
-    if (flag === 0) {
-        if (laborContractRenewal.principal === "" || laborContractRenewal.principal === undefined) {
-            $('#principalContent').append(
-                '<textarea onkeyup="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="principalContent" style="background-color: #ffffff"></textarea>' +
-                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
-                '<input class="approval-date-input" type="text" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
-                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
-                '<input class="approval-signature-input" type="text" name="principal" value="${nickname}" readonly></div>');
-            flag = 1;
+    if (laborContractRenewal.state === 0) {
+        if (flag === 0) {
+            if (laborContractRenewal.principal === "" || laborContractRenewal.principal === undefined) {
+                $('#principalContent').append(
+                    '<textarea oninput="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="principalContent" style="background-color: #ffffff"></textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                    '<input class="approval-date-input" type="text" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                    '<input class="approval-signature-input" type="text" name="principal" value="${nickname}" readonly></div>');
+                flag = 1;
+            } else {
+                $('#principalContent').append('<textarea class="approval-content-textarea" readonly>${oaActLaborContractRenewal.principalContent}</textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                    '<input class="approval-date-input" type="text" value="${oaActLaborContractRenewal.principalDate}" readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                    '<input class="approval-signature-input" type="text" value="${oaActLaborContractRenewal.principal}" readonly></div>');
+            }
         } else {
             $('#principalContent').append('<textarea class="approval-content-textarea" readonly>${oaActLaborContractRenewal.principalContent}</textarea>' +
                 '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
@@ -211,23 +220,23 @@
                 '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
                 '<input class="approval-signature-input" type="text" value="${oaActLaborContractRenewal.principal}" readonly></div>');
         }
-    } else {
-        $('#principalContent').append('<textarea class="approval-content-textarea" readonly>${oaActLaborContractRenewal.principalContent}</textarea>' +
-            '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
-            '<input class="approval-date-input" type="text" value="${oaActLaborContractRenewal.principalDate}" readonly></div>' +
-            '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
-            '<input class="approval-signature-input" type="text" value="${oaActLaborContractRenewal.principal}" readonly></div>');
-    }
 
-    if (flag === 0) {
-        if (laborContractRenewal.supervisor === "" || laborContractRenewal.supervisor === undefined) {
-            $('#supervisorContent').append(
-                '<textarea onkeyup="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="supervisorContent" style="background-color: #ffffff"></textarea>' +
-                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
-                '<input class="approval-date-input" type="text" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
-                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
-                '<input class="approval-signature-input" type="text" name="supervisor" value="${nickname}" readonly></div>');
-            flag = 1;
+        if (flag === 0) {
+            if (laborContractRenewal.supervisor === "" || laborContractRenewal.supervisor === undefined) {
+                $('#supervisorContent').append(
+                    '<textarea oninput="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="supervisorContent" style="background-color: #ffffff"></textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                    '<input class="approval-date-input" type="text" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                    '<input class="approval-signature-input" type="text" name="supervisor" value="${nickname}" readonly></div>');
+                flag = 1;
+            } else {
+                $('#supervisorContent').append('<textarea class="approval-content-textarea" readonly>${oaActLaborContractRenewal.supervisorContent}</textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                    '<input class="approval-date-input" type="text" value="${oaActLaborContractRenewal.supervisorDate}" readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                    '<input class="approval-signature-input" type="text" value="${oaActLaborContractRenewal.supervisor}" readonly></div>');
+            }
         } else {
             $('#supervisorContent').append('<textarea class="approval-content-textarea" readonly>${oaActLaborContractRenewal.supervisorContent}</textarea>' +
                 '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
@@ -235,23 +244,23 @@
                 '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
                 '<input class="approval-signature-input" type="text" value="${oaActLaborContractRenewal.supervisor}" readonly></div>');
         }
-    } else {
-        $('#supervisorContent').append('<textarea class="approval-content-textarea" readonly>${oaActLaborContractRenewal.supervisorContent}</textarea>' +
-            '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
-            '<input class="approval-date-input" type="text" value="${oaActLaborContractRenewal.supervisorDate}" readonly></div>' +
-            '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
-            '<input class="approval-signature-input" type="text" value="${oaActLaborContractRenewal.supervisor}" readonly></div>');
-    }
 
-    if (flag === 0) {
-        if (laborContractRenewal.personnel === "" || laborContractRenewal.personnel === undefined) {
-            $('#personnelContent').append(
-                '<textarea onkeyup="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="personnelContent" style="background-color: #ffffff"></textarea>' +
-                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
-                '<input class="approval-date-input" type="text" name="personnelDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
-                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
-                '<input class="approval-signature-input" type="text" name="personnel" value="${nickname}" readonly></div>');
-            flag = 1;
+        if (flag === 0) {
+            if (laborContractRenewal.personnel === "" || laborContractRenewal.personnel === undefined) {
+                $('#personnelContent').append(
+                    '<textarea oninput="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="personnelContent" style="background-color: #ffffff"></textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                    '<input class="approval-date-input" type="text" name="personnelDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                    '<input class="approval-signature-input" type="text" name="personnel" value="${nickname}" readonly></div>');
+                flag = 1;
+            } else {
+                $('#personnelContent').append('<textarea class="approval-content-textarea" readonly>${oaActLaborContractRenewal.personnelContent}</textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                    '<input class="approval-date-input" type="text" value="${oaActLaborContractRenewal.personnelDate}" readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                    '<input class="approval-signature-input" type="text" value="${oaActLaborContractRenewal.personnel}" readonly></div>');
+            }
         } else {
             $('#personnelContent').append('<textarea class="approval-content-textarea" readonly>${oaActLaborContractRenewal.personnelContent}</textarea>' +
                 '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
@@ -259,23 +268,23 @@
                 '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
                 '<input class="approval-signature-input" type="text" value="${oaActLaborContractRenewal.personnel}" readonly></div>');
         }
-    } else {
-        $('#personnelContent').append('<textarea class="approval-content-textarea" readonly>${oaActLaborContractRenewal.personnelContent}</textarea>' +
-            '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
-            '<input class="approval-date-input" type="text" value="${oaActLaborContractRenewal.personnelDate}" readonly></div>' +
-            '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
-            '<input class="approval-signature-input" type="text" value="${oaActLaborContractRenewal.personnel}" readonly></div>');
-    }
 
-    if (flag === 0) {
-        if (laborContractRenewal.companyPrincipal === "" || laborContractRenewal.companyPrincipal === undefined) {
-            $('#companyPrincipalContent').append(
-                '<textarea onkeyup="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="companyPrincipalContent" style="background-color: #ffffff"></textarea>' +
-                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
-                '<input class="approval-date-input" type="text" name="companyPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
-                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
-                '<input class="approval-signature-input" type="text" name="companyPrincipal" value="${nickname}" readonly></div>');
-            flag = 1;
+        if (flag === 0) {
+            if (laborContractRenewal.companyPrincipal === "" || laborContractRenewal.companyPrincipal === undefined) {
+                $('#companyPrincipalContent').append(
+                    '<textarea oninput="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="companyPrincipalContent" style="background-color: #ffffff"></textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                    '<input class="approval-date-input" type="text" name="companyPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                    '<input class="approval-signature-input" type="text" name="companyPrincipal" value="${nickname}" readonly></div>');
+                flag = 1;
+            } else {
+                $('#companyPrincipalContent').append('<textarea class="approval-content-textarea" readonly>${oaActLaborContractRenewal.companyPrincipalContent}</textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                    '<input class="approval-date-input" type="text" value="${oaActLaborContractRenewal.companyPrincipalDate}" readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                    '<input class="approval-signature-input" type="text" value="${oaActLaborContractRenewal.companyPrincipal}" readonly></div>');
+            }
         } else {
             $('#companyPrincipalContent').append('<textarea class="approval-content-textarea" readonly>${oaActLaborContractRenewal.companyPrincipalContent}</textarea>' +
                 '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
@@ -283,15 +292,28 @@
                 '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
                 '<input class="approval-signature-input" type="text" value="${oaActLaborContractRenewal.companyPrincipal}" readonly></div>');
         }
+
     } else {
+        $('#principalContent').append('<textarea class="approval-content-textarea" readonly>${oaActLaborContractRenewal.principalContent}</textarea>' +
+            '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+            '<input class="approval-date-input" type="text" value="${oaActLaborContractRenewal.principalDate}" readonly></div>' +
+            '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+            '<input class="approval-signature-input" type="text" value="${oaActLaborContractRenewal.principal}" readonly></div>');
+        $('#supervisorContent').append('<textarea class="approval-content-textarea" readonly>${oaActLaborContractRenewal.supervisorContent}</textarea>' +
+            '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+            '<input class="approval-date-input" type="text" value="${oaActLaborContractRenewal.supervisorDate}" readonly></div>' +
+            '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+            '<input class="approval-signature-input" type="text" value="${oaActLaborContractRenewal.supervisor}" readonly></div>');
+        $('#personnelContent').append('<textarea class="approval-content-textarea" readonly>${oaActLaborContractRenewal.personnelContent}</textarea>' +
+            '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+            '<input class="approval-date-input" type="text" value="${oaActLaborContractRenewal.personnelDate}" readonly></div>' +
+            '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+            '<input class="approval-signature-input" type="text" value="${oaActLaborContractRenewal.personnel}" readonly></div>');
         $('#companyPrincipalContent').append('<textarea class="approval-content-textarea" readonly>${oaActLaborContractRenewal.companyPrincipalContent}</textarea>' +
             '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
             '<input class="approval-date-input" type="text" value="${oaActLaborContractRenewal.companyPrincipalDate}" readonly></div>' +
             '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
             '<input class="approval-signature-input" type="text" value="${oaActLaborContractRenewal.companyPrincipal}" readonly></div>');
-    }
-
-    if (flag === 0){
         $('#return').html("");
         $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
     }
@@ -311,6 +333,9 @@
                     //返回上一页
                     window.location.href = '${path}/oaHomePage/toOaHomePage';
                     window.top.tips("提交成功！", 0, 1, 1000);
+                } else if (data === 'backSuccess') {
+                    window.location.href = '${path}/oaHomePage/toOaHomePage';
+                    window.top.tips("提交成功,并将数据转存到待发事项中！", 6, 1, 2000);
                 } else {
                     window.top.tips("提交失败！", 0, 2, 1000);
                 }
@@ -320,15 +345,15 @@
             }
         })
     }
-    
+
     //打印
     function printContent() {
         $('#tool,#return').hide();
         $('#body').css('width', '100%');
         //执行打印
         window.print();
-        $('#tool').show();
-        $('#body,#return').css('width', '75%');
+        $('#tool,#return').show();
+        $('#body').css('width', '70%');
     }
 </script>
 </html>

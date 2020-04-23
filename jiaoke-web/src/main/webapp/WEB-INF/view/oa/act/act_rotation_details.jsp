@@ -228,7 +228,7 @@
     </tr>
 
     <tr>
-        <td class="tdLabel">劳资部门意见</td>
+        <td class="tdLabel">组织人事部门意见</td>
         <td colspan="5" class="approval-content">
             <textarea readonly class="approval-content-textarea">${oaActRotation.personnelContent}</textarea>
             <div class="approval-date">

@@ -64,7 +64,7 @@
     </style>
 </head>
 
-<body id="body">
+<body id="body" style="width: 70%">
 
 <div class="table-title">
     <span>验收入库单</span>
@@ -147,7 +147,7 @@
                 <th class="th_title" nowrap="nowrap" style="width: 4%">流程</th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" placeholder="验收人(审批)、发起人(知会)"
+                        <input type="text" placeholder="验收人→发起人(知会)"
                                readonly="readonly">
                     </div>
                 </td>
@@ -186,11 +186,11 @@
             <td class="table-td-content" style="text-align: center;">1</td>
 
             <td class="table-td-content">
-                <input type="text" class="formInput" name="name" id="name" onkeyup="value=value.replace(/\s+/g,'')" autocomplete="off">
+                <input type="text" class="formInput" name="name" id="name" oninput="value=value.replace(/\s+/g,'')" autocomplete="off">
             </td>
 
             <td class="table-td-content">
-                <input type="text" class="formInput" name="number" id="number" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')" autocomplete="off">
+                <input type="text" class="formInput" name="number" id="number" oninput="value=value.replace(/^(0+)|[^\d]+/g,'')" autocomplete="off">
             </td>
 
             <td class="table-td-content">
@@ -250,10 +250,10 @@
                 '<tr>\n' +
                 '            <td class="table-td-content" style="text-align: center;">' + rowId + '</td>\n' +
                 '            <td class="table-td-content">\n' +
-                '                <input type="text" class="formInput" name="name" id="name" onkeyup="value=value.replace(/\\s+/g,\'\')" autocomplete="off">\n' +
+                '                <input type="text" class="formInput" name="name" id="name" oninput="value=value.replace(/\\s+/g,\'\')" autocomplete="off">\n' +
                 '            </td>\n' +
                 '            <td class="table-td-content">\n' +
-                '                <input type="text" class="formInput" name="number" id="number" onkeyup="value=value.replace(/^(0+)|[^\\d]+/g,\'\')" autocomplete="off">\n' +
+                '                <input type="text" class="formInput" name="number" id="number" oninput="value=value.replace(/^(0+)|[^\\d]+/g,\'\')" autocomplete="off">\n' +
                 '            </td>\n' +
                 '            <td class="table-td-content">\n' +
                 '                <input type="text" class="formInput-readonly" name="date" id="date" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">\n' +
@@ -501,7 +501,7 @@
         //执行打印
         window.print();
         $('#tool,#titleArea,#addRow').show();
-        $('#body').css('width', '80%');
+        $('#body').css('width', '70%');
 
         //附件列表
         let annexesLen = $('#annexes').children().length;

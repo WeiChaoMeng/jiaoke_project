@@ -88,6 +88,7 @@
         FROM oa_asset_management
         WHERE
             state = 0
+            AND product_quantity &gt; 0
         ORDER BY
             create_time DESC
     </select>

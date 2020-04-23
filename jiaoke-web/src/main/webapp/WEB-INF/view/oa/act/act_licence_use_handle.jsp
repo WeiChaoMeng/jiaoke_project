@@ -48,7 +48,8 @@
                     <c:forTokens items="${oaActLicenceUse.annex}" delims="," var="annex">
                         <div class="table-file">
                             <div class="table-file-content">
-                                <span class="table-file-title" title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <span class="table-file-title"
+                                      title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
                                 <a class="table-file-download icon"
                                    href="/fileDownloadHandle/download?fileName=${annex}"
                                    title="下载">&#xebda;</a>
@@ -81,6 +82,8 @@
                 ${oaActLicenceUse.receiveTime}
                 <input type="hidden" name="id" value="${oaActLicenceUse.id}">
                 <input type="hidden" name="title" value="${oaActLicenceUse.title}">
+                <input type="hidden" name="promoter" value="${oaActLicenceUse.promoter}">
+                <input type="hidden" name="departmentPrincipal" value="${oaActLicenceUse.departmentPrincipal}">
             </td>
         </tr>
 
@@ -100,9 +103,7 @@
             <td class="tdLabel">部门负责人</td>
             <td class="table-td-content" style="width: 340px;">
                 <shiro:hasPermission name="principal">
-                    <div style="width: 100%;height: 100%;" id="principalContent">
-                        <%--<input type="text" class="formInput-readonly" name="principal" value="${nickname}" readonly>--%>
-                    </div>
+                    <div style="width: 100%;height: 100%;" id="principalContent"></div>
                 </shiro:hasPermission>
 
                 <shiro:lacksPermission name="principal">
@@ -115,9 +116,7 @@
             <td class="tdLabel">证照主管领导</td>
             <td class="table-td-content">
                 <shiro:hasPermission name="licence_manage">
-                    <div style="width: 100%;height: 100%;" id="licenceManageContent">
-                        <%--<input type="text" class="formInput-readonly" name="licenceManage" value="${nickname}" readonly>--%>
-                    </div>
+                    <div style="width: 100%;height: 100%;" id="licenceManageContent"></div>
                 </shiro:hasPermission>
 
                 <shiro:lacksPermission name="licence_manage">
@@ -126,11 +125,9 @@
             </td>
 
             <td class="tdLabel">经办人</td>
-            <td class="table-td-content">
+            <td class="table-td-content" style="vertical-align: baseline;">
                 <shiro:hasPermission name="licence_operator">
-                    <div style="width: 100%;height: 100%;" id="licenceOperatorContent">
-                        <%--<input type="text" class="formInput-readonly" name="licenceOperator" value="${nickname}" readonly>--%>
-                    </div>
+                    <div id="licenceOperatorContent"></div>
                 </shiro:hasPermission>
 
                 <shiro:lacksPermission name="licence_operator">
@@ -158,37 +155,69 @@
     var licenceUse = JSON.parse('${oaActLicenceUseJson}');
     //标记
     var flag = 0;
-    if (flag === 0) {
-        if (licenceUse.principal === "" || licenceUse.principal === undefined) {
-            $('#principalContent').append('<input type="text" class="formInput-readonly" name="principal" value="${nickname}" readonly="readonly"><input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
-            flag = 1;
+
+    if (licenceUse.state === 0) {
+        if (flag === 0) {
+
+            var principalNums = JSON.parse('${principalNum}');
+            //单个审批人
+            if (principalNums === "noPrincipalNum") {
+                if (licenceUse.principal === "" || licenceUse.principal === undefined) {
+                    $('#principalContent').append('<input type="text" class="formInput-readonly" name="principal" value="${oaActLicenceUse.principal} ${nickname}" readonly="readonly"><input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                    flag = 1;
+                } else {
+                    $('#principalContent').append(licenceUse.principal);
+                }
+            } else {
+                if (licenceUse.principal === undefined) {
+                    $('#principalContent').append('<input type="text" class="formInput-readonly" name="principal" value="${oaActLicenceUse.principal} ${nickname}" readonly="readonly"><input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                    flag = 1;
+                } else if ((licenceUse.principal).length === principalNums.length) {
+                    $('#principalContent').append(licenceUse.principal);
+                } else {
+                    $('#principalContent').append('<input type="text" class="formInput-readonly" name="principal" value="${oaActLicenceUse.principal} ${nickname}" readonly="readonly"><input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                    flag = 1;
+                }
+            }
+
         } else {
             $('#principalContent').append(licenceUse.principal);
         }
-    } else {
-        $('#principalContent').append(licenceUse.principal);
-    }
 
-    if (flag === 0) {
-        if (licenceUse.licenceManage === "" || licenceUse.licenceManage === undefined) {
-            $('#licenceManageContent').append('<input type="text" class="formInput-readonly" name="licenceManage" value="${nickname}" readonly="readonly"><input type="hidden" name="licenceManageDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
-            flag = 1;
+        if (flag === 0) {
+            if (licenceUse.licenceManage === "" || licenceUse.licenceManage === undefined) {
+                $('#licenceManageContent').append('<input type="text" class="formInput-readonly" name="licenceManage" value="${nickname}" readonly="readonly"><input type="hidden" name="licenceManageDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                flag = 1;
+            } else {
+                $('#licenceManageContent').append(licenceUse.licenceManage);
+            }
         } else {
             $('#licenceManageContent').append(licenceUse.licenceManage);
         }
-    } else {
-        $('#licenceManageContent').append(licenceUse.licenceManage);
-    }
 
-    if (flag === 0) {
-        if (licenceUse.licenceOperator === "" || licenceUse.licenceOperator === undefined) {
-            $('#licenceOperatorContent').append('<input type="text" class="formInput-readonly" name="licenceOperator" value="${nickname}" readonly="readonly"><input type="hidden" name="licenceOperatorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
-            flag = 1;
+        if (flag === 0) {
+            if (licenceUse.licenceOperator === "" || licenceUse.licenceOperator === undefined) {
+                $('#licenceOperatorContent').append('<input type="text" class="formInput-readonly" name="licenceOperator" value="${nickname}" readonly="readonly"><input type="hidden" name="licenceOperatorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                $('#licenceOperatorContent').css('margin-top','6px');
+                flag = 1;
+            } else {
+                $('#licenceOperatorContent').append(licenceUse.licenceOperator);
+                $('#licenceOperatorContent').css('position','absolute');
+            }
         } else {
             $('#licenceOperatorContent').append(licenceUse.licenceOperator);
         }
+
+        if (flag === 0) {
+            $('#return').html("");
+            $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
+        }
     } else {
+        $('#principalContent').append(licenceUse.principal);
+        $('#licenceManageContent').append(licenceUse.licenceManage);
         $('#licenceOperatorContent').append(licenceUse.licenceOperator);
+        $('#return').html("");
+        $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
     }
 
     //任务Id
@@ -206,6 +235,9 @@
                     //返回上一页
                     window.location.href = '${path}/oaHomePage/toOaHomePage';
                     window.top.tips("提交成功！", 0, 1, 1000);
+                } else if (data === 'backSuccess') {
+                    window.location.href = '${path}/oaHomePage/toOaHomePage';
+                    window.top.tips("提交成功,并将数据转存到待发事项中！", 6, 1, 2000);
                 } else {
                     window.top.tips("提交失败！", 0, 2, 1000);
                 }

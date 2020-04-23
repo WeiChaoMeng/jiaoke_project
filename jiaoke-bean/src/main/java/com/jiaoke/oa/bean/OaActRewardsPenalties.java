@@ -94,21 +94,6 @@ public class OaActRewardsPenalties {
     private String productionDate;
 
     /**
-     * 物资管理部主管领导签字
-     */
-    private String supplies;
-
-    /**
-     * 物资管理部主管领导内容
-     */
-    private String suppliesContent;
-
-    /**
-     * 物资管理部主管领导时间
-     */
-    private String suppliesDate;
-
-    /**
      * 财务管理部主管领导签字
      */
     private String financial;
@@ -124,6 +109,20 @@ public class OaActRewardsPenalties {
     private String financialDate;
 
     /**
+     * 人事专员
+     */
+    private String personnelCensor;
+    private String personnelCensorDate;
+    private String personnelCensorContent;
+
+    /**
+     * 人事主管
+     */
+    private String personnel;
+    private String personnelDate;
+    private String personnelContent;
+
+    /**
      * 总经理签字
      */
     private String companyPrincipal;
@@ -137,6 +136,11 @@ public class OaActRewardsPenalties {
      * 总经理时间
      */
     private String companyPrincipalDate;
+
+    /**
+     * 状态
+     */
+    private Integer state;
 
     /**
      * 附件
@@ -282,30 +286,6 @@ public class OaActRewardsPenalties {
         this.productionDate = productionDate;
     }
 
-    public String getSupplies() {
-        return supplies;
-    }
-
-    public void setSupplies(String supplies) {
-        this.supplies = supplies;
-    }
-
-    public String getSuppliesContent() {
-        return suppliesContent;
-    }
-
-    public void setSuppliesContent(String suppliesContent) {
-        this.suppliesContent = suppliesContent;
-    }
-
-    public String getSuppliesDate() {
-        return suppliesDate;
-    }
-
-    public void setSuppliesDate(String suppliesDate) {
-        this.suppliesDate = suppliesDate;
-    }
-
     public String getFinancial() {
         return financial;
     }
@@ -400,5 +380,61 @@ public class OaActRewardsPenalties {
 
     public void setPromoterStr(String promoterStr) {
         this.promoterStr = promoterStr;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
+    public String getPersonnelCensor() {
+        return personnelCensor;
+    }
+
+    public void setPersonnelCensor(String personnelCensor) {
+        this.personnelCensor = personnelCensor;
+    }
+
+    public String getPersonnelCensorDate() {
+        return personnelCensorDate;
+    }
+
+    public void setPersonnelCensorDate(String personnelCensorDate) {
+        this.personnelCensorDate = personnelCensorDate;
+    }
+
+    public String getPersonnelCensorContent() {
+        return personnelCensorContent;
+    }
+
+    public void setPersonnelCensorContent(String personnelCensorContent) {
+        this.personnelCensorContent = personnelCensorContent;
+    }
+
+    public String getPersonnel() {
+        return personnel;
+    }
+
+    public void setPersonnel(String personnel) {
+        this.personnel = personnel;
+    }
+
+    public String getPersonnelDate() {
+        return personnelDate;
+    }
+
+    public void setPersonnelDate(String personnelDate) {
+        this.personnelDate = personnelDate;
+    }
+
+    public String getPersonnelContent() {
+        return personnelContent;
+    }
+
+    public void setPersonnelContent(String personnelContent) {
+        this.personnelContent = personnelContent;
     }
 }

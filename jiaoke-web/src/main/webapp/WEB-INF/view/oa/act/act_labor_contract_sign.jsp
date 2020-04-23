@@ -75,7 +75,7 @@
                 <th class="th_title" nowrap="nowrap" style="width: 4%">流程</th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" placeholder="部门负责人(审批),部门主管领导(审批),人事部门(审批),总经理(审批),通知人、被通知人(协同)" readonly>
+                        <input type="text" placeholder="发起者部门负责人→发起者部门主管领导→人事部门→总经理→通知人、被通知人(知会)" readonly>
                     </div>
                 </td>
             </tr>
@@ -88,6 +88,7 @@
             <input type="text" class="notice-personnel-field" onclick="recipientSelect()" id="recipientName" readonly>将与我公司签订劳动合同，请各部门（领导）签署意见。
             <input type="hidden" id="recipientId" name="notifiedPerson">
             <input type="hidden" id="annex" name="annex">
+            <input type="hidden" id="departmentPrincipal" name="departmentPrincipal">
         </div>
     </div>
 
@@ -160,41 +161,125 @@
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
 <script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
-    //发送
     function send() {
         if ($.trim($("#title").val()) === '') {
             window.top.tips("标题不可以为空！", 6, 5, 2000);
         } else {
             if ($.trim($("#recipientId").val()) === '') {
-                window.top.tips("请选择要通知的人！", 6, 5, 2000);
+                window.top.tips("请选择要通知的人！", 6, 5, 1000);
             } else {
-                var array = [];
-                $('#annexes').find('input').each(function () {
-                    array.push($(this).val());
-                });
 
-                //发送前将上传好的附件插入form中
-                $('#annex').val(array);
-
+                var notifiedPerson = $('#recipientId').val();
                 $.ajax({
                     type: "POST",
-                    url: '${path}/laborContractSign/add',
-                    data: $('#oaActLaborContractSign').serialize(),
+                    url: '${path}/laborContractSign/getNotifiedPersonPrincipal',
+                    data: {'notifiedPerson':notifiedPerson},
                     error: function (request) {
                         layer.msg("出错！");
                     },
                     success: function (result) {
-                        if (result === "success") {
-                            window.location.href = "${path}/oaIndex.do";
-                            window.top.tips("发送成功！", 0, 1, 2000);
+                        var data = JSON.parse(result);
+                        if (data === "noData") {
+                            $('#departmentPrincipal').val("single");
+
+                            var array = [];
+                            $('#annexes').find('input').each(function () {
+                                array.push($(this).val());
+                            });
+
+                            //发送前将上传好的附件插入form中
+                            $('#annex').val(array);
+
+                            $.ajax({
+                                type: "POST",
+                                url: '${path}/laborContractSign/add',
+                                data: $('#oaActLaborContractSign').serialize(),
+                                error: function (request) {
+                                    layer.msg("出错！");
+                                },
+                                success: function (result) {
+                                    if (result === "success") {
+                                        window.location.href = "${path}/oaIndex.do";
+                                        window.top.tips("发送成功！", 0, 1, 2000);
+                                    } else {
+                                        window.top.tips('发送失败！', 0, 2, 2000);
+                                    }
+                                }
+                            })
                         } else {
-                            window.top.tips('发送失败！', 0, 2, 2000);
+                            window.top.selectPrincipal(data);
                         }
                     }
-                })
+                });
             }
         }
     }
+
+    //根据勾选的部门负责人发送
+    function selectionPrincipal(principalId) {
+        $('#departmentPrincipal').val(principalId);
+
+        var array = [];
+        $('#annexes').find('input').each(function () {
+            array.push($(this).val());
+        });
+
+        //发送前将上传好的附件插入form中
+        $('#annex').val(array);
+
+        $.ajax({
+            type: "POST",
+            url: '${path}/laborContractSign/add',
+            data: $('#oaActLaborContractSign').serialize(),
+            error: function (request) {
+                layer.msg("出错！");
+            },
+            success: function (result) {
+                if (result === "success") {
+                    window.location.href = "${path}/oaIndex.do";
+                    window.top.tips("发送成功！", 0, 1, 2000);
+                } else {
+                    window.top.tips('发送失败！', 0, 2, 2000);
+                }
+            }
+        })
+    }
+
+    //发送
+    <%--function send() {--%>
+        <%--if ($.trim($("#title").val()) === '') {--%>
+            <%--window.top.tips("标题不可以为空！", 6, 5, 2000);--%>
+        <%--} else {--%>
+            <%--if ($.trim($("#recipientId").val()) === '') {--%>
+                <%--window.top.tips("请选择要通知的人！", 6, 5, 2000);--%>
+            <%--} else {--%>
+                <%--var array = [];--%>
+                <%--$('#annexes').find('input').each(function () {--%>
+                    <%--array.push($(this).val());--%>
+                <%--});--%>
+
+                <%--//发送前将上传好的附件插入form中--%>
+                <%--$('#annex').val(array);--%>
+
+                <%--$.ajax({--%>
+                    <%--type: "POST",--%>
+                    <%--url: '${path}/laborContractSign/add',--%>
+                    <%--data: $('#oaActLaborContractSign').serialize(),--%>
+                    <%--error: function (request) {--%>
+                        <%--layer.msg("出错！");--%>
+                    <%--},--%>
+                    <%--success: function (result) {--%>
+                        <%--if (result === "success") {--%>
+                            <%--window.location.href = "${path}/oaIndex.do";--%>
+                            <%--window.top.tips("发送成功！", 0, 1, 2000);--%>
+                        <%--} else {--%>
+                            <%--window.top.tips('发送失败！', 0, 2, 2000);--%>
+                        <%--}--%>
+                    <%--}--%>
+                <%--})--%>
+            <%--}--%>
+        <%--}--%>
+    <%--}--%>
 
     //保存待发
     function savePending() {

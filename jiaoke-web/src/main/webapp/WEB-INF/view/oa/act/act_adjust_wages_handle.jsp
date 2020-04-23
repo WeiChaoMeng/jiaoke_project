@@ -16,7 +16,7 @@
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
 </head>
 
-<body id="body" style="width: 75%">
+<body id="body" style="width: 70%">
 
 <div class="table-title">
     <span>${oaActAdjustWages.title}</span>
@@ -69,157 +69,160 @@
 </div>
 
 <form id="oaActAdjustWages">
-<table class="formTable">
-    <tbody>
-    <tr>
-        <td class="tdLabel">姓名</td>
-        <td class="table-td-content" id="name">
-            ${oaActAdjustWages.name}
-            <input type="hidden" name="id" value="${oaActAdjustWages.id}">
-            <input type="hidden" name="promoter" value="${oaActAdjustWages.promoter}">
-        </td>
+    <table class="formTable">
+        <tbody>
+        <tr>
+            <td class="tdLabel">姓名</td>
+            <td class="table-td-content" id="name">
+                ${oaActAdjustWages.name}
+                <input type="hidden" name="id" value="${oaActAdjustWages.id}">
+                <input type="hidden" name="promoter" value="${oaActAdjustWages.promoter}">
+                <input type="hidden" name="departmentPrincipal" value="${oaActAdjustWages.departmentPrincipal}">
+            </td>
 
-        <td class="tdLabel">部门</td>
-        <td class="table-td-content">
-            ${oaActAdjustWages.department}
-        </td>
+            <td class="tdLabel">部门</td>
+            <td class="table-td-content">
+                ${oaActAdjustWages.department}
+            </td>
 
-        <td class="tdLabel">职务</td>
-        <td class="table-td-content">
-            ${oaActAdjustWages.position}
-        </td>
-    </tr>
+            <td class="tdLabel">职务</td>
+            <td class="table-td-content">
+                ${oaActAdjustWages.position}
+            </td>
+        </tr>
 
-    <tr>
-        <td class="tdLabel">入职时间</td>
-        <td class="table-td-content">
-            ${oaActAdjustWages.entryDate}
-        </td>
+        <tr>
+            <td class="tdLabel">入职时间</td>
+            <td class="table-td-content">
+                ${oaActAdjustWages.entryDate}
+            </td>
 
-        <td class="tdLabel">目前薪资</td>
-        <td class="table-td-content">
-            ${oaActAdjustWages.currentSalary}
-        </td>
+            <td class="tdLabel">目前薪资</td>
+            <td class="table-td-content">
+                ${oaActAdjustWages.currentSalary}
+            </td>
 
-        <td class="tdLabel">期望薪资</td>
-        <td class="table-td-content">
-            ${oaActAdjustWages.salaryExpectation}
-        </td>
-    </tr>
+            <td class="tdLabel">期望薪资</td>
+            <td class="table-td-content">
+                ${oaActAdjustWages.salaryExpectation}
+            </td>
+        </tr>
 
-    <tr>
-        <td class="tdLabel">申请原因</td>
-        <td colspan="5" class="table-td-evaluation">
-            <textarea class="evaluation-content-disabled" style="height: 90px" readonly>${oaActAdjustWages.reason}</textarea>
-            <div class="approval-date">
-                <label class="approval-date-label">日期 </label>
-                <input class="approval-date-input" type="text" value="${oaActAdjustWages.createTimeStr}" readonly>
-            </div>
-            <div class="approval-signature">
-                <label class="approval-signature-label">本人签字 </label>
-                <input class="approval-signature-input" type="text" value="${oaActAdjustWages.promoterStr}" readonly>
-            </div>
-        </td>
-    </tr>
+        <tr>
+            <td class="tdLabel">申请原因</td>
+            <td colspan="5" class="table-td-evaluation">
+                <textarea class="evaluation-content-disabled" style="height: 90px"
+                          readonly>${oaActAdjustWages.reason}</textarea>
+                <div class="approval-date">
+                    <label class="approval-date-label">日期 </label>
+                    <input class="approval-date-input" type="text" value="${oaActAdjustWages.createTimeStr}" readonly>
+                </div>
+                <div class="approval-signature">
+                    <label class="approval-signature-label">本人签字 </label>
+                    <input class="approval-signature-input" type="text" value="${oaActAdjustWages.promoterStr}"
+                           readonly>
+                </div>
+            </td>
+        </tr>
 
-    <tr>
-        <td class="tdLabel">所在部门意见</td>
-        <td colspan="5" class="table-td-textarea" style="line-height: 0">
-            <div class="opinion-principal">
-                <label class="opinion-principal-title">部门负责人</label>
-                <shiro:hasPermission name="principal">
-                    <div style="width: 100%;height: 100%;" id="principalContent"></div>
-                </shiro:hasPermission>
+        <tr>
+            <td class="tdLabel">所在部门意见</td>
+            <td colspan="5" class="table-td-textarea" style="line-height: 0">
+                <div class="opinion-principal">
+                    <label class="opinion-principal-title">部门负责人</label>
+                    <shiro:hasPermission name="principal">
+                        <div style="width: 100%;height: 100%;" id="principalContent"></div>
+                    </shiro:hasPermission>
 
-                <shiro:lacksPermission name="principal">
+                    <shiro:lacksPermission name="principal">
                         <textarea class="opinion-column-Juxtaposition"
                                   readonly>${oaActAdjustWages.principalContent}</textarea>
-                    <div class="approval-date">
-                        <label class="approval-date-label">日期 </label>
-                        <input class="approval-date-input" type="text" value="${oaActAdjustWages.principalDate}"
-                               readonly>
-                    </div>
-                    <div class="approval-signature">
-                        <label class="approval-signature-label">签字 </label>
-                        <input class="approval-signature-input" type="text"
-                               value="${oaActAdjustWages.principal}" readonly>
-                    </div>
-                </shiro:lacksPermission>
-            </div>
+                        <div class="approval-date">
+                            <label class="approval-date-label">日期 </label>
+                            <input class="approval-date-input" type="text" value="${oaActAdjustWages.principalDate}"
+                                   readonly>
+                        </div>
+                        <div class="approval-signature">
+                            <label class="approval-signature-label">签字 </label>
+                            <input class="approval-signature-input" type="text"
+                                   value="${oaActAdjustWages.principal}" readonly>
+                        </div>
+                    </shiro:lacksPermission>
+                </div>
 
-            <div class="opinion-supervisor">
-                <label class="opinion-principal-title">部门主管领导</label>
-                <shiro:hasPermission name="supervisor">
-                    <div style="width: 100%;height: 100%;" id="supervisorContent"></div>
-                </shiro:hasPermission>
+                <div class="opinion-supervisor">
+                    <label class="opinion-principal-title">部门主管领导</label>
+                    <shiro:hasPermission name="supervisor">
+                        <div style="width: 100%;height: 100%;" id="supervisorContent"></div>
+                    </shiro:hasPermission>
 
-                <shiro:lacksPermission name="supervisor">
+                    <shiro:lacksPermission name="supervisor">
                         <textarea class="opinion-column-Juxtaposition"
                                   readonly>${oaActAdjustWages.supervisorContent}</textarea>
+                        <div class="approval-date">
+                            <label class="approval-date-label">日期 </label>
+                            <input class="approval-date-input" type="text" value="${oaActAdjustWages.supervisorDate}"
+                                   readonly>
+                        </div>
+                        <div class="approval-signature">
+                            <label class="approval-signature-label">签字 </label>
+                            <input class="approval-signature-input" type="text"
+                                   value="${oaActAdjustWages.supervisor}" readonly>
+                        </div>
+                    </shiro:lacksPermission>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">组织人事部门意见</td>
+            <td colspan="5" class="approval-content">
+                <shiro:hasPermission name="personnel">
+                    <div style="width: 100%;height: 100%;" id="personnelContent"></div>
+                </shiro:hasPermission>
+
+                <shiro:lacksPermission name="personnel">
+                    <textarea class="approval-content-textarea"
+                              readonly>${oaActAdjustWages.personnelContent}</textarea>
                     <div class="approval-date">
                         <label class="approval-date-label">日期 </label>
-                        <input class="approval-date-input" type="text" value="${oaActAdjustWages.supervisorDate}"
-                               readonly>
+                        <input class="approval-date-input" type="text"
+                               value="${oaActAdjustWages.personnelDate}" readonly>
                     </div>
                     <div class="approval-signature">
                         <label class="approval-signature-label">签字 </label>
                         <input class="approval-signature-input" type="text"
-                               value="${oaActAdjustWages.supervisor}" readonly>
+                               value="${oaActAdjustWages.personnel}" readonly>
                     </div>
                 </shiro:lacksPermission>
-            </div>
-        </td>
-    </tr>
+            </td>
+        </tr>
 
-    <tr>
-        <td class="tdLabel">组织人事部门意见</td>
-        <td colspan="5" class="approval-content">
-            <shiro:hasPermission name="personnel">
-                <div style="width: 100%;height: 100%;" id="personnelContent"></div>
-            </shiro:hasPermission>
+        <tr>
+            <td class="tdLabel">总经理审批</td>
+            <td colspan="5" class="approval-content">
+                <shiro:hasPermission name="company_principal">
+                    <div style="width: 100%;height: 100%;" id="companyPrincipalContent"></div>
+                </shiro:hasPermission>
 
-            <shiro:lacksPermission name="personnel">
-                    <textarea class="approval-content-textarea"
-                              readonly>${oaActAdjustWages.personnelContent}</textarea>
-                <div class="approval-date">
-                    <label class="approval-date-label">日期 </label>
-                    <input class="approval-date-input" type="text"
-                           value="${oaActAdjustWages.personnelDate}" readonly>
-                </div>
-                <div class="approval-signature">
-                    <label class="approval-signature-label">签字 </label>
-                    <input class="approval-signature-input" type="text"
-                           value="${oaActAdjustWages.personnel}" readonly>
-                </div>
-            </shiro:lacksPermission>
-        </td>
-    </tr>
-
-    <tr>
-        <td class="tdLabel">总经理审批</td>
-        <td colspan="5" class="approval-content">
-            <shiro:hasPermission name="company_principal">
-                <div style="width: 100%;height: 100%;" id="companyPrincipalContent"></div>
-            </shiro:hasPermission>
-
-            <shiro:lacksPermission name="company_principal">
+                <shiro:lacksPermission name="company_principal">
                     <textarea class="approval-content-textarea"
                               readonly>${oaActAdjustWages.companyPrincipalContent}</textarea>
-                <div class="approval-date">
-                    <label class="approval-date-label">日期 </label>
-                    <input class="approval-date-input" type="text"
-                           value="${oaActAdjustWages.companyPrincipalDate}" readonly>
-                </div>
-                <div class="approval-signature">
-                    <label class="approval-signature-label">签字 </label>
-                    <input class="approval-signature-input" type="text"
-                           value="${oaActAdjustWages.companyPrincipal}" readonly>
-                </div>
-            </shiro:lacksPermission>
-        </td>
-    </tr>
-    </tbody>
-</table>
+                    <div class="approval-date">
+                        <label class="approval-date-label">日期 </label>
+                        <input class="approval-date-input" type="text"
+                               value="${oaActAdjustWages.companyPrincipalDate}" readonly>
+                    </div>
+                    <div class="approval-signature">
+                        <label class="approval-signature-label">签字 </label>
+                        <input class="approval-signature-input" type="text"
+                               value="${oaActAdjustWages.companyPrincipal}" readonly>
+                    </div>
+                </shiro:lacksPermission>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </form>
 
 <div class="form-but" id="return">
@@ -243,107 +246,128 @@
         $('#return').html("");
         $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
         flag = 1;
-    }
+    }else {
+        if (adjustWages.state === 0) {
+            if (flag === 0) {
+                if (adjustWages.principal === "" || adjustWages.principal === undefined) {
+                    $('#principalContent').append(
+                        '<textarea oninput="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="principalContent" style="background-color: #ffffff"></textarea>' +
+                        '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                        '<input class="approval-date-input" type="text" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
+                        '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                        '<input class="approval-signature-input" type="text" name="principal" value="${nickname}" readonly></div>');
+                    flag = 1;
+                } else {
+                    $('#principalContent').append('<textarea class="approval-content-textarea" readonly>${oaActAdjustWages.principalContent}</textarea>' +
+                        '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                        '<input class="approval-date-input" type="text" value="${oaActAdjustWages.principalDate}" readonly></div>' +
+                        '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                        '<input class="approval-signature-input" type="text" value="${oaActAdjustWages.principal}" readonly></div>');
+                }
+            } else {
+                $('#principalContent').append('<textarea class="approval-content-textarea" readonly>${oaActAdjustWages.principalContent}</textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                    '<input class="approval-date-input" type="text" value="${oaActAdjustWages.principalDate}" readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                    '<input class="approval-signature-input" type="text" value="${oaActAdjustWages.principal}" readonly></div>');
+            }
 
-    if (flag === 0) {
-        if (adjustWages.principal === "" || adjustWages.principal === undefined) {
-            $('#principalContent').append(
-                '<textarea onkeyup="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="principalContent" style="background-color: #ffffff"></textarea>' +
-                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
-                '<input class="approval-date-input" type="text" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
-                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
-                '<input class="approval-signature-input" type="text" name="principal" value="${nickname}" readonly></div>');
-            flag = 1;
+            if (flag === 0) {
+                if (adjustWages.supervisor === "" || adjustWages.supervisor === undefined) {
+                    $('#supervisorContent').append(
+                        '<textarea oninput="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="supervisorContent" style="background-color: #ffffff"></textarea>' +
+                        '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                        '<input class="approval-date-input" type="text" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
+                        '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                        '<input class="approval-signature-input" type="text" name="supervisor" value="${nickname}" readonly></div>');
+                    flag = 1;
+                } else {
+                    $('#supervisorContent').append('<textarea class="approval-content-textarea" readonly>${oaActAdjustWages.supervisorContent}</textarea>' +
+                        '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                        '<input class="approval-date-input" type="text" value="${oaActAdjustWages.supervisorDate}" readonly></div>' +
+                        '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                        '<input class="approval-signature-input" type="text" value="${oaActAdjustWages.supervisor}" readonly></div>');
+                }
+            } else {
+                $('#supervisorContent').append('<textarea class="approval-content-textarea" readonly>${oaActAdjustWages.supervisorContent}</textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                    '<input class="approval-date-input" type="text" value="${oaActAdjustWages.supervisorDate}" readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                    '<input class="approval-signature-input" type="text" value="${oaActAdjustWages.supervisor}" readonly></div>');
+            }
+
+            if (flag === 0) {
+                if (adjustWages.personnel === "" || adjustWages.personnel === undefined) {
+                    $('#personnelContent').append(
+                        '<textarea oninput="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="personnelContent" style="background-color: #ffffff"></textarea>' +
+                        '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                        '<input class="approval-date-input" type="text" name="personnelDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
+                        '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                        '<input class="approval-signature-input" type="text" name="personnel" value="${nickname}" readonly></div>');
+                    flag = 1;
+                } else {
+                    $('#personnelContent').append('<textarea class="approval-content-textarea" readonly>${oaActAdjustWages.personnelContent}</textarea>' +
+                        '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                        '<input class="approval-date-input" type="text" value="${oaActAdjustWages.personnelDate}" readonly></div>' +
+                        '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                        '<input class="approval-signature-input" type="text" value="${oaActAdjustWages.personnel}" readonly></div>');
+                }
+            } else {
+                $('#personnelContent').append('<textarea class="approval-content-textarea" readonly>${oaActAdjustWages.personnelContent}</textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                    '<input class="approval-date-input" type="text" value="${oaActAdjustWages.personnelDate}" readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                    '<input class="approval-signature-input" type="text" value="${oaActAdjustWages.personnel}" readonly></div>');
+            }
+
+            if (flag === 0) {
+                if (adjustWages.companyPrincipal === "" || adjustWages.companyPrincipal === undefined) {
+                    $('#companyPrincipalContent').append(
+                        '<textarea oninput="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="companyPrincipalContent" style="background-color: #ffffff"></textarea>' +
+                        '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                        '<input class="approval-date-input" type="text" name="companyPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
+                        '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                        '<input class="approval-signature-input" type="text" name="companyPrincipal" value="${nickname}" readonly></div>');
+                    flag = 1;
+                } else {
+                    $('#companyPrincipalContent').append('<textarea class="approval-content-textarea" readonly>${oaActAdjustWages.companyPrincipalContent}</textarea>' +
+                        '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                        '<input class="approval-date-input" type="text" value="${oaActAdjustWages.companyPrincipalDate}" readonly></div>' +
+                        '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                        '<input class="approval-signature-input" type="text" value="${oaActAdjustWages.companyPrincipal}" readonly></div>');
+                }
+            } else {
+                $('#companyPrincipalContent').append('<textarea class="approval-content-textarea" readonly>${oaActAdjustWages.companyPrincipalContent}</textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                    '<input class="approval-date-input" type="text" value="${oaActAdjustWages.companyPrincipalDate}" readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                    '<input class="approval-signature-input" type="text" value="${oaActAdjustWages.companyPrincipal}" readonly></div>');
+            }
+
         } else {
             $('#principalContent').append('<textarea class="approval-content-textarea" readonly>${oaActAdjustWages.principalContent}</textarea>' +
                 '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
                 '<input class="approval-date-input" type="text" value="${oaActAdjustWages.principalDate}" readonly></div>' +
                 '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
                 '<input class="approval-signature-input" type="text" value="${oaActAdjustWages.principal}" readonly></div>');
-        }
-    } else {
-        $('#principalContent').append('<textarea class="approval-content-textarea" readonly>${oaActAdjustWages.principalContent}</textarea>' +
-            '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
-            '<input class="approval-date-input" type="text" value="${oaActAdjustWages.principalDate}" readonly></div>' +
-            '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
-            '<input class="approval-signature-input" type="text" value="${oaActAdjustWages.principal}" readonly></div>');
-    }
-
-    if (flag === 0) {
-        if (adjustWages.supervisor === "" || adjustWages.supervisor === undefined) {
-            $('#supervisorContent').append(
-                '<textarea onkeyup="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="supervisorContent" style="background-color: #ffffff"></textarea>' +
-                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
-                '<input class="approval-date-input" type="text" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
-                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
-                '<input class="approval-signature-input" type="text" name="supervisor" value="${nickname}" readonly></div>');
-            flag = 1;
-        } else {
             $('#supervisorContent').append('<textarea class="approval-content-textarea" readonly>${oaActAdjustWages.supervisorContent}</textarea>' +
                 '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
                 '<input class="approval-date-input" type="text" value="${oaActAdjustWages.supervisorDate}" readonly></div>' +
                 '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
                 '<input class="approval-signature-input" type="text" value="${oaActAdjustWages.supervisor}" readonly></div>');
-        }
-    } else {
-        $('#supervisorContent').append('<textarea class="approval-content-textarea" readonly>${oaActAdjustWages.supervisorContent}</textarea>' +
-            '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
-            '<input class="approval-date-input" type="text" value="${oaActAdjustWages.supervisorDate}" readonly></div>' +
-            '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
-            '<input class="approval-signature-input" type="text" value="${oaActAdjustWages.supervisor}" readonly></div>');
-    }
-
-    if (flag === 0) {
-        if (adjustWages.personnel === "" || adjustWages.personnel === undefined) {
-            $('#personnelContent').append(
-                '<textarea onkeyup="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="personnelContent" style="background-color: #ffffff"></textarea>' +
-                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
-                '<input class="approval-date-input" type="text" name="personnelDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
-                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
-                '<input class="approval-signature-input" type="text" name="personnel" value="${nickname}" readonly></div>');
-            flag = 1;
-        } else {
             $('#personnelContent').append('<textarea class="approval-content-textarea" readonly>${oaActAdjustWages.personnelContent}</textarea>' +
                 '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
                 '<input class="approval-date-input" type="text" value="${oaActAdjustWages.personnelDate}" readonly></div>' +
                 '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
                 '<input class="approval-signature-input" type="text" value="${oaActAdjustWages.personnel}" readonly></div>');
-        }
-    } else {
-        $('#personnelContent').append('<textarea class="approval-content-textarea" readonly>${oaActAdjustWages.personnelContent}</textarea>' +
-            '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
-            '<input class="approval-date-input" type="text" value="${oaActAdjustWages.personnelDate}" readonly></div>' +
-            '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
-            '<input class="approval-signature-input" type="text" value="${oaActAdjustWages.personnel}" readonly></div>');
-    }
-
-    if (flag === 0) {
-        if (adjustWages.companyPrincipal === "" || adjustWages.companyPrincipal === undefined) {
-            $('#companyPrincipalContent').append(
-                '<textarea onkeyup="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="companyPrincipalContent" style="background-color: #ffffff"></textarea>' +
-                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
-                '<input class="approval-date-input" type="text" name="companyPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
-                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
-                '<input class="approval-signature-input" type="text" name="companyPrincipal" value="${nickname}" readonly></div>');
-            flag = 1;
-        } else {
             $('#companyPrincipalContent').append('<textarea class="approval-content-textarea" readonly>${oaActAdjustWages.companyPrincipalContent}</textarea>' +
                 '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
                 '<input class="approval-date-input" type="text" value="${oaActAdjustWages.companyPrincipalDate}" readonly></div>' +
                 '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
                 '<input class="approval-signature-input" type="text" value="${oaActAdjustWages.companyPrincipal}" readonly></div>');
+            $('#return').html("");
+            $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
         }
-    } else {
-        $('#companyPrincipalContent').append('<textarea class="approval-content-textarea" readonly>${oaActAdjustWages.companyPrincipalContent}</textarea>' +
-            '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
-            '<input class="approval-date-input" type="text" value="${oaActAdjustWages.companyPrincipalDate}" readonly></div>' +
-            '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
-            '<input class="approval-signature-input" type="text" value="${oaActAdjustWages.companyPrincipal}" readonly></div>');
-    }
-
-    if (flag === 0){
-        $('#return').html("");
-        $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
     }
 
     //任务Id
@@ -361,6 +385,9 @@
                     //返回上一页
                     window.location.href = '${path}/oaHomePage/toOaHomePage';
                     layer.msg('提交成功！');
+                } else if (data === 'backSuccess') {
+                    window.location.href = '${path}/oaHomePage/toOaHomePage';
+                    window.top.tips("提交成功,并将数据转存到待发事项中！", 6, 1, 2000);
                 } else {
                     layer.msg('提交失败！');
                 }
@@ -377,8 +404,8 @@
         $('#body').css('width', '100%');
         //执行打印
         window.print();
-        $('#tool').show();
-        $('#body,#return').css('width', '75%');
+        $('#tool,#return').show();
+        $('#body').css('width', '70%');
     }
 </script>
 </html>

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,6 +67,22 @@ public class OaActOvertimeController {
      */
     @RequestMapping("/toIndex")
     public String toMeals(Model model) {
+        String department = userInfoService.selectDepartmentByUserId(getCurrentUser().getId());
+        //查询部门负责人
+        String principalIds = departmentService.selectEnforcerId("principal", department);
+        List<String> list = new ArrayList<>();
+        //部门负责人是否多个
+        if (principalIds.contains(",")) {
+            String[] principals = principalIds.split(",");
+            for (String principal : principals) {
+                String nickname = userInfoService.getNicknameById(Integer.valueOf(principal));
+                list.add(nickname);
+                list.add(principal);
+            }
+            model.addAttribute("principalGroup", JsonHelper.toJSONString(list));
+        } else {
+            model.addAttribute("principalGroup", "");
+        }
         model.addAttribute("nickname", getCurrentUser().getNickname());
         model.addAttribute("department", getCurrentUser().getDepartment());
         return "oa/act/act_overtime";
@@ -81,21 +98,40 @@ public class OaActOvertimeController {
     @ResponseBody
     public String add(@RequestBody OaActOvertime oaActOvertime) {
         String randomId = RandomUtil.randomId();
-        if (oaActOvertimeService.insert(oaActOvertime, getCurrentUser().getId(), randomId, 0) < 1) {
-            return "error";
-        } else {
-            //用户所在部门id
+
+        Map<String, Object> map = new HashMap<>(16);
+        List<Object> principalList = new ArrayList<>();
+
+        String principal = oaActOvertime.getDepartmentPrincipal();
+        //部门负责人勾选多个
+        if (principal.contains(",")) {
+            String[] split = principal.split(",");
+            for (String s : split) {
+                principalList.add(s);
+            }
+            map.put("principalList", principalList);
+
+            //部门负责人是单个
+        } else if (principal.contains("single")) {
             String department = userInfoService.selectDepartmentByUserId(getCurrentUser().getId());
-            //部门负责人
-            String principal = departmentService.selectEnforcerId("principal", department);
-            Map<String, Object> map = new HashMap<>(16);
-            map.put("principal", principal);
-            String instance = activitiUtil.startProcessInstanceByKey("oa_overtime", "oa_act_overtime:" + randomId, map, getCurrentUser().getId().toString());
-            if (instance != null) {
+            String enforcerId = departmentService.selectEnforcerId("principal", department);
+            principalList.add(enforcerId);
+            map.put("principalList", principalList);
+
+            //部门负责人勾选单个
+        } else {
+            principalList.add(principal);
+            map.put("principalList", principalList);
+        }
+        String instance = activitiUtil.startProcessInstanceByKey("oa_overtime", "oa_act_overtime:" + randomId, map, getCurrentUser().getId().toString());
+        if (instance != null) {
+            if (oaActOvertimeService.insert(oaActOvertime, getCurrentUser().getId(), randomId, 0) < 1) {
+                return "error";
+            } else {
                 return "success";
             }
-            return "error";
         }
+        return "error";
     }
 
     /**
@@ -110,11 +146,21 @@ public class OaActOvertimeController {
     public String approval(String id, String taskId, Model model) {
         //审批
         OaActOvertime oaActOvertime = oaActOvertimeService.selectByPrimaryKey(id);
-        //获取批注信息
-        List<Comments> commentsList = activitiUtil.selectHistoryComment(activitiUtil.getTaskByTaskId(taskId).getProcessInstanceId());
+        //查询部门负责人nickname
+        if (oaActOvertime.getDepartmentPrincipal().contains(",")) {
+            String principalNum = "";
+            String[] strings = oaActOvertime.getDepartmentPrincipal().split(",");
+            for (String s : strings) {
+                principalNum += " ";
+                principalNum += userInfoService.getNicknameById(Integer.valueOf(s));
+            }
+            model.addAttribute("principalNum", JsonHelper.toJSONString(principalNum));
+        } else {
+            model.addAttribute("principalNum", JsonHelper.toJSONString("noPrincipalNum"));
+        }
         model.addAttribute("oaActOvertime", oaActOvertime);
+        model.addAttribute("oaActOvertimeJson", JsonHelper.toJSONString(oaActOvertime));
         model.addAttribute("taskId", JsonHelper.toJSONString(taskId));
-        model.addAttribute("commentsList", commentsList);
         model.addAttribute("nickname", getCurrentUser().getNickname());
         return "oa/act/act_overtime_handle";
     }
@@ -140,29 +186,96 @@ public class OaActOvertimeController {
         //部门主管领导
         String supervisor = "supervisor";
 
-        //更新数据
-        if (oaActOvertimeService.updateByPrimaryKeySelective(oaActOvertime) < 1) {
-            return "error";
-        }
+        //网关-部门负责人
+        String principalEG = "principalEG";
+        //网关-部门主管领导
+        String supervisorEG = "supervisorEG";
 
         Task task = activitiUtil.getTaskByTaskId(taskId);
         if (task == null) {
             return "error";
-        }
-
-        if (flag == 1) {
-            //同意
-            //下个节点
+        } else {
             String nextNode = activitiUtil.getNextNode(task.getProcessDefinitionId(), task.getTaskDefinitionKey());
 
-            //下个节点是否为end直接结束
-            if (end.equals(nextNode)) {
+            //网关
+            if (principalEG.equals(nextNode)) {
+                //同意
+                if (flag.equals(1)) {
+                    //根据发起者id获取所属部门id
+                    String departmentId = userInfoService.selectDepartmentByUserId(getCurrentUser().getId());
+                    //选择执行者Id
+                    String enforcerId = departmentService.selectEnforcerId("supervisor", departmentId);
+
+                    Map<String, Object> map = new HashMap<>(16);
+                    map.put("whether", 0);
+                    map.put("supervisor", enforcerId);
+                    activitiUtil.approvalComplete(taskId, map);
+                    return updateByPrimaryKeySelective(oaActOvertime);
+                } else {
+                    if (oaActOvertime.getDepartmentPrincipal().contains(",")){
+
+                        UserInfo userInfo = userInfoService.getUserInfoByPermission("notifyHumanAffairs");
+                        Task task1 = activitiUtil.getProcessInstanceIdByTaskId(taskId);
+                        List<Task> taskList = activitiUtil.getTaskListByProcessInstanceId(task1.getProcessInstanceId());
+                        for (Task tasks : taskList) {
+                            Map<String, Object> map = new HashMap<>(16);
+                            map.put("whether", 1);
+                            map.put("humanAffairs", userInfo.getId());
+                            activitiUtil.approvalComplete(tasks.getId(), map);
+                        }
+                        oaCollaborationService.updateStatusCode(oaActOvertime.getId(), "被回退");
+                        oaActOvertime.setPrincipal(null);
+                        oaActOvertime.setState(1);
+                        return updateByPrimaryKeySelective(oaActOvertime);
+
+                    }else {
+                        UserInfo userInfo = userInfoService.getUserInfoByPermission("notifyHumanAffairs");
+                        Map<String, Object> map = new HashMap<>(16);
+                        map.put("whether", 1);
+                        map.put("humanAffairs", userInfo.getId());
+                        activitiUtil.approvalComplete(taskId, map);
+                        oaCollaborationService.updateStatusCode(oaActOvertime.getId(), "被回退");
+                        oaActOvertime.setPrincipal(null);
+                        oaActOvertime.setState(1);
+                        return updateByPrimaryKeySelective(oaActOvertime);
+                    }
+                }
+            } else if (supervisorEG.equals(nextNode)) {
+                //同意
+                if (flag.equals(1)) {
+
+                    UserInfo userInfo = userInfoService.getUserInfoByPermission("notifyHumanAffairs");
+                    Map<String, Object> map = new HashMap<>(16);
+                    List<Object> leaveNotifyList = new ArrayList<>();
+                    leaveNotifyList.add(userInfo.getId());
+                    leaveNotifyList.add(activitiUtil.getStartUserId(task.getProcessInstanceId()));
+                    map.put("whether", 0);
+                    map.put("normalList", leaveNotifyList);
+                    activitiUtil.approvalComplete(taskId, map);
+                    return updateByPrimaryKeySelective(oaActOvertime);
+                } else {
+                    UserInfo userInfo = userInfoService.getUserInfoByPermission("notifyHumanAffairs");
+                    Map<String, Object> map = new HashMap<>(16);
+                    map.put("whether", 1);
+                    map.put("humanAffairs", userInfo.getId());
+                    activitiUtil.approvalComplete(taskId, map);
+                    oaCollaborationService.updateStatusCode(oaActOvertime.getId(), "被回退");
+                    oaActOvertime.setSupervisor(null);
+                    oaActOvertime.setState(1);
+                    return updateByPrimaryKeySelective(oaActOvertime);
+                }
+
+                //回退结束
+            } else if (back.equals(nextNode)) {
+                //驳回
+                managementService.executeCommand(new TargetFlowNodeCommand(task.getId(), back));
+                //修改表单状态
+                oaCollaborationService.updateState(oaActOvertime.getId(), 3);
+                return "backSuccess";
+            } else if (end.equals(nextNode)) {
                 activitiUtil.endProcess(taskId);
                 return "success";
             } else {
-                //附言
-                String processingOpinion = "";
-
                 UserTask userTask = activitiUtil.getUserTask(task.getProcessDefinitionId(), nextNode);
                 if (nextNode.equals(userTask.getId())) {
                     String enforcer = userTask.getAssignee().substring(userTask.getAssignee().indexOf("{") + 1, userTask.getAssignee().indexOf("}"));
@@ -170,43 +283,92 @@ public class OaActOvertimeController {
                     if (promoter.equals(enforcer)) {
                         Map<String, Object> map = new HashMap<>(16);
                         map.put(promoter, activitiUtil.getStartUserId(task.getProcessInstanceId()));
-                        activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
-                        return "success";
-
-                        //部门负责人
-                    } else if (principal.equals(enforcer)) {
-                        String startUserId = activitiUtil.getStartUserId(task.getProcessInstanceId());
-                        //根据发起者id获取所属部门id
-                        String departmentId = userInfoService.selectDepartmentByUserId(Integer.valueOf(startUserId));
-                        //选择执行者Id
-                        String enforcerId = departmentService.selectEnforcerId(enforcer, departmentId);
-                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, Integer.valueOf(enforcerId));
-                        return "success";
-
-                        //印章主管领导
-                    } else if (supervisor.equals(enforcer)) {
-                        String startUserId = activitiUtil.getStartUserId(task.getProcessInstanceId());
-                        //根据发起者id获取所属部门id
-                        String departmentId = userInfoService.selectDepartmentByUserId(Integer.valueOf(startUserId));
-                        //选择执行者Id
-                        String enforcerId = departmentService.selectEnforcerId(enforcer, departmentId);
-                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, Integer.valueOf(enforcerId));
-                        return "success";
-
+                        activitiUtil.approvalComplete(taskId, map);
+                        return updateByPrimaryKeySelective(oaActOvertime);
                     } else {
-                        UserInfo userInfo = userInfoService.getUserInfoByPermission(enforcer);
-                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
-                        return "success";
+                        //直接结束
+                        activitiUtil.endProcess(taskId);
+                        return updateByPrimaryKeySelective(oaActOvertime);
                     }
                 } else {
-                    return "error";
+                    //直接结束
+                    activitiUtil.endProcess(taskId);
+                    return updateByPrimaryKeySelective(oaActOvertime);
                 }
             }
+        }
+
+//        if (flag == 1) {
+//            //同意
+//            //下个节点
+//            String nextNode = activitiUtil.getNextNode(task.getProcessDefinitionId(), task.getTaskDefinitionKey());
+//
+//            //下个节点是否为end直接结束
+//            if (end.equals(nextNode)) {
+//                activitiUtil.endProcess(taskId);
+//                return "success";
+//            } else {
+//                //附言
+//                String processingOpinion = "";
+//
+//                UserTask userTask = activitiUtil.getUserTask(task.getProcessDefinitionId(), nextNode);
+//                if (nextNode.equals(userTask.getId())) {
+//                    String enforcer = userTask.getAssignee().substring(userTask.getAssignee().indexOf("{") + 1, userTask.getAssignee().indexOf("}"));
+//
+//                    if (promoter.equals(enforcer)) {
+//                        Map<String, Object> map = new HashMap<>(16);
+//                        map.put(promoter, activitiUtil.getStartUserId(task.getProcessInstanceId()));
+//                        activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
+//                        return "success";
+//
+//                        //部门负责人
+//                    } else if (principal.equals(enforcer)) {
+//                        String startUserId = activitiUtil.getStartUserId(task.getProcessInstanceId());
+//                        //根据发起者id获取所属部门id
+//                        String departmentId = userInfoService.selectDepartmentByUserId(Integer.valueOf(startUserId));
+//                        //选择执行者Id
+//                        String enforcerId = departmentService.selectEnforcerId(enforcer, departmentId);
+//                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, Integer.valueOf(enforcerId));
+//                        return "success";
+//
+//                        //印章主管领导
+//                    } else if (supervisor.equals(enforcer)) {
+//                        String startUserId = activitiUtil.getStartUserId(task.getProcessInstanceId());
+//                        //根据发起者id获取所属部门id
+//                        String departmentId = userInfoService.selectDepartmentByUserId(Integer.valueOf(startUserId));
+//                        //选择执行者Id
+//                        String enforcerId = departmentService.selectEnforcerId(enforcer, departmentId);
+//                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, Integer.valueOf(enforcerId));
+//                        return "success";
+//
+//                    } else {
+//                        UserInfo userInfo = userInfoService.getUserInfoByPermission(enforcer);
+//                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
+//                        return "success";
+//                    }
+//                } else {
+//                    return "error";
+//                }
+//            }
+//        } else {
+//            //驳回
+//            managementService.executeCommand(new TargetFlowNodeCommand(task.getId(), back));
+//            //修改表单状态
+//            oaCollaborationService.updateState(oaActOvertime.getId(), 3);
+//            return "success";
+//        }
+    }
+
+    /**
+     * 根据主键更新
+     *
+     * @param oaActOvertime oaActOvertime
+     * @return int
+     */
+    public String updateByPrimaryKeySelective(OaActOvertime oaActOvertime) {
+        if (oaActOvertimeService.updateByPrimaryKeySelective(oaActOvertime) < 1) {
+            return "error";
         } else {
-            //驳回
-            managementService.executeCommand(new TargetFlowNodeCommand(task.getId(), back));
-            //修改表单状态
-            oaCollaborationService.updateState(oaActOvertime.getId(), 3);
             return "success";
         }
     }
@@ -237,6 +399,21 @@ public class OaActOvertimeController {
      */
     @RequestMapping(value = "/toEdit")
     public String toEdit(String id, Model model) {
+        //查询部门负责人
+        String department = userInfoService.selectDepartmentByUserId(getCurrentUser().getId());
+        String principalIds = departmentService.selectEnforcerId("principal", department);
+        List<String> list = new ArrayList<>();
+        if (principalIds.contains(",")) {
+            String[] principals = principalIds.split(",");
+            for (String principal : principals) {
+                String nickname = userInfoService.getNicknameById(Integer.valueOf(principal));
+                list.add(nickname);
+                list.add(principal);
+            }
+            model.addAttribute("principalGroup", JsonHelper.toJSONString(list));
+        } else {
+            model.addAttribute("principalGroup", "");
+        }
         OaActOvertime oaActOvertime = oaActOvertimeService.selectByPrimaryKey(id);
         model.addAttribute("oaActOvertime", oaActOvertime);
         return "oa/act/act_overtime_edit";
@@ -267,25 +444,37 @@ public class OaActOvertimeController {
     @RequestMapping(value = "/editAdd")
     @ResponseBody
     public String editAdd(@RequestBody OaActOvertime oaActOvertime) {
-        //更新数据
-        if (oaActOvertimeService.edit(oaActOvertime) < 0) {
-            return "error";
-        } else {
+        Map<String, Object> map = new HashMap<>(16);
+        List<Object> principalList = new ArrayList<>();
 
-            //用户所在部门id
-            String department = userInfoService.selectDepartmentByUserId(getCurrentUser().getId());
-            //部门负责人
-            String principal = departmentService.selectEnforcerId("principal", department);
-            Map<String, Object> map = new HashMap<>(16);
-            map.put("principal", principal);
-            String instance = activitiUtil.startProcessInstanceByKey("oa_overtime", "oa_act_overtime:" + oaActOvertime.getId(), map, getCurrentUser().getId().toString());
-            if (instance != null) {
-                //发送成功后更新状态
-                oaCollaborationService.updateStateByCorrelationId(oaActOvertime.getId(), 0, oaActOvertime.getTitle());
-                return "success";
-            } else {
-                return "error";
+        String principal = oaActOvertime.getDepartmentPrincipal();
+        if (principal.contains(",")) {
+            String[] split = principal.split(",");
+            for (String s : split) {
+                principalList.add(s);
             }
+            map.put("principalList", principalList);
+
+        } else if (principal.contains("single")) {
+            String department = userInfoService.selectDepartmentByUserId(getCurrentUser().getId());
+            String enforcerId = departmentService.selectEnforcerId("principal", department);
+            principalList.add(enforcerId);
+            map.put("principalList", principalList);
+
+        } else {
+            principalList.add(principal);
+            map.put("principalList", principalList);
+        }
+        String instance = activitiUtil.startProcessInstanceByKey("oa_overtime", "oa_act_overtime:" + oaActOvertime.getId(), map, getCurrentUser().getId().toString());
+        if (instance != null) {
+            //发送成功后更新状态
+            oaActOvertimeService.edit(oaActOvertime);
+            oaCollaborationService.updateStatusCode(oaActOvertime.getId(), "协同");
+
+            oaCollaborationService.updateStateByCorrelationId(oaActOvertime.getId(), 0, oaActOvertime.getTitle());
+            return "success";
+        } else {
+            return "error";
         }
     }
 

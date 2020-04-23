@@ -16,7 +16,7 @@
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
 </head>
 
-<body id="body">
+<body id="body" style="width: 70%">
 
 <div class="table-title">
     <span>${oaActAcceptance.title}</span>
@@ -49,7 +49,8 @@
                     <c:forTokens items="${oaActAcceptance.annex}" delims="," var="annex">
                         <div class="table-file">
                             <div class="table-file-content">
-                                <span class="table-file-title" title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <span class="table-file-title"
+                                      title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
                                 <a class="table-file-download icon"
                                    href="/fileDownloadHandle/download?fileName=${annex}"
                                    title="下载">&#xebda;</a>
@@ -71,6 +72,8 @@
                 ${oaActAcceptance.factory}
                 <input type="hidden" name="id" value="${oaActAcceptance.id}">
                 <input type="hidden" name="title" value="${oaActAcceptance.title}">
+                <input type="hidden" name="promoter" value="${oaActAcceptance.promoter}">
+                <input type="hidden" name="departmentPrincipal" value="${oaActAcceptance.departmentPrincipal}">
             </td>
         </tr>
 
@@ -184,53 +187,83 @@
     var acceptance = JSON.parse('${oaActAcceptanceJson}');
     //标记
     var flag = 0;
-    if (flag === 0) {
-        if (acceptance.accepter === "" || acceptance.accepter === undefined) {
-            $('#accepterContent').append('<input type="text" class="formInput-readonly" name="accepter" value="${nickname}" readonly="readonly">');
-            $('#acceptanceDateContent').append('<input type="text" class="formInput-readonly" name="acceptanceDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>');
-            flag = 1;
+
+    if (acceptance.state === 0) {
+        if (flag === 0) {
+            if (acceptance.accepter === "" || acceptance.accepter === undefined) {
+                $('#accepterContent').append('<input type="text" class="formInput-readonly" name="accepter" value="${nickname}" readonly="readonly">');
+                $('#acceptanceDateContent').append('<input type="text" class="formInput-readonly" name="acceptanceDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>');
+                flag = 1;
+            } else {
+                $('#accepterContent').append(acceptance.accepter);
+                $('#acceptanceDateContent').append(acceptance.acceptanceDate);
+            }
         } else {
             $('#accepterContent').append(acceptance.accepter);
             $('#acceptanceDateContent').append(acceptance.acceptanceDate);
         }
-    } else {
-        $('#accepterContent').append(acceptance.accepter);
-        $('#acceptanceDateContent').append(acceptance.acceptanceDate);
-    }
 
-    if (flag === 0) {
-        if (acceptance.principal === "" || acceptance.principal === undefined) {
-            $('#principalContent').append('<input type="text" class="formInput-readonly" name="principal" value="${nickname}" readonly="readonly"><input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
-            flag = 1;
+        if (flag === 0) {
+            var principalNums = JSON.parse('${principalNum}');
+            //单个审批人
+            if (principalNums === "noPrincipalNum") {
+                if (acceptance.principal === "" || acceptance.principal === undefined) {
+                    $('#principalContent').append('<input type="text" class="formInput-readonly" name="principal" value="${oaActAcceptance.principal} ${nickname}" readonly="readonly"><input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                    flag = 1;
+                } else {
+                    $('#principalContent').append(acceptance.principal);
+                }
+            }else {
+                if (acceptance.principal === undefined) {
+                    $('#principalContent').append('<input type="text" class="formInput-readonly" name="principal" value="${oaActAcceptance.principal} ${nickname}" readonly="readonly"><input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                    flag = 1;
+                } else if ((acceptance.principal).length === principalNums.length) {
+                    $('#principalContent').append(acceptance.principal);
+                } else {
+                    $('#principalContent').append('<input type="text" class="formInput-readonly" name="principal" value="${oaActAcceptance.principal} ${nickname}" readonly="readonly"><input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                    flag = 1;
+                }
+            }
+
         } else {
             $('#principalContent').append(acceptance.principal);
         }
-    } else {
-        $('#principalContent').append(acceptance.principal);
-    }
 
-    if (flag === 0) {
-        if (acceptance.supervisor === "" || acceptance.supervisor === undefined) {
-            $('#supervisorContent').append('<input type="text" class="formInput-readonly" name="supervisor" value="${nickname}" readonly="readonly"><input type="hidden" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
-            flag = 1;
+        if (flag === 0) {
+            if (acceptance.supervisor === "" || acceptance.supervisor === undefined) {
+                $('#supervisorContent').append('<input type="text" class="formInput-readonly" name="supervisor" value="${nickname}" readonly="readonly"><input type="hidden" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                flag = 1;
+            } else {
+                $('#supervisorContent').append(acceptance.supervisor);
+            }
         } else {
             $('#supervisorContent').append(acceptance.supervisor);
         }
-    } else {
-        $('#supervisorContent').append(acceptance.supervisor);
-    }
 
-    if (flag === 0) {
-        if (acceptance.companyPrincipal === "" || acceptance.companyPrincipal === undefined) {
-            $('#companyPrincipalContent').append('<input type="text" class="formInput-readonly" name="companyPrincipal" value="${nickname}" readonly="readonly"><input type="hidden" name="companyPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
-            flag = 1;
+        if (flag === 0) {
+            if (acceptance.companyPrincipal === "" || acceptance.companyPrincipal === undefined) {
+                $('#companyPrincipalContent').append('<input type="text" class="formInput-readonly" name="companyPrincipal" value="${nickname}" readonly="readonly"><input type="hidden" name="companyPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                flag = 1;
+            } else {
+                $('#companyPrincipalContent').append(acceptance.companyPrincipal);
+            }
         } else {
             $('#companyPrincipalContent').append(acceptance.companyPrincipal);
         }
-    } else {
-        $('#companyPrincipalContent').append(acceptance.companyPrincipal);
-    }
 
+        if (flag === 0){
+            $('#return').html("");
+            $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
+        }
+    } else {
+        $('#accepterContent').append(acceptance.accepter);
+        $('#acceptanceDateContent').append(acceptance.acceptanceDate);
+        $('#principalContent').append(acceptance.principal);
+        $('#supervisorContent').append(acceptance.supervisor);
+        $('#companyPrincipalContent').append(acceptance.companyPrincipal);
+        $('#return').html("");
+        $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
+    }
     //任务Id
     var taskId = JSON.parse('${taskId}');
 
@@ -246,7 +279,10 @@
                     //返回上一页
                     window.location.href = '${path}/oaHomePage/toOaHomePage';
                     window.top.tips("提交成功！", 0, 1, 1000);
-                } else {
+                } else if (data === 'backSuccess') {
+                    window.location.href = '${path}/oaHomePage/toOaHomePage';
+                    window.top.tips("提交成功,并将数据转存到待发事项中！", 6, 1, 2000);
+                }else {
                     window.top.tips("提交失败！", 0, 2, 1000);
                 }
             },
@@ -262,8 +298,8 @@
         $('#body').css('width', '100%');
         //执行打印
         window.print();
-        $('#tool').show();
-        $('#body,#return').css('width', '80%');
+        $('#tool,#return').show();
+        $('#body').css('width', '70%');
     }
 </script>
 </html>

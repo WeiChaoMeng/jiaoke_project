@@ -36,6 +36,7 @@ public class OaActLicenceUseServiceImpl implements OaActLicenceUseService {
         oaActLicenceUse.setCreateTime(new Date());
         oaActLicenceUse.setPromoter(userId);
         oaActLicenceUse.setUrl("licenceUse");
+        oaActLicenceUse.setState(0);
         if (oaActLicenceUseMapper.insertSelective(oaActLicenceUse) < 0) {
             return -1;
         } else {
@@ -45,6 +46,7 @@ public class OaActLicenceUseServiceImpl implements OaActLicenceUseService {
             oaCollaboration.setTitle(oaActLicenceUse.getTitle());
             oaCollaboration.setUrl("licenceUse");
             oaCollaboration.setTable("oa_act_licence_use");
+            oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("证照使用申请");
             if (oaActLicenceUse.getSeal() == 0) {
                 oaCollaboration.setDataOne("证照种类:路驰营业执照正本");
@@ -67,11 +69,17 @@ public class OaActLicenceUseServiceImpl implements OaActLicenceUseService {
 
     @Override
     public int edit(OaActLicenceUse oaActLicenceUse) {
+        oaActLicenceUse.setState(0);
+        oaActLicenceUse.setPrincipal("");
+        oaActLicenceUse.setPrincipalDate("");
+        oaActLicenceUse.setLicenceManage("");
+        oaActLicenceUse.setLicenceManageDate("");
+        oaActLicenceUse.setLicenceOperator("");
+        oaActLicenceUse.setLicenceOperatorDate("");
         oaActLicenceUse.setCreateTime(new Date());
         if (oaActLicenceUseMapper.updateByPrimaryKey(oaActLicenceUse) < 0) {
             return -1;
         } else {
-            oaCollaborationMapper.updateStateByCorrelationId(oaActLicenceUse.getId(), 1, oaActLicenceUse.getTitle());
             return 1;
         }
     }

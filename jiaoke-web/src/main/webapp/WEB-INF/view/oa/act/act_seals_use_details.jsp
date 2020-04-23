@@ -14,7 +14,7 @@
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
 </head>
 
-<body style="width: 75%" id="body">
+<body style="width: 70%" id="body">
 
 <div class="table-title">
     <span>${oaActSealsUse.title}</span>
@@ -132,7 +132,7 @@
         //执行打印
         window.print();
         $('#tool,#return').show();
-        $('#body').css('width', '75%');
+        $('#body').css('width', '70%');
     }
 </script>
 </html>

@@ -294,11 +294,11 @@
                                 </a>
                             </td>
 
-                            <%--<td class="template" valign="middle">--%>
-                                <%--<a class="check_color" onclick="commonJump('confirm')" title="确认单审批单">--%>
-                                    <%--<em class="template-icon">&#xe695;</em>确认单审批单--%>
-                                <%--</a>--%>
-                            <%--</td>--%>
+                            <td class="template" valign="middle">
+                                <a class="check_color" onclick="commonJump('confirm')" title="确认单审批单">
+                                    <em class="template-icon">&#xe695;</em>确认单审批单
+                                </a>
+                            </td>
 
                             <td class="template" valign="middle">
                                 <a class="check_color" onclick="commonJump('unitPrice')" title="单价审批单">
@@ -367,7 +367,7 @@
                     var pendingList = '';
                     for (let i = 0; i < list.length; i++) {
                         pendingList += '<tr>';
-                        pendingList += '    <td class="list_content">';
+                        pendingList += '    <td class="list_content" style="width: 72%">';
                         pendingList += '        <span class="list_content_name">';
                         pendingList += '            <a class="check_color" onclick="taskApprovalHandle(\'' + list[i].url + '\',\'' + list[i].correlationId + '\',\'' + list[i].taskId + '\')" title="' + list[i].title + '">' + list[i].title + '</a>';
                         pendingList += '        </span>';
@@ -380,6 +380,15 @@
                         pendingList += '    <td class="list-content-proposer">';
                         pendingList += '        <span class="list_content_sponsor">';
                         pendingList += '            <a title="申请人">' + list[i].promoterStr + '</a>';
+                        pendingList += '        </span>';
+                        pendingList += '    </td>';
+                        pendingList += '    <td class="list-content-proposer">';
+                        pendingList += '        <span class="list_content_sponsor">';
+                        if (list[i].statusCode === "被回退") {
+                            pendingList += '            <a title="状态" style="color: #ff0000;font-weight: 600;">' + list[i].statusCode + '</a>';
+                        }else{
+                            pendingList += '            <a title="状态" style="color: #2196F3;font-weight: 600;">' + list[i].statusCode + '</a>';
+                        }
                         pendingList += '        </span>';
                         pendingList += '    </td>';
                         pendingList += '</tr>';

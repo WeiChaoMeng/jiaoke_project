@@ -86,6 +86,21 @@ public class OaActOfficeSupplies {
     private String principalDate;
 
     /**
+     * 部门负责人内容
+     */
+    private String principalContentT;
+
+    /**
+     * 部门负责人
+     */
+    private String principalT;
+
+    /**
+     * 部门负责人时间
+     */
+    private String principalDateT;
+
+    /**
      * 部门主管
      */
     private String supervisor;
@@ -99,6 +114,16 @@ public class OaActOfficeSupplies {
      * 部门主管时间
      */
     private String supervisorDate;
+
+    /**
+     * 部门负责人
+     */
+    private String departmentPrincipal;
+
+    /**
+     * 状态
+     */
+    private Integer state;
 
     /**
      * 创建日期
@@ -298,5 +323,45 @@ public class OaActOfficeSupplies {
 
     public void setAnnex(String annex) {
         this.annex = annex;
+    }
+
+    public String getDepartmentPrincipal() {
+        return departmentPrincipal;
+    }
+
+    public void setDepartmentPrincipal(String departmentPrincipal) {
+        this.departmentPrincipal = departmentPrincipal;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
+    public String getPrincipalContentT() {
+        return principalContentT;
+    }
+
+    public void setPrincipalContentT(String principalContentT) {
+        this.principalContentT = principalContentT;
+    }
+
+    public String getPrincipalT() {
+        return principalT;
+    }
+
+    public void setPrincipalT(String principalT) {
+        this.principalT = principalT;
+    }
+
+    public String getPrincipalDateT() {
+        return principalDateT;
+    }
+
+    public void setPrincipalDateT(String principalDateT) {
+        this.principalDateT = principalDateT;
     }
 }

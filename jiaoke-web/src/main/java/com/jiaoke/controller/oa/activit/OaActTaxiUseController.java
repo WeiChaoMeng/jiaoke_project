@@ -11,7 +11,6 @@ import com.jiaoke.oa.service.DepartmentService;
 import com.jiaoke.oa.service.OaActTaxiUseService;
 import com.jiaoke.oa.service.OaCollaborationService;
 import com.jiaoke.oa.service.UserInfoService;
-import org.activiti.bpmn.model.UserTask;
 import org.activiti.engine.ManagementService;
 import org.activiti.engine.task.Task;
 import org.apache.shiro.SecurityUtils;
@@ -71,6 +70,22 @@ public class OaActTaxiUseController {
      */
     @RequestMapping("/toIndex")
     public String toMeals(Model model) {
+        String department = userInfoService.selectDepartmentByUserId(getCurrentUser().getId());
+        //查询部门负责人
+        String principalIds = departmentService.selectEnforcerId("principal", department);
+        List<String> list = new ArrayList<>();
+        //部门负责人是否多个
+        if (principalIds.contains(",")) {
+            String[] principals = principalIds.split(",");
+            for (String principal : principals) {
+                String nickname = userInfoService.getNicknameById(Integer.valueOf(principal));
+                list.add(nickname);
+                list.add(principal);
+            }
+            model.addAttribute("principalGroup", JsonHelper.toJSONString(list));
+        } else {
+            model.addAttribute("principalGroup", "");
+        }
         model.addAttribute("nickname", getCurrentUser().getNickname());
         return "oa/act/act_taxi_use";
     }
@@ -88,23 +103,31 @@ public class OaActTaxiUseController {
         if (oaActTaxiUseService.insert(oaActTaxiUse, getCurrentUser().getId(), randomId, 0) < 1) {
             return "error";
         } else {
-            //用户所在部门id
-            String department = userInfoService.selectDepartmentByUserId(getCurrentUser().getId());
-            //部门负责人
-            String principal = departmentService.selectEnforcerId("principal", department);
             Map<String, Object> map = new HashMap<>(16);
             List<Object> principalList = new ArrayList<>();
-            if (principal.contains(",")){
+
+            String principal = oaActTaxiUse.getDepartmentPrincipal();
+            //部门负责人勾选多个
+            if (principal.contains(",")) {
                 String[] split = principal.split(",");
                 for (String s : split) {
                     principalList.add(s);
                 }
                 map.put("principalList", principalList);
-            }else {
+
+                //部门负责人是单个
+            } else if (principal.contains("single")) {
+                String department = userInfoService.selectDepartmentByUserId(getCurrentUser().getId());
+                String enforcerId = departmentService.selectEnforcerId("principal", department);
+                principalList.add(enforcerId);
+                map.put("principalList", principalList);
+
+                //部门负责人勾选单个
+            } else {
                 principalList.add(principal);
                 map.put("principalList", principalList);
             }
-            String instance = activitiUtil.startProcessInstanceByKey("oa_taxi_use", "oa_act_taxi_use:" + randomId, map, getCurrentUser().getId().toString());
+            String instance = activitiUtil.startProcessInstanceByKey("oa_taxi_uses", "oa_act_taxi_use:" + randomId, map, getCurrentUser().getId().toString());
             if (instance != null) {
                 return "success";
             }
@@ -122,13 +145,23 @@ public class OaActTaxiUseController {
      */
     @RequestMapping(value = "/approval")
     public String approval(String id, String taskId, Model model) {
-        //审批
         OaActTaxiUse oaActTaxiUse = oaActTaxiUseService.selectByPrimaryKey(id);
-        //获取批注信息
-        List<Comments> commentsList = activitiUtil.selectHistoryComment(activitiUtil.getTaskByTaskId(taskId).getProcessInstanceId());
+
+        //查询部门负责人nickname
+        if (oaActTaxiUse.getDepartmentPrincipal().contains(",")) {
+            String principalNum = "";
+            String[] strings = oaActTaxiUse.getDepartmentPrincipal().split(",");
+            for (String s : strings) {
+                principalNum += " ";
+                principalNum += userInfoService.getNicknameById(Integer.valueOf(s));
+            }
+            model.addAttribute("principalNum", JsonHelper.toJSONString(principalNum));
+        } else {
+            model.addAttribute("principalNum", JsonHelper.toJSONString("noPrincipalNum"));
+        }
         model.addAttribute("oaActTaxiUse", oaActTaxiUse);
+        model.addAttribute("oaActTaxiUseJson", JsonHelper.toJSONString(oaActTaxiUse));
         model.addAttribute("taskId", JsonHelper.toJSONString(taskId));
-        model.addAttribute("commentsList", commentsList);
         model.addAttribute("nickname", getCurrentUser().getNickname());
         return "oa/act/act_taxi_use_handle";
     }
@@ -144,73 +177,121 @@ public class OaActTaxiUseController {
     @RequestMapping(value = "/approvalSubmit")
     @ResponseBody
     public String approvalSubmit(OaActTaxiUse oaActTaxiUse, String taskId, Integer flag) {
-        //流程终点名称
-        String end = "end";
-        //发起人
-        String promoter = "promoter";
+
+        //网关-部门负责人
+        String principalEG = "principalEG";
+        //网关-部门主管领导
+        String supervisorEG = "supervisorEG";
         //回退
         String back = "back";
-        //部门主管领导
-        String supervisor = "supervisor";
-
-        //更新数据
-        if (oaActTaxiUseService.updateByPrimaryKeySelective(oaActTaxiUse) < 1) {
-            return "error";
-        }
 
         Task task = activitiUtil.getTaskByTaskId(taskId);
+        //没有该流程
         if (task == null) {
             return "error";
-        }
-
-        if (flag == 1) {
-            //同意
-            //下个节点
+        } else {
             String nextNode = activitiUtil.getNextNode(task.getProcessDefinitionId(), task.getTaskDefinitionKey());
 
-            //下个节点是否为end直接结束
-            if (end.equals(nextNode)) {
-                activitiUtil.endProcess(taskId);
-                return "success";
-            } else {
-                //附言
-                String processingOpinion = "";
+            //网关
+            if (principalEG.equals(nextNode)) {
+                //同意
+                if (flag.equals(1)) {
+                    //根据发起者id获取所属部门id
+                    String departmentId = userInfoService.selectDepartmentByUserId(getCurrentUser().getId());
+                    //选择执行者Id
+                    String enforcerId = departmentService.selectEnforcerId("supervisor", departmentId);
 
-                UserTask userTask = activitiUtil.getUserTask(task.getProcessDefinitionId(), nextNode);
-                if (nextNode.equals(userTask.getId())) {
-                    String enforcer = userTask.getAssignee().substring(userTask.getAssignee().indexOf("{") + 1, userTask.getAssignee().indexOf("}"));
-
-                    if (promoter.equals(enforcer)) {
-                        Map<String, Object> map = new HashMap<>(16);
-                        map.put(promoter, activitiUtil.getStartUserId(task.getProcessInstanceId()));
-                        activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
-                        return "success";
-
-                        //部门负责人和主管领导
-                    } else if (supervisor.equals(enforcer)) {
-                        String startUserId = activitiUtil.getStartUserId(task.getProcessInstanceId());
-                        //根据发起者id获取所属部门id
-                        String departmentId = userInfoService.selectDepartmentByUserId(Integer.valueOf(startUserId));
-                        //选择执行者Id
-                        String enforcerId = departmentService.selectEnforcerId(enforcer, departmentId);
-                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, Integer.valueOf(enforcerId));
-                        return "success";
-
-                        //知会
-                    } else {
-                        UserInfo userInfo = userInfoService.getUserInfoByPermission(enforcer);
-                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
-                        return "success";
-                    }
+                    Map<String, Object> map = new HashMap<>(16);
+                    map.put("whether", 0);
+                    map.put("supervisor", enforcerId);
+                    activitiUtil.approvalComplete(taskId, map);
+                    return updateByPrimaryKeySelective(oaActTaxiUse);
                 } else {
-                    return "error";
+
+                    if (oaActTaxiUse.getDepartmentPrincipal().contains(",")){
+
+                        Task task1 = activitiUtil.getProcessInstanceIdByTaskId(taskId);
+                        List<Task> taskList = activitiUtil.getTaskListByProcessInstanceId(task1.getProcessInstanceId());
+                        for (Task tasks : taskList) {
+                            Map<String, Object> map = new HashMap<>(16);
+                            map.put("whether", 1);
+                            map.put("backNotify", activitiUtil.getStartUserId(task.getProcessInstanceId()));
+                            activitiUtil.approvalComplete(tasks.getId(), map);
+                        }
+                        oaCollaborationService.updateStatusCode(oaActTaxiUse.getId(), "被回退");
+                        oaActTaxiUse.setPrincipal(null);
+                        oaActTaxiUse.setPrincipalDate(null);
+                        oaActTaxiUse.setState(1);
+                        return updateByPrimaryKeySelective(oaActTaxiUse);
+
+                    }else {
+                        Map<String, Object> map = new HashMap<>(16);
+                        map.put("whether", 1);
+                        map.put("backNotify", activitiUtil.getStartUserId(task.getProcessInstanceId()));
+                        activitiUtil.approvalComplete(taskId, map);
+                        oaCollaborationService.updateStatusCode(oaActTaxiUse.getId(), "被回退");
+                        oaActTaxiUse.setPrincipal(null);
+                        oaActTaxiUse.setPrincipalDate(null);
+                        oaActTaxiUse.setState(1);
+                        return updateByPrimaryKeySelective(oaActTaxiUse);
+                    }
+
+
+//                    Map<String, Object> map = new HashMap<>(16);
+//                    map.put("whether", 1);
+//                    map.put("backNotify", activitiUtil.getStartUserId(task.getProcessInstanceId()));
+//                    activitiUtil.approvalComplete(taskId, map);
+//                    oaCollaborationService.updateStatusCode(oaActTaxiUse.getId(), "被回退");
+//                    oaActTaxiUse.setPrincipal(null);
+//                    oaActTaxiUse.setPrincipalDate(null);
+//                    oaActTaxiUse.setState(1);
+//                    return updateByPrimaryKeySelective(oaActTaxiUse);
                 }
+            } else if (supervisorEG.equals(nextNode)) {
+                //同意
+                if (flag.equals(1)) {
+                    Map<String, Object> map = new HashMap<>(16);
+                    map.put("whether", 0);
+                    map.put("promoter", activitiUtil.getStartUserId(task.getProcessInstanceId()));
+                    activitiUtil.approvalComplete(taskId, map);
+                    return updateByPrimaryKeySelective(oaActTaxiUse);
+                } else {
+                    Map<String, Object> map = new HashMap<>(16);
+                    map.put("whether", 1);
+                    map.put("backNotify", activitiUtil.getStartUserId(task.getProcessInstanceId()));
+                    activitiUtil.approvalComplete(taskId, map);
+                    oaCollaborationService.updateStatusCode(oaActTaxiUse.getId(), "被回退");
+                    oaActTaxiUse.setSupervisor(null);
+                    oaActTaxiUse.setSupervisorDate(null);
+                    oaActTaxiUse.setState(1);
+                    return updateByPrimaryKeySelective(oaActTaxiUse);
+                }
+
+                //回退结束
+            } else if (back.equals(nextNode)) {
+                //驳回
+                managementService.executeCommand(new TargetFlowNodeCommand(task.getId(), back));
+                //修改表单状态
+                oaCollaborationService.updateState(oaActTaxiUse.getId(), 3);
+                return "backSuccess";
+            } else {
+                //直接结束
+                activitiUtil.endProcess(taskId);
+                return updateByPrimaryKeySelective(oaActTaxiUse);
             }
+        }
+    }
+
+    /**
+     * 根据主键更新
+     *
+     * @param oaActTaxiUse oaActTaxiUse
+     * @return int
+     */
+    public String updateByPrimaryKeySelective(OaActTaxiUse oaActTaxiUse) {
+        if (oaActTaxiUseService.updateByPrimaryKeySelective(oaActTaxiUse) < 1) {
+            return "error";
         } else {
-            //驳回
-            managementService.executeCommand(new TargetFlowNodeCommand(task.getId(), back));
-            //修改表单状态
-            oaCollaborationService.updateState(oaActTaxiUse.getId(), 3);
             return "success";
         }
     }
@@ -241,7 +322,25 @@ public class OaActTaxiUseController {
      */
     @RequestMapping(value = "/toEdit")
     public String toEdit(String id, Model model) {
+
         OaActTaxiUse oaActTaxiUse = oaActTaxiUseService.selectByPrimaryKey(id);
+
+        //查询部门负责人
+        String department = userInfoService.selectDepartmentByUserId(getCurrentUser().getId());
+        String principalIds = departmentService.selectEnforcerId("principal", department);
+        List<String> list = new ArrayList<>();
+        if (principalIds.contains(",")) {
+            String[] principals = principalIds.split(",");
+            for (String principal : principals) {
+                String nickname = userInfoService.getNicknameById(Integer.valueOf(principal));
+                list.add(nickname);
+                list.add(principal);
+            }
+            model.addAttribute("principalGroup", JsonHelper.toJSONString(list));
+        } else {
+            model.addAttribute("principalGroup", "");
+        }
+        model.addAttribute("nickname", getCurrentUser().getNickname());
         model.addAttribute("oaActTaxiUse", oaActTaxiUse);
         return "oa/act/act_taxi_use_edit";
     }
@@ -271,24 +370,37 @@ public class OaActTaxiUseController {
     @RequestMapping(value = "/editAdd")
     @ResponseBody
     public String editAdd(OaActTaxiUse oaActTaxiUse) {
-        //更新数据
-        if (oaActTaxiUseService.edit(oaActTaxiUse) < 0) {
-            return "error";
-        } else {
-            //用户所在部门id
-            String department = userInfoService.selectDepartmentByUserId(getCurrentUser().getId());
-            //部门负责人
-            String principal = departmentService.selectEnforcerId("principal", department);
-            Map<String, Object> map = new HashMap<>(16);
-            map.put("principal", principal);
-            String instance = activitiUtil.startProcessInstanceByKey("oa_taxi_Use", "oa_act_taxi_Use:" + oaActTaxiUse.getId(), map, getCurrentUser().getId().toString());
-            if (instance != null) {
-                //发送成功后更新状态
-                oaCollaborationService.updateStateByCorrelationId(oaActTaxiUse.getId(), 0, oaActTaxiUse.getTitle());
-                return "success";
-            } else {
-                return "error";
+
+        Map<String, Object> map = new HashMap<>(16);
+        List<Object> principalList = new ArrayList<>();
+
+        String principal = oaActTaxiUse.getDepartmentPrincipal();
+        if (principal.contains(",")) {
+            String[] split = principal.split(",");
+            for (String s : split) {
+                principalList.add(s);
             }
+            map.put("principalList", principalList);
+
+        } else if (principal.contains("single")) {
+            String department = userInfoService.selectDepartmentByUserId(getCurrentUser().getId());
+            String enforcerId = departmentService.selectEnforcerId("principal", department);
+            principalList.add(enforcerId);
+            map.put("principalList", principalList);
+
+        } else {
+            principalList.add(principal);
+            map.put("principalList", principalList);
+        }
+        String instance = activitiUtil.startProcessInstanceByKey("oa_taxi_uses", "oa_act_taxi_use:" + oaActTaxiUse.getId(), map, getCurrentUser().getId().toString());
+        if (instance != null) {
+            //发送成功后更新状态
+            oaActTaxiUseService.edit(oaActTaxiUse);
+            oaCollaborationService.updateStatusCode(oaActTaxiUse.getId(), "协同");
+            oaCollaborationService.updateStateByCorrelationId(oaActTaxiUse.getId(), 0, oaActTaxiUse.getTitle());
+            return "success";
+        } else {
+            return "error";
         }
     }
 

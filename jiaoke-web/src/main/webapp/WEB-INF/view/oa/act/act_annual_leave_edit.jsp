@@ -107,7 +107,7 @@
                 <th class="th_title" nowrap="nowrap" style="width: 4%">流程 </th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" placeholder="发起者部门主管领导(审批),总经理(审批),人事主管(审批),发起人、人事(协同)" readonly>
+                        <input type="text" placeholder="发起者部门主管领导→人事部门主管→总经理→发起人、人事(知会)" readonly>
                     </div>
                 </td>
             </tr>
@@ -126,6 +126,7 @@
             <td class="table-td-content">
                 <input type="text" class="formInput-readonly" name="department" value="${oaActAnnualLeave.department}" readonly>
                 <input type="hidden" id="id" name="id" value="${oaActAnnualLeave.id}">
+                <input type="hidden" id="promoter" name="promoter" value="${oaActAnnualLeave.promoter}">
             </td>
 
             <td class="tdLabel">姓名</td>
@@ -138,7 +139,7 @@
             <td class="tdLabel">享受休假天数</td>
             <td class="table-td-content">
                 <input type="text" class="formInput" name="total" value="${oaActAnnualLeave.total}"
-                       oninput="value=value.replace(/^(0+)|[^\d]/g,'')" autocomplete="off">
+                       oninput="value=value.replace(/^0(0+)|[^\d]/g,'')" autocomplete="off">
             </td>
 
             <td class="tdLabel">计划休假时间</td>
@@ -177,12 +178,12 @@
         </tr>
 
         <tr>
-            <td class="tdLabel">总经理</td>
+            <td class="tdLabel">人事主管</td>
             <td class="table-td-content">
                 <input type="text" class="formInput-readonly" readonly>
             </td>
 
-            <td class="tdLabel">人事主管</td>
+            <td class="tdLabel">总经理</td>
             <td class="table-td-content">
                 <input type="text" class="formInput-readonly" readonly>
             </td>

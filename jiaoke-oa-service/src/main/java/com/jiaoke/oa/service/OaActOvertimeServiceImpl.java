@@ -54,6 +54,7 @@ public class OaActOvertimeServiceImpl implements OaActOvertimeService {
         oaActOvertime.setCreateTime(new Date());
         oaActOvertime.setPromoter(userId);
         oaActOvertime.setUrl("overtime");
+        oaActOvertime.setState(0);
         if (oaActOvertimeMapper.insertSelective(oaActOvertime) < 0) {
             return -1;
         } else {
@@ -63,6 +64,7 @@ public class OaActOvertimeServiceImpl implements OaActOvertimeService {
             oaCollaboration.setTitle(oaActOvertime.getTitle());
             oaCollaboration.setUrl("overtime");
             oaCollaboration.setTable("oa_act_overtime");
+            oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("加班统计表");
             oaCollaboration.setDataOne("部门:" + oaActOvertime.getDepartment());
             oaCollaboration.setDataTwo("日期:" + oaActOvertime.getStatisticalDate());
@@ -75,6 +77,11 @@ public class OaActOvertimeServiceImpl implements OaActOvertimeService {
 
     @Override
     public int edit(OaActOvertime oaActOvertime) {
+        oaActOvertime.setState(0);
+        oaActOvertime.setPrincipal("");
+        oaActOvertime.setPrincipalDate("");
+        oaActOvertime.setSupervisor("");
+        oaActOvertime.setSupervisorDate("");
         if (oaActOvertimeMapper.updateByPrimaryKeySelective(oaActOvertime) < 0) {
             return -1;
         } else {

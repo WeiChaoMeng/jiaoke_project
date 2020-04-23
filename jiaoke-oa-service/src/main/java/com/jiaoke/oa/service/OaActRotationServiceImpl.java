@@ -40,6 +40,7 @@ public class OaActRotationServiceImpl implements OaActRotationService {
         oaActRotation.setCreateTime(new Date());
         oaActRotation.setPromoter(userId);
         oaActRotation.setUrl("rotation");
+        oaActRotation.setState(0);
         if (oaActRotationMapper.insertSelective(oaActRotation) < 0) {
             return -1;
         } else {
@@ -49,6 +50,7 @@ public class OaActRotationServiceImpl implements OaActRotationService {
             oaCollaboration.setTitle(oaActRotation.getTitle());
             oaCollaboration.setUrl("rotation");
             oaCollaboration.setTable("oa_act_rotation");
+            oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("员工轮岗审请");
             oaCollaboration.setDataOne("转入部门：" + departmentMapper.selectDepartmentNameByDepartmentKey(oaActRotation.getNewDepartment()));
             if (oaActRotation.getAdjust() == 0) {
@@ -68,10 +70,23 @@ public class OaActRotationServiceImpl implements OaActRotationService {
 
     @Override
     public int edit(OaActRotation oaActRotation) {
+        oaActRotation.setState(0);
+        oaActRotation.setPrincipal("");
+        oaActRotation.setPrincipalDate("");
+        oaActRotation.setPrincipalContent("");
+        oaActRotation.setTransferPrincipal("");
+        oaActRotation.setTransferPrincipalDate("");
+        oaActRotation.setTransferPrincipalContent("");
+        oaActRotation.setPersonnel("");
+        oaActRotation.setPersonnelDate("");
+        oaActRotation.setPersonnelContent("");
+        oaActRotation.setCompanyPrincipal("");
+        oaActRotation.setCompanyPrincipalDate("");
+        oaActRotation.setCompanyPrincipalContent("");
+        oaActRotation.setCreateTime(new Date());
         if (oaActRotationMapper.updateByPrimaryKeySelective(oaActRotation) < 0) {
             return -1;
         } else {
-            oaCollaborationMapper.updateStateByCorrelationId(oaActRotation.getId(), 1, oaActRotation.getTitle());
             return 1;
         }
     }

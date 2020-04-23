@@ -15,7 +15,7 @@
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
 </head>
 
-<body id="body">
+<body id="body" style="width: 70%">
 
 <div class="table-title">
     <span>${oaActCar.title}</span>
@@ -161,13 +161,8 @@
 
     <tr>
         <td class="tdLabel">审核人</td>
-        <td class="table-td-content">
+        <td class="table-td-content" colspan="3">
             ${oaActCar.principal}
-        </td>
-
-        <td class="tdLabel">批准人</td>
-        <td class="table-td-content">
-            ${oaActCar.supervisor}
         </td>
     </tr>
     </tbody>
@@ -175,7 +170,7 @@
 
 <div class="notice-tips">
     <span class="notice-tips-mark">*</span>
-    <span class="notice-tips-script">说明：1.每公里2元。使用的车辆为享受车补待遇的，每公里1.2元。2.审核人为使用部门负责人，批准人为使用人部门主管领导。3.多人同时使用时费用均摊。4.费用按月报销或扣除。</span>
+    <span class="notice-tips-script">说明：1.每公里2元。使用的车辆为享受车补待遇的，每公里1.2元。2.审核人为使用部门负责人。3.多人同时使用时费用均摊。4.费用按月报销或扣除。</span>
 </div>
 
 </body>
@@ -190,7 +185,7 @@
         //执行打印
         window.print();
         $('#tool').show();
-        $('#body').css('width', '80%');
+        $('#body').css('width', '70%');
     }
 </script>
 </html>

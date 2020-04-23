@@ -39,7 +39,7 @@
     </style>
 </head>
 
-<body id="body" style="width: 65%">
+<body id="body" style="width: 70%">
 
 <div class="table-title">
     <span>办公用品领用</span>
@@ -95,7 +95,7 @@
                 <th class="th_title" nowrap="nowrap" style="width: 4%">流程</th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" placeholder="保管员(审批)、发起人(知会)"
+                        <input type="text" placeholder="保管员→发起人(知会)"
                                readonly="readonly">
                     </div>
                 </td>
@@ -305,7 +305,7 @@
         //执行打印
         window.print();
         $('#tool,#titleArea').show();
-        $('#body').css('width', '80%');
+        $('#body').css('width', '70%');
 
         //附件列表
         let annexesLen = $('#annexes').children().length;

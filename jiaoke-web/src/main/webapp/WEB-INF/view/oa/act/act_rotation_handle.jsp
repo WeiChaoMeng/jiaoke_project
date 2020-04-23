@@ -78,6 +78,7 @@
                 <input type="hidden" name="id" value="${oaActRotation.id}">
                 <input type="hidden" name="promoter" value="${oaActRotation.promoter}">
                 <input type="hidden" name="newDepartment" value="${oaActRotation.newDepartment}">
+                <input type="hidden" name="departmentPrincipal" value="${oaActRotation.departmentPrincipal}">
             </td>
 
             <td class="tdLabel">性别</td>
@@ -99,7 +100,7 @@
         </tr>
 
         <tr>
-            <td class="tdLabel">名族</td>
+            <td class="tdLabel">民族</td>
             <td class="table-td-content">
                 ${oaActRotation.ethnic}
             </td>
@@ -207,11 +208,11 @@
         <tr>
             <td class="tdLabel">所在部门意见</td>
             <td colspan="5" class="approval-content">
-                <shiro:hasPermission name="principal">
+                <shiro:hasPermission name="office_principal">
                     <div style="width: 100%;height: 100%;" id="principalContent"></div>
                 </shiro:hasPermission>
 
-                <shiro:lacksPermission name="principal">
+                <shiro:lacksPermission name="office_principal">
                     <textarea readonly class="approval-content-textarea">${oaActRotation.principalContent}</textarea>
                     <div class="approval-date">
                         <label class="approval-date-label">日期 </label>
@@ -228,11 +229,11 @@
         <tr>
             <td class="tdLabel">分管部门意见</td>
             <td colspan="5" class="approval-content">
-                <shiro:hasPermission name="principal">
+                <shiro:hasPermission name="quality_principal">
                     <div style="width: 100%;height: 100%;" id="transferPrincipalContent"></div>
                 </shiro:hasPermission>
 
-                <shiro:lacksPermission name="principal">
+                <shiro:lacksPermission name="quality_principal">
                 <textarea readonly
                           class="approval-content-textarea">${oaActRotation.transferPrincipalContent}</textarea>
                     <div class="approval-date">
@@ -250,7 +251,7 @@
         </tr>
 
         <tr>
-            <td class="tdLabel">劳资部门意见</td>
+            <td class="tdLabel">组织人事部门意见</td>
             <td colspan="5" class="approval-content">
                 <shiro:hasPermission name="personnel">
                     <div style="width: 100%;height: 100%;" id="personnelContent"></div>
@@ -313,15 +314,23 @@
     //标记
     var flag = 0;
 
-    if (flag === 0) {
-        if (rotation.principal === "" || rotation.principal === undefined) {
-            $('#principalContent').append(
-                '<textarea onkeyup="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="principalContent" style="background-color: #ffffff"></textarea>' +
-                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
-                '<input class="approval-date-input" type="text" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
-                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
-                '<input class="approval-signature-input" type="text" name="principal" value="${nickname}" readonly></div>');
-            flag = 1;
+    if (rotation.state === 0) {
+        if (flag === 0) {
+            if (rotation.principal === "" || rotation.principal === undefined) {
+                $('#principalContent').append(
+                    '<textarea oninput="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="principalContent" style="background-color: #ffffff"></textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                    '<input class="approval-date-input" type="text" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                    '<input class="approval-signature-input" type="text" name="principal" value="${nickname}" readonly></div>');
+                flag = 1;
+            } else {
+                $('#principalContent').append('<textarea class="approval-content-textarea" readonly>${oaActRotation.principalContent}</textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                    '<input class="approval-date-input" type="text" value="${oaActRotation.principalDate}" readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                    '<input class="approval-signature-input" type="text" value="${oaActRotation.principal}" readonly></div>');
+            }
         } else {
             $('#principalContent').append('<textarea class="approval-content-textarea" readonly>${oaActRotation.principalContent}</textarea>' +
                 '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
@@ -329,23 +338,23 @@
                 '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
                 '<input class="approval-signature-input" type="text" value="${oaActRotation.principal}" readonly></div>');
         }
-    } else {
-        $('#principalContent').append('<textarea class="approval-content-textarea" readonly>${oaActRotation.principalContent}</textarea>' +
-            '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
-            '<input class="approval-date-input" type="text" value="${oaActRotation.principalDate}" readonly></div>' +
-            '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
-            '<input class="approval-signature-input" type="text" value="${oaActRotation.principal}" readonly></div>');
-    }
 
-    if (flag === 0) {
-        if (rotation.transferPrincipal === "" || rotation.transferPrincipal === undefined) {
-            $('#transferPrincipalContent').append(
-                '<textarea onkeyup="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="transferPrincipalContent" style="background-color: #ffffff"></textarea>' +
-                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
-                '<input class="approval-date-input" type="text" name="transferPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
-                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
-                '<input class="approval-signature-input" type="text" name="transferPrincipal" value="${nickname}" readonly></div>');
-            flag = 1;
+        if (flag === 0) {
+            if (rotation.transferPrincipal === "" || rotation.transferPrincipal === undefined) {
+                $('#transferPrincipalContent').append(
+                    '<textarea oninput="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="transferPrincipalContent" style="background-color: #ffffff"></textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                    '<input class="approval-date-input" type="text" name="transferPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                    '<input class="approval-signature-input" type="text" name="transferPrincipal" value="${nickname}" readonly></div>');
+                flag = 1;
+            } else {
+                $('#transferPrincipalContent').append('<textarea class="approval-content-textarea" readonly>${oaActRotation.transferPrincipalContent}</textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                    '<input class="approval-date-input" type="text" value="${oaActRotation.transferPrincipalDate}" readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                    '<input class="approval-signature-input" type="text" value="${oaActRotation.transferPrincipal}" readonly></div>');
+            }
         } else {
             $('#transferPrincipalContent').append('<textarea class="approval-content-textarea" readonly>${oaActRotation.transferPrincipalContent}</textarea>' +
                 '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
@@ -353,23 +362,23 @@
                 '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
                 '<input class="approval-signature-input" type="text" value="${oaActRotation.transferPrincipal}" readonly></div>');
         }
-    } else {
-        $('#transferPrincipalContent').append('<textarea class="approval-content-textarea" readonly>${oaActRotation.transferPrincipalContent}</textarea>' +
-            '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
-            '<input class="approval-date-input" type="text" value="${oaActRotation.transferPrincipalDate}" readonly></div>' +
-            '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
-            '<input class="approval-signature-input" type="text" value="${oaActRotation.transferPrincipal}" readonly></div>');
-    }
 
-    if (flag === 0) {
-        if (rotation.personnel === "" || rotation.personnel === undefined) {
-            $('#personnelContent').append(
-                '<textarea onkeyup="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="personnelContent" style="background-color: #ffffff"></textarea>' +
-                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
-                '<input class="approval-date-input" type="text" name="personnelDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
-                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
-                '<input class="approval-signature-input" type="text" name="personnel" value="${nickname}" readonly></div>');
-            flag = 1;
+        if (flag === 0) {
+            if (rotation.personnel === "" || rotation.personnel === undefined) {
+                $('#personnelContent').append(
+                    '<textarea oninput="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="personnelContent" style="background-color: #ffffff"></textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                    '<input class="approval-date-input" type="text" name="personnelDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                    '<input class="approval-signature-input" type="text" name="personnel" value="${nickname}" readonly></div>');
+                flag = 1;
+            } else {
+                $('#personnelContent').append('<textarea class="approval-content-textarea" readonly>${oaActRotation.personnelContent}</textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                    '<input class="approval-date-input" type="text" value="${oaActRotation.personnelDate}" readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                    '<input class="approval-signature-input" type="text" value="${oaActRotation.personnel}" readonly></div>');
+            }
         } else {
             $('#personnelContent').append('<textarea class="approval-content-textarea" readonly>${oaActRotation.personnelContent}</textarea>' +
                 '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
@@ -377,23 +386,23 @@
                 '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
                 '<input class="approval-signature-input" type="text" value="${oaActRotation.personnel}" readonly></div>');
         }
-    } else {
-        $('#personnelContent').append('<textarea class="approval-content-textarea" readonly>${oaActRotation.personnelContent}</textarea>' +
-            '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
-            '<input class="approval-date-input" type="text" value="${oaActRotation.personnelDate}" readonly></div>' +
-            '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
-            '<input class="approval-signature-input" type="text" value="${oaActRotation.personnel}" readonly></div>');
-    }
 
-    if (flag === 0) {
-        if (rotation.companyPrincipal === "" || rotation.companyPrincipal === undefined) {
-            $('#companyPrincipalContent').append(
-                '<textarea onkeyup="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="companyPrincipalContent" style="background-color: #ffffff"></textarea>' +
-                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
-                '<input class="approval-date-input" type="text" name="companyPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
-                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
-                '<input class="approval-signature-input" type="text" name="companyPrincipal" value="${nickname}" readonly></div>');
-            flag = 1;
+        if (flag === 0) {
+            if (rotation.companyPrincipal === "" || rotation.companyPrincipal === undefined) {
+                $('#companyPrincipalContent').append(
+                    '<textarea oninput="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="companyPrincipalContent" style="background-color: #ffffff"></textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                    '<input class="approval-date-input" type="text" name="companyPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                    '<input class="approval-signature-input" type="text" name="companyPrincipal" value="${nickname}" readonly></div>');
+                flag = 1;
+            } else {
+                $('#companyPrincipalContent').append('<textarea class="approval-content-textarea" readonly>${oaActRotation.companyPrincipalContent}</textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                    '<input class="approval-date-input" type="text" value="${oaActRotation.companyPrincipalDate}" readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                    '<input class="approval-signature-input" type="text" value="${oaActRotation.companyPrincipal}" readonly></div>');
+            }
         } else {
             $('#companyPrincipalContent').append('<textarea class="approval-content-textarea" readonly>${oaActRotation.companyPrincipalContent}</textarea>' +
                 '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
@@ -401,15 +410,32 @@
                 '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
                 '<input class="approval-signature-input" type="text" value="${oaActRotation.companyPrincipal}" readonly></div>');
         }
+
+        if (flag === 0) {
+            $('#return').html("");
+            $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
+        }
     } else {
+        $('#principalContent').append('<textarea class="approval-content-textarea" readonly>${oaActRotation.principalContent}</textarea>' +
+            '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+            '<input class="approval-date-input" type="text" value="${oaActRotation.principalDate}" readonly></div>' +
+            '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+            '<input class="approval-signature-input" type="text" value="${oaActRotation.principal}" readonly></div>');
+        $('#transferPrincipalContent').append('<textarea class="approval-content-textarea" readonly>${oaActRotation.transferPrincipalContent}</textarea>' +
+            '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+            '<input class="approval-date-input" type="text" value="${oaActRotation.transferPrincipalDate}" readonly></div>' +
+            '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+            '<input class="approval-signature-input" type="text" value="${oaActRotation.transferPrincipal}" readonly></div>');
+        $('#personnelContent').append('<textarea class="approval-content-textarea" readonly>${oaActRotation.personnelContent}</textarea>' +
+            '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+            '<input class="approval-date-input" type="text" value="${oaActRotation.personnelDate}" readonly></div>' +
+            '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+            '<input class="approval-signature-input" type="text" value="${oaActRotation.personnel}" readonly></div>');
         $('#companyPrincipalContent').append('<textarea class="approval-content-textarea" readonly>${oaActRotation.companyPrincipalContent}</textarea>' +
             '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
             '<input class="approval-date-input" type="text" value="${oaActRotation.companyPrincipalDate}" readonly></div>' +
             '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
             '<input class="approval-signature-input" type="text" value="${oaActRotation.companyPrincipal}" readonly></div>');
-    }
-
-    if (flag === 0) {
         $('#return').html("");
         $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
     }
@@ -429,6 +455,9 @@
                     //返回上一页
                     window.location.href = '${path}/oaHomePage/toOaHomePage';
                     layer.msg('提交成功！');
+                } else if (data === 'backSuccess') {
+                    window.location.href = '${path}/oaHomePage/toOaHomePage';
+                    window.top.tips("提交成功,并将数据转存到待发事项中！", 6, 1, 2000);
                 } else {
                     layer.msg('提交失败！');
                 }
@@ -445,8 +474,8 @@
         $('#body').css('width', '100%');
         //执行打印
         window.print();
-        $('#tool').show();
-        $('#body,#return').css('width', '70%');
+        $('#tool,#return').show();
+        $('#body').css('width', '70%');
     }
 </script>
 </html>

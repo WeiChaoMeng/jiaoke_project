@@ -115,6 +115,15 @@ public interface OaCollaborationMapper {
     int updateState(@Param("correlationId") String correlationId, @Param("state") Integer state);
 
     /**
+     * 更新状态码
+     *
+     * @param correlationId correlationId
+     * @param statusCode    statusCode
+     * @return int
+     */
+    int updateStatusCode(@Param("correlationId") String correlationId, @Param("statusCode") String statusCode);
+
+    /**
      * 查询数据是否存在
      *
      * @param correlationId 关联id

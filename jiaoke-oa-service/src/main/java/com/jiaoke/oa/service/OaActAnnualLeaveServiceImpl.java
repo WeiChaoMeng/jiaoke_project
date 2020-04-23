@@ -37,6 +37,7 @@ public class OaActAnnualLeaveServiceImpl implements OaActAnnualLeaveService {
         oaActAnnualLeave.setCreateTime(new Date());
         oaActAnnualLeave.setPromoter(userId);
         oaActAnnualLeave.setUrl("annualLeave");
+        oaActAnnualLeave.setState(0);
         if (oaActAnnualLeaveMapper.insertSelective(oaActAnnualLeave) < 0) {
             return -1;
         } else {
@@ -46,6 +47,7 @@ public class OaActAnnualLeaveServiceImpl implements OaActAnnualLeaveService {
             oaCollaboration.setTitle(oaActAnnualLeave.getTitle());
             oaCollaboration.setUrl("annualLeave");
             oaCollaboration.setTable("oa_act_annual_leave");
+            oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("年休假审批");
             oaCollaboration.setDataOne("享受休假天数" + oaActAnnualLeave.getPlanDate());
             oaCollaboration.setDataTwo("累计享受休假天数" + oaActAnnualLeave.getTotal());
@@ -58,10 +60,17 @@ public class OaActAnnualLeaveServiceImpl implements OaActAnnualLeaveService {
 
     @Override
     public int edit(OaActAnnualLeave oaActAnnualLeave) {
+        oaActAnnualLeave.setState(0);
+        oaActAnnualLeave.setPersonnel("");
+        oaActAnnualLeave.setPersonnelDate("");
+        oaActAnnualLeave.setSupervisor("");
+        oaActAnnualLeave.setSupervisorDate("");
+        oaActAnnualLeave.setCompanyPrincipal("");
+        oaActAnnualLeave.setCompanyPrincipalDate("");
+        oaActAnnualLeave.setCreateTime(new Date());
         if (oaActAnnualLeaveMapper.updateByPrimaryKeySelective(oaActAnnualLeave) < 0) {
             return -1;
         } else {
-            oaCollaborationMapper.updateStateByCorrelationId(oaActAnnualLeave.getId(), 1, oaActAnnualLeave.getTitle());
             return 1;
         }
     }

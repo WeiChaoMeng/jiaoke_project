@@ -66,7 +66,7 @@
     </style>
 </head>
 
-<body id="body">
+<body id="body" style="width: 70%">
 
 <div class="table-title">
     <span>${oaActAcceptanceWarehousing.title}</span>
@@ -113,23 +113,23 @@
     </c:choose>
 
     <c:choose>
-        <c:when test="${oaActAcceptanceWarehousing.associatedId != ''}">
-            <div class="relevance-tool" id="relevanceList">
-                <div class="relevance-tool-padding">
+            <c:when test="${oaActAcceptanceWarehousing.associatedId != null} || ${oaActAcceptanceWarehousing.associatedId != ''}">
+                <div class="relevance-tool" id="relevanceList">
+                    <div class="relevance-tool-padding">
 
-                    <div class="annexes-icon-details">
-                        <button type="button" class="cursor_hand" style="line-height: 20px">&#xea67;</button>
-                    </div>
+                        <div class="annexes-icon-details">
+                            <button type="button" class="cursor_hand" style="line-height: 20px">&#xea67;</button>
+                        </div>
 
-                    <div class="table-file">
-                        <div class="relevance-file-content">
+                        <div class="table-file">
+                            <div class="relevance-file-content">
                             <span class="relevance-content-link"
                                   onclick="relevanceFormsDetails('${oaActAcceptanceWarehousing.associatedId}')">${oaActAcceptanceWarehousing.associatedName}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </c:when>
+            </c:when>
     </c:choose>
 </div>
 
@@ -227,6 +227,9 @@
                     //返回上一页
                     window.location.href = '${path}/oaHomePage/toOaHomePage';
                     window.top.tips("提交成功！", 0, 1, 1000);
+                } else if (data === 'backSuccess') {
+                    window.location.href = '${path}/oaHomePage/toOaHomePage';
+                    window.top.tips("提交成功,并将数据转存到待发事项中！", 6, 1, 2000);
                 } else {
                     window.top.tips("提交失败！", 0, 2, 1000);
                 }
@@ -249,7 +252,7 @@
         //执行打印
         window.print();
         $('#tool,#return').show();
-        $('#body').css('width', '80%');
+        $('#body').css('width', '70%');
     }
 </script>
 </html>

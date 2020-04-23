@@ -36,6 +36,7 @@ public class OaActAcceptanceServiceImpl implements OaActAcceptanceService {
         oaActAcceptance.setId(randomId);
         oaActAcceptance.setPromoter(userId);
         oaActAcceptance.setUrl("acceptance");
+        oaActAcceptance.setState(0);
         oaActAcceptance.setCreateTime(new Date());
         if (oaActAcceptanceMapper.insertSelective(oaActAcceptance) < 0) {
             return -1;
@@ -46,6 +47,7 @@ public class OaActAcceptanceServiceImpl implements OaActAcceptanceService {
             oaCollaboration.setTitle(oaActAcceptance.getTitle());
             oaCollaboration.setUrl("acceptance");
             oaCollaboration.setTable("oa_act_acceptance");
+            oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("设备维修验收申请");
             oaCollaboration.setDataOne("维修厂家:" + oaActAcceptance.getFactory());
             oaCollaboration.setDataTwo("总计:" + oaActAcceptance.getAmount());
@@ -66,11 +68,19 @@ public class OaActAcceptanceServiceImpl implements OaActAcceptanceService {
 
     @Override
     public int edit(OaActAcceptance oaActAcceptance) {
+        oaActAcceptance.setState(0);
+        oaActAcceptance.setAccepter("");
+        oaActAcceptance.setAcceptanceDate("");
+        oaActAcceptance.setPrincipal("");
+        oaActAcceptance.setPrincipalDate("");
+        oaActAcceptance.setSupervisor("");
+        oaActAcceptance.setSupervisorDate("");
+        oaActAcceptance.setCompanyPrincipal("");
+        oaActAcceptance.setCompanyPrincipalDate("");
         oaActAcceptance.setCreateTime(new Date());
         if (oaActAcceptanceMapper.updateByPrimaryKey(oaActAcceptance) < 0) {
             return -1;
         } else {
-            oaCollaborationMapper.updateStateByCorrelationId(oaActAcceptance.getId(), 1, oaActAcceptance.getTitle());
             return 1;
         }
     }

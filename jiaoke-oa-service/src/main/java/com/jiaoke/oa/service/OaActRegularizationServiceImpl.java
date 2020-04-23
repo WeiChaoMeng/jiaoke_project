@@ -37,6 +37,7 @@ public class OaActRegularizationServiceImpl implements OaActRegularizationServic
         oaActRegularization.setCreateTime(new Date());
         oaActRegularization.setPromoter(userId);
         oaActRegularization.setUrl("regularization");
+        oaActRegularization.setState(0);
         if (oaActRegularizationMapper.insertSelective(oaActRegularization) < 0) {
             return -1;
         } else {
@@ -46,6 +47,7 @@ public class OaActRegularizationServiceImpl implements OaActRegularizationServic
             oaCollaboration.setTitle(oaActRegularization.getTitle());
             oaCollaboration.setUrl("regularization");
             oaCollaboration.setTable("oa_act_regularization");
+            oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("转正申请");
             oaCollaboration.setDataOne("入职日期:" + oaActRegularization.getEntryDate());
             oaCollaboration.setDataTwo("试用期日期:" + oaActRegularization.getProbationPeriod());
@@ -58,11 +60,23 @@ public class OaActRegularizationServiceImpl implements OaActRegularizationServic
 
     @Override
     public int edit(OaActRegularization oaActRegularization) {
+        oaActRegularization.setState(0);
+        oaActRegularization.setPrincipal("");
+        oaActRegularization.setPrincipalDate("");
+        oaActRegularization.setPrincipalContent("");
+        oaActRegularization.setSupervisor("");
+        oaActRegularization.setSupervisorDate("");
+        oaActRegularization.setSupervisorContent("");
+        oaActRegularization.setPersonnel("");
+        oaActRegularization.setPersonnelDate("");
+        oaActRegularization.setPersonnelContent("");
+        oaActRegularization.setCompanyPrincipal("");
+        oaActRegularization.setCompanyPrincipalDate("");
+        oaActRegularization.setCompanyPrincipalContent("");
         oaActRegularization.setCreateTime(new Date());
         if (oaActRegularizationMapper.updateByPrimaryKeySelective(oaActRegularization) < 0) {
             return -1;
         } else {
-            oaCollaborationMapper.updateStateByCorrelationId(oaActRegularization.getId(), 1, oaActRegularization.getTitle());
             return 1;
         }
     }

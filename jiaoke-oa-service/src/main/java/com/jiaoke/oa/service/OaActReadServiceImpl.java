@@ -32,6 +32,7 @@ public class OaActReadServiceImpl implements OaActReadService {
         oaActRead.setCreateTime(new Date());
         oaActRead.setPromoter(userId);
         oaActRead.setUrl("read");
+        oaActRead.setState(0);
         if (oaActReadMapper.insertSelective(oaActRead) < 0) {
             return -1;
         } else {
@@ -41,6 +42,7 @@ public class OaActReadServiceImpl implements OaActReadService {
             oaCollaboration.setTitle(oaActRead.getTitle());
             oaCollaboration.setUrl("read");
             oaCollaboration.setTable("oa_act_read");
+            oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("收文阅办单");
             oaCollaboration.setDataOne("来文机关" + oaActRead.getOrgan());
             oaCollaboration.setDataTwo("收文字号" + oaActRead.getReceiptTime());
@@ -53,11 +55,20 @@ public class OaActReadServiceImpl implements OaActReadService {
 
     @Override
     public int edit(OaActRead oaActRead) {
+        oaActRead.setState(0);
+        oaActRead.setReceiptProposed("");
+        oaActRead.setReceiptProposedDate("");
+        oaActRead.setReceiptProposedContent("");
+        oaActRead.setCompanyPrincipal("");
+        oaActRead.setCompanyPrincipalDate("");
+        oaActRead.setCompanyPrincipalContent("");
+        oaActRead.setOutcome("");
+        oaActRead.setOutcomeDate("");
+        oaActRead.setOutcomeContent("");
         oaActRead.setCreateTime(new Date());
         if (oaActReadMapper.updateByPrimaryKey(oaActRead) < 0) {
             return -1;
         } else {
-            oaCollaborationMapper.updateStateByCorrelationId(oaActRead.getId(), 1, oaActRead.getTitle());
             return 1;
         }
     }

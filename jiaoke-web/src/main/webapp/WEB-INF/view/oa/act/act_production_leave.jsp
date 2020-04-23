@@ -77,7 +77,7 @@
                 <th class="th_title" nowrap="nowrap" style="width: 4%">流程</th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" placeholder="发起者部门主管领导(审批),总经理(审批),人事主管(审批),发起人、人事(协同)" readonly>
+                        <input type="text" placeholder="发起者部门主管领导→总经理→人事部门主管→发起人、人事(知会)" readonly>
                     </div>
                 </td>
             </tr>
@@ -143,12 +143,12 @@
         </tr>
 
         <tr>
-            <td class="tdLabel">总经理</td>
+            <td class="tdLabel">人事主管</td>
             <td class="table-td-content">
                 <input type="text" class="formInput-readonly" readonly>
             </td>
 
-            <td class="tdLabel">人事主管</td>
+            <td class="tdLabel">总经理</td>
             <td class="table-td-content">
                 <input type="text" class="formInput-readonly" readonly>
             </td>

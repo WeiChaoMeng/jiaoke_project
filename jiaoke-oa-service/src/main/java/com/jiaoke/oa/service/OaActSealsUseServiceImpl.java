@@ -42,6 +42,7 @@ public class OaActSealsUseServiceImpl implements OaActSealsUseService {
         oaActSealsUse.setId(randomId);
         oaActSealsUse.setPromoter(userId);
         oaActSealsUse.setUrl("sealsUse");
+        oaActSealsUse.setState(0);
         if (oaActSealsUseMapper.insertSelective(oaActSealsUse) < 0) {
             return -1;
         } else {
@@ -51,6 +52,7 @@ public class OaActSealsUseServiceImpl implements OaActSealsUseService {
             oaCollaboration.setTitle(oaActSealsUse.getTitle());
             oaCollaboration.setUrl("sealsUse");
             oaCollaboration.setTable("oa_act_seals_use");
+            oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("印章使用申请");
             if (oaActSealsUse.getSeal() == 0) {
                 oaCollaboration.setDataOne("印章种类:路驰公章");
@@ -79,11 +81,19 @@ public class OaActSealsUseServiceImpl implements OaActSealsUseService {
 
     @Override
     public int edit(OaActSealsUse oaActSealsUse) {
+        oaActSealsUse.setState(0);
+        oaActSealsUse.setPrincipal("");
+        oaActSealsUse.setPrincipalDate("");
+        oaActSealsUse.setSupervisor("");
+        oaActSealsUse.setSupervisorDate("");
+        oaActSealsUse.setSealSupervisor("");
+        oaActSealsUse.setSealSupervisorDate("");
+        oaActSealsUse.setSealOperator("");
+        oaActSealsUse.setSealOperatorDate("");
         oaActSealsUse.setCreateTime(new Date());
         if (oaActSealsUseMapper.updateByPrimaryKey(oaActSealsUse) < 0) {
             return -1;
         } else {
-            oaCollaborationMapper.updateStateByCorrelationId(oaActSealsUse.getId(), 1, oaActSealsUse.getTitle());
             return 1;
         }
     }

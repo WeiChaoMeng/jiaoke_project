@@ -15,7 +15,7 @@
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
 </head>
 
-<body style="width: 75%" id="body">
+<body style="width: 70%" id="body">
 <div class="table-title">
     <span>印章使用审批单</span>
 </div>
@@ -65,7 +65,7 @@
                 </td>
 
                 <th nowrap="nowrap" class="th_title" style="width: 4%">标题</th>
-                <td style="width: 44%">
+                <td style="width: 35%">
                     <div class="common_input_frame">
                         <input type="text" id="title" name="title" placeholder="请输入标题" title="点击此处填写标题"
                                value="印章使用审批单(${nickname} <%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>)"
@@ -76,8 +76,7 @@
                 <th class="th_title" nowrap="nowrap" style="width: 4%">流程</th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" placeholder="部门负责人(审批)、部门主管领导(审批)、印章管理部门主管领导(审批)、盖章人"
-                               readonly="readonly">
+                        <input type="text" placeholder="发起者部门负责人→发起者部门主管领导→印章管理部门主管领导→盖章人→发起人(知会)" readonly>
                     </div>
                 </td>
             </tr>
@@ -130,13 +129,14 @@
             <td class="tdLabel">申请人</td>
             <td class="table-td-content">
                 <input type="text" class="formInput-readonly" name="applicant" value="${nickname}" readonly="readonly">
+                <input type="hidden" id="departmentPrincipal" name="departmentPrincipal">
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel">申请文件名称</td>
             <td class="table-td-content" colspan="3" style="padding: 10px">
-                <textarea class="write-approval-content-textarea" onkeyup="value=value.replace(/\s+/g,'')" name="name"></textarea>
+                <textarea class="write-approval-content-textarea" oninput="value=value.replace(/\s+/g,'')" name="name"></textarea>
             </td>
         </tr>
 
@@ -174,37 +174,76 @@
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
 <script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
-
-    //发送
     function send() {
+        if ($.trim($("#title").val()) === '') {
+            window.top.tips("标题不可以为空！", 6, 5, 2000);
+        } else {
+            var principalGroup = '${principalGroup}';
+            //部门负责人是多个
+            if (principalGroup !== '') {
+                var principalList = JSON.parse(principalGroup);
+                window.top.selectPrincipal(principalList);
+
+                //部门负责人是单个
+            } else {
+                $('#departmentPrincipal').val("single");
+
+                var array = [];
+                $('#annexes').find('input').each(function () {
+                    array.push($(this).val());
+                });
+
+                //发送前将上传好的附件插入form中
+                $('#annex').val(array);
+
+                $.ajax({
+                    type: "POST",
+                    url: '${path}/sealsUse/add',
+                    data: $('#oaActSealsUse').serialize(),
+                    error: function (request) {
+                        layer.msg("出错！");
+                    },
+                    success: function (result) {
+                        if (result === "success") {
+                            window.location.href = "${path}/oaIndex.do";
+                            window.top.tips("发送成功！", 0, 1, 2000);
+                        } else {
+                            window.top.tips('发送失败！', 0, 2, 2000);
+                        }
+                    }
+                })
+            }
+        }
+    }
+
+    //根据勾选的部门负责人发送
+    function selectionPrincipal(principalId) {
+        $('#departmentPrincipal').val(principalId);
+
         var array = [];
         $('#annexes').find('input').each(function () {
             array.push($(this).val());
         });
 
-        if ($.trim($("#title").val()) === '') {
-            window.top.tips("标题不能为空！", 6, 5, 1000);
-        } else {
-            //发送前将上传好的附件插入form中
-            $('#annex').val(array);
+        //发送前将上传好的附件插入form中
+        $('#annex').val(array);
 
-            $.ajax({
-                type: "POST",
-                url: '${path}/sealsUse/add',
-                data: $('#oaActSealsUse').serialize(),
-                error: function (request) {
-                    window.top.tips("出错！", 6, 2, 1000);
-                },
-                success: function (result) {
-                    if (result === "success") {
-                        window.top.tips("发送成功！", 0, 1, 1000);
-                        window.location.href = "${path}/oaIndex.do";
-                    } else {
-                        window.top.tips("发送失败！", 0, 2, 1000);
-                    }
+        $.ajax({
+            type: "POST",
+            url: '${path}/sealsUse/add',
+            data: $('#oaActSealsUse').serialize(),
+            error: function (request) {
+                layer.msg("出错！");
+            },
+            success: function (result) {
+                if (result === "success") {
+                    window.location.href = "${path}/oaIndex.do";
+                    window.top.tips("发送成功！", 0, 1, 2000);
+                } else {
+                    window.top.tips('发送失败！', 0, 2, 2000);
                 }
-            })
-        }
+            }
+        })
     }
 
     //保存待发
@@ -298,7 +337,7 @@
         //执行打印
         window.print();
         $('#tool,#titleArea').show();
-        $('#body').css('width', '75%');
+        $('#body').css('width', '70%');
 
         //附件列表
         let annexesLen = $('#annexes').children().length;

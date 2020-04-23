@@ -31,6 +31,7 @@ public class OaActDocumentServiceImpl implements OaActDocumentService {
         oaActDocument.setId(randomId);
         oaActDocument.setPromoter(userId);
         oaActDocument.setUrl("document");
+        oaActDocument.setState(0);
         oaActDocument.setCreateTime(new Date());
         if (oaActDocumentMapper.insertSelective(oaActDocument) < 0) {
             return -1;
@@ -41,6 +42,7 @@ public class OaActDocumentServiceImpl implements OaActDocumentService {
             oaCollaboration.setTitle(oaActDocument.getTitle());
             oaCollaboration.setUrl("document");
             oaCollaboration.setTable("oa_act_document");
+            oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("公文审批");
             oaCollaboration.setDataOne("标题:" + oaActDocument.getTitle());
             if (oaActDocument.getDocType() == 0) {
@@ -66,11 +68,14 @@ public class OaActDocumentServiceImpl implements OaActDocumentService {
 
     @Override
     public int edit(OaActDocument oaActDocument) {
+        oaActDocument.setState(0);
+        oaActDocument.setSupervisor("");
+        oaActDocument.setCountersign("");
+        oaActDocument.setCompanyPrincipal("");
         oaActDocument.setCreateTime(new Date());
         if (oaActDocumentMapper.updateByPrimaryKey(oaActDocument) < 1) {
             return -1;
         } else {
-            oaCollaborationMapper.updateStateByCorrelationId(oaActDocument.getId(), 1, oaActDocument.getTitle());
             return 1;
         }
     }

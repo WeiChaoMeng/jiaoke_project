@@ -49,7 +49,8 @@
                     <c:forTokens items="${oaActSealsBorrow.annex}" delims="," var="annex">
                         <div class="table-file">
                             <div class="table-file-content">
-                                <span  class="table-file-title" title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <span class="table-file-title"
+                                      title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
                                 <a class="table-file-download icon"
                                    href="/fileDownloadHandle/download?fileName=${annex}"
                                    title="下载">&#xebda;</a>
@@ -66,8 +67,8 @@
     <table class="formTable">
         <tbody>
         <tr>
-            <td class="tdLabel">印章种类：</td>
-            <td class="table-td-content">
+            <td class="tdLabel">印章种类</td>
+            <td class="table-td-content" style="width: 340px;">
                 <c:choose>
                     <c:when test="${oaActSealsBorrow.seal == 0}">路驰公章</c:when>
                     <c:when test="${oaActSealsBorrow.seal == 1}">路驰合同章</c:when>
@@ -80,34 +81,36 @@
                 </c:choose>
             </td>
 
-            <td class="tdLabel">借用时间：</td>
+            <td class="tdLabel">借用时间</td>
             <td class="table-td-content">
                 ${oaActSealsBorrow.borrowTime}
                 <input type="hidden" name="id" value="${oaActSealsBorrow.id}">
                 <input type="hidden" name="title" value="${oaActSealsBorrow.title}">
                 <input type="hidden" name="seal" value="${oaActSealsBorrow.seal}">
+                <input type="hidden" name="promoter" value="${oaActSealsBorrow.promoter}">
+                <input type="hidden" name="departmentPrincipal" value="${oaActSealsBorrow.departmentPrincipal}">
             </td>
         </tr>
 
         <tr>
-            <td class="tdLabel">盖章文件内容：</td>
+            <td class="tdLabel">盖章文件内容</td>
             <td class="table-td-content" colspan="3">
                 ${oaActSealsBorrow.content}
             </td>
         </tr>
 
         <tr>
-            <td class="tdLabel">借章人：</td>
+            <td class="tdLabel">借章人</td>
             <td class="table-td-content">
                 ${oaActSealsBorrow.borrower}
             </td>
 
-            <td class="tdLabel">部门负责人：</td>
+            <td class="tdLabel">部门负责人</td>
             <td class="table-td-content">
                 <shiro:hasPermission name="principal">
                     <div style="width: 100%;height: 100%;" id="principalContent">
-                        <%--<input type="text" class="formInput-readonly" name="principal" value="${nickname}" readonly="readonly">--%>
-                        <%--<input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">--%>
+                            <%--<input type="text" class="formInput-readonly" name="principal" value="${nickname}" readonly="readonly">--%>
+                            <%--<input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">--%>
                     </div>
                 </shiro:hasPermission>
 
@@ -118,12 +121,12 @@
         </tr>
 
         <tr>
-            <td class="tdLabel">印章主管领导：</td>
+            <td class="tdLabel">印章主管领导</td>
             <td class="table-td-content" colspan="3">
                 <shiro:hasAnyPermission name="seal_supervisor,specialChapter">
                     <div style="width: 100%;height: 100%;" id="sealSupervisorContent">
-                        <%--<input type="text" class="formInput-readonly" name="sealSupervisor" value="${nickname}" readonly="readonly">--%>
-                        <%--<input type="hidden" name="sealSupervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">--%>
+                            <%--<input type="text" class="formInput-readonly" name="sealSupervisor" value="${nickname}" readonly="readonly">--%>
+                            <%--<input type="hidden" name="sealSupervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">--%>
                     </div>
                 </shiro:hasAnyPermission>
 
@@ -134,12 +137,10 @@
         </tr>
 
         <tr>
-            <td class="tdLabel">经办人：</td>
-            <td class="table-td-content">
+            <td class="tdLabel">经办人</td>
+            <td class="table-td-content" style="vertical-align: baseline;">
                 <shiro:hasAnyPermission name="seal_operator,legalStamp,financeStamp">
-                    <div style="width: 100%;height: 100%;" id="sealOperatorContent">
-                        <%--<input type="text" class="formInput-readonly" name="sealOperator" value="${nickname}" readonly="readonly">--%>
-                    </div>
+                    <div id="sealOperatorContent"></div>
                 </shiro:hasAnyPermission>
 
                 <shiro:lacksPermission name="seal_operator">
@@ -147,12 +148,10 @@
                 </shiro:lacksPermission>
             </td>
 
-            <td class="tdLabel">归还时间：</td>
-            <td class="table-td-content">
+            <td class="tdLabel">归还时间</td>
+            <td class="table-td-content" style="vertical-align: baseline;">
                 <shiro:hasAnyPermission name="seal_operator,legalStamp,financeStamp">
-                    <div style="width: 100%;height: 100%;" id="returnTimeContent">
-                        <%--<input type="text" class="formInput-readonly" name="returnTime" value="<%=new SimpleDateFormat("yyyy-MM-dd HH").format(new Date())%>" readonly="readonly">--%>
-                    </div>
+                    <div id="returnTimeContent"></div>
                 </shiro:hasAnyPermission>
 
                 <shiro:lacksPermission name="seal_operator">
@@ -180,40 +179,73 @@
     var sealsBorrow = JSON.parse('${oaActSealsBorrowJson}');
     //标记
     var flag = 0;
-    if (flag === 0) {
-        if (sealsBorrow.principal === "" || sealsBorrow.principal === undefined) {
-            $('#principalContent').append('<input type="text" class="formInput-readonly" name="principal" value="${nickname}" readonly="readonly"><input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
-            flag = 1;
+
+    if (sealsBorrow.state === 0) {
+        if (flag === 0) {
+            var principalNums = JSON.parse('${principalNum}');
+            //单个审批人
+            if (principalNums === "noPrincipalNum") {
+                if (sealsBorrow.principal === "" || sealsBorrow.principal === undefined) {
+                    $('#principalContent').append('<input type="text" class="formInput-readonly" name="principal" value="${nickname}" readonly="readonly"><input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                    flag = 1;
+                } else {
+                    $('#principalContent').append(sealsBorrow.principal);
+                }
+            } else {
+                if (sealsBorrow.principal === undefined) {
+                    $('#principalContent').append('<input type="text" class="formInput-readonly" name="principal" value="${oaActSealsBorrow.principal} ${nickname}" readonly="readonly"><input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                    flag = 1;
+                } else if ((sealsBorrow.principal).length === principalNums.length) {
+                    $('#principalContent').append(sealsBorrow.principal);
+                } else {
+                    $('#principalContent').append('<input type="text" class="formInput-readonly" name="principal" value="${oaActSealsBorrow.principal} ${nickname}" readonly="readonly"><input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                    flag = 1;
+                }
+            }
         } else {
             $('#principalContent').append(sealsBorrow.principal);
         }
-    } else {
-        $('#principalContent').append(sealsBorrow.principal);
-    }
 
-    if (flag === 0) {
-        if (sealsBorrow.sealSupervisor === "" || sealsBorrow.sealSupervisor === undefined) {
-            $('#sealSupervisorContent').append('<input type="text" class="formInput-readonly" name="sealSupervisor" value="${nickname}" readonly="readonly"><input type="hidden" name="sealSupervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
-            flag = 1;
+        if (flag === 0) {
+            if (sealsBorrow.sealSupervisor === "" || sealsBorrow.sealSupervisor === undefined) {
+                $('#sealSupervisorContent').append('<input type="text" class="formInput-readonly" name="sealSupervisor" value="${nickname}" readonly="readonly"><input type="hidden" name="sealSupervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                flag = 1;
+            } else {
+                $('#sealSupervisorContent').append(sealsBorrow.sealSupervisor);
+            }
         } else {
             $('#sealSupervisorContent').append(sealsBorrow.sealSupervisor);
         }
-    } else {
-        $('#sealSupervisorContent').append(sealsBorrow.sealSupervisor);
-    }
 
-    if (flag === 0) {
-        if (sealsBorrow.sealOperator === "" || sealsBorrow.sealOperator === undefined) {
-            $('#sealOperatorContent').append('<input type="text" class="formInput-readonly" name="sealOperator" value="${nickname}" readonly="readonly">');
-            $('#returnTimeContent').append('<input type="text" class="formInput-readonly" name="returnTime" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date())%>" readonly="readonly">');
-            flag = 1;
+        if (flag === 0) {
+            if (sealsBorrow.sealOperator === "" || sealsBorrow.sealOperator === undefined) {
+                $('#sealOperatorContent').html('<input type="text" class="formInput-readonly" name="sealOperator" value="${nickname}" readonly="readonly">');
+                $('#sealOperatorContent').css('margin-top','6px');
+                $('#returnTimeContent').html('<input type="text" class="formInput-readonly" name="returnTime" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date())%>" readonly="readonly">');
+                $('#returnTimeContent').css('margin-top','6px');
+                flag = 1;
+            } else {
+                $('#sealOperatorContent').append(sealsBorrow.sealOperator);
+                $('#sealOperatorContent').css('position','absolute');
+                $('#returnTimeContent').append(sealsBorrow.returnTime);
+                $('#returnTimeContent').css('position','absolute');
+            }
         } else {
             $('#sealOperatorContent').append(sealsBorrow.sealOperator);
             $('#returnTimeContent').append(sealsBorrow.returnTime);
         }
+
+        if (flag === 0) {
+            $('#return').html("");
+            $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
+        }
     } else {
+        $('#principalContent').append(sealsBorrow.principal);
+        $('#sealSupervisorContent').append(sealsBorrow.sealSupervisor);
         $('#sealOperatorContent').append(sealsBorrow.sealOperator);
         $('#returnTimeContent').append(sealsBorrow.returnTime);
+        $('#return').html("");
+        $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
     }
 
     //任务Id
@@ -231,6 +263,9 @@
                     //返回上一页
                     window.location.href = '${path}/oaHomePage/toOaHomePage';
                     window.top.tips("提交成功！", 0, 1, 1000);
+                } else if (data === 'backSuccess') {
+                    window.location.href = '${path}/oaHomePage/toOaHomePage';
+                    window.top.tips("提交成功,并将数据转存到待发事项中！", 6, 1, 2000);
                 } else {
                     window.top.tips("提交失败！", 0, 2, 1000);
                 }
@@ -247,8 +282,8 @@
         $('#body').css('width', '100%');
         //执行打印
         window.print();
-        $('#tool').show();
-        $('#body,#return').css('width', '70%');
+        $('#tool,#return').show();
+        $('#body').css('width', '70%');
     }
 </script>
 </html>

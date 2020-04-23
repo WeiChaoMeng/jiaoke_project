@@ -71,6 +71,30 @@ public class CommonController {
     }
 
     /**
+     * 登录成功后进入首页(管理层)
+     *
+     * @return security_index.jsp
+     */
+    @RequestMapping("/managePage.do")
+    public String managePage(Model model) {
+        UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
+        model.addAttribute("userInfo", userInfo);
+        return "new/managePage";
+    }
+
+    /**
+     * 登录成功后进入首页（基础层）
+     *
+     * @return security_index.jsp
+     */
+    @RequestMapping("/basePage.do")
+    public String basePage(Model model) {
+        UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
+        model.addAttribute("userInfo", userInfo);
+        return "new/basePage";
+    }
+
+    /**
      *
      * 功能描述: <br>
      *  <iframe返回页面>

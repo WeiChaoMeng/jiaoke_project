@@ -3,12 +3,15 @@ package com.jiaoke.controller.oa.activit;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
+import com.jiaoke.controller.oa.TargetFlowNodeCommand;
 import com.jiaoke.oa.bean.Comments;
 import com.jiaoke.oa.bean.OaActConfirm;
 import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.service.OaActConfirmService;
 import com.jiaoke.oa.service.OaCollaborationService;
 import com.jiaoke.oa.service.UserInfoService;
+import org.activiti.bpmn.model.UserTask;
+import org.activiti.engine.ManagementService;
 import org.activiti.engine.task.Task;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
@@ -45,6 +48,9 @@ public class OaActConfirmController {
     @Resource
     private OaCollaborationService oaCollaborationService;
 
+    @Resource
+    private ManagementService managementService;
+
     /**
      * 获取当前登录用户信息
      *
@@ -74,16 +80,16 @@ public class OaActConfirmController {
      */
     @RequestMapping(value = "/add")
     @ResponseBody
-    public String add(OaActConfirm oaActConfirm) {
+    public String add(@RequestBody OaActConfirm oaActConfirm) {
         String randomId = RandomUtil.randomId();
         if (oaActConfirmService.insert(oaActConfirm, getCurrentUser().getId(), randomId, 0) < 1) {
             return "error";
         } else {
-            //获取拥有权限的用户
-            UserInfo userInfo = userInfoService.getUserInfoByPermission("mealsApproval");
+            //经营统计
+            UserInfo userInfo = userInfoService.getUserInfoByPermission("operating_statistics");
             //开启流程
             Map<String, Object> map = new HashMap<>(16);
-            map.put("approval", userInfo.getId());
+            map.put("operating_statistics", userInfo.getId());
             String instance = activitiUtil.startProcessInstanceByKey("oa_confirm", "oa_act_confirm:" + randomId, map, getCurrentUser().getId().toString());
             if (instance != null) {
                 return "success";
@@ -102,57 +108,201 @@ public class OaActConfirmController {
      */
     @RequestMapping(value = "/approval")
     public String approval(String id, String taskId, Model model) {
-        //审批
         OaActConfirm oaActConfirm = oaActConfirmService.selectByPrimaryKey(id);
-        //获取批注信息
-        List<Comments> commentsList = activitiUtil.selectHistoryComment(activitiUtil.getTaskByTaskId(taskId).getProcessInstanceId());
         model.addAttribute("oaActConfirm", oaActConfirm);
+        model.addAttribute("oaActConfirmJson", JsonHelper.toJSONString(oaActConfirm));
         model.addAttribute("taskId", JsonHelper.toJSONString(taskId));
-        model.addAttribute("commentsList", commentsList);
         model.addAttribute("nickname", getCurrentUser().getNickname());
-        return "oa/act/act_meals_handle";
+        return "oa/act/act_confirm_handel";
     }
 
     /**
      * 提交审批
      *
-     * @param processingOpinion 处理意见
-     * @param taskId            任务Id
+     * @param oaActConfirm oaActConfirm
+     * @param taskId       任务Id
      * @return s/e
      */
     @RequestMapping(value = "/approvalSubmit")
     @ResponseBody
-    public String approvalSubmit(String processingOpinion, String taskId, Integer flag) {
+    public String approvalSubmit(OaActConfirm oaActConfirm, String taskId, Integer flag) {
         //回退标识
         String back = "back";
         //结束标识
         String end = "end";
-        //网关标识
-        String eg = "eg";
+        //发起人
+        String promoter = "promoter";
+
+        //经营统计网关
+        String operatingStatisticsEG = "operatingStatisticsEG";
+        //财务审核网关
+        String financeReviewEG = "financeReviewEG";
+        //财务主管网关
+        String financeSupervisorEG = "financeSupervisorEG";
+        //经营主管网关
+        String operatingSupervisorEG = "operatingSupervisorEG";
+        //总经理网关
+        String companyPrincipalEG = "companyPrincipalEG";
+
         Task task = activitiUtil.getTaskByTaskId(taskId);
-        Map<String, Object> map = new HashMap<>(16);
         if (task == null) {
             return "error";
         } else {
-            //下个节点
             String nextNode = activitiUtil.getNextNode(task.getProcessDefinitionId(), task.getTaskDefinitionKey());
 
-            //下个节点是否为end直接结束
-            if (end.equals(nextNode)) {
-                activitiUtil.endProcess(taskId);
+            if (operatingStatisticsEG.equals(nextNode)) {
+                //同意
+                if (flag.equals(1)) {
 
-                //下个节点为back修改表达状态为2并结束流程
+                    UserInfo userInfo = userInfoService.getUserInfoByPermission("finance_review");
+                    Map<String, Object> map = new HashMap<>(16);
+                    map.put("whether", 0);
+                    map.put("finance_review", userInfo.getId());
+                    activitiUtil.approvalComplete(taskId, map);
+                    return updateByPrimaryKeySelective(oaActConfirm);
+                } else {
+                    Map<String, Object> map = new HashMap<>(16);
+                    map.put("whether", 1);
+                    map.put("promoter", oaActConfirm.getPromoter());
+                    activitiUtil.approvalComplete(taskId, map);
+                    oaCollaborationService.updateStatusCode(oaActConfirm.getId(), "被回退");
+                    oaActConfirm.setOperatingStatistics(null);
+                    oaActConfirm.setOperatingStatisticsDate(null);
+                    oaActConfirm.setState(1);
+                    return updateByPrimaryKeySelective(oaActConfirm);
+                }
+
+            } else if (financeReviewEG.equals(nextNode)) {
+                //同意
+                if (flag.equals(1)) {
+                    UserInfo userInfo = userInfoService.getUserInfoByPermission("finance_principal");
+                    Map<String, Object> map = new HashMap<>(16);
+                    map.put("whether", 0);
+                    map.put("finance_supervisor", userInfo.getId());
+                    activitiUtil.approvalComplete(taskId, map);
+                    return updateByPrimaryKeySelective(oaActConfirm);
+                } else {
+                    Map<String, Object> map = new HashMap<>(16);
+                    map.put("whether", 1);
+                    map.put("promoter", oaActConfirm.getPromoter());
+                    activitiUtil.approvalComplete(taskId, map);
+                    oaCollaborationService.updateStatusCode(oaActConfirm.getId(), "被回退");
+                    oaActConfirm.setFinancialAudit(null);
+                    oaActConfirm.setFinancialAuditDate(null);
+                    oaActConfirm.setState(1);
+                    return updateByPrimaryKeySelective(oaActConfirm);
+                }
+
+                //回退结束
+            } else if (financeSupervisorEG.equals(nextNode)) {
+                //同意
+                if (flag.equals(1)) {
+                    UserInfo userInfo = userInfoService.getUserInfoByPermission("operating_supervisor");
+                    Map<String, Object> map = new HashMap<>(16);
+                    map.put("whether", 0);
+                    map.put("operating_supervisor", userInfo.getId());
+                    activitiUtil.approvalComplete(taskId, map);
+                    return updateByPrimaryKeySelective(oaActConfirm);
+                } else {
+                    Map<String, Object> map = new HashMap<>(16);
+                    map.put("whether", 1);
+                    map.put("promoter", oaActConfirm.getPromoter());
+                    activitiUtil.approvalComplete(taskId, map);
+                    oaCollaborationService.updateStatusCode(oaActConfirm.getId(), "被回退");
+                    oaActConfirm.setFinanceSupervisor(null);
+                    oaActConfirm.setFinanceSupervisorDate(null);
+                    oaActConfirm.setState(1);
+                    return updateByPrimaryKeySelective(oaActConfirm);
+                }
+
+                //回退结束
+            } else if (operatingSupervisorEG.equals(nextNode)) {
+                //同意
+                if (flag.equals(1)) {
+                    UserInfo userInfo = userInfoService.getUserInfoByPermission("company_principal");
+                    Map<String, Object> map = new HashMap<>(16);
+                    map.put("whether", 0);
+                    map.put("company_principal", userInfo.getId());
+                    activitiUtil.approvalComplete(taskId, map);
+                    return updateByPrimaryKeySelective(oaActConfirm);
+                } else {
+                    Map<String, Object> map = new HashMap<>(16);
+                    map.put("whether", 1);
+                    map.put("promoter", oaActConfirm.getPromoter());
+                    activitiUtil.approvalComplete(taskId, map);
+                    oaCollaborationService.updateStatusCode(oaActConfirm.getId(), "被回退");
+                    oaActConfirm.setBusinessSupervisor(null);
+                    oaActConfirm.setBusinessSupervisorDate(null);
+                    oaActConfirm.setState(1);
+                    return updateByPrimaryKeySelective(oaActConfirm);
+                }
+
+                //回退结束
+            } else if (companyPrincipalEG.equals(nextNode)) {
+                //同意
+                if (flag.equals(1)) {
+                    Map<String, Object> map = new HashMap<>(16);
+                    map.put("whether", 0);
+                    map.put("promoter", oaActConfirm.getPromoter());
+                    activitiUtil.approvalComplete(taskId, map);
+                    return updateByPrimaryKeySelective(oaActConfirm);
+                } else {
+                    Map<String, Object> map = new HashMap<>(16);
+                    map.put("whether", 1);
+                    map.put("promoter", oaActConfirm.getPromoter());
+                    activitiUtil.approvalComplete(taskId, map);
+                    oaCollaborationService.updateStatusCode(oaActConfirm.getId(), "被回退");
+                    oaActConfirm.setCompanyPrincipal(null);
+                    oaActConfirm.setCompanyPrincipalDate(null);
+                    oaActConfirm.setState(1);
+                    return updateByPrimaryKeySelective(oaActConfirm);
+                }
+
+                //回退结束
             } else if (back.equals(nextNode)) {
-                String businessId = activitiUtil.getBusinessByTaskId(task.getId());
-                String correlationId = businessId.substring(businessId.lastIndexOf(":") + 1);
-                oaCollaborationService.updateState(correlationId, 3);
+                //驳回
+                managementService.executeCommand(new TargetFlowNodeCommand(task.getId(), back));
+                //修改表单状态
+                oaCollaborationService.updateState(oaActConfirm.getId(), 3);
+                return "backSuccess";
+            } else if (end.equals(nextNode)) {
                 activitiUtil.endProcess(taskId);
+                return "success";
+            } else {
+                UserTask userTask = activitiUtil.getUserTask(task.getProcessDefinitionId(), nextNode);
+                if (nextNode.equals(userTask.getId())) {
+                    String enforcer = userTask.getAssignee().substring(userTask.getAssignee().indexOf("{") + 1, userTask.getAssignee().indexOf("}"));
 
-            } else if (eg.equals(nextNode)) {
-                map.put("result", flag);
-                map.put("notify", activitiUtil.getStartUserId(task.getProcessInstanceId()));
-                activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
+                    if (promoter.equals(enforcer)) {
+                        Map<String, Object> map = new HashMap<>(16);
+                        map.put(promoter, activitiUtil.getStartUserId(task.getProcessInstanceId()));
+                        activitiUtil.approvalComplete(taskId, map);
+                        return updateByPrimaryKeySelective(oaActConfirm);
+
+                    } else {
+                        //直接结束
+                        activitiUtil.endProcess(taskId);
+                        return updateByPrimaryKeySelective(oaActConfirm);
+                    }
+                } else {
+                    //直接结束
+                    activitiUtil.endProcess(taskId);
+                    return updateByPrimaryKeySelective(oaActConfirm);
+                }
             }
+        }
+    }
+
+    /**
+     * 根据主键更新
+     *
+     * @param oaActConfirm oaActConfirm
+     * @return int
+     */
+    public String updateByPrimaryKeySelective(OaActConfirm oaActConfirm) {
+        if (oaActConfirmService.updateByPrimaryKeySelective(oaActConfirm) < 1) {
+            return "error";
+        } else {
             return "success";
         }
     }
@@ -212,18 +362,20 @@ public class OaActConfirmController {
      */
     @RequestMapping(value = "/editAdd")
     @ResponseBody
-    public String editAdd(OaActConfirm oaActConfirm) {
+    public String editAdd(@RequestBody OaActConfirm oaActConfirm) {
         //更新数据
         if (oaActConfirmService.edit(oaActConfirm) < 0) {
             return "error";
         } else {
-            //获取拥有权限的用户
-            UserInfo userInfo = userInfoService.getUserInfoByPermission("mealsApproval");
+            //经营统计
+            UserInfo userInfo = userInfoService.getUserInfoByPermission("operating_statistics");
+            //开启流程
             Map<String, Object> map = new HashMap<>(16);
-            map.put("mealsApproval", userInfo.getId());
-            String instance = activitiUtil.startProcessInstanceByKey("oa_meals", "oa_act_meals:" + oaActConfirm.getId(), map, getCurrentUser().getId().toString());
+            map.put("operating_statistics", userInfo.getId());
+            String instance = activitiUtil.startProcessInstanceByKey("oa_confirm", "oa_act_confirm:" + oaActConfirm.getId(), map, getCurrentUser().getId().toString());
             if (instance != null) {
                 //发送成功后更新状态
+                oaCollaborationService.updateStatusCode(oaActConfirm.getId(), "协同");
                 oaCollaborationService.updateStateByCorrelationId(oaActConfirm.getId(), 0, oaActConfirm.getTitle());
                 return "success";
             } else {
@@ -246,6 +398,7 @@ public class OaActConfirmController {
         List<Comments> commentsList = activitiUtil.selectHistoryComment(taskId);
         model.addAttribute("oaActConfirm", oaActConfirm);
         model.addAttribute("commentsList", commentsList);
+        model.addAttribute("nickname", getCurrentUser().getNickname());
         return "oa/act/act_confirm_details";
     }
 

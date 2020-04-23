@@ -53,11 +53,10 @@
             dep.id,
             dep.department_key AS departmentKey,
             dep.department_name AS departmentName,
-            ui1.nickname AS principal,
+            principal,
             ui2.nickname AS supervisor
         FROM
             `department` AS dep
-            LEFT JOIN user_info AS ui1 ON dep.principal = ui1.id
             LEFT JOIN user_info AS ui2 ON dep.supervisor = ui2.id
     </select>
 

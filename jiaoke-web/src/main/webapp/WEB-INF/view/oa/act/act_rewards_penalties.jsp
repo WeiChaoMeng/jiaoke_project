@@ -77,7 +77,7 @@
                 <th class="th_title" nowrap="nowrap" style="width: 5%">流程</th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" placeholder="各部门主管领导、总经理、发起者(协同)" readonly>
+                        <input type="text" placeholder="各部门主管领导→总经理→发起者(知会)" readonly>
                     </div>
                 </td>
             </tr>
@@ -151,9 +151,47 @@
         </tr>
 
         <tr>
-            <td class="tdLabel" style="padding: 0;text-align: center">总经理意见</td>
-            <td colspan="5" class="table-td-textarea">
-                <textarea class="approval-content-textarea" style="height: 75px" readonly></textarea>
+            <td class="tdLabel">人事专员意见</td>
+            <td colspan="5" class="approval-content">
+                <textarea class="approval-content-textarea" readonly></textarea>
+                <div class="approval-date">
+                    <label class="approval-date-label">日期 </label>
+                    <input class="approval-date-input" type="text" readonly>
+                </div>
+                <div class="approval-signature">
+                    <label class="approval-signature-label">签字 </label>
+                    <input class="approval-signature-input" type="text" readonly>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">人事主管意见</td>
+            <td colspan="5" class="approval-content">
+                <textarea class="approval-content-textarea" readonly></textarea>
+                <div class="approval-date">
+                    <label class="approval-date-label">日期 </label>
+                    <input class="approval-date-input" type="text" readonly>
+                </div>
+                <div class="approval-signature">
+                    <label class="approval-signature-label">签字 </label>
+                    <input class="approval-signature-input" type="text" readonly>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">总经理意见</td>
+            <td colspan="5" class="approval-content">
+                <textarea class="approval-content-textarea" readonly></textarea>
+                <div class="approval-date">
+                    <label class="approval-date-label">日期 </label>
+                    <input class="approval-date-input" type="text" readonly>
+                </div>
+                <div class="approval-signature">
+                    <label class="approval-signature-label">签字 </label>
+                    <input class="approval-signature-input" type="text" readonly>
+                </div>
             </td>
         </tr>
         </tbody>

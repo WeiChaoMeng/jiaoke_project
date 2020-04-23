@@ -174,10 +174,11 @@ public class FilesUploadHandle {
     @RequestMapping(value = "/deleteFile", method = RequestMethod.POST)
     @ResponseBody
     public String deleteFile(String fileName) {
-
+        System.out.println("进入deFile方法 psth =: "+fileName);
         String filePath = FILE_PATH + fileName;
 
         File file = new File(filePath);
+        System.out.println("操作文件文件，文件列表如下~~__--~~~~~~~~~~~~~~~~~~~：：:"+file);
 
         if (!file.exists()) {
             return "error";

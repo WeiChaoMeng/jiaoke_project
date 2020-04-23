@@ -36,6 +36,7 @@ public class OaActCardServiceImpl implements OaActCardService {
         oaActCard.setCreateTime(new Date());
         oaActCard.setPromoter(userId);
         oaActCard.setUrl("card");
+        oaActCard.setState(0);
         if (oaActCardMapper.insertSelective(oaActCard) < 0) {
             return -1;
         } else {
@@ -45,6 +46,7 @@ public class OaActCardServiceImpl implements OaActCardService {
             oaCollaboration.setTitle(oaActCard.getTitle());
             oaCollaboration.setUrl("card");
             oaCollaboration.setTable("oa_act_card");
+            oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("饭卡申请");
             oaCollaboration.setDataOne("事由:" + oaActCard.getReason());
             oaCollaboration.setDataTwo("拟使用期限:" + oaActCard.getStartTime() + " ~ " + oaActCard.getEndTime());
@@ -57,12 +59,20 @@ public class OaActCardServiceImpl implements OaActCardService {
 
     @Override
     public int edit(OaActCard oaActCard) {
+        oaActCard.setState(0);
+        oaActCard.setPrincipal("");
+        oaActCard.setPrincipalDate("");
+        oaActCard.setPrincipalContent("");
+        oaActCard.setSupervisor("");
+        oaActCard.setSupervisorDate("");
+        oaActCard.setSupervisorContent("");
+        oaActCard.setCardApproval("");
+        oaActCard.setCardApprovalDate("");
+        oaActCard.setCardApprovalContent("");
         oaActCard.setCreateTime(new Date());
-
         if (oaActCardMapper.updateByPrimaryKey(oaActCard) < 1) {
             return -1;
         } else {
-            oaCollaborationMapper.updateStateByCorrelationId(oaActCard.getId(), 1, oaActCard.getTitle());
             return 1;
         }
     }

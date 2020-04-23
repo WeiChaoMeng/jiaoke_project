@@ -168,23 +168,23 @@
     </tr>
 
     <tr>
-        <td class="table-td-content" style="padding: 5px 10px;height: 40px;">
+        <td class="table-td-content" style="padding: 5px 10px;;line-height: 30px">
             ${oaActConfirm.companyPrincipal}
         </td>
-        <td class="table-td-content" style="padding: 5px 10px">
+        <td class="table-td-content" style="padding: 5px 10px;line-height: 30px">
             ${oaActConfirm.businessSupervisor}
         </td>
-        <td class="table-td-content" style="padding: 5px 10px">
+        <td class="table-td-content" style="padding: 5px 10px;line-height: 30px">
             ${oaActConfirm.financeSupervisor}
         </td>
-        <td class="table-td-content" style="padding: 5px 10px">
+        <td class="table-td-content" style="padding: 5px 10px;line-height: 30px">
             ${oaActConfirm.financialAudit}
         </td>
-        <td class="table-td-content" style="padding: 5px 10px">
+        <td class="table-td-content" style="padding: 5px 10px;line-height: 30px">
             ${oaActConfirm.operatingStatistics}
         </td>
-        <td class="table-td-content" style="padding: 5px 10px">
-            ${oaActConfirm.business}
+        <td class="table-td-content" style="padding: 5px 10px;line-height: 30px">
+            ${nickname}
         </td>
     </tr>
 

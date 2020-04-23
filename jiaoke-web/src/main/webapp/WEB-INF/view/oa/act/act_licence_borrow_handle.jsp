@@ -49,7 +49,8 @@
                     <c:forTokens items="${oaActLicenceBorrow.annex}" delims="," var="annex">
                         <div class="table-file">
                             <div class="table-file-content">
-                                <span class="table-file-title" title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <span class="table-file-title"
+                                      title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
                                 <a class="table-file-download icon"
                                    href="/fileDownloadHandle/download?fileName=${annex}"
                                    title="下载">&#xebda;</a>
@@ -82,6 +83,8 @@
                 ${oaActLicenceBorrow.borrowTime}
                 <input type="hidden" name="id" value="${oaActLicenceBorrow.id}">
                 <input type="hidden" name="title" value="${oaActLicenceBorrow.title}">
+                <input type="hidden" name="promoter" value="${oaActLicenceBorrow.promoter}">
+                <input type="hidden" name="departmentPrincipal" value="${oaActLicenceBorrow.departmentPrincipal}">
             </td>
         </tr>
 
@@ -101,9 +104,7 @@
             <td class="tdLabel">部门负责人</td>
             <td class="table-td-content" style="width: 340px">
                 <shiro:hasPermission name="principal">
-                    <div style="width: 100%;height: 100%;" id="principalContent">
-                            <%--<input type="text" class="formInput-readonly" name="principal" value="${nickname}" readonly>--%>
-                    </div>
+                    <div style="width: 100%;height: 100%;" id="principalContent"></div>
                 </shiro:hasPermission>
 
                 <shiro:lacksPermission name="principal">
@@ -116,9 +117,7 @@
             <td class="tdLabel">证照主管领导</td>
             <td class="table-td-content" colspan="3">
                 <shiro:hasPermission name="licence_manage">
-                    <div style="width: 100%;height: 100%;" id="licenceManageContent">
-                            <%--<input type="text" class="formInput-readonly" name="licenceManage" value="${nickname}" readonly>--%>
-                    </div>
+                    <div style="width: 100%;height: 100%;" id="licenceManageContent"></div>
                 </shiro:hasPermission>
 
                 <shiro:lacksPermission name="licence_manage">
@@ -129,11 +128,9 @@
 
         <tr>
             <td class="tdLabel">经办人</td>
-            <td class="table-td-content">
+            <td class="table-td-content" style="vertical-align: baseline;">
                 <shiro:hasPermission name="licence_operator">
-                    <div style="width: 100%;height: 100%;" id="licenceOperatorContent">
-                            <%--<input type="text" class="formInput-readonly" name="licenceOperator" value="${nickname}" readonly>--%>
-                    </div>
+                    <div id="licenceOperatorContent"></div>
                 </shiro:hasPermission>
 
                 <shiro:lacksPermission name="licence_operator">
@@ -142,11 +139,9 @@
             </td>
 
             <td class="tdLabel">归还时间</td>
-            <td class="table-td-content">
+            <td class="table-td-content" style="vertical-align: baseline;">
                 <shiro:hasPermission name="licence_operator">
-                    <div style="width: 100%;height: 100%;" id="returnTimeContent">
-                        <%--<input type="text" class="formInput-readonly" name="returnTime" value="<%=new SimpleDateFormat("yyyy-MM-dd HH").format(new Date())%>" readonly="readonly">--%>
-                    </div>
+                    <div id="returnTimeContent"></div>
                 </shiro:hasPermission>
 
                 <shiro:lacksPermission name="licence_operator">
@@ -174,40 +169,75 @@
     var licenceBorrow = JSON.parse('${oaActLicenceBorrowJson}');
     //标记
     var flag = 0;
-    if (flag === 0) {
-        if (licenceBorrow.principal === "" || licenceBorrow.principal === undefined) {
-            $('#principalContent').append('<input type="text" class="formInput-readonly" name="principal" value="${nickname}" readonly="readonly"><input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
-            flag = 1;
+
+    if (licenceBorrow.state === 0) {
+        if (flag === 0) {
+
+            var principalNums = JSON.parse('${principalNum}');
+            //单个审批人
+            if (principalNums === "noPrincipalNum") {
+                if (licenceBorrow.principal === "" || licenceBorrow.principal === undefined) {
+                    $('#principalContent').append('<input type="text" class="formInput-readonly" name="principal" value="${oaActLicenceBorrow.principal} ${nickname}" readonly="readonly"><input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                    flag = 1;
+                } else {
+                    $('#principalContent').append(licenceBorrow.principal);
+                }
+            } else {
+                if (licenceBorrow.principal === undefined) {
+                    $('#principalContent').append('<input type="text" class="formInput-readonly" name="principal" value="${oaActLicenceBorrow.principal} ${nickname}" readonly="readonly"><input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                    flag = 1;
+                } else if ((licenceBorrow.principal).length === principalNums.length) {
+                    $('#principalContent').append(licenceBorrow.principal);
+                } else {
+                    $('#principalContent').append('<input type="text" class="formInput-readonly" name="principal" value="${oaActLicenceBorrow.principal} ${nickname}" readonly="readonly"><input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                    flag = 1;
+                }
+            }
+
         } else {
             $('#principalContent').append(licenceBorrow.principal);
         }
-    } else {
-        $('#principalContent').append(licenceBorrow.principal);
-    }
 
-    if (flag === 0) {
-        if (licenceBorrow.licenceManage === "" || licenceBorrow.licenceManage === undefined) {
-            $('#licenceManageContent').append('<input type="text" class="formInput-readonly" name="licenceManage" value="${nickname}" readonly="readonly"><input type="hidden" name="licenceManageDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
-            flag = 1;
+        if (flag === 0) {
+            if (licenceBorrow.licenceManage === "" || licenceBorrow.licenceManage === undefined) {
+                $('#licenceManageContent').append('<input type="text" class="formInput-readonly" name="licenceManage" value="${nickname}" readonly="readonly"><input type="hidden" name="licenceManageDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                flag = 1;
+            } else {
+                $('#licenceManageContent').append(licenceBorrow.licenceManage);
+            }
         } else {
             $('#licenceManageContent').append(licenceBorrow.licenceManage);
         }
-    } else {
-        $('#licenceManageContent').append(licenceBorrow.licenceManage);
-    }
 
-    if (flag === 0) {
-        if (licenceBorrow.licenceOperator === "" || licenceBorrow.licenceOperator === undefined) {
-            $('#licenceOperatorContent').append('<input type="text" class="formInput-readonly" name="licenceOperator" value="${nickname}" readonly="readonly">');
-            $('#returnTimeContent').append('<input type="text" class="formInput-readonly" name="returnTime" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date())%>" readonly="readonly">');
-            flag = 1;
+        if (flag === 0) {
+            if (licenceBorrow.licenceOperator === "" || licenceBorrow.licenceOperator === undefined) {
+                $('#licenceOperatorContent').append('<input type="text" class="formInput-readonly" name="licenceOperator" value="${nickname}" readonly="readonly">');
+                $('#returnTimeContent').append('<input type="text" class="formInput-readonly" name="returnTime" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date())%>" readonly="readonly">');
+                $('#licenceOperatorContent').css('margin-top','6px');
+                $('#returnTimeContent').css('margin-top','6px');
+                flag = 1;
+            } else {
+                $('#licenceOperatorContent').append(licenceBorrow.licenceOperator);
+                $('#returnTimeContent').append(licenceBorrow.returnTime);
+                $('#licenceOperatorContent').css('position','absolute');
+                $('#returnTimeContent').css('position','absolute');
+            }
         } else {
             $('#licenceOperatorContent').append(licenceBorrow.licenceOperator);
             $('#returnTimeContent').append(licenceBorrow.returnTime);
         }
+
+        if (flag === 0) {
+            $('#return').html("");
+            $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
+        }
     } else {
+        $('#principalContent').append(licenceBorrow.principal);
+        $('#licenceManageContent').append(licenceBorrow.licenceManage);
         $('#licenceOperatorContent').append(licenceBorrow.licenceOperator);
         $('#returnTimeContent').append(licenceBorrow.returnTime);
+        $('#return').html("");
+        $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
     }
 
     //任务Id
@@ -225,6 +255,9 @@
                     //返回上一页
                     window.location.href = '${path}/oaHomePage/toOaHomePage';
                     window.top.tips("提交成功！", 0, 1, 1000);
+                } else if (data === 'backSuccess') {
+                    window.location.href = '${path}/oaHomePage/toOaHomePage';
+                    window.top.tips("提交成功,并将数据转存到待发事项中！", 6, 1, 2000);
                 } else {
                     window.top.tips("提交失败！", 0, 2, 1000);
                 }

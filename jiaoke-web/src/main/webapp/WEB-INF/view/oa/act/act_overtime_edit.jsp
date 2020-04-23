@@ -160,7 +160,7 @@
                 <th class="th_title" nowrap="nowrap" style="width: 4%">流程</th>
                 <td>
                     <div class="common_input_frame">
-                        <input type="text" placeholder="部门负责人(审批)、部门主管领导(审批)、发起者(协同)" readonly>
+                        <input type="text" placeholder="部门负责人→部门主管领导→发起者(知会)" readonly>
                     </div>
                 </td>
             </tr>
@@ -284,6 +284,85 @@
 
     //发送
     function send() {
+        if ($.trim($("#title").val()) === '') {
+            window.top.tips("标题不可以为空！", 6, 5, 2000);
+        } else {
+            var principalGroup = '${principalGroup}';
+            //部门负责人是多个
+            if (principalGroup !== '') {
+                var principalList = JSON.parse(principalGroup);
+                window.top.selectPrincipal(principalList);
+
+                //部门负责人是单个
+            } else {
+
+                var actOvertimeList = [];
+                var tel = $('#tbo').find('tr');
+                for (let i = 0; i < tel.length; i++) {
+                    var n = $(tel[i]).find('td').find('#name').val();
+                    var w = $(tel[i]).find('td').find('#weekend').val();
+                    var lh = $(tel[i]).find('td').find('#legalHolidays').val();
+                    var r = $(tel[i]).find('td').find('#restDown').val();
+                    var wt = $(tel[i]).find('td').find('#weekendTotal').val();
+                    var lt = $(tel[i]).find('td').find('#legalTotal').val();
+                    actOvertimeList.push({
+                        name: n,
+                        weekend: w,
+                        legalHolidays: lh,
+                        restDown: r,
+                        weekendTotal: wt,
+                        legalTotal: lt
+                    })
+                }
+
+                var array = [];
+                $('#annexes').find('input').each(function () {
+                    array.push($(this).val());
+                });
+
+                //发送前将上传好的附件插入form中
+                $('#annex').val(array);
+
+                var tit = $('#title').val();
+                var id = $('#id').val();
+                var dep = $('#department').val();
+                var sd = $('#statisticalDate').val();
+                var pp = $('#preparer').val();
+                var an = $('#annex').val();
+                var oaActOvertime = {
+                    title: tit,
+                    id: id,
+                    department: dep,
+                    statisticalDate: sd,
+                    oaOvertimeStatisticsList: actOvertimeList,
+                    preparer: pp,
+                    annex: an,
+                    departmentPrincipal: "single"
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: '${path}/overtime/editAdd',
+                    contentType: "application/json;charset=utf-8",
+                    data: JSON.stringify(oaActOvertime),
+                    error: function (request) {
+                        layer.msg("出错！");
+                    },
+                    success: function (result) {
+                        if (result === "success") {
+                            window.location.href = "${path}/oaIndex.do";
+                            window.top.tips("发送成功！", 0, 1, 2000);
+                        } else {
+                            window.top.tips('发送失败！', 0, 2, 2000);
+                        }
+                    }
+                })
+            }
+        }
+    }
+
+    //根据勾选的部门负责人发送
+    function selectionPrincipal(principalId) {
         var actOvertimeList = [];
         var tel = $('#tbo').find('tr');
         for (let i = 0; i < tel.length; i++) {
@@ -311,44 +390,109 @@
         //发送前将上传好的附件插入form中
         $('#annex').val(array);
 
-        if ($.trim($("#title").val()) === '') {
-            window.top.tips("标题不可以为空！", 6, 5, 2000);
-        } else {
-            var tit = $('#title').val();
-            var id = $('#id').val();
-            var dep = $('#department').val();
-            var sd = $('#statisticalDate').val();
-            var pp = $('#preparer').val();
-            var an = $('#annex').val();
-            var oaActOvertime = {
-                title: tit,
-                id: id,
-                department: dep,
-                statisticalDate: sd,
-                oaOvertimeStatisticsList: actOvertimeList,
-                preparer: pp,
-                annex: an
-            };
+        var tit = $('#title').val();
+        var id = $('#id').val();
+        var dep = $('#department').val();
+        var sd = $('#statisticalDate').val();
+        var pp = $('#preparer').val();
+        var an = $('#annex').val();
+        var oaActOvertime = {
+            title: tit,
+            id: id,
+            department: dep,
+            statisticalDate: sd,
+            oaOvertimeStatisticsList: actOvertimeList,
+            preparer: pp,
+            annex: an,
+            departmentPrincipal: principalId
+        };
 
-            $.ajax({
-                type: "POST",
-                url: '${path}/overtime/editAdd',
-                contentType: "application/json;charset=utf-8",
-                data: JSON.stringify(oaActOvertime),
-                error: function (request) {
-                    layer.msg("出错！");
-                },
-                success: function (result) {
-                    if (result === "success") {
-                        window.location.href = "${path}/oaIndex.do";
-                        window.top.tips("发送成功！", 0, 1, 2000);
-                    } else {
-                        window.top.tips('发送失败！', 0, 2, 2000);
-                    }
+        $.ajax({
+            type: "POST",
+            url: '${path}/overtime/editAdd',
+            contentType: "application/json;charset=utf-8",
+            data: JSON.stringify(oaActOvertime),
+            error: function (request) {
+                layer.msg("出错！");
+            },
+            success: function (result) {
+                if (result === "success") {
+                    window.location.href = "${path}/oaIndex.do";
+                    window.top.tips("发送成功！", 0, 1, 2000);
+                } else {
+                    window.top.tips('发送失败！', 0, 2, 2000);
                 }
-            })
-        }
+            }
+        })
     }
+
+    //发送
+    <%--function send() {--%>
+    <%--var actOvertimeList = [];--%>
+    <%--var tel = $('#tbo').find('tr');--%>
+    <%--for (let i = 0; i < tel.length; i++) {--%>
+    <%--var n = $(tel[i]).find('td').find('#name').val();--%>
+    <%--var w = $(tel[i]).find('td').find('#weekend').val();--%>
+    <%--var lh = $(tel[i]).find('td').find('#legalHolidays').val();--%>
+    <%--var r = $(tel[i]).find('td').find('#restDown').val();--%>
+    <%--var wt = $(tel[i]).find('td').find('#weekendTotal').val();--%>
+    <%--var lt = $(tel[i]).find('td').find('#legalTotal').val();--%>
+    <%--actOvertimeList.push({--%>
+    <%--name: n,--%>
+    <%--weekend: w,--%>
+    <%--legalHolidays: lh,--%>
+    <%--restDown: r,--%>
+    <%--weekendTotal: wt,--%>
+    <%--legalTotal: lt--%>
+    <%--})--%>
+    <%--}--%>
+
+    <%--var array = [];--%>
+    <%--$('#annexes').find('input').each(function () {--%>
+    <%--array.push($(this).val());--%>
+    <%--});--%>
+
+    <%--//发送前将上传好的附件插入form中--%>
+    <%--$('#annex').val(array);--%>
+
+    <%--if ($.trim($("#title").val()) === '') {--%>
+    <%--window.top.tips("标题不可以为空！", 6, 5, 2000);--%>
+    <%--} else {--%>
+    <%--var tit = $('#title').val();--%>
+    <%--var id = $('#id').val();--%>
+    <%--var dep = $('#department').val();--%>
+    <%--var sd = $('#statisticalDate').val();--%>
+    <%--var pp = $('#preparer').val();--%>
+    <%--var an = $('#annex').val();--%>
+    <%--var oaActOvertime = {--%>
+    <%--title: tit,--%>
+    <%--id: id,--%>
+    <%--department: dep,--%>
+    <%--statisticalDate: sd,--%>
+    <%--oaOvertimeStatisticsList: actOvertimeList,--%>
+    <%--preparer: pp,--%>
+    <%--annex: an--%>
+    <%--};--%>
+
+    <%--$.ajax({--%>
+    <%--type: "POST",--%>
+    <%--url: '${path}/overtime/editAdd',--%>
+    <%--contentType: "application/json;charset=utf-8",--%>
+    <%--data: JSON.stringify(oaActOvertime),--%>
+    <%--error: function (request) {--%>
+    <%--layer.msg("出错！");--%>
+    <%--},--%>
+    <%--success: function (result) {--%>
+    <%--if (result === "success") {--%>
+    <%--window.location.href = "${path}/oaIndex.do";--%>
+    <%--window.top.tips("发送成功！", 0, 1, 2000);--%>
+    <%--} else {--%>
+    <%--window.top.tips('发送失败！', 0, 2, 2000);--%>
+    <%--}--%>
+    <%--}--%>
+    <%--})--%>
+    <%--}--%>
+    <%--}--%>
 
     //保存待发
     function savePending() {

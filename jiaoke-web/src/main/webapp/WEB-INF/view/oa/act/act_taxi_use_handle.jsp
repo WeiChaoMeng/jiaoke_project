@@ -72,6 +72,7 @@
                 ${oaActTaxiUse.applicant}
                 <input type="hidden" id="id" name="id" value="${oaActTaxiUse.id}">
                 <input type="hidden" id="promoter" name="promoter" value="${oaActTaxiUse.promoter}">
+                    <input type="hidden" name="departmentPrincipal" value="${oaActTaxiUse.departmentPrincipal}">
             </td>
 
             <td class="tdLabel">填表日期</td>
@@ -103,9 +104,10 @@
             <td class="tdLabel">审核人</td>
             <td class="table-td-content">
                 <shiro:hasPermission name="principal">
-                    <input type="text" class="formInput-readonly" name="principal" value="${oaActTaxiUse.principal} ${nickname}" readonly>
-                    <input type="hidden" name="principalDate"
-                           value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">
+                    <div style="width: 100%;height: 100%;" id="principalContent"></div>
+
+                    <%--<input type="text" class="formInput-readonly" name="principal" value="${oaActTaxiUse.principal} ${nickname}" readonly>--%>
+                    <%--<input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">--%>
                 </shiro:hasPermission>
 
                 <shiro:lacksPermission name="principal">
@@ -116,9 +118,10 @@
             <td class="tdLabel">批准人</td>
             <td class="table-td-content">
                 <shiro:hasPermission name="supervisor">
-                    <input type="text" class="formInput-readonly" name="supervisor" value="${nickname}" readonly>
-                    <input type="hidden" name="supervisorDate"
-                           value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">
+                    <div style="width: 100%;height: 100%;" id="supervisorContent"></div>
+
+                    <%--<input type="text" class="formInput-readonly" name="supervisor" value="${nickname}" readonly>--%>
+                    <%--<input type="hidden" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">--%>
                 </shiro:hasPermission>
 
                 <shiro:lacksPermission name="supervisor">
@@ -149,6 +152,70 @@
 <script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
 
+    //流程执行步骤
+    var taxiUse = JSON.parse('${oaActTaxiUseJson}');
+    //标记
+    var flag = 0;
+
+    //被回退
+    if (taxiUse.state === 0) {
+        if (flag === 0) {
+
+            var principalNums = JSON.parse('${principalNum}');
+            //单个审批人
+            if (principalNums === "noPrincipalNum") {
+                if (taxiUse.principal === "" || taxiUse.principal === undefined) {
+                    $('#principalContent').append(
+                        '<input type="text" class="formInput-readonly" name="principal" value="${oaActTaxiUse.principal} ${nickname}" readonly>\n' +
+                        '<input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                    flag = 1;
+                } else {
+                    $('#principalContent').append('${oaActTaxiUse.principal}');
+                }
+            } else {
+                if (taxiUse.principal === undefined) {
+                    $('#principalContent').append(
+                        '<input type="text" class="formInput-readonly" name="principal" value="${oaActTaxiUse.principal} ${nickname}" readonly>\n' +
+                        '<input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                    flag = 1;
+                } else if ((taxiUse.principal).length === principalNums.length) {
+                    $('#principalContent').append('${oaActTaxiUse.principal}');
+                } else {
+                    $('#principalContent').append(
+                        '<input type="text" class="formInput-readonly" name="principal" value="${oaActTaxiUse.principal} ${nickname}" readonly>\n' +
+                        '<input type="hidden" name="principalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                    flag = 1;
+                }
+            }
+
+        } else {
+            $('#principalContent').append('${oaActTaxiUse.principal}');
+        }
+
+        if (flag === 0) {
+            if (taxiUse.supervisor === "" || taxiUse.supervisor === undefined) {
+                $('#supervisorContent').append(
+                    '<input type="text" class="formInput-readonly" name="supervisor" value="${nickname}" readonly>\n' +
+                    '<input type="hidden" name="supervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+                flag = 1;
+            } else {
+                $('#supervisorContent').append('${oaActTaxiUse.supervisor}');
+            }
+        } else {
+            $('#supervisorContent').append('${oaActTaxiUse.supervisor}');
+        }
+
+        if (flag === 0) {
+            $('#return').html("");
+            $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
+        }
+    } else {
+        $('#principalContent').append('${oaActTaxiUse.principal}');
+        $('#supervisorContent').append('${oaActTaxiUse.supervisor}');
+        $('#return').html("");
+        $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
+    }
+
     //任务Id
     var taskId = JSON.parse('${taskId}');
 
@@ -164,6 +231,9 @@
                     //返回上一页
                     window.location.href = '${path}/oaHomePage/toOaHomePage';
                     window.top.tips("提交成功！", 0, 1, 1000);
+                } else if (data === 'backSuccess') {
+                    window.location.href = '${path}/oaHomePage/toOaHomePage';
+                    window.top.tips("提交成功,并将数据转存到待发事项中！", 6, 1, 2000);
                 } else {
                     window.top.tips("提交失败！", 0, 2, 1000);
                 }

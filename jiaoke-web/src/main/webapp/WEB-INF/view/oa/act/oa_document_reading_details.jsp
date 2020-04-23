@@ -12,9 +12,29 @@
     <meta charset="utf-8">
     <title>收文阅办审批单详情</title>
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
+    <style>
+        .input-radio-div{
+            width: 100px;display: inline-block;text-align: center;
+        }
+        .radio-style{
+            vertical-align: middle;outline: none;
+            zoom: 120%;
+        }
+        .deadline-select{
+            line-height: 30px;margin-top: 8px;width: 25%;display: inline-block;float: right
+        }
+
+        .dep-radio{
+            line-height: 30px;margin-top: 8px;width: 75%;display: inline-block;
+        }
+
+        .handling-result-div{
+            border-top: 1px solid #eaeaea;width: 100%;display: inline-block;margin-top: 10px;
+        }
+    </style>
 </head>
 
-<body id="body" style="width: 65%">
+<body id="body" style="width: 70%">
 
 <div class="table-title">
     <span>${oaActRead.title}</span>
@@ -71,7 +91,7 @@
     <tbody>
     <tr>
         <td class="tdLabel">来文机关</td>
-        <td class="table-td-content">
+        <td class="table-td-content" style="width: 314px;">
             ${oaActRead.organ}
         </td>
 
@@ -103,35 +123,92 @@
     <tr>
         <td class="tdLabel">拟办意见</td>
         <td colspan="3" class="table-td-content" style="padding: 10px;height: 60px">
-            ${oaActRead.receiptProposedContent}
-        </td>
-    </tr>
-
-    <tr>
-        <td class="tdLabel">部门意见</td>
-        <td colspan="3" class="table-td-content" style="padding: 10px;height: 60px">
-            ${oaActRead.departmentOpinion}
+            <textarea class="approval-content-textarea"
+                      readonly>${oaActRead.receiptProposedContent}</textarea>
+            <div class="approval-date">
+                <label class="approval-date-label">日期 </label>
+                <input class="approval-date-input" type="text"
+                       value="${oaActRead.receiptProposedDate}" readonly>
+            </div>
+            <div class="approval-signature">
+                <label class="approval-signature-label">签字 </label>
+                <input class="approval-signature-input" type="text"
+                       value="${oaActRead.receiptProposed}" readonly>
+            </div>
         </td>
     </tr>
 
     <tr>
         <td class="tdLabel">领导批示</td>
         <td colspan="3" class="table-td-content" style="padding: 10px;height: 60px">
-            ${oaActRead.companyPrincipalContent}
+            <textarea class="approval-content-textarea"
+                      readonly>${oaActRead.companyPrincipalContent}</textarea>
+            <div class="approval-date">
+                <label class="approval-date-label">日期 </label>
+                <input class="approval-date-input" type="text"
+                       value="${oaActRead.companyPrincipalDate}" readonly>
+            </div>
+            <div class="approval-signature">
+                <label class="approval-signature-label">签字 </label>
+                <input class="approval-signature-input" type="text"
+                       value="${oaActRead.companyPrincipal}" readonly>
+            </div>
         </td>
     </tr>
 
     <tr>
         <td class="tdLabel">办理结果</td>
         <td colspan="3" class="table-td-content" style="padding: 10px;height: 60px">
-            ${oaActRead.outcome}
-        </td>
-    </tr>
+            <textarea class="approval-content-textarea"
+                      readonly>${oaActRead.outcomeContent}</textarea>
+            <div class="approval-date">
+                <label class="approval-date-label">日期 </label>
+                <input class="approval-date-input" type="text"
+                       value="${oaActRead.outcomeDate}" readonly>
+            </div>
+            <div class="approval-signature">
+                <label class="approval-signature-label">签字 </label>
+                <input class="approval-signature-input" type="text"
+                       value="${oaActRead.outcome}" readonly>
+            </div>
 
-    <tr>
-        <td class="tdLabel">保存期限</td>
-        <td colspan="3" class="table-td-content" style="padding: 10px;height: 60px">
-            ${oaActRead.deadline}
+            <div class="handling-result-div">
+                <div class="dep-radio">
+                    知会/抄送：
+                    <c:choose>
+                        <c:when test="${oaActRead.receiptDepartment == 0}">
+                            无
+                        </c:when>
+                        <c:when test="${oaActRead.receiptDepartment == 1}">
+                            领导班子成员
+                        </c:when>
+                        <c:when test="${oaActRead.receiptDepartment == 2}">
+                            各部室负责人
+                        </c:when>
+                        <c:otherwise>
+                            无
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+
+                <div class="deadline-select">
+                    保存期限：
+                    <c:choose>
+                        <c:when test="${oaActRead.deadline == 0}">
+                            10年
+                        </c:when>
+                        <c:when test="${oaActRead.deadline == 1}">
+                            30年
+                        </c:when>
+                        <c:when test="${oaActRead.deadline == 2}">
+                            永久
+                        </c:when>
+                        <c:otherwise>
+                            无
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </div>
         </td>
     </tr>
     </tbody>
@@ -148,7 +225,7 @@
         //执行打印
         window.print();
         $('#tool').show();
-        $('#body,#return').css('width', '65%');
+        $('#body,#return').css('width', '70%');
     }
 </script>
 </html>
