@@ -231,14 +231,17 @@
         zIndex: 100000,
     });
 
+    //日期选择器
     jeDate(".probation-date", {
         theme: {bgcolor: "#00A1CB", pnColor: "#00CCFF"},
         festival: false,
-        isinitVal: true,
-        isClear: false,                     //是否开启清空
+        isinitVal: false,
+        isClear: true,                     //是否开启清空
         minDate: "1900-01-01",              //最小日期
         maxDate: "2099-12-31",              //最大日期
         format: "YYYY-MM-DD",
+        multiPane: false,
+        range: " 至 ",
         zIndex: 100000,
     });
 
