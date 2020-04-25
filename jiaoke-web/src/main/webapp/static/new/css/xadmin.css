@@ -97,11 +97,16 @@ body {
 
 }
 
+/*首页*/
+.layui-card-header{
+    font-size: 16px;
+}
+
 /*登录样式*/
 /*头部*/
 .container {
     width: 100%;
-    height: 45px;
+    height: 55px;
     background-color: #222;
 }
 
@@ -115,9 +120,9 @@ body {
 
 .container .logo a {
     float: left;
-    font-size: 18px;
+    font-size: 22px;
     padding-left: 20px;
-    line-height: 45px;
+    line-height: 55px;
     width: 200px;
 }
 
@@ -141,7 +146,7 @@ body {
     line-height: 32px;
     border-radius: 3px;
     text-align: center;
-    margin-top: 7px;
+    margin-top: 12px;
     cursor: pointer;
 }
 
@@ -156,11 +161,11 @@ body {
 }
 
 .container .layui-nav-item {
-    line-height: 45px;
+    line-height: 55px;
 }
 
 .container .layui-nav-more {
-    top: 20px;
+    top: 25px;
 }
 
 .container .layui-nav-child {
@@ -182,7 +187,7 @@ body {
 
 .left-nav {
     position: absolute;
-    top: 45px;
+    top: 55px;
     bottom: 0px;
     /*bottom: 42px;*/
     left: 0;
@@ -270,12 +275,12 @@ body {
     color: #148cf1;
 }*/
 .left-nav #nav li .sub-menu li a i {
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .left-nav #nav li a i {
     padding-right: 10px;
-    line-height: 14px;
+    line-height: 16px;
 }
 
 .left-nav #nav li .nav_right {
@@ -296,7 +301,7 @@ body {
 
 .page-content {
     position: absolute;
-    top: 45px;
+    top: 55px;
     right: 0;
     /*bottom: 42px;*/
     bottom: 0px;
@@ -399,7 +404,6 @@ body {
 
 .x-admin-backlog-body h3 {
     padding-bottom: 10px;
-    font-size: 12px
 }
 
 .x-admin-backlog-body p cite {
@@ -433,6 +437,8 @@ table th, table td {
     margin-top: -9px;
     position: absolute;
     right: 15px;
+    font-style: normal;
+    color: #999999;
 }
 
 .layuiadmin-span-color{
@@ -550,32 +556,34 @@ table th, table td {
 /*精细版样式*/
 
 .x-admin-sm {
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .x-admin-sm body {
-    font-size: 12px;
+    font-size: 14px;
 }
 
 /*登录页面样式*/
 .x-admin-sm .login input[type=submit], .x-admin-sm .login input[type=button] {
-    font-size: 14px;
+    font-size: 16px;
 }
 
-.x-admin-sm .login input[type=text],
-.x-admin-sm .login input[type=file],
-.x-admin-sm .login input[type=password],
-.x-admin-sm .login input[type=email], .x-admin-sm select {
-    font-size: 12px;
-}
+/*登录界面账户密码字号*/
+/*.x-admin-sm .login input[type=text],*/
+/*.x-admin-sm .login input[type=file],*/
+/*.x-admin-sm .login input[type=password],*/
+/*.x-admin-sm .login input[type=email], .x-admin-sm select {*/
+    /*font-size: 12px;*/
+/*}*/
 
 .x-admin-sm .login .message {
     font-size: 14px;
 }
 
-.x-admin-sm .layui-table td, .x-admin-sm .layui-table th {
-    font-size: 12px;
-}
+/*列表中字号*/
+/*.x-admin-sm .layui-table td, .x-admin-sm .layui-table th {*/
+    /*font-size: 12px;*/
+/*}*/
 
 .x-admin-sm .layui-elem-field legend {
     font-size: 18px;
@@ -585,33 +593,37 @@ table th, table td {
     font-size: 24px;
 }
 
-.x-admin-sm .left-nav #nav li a cite {
-    font-size: 12px;
-}
+/*左边菜单字号*/
+/*.x-admin-sm .left-nav #nav li a cite {*/
+    /*font-size: 12px;*/
+/*}*/
 
-.x-admin-sm .iconfont {
-    font-size: 14px;
-}
+/*左边菜单图标尺寸*/
+/*.x-admin-sm .iconfont {*/
+    /*font-size: 14px;*/
+/*}*/
 
 .x-admin-sm .layui-tab-title li {
-    font-size: 12px;
+    font-size: 13px;
 }
 
 .x-admin-sm .layui-icon {
     font-size: 14px;
 }
 
-.x-admin-sm .layui-nav * {
-    font-size: 12px;
-}
+/*首页右上角字号*/
+/*.x-admin-sm .layui-nav * {*/
+    /*font-size: 12px;*/
+/*}*/
 
 .x-admin-sm .layui-breadcrumb > * {
-    font-size: 12px;
+    font-size: 13px;
 }
 
-.x-admin-sm .layui-btn, .x-admin-sm .layui-btn-xs, .x-admin-sm .layui-btn-sm {
-    font-size: 12px;
-}
+/*页面头部按钮字号*/
+/*.x-admin-sm .layui-btn, .x-admin-sm .layui-btn-xs, .x-admin-sm .layui-btn-sm {*/
+    /*font-size: 12px;*/
+/*}*/
 
 .x-admin-sm .layui-laydate {
     font-size: 12px;

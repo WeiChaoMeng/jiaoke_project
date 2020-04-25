@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,7 +40,8 @@ public class DownLoadServlet {
     @ResponseBody
     public void download(String fileName, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        fileName = new String(fileName.getBytes("iso8859-1"), "UTF-8");
+        fileName = URLDecoder.decode(fileName,"UTF-8");
+//        fileName = new String(fileName.getBytes("iso8859-1"), "UTF-8");
         //得到要下载的文件
         File file = new File(FILE_PATH + "\\" + fileName);
         //如果文件不存在
