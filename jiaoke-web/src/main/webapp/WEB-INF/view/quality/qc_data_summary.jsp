@@ -47,7 +47,7 @@
                                 <label class="jelabel">机组选择</label>
                                 <div class="dy_select_div"   >
                                     <select id="crew_num" class="dy_select" onchange="getModelByDateTimeAndCrew()" >
-                                        <option value="sect">请选择</option>
+                                        <option value="select">请选择</option>
                                         <option value="data1">机组一</option>
                                         <option value="data2">机组二</option>
                                     </select>
@@ -55,7 +55,7 @@
 
                                 <label class="jelabel">模板选择</label>
                                 <div class="dy_select_div" >
-                                    <select  id="ratio_id" class="dy_select">
+                                    <select  id="ratio_id" class="dy_select" onchange="getProjectByDateTimeAndCrewAndRation()">
                                         <option value="select" >请选择</option>
                                     </select>
                                 </div>

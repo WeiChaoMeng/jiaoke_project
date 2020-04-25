@@ -94,7 +94,7 @@
 				if(o.className=="col666"){return}
 				oInput.value=ids['y'].innerHTML+"-"+ids['m'].innerHTML+"-"+ fillzero(o.innerHTML) 
 							+" "+ids['h'].innerHTML+":"+ids['i'].innerHTML+":"+ids['s'].innerHTML;
-                getProjectNameByData(oInput.id);
+                // getProjectNameByData(oInput.id);
 				hide();
 			})
 		})
@@ -380,6 +380,7 @@ function getProjectNameByData(id) {
                 layer.alert("查询工程错误");
                 return false;
             }
+            $("#project_id").append("<option value='select' >请选择</option>")
             var proNameList = res.projectList;
             //判断该日期内是否有工程
             if (proNameList.length === 0){
@@ -388,7 +389,9 @@ function getProjectNameByData(id) {
             }
             //渲染selcet
             for (var i = 0; i < proNameList.length;i++){
-                $("#project_id").append("<option selected = 'selected' value=" + proNameList[i].project_name + ">" + proNameList[i].project_name + "</option>")
+            	if (proNameList[i]){
+                    $("#project_id").append("<option selected = 'selected' value=" + proNameList[i].project_name + ">" + proNameList[i].project_name + "</option>")
+                }
             }
         }
     })

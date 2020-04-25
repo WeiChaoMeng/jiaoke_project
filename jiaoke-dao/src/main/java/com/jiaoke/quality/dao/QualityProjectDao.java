@@ -145,5 +145,6 @@ public interface QualityProjectDao {
                                   @Param("carDate")  String carDate,
                                   @Param("carTime")  String carTime,
                                   @Param("lastTime") String lastTime,
-                                  @Param("crewNum")  String crewNum);
+                                  @Param("crewNum")  String crewNum,
+                                  @Param("proName") String proName);
 }

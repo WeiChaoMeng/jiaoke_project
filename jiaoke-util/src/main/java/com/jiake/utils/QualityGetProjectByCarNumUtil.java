@@ -287,23 +287,20 @@ public class QualityGetProjectByCarNumUtil {
     }
 
 
-    public static  String getErpData(String crewNum,String carDate){
+    public static  String getErpData(String crewNum,String carDate) throws InterruptedException{
+        Thread.sleep(600000);
         String ghqrd = getGhqrd(crewNum,carDate);
         Map<String,String> map = (Map) JSONObject.parse(ghqrd);
         int count = 0;
         //判断是否查询到出厂单
-        while (map == null ||"500".equals(map.get("Result"))){
-            try{
-                Thread.sleep(300000);
+        while (map == null ||!("0".equals(map.get("Result")))){
+                Thread.sleep(600000);
                 ghqrd = getGhqrd(crewNum,carDate);
-                //计算查询时间用 count * 5分钟
+                //计算查询时间用 count * 10分钟
                 count++;
-                if (count == 25){
+                if (count == 11){
                     break;
                 }
-            }catch (Exception e){
-                e.printStackTrace();
-            }
         }
         return ghqrd;
     }

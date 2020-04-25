@@ -134,4 +134,15 @@ public interface QualityDataSummaryInf {
      * @date 2020/4/21 14:22
      */
     Map<String,Object> getProjectNameByDate(String startDate, String endDate);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期时间、机组、配比查询工程>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/4/23 22:16
+     */
+    Map<String, Object> getProjectByDateTimeAndCrewAndRation(String startDate, String endDate, String crew, String rationId);
 }

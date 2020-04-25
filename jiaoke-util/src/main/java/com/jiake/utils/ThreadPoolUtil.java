@@ -9,6 +9,7 @@
 package com.jiake.utils;
 
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  *  <一句话功能描述>
@@ -111,13 +112,24 @@ public class ThreadPoolUtil<T> {
              *
              */
             executor = new ThreadPoolExecutor(CORE_POOL_SIZE, MAXIMUM_POOL_SIZE,
-                    KEEP_ALIVE, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(20),
-                    Executors.defaultThreadFactory(), new ThreadPoolExecutor.AbortPolicy());
+                    KEEP_ALIVE, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>(),
+                    new NameTreadFactory(), new ThreadPoolExecutor.DiscardOldestPolicy());
         }
         // 把一个任务丢到了线程池中
         return executor.submit(r);
     }
 
+    static class NameTreadFactory implements ThreadFactory {
+
+        private final AtomicInteger mThreadNum = new AtomicInteger(1);
+
+        @Override
+        public Thread newThread(Runnable r) {
+            Thread t = new Thread(r, "my-thread-" + mThreadNum.getAndIncrement());
+            System.out.println(t.getName() + "线程被创建");
+            return t;
+        }
+    }
     /**
      * 把任务移除等待队列
      * @param r

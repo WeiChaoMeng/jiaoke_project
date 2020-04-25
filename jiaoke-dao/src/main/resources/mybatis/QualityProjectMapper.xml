@@ -147,13 +147,10 @@
     <update id="updateRealtimeDataByDate" parameterType="java.lang.String">
 
         UPDATE quality_monitoring_realtime_${crewNum}
-        set produce_car_num = &apos;${license}&apos;
+        set produce_car_num = &apos;${license}&apos;,
+           project_name = &apos;${proName}&apos;
         WHERE
                 produce_date = &apos;${carDate}&apos;
-          AND CONCAT(
-                  produce_date,
-                  ' ',
-                  produce_time
-                        ) between  &apos;${lastTime}&apos; and &apos;${carTime}&apos;;
+          AND produce_time between  &apos;${lastTime}&apos; and &apos;${carTime}&apos;;
     </update>
 </mapper>

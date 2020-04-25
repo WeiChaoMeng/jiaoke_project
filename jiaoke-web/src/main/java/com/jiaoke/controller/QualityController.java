@@ -207,9 +207,7 @@ public class QualityController {
         String deviceName= Json.getJSONObject("AlarmInfoPlate").getString("result");
         System.out.println(deviceName);
 
-        //设备IP地址
-//        String ipaddr= Json.getJSONObject("AlarmInfoPlate").getString("ipaddr");
-//        System.out.println(ipaddr);
+
 //        //获取识别车牌号
 //        String license= Json.getJSONObject("AlarmInfoPlate").getJSONObject("result").getJSONObject("PlateResult").getString("license");
 //        System.out.println(license);
@@ -1179,7 +1177,7 @@ public class QualityController {
 
 
     @ResponseBody
-    @RequestMapping(value = "getPromessageByRaionModel.do",method = RequestMethod.POST)
+    @RequestMapping(value = "/getPromessageByRaionModel.do",method = RequestMethod.POST)
     public String getPromessageByRaionModel(String startDate,String endDate,String crew, String rationId,String projectName){
 
         List<Map<String,Object>> list = new ArrayList<>();
@@ -1192,6 +1190,17 @@ public class QualityController {
         return JSON.toJSONString(list);
     }
 
+    @RequestMapping(value = "/getProjectByDateTimeAndCrewAndRation.do",method = RequestMethod.POST)
+    public String getProjectByDateTimeAndCrewAndRation(String startDate,String endDate,String crew, String rationId){
+        Map<String,Object> map = new HashMap<>();
+        try{
+            map =  qualityDataSummaryInf.getProjectByDateTimeAndCrewAndRation(startDate,endDate,crew,rationId);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return JSON.toJSONString(map);
+    }
 
     @RequestMapping("/getProSvgmessage.do")
     public String getProSvgmessage(String startDate,String endDate,String crew, String rationId,HttpServletRequest request){

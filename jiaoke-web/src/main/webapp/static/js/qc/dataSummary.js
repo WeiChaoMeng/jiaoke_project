@@ -31,6 +31,14 @@ function getThreeDayData() {
         type:"get",
         async:false,
         dataType:"json",
+        beforeSend:function(){
+            var index = layer.load(3, {
+                shade: [0.1,'#fff'] //0.1透明度的白色背景
+            });
+        },
+        complete:function(){
+            layer.closeAll();
+        },
         success:function (res) {
             dataArray = res;
         }
@@ -49,12 +57,13 @@ function getDateByPageNum(currentNum){
     var htmlStr;
     for (var i = arrayStart; i < arrayEnd; i++ ){
         if (dataArray[i]){
+            var project_name = dataArray[i].project_name ? dataArray[i].project_name:"";
             htmlStr += "<tr>"
-                + "<td title=" + dataArray[i].produce_date + " >" + dataArray[i].produce_date + "</td>"
+                + "<td style='width: 50px;' title=" + dataArray[i].produce_date + " >" + dataArray[i].produce_date + "</td>"
                 + "<td>" + dataArray[i].produce_time  + "</td>"
                 + "<td>" + (dataArray[i].crewNums === 'data1'? '机组1':'机组2')  + "</td>"
                 + "<td>" + dataArray[i].produce_disc_num  + "</td>"
-                + "<td title=" + dataArray[i].project_name + ">" + dataArray[i].project_name  + "</td>"
+                + "<td title=" + project_name + ">" + project_name  + "</td>"
                 + "<td>" + dataArray[i].pro_name  + "</td>"
                 + "<td>" + dataArray[i].material_aggregate_6  + "</td>"
                 + "<td>" + dataArray[i].material_aggregate_5  + "</td>"
@@ -91,7 +100,7 @@ function  getModelByDateTimeAndCrew(rationNum) {
     }
     var crew = $("#crew_num option:selected").val();
 
-    if (crew == "sect") {
+    if (crew === "select") {
         layer.alert("请选择机组");
         return false;
     }
@@ -129,9 +138,11 @@ function  getModelByDateTimeAndCrew(rationNum) {
 
                 //渲染工程
                 if (projectArry.length > 0){
-                    $("#project_id").empty();
+                    $("#project_id").empty().append("<option value='select' >请选择</option>");
                     for (var j = 0; j < projectArry.length;j++ ){
-                        $("#project_id").append("<option value=" +  projectArry[j].project_name + ">" + projectArry[j].project_name + "</option>");
+                        if (projectArry[j]){
+                            $("#project_id").append("<option value=" +  projectArry[j].project_name + ">" + projectArry[j].project_name + "</option>");
+                        }
                     }
                 }
             }
@@ -180,6 +191,42 @@ function  getModelByDateTimeAndCrew(rationNum) {
 //     })
 // }
 
+function getProjectByDateTimeAndCrewAndRation() {
+    var path = $("#path").val();
+    var start = $("#inpstart").val();
+    var end = $("#inpend").val();
+    var crew = $("#crew_num option:selected").val();
+    var rationId = $("#ratio_id option:selected").val();
+    if (crew === 'select'){
+        return false;
+    }
+    if (crew === 'select'){
+        layer.alert('请选择机组');
+        return false;
+    }
+
+    $.ajax({
+        url: path + "/getProjectByDateTimeAndCrewAndRation.do",
+        type:"post",
+        dataType: "json",
+        data:{"startDate":start,
+            "endDate":end,
+            "crew":crew,
+            "rationId":rationId},
+        success:function (res) {
+            $("#project_id").empty().append("<option value='select' >请选择</option>");
+            if (res.message === 'success'){
+                var projectArry = res.proNameList;
+                for (var j = 0; j < projectArry.length;j++ ){
+                    if (projectArry[j]){
+                        $("#project_id").append("<option value=" +  projectArry[j].project_name + ">" + projectArry[j].project_name + "</option>");
+                    }
+                }
+            }
+        }
+    })
+}
+
 
 function selectPromessageByRaionModel(){
     var path = $("#path").val();
@@ -193,6 +240,11 @@ function selectPromessageByRaionModel(){
     var crew = $("#crew_num option:selected").val();
     var rationId = $("#ratio_id option:selected").val();
     var projectName = $("#project_id option:selected").val();
+
+    if (crew === 'select'){
+            layer.alert('请选择机组');
+            return false;
+    }
 
     //判断机组号和配比是否存在。弃用的逻辑，必选项
     // if (crew.isBlanks() || rationId.isBlanks()){
@@ -209,9 +261,20 @@ function selectPromessageByRaionModel(){
                 "crew":crew,
                 "rationId":rationId,
                 "projectName":projectName},
+
+        beforeSend:function(){
+            var index = layer.load(3, {
+                shade: [0.1,'#fff'] //0.1透明度的白色背景
+            });
+        },
+        complete:function(){
+            layer.closeAll();
+        },
         success:function (res) {
             dataArray = res;
-            var htmlStr = '<a href="#" id="submits"  onclick="showPromessageSVG()" >更多<i class="iconfont"></i></a>';
+            if (!(rationId === 'select')){
+                var htmlStr = '<a href="#" id="submits"  onclick="showPromessageSVG()" >更多<i class="iconfont"></i></a>';
+            }
             $("#submits").remove();
             $(".boxtitle").append(htmlStr);
 
@@ -262,7 +325,8 @@ function selectPromessageByRaionModel(){
                 + "<td>" +  " " + "</td>"
                 + "<td>" + crew + "</td>"
                 + "<td>" +  " " + "</td>"
-                + "<td>" + proName  + "</td>"
+                + "<td>" +  " " + "</td>"
+                + "<td>" +  " " + "</td>"
                 + "<td>" +( aggregate6/res.length).toFixed(2) + "</td>"
                 + "<td>" + ( aggregate5/res.length).toFixed(2)+ "</td>"
                 + "<td>" + ( aggregate4/res.length).toFixed(2) + "</td>"
@@ -284,7 +348,9 @@ function selectPromessageByRaionModel(){
             getDateByPageNum(1);
             $("#productData").append(svgHtmlStr);
         }
-    })
+    });
+
+
 
 }
 

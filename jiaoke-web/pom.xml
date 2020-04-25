@@ -39,12 +39,12 @@
             <artifactId>jiaoke-oa-service</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>4.3.13.RELEASE</version>
-            <scope>compile</scope>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.springframework</groupId>-->
+            <!--<artifactId>spring-test</artifactId>-->
+            <!--<version>4.3.13.RELEASE</version>-->
+            <!--<scope>compile</scope>-->
+        <!--</dependency>-->
         <!--加入MyBatis 依赖 start -->
         <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
         <dependency>

@@ -10,8 +10,10 @@ package com.jiaoke.quality.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jiake.utils.QualityGetProjectByCarNumUtil;
+import com.jiake.utils.ThreadPoolUtil;
 import com.jiaoke.quality.bean.QualityProjectItem;
 import com.jiaoke.quality.dao.QualityProjectDao;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -20,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 /**
  *  <一句话功能描述>
@@ -92,7 +95,7 @@ public class QualityProjectImpl implements QualityProjectInf {
         String crewId = "data1".equals(crewNum) ? "1":"2";
         Map<String,Object> lastCarNumMap = qualityProjectDao.selectLastCarNumByCrewNum(crewId);
         //根据时间差值与车号对比确认是否是重复数据
-        SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String fromDate = simpleFormat.format(lastCarNumMap.get("upTime"));
         String toDate = simpleFormat.format(simpleFormat.parse(recotime));
         long from = simpleFormat.parse(fromDate).getTime();
@@ -104,23 +107,23 @@ public class QualityProjectImpl implements QualityProjectInf {
             return;
         }
         //判断车牌是否为空
-        if (license == null || "".equals(license)){
+        if ( StringUtils.isBlank(license)){
             return;
         }
         //存入车牌识别表
         int insertCarId = qualityProjectDao.insertCarNum(license,recotime,crewId);
         //接入erp查询出厂单
         //正常模式
-        String res = QualityGetProjectByCarNumUtil.getErpData(license,carDate);
+//        String res = QualityGetProjectByCarNumUtil.getErpData(license,carDate);
          //多线程模式q
-//        Future<String> f =  ThreadPoolUtil.getInstance().submit(() ->{
-//            String ghqrd = QualityGetProjectByCarNumUtil.getErpData(license,carDate);
-//            return ghqrd;
-//        });
-//        String res = f.get();
+        Future<String> f =  ThreadPoolUtil.getInstance().submit(() ->{
+            String ghqrd = QualityGetProjectByCarNumUtil.getErpData(license,carDate);
+            return ghqrd;
+        });
+        String res = f.get();
         Map<String,String> map = (Map)JSONObject.parse(res);
         //解析ERP传回来的数据
-        if (map == null ||"500".equals(map.get("Result"))){
+        if (map == null ||!("0".equals(map.get("Result")))){
             return;
         }
         map.put("crewNum",crewId);
@@ -137,7 +140,14 @@ public class QualityProjectImpl implements QualityProjectInf {
             String lastTime = fromDate.split(" ")[1];
             String carTime = toDate.split(" ")[1];
             //更新读取数据
-            qualityProjectDao.updateRealtimeDataByDate(license,carDate,carTime,lastTime,crewNum);
+            qualityProjectDao.updateRealtimeDataByDate(license,carDate,carTime,lastTime,crewNum,map.get("gcmc"));
+            System.out.println("license = " + license);
+            System.out.println("carDate = " + carDate);
+            System.out.println("carTime = " + carTime);
+            System.out.println("lastTime = " + lastTime);
+            System.out.println("crewNum = " + crewNum);
+            System.out.println("gcmc = " + map.get("gcmc"));
+
         }
     }
 }
