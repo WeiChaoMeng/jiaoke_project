@@ -53,7 +53,8 @@
                                 <span class="table-file-title"
                                       title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
                                 <a class="table-file-download icon"
-                                   href="/fileDownloadHandle/download?fileName=${annex}"
+                                   <%--href="/fileDownloadHandle/download?fileName=${annex}"--%>
+                                   onclick="downloadFile('${annex}')" href="javascript:void(0);"
                                    title="下载">&#xebda;</a>
                             </div>
                         </div>
@@ -307,6 +308,10 @@
                 layer.msg("出错！");
             }
         })
+    }
+
+    function downloadFile(fileName){
+        window.location.href = '${path}/fileDownloadHandle/download?fileName=' + encodeURI(fileName);
     }
 
     //打印
