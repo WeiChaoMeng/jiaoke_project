@@ -100,7 +100,7 @@
             <div class="layui-card">
                 <div class="layui-card-header">常用模板</div>
                 <div class="layui-card-body" style=" min-height: 190px;">
-                    <table style="font-size: 13px;width: 100%;">
+                    <table style="font-size: 14px;width: 100%;">
                         <tbody>
                         <tr style="line-height: 25px;cursor: pointer;">
                             <td class="template" valign="middle">
@@ -202,7 +202,7 @@
             <div class="layui-card">
                 <div class="layui-card-header">待办工作</div>
                 <div class="layui-card-body" style="min-height: 190px;">
-                    <table style="font-size: 13px;width: 100%;">
+                    <table style="font-size: 14px;width: 100%;">
                         <tbody>
                         <tr style="line-height: 25px;cursor: pointer;">
                             <td class="list_content" style="width: 75%;">

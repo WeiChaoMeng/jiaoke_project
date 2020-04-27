@@ -153,4 +153,11 @@
                 produce_date = &apos;${carDate}&apos;
           AND produce_time between  &apos;${lastTime}&apos; and &apos;${carTime}&apos;;
     </update>
+    <update id="updateRealTimeDataByCarNum" parameterType="java.lang.String">
+        UPDATE quality_monitoring_realtime_${crewNum}
+        set produce_car_num = &apos;${license}&apos;
+        WHERE
+                produce_date = &apos;${carDate}&apos;
+          AND produce_time between  &apos;${lastTime}&apos; and &apos;${carTime}&apos;;
+    </update>
 </mapper>

@@ -124,7 +124,7 @@ public class QualityDynamicImpl implements QualityDynamicInf {
                 break;
             case "material_stone":
                 ratioName = "breeze";
-                request.setAttribute("material","石粉比");
+                request.setAttribute("material","石粉含量");
                 break;
                 default:
                     ratioName = "ratio_stone";

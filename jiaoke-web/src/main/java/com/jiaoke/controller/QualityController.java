@@ -192,7 +192,6 @@ public class QualityController {
             {
                 qualityprojectInf.editProductionDataByCarNum(new String(buf,"UTF-8"));
 
-                show_json(new String(buf));
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -200,20 +199,6 @@ public class QualityController {
 
     }
 
-    public static void show_json(String m_str)
-    {
-        //获取设备名称
-        JSONObject Json = JSONObject.parseObject(m_str);
-        String deviceName= Json.getJSONObject("AlarmInfoPlate").getString("result");
-        System.out.println(deviceName);
-
-
-//        //获取识别车牌号
-//        String license= Json.getJSONObject("AlarmInfoPlate").getJSONObject("result").getJSONObject("PlateResult").getString("license");
-//        System.out.println(license);
-
-
-    }
     /**********************************  质量监控首页 Start ************************************************/
 
     /**
@@ -1189,7 +1174,7 @@ public class QualityController {
 
         return JSON.toJSONString(list);
     }
-
+    @ResponseBody
     @RequestMapping(value = "/getProjectByDateTimeAndCrewAndRation.do",method = RequestMethod.POST)
     public String getProjectByDateTimeAndCrewAndRation(String startDate,String endDate,String crew, String rationId){
         Map<String,Object> map = new HashMap<>();

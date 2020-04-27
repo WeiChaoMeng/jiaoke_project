@@ -67,7 +67,6 @@ function yyui_menu(ulclass){
 /***********************未完实验单列表start*****************************/
 function getAllExperimentalItem() {
     var res ;
-    debugger
     $.ajax({
         type: "GET",
         url: basePath + "/getAllExperimentalItem.do",
@@ -291,7 +290,6 @@ function getExperimentalItemById(id,orderTicketNum){
 
 //添加试验项目
 function addExperimentalItem(){
-    debugger
     var orderTicketNum = $("#orderTicketNum").val();
     var spCodesTemp = "";
 

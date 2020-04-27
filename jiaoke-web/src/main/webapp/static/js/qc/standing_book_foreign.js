@@ -360,7 +360,6 @@ function getTestStandingBook() {
         url: basePath + "/getTestStandingBookForeign.do",
         dataType:'json',
         success:function (res) {
-            debugger
             $(".messageSpan").remove();
             var rawMaterialHtml = '';
             if (res.length === 0){
@@ -421,7 +420,6 @@ function getTestStandingBookByDate() {
                 $("#testDiv").append(rawMaterialHtml);
 
             } else {
-                debugger
                 //判断当前是否有表格，没有就添加
                 if (!$("#testTable").length > 0){
                     $("#testDiv").append(returnTestBookHtml());

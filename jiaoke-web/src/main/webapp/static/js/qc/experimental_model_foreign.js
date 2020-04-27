@@ -46,7 +46,6 @@ function getExperimentalItemListById(id) {
         success:function (msg) {
 
             if (!jQuery.isEmptyObject(msg)){
-                debugger
                 var material_num = msg[0].material_num;
                 switch (material_num) {
                     //细集料 quality_test_material_dictionary ID
@@ -304,7 +303,6 @@ function sendFrom(){
     //获取实验数据
     var firstTest = getExperimentFromData();
     var coarseTest = "";
-    debugger
     if ($('#secondTbody').exist()){
         coarseTest = getCoarseData();
     }
@@ -377,7 +375,6 @@ function getExperimentFromData() {
 
 //查询第二种实验
 function getCoarseData() {
-    debugger
     var coarseData= [];
     //获取筛孔类相关实验
     $("#secondTbody").find('tr').each(function (i) {

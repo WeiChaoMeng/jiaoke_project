@@ -220,7 +220,6 @@ function eachMaterialList(res) {
             if(arr){
                 option7.xAxis.max = arr[arr.length - 1][0];
             }
-            debugger
             option7.series[0].markLine.data = temArray;
             option7.series[1].data = returnJsonArray(res[i]['crew1']['moudleList']);
             option7.series[2].data = returnJsonArray(res[i]['crew1']['realList']);

@@ -51,13 +51,13 @@
         border-style:dashed solid dashed dashed;
     }
 </style>
-<body style="padding:15px 8px 500px 8px;">
+<body style="padding:15px 8px 500px 8px;background-color: #fff7f7">
 
     <div class="my_echars_div_block" >
         <div>
             <div class="boxtitle">
                 <span>一号机组实时数据预警</span>
-                <div style="height: 100%;padding-left: 60%;float: left;">
+                <div style="height: 100%;padding-left: 55%;float: left;">
                     <p style="float: left;font-size: 12px;" >无预警：</p>
                     <span class="example_span" style="background-color: green;    display: block;width: 15px;height: 50%;margin-right: 10px;margin-top: 10px;border-radius: 5px;"></span>
                     <p style="float: left;font-size: 12px;" >一级预警：</p>
@@ -77,10 +77,10 @@
                     <th>生产时间</th>
                     <th>配比号</th>
                     <th>配比名称</th>
-                    <th>车号</th>
+                    <%--<th>车号</th>--%>
                     <th>盘号</th>
-                    <th>生产人</th>
-                    <th>工程名称</th>
+                    <%--<th>生产人</th>--%>
+                    <%--<th>工程名称</th>--%>
                 </thead>
 
                 <tbody>
@@ -90,10 +90,10 @@
                         <td id="crew1_produce_time"></td>
                         <td id="crew1_produce_ratio_id"></td>
                         <td id="crew1_pro_name"></td>
-                        <td id="crew1_produce_car_num"></td>
+                        <%--<td id="crew1_produce_car_num"></td>--%>
                         <td id="crew1_produce_disc_num"></td>
-                        <td id="crew1_produce_user"></td>
-                        <td id="crew1_project_name"></td>
+                        <%--<td id="crew1_produce_user"></td>--%>
+                        <%--<td id="crew1_project_name"></td>--%>
 
                     </tr>
                 </tbody>
@@ -118,15 +118,15 @@
 
             </table>
         </div>
-        <div class="div_echar">
+        <div class="div_echar" style="border: solid 1px #d6d6d6;" >
 
             <li >
 
                 <div>
 
-                    <div class="boxtitle">
+                    <div class="boxtitle" style="background: #aff0f3;height: 30px;line-height: 32px;" >
                         <span>一号机组三盘产品平均级配曲线图</span>
-                        <button  onclick="editWarningLevel()" class="layui-btn" style="margin-left: 170px;margin-top: 3px;color: #0e0e0e;background-color: #cde6e2;" >预警设置</button>
+                        <button  onclick="editWarningLevel()" style="background-color: #aff0f3;width: 105px;height: 100%color: #121010;margin-left: 35%;margin-top: 1.5%;" >预警级别设置</button>
                     </div>
                     <div id="chart7" class="charts_2"></div>
 
@@ -141,19 +141,13 @@
                             data:['合成级配','实际级配','上限','中值','下限']
                         },
                         grid: {
-
+                            left: '2%',
+                            right: '2%',
+                            bottom: '3%',
+                            containLabel: true
                         },
                         tooltip: {
-                            trigger: 'item'
-                        },
-                        toolbox: {
-                            feature: {
-                                dataZoom: {
-                                    yAxisIndex: 'none'
-                                },
-                                restore: {},
-                                saveAsImage: {}
-                            }
+                            trigger: 'axis'
                         },
                         xAxis: {
                             type: 'value',
@@ -277,7 +271,7 @@
     <div class="my_echars_div_block" >
 
         <div>
-            <div class="boxtitle">
+            <div class="boxtitle" >
                 <span>二号机组实时数据预警</span>
             </div>
         </div>
@@ -289,10 +283,10 @@
                     <th>生产时间</th>
                     <th>配比号</th>
                     <th>配比名称</th>
-                    <th>车号</th>
+                    <%--<th>车号</th>--%>
                     <th>盘号</th>
-                    <th>生产人</th>
-                    <th>工程名称</th>
+                    <%--<th>生产人</th>--%>
+                    <%--<th>工程名称</th>--%>
                 </thead>
 
                 <tbody  id="crew2_message" >
@@ -302,10 +296,10 @@
                     <td id="crew2_produce_time"></td>
                     <td id="crew2_produce_ratio_id"></td>
                     <td id="crew2_pro_name"></td>
-                    <td id="crew2_produce_car_num"></td>
+                    <%--<td id="crew2_produce_car_num"></td>--%>
                     <td id="crew2_produce_disc_num"></td>
-                    <td id="crew2_produce_user"></td>
-                    <td id="crew2_project_name"></td>
+                    <%--<td id="crew2_produce_user"></td>--%>
+                    <%--<td id="crew2_project_name"></td>--%>
                 </tr>
                 </tbody>
             </table>
@@ -328,13 +322,13 @@
 
             </table>
         </div>
-        <div class="div_echar">
+        <div class="div_echar" style="border: solid 1px #d6d6d6;line-height: 32px;"  >
 
             <li>
 
                 <div>
 
-                    <div class="boxtitle">
+                    <div class="boxtitle"  style="background: #aff0f3;height: 30px;line-height: 32px;" >
                         <span>二号机组三盘产品平均级配曲线图</span>
                     </div>
                     <div id="chart4" class="charts_2"></div>
@@ -350,19 +344,13 @@
                             data:['合成级配','实际级配','上限','中值','下限']
                         },
                         grid: {
-
+                            left: '2%',
+                            right: '2%',
+                            bottom: '3%',
+                            containLabel: true
                         },
                         tooltip: {
                             trigger: 'item'
-                        },
-                        toolbox: {
-                            feature: {
-                                dataZoom: {
-                                    yAxisIndex: 'none'
-                                },
-                                restore: {},
-                                saveAsImage: {}
-                            }
                         },
                         xAxis: {
                             type: 'value',

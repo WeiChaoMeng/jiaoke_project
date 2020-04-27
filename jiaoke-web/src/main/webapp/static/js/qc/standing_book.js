@@ -374,7 +374,6 @@ function getAsphaltStandingBook(id) {
                         tBoday += (blank(asphaltArry[i][key])  ? '<td></td>':'<td>' + asphaltArry[i][key] +'</td>');
                     }
                     tBoday += '<td>' + asphaltArry[i].remark+'</td>' +'</tr>';
-                    debugger
                 }
                 $('#asphaltTbody').empty().append(tBoday);
             }
@@ -425,7 +424,6 @@ function searchFrom(){
             success:function (res) {
                 var rawMaterialHtml = '';
                 $(".messageSpan").remove();
-                debugger
                 if (res.length === 0){
                     rawMaterialHtml = '<span class="messageSpan">'
                         + '所选日期并无试验'
@@ -718,7 +716,6 @@ function getTestStandingBookByDate() {
                     $("#testDiv").append(rawMaterialHtml);
                 }
             } else {
-                debugger
                 //判断当前是否有表格，没有就添加
                 $("#testTable").remove();
                 $("#testDiv").append(returnTestBookHtml());

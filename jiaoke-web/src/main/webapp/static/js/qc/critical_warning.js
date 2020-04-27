@@ -67,7 +67,6 @@ function foreachDataArray(currentNum,dataArray) {
 }
 
 function limitList(dataAray) {
-    debugger
     foreachDataArray(1,dataAray);
     //翻页
     $(".zxf_pagediv").createPage({

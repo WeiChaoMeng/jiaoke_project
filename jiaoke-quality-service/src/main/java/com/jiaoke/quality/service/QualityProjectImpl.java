@@ -10,7 +10,6 @@ package com.jiaoke.quality.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jiake.utils.QualityGetProjectByCarNumUtil;
-import com.jiake.utils.ThreadPoolUtil;
 import com.jiaoke.quality.bean.QualityProjectItem;
 import com.jiaoke.quality.dao.QualityProjectDao;
 import org.apache.commons.lang3.StringUtils;
@@ -22,7 +21,6 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
 /**
  *  <一句话功能描述>
@@ -77,18 +75,13 @@ public class QualityProjectImpl implements QualityProjectInf {
     public  void editProductionDataByCarNum(String carNum) throws ExecutionException, InterruptedException,ParseException {
         //获取设备名称
         JSONObject Json = JSONObject.parseObject(carNum);
-        String deviceName= Json.getJSONObject("AlarmInfoPlate").getString("result");
-        System.out.println(deviceName);
-
-        //设备IP地址
-        String ipaddr= Json.getJSONObject("AlarmInfoPlate").getString("ipaddr");
         //获取识别车牌号
         String license= Json.getJSONObject("AlarmInfoPlate").getJSONObject("result").getJSONObject("PlateResult").getString("license");
         //获取时间
         String recotime= Json.getJSONObject("AlarmInfoPlate").getJSONObject("result").getJSONObject("PlateResult").getString("recotime");
         //获取机组号
         String crewNum = Json.getJSONObject("AlarmInfoPlate").getString("ParkID");
-
+        System.out.println("车号：" + "\n" + carNum);
         //获取监控摄像头拍摄到车牌的时间
         String carDate = recotime.split(" ")[0];
         //获取当前机组最后一条车号数据
@@ -110,17 +103,29 @@ public class QualityProjectImpl implements QualityProjectInf {
         if ( StringUtils.isBlank(license)){
             return;
         }
+        //判断是否为京牌 判断尾部是否为汉字 容错车牌
+        String[] locenseArry = license.split("");
+        String licenseHerd = locenseArry[0];
+        String licenseTail = locenseArry[locenseArry.length - 1];
+        if (!("京".equals(licenseHerd)) ||  QualityGetProjectByCarNumUtil.isContainChinese(licenseTail)){
+            return;
+        }
+
         //存入车牌识别表
         int insertCarId = qualityProjectDao.insertCarNum(license,recotime,crewId);
+        //更新对应数据表
+        String lastTime = fromDate.split(" ")[1];
+        String carTime = toDate.split(" ")[1];
+        qualityProjectDao.updateRealTimeDataByCarNum(license,carDate,carTime,lastTime,crewNum);
         //接入erp查询出厂单
         //正常模式
-//        String res = QualityGetProjectByCarNumUtil.getErpData(license,carDate);
-         //多线程模式q
-        Future<String> f =  ThreadPoolUtil.getInstance().submit(() ->{
-            String ghqrd = QualityGetProjectByCarNumUtil.getErpData(license,carDate);
-            return ghqrd;
-        });
-        String res = f.get();
+        String res = QualityGetProjectByCarNumUtil.getErpData(license,carDate);
+        //多线程模式
+//        Future<String> f =  ThreadPoolUtil.getInstance().submit(() ->{
+//            String ghqrd = QualityGetProjectByCarNumUtil.getErpData(license,carDate);
+//            return ghqrd;
+//        });
+//        String res = f.get();
         Map<String,String> map = (Map)JSONObject.parse(res);
         //解析ERP传回来的数据
         if (map == null ||!("0".equals(map.get("Result")))){
@@ -137,8 +142,6 @@ public class QualityProjectImpl implements QualityProjectInf {
             //最后一条为Null时打印错误
             System.out.println("最后一条错误");
         }else {
-            String lastTime = fromDate.split(" ")[1];
-            String carTime = toDate.split(" ")[1];
             //更新读取数据
             qualityProjectDao.updateRealtimeDataByDate(license,carDate,carTime,lastTime,crewNum,map.get("gcmc"));
             System.out.println("license = " + license);

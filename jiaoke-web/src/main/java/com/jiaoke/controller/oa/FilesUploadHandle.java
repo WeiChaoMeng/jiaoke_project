@@ -73,7 +73,7 @@ public class FilesUploadHandle {
                 String fileExtName = filename.substring(filename.lastIndexOf(".") + 1);
                 InputStream in = files[i].getInputStream();
                 String saveFilename = makeFileName(filename);
-                FileOutputStream out = new FileOutputStream(FILE_PATH + "\\" + saveFilename);
+                FileOutputStream out = new FileOutputStream(FILE_PATH +  saveFilename);
                 byte buffer[] = new byte[1024];
                 int len = 0;
                 while ((len = in.read(buffer)) > 0) {
@@ -174,11 +174,9 @@ public class FilesUploadHandle {
     @RequestMapping(value = "/deleteFile", method = RequestMethod.POST)
     @ResponseBody
     public String deleteFile(String fileName) {
-        System.out.println("进入deFile方法 psth =: "+fileName);
         String filePath = FILE_PATH + fileName;
 
         File file = new File(filePath);
-        System.out.println("操作文件文件，文件列表如下~~__--~~~~~~~~~~~~~~~~~~~：：:"+file);
 
         if (!file.exists()) {
             return "error";

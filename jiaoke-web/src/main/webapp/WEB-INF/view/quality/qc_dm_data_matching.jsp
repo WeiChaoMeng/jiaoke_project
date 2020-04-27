@@ -116,8 +116,6 @@
                                             {
                                                 name:'上限配比',
                                                 type:'bar',
-
-
                                                 data: [     <fmt:formatNumber value="${ration.repertoryOne == '0'? 0:ration.repertoryOne+ 2  }" pattern="#.00"/>,
                                                     <fmt:formatNumber value="${ration.repertoryTwo == '0'? 0:ration.repertoryTwo+ 2 }" pattern="#.00"/>,
                                                     <fmt:formatNumber value="${ration.repertoryThree == '0'? 0:ration.repertoryThree+ 2 }" pattern="#.00"/>,

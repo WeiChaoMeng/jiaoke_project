@@ -36,7 +36,6 @@ function  getModelByDateTimeAndCrew(rationNum) {
                 }else {
                     $("#ratio_id").empty();
                     for (var i = 0; i < res.length;i++){
-                        debugger
                         var modId = res[i].modele_id;
                         if (rationNum != null){
                             if (Number(rationNum) ===  modId ) {
@@ -90,7 +89,6 @@ function selectProductMessage(){
 var tagId;
 //点击查看按钮时弹出详细页面
 function getProductById(producedId,prodate,discNum,crew,tagID) {
-    debugger
     layer.close(layer.index);
     var path = $("#path").val();
     tagId = tagID;

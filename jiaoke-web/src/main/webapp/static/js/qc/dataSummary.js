@@ -113,7 +113,6 @@ function  getModelByDateTimeAndCrew(rationNum) {
         success:function (res) {
             var rationArry = res.rationList;
             var projectArry = res.projectList;
-            debugger
             if (rationArry.length === 0){
                 layer.alert('该日期并无生产');
                 $("#pro_message").text("该日期并无生产");
@@ -207,7 +206,7 @@ function getProjectByDateTimeAndCrewAndRation() {
 
     $.ajax({
         url: path + "/getProjectByDateTimeAndCrewAndRation.do",
-        type:"post",
+        type:"POST",
         dataType: "json",
         data:{"startDate":start,
             "endDate":end,

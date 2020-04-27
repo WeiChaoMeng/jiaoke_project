@@ -16,7 +16,7 @@
     <script src="/static/js/echarts/echarts.js"></script>
 </head>
 
-<body style="padding:15px 8px 1000px 8px;background: #ffffff;">
+<body style="padding:15px 8px 1000px 8px;background: #fff7f7;">
 
 <%
     request.setAttribute("path",request.getContextPath());
@@ -455,19 +455,14 @@
                 text: '一号机组级配曲线图'
             },
             legend: {
-                data:['合成级配','实际级配','上限','中值','下限']
+                data:['合成级配','实际级配','上限','中值','下限'],
+                x:'right'
             },
-            grid: {
-
-            },
-            toolbox: {
-                feature: {
-                    dataZoom: {
-                        yAxisIndex: 'none'
-                    },
-                    restore: {},
-                    saveAsImage: {}
-                }
+            grid:{
+                left: '2%',
+                right: '2%',
+                bottom: '3%',
+                containLabel: true
             },
             tooltip: {
                 trigger: 'item'
@@ -615,19 +610,14 @@
                 text: '二号机组级配曲线图'
             },
             legend: {
-                data:['合成级配','实际级配','上限','中值','下限']
+                data:['合成级配','实际级配','上限','中值','下限'],
+                x:'right'
             },
-            grid: {
-
-            },
-            toolbox: {
-                feature: {
-                    dataZoom: {
-                        yAxisIndex: 'none'
-                    },
-                    restore: {},
-                    saveAsImage: {}
-                }
+            grid:{
+                left: '2%',
+                right: '2%',
+                bottom: '3%',
+                containLabel: true
             },
             tooltip: {
                 trigger: 'item'
@@ -767,25 +757,20 @@
             var colors = ['#5793f3', '#d14a61', '#675bba'];
             var option1 =  {
                 title: {
-                    text: '一号机组产品温度走势图'
+                    text: '一号机产品温度走势'
+                },
+                legend: {
+                    data:['一仓温度','混合料温度','沥青温度','骨料温度','除尘器温度'],
+                    x:'right'
                 },
                 tooltip: {
                     trigger: 'axis'
                 },
-                legend: {
-                    data:['最高气温','最低气温']
-                },
-                toolbox: {
-                    show: true,
-                    feature: {
-                        dataZoom: {
-                            yAxisIndex: 'none'
-                        },
-                        dataView: {readOnly: false},
-                        // magicType: {type: ['line', 'bar']},
-                        restore: {},
-                        saveAsImage: {}
-                    }
+                grid:{
+                    left: '2%',
+                    right: '2%',
+                    bottom: '3%',
+                    containLabel: true
                 },
                 xAxis:  {
                     type: 'category',
@@ -797,7 +782,9 @@
                     axisLabel: {
                         formatter: '{value} °C'
                     },
-                    min:60
+                    min:function (v) {
+                        return (v.min - 30) < 0? 0:(v.min - 30).toFixed(1)
+                    }
                 },
                 series: [
                     {
@@ -864,25 +851,20 @@
             var colors = ['#5793f3', '#d14a61', '#675bba'];
             var option5= {
                 title: {
-                    text: '二号机组产品温度走势图'
+                    text: '二号机产品温度走势'
+                },
+                legend: {
+                    data:['一仓温度','混合料温度','沥青温度','骨料温度','除尘器温度'],
+                    x:'right'
                 },
                 tooltip: {
                     trigger: 'axis'
                 },
-                legend: {
-                    data:['最高气温','最低气温']
-                },
-                toolbox: {
-                    show: true,
-                    feature: {
-                        dataZoom: {
-                            yAxisIndex: 'none'
-                        },
-                        dataView: {readOnly: false},
-                        // magicType: {type: ['line', 'bar']},
-                        restore: {},
-                        saveAsImage: {}
-                    }
+                grid:{
+                    left: '2%',
+                    right: '2%',
+                    bottom: '3%',
+                    containLabel: true
                 },
                 xAxis:  {
                     type: 'category',
@@ -894,7 +876,9 @@
                     axisLabel: {
                         formatter: '{value} °C'
                     },
-                    min:50
+                    min:function (v) {
+                        return (v.min - 30) < 0? 0:(v.min - 30).toFixed(1)
+                    }
                 },
                 series: [
                     {

@@ -27,11 +27,11 @@ public class ThreadPoolUtil<T> {
     /**
      * 核心线程数 = CPU核心数 + 1
      */
-    private static final int CORE_POOL_SIZE      = CPU_COUNT + 1;
+    private static final int CORE_POOL_SIZE      = CPU_COUNT + 5;
     /**
      * 线程池最大线程数 = CPU核心数 * 2 + 1
      */
-    private static final int MAXIMUM_POOL_SIZE    = CPU_COUNT * 2 + 1;
+    private static final int MAXIMUM_POOL_SIZE    = CPU_COUNT * 2 + 15;
 
     /**
      *  非核心线程超时时间1s

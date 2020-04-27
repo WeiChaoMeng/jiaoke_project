@@ -80,7 +80,6 @@ function getAllSamplingPage() {
 
 
 function echaSamplingPage(currentNum,amplingArray) {
-    debugger
     var arrayStart = (currentNum - 1) * 10;
     var arrayEnd = arrayStart + 10;
     $("#samplingData").empty();
@@ -156,7 +155,6 @@ function removeSample(id) {
 
 //点击确认完成按钮时相关逻辑
 function confirm_completed(id) {
-    debugger
     //查询状态是否已是完成
     var condition = false;
     $.ajax({

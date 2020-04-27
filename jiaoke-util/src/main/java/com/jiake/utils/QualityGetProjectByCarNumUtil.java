@@ -31,6 +31,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 //import com.ab.cip.handler.RequestHeader;
 
@@ -51,7 +53,7 @@ public class QualityGetProjectByCarNumUtil {
     static String repack = "";
     static String method = "";
     static String filename = "";
-
+    private static Pattern NUMBER_PATTERN = Pattern.compile("[\u4e00-\u9fa5]");
 
 //    String CLIENT_SYSTEM_CODE = "client_system_code";
 //    String MESSAGE_ID = "message_id";
@@ -288,22 +290,39 @@ public class QualityGetProjectByCarNumUtil {
 
 
     public static  String getErpData(String crewNum,String carDate) throws InterruptedException{
-        Thread.sleep(600000);
+        Thread.sleep(900000);
         String ghqrd = getGhqrd(crewNum,carDate);
+        System.out.println("erp :" + "\n" + ghqrd);
         Map<String,String> map = (Map) JSONObject.parse(ghqrd);
         int count = 0;
         //判断是否查询到出厂单
         while (map == null ||!("0".equals(map.get("Result")))){
-                Thread.sleep(600000);
+                Thread.sleep(300000);
                 ghqrd = getGhqrd(crewNum,carDate);
-                //计算查询时间用 count * 10分钟
+                //计算查询时间用 count * 5分钟
                 count++;
-                if (count == 11){
+                if (count == 22){
                     break;
                 }
         }
         return ghqrd;
     }
+
+    /**
+     * 判断字符串中是否包含中文
+     * @param str
+     * 待校验字符串
+     * @return 是否为中文
+     * @warn 不能校验是否为中文标点符号
+     */
+    public static boolean isContainChinese(String str) {
+        Matcher m = NUMBER_PATTERN.matcher(str);
+        if (m.find()) {
+            return true;
+        }
+        return false;
+    }
+
 //    public static void main(String[] args) {//114.242.85.231  www.lqerp.com
 //
 //

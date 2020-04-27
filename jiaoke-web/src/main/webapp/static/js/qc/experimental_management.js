@@ -203,7 +203,6 @@ function confirm_completed(id) {
 /***********************添加试验项目start*****************************/
 //根据委托单ID查询试验项目列表
 function getExperimentalItemById(id,orderTicketNum){
-debugger
     //查询该项试验委托单下是否已有项目
     var condition;
     $.ajax({
@@ -268,7 +267,6 @@ function addExperimentalItem(){
         }
     });
 
-    debugger
     if (!spCodesTemp.isBlank()){
         $.ajax({
             type: "POST",

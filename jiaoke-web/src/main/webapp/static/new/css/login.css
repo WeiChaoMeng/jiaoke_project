@@ -5,14 +5,14 @@
 * @Last Modified time: 2019-04-01 13:37:19
 */
 .login-bg{
-    /*background: #eeeeee url() 0 0 no-repeat;*/
-     background:url(../images/bg.png) no-repeat center;
+    background:url(../images/bg.png) no-repeat center;
+    /*background:url(../../images/login/page3.JPG) no-repeat center;*/
     background-size: cover;
     overflow: hidden;
 }
 .login{
     margin: 120px auto 0 auto;
-    min-height: 420px;
+    /*min-height: 420px;*/
     max-width: 420px;
     padding: 40px;
     background-color: #ffffff;

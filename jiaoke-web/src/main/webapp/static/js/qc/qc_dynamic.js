@@ -10,7 +10,6 @@ function  getProduceRatioByCrew(rationNum) {
         layer.alert('请先选择日期');
         return false;
     }else {
-        debugger
         var  startYear = dateStart.split("-")[0];
         var  endYear = dateEnd.split("-")[0];
         if (startYear != endYear ) {
@@ -30,7 +29,6 @@ function  getProduceRatioByCrew(rationNum) {
             dataType:"json",
             data:{"proData":proDate,"crew":crew},
             success:function (res) {
-                debugger
                 if (res.length <= 0){
                     layer.alert("该日期并无生产");
                     $("#pro_message").text("该日期并无生产");
@@ -56,7 +54,6 @@ function  getProduceRatioByCrew(rationNum) {
 
 //点击材料时发送数据到后台接口
 function chengeHref(id){
-debugger
     var href = $("#"+id).attr('href');
     var path = $("#path").val();
     var dateStart = $("#inpstart").val();

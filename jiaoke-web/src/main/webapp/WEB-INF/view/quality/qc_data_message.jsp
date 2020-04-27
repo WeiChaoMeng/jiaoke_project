@@ -390,7 +390,7 @@
 // Make gradient line here
                 title: [{
                     left: 'center',
-                    text: '沥青占比走势图'
+                    text: '沥青含量走势图'
                 }],
                 tooltip: {
                     trigger: 'axis'
