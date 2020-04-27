@@ -418,9 +418,9 @@ body {
     color: #888
 }
 
-.layui-table td, .layui-table th {
-    min-width: 80px;
-}
+/*.layui-table td, .layui-table th {*/
+    /*min-width: 80px;*/
+/*}*/
 
 table th, table td {
     word-break: break-all;
@@ -663,6 +663,18 @@ table th, table td {
     line-height: 300px;
     font-size: 300px;
     color: #393D49;
+}
+
+.layui-form-checkbox[lay-skin=primary]{
+    padding: 0;
+}
+
+.layui-table td{
+    padding: 5px 15px;
+}
+
+.layui-table th{
+    height: 37px;
 }
 
 /*皮肤*/

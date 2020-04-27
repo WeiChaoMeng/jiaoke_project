@@ -1,0 +1,716 @@
+.menu-bar li:nth-of-type(2) span{
+    background: url("../img/line.png") 0 40px no-repeat;
+    background-size: 100% 15px;
+}
+.main_con{
+    padding-left: 16px;
+    padding-right: 16px;
+    width: 100%;
+    height: 100%;
+    padding-top: 80px;
+    padding-bottom: 75px;
+    background: url(../img/indexBG_1.png) no-repeat;
+    background-size: 100% 100%;
+}
+.nav_left{
+    width: 180px;
+    height: 100%;
+    float: left;
+    margin-right: 8px;
+}
+.nav_left_t{
+    height: 44px;
+    line-height: 44px;
+    background: #1e2b67;
+    color:#bdd7fe;
+    margin-bottom: 4px;
+    padding-left: 40px;
+}
+.nav_left_t span{
+    margin-left: 5px;
+}
+.nav_left_b{
+    color:#bdd7fe;
+    height: calc(100% - 48px);
+    margin-bottom: 0;
+    background: rgba(30,43,103,.6);
+}
+.nav_left_b li.liactive{
+    background: rgba(30,43,103,.4);
+}
+.nav_left_b li{
+    text-align: center;
+    height: 44px;
+    line-height: 44px;
+    cursor: pointer;
+}
+.main_right{
+    width: calc(100% - 188px);
+    width: -webkit-calc(100% - 188px);
+    width: -moz-calc(100% - 188px);
+    width: -ms-calc(100% - 188px);
+    width: -o-calc(100% - 188px);
+    height: 100%;
+    float: left;
+    background: #000000;
+}
+.main_r_t{
+    width: 100%;
+    height: 40%;
+    margin-bottom: 8px;
+    position: relative;
+    border: 1px solid #00286a;
+}
+.main_r_t_l{
+    float: left;
+    height: 30px;
+    background: #011c4a;
+    width: 140px;
+    line-height: 30px;
+    color: #5696ff;
+    font-size: 16px;
+    padding-left: 10px;
+
+}
+.main_r_t_l:after{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 140px;
+    width: 0px;
+    height: 0px;
+    border: 15px solid transparent;
+    border-top-color: transparent;
+    border-left-color: transparent;
+    border-left-color: #011c4a;
+    border-top-color: #011c4a;
+
+}
+.main_r_t_title .tilt{
+    display: inline-block;
+    width: 43px;
+    height: 6px;
+    border-bottom: 1px solid #00286a;
+    transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    position: absolute;
+    top: 10px;
+    left: 140px;
+    background: #000209;
+
+}
+.main_r_t:before{
+    position: absolute;
+    left: -1px;
+    top: -1px;
+    width: 8px;
+    height: 8px;
+    content: "";
+    border-left: 1px solid #0241a9;
+    border-top: 1px solid #0241a9;
+
+}
+.echart_wrap{
+    height: 100%;
+}
+.main_r_t:after{
+    position: absolute;
+    right: -1px;
+    bottom: -1px;
+    width: 8px;
+    height: 8px;
+    content: "";
+    border-right: 1px solid #0241a9;
+    border-bottom: 1px solid #0241a9;
+}
+.main_r_t_echart_l{
+    position: relative;
+}
+.main_r_t_echart_l:after{
+    content: '';
+    position: absolute;
+    height: 100px;
+    width: 1px;
+    background: rgba(30,43,103,.9);
+    right:0;
+    top:100px;
+}
+.main_r_t_title{
+    height: 30px;
+}
+.main_r_t_r{
+    margin: 10px 24px 0 0;
+    float: right;
+}
+.echart_con{
+    width: 100%;
+    height: calc(100% - 25px);
+    height: -webkit-calc(100% - 25px);
+    /*height: 230px;*/
+}
+
+.main_r_t_echart{
+    /*height: 300px;*/
+
+}
+.main_r_t_echart{
+    overflow: hidden;
+    height: calc(100% - 40px);
+    padding-top: 15px;
+    padding-left: 24px;
+    width: 50%;
+    float: left;
+}
+.echart_wrap_title{
+    font-size: 16px;
+    color:#5696ff;
+}
+.echart_wrap_title span{
+    color: #fff;
+    background: #1e2b67;
+    padding: 3px 5px;
+    margin: 0 3px;
+    border-radius: 4px;
+}
+#daterange-btn{
+    border-radius: 25px;
+    border:0;
+    background: #011c4a;
+    color:#bdd7fe;
+    outline: none;
+}
+.main_r_b{
+    border: 1px solid #00286a;
+    width: 100%;
+    height:calc(60% - 8px);
+    height:-webkit-calc(60% - 8px);
+    height:-moz-calc(60% - 8px);
+    height:-ms-calc(60% - 8px);
+    height:-o-calc(60% - 8px);
+    position: relative;
+    overflow: hidden;
+}
+.table_wrap{
+    z-index: 99;
+    position: absolute;
+    height: 300px;
+    right:0px;
+    top:50px;
+}
+#table_wrap.hoverActive{
+    /*right:-400px;*/
+}
+.table_control{
+    margin-top: 150px;
+    width:24px;
+    height: 72px;
+    background-image: url("../img/hover_arrow.png");
+    background-repeat:no-repeat ;
+    float: left;
+}
+.table_wrap_c{
+    border-top-left-radius: 5px;
+    width: 470px;
+    height: 350px;
+    border-left: 1px solid #00286a;
+    border-bottom: 1px solid #00286a;
+    float: right;
+}
+.table_wrap_c_t{
+    color: #bdd7fe;
+    height: 44px;
+    line-height: 44px;
+    border-top-left-radius: 5px;
+    background-color: #1e2b67;
+}
+.table_wrap_c_t span{
+    width: 20px;
+    height: 20px;
+    float: left;
+    background-image: url("../img/modelleft_icon.png") ;
+    background-repeat:no-repeat;
+    background-size: 79px 39px;
+    background-position-x: 0px;
+    margin: 13px 8px 0 12px;
+}
+.table_wrap_c_b{
+    background: rgba(30,43,103,.5);
+    height: calc(100% - 44px);
+    height: -webkit-calc(100% - 44px);
+    height: -moz-calc(100% - 44px);
+    height: -ms-calc(100% - 44px);
+    height: -o-calc(100% - 44px);
+    padding-left: 12px;
+}
+.ser_con{
+    padding: 12px 0;
+}
+#daterange-btn-ser{
+    height: 36px;
+    vertical-align: top;
+    border-radius: 25px;
+    border: 0;
+    background: #011c4a;
+    color: #bdd7fe;
+    outline: none;
+}
+.car_license{
+    width: 100px;
+    height: 36px;
+    border: 0;
+    outline: none;
+    vertical-align: top;
+    color:#bdd7fe;
+    background: #011c4a;
+    border-radius: 25px;
+    padding-left: 10px;
+}
+.ser_btn{
+    cursor: pointer;
+    color: #fff;
+    width: 50px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    background: #1c83f6;
+    border-radius: 25px;
+    display: inline-block;
+    vertical-align: top;
+}
+.table_container{
+    overflow-x: auto;
+    overflow-y: auto;
+    /* overflow: hidden; */
+    height: 175px;
+    padding-right: 15px;
+    padding-bottom: 10px;
+}
+.table_main{
+    border-collapse: separate;
+    border-spacing:1px ;
+}
+.table_main td{
+    border: 1px solid rgb(30,43,103);
+    padding: 5px 8px;
+    color:#bdd7fe;
+    background: #1e2b67;
+    word-break: keep-all;
+    text-align: center;
+    white-space:nowrap;
+}
+.ser_result{
+    color:#bdd7fe;
+    line-height: 140px;
+    text-align: center;
+}
+.travel_btn{
+    width: 154px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    font-size: 16px;
+    color: #bdd7fe;
+    background: #1c83f6;
+    margin: 0 auto;
+    border-radius: 25px;
+    margin-top: 16px;
+    cursor: pointer;
+}
+/*select样式重写*/
+.sel-box{
+    font-size: 14px;
+    color:#bdd7fe;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 25px;
+}
+.sel-box.on{
+    /*border-color: #15A0F5;*/
+}
+.sel-title-box{
+    height: 36px;
+    line-height: 36px;
+    position: relative;
+    cursor: default;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    background-color:#011c4a;
+    text-align: center;
+}
+
+.sel-title{
+    padding-left: 8px;
+    /*line-height: 2.2;*/
+}
+.sel-sign{
+    position: absolute;
+    display: inline-block;
+    right: 10px;
+    top: 17px;
+    width: 0;
+    height: 0;
+    border-top: 3px solid #fff;
+    border-left:3px solid transparent;
+    border-right:3px solid transparent;
+    border-bottom:3px solid transparent;
+}
+/*.sel-sign.on{
+	background: url(down22.png);
+	background-size: 100% 100%;
+}*/
+.sel-float-box{
+    margin-top: 4px;
+    position: absolute;
+    z-index: 2;
+    background-color:#293c90;
+    border-radius: 4px;
+    overflow: hidden;
+    padding: 0 12px;
+    /*line-height: 1.8;*/
+}
+.sel-float-box:after{
+    content: '';
+    width: 0;
+    height: 0;
+    position: absolute;
+    top:-6px;
+    left:20px;
+    z-index: 10;
+    border-top: 3px solid #f00;
+    border-left:3px solid transparent;
+    border-right:3px solid transparent;
+    border-bottom:3px solid transparent;
+
+}
+.sel-float-box.on{
+    /*border-color: #15A0F5;*/
+}
+.sel-float-div{
+    text-align: center;
+    font-size: 14px;
+    color: #bdd7fe;
+    height: 32px;
+    line-height: 32px;
+    /*margin-left: 12px;*/
+    /*margin-right: 12px;*/
+    cursor: default;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    border-bottom: 1px solid rgba(189,215,254,.1);
+}
+.sel-float-div:last-child{
+    border-bottom: 0;
+}
+.sel-float-div:hover{
+    /*background-color:#15A0F5;*/
+    /*color:white;*/
+    cursor: pointer;
+}
+.sel-float-div-disabled{
+    padding-left: 12px;
+    /*line-height: 1.8;*/
+    color:#bbb;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.sel-hide{
+    display: none;
+
+}
+#allmap{
+    width: 100%;
+    height: 100%;
+}
+.table_main input{
+    display: none;
+}
+.table_main label{
+    background-color: #1e2b67;
+    border: 1px solid #0379f2;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+    padding: 7px;
+    border-radius: 2px;
+    display: inline-block;
+    position: relative;
+    margin-bottom: 0;
+    vertical-align: middle;
+}
+
+.table_main input:checked + label {
+    background-color: transparent;
+    border: 0;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1);
+}
+
+.table_main input:checked + label:after {
+    content: '\2713';
+    font-size: 14px;
+    position: absolute;
+    top: -4px;
+    left: 3px;
+    color: #f1f000;
+}
+
+/*!*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*!*/
+.table_container::-webkit-scrollbar
+{
+width: 6px;
+height: 6px;
+/*background-color:rgba(30,43,103,.5);*/
+}
+
+/*!*定义滚动条轨道 内阴影+圆角*!*/
+.table_container::-webkit-scrollbar-track
+{
+-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+border-radius: 10px;
+/*background-color: #F5F5F5;*/
+}
+
+/*!*定义滑块 内阴影+圆角*!*/
+.table_container::-webkit-scrollbar-thumb
+{
+border-radius: 10px;
+-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+background-color: #555;
+}
+
+/*车主画像*/
+.perportrait-main{
+    display: none;
+    width: calc(100% - 188px);
+    width: -webkit-calc(100% - 188px);
+    width: -moz-calc(100% - 188px);
+    width: -ms-calc(100% - 188px);
+    width: -o-calc(100% - 188px);
+    height: 100%;
+    float: left;
+    border: 1px solid #00286a;
+    position: relative;
+}
+.perportrait-main:before{
+    position: absolute;
+    left: -1px;
+    top: -1px;
+    width: 8px;
+    height: 8px;
+    content: "";
+    border-left: 1px solid #0241a9;
+    border-top: 1px solid #0241a9;
+
+}
+.perportrait-main:after{
+    position: absolute;
+    right: -1px;
+    bottom: -1px;
+    width: 8px;
+    height: 8px;
+    content: "";
+    border-right: 1px solid #0241a9;
+    border-bottom: 1px solid #0241a9;
+}
+.perportrait-main .perportrait_mid{
+    width: 250px;
+    height: 240px;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    margin-left: -125px;
+    margin-top: -120px;
+}
+.perportrait-main .perportrait_mid .perportrait_waiticon{
+    width: 198px;
+    height: 185px;
+    background: url("../img/waittingPage.png") no-repeat;
+    background-size: 100% 100%;
+    margin-left: 26px;
+}
+.perportrait-main .perportrait_mid .perportrait_text{
+    width: 250px;
+    height: 40px;
+    line-height: 40px;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+}
+    /*车辆分析*/
+.caranalysis-main{
+    display: none;
+    width: calc(100% - 188px);
+    width: -webkit-calc(100% - 188px);
+    width: -moz-calc(100% - 188px);
+    width: -ms-calc(100% - 188px);
+    width: -o-calc(100% - 188px);
+    height: 100%;
+    float: left;
+    border: 1px solid #00286a;
+    position: relative;
+}
+.caranalysis-main:before{
+    position: absolute;
+    left: -1px;
+    top: -1px;
+    width: 8px;
+    height: 8px;
+    content: "";
+    border-left: 1px solid #0241a9;
+    border-top: 1px solid #0241a9;
+
+}
+.caranalysis-main:after{
+    position: absolute;
+    right: -1px;
+    bottom: -1px;
+    width: 8px;
+    height: 8px;
+    content: "";
+    border-right: 1px solid #0241a9;
+    border-bottom: 1px solid #0241a9;
+}
+.caranalysis-main .caranalysis_mid{
+    width: 250px;
+    height: 240px;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    margin-left: -125px;
+    margin-top: -120px;
+}
+.caranalysis-main .caranalysis_mid .caranalysis_waiticon{
+    width: 198px;
+    height: 185px;
+    background: url("../img/waittingPage.png") no-repeat;
+    background-size: 100% 100%;
+    margin-left: 26px;
+}
+.caranalysis-main .caranalysis_mid .caranalysis_text{
+    width: 250px;
+    height: 40px;
+    line-height: 40px;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+}
+/*套牌分析*/
+.deckanalysis-main{
+    display: none;
+    width: calc(100% - 188px);
+    width: -webkit-calc(100% - 188px);
+    width: -moz-calc(100% - 188px);
+    width: -ms-calc(100% - 188px);
+    width: -o-calc(100% - 188px);
+    height: 100%;
+    float: left;
+    border: 1px solid #00286a;
+    position: relative;
+}
+.deckanalysis-main:before{
+    position: absolute;
+    left: -1px;
+    top: -1px;
+    width: 8px;
+    height: 8px;
+    content: "";
+    border-left: 1px solid #0241a9;
+    border-top: 1px solid #0241a9;
+
+}
+.deckanalysis-main:after{
+    position: absolute;
+    right: -1px;
+    bottom: -1px;
+    width: 8px;
+    height: 8px;
+    content: "";
+    border-right: 1px solid #0241a9;
+    border-bottom: 1px solid #0241a9;
+}
+.deckanalysis-main .deckanalysis_mid{
+    width: 250px;
+    height: 240px;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    margin-left: -125px;
+    margin-top: -120px;
+}
+.deckanalysis-main .deckanalysis_mid .deckanalysis_waiticon{
+    width: 198px;
+    height: 185px;
+    background: url("../img/waittingPage.png") no-repeat;
+    background-size: 100% 100%;
+    margin-left: 26px;
+}
+.deckanalysis-main .deckanalysis_mid .deckanalysis_text{
+    width: 250px;
+    height: 40px;
+    line-height: 40px;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+}
+/*违停分析*/
+.stopanalysis-main{
+    display: none;
+    width: calc(100% - 188px);
+    width: -webkit-calc(100% - 188px);
+    width: -moz-calc(100% - 188px);
+    width: -ms-calc(100% - 188px);
+    width: -o-calc(100% - 188px);
+    height: 100%;
+    float: left;
+    border: 1px solid #00286a;
+    position: relative;
+}
+.stopanalysis-main:before{
+    position: absolute;
+    left: -1px;
+    top: -1px;
+    width: 8px;
+    height: 8px;
+    content: "";
+    border-left: 1px solid #0241a9;
+    border-top: 1px solid #0241a9;
+
+}
+.stopanalysis-main:after{
+    position: absolute;
+    right: -1px;
+    bottom: -1px;
+    width: 8px;
+    height: 8px;
+    content: "";
+    border-right: 1px solid #0241a9;
+    border-bottom: 1px solid #0241a9;
+}
+.stopanalysis-main .stopanalysis_mid{
+    width: 250px;
+    height: 240px;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    margin-left: -125px;
+    margin-top: -120px;
+}
+.stopanalysis-main .stopanalysis_mid .stopanalysis_waiticon{
+    width: 198px;
+    height: 185px;
+    background: url("../img/waittingPage.png") no-repeat;
+    background-size: 100% 100%;
+    margin-left: 26px;
+}
+.stopanalysis-main .stopanalysis_mid .stopanalysis_text{
+    width: 250px;
+    height: 40px;
+    line-height: 40px;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+}

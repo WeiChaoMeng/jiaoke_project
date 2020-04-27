@@ -1,12 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <% String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
     request.setAttribute("path", basePath); %>
 <html class="x-admin-sm">
 <head>
     <meta charset="UTF-8">
-    <title>后台登录-X-admin2.2</title>
+    <title>路驰公司企业综合管理平台</title>
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport"
@@ -67,7 +68,7 @@
                     success: function (result) {
                         if (result.messages === "success") {
                             localStorage.setItem("userInfo", JSON.stringify(result.userInfo));
-                            window.location.href = '${path}/homePage.do';
+                            window.location.href = '${path}/loginJump.do';
                         } else {
                             layer.msg('您输入的账号密码不匹配', {
                                 icon: 2

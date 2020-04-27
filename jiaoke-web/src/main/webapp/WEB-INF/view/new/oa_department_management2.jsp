@@ -67,14 +67,14 @@
                     <table class="layui-table layui-form" lay-filter="demo">
                         <thead>
                         <tr>
-                            <th>
+                            <th style="width: 3%;">
                                 <input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose" id="allChoose">
                             </th>
-                            <th>序号</th>
-                            <th>部门名称</th>
-                            <th>部门负责人</th>
-                            <th>部门主管领导</th>
-                            <th>操作</th>
+                            <th style="width: 7%">序号</th>
+                            <th style="width: 15%">部门名称</th>
+                            <th style="width: 15%">部门负责人</th>
+                            <th style="width: 15%">部门主管领导</th>
+                            <th style="width: 45%">操作</th>
                         </thead>
 
                         <tbody id="tbody">

@@ -1,0 +1,367 @@
+logo-homehtml,body{
+    width: 100%;
+    height: 100%;
+    min-width: 1000px;
+    min-height: 600px;
+    height: 100%;
+    background: #00101f;
+  
+    box-sizing:border-box;
+    -moz-box-sizing:border-box; /* Firefox */
+    -webkit-box-sizing:border-box; /* Safari */
+}
+input,button,select,textarea{outline:none;}
+ul{
+    padding-left: 0;
+}
+body,ul,li{
+    list-style:none;
+
+}
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+a{
+    text-decoration:none;
+}
+a:link{
+    text-decoration:none;
+}
+a:visited{
+    text-decoration:none;
+}
+a:hover{
+    text-decoration:none;
+}
+a:active{
+    text-decoration:none;
+}
+/*头部 sta*/
+.model-top{
+    height: 80px;
+    width: 100%;
+    min-width: 1000px;
+    background: url("../img/top_bgline.png") repeat-x;
+    background-size: 100% 100%;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+}
+.head-line{
+    float: left;
+    width: 30%;
+    height: 80px;
+    background: url("../img/index_headlr.png") no-repeat;
+    background-size: 100% 100%;
+}
+.headbg{
+    float: left;
+    width: 40%;
+    height: 80px;
+    background: url("../img/index_headmid.png") no-repeat;
+    background-size: 100% 100%;
+}
+.return-but-tc{
+    background: url("../lcimg/tc.png") no-repeat;
+    width: 20px;
+    height: 20px;
+    float: right;
+    margin-top: 20px;
+    margin-right: 20px;
+}
+.return-but-yh{
+    background: url("../lcimg/yh.png") no-repeat;
+    width: 68px;
+    height: 20px;
+    float: right;
+    margin-top: 20px;
+    margin-right: 15px;
+    line-height: 15px;
+}
+
+.headbg .headtit{
+    width: 440px;
+    height: 49px;
+    /*background: url("../img/index_titbg2.png") no-repeat;*/
+    background: url("../lcimg/lc.png") no-repeat;
+    background-size: 100% 100%;
+    position: absolute;
+    top:10px;
+    left: 50%;
+    margin-left: -210px;
+}
+.headbg .headtit1{
+    width: 440px;
+    height: 49px;
+    background: url("../img/sszl.png") no-repeat;
+    background-size: 100% 100%;
+    position: absolute;
+    top:10px;
+    left: 50%;
+    margin-left: -210px;
+}
+.headbg .headtit2{
+    width: 440px;
+    height: 49px;
+    background: url("../img/xcwx.png") no-repeat;
+    background-size: 100% 100%;
+    position: absolute;
+    top:10px;
+    left: 50%;
+    margin-left: -210px;
+}
+.headbg .headtit3{
+    width: 440px;
+    height: 49px;
+    background: url("../img/ssgl.png") no-repeat;
+    background-size: 100% 100%;
+    position: absolute;
+    top:10px;
+    left: 50%;
+    margin-left: -210px;
+}
+.floatr{
+    float: right;
+    width: 165px;
+    margin-top: 20px;
+    margin-right: 15px;
+    height: 50px;
+}
+.head-line .headright-time{
+    width: 165px;
+    height: 30px;
+    line-height: 30px;
+    color: #1c83f6;
+    font-size: 24px;
+    text-align: right;
+    letter-spacing:4px;
+}
+.head-line .headright-date{
+    width: 165px;
+    height: 16px;
+    line-height: 16px;
+    color: #1c83f6;
+    font-size: 14px;
+    text-align: right;
+}
+/*底部 sta */
+.model-foot{
+    height: 75px;
+    width: 100%;
+    min-width: 1000px;
+    background: url("../img/bottom_bgline.png") repeat-x;
+    background-size: 100% 100%;
+    font-size: 40px;
+    position: fixed;
+    bottom: 0;
+    padding-top: 12px;
+}
+.foot-line{
+    float: left;
+    height: 63px;
+    width: 25%;
+    background: url("../img/foot_linebg.png") repeat-x;
+    background-size: 100% 100%;
+}
+.foot-line .foot-logo{
+    height: 22px;
+    width: 151px;
+    background: url("../img/zte_itslogo.png") no-repeat;
+    background-size: 100% 100%;
+    margin-left: 25px;
+    margin-top: 18px;
+}
+.foot-line .foot-logo1{
+    height: 22px;
+    width: 168px;
+    background: url("../img/zte-logo.png") no-repeat;
+    background-size: 100% 100%;
+    margin-right: 5%;
+    float: right;
+    margin-top:18px;
+}
+.foot-menu{
+    width:50%;
+    float: left;
+    height: 63px;
+}
+.menu-arrow{
+    float: left;
+    width: 121px;
+    height: 63px;
+}
+.arrowleft{
+    background: url("../img/foot_arrowl.png") no-repeat;
+    background-size: 100% 100%;
+}
+.arrowright{
+    background: url("../img/foot_arrowr.png") no-repeat;
+    background-size: 100% 100%;
+}
+.menu-bar{
+    float: left;
+    width: calc(100% - 242px);
+    width: -webkit-calc(100% - 242px);
+    width: -mos-calc(100% - 242px);
+    width: -moz-calc(100% - 242px);
+    width: -o-calc(100% - 242px);
+    background: url("../img/foot_menubg.png") no-repeat;
+    background-size: 100% 100%;
+    height: 63px;
+    margin:0 !important;
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    padding: 0 10px;
+}
+.menu-bar .common-menu{
+    font-size: 16px;
+    flex: 1;
+    height: 63px;
+    line-height: 63px;
+    text-align: center;
+    color:#fff;
+    cursor: pointer;
+}
+.menu-bar li span{
+    display: inline-block;
+    padding: 0 10px;
+    color:#fff;
+}
+.foot-line .headright-time{
+    width: 165px;
+    height: 30px;
+    line-height: 30px;
+    color: #1c83f6;
+    font-size: 24px;
+    text-align: right;
+    letter-spacing:4px;
+}
+.foot-line .headright-date{
+    width: 165px;
+    height: 16px;
+    line-height: 16px;
+    color: #1c83f6;
+    font-size: 14px;
+    text-align: right;
+}
+
+/*去掉百度地图logo*/
+#allmap label{max-width:none;}
+.BMap_cpyCtrl
+{
+    display:none;
+}
+.anchorBL{
+    display:none;
+}
+.BMap_Marker:hover{
+    width: 32px !important;
+    height: 27px !important;
+}
+
+/*四个角*/
+.i-common-top {
+    position: absolute;
+    top: 10%;
+    width: 212px;
+    height: 223px;
+}
+.i-common-bottom {
+    position: absolute;
+    bottom: 2%;
+    width: 233px;
+    height: 230px;
+}
+.i-top-left {
+    background: url(../img/top_left.png) no-repeat center center;
+    left: 22px;
+}
+.i-top-right {
+    background: url(../img/top_right.png) no-repeat center center;
+    right: 22px;
+}
+.i-left-bottom {
+    background: url(../img/left_bottom.png) no-repeat center center;
+    left: 10px;
+}
+.i-right-bottom {
+    background: url(../img/right_bottom.png) no-repeat center center;
+    right: 10px;
+}
+.container-bgcolor{
+	padding:10px 0;
+	position: absolute;
+    background: rgba(7,42,74,.9);
+    width: 94%;
+    height: 78%;
+    left: 50px;
+    right: auto;
+    top: 14%;
+    bottom: auto;
+}
+.margin-top-10{
+	margin-top:10px;
+}
+.logo-home{
+	
+	position: absolute;
+	top: 5%;
+	left:2%;
+	z-index: 999;
+	
+	
+}
+.rt-logo{
+	font-size:20px;
+	color:#f00;
+}
+
+
+.bridge-con{
+	margin-top:5px;
+	height: 85%;
+	
+}
+.bridge-pic{
+	height: 100%;
+	padding-right:0px;
+}
+.bridge-pic ul{
+	height: 100%;
+	
+}
+.bridge-pic li{
+	height: 50%;
+	
+}
+.bridge-pic img{
+	border: 3px solid #03162b;
+	width: 100%;
+	height: 100%;
+}
+.bridge-detailed{
+	height: 100%;
+}
+.bridge-detailed table{
+	width: 100%;
+	height: 100%;
+}
+.bridge-detailed table td{
+	color:#fff;
+	vertical-align: middle;
+	text-align: center;
+    border: solid 1px #18334E;
+    /*height: 100%;;*/
+}
+.bridge-detailed table td em{
+	font-style: normal;
+	color: #578723;
+	
+}
+.common-bottom{
+	overflow: hidden;
+	height: 100%;
+}
