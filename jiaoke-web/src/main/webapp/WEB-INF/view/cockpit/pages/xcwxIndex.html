@@ -1,0 +1,228 @@
+
+<!DOCTYPE html>
+<head>
+    <title>赤峰市政巡查维修数据中心</title>
+    <meta charset="UTF-8">
+    <meta name="google" value="notranslate"><!-- 禁止Chrome 浏览器中自动提示翻译 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"><!--IE=edge：保持使用最高级别模式显示内容-->
+    <meta name="renderer" content="webkit"><!--360浏览器-->
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <link rel="stylesheet" href="../css/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="../css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/index1.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+     <link rel="stylesheet" href="../css/logo.css">
+</head>
+<body>
+
+<!--首页头部 sta -->
+<!--<div id="model-top" class="model-top"></div>-->
+<div class="jimu-main-header" id="Header-Panel" style="left: 10px; top: 10px; width: 313px; height: 36px; right: auto; bottom: auto;"><div class="jimu-head">
+    <div class="jimu-head-content" id="jimu-head-content" style="line-height: 33px;">
+        <div class="jimu-head-leftTopBg" id="leftTopBg"></div>
+        <!--<div class="jimu-head-logo"><img id="logoNode" src="../img/logo-left.png"></div>-->
+        <div class="jimu-head-title jimu-head-title-light" id="titleNode">赤峰市政巡查维修数据中心</div>
+        
+        <i class="jimu-head-masked"></i>
+        <div class="jimu-head-rightBottomBg" id="rightBottomBg"></div>
+    </div>
+</div></div>
+<div id="ToolBar-Panel" >
+	<div class="jimu-toolbar" id="jimu-toolbar-content">
+    <div class="jimu-toolbar-left"></div>
+    <div class="jimu-list jimu-toolbar-middle" id="jimu-list">
+    	<ul id="jimu-list-ul" class="jimu-list-ul">
+    		<li class="jimu-list-ul-li-select">首页</li>
+    		<li>桥梁视频</li>
+    		<li>泵站视频</li>
+    		<li>桥梁视频</li>
+    	
+    	</ul>
+    </div>
+    <div class="jimu-toolbar-right"></div>
+</div></div>
+<div id="Clock-Panel" class="jimu-main-absolute" style="width: 210px; height: 36px; left: auto; right: 170px; top: 10px; bottom: auto;"><div class="jimu-clock">
+    <div class="jimu-clock-content" id="jimu-clock-content">
+        <div class="jimu-clock-hours" style="line-height: 36px;"></div>
+        <ul>
+            <li><div id="head-time" class="jimu-clock-day"></div></li>
+            <li><div id="head-date" class="jimu-clock-week"></div></li>
+        </ul>
+    </div>
+</div></div>
+<div id="afoot-Panel" class="jimu-main-absolute" style="width: 380px; height: 30px; left: 39%; right: auto; top: auto; bottom: 0.1px;"><div class="jimu-foot-content" id="jimu-foot-content">
+    <div class="jimu-foot-bg"><div class="jimu-foot-name" title="停车场管理系统"></div></div>
+</div></div>
+
+<!--4个角-->
+<div class="i-common-top i-top-left"></div>
+<div class="i-common-top i-top-right"></div>
+<div class="i-common-bottom i-left-bottom"></div>
+<div class="i-common-bottom i-right-bottom"></div>
+<!--首页头部 end -->
+<div class="container-bgcolor">
+
+    
+    <div class="row" style="height: 100%;overflow: hidden;">
+    		<div class="col-md-3 col-lg-3 " style="height: 100%;" >
+    			<div class="org-chart modelpub2" >
+    			  <div class="common-tit">组织架构图</div>
+    			    <span class="tilt"></span>
+    		        <div class="org-anizational" style="text-align: center;">
+    		        	<img src="../img/zzjgt.png"  style="text-align: center;width: 80%;height: 85%;margin-top:5%;"/>
+    		        </div>
+    		    </div>
+    		    <div class="org-chart modelpub2">
+    			  <div class="common-tit">机械设备数量统计</div> 
+    			    <span class="tilt"></span>
+    		        <div class="org-anizational" id='xctj' style="height: 100%;">
+    		        
+    		        </div>
+    		    </div>
+    		    
+    		</div>
+    		<div class="col-md-6 col-lg-6" style="height: 100%;padding: 0;">
+    			<div  id='allmap' style="height: 100%;padding: 0;" > </div>
+    		</div>
+    		<div class="col-md-3 col-lg-3" style="height: 100%;">
+    			<div class="org-chart modelpub2">
+    			  <div class="common-tit">病害处理流程图</div>
+    			    <span class="tilt"></span>
+    		        <div class="org-anizational" style="text-align: center;">
+    		        		<img src="../img/liuc.png"  style="text-align: center;width: 80%;height: 85%;margin-top: 5%;"/>
+    		        </div>
+    		    </div>
+    		    <div class="org-chart modelpub2">
+    			  <div class="common-tit">道路病害类型统计</div>
+    			    <span class="tilt"></span>
+    		        <div class="org-anizational" id='sssjtj' style="height: 100%;">
+    		        </div>
+    		    </div>
+    		</div>
+    	</div>
+       
+
+    
+    <!--首页居中 sta -->
+   
+    
+    <!--首页右侧 end -->
+
+</div>
+<div class="clearfix"></div>
+<!--首页底部 sta -->
+<!--<div id="model-foot" class="model-foot"></div>-->
+<!--首页底部 end-->
+<script src="../js/lib/jquery.min.js"></script>
+<script src="../js/lib/sockjs-client/1.0.2/sockjs.js"></script>
+<script src="../js/lib/stomp-websocket/2.3.3/stomp.js"></script>
+<script src="../js/lib/bootstrap.min.js"></script>
+<script src="../js/lib/echarts.min.js"></script>
+<script src="../js/highcharts.js"></script>
+<script src="../js/highcharts-3d.js"></script>
+<script src="../js/highcharts-zh_CN.js"></script>
+<script src="../js/lib/chifeng.js"></script>
+<script src="../js/common/header-footer2.js"></script>
+<script src="../js/common/common.js"></script>
+<script src="../js/common/unit.js"></script>
+<script src="../js/pagejs/indexXCWX.js?c=2.9"></script>
+<script src="../js/dark.js"></script>
+<script src="../js/expo.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=6uOSz92abUb57rxpo1iSqiRxdZNbTmq6"></script>
+<!--<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=您的密钥"></script>-->
+<script type="text/javascript">
+	var	map = new BMap.Map("allmap");
+	map.enableScrollWheelZoom(true);
+	map.addControl(new BMap.OverviewMapControl());    
+	map.addControl(new BMap.ScaleControl());     
+//	map.addEventListener("click",function(e){
+//		//alert(e.point.lng + "," + e.point.lat);
+//	});
+	map.setMapStyle({style:'midnight'});
+//	map.centerAndZoom("赤峰",12);      // 初始化地图,用城市名设置地图中心点[Window Title]
+map.centerAndZoom(new BMap.Point(118.973113,42.299233), 14);
+var cr = new BMap.CopyrightControl({anchor: BMAP_ANCHOR_TOP_RIGHT});   //设置版权控件位置
+	map.addControl(cr); //添加版权控件
+	var bs = map.getBounds();   //返回地图可视区域
+	cr.addCopyright({id: 1, content: "<a>1111</a>", bounds: bs});   
+	//Copyright(id,content,bounds)类作为CopyrightControl.addCopyright()方法的参数
+	var Wzdata_info = [[118.946381,42.26696,"地址：赤峰市哈达西街","哈达西街物资点"],
+					 [118.943797,42.260505,"地址：赤峰市钢铁街","钢铁街物资点"],
+					 [118.975067,42.309019,"地址：赤峰市清河路","清河路物资点"]
+					];
+	var Bhdata_info = [[118.994894,42.306535,"地址：赤峰市哈达西街","道路裂缝"],
+					 [119.007751,42.311696,"地址：赤峰市钢铁街","道路坑槽"],
+					 [119.010807,42.319217,"地址：赤峰市清河路","行道砖缺失"],
+					 [119.020807,42.329217,"地址：赤峰市清河路","行道砖缺失"]
+					];
+	var Rydata_info =[[118.92332,42.33257,"巡查人员姓名：赵峰，手机号：15000200993","巡查员：赵峰"]];
+	var opts = {
+				width : 300,     // 信息窗口宽度
+				height: 180,     // 信息窗口高度
+				title : "" , // 信息窗口标题
+				enableMessage:true//设置允许信息窗发送短息
+			   };
+	for(var i=0;i<Wzdata_info.length;i++){
+		var marker = new BMap.Marker(new BMap.Point(Wzdata_info[i][0],Wzdata_info[i][1]));  // 创建标注
+		var content = Wzdata_info[i][2];
+		var myIcon = new BMap.Icon("../img/icon_hw.png", new BMap.Size(33, 35));  
+		marker.setIcon(myIcon);
+//			var sContent =	"<h4 style='margin:0 0 5px 0;padding:0.2em 0'>物资点</h4>" + 
+//	"<img style='float:right;margin:4px' id='imgDemo' src='../img/hqbz.jpg' width='189' height='204' title='物资点'/>" + 
+//	"<p style='margin:0;line-height:1.5;font-size:13px;text-indent:2em'>"+Wzdata_info[i][2]+"</p>" + 
+//	"</div>";
+var sContent ="<table border=0 class='' align:'center'><tr style=''><td style='width:48%'><h2>物资点</h2>位置：钢铁街<br/>片区：第一片区<br/>类型：物资仓库</td><td align='right'><img src='../img/hqbz.jpg' style='width:130px;height:140px;'></td></tr></table>";
+//		var label = new BMap.Label(sContent,{offset:new BMap.Size(20,-10)});
+		//marker.setLabel(label);
+		map.addOverlay(marker);       // 将标注添加到地图中
+		addClickHandler(sContent,marker);
+	}
+	for(var i=0;i<Rydata_info.length;i++){
+		var marker = new BMap.Marker(new BMap.Point(Rydata_info[i][0],Rydata_info[i][1]));  // 创建标注
+		var content = Rydata_info[i][2];
+		var myIcon = new BMap.Icon("../img/layer_user_2_32.png", new BMap.Size(33, 35));  
+//		var label = new BMap.Label(Rydata_info[i][3],{offset:new BMap.Size(20,-10)});
+		//marker.setLabel(label);
+			var sContent ="<table border=0 class='' align:'center'><tr style=''><td style='width:52%'><h2>赵峰</h2>职位：巡查人员<br/>片区：第一片区<br/>年龄：42岁<br/>手机：15300620039</td><td align='right'><img src='../img/xcry.jpg' style='width:130px;height:140px;'></td></tr></table>";
+//	"<h4 style='margin:0 0 5px 0;padding:0.2em 0'>巡查人员</h4>" + 
+//	"<img style='float:right;margin:4px' id='imgDemo' src='../img/xcry.jpg' width='239' height='204' title='巡查人员'/>" + 
+//	"<p style='margin:0;line-height:1.5;font-size:13px;text-indent:2em'>"+Rydata_info[i][2]+"</p>" + 
+//	"</div>";
+		marker.setIcon(myIcon);
+		map.addOverlay(marker);       // 将标注添加到地图中
+		addClickHandler(sContent,marker);
+	}
+	for(var i=0;i<Bhdata_info.length;i++){
+		var marker = new BMap.Marker(new BMap.Point(Bhdata_info[i][0],Bhdata_info[i][1]));  // 创建标注
+		var content = Bhdata_info[i][2];
+		var myIcon = new BMap.Icon("../img/icon_red.png", new BMap.Size(33, 35));  
+//		var label = new BMap.Label(Rydata_info[i][3],{offset:new BMap.Size(20,-10)});
+		//marker.setLabel(label);
+			var sContent ="<table border=0 class='' align:'center'><tr style=''><td style='width:48%'><h2>病害信息</h2>位置：钢铁街<br/>片区：第一片区<br/>病害类型：行道砖缺</td><td align='right'><img src='../img/bh_01.jpg' style='width:130px;height:140px;'></td></tr></table>";
+			//var sContent ="<table border=1 class='bridge-detailed' align:'center'><tr style='background:#ff8c01'><td>病害名称</td><td>病害类型</td><td>病害图片</td></tr><tr style=''><td>钢铁街道路裂缝</td><td>路面裂缝</td><td><img src='../img/bh_01.jpg' style='width:220px;height:200px;'></td></tr></table>";
+//	"<h4 style='margin:0 0 5px 0;padding:0.2em 0'>病害信息</h4>" + 
+//	"<img style='float:right;margin:4px' id='imgDemo' src='../img/bh_01.jpg' width='239' height='204' title=''/>" + 
+//	"<p style='margin:0;line-height:1.5;font-size:13px;text-indent:2em'>"+Bhdata_info[i][2]+"</p>" + 
+//	"</div>";
+		marker.setIcon(myIcon);
+		map.addOverlay(marker);       // 将标注添加到地图中
+		addClickHandler(sContent,marker);
+	}
+	function addClickHandler(content,marker){
+		marker.addEventListener("click",function(e){
+			openInfo(content,e)}
+		);
+	}
+	function openInfo(content,e){
+		var p = e.target;
+		var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
+		var infoWindow = new BMap.InfoWindow(content,opts);  // 创建信息窗口对象 
+		map.openInfoWindow(infoWindow,point); //开启信息窗口
+	}
+</script>
+
+</body>
+</html>

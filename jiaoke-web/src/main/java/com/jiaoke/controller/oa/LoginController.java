@@ -41,17 +41,17 @@ public class LoginController {
      */
     @RequestMapping(value = "/login.do", method = RequestMethod.POST)
     @ResponseBody
-    public String login(String username, String password) {
-//    public String login(@RequestBody UserInfo userInfo) {
+//    public String login(String username, String password) {
+    public String login(@RequestBody UserInfo userInfo) {
         Map<String,Object> map = new HashMap<>();
-//        if ("".equals(userInfo.getUsername()) && "".equals(userInfo.getPassword())) {
-        if ("".equals(username) && "".equals(password)) {
+        if ("".equals(userInfo.getUsername()) && "".equals(userInfo.getPassword())) {
+//        if ("".equals(username) && "".equals(password)) {
             map.put("messages","error");
             return JSON.toJSONString(map);
         } else {
             Subject subject = SecurityUtils.getSubject();
-            UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-//            UsernamePasswordToken token = new UsernamePasswordToken(userInfo.getUsername(),userInfo.getPassword());
+//            UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+            UsernamePasswordToken token = new UsernamePasswordToken(userInfo.getUsername(),userInfo.getPassword());
             try {
                 subject.login(token);
             } catch (Exception e) {

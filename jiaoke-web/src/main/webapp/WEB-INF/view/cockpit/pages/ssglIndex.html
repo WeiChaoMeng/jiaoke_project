@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<head>
+    <title>赤峰市政设施管理数据中心</title>
+    <meta charset="UTF-8">
+    <meta name="google" value="notranslate"><!-- 禁止Chrome 浏览器中自动提示翻译 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"><!--IE=edge：保持使用最高级别模式显示内容-->
+    <meta name="renderer" content="webkit"><!--360浏览器-->
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <link rel="stylesheet" href="../css/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="../css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/index1.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../css/logo.css">
+    <link rel="stylesheet" href="../css/style.css">
+    
+    
+</head>
+<body>
+
+<!--首页头部 sta -->
+<!--<div id="model-top" class="model-top"></div>-->
+<div class="jimu-main-header" id="Header-Panel" style="left: 10px; top: 10px; width: 313px; height: 36px; right: auto; bottom: auto;"><div class="jimu-head">
+    <div class="jimu-head-content" id="jimu-head-content" style="line-height: 33px;">
+        <div class="jimu-head-leftTopBg" id="leftTopBg"></div>
+        <!--<div class="jimu-head-logo"><img id="logoNode" src="../img/logo-left.png"></div>-->
+        <div class="jimu-head-title jimu-head-title-light" id="titleNode">赤峰市政设施管理数据中心</div>
+        
+        <i class="jimu-head-masked"></i>
+        <div class="jimu-head-rightBottomBg" id="rightBottomBg"></div>
+    </div>
+</div></div>
+<div id="ToolBar-Panel" >
+	<div class="jimu-toolbar" id="jimu-toolbar-content">
+    <div class="jimu-toolbar-left"></div>
+    <div class="jimu-list jimu-toolbar-middle" id="jimu-list">
+    	<ul id="jimu-list-ul" class="jimu-list-ul">
+    		<li class="jimu-list-ul-li-select">首页</li>
+    		<li>桥梁视频</li>
+    		<li>泵站视频</li>
+    		<li>桥梁视频</li>
+    	
+    	</ul>
+    </div>
+    <div class="jimu-toolbar-right"></div>
+</div></div>
+
+
+<div id="Clock-Panel" class="jimu-main-absolute" style="width: 210px; height: 36px; left: auto; right: 170px; top: 10px; bottom: auto;"><div class="jimu-clock">
+    <div class="jimu-clock-content" id="jimu-clock-content">
+        <div class="jimu-clock-hours" style="line-height: 36px;"></div>
+        <ul>
+            <li><div id="head-time" class="jimu-clock-day"></div></li>
+            <li><div id="head-date" class="jimu-clock-week"></div></li>
+        </ul>
+    </div>
+</div></div>
+<div id="afoot-Panel" class="jimu-main-absolute" style="width: 380px; height: 30px; left: 39%; right: auto; top: auto; bottom: 0.1px;"><div class="jimu-foot-content" id="jimu-foot-content">
+    <div class="jimu-foot-bg"><div class="jimu-foot-name" title="停车场管理系统"></div></div>
+</div></div>
+<!--4个角-->
+<div class="i-common-top i-top-left"></div>
+<div class="i-common-top i-top-right"></div>
+<div class="i-common-bottom i-left-bottom"></div>
+<div class="i-common-bottom i-right-bottom"></div>
+<!--首页头部 end -->
+<div class="container-bgcolor">
+<div class="model-content">
+    <!--首页左侧 sta -->
+    <div class="comtab">
+        <div class="modelpub2">
+            <div class="common-tit "><span>天气预报</span><span class="mar-left">外场设备数量统计</span></div>
+            <div class="common-bottom">
+            		<div class="col-md-4 col-lg-4 "  style="height: 100%;"  >
+            	<!--<iframe src="//www.seniverse.com/weather/weather.aspx?uid=U5F3719214&cid=CHNM050000&l=zh-CHS&p=SMART&a=0&u=C&s=3&m=0&x=1&d=3&fc=&bgc=&bc=&ti=1&in=0&li=" frameborder="0" scrolling="no" width="100%" height="100%" allowTransparency="true"></iframe>-->
+            		<!--<iframe src="//www.seniverse.com/weather/weather.aspx?uid=U5F3719214&cid=CHNM050000&l=zh-CHS&p=SMART&a=0&u=C&s=31&m=0&x=1&d=3&fc=FFFFFF&bgc=&bc=&ti=1&in=0&li=" frameborder="0" scrolling="no" width="100%" height="100%" allowTransparency="true"></iframe>-->
+            		<iframe src="//www.seniverse.com/weather/weather.aspx?uid=U5F3719214&cid=CHNM050000&l=zh-CHS&p=SMART&a=0&u=C&s=13&m=0&x=1&d=3&fc=FFFFFF&bgc=&bc=&ti=1&in=0&li=" frameborder="0" scrolling="no" width="100%" height="100%" allowTransparency="true"></iframe>
+            		</div>
+            		<div class="col-md-8 col-lg-8 echart_con2 "   id='radar_echart'>
+            		</div>
+
+            </div>
+        </div>
+        <div class="modelpub2 margin10">
+            <div class="common-tit">桥梁信息</div>
+            <div class="bridge-con">
+            	<div class="col-lg-4 col-md-4 bridge-pic">
+            		<ul>
+            			<li><img src="../img/zwdq.jpg" /></li>
+            			<li><img src="../img/zwdq3d.jpg" /></li>
+            		</ul>
+            		
+            	</div>
+            	<div class="col-lg-8 col-md-8 bridge-detailed">
+            		<table border cellspacing cellpadding>
+            			<tbody>
+            				<tr>
+            					<td>桥梁名称：</td>
+            					<td><em>昭乌达桥</em></td>
+            					<td>桥梁全长：</td>
+            					<td><em>306.04</em></td>
+            				</tr>
+            				<tr>
+            					<td>桥跨组合：</td>
+            					<td><em>7*27.1+4*27.7</em></td>
+            					<td>桥面宽度：</td>
+            					<td><em>14.00</em></td>
+            				</tr>
+            				<tr>
+            					<td>桥宽组合：</td>
+            					<td><em>14+2*2.5+2*0.25</em></td>
+            					<td>设计荷载：</td>
+            					<td><em>汽车-20级</em></td>
+            				</tr>
+            				<tr>
+            					<td>竖曲线半径：</td>
+            					<td><em>7°无设防 </em></td>
+            					<td>桥面横坡：</td>
+            					<td><em>19.50</em></td>
+            				</tr>
+            				<tr>
+            					<td>抗震设防烈度：</td>
+            					<td><em>6</em></td>
+            					<td>设计洪水频率 ：</td>
+            					<td><em>1/100</em></td>
+            				</tr>
+            				<tr>
+            					<td>通航等级：</td>
+            					<td><em>不通航</em></td>
+            					<td>设计风速：</td>
+            					<td><em>22.8m/s</em></td>
+            				</tr>
+            				
+            			</tbody>
+            		</table>
+            		
+            	</div>
+            </div>
+            
+        </div>
+
+    </div>
+
+    <!--首页左侧 end -->
+    <!--首页居中 sta -->
+    <div class="model-mid">
+        <div class="mid-top" id="map_c_echart">
+            <!--<div class="echart_con" >-->
+
+            <!--</div>-->
+        </div>
+        
+    </div>
+    <!--首页居中 end -->
+    <!--首页右侧 sta -->
+    <div class="comtab">
+
+
+        <div class="modelpub2">
+            <div class="common-tit">外场设备在线率统计</div>
+           
+            <div class="echart_con">
+                <div id="container-speed" style="width: 49%; height: 100%;display: inline-block; "></div>
+                <div id="container-rpm" style="width: 49%; height: 100%;display: inline-block;"></div>
+            </div>
+        </div>
+        <div class="modelpub2 margin10">
+            <div class="common-tit">泵站信息</div>
+            
+            <div class="bridge-con">
+            	<div class="bz-news">
+            	<div class="bridge-title">
+            		<ul>
+            			<li class="bz-xh">序号</li>
+            			<li class="bz-name">泵站名称</li>
+            			<li class="bz-add">泵站地址</li>
+            			<li class="bz-glv">装机功率</li>
+            			<li class="bz-img">泵站照片</li>
+            		</ul>
+            	</div>
+            	<div class="bridge-table">
+            	<div id="demo"style="overflow:hidden;height:210px;margin:0;padding:0;width:100%; ">	
+                <div id="demo1">
+                  <ul>
+                  	<li>
+                  		<span class="bz-xh">1</span>
+                  		<span class="bz-name">解放街泵站</span>
+                  		<span class="bz-add">解放街</span>
+                  		<span class="bz-glv">90kw*3台</span>
+                  		<span class="bz-img">
+                  			<img src="../img/jfjbz.jpg" width="45%" height="70"/>
+                            <img src="../img/jfjbz3d.jpg" width="45%" height="70"/>
+                  		</span>
+                  	</li>
+                  	<li>
+                  		<span class="bz-xh">2</span>
+                  		<span class="bz-name">红旗泵站</span>
+                  		<span class="bz-add">钢铁街</span>
+                  		<span class="bz-glv">60kw*3台</span>
+                  		<span class="bz-img">
+                  			<img src="../img/hqbz.jpg" width="45%" height="70"/>
+                            <img src="../img/hqbz3d.png" width="45%" height="70"/>
+                  		</span>
+                  	</li>
+                  	<li>
+                  		<span class="bz-xh">3</span>
+                  		<span class="bz-name">万达二号泵站</span>
+                  		<span class="bz-add">万达广场2号楼</span>
+                  		<span class="bz-glv">190kw*2台</span>
+                  		<span class="bz-img">
+                  			<img src="../img/wdehbz.jpg" width="45%" height="70"/>
+                            <img src="../img/wdehbz3d.png" width="45%" height="70"/>
+                  		</span>
+                  	</li>
+                  	<li>
+                  		<span class="bz-xh">4</span>
+                  		<span class="bz-name">万达二号11</span>
+                  		<span class="bz-add">万达广场2号楼</span>
+                  		<span class="bz-glv">190kw*2台</span>
+                  		<span class="bz-img">
+                  			<img src="../img/hqbz.jpg" width="45%" height="70"/>
+                            <img src="../img/hqbz3d.png" width="45%" height="70"/>
+                  		</span>
+                  	</li>
+                  	<li>
+                  		<span class="bz-xh">5</span>
+                  		<span class="bz-name">万达</span>
+                  		<span class="bz-add">万达广场2号楼</span>
+                  		<span class="bz-glv">190kw*2台</span>
+                  		<span class="bz-img">
+                  			<img src="../img/wdehbz.jpg" width="45%" height="70"/>
+                            <img src="../img/wdehbz3d.png" width="45%" height="70"/>
+                  		</span>
+                  	</li>
+                  	
+                  </ul>
+            	</div>
+            	<div id="demo2"></div> 
+            	</div>
+            	<script style="text/javascript">
+var speed=40;//数值越大，速度越慢
+var demo2=document.getElementById("demo2");
+var demo1=document.getElementById("demo1");
+var demo=document.getElementById("demo");
+demo2.innerHTML=demo1.innerHTML;
+demo.scrollTop=demo.scrollHeight;
+function MarqueeUp(){
+if(demo2.offsetTop-demo.scrollTop<=0)
+demo.scrollTop-=demo2.offsetHeight;
+else{
+demo.scrollTop++;
+}
+}
+var MyMar=setInterval(MarqueeUp,speed);
+demo.onmouseover=function() {clearInterval(MyMar);}
+demo.onmouseout=function() {MyMar=setInterval(MarqueeUp,speed);}
+</script> 
+            	</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--首页右侧 end -->
+</div>
+</div>
+<div class="clearfix"></div>
+<!--首页底部 sta -->
+<!--<div id="model-foot" class="model-foot">-->
+
+</div>
+
+<!--首页底部 end-->
+<script src="../js/lib/jquery.min.js"></script>
+<script src="../js/lib/sockjs-client/1.0.2/sockjs.js"></script>
+<script src="../js/lib/stomp-websocket/2.3.3/stomp.js"></script>
+<script src="../js/lib/bootstrap.min.js"></script>
+<script src="../js/lib/echarts.min.js"></script>
+<script src="../js/highcharts.js"></script>
+<script src="../js/highcharts-3d.js"></script>
+<script src="../js/highcharts-zh_CN.js"></script>
+<script src="../js/lib/chifeng.js"></script>
+<script src="../js/common/header-footer3.js"></script>
+<script src="../js/common/common.js"></script>
+<script src="../js/common/unit.js"></script>
+<script src="../js/pagejs/indexSSGL.js?c=2.9"></script>
+<script src="../js/dark.js"></script>
+<script src="../js/expo.js"></script>
+</body>
+</html>

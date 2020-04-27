@@ -821,13 +821,15 @@
                 </div>
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
-                        <shiro:hasPermission name="managementLayer">
-                            <iframe src='/managePage.do' frameborder="0" scrolling="yes" class="x-iframe"></iframe>
-                        </shiro:hasPermission>
+                        <%--<shiro:hasPermission name="managementLayer">--%>
+                            <%--<iframe src='/managePage.do' frameborder="0" scrolling="yes" class="x-iframe"></iframe>--%>
+                        <%--</shiro:hasPermission>--%>
 
-                        <shiro:lacksPermission name="managementLayer">
-                            <iframe src='/basePage.do' frameborder="0" scrolling="yes" class="x-iframe"></iframe>
-                        </shiro:lacksPermission>
+                        <%--<shiro:lacksPermission name="managementLayer">--%>
+                            <%--<iframe src='/basePage.do' frameborder="0" scrolling="yes" class="x-iframe"></iframe>--%>
+                        <%--</shiro:lacksPermission>--%>
+
+                        <iframe src='/basePage.do' frameborder="0" scrolling="yes" class="x-iframe"></iframe>
                     </div>
                 </div>
                 <div id="tab_show"></div>

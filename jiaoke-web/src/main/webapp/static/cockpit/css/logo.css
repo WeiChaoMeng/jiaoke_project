@@ -1,0 +1,752 @@
+/*
+*   modify:songcx
+*   date:2016-3-1
+*   describe:index.jsp
+*   Modified:
+*   Modified-date:
+*   Modified-content:
+*/
+/**{ box-sizing: border-box; }*/
+@import url(all-animation.css);
+@import url(jqueryui.min.css);
+@import url(jquery-ui-slider-pips.min.css);
+body,html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: rgba(3,23,43,1);
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    -ms-user-select: none;
+    /*IE?????��???css*/
+    SCROLLBAR-FACE-COLOR: rgba(0,16,31,0.5);
+    Scrollbar-Shadow-Color:rgba(152, 150, 150,.3); 
+    Scrollbar-Track-Color:rgba(0,16,31,1); 
+    Scrollbar-Arrow-Color:rgba(0,0,0,.2);
+}
+
+.jimu-main-font {
+    font-family: "Microsoft YaHei";
+    background-color:rgba(0,16,31,1);
+}
+/*��??��?��???????-��??��*/
+input, textarea, keygen, select, button {
+  font-family: "Microsoft YaHei" !important;
+}
+/*baidu?�?echart??��???*/
+.jimu-main-map {
+    width:100%;
+    height:100%;
+}
+.jimu-main-map-bg {
+     background-color: rgba(2, 28, 54, 1)!important;
+}
+
+/*echart??��???*/
+.jimu-main-emap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display:none;
+}
+
+.jimu-main-frameBox {
+    display:block;
+    width:100%;
+    height:100%;
+
+    -webkit-transition-duration:.5s;
+	-moz-transition-duration:.5s;
+	-ms-transition-duration:.5s;
+	transition-duration:.5s;
+
+    -webkit-transition-property:-webkit-transform, height,width;
+	-moz-transition-property:-moz-transform,height,width;
+	-ms-transition-property:-ms-transform, height,width;
+	transition-property:transform, height,width;
+}
+
+/*loading???��????-*/
+.jimu-main-loaderBox {
+    position: absolute;
+    top: calc(45% - 1.25em);
+    left: calc(45% - 1.25em);
+    width:170px;
+    height:57px;
+    border:solid 1px #333;
+    border-radius:5px;
+    background:rgba(0, 0, 0, 0.5);
+    text-align:center;
+     z-index: 99999;
+}
+.jimu-main-loaderBox > span:first-child {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+.jimu-main-loader {
+    width: 3.5em;
+    height: 3.5em;
+    transform: rotate(165deg);
+    display:inline-block;
+}
+.jimu-main-loader:before,
+.jimu-main-loader:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    width: 0.5em;
+    height: 0.5em;
+    border-radius: 0.25em;
+    transform: translate(-50%, -50%);
+}
+
+.jimu-main-loader:before {
+    animation: loader-before 2s infinite;
+}
+
+.jimu-main-loader:after {
+    animation: loader-after 2s infinite;
+}
+
+@keyframes loader-before {
+    0% {
+        width: 0.5em;
+        box-shadow: 1em -0.5em rgba(225, 20, 98, 0.75), -1em 0.5em rgba(111, 202, 220, 0.75);
+    }
+    35% {
+        width: 2.5em;
+        box-shadow: 0 -0.5em rgba(225, 20, 98, 0.75), 0 0.5em rgba(111, 202, 220, 0.75);
+    }
+    70% {
+        width: 0.5em;
+        box-shadow: -1em -0.5em rgba(225, 20, 98, 0.75), 1em 0.5em rgba(111, 202, 220, 0.75);
+    }
+    100% {
+        box-shadow: 1em -0.5em rgba(225, 20, 98, 0.75), -1em 0.5em rgba(111, 202, 220, 0.75);
+    }
+}
+
+@-webkit-keyframes loader-before {
+    0% {
+        width: 0.5em;
+        box-shadow: 1em -0.5em rgba(225, 20, 98, 0.75), -1em 0.5em rgba(111, 202, 220, 0.75);
+    }
+    35% {
+        width: 2.5em;
+        box-shadow: 0 -0.5em rgba(225, 20, 98, 0.75), 0 0.5em rgba(111, 202, 220, 0.75);
+    }
+    70% {
+        width: 0.5em;
+        box-shadow: -1em -0.5em rgba(225, 20, 98, 0.75), 1em 0.5em rgba(111, 202, 220, 0.75);
+    }
+    100% {
+        box-shadow: 1em -0.5em rgba(225, 20, 98, 0.75), -1em 0.5em rgba(111, 202, 220, 0.75);
+    }
+}
+
+@keyframes loader-after {
+    0% {
+        height: 0.5em;
+        box-shadow: 0.5em 1em rgba(61, 184, 143, 0.75), -0.5em -1em rgba(233, 169, 32, 0.75);
+    }
+    35% {
+        height: 2.5em;
+        box-shadow: 0.5em 0 rgba(61, 184, 143, 0.75), -0.5em 0 rgba(233, 169, 32, 0.75);
+    }
+    70% {
+        height: 0.5em;
+        box-shadow: 0.5em -1em rgba(61, 184, 143, 0.75), -0.5em 1em rgba(233, 169, 32, 0.75);
+    }
+    100% {
+        box-shadow: 0.5em 1em rgba(61, 184, 143, 0.75), -0.5em -1em rgba(233, 169, 32, 0.75);
+    }
+}
+
+@-webkit-keyframes loader-after {
+    0% {
+        height: 0.5em;
+        box-shadow: 0.5em 1em rgba(61, 184, 143, 0.75), -0.5em -1em rgba(233, 169, 32, 0.75);
+    }
+    35% {
+        height: 2.5em;
+        box-shadow: 0.5em 0 rgba(61, 184, 143, 0.75), -0.5em 0 rgba(233, 169, 32, 0.75);
+    }
+    70% {
+        height: 0.5em;
+        box-shadow: 0.5em -1em rgba(61, 184, 143, 0.75), -0.5em 1em rgba(233, 169, 32, 0.75);
+    }
+    100% {
+        box-shadow: 0.5em 1em rgba(61, 184, 143, 0.75), -0.5em -1em rgba(233, 169, 32, 0.75);
+    }
+}
+/*loading-end*/
+/*Header*/
+.jimu-main-header {
+    /*border:blue 1px solid;*/
+    position: absolute;
+    color: white;
+    /*border-radius: 3px;*/
+    box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.35);
+    -webkit-box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.35);
+}
+
+
+
+.jimu-main-header2 {
+    /*border:blue 1px solid;*/
+    position: absolute;
+}
+
+/*searchBox*/
+.jimu-main-searchBox {
+    position: absolute;
+    /*overflow:hidden;*/
+    /*border:1px solid red;*/
+}
+
+
+
+/*
+    ��?????��?��??��??��?????��???
+*/
+/*?��3����-*/
+.pano_close {
+    top: 65px !important;
+    border-radius: 50% !important;
+    border: 3px solid rgba(255, 255, 255, .5) !important;
+}
+
+/*PanoramaControl*/
+.BMap_ieundefined {
+    z-index: 20 !important;
+}
+
+/*
+    ��?????????????����?��??????
+*/
+.ui_city_change_inner {
+    height: 48px !important;
+    line-height: 48px !important;
+    opacity: .5 !important;
+    -webkit-transition-duration: .3s;
+    -ms-transition-duration: .3s;
+    transition-duration: .3s;
+    -webkit-transition-property: -webkit-transform, opacity;
+    -ms-transition-property: -ms-transform, opacity;
+    transition-property: transform, opacity;
+}
+
+.ui_city_change_inner:hover {
+    opacity: .8 !important;
+}
+
+/*????????????*/
+.ui_city_change_inner::before {
+    content: url(../img/icon-city.png) !important;
+    vertical-align: middle;
+    display: inline-block;
+    margin-right: 5px;
+}
+.ui_city_change_inner > i {
+    display: none !important;
+}
+
+/*myLocation*/
+.ui_city_location {
+    position: absolute;
+    box-shadow: 1px 1px 2px 1px rgba(144, 139, 139, 0.33);
+    text-align: center;
+    border: 1px solid #908B8B;
+    border-radius: 45%;
+    cursor: pointer;
+}
+
+.ui_city_location > span {
+    background: url(../img/location.png) no-repeat center center;
+    background-position: -14px 0;
+    display: inline-block;
+    width: 14px;
+    height: 15px;
+}
+
+.ui_city_location > span:hover {
+    background: url(../img/location.png) no-repeat center center;
+    background-position: 1px 0;
+}
+
+
+/*��??????��??????��???(?���????�?logo)*/
+.BMap_cpyCtrl .BMap_noprint .anchorBL {
+    display:none !important;
+    color:red !important;
+}
+
+.BMap_cpyCtrl {
+    display:none !important;
+    color:red !important;
+}
+.anchorBL img:first-child{
+    display:none !important;
+}
+
+/*��???????��???label??��???*/
+.BMapLabel {
+    max-width:none !important;
+    border-radius:5px !important;
+}
+
+
+/*scrollbar��??????????��?????��???*/
+::-webkit-scrollbar {  
+  width: 14px;  
+  height: 14px;  
+}  
+  
+::-webkit-scrollbar-track,  
+::-webkit-scrollbar-thumb {  
+  border-radius: 999px;  
+  border: 5px solid transparent;  
+}  
+  
+::-webkit-scrollbar-track {  
+  box-shadow: 1px 1px 5px rgba(0,0,0,.2) inset;  
+}  
+  
+::-webkit-scrollbar-thumb {  
+  min-height: 20px;  
+  background-clip: content-box;  
+  box-shadow: 0 0 0 5px rgba(152, 150, 150,.3) inset;  
+}  
+  
+::-webkit-scrollbar-corner {  
+  background: transparent;  
+}  
+
+/*IE*/
+::-ms-scrollbar {  
+  width: 14px;  
+  height: 14px;  
+}  
+  
+::-ms-scrollbar-track,  
+::-ms-scrollbar-thumb {  
+  border-radius: 999px;  
+  border: 5px solid transparent;  
+}  
+  
+::-ms-scrollbar-track {  
+  box-shadow: 1px 1px 5px rgba(0,0,0,.2) inset;  
+}  
+  
+::-ms-scrollbar-thumb {  
+  min-height: 20px;  
+  background-clip: content-box;  
+  box-shadow: 0 0 0 5px rgba(152, 150, 150,.3) inset;  
+}  
+  
+::-ms-scrollbar-corner {  
+  background: transparent;  
+}  
+/*ie-2*/
+::-scrollbar {  
+  width: 14px;  
+  height: 14px;  
+}  
+  
+::-scrollbar-track,::-scrollbar-thumb {  
+  border-radius: 999px;  
+  border: 5px solid transparent;  
+}  
+  
+::-scrollbar-track {  
+  box-shadow: 1px 1px 5px rgba(0,0,0,.2) inset;  
+}  
+  
+::-scrollbar-thumb {  
+  min-height: 20px;  
+  background-clip: content-box;  
+  box-shadow: 0 0 0 5px rgba(152, 150, 150,.3) inset;  
+}  
+  
+::-scrollbar-corner {  
+  background: transparent;  
+}  
+
+
+
+
+.jimu-head {
+     width:100%;
+     height:100%;
+}
+
+.jimu-head .jimu-head-content {
+     position: relative;
+     width:100%;
+     height:100%;
+     background:url(../img/head_bg.png) no-repeat;
+     /*border-radius:3px;*/
+}
+
+
+.jimu-head .jimu-head-leftTopBg{
+    position:absolute;
+    top:0;
+    left:0;
+    background:url(../img/leftTopBg.png) no-repeat;
+    width:116px;
+    height:33px;
+}
+.jimu-head .jimu-head-rightBottomBg{
+    position:absolute;
+    bottom:1px;
+    right:1px;
+    background:url(../img/rightBottomBg.png) no-repeat;
+    width:30px;
+    height:22px;
+}
+
+
+.jimu-head .jimu-head-logo {
+     float:left !important;
+     /*margin-top:3px;*/
+     margin-left:15px;
+}
+
+
+.jimu-head .jimu-head-title {
+    font-size:1.3em;
+    float:left !important;
+    font-weight:bold;
+    margin-left:8px;
+    color:#028dff;
+}
+
+
+.jimu-head .jimu-head-subtitle {
+     float:left !important;
+     margin-left: 0px;
+     font-size:14px;
+     color:#028dff;
+     cursor:pointer;
+}
+
+
+.jimu-head .jimu-head-subtitle:before {
+    content:url(../img/head_city.png);
+    width:5px;
+    height:9px;
+    margin: 0 5px 0 10px;
+}
+
+
+.jimu-head .jimu-head-title-light {
+      -webkit-transition: all 0.5s ease;
+      -ms-transition: all 0.5s ease;
+      transition: all 0.5s ease;
+}
+.jimu-head .jimu-head-title-light:hover{
+    -webkit-animation: light-shadow-animation 11.5s linear infinite alternate;
+    -ms-animation: light-shadow-animation 11.5s linear infinite alternate;
+    animation: light-shadow-animation 11.5s linear infinite alternate;
+
+    -webkit-transform: scale(1.08);
+    -ms-transform: scale(1.08);
+    transform: scale(1.08);
+}
+@-webkit-keyframes light-shadow-animation {
+  from {
+    text-shadow: 0 0 10px #fafad2,
+               0 0 20px  #fafad2,
+               0 0 30px  #fafad2,
+               0 0 40px  #228DFF,
+               0 0 70px  #228DFF,
+               0 0 80px  #228DFF,
+               0 0 100px #228DFF,
+               0 0 150px #228DFF;
+  }
+  to {
+    text-shadow: 0 0 5px #fafad2,
+               0 0 10px #fafad2,
+               0 0 15px #fafad2,
+               0 0 20px #228DFF,
+               0 0 35px #228DFF,
+               0 0 40px #228DFF,
+               0 0 50px #228DFF,
+               0 0 75px #228DFF;
+  }
+}
+@keyframes light-shadow-animation {
+  from {
+    text-shadow: 0 0 10px #fafad2,
+               0 0 20px  #fafad2,
+               0 0 30px  #fafad2,
+               0 0 40px  #228DFF,
+               0 0 70px  #228DFF,
+               0 0 80px  #228DFF,
+               0 0 100px #228DFF,
+               0 0 150px #228DFF;
+  }
+  to {
+    text-shadow: 0 0 5px #fafad2,
+               0 0 10px #fafad2,
+               0 0 15px #fafad2,
+               0 0 20px #228DFF,
+               0 0 35px #228DFF,
+               0 0 40px #228DFF,
+               0 0 50px #228DFF,
+               0 0 75px #228DFF;
+  }
+}
+
+/*mask?|??a�??��??a�?*/
+.jimu-head .jimu-head-masked {
+    
+    cursor: none;
+    left:-100%;
+    position: absolute;
+    top:0px;
+    width: 18px;
+    height: 100%;
+    background-image: -ms-linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2));
+    background-image: -webkit-linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2));
+    transform: skewx(-25deg);
+    -ms-transform: skewx(-25deg);
+    -webkit-transform: skewx(-25deg);
+
+    animation:masked-light-animation 6s infinite linear;
+    -webkit-animation: masked-light-animation 6s infinite linear;
+    -ms-animation: masked-light-animation 6s infinite linear;
+    border-top:3px solid rgba(255,165,0, 1);
+}
+
+@keyframes masked-light-animation {
+    0%   { opacity:0.6;  left: -100%;border-top:3px solid rgba(255,165,0, 0)}
+    50%  { opacity:1;   border-top:3px solid rgba(255,165,0, 1)}
+    80%  {  border-top:3px solid rgba(255,165,0, 0.6)}
+    100% { opacity:0.5; left: 99%;border-top:3px solid rgba(255,165,0, 0)}
+}
+@-webkit-keyframes masked-light-animation {
+    0%   { opacity:0.6;  left: -100%;border-top:3px solid rgba(255,165,0, 0)}
+    50%  { opacity:1;   border-top:3px solid rgba(255,165,0, 1)}
+    80%  {  border-top:3px solid rgba(255,165,0, 0.6)}
+    100% { opacity:0.5; left: 99%;border-top:3px solid rgba(255,165,0, 0)}
+}
+@-ms-keyframes masked-light-animation {
+    0%   { opacity:0.6;  left: -100%;border-top:3px solid rgba(255,165,0, 0)}
+    50%  { opacity:1;   border-top:3px solid rgba(255,165,0, 1)}
+    80%  {  border-top:3px solid rgba(255,165,0, 0.6)}
+    100% { opacity:0.5; left: 99%;border-top:3px solid rgba(255,165,0, 0)}
+}
+
+
+#ToolBar-Panel {
+   width:auto;
+   position:absolute;
+   left: 50% ;
+   transform: translateX(-50%); 
+}
+.jimu-main-absolute {
+    /*border:blue 1px solid;*/
+    position: absolute;
+    right: 0 !important;
+   
+   
+}
+.jimu-toolbar {
+     width:auto;
+     height:100%;
+     /*background-color:rgba(10,70,128, 0.9);*/
+     /*background-color:rgba(3,26,48,1);*/
+     position: relative;
+     border-radius:3px;
+     display: table;
+     font-size:16px;
+}
+.jimu-toolbar .jimu-toolbar-left {
+    width:59px;
+    height:66px;
+    background:url(../img/bg_left.png) no-repeat;
+    left:0;
+    top:0;
+}
+.jimu-toolbar .jimu-toolbar-right {
+     width:60px;
+     height:66px;
+     background:url(../img/bg_right.png) no-repeat;
+     right:0;
+     top:0;
+}
+.jimu-toolbar .jimu-toolbar-middle {
+    background:url(../img/bg_middle.png) repeat-x;
+}
+
+.jimu-toolbar .jimu-list {
+    width:auto;
+  text-align:center;
+    display: table-cell;  
+    vertical-align: top;  
+    color:#00a7ff;
+}
+
+.jimu-toolbar .jimu-list ul {
+    
+    margin-top:2%;
+    width:auto;
+    white-space:nowrap;
+    
+}
+
+.jimu-toolbar .jimu-list-ul li {
+    display: inline-block;
+    padding:0 10px;
+    text-align:center;
+    cursor:pointer;
+    /*border:1px solid red;*/
+}
+
+.jimu-toolbar .jimu-list-ul li:hover {
+     color:#FFFFFF;
+     text-shadow: 0 0 5px #fff,
+               0 0 5px #fff,
+               0 0 10px #fff,
+               0 0 20px #228DFF,
+               0 0 35px #228DFF,
+               0 0 40px #228DFF,
+               0 0 50px #228DFF,
+               0 0 75px #228DFF;
+     -webkit-transition-duration: 500ms;
+     -ms-transition-duration: 500ms;
+     transition-duration:  500ms;
+}
+.jimu-toolbar .jimu-list-ul-li-select {
+     color:#FFFFFF;
+     text-shadow: 0 0 5px #fff,
+               0 0 5px #fff,
+               0 0 10px #fff,
+               0 0 20px #228DFF,
+               0 0 35px #228DFF,
+               0 0 40px #228DFF,
+               0 0 50px #228DFF,
+               0 0 75px #228DFF;
+     -webkit-transition-duration: 500ms;
+     -ms-transition-duration: 500ms;
+     transition-duration:  500ms;
+}
+
+.jimu-toolbar .icon-area{
+    height:24px;
+    width:25px;
+    background-position:center center;
+    background-repeat:no-repeat;
+    float:left;
+}
+
+.jimu-toolbar .jimu-list a {
+     color:#F5F2F2;
+     text-decoration:none;
+}
+/*ʱ������*/
+.jimu-clock {
+     width:100%;
+     height:100%;
+     font-size:14px;
+     text-align:center;
+     color:#818E9B;
+     font-weight:bold;
+     /*border:1px solid green;*/
+}
+
+.jimu-clock .jimu-clock-content {
+     position: relative;
+     width:100%;
+     height:100%;
+     border-radius:3px;
+     font-family:sans-serif;
+     background:url(../img/bg.png) no-repeat;
+     background-size:100% 100%;
+}
+
+/*
+    ����
+*/
+.jimu-clock .jimu-clock-content ul{
+    list-style:none;
+    margin:auto;
+    padding:0;
+    float:left;
+    font-size:12px;
+    color:#5d656b;
+    margin-left:5px;
+}
+.jimu-clock .jimu-clock-content li{
+    line-height: 22px;
+    text-align: center;
+}
+/*
+    Сʱ
+*/
+.jimu-clock .jimu-clock-hours {
+    color:#fe8c00;
+    font-size:24px;
+    float:left;
+    margin:0px 1px 0px 0px;
+    margin-left:5px;
+}
+
+/*��������С��ָ���ߴ�*/
+
+@media screen and (max-width:1024px ) {/*С��1024����*/
+  #Clock-Panel {
+    right:110px !important;
+    display:none;
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1185px) {
+  #Clock-Panel {
+    right:120px !important;
+  }
+}
+
+/*�ײ���Ȩ����*/
+#afoot-Panel{
+	width: 27% !important;
+	left: 37% !important;
+}
+.jimu-foot-content {
+     width:100%;
+     height:100%;
+     font-size:14px;
+     text-align:center;
+     color:#818E9B;
+     font-weight:bold;
+     /*border:1px solid green;*/
+}
+
+.jimu-foot-content .jimu-foot-bg {
+    background: url(../img/foot_bg.png) no-repeat center center;
+    width: 100%; 
+    height: 30px;
+    line-height: 100%;
+    text-align:center;
+}
+.jimu-foot-content .jimu-foot-name {
+    background: url(../img/zte_itslogo.png) no-repeat center center;
+    height:100%;   
+}
+.jimu-clock-day{
+    font-size: 30px;
+    color:#fe8c00;
+    font-weight: bold;
+    width:160px;
+    text-align: center;
+    padding-top:10px;
+}

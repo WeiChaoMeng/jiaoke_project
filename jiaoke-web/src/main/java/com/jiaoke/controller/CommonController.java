@@ -53,13 +53,22 @@ public class CommonController {
      */
     @RequestMapping("/")
     public String index(){
-        return "login";
+//        return "login";
         //新ui框架主页
-//        return "new/login";
+        return "new/login";
     }
 
     /**
-     * 登录成功后进入首页
+     * 登录成功后跳转
+     * @return jsp
+     */
+    @RequestMapping("/loginJump.do")
+    public String loginJump(){
+        return "loginJump";
+    }
+
+    /**
+     * 登录成功后进入首页(普通页面)
      *
      * @return security_index.jsp
      */
@@ -71,7 +80,39 @@ public class CommonController {
     }
 
     /**
-     * 登录成功后进入首页(管理层)
+     * 登录成功后进入首页(驾驶舱)
+     *
+     * @return security_index.jsp
+     */
+    @RequestMapping("/cockpitPage.do")
+    public String cockpitPage(Model model) {
+        UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
+        model.addAttribute("nickname", userInfo.getNickname());
+        return "cockpit/pages/index1";
+    }
+
+    /**
+     * 质量管控-领导驾驶舱页面
+     *
+     * @return jsp
+     */
+    @RequestMapping("/qualityCockpitPage.do")
+    public String qualityCockpitPage(){
+        return "cockpit/pages/sszlIndex";
+    }
+
+    /**
+     * 实验管理-领导驾驶舱页面
+     *
+     * @return jsp
+     */
+    @RequestMapping("/experimentCockpitPage.do")
+    public String experimentCockpitPage(){
+        return "cockpit/pages/szxcIndex";
+    }
+
+    /**
+     * 登录成功后进入首页(管理层) - 未使用
      *
      * @return security_index.jsp
      */
@@ -83,7 +124,7 @@ public class CommonController {
     }
 
     /**
-     * 登录成功后进入首页（基础层）
+     * 登录成功后进入首页（基础层） - 未使用
      *
      * @return security_index.jsp
      */

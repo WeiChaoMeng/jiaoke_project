@@ -1,0 +1,279 @@
+/*泵站信息样式修改*/
+.bz-news{
+	height: 100%;
+	overflow: hidden;
+	padding:0 10px;
+}
+.bridge-title{
+	border-top: 1px solid #18334E;
+	border-right: 1px solid #18334E;
+	height: 32px;
+	line-height: 32px;
+	width: 100%;
+	overflow: hidden;
+}
+
+.bridge-title li{
+	float: left;
+	border-left: 1px solid #18334E;
+	vertical-align: middle;
+	color: #fff;
+	height: 32px;
+}	
+
+.bz-xh{
+	width:5%;
+	text-align: center;
+}
+.bz-name{
+	width:15%;
+	text-align: center;
+}
+.bz-add{
+	width:15%;
+	text-align: center;
+}
+.bz-glv{
+	width:15%;
+	text-align: center;
+}
+.bz-img{
+	width:50%;
+	text-align: center;
+}
+.bridge-table{
+	width: 100%;
+	border-top: 1px solid #18334E;
+	border-right: 1px solid #18334E;
+}
+.bridge-table li{
+	overflow: hidden;
+	height: 70px;
+	line-height: 70px;
+	color: #fff;
+	border-bottom: 1px solid #18334E;
+}
+.bridge-table li span{
+	float: left;
+	border-left: 1px solid #18334E;
+	
+}
+
+#demo1,#demo2{
+	margin-top:0;
+	
+	margin-bottom:0;
+	padding: 0;
+	clear: both;
+	overflow: hidden
+}
+
+
+
+/*左侧导航*/
+.content-box{
+	position: absolute;
+    width: 96%;
+    height: 78%;
+    left: 50px;
+    right: auto;
+    top: 14%;
+    bottom: auto;
+}
+.main-box{
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+}
+.sub-nav-left{
+	height: 100%;
+	width: 100%;
+	background: #062745;
+	overflow: hidden;
+}
+
+.sub-con-right{
+	height: 100%;
+	width: 100%;
+	background: #011f39;
+	overflow: hidden;
+}
+.sub-li li{
+	text-align: center;
+	font-size:14px;
+	line-height: 50px;
+	border-bottom: 1px solid #1b364d;
+}
+.sub-li li:hover{
+	background: #825a24;
+}
+.sub-li li a{
+	color:#fff;
+	cursor: pointer;
+	display: block;
+}
+.sub-li li.ahover{
+	background: #da7e0b;
+	display: block;
+	color: #fff;
+}
+
+/*右侧内容*/
+.sub-con-right{
+	height: 100%;
+	width: 100%;
+	background: #011f39;
+	overflow: hidden;
+}
+.main-con-title{
+	height: 33px;
+	line-height: 33px;
+	border-bottom:1px solid #173756 ;
+	
+}
+.main-tit-name{
+	color: #fff;
+	font-size: 14px;
+	padding-left:20px;
+	
+}
+
+.table-box{
+	padding:30px 30px 0;
+}
+.t-head{
+	background: #084b74;
+}
+.t-head tr th{
+	font-size:14px;
+	color: #fff;
+	
+}
+.t-body tr td{
+	font-size:14px;
+	color: #fff;
+	
+}
+.table-box > table{
+	border: 1px solid #183f5e;
+	
+}
+.table-box > table > thead > tr > th{
+	border: 1px solid #183f5e;
+	text-align: center;
+	vertical-align: middle;
+	
+}
+.table-box > table > tbody > tr > td{
+	border: 1px solid #183f5e;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.table-box > table > tbody > tr:hover, 
+.table-box > table > tbody > tr > td:hover{
+	background: #052846;
+}
+.table-box tr.action{
+	background: #052846;
+}
+.cz-btn{
+	background: url(../img/cz-btn.png) no-repeat;
+	width: 57px;
+	height: 25px;
+	vertical-align: middle;
+	border: none;
+}
+.dw-btn{
+	background: url(../img/dw-btn.png) no-repeat;
+	width: 57px;
+	height: 25px;
+	vertical-align: middle;
+	border: none;
+}
+
+
+
+/*详细页面*/
+.detailed-table{
+	padding:30px 30px 0;
+}
+.detailed-table > table{
+	border: 1px solid #183f5e;
+	color: #fff;
+}
+.detailed-table > table > thead > tr > th{
+	border: 1px solid #183f5e;
+	text-align: center;
+	vertical-align: middle;
+}
+.detailed-table > table > tbody > tr > td{
+	border: 1px solid #183f5e;
+	text-align: center;
+	vertical-align: middle;
+}
+.bgclor{
+	background: #052846;
+
+}
+
+
+
+/*病害修改页面*/
+
+.alter-table{
+	padding:30px 30px 0;
+}
+.alter-table select{
+	border: 1px solid #224d6f;
+	background: #183f5e;
+}
+.alter-table input{
+	border: 1px solid #224d6f;
+	background: #183f5e;
+}
+
+
+.alter-table > table{
+	border: 1px solid #183f5e;
+	color: #fff;
+}
+.alter-table > table > thead > tr > th{
+	border: 1px solid #183f5e;
+	
+	vertical-align: middle;
+}
+.alter-table > table > tbody > tr > td{
+	border: 1px solid #183f5e;
+	
+	vertical-align: middle;
+}
+.file-img input{
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 5px;
+}
+.file-img button{
+	display: inline-block;
+	vertical-align: middle;
+}
+.sc-btn{
+	border: 1px solid #0c385f;
+	width:60px;
+	background: #2f8bc3;
+	height: 24px;
+	font-size:12px;
+	color:#fff;
+	display: inline-block;
+}
+.impor{
+	color: #f00;
+	font-size:18px;
+	font-style: normal;
+	vertical-align: middle;
+	width:15px;
+	margin-top:8px;
+	display: inline-block;
+	line-height: normal;
+	
+}
