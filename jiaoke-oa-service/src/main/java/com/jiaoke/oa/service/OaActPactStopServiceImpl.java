@@ -72,7 +72,6 @@ public class OaActPactStopServiceImpl implements OaActPactStopService {
         OaActPactStop oaActPactStop = oaActPactStopMapper.selectByPrimaryKey(id);
         oaActPactStop.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActPactStop.getCreateTime()));
         oaActPactStop.setPromoterStr(userInfoMapper.getNicknameById(oaActPactStop.getPromoter()));
-        oaActPactStop.setNotifiedPersonStr(userInfoMapper.getNicknameById(oaActPactStop.getNotifiedPerson()));
         return oaActPactStop;
     }
 

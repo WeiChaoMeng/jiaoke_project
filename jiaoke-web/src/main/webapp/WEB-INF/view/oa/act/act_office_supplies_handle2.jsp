@@ -102,10 +102,11 @@
         <thead>
         <tr>
             <th style="width: 7%">序号</th>
-            <th style="width: 45%">项目</th>
-            <th style="width: 16%">数量</th>
-            <th style="width: 16%">单价</th>
-            <th style="width: 16%">金额(元)</th>
+            <th style="width: 41%">项目</th>
+            <th style="width: 13%">单位</th>
+            <th style="width: 13%">数量</th>
+            <th style="width: 13%">单价</th>
+            <th style="width: 13%">金额(元)</th>
         </tr>
         </thead>
 
@@ -114,6 +115,7 @@
             <tr>
                 <td class="table-td-content" style="text-align: center">${status.index+1}</td>
                 <td class="table-td-content">${list.item}</td>
+                <td class="table-td-content">${list.unit}</td>
                 <td class="table-td-content">${list.number}</td>
                 <td class="table-td-content">${list.price}</td>
                 <td class="table-td-content">${list.money}</td>

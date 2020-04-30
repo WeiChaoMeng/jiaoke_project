@@ -173,6 +173,19 @@
         </tr>
 
         <tr>
+            <td class="tdLabel">审核人</td>
+            <td class="table-td-content" colspan="3">
+                <shiro:hasPermission name="principal">
+                    <div style="width: 100%;height: 100%;" id="principalContent"></div>
+                </shiro:hasPermission>
+
+                <shiro:lacksPermission name="principal">
+                    ${oaActCar.principal}
+                </shiro:lacksPermission>
+            </td>
+        </tr>
+
+        <tr>
             <td class="tdLabel">查表计数人</td>
             <td class="table-td-content">
                 <shiro:hasPermission name="lookup">
@@ -193,19 +206,6 @@
                 <shiro:lacksPermission name="lookup">
                     <input type="hidden" class="formInput je-end-date" onfocus="this.blur()">
                     ${oaActCar.endTime}
-                </shiro:lacksPermission>
-            </td>
-        </tr>
-
-        <tr>
-            <td class="tdLabel">审核人</td>
-            <td class="table-td-content" colspan="3">
-                <shiro:hasPermission name="principal">
-                    <div style="width: 100%;height: 100%;" id="principalContent"></div>
-                </shiro:hasPermission>
-
-                <shiro:lacksPermission name="principal">
-                    ${oaActCar.principal}
                 </shiro:lacksPermission>
             </td>
         </tr>

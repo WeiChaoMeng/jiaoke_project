@@ -125,7 +125,8 @@
         <tr>
             <td class="tdLabel">文件标题</td>
             <td colspan="3" class="table-td-content" style="padding: 10px">
-                <textarea class="write-approval-content-textarea" oninput="value=value.replace(/\s+/g,'')" name="fileTitle"></textarea>
+                <textarea class="write-approval-content-textarea" oninput="value=value.replace(/\s+/g,'')"
+                          name="fileTitle"></textarea>
             </td>
         </tr>
 
@@ -141,6 +142,13 @@
                     <label class="approval-signature-label">签字 </label>
                     <input class="approval-signature-input" type="text" readonly>
                 </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">部门意见</td>
+            <td colspan="5" class="approval-content">
+                <textarea class="approval-content-textarea" readonly></textarea>
             </td>
         </tr>
 
@@ -170,6 +178,33 @@
                 <div class="approval-signature">
                     <label class="approval-signature-label">签字 </label>
                     <input class="approval-signature-input" type="text" readonly>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">保存期限</td>
+            <td colspan="5" class="approval-content">
+                <textarea class="approval-content-textarea" readonly></textarea>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <div class="dep-radio">
+                    <div class="input-radio-div">
+                        <input type="radio" class="radio-style" name="receiptDepartment" value="1" checked>
+                        <span style="font-size: 13px;">领导班子成员</span>
+                    </div>
+                    <div class="input-radio-div">
+                        <input type="radio" class="radio-style" name="receiptDepartment" value="2">
+                        <span style="font-size: 13px;">各部室负责人</span>
+                    </div>
+                    <div class="input-radio-div">
+                        <input type="radio" class="radio-style" name="receiptDepartment" value="0">
+                        <span style="font-size: 13px;">无</span>
+                    </div>
                 </div>
             </td>
         </tr>

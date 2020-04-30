@@ -208,11 +208,11 @@
         <tr>
             <td class="tdLabel">所在部门意见</td>
             <td colspan="5" class="approval-content">
-                <shiro:hasPermission name="office_principal">
+                <shiro:hasPermission name="principal">
                     <div style="width: 100%;height: 100%;" id="principalContent"></div>
                 </shiro:hasPermission>
 
-                <shiro:lacksPermission name="office_principal">
+                <shiro:lacksPermission name="principal">
                     <textarea readonly class="approval-content-textarea">${oaActRotation.principalContent}</textarea>
                     <div class="approval-date">
                         <label class="approval-date-label">日期 </label>
@@ -229,11 +229,11 @@
         <tr>
             <td class="tdLabel">分管部门意见</td>
             <td colspan="5" class="approval-content">
-                <shiro:hasPermission name="quality_principal">
+                <shiro:hasPermission name="principal">
                     <div style="width: 100%;height: 100%;" id="transferPrincipalContent"></div>
                 </shiro:hasPermission>
 
-                <shiro:lacksPermission name="quality_principal">
+                <shiro:lacksPermission name="principal">
                 <textarea readonly
                           class="approval-content-textarea">${oaActRotation.transferPrincipalContent}</textarea>
                     <div class="approval-date">

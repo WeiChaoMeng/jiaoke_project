@@ -100,7 +100,7 @@ public class OaActDepartureController {
                     set.add(department.getSupervisor());
                 }
             }
-            map.put("resignationCountersignList", set);
+            map.put("resignation_countersign_list", set);
             String instance = activitiUtil.startProcessInstanceByKey("oa_departure", "oa_act_departure:" + randomId, map, getCurrentUser().getId().toString());
             if (instance != null) {
                 return "success";
@@ -223,46 +223,6 @@ public class OaActDepartureController {
                 }
             }
         }
-
-//        if (flag == 1) {
-//            String nextNode = activitiUtil.getNextNode(task.getProcessDefinitionId(), task.getTaskDefinitionKey());
-//            if (end.equals(nextNode)) {
-//                activitiUtil.endProcess(taskId);
-//                return "success";
-//            } else {
-//                String processingOpinion = "";
-//                UserTask userTask = activitiUtil.getUserTask(task.getProcessDefinitionId(), nextNode);
-//                if (nextNode.equals(userTask.getId())) {
-//                    String enforcer = userTask.getAssignee().substring(userTask.getAssignee().indexOf("{") + 1, userTask.getAssignee().indexOf("}"));
-//
-//                    if (leaveNotify.equals(enforcer)) {
-//                        List<UserInfo> userInfoList = userInfoService.selectMultipleByPermission("leaveNotify");
-//                        Map<String, Object> map = new HashMap<>(16);
-//                        List<Object> leaveNotifyList = new ArrayList<>();
-//                        for (UserInfo user : userInfoList) {
-//                            leaveNotifyList.add(user.getId());
-//                        }
-//                        leaveNotifyList.add(oaActDeparture.getPromoter());
-//                        map.put("leaveNotifyList", leaveNotifyList);
-//                        activitiUtil.designatedCountersignPersonnel(taskId, map);
-//                        return "success";
-//
-//                    } else {
-//                        UserInfo userInfo = userInfoService.getUserInfoByPermission(enforcer);
-//                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
-//                        return "success";
-//                    }
-//                } else {
-//                    return "error";
-//                }
-//            }
-//        } else {
-//            //驳回
-//            managementService.executeCommand(new TargetFlowNodeCommand(task.getId(), back));
-//            //修改表单状态
-//            oaCollaborationService.updateState(oaActDeparture.getId(), 3);
-//            return "success";
-//        }
     }
 
     /**
@@ -356,7 +316,7 @@ public class OaActDepartureController {
                     set.add(department.getSupervisor());
                 }
             }
-            map.put("resignationCountersignList", set);
+            map.put("resignation_countersign_list", set);
             String instance = activitiUtil.startProcessInstanceByKey("oa_departure", "oa_act_departure:" + oaActDeparture.getId(), map, getCurrentUser().getId().toString());
             if (instance != null) {
                 //发送成功后更新状态

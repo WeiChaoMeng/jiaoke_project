@@ -180,13 +180,8 @@
         </tr>
 
         <tr>
-            <td class="tdLabel">用料单位</td>
-            <td class="table-td-content">
-                <input type="text" class="formInput" name="useCompany" value="${oaActEngineering.useCompany}" autocomplete="off">
-            </td>
-
             <td class="tdLabel">业务员</td>
-            <td class="table-td-content">
+            <td class="table-td-content" colspan="3">
                 <input type="text" class="formInput-readonly" name="salesman" value="${oaActEngineering.salesman}" readonly="readonly">
             </td>
         </tr>
@@ -197,7 +192,7 @@
                 <input type="text" class="formInput-readonly" readonly>
             </td>
 
-            <td class="tdLabel">经营部长</td>
+            <td class="tdLabel">经营主管</td>
             <td class="table-td-content">
                 <input type="text" class="formInput-readonly" readonly>
             </td>

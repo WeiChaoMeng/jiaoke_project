@@ -91,7 +91,7 @@ public class OaActPactStopController {
             return "error";
         } else {
             Map<String, Object> map = new HashMap<>(16);
-            map.put("notified_person", oaActPactStop.getNotifiedPerson());
+            map.put("notified_person", oaActPactStop.getNotifiedPersonId());
             String instance = activitiUtil.startProcessInstanceByKey("oa_pact_stop", "oa_act_pact_stop:" + randomId, map, getCurrentUser().getId().toString());
             if (instance != null) {
                 return "success";
@@ -178,7 +178,7 @@ public class OaActPactStopController {
                         Map<String, Object> map = new HashMap<>(16);
                         List<Object> maintainNotifyList = new ArrayList<>();
                         maintainNotifyList.add(oaActPactStop.getPromoter());
-                        maintainNotifyList.add(oaActPactStop.getNotifiedPerson());
+                        maintainNotifyList.add(oaActPactStop.getNotifiedPersonId());
                         map.put("maintainNotifyList", maintainNotifyList);
                         activitiUtil.designatedCountersignPersonnel(taskId, map);
                         return "success";
@@ -266,7 +266,7 @@ public class OaActPactStopController {
             return "error";
         } else {
             Map<String, Object> map = new HashMap<>(16);
-            map.put("notified_person", oaActPactStop.getNotifiedPerson());
+            map.put("notified_person", oaActPactStop.getNotifiedPersonId());
             String instance = activitiUtil.startProcessInstanceByKey("oa_pact_stop", "oa_act_pact_stop:" + oaActPactStop.getId(), map, getCurrentUser().getId().toString());
             if (instance != null) {
                 //发送成功后更新状态

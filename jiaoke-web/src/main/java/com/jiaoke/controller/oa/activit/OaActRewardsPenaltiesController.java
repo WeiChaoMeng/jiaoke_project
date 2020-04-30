@@ -92,7 +92,7 @@ public class OaActRewardsPenaltiesController {
             for (UserInfo userInfo : userInfoList) {
                 countersignList.add(userInfo.getId());
             }
-            map.put("supervisorCountersignList", countersignList);
+            map.put("supervisor_countersign_list", countersignList);
             String instance = activitiUtil.startProcessInstanceByKey("oa_rewards_penalties", "oa_act_rewards_penalties:" + randomId, map, getCurrentUser().getId().toString());
             if (instance != null) {
                 return "success";
@@ -347,7 +347,7 @@ public class OaActRewardsPenaltiesController {
             for (UserInfo userInfo : userInfoList) {
                 countersignList.add(userInfo.getId());
             }
-            map.put("supervisorCountersignList", countersignList);
+            map.put("supervisor_countersign_list", countersignList);
             String instance = activitiUtil.startProcessInstanceByKey("oa_rewards_penalties", "oa_act_rewards_penalties:" + oaActRewardsPenalties.getId(), map, getCurrentUser().getId().toString());
             if (instance != null) {
                 //发送成功后更新状态

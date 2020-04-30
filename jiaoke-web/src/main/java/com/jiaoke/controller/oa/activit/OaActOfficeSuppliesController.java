@@ -108,7 +108,7 @@ public class OaActOfficeSuppliesController {
         } else {
             UserInfo userInfo = userInfoService.getUserInfoByPermission("office_supplies_review");
             Map<String, Object> map = new HashMap<>(16);
-            map.put("office_supplies_review", userInfo.getId());
+            map.put("review", userInfo.getId());
             String instance = activitiUtil.startProcessInstanceByKey("oa_office_supplies", "oa_act_office_supplies:" + randomId, map, getCurrentUser().getId().toString());
             if (instance != null) {
                 return "success";
@@ -215,7 +215,7 @@ public class OaActOfficeSuppliesController {
                     UserInfo userInfo = userInfoService.getUserInfoByPermission("office_supplies_supervisor");
                     Map<String, Object> map = new HashMap<>(16);
                     map.put("whether", 0);
-                    map.put("office_supplies_supervisor", userInfo.getId());
+                    map.put("supervisor", userInfo.getId());
                     activitiUtil.approvalComplete(taskId, map);
                     return updateByPrimaryKeySelective(oaActOfficeSupplies);
                 } else {
@@ -395,7 +395,7 @@ public class OaActOfficeSuppliesController {
         //更新数据
         UserInfo userInfo = userInfoService.getUserInfoByPermission("office_supplies_review");
         Map<String, Object> map = new HashMap<>(16);
-        map.put("office_supplies_review", userInfo.getId());
+        map.put("review", userInfo.getId());
         String instance = activitiUtil.startProcessInstanceByKey("oa_office_supplies", "oa_act_office_supplies:" + oaActOfficeSupplies.getId(), map, getCurrentUser().getId().toString());
         if (instance != null) {
             //发送成功后更新状态

@@ -95,33 +95,42 @@
 
         <td class="tdLabel">确认金额（元）</td>
         <td colspan="2" class="table-td-content">
-            ${oaActConfirm.money}
+            ${oaActConfirm.total}
         </td>
     </tr>
 
     </tbody>
+</table>
 
+<table class="formTable" style="margin: 0">
     <tbody id="tbo">
     <c:forEach items="${oaActConfirm.oaConfirmList}" var="list" varStatus="status">
         <tr>
-            <td class="tdLabel">品种</td>
-            <td class="table-td-content">
+            <td class="tdLabel" style="width: 10%">品种</td>
+            <td class="table-td-content" style="width: 20%">
                     ${list.variety}
             </td>
 
-            <td class="tdLabel">单价（元/吨）</td>
+            <td class="tdLabel" style="width: 10%">单价（元/吨）</td>
             <td class="table-td-content">
                     ${list.univalent}
             </td>
 
-            <td class="tdLabel">数量（吨）</td>
+            <td class="tdLabel" style="width: 10%">数量（吨）</td>
             <td class="table-td-content">
                     ${list.number}
+            </td>
+
+            <td class="tdLabel" style="width: 10%">金额（元）</td>
+            <td class="table-td-content">
+                    ${list.money}
             </td>
         </tr>
     </c:forEach>
     </tbody>
+</table>
 
+<table class="formTable" style="margin: 0">
     <tbody>
     <tr>
         <td class="tdLabel">数量是否与ERP一致</td>

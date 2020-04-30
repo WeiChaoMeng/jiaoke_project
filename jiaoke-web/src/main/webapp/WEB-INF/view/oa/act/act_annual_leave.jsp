@@ -119,7 +119,7 @@
         <tr>
             <td class="tdLabel">累计享受休假天数</td>
             <td class="table-td-content">
-                <input type="text" class="formInput" name="cumulative" oninput="value=value.replace(/^(0+)|[^\d]/g,'')"
+                <input type="text" class="formInput" name="cumulative" oninput="value=value.replace(/^0(0+)|[^\d]/g,'')"
                        autocomplete="off">
             </td>
 

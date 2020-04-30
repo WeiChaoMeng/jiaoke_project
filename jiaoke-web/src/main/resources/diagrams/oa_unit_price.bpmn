@@ -2,8 +2,8 @@
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.activiti.org/test" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" expressionLanguage="http://www.w3.org/1999/XPath" id="m1587397092960" name="" targetNamespace="http://www.activiti.org/test" typeLanguage="http://www.w3.org/2001/XMLSchema">
   <process id="oa_unit_price" isClosed="false" isExecutable="true" name="单价审批表" processType="None">
     <startEvent id="start" name="开始"/>
-    <userTask activiti:assignee="${operating_principal}" activiti:exclusive="true" id="up1" name="经营负责人"/>
-    <userTask activiti:assignee="${operating_supervisor}" activiti:exclusive="true" id="up2" name="经营主管领导"/>
+    <userTask activiti:assignee="${business_principal}" activiti:exclusive="true" id="up1" name="经营负责人"/>
+    <userTask activiti:assignee="${business_supervisor}" activiti:exclusive="true" id="up2" name="经营主管领导"/>
     <userTask activiti:assignee="${company_principal}" activiti:exclusive="true" id="up3" name="总经理"/>
     <userTask activiti:assignee="${promoter}" activiti:exclusive="true" id="up4" name="发起人"/>
     <endEvent id="end" name="结束"/>

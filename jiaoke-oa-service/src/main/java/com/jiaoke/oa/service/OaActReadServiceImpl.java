@@ -3,8 +3,8 @@ package com.jiaoke.oa.service;
 import com.jiake.utils.DateUtil;
 import com.jiaoke.oa.bean.OaActRead;
 import com.jiaoke.oa.bean.OaCollaboration;
-import com.jiaoke.oa.dao.OaActReadMapper;
-import com.jiaoke.oa.dao.OaCollaborationMapper;
+import com.jiaoke.oa.bean.UserInfo;
+import com.jiaoke.oa.dao.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -26,12 +26,17 @@ public class OaActReadServiceImpl implements OaActReadService {
     @Resource
     private OaCollaborationMapper oaCollaborationMapper;
 
+    @Resource
+    private UserInfoMapper userInfoMapper;
+
     @Override
     public int insert(OaActRead oaActRead, Integer userId, String randomId, Integer state) {
         oaActRead.setId(randomId);
         oaActRead.setCreateTime(new Date());
         oaActRead.setPromoter(userId);
         oaActRead.setUrl("read");
+        UserInfo userInfo = userInfoMapper.selectByPermission("handling_result");
+        oaActRead.setHandlingResult(userInfo.getNickname());
         oaActRead.setState(0);
         if (oaActReadMapper.insertSelective(oaActRead) < 0) {
             return -1;

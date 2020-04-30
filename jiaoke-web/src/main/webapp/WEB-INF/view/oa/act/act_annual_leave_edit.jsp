@@ -153,7 +153,7 @@
             <td class="tdLabel">累计享受休假天数</td>
             <td class="table-td-content">
                 <input type="text" class="formInput" name="cumulative" value="${oaActAnnualLeave.cumulative}"
-                       oninput="value=value.replace(/^(0+)|[^\d]/g,'')" autocomplete="off">
+                       oninput="value=value.replace(/^0(0+)|[^\d]/g,'')" autocomplete="off">
             </td>
 
             <td class="tdLabel">实际休假时间</td>

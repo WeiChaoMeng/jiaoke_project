@@ -165,7 +165,7 @@
             </div>
 
             <div class="opinion-supervisor" style="width: 32%;float: left;margin: 0 3px;">
-                <label class="opinion-principal-title"></label>
+                <label class="opinion-principal-title">部门负责人</label>
                     <textarea class="opinion-column-Juxtaposition" readonly>${oaActRelieveLaborContract.principalContentT}</textarea>
                     <div class="approval-date">
                         <label class="approval-date-label">日期 </label>

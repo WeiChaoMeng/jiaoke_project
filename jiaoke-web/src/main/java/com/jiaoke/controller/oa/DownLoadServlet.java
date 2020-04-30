@@ -43,7 +43,7 @@ public class DownLoadServlet {
         fileName = URLDecoder.decode(fileName,"UTF-8");
 //        fileName = new String(fileName.getBytes("iso8859-1"), "UTF-8");
         //得到要下载的文件
-        File file = new File(FILE_PATH + "\\" + fileName);
+        File file = new File(FILE_PATH + fileName);
         //如果文件不存在
         if (!file.exists()) {
             Map<String, Object> map = new HashMap<>(16);

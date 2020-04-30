@@ -99,7 +99,7 @@
         </tr>
 
         <tr>
-            <td class="tdLabel">变更前用料单位</td>
+            <td class="tdLabel" colspan="">变更前用料单位</td>
             <td class="table-td-content">
                 <input type="text" class="formInput" name="beforeCompany" autocomplete="off">
             </td>
@@ -147,13 +147,8 @@
         </tr>
 
         <tr>
-            <td class="tdLabel">用料单位</td>
-            <td class="table-td-content">
-                <input type="text" class="formInput" name="useCompany" autocomplete="off">
-            </td>
-
             <td class="tdLabel">业务员</td>
-            <td class="table-td-content">
+            <td class="table-td-content" colspan="3">
                 <input type="text" class="formInput-readonly" name="salesman" value="${nickname}" readonly>
             </td>
         </tr>
@@ -164,7 +159,7 @@
                 <input type="text" class="formInput-readonly" readonly>
             </td>
 
-            <td class="tdLabel">经营部长</td>
+            <td class="tdLabel">经营主管</td>
             <td class="table-td-content">
                 <input type="text" class="formInput-readonly" readonly>
             </td>

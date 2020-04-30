@@ -120,7 +120,7 @@
         <td class="tdLabel">所在部门意见</td>
         <td colspan="5" class="table-td-textarea" style="line-height: 0">
             <div class="opinion-principal" style="width: 32%;float: left;">
-                <label class="opinion-principal-title">部长 </label>
+                <label class="opinion-principal-title">部门负责人 </label>
                 <textarea class="opinion-column-Juxtaposition"
                           readonly>${oaActAdjustWages.principalContent}</textarea>
                 <div class="approval-date">
@@ -136,7 +136,7 @@
             </div>
 
             <div class="opinion-principal" style="width: 32%;float: left;margin: 0 3px">
-                <label class="opinion-principal-title">部长 </label>
+                <label class="opinion-principal-title">部门负责人 </label>
                 <textarea class="opinion-column-Juxtaposition"
                           readonly>${oaActAdjustWages.principalContentT}</textarea>
                 <div class="approval-date">

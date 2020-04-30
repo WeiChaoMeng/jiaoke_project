@@ -7,8 +7,8 @@
         <completionCondition><![CDATA[${nrOfCompletedInstances/nrOfInstances >= 1}]]></completionCondition>
       </multiInstanceLoopCharacteristics>
     </userTask>
-    <userTask activiti:assignee="${transferPrincipal}" activiti:exclusive="true" id="_4" name="转入负责人">
-      <multiInstanceLoopCharacteristics activiti:collection="${transferPrincipalList}" activiti:elementVariable="transferPrincipal" isSequential="false">
+    <userTask activiti:assignee="${transfer_principal}" activiti:exclusive="true" id="_4" name="转入负责人">
+      <multiInstanceLoopCharacteristics activiti:collection="${transfer_principal_list}" activiti:elementVariable="transfer_principal" isSequential="false">
         <completionCondition><![CDATA[${nrOfCompletedInstances/nrOfInstances >= 1}]]></completionCondition>
       </multiInstanceLoopCharacteristics>
     </userTask>

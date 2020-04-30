@@ -10,12 +10,12 @@
       </multiInstanceLoopCharacteristics>
     </userTask>
     <userTask activiti:assignee="${supervisor}" activiti:exclusive="true" id="_6" name="转出主管"/>
-    <userTask activiti:assignee="${transferPrincipal}" activiti:exclusive="true" id="_7" name="转入负责人">
-      <multiInstanceLoopCharacteristics activiti:collection="${transferPrincipalList}" activiti:elementVariable="transferPrincipal" isSequential="false">
+    <userTask activiti:assignee="${transfer_principal}" activiti:exclusive="true" id="_7" name="转入负责人">
+      <multiInstanceLoopCharacteristics activiti:collection="${transfer_principal_list}" activiti:elementVariable="transfer_principal" isSequential="false">
         <completionCondition><![CDATA[${nrOfCompletedInstances/nrOfInstances >= 1}]]></completionCondition>
       </multiInstanceLoopCharacteristics>
     </userTask>
-    <userTask activiti:assignee="${transferSupervisor}" activiti:exclusive="true" id="_8" name="转入主管"/>
+    <userTask activiti:assignee="${transfer_supervisor}" activiti:exclusive="true" id="_8" name="转入主管"/>
     <userTask activiti:assignee="${personnel}" activiti:exclusive="true" id="_9" name="人事主管"/>
     <userTask activiti:assignee="${company_principal}" activiti:exclusive="true" id="_10" name="总经理"/>
     <userTask activiti:assignee="${normal}" activiti:exclusive="true" id="_11" name="知会">

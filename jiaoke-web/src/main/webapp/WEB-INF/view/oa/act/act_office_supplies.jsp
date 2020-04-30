@@ -134,10 +134,11 @@
         <thead>
         <tr>
             <th style="width: 7%">序号</th>
-            <th style="width: 45%">项目</th>
-            <th style="width: 16%">数量</th>
-            <th style="width: 16%">单价</th>
-            <th style="width: 16%">金额(元)</th>
+            <th style="width: 41%">项目</th>
+            <th style="width: 13%">单位</th>
+            <th style="width: 13%">数量</th>
+            <th style="width: 13%">单价</th>
+            <th style="width: 13%">金额(元)</th>
         </tr>
         </thead>
 
@@ -147,6 +148,10 @@
 
             <td class="table-td-content">
                 <input type="text" class="formInput" name="item" id="item1" autocomplete="off">
+            </td>
+
+            <td class="table-td-content">
+                <input type="text" class="formInput" name="unit" id="unit1" autocomplete="off">
             </td>
 
             <td class="table-td-content">
@@ -251,9 +256,9 @@
                 '<tr>\n' +
                 '  <td class="table-td-content" style="text-align: center;"><span class="order-number-style">' + rowId + '</span></td>' +
                 '  <td class="table-td-content"><input type="text" class="formInput" name="item" id="item' + rowId + '" autocomplete="off"></td>\n' +
+                '  <td class="table-td-content"><input type="text" class="formInput" name="unit" id="unit' + rowId + '" autocomplete="off"></td>\n' +
                 '  <td class="table-td-content">\n' +
-                '     <input type="text" class="formInput" name="number" id="number' + rowId + '" onchange="amountCalculation(this)"\n' +
-                '           oninput="value=value.replace(/^(0+)|[^\\d]/g,\'\')" autocomplete="off">\n' +
+                '     <input type="text" class="formInput" name="number" id="number' + rowId + '" onchange="amountCalculation(this)" oninput="value=value.replace(/^(0+)|[^\\d]/g,\'\')" autocomplete="off">\n' +
                 '  </td>\n' +
                 '  <td class="table-td-content">\n' +
                 '       <input type="text" class="formInput" name="price" id="price' + rowId + '" onchange="amountCalculation(this)"\n' +
@@ -322,11 +327,13 @@
                 var tel = $('#tbo').find('tr');
                 for (let i = 0; i < tel.length; i++) {
                     var it = $(tel[i]).find('td').find('#item' + (i + 1)).val();
+                    var un = $(tel[i]).find('td').find('#unit' + (i + 1)).val();
                     var nb = $(tel[i]).find('td').find('#number' + (i + 1)).val();
                     var pr = $(tel[i]).find('td').find('#price' + (i + 1)).val();
                     var mo = $(tel[i]).find('td').find('#money' + (i + 1)).val();
                     officeSupplies.push({
                         item: it,
+                        unit: un,
                         number: nb,
                         price: pr,
                         money: mo
@@ -385,11 +392,13 @@
         var tel = $('#tbo').find('tr');
         for (let i = 0; i < tel.length; i++) {
             var it = $(tel[i]).find('td').find('#item' + (i + 1)).val();
+            var un = $(tel[i]).find('td').find('#unit' + (i + 1)).val();
             var nb = $(tel[i]).find('td').find('#number' + (i + 1)).val();
             var pr = $(tel[i]).find('td').find('#price' + (i + 1)).val();
             var mo = $(tel[i]).find('td').find('#money' + (i + 1)).val();
             officeSupplies.push({
                 item: it,
+                unit: un,
                 number: nb,
                 price: pr,
                 money: mo
@@ -446,11 +455,13 @@
         var tel = $('#tbo').find('tr');
         for (let i = 0; i < tel.length; i++) {
             var it = $(tel[i]).find('td').find('#item' + (i + 1)).val();
+            var un = $(tel[i]).find('td').find('#unit' + (i + 1)).val();
             var nb = $(tel[i]).find('td').find('#number' + (i + 1)).val();
             var pr = $(tel[i]).find('td').find('#price' + (i + 1)).val();
             var mo = $(tel[i]).find('td').find('#money' + (i + 1)).val();
             officeSupplies.push({
                 item: it,
+                unit: un,
                 number: nb,
                 price: pr,
                 money: mo

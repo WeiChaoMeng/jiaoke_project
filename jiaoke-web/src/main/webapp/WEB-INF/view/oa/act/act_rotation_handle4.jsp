@@ -208,21 +208,41 @@
         <tr>
             <td class="tdLabel">所在部门意见</td>
             <td colspan="5" class="approval-content">
-                <shiro:hasPermission name="principal">
-                    <div style="width: 100%;height: 100%;" id="principalContent"></div>
-                </shiro:hasPermission>
+                <div style="width: 49%;float: left">
+                    <shiro:hasPermission name="principal">
+                        <div style="width: 100%;height: 100%;" id="principalContent"></div>
+                    </shiro:hasPermission>
 
-                <shiro:lacksPermission name="principal">
-                    <textarea readonly class="approval-content-textarea">${oaActRotation.principalContent}</textarea>
-                    <div class="approval-date">
-                        <label class="approval-date-label">日期 </label>
-                        <input class="approval-date-input" type="text" value="${oaActRotation.principalDate}" readonly>
-                    </div>
-                    <div class="approval-signature">
-                        <label class="approval-signature-label">签字 </label>
-                        <input class="approval-signature-input" type="text" value="${oaActRotation.principal}" readonly>
-                    </div>
-                </shiro:lacksPermission>
+                    <shiro:lacksPermission name="principal">
+                        <textarea readonly class="approval-content-textarea">${oaActRotation.principalContent}</textarea>
+                        <div class="approval-date">
+                            <label class="approval-date-label">日期 </label>
+                            <input class="approval-date-input" type="text" value="${oaActRotation.principalDate}" readonly>
+                        </div>
+                        <div class="approval-signature">
+                            <label class="approval-signature-label">签字 </label>
+                            <input class="approval-signature-input" type="text" value="${oaActRotation.principal}" readonly>
+                        </div>
+                    </shiro:lacksPermission>
+                </div>
+
+                <div style="width: 49%;float: right">
+                    <shiro:hasPermission name="principal">
+                        <div style="width: 100%;height: 100%;" id="principalContentT"></div>
+                    </shiro:hasPermission>
+
+                    <shiro:lacksPermission name="principal">
+                        <textarea readonly class="approval-content-textarea">${oaActRotation.principalContentT}</textarea>
+                        <div class="approval-date">
+                            <label class="approval-date-label">日期 </label>
+                            <input class="approval-date-input" type="text" value="${oaActRotation.principalDateT}" readonly>
+                        </div>
+                        <div class="approval-signature">
+                            <label class="approval-signature-label">签字 </label>
+                            <input class="approval-signature-input" type="text" value="${oaActRotation.principalT}" readonly>
+                        </div>
+                    </shiro:lacksPermission>
+                </div>
             </td>
         </tr>
 
@@ -362,6 +382,29 @@
                 '<input class="approval-signature-input" type="text" value="${oaActRotation.principal}" readonly></div>');
         }
 
+        if (flag === 0) {
+            if (rotation.principalT === "" || rotation.principalT === undefined) {
+                $('#principalContentT').append(
+                    '<textarea oninput="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="principalContentT" style="background-color: #ffffff"></textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                    '<input class="approval-date-input" type="text" name="principalDateT" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
+                    '<input class="approval-signature-input" type="text" name="principalT" value="${nickname}" readonly></div>');
+                flag = 1;
+            } else {
+                $('#principalContentT').append('<textarea class="approval-content-textarea" readonly>${oaActRotation.principalContentT}</textarea>' +
+                    '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                    '<input class="approval-date-input" type="text" value="${oaActRotation.principalDateT}" readonly></div>' +
+                    '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                    '<input class="approval-signature-input" type="text" value="${oaActRotation.principalT}" readonly></div>');
+            }
+        } else {
+            $('#principalContentT').append('<textarea class="approval-content-textarea" readonly>${oaActRotation.principalContentT}</textarea>' +
+                '<div class="approval-date"><label class="approval-date-label">日期 </label>' +
+                '<input class="approval-date-input" type="text" value="${oaActRotation.principalDateT}" readonly></div>' +
+                '<div class="approval-signature"><label class="approval-signature-label">签字 </label>' +
+                '<input class="approval-signature-input" type="text" value="${oaActRotation.principalT}" readonly></div>');
+        }
 
         if (flag === 0) {
             if (rotation.transferPrincipal === "" || rotation.transferPrincipal === undefined) {

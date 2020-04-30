@@ -66,11 +66,11 @@
 <form id="oaActLaborContractStop">
     <div style="margin-top: 10px">
         <div class="notice-personnel">
-            <input type="text" class="notice-personnel-field" value="${oaActLaborContractStop.notifiedPersonStr}"
+            <input type="text" class="notice-personnel-field" value="${oaActLaborContractStop.notifiedPerson}"
                    readonly>:
             <input type="hidden" name="id" value="${oaActLaborContractStop.id}">
             <input type="hidden" name="promoter" value="${oaActLaborContractStop.promoter}">
-            <input type="hidden" name="notifiedPerson" value="${oaActLaborContractStop.notifiedPerson}">
+            <input type="hidden" name="notifiedPersonId" value="${oaActLaborContractStop.notifiedPersonId}">
         </div>
 
         <div class="notice-content">

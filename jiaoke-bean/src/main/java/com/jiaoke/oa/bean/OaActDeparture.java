@@ -36,6 +36,8 @@ public class OaActDeparture {
      */
     private String departureDate;
 
+    private String resignationCountersign;
+
     /**
      *办公室负责人和主管领导
      */
@@ -449,5 +451,13 @@ public class OaActDeparture {
 
     public void setState(Integer state) {
         this.state = state;
+    }
+
+    public String getResignationCountersign() {
+        return resignationCountersign;
+    }
+
+    public void setResignationCountersign(String resignationCountersign) {
+        this.resignationCountersign = resignationCountersign;
     }
 }

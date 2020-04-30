@@ -79,11 +79,6 @@ public class OaActEngineering {
     private String afterNumber;
 
     /**
-     * 用料单位
-     */
-    private String useCompany;
-
-    /**
      * 业务员
      */
     private String salesman;
@@ -241,14 +236,6 @@ public class OaActEngineering {
 
     public void setAfterNumber(String afterNumber) {
         this.afterNumber = afterNumber;
-    }
-
-    public String getUseCompany() {
-        return useCompany;
-    }
-
-    public void setUseCompany(String useCompany) {
-        this.useCompany = useCompany;
     }
 
     public String getSalesman() {

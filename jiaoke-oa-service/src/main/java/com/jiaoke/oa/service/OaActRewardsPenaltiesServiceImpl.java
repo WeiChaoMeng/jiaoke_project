@@ -37,6 +37,7 @@ public class OaActRewardsPenaltiesServiceImpl implements OaActRewardsPenaltiesSe
         oaActRewardsPenalties.setCreateTime(new Date());
         oaActRewardsPenalties.setPromoter(userId);
         oaActRewardsPenalties.setUrl("rewardsPenalties");
+        oaActRewardsPenalties.setSupervisorCountersign("各部门主管");
         oaActRewardsPenalties.setState(0);
         if (oaActRewardsPenaltiesMapper.insertSelective(oaActRewardsPenalties) < 0) {
             return -1;

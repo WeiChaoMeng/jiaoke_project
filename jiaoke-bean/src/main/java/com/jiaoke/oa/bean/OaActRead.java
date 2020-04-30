@@ -64,11 +64,6 @@ public class OaActRead {
     private String fileTitle;
 
     /**
-     * 拟办部门0.领导班子，1.各部门负责人
-     */
-    private Integer receiptDepartment;
-
-    /**
      * 拟办意见
      */
     private String receiptProposed;
@@ -82,6 +77,13 @@ public class OaActRead {
      * 拟办意见时间
      */
     private String receiptProposedDate;
+
+    private String handlingResult;
+
+    /**
+     * 通知部门
+     */
+    private String depOpinion;
 
     /**
      * 领导批示
@@ -106,9 +108,9 @@ public class OaActRead {
     private String outcomeDate;
 
     /**
-     * 保存期限（10年，30年，永久）
+     * 保存期限
      */
-    private Integer deadline;
+    private String deadline;
 
     /**
      * 状态
@@ -219,14 +221,6 @@ public class OaActRead {
         this.outcome = outcome;
     }
 
-    public Integer getDeadline() {
-        return deadline;
-    }
-
-    public void setDeadline(Integer deadline) {
-        this.deadline = deadline;
-    }
-
     public String getAnnex() {
         return annex;
     }
@@ -323,14 +317,6 @@ public class OaActRead {
         this.companyPrincipalContent = companyPrincipalContent;
     }
 
-    public Integer getReceiptDepartment() {
-        return receiptDepartment;
-    }
-
-    public void setReceiptDepartment(Integer receiptDepartment) {
-        this.receiptDepartment = receiptDepartment;
-    }
-
     public Integer getState() {
         return state;
     }
@@ -353,5 +339,29 @@ public class OaActRead {
 
     public void setOutcomeDate(String outcomeDate) {
         this.outcomeDate = outcomeDate;
+    }
+
+    public String getDepOpinion() {
+        return depOpinion;
+    }
+
+    public void setDepOpinion(String depOpinion) {
+        this.depOpinion = depOpinion;
+    }
+
+    public String getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
+    }
+
+    public String getHandlingResult() {
+        return handlingResult;
+    }
+
+    public void setHandlingResult(String handlingResult) {
+        this.handlingResult = handlingResult;
     }
 }

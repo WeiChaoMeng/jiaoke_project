@@ -4,8 +4,8 @@
     <startEvent id="start" name="开始"/>
     <userTask activiti:assignee="${operating_statistics}" activiti:exclusive="true" id="c1" name="经营统计"/>
     <userTask activiti:assignee="${company_principal}" activiti:exclusive="true" id="c5" name="总经理"/>
-    <userTask activiti:assignee="${operating_supervisor}" activiti:exclusive="true" id="c4" name="经营主管"/>
-    <userTask activiti:assignee="${finance_review}" activiti:exclusive="true" id="c2" name="财务审核"/>
+    <userTask activiti:assignee="${business_supervisor}" activiti:exclusive="true" id="c4" name="经营主管"/>
+    <userTask activiti:assignee="${financial_audit}" activiti:exclusive="true" id="c2" name="财务审核"/>
     <userTask activiti:assignee="${finance_supervisor}" activiti:exclusive="true" id="c3" name="财务主管"/>
     <exclusiveGateway gatewayDirection="Unspecified" id="financeReviewEG" name="财务审核网关"/>
     <exclusiveGateway gatewayDirection="Unspecified" id="financeSupervisorEG" name="财务主管网关"/>

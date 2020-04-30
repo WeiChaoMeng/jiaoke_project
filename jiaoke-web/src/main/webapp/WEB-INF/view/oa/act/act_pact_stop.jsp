@@ -87,8 +87,8 @@
 
     <div>
         <div class="notice-personnel">
-            <input type="text" class="notice-personnel-field" onclick="recipientSelect()" id="recipientName" readonly>:
-            <input type="hidden" id="recipientId" name="notifiedPerson">
+            <input type="text" class="notice-personnel-field" id="recipientName" name="notifiedPerson" onclick="recipientSelect()" readonly>:
+            <input type="hidden" id="recipientId" name="notifiedPersonId">
         </div>
 
         <div class="notice-content">

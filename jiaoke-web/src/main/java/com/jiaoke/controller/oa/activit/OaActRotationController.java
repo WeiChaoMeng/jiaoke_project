@@ -154,9 +154,21 @@ public class OaActRotationController {
         model.addAttribute("oaActRotationJson", JsonHelper.toJSONString(oaActRotation));
         model.addAttribute("taskId", JsonHelper.toJSONString(taskId));
         model.addAttribute("nickname", getCurrentUser().getNickname());
+
+        String principal = departmentService.selectEnforcerId("principal", oaActRotation.getNewDepartment());
         if (oaActRotation.getDepartmentPrincipal().contains(",")){
+            if (principal.contains(",")){
+                //2-2
+                return "oa/act/act_rotation_handle4";
+            }else{
+                //2-1
+                return "oa/act/act_rotation_handle3";
+            }
+        }else if (principal.contains(",")){
+            //1-2
             return "oa/act/act_rotation_handle2";
-        }else{
+        }else {
+            //1-1
             return "oa/act/act_rotation_handle";
         }
     }
@@ -207,12 +219,12 @@ public class OaActRotationController {
                         for (String s : split) {
                             principalList.add(s);
                         }
-                        map.put("transferPrincipalList", principalList);
+                        map.put("transfer_principal_list", principalList);
 
                         //部门负责人是单个
                     } else {
                         principalList.add(principals);
-                        map.put("transferPrincipalList", principalList);
+                        map.put("transfer_principal_list", principalList);
                     }
 
                     map.put("whether", 0);
@@ -573,9 +585,21 @@ public class OaActRotationController {
     public String details(String id, String taskId, Model model) {
         OaActRotation oaActRotation = oaActRotationService.selectByPrimaryKey(id);
         model.addAttribute("oaActRotation", oaActRotation);
+
+        String principal = departmentService.selectEnforcerId("principal", oaActRotation.getNewDepartment());
         if (oaActRotation.getDepartmentPrincipal().contains(",")){
+            if (principal.contains(",")){
+                //2-2
+                return "oa/act/act_rotation_details4";
+            }else{
+                //2-1
+                return "oa/act/act_rotation_details3";
+            }
+        }else if (principal.contains(",")){
+            //1-2
             return "oa/act/act_rotation_details2";
         }else {
+            //1-1
             return "oa/act/act_rotation_details";
         }
     }

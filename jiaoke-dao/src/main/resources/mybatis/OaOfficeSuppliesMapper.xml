@@ -4,10 +4,10 @@
 
     <insert id="batchInsertData" parameterType="com.jiaoke.oa.bean.OaOfficeSupplies">
         insert into oa_office_supplies
-        (item,`number`,price,money,office_supplies_id)
+        (item,unit,`number`,price,money,office_supplies_id)
         values
         <foreach collection="list" item="list" separator=",">
-            (#{list.item},#{list.number},#{list.price},#{list.money},#{list.officeSuppliesId})
+            (#{list.item},#{list.unit},#{list.number},#{list.price},#{list.money},#{list.officeSuppliesId})
         </foreach>
     </insert>
 
@@ -15,6 +15,7 @@
             resultType="com.jiaoke.oa.bean.OaOfficeSupplies">
         SELECT
             item,
+            unit,
             `number`,
             price,
             money

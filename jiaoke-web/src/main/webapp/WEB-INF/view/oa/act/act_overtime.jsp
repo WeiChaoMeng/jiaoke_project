@@ -44,7 +44,7 @@
 
         .approval-input-span {
             font-size: 13px;
-            width: 25%;
+            width: 45%;
             display: inline-block;
             float: left;
             line-height: 29px;

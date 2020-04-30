@@ -129,7 +129,7 @@
     <tr>
         <td class="tdLabel">所在部门评价</td>
         <td colspan="7" class="table-td-textarea" style="line-height: 0">
-            <div class="opinion-principal">
+            <div class="opinion-principal" style="width: 32%;float: left;">
                 <label class="opinion-principal-title">部长</label>
                 <textarea class="opinion-column-Juxtaposition" readonly>${transfer.principalContent}</textarea>
                 <div class="approval-date">
@@ -142,7 +142,20 @@
                 </div>
             </div>
 
-            <div class="opinion-supervisor">
+            <div class="opinion-principal" style="width: 32%;float: left;margin: 0 3px">
+                <label class="opinion-principal-title">部长</label>
+                <textarea class="opinion-column-Juxtaposition" readonly>${transfer.principalContentT}</textarea>
+                <div class="approval-date">
+                    <label class="approval-date-label">日期 </label>
+                    <input class="approval-date-input" type="text" value="${transfer.principalDateT}" readonly>
+                </div>
+                <div class="approval-signature">
+                    <label class="approval-signature-label">签字 </label>
+                    <input class="approval-signature-input" type="text" value="${transfer.principalT}" readonly>
+                </div>
+            </div>
+
+            <div class="opinion-supervisor" style="float: right;width: 34%;">
                 <label class="opinion-principal-title">主管</label>
                 <textarea class="opinion-column-Juxtaposition" readonly>${transfer.supervisorContent}</textarea>
                 <div class="approval-date">
@@ -160,7 +173,7 @@
     <tr>
         <td class="tdLabel">转入部门意见</td>
         <td colspan="7" class="table-td-textarea" style="line-height: 0">
-            <div class="opinion-principal" style="width: 32%;float: left;">
+            <div class="opinion-principal">
                 <label class="opinion-principal-title">部长</label>
                 <textarea class="opinion-column-Juxtaposition" readonly>${transfer.transferPrincipalContent}</textarea>
                 <div class="approval-date">
@@ -173,20 +186,7 @@
                 </div>
             </div>
 
-            <div class="opinion-principal" style="width: 32%;float: left;margin: 0 3px">
-                <label class="opinion-principal-title">部长</label>
-                <textarea class="opinion-column-Juxtaposition" readonly>${transfer.transferPrincipalContentT}</textarea>
-                <div class="approval-date">
-                    <label class="approval-date-label">日期 </label>
-                    <input class="approval-date-input" type="text" value="${transfer.transferPrincipalDateT}" readonly>
-                </div>
-                <div class="approval-signature">
-                    <label class="approval-signature-label">签字 </label>
-                    <input class="approval-signature-input" type="text" value="${transfer.transferPrincipalT}" readonly>
-                </div>
-            </div>
-
-            <div class="opinion-supervisor" style="float: right;width: 34%;">
+            <div class="opinion-supervisor">
                 <label class="opinion-principal-title">主管</label>
                 <textarea class="opinion-column-Juxtaposition" readonly>${transfer.transferSupervisorDate}</textarea>
                 <div class="approval-date">

@@ -123,13 +123,8 @@
     </tr>
 
     <tr>
-        <td class="tdLabel">用料单位</td>
-        <td class="table-td-content">
-            ${oaActEngineering.useCompany}
-        </td>
-
         <td class="tdLabel">业务员</td>
-        <td class="table-td-content">
+        <td class="table-td-content"  colspan="3">
             ${oaActEngineering.salesman}
         </td>
     </tr>
@@ -140,7 +135,7 @@
             ${oaActEngineering.principal}
         </td>
 
-        <td class="tdLabel">经营部长</td>
+        <td class="tdLabel">经营主管</td>
         <td class="table-td-content">
             ${oaActEngineering.supervisor}
         </td>

@@ -33,6 +33,8 @@ public class OaActRewardsPenalties {
      */
     private String month;
 
+    private String supervisorCountersign;
+
     /**
      * 综合办公室主管领导签字
      */
@@ -436,5 +438,13 @@ public class OaActRewardsPenalties {
 
     public void setPersonnelContent(String personnelContent) {
         this.personnelContent = personnelContent;
+    }
+
+    public String getSupervisorCountersign() {
+        return supervisorCountersign;
+    }
+
+    public void setSupervisorCountersign(String supervisorCountersign) {
+        this.supervisorCountersign = supervisorCountersign;
     }
 }

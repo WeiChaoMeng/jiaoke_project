@@ -186,6 +186,13 @@
         </tr>
 
         <tr>
+            <td class="tdLabel">主送</td>
+            <td class="table-td-content" colspan="5">
+                ${oaActDocument.mainGive}
+            </td>
+        </tr>
+
+        <tr>
             <td class="tdLabel">抄送</td>
             <td class="table-td-content" colspan="5">
                 ${oaActDocument.copyGive}

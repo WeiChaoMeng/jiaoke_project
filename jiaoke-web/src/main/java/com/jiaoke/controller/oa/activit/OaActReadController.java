@@ -12,6 +12,7 @@ import com.jiaoke.oa.service.OaCollaborationService;
 import com.jiaoke.oa.service.UserInfoService;
 import org.activiti.bpmn.model.UserTask;
 import org.activiti.engine.ManagementService;
+import org.activiti.engine.impl.identity.Authentication;
 import org.activiti.engine.task.Task;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
@@ -108,10 +109,24 @@ public class OaActReadController {
     public String approval(String id, String taskId, Model model) {
         //审批
         OaActRead oaActRead = oaActReadService.selectByPrimaryKey(id);
+        Task task1 = activitiUtil.getProcessInstanceIdByTaskId(taskId);
+
+        //获取批注信息
+        List<Comments> commentsList = activitiUtil.selectHistoryComment(task1.getProcessInstanceId());
+        model.addAttribute("commentsList", commentsList);
+        model.addAttribute("commentsListSize", commentsList.size());
         model.addAttribute("oaActRead", oaActRead);
         model.addAttribute("oaActReadJson", JsonHelper.toJSONString(oaActRead));
         model.addAttribute("taskId", JsonHelper.toJSONString(taskId));
         model.addAttribute("nickname", getCurrentUser().getNickname());
+
+        if (oaActRead.getDepOpinion() != null){
+            Task task = activitiUtil.getTaskByTaskId(taskId);
+            String nextNode = activitiUtil.getNextNode(task.getProcessDefinitionId(), task.getTaskDefinitionKey());
+            if ("general_manager".equals(nextNode)){
+                return "oa/act/oa_document_reading_handle2";
+            }
+        }
         return "oa/act/oa_document_reading_handle";
     }
 
@@ -125,7 +140,7 @@ public class OaActReadController {
      */
     @RequestMapping(value = "/approvalSubmit")
     @ResponseBody
-    public String approvalSubmit(OaActRead oaActRead, String taskId, Integer flag) {
+    public String approvalSubmit(OaActRead oaActRead,String processingOpinion, String taskId, Integer flag) {
 
         //结束标识
         String end = "end";
@@ -133,39 +148,23 @@ public class OaActReadController {
         String promoter = "promoter";
         //回退
         String back = "back";
+        //选择部门
+        String depOpinion = "dep_opinion";
+        //总经理
+        String companyPrincipal = "company_principal";
         //拟办意见网关
         String receiptProposedEG = "receiptProposedEG";
         //领导批示网关
         String companyEG = "companyEG";
-        //办理结果网关
-        String handlingResultEG = "handlingResultEG";
 
         Task task = activitiUtil.getTaskByTaskId(taskId);
         if (task == null) {
             return "error";
-        }else {
+        } else {
             String nextNode = activitiUtil.getNextNode(task.getProcessDefinitionId(), task.getTaskDefinitionKey());
 
             //网关
             if (receiptProposedEG.equals(nextNode)) {
-                //同意
-                if (flag.equals(1)) {
-                    UserInfo userInfo = userInfoService.getUserInfoByPermission("company_principal");
-                    Map<String, Object> map = new HashMap<>(16);
-                    map.put("whether", 0);
-                    map.put("company_principal", userInfo.getId());
-                    activitiUtil.approvalComplete(taskId, map);
-                    return updateByPrimaryKeySelective(oaActRead);
-                } else {
-                    //发起人
-                    Map<String, Object> map = new HashMap<>(16);
-                    map.put("whether", 1);
-                    map.put("promoter", oaActRead.getPromoter());
-                    activitiUtil.approvalComplete(taskId, map);
-                    oaActRead.setState(1);
-                    return updateByPrimaryKeySelective(oaActRead);
-                }
-            }else if (companyEG.equals(nextNode)) {
                 //同意
                 if (flag.equals(1)) {
                     UserInfo userInfo = userInfoService.getUserInfoByPermission("handling_result");
@@ -183,45 +182,25 @@ public class OaActReadController {
                     oaActRead.setState(1);
                     return updateByPrimaryKeySelective(oaActRead);
                 }
-            } else if (handlingResultEG.equals(nextNode)) {
-                    //领导班子
-                    if (oaActRead.getReceiptDepartment() == 1){
-                        Map<String, Object> map = new HashMap<>(16);
-                        List<Object> depOpinionList = new ArrayList<>();
-                        depOpinionList.add(1);
-                        depOpinionList.add(2);
-                        depOpinionList.add(3);
-                        depOpinionList.add(4);
-                        depOpinionList.add(23);
-                        map.put("whether", 0);
-                        map.put("depOpinionList", depOpinionList);
-                        activitiUtil.approvalComplete(taskId, map);
-                        return updateByPrimaryKeySelective(oaActRead);
-
-                    } else if (oaActRead.getReceiptDepartment() == 2){
-                        Map<String, Object> map = new HashMap<>(16);
-                        List<Object> depOpinionList = new ArrayList<>();
-                        depOpinionList.add(5);
-                        depOpinionList.add(6);
-                        depOpinionList.add(22);
-                        depOpinionList.add(34);
-                        depOpinionList.add(38);
-                        depOpinionList.add(47);
-                        depOpinionList.add(48);
-                        depOpinionList.add(58);
-                        map.put("whether", 0);
-                        map.put("depOpinionList", depOpinionList);
-                        activitiUtil.approvalComplete(taskId, map);
-                        return updateByPrimaryKeySelective(oaActRead);
-
-                        //无-直接结束
-                    } else {
-                        Map<String, Object> map = new HashMap<>(16);
-                        map.put("whether", 1);
-                        activitiUtil.approvalComplete(taskId, map);
-                        return updateByPrimaryKeySelective(oaActRead);
-                    }
-            }else if (back.equals(nextNode)) {
+            } else if (companyEG.equals(nextNode)) {
+                //同意
+                if (flag.equals(1)) {
+                    UserInfo userInfo = userInfoService.getUserInfoByPermission("handling_result");
+                    Map<String, Object> map = new HashMap<>(16);
+                    map.put("whether", 0);
+                    map.put("handling_result", userInfo.getId());
+                    activitiUtil.approvalComplete(taskId, map);
+                    return updateByPrimaryKeySelective(oaActRead);
+                } else {
+                    //发起人
+                    Map<String, Object> map = new HashMap<>(16);
+                    map.put("whether", 1);
+                    map.put("promoter", oaActRead.getPromoter());
+                    activitiUtil.approvalComplete(taskId, map);
+                    oaActRead.setState(1);
+                    return updateByPrimaryKeySelective(oaActRead);
+                }
+            } else if (back.equals(nextNode)) {
                 //驳回
                 managementService.executeCommand(new TargetFlowNodeCommand(task.getId(), back));
                 //修改表单状态
@@ -229,7 +208,7 @@ public class OaActReadController {
                 return "backSuccess";
             } else if (end.equals(nextNode)) {
                 activitiUtil.endProcess(taskId);
-                return "success";
+                return updateByPrimaryKeySelective(oaActRead);
             } else {
                 UserTask userTask = activitiUtil.getUserTask(task.getProcessDefinitionId(), nextNode);
                 if (nextNode.equals(userTask.getId())) {
@@ -241,7 +220,49 @@ public class OaActReadController {
                         activitiUtil.approvalComplete(taskId, map);
                         return updateByPrimaryKeySelective(oaActRead);
 
-                    } else {
+                        //选择部门
+                    } else if (depOpinion.equals(enforcer)) {
+
+                        String[] strings = oaActRead.getDepOpinion().split(",");
+//                        领导班子
+                        if ("1".equals(strings[0])) {
+                            Map<String, Object> map = new HashMap<>(16);
+                            List<Object> depOpinionList = new ArrayList<>();
+                            depOpinionList.add(3);
+                            depOpinionList.add(4);
+                            depOpinionList.add(23);
+                            map.put("dep_opinion_list", depOpinionList);
+                            activitiUtil.approvalComplete(taskId, map);
+                            oaActRead.setDepOpinion(strings[1]);
+                            return updateByPrimaryKeySelective(oaActRead);
+
+                        } else {
+                            Map<String, Object> map = new HashMap<>(16);
+                            List<Object> depOpinionList = new ArrayList<>();
+                            depOpinionList.add(5);
+                            depOpinionList.add(6);
+                            depOpinionList.add(22);
+                            depOpinionList.add(34);
+                            depOpinionList.add(38);
+                            depOpinionList.add(47);
+                            depOpinionList.add(48);
+                            depOpinionList.add(58);
+                            map.put("dep_opinion_list", depOpinionList);
+                            activitiUtil.approvalComplete(taskId, map);
+                            oaActRead.setDepOpinion(strings[1]);
+                            return updateByPrimaryKeySelective(oaActRead);
+
+                            //无-直接结束
+                        }
+                        //领导批示
+                    } else if (companyPrincipal.equals(enforcer)){
+                        UserInfo userInfo = userInfoService.getUserInfoByPermission("company_principal");
+                        Map<String, Object> map = new HashMap<>(16);
+                        map.put("company_principal", userInfo.getId());
+                        activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(),map);
+                        return updateByPrimaryKeySelective(oaActRead);
+
+                    }else {
                         //直接结束
                         activitiUtil.endProcess(taskId);
                         return updateByPrimaryKeySelective(oaActRead);

@@ -211,6 +211,13 @@
         </tr>
 
         <tr>
+            <td class="tdLabel">审核人</td>
+            <td class="table-td-content" colspan="3">
+                <input type="text" class="formInput-readonly" readonly>
+            </td>
+        </tr>
+
+        <tr>
             <td class="tdLabel">查表计数人</td>
             <td class="table-td-content">
                 <input type="text" class="formInput-readonly" readonly>
@@ -218,13 +225,6 @@
 
             <td class="tdLabel">交车时间</td>
             <td class="table-td-content">
-                <input type="text" class="formInput-readonly" readonly>
-            </td>
-        </tr>
-
-        <tr>
-            <td class="tdLabel">审核人</td>
-            <td class="table-td-content" colspan="3">
                 <input type="text" class="formInput-readonly" readonly>
             </td>
         </tr>
