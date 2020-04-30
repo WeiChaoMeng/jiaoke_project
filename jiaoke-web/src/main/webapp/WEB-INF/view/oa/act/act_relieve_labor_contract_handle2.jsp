@@ -183,7 +183,7 @@
                 </div>
 
                 <div class="opinion-supervisor" style="width: 32%;float: left;margin: 0 3px;">
-                    <label class="opinion-principal-title"></label>
+                    <label class="opinion-principal-title">部门负责人</label>
                     <shiro:hasPermission name="principal">
                         <div style="width: 100%;" id="principalContentT"></div>
                     </shiro:hasPermission>

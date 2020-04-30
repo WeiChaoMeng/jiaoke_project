@@ -208,6 +208,13 @@
                 </div>
             </td>
         </tr>
+
+        <tr>
+            <td class="tdLabel">部门意见</td>
+            <td colspan="5" class="approval-content">
+                <textarea class="approval-content-textarea" readonly></textarea>
+            </td>
+        </tr>
         </tbody>
     </table>
 </form>

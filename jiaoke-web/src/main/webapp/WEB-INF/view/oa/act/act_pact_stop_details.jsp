@@ -65,7 +65,7 @@
 
 <div style="margin-top: 10px">
     <div class="notice-personnel">
-        <input type="text" class="notice-personnel-field" value="${oaActPactStop.notifiedPersonStr}" readonly>:
+        <input type="text" class="notice-personnel-field" value="${oaActPactStop.notifiedPerson}" readonly>:
     </div>
 
     <div class="notice-content">

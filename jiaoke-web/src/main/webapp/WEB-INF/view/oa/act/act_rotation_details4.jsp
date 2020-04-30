@@ -47,8 +47,7 @@
                     <c:forTokens items="${oaActRotation.annex}" delims="," var="annex">
                         <div class="table-file">
                             <div class="table-file-content">
-                                <span class="table-file-title"
-                                      title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <span class="table-file-title" title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
                                 <a class="table-file-download icon"
                                    href="/fileDownloadHandle/download?fileName=${annex}"
                                    title="下载">&#xebda;</a>
@@ -201,14 +200,28 @@
     <tr>
         <td class="tdLabel">所在部门意见</td>
         <td colspan="5" class="approval-content">
-            <textarea readonly class="approval-content-textarea">${oaActRotation.principalContent}</textarea>
-            <div class="approval-date">
-                <label class="approval-date-label">日期 </label>
-                <input class="approval-date-input" type="text" value="${oaActRotation.principalDate}" readonly>
+            <div style="width: 49%;float:left;">
+                <textarea readonly class="approval-content-textarea">${oaActRotation.principalContent}</textarea>
+                <div class="approval-date">
+                    <label class="approval-date-label">日期 </label>
+                    <input class="approval-date-input" type="text" value="${oaActRotation.principalDate}" readonly>
+                </div>
+                <div class="approval-signature">
+                    <label class="approval-signature-label">签字 </label>
+                    <input class="approval-signature-input" type="text" value="${oaActRotation.principal}" readonly>
+                </div>
             </div>
-            <div class="approval-signature">
-                <label class="approval-signature-label">签字 </label>
-                <input class="approval-signature-input" type="text" value="${oaActRotation.principal}" readonly>
+
+            <div style="width: 49%;float:right;">
+                <textarea readonly class="approval-content-textarea">${oaActRotation.principalContentT}</textarea>
+                <div class="approval-date">
+                    <label class="approval-date-label">日期 </label>
+                    <input class="approval-date-input" type="text" value="${oaActRotation.principalDateT}" readonly>
+                </div>
+                <div class="approval-signature">
+                    <label class="approval-signature-label">签字 </label>
+                    <input class="approval-signature-input" type="text" value="${oaActRotation.principalT}" readonly>
+                </div>
             </div>
         </td>
     </tr>
@@ -217,32 +230,26 @@
         <td class="tdLabel">分管部门意见</td>
         <td colspan="5" class="approval-content">
             <div style="width: 49%;float:left;">
-                <textarea readonly
-                          class="approval-content-textarea">${oaActRotation.transferPrincipalContent}</textarea>
+                <textarea readonly class="approval-content-textarea">${oaActRotation.transferPrincipalContent}</textarea>
                 <div class="approval-date">
                     <label class="approval-date-label">日期 </label>
-                    <input class="approval-date-input" type="text" value="${oaActRotation.transferPrincipalDate}"
-                           readonly>
+                    <input class="approval-date-input" type="text" value="${oaActRotation.transferPrincipalDate}" readonly>
                 </div>
                 <div class="approval-signature">
                     <label class="approval-signature-label">签字 </label>
-                    <input class="approval-signature-input" type="text" value="${oaActRotation.transferPrincipal}"
-                           readonly>
+                    <input class="approval-signature-input" type="text" value="${oaActRotation.transferPrincipal}" readonly>
                 </div>
             </div>
 
             <div style="width: 49%;float:right;">
-                <textarea readonly
-                          class="approval-content-textarea">${oaActRotation.transferPrincipalContentT}</textarea>
+                <textarea readonly class="approval-content-textarea">${oaActRotation.transferPrincipalContentT}</textarea>
                 <div class="approval-date">
                     <label class="approval-date-label">日期 </label>
-                    <input class="approval-date-input" type="text" value="${oaActRotation.transferPrincipalDateT}"
-                           readonly>
+                    <input class="approval-date-input" type="text" value="${oaActRotation.transferPrincipalDateT}" readonly>
                 </div>
                 <div class="approval-signature">
                     <label class="approval-signature-label">签字 </label>
-                    <input class="approval-signature-input" type="text" value="${oaActRotation.transferPrincipalT}"
-                           readonly>
+                    <input class="approval-signature-input" type="text" value="${oaActRotation.transferPrincipalT}" readonly>
                 </div>
             </div>
         </td>

@@ -157,7 +157,7 @@ public class OaActConfirmController {
                     UserInfo userInfo = userInfoService.getUserInfoByPermission("finance_review");
                     Map<String, Object> map = new HashMap<>(16);
                     map.put("whether", 0);
-                    map.put("finance_review", userInfo.getId());
+                    map.put("financial_audit", userInfo.getId());
                     activitiUtil.approvalComplete(taskId, map);
                     return updateByPrimaryKeySelective(oaActConfirm);
                 } else {
@@ -200,7 +200,7 @@ public class OaActConfirmController {
                     UserInfo userInfo = userInfoService.getUserInfoByPermission("operating_supervisor");
                     Map<String, Object> map = new HashMap<>(16);
                     map.put("whether", 0);
-                    map.put("operating_supervisor", userInfo.getId());
+                    map.put("business_supervisor", userInfo.getId());
                     activitiUtil.approvalComplete(taskId, map);
                     return updateByPrimaryKeySelective(oaActConfirm);
                 } else {

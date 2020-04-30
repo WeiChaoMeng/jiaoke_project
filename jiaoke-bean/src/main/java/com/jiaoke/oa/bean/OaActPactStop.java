@@ -31,9 +31,12 @@ public class OaActPactStop {
     /**
      * 名字
      */
-    private Integer notifiedPerson;
-    @Transient
-    private String notifiedPersonStr;
+    private Integer notifiedPersonId;
+
+    /**
+     * 名字
+     */
+    private String notifiedPerson;
 
     /**
      * 开始时间
@@ -115,20 +118,20 @@ public class OaActPactStop {
         this.title = title;
     }
 
-    public Integer getNotifiedPerson() {
+    public Integer getNotifiedPersonId() {
+        return notifiedPersonId;
+    }
+
+    public void setNotifiedPersonId(Integer notifiedPersonId) {
+        this.notifiedPersonId = notifiedPersonId;
+    }
+
+    public String getNotifiedPerson() {
         return notifiedPerson;
     }
 
-    public void setNotifiedPerson(Integer notifiedPerson) {
+    public void setNotifiedPerson(String notifiedPerson) {
         this.notifiedPerson = notifiedPerson;
-    }
-
-    public String getNotifiedPersonStr() {
-        return notifiedPersonStr;
-    }
-
-    public void setNotifiedPersonStr(String notifiedPersonStr) {
-        this.notifiedPersonStr = notifiedPersonStr;
     }
 
     public String getStartDate() {

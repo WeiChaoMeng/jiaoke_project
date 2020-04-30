@@ -2,13 +2,13 @@
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.activiti.org/test" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" expressionLanguage="http://www.w3.org/1999/XPath" id="m1587107120113" name="" targetNamespace="http://www.activiti.org/test" typeLanguage="http://www.w3.org/2001/XMLSchema">
   <process id="oa_office_supplies" isClosed="false" isExecutable="true" name="办公用品需求计划" processType="None">
     <startEvent id="start" name="开始"/>
-    <userTask activiti:assignee="${office_supplies_review}" activiti:exclusive="true" id="os1" name="审核"/>
+    <userTask activiti:assignee="${review}" activiti:exclusive="true" id="os1" name="审核"/>
     <userTask activiti:assignee="${principal}" activiti:exclusive="true" id="os2" name="部门负责人">
       <multiInstanceLoopCharacteristics activiti:collection="${principalList}" activiti:elementVariable="principal" isSequential="false">
         <completionCondition><![CDATA[${nrOfCompletedInstances/nrOfInstances >= 1}]]></completionCondition>
       </multiInstanceLoopCharacteristics>
     </userTask>
-    <userTask activiti:assignee="${office_supplies_supervisor}" activiti:exclusive="true" id="os3" name="主管领导"/>
+    <userTask activiti:assignee="${supervisor}" activiti:exclusive="true" id="os3" name="主管领导"/>
     <userTask activiti:assignee="${normal}" activiti:exclusive="true" id="os4" name="知会">
       <multiInstanceLoopCharacteristics activiti:collection="${normalList}" activiti:elementVariable="normal" isSequential="false">
         <completionCondition><![CDATA[${nrOfCompletedInstances/nrOfInstances >= 1}]]></completionCondition>

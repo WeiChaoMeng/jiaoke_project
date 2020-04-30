@@ -510,6 +510,7 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
                 collaboration.setCorrelationId(id);
                 collaboration.setUrl("ExperimentalItems.do");
                 collaboration.setState(0);
+                collaboration.setStatusCode("协同");
                 collaboration.setCreateTime(new Date());
 
                 //添加成功后开启流程

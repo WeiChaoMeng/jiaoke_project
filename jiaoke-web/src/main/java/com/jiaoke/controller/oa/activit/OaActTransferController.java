@@ -132,10 +132,23 @@ public class OaActTransferController {
         model.addAttribute("oaActTransferJson", JsonHelper.toJSONString(oaActTransfer));
         model.addAttribute("taskId", JsonHelper.toJSONString(taskId));
         model.addAttribute("nickname", getCurrentUser().getNickname());
+        String principal = departmentService.selectEnforcerId("principal", oaActTransfer.getNewDepartment());
+
         if (oaActTransfer.getDepartmentPrincipal().contains(",")){
+            if (principal.contains(",")){
+                //2-2
+                return "oa/act/act_transfer_handle4";
+            }else{
+                //2-1
+                return "oa/act/act_transfer_handle3";
+            }
+        }else if (principal.contains(",")){
+            //1-2
             return "oa/act/act_transfer_handle2";
+        }else {
+            //1-1
+            return "oa/act/act_transfer_handle";
         }
-        return "oa/act/act_transfer_handle";
     }
 
     /**
@@ -234,12 +247,12 @@ public class OaActTransferController {
                         for (String s : split) {
                             principalList.add(s);
                         }
-                        map.put("transferPrincipalList", principalList);
+                        map.put("transfer_principal_list", principalList);
 
                         //部门负责人是单个
                     } else {
                         principalList.add(principals);
-                        map.put("transferPrincipalList", principalList);
+                        map.put("transfer_principal_list", principalList);
                     }
                     activitiUtil.approvalComplete(taskId, map);
                     return updateByPrimaryKeySelective(oaActTransfer);
@@ -280,7 +293,7 @@ public class OaActTransferController {
                     String enforcerId = departmentService.selectEnforcerId("supervisor", oaActTransfer.getNewDepartment());
                     Map<String, Object> map = new HashMap<>(16);
                     map.put("whether", 0);
-                    map.put("transferSupervisor", enforcerId);
+                    map.put("transfer_supervisor", enforcerId);
                     activitiUtil.approvalComplete(taskId, map);
                     return updateByPrimaryKeySelective(oaActTransfer);
                 } else {
@@ -568,9 +581,21 @@ public class OaActTransferController {
     public String details(String id, String taskId, Model model) {
         OaActTransfer oaActTransfer = oaActTransferService.selectByPrimaryKey(id);
         model.addAttribute("transfer", oaActTransfer);
+
+        String principal = departmentService.selectEnforcerId("principal", oaActTransfer.getNewDepartment());
         if (oaActTransfer.getDepartmentPrincipal().contains(",")){
+            if (principal.contains(",")){
+                //2-2
+                return "oa/act/act_transfer_details4";
+            }else{
+                //2-1
+                return "oa/act/act_transfer_details3";
+            }
+        }else if (principal.contains(",")){
+            //1-2
             return "oa/act/act_transfer_details2";
         }else {
+            //1-1
             return "oa/act/act_transfer_details";
         }
     }

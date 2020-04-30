@@ -36,6 +36,7 @@ public class OaActDepartureServiceImpl implements OaActDepartureService {
         oaActDeparture.setCreateTime(new Date());
         oaActDeparture.setPromoter(userId);
         oaActDeparture.setUrl("departure");
+        oaActDeparture.setResignationCountersign("副部及以上");
         oaActDeparture.setState(0);
         if (oaActDepartureMapper.insertSelective(oaActDeparture) < 0) {
             return -1;

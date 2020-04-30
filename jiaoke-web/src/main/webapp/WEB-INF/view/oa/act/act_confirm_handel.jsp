@@ -75,168 +75,179 @@
 </div>
 
 <form id="oaActConfirm">
-<table class="formTable" style="margin: 0">
-    <tbody>
-    <tr>
-        <td class="tdLabel">经办部门</td>
-        <td colspan="2" class="table-td-content">
-            ${oaActConfirm.department}
-            <input type="hidden" name="id" value="${oaActConfirm.id}">
-            <input type="hidden" name="promoter" value="${oaActConfirm.promoter}">
-        </td>
-
-        <td class="tdLabel">经办人</td>
-        <td colspan="2" class="table-td-content">
-            ${oaActConfirm.operator}
-        </td>
-    </tr>
-
-    <tr>
-        <td class="tdLabel">确认名称</td>
-        <td colspan="2" class="table-td-content">
-            ${oaActConfirm.name}
-        </td>
-
-        <td class="tdLabel">确认金额（元）</td>
-        <td colspan="2" class="table-td-content">
-            ${oaActConfirm.money}
-        </td>
-    </tr>
-
-    </tbody>
-
-    <tbody id="tbo">
-    <c:forEach items="${oaActConfirm.oaConfirmList}" var="list" varStatus="status">
+    <table class="formTable" style="margin: 0">
+        <tbody>
         <tr>
-            <td class="tdLabel">品种</td>
-            <td class="table-td-content">
-                    ${list.variety}
+            <td class="tdLabel">经办部门</td>
+            <td colspan="2" class="table-td-content">
+                ${oaActConfirm.department}
+                <input type="hidden" name="id" value="${oaActConfirm.id}">
+                <input type="hidden" name="promoter" value="${oaActConfirm.promoter}">
             </td>
 
-            <td class="tdLabel">单价（元/吨）</td>
-            <td class="table-td-content">
-                    ${list.univalent}
-            </td>
-
-            <td class="tdLabel">数量（吨）</td>
-            <td class="table-td-content">
-                    ${list.number}
+            <td class="tdLabel">经办人</td>
+            <td colspan="2" class="table-td-content">
+                ${oaActConfirm.operator}
             </td>
         </tr>
-    </c:forEach>
-    </tbody>
 
-    <tbody>
-    <tr>
-        <td class="tdLabel">数量是否与ERP一致</td>
-        <td colspan="5" class="table-td-content">
-            ${oaActConfirm.erp}
-        </td>
-    </tr>
+        <tr>
+            <td class="tdLabel">确认名称</td>
+            <td colspan="2" class="table-td-content">
+                ${oaActConfirm.name}
+            </td>
 
-    <tr>
-        <td class="tdLabel">单价是否与合同一致</td>
-        <td colspan="5" class="table-td-content">
-            ${oaActConfirm.contract}
-        </td>
-    </tr>
+            <td class="tdLabel">确认金额（元）</td>
+            <td colspan="2" class="table-td-content">
+                ${oaActConfirm.total}
+            </td>
+        </tr>
 
-    <tr>
-        <td class="tdLabel">单位（全称）</td>
-        <td colspan="5" class="table-td-content">
-            ${oaActConfirm.unit}
-        </td>
-    </tr>
+        </tbody>
+    </table>
 
-    <tr>
-        <td class="tdLabel">工程名称（全称）</td>
-        <td colspan="5" class="table-td-content">
-            ${oaActConfirm.projectName}
-        </td>
-    </tr>
+    <table class="formTable" style="margin: 0">
+        <tbody id="tbo">
+        <c:forEach items="${oaActConfirm.oaConfirmList}" var="list" varStatus="status">
+            <tr>
+                <td class="tdLabel" style="width: 10%">品种</td>
+                <td class="table-td-content" style="width: 20%">
+                        ${list.variety}
+                </td>
 
-    <tr>
-        <td class="tdLabel">审批时间</td>
-        <td colspan="5" class="table-td-content">
-            ${oaActConfirm.approvalTime}
-        </td>
-    </tr>
+                <td class="tdLabel" style="width: 10%">单价（元/吨）</td>
+                <td class="table-td-content">
+                        ${list.univalent}
+                </td>
 
-    <tr>
-        <td class="tdLabel" style="text-align: center">总经理</td>
-        <td class="tdLabel" style="text-align: center">经营主管</td>
-        <td class="tdLabel" style="text-align: center">财务主管</td>
-        <td class="tdLabel" style="text-align: center">财务审核</td>
-        <td class="tdLabel" style="text-align: center">经营统计</td>
-        <td class="tdLabel" style="text-align: center">业务</td>
-    </tr>
+                <td class="tdLabel" style="width: 10%">数量（吨）</td>
+                <td class="table-td-content">
+                        ${list.number}
+                </td>
 
-    <tr>
-        <td class="table-td-content" style="padding: 5px 10px;height: 40px;">
-            <shiro:hasPermission name="company_principal">
-                <div style="width: 100%;height: 100%;" id="companyPrincipalContent"></div>
-            </shiro:hasPermission>
+                <td class="tdLabel" style="width: 10%">金额（元）</td>
+                <td class="table-td-content">
+                        ${list.money}
+                </td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
 
-            <shiro:lacksPermission name="company_principal">
-                ${oaActConfirm.companyPrincipal}
-            </shiro:lacksPermission>
-        </td>
+    <table class="formTable" style="margin: 0">
+        <tbody>
+        <tr>
+            <td class="tdLabel">数量是否与ERP一致</td>
+            <td colspan="5" class="table-td-content">
+                ${oaActConfirm.erp}
+            </td>
+        </tr>
 
-        <td class="table-td-content" style="padding: 5px 10px">
-            <shiro:hasPermission name="operating_supervisor">
-                <div style="width: 100%;height: 100%;" id="operatingSupervisorContent"></div>
-            </shiro:hasPermission>
+        <tr>
+            <td class="tdLabel">单价是否与合同一致</td>
+            <td colspan="5" class="table-td-content">
+                ${oaActConfirm.contract}
+            </td>
+        </tr>
 
-            <shiro:lacksPermission name="operating_supervisor">
-                ${oaActConfirm.businessSupervisor}
-            </shiro:lacksPermission>
-        </td>
+        <tr>
+            <td class="tdLabel">单位（全称）</td>
+            <td colspan="5" class="table-td-content">
+                ${oaActConfirm.unit}
+            </td>
+        </tr>
 
-        <td class="table-td-content" style="padding: 5px 10px">
-            <shiro:hasPermission name="finance_principal">
-                <div style="width: 100%;height: 100%;" id="financePrincipalContent"></div>
-            </shiro:hasPermission>
+        <tr>
+            <td class="tdLabel">工程名称（全称）</td>
+            <td colspan="5" class="table-td-content">
+                ${oaActConfirm.projectName}
+            </td>
+        </tr>
 
-            <shiro:lacksPermission name="finance_principal">
-                ${oaActConfirm.financeSupervisor}
-            </shiro:lacksPermission>
-        </td>
+        <tr>
+            <td class="tdLabel">审批时间</td>
+            <td colspan="5" class="table-td-content">
+                ${oaActConfirm.approvalTime}
+            </td>
+        </tr>
 
-        <td class="table-td-content" style="padding: 5px 10px">
-            <shiro:hasPermission name="finance_review">
-                <div style="width: 100%;height: 100%;" id="financeReviewContent"></div>
-            </shiro:hasPermission>
+        <tr>
+            <td class="tdLabel" style="text-align: center">总经理</td>
+            <td class="tdLabel" style="text-align: center">经营主管</td>
+            <td class="tdLabel" style="text-align: center">财务主管</td>
+            <td class="tdLabel" style="text-align: center">财务审核</td>
+            <td class="tdLabel" style="text-align: center">经营统计</td>
+            <td class="tdLabel" style="text-align: center">业务</td>
+        </tr>
 
-            <shiro:lacksPermission name="finance_review">
-                ${oaActConfirm.financialAudit}
-            </shiro:lacksPermission>
-        </td>
+        <tr>
+            <td class="table-td-content" style="padding: 5px 10px;height: 40px;">
+                <shiro:hasPermission name="company_principal">
+                    <div style="width: 100%;height: 100%;" id="companyPrincipalContent"></div>
+                </shiro:hasPermission>
 
-        <td class="table-td-content" style="padding: 5px 10px">
-            <shiro:hasPermission name="operating_statistics">
-                <div style="width: 100%;height: 100%;" id="operatingStatisticsContent"></div>
-            </shiro:hasPermission>
+                <shiro:lacksPermission name="company_principal">
+                    ${oaActConfirm.companyPrincipal}
+                </shiro:lacksPermission>
+            </td>
 
-            <shiro:lacksPermission name="operating_statistics">
-                ${oaActConfirm.operatingStatistics}
-            </shiro:lacksPermission>
-        </td>
+            <td class="table-td-content" style="padding: 5px 10px">
+                <shiro:hasPermission name="operating_supervisor">
+                    <div style="width: 100%;height: 100%;" id="operatingSupervisorContent"></div>
+                </shiro:hasPermission>
 
-        <td class="table-td-content" style="padding: 5px 10px"></td>
-    </tr>
+                <shiro:lacksPermission name="operating_supervisor">
+                    ${oaActConfirm.businessSupervisor}
+                </shiro:lacksPermission>
+            </td>
 
-    <tr>
-        <td class="tdLabel">备注</td>
-        <td colspan="5" class="table-td-textarea">
-            <textarea class="table-remark" style="background-color: #e8e8e8" readonly>${oaActConfirm.remarks}</textarea>
-        </td>
-    </tr>
-    </tbody>
-</table>
+            <td class="table-td-content" style="padding: 5px 10px">
+                <shiro:hasPermission name="finance_principal">
+                    <div style="width: 100%;height: 100%;" id="financePrincipalContent"></div>
+                </shiro:hasPermission>
+
+                <shiro:lacksPermission name="finance_principal">
+                    ${oaActConfirm.financeSupervisor}
+                </shiro:lacksPermission>
+            </td>
+
+            <td class="table-td-content" style="padding: 5px 10px">
+                <shiro:hasPermission name="finance_review">
+                    <div style="width: 100%;height: 100%;" id="financeReviewContent"></div>
+                </shiro:hasPermission>
+
+                <shiro:lacksPermission name="finance_review">
+                    ${oaActConfirm.financialAudit}
+                </shiro:lacksPermission>
+            </td>
+
+            <td class="table-td-content" style="padding: 5px 10px">
+                <shiro:hasPermission name="operating_statistics">
+                    <div style="width: 100%;height: 100%;" id="operatingStatisticsContent"></div>
+                </shiro:hasPermission>
+
+                <shiro:lacksPermission name="operating_statistics">
+                    ${oaActConfirm.operatingStatistics}
+                </shiro:lacksPermission>
+            </td>
+
+            <td class="table-td-content" style="padding: 5px 10px"></td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">备注</td>
+            <td colspan="5" class="table-td-textarea">
+                <textarea class="table-remark" style="background-color: #e8e8e8"
+                          readonly>${oaActConfirm.remarks}</textarea>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </form>
 
 <div class="form-but" style="margin-top: 20px" id="return">
-    <shiro:hasAnyPermission name="company_principal,operating_supervisor,finance_principal,operating_statistics,finance_review">
+    <shiro:hasAnyPermission
+            name="company_principal,operating_supervisor,finance_principal,operating_statistics,finance_review">
         <button type="button" class="return-but" style="margin-right: 10px;" onclick="approvalProcessing(2)">回退</button>
     </shiro:hasAnyPermission>
     <button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>

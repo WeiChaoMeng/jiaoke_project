@@ -116,8 +116,8 @@
     <div>
         <div class="notice-personnel">
             <input type="text" class="notice-personnel-field" onclick="recipientSelect()"
-                   value="${oaActLaborContractStop.notifiedPersonStr}" id="recipientName" readonly>:
-            <input type="hidden" id="recipientId" name="notifiedPerson" value="${oaActLaborContractStop.notifiedPerson}">
+                   value="${oaActLaborContractStop.notifiedPerson}" name="notifiedPerson" id="recipientName" readonly>:
+            <input type="hidden" id="recipientId" name="notifiedPersonId" value="${oaActLaborContractStop.notifiedPersonId}">
         </div>
 
         <div class="notice-content">

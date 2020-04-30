@@ -148,6 +148,13 @@
     </tr>
 
     <tr>
+        <td class="tdLabel">审核人</td>
+        <td class="table-td-content" colspan="3">
+            ${oaActCar.principal}
+        </td>
+    </tr>
+
+    <tr>
         <td class="tdLabel">查表计数人</td>
         <td class="table-td-content">
             ${oaActCar.lookup}
@@ -156,13 +163,6 @@
         <td class="tdLabel">交车时间</td>
         <td class="table-td-content">
             ${oaActCar.endTime}
-        </td>
-    </tr>
-
-    <tr>
-        <td class="tdLabel">审核人</td>
-        <td class="table-td-content" colspan="3">
-            ${oaActCar.principal}
         </td>
     </tr>
     </tbody>

@@ -139,6 +139,21 @@
     </tr>
 
     <tr>
+        <td class="tdLabel">部门意见</td>
+        <td colspan="5" class="approval-content">
+            <c:forEach items="${commentsList}" var="comments">
+                <div class="comment-container" style="padding: 5px 0;">
+                    <div class="comment-style">
+                        <span class="comment-name">${comments.userName}</span>
+                        <span class="comment-message">${comments.message}</span>
+                        <span class="comment-date">${comments.timeStr}</span>
+                    </div>
+                </div>
+            </c:forEach>
+        </td>
+    </tr>
+
+    <tr>
         <td class="tdLabel">领导批示</td>
         <td colspan="3" class="table-td-content" style="padding: 10px;height: 60px">
             <textarea class="approval-content-textarea"
@@ -171,44 +186,13 @@
                 <input class="approval-signature-input" type="text"
                        value="${oaActRead.outcome}" readonly>
             </div>
+        </td>
+    </tr>
 
-            <div class="handling-result-div">
-                <div class="dep-radio">
-                    知会/抄送：
-                    <c:choose>
-                        <c:when test="${oaActRead.receiptDepartment == 0}">
-                            无
-                        </c:when>
-                        <c:when test="${oaActRead.receiptDepartment == 1}">
-                            领导班子成员
-                        </c:when>
-                        <c:when test="${oaActRead.receiptDepartment == 2}">
-                            各部室负责人
-                        </c:when>
-                        <c:otherwise>
-                            无
-                        </c:otherwise>
-                    </c:choose>
-                </div>
-
-                <div class="deadline-select">
-                    保存期限：
-                    <c:choose>
-                        <c:when test="${oaActRead.deadline == 0}">
-                            10年
-                        </c:when>
-                        <c:when test="${oaActRead.deadline == 1}">
-                            30年
-                        </c:when>
-                        <c:when test="${oaActRead.deadline == 2}">
-                            永久
-                        </c:when>
-                        <c:otherwise>
-                            无
-                        </c:otherwise>
-                    </c:choose>
-                </div>
-            </div>
+    <tr>
+        <td class="tdLabel">保存期限</td>
+        <td colspan="5" class="approval-content">
+            <textarea class="approval-content-textarea" readonly>${oaActRead.deadline}</textarea>
         </td>
     </tr>
     </tbody>

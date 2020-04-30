@@ -138,30 +138,41 @@
 
             <td class="tdLabel">确认金额（元）</td>
             <td colspan="2" class="table-td-content">
-                <input type="text" class="formInput" name="money" id="money" autocomplete="off">
+                <input type="text" class="formInput-readonly" name="total" id="total" readonly>
             </td>
         </tr>
         </tbody>
+    </table>
 
+    <table class="formTable" style="margin: 0">
         <tbody id="tbo">
         <tr>
-            <td class="tdLabel">品种</td>
-            <td class="table-td-content">
-                <input type="text" class="formInput" name="variety" id="variety" autocomplete="off">
+            <td class="tdLabel" style="width: 10%">品种</td>
+            <td class="table-td-content" style="width: 20%">
+                <input type="text" class="formInput" name="variety" id="variety1" autocomplete="off">
             </td>
 
-            <td class="tdLabel">单价（元/吨）</td>
+            <td class="tdLabel" style="width: 10%">单价（元/吨）</td>
             <td class="table-td-content">
-                <input type="text" class="formInput" name="univalent" id="univalent" autocomplete="off">
+                <input type="text" class="formInput" name="univalent" id="univalent1" onchange="amountCalculation(this)"
+                       oninput="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')" autocomplete="off">
             </td>
 
-            <td class="tdLabel">数量（吨）</td>
+            <td class="tdLabel" style="width: 10%">数量（吨）</td>
             <td class="table-td-content">
-                <input type="text" class="formInput" name="number" id="number" autocomplete="off">
+                <input type="text" class="formInput" name="number" id="number1" onchange="amountCalculation(this)"
+                       oninput="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')" autocomplete="off">
+            </td>
+
+            <td class="tdLabel" style="width: 10%">金额（元）</td>
+            <td class="table-td-content">
+                <input type="text" class="formInput-readonly" name="money" id="money1" readonly>
             </td>
         </tr>
         </tbody>
+    </table>
 
+    <table class="formTable" style="margin: 0">
         <tbody>
         <tr>
             <td class="tdLabel">数量是否与ERP一致</td>
@@ -259,29 +270,75 @@
         zIndex: 100000,
     });
 
+    //数据行id递增
+    let rowId = 1;
+
     //添加数据行
     function addRow(row) {
         var content = '';
         for (let i = 0; i < row; i++) {
+            rowId++;
             content +=
                 '<tr>\n' +
-                '            <td class="tdLabel">品种</td>\n' +
-                '            <td class="table-td-content">\n' +
-                '                <input type="text" class="formInput" name="variety" id="variety" autocomplete="off">\n' +
+                '            <td class="tdLabel" style="width: 10%;">品种</td>\n' +
+                '            <td class="table-td-content" style="width: 20%;">\n' +
+                '                <input type="text" class="formInput" name="variety" id="variety' + rowId + '" autocomplete="off">\n' +
                 '            </td>\n' +
                 '\n' +
-                '            <td class="tdLabel">单价（元/吨）</td>\n' +
+                '            <td class="tdLabel" style="width: 10%;">单价（元/吨）</td>\n' +
                 '            <td class="table-td-content">\n' +
-                '                <input type="text" class="formInput" name="univalent" id="univalent" autocomplete="off">\n' +
+                '                <input type="text" class="formInput" name="univalent" id="univalent' + rowId + '" onchange="amountCalculation(this)" oninput="value=value.replace(/^\\D*(\\d*(?:\\.\\d{0,2})?).*$/g, \'$1\')" autocomplete="off">\n' +
                 '            </td>\n' +
                 '\n' +
-                '            <td class="tdLabel">数量（吨）</td>\n' +
+                '            <td class="tdLabel" style="width: 10%;">数量（吨）</td>\n' +
                 '            <td class="table-td-content">\n' +
-                '                <input type="text" class="formInput" name="number" id="number" autocomplete="off">\n' +
+                '                <input type="text" class="formInput" name="number" id="number' + rowId + '" onchange="amountCalculation(this)" oninput="value=value.replace(/^\\D*(\\d*(?:\\.\\d{0,2})?).*$/g, \'$1\')" autocomplete="off">\n' +
                 '            </td>\n' +
+                '           <td class="tdLabel" style="width: 10%">金额（元）</td>\n' +
+                '                <td class="table-td-content">\n' +
+                '                    <input type="text" class="formInput-readonly" name="money" id="money' + rowId + '" readonly>\n' +
+                '           </td>\n' +
                 '        </tr>';
         }
         $('#tbo').append(content);
+    }
+
+    //计算金额
+    function amountCalculation(self) {
+        var currentRowId = self.id;
+        var id = currentRowId.charAt(currentRowId.length - 1);
+        var s1 = $('#univalent' + id).val().toString();
+        var s2 = $('#number' + id).val().toString();
+        if (s1 !== "" & s2 !== "") {
+            $('#money' + id).val(calculate(s1, s2));
+            $('#total').val(sum());
+        }
+    }
+
+    //计算金额
+    function calculate(number, money) {
+        var m = 0;
+        try {
+            m += number.split(".")[1].length
+        } catch (e) {
+        }
+
+        try {
+            m += money.split(".")[1].length
+        } catch (e) {
+        }
+
+        return Number(number.replace(".", "")) * Number(money.replace(".", "")) / Math.pow(10, m);
+    }
+
+    //总和
+    function sum() {
+        var sum = 0;
+        for (let i = 1; i <= rowId; i++) {
+            var money = $('#money' + i).val();
+            sum = (money * 1000 + sum * 1000) / 1000;
+        }
+        return sum;
     }
 
     //发送
@@ -289,13 +346,15 @@
         var confirm = [];
         var tel = $('#tbo').find('tr');
         for (let i = 0; i < tel.length; i++) {
-            var va = $(tel[i]).find('td').find('#variety').val();
-            var un = $(tel[i]).find('td').find('#univalent').val();
-            var nu = $(tel[i]).find('td').find('#number').val();
+            var va = $(tel[i]).find('td').find('#variety' + (i + 1)).val();
+            var un = $(tel[i]).find('td').find('#univalent' + (i + 1)).val();
+            var nu = $(tel[i]).find('td').find('#number' + (i + 1)).val();
+            var mo = $(tel[i]).find('td').find('#money' + (i + 1)).val();
             confirm.push({
                 variety: va,
                 univalent: un,
-                number: nu
+                number: nu,
+                money: mo
             })
         }
 
@@ -315,7 +374,7 @@
             var dep = $('#department').val();
             var ope = $('#operator').val();
             var nam = $('#name').val();
-            var mon = $('#money').val();
+            var tot = $('#total').val();
             var erp = $('#erp').val();
             var con = $('#contract').val();
             var uni = $('#unit').val();
@@ -328,7 +387,7 @@
                 department: dep,
                 operator: ope,
                 name: nam,
-                money: mon,
+                total: tot,
                 oaConfirmList: confirm,
                 erp: erp,
                 contract: con,
@@ -364,13 +423,15 @@
         var confirm = [];
         var tel = $('#tbo').find('tr');
         for (let i = 0; i < tel.length; i++) {
-            var va = $(tel[i]).find('td').find('#variety').val();
-            var un = $(tel[i]).find('td').find('#univalent').val();
-            var nu = $(tel[i]).find('td').find('#number').val();
+            var va = $(tel[i]).find('td').find('#variety' + (i + 1)).val();
+            var un = $(tel[i]).find('td').find('#univalent' + (i + 1)).val();
+            var nu = $(tel[i]).find('td').find('#number' + (i + 1)).val();
+            var mo = $(tel[i]).find('td').find('#money' + (i + 1)).val();
             confirm.push({
                 variety: va,
                 univalent: un,
-                number: nu
+                number: nu,
+                money: mo
             })
         }
 
@@ -390,7 +451,7 @@
             var dep = $('#department').val();
             var ope = $('#operator').val();
             var nam = $('#name').val();
-            var mon = $('#money').val();
+            var tot = $('#total').val();
             var erp = $('#erp').val();
             var con = $('#contract').val();
             var uni = $('#unit').val();
@@ -403,7 +464,7 @@
                 department: dep,
                 operator: ope,
                 name: nam,
-                money: mon,
+                total: tot,
                 oaConfirmList: confirm,
                 erp: erp,
                 contract: con,
@@ -489,11 +550,11 @@
     //打印
     function printContent() {
         $('#tool,#titleArea,#annexList').hide();
-        $('#body').css('width','100%');
+        $('#body').css('width', '100%');
         //执行打印
         window.print();
         $('#tool,#titleArea').show();
-        $('#body').css('width','80%');
+        $('#body').css('width', '80%');
 
         //附件列表
         let annexesLen = $('#annexes').children().length;

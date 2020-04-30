@@ -10,19 +10,19 @@
     </userTask>
     <userTask activiti:assignee="${company_principal}" activiti:exclusive="true" id="_5" name="签发"/>
     <exclusiveGateway gatewayDirection="Unspecified" id="companyEG" name="签发网关"/>
-    <userTask activiti:assignee="${mainGive}" activiti:exclusive="true" id="_7" name="主送">
-      <multiInstanceLoopCharacteristics activiti:collection="${mainGiveList}" activiti:elementVariable="mainGive" isSequential="false">
+    <userTask activiti:assignee="${main_give}" activiti:exclusive="true" id="_7" name="主送">
+      <multiInstanceLoopCharacteristics activiti:collection="${main_give_list}" activiti:elementVariable="main_give" isSequential="false">
         <completionCondition><![CDATA[${nrOfCompletedInstances/nrOfInstances >= 1}]]></completionCondition>
       </multiInstanceLoopCharacteristics>
     </userTask>
-    <userTask activiti:assignee="${copyGive}" activiti:exclusive="true" id="_8" name="抄送">
-      <multiInstanceLoopCharacteristics activiti:collection="${copyGiveList}" activiti:elementVariable="copyGive" isSequential="false">
+    <userTask activiti:assignee="${copy_give}" activiti:exclusive="true" id="_8" name="抄送">
+      <multiInstanceLoopCharacteristics activiti:collection="${copy_give_list}" activiti:elementVariable="copy_give" isSequential="false">
         <completionCondition><![CDATA[${nrOfCompletedInstances/nrOfInstances >= 1}]]></completionCondition>
       </multiInstanceLoopCharacteristics>
     </userTask>
     <userTask activiti:assignee="${promoter}" activiti:exclusive="true" id="_9" name="发起人"/>
-    <userTask activiti:assignee="${copyGive}" activiti:exclusive="true" id="_10" name="抄送">
-      <multiInstanceLoopCharacteristics activiti:collection="${copyGiveList}" activiti:elementVariable="copyGive" isSequential="false">
+    <userTask activiti:assignee="${copy_give}" activiti:exclusive="true" id="_10" name="抄送">
+      <multiInstanceLoopCharacteristics activiti:collection="${copy_give_list}" activiti:elementVariable="copy_give" isSequential="false">
         <completionCondition><![CDATA[${nrOfCompletedInstances/nrOfInstances >= 1}]]></completionCondition>
       </multiInstanceLoopCharacteristics>
     </userTask>

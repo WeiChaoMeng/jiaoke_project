@@ -15,22 +15,37 @@
     <title>收文阅办审批单审批</title>
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
     <style>
-        .input-radio-div{
-            width: 100px;display: inline-block;text-align: center;
-        }
-        .radio-style{
-            vertical-align: middle;outline: none;zoom: 120%;
-        }
-        .deadline-select{
-            line-height: 20px;margin-top: 8px;width: 25%;display: inline-block;float: right
+        .input-radio-div {
+            width: 100px;
+            display: inline-block;
+            text-align: center;
         }
 
-        .dep-radio{
-            line-height: 30px;margin-top: 8px;width: 75%;display: inline-block;
+        .radio-style {
+            vertical-align: middle;
+            outline: none;
+            zoom: 120%;
         }
 
-        .handling-result-div{
-            border-top: 1px solid #eaeaea;width: 100%;display: inline-block;margin-top: 10px;
+        .deadline-select {
+            line-height: 20px;
+            margin-top: 8px;
+            width: 25%;
+            display: inline-block;
+            float: right
+        }
+
+        .dep-radio {
+            line-height: 30px;
+            margin: 10px;
+            display: inline-block;
+        }
+
+        .handling-result-div {
+            border-top: 1px solid #eaeaea;
+            width: 100%;
+            display: inline-block;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -131,28 +146,65 @@
             <td colspan="3" class="table-td-content" style="padding: 10px">
                 <shiro:hasPermission name="receipt_proposed">
                     <div style="width: 100%;height: 100%;" id="receiptProposedContent"></div>
-
-                    <%--<textarea oninput="value=value.replace(/\s+/g,'')" class="approval-content-textarea" name="receiptProposedContent" style="background-color: #ffffff"></textarea>--%>
-                    <%--<div class="approval-date">--%>
-                        <%--<label class="approval-date-label">日期 </label>--%>
-                        <%--<input class="approval-date-input" type="text" name="receiptProposedDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>--%>
-                    <%--</div>--%>
-                    <%--<div class="approval-signature"><label class="approval-signature-label">签字 </label>--%>
-                        <%--<input class="approval-signature-input" type="text" name="receiptProposed" value="${nickname}" readonly>--%>
-                    <%--</div>--%>
                 </shiro:hasPermission>
 
                 <shiro:lacksPermission name="receipt_proposed">
                     <textarea class="approval-content-textarea" readonly>${oaActRead.receiptProposedContent}</textarea>
                     <div class="approval-date">
                         <label class="approval-date-label">日期 </label>
-                        <input class="approval-date-input" type="text" value="${oaActRead.receiptProposedDate}" readonly>
+                        <input class="approval-date-input" type="text" value="${oaActRead.receiptProposedDate}"
+                               readonly>
                     </div>
                     <div class="approval-signature">
                         <label class="approval-signature-label">签字 </label>
-                        <input class="approval-signature-input" type="text" value="${oaActRead.receiptProposed}" readonly>
+                        <input class="approval-signature-input" type="text" value="${oaActRead.receiptProposed}"
+                               readonly>
                     </div>
                 </shiro:lacksPermission>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td colspan="5">
+                <shiro:hasPermission name="handling_result">
+                    <div class="dep-radio" id="depOpinionSel">
+                        <%--<div class="input-radio-div">--%>
+                            <%--<input type="radio" class="radio-style" name="receiptDepartment" value="1" checked>--%>
+                            <%--<span style="font-size: 13px;">领导班子成员</span>--%>
+                        <%--</div>--%>
+                        <%--<div class="input-radio-div">--%>
+                            <%--<input type="radio" class="radio-style" name="receiptDepartment" value="2">--%>
+                            <%--<span style="font-size: 13px;">各部室负责人</span>--%>
+                        <%--</div>--%>
+                        <%--<div class="input-radio-div">--%>
+                            <%--<input type="radio" class="radio-style" name="receiptDepartment" value="0">--%>
+                            <%--<span style="font-size: 13px;">无</span>--%>
+                        <%--</div>--%>
+                    </div>
+                </shiro:hasPermission>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">部门意见</td>
+            <td colspan="5" class="approval-content">
+                <c:choose>
+                    <c:when test="${commentsListSize == 0}">
+                        <textarea class="approval-content-textarea" readonly></textarea>
+                    </c:when>
+                    <c:otherwise>
+                        <c:forEach items="${commentsList}" var="comments">
+                            <div class="comment-container" style="padding: 5px 0;">
+                                <div class="comment-style">
+                                    <span class="comment-name">${comments.userName}</span>
+                                    <span class="comment-message">${comments.message}</span>
+                                    <span class="comment-date">${comments.timeStr}</span>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </c:otherwise>
+                </c:choose>
             </td>
         </tr>
 
@@ -161,26 +213,19 @@
             <td colspan="3" class="table-td-content" style="padding: 10px">
                 <shiro:hasPermission name="company_principal">
                     <div style="width: 100%;height: 100%;" id="companyPrincipalContent"></div>
-
-                    <%--<textarea oninput="value=value.replace(/\s+/g,'')" class="approval-content-textarea" name="companyPrincipalContent" style="background-color: #ffffff"></textarea>--%>
-                    <%--<div class="approval-date">--%>
-                        <%--<label class="approval-date-label">日期 </label>--%>
-                        <%--<input class="approval-date-input" type="text" name="companyPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>--%>
-                    <%--</div>--%>
-                    <%--<div class="approval-signature"><label class="approval-signature-label">签字 </label>--%>
-                        <%--<input class="approval-signature-input" type="text" name="companyPrincipal" value="${nickname}" readonly>--%>
-                    <%--</div>--%>
                 </shiro:hasPermission>
 
                 <shiro:lacksPermission name="company_principal">
                     <textarea class="approval-content-textarea" readonly>${oaActRead.companyPrincipalContent}</textarea>
                     <div class="approval-date">
                         <label class="approval-date-label">日期 </label>
-                        <input class="approval-date-input" type="text" value="${oaActRead.companyPrincipalDate}" readonly>
+                        <input class="approval-date-input" type="text" value="${oaActRead.companyPrincipalDate}"
+                               readonly>
                     </div>
                     <div class="approval-signature">
                         <label class="approval-signature-label">签字 </label>
-                        <input class="approval-signature-input" type="text" value="${oaActRead.companyPrincipal}" readonly>
+                        <input class="approval-signature-input" type="text" value="${oaActRead.companyPrincipal}"
+                               readonly>
                     </div>
                 </shiro:lacksPermission>
             </td>
@@ -191,42 +236,6 @@
             <td colspan="3" class="table-td-content" style="padding: 10px">
                 <shiro:hasPermission name="handling_result">
                     <div style="width: 100%;height: 100%;" id="outcomeContent"></div>
-
-                    <%--<textarea oninput="value=value.replace(/\s+/g,'')" class="approval-content-textarea" name="outcomeContent" style="background-color: #ffffff"></textarea>--%>
-                    <%--<div class="approval-date">--%>
-                        <%--<label class="approval-date-label">日期 </label>--%>
-                        <%--<input class="approval-date-input" type="text" name="outcomeDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>--%>
-                    <%--</div>--%>
-                    <%--<div class="approval-signature"><label class="approval-signature-label">签字 </label>--%>
-                        <%--<input class="approval-signature-input" type="text" name="outcome" value="${nickname}" readonly>--%>
-                    <%--</div>--%>
-
-                    <%--<div class="handling-result-div">--%>
-                        <%--<div class="dep-radio">--%>
-                            <%--<div class="input-radio-div">--%>
-                                <%--<input type="radio" class="radio-style" name="receiptDepartment" value="1" checked>--%>
-                                <%--<span style="font-size: 13px;">领导班子成员</span>--%>
-                            <%--</div>--%>
-
-                            <%--<div class="input-radio-div">--%>
-                                <%--<input type="radio" class="radio-style" name="receiptDepartment" value="2">--%>
-                                <%--<span style="font-size: 13px;">各部室负责人</span>--%>
-                            <%--</div>--%>
-
-                            <%--<div class="input-radio-div">--%>
-                                <%--<input type="radio" class="radio-style" name="receiptDepartment" value="0">--%>
-                                <%--<span style="font-size: 13px;">无</span>--%>
-                            <%--</div>--%>
-                        <%--</div>--%>
-
-                        <%--<div class="deadline-select">--%>
-                            <%--<select class="select" name="deadline">--%>
-                                <%--<option value="0">10年</option>--%>
-                                <%--<option value="1">30年</option>--%>
-                                <%--<option value="2">永久</option>--%>
-                            <%--</select>--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
                 </shiro:hasPermission>
 
                 <shiro:lacksPermission name="handling_result">
@@ -239,6 +248,19 @@
                         <label class="approval-signature-label">签字 </label>
                         <input class="approval-signature-input" type="text" value="${oaActRead.outcome}" readonly>
                     </div>
+                </shiro:lacksPermission>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tdLabel">保存期限</td>
+            <td colspan="5" class="approval-content">
+                <shiro:hasPermission name="handling_result">
+                    <div style="width: 100%;height: 100%;" id="shelfLife"></div>
+                </shiro:hasPermission>
+
+                <shiro:lacksPermission name="handling_result">
+                    <textarea class="approval-content-textarea" readonly>${oaActRead.deadline}</textarea>
                 </shiro:lacksPermission>
             </td>
         </tr>
@@ -298,6 +320,24 @@
         }
 
         if (flag === 0) {
+            if (read.depOpinion === "" || read.depOpinion === undefined || read.depOpinion === null) {
+                $('#depOpinionSel').append('<div class="input-radio-div">\n' +
+                    '                            <input type="radio" class="radio-style" name="depOpinion" value="1,领导班子成员" checked>\n' +
+                    '                            <span style="font-size: 13px;">领导班子成员</span>\n' +
+                    '                        </div>\n' +
+                    '                        <div class="input-radio-div">\n' +
+                    '                            <input type="radio" class="radio-style" name="depOpinion" value="2,各部室负责人">\n' +
+                    '                            <span style="font-size: 13px;">各部室负责人</span>\n' +
+                    '                        </div>');
+                flag = 1;
+            } else {
+                $('#depOpinionSel').html('');
+            }
+        } else {
+            $('#depOpinionSel').html('');
+        }
+
+        if (flag === 0) {
             if (read.companyPrincipal === "" || read.companyPrincipal === undefined) {
                 $('#companyPrincipalContent').append('<textarea oninput="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="companyPrincipalContent" style="background-color: #ffffff"></textarea>\n' +
                     '                    <div class="approval-date">\n' +
@@ -340,34 +380,8 @@
                     '                    </div>\n' +
                     '                    <div class="approval-signature"><label class="approval-signature-label">签字 </label>\n' +
                     '                        <input class="approval-signature-input" type="text" name="outcome" value="${nickname}" readonly>\n' +
-                    '                    </div>\n' +
-                    '\n' +
-                    '                    <div class="handling-result-div">\n' +
-                    '                        <div class="dep-radio">\n' +
-                    '                            <div class="input-radio-div">\n' +
-                    '                                <input type="radio" class="radio-style" name="receiptDepartment" value="1" checked>\n' +
-                    '                                <span style="font-size: 13px;">领导班子成员</span>\n' +
-                    '                            </div>\n' +
-                    '\n' +
-                    '                            <div class="input-radio-div">\n' +
-                    '                                <input type="radio" class="radio-style" name="receiptDepartment" value="2">\n' +
-                    '                                <span style="font-size: 13px;">各部室负责人</span>\n' +
-                    '                            </div>\n' +
-                    '\n' +
-                    '                            <div class="input-radio-div">\n' +
-                    '                                <input type="radio" class="radio-style" name="receiptDepartment" value="0">\n' +
-                    '                                <span style="font-size: 13px;">无</span>\n' +
-                    '                            </div>\n' +
-                    '                        </div>\n' +
-                    '\n' +
-                    '                        <div class="deadline-select">\n' +
-                    '                            <select class="select" name="deadline">\n' +
-                    '                                <option value="0">10年</option>\n' +
-                    '                                <option value="1">30年</option>\n' +
-                    '                                <option value="2">永久</option>\n' +
-                    '                            </select>\n' +
-                    '                        </div>\n' +
                     '                    </div>');
+                $('#shelfLife').append('<textarea oninput="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="deadline" style="background-color: #ffffff"></textarea>');
                 flag = 1;
             } else {
                 $('#outcomeContent').append('<textarea class="approval-content-textarea" readonly>${oaActRead.outcomeContent}</textarea>\n' +
@@ -379,6 +393,7 @@
                     '                        <label class="approval-signature-label">签字 </label>\n' +
                     '                        <input class="approval-signature-input" type="text" value="${oaActRead.outcome}" readonly>\n' +
                     '                    </div>');
+                $('#shelfLife').append('<textarea class="approval-content-textarea" readonly>${oaActRead.deadline}</textarea>');
             }
         } else {
             $('#outcomeContent').append('<textarea class="approval-content-textarea" readonly>${oaActRead.outcomeContent}</textarea>\n' +
@@ -390,13 +405,14 @@
                 '                        <label class="approval-signature-label">签字 </label>\n' +
                 '                        <input class="approval-signature-input" type="text" value="${oaActRead.outcome}" readonly>\n' +
                 '                    </div>');
+            $('#shelfLife').append('<textarea class="approval-content-textarea" readonly>${oaActRead.deadline}</textarea>');
         }
 
         if (flag === 0) {
             $('#return').html("");
             $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
         }
-    }else {
+    } else {
         $('#receiptProposedContent').append('<textarea class="approval-content-textarea" readonly>${oaActRead.receiptProposedContent}</textarea>\n' +
             '                    <div class="approval-date">\n' +
             '                        <label class="approval-date-label">日期 </label>\n' +
@@ -434,10 +450,12 @@
 
     //提交
     function approvalProcessing(flag) {
+        var processingOpinion = "";
+
         $.ajax({
             type: "post",
             url: '/read/approvalSubmit',
-            data: $('#oaActRead').serialize() + "&taskId=" + taskId + "&flag=" + flag,
+            data: $('#oaActRead').serialize() + "&processingOpinion=" + processingOpinion + "&taskId=" + taskId + "&flag=" + flag,
             async: false,
             success: function (data) {
                 if (data === 'success') {

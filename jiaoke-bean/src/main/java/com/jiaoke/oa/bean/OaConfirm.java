@@ -33,6 +33,11 @@ public class OaConfirm {
     private String number;
 
     /**
+     * 金额
+     */
+    private String money;
+
+    /**
      * 确认单审id
      */
     private String confirmId;
@@ -75,5 +80,13 @@ public class OaConfirm {
 
     public void setConfirmId(String confirmId) {
         this.confirmId = confirmId;
+    }
+
+    public String getMoney() {
+        return money;
+    }
+
+    public void setMoney(String money) {
+        this.money = money;
     }
 }

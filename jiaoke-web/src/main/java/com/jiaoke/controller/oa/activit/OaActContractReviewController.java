@@ -91,7 +91,7 @@ public class OaActContractReviewController {
             UserInfo userInfo = userInfoService.getUserInfoByPermission("HTPS_material");
             //开启流程
             Map<String, Object> map = new HashMap<>(16);
-            map.put("material", userInfo.getId());
+            map.put("material_principal", userInfo.getId());
             String instance = activitiUtil.startProcessInstanceByKey("oa_contract_review", "oa_act_contract_review:" + randomId, map, getCurrentUser().getId().toString());
             if (instance != null) {
                 return "success";
@@ -159,7 +159,7 @@ public class OaActContractReviewController {
                     UserInfo userInfo = userInfoService.getUserInfoByPermission("HTPS_finance");
                     Map<String, Object> map = new HashMap<>(16);
                     map.put("whether", 0);
-                    map.put("finance", userInfo.getId());
+                    map.put("finance_principal", userInfo.getId());
                     activitiUtil.approvalComplete(taskId, map);
                     return updateByPrimaryKeySelective(oaActContractReview);
                 } else {
@@ -179,7 +179,7 @@ public class OaActContractReviewController {
                     UserInfo userInfo = userInfoService.getUserInfoByPermission("HTPS_quality");
                     Map<String, Object> map = new HashMap<>(16);
                     map.put("whether", 0);
-                    map.put("quality", userInfo.getId());
+                    map.put("quality_principal", userInfo.getId());
                     activitiUtil.approvalComplete(taskId, map);
                     return updateByPrimaryKeySelective(oaActContractReview);
                 } else {
@@ -199,7 +199,7 @@ public class OaActContractReviewController {
                     UserInfo userInfo = userInfoService.getUserInfoByPermission("HTPS_operating");
                     Map<String, Object> map = new HashMap<>(16);
                     map.put("whether", 0);
-                    map.put("operating", userInfo.getId());
+                    map.put("operating_principal", userInfo.getId());
                     activitiUtil.approvalComplete(taskId, map);
                     return updateByPrimaryKeySelective(oaActContractReview);
                 } else {
@@ -384,7 +384,7 @@ public class OaActContractReviewController {
             UserInfo userInfo = userInfoService.getUserInfoByPermission("material_principal");
             //开启流程
             Map<String, Object> map = new HashMap<>(16);
-            map.put("material", userInfo.getId());
+            map.put("material_principal", userInfo.getId());
             String instance = activitiUtil.startProcessInstanceByKey("oa_contract_review", "oa_act_contract_review:" + oaActContractReview.getId(), map, getCurrentUser().getId().toString());
             if (instance != null) {
                 //发送成功后更新状态

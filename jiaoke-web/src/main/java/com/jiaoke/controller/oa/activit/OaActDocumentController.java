@@ -258,7 +258,7 @@ public class OaActDocumentController {
 //                            mainGiveList.add(user);
 //                        }
                         map.put("whether", 0);
-                        map.put("mainGiveList", mainGiveList);
+                        map.put("main_give_list", mainGiveList);
                         activitiUtil.approvalComplete(taskId, map);
                         return updateByPrimaryKeySelective(oaActDocument);
                     }else{
@@ -272,7 +272,7 @@ public class OaActDocumentController {
                                 copyGiveList.add(user);
                             }
                             map.put("whether", 1);
-                            map.put("copyGiveList", copyGiveList);
+                            map.put("copy_give_list", copyGiveList);
                             activitiUtil.approvalComplete(taskId, map);
                             return updateByPrimaryKeySelective(oaActDocument);
                         }else{
@@ -304,7 +304,7 @@ public class OaActDocumentController {
                         copyGiveList.add(user);
                     }
                     map.put("whether", 0);
-                    map.put("copyGiveList", copyGiveList);
+                    map.put("copy_give_list", copyGiveList);
                     activitiUtil.approvalComplete(taskId, map);
                     return updateByPrimaryKeySelective(oaActDocument);
                 }else{

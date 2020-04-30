@@ -91,7 +91,7 @@ public class OaActLaborContractStopController {
             return "error";
         } else {
             Map<String, Object> map = new HashMap<>(16);
-            map.put("notified_person", oaActLaborContractStop.getNotifiedPerson());
+            map.put("notified_person", oaActLaborContractStop.getNotifiedPersonId());
             String instance = activitiUtil.startProcessInstanceByKey("oa_labor_contract_stop", "oa_act_labor_contract_stop:" + randomId, map, getCurrentUser().getId().toString());
             if (instance != null) {
                 return "success";
@@ -178,7 +178,7 @@ public class OaActLaborContractStopController {
                         Map<String, Object> map = new HashMap<>(16);
                         List<Object> maintainNotifyList = new ArrayList<>();
                         maintainNotifyList.add(oaActLaborContractStop.getPromoter());
-                        maintainNotifyList.add(oaActLaborContractStop.getNotifiedPerson());
+                        maintainNotifyList.add(oaActLaborContractStop.getNotifiedPersonId());
                         map.put("maintainNotifyList", maintainNotifyList);
                         activitiUtil.designatedCountersignPersonnel(taskId, map);
                         return "success";
@@ -266,7 +266,7 @@ public class OaActLaborContractStopController {
             return "error";
         } else {
             Map<String, Object> map = new HashMap<>(16);
-            map.put("notified_person", oaActLaborContractStop.getNotifiedPerson());
+            map.put("notified_person", oaActLaborContractStop.getNotifiedPersonId());
             String instance = activitiUtil.startProcessInstanceByKey("oa_labor_contract_stop", "oa_act_labor_contract_stop:" + oaActLaborContractStop.getId(), map, getCurrentUser().getId().toString());
             if (instance != null) {
                 //发送成功后更新状态

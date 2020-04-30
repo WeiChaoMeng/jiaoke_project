@@ -23,6 +23,11 @@ public class OaOfficeSupplies {
     private String item;
 
     /**
+     * 单位
+     */
+    private String unit;
+
+    /**
      * 数量
      */
     private String number;
@@ -88,5 +93,13 @@ public class OaOfficeSupplies {
 
     public void setOfficeSuppliesId(String officeSuppliesId) {
         this.officeSuppliesId = officeSuppliesId;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 }

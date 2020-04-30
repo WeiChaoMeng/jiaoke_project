@@ -13,7 +13,7 @@ import java.util.Date;
  * @version 1.0
  * @date 2019-5-22 11:36
  */
-@Table(name = "oa_act_taxi_Use")
+@Table(name = "oa_act_taxi_use")
 public class OaActTaxiUse {
 
     /**

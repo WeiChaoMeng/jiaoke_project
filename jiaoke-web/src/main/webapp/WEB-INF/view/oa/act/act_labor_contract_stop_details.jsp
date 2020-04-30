@@ -62,7 +62,7 @@
 
 <div style="margin-top: 10px">
     <div class="notice-personnel">
-        <input type="text" class="notice-personnel-field" value="${oaActLaborContractStop.notifiedPersonStr}" readonly>:
+        <input type="text" class="notice-personnel-field" value="${oaActLaborContractStop.notifiedPerson}" readonly>:
     </div>
 
     <div class="notice-content">

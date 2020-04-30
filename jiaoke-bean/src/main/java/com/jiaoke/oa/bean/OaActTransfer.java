@@ -142,6 +142,21 @@ public class OaActTransfer {
     private String transferPrincipalDate;
 
     /**
+     * 转入部门负责人审批内容
+     */
+    private String transferPrincipalContentT;
+
+    /**
+     * 转入部门负责人签字
+     */
+    private String transferPrincipalT;
+
+    /**
+     * 转入部门负责人签字时间
+     */
+    private String transferPrincipalDateT;
+
+    /**
      * 转入部门主管审批内容
      */
     private String transferSupervisorContent;
@@ -554,5 +569,29 @@ public class OaActTransfer {
 
     public void setPrincipalDateT(String principalDateT) {
         this.principalDateT = principalDateT;
+    }
+
+    public String getTransferPrincipalContentT() {
+        return transferPrincipalContentT;
+    }
+
+    public void setTransferPrincipalContentT(String transferPrincipalContentT) {
+        this.transferPrincipalContentT = transferPrincipalContentT;
+    }
+
+    public String getTransferPrincipalT() {
+        return transferPrincipalT;
+    }
+
+    public void setTransferPrincipalT(String transferPrincipalT) {
+        this.transferPrincipalT = transferPrincipalT;
+    }
+
+    public String getTransferPrincipalDateT() {
+        return transferPrincipalDateT;
+    }
+
+    public void setTransferPrincipalDateT(String transferPrincipalDateT) {
+        this.transferPrincipalDateT = transferPrincipalDateT;
     }
 }

@@ -72,7 +72,6 @@ public class OaActLaborContractStopServiceImpl implements OaActLaborContractStop
         OaActLaborContractStop oaActLaborContractStop = oaActLaborContractStopMapper.selectByPrimaryKey(id);
         oaActLaborContractStop.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActLaborContractStop.getCreateTime()));
         oaActLaborContractStop.setPromoterStr(userInfoMapper.getNicknameById(oaActLaborContractStop.getPromoter()));
-        oaActLaborContractStop.setNotifiedPersonStr(userInfoMapper.getNicknameById(oaActLaborContractStop.getNotifiedPerson()));
         return oaActLaborContractStop;
     }
 

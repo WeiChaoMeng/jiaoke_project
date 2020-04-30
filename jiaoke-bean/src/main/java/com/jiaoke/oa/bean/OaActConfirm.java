@@ -47,7 +47,7 @@ public class OaActConfirm {
     /**
      * 确认金额（元）
      */
-    private String money;
+    private String total;
 
     /**
      * 确认单详情
@@ -203,12 +203,12 @@ public class OaActConfirm {
         this.name = name;
     }
 
-    public String getMoney() {
-        return money;
+    public String getTotal() {
+        return total;
     }
 
-    public void setMoney(String money) {
-        this.money = money;
+    public void setTotal(String total) {
+        this.total = total;
     }
 
     public String getErp() {

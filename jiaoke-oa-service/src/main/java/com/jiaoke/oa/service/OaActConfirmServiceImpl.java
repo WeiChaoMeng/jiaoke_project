@@ -65,7 +65,7 @@ public class OaActConfirmServiceImpl implements OaActConfirmService {
             oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("确认单审批");
             oaCollaboration.setDataOne("确认名称:" + oaActConfirm.getName());
-            oaCollaboration.setDataTwo("确认金额(员):" + oaActConfirm.getMoney());
+            oaCollaboration.setDataTwo("确认金额(元):" + oaActConfirm.getTotal());
             oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);

@@ -68,10 +68,10 @@
 <form id="oaActPactStop">
     <div style="margin-top: 10px">
         <div class="notice-personnel">
-            <input type="text" class="notice-personnel-field" value="${oaActPactStop.notifiedPersonStr}" readonly>:
+            <input type="text" class="notice-personnel-field" value="${oaActPactStop.notifiedPerson}" readonly>:
             <input type="hidden" name="id" value="${oaActPactStop.id}">
             <input type="hidden" name="promoter" value="${oaActPactStop.promoter}">
-            <input type="hidden" name="notifiedPerson" value="${oaActPactStop.notifiedPerson}">
+            <input type="hidden" name="notifiedPersonId" value="${oaActPactStop.notifiedPersonId}">
         </div>
 
         <div class="notice-content">
