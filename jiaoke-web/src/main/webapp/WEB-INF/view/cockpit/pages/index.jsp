@@ -138,24 +138,15 @@
 <div id="model-foot" class="model-foot">
 
 </div>
+<input  id="path" value="${path}" type="hidden" >
 <!--首页底部 end-->
-<script src="../js/lib/jquery.min.js"></script>
-<script src="../js/lib/sockjs-client/1.0.2/sockjs.js"></script>
-<script src="../js/lib/stomp-websocket/2.3.3/stomp.js"></script>
-<script src="../js/lib/bootstrap.min.js"></script>
-<script src="../js/lib/echarts.min.js"></script>
-<script src="../js/highcharts.js"></script>
-<script src="../js/highcharts-3d.js"></script>
-<script src="../js/highcharts-zh_CN.js"></script>
-<script src="../js/lib/chifeng.js"></script>
-<script src="../js/common/header-footer.js"></script>
-<script src="../js/common/common.js"></script>
-<script src="../js/common/unit.js"></script>
-<script src="../js/pagejs/index.js?c=2.9"></script>
-<script src="../js/dark.js"></script>
-<script src="../js/expo.js"></script>
-<script src="https://webapi.amap.com/maps?v=1.4.15&key=c4f16b4da2e9c9023eac7f81d021bb1b&plugin=AMap.DistrictSearch"></script>
-<script src="https://webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+<script type="text/javascript" src="../../../../static/cockpit/js/lib/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../static/cockpit/js/lib/echarts.min.js"></script>
+<script type="text/javascript" src="../../../../static/cockpit/js/highcharts.js"></script>
+<script type="text/javascript" src="../../../../static/cockpit/js/highcharts-3d.js"></script>
+<script type="text/javascript" src="../../../../static/cockpit/js/highcharts-zh_CN.js"></script>
+<script type="text/javascript" src="../../../../static/cockpit/js/common/header-footer.js"></script>
+<script type="text/javascript" src="../../../../static/cockpit/js/pagejs/index.js?c=2.9"></script>
 <script>
     var map = new AMap.Map('container', {
         zoom:8,

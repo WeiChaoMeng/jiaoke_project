@@ -22,8 +22,8 @@
     height: calc(100% - 11px);
     height: -webkit-calc(100% - 11px);
     height: -moz-calc(100% - 11px);
-    height: -ms-calc(100% - 11px);
-    height: -o-calc(100% - 11px);
+    /*height: -ms-calc(100% - 11px);*/
+    /*height: -o-calc(100% - 11px);*/
 }
 .echart_con1{
     width: 100%;
@@ -39,8 +39,8 @@
     height: calc(100% - 128px);
     height: -webkit-calc(100% - 128px);
     height: -moz-calc(100% - 128px);
-    height: -ms-calc(100% - 128px);
-    height: -o-calc(100% - 128px);
+    /*height: -ms-calc(100% - 128px);*/
+    /*height: -o-calc(100% - 128px);*/
     width: 100%;
 
 }
@@ -178,9 +178,9 @@
 .modelpub{
     height: calc((100% - 20px)/3);
     height: -webkit-calc((100% - 20px)/3);
-    height: -mos-calc((100% - 20px)/3);
+    /*height: -mos-calc((100% - 20px)/3);*/
     height: -moz-calc((100% - 20px)/3);
-    height: -o-calc((100% - 20px)/3);
+    /*height: -o-calc((100% - 20px)/3);*/
     width: 100%;
     border: 1px solid #00286a;
     position: relative;
@@ -188,9 +188,9 @@
 .modelpub1{
     height: calc((100% - 20px)*2/3);
     height: -webkit-calc((100% - 20px)*2/3);
-    height: -mos-calc((100% - 20px)*2/3);
+    /*height: -mos-calc((100% - 20px)*2/3);*/
     height: -moz-calc((100% - 20px)*2/3);
-    height: -o-calc((100% - 20px)*2/3);
+    /*height: -o-calc((100% - 20px)*2/3);*/
     width: 100%;
     border: 1px solid #00286a;
     position: relative;

@@ -166,20 +166,13 @@
 
 </div>-->
 <!--首页底部 end-->
-<script src="../../../../static/cockpit/js/lib/jquery.min.js"></script>
-<script src="../../../../static/cockpit/js/lib/sockjs-client/1.0.2/sockjs.js"></script>
-<script src="../../../../static/cockpit/js/lib/stomp-websocket/2.3.3/stomp.js"></script>
-<script src="../../../../static/cockpit/js/lib/bootstrap.min.js"></script>
-<script src="../../../../static/cockpit/js/lib/echarts.min.js"></script>
-<script src="../../../../static/cockpit/js/highcharts.js"></script>
-<script src="../../../../static/cockpit/js/highcharts-3d.js"></script>
-<script src="../../../../static/cockpit/js/highcharts-zh_CN.js"></script>
-<script src="../../../../static/cockpit/js/lib/chifeng.js"></script>
-<script src="../../../../static/cockpit/js/common/header-footer1.js"></script>
-<script src="../../../../static/cockpit/js/common/common.js"></script>
+<script type="text/javascript" src="../../../../static/cockpit/js/lib/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../static/cockpit/js/lib/echarts.min.js"></script>
+<script type="text/javascript" src="../../../../static/cockpit/js/highcharts.js"></script>
+<script type="text/javascript" src="../../../../static/cockpit/js/highcharts-3d.js"></script>
+<script type="text/javascript" src="../../../../static/cockpit/js/highcharts-zh_CN.js"></script>
+<script type="text/javascript" src="../../../../static/cockpit/js/common/header-footer.js"></script>
 <script src="../../../../static/cockpit/js/common/unit.js"></script>
-<script src="../../../../static/cockpit/js/pagejs/indexSSHZ.js?c=2.9"></script>
-<script src="../../../../static/cockpit/js/dark.js"></script>
-<script src="../../../../static/cockpit/js/expo.js"></script>
+<script type="text/javascript" src="../../../../static/cockpit/js/pagejs/indexSSHZ.js?c=2.9"></script>
 </body>
 </html>

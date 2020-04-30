@@ -51,7 +51,7 @@
     <!--首页左侧 sta -->
     <div class="comtab">
         <div class="modelpub">
-            <div class="common-tit">标题</div>
+            <div class="common-tit">本月各机组产量</div>
             <span class="tilt"></span>
             <div class="echart_con" style="height: 170px;" id="radar_echart">
 
@@ -85,31 +85,39 @@
         <div class="mid-foot">
             <div class="parkingbox">
                 <div class="commombox-top"><span class="prakbg"></span>
-                    <div class="boxnum"><span id="parknum">第58天</span></div>
+                    <div class="boxnum" id="production_days">
+
+                    </div>
                     <div class="commonbox-foot"></div>
                 </div>
                 <div class="commonbox-tit">开工</div>
             </div>
             <div class="parkingbox marginl15">
                 <div class="commombox-top"><span class="placebg"></span>
-                    <div class="boxnum"><span id="parkplace">1.7万吨</span></div>
+                    <div class="boxnum" id="yield">
+
+                    </div>
                     <div class="commonbox-foot"></div>
                 </div>
                 <div class="commonbox-tit">产量</div>
             </div>
             <div class="parkingbox marginl15">
                 <div class="commombox-top"><span class="freebg"></span>
-                    <div class="boxnum"><span id="freenum">0.32吨</span></div>
+                    <div class="boxnum" id="usageAmount">
+
+                    </div>
                     <div class="commonbox-foot"></div>
                 </div>
                 <div class="commonbox-tit">再生料总用量</div>
             </div>
             <div class="parkingbox marginl15">
                 <div class="commombox-top"><span class="matchbg"></span>
-                    <div class="boxnum"><span id="matchnum">18次</span></div>
+                    <div class="boxnum" id="thisUsageAmount">
+
+                    </div>
                     <div class="commonbox-foot"></div>
                 </div>
-                <div class="commonbox-tit">预警</div>
+                <div class="commonbox-tit">再生料本月用量</div>
             </div>
         </div>
         <!--中底 end -->
@@ -118,10 +126,10 @@
     <!--首页右侧 sta -->
     <div class="comtab">
         <div class="modelpub">
-            <div class="common-tit">标题</div>
+            <div class="common-tit">本年各机组产量</div>
             <span class="tilt"></span>
-            <div class="echart_con">
-                <div id="container-speed" style="height: 150px; "></div>
+            <div class="echart_con" id="right_one">
+
             </div>
         </div>
         <div class="modelpub margin10">
@@ -148,204 +156,17 @@
 <div id="model-foot" class="model-foot">
 
 </div>
+<input  id="path" value="${path}" type="hidden" >
 <!--首页底部 end-->
 <script type="text/javascript" src="../../../../static/cockpit/js/lib/jquery.min.js"></script>
-<script type="text/javascript" src="../../../../static/cockpit/js/lib/sockjs-client/1.0.2/sockjs.js"></script>
-<script type="text/javascript" src="../../../../static/cockpit/js/lib/stomp-websocket/2.3.3/stomp.js"></script>
-<script type="text/javascript" src="../../../../static/cockpit/js/lib/bootstrap.min.js"></script>
 <script type="text/javascript" src="../../../../static/cockpit/js/lib/echarts.min.js"></script>
 <script type="text/javascript" src="../../../../static/cockpit/js/highcharts.js"></script>
 <script type="text/javascript" src="../../../../static/cockpit/js/highcharts-3d.js"></script>
 <script type="text/javascript" src="../../../../static/cockpit/js/highcharts-zh_CN.js"></script>
-<script type="text/javascript" src="../../../../static/cockpit/js/lib/chifeng.js"></script>
 <script type="text/javascript" src="../../../../static/cockpit/js/common/header-footer.js"></script>
-<script type="text/javascript" src="../../../../static/cockpit/js/common/common.js"></script>
-<script type="text/javascript" src="../../../../static/cockpit/js/common/unit.js"></script>
 <script type="text/javascript" src="../../../../static/cockpit/js/pagejs/index.js?c=2.9"></script>
-<script type="text/javascript" src="../../../../static/cockpit/js/dark.js"></script>
-<script type="text/javascript" src="../../../../static/cockpit/js/expo.js"></script>
+
 <script>
-    $(function () {
-        echarts_3();
-    });
-
-    function echarts_3() {
-    // 基于准备好的dom，初始化echarts实例
-    var myChart = echarts.init(document.getElementById('echart3'));
-
-    option = {
-        tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-                lineStyle: {
-                    color: '#57617B'
-                }
-            }
-        },
-        legend: {
-
-            //icon: 'vertical',
-            data: ['参数1', '参数2','参数3'],
-            //align: 'center',
-            // right: '35%',
-            top:'0',
-            textStyle: {
-                color: "#fff"
-            },
-            // itemWidth: 15,
-            // itemHeight: 15,
-            itemGap: 20,
-        },
-        grid: {
-            left: '0',
-            right: '20',
-            top:'10',
-            bottom: '20',
-            containLabel: true
-        },
-        xAxis: [{
-            type: 'category',
-            boundaryGap: false,
-            axisLabel: {
-                show: true,
-                textStyle: {
-                    color: 'rgba(255,255,255,.6)'
-                }
-            },
-            axisLine: {
-                lineStyle: {
-                    color: 'rgba(255,255,255,.1)'
-                }
-            },
-            data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
-        }, {
-
-        }],
-        yAxis: [{
-            axisLabel: {
-                show: true,
-                textStyle: {
-                    color: 'rgba(255,255,255,.6)'
-                }
-            },
-            axisLine: {
-                lineStyle: {
-                    color: 'rgba(255,255,255,.1)'
-                }
-            },
-            splitLine: {
-                lineStyle: {
-                    color: 'rgba(255,255,255,.1)'
-                }
-            }
-        }],
-        series: [{
-            name: '参数1',
-            type: 'line',
-            smooth: true,
-            symbol: 'circle',
-            symbolSize: 5,
-            showSymbol: false,
-            lineStyle: {
-                normal: {
-                    width: 2
-                }
-            },
-            areaStyle: {
-                normal: {
-                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                        offset: 0,
-                        color: 'rgba(24, 163, 64, 0.3)'
-                    }, {
-                        offset: 0.8,
-                        color: 'rgba(24, 163, 64, 0)'
-                    }], false),
-                    shadowColor: 'rgba(0, 0, 0, 0.1)',
-                    shadowBlur: 10
-                }
-            },
-            itemStyle: {
-                normal: {
-                    color: '#cdba00',
-                    borderColor: 'rgba(137,189,2,0.27)',
-                    borderWidth: 12
-                }
-            },
-            data: [220, 182, 191, 134, 150, 120, 110, 125, 145, 122, 165, 122]
-        }, {
-            name: '参数2',
-            type: 'line',
-            smooth: true,
-            symbol: 'circle',
-            symbolSize: 5,
-            showSymbol: false,
-            lineStyle: {
-                normal: {
-                    width: 2
-                }
-            },
-            areaStyle: {
-                normal: {
-                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                        offset: 0,
-                        color: 'rgba(39, 122,206, 0.3)'
-                    }, {
-                        offset: 0.8,
-                        color: 'rgba(39, 122,206, 0)'
-                    }], false),
-                    shadowColor: 'rgba(0, 0, 0, 0.1)',
-                    shadowBlur: 10
-                }
-            },
-            itemStyle: {
-                normal: {
-                    color: '#277ace',
-                    borderColor: 'rgba(0,136,212,0.2)',
-                    borderWidth: 12
-                }
-            },
-            data: [120, 110, 125, 145, 122, 165, 122, 220, 182, 191, 134, 150]
-        }, {
-            name: '参数3',
-            type: 'line',
-            smooth: true,
-            symbol: 'circle',
-            symbolSize: 5,
-            showSymbol: false,
-            lineStyle: {
-                normal: {
-                    width: 2
-                }
-            },
-            areaStyle: {
-                normal: {
-                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                        offset: 0,
-                        color: 'rgba(39, 122,206, 0.3)'
-                    }, {
-                        offset: 0.8,
-                        color: 'rgba(39, 122,206, 0)'
-                    }], false),
-                    shadowColor: 'rgba(0, 0, 0, 0.1)',
-                    shadowBlur: 10
-                }
-            },
-            itemStyle: {
-                normal: {
-                    color: '#ce0cc8',
-                    borderColor: 'rgba(0,136,212,0.2)',
-                    borderWidth: 12
-                }
-            },
-            data: [20, 201, 90, 78, 30, 109, 221, 88, 70, 39, 55, 180]
-        }]
-    };
-
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
-    window.addEventListener("resize",function(){
-        myChart.resize();
-    });
-}</script>
+ </script>
 </body>
 </html>

@@ -10,7 +10,6 @@ package com.jiaoke.controller;
 
 import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.QualityMatchingUtil;
 import com.jiaoke.common.bean.PageBean;
@@ -24,6 +23,7 @@ import com.jiaoke.quality.bean.QualityDataManagerDay;
 import com.jiaoke.quality.bean.QualityProjectItem;
 import com.jiaoke.quality.bean.QualityRatioModel;
 import com.jiaoke.quality.bean.QualityRatioTemplate;
+import com.jiaoke.quality.dao.QualityLeadingCockpit;
 import com.jiaoke.quality.service.*;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.ManagementService;
@@ -36,7 +36,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -101,6 +104,8 @@ public class QualityController {
     private HistoryService historyService;
     @Resource
     private TaskService taskService;
+    @Resource
+    private QualityLeadingCockpitInf qualityLeadingCockpitInf;
 
     /**
      * 获取当前登录用户信息
@@ -581,7 +586,72 @@ public class QualityController {
 
     /********************************  实时监控 end *****************************************/
 
+    /********************************  领导驾驶仓 Start *****************************************/
+    @ResponseBody
+    @RequestMapping("/getThisMonthTwoCrewData.do")
+    public String getThisMonthTwoCrewData(){
+        Map<String,Object> map = new HashMap<>();
+        try{
+            map = qualityLeadingCockpitInf.getThisMonthTwoCrewData();
+        }catch (Exception e){
+            map.put("message","error");
+            e.printStackTrace();
+        }
+        return JSON.toJSONString(map);
+    }
 
+    @ResponseBody
+    @RequestMapping("/getThisYearTwoCrewData.do")
+    public String getThisYearTwoCrewData(){
+        Map<String,Object> map = new HashMap<>();
+        try{
+            map = qualityLeadingCockpitInf.getThisYearTwoCrewData();
+        }catch (Exception e){
+            map.put("message","error");
+            e.printStackTrace();
+        }
+        return JSON.toJSONString(map);
+    }
+
+    @ResponseBody
+    @RequestMapping("/getProductionDays.do")
+    public String getProductionDays(){
+        Map<String,Object> map = new HashMap<>();
+        try{
+            map = qualityLeadingCockpitInf.getProductionDays();
+        }catch (Exception e){
+            map.put("message","error");
+            e.printStackTrace();
+        }
+        return JSON.toJSONString(map);
+    }
+
+    @ResponseBody
+    @RequestMapping("/getMaterialRegenerate.do")
+    public String getMaterialRegenerate(){
+        Map<String,Object> map = new HashMap<>();
+        try{
+            map = qualityLeadingCockpitInf.getMaterialRegenerate();
+        }catch (Exception e){
+            map.put("message","error");
+            e.printStackTrace();
+        }
+        return JSON.toJSONString(map);
+    }
+
+    @ResponseBody
+    @RequestMapping("/getThisMonthRegenerate.do")
+    public String getThisMonthRegenerate(){
+        Map<String,Object> map = new HashMap<>();
+        try{
+            map = qualityLeadingCockpitInf.getThisMonthRegenerate();
+        }catch (Exception e){
+            map.put("message","error");
+            e.printStackTrace();
+        }
+        return JSON.toJSONString(map);
+    }
+    /********************************  领导驾驶仓 end *****************************************/
 
     /********************************  数据管理 Start *****************************************/
     /**

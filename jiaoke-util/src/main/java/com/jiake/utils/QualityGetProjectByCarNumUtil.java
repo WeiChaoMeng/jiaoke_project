@@ -289,7 +289,7 @@ public class QualityGetProjectByCarNumUtil {
     }
 
 
-    public static  String getErpData(String crewNum,String carDate) throws InterruptedException{
+    public static  Map<String,String> getErpData(String crewNum,String carDate) throws InterruptedException{
         Thread.sleep(900000);
         String ghqrd = getGhqrd(crewNum,carDate);
         System.out.println("erp :" + "\n" + ghqrd);
@@ -305,7 +305,7 @@ public class QualityGetProjectByCarNumUtil {
                     break;
                 }
         }
-        return ghqrd;
+        return map;
     }
 
     /**
