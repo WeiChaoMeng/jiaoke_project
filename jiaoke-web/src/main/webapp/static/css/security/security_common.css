@@ -316,3 +316,695 @@ body {
     margin-left: 10px;
     vertical-align: middle;
 }
+
+/*厂区图*/
+.aerial-view-style{
+    position: relative;height: 100%;width: 100%;
+}
+
+/*地图上监控位置*/
+.position-action:hover{
+    width: 25px;
+    margin-top: -15px;
+    position: absolute;
+}
+
+/*东院南大门口外*/
+.dyndmkw-region {
+    position: absolute;
+    left: 5%;
+    top: 67%;
+    font-size: 20px;
+    background: #ffe500;
+    width: 26px;
+    height: 29px;
+    opacity: .7;
+    border-radius: 0 0 0 100px;
+}
+
+.dyndmkw-position {
+    width: 20px;
+    margin-top: -10px;
+    float: right;
+    cursor: pointer;
+}
+
+/*东院南大门口内*/
+.dyndmkn-region {
+    position: absolute;
+    top: 67%;
+    font-size: 20px;
+    background: #ffe500;
+    width: 26px;
+    height: 29px;
+    opacity: .7;
+    left: 8%;
+    border-radius: 0 0 100px 0;
+}
+
+.dyndmkn-position {
+    width: 20px;
+    margin-top: -10px;
+    float: left;
+    cursor: pointer;
+}
+
+/*东院办公楼前西向东*/
+.dybglqxxd-region {
+    height: 0;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+    top: 50%;
+    left: 33%;
+    border-left: 13px solid transparent;
+    border-right: 13px solid transparent;
+    border-bottom: 30px solid #e5d330;
+}
+
+.dybglqxxd-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -18px;
+    margin-left: -10px;
+    position: absolute;
+}
+
+.dybglqxxd-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -21px;
+    margin-left: -12px;
+    position: absolute;
+}
+
+/*东院正达实验室东向西*/
+.dyzdsysdxx-region {
+    position: absolute;
+    top: 62%;
+    font-size: 20px;
+    opacity: .7;
+    left: 23%;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 30px solid #ffe500;
+    width: 7px;
+}
+
+.dyzdsysdxx-position {
+    width: 20px;
+    margin-top: -19px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -7px;
+}
+
+.dyzdsysdxx-position:hover {
+    width: 25px;
+    margin-top: -22px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -9px;
+}
+
+/*东院办公楼前东向西*/
+.dybglqdxx-region {
+    position: absolute;
+    top: 88%;
+    font-size: 20px;
+    opacity: .7;
+    left: 30%;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 30px solid #ffe500;
+    width: 7px;
+}
+
+.dybglqdxx-position {
+    width: 20px;
+    margin-top: -19px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -7px;
+}
+
+.dybglqdxx-position:hover {
+    width: 25px;
+    margin-top: -22px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -9px;
+}
+
+
+/*东院运动场小广场南向北*/
+.dyydcxgcnxb-region {
+    position: absolute;
+    top: 89%;
+    font-size: 20px;
+    opacity: .7;
+    left: 34%;
+    border-bottom: 25px solid #ffe500;
+    border-right: 40px solid transparent;
+}
+
+.dyydcxgcnxb-position {
+    width: 20px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -7px;
+    margin-top: 5px;
+}
+
+.dyydcxgcnxb-position:hover {
+    width: 25px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -7px;
+    margin-top: 3px;
+}
+
+/*东院南门主通道北向南*/
+.dynmztdbxn-region {
+    top: 68%;
+    left: 31%;
+    border-top: 15px solid transparent;
+    border-left: 36px solid #ffe500;
+    border-bottom: 15px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.dynmztdbxn-position {
+    width: 20px;
+    float: right;
+    cursor: pointer;
+    margin-top: -18px;
+    position: absolute;
+    margin-left: -11px;
+}
+
+.dynmztdbxn-position:hover {
+    width: 25px;
+    float: right;
+    cursor: pointer;
+    margin-top: -21px;
+    position: absolute;
+    margin-left: -13px;
+}
+
+/*东院办公楼后东通道东向西*/
+.dybglhdtddxx-region {
+    top: 87%;
+    left: 37%;
+    border-bottom: 35px solid #ffe500;
+    border-left: 31px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.dybglhdtddxx-position {
+    width: 20px;
+    margin-top: 15px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -11px;
+}
+
+.dybglhdtddxx-position:hover {
+    width: 25px;
+    margin-top: 13px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -11px;
+}
+
+/*东院办公楼路驰通道*/
+.dybgllctd-region {
+    top: 69%;
+    left: 35%;
+    height: 0;
+    border-top: 7px solid transparent;
+    border-right: 22px solid #ffe500;
+    border-bottom: 11px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.dybgllctd-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -18px;
+    margin-left: -8px;
+    position: absolute;
+}
+
+.dybgllctd-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -21px;
+    margin-left: -10px;
+    position: absolute;
+}
+
+/*东院办公楼正达通道*/
+.dybglzdtd-region {
+    top: 72%;
+    left: 35%;
+    height: 0;
+    border-top: 13px solid transparent;
+    border-right: 21px solid #ffe500;
+    border-bottom: 6px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.dybglzdtd-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -18px;
+    margin-left: -8px;
+    position: absolute;
+}
+
+.dybglzdtd-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -21px;
+    margin-left: -10px;
+    position: absolute;
+}
+
+/*东院财务室*/
+.dycws-region {
+    top: 66%;
+    left: 35%;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-right: 23px solid #ffe500;
+    border-bottom: 8px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.dycws-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -18px;
+    margin-left: -8px;
+    position: absolute;
+}
+
+.dycws-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -21px;
+    margin-left: -10px;
+    position: absolute;
+}
+
+/*东院办公楼西侧南向北*/
+.dybglxcnxb-region {
+    height: 0;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+    top: 50%;
+    left: 28%;
+    border-top: 11px solid transparent;
+    border-right: 32px solid rgb(255, 229, 0);
+    border-bottom: 3px solid transparent;
+}
+
+.dybglxcnxb-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -21px;
+    margin-left: -11px;
+    position: absolute;
+}
+
+.dybglxcnxb-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -18px;
+    margin-left: -8px;
+    position: absolute;
+}
+
+/*东院供暖锅炉房西侧通道南向北*/
+.dygnglxctdnxb-region {
+    height: 0;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+    top: 42%;
+    left: 38%;
+    border-top: 8px solid transparent;
+    border-right: 32px solid rgb(255, 229, 0);
+    border-bottom: 8px solid transparent;
+}
+
+.dygnglxctdnxb-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -18px;
+    margin-left: -8px;
+    position: absolute;
+}
+
+.dygnglxctdnxb-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -21px;
+    margin-left: -10px;
+    position: absolute;
+}
+
+/*东院供暖锅炉房西侧通道南向北*/
+.dybglhtdxxd-region {
+    height: 0;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+    top: 54%;
+    left: 39%;
+    border-left: 20px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 30px solid #e5d330;
+}
+
+.dybglhtdxxd-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -18px;
+    margin-left: -10px;
+    position: absolute;
+}
+
+.dybglhtdxxd-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -21px;
+    margin-left: -12px;
+    position: absolute;
+}
+
+
+/*东院燃气站*/
+.dyyqz-region {
+    top: 44%;
+    left: 40%;
+    border-top: 13px solid transparent;
+    border-left: 38px solid #ffe500;
+    border-bottom: 13px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.dyyqz-position {
+    width: 20px;
+    float: right;
+    cursor: pointer;
+    margin-top: -18px;
+    position: absolute;
+    margin-left: -11px;
+}
+
+.dyyqz-position:hover {
+    width: 25px;
+    float: right;
+    cursor: pointer;
+    margin-top: -21px;
+    position: absolute;
+    margin-left: -13px;
+}
+
+/*小龙河料车等候通道*/
+.xlhlcdhtd-region {
+    top: 31%;
+    left: 48%;
+    border-top: 19px solid transparent;
+    border-left: 44px solid #ffe500;
+    border-bottom: 4px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.xlhlcdhtd-position {
+    width: 20px;
+    float: right;
+    cursor: pointer;
+    margin-top: -18px;
+    position: absolute;
+    margin-left: -11px;
+}
+
+.xlhlcdhtd-position:hover {
+    width: 25px;
+    float: right;
+    cursor: pointer;
+    margin-top: -21px;
+    position: absolute;
+    margin-left: -13px;
+}
+
+/*东院地磅南侧通道东向西*/
+.dydbnctddxx-region {
+    position: absolute;
+    top: 47%;
+    font-size: 20px;
+    opacity: .7;
+    left: 51%;
+    border-left: 0px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 23px solid #ffe500;
+}
+
+.dydbnctddxx-position {
+    width: 20px;
+    margin-top: -19px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -9px;
+}
+
+.dydbnctddxx-position:hover {
+    width: 25px;
+    margin-top: -22px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -11px;
+}
+
+/*东院地磅南侧通道西向东*/
+.dydbnctdxxd-region {
+    height: 0;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+    top: 44%;
+    left: 51%;
+    border-left: 0px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 19px solid #e5d330;
+}
+
+.dydbnctdxxd-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -18px;
+    margin-left: -10px;
+    position: absolute;
+}
+
+.dydbnctdxxd-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -21px;
+    margin-left: -12px;
+    position: absolute;
+}
+
+/*东院西门东向西*/
+.dyxmdxx-region {
+    position: absolute;
+    top: 41%;
+    font-size: 20px;
+    opacity: .7;
+    left: 51.2%;
+    border-left: 19px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 23px solid #ffe500;
+}
+
+.dyxmdxx-position {
+    width: 20px;
+    margin-top: -19px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -9px;
+}
+
+.dyxmdxx-position:hover {
+    width: 25px;
+    margin-top: -22px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -11px;
+}
+
+/*东院地磅北侧通道东向西*/
+.dydbbctddxx-region {
+    position: absolute;
+    top: 47%;
+    font-size: 20px;
+    opacity: .7;
+    left: 53%;
+    border-left: 15px solid transparent;
+    border-right: 0px solid transparent;
+    border-top: 23px solid #ffe500;
+}
+
+.dydbbctddxx-position {
+    width: 20px;
+    margin-top: -19px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -9px;
+}
+
+.dydbbctddxx-position:hover {
+    width: 25px;
+    margin-top: -22px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -11px;
+}
+
+/*东院地磅北侧通道西向东*/
+.dydbbctdxxd-region {
+    height: 0;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+    top: 44%;
+    left: 53%;
+    border-left: 15px solid transparent;
+    border-right: 0px solid transparent;
+    border-bottom: 19px solid #e5d330;
+}
+
+.dydbbctdxxd-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -18px;
+    margin-left: -10px;
+    position: absolute;
+}
+
+.dydbbctdxxd-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -21px;
+    margin-left: -12px;
+    position: absolute;
+}
+
+/*东院地磅东侧北通道北向南*/
+.dydbdcbtdbxn-region {
+    top: 51%;
+    left: 53%;
+    border-top: 15px solid transparent;
+    border-left: 36px solid #ffe500;
+    border-bottom: 0px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.dydbdcbtdbxn-position {
+    width: 20px;
+    float: right;
+    cursor: pointer;
+    margin-top: -18px;
+    position: absolute;
+    margin-left: -11px;
+}
+
+.dydbdcbtdbxn-position:hover {
+    width: 25px;
+    float: right;
+    cursor: pointer;
+    margin-top: -21px;
+    position: absolute;
+    margin-left: -13px;
+}
+
+/*东院西门北向南*/
+.dyxmbxn-region {
+    top: 39%;
+    left: 52%;
+    border-top: 5px solid transparent;
+    border-left: 35px solid #FF9800;
+    border-bottom: 15px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: 1;
+}
+
+.dyxmbxn-position {
+    width: 20px;
+    float: right;
+    cursor: pointer;
+    margin-top: -12px;
+    position: absolute;
+    margin-left: -15px;
+}
+
+.dyxmbxn-position:hover {
+    width: 25px;
+    float: right;
+    cursor: pointer;
+    margin-top: -15px;
+    position: absolute;
+    margin-left: -17px;
+}
+
+/*东院西门外东向西*/
+.dyxmwdxx-region {
+    top: 34.4%;
+    left: 52%;
+    border-top: 24px solid transparent;
+    border-left: 36px solid #ffe500;
+    border-bottom: 0px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+    z-index: 0;
+}
+
+.dyxmwdxx-position {
+    width: 20px;
+    float: right;
+    cursor: pointer;
+    margin-top: -18px;
+    position: absolute;
+    margin-left: -11px;
+}
+
+.dyxmwdxx-position:hover {
+    width: 25px;
+    float: right;
+    cursor: pointer;
+    margin-top: -21px;
+    position: absolute;
+    margin-left: -13px;
+}
