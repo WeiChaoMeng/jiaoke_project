@@ -6,64 +6,107 @@
     <link href="../../../static/css/security/security_common.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<div id="popup-window" class="popup-window">
-    <!--弹窗背景-->
-    <div class="backdrop"></div>
-    <!--弹窗内容-->
-    <div id="video" style="display: none" class="video"></div>
-    <div id="videos" style="display: none" class="videos"></div>
-</div>
 
-<div class="nav">
-    <ul class="nav-ul">
-        <li class="nav-item nav-item-style">
-            <img src="../../../static/images/security/bg.png">
-            <span>办公区监控</span>
-        </li>
+<div class="aerial-view-style">
+    <img src="../../../static/images/security/vertical_view.jpg" style="width: 100%;height: 100%">
 
-        <li class="nav-item">
-            <img src="../../../static/images/security/cr.png">
-            <span>出入口监控</span>
-        </li>
-
-        <li class="nav-item">
-            <img src="../../../static/images/security/sc.png">
-            <span>生产区监控</span>
-        </li>
-
-        <li class="nav-item">
-            <img src="../../../static/images/security/mj.png">
-            <span>厂区门禁管理</span>
-        </li>
-
-        <%--第一版菜单样式--%>
-        <%--<li class="nav-item">
-            <a>
-                <img src="../../../static/images/security/factory.png">
-                <span>生产区(东)</span>
-            </a>
-            <ul>
-                <li><a onclick="popupBackdrop('eastProductionLine1')"><span>(东)线路一</span></a></li>
-                <li><a onclick="popupBackdrop('eastProductionLine2')"><span>(东)线路二</span></a></li>
-                <li><a><span>线路三</span></a></li>
-                <li><a><span>线路四</span></a></li>
-            </ul>
-        </li>--%>
-    </ul>
-</div>
-
-<div class="right_page">
-    <img src="../../../static/images/security/vertical_view.jpg">
-
-    <div id="office" class="office-region">
-        <img class="sign-office-1" onclick="office()" src="../../../static/images/security/dian.png">
-        <img class="sign-office-2" onclick="guard()" src="../../../static/images/security/dian.png">
+    <div class="dyndmkn-region">
+        <img class="dyndmkn-position position-action" onclick="guard('D13034612','1')" title="东院南大门口内" src="../../../static/images/security/dian.png">
     </div>
 
-    <div id="guard" class="guard-region">
-        <img class="sign" onclick="guard()" src="../../../static/images/security/dian.png">
+    <div class="dyndmkw-region">
+        <img class="dyndmkw-position position-action" onclick="guard('D13034612','2')" title="东院南大门口外" src="../../../static/images/security/dian.png">
     </div>
 
+    <div class="dybglqxxd-region">
+        <img class="dybglqxxd-position" onclick="guard('D13034612','3')" title="东院办公楼前西向东" src="../../../static/images/security/dian.png">
+    </div>
+
+    <div class="dyzdsysdxx-region">
+        <img class="dyzdsysdxx-position" onclick="guard('D13034612','4')" title="东院正达实验室东向西" src="../../../static/images/security/dian.png">
+    </div>
+
+    <div class="dybglqdxx-region">
+        <img class="dybglqdxx-position" onclick="guard('D13034612','5')" title="东院办公楼前东向西" src="../../../static/images/security/dian.png">
+    </div>
+
+    <div class="dyydcxgcnxb-region">
+        <img class="dyydcxgcnxb-position" onclick="guard('D13034612','6')" title="东院运动场小广场南向北" src="../../../static/images/security/dian.png">
+    </div>
+
+    <div class="dynmztdbxn-region">
+        <img class="dynmztdbxn-position" onclick="guard('D13034612','7')" title="东院南门主通道北向南" src="../../../static/images/security/dian.png">
+    </div>
+
+    <div class="dybglhdtddxx-region">
+        <img class="dybglhdtddxx-position" onclick="guard('D13034612','8')" title="东院办公楼后东通道东向西" src="../../../static/images/security/dian.png">
+    </div>
+
+    <div class="dybglzdtd-region">
+        <img class="dybglzdtd-position" onclick="guard('D13034612','9')" title="东院办公楼正达通道" src="../../../static/images/security/dian.png">
+    </div>
+
+    <div class="dybgllctd-region">
+        <img class="dybgllctd-position" onclick="guard('D13034612','10')" title="东院办公楼路驰通道" src="../../../static/images/security/dian.png">
+    </div>
+
+    <div class="dycws-region">
+        <img class="dycws-position" onclick="guard('D13034612','11')" title="东院财务室" src="../../../static/images/security/dian.png">
+    </div>
+
+    <div class="dybglxcnxb-region">
+        <img class="dybglxcnxb-position" onclick="guard('D13034612','12')" title="东院办公楼西侧南向北" src="../../../static/images/security/dian.png">
+    </div>
+
+    <div class="dygnglxctdnxb-region">
+        <img class="dygnglxctdnxb-position" onclick="guard('D13034612','13')" title="东院供暖锅炉房西侧通道南向北" src="../../../static/images/security/dian.png">
+    </div>
+
+    <div class="dybglhtdxxd-region">
+        <img class="dybglhtdxxd-position" onclick="guard('D13034612','14')" title="东院办公楼后通道西向东" src="../../../static/images/security/dian.png">
+    </div>
+
+    <div class="dyyqz-region">
+        <img class="dyyqz-position" onclick="guard('D13034612','15')" title="东院燃气站" src="../../../static/images/security/dian.png">
+    </div>
+
+    <div class="xlhlcdhtd-region">
+        <img class="xlhlcdhtd-position" onclick="guard('D13034612','16')" title="小龙河料车等候通道" src="../../../static/images/security/dian.png">
+    </div>
+
+    <div class="dydbnctddxx-region">
+        <img class="dydbnctddxx-position" onclick="guard('D13034612','17')" title="东院地磅南侧通道东向西" src="../../../static/images/security/dian.png">
+    </div>
+
+    <div class="dydbnctdxxd-region">
+        <img class="dydbnctdxxd-position" onclick="guard('D13034612','18')" title="东院地磅南侧通道西向东" src="../../../static/images/security/dian.png">
+    </div>
+
+    <div class="dyxmdxx-region">
+        <img class="dyxmdxx-position" onclick="guard('D13034612','19')" title="东院西门东向西" src="../../../static/images/security/dian.png">
+    </div>
+
+    <div class="dydbbctddxx-region">
+        <img class="dydbbctddxx-position" onclick="guard('D13034612','20')" title="东院地磅北侧通道东向西" src="../../../static/images/security/dian.png">
+    </div>
+
+    <div class="dydbbctdxxd-region">
+        <img class="dydbbctdxxd-position" onclick="guard('D13034612','21')" title="东院地磅北侧通道西向东" src="../../../static/images/security/dian.png">
+    </div>
+
+    <div class="dydbdcbtdbxn-region">
+        <img class="dydbdcbtdbxn-position" onclick="guard('D13034612','22')" title="东院地磅东侧北通道北向南" src="../../../static/images/security/dian.png">
+    </div>
+
+    <div class="dyxmbxn-region">
+        <img class="dyxmbxn-position" onclick="guard('D13034612','24')" title="东院西门北向南" src="../../../static/images/security/dian.png">
+    </div>
+
+    <div class="dyxmwdxx-region">
+        <img class="dyxmwdxx-position" onclick="guard('D13034612','25')" title="东院西门外东向西" src="../../../static/images/security/dian.png">
+    </div>
+
+    <%--图例--%>
     <div class="signal-region">
         <div>
             <span class="signal-region-name">厂区安全监控分布图</span>
@@ -88,79 +131,46 @@
             </div>
         </div>
     </div>
-    <%--<div class="map-tagging">--%>
-    <%--<img src="../../../static/images/security/monitor.png" class="twinkle west-door"--%>
-    <%--onclick="popupBackdrop('westDoor')">--%>
-    <%--<img src="../../../static/images/security/monitor.png" class="twinkle south-door"--%>
-    <%--onclick="popupBackdrop('southDoor')">--%>
-    <%--<img src="../../../static/images/security/monitor.png" class="twinkle office-area-line1"--%>
-    <%--onclick="popupBackdrop('officeAreaLine1')">--%>
-    <%--<img src="../../../static/images/security/monitor.png" class="twinkle office-area-line2"--%>
-    <%--onclick="popupBackdrop('officeAreaLine2')">--%>
-    <%--<img src="../../../static/images/security/monitor.png" class="twinkle east-production-line1"--%>
-    <%--onclick="popupBackdrop('eastProductionLine1')">--%>
-    <%--<img src="../../../static/images/security/monitor.png" class="twinkle east-production-line2"--%>
-    <%--onclick="popupBackdrop('eastProductionLine2')">--%>
-    <%--<img src="../../../static/images/security/monitor.png" class="twinkle west-production-line1"--%>
-    <%--onclick="popupBackdrop('westProductionLine1')">--%>
-    <%--<img src="../../../static/images/security/monitor.png" class="twinkle west-production-line2"--%>
-    <%--onclick="popupBackdrop('westProductionLine2')">--%>
-    <%--</div>--%>
 </div>
+
+<div id="myPlayer" style="display: none"></div>
 
 </body>
 <script type="text/javascript" src="../../../static/js/jquery.js"></script>
 <script type="text/javascript" src="../../../static/js/security/security_common.js"></script>
-
+<script src="../../../static/js/oa/layer/layer.js"></script>
+<script src="../../../static/EZUIKit/ezuikit.js"></script>
 <script>
 
-    $('.nav-ul li').on('click', function () {
-        $('.nav-ul li').removeClass('nav-item-style');
-        $(this).addClass('nav-item-style');
-    });
+    function guard(serial,channel) {
+        window.lar = layer.open({
+            title: false,
+            type: 1,
+            area: ['800px','448px'],
+            shadeClose: false, //点击遮罩关闭
+            shade:0.8,
+            content: $("#myPlayer"),
+            offset: ['10%', '25%'],
+            closeBtn: 2,
+            cancel: function(index, layero){
+                layer.close(index);
+                player.stop();
+            },
+            success: function(layero, index){
+                console.log(layero, index);
+            }
+        });
 
-    function guard() {
-        $('#video').append('<video width="100%" height="100%" autoplay="autoplay" loop="loop">' +
-            '<source type="video/mp4" src="../../../static/images/security/video6.mp4">' +
-            '<embed src="../../../static/images/security/video3.mp4" width="100%" height="100%">' +
-            '</video>');
-        $('.popup-window').show();
-        $('.videos').hide();
-        $('.video').show();
-    }
-
-    function office() {
-        $('#videos').append('<div id="video1"\n' +
-            '         style="height: 49%;width: 37%;border: 1px solid #00e7ff;position: absolute;z-index: 9999;top: 1%;right: 50%;">\n' +
-            '        <video width="100%" height="100%" autoplay="autoplay" loop="loop">\n' +
-            '            <source type="video/mp4" src="../../../static/images/security/video3.mp4">\n' +
-            '            <embed src="../../../static/images/security/video4.mp4" width="100%" height="100%">\n' +
-            '        </video>\n' +
-            '    </div>\n' +
-            '    <div id="video2"\n' +
-            '         style="height:49%;width: 37%;border: 1px solid #00e7ff;position: absolute;z-index: 9999;top: 1%;left: 50%;">\n' +
-            '        <video width="100%" height="100%" autoplay="autoplay" loop="loop">\n' +
-            '            <source type="video/mp4" src="../../../static/images/security/video4.mp4">\n' +
-            '            <embed src="../../../static/images/security/video4.mp4" width="100%" height="100%">\n' +
-            '        </video>\n' +
-            '    </div>\n' +
-            '    <div id="video3"\n' +
-            '         style="height:49%;width: 37%;border:1px solid #00e7ff;position:absolute;z-index:9999;top:50%;right: 50%;">\n' +
-            '        <video width="100%" height="100%" autoplay="autoplay" loop="loop">\n' +
-            '            <source type="video/mp4" src="../../../static/images/security/video5.mp4">\n' +
-            '            <embed src="../../../static/images/security/video4.mp4" width="100%" height="100%">\n' +
-            '        </video>\n' +
-            '    </div>\n' +
-            '    <div id="video4"\n' +
-            '         style="height: 49%;width: 37%;border: 1px solid #00e7ff;position: absolute;z-index: 9999;top: 50%;left: 50%;">\n' +
-            '        <video width="100%" height="100%" autoplay="autoplay" loop="loop">\n' +
-            '            <source type="video/mp4" src="../../../static/images/security/video6.mp4">\n' +
-            '            <embed src="../../../static/images/security/video4.mp4" width="100%" height="100%">\n' +
-            '        </video>\n' +
-            '    </div>');
-        $('.popup-window').show();
-        $('.videos').show();
-        $('.video').hide();
+        player = new EZUIPlayer({
+            id: 'myPlayer',
+            url: 'ezopen://open.ys7.com/'+serial+'/'+channel+'.hd.live',
+            autoplay: true,
+            accessToken: "at.0sz086aecomohov56vp3lpsyc3l9ee37-5q5mfgepqy-1rjjkzx-y3phg5a3t",
+            decoderPath: '../../../static/EZUIKit/',
+            width: 800,
+            height: 448,
+            splitBasis: 1
+        });
     }
 </script>
 </html>
