@@ -411,7 +411,7 @@
                     type: 'value',
                     interval :0.5,
                     max:function (v) {
-                        return (v.max + 0.2).toFixed(1)
+                        return ${baseMap.template.ratioStone + 0.3};
                     },
                     min:function (v) {
                         return (v.min - 0.5) < 0? 0:(v.min - 0.5).toFixed(1)
@@ -430,6 +430,7 @@
                     markLine: {
                         data: [
                             {name: '上限', yAxis: ${baseMap.template.ratioStone + 0.3}},
+                            {name: '模板占比',  yAxis: ${baseMap.template.ratioStone}},
                             {name: '下限',  yAxis: ${baseMap.template.ratioStone - 0.3}}
                         ]
                     }

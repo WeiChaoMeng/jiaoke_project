@@ -54,7 +54,7 @@
 
                                         <td>${produced.produce_custom_num}</td>
                                         <td>
-                                            <a href="${path}/getProductMessage.do?id=${produced.Id}&crewNum=${crewNum}" target="_self" class="selected" >
+                                            <a href="${path}/getProductMessage.do?id=${produced.Id}&crewNum=${crewNum}&proDate=${produced.produce_date}" target="_self" class="selected" >
                                                 <i class="toolico iconfont">&#xe970;</i>查看</a>
                                         </td>
                                     </tr>

@@ -54,4 +54,15 @@ public interface QualityAuxiliaryAnalysisInf {
      * @return
      */
     String getRealTimeDataEcharsMaterial(String id, String crewNum);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期机组查询所有配比>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/5/5 20:43
+     */
+    String getModelListByDate(String proData, String crew);
 }

@@ -25,7 +25,7 @@ function  getModelByDateTimeAndCrew(rationNum) {
     }
         $.ajax({
             //该接口使用的是动态管理里面的接口，如需修改需自定义
-            url: path + "/getRatioListByDate.do",
+            url: path + "/getModelListByDate.do",
             type: "post",
             dataType:"json",
             data:{"proData":proDate,"crew":crew},

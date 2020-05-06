@@ -8,6 +8,7 @@
  **/
 package com.jiaoke.quality.service;
 
+import com.alibaba.fastjson.JSON;
 import com.jiake.utils.QualityGradingUtil;
 import com.jiaoke.common.bean.PageBean;
 import com.jiaoke.quality.dao.QualityAuxiliaryAnalysisDao;
@@ -123,5 +124,25 @@ public class QualityAuxiliaryAnalysisImpl implements QualityAuxiliaryAnalysisInf
         String resoult = QualityGradingUtil.getGradingResultJson(list,qualityDataMontoringDao,result);
 
         return resoult;
+    }
+
+    @Override
+    public String getModelListByDate(String proData, String crew) {
+        if (proData.isEmpty() || crew.isEmpty()) {return null;}
+        String[] array = proData.split("to");
+        //处理 一、二机组区别
+        String crewNum;
+        switch (crew){
+            case "data1":
+                crewNum = "crew1";
+                break;
+            case "data2":
+                crewNum = "crew2";
+                break;
+            default:
+                crewNum = "crew1";
+        }
+        List<Map<String,String>> map = qualityAuxiliaryAnalysisDao.selectRatioListByDate(array[0], array[1],crew,crewNum);
+        return JSON.toJSONString(map);
     }
 }

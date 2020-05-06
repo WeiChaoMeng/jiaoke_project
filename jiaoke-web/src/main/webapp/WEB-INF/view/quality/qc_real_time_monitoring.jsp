@@ -37,7 +37,6 @@
                     <th>配比名称</th>
                     <th>车号</th>
                     <th>盘号</th>
-                    <th>工程名称</th>
                 </thead>
 
                 <tbody>
@@ -49,7 +48,6 @@
                         <td id="crew1_basic_ratio_name" ></td>
                         <td id="crew1_basic_carNum" ></td>
                         <td id="crew1_basic_discNum" ></td>
-                        <td  id="crew1_basic_userNum" ></td>
                     </tr>
                 </tbody>
             </table>
@@ -245,7 +243,6 @@
             <th>配比名称</th>
             <th>车号</th>
             <th>盘号</th>
-            <th>工程名称</th>
             </thead>
 
             <tbody>
@@ -257,7 +254,6 @@
                 <td id="crew2_basic_ratio_name" ></td>
                 <td id="crew2_basic_carNum" ></td>
                 <td id="crew2_basic_discNum" ></td>
-                <td  id="crew2_basic_userNum" ></td>
             </tr>
             </tbody>
         </table>

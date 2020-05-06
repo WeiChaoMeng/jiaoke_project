@@ -11,7 +11,6 @@ package com.jiaoke.quality.service;
 import com.alibaba.fastjson.JSONObject;
 import com.jiake.utils.CarDateUtil;
 import com.jiake.utils.QualityGetProjectByCarNumUtil;
-import com.jiake.utils.ThreadPoolUtil;
 import com.jiaoke.quality.bean.QualityProjectItem;
 import com.jiaoke.quality.dao.QualityProjectDao;
 import org.apache.commons.lang3.StringUtils;
@@ -22,7 +21,6 @@ import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
 /**
  *  <一句话功能描述>
@@ -109,34 +107,35 @@ public class QualityProjectImpl implements QualityProjectInf {
         //存入车牌识别表
          qualityProjectDao.insertCarNum(license,recotime,crewId);
         //更新对应数据表
-        String lastTime = fromDate.split(" ")[1];
-        String carTime = recotime.split(" ")[1];
-        qualityProjectDao.updateRealTimeDataByCarNum(license,carDate,carTime,lastTime,crewNum);
+        qualityProjectDao.updateRealTimeDataByCarNum(license,recotime,fromDate,crewNum);
         //接入erp查询出厂单
+//        amqpTemplate.convertAndSend("exchangeCar","queueTestKey","success");
         //正常模式
 //        Map<String,String> map = QualityGetProjectByCarNumUtil.getErpData(license,carDate);
 
         //多线程模式
-        Future<Map<String,String>> f =  ThreadPoolUtil.getInstance().submit(() ->{
-            Map<String,String> map = QualityGetProjectByCarNumUtil.getErpData(license,carDate);
-            return map;
-        });
-        Map<String,String> map = f.get();
+//        Future<Map<String,String>> f =  ThreadPoolUtil.getInstance().submit(() ->{
+//            Map<String,String> map = QualityGetProjectByCarNumUtil.getErpData(license,carDate);
+//            return map;
+//        });
+//        Map<String,String> map = f.get();
+//
+//        //解析ERP传回来的数据
+//        if (map == null ||!("0".equals(map.get("Result")))){
+//            return;
+//        }
+//        map.put("crewNum",crewId);
+//        //插入出场单表`quality_leave_factory_history`
+//        int i = qualityProjectDao.insertLeaveFactory(map);
+//        //更新读取数据
+//        qualityProjectDao.updateRealtimeDataByDate(license,recotime,fromDate,crewNum,map.get("gcmc"));
+//        System.out.println("license = " + license);
+//        System.out.println("carDate = " + carDate);
+//        System.out.println("carTime = " + recotime);
+//        System.out.println("lastTime = " + fromDate);
+//        System.out.println("crewNum = " + crewNum);
+//        System.out.println("gcmc = " + map.get("gcmc"));
 
-        //解析ERP传回来的数据
-        if (map == null ||!("0".equals(map.get("Result")))){
-            return;
-        }
-        map.put("crewNum",crewId);
-        //插入出场单表`quality_leave_factory_history`
-        int i = qualityProjectDao.insertLeaveFactory(map);
-        //更新读取数据
-        qualityProjectDao.updateRealtimeDataByDate(license,carDate,carTime,lastTime,crewNum,map.get("gcmc"));
-        System.out.println("license = " + license);
-        System.out.println("carDate = " + carDate);
-        System.out.println("carTime = " + carTime);
-        System.out.println("lastTime = " + lastTime);
-        System.out.println("crewNum = " + crewNum);
-        System.out.println("gcmc = " + map.get("gcmc"));
+
     }
 }

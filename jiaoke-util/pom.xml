@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <properties>
-        <axis2.version>1.6.2</axis2.version>
+        <axis2.version>1.7.8</axis2.version>
     </properties>
     <artifactId>jiaoke-util</artifactId>
 
@@ -60,7 +60,7 @@
         </dependency>
         <dependency>
             <groupId>org.apache.axis2</groupId>
-            <artifactId>axis2</artifactId>
+            <artifactId>axis2-adb</artifactId>
             <version>${axis2.version}</version>
             <!--<scope>provided</scope>-->
         </dependency>

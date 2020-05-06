@@ -23,7 +23,6 @@ import com.jiaoke.quality.bean.QualityDataManagerDay;
 import com.jiaoke.quality.bean.QualityProjectItem;
 import com.jiaoke.quality.bean.QualityRatioModel;
 import com.jiaoke.quality.bean.QualityRatioTemplate;
-import com.jiaoke.quality.dao.QualityLeadingCockpit;
 import com.jiaoke.quality.service.*;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.ManagementService;
@@ -32,6 +31,7 @@ import org.activiti.engine.impl.identity.Authentication;
 import org.activiti.engine.task.Task;
 import org.apache.logging.log4j.util.Strings;
 import org.apache.shiro.SecurityUtils;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -106,6 +106,8 @@ public class QualityController {
     private TaskService taskService;
     @Resource
     private QualityLeadingCockpitInf qualityLeadingCockpitInf;
+    @Resource
+    private AmqpTemplate amqpTemplate;
 
     /**
      * 获取当前登录用户信息
@@ -195,9 +197,10 @@ public class QualityController {
 
             if ((charset == null || charset.length() == 0) && (size ==readCount))
             {
-                qualityprojectInf.editProductionDataByCarNum(new String(buf,"UTF-8"));
-
+//                qualityprojectInf.editProductionDataByCarNum(new String(buf,"UTF-8"));
+                amqpTemplate.convertAndSend("exchangeCar","queueTestKey",new String(buf,"UTF-8"));
             }
+
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -902,6 +905,19 @@ public class QualityController {
         return "quality/qc_auxiliary_analysis";
     }
 
+
+    @ResponseBody
+    @RequestMapping(value = "/getModelListByDate.do",method = RequestMethod.POST)
+    public String getModelListByDate(String proData,String crew){
+        String res = "";
+        try{
+            res = qualityAuxiliaryAnalysisInf.getModelListByDate(proData,crew);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return res;
+    }
     /**
      * 查询基本信息
      * @param producedId
