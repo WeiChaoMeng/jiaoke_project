@@ -312,6 +312,30 @@
                                 </a>
                             </td>
 
+                            <td class="template" valign="middle">
+                                <a class="check_color" onclick="commonJump('employment')" title="部室用人申请表">
+                                    <em class="template-icon">&#xe695;</em>部室用人申请表
+                                </a>
+                            </td>
+
+                            <td class="template" valign="middle">
+                                <a class="check_color" onclick="commonJump('examination')" title="职称（技术等级）考试申请表">
+                                    <em class="template-icon">&#xe695;</em>职称（技术等级）考试申请表
+                                </a>
+                            </td>
+
+                            <td class="template" valign="middle">
+                                <a class="check_color" onclick="commonJump('engage')" title="职称（技术等级）评聘申请表">
+                                    <em class="template-icon">&#xe695;</em>职称（技术等级）评聘申请表
+                                </a>
+                            </td>
+
+                            <%--<td class="template" valign="middle">--%>
+                                <%--<a class="check_color" onclick="commonJump('trainee')" title="毕业生见习期满考核鉴定表">--%>
+                                    <%--<em class="template-icon">&#xe695;</em>毕业生见习期满考核鉴定表--%>
+                                <%--</a>--%>
+                            <%--</td>--%>
+
                             <%--<td class="template" valign="middle">--%>
                                 <%--<a class="check_color" onclick="commonJump('meeting')" title="会议室申请单">--%>
                                     <%--<em class="template-icon">&#xe695;</em>会议室申请单--%>

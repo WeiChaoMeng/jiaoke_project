@@ -1,245 +1,29 @@
 body {
     margin: 0;
     padding: 0;
+    min-height: 656px;
 }
 
-.twinkle {
-    background: #ffffff00;
-    animation: flash 0s linear infinite;
+/*overflow滚动条样式*/
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
 }
 
-@keyframes flash {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 100;
-    }
+::-webkit-scrollbar-thumb {
+    background-color: #E5E8EC;
+    background-clip: padding-box;
+    border: 1px solid #E6E5E6;
+    min-height: 28px;
+    border-radius: 4px;
 }
 
-.nav-item ul li span {
-    font-size: 13px;
+::-webkit-scrollbar-track-piece {
+    background-color: #fff;
 }
 
-.backdrop {
-    width: 100%;
-    height: 100%;
-    z-index: 8888;
-    background-color: #000000;
-    position: absolute;
-    opacity: 0.3;
-}
-
-.video {
-    height: 450px;
-    width: 800px;
-    border: 1px solid #FF0000;
-    position: absolute;
-    z-index: 9999;
-    top: 10%;
-    left: 25%;
-}
-
-.popup-window {
-    display: none
-}
-
-.nav {
-    width: 6.5%;
-    min-height: 100%;
-    height: auto;
-    background: #f5f9ff;
-    transition: all .3s;
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-
-.mini {
-    border-bottom: 2px #fff solid;
-    text-align: center
-}
-
-.menu-img {
-    padding: 3.5px 13px
-}
-
-.nav-item a img {
-    margin-top: 5px;
-}
-
-.nav-item > a > span {
-    margin-left: 10px;
-    position: absolute;
-    font-size: 13px
-}
-
-.right_page {
-    float: right;
-    position: relative;
-    height: 99%;
-    width: 93%;
-}
-
-.nav-item {
-    position: relative;
-    text-align: center;
-    padding: 5px 0;
-    list-style: none;
-}
-
-.nav-item img {
-    width: 28px;
-}
-
-.nav-item span {
-    display: block;
-    font-size: 13px;
-    margin-top: 5px;
-}
-
-.nav ul {
-    margin: 0;
-    padding: 0;
-}
-
-.nav-item-style {
-    background-color: #ffffff;
-    transition: all .3s;
-    box-shadow: 1px 1px 5px 0 #a7a7a7;
-}
-
-.right_page > img {
-    width: 100%;
-    height: 100%
-}
-
-/*西门*/
-.west-door {
-    position: absolute;
-    left: 56%;
-    top: 37%;
-    font-size: 20px;
-    width: 2%;
-}
-
-/*南门坐标*/
-.south-door {
-    position: absolute;
-    left: 13%;
-    top: 60%;
-    font-size: 20px;
-    width: 2%;
-}
-
-/*办公区线路1*/
-.office-area-line1 {
-    position: absolute;
-    left: 39%;
-    top: 73%;
-    font-size: 20px;
-    width: 2%;
-}
-
-/*办公区线路2*/
-.office-area-line2 {
-    position: absolute;
-    left: 40%;
-    top: 53%;
-    font-size: 20px;
-    width: 2%;
-}
-
-/*生产区东-线路1*/
-.east-production-line1 {
-    position: absolute;
-    left: 67%;
-    top: 52%;
-    font-size: 20px;
-    width: 2%;
-}
-
-/*生产区东-线路2*/
-.east-production-line2 {
-    position: absolute;
-    left: 62%;
-    top: 51%;
-    font-size: 20px;
-    width: 2%;
-}
-
-/*生产区西-线路1*/
-.west-production-line1 {
-    position: absolute;
-    left: 35%;
-    top: 16%;
-    font-size: 20px;
-    width: 2%;
-}
-
-/*生产区西-线路2*/
-.west-production-line2 {
-    position: absolute;
-    left: 52%;
-    top: 24%;
-    font-size: 20px;
-    width: 2%;
-}
-
-/*办公区域*/
-.office-region {
-    position: absolute;
-    left: 33%;
-    top: 55%;
-    font-size: 20px;
-    background: #ffe500;
-    width: 80px;
-    height: 108px;
-    opacity: .5;
-    border-radius: 40px;
-}
-
-.sign-office-1 {
-    width: 20px;
-    margin-top: -10px;
-    cursor: pointer;
-    left: 26px;
-    position: absolute;
-    top: 10px;
-}
-
-.sign-office-2 {
-    width: 20px;
-    margin-top: -10px;
-    cursor: pointer;
-    left: 38px;
-    position: absolute;
-    top: 86px;
-}
-
-/*出入口区域*/
-.guard-region {
-    position: absolute;
-    left: 5%;
-    top: 67%;
-    font-size: 20px;
-    background: #ffe500;
-    width: 33px;
-    height: 29px;
-    opacity: .7;
-    border-radius: 0 0 0 100px;
-}
-
-.sign {
-    width: 20px;
-    margin-top: -10px;
-    float: right;
-    cursor: pointer;
-}
-
-.sign:hover, .sign-office-1:hover, .sign-office-2:hover {
-    width: 25px;
-    margin-top: -15px;
+.aerial-view-style{
+    position: relative;height: 100%;width: 100%;
 }
 
 /*右上角示意区域*/
@@ -317,23 +101,39 @@ body {
     vertical-align: middle;
 }
 
-/*厂区图*/
-.aerial-view-style{
-    position: relative;height: 100%;width: 100%;
+/*------1号刻录机sta--------*/
+/*东院南大门口内*/
+.dyndmkn-region {
+    position: absolute;
+    top: 72%;
+    font-size: 20px;
+    background: #ffe500;
+    width: 26px;
+    height: 29px;
+    opacity: .7;
+    left: 34%;
+    border-radius: 0 0 100px 0;
 }
 
-/*地图上监控位置*/
-.position-action:hover{
+.dyndmkn-position {
+    width: 20px;
+    margin-top: -10px;
+    float: left;
+    cursor: pointer;
+}
+
+.dyndmkn-position:hover {
     width: 25px;
-    margin-top: -15px;
-    position: absolute;
+    margin-top: -13px;
+    float: left;
+    cursor: pointer;
 }
 
 /*东院南大门口外*/
 .dyndmkw-region {
     position: absolute;
-    left: 5%;
-    top: 67%;
+    left: 31%;
+    top: 72%;
     font-size: 20px;
     background: #ffe500;
     width: 26px;
@@ -348,24 +148,10 @@ body {
     float: right;
     cursor: pointer;
 }
-
-/*东院南大门口内*/
-.dyndmkn-region {
-    position: absolute;
-    top: 67%;
-    font-size: 20px;
-    background: #ffe500;
-    width: 26px;
-    height: 29px;
-    opacity: .7;
-    left: 8%;
-    border-radius: 0 0 100px 0;
-}
-
-.dyndmkn-position {
-    width: 20px;
-    margin-top: -10px;
-    float: left;
+.dyndmkw-position:hover {
+    width: 25px;
+    margin-top: -13px;
+    float: right;
     cursor: pointer;
 }
 
@@ -375,8 +161,8 @@ body {
     position: absolute;
     font-size: 20px;
     opacity: .7;
-    top: 50%;
-    left: 33%;
+    top: 58%;
+    left: 51%;
     border-left: 13px solid transparent;
     border-right: 13px solid transparent;
     border-bottom: 30px solid #e5d330;
@@ -401,10 +187,10 @@ body {
 /*东院正达实验室东向西*/
 .dyzdsysdxx-region {
     position: absolute;
-    top: 62%;
+    top: 90%;
     font-size: 20px;
     opacity: .7;
-    left: 23%;
+    left: 43%;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
     border-top: 30px solid #ffe500;
@@ -430,10 +216,10 @@ body {
 /*东院办公楼前东向西*/
 .dybglqdxx-region {
     position: absolute;
-    top: 88%;
+    top: 91%;
     font-size: 20px;
     opacity: .7;
-    left: 30%;
+    left: 50%;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
     border-top: 30px solid #ffe500;
@@ -460,10 +246,10 @@ body {
 /*东院运动场小广场南向北*/
 .dyydcxgcnxb-region {
     position: absolute;
-    top: 89%;
+    top: 91%;
     font-size: 20px;
     opacity: .7;
-    left: 34%;
+    left: 52%;
     border-bottom: 25px solid #ffe500;
     border-right: 40px solid transparent;
 }
@@ -486,8 +272,8 @@ body {
 
 /*东院南门主通道北向南*/
 .dynmztdbxn-region {
-    top: 68%;
-    left: 31%;
+    top: 74%;
+    left: 49%;
     border-top: 15px solid transparent;
     border-left: 36px solid #ffe500;
     border-bottom: 15px solid transparent;
@@ -516,8 +302,8 @@ body {
 
 /*东院办公楼后东通道东向西*/
 .dybglhdtddxx-region {
-    top: 87%;
-    left: 37%;
+    top: 89%;
+    left: 55%;
     border-bottom: 35px solid #ffe500;
     border-left: 31px solid transparent;
     position: absolute;
@@ -543,8 +329,8 @@ body {
 
 /*东院办公楼路驰通道*/
 .dybgllctd-region {
-    top: 69%;
-    left: 35%;
+    top: 74%;
+    left: 53%;
     height: 0;
     border-top: 7px solid transparent;
     border-right: 22px solid #ffe500;
@@ -572,8 +358,8 @@ body {
 
 /*东院办公楼正达通道*/
 .dybglzdtd-region {
-    top: 72%;
-    left: 35%;
+    top: 77%;
+    left: 53%;
     height: 0;
     border-top: 13px solid transparent;
     border-right: 21px solid #ffe500;
@@ -601,8 +387,8 @@ body {
 
 /*东院财务室*/
 .dycws-region {
-    top: 66%;
-    left: 35%;
+    top: 70%;
+    left: 53%;
     height: 0;
     border-top: 8px solid transparent;
     border-right: 23px solid #ffe500;
@@ -634,8 +420,8 @@ body {
     position: absolute;
     font-size: 20px;
     opacity: .7;
-    top: 50%;
-    left: 28%;
+    top: 57%;
+    left: 46%;
     border-top: 11px solid transparent;
     border-right: 32px solid rgb(255, 229, 0);
     border-bottom: 3px solid transparent;
@@ -663,8 +449,8 @@ body {
     position: absolute;
     font-size: 20px;
     opacity: .7;
-    top: 42%;
-    left: 38%;
+    top: 50%;
+    left: 53%;
     border-top: 8px solid transparent;
     border-right: 32px solid rgb(255, 229, 0);
     border-bottom: 8px solid transparent;
@@ -692,8 +478,8 @@ body {
     position: absolute;
     font-size: 20px;
     opacity: .7;
-    top: 54%;
-    left: 39%;
+    top: 61%;
+    left: 55%;
     border-left: 20px solid transparent;
     border-right: 8px solid transparent;
     border-bottom: 30px solid #e5d330;
@@ -718,8 +504,8 @@ body {
 
 /*东院燃气站*/
 .dyyqz-region {
-    top: 44%;
-    left: 40%;
+    top: 52%;
+    left: 55%;
     border-top: 13px solid transparent;
     border-left: 38px solid #ffe500;
     border-bottom: 13px solid transparent;
@@ -748,8 +534,8 @@ body {
 
 /*小龙河料车等候通道*/
 .xlhlcdhtd-region {
-    top: 31%;
-    left: 48%;
+    top: 40%;
+    left: 61%;
     border-top: 19px solid transparent;
     border-left: 44px solid #ffe500;
     border-bottom: 4px solid transparent;
@@ -779,10 +565,10 @@ body {
 /*东院地磅南侧通道东向西*/
 .dydbnctddxx-region {
     position: absolute;
-    top: 47%;
+    top: 55%;
     font-size: 20px;
     opacity: .7;
-    left: 51%;
+    left: 64%;
     border-left: 0px solid transparent;
     border-right: 15px solid transparent;
     border-top: 23px solid #ffe500;
@@ -810,8 +596,8 @@ body {
     position: absolute;
     font-size: 20px;
     opacity: .7;
-    top: 44%;
-    left: 51%;
+    top: 52%;
+    left: 64%;
     border-left: 0px solid transparent;
     border-right: 15px solid transparent;
     border-bottom: 19px solid #e5d330;
@@ -836,10 +622,10 @@ body {
 /*东院西门东向西*/
 .dyxmdxx-region {
     position: absolute;
-    top: 41%;
+    top: 48%;
     font-size: 20px;
     opacity: .7;
-    left: 51.2%;
+    left: 63.6%;
     border-left: 19px solid transparent;
     border-right: 20px solid transparent;
     border-top: 23px solid #ffe500;
@@ -864,10 +650,10 @@ body {
 /*东院地磅北侧通道东向西*/
 .dydbbctddxx-region {
     position: absolute;
-    top: 47%;
+    top: 55%;
     font-size: 20px;
     opacity: .7;
-    left: 53%;
+    left: 65%;
     border-left: 15px solid transparent;
     border-right: 0px solid transparent;
     border-top: 23px solid #ffe500;
@@ -895,8 +681,8 @@ body {
     position: absolute;
     font-size: 20px;
     opacity: .7;
-    top: 44%;
-    left: 53%;
+    top: 52%;
+    left: 65%;
     border-left: 15px solid transparent;
     border-right: 0px solid transparent;
     border-bottom: 19px solid #e5d330;
@@ -920,11 +706,11 @@ body {
 
 /*东院地磅东侧北通道北向南*/
 .dydbdcbtdbxn-region {
-    top: 51%;
-    left: 53%;
-    border-top: 15px solid transparent;
+    top: 59%;
+    left: 66%;
+    border-top: 0 solid transparent;
     border-left: 36px solid #ffe500;
-    border-bottom: 0px solid transparent;
+    border-bottom: 21px solid transparent;
     position: absolute;
     font-size: 20px;
     opacity: .7;
@@ -948,10 +734,39 @@ body {
     margin-left: -13px;
 }
 
+/*东院配电室西侧通道南向北*/
+.dypdsxctdnxb-region {
+    top: 51%;
+    left: 67%;
+    height: 0;
+    border-top: 12px solid transparent;
+    border-right: 23px solid #ffe500;
+    border-bottom: 12px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.dypdsxctdnxb-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -18px;
+    margin-left: -8px;
+    position: absolute;
+}
+
+.dypdsxctdnxb-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -21px;
+    margin-left: -10px;
+    position: absolute;
+}
+
 /*东院西门北向南*/
 .dyxmbxn-region {
-    top: 39%;
-    left: 52%;
+    top: 46%;
+    left: 65%;
     border-top: 5px solid transparent;
     border-left: 35px solid #FF9800;
     border-bottom: 15px solid transparent;
@@ -980,8 +795,8 @@ body {
 
 /*东院西门外东向西*/
 .dyxmwdxx-region {
-    top: 34.4%;
-    left: 52%;
+    top: 42.4%;
+    left: 64%;
     border-top: 24px solid transparent;
     border-left: 36px solid #ffe500;
     border-bottom: 0px solid transparent;
@@ -1008,3 +823,2180 @@ body {
     position: absolute;
     margin-left: -13px;
 }
+
+/*东院石料库南通道西向东*/
+.dyslkntdxxd-region {
+    height: 0;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+    top: 62%;
+    left: 63%;
+    border-left: 0px solid transparent;
+    border-right: 25px solid transparent;
+    border-bottom: 30px solid #e5d330;
+}
+
+.dyslkntdxxd-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -18px;
+    margin-left: -10px;
+    position: absolute;
+}
+
+.dyslkntdxxd-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -21px;
+    margin-left: -12px;
+    position: absolute;
+}
+
+/*东院石料库西门南向北*/
+.dyslkxmnxb-region {
+    top: 61%;
+    left: 64%;
+    height: 0;
+    border-top: 7px solid transparent;
+    border-right: 32px solid #ffe500;
+    border-bottom: 17px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.dyslkxmnxb-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -18px;
+    margin-left: -8px;
+    position: absolute;
+}
+
+.dyslkxmnxb-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -21px;
+    margin-left: -10px;
+    position: absolute;
+}
+
+/*东院1号机南侧通道西向东*/
+.dy1hjnctdxxd-region {
+    height: 0;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+    top: 62%;
+    left: 67%;
+    border-left: 17px solid transparent;
+    border-right: 0px solid transparent;
+    border-bottom: 25px solid #e5d330;
+}
+
+.dy1hjnctdxxd-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -18px;
+    margin-left: -10px;
+    position: absolute;
+}
+
+.dy1hjnctdxxd-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -21px;
+    margin-left: -12px;
+    position: absolute;
+}
+
+/*东院石料库南北通道南向北*/
+.dyslknbtdnxb-region {
+    top: 75%;
+    left: 63%;
+    height: 0;
+    border-top: 12px solid transparent;
+    border-right: 33px solid #ffe500;
+    border-bottom: 12px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.dyslknbtdnxb-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -18px;
+    margin-left: -8px;
+    position: absolute;
+}
+
+.dyslknbtdnxb-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -21px;
+    margin-left: -10px;
+    position: absolute;
+}
+
+/*东院1号机南侧通道北向南*/
+.dy1hjnctdbxn-region {
+    top: 75%;
+    left: 64%;
+    border-top: 21px solid transparent;
+    border-left: 36px solid #FF9800;
+    border-bottom: 10px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.dy1hjnctdbxn-position {
+    width: 20px;
+    float: right;
+    cursor: pointer;
+    margin-top: -18px;
+    position: absolute;
+    margin-left: -11px;
+}
+
+.dy1hjnctdbxn-position:hover {
+    width: 25px;
+    float: right;
+    cursor: pointer;
+    margin-top: -21px;
+    position: absolute;
+    margin-left: -13px;
+}
+
+/*东院1号机南上料口*/
+.dy1hjnslk-region {
+    position: absolute;
+    top: 73%;
+    font-size: 20px;
+    opacity: .7;
+    left: 70%;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 30px solid #ffe500;
+    width: 7px;
+}
+
+.dy1hjnslk-position {
+    width: 20px;
+    margin-top: -19px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -7px;
+}
+
+.dy1hjnslk-position:hover {
+    width: 25px;
+    margin-top: -22px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -9px;
+}
+
+/*东院1号机北上料口*/
+.dy1hjbslk-region {
+    position: absolute;
+    top: 73%;
+    font-size: 20px;
+    opacity: .7;
+    left: 74%;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 30px solid #ffe500;
+    width: 7px;
+}
+
+.dy1hjbslk-position {
+    width: 20px;
+    margin-top: -19px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -7px;
+}
+
+.dy1hjbslk-position:hover {
+    width: 25px;
+    margin-top: -22px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -9px;
+}
+
+/*东院2号机上料口*/
+.dy2hjslk-region {
+    position: absolute;
+    top: 73%;
+    font-size: 20px;
+    opacity: .7;
+    left: 77%;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 30px solid #ffe500;
+    width: 7px;
+}
+
+.dy2hjslk-position {
+    width: 20px;
+    margin-top: -19px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -7px;
+}
+
+.dy2hjslk-position:hover {
+    width: 25px;
+    margin-top: -22px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -9px;
+}
+
+/*东院1号机中间通道*/
+.dy1hjzjtd-region {
+    position: absolute;
+    top: 73%;
+    font-size: 20px;
+    opacity: .7;
+    left: 80%;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 30px solid #ffe500;
+    width: 7px;
+}
+
+.dy1hjzjtd-position {
+    width: 20px;
+    margin-top: -19px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -7px;
+}
+
+.dy1hjzjtd-position:hover {
+    width: 25px;
+    margin-top: -22px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -9px;
+}
+/*------1号刻录机end--------*/
+
+/*------2号刻录机sta--------*/
+/*东院2号机南上料口*/
+.dy2hjnslk-region {
+    position: absolute;
+    top: 73%;
+    font-size: 20px;
+    opacity: .7;
+    left: 83%;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 30px solid #ffe500;
+    width: 7px;
+}
+
+.dy2hjnslk-position {
+    width: 20px;
+    margin-top: -19px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -7px;
+}
+
+.dy2hjnslk-position:hover {
+    width: 25px;
+    margin-top: -22px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -9px;
+}
+
+/*东院2号机北上料口*/
+.dy2hjbslk-region {
+    position: absolute;
+    top: 73%;
+    font-size: 20px;
+    opacity: .7;
+    left: 86%;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 30px solid #ffe500;
+    width: 7px;
+}
+
+.dy2hjbslk-position {
+    width: 20px;
+    margin-top: -19px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -7px;
+}
+
+.dy2hjbslk-position:hover {
+    width: 25px;
+    margin-top: -22px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -9px;
+}
+
+/*东院石料库南北通道北向南*/
+.dyslknbtdbxn-region {
+    top: 74%;
+    left: 88%;
+    border-top: 15px solid transparent;
+    border-left: 35px solid #ffe500;
+    border-bottom: 15px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.dyslknbtdbxn-position {
+    width: 20px;
+    float: right;
+    cursor: pointer;
+    margin-top: -18px;
+    position: absolute;
+    margin-left: -11px;
+}
+
+.dyslknbtdbxn-position:hover {
+    width: 25px;
+    float: right;
+    cursor: pointer;
+    margin-top: -21px;
+    position: absolute;
+    margin-left: -13px;
+}
+
+/*东院石料库废粉池*/
+.dyslkffc-region {
+    top: 72%;
+    left: 91%;
+    height: 0;
+    border-top: 15px solid transparent;
+    border-right: 31px solid #ffe500;
+    border-bottom: 15px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.dyslkffc-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -18px;
+    margin-left: -8px;
+    position: absolute;
+}
+
+.dyslkffc-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -21px;
+    margin-left: -10px;
+    position: absolute;
+}
+
+/*东院1号机成品料通道*/
+.dylqgqdctdnxb-region {
+    top: 63%;
+    left: 70%;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-right: 23px solid #ffe500;
+    border-bottom: 10px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.dylqgqdctdnxb-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -18px;
+    margin-left: -8px;
+    position: absolute;
+}
+
+.dylqgqdctdnxb-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -21px;
+    margin-left: -10px;
+    position: absolute;
+}
+
+/*东院1号机废粉通道*/
+.dy1hjfftd-region {
+    top: 68%;
+    left: 70%;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-right: 23px solid #ffe500;
+    border-bottom: 10px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.dy1hjfftd-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -18px;
+    margin-left: -8px;
+    position: absolute;
+}
+
+.dy1hjfftd-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -21px;
+    margin-left: -10px;
+    position: absolute;
+}
+
+/*东院2号机成品料通道*/
+.dy2hjcpltd-region {
+    height: 0;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+    top: 65%;
+    left: 81%;
+    border-top: 12px solid transparent;
+    border-right: 26px solid rgb(255, 229, 0);
+    border-bottom: 3px solid transparent;
+}
+
+.dy2hjcpltd-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -18px;
+    margin-left: -8px;
+    position: absolute;
+}
+
+.dy2hjcpltd-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -21px;
+    margin-left: -10px;
+    position: absolute;
+}
+
+/*东院2号机废粉通道*/
+.dy2hjfftd-region {
+    top: 68%;
+    left: 81%;
+    height: 0;
+    border-top: 11px solid transparent;
+    border-right: 26px solid #ffe500;
+    border-bottom: 4px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.dy2hjfftd-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -18px;
+    margin-left: -8px;
+    position: absolute;
+}
+
+.dy2hjfftd-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -21px;
+    margin-left: -10px;
+    position: absolute;
+}
+
+/*东院1号机运输车等候区*/
+.dy1hjyscdhq-region {
+    top: 62%;
+    left: 79.8%;
+    border-top: 10px solid transparent;
+    border-left: 30px solid #ffe500;
+    border-bottom: 10px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.dy1hjyscdhq-position {
+    width: 20px;
+    float: right;
+    cursor: pointer;
+    margin-top: -18px;
+    position: absolute;
+    margin-left: -11px;
+}
+
+.dy1hjyscdhq-position:hover {
+    width: 25px;
+    float: right;
+    cursor: pointer;
+    margin-top: -21px;
+    position: absolute;
+    margin-left: -13px;
+}
+
+/*东院2号机组维修间*/
+.dy2hjzwxj-region {
+    top: 63%;
+    left: 82.5%;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-right: 29px solid #ffe500;
+    border-bottom: 8px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.dy2hjzwxj-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -18px;
+    margin-left: -8px;
+    position: absolute;
+}
+
+.dy2hjzwxj-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -21px;
+    margin-left: -10px;
+    position: absolute;
+}
+
+/*东院1.2号机中通道西向东*/
+.dy12hjztdxxd-region {
+    top: 59%;
+    left: 80%;
+    border-top: 5px solid transparent;
+    border-left: 36px solid #ffe500;
+    border-bottom: 13px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.dy12hjztdxxd-position {
+    width: 20px;
+    float: right;
+    cursor: pointer;
+    margin-top: -18px;
+    position: absolute;
+    margin-left: -11px;
+}
+
+.dy12hjztdxxd-position:hover {
+    width: 25px;
+    float: right;
+    cursor: pointer;
+    margin-top: -21px;
+    position: absolute;
+    margin-left: -13px;
+}
+
+/*东院2号机再生料库*/
+.dy2hjzslk-region {
+    top: 64%;
+    left: 87%;
+    height: 0;
+    border-top: 12px solid transparent;
+    border-right: 23px solid #ffe500;
+    border-bottom: 12px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.dy2hjzslk-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -18px;
+    margin-left: -8px;
+    position: absolute;
+}
+
+.dy2hjzslk-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -21px;
+    margin-left: -10px;
+    position: absolute;
+}
+
+/*东院宿舍门前*/
+.dyssmq-region {
+    position: absolute;
+    top: 51%;
+    font-size: 20px;
+    opacity: .7;
+    left: 70%;
+    border-left: 25px solid transparent;
+    border-right: 0px solid transparent;
+    border-top: 20px solid #ffe500;
+    width: 7px;
+}
+
+.dyssmq-position {
+    width: 20px;
+    margin-top: -19px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -7px;
+}
+
+.dyssmq-position:hover {
+    width: 25px;
+    margin-top: -22px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -9px;
+}
+
+/*东院卸油口1*/
+.dyxyk1-region {
+    position: absolute;
+    top: 51%;
+    font-size: 20px;
+    opacity: .7;
+    left: 73%;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 20px solid #ffe500;
+    width: 7px;
+}
+
+.dyxyk1-position {
+    width: 20px;
+    margin-top: -19px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -6px;
+}
+
+.dyxyk1-position:hover {
+    width: 25px;
+    margin-top: -22px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -8px;
+}
+
+/*东院卸油口2*/
+.dyxyk2-region {
+    position: absolute;
+    top: 51%;
+    font-size: 20px;
+    opacity: .7;
+    left: 76%;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 20px solid #ffe500;
+    width: 7px;
+}
+
+.dyxyk2-position {
+    width: 20px;
+    margin-top: -19px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -6px;
+}
+
+.dyxyk2-position:hover {
+    width: 25px;
+    margin-top: -22px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -8px;
+}
+
+/*东院库房.宿舍门前*/
+.dykfssmq-region {
+    position: absolute;
+    top: 51%;
+    font-size: 20px;
+    opacity: .7;
+    left: 78%;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 20px solid #ffe500;
+    width: 7px;
+}
+
+.dykfssmq-position {
+    width: 20px;
+    margin-top: -19px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -6px;
+}
+
+.dykfssmq-position:hover {
+    width: 25px;
+    margin-top: -22px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -8px;
+}
+
+/*东院库房门前*/
+.dykfmq-region {
+    position: absolute;
+    top: 51%;
+    font-size: 20px;
+    opacity: .7;
+    left: 80%;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 20px solid #ffe500;
+    width: 7px;
+}
+
+.dykfmq-position {
+    width: 20px;
+    margin-top: -19px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -6px;
+}
+
+.dykfmq-position:hover {
+    width: 25px;
+    margin-top: -22px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -8px;
+}
+
+/*东院卸油口3*/
+.dyxyk3-region {
+    position: absolute;
+    top: 51%;
+    font-size: 20px;
+    opacity: .7;
+    left: 82%;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 20px solid #ffe500;
+    width: 7px;
+}
+
+.dyxyk3-position {
+    width: 20px;
+    margin-top: -19px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -6px;
+}
+
+.dyxyk3-position:hover {
+    width: 25px;
+    margin-top: -22px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -8px;
+}
+
+/*东院卸油口4*/
+.dyxyk4-region {
+    position: absolute;
+    top: 51%;
+    font-size: 20px;
+    opacity: .7;
+    left: 85%;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 20px solid #ffe500;
+    width: 7px;
+}
+
+.dyxyk4-position {
+    width: 20px;
+    margin-top: -19px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -6px;
+}
+
+.dyxyk4-position:hover {
+    width: 25px;
+    margin-top: -22px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -8px;
+}
+
+/*东院糊沥青*/
+.dyhlq-region {
+    top: 57%;
+    left: 85%;
+    border-top: 15px solid transparent;
+    border-left: 25px solid #ffe500;
+    border-bottom: 0px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.dyhlq-position {
+    width: 20px;
+    float: right;
+    cursor: pointer;
+    margin-top: -19px;
+    position: absolute;
+    margin-left: -11px;
+}
+
+.dyhlq-position:hover {
+    width: 25px;
+    float: right;
+    cursor: pointer;
+    margin-top: -22px;
+    position: absolute;
+    margin-left: -13px;
+}
+
+/*东院2号机运输车等候区*/
+.dy2hjyscdhq-region {
+    top: 58%;
+    left: 87%;
+    border-top: 0px solid transparent;
+    border-left: 25px solid #ffe500;
+    border-bottom: 20px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.dy2hjyscdhq-position {
+    width: 20px;
+    float: right;
+    cursor: pointer;
+    margin-top: -19px;
+    position: absolute;
+    margin-left: -11px;
+}
+
+.dy2hjyscdhq-position:hover {
+    width: 25px;
+    float: right;
+    cursor: pointer;
+    margin-top: -22px;
+    position: absolute;
+    margin-left: -13px;
+}
+
+/*东院锅炉房操作间*/
+.dyglfczj-region {
+    top: 55%;
+    left: 89.5%;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-right: 21px solid #ffe500;
+    border-bottom: 11px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.dyglfczj-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -18px;
+    margin-left: -8px;
+    position: absolute;
+}
+
+.dyglfczj-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -21px;
+    margin-left: -10px;
+    position: absolute;
+}
+
+/*东院2号机北侧*/
+.dy2hjbc-region {
+    top: 68%;
+    left: 89.2%;
+    border-top: 0px solid transparent;
+    border-left: 44px solid #ffe500;
+    border-bottom: 22px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.dy2hjbc-position {
+    width: 20px;
+    float: right;
+    cursor: pointer;
+    margin-top: -18px;
+    position: absolute;
+    margin-left: -11px;
+}
+
+.dy2hjbc-position:hover {
+    width: 25px;
+    float: right;
+    cursor: pointer;
+    margin-top: -21px;
+    position: absolute;
+    margin-left: -13px;
+}
+
+/*东院2号机上料区北向南*/
+.dy2hjslqbxn-region {
+    top: 64%;
+    left: 88.7%;
+    border-top: 24px solid transparent;
+    border-left: 36px solid #ffe500;
+    border-bottom: 0px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+    z-index: 0;
+}
+
+.dy2hjslqbxn-position {
+    width: 20px;
+    float: right;
+    cursor: pointer;
+    margin-top: -18px;
+    position: absolute;
+    margin-left: -11px;
+}
+
+.dy2hjslqbxn-position:hover {
+    width: 25px;
+    float: right;
+    cursor: pointer;
+    margin-top: -21px;
+    position: absolute;
+    margin-left: -13px;
+}
+
+/*东院罐区北向南*/
+.dygqbxn-region {
+    top: 58%;
+    left: 91%;
+    border-top: 10px solid transparent;
+    border-left: 30px solid #ffe500;
+    border-bottom: 10px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.dygqbxn-position {
+    width: 20px;
+    float: right;
+    cursor: pointer;
+    margin-top: -18px;
+    position: absolute;
+    margin-left: -11px;
+}
+
+.dygqbxn-position:hover {
+    width: 25px;
+    float: right;
+    cursor: pointer;
+    margin-top: -21px;
+    position: absolute;
+    margin-left: -13px;
+}
+
+/*东院垃圾站*/
+.dyljz-region {
+    top: 52%;
+    left: 91%;
+    border-top: 0px solid transparent;
+    border-left: 20px solid #e3d02b;
+    border-bottom: 17px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.dyljz-position {
+    width: 20px;
+    float: right;
+    cursor: pointer;
+    margin-top: -18px;
+    position: absolute;
+    margin-left: -11px;
+}
+
+.dyljz-position:hover {
+    width: 25px;
+    float: right;
+    cursor: pointer;
+    margin-top: -21px;
+    position: absolute;
+    margin-left: -13px;
+}
+
+/*东院西侧通道北向南*/
+.dyxctdbxn-region {
+    top: 50%;
+    left: 89%;
+    border-top: 10px solid transparent;
+    border-left: 36px solid #ffe500;
+    border-bottom: 10px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.dyxctdbxn-position {
+    width: 20px;
+    float: right;
+    cursor: pointer;
+    margin-top: -18px;
+    position: absolute;
+    margin-left: -11px;
+}
+
+.dyxctdbxn-position:hover {
+    width: 25px;
+    float: right;
+    cursor: pointer;
+    margin-top: -21px;
+    position: absolute;
+    margin-left: -13px;
+}
+
+/*西院食堂北向南*/
+.xystbxn-region {
+    top: 32%;
+    left: 59%;
+    border-top: 15px solid transparent;
+    border-left: 34px solid #ffe500;
+    border-bottom: 4px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.xystbxn-position {
+    width: 20px;
+    float: right;
+    cursor: pointer;
+    margin-top: -18px;
+    position: absolute;
+    margin-left: -11px;
+}
+
+.xystbxn-position:hover {
+    width: 25px;
+    float: right;
+    cursor: pointer;
+    margin-top: -21px;
+    position: absolute;
+    margin-left: -13px;
+}
+
+/*西院食堂西向东*/
+.xystxxd-region {
+    height: 0;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+    top: 28%;
+    left: 61.8%;
+    border-left: 17px solid transparent;
+    border-right: 0px solid transparent;
+    border-bottom: 20px solid #e5d330;
+}
+
+.xystxxd-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -18px;
+    margin-left: -10px;
+    position: absolute;
+}
+
+.xystxxd-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -21px;
+    margin-left: -12px;
+    position: absolute;
+}
+
+/*西院南侧车间南侧*/
+.xynccjnc-region {
+    top: 21%;
+    left: 42%;
+    border-top: 0px solid transparent;
+    border-left: 28px solid #ffe500;
+    border-bottom: 21px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.xynccjnc-position {
+    width: 20px;
+    float: right;
+    cursor: pointer;
+    margin-top: -18px;
+    position: absolute;
+    margin-left: -11px;
+}
+
+.xynccjnc-position:hover {
+    width: 25px;
+    float: right;
+    cursor: pointer;
+    margin-top: -21px;
+    position: absolute;
+    margin-left: -13px;
+}
+
+/*西院冷再生西侧*/
+.xylzsxc-region {
+    height: 0;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+    top: 23%;
+    left: 41.8%;
+    border-left: 15px solid transparent;
+    border-right: 0px solid transparent;
+    border-bottom: 19px solid #e5d330;
+}
+
+.xylzsxc-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -18px;
+    margin-left: -10px;
+    position: absolute;
+}
+
+.xylzsxc-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -21px;
+    margin-left: -12px;
+    position: absolute;
+}
+
+/*西院北通道西向东*/
+.xybtdxxd-region {
+    height: 0;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+    top: 25%;
+    left: 42.5%;
+    border-left: 14px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 20px solid #e5d330;
+}
+
+.xybtdxxd-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -18px;
+    margin-left: -10px;
+    position: absolute;
+}
+
+.xybtdxxd-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -21px;
+    margin-left: -12px;
+    position: absolute;
+}
+
+/*东院办公楼外大门口*/
+.dybglwdmk-region {
+    top: 75%;
+    left: 52%;
+    height: 0;
+    border-top: 0px solid transparent;
+    border-right: 15px solid #ffe500;
+    border-bottom: 10px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.dybglwdmk-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -18px;
+    margin-left: -8px;
+    position: absolute;
+}
+
+.dybglwdmk-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -21px;
+    margin-left: -10px;
+    position: absolute;
+}
+/*------2号刻录机end--------*/
+
+/*------3号刻录机sta--------*/
+/*西院实验室西通道北向南*/
+.xysysxtdbxn-region {
+    top: 34%;
+    left: 40%;
+    border-top: 15px solid transparent;
+    border-left: 34px solid #ffe500;
+    border-bottom: 4px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.xysysxtdbxn-position {
+    width: 20px;
+    float: right;
+    cursor: pointer;
+    margin-top: -18px;
+    position: absolute;
+    margin-left: -11px;
+}
+
+.xysysxtdbxn-position:hover {
+    width: 25px;
+    float: right;
+    cursor: pointer;
+    margin-top: -21px;
+    position: absolute;
+    margin-left: -13px;
+}
+
+/*西院实验室西通道北向南*/
+.xyzmbxn-region {
+    top: 37.5%;
+    left: 41.5%;
+    border-top: 0 solid transparent;
+    border-left: 25px solid #ffe500;
+    border-bottom: 20px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.xyzmbxn-position {
+    width: 20px;
+    float: right;
+    cursor: pointer;
+    margin-top: -18px;
+    position: absolute;
+    margin-left: -11px;
+}
+
+.xyzmbxn-position:hover {
+    width: 25px;
+    float: right;
+    cursor: pointer;
+    margin-top: -21px;
+    position: absolute;
+    margin-left: -13px;
+}
+
+/*西院冷再生成品料通道*/
+.xylzscpltd-region {
+    position: absolute;
+    top: 32%;
+    font-size: 20px;
+    opacity: .7;
+    left: 37%;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 25px solid #ffe500;
+    width: 7px;
+}
+
+.xylzscpltd-position {
+    width: 20px;
+    margin-top: -19px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -6px;
+}
+
+.xylzscpltd-position:hover {
+    width: 25px;
+    margin-top: -23px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -8px;
+}
+
+/*西院正门南向北*/
+.xyzmnxb-region {
+    top: 37%;
+    left: 39%;
+    height: 0;
+    border-top: 6px solid transparent;
+    border-right: 23px solid #ffe500;
+    border-bottom: 13px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.xyzmnxb-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -18px;
+    margin-left: -8px;
+    position: absolute;
+}
+
+.xyzmnxb-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -21px;
+    margin-left: -10px;
+    position: absolute;
+}
+
+/*西院正门南向北*/
+.xypscjdrk-region {
+    top: 29%;
+    left: 33%;
+    border-bottom: 29px solid #ffe500;
+    border-left: 33px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.xypscjdrk-position {
+    width: 20px;
+    margin-top: 10px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -11px;
+}
+
+.xypscjdrk-position:hover {
+    width: 25px;
+    margin-top: 13px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -13px;
+}
+
+/*西院破碎车间上料台东向西*/
+.xypscjsltdxx-region {
+    position: absolute;
+    top: 18%;
+    font-size: 20px;
+    opacity: .7;
+    left: 21.5%;
+    border-left: 19px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 23px solid #ffe500;
+}
+
+.xypscjsltdxx-position {
+    width: 20px;
+    margin-top: -20px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -9px;
+}
+
+.xypscjsltdxx-position:hover {
+    width: 25px;
+    margin-top: -23px;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -11px;
+}
+
+/*西院破碎车间储料区*/
+.xypscjclq-region {
+    height: 0;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+    top: 22%;
+    left: 23%;
+    border-top: 11px solid transparent;
+    border-right: 32px solid rgb(255, 229, 0);
+    border-bottom: 3px solid transparent;
+}
+
+.xypscjclq-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -18px;
+    margin-left: -6px;
+    position: absolute;
+}
+
+.xypscjclq-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -21px;
+    margin-left: -8px;
+    position: absolute;
+}
+
+/*西院破碎车间进料东入口*/
+.xypscjjldrk-region {
+    top: 22%;
+    left: 20%;
+    border-top: 10px solid transparent;
+    border-left: 36px solid #ffe500;
+    border-bottom: 10px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.xypscjjldrk-position {
+    width: 20px;
+    float: right;
+    cursor: pointer;
+    margin-top: -18px;
+    position: absolute;
+    margin-left: -13px;
+}
+
+.xypscjjldrk-position:hover {
+    width: 25px;
+    float: right;
+    cursor: pointer;
+    margin-top: -21px;
+    position: absolute;
+    margin-left: -15px;
+}
+
+/*西院地磅房东向西*/
+.xydbfdxx-region {
+    height: 0;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+    top: 35%;
+    left: 21%;
+    border-left: 21px solid transparent;
+    border-right: 0px solid transparent;
+    border-bottom: 20px solid #e5d330;
+}
+
+.xydbfdxx-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -18px;
+    margin-left: -10px;
+    position: absolute;
+}
+
+.xydbfdxx-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -21px;
+    margin-left: -12px;
+    position: absolute;
+}
+
+/*西院地磅房东向西*/
+.xycxtccrk-region {
+    top: 31%;
+    left: 20%;
+    border-top: 8px solid transparent;
+    border-left: 34px solid #ffe500;
+    border-bottom: 13px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.xycxtccrk-position {
+    width: 20px;
+    float: right;
+    cursor: pointer;
+    margin-top: -18px;
+    position: absolute;
+    margin-left: -11px;
+}
+
+.xycxtccrk-position:hover {
+    width: 25px;
+    float: right;
+    cursor: pointer;
+    margin-top: -21px;
+    position: absolute;
+    margin-left: -13px;
+}
+
+/*西院破碎车间南库区1*/
+.xypscjnkq1-region {
+    top: 6%;
+    left: 23%;
+    border-top: 10px solid transparent;
+    border-left: 25px solid #ffe500;
+    border-bottom: 4px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.xypscjnkq1-position {
+    width: 20px;
+    float: right;
+    cursor: pointer;
+    margin-top: -18px;
+    position: absolute;
+    margin-left: -11px;
+}
+
+.xypscjnkq1-position:hover {
+    width: 25px;
+    float: right;
+    cursor: pointer;
+    margin-top: -21px;
+    position: absolute;
+    margin-left: -13px;
+}
+
+/*西院水洗料北向南*/
+.xysxlbxn-region {
+    top: 15%;
+    left: 19%;
+    border-top: 0px solid transparent;
+    border-left: 25px solid #ffe500;
+    border-bottom: 20px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.xysxlbxn-position {
+    width: 20px;
+    float: right;
+    cursor: pointer;
+    margin-top: -19px;
+    position: absolute;
+    margin-left: -11px;
+}
+
+.xysxlbxn-position:hover {
+    width: 25px;
+    float: right;
+    cursor: pointer;
+    margin-top: -21px;
+    position: absolute;
+    margin-left: -13px;
+}
+
+/*西院破碎车间南库区2*/
+.xypscjnkq2-region {
+    top: 8%;
+    left: 21%;
+    border-top: 12px solid transparent;
+    border-left: 25px solid #ffe500;
+    border-bottom: 4px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.xypscjnkq2-position {
+    width: 20px;
+    float: right;
+    cursor: pointer;
+    margin-top: -18px;
+    position: absolute;
+    margin-left: -11px;
+}
+
+.xypscjnkq2-position:hover {
+    width: 25px;
+    float: right;
+    cursor: pointer;
+    margin-top: -21px;
+    position: absolute;
+    margin-left: -13px;
+}
+
+/*西院破碎车间机组南向北*/
+.xypscjjznxb-region {
+    top: 15%;
+    left: 21.3%;
+    height: 0;
+    border-top: 6px solid transparent;
+    border-right: 29px solid #ffe500;
+    border-bottom: 13px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.xypscjjznxb-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -18px;
+    margin-left: -8px;
+    position: absolute;
+}
+
+.xypscjjznxb-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -21px;
+    margin-left: -10px;
+    position: absolute;
+}
+
+/*西院破碎车间南库区3*/
+.xypscjnkq3-region {
+    top: 11%;
+    left: 20%;
+    border-top: 10px solid transparent;
+    border-left: 25px solid #ffe500;
+    border-bottom: 4px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.xypscjnkq3-position {
+    width: 20px;
+    float: right;
+    cursor: pointer;
+    margin-top: -18px;
+    position: absolute;
+    margin-left: -11px;
+}
+
+.xypscjnkq3-position:hover {
+    width: 25px;
+    float: right;
+    cursor: pointer;
+    margin-top: -21px;
+    position: absolute;
+    margin-left: -13px;
+}
+
+/*西院水洗料沉淀池*/
+.xysxlcdc-region {
+    top: 5%;
+    left: 18%;
+    border-top: 0px solid transparent;
+    border-left: 29px solid #ffe500;
+    border-bottom: 20px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.xysxlcdc-position {
+    width: 20px;
+    float: right;
+    cursor: pointer;
+    margin-top: -19px;
+    position: absolute;
+    margin-left: -11px;
+}
+
+.xysxlcdc-position:hover {
+    width: 25px;
+    float: right;
+    cursor: pointer;
+    margin-top: -22px;
+    position: absolute;
+    margin-left: -13px;
+}
+
+/*西院水洗料上料台*/
+.xysxlslt-region {
+    height: 0;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+    top: 10%;
+    left: 15%;
+    border-left: 27px solid transparent;
+    border-right: 0px solid transparent;
+    border-bottom: 20px solid #e5d330;
+}
+
+.xysxlslt-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -18px;
+    margin-left: -10px;
+    position: absolute;
+}
+
+.xysxlslt-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -21px;
+    margin-left: -12px;
+    position: absolute;
+}
+
+/*西院水洗料东向西*/
+.xysxldxn-region {
+    height: 0;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+    top: 8%;
+    left: 14%;
+    border-top: 16px solid transparent;
+    border-right: 29px solid rgb(255, 229, 0);
+    border-bottom: 8px solid transparent;
+}
+
+.xysxldxn-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -18px;
+    margin-left: -8px;
+    position: absolute;
+}
+
+.xysxldxn-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -21px;
+    margin-left: -10px;
+    position: absolute;
+}
+
+/*西院破碎车间南向北*/
+.xypscjnxb-region {
+    top: 3%;
+    left: 23%;
+    height: 0;
+    border-top: 1px solid transparent;
+    border-right: 21px solid #ffe500;
+    border-bottom: 11px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.xypscjnxb-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -18px;
+    margin-left: -8px;
+    position: absolute;
+}
+
+.xypscjnxb-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -21px;
+    margin-left: -10px;
+    position: absolute;
+}
+
+/*西院破碎车间西向东*/
+.xypscjxxd-region {
+    height: 0;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+    top: 13%;
+    left: 36%;
+    border-left: 27px solid transparent;
+    border-right: 0px solid transparent;
+    border-bottom: 23px solid #e5d330;
+}
+
+.xypscjxxd-position {
+
+    width: 20px;
+    cursor: pointer;
+    margin-top: -18px;
+    margin-left: -10px;
+    position: absolute;
+}
+
+.xypscjxxd-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -21px;
+    margin-left: -12px;
+    position: absolute;
+}
+
+/*西院冷再生粗环型皮带*/
+.xylzschxpd-region {
+    top: 27%;
+    left: 35%;
+    height: 0;
+    border-top: 14px solid transparent;
+    border-right: 10px solid #ffe500;
+    border-bottom: 2px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.xylzschxpd-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -30px;
+    margin-left: -1px;
+    position: absolute;
+}
+
+.xylzschxpd-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -33px;
+    margin-left: -3px;
+    position: absolute;
+}
+
+/*西院冷再生细环型皮带*/
+.xylzsxhxpd-region {
+    top: 28%;
+    left: 36%;
+    height: 0;
+    border-top: 14px solid transparent;
+    border-right: 10px solid #ffe500;
+    border-bottom: 2px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.xylzsxhxpd-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -30px;
+    margin-left: 0px;
+    position: absolute;
+}
+
+.xylzsxhxpd-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -33px;
+    margin-left: -2px;
+    position: absolute;
+}
+
+/*西院冷料仓*/
+.xyllc-region {
+    top: 29%;
+    left: 37%;
+    height: 0;
+    border-top: 14px solid transparent;
+    border-right: 10px solid #ffe500;
+    border-bottom: 2px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.xyllc-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -30px;
+    margin-left: 0px;
+    position: absolute;
+}
+
+.xyllc-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -33px;
+    margin-left: -2px;
+    position: absolute;
+}
+
+/*西院冷再生成品通道1*/
+.xylzscptd1-region {
+    top: 29.5%;
+    left: 38%;
+    height: 0;
+    border-top: 14px solid transparent;
+    border-right: 10px solid #ffe500;
+    border-bottom: 2px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.xylzscptd1-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -30px;
+    margin-left: 0px;
+    position: absolute;
+}
+
+.xylzscptd1-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -33px;
+    margin-left: -2px;
+    position: absolute;
+}
+
+/*西院冷再生成品通道2*/
+.xylzscptd2-region {
+    top: 30.5%;
+    left: 39%;
+    height: 0;
+    border-top: 14px solid transparent;
+    border-right: 10px solid #ffe500;
+    border-bottom: 2px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.xylzscptd2-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -30px;
+    margin-left: 0px;
+    position: absolute;
+}
+
+.xylzscptd2-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -33px;
+    margin-left: -2px;
+    position: absolute;
+}
+
+/*西院冷再生最顶上进料口*/
+.xylzszdsjlk-region {
+    top: 31%;
+    left: 40%;
+    height: 0;
+    border-top: 14px solid transparent;
+    border-right: 10px solid #ffe500;
+    border-bottom: 2px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.xylzszdsjlk-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -30px;
+    margin-left: 0px;
+    position: absolute;
+}
+
+.xylzszdsjlk-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -33px;
+    margin-left: -2px;
+    position: absolute;
+}
+
+
+
+
+/*西院破碎车间上料口*/
+.xypscjslk-region {
+    top: 20%;
+    left: 26%;
+    height: 0;
+    border-top: 19px solid transparent;
+    border-right: 18px solid #ffe500;
+    border-bottom: 4px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.xypscjslk-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -35px;
+    margin-left: 7px;
+    position: absolute;
+}
+
+.xypscjslk-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -38px;
+    margin-left: 5px;
+    position: absolute;
+}
+
+/*西院破碎车间细料口*/
+.xypscjxlk-region {
+    top: 20.5%;
+    left: 27.5%;
+    height: 0;
+    border-top: 19px solid transparent;
+    border-right: 18px solid #ffe500;
+    border-bottom: 4px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.xypscjxlk-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -35px;
+    margin-left: 7px;
+    position: absolute;
+}
+
+.xypscjxlk-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -38px;
+    margin-left: 5px;
+    position: absolute;
+}
+
+/*西院破碎车间粗料口*/
+.xypscjclk-region {
+    top: 21.5%;
+    left: 29%;
+    height: 0;
+    border-top: 19px solid transparent;
+    border-right: 18px solid #ffe500;
+    border-bottom: 4px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.xypscjclk-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -35px;
+    margin-left: 7px;
+    position: absolute;
+}
+
+.xypscjclk-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -38px;
+    margin-left: 5px;
+    position: absolute;
+}
+
+/*西院破碎车间主皮带*/
+.xypscjzpd-region {
+    top: 22.5%;
+    left: 30.5%;
+    height: 0;
+    border-top: 19px solid transparent;
+    border-right: 18px solid #ffe500;
+    border-bottom: 4px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.xypscjzpd-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -35px;
+    margin-left: 7px;
+    position: absolute;
+}
+
+.xypscjzpd-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -38px;
+    margin-left: 5px;
+    position: absolute;
+}
+
+/*西院破碎车间主皮带*/
+.xypscj1-region {
+    top: 23.5%;
+    left: 32%;
+    height: 0;
+    border-top: 19px solid transparent;
+    border-right: 18px solid #ffe500;
+    border-bottom: 4px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.xypscj1-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -35px;
+    margin-left: 7px;
+    position: absolute;
+}
+
+.xypscj1-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -38px;
+    margin-left: 5px;
+    position: absolute;
+}
+
+/*西院破碎车间主皮带*/
+.xypscj2-region {
+    top: 24.5%;
+    left: 33.5%;
+    height: 0;
+    border-top: 19px solid transparent;
+    border-right: 18px solid #ffe500;
+    border-bottom: 4px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.xypscj2-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -35px;
+    margin-left: 7px;
+    position: absolute;
+}
+
+.xypscj2-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -38px;
+    margin-left: 5px;
+    position: absolute;
+}
+
+
+/*------3号刻录机end--------*/
