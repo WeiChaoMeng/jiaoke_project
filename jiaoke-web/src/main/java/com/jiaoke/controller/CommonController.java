@@ -53,9 +53,9 @@ public class CommonController {
      */
     @RequestMapping("/")
     public String index(){
-        return "login";
+//        return "login";
         //新ui框架主页
-//        return "new/login";
+        return "new/login";
     }
 
     /**

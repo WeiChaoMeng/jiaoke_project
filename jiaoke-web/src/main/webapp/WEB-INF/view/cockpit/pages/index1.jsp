@@ -3,8 +3,8 @@
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%
     String path = request.getContextPath();
-    String basePath = request.getScheme()+ "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
-    request.setAttribute("path",basePath);
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+    request.setAttribute("path", basePath);
 %>
 <head>
     <title>路驰公司企业综合管理平台</title>
@@ -19,11 +19,14 @@
     <link rel="stylesheet" href="../../../../static/cockpit/css/logo.css">
     <link rel="stylesheet" href="../../../../static/cockpit/css/index.css">
     <link rel="stylesheet" href="../../../../static/cockpit/css/common.css">
+    <link rel="stylesheet" href="../../../../static/layui/css/layui.css">
     <link rel="icon" href="../../../../static/images/favicon.ico" type="image/x-icon"/>
     <style>
-        .comtab{
-            width: 25%;
+        .my_div span{
+            width: 100%;
+            height: 20%;
         }
+
     </style>
 </head>
 <body>
@@ -51,21 +54,70 @@
     <!--首页左侧 sta -->
     <div class="comtab">
         <div class="modelpub">
-            <div class="common-tit">本月各机组产量</div>
+            <div class="common-tit">路驰拌合机信息</div>
             <span class="tilt"></span>
-            <div class="echart_con" style="height: 170px;" id="radar_echart">
-
+            <div class="layui-carousel" id="basicMessage" >
+                <div carousel-item>
+                    <div class="td-avg-time">
+                        <div style="display: block;width: 100%;margin-top: 13px;">
+                            <div class="staff-name">1#机组</div>
+                            <div class="avg-time-label" style="margin-top: 13px;" >|&nbsp;&nbsp;设备型号:</div>
+                            <div class="avg-time-value" style="margin-top: 13px;"  >NBD400</div>
+                        </div>
+                        <div style="display: block;width: 100%" >
+                            <div class="staff-cust-time">
+                                <span style="font-size:15px;">生产能力</span>
+                                <br>
+                                <span style="color:#00A8FE;font-size:18px;font-weight:600;">400吨/小时</span>
+                            </div>
+                            <div class="staff-order-count">
+                                <span style="font-size:15px;">冷料仓</span>
+                                <br>
+                                <span style="color:#00A8FE;font-size:18px;font-weight:600;">11个</span>
+                            </div>
+                            <div class="staff-alarm">
+                                <span style="font-size:15px;">热料仓</span>
+                                <br>
+                                <span style="color:#00A8FE;font-size:18px;font-weight:600;">6个</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="td-avg-time">
+                        <div style="display: block;width: 100%;margin-top: 13px;">
+                            <div class="staff-name">2#机组</div>
+                            <div class="avg-time-label" style="margin-top: 13px;" >|&nbsp;&nbsp;设备型号:</div>
+                            <div class="avg-time-value" style="margin-top: 13px;"  >NBD400</div>
+                        </div>
+                        <div style="display: block;width: 100%" >
+                            <div class="staff-cust-time">
+                                <span style="font-size:15px;">生产能力</span>
+                                <br>
+                                <span style="color:#00A8FE;font-size:18px;font-weight:600;">400吨/小时</span>
+                            </div>
+                            <div class="staff-order-count">
+                                <span style="font-size:15px;">冷料仓</span>
+                                <br>
+                                <span style="color:#00A8FE;font-size:18px;font-weight:600;">11个</span>
+                            </div>
+                            <div class="staff-alarm">
+                                <span style="font-size:15px;">热料仓</span>
+                                <br>
+                                <span style="color:#00A8FE;font-size:18px;font-weight:600;">6个</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="modelpub margin10">
-            <div class="common-tit">标题</div>
+            <div class="common-tit">机组本月生产信息</div>
             <span class="tilt"></span>
             <div class="echart_con bar_l_echart" style="height: 170px;" id="xctj">
 
             </div>
         </div>
         <div class="modelpub">
-            <div class="common-tit">标题</div>
+            <div class="common-tit">本年各机组产量</div>
             <span class="tilt"></span>
             <div class="echart_con" style="height: 170px;" id="sssjtj">
 
@@ -85,30 +137,30 @@
         <div class="mid-foot">
             <div class="parkingbox">
                 <div class="commombox-top"><span class="prakbg"></span>
-                    <div class="boxnum" id="production_days">
-
-                    </div>
-                    <div class="commonbox-foot"></div>
-                </div>
-                <div class="commonbox-tit">开工</div>
-            </div>
-            <div class="parkingbox marginl15">
-                <div class="commombox-top"><span class="placebg"></span>
                     <div class="boxnum" id="yield">
 
                     </div>
                     <div class="commonbox-foot"></div>
                 </div>
-                <div class="commonbox-tit">产量</div>
+                <div class="commonbox-tit">本年产量</div>
             </div>
             <div class="parkingbox marginl15">
-                <div class="commombox-top"><span class="freebg"></span>
+                <div class="commombox-top"><span class="placebg"></span>
                     <div class="boxnum" id="usageAmount">
 
                     </div>
                     <div class="commonbox-foot"></div>
                 </div>
-                <div class="commonbox-tit">再生料总用量</div>
+                <div class="commonbox-tit">RAP总用量</div>
+            </div>
+            <div class="parkingbox marginl15">
+                <div class="commombox-top"><span class="freebg"></span>
+                    <div class="boxnum" id="thisMonthCount">
+
+                    </div>
+                    <div class="commonbox-foot"></div>
+                </div>
+                <div class="commonbox-tit">本月总产量</div>
             </div>
             <div class="parkingbox marginl15">
                 <div class="commombox-top"><span class="matchbg"></span>
@@ -117,7 +169,7 @@
                     </div>
                     <div class="commonbox-foot"></div>
                 </div>
-                <div class="commonbox-tit">再生料本月用量</div>
+                <div class="commonbox-tit">RAP本月用量</div>
             </div>
         </div>
         <!--中底 end -->
@@ -126,11 +178,14 @@
     <!--首页右侧 sta -->
     <div class="comtab">
         <div class="modelpub">
-            <div class="common-tit">本年各机组产量</div>
+            <div class="common-tit">本年供料工程</div>
             <span class="tilt"></span>
             <div class="echart_con" id="right_one">
+                <div class="list_lh" >
+                    <ul id="yearProduct" >
 
-            </div>
+                    </ul>
+                </div>
         </div>
         <div class="modelpub margin10">
             <div class="common-tit">标题</div>
@@ -156,17 +211,20 @@
 <div id="model-foot" class="model-foot">
 
 </div>
-<input  id="path" value="${path}" type="hidden" >
+<input id="path" value="${path}" type="hidden">
 <!--首页底部 end-->
 <script type="text/javascript" src="../../../../static/cockpit/js/lib/jquery.min.js"></script>
-<script type="text/javascript" src="../../../../static/cockpit/js/lib/echarts.min.js"></script>
+<script type="text/javascript" src="../../../../static/js/echarts/echarts.js"></script>
+<script type="text/javascript" src="../../../../static/layui/layui.js"></script>
 <script type="text/javascript" src="../../../../static/cockpit/js/highcharts.js"></script>
 <script type="text/javascript" src="../../../../static/cockpit/js/highcharts-3d.js"></script>
 <script type="text/javascript" src="../../../../static/cockpit/js/highcharts-zh_CN.js"></script>
 <script type="text/javascript" src="../../../../static/cockpit/js/common/header-footer.js"></script>
+<script type="text/javascript" src="../../../../static/cockpit/js/scroll.js"></script>
+<script type="text/javascript" src="../../../../static/cockpit/js/pagejs/map.js"></script>
 <script type="text/javascript" src="../../../../static/cockpit/js/pagejs/index.js?c=2.9"></script>
 
 <script>
- </script>
+</script>
 </body>
 </html>

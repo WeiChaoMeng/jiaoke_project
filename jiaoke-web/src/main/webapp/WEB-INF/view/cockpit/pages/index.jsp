@@ -69,9 +69,9 @@
     <!--首页居中 sta -->
     <div class="model-mid">
         <div class="mid-top" id="container">
-            <!--<div class="echart_con" >-->
+            <div class="echart_con" style="height: 170px;" id="mid_echart">
 
-            <!--</div>-->
+            </div>
         </div>
         <!--中底 sta -->
         <div class="mid-foot">
@@ -147,6 +147,7 @@
 <script type="text/javascript" src="../../../../static/cockpit/js/highcharts-zh_CN.js"></script>
 <script type="text/javascript" src="../../../../static/cockpit/js/common/header-footer.js"></script>
 <script type="text/javascript" src="../../../../static/cockpit/js/pagejs/index.js?c=2.9"></script>
+
 <script>
     var map = new AMap.Map('container', {
         zoom:8,
@@ -157,7 +158,7 @@
         mapStyle: 'amap://styles/darkblue'
 
     });
-    //map.setZoom(12.2); //设置地图层级
+    map.setZoom(12.2); //设置地图层级
     new AMap.DistrictSearch({
         extensions: 'all',
         showbiz: false,

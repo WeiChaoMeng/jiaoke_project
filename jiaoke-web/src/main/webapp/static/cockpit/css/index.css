@@ -5,7 +5,7 @@
     background: url("../img/indexBG.png") no-repeat;
     background-size: 100% 100%;
     padding-top: 80px;
-    padding-bottom: 75px;
+    padding-bottom: 60px;
     float: left;
     width: 100%;
     display: -webkit-flex; /* Safari */
@@ -264,3 +264,11 @@
 .bar_l_echart,.line_r_echart{
     padding-top: 10px;
 }
+.list_lh{height:85%;overflow:hidden;}
+/*.list_lh ul{height:90%}*/
+.list_lh li{padding:10px;color:#00A8FE;height: 60px;}
+/*.list_lh li p{height:24px;line-height:24px;}*/
+/*.list_lh li p a{float:left;}*/
+/*.list_lh li p em{width:80px;font:normal 12px/24px Arial;color:#ffffff;float:right;display:inline-block;}*/
+/*.list_lh li p span{color:#ffffff;float:right;}*/
+/*.btn_lh:hover{color:#fff;text-decoration:none;}*/
