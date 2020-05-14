@@ -54,7 +54,7 @@
 
                                         <td>${produced.produce_custom_num}</td>
                                         <td>
-                                            <a href="${path}/getProductMessage.do?id=${produced.Id}&crewNum=${crewNum}" target="_self" class="selected" >
+                                            <a href="${path}/getProductMessage.do?id=${produced.Id}&crewNum=${crewNum}&proDate=${produced.produce_date}" target="_self" class="selected" >
                                                 <i class="toolico iconfont">&#xe970;</i>查看</a>
                                         </td>
                                     </tr>
@@ -116,8 +116,6 @@
                                             {
                                                 name:'上限配比',
                                                 type:'bar',
-
-
                                                 data: [     <fmt:formatNumber value="${ration.repertoryOne == '0'? 0:ration.repertoryOne+ 2  }" pattern="#.00"/>,
                                                     <fmt:formatNumber value="${ration.repertoryTwo == '0'? 0:ration.repertoryTwo+ 2 }" pattern="#.00"/>,
                                                     <fmt:formatNumber value="${ration.repertoryThree == '0'? 0:ration.repertoryThree+ 2 }" pattern="#.00"/>,

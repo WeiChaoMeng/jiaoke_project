@@ -282,21 +282,15 @@
             tooltip: {
                 trigger: 'axis'
             },
-            legend: {
-                data: ['上限占比', '实际占比', '下限占比'],
-                x: 'left'
-            },
-            toolbox: {
-                show: true,
-                feature: {
-                    dataZoom: {
-                        yAxisIndex: 'none'
-                    },
-                    dataView: { readOnly: false },
-                    magicType: { type: ['line', 'bar'] },
-                    restore: {},
-                    saveAsImage: {}
-                }
+            // legend: {
+            //     data: ['上限占比', '实际占比', '下限占比'],
+            //     x: 'left'
+            // },
+            grid:{
+                left: '2%',
+                right: '2%',
+                bottom: '3%',
+                containLabel: true
             },
             xAxis: [{
                 axisLabel: {
@@ -378,21 +372,14 @@
             tooltip: {
                 trigger: 'axis'
             },
-            legend: {
-                data: ['上限占比', '实际占比', '下限占比'],
-                x: 'left'
-            },
-            toolbox: {
-                show: true,
-                feature: {
-                    dataZoom: {
-                        yAxisIndex: 'none'
-                    },
-                    dataView: { readOnly: false },
-                    magicType: { type: ['line', 'bar'] },
-                    restore: {},
-                    saveAsImage: {}
-                }
+            // legend: {
+            //     data: ['上限占比', '实际占比', '下限占比']
+            // },
+            grid:{
+                left: '2%',
+                right: '2%',
+                bottom: '3%',
+                containLabel: true
             },
             xAxis: [{
                 axisLabel: {
@@ -459,25 +446,20 @@
             var colors = ['#5793f3', '#d14a61', '#675bba'];
             var option1 =  {
                 title: {
-                    text: '一号机组产品温度走势图'
+                    text: '一号机组产品温度走势图',
+                    x: 'center'
                 },
                 tooltip: {
                     trigger: 'axis'
                 },
+                grid:{
+                    left: '2%',
+                    right: '2%',
+                    bottom: '3%',
+                    containLabel: true
+                },
                 legend: {
                     data:['最高气温','最低气温']
-                },
-                toolbox: {
-                    show: true,
-                    feature: {
-                        dataZoom: {
-                            yAxisIndex: 'none'
-                        },
-                        dataView: {readOnly: false},
-                        magicType: {type: ['line', 'bar']},
-                        restore: {},
-                        saveAsImage: {}
-                    }
                 },
                 xAxis:  {
                     type: 'category',
@@ -555,25 +537,20 @@
             var colors = ['#5793f3', '#d14a61', '#675bba'];
             var option5= {
                 title: {
-                    text: '二号机组产品温度走势图'
+                    text: '二号机组产品温度走势图',
+                    x: 'center'
                 },
                 tooltip: {
                     trigger: 'axis'
                 },
+                grid:{
+                    left: '2%',
+                    right: '2%',
+                    bottom: '3%',
+                    containLabel: true
+                },
                 legend: {
                     data:['最高气温','最低气温']
-                },
-                toolbox: {
-                    show: true,
-                    feature: {
-                        dataZoom: {
-                            yAxisIndex: 'none'
-                        },
-                        dataView: {readOnly: false},
-                        magicType: {type: ['line', 'bar']},
-                        restore: {},
-                        saveAsImage: {}
-                    }
                 },
                 xAxis:  {
                     type: 'category',

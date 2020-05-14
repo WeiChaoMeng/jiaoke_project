@@ -26,7 +26,7 @@
         <li class="yyui_tab_title_this" onclick="getTestStandingBook()">试验检测台账</li>
         <li class="yyui_tab_title" id="2" onclick="getCoarseStandingBook(this.id)">粗集料台账</li>
         <li class="yyui_tab_title" id="1" onclick="getFineStandingBook(this.id)">细集料台账</li>
-        <li class="yyui_tab_title" id="3" onclick="getBreezeStandingBook(this.id)">矿料台账</li>
+        <li class="yyui_tab_title" id="3" onclick="getBreezeStandingBook(this.id)">矿粉台账</li>
         <li class="yyui_tab_title" id="4" onclick="getAsphaltStandingBook(this.id)">沥青原材台账</li>
         <li class="yyui_tab_title" id="search" onclick="searchStandingBook()">台账检索 </li>
     </ul>

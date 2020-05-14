@@ -193,4 +193,26 @@
         WHERE
                 ${crewNum}_id = ${rationNum};
     </select>
+    <select id="selectRatioListByDate" resultType="java.util.Map">
+
+        SELECT
+               QPM.pro_name,
+               QPM.${crewNum}_modele_id as modele_id
+        FROM
+             quality_proportioning_message AS QPM
+                 INNER JOIN quality_proportioning_model AS QPMD
+                     ON QPM.id = QPMD.message_id
+        WHERE
+                QPM.${crewNum}_modele_id IN
+                (SELECT
+                        produce_proportioning_num
+                 FROM
+                      quality_monitoring_realtime_${crew}
+                 WHERE produce_date
+                               BETWEEN  &apos;${startDate}&apos;
+                               AND &apos;${endDate}&apos;
+                 GROUP BY
+                          produce_proportioning_num)
+          AND YEAR(QPMD.create_time) = YEAR(&apos;${startDate}&apos;)
+    </select>
 </mapper>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.LeadCockpit.dao.LeadCockpitServiceDao">
+    <select id="selectTopTenProject" resultType="java.util.Map">
+        SELECT
+               project_name,
+               construction_site_name,
+               SUM(amount) AS total
+        FROM
+             `quality_leave_factory_history`
+        GROUP BY
+                 project_name
+        ORDER BY total DESC
+        LIMIT 10
+    </select>
+    <select id="selectThisMonthYield" resultType="java.util.Map">
+        (
+        SELECT
+               'crew1' AS crew,
+               ROUND(SUM(material_total)/1000) AS gross
+        FROM
+             quality_monitoring_realtime_data1
+        WHERE
+                DATE_FORMAT( produce_date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
+        )
+        UNION ALL
+                (
+                SELECT
+                       'crew2' AS crew,
+                       ROUND(SUM(material_total)/1000) AS gross
+                FROM
+                     quality_monitoring_realtime_data2
+                WHERE
+                        DATE_FORMAT( produce_date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
+                )
+    </select>
+    <select id="selectThisMonthProduct" resultType="java.util.Map">
+        SELECT
+               TEM.pro_name,
+               ROUND(SUM(TEM.material_total)/1000) AS total
+        FROM
+             (
+             SELECT
+                    QPM.pro_name,
+                    QMRD.material_total
+             FROM
+                  quality_monitoring_realtime_data1 AS QMRD
+                      INNER JOIN quality_proportioning_message AS QPM
+                          ON QMRD.produce_proportioning_num = QPM.crew1_modele_id
+             WHERE YEAR(QPM.create_time) = YEAR(NOW())
+               AND  DATE_FORMAT( produce_date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
+             UNION
+             SELECT
+                    QPM.pro_name,
+                    QMRD.material_total
+             FROM
+                  quality_monitoring_realtime_data2 AS QMRD
+                      INNER JOIN quality_proportioning_message AS QPM
+                          ON QMRD.produce_proportioning_num = QPM.crew2_modele_id
+             WHERE YEAR(QPM.create_time) = YEAR(NOW())
+               AND  DATE_FORMAT( produce_date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
+             ) AS TEM
+        GROUP BY TEM.pro_name
+        ORDER BY total DESC
+        LIMIT 10
+
+    </select>
+</mapper>

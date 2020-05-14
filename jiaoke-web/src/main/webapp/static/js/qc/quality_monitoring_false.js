@@ -26,7 +26,6 @@ function renderDataToPage(){
         type:"post",
         dataType:"json",
         success:function (listStr) {
-            debugger
             if (listStr){
                 for (var i=0;i<listStr.length;i++){
 

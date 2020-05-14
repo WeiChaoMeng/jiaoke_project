@@ -53,9 +53,9 @@ public class CommonController {
      */
     @RequestMapping("/")
     public String index(){
-        return "login";
+//        return "login";
         //新ui框架主页
-//        return "new/login";
+        return "new/login";
     }
 
     /**
@@ -186,13 +186,13 @@ public class CommonController {
      *
      * 功能描述: <br>
      *  <>
-     * @param [model]
+     * @param
      * @return java.lang.String
      * @auther Melone
      * @date 2018/10/11 19:13
      */
     @RequestMapping("/qc_index.do")
-    public String qc_index(Model model){
+    public String qcIndex(Model model){
 
         List<Map<String,String>> list =  qualityIndexInf.getLastProductData();
 
@@ -215,7 +215,7 @@ public class CommonController {
      * @date: 2018/9/29 18:50
      */
     @RequestMapping("/calendar_index.do")
-    public String calendar_index(){
+    public String calendarIndex(){
         return "oa/calendar/calendar_index";
     }
 

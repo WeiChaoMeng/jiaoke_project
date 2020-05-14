@@ -517,4 +517,6 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
         }
         return JSON.toJSONString(map);
     }
+
+
 }

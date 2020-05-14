@@ -74,4 +74,15 @@ public interface QualityAuxiliaryAnalysisDao {
      * @return
      */
     List<Map<String, String>> selectGradingBycrewNumAndRationNum(String crewNum, String rationNum);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期查询模板列表>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/5/5 20:48
+     */
+    List<Map<String, String>> selectRatioListByDate(@Param("startDate") String startDate, @Param("endDate")String endDate, @Param("crew")String crew,@Param("crewNum")String crewNum);
 }

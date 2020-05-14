@@ -75,8 +75,8 @@ public class QualityGradingUtil {
 
 
             //取出粗的再生，细的再生，添加剂 通知单配比
-            String regenerateRoughRation = String.valueOf(list.get(i).get("ratio_regenerate1"));
-            String regenerateThinRation = String.valueOf(list.get(i).get("ratio_regenerate2"));
+            String regenerateRoughRation = String.valueOf(list.get(i).get("ratio_regenerate2"));
+            String regenerateThinRation = String.valueOf(list.get(i).get("ratio_regenerate1"));
             String additiveRation = String.valueOf(list.get(i).get("ratio_additive"));
 
 

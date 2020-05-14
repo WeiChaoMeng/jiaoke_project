@@ -142,8 +142,22 @@ public interface QualityProjectDao {
      * @date 2020/4/16 16:12
      */
     void updateRealtimeDataByDate(@Param("license") String license,
-                                  @Param("carDate")  String carDate,
                                   @Param("carTime")  String carTime,
                                   @Param("lastTime") String lastTime,
-                                  @Param("crewNum")  String crewNum);
+                                  @Param("crewNum")  String crewNum,
+                                  @Param("proName") String proName);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <更新车牌表>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/4/27 10:33
+     */
+    void updateRealTimeDataByCarNum(@Param("license") String license,
+                                        @Param("carTime")  String carTime,
+                                        @Param("lastTime") String lastTime,
+                                        @Param("crewNum")  String crewNum);
 }

@@ -138,7 +138,6 @@ function delectUserProject(){
             },
             dataType:"json",
             success:function (res) {
-                debugger
                 if(res.message === "success"){
                     layer.msg('删除成功',{icon:0, shade:0.1},function(){
                         location.reload();

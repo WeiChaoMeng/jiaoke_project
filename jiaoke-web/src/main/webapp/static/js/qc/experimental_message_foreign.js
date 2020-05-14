@@ -49,7 +49,6 @@ function showExperimentalProjectItem(tem) {
         success:function (res) {
 
             if (res){
-                debugger
                 var material_num = res[0][0].materials_num;
                 switch (material_num) {
                     //细集料 quality_test_material_dictionary ID
@@ -146,7 +145,6 @@ function showAsphalt(msg) {
 
 //编写显示细集料   实验信息
 function showFineAggregate(msg) {
-debugger
     var firstTbody = '';
     var secondTable = '';
 
@@ -281,7 +279,6 @@ function showCoarseAggregate(msg) {
 
 //编辑显示石粉实验信息
 function showBrzzez(msg) {
-    debugger
     var firstHead = '<th>实验项目</th>'
         + '<th>技术要求</th>'
         + '<th>试验结果</th>'

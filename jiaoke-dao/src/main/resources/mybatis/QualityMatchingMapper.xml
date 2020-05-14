@@ -16,7 +16,7 @@
              quality_proportioning_model AS QPM
                  INNER JOIN quality_proportioning_message AS QPMS ON QPM.message_id = QPMS.id
         WHERE YEAR(QPM.create_time) = YEAR(NOW())
-        ORDER BY QPMS.id DESC
+        ORDER BY QPMS.crew1_modele_id
         limit #{startLineNum},#{endLineNum};
     </select>
 

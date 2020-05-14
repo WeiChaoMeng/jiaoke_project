@@ -10,7 +10,6 @@ package com.jiaoke.controller;
 
 import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.QualityMatchingUtil;
 import com.jiaoke.common.bean.PageBean;
@@ -32,11 +31,15 @@ import org.activiti.engine.impl.identity.Authentication;
 import org.activiti.engine.task.Task;
 import org.apache.logging.log4j.util.Strings;
 import org.apache.shiro.SecurityUtils;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -101,6 +104,10 @@ public class QualityController {
     private HistoryService historyService;
     @Resource
     private TaskService taskService;
+    @Resource
+    private QualityLeadingCockpitInf qualityLeadingCockpitInf;
+    @Resource
+    private AmqpTemplate amqpTemplate;
 
     /**
      * 获取当前登录用户信息
@@ -190,32 +197,16 @@ public class QualityController {
 
             if ((charset == null || charset.length() == 0) && (size ==readCount))
             {
-                qualityprojectInf.editProductionDataByCarNum(new String(buf,"UTF-8"));
-
-                show_json(new String(buf));
+//                qualityprojectInf.editProductionDataByCarNum(new String(buf,"UTF-8"));
+                amqpTemplate.convertAndSend("exchangeCar","queueTestKey",new String(buf,"UTF-8"));
             }
+
         }catch (Exception e){
             e.printStackTrace();
         }
 
     }
 
-    public static void show_json(String m_str)
-    {
-        //获取设备名称
-        JSONObject Json = JSONObject.parseObject(m_str);
-        String deviceName= Json.getJSONObject("AlarmInfoPlate").getString("result");
-        System.out.println(deviceName);
-
-        //设备IP地址
-//        String ipaddr= Json.getJSONObject("AlarmInfoPlate").getString("ipaddr");
-//        System.out.println(ipaddr);
-//        //获取识别车牌号
-//        String license= Json.getJSONObject("AlarmInfoPlate").getJSONObject("result").getJSONObject("PlateResult").getString("license");
-//        System.out.println(license);
-
-
-    }
     /**********************************  质量监控首页 Start ************************************************/
 
     /**
@@ -598,7 +589,72 @@ public class QualityController {
 
     /********************************  实时监控 end *****************************************/
 
+    /********************************  领导驾驶仓 Start *****************************************/
+    @ResponseBody
+    @RequestMapping("/getThisMonthTwoCrewData.do")
+    public String getThisMonthTwoCrewData(){
+        Map<String,Object> map = new HashMap<>();
+        try{
+            map = qualityLeadingCockpitInf.getThisMonthTwoCrewData();
+        }catch (Exception e){
+            map.put("message","error");
+            e.printStackTrace();
+        }
+        return JSON.toJSONString(map);
+    }
 
+    @ResponseBody
+    @RequestMapping("/getThisYearTwoCrewData.do")
+    public String getThisYearTwoCrewData(){
+        Map<String,Object> map = new HashMap<>();
+        try{
+            map = qualityLeadingCockpitInf.getThisYearTwoCrewData();
+        }catch (Exception e){
+            map.put("message","error");
+            e.printStackTrace();
+        }
+        return JSON.toJSONString(map);
+    }
+
+    @ResponseBody
+    @RequestMapping("/getProductionDays.do")
+    public String getProductionDays(){
+        Map<String,Object> map = new HashMap<>();
+        try{
+            map = qualityLeadingCockpitInf.getProductionDays();
+        }catch (Exception e){
+            map.put("message","error");
+            e.printStackTrace();
+        }
+        return JSON.toJSONString(map);
+    }
+
+    @ResponseBody
+    @RequestMapping("/getMaterialRegenerate.do")
+    public String getMaterialRegenerate(){
+        Map<String,Object> map = new HashMap<>();
+        try{
+            map = qualityLeadingCockpitInf.getMaterialRegenerate();
+        }catch (Exception e){
+            map.put("message","error");
+            e.printStackTrace();
+        }
+        return JSON.toJSONString(map);
+    }
+
+    @ResponseBody
+    @RequestMapping("/getThisMonthRegenerate.do")
+    public String getThisMonthRegenerate(){
+        Map<String,Object> map = new HashMap<>();
+        try{
+            map = qualityLeadingCockpitInf.getThisMonthRegenerate();
+        }catch (Exception e){
+            map.put("message","error");
+            e.printStackTrace();
+        }
+        return JSON.toJSONString(map);
+    }
+    /********************************  领导驾驶仓 end *****************************************/
 
     /********************************  数据管理 Start *****************************************/
     /**
@@ -849,6 +905,19 @@ public class QualityController {
         return "quality/qc_auxiliary_analysis";
     }
 
+
+    @ResponseBody
+    @RequestMapping(value = "/getModelListByDate.do",method = RequestMethod.POST)
+    public String getModelListByDate(String proData,String crew){
+        String res = "";
+        try{
+            res = qualityAuxiliaryAnalysisInf.getModelListByDate(proData,crew);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return res;
+    }
     /**
      * 查询基本信息
      * @param producedId
@@ -1179,7 +1248,7 @@ public class QualityController {
 
 
     @ResponseBody
-    @RequestMapping(value = "getPromessageByRaionModel.do",method = RequestMethod.POST)
+    @RequestMapping(value = "/getPromessageByRaionModel.do",method = RequestMethod.POST)
     public String getPromessageByRaionModel(String startDate,String endDate,String crew, String rationId,String projectName){
 
         List<Map<String,Object>> list = new ArrayList<>();
@@ -1191,7 +1260,18 @@ public class QualityController {
 
         return JSON.toJSONString(list);
     }
+    @ResponseBody
+    @RequestMapping(value = "/getProjectByDateTimeAndCrewAndRation.do",method = RequestMethod.POST)
+    public String getProjectByDateTimeAndCrewAndRation(String startDate,String endDate,String crew, String rationId){
+        Map<String,Object> map = new HashMap<>();
+        try{
+            map =  qualityDataSummaryInf.getProjectByDateTimeAndCrewAndRation(startDate,endDate,crew,rationId);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
 
+        return JSON.toJSONString(map);
+    }
 
     @RequestMapping("/getProSvgmessage.do")
     public String getProSvgmessage(String startDate,String endDate,String crew, String rationId,HttpServletRequest request){

@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <properties>
-        <axis2.version>1.6.2</axis2.version>
+        <axis2.version>1.7.8</axis2.version>
     </properties>
     <artifactId>jiaoke-util</artifactId>
 
@@ -47,23 +47,31 @@
         <dependency>
             <groupId>org.apache.ws.commons.axiom</groupId>
             <artifactId>axiom-api</artifactId>
-            <version>1.2.13</version>
+            <version>1.2.12</version>
             <type>jar</type>
             <!--<scope>provided</scope>-->
         </dependency>
         <dependency>
             <groupId>org.apache.ws.commons.axiom</groupId>
             <artifactId>axiom-impl</artifactId>
-            <version>1.2.13</version>
+            <version>1.2.12</version>
             <type>jar</type>
             <scope>provided</scope>
         </dependency>
+
+
         <dependency>
             <groupId>org.apache.axis2</groupId>
-            <artifactId>axis2</artifactId>
+            <artifactId>axis2-adb</artifactId>
             <version>${axis2.version}</version>
-            <!--<scope>provided</scope>-->
         </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>org.apache.axis2</groupId>-->
+            <!--<artifactId>axis2</artifactId>-->
+            <!--<version>${axis2.version}</version>-->
+            <!--&lt;!&ndash;<scope>provided</scope>&ndash;&gt;-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.apache.axis2</groupId>
             <artifactId>axis2-spring</artifactId>
@@ -116,17 +124,12 @@
             <version>${axis2.version}</version>
             <!--<scope>provided</scope>-->
         </dependency>
-        <dependency>
-            <groupId>org.apache.axis2</groupId>
-            <artifactId>axis2</artifactId>
-            <version>${axis2.version}</version>
-            <!--<scope>provided</scope>-->
-        </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.jdom/jdom -->
         <dependency>
             <groupId>org.jdom</groupId>
             <artifactId>jdom</artifactId>
-            <version>1.1.3</version>
+            <version>1.1.2</version>
         </dependency>
 
 

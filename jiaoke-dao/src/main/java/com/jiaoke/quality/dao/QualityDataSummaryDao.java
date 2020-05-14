@@ -198,4 +198,18 @@ public interface QualityDataSummaryDao {
                                                                      @Param("crew")  String crew,
                                                                      @Param("rationId")  String rationId,
                                                                      @Param("projectName") String projectName);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期、机组、配比号查询工程>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/4/23 22:21
+     */
+    List<Map<String, Object>> selectProjectByDateTimeAndCrewAndRation(@Param("startDate") String startDate,
+                                                                      @Param("endDate")   String endDate,
+                                                                      @Param("crew")  String crew,
+                                                                      @Param("rationId")  String rationId);
 }

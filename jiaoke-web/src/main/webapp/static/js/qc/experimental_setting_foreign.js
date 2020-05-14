@@ -79,7 +79,6 @@ function getSpecificationDataAndManufacturersData() {
         dataType:"json",
         async: false,
         success:function (res) {
-            debugger
             if (res.length === 0){
                 layer.alert("当前并无材料规格与材料厂家信息");
             } else {
@@ -116,7 +115,6 @@ function getSpecificationDataAndManufacturersData() {
  * 删除方法
  */
 function deleteSpecificationOrManufacturersById(id,make) {
-    debugger
     var basePath = $("#path").val();
     layer.confirm('确认删除？', {
         btn: ['确认','取消'] //按钮
@@ -189,7 +187,6 @@ function updateSpecificationOrManufacturers(){
     var make = $("#tableName").val();
     var updateName = $("#newName").val();
     var basePath = $("#path").val();
-debugger
     if (updateName.isBlank()){
         layer.msg("请填写更新数据");
     }else {

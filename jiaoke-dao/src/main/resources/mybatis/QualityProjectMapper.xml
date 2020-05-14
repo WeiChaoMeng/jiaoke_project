@@ -147,13 +147,15 @@
     <update id="updateRealtimeDataByDate" parameterType="java.lang.String">
 
         UPDATE quality_monitoring_realtime_${crewNum}
+        set produce_car_num = &apos;${license}&apos;,
+           project_name = &apos;${proName}&apos;
+        WHERE
+                str_to_date(CONCAT('',produce_date,produce_time),'%Y-%m-%d %H:%i:%s') between  &apos;${lastTime}&apos;  and &apos;${carTime}&apos;;
+    </update>
+    <update id="updateRealTimeDataByCarNum" parameterType="java.lang.String">
+        UPDATE quality_monitoring_realtime_${crewNum}
         set produce_car_num = &apos;${license}&apos;
         WHERE
-                produce_date = &apos;${carDate}&apos;
-          AND CONCAT(
-                  produce_date,
-                  ' ',
-                  produce_time
-                        ) between  &apos;${lastTime}&apos; and &apos;${carTime}&apos;;
+                str_to_date(CONCAT('',produce_date,produce_time),'%Y-%m-%d %H:%i:%s') between  &apos;${lastTime}&apos;  and &apos;${carTime}&apos;;
     </update>
 </mapper>

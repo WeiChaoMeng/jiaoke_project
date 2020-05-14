@@ -107,4 +107,6 @@ public interface QualityDataManagerInf {
      * @date 2019/11/20 9:14
      */
     String getMsgByUserAndDate(String userNum, String proDate);
+
+
 }

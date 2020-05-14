@@ -199,7 +199,6 @@ function yearFrom() {
                         }
                         break;
                     case 'lastYearMaterialMaxLever':
-                        debugger
                         for (var i =0; i < res.lastYearMaterialMaxLever.length;i++) {
                             var crew_materialMaxLever = res[k][i]['crew'];
                             if (crew_materialMaxLever == 'crew1') {

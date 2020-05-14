@@ -50,7 +50,7 @@ function renderDataToPage(listStr) {
                     }
                     $("#crew1_basic_carNum").html(listStr[i].produce_car_num);
                     $("#crew1_basic_discNum").html(listStr[i].produce_disc_num);
-                    $("#crew1_basic_userNum").html(listStr[i].project_name);
+                    // $("#crew1_basic_userNum").html(listStr[i].project_name);
                     $("#crew1_data_Aggregate1").html(listStr[i].material_aggregate_1 + "<i>%</i>");
                     $("#crew1_data_Aggregate2").html(listStr[i].material_aggregate_2 + "<i>%</i>");
                     $("#crew1_data_Aggregate3").html(listStr[i].material_aggregate_3 + "<i>%</i>");
@@ -85,7 +85,7 @@ function renderDataToPage(listStr) {
                     }
                     $("#crew2_basic_carNum").html(listStr[i].produce_car_num);
                     $("#crew2_basic_discNum").html(listStr[i].produce_disc_num);
-                    $("#crew2_basic_userNum").html(listStr[i].project_name);
+                    // $("#crew2_basic_userNum").html(listStr[i].project_name);
                     $("#crew2_data_Aggregate1").html(listStr[i].material_aggregate_1 + "<i>%</i>");
                     $("#crew2_data_Aggregate2").html(listStr[i].material_aggregate_2 + "<i>%</i>");
                     $("#crew2_data_Aggregate3").html(listStr[i].material_aggregate_3 + "<i>%</i>");
@@ -206,7 +206,7 @@ function getRealTimeDataEcharsMaterial() {
 
 function eachMaterialList(res) {
 
-
+    debugger
     for (var i = 0; i < res.length;i++){
 
         var arr = res[i]['crew1'];
@@ -220,7 +220,6 @@ function eachMaterialList(res) {
             if(arr){
                 option7.xAxis.max = arr[arr.length - 1][0];
             }
-            debugger
             option7.series[0].markLine.data = temArray;
             option7.series[1].data = returnJsonArray(res[i]['crew1']['moudleList']);
             option7.series[2].data = returnJsonArray(res[i]['crew1']['realList']);

@@ -47,8 +47,7 @@ public class QualityDataSummaryImpl implements QualityDataSummaryInf {
     public Map<String,Object> getRatioListByDateTimeAndCrew(String startDate, String endDate, String crew) {
         Map<String,Object> res = new HashMap<>();
         List<Map<String, Object>> rationList = qualityDataSummaryDao.selectRatioListByDateTimeAndCrew(startDate,endDate,crew);
-        String crewNum = "data1".equals(crew) ? "1":"2";
-        List<Map<String, Object>> projectList = qualityDataSummaryDao.selectProjectByDateAndCrewNum(startDate,endDate,crewNum);
+        List<Map<String, Object>> projectList = qualityDataSummaryDao.selectProjectByDateAndCrewNum(startDate,endDate,crew);
         res.put("rationList",rationList);
         res.put("projectList",projectList);
         return res;
@@ -64,6 +63,18 @@ public class QualityDataSummaryImpl implements QualityDataSummaryInf {
         map.put("message","success");
         map.put("projectList",list);
 
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> getProjectByDateTimeAndCrewAndRation(String startDate, String endDate, String crew, String rationId) {
+        Map<String,Object> map = new HashMap<>();
+        List<Map<String, Object>> proNameList = qualityDataSummaryDao.selectProjectByDateTimeAndCrewAndRation( startDate,  endDate,  crew,  rationId);
+        map.put("proNameList",proNameList);
+        map.put("message","success");
+        if (proNameList == null || proNameList.size() == 0){
+            map.put("message","empty");
+        }
         return map;
     }
 

@@ -9,6 +9,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -40,17 +41,17 @@ public class LoginController {
      */
     @RequestMapping(value = "/login.do", method = RequestMethod.POST)
     @ResponseBody
-    public String login(String username, String password) {
-//    public String login(@RequestBody UserInfo userInfo) {
+//    public String login(String username, String password) {
+    public String login(@RequestBody UserInfo userInfo) {
         Map<String,Object> map = new HashMap<>();
-//        if ("".equals(userInfo.getUsername()) && "".equals(userInfo.getPassword())) {
-        if ("".equals(username) && "".equals(password)) {
+        if ("".equals(userInfo.getUsername()) && "".equals(userInfo.getPassword())) {
+//        if ("".equals(username) && "".equals(password)) {
             map.put("messages","error");
             return JSON.toJSONString(map);
         } else {
             Subject subject = SecurityUtils.getSubject();
-            UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-//            UsernamePasswordToken token = new UsernamePasswordToken(userInfo.getUsername(),userInfo.getPassword());
+//            UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+            UsernamePasswordToken token = new UsernamePasswordToken(userInfo.getUsername(),userInfo.getPassword());
             try {
                 subject.login(token);
             } catch (Exception e) {

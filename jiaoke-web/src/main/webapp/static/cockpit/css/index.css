@@ -5,7 +5,7 @@
     background: url("../img/indexBG.png") no-repeat;
     background-size: 100% 100%;
     padding-top: 80px;
-    padding-bottom: 75px;
+    padding-bottom: 60px;
     float: left;
     width: 100%;
     display: -webkit-flex; /* Safari */
@@ -22,8 +22,8 @@
     height: calc(100% - 11px);
     height: -webkit-calc(100% - 11px);
     height: -moz-calc(100% - 11px);
-    height: -ms-calc(100% - 11px);
-    height: -o-calc(100% - 11px);
+    /*height: -ms-calc(100% - 11px);*/
+    /*height: -o-calc(100% - 11px);*/
 }
 .echart_con1{
     width: 100%;
@@ -39,8 +39,8 @@
     height: calc(100% - 128px);
     height: -webkit-calc(100% - 128px);
     height: -moz-calc(100% - 128px);
-    height: -ms-calc(100% - 128px);
-    height: -o-calc(100% - 128px);
+    /*height: -ms-calc(100% - 128px);*/
+    /*height: -o-calc(100% - 128px);*/
     width: 100%;
 
 }
@@ -178,9 +178,9 @@
 .modelpub{
     height: calc((100% - 20px)/3);
     height: -webkit-calc((100% - 20px)/3);
-    height: -mos-calc((100% - 20px)/3);
+    /*height: -mos-calc((100% - 20px)/3);*/
     height: -moz-calc((100% - 20px)/3);
-    height: -o-calc((100% - 20px)/3);
+    /*height: -o-calc((100% - 20px)/3);*/
     width: 100%;
     border: 1px solid #00286a;
     position: relative;
@@ -188,9 +188,9 @@
 .modelpub1{
     height: calc((100% - 20px)*2/3);
     height: -webkit-calc((100% - 20px)*2/3);
-    height: -mos-calc((100% - 20px)*2/3);
+    /*height: -mos-calc((100% - 20px)*2/3);*/
     height: -moz-calc((100% - 20px)*2/3);
-    height: -o-calc((100% - 20px)*2/3);
+    /*height: -o-calc((100% - 20px)*2/3);*/
     width: 100%;
     border: 1px solid #00286a;
     position: relative;
@@ -264,3 +264,11 @@
 .bar_l_echart,.line_r_echart{
     padding-top: 10px;
 }
+.list_lh{height:85%;overflow:hidden;}
+/*.list_lh ul{height:90%}*/
+.list_lh li{padding:10px;color:#00A8FE;height: 60px;}
+/*.list_lh li p{height:24px;line-height:24px;}*/
+/*.list_lh li p a{float:left;}*/
+/*.list_lh li p em{width:80px;font:normal 12px/24px Arial;color:#ffffff;float:right;display:inline-block;}*/
+/*.list_lh li p span{color:#ffffff;float:right;}*/
+/*.btn_lh:hover{color:#fff;text-decoration:none;}*/

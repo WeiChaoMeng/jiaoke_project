@@ -46,7 +46,6 @@ function getExperimentalItemListById(id) {
         success:function (msg) {
 
             if (!jQuery.isEmptyObject(msg)){
-                debugger
                 var material_num = msg[0].material_num;
                 switch (material_num) {
                     //细集料 quality_test_material_dictionary ID
@@ -251,7 +250,6 @@ function showCoarseAggregate(msg) {
     for (var i = 0; i < msg.length; i++){
 
         var  temHtml ="";
-        debugger
         if (msg[i]['remake'] .indexOf("coarse_SF") >= 0){
             temHtml = '<tr>'
                 + '<input type="text" name="table_name" required="required"  value="' + msg[i]['table_name'] + '" />'
@@ -400,7 +398,6 @@ function coarseMilling(msg){
     for (var i = 0; i < msg.length; i++){
 
         var  temHtml ="";
-        debugger
         if (msg[i]['remake'] .indexOf("milling_RS") >= 0){
             temHtml = '<tr>'
                 + '<input type="text" name="table_name" required="required"  value="' + msg[i]['table_name'] + '" />'
@@ -504,7 +501,6 @@ function fineMilling(msg){
     for (var i = 0; i < msg.length; i++){
 
         var  temHtml ="";
-        debugger
         if (msg[i]['remake'] .indexOf("millfine_RS") >= 0){
             temHtml = '<tr>'
                 + '<input type="text" name="table_name" required="required"  value="' + msg[i]['table_name'] + '" />'
@@ -601,7 +597,6 @@ function rockAsphalt(msg){
     for (var i = 0; i < msg.length; i++){
 
         var  temHtml ="";
-        debugger
         if (msg[i]['remake'] .indexOf("rock_RS") >= 0){
             temHtml = '<tr>'
                 + '<input type="text" name="table_name" required="required"  value="' + msg[i]['table_name'] + '" />'
@@ -770,7 +765,6 @@ function showMixture(msg){
     for (var i = 0; i < msg.length; i++){
 
         var  temHtml ="";
-        debugger
         if (msg[i]['remake'] .indexOf("mixture_RS") >= 0){
             temHtml = '<tr>'
                 + '<input type="text" name="table_name" required="required"  value="' + msg[i]['table_name'] + '" />'
@@ -858,7 +852,6 @@ $("#myFrom").submit(function(){
     //获取实验数据
     var firstTest = getExperimentFromData();
     var coarseTest = "";
-    debugger
     if ($('#secondTbody').exist()){
         coarseTest = getCoarseData();
     }
@@ -944,7 +937,6 @@ function getExperimentFromData() {
 
 //查询第二种实验
 function getCoarseData() {
-    debugger
     var coarseData= [];
     //获取筛孔类相关实验
     $("#secondTbody").find('tr').each(function (i) {

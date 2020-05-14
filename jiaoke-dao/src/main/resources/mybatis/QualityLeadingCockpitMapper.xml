@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.quality.dao.QualityLeadingCockpit">
+    <select id="selectThisMonthTwoCrewData" resultType="java.util.Map">
+        SELECT
+               'crew1' AS crew,
+               SUM(material_total) / 1000 AS total
+        FROM
+             `quality_monitoring_realtime_data1`
+        WHERE
+                DATE_FORMAT(produce_date, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')
+        UNION ALL
+        SELECT
+               'crew2' AS crew,
+               SUM(material_total) / 1000 AS total
+        FROM
+             `quality_monitoring_realtime_data2`
+        WHERE
+                DATE_FORMAT(produce_date, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')
+    </select>
+    <select id="selectThisYearTwoCrewData" resultType="java.util.Map">
+        (
+        SELECT
+               "crew1" AS crew,
+               SUM(material_total)/10000000 AS total
+        FROM
+             quality_monitoring_realtime_data1
+        WHERE
+                YEAR (produce_date) = YEAR (NOW())
+        )
+        UNION ALL
+                (
+                SELECT
+                       "crew2" AS crew,
+                       SUM(material_total)/10000000 AS total
+                FROM
+                     quality_monitoring_realtime_data2
+                WHERE
+                        YEAR (produce_date) = YEAR (NOW())
+                )
+    </select>
+    <select id="selectProductionDays" resultType="java.util.Map">
+        (SELECT
+                'crew2' AS crew,
+                COUNT(T1.produce_date) AS crewCount
+         FROM
+              (
+              SELECT
+                     produce_date
+              FROM
+                   `quality_monitoring_realtime_data2`
+              WHERE
+                      YEAR (produce_date) = YEAR (NOW())
+              GROUP BY
+                       produce_date
+              ) AS T1)
+        UNION ALL
+                (SELECT
+                        'crew1' AS crew,
+                        COUNT(T1.produce_date) AS crewCount
+                 FROM
+                      (
+                      SELECT
+                             produce_date
+                      FROM
+                           `quality_monitoring_realtime_data1`
+                      WHERE
+                              YEAR (produce_date) = YEAR (NOW())
+                      GROUP BY
+                               produce_date
+                      ) AS T1)
+    </select>
+    <select id="getMaterialRegenerate" resultType="java.util.Map">
+        (
+        SELECT
+               'crew1' AS crew,
+               SUM(material_regenerate)/1000 AS total
+        FROM
+             quality_monitoring_realtime_data1
+        WHERE
+                YEAR (produce_date) = YEAR (NOW())
+        )
+        UNION ALL
+                (
+                SELECT
+                       'crew2' AS crew,
+                       SUM(material_regenerate)/1000 AS total
+                FROM
+                     quality_monitoring_realtime_data2
+                WHERE
+                        YEAR (produce_date) = YEAR (NOW())
+                )
+    </select>
+
+    <select id="getThisMonthRegenerate" resultType="java.util.Map">
+        SELECT
+               'crew1' AS crew,
+               SUM(material_regenerate) / 1000 AS total
+        FROM
+             `quality_monitoring_realtime_data1`
+        WHERE
+                DATE_FORMAT(produce_date, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')
+        UNION ALL
+        SELECT
+               'crew2' AS crew,
+               SUM(material_regenerate) / 1000 AS total
+        FROM
+             `quality_monitoring_realtime_data2`
+        WHERE
+                DATE_FORMAT(produce_date, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')
+    </select>
+</mapper>
