@@ -2029,6 +2029,35 @@ body {
     position: absolute;
 }
 
+/*西院冷再生卸料口*/
+.xylzsxlk-region {
+    top: 31%;
+    left: 35.5%;
+    height: 0;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+    border-left: 8px solid transparent;
+    border-right: 14px solid transparent;
+    border-top: 20px solid #ffe500;
+}
+
+.xylzsxlk-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -18px;
+    margin-left: -8px;
+    position: absolute;
+}
+
+.xylzsxlk-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -21px;
+    margin-left: -10px;
+    position: absolute;
+}
+
 /*东院办公楼外大门口*/
 .dybglwdmk-region {
     top: 75%;

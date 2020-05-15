@@ -27,6 +27,13 @@
             height: 20%;
         }
 
+        /*去除高德地图左下角logo*/
+        .amap-logo{
+            opacity:0;
+        }
+        .amap-copyright{
+            opacity:0;
+        }
     </style>
 </head>
 <body>
@@ -180,25 +187,23 @@
         <div class="modelpub">
             <div class="common-tit">本年供料工程</div>
             <span class="tilt"></span>
-            <div class="echart_con" id="right_one">
+            <div class="echart_con" id="right_one" style="height: 83%;margin: 1% 0;">
                 <div class="list_lh" >
-                    <ul id="yearProduct" >
+                    <ul id="yearProduct">
 
                     </ul>
                 </div>
-        </div>
-        <div class="modelpub margin10">
-            <div class="common-tit">标题</div>
-            <span class="tilt"></span>
-            <div class="echart_con bar_c_echart" style="height: 170px;" id="ldwhl">
-
             </div>
         </div>
-        <div class="modelpub">
-            <div class="common-tit">标题</div>
-            <span class="tilt"></span>
-            <div class="echart_con line_r_echart" style="height: 170px;" id="line_r_echart">
 
+        <div class="modelpub" style="margin-top: 10px;height: -webkit-calc((100%/1.5));">
+            <div class="common-tit">厂区安全</div>
+            <span class="tilt"></span>
+            <div id="myPlayer" style="height: calc((100% - 30px));"></div>
+            <img src="../../../../static/cockpit/img/inp_del.png" style="position: absolute;top: 10%;left: 90%;z-index: 999999;" id="closeMonitor" onclick="closeMonitor()">
+
+            <div class="echart_con bar_c_echart" style="height: -webkit-calc((100% - 30px));" id="container">
+                <%--<img style="width: 100%;height: 100%" src="../../../../static/new/images/monitor.png">--%>
             </div>
         </div>
     </div>
@@ -223,8 +228,8 @@
 <script type="text/javascript" src="../../../../static/cockpit/js/scroll.js"></script>
 <script type="text/javascript" src="../../../../static/cockpit/js/pagejs/map.js"></script>
 <script type="text/javascript" src="../../../../static/cockpit/js/pagejs/index.js?c=2.9"></script>
-
-<script>
-</script>
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=5ae1365fcf3e53e6a218d9d88cd50249"></script>
+<script type="text/javascript" src="../../../../static/new/js/gdmap.js"></script>
+<script type="text/javascript" src="../../../../static/EZUIKit/ezuikit.js"></script>
 </body>
 </html>

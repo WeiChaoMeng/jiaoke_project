@@ -15,10 +15,10 @@
         // '<div class="floatr">'+
         // '<div id="head-time" class="headright-time"></div>'+
         // '<div id="head-date" class="headright-date"></div>'+
-        '<div style="margin-top: 20px;">'+
-        '<div class="return-but-tc"><a href="/logout" style="display: block;width: 100%;height: 100%"></a></div>'+
-        '<div class="return-but-yh"><span style="margin-left: 23px;color: #028dff;">'+nickname+'</span></div>'+
-        '</div>'+
+        // '<div style="margin-top: 20px;">'+
+        // '<div class="return-but-tc"><a href="/logout" style="display: block;width: 100%;height: 100%"></a></div>'+
+        // '<div class="return-but-yh"><span style="margin-left: 23px;color: #028dff;">'+nickname+'</span></div>'+
+        // '</div>'+
         '</div>';
     $("#model-top").html(headHtlm);
 
@@ -70,3 +70,9 @@ function showTime(){
     setTimeout("showTime();",1000);
 }
 showTime();
+
+$('#titleNode').on('click',function () {
+    var path = $('#path').val();
+    window.location.href = path + "/homePage.do";
+
+});
