@@ -13,7 +13,21 @@
     <link rel="stylesheet" href="../../../../static/cockpit/css/common.css">
     <link rel="icon" href="../../../../static/images/favicon.ico" type="image/x-icon"/>
     <link rel="stylesheet" href="../../../../static/cockpit/css/logo.css">
+    <script type="text/javascript" src="../../../../static/js/echarts/echarts.js"></script>
 </head>
+    <style>
+        .basic_div{
+            width: 100%;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+        .basic_span{
+            width: 100%;
+            display: block;
+            text-align:center;
+            color: #8bb2dc;
+        }
+    </style>
 <body>
 
 <!--首页头部 sta -->
@@ -64,102 +78,518 @@
 <div class="model-content">
     <!--首页左侧 sta -->
     <div class="comtab">
-        <div class="modelpub">
-            <div class="common-tit">标题</div>
+        <div class="modelpub" style="height: 50%;">
+            <div class="common-tit">机组一级配图</div>
             <span class="tilt"></span>
-            <div class="echart_con" id="radar_echart"  style="height: 150px">
+            <div class="echart_con" id="chart7" style="width: 75%;float: left;" >
+                <script type="text/javascript">
+                    var myChart7= echarts.init(document.getElementById('chart7'));
+                    // 指定图表的配置项和数据
+                    var colors = ['#5793f3', '#d14a61', '#675bba'];
+                    var option7= {
+                        // title: {
+                        //     text: '一号机组级配曲线图'
+                        // },
+                        legend: {
+                            data:['合成级配','实际级配','上限','中值','下限'],
+                            x:'right',
+                            top:'7.5%',
+                            left:'27.5%',
+                            textStyle:{
+                                color: '#96ceb4'
+                            }
+                        },
+                        grid:{
+                            left: '2%',
+                            right: '3.5%',
+                            bottom: '5%',
+                            containLabel: true
+                        },
+                        tooltip: {
+                            trigger: 'item'
+                        },
+                        xAxis: {
+                            type: 'value',
+                            min:0,
+                            max:7,
+
+                            splitLine: {
+                                show: false
+                            },
+                            axisLabel: { //轴标签
+                                show: false//不显示
+                                // rotate:90
+                            },
+                            axisTick: { //轴刻度
+                                show: false //不显示
+                            },
+                            axisLine: { //轴线
+                                lineStyle: { //样式
+                                    color: '#96ceb4' //颜色
+                                }
+                            },
+                            // axisLabel:{
+                            //     interval: 0,
+                            //     formatter: function (value) {
+                            //         //x轴的文字改为竖版显示
+                            //         var str = value.split("");
+                            //         return str.join("\n");
+                            //     }
+                            // }
+                        },
+                        dataZoom:{
+                            type:'inside'
+                        },
+                        yAxis: {
+                            type: 'value',
+                            name: '占比 %',
+                            nameLocation: 'end',
+                            nameGap: 10,
+                            position: 'left',
+                            offset: 3,
+                            max:100,
+                            min:0,
+                            scale: true,
+                            nameTextStyle: {
+                                color: '#fff',
+                                fontSize: 11
+                            },
+                            axisLine: {
+                                onZero: false,
+                                lineStyle: {
+                                    color: '#96ceb4'
+                                }
+                            },
+                            splitLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: '#96ceb4'
+                                }
+                            }
+                        },
+                        series: [
+                            {
+                                type: 'line',
+                                markLine: {
+                                    symbol: ['none', 'none'],
+                                    silent: true,
+                                    label: {
+                                        rotate:90,
+                                        normal: {
+                                            position: "start"
+                                        }
+                                    },
+                                    lineStyle: {
+                                        normal: {
+                                            type: 'solid',
+                                            width:0.6,
+                                            color: '#96ceb4'
+                                        }
+                                    },
+                                    data: []
+                                }
+                            },
+                            {
+                                id: 'a',
+                                type: 'line',
+                                name:'合成级配',
+                                symbolSize:6,
+                                data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                            },
+                            {
+                                id: 'b',
+                                type: 'line',
+                                name:'实际级配',
+                                symbolSize:6,
+                                data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                            },
+                            {
+                                id: 'c',
+                                type: 'line',
+                                name:'上限',
+                                symbolSize:6,
+                                data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                            },
+                            {
+                                id: 'd',
+                                type: 'line',
+                                name:'中值',
+                                symbolSize:6,
+                                data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                            },
+                            {
+                                id: 'e',
+                                type: 'line',
+                                name:'下限',
+                                symbolSize:6,
+                                data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                            }
+                        ]
+                    };
+                </script>
 
             </div>
-        </div>
-        <div class="modelpub margin10">
-            <div class="common-tit">标题</div>
-            <span class="tilt"></span>
-            <div class="echart_con bar_l_echart" id="xctj" style="height: 160px">
-
+            <div style="width: 25%;height: 93%;float: left;">
+                <div class="basic_div"><span class="basic_span" style="size: 21px;font-size: 19px;color: #c4c7c0;">基本信息</span></div>
+                <div class="basic_div"><span class="basic_span" id="crew1_date"></span></div>
+                <div class="basic_div"><span class="basic_span" id="crew1_time"></span></div>
+                <div class="basic_div"><span class="basic_span" id="crew1_ratio_name"></span></div>
+                <div class="basic_div"><span class="basic_span" id="crew1_stone" ></span></div>
+                <div class="basic_div"><span class="basic_span" id="crew1_asphalt" ></span></div>
+                <div class="basic_div"><span class="basic_span" id="crew1_regenerate" ></span></div>
+                <div class="basic_div"><span class="basic_span" id="crew1_additive" ></span></div>
             </div>
         </div>
-        <div class="modelpub">
-            <div class="common-tit">标题</div>
+        <div class="modelpub margin10" style="height: 48%;">
+            <div class="common-tit" id="aar1_title" ></div>
             <span class="tilt"></span>
-            <div class="echart_con" id="sssjtj" style="height: 160px">
+            <div class="echart_con bar_l_echart" id="chart3">
+                <script type="text/javascript">
+                    var myChart3= echarts.init(document.getElementById('chart3'));
+                    // 指定图表的配置项和数据
+                    var option3 = {
+                        tooltip: {
+                            trigger: 'axis'
+                        },
+                        toolbox: {
+                            show: true,
+                            feature: {
+                                magicType: {type: ['line', 'bar']},
+                                restore: {},
+                                saveAsImage: {}
+                            }
+                        },
 
+                        xAxis: [{
+                            axisLine: { //轴线
+                                lineStyle: { //样式
+                                    color: '#96ceb4' //颜色
+                                }
+                            },
+                            data: []
+                        }],
+                        yAxis: [{
+                            type: 'value',
+                            interval :0.2,
+                            max:function (v) {
+                                return (v.max + 0.7).toFixed(1);
+                            },
+                            min:function (v) {
+                                return (v.min - 0.7) < 0? 0:(v.min - 0.7).toFixed(1)
+                            },
+                            axisLabel: {
+                                formatter: '{value} %'
+                            },
+                            nameTextStyle: {
+                                color: '#fff',
+                                fontSize: 11
+                            },
+                            splitLine:{
+                                lineStyle: {
+                                    color: '#96ceb4'
+                                },
+                                show:false    //去掉网格线
+                            },
+                            axisLine:{
+                                type : 'solid',
+                                lineStyle:{
+                                    color: '#96ceb4'
+                                }
+                            },
+                            axisTick:{
+                                show:true,
+                                lineStyle:{
+                                    color: '#96ceb4'
+                                }
+                            }
+                        }],
+                        grid:{
+                            left: '2%',
+                            right: '3.5%',
+                            bottom: '5%',
+                            containLabel: true
+                        },
+                        series: [{
+                            type: 'line',
+                            showSymbol: true,
+                            data: [],
+                            markLine: {
+                                symbol: ['none', 'arrow'],
+                                silent:false,
+                                lineStyle: {
+                                    type: 'solid',
+                                    normal: {
+                                        color: '#F8AC59'
+                                    }
+                                },
+                                data: []
+                            }
+                        }]
+                    };
+                    myChart3.setOption(option3);
+                </script>
             </div>
         </div>
     </div>
 
     <!--首页左侧 end -->
-    <!--首页居中 sta -->
-    <div class="model-mid">
-        <div class="mid-top" id="map_c_echart">
-            <!--<div class="echart_con" >-->
 
-            <!--</div>-->
-        </div>
-        <!--中底 sta -->
-        <!--<div class="mid-foot">-->
-            <!--<div class="parkingbox">-->
-                <!--<div class="commombox-top"><span class="prakbg"></span>-->
-                    <!--<div  class="boxnum"><span id="parknum">13027公里</span></div>-->
-                    <!--<div class="commonbox-foot"></div>-->
-                <!--</div>-->
-                <!--<div class="commonbox-tit">道路</div>-->
-            <!--</div>-->
-            <!--<div class="parkingbox marginl15">-->
-                <!--<div class="commombox-top"><span class="placebg"></span>-->
-                    <!--<div  class="boxnum"><span id="parkplace">12座</span></div>-->
-                    <!--<div class="commonbox-foot"></div>-->
-                <!--</div>-->
-                <!--<div class="commonbox-tit">桥梁</div>-->
-            <!--</div>-->
-            <!--<div class="parkingbox marginl15">-->
-                <!--<div class="commombox-top"><span class="freebg"></span>-->
-                    <!--<div  class="boxnum"><span id="freenum">13810个</span></div>-->
-                    <!--<div class="commonbox-foot"></div>-->
-                <!--</div>-->
-                <!--<div class="commonbox-tit">设施</div>-->
-            <!--</div>-->
-            <!--<div class="parkingbox marginl15">-->
-                <!--<div class="commombox-top"><span class="matchbg"></span>-->
-                    <!--<div  class="boxnum"><span id="matchnum">113027平方米</span></div>-->
-                    <!--<div class="commonbox-foot"></div>-->
-                <!--</div>-->
-                <!--<div class="commonbox-tit">绿化</div>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--中底 end -->
-    </div>
-    <!--首页居中 end -->
     <!--首页右侧 sta -->
     <div class="comtab">
-        
-        
-        
-        <div class="modelpub  ">
-            <div class="common-tit">标题</div>
-            
-            <div class="echart_con bar_c_echart"  id="ldwhl" style="height: 160px">
+        <div class="modelpub" style="height: 50%;" >
+            <div class="common-tit">机组二级配图</div>
+            <div class="echart_con bar_c_echart"  id="chart4" style="width: 75%;float: left;">
+                <script type="text/javascript">
+                    var myChart4 = echarts.init(document.getElementById('chart4'));
+                    // 指定图表的配置项和数据
+                    var colors = ['#5793f3', '#d14a61', '#675bba'];
+                    var option4= {
+                        // title: {
+                        //     text: '一号机组级配曲线图'
+                        // },
+                        legend: {
+                            data:['合成级配','实际级配','上限','中值','下限'],
+                            x:'right',
+                            top:'7.5%',
+                            left:'27.5%',
+                            textStyle:{
+                                color: '#96ceb4'
+                            }
+                        },
+                        grid:{
+                            left: '2%',
+                            right: '3.5%',
+                            bottom: '5%',
+                            containLabel: true
+                        },
+                        tooltip: {
+                            trigger: 'item'
+                        },
+                        xAxis: {
+                            type: 'value',
+                            min:0,
+                            max:7,
 
+                            splitLine: {
+                                show: false
+                            },
+                            axisLabel: { //轴标签
+                                show: false//不显示
+                                // rotate:90
+                            },
+                            axisTick: { //轴刻度
+                                show: false //不显示
+                            },
+                            axisLine: { //轴线
+                                lineStyle: { //样式
+                                    color: '#96ceb4' //颜色
+                                }
+                            },
+                            // axisLabel:{
+                            //     interval: 0,
+                            //     formatter: function (value) {
+                            //         //x轴的文字改为竖版显示
+                            //         var str = value.split("");
+                            //         return str.join("\n");
+                            //     }
+                            // }
+                        },
+                        dataZoom:{
+                            type:'inside'
+                        },
+                        yAxis: {
+                            type: 'value',
+                            name: '占比 %',
+                            nameLocation: 'end',
+                            nameGap: 10,
+                            position: 'left',
+                            offset: 3,
+                            max:100,
+                            min:0,
+                            scale: true,
+                            nameTextStyle: {
+                                color: '#fff',
+                                fontSize: 11
+                            },
+                            axisLine: {
+                                onZero: false,
+                                lineStyle: {
+                                    color: '#96ceb4'
+                                }
+                            },
+                            splitLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: '#96ceb4'
+                                }
+                            }
+                        },
+                        series: [
+                            {
+                                type: 'line',
+                                markLine: {
+                                    symbol: ['none', 'none'],
+                                    silent: true,
+                                    label: {
+                                        rotate:90,
+                                        normal: {
+                                            position: "start"
+                                        }
+                                    },
+                                    lineStyle: {
+                                        normal: {
+                                            type: 'solid',
+                                            width:0.6,
+                                            color: '#96ceb4'
+                                        }
+                                    },
+                                    data: []
+                                }
+                            },
+                            {
+                                id: 'a',
+                                type: 'line',
+                                name:'合成级配',
+                                symbolSize:6,
+                                data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                            },
+                            {
+                                id: 'b',
+                                type: 'line',
+                                name:'实际级配',
+                                symbolSize:6,
+                                data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                            },
+                            {
+                                id: 'c',
+                                type: 'line',
+                                name:'上限',
+                                symbolSize:6,
+                                data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                            },
+                            {
+                                id: 'd',
+                                type: 'line',
+                                name:'中值',
+                                symbolSize:6,
+                                data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                            },
+                            {
+                                id: 'e',
+                                type: 'line',
+                                name:'下限',
+                                symbolSize:6,
+                                data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                            }
+                        ]
+                    };
+
+                </script>
+            </div>
+            <div style="width: 25%;height: 93%;float: left;">
+                <div class="basic_div"><span class="basic_span" style="size: 21px;font-size: 19px;color: #c4c7c0;">基本信息</span></div>
+                <div class="basic_div"><span class="basic_span" id="crew2_date"></span></div>
+                <div class="basic_div"><span class="basic_span" id="crew2_time"></span></div>
+                <div class="basic_div"><span class="basic_span" id="crew2_ratio_name"></span></div>
+                <div class="basic_div"><span class="basic_span" id="crew2_stone" ></span></div>
+                <div class="basic_div"><span class="basic_span" id="crew2_asphalt" ></span></div>
+                <div class="basic_div"><span class="basic_span" id="crew2_regenerate" ></span></div>
+                <div class="basic_div"><span class="basic_span" id="crew2_additive" ></span></div>
             </div>
         </div>
-        <div class="modelpub margin10">
-            <div class="common-tit">标题</div>
+        <div class="modelpub margin10" style="height: 48%;">
+            <div class="common-tit" id="aar2_title"></div>
             <span class="tilt"></span>
-            <div class="echart_con"  id="ldgdzt">
-                <!--<div id="container-speed" style="width:49%;height: 100%;display: inline-block; "></div>
-                <div id="container-rpm" style=" width:49%;height: 100%;display: inline-block;"></div>-->
-            </div>
-        </div>
-        <div class="modelpub margin10">
-            <div class="common-tit">标题</div>
-            <span class="tilt"></span>
-            <div class="echart_con line_r_echart" id="ldlxtj">
+            <div class="echart_con"  id="chart6">
+                <script type="text/javascript">
+                    var myChart6 = echarts.init(document.getElementById('chart6'));
+                    // 指定图表的配置项和数据
+                    var option6 = {
+                        tooltip: {
+                            trigger: 'axis'
+                        },
+                        toolbox: {
+                            show: true,
+                            feature: {
+                                magicType: {type: ['line', 'bar']},
+                                restore: {},
+                                saveAsImage: {}
+                            }
+                        },
+                        xAxis: [{
+                            axisLine: { //轴线
+                                lineStyle: { //样式
+                                    color: '#96ceb4' //颜色
+                                }
+                            },
+                            data: []
+                        }],
+                        yAxis: [{
+                            type: 'value',
+                            interval :0.2,
+                            max:function (v) {
+                                return (v.max + 0.7).toFixed(1);
+                            },
+                            min:function (v) {
+                                return (v.min - 0.7) < 0? 0:(v.min - 0.7).toFixed(1)
+                            },
+                            axisLabel: {
+                                formatter: '{value} %'
+                            },
+                            nameTextStyle: {
+                                color: '#fff',
+                                fontSize: 11
+                            },
+                            splitLine:{
+                                lineStyle: {
+                                    color: '#96ceb4'
+                                },
+                                show:false    //去掉网格线
+                            },
+                            axisLine:{
+                                type : 'solid',
+                                lineStyle:{
+                                    color: '#96ceb4'
+                                }
+                            },
+                            axisTick:{
+                                show:true,
+                                lineStyle:{
+                                    color: '#96ceb4'
+                                }
+                            }
+                        }],
+                        grid:{
+                            left: '2%',
+                            right: '3.5%',
+                            bottom: '5%',
+                            containLabel: true
+                        },
+                        series: [{
+                            type: 'line',
+                            showSymbol: true,
+                            data: [],
+                            markLine: {
+                                symbol: ['none', 'arrow'],
+                                silent: true,
+                                lineStyle: {
+                                    normal: {
+                                        color: '#F8AC59'
+                                    }
+                                },
+                                data: []
+                            }
+                        }]
+                    };
 
+                </script>
             </div>
         </div>
     </div>
     <!--首页右侧 end -->
 </div>
 </div>
+<input id="path" value="${path}" type="hidden">
 <div class="clearfix"></div>
 <!--首页底部 sta -->
 <!--<div id="model-foot" class="model-foot">
@@ -167,12 +597,10 @@
 </div>-->
 <!--首页底部 end-->
 <script type="text/javascript" src="../../../../static/cockpit/js/lib/jquery.min.js"></script>
-<script type="text/javascript" src="../../../../static/cockpit/js/lib/echarts.min.js"></script>
 <script type="text/javascript" src="../../../../static/cockpit/js/highcharts.js"></script>
 <script type="text/javascript" src="../../../../static/cockpit/js/highcharts-3d.js"></script>
 <script type="text/javascript" src="../../../../static/cockpit/js/highcharts-zh_CN.js"></script>
 <script type="text/javascript" src="../../../../static/cockpit/js/common/header-footer.js"></script>
-<script src="../../../../static/cockpit/js/common/unit.js"></script>
 <script type="text/javascript" src="../../../../static/cockpit/js/pagejs/indexSSHZ.js?c=2.9"></script>
 </body>
 </html>

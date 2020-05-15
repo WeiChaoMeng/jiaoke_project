@@ -33,4 +33,15 @@ public interface LeadCockpitServiceInf {
      * @date 2020/5/13 9:09
      */
     Map<String, Object> getThisMonthYield();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <获取三日内油石比>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/5/14 16:05
+     */
+    Map<String, Object> getAsphaltAggregateRatio();
 }

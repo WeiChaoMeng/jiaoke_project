@@ -17,21 +17,20 @@
                t2.produce_disc_num,
                t2.produce_user,
                t2.produce_custom_num,
-               t2.produce_crewNum,
-               t2.project_name
+               t2.produce_crewNum
         FROM
              quality_warning_data AS t1
                  INNER JOIN (
                             (
                             SELECT
-                                   QC.*, QM.pro_name,
-                                   QTP.project_name
+                                   QC.*, QM.pro_name
                             FROM
                                  quality_warning_promessage_crew AS QC
                                      INNER JOIN quality_proportioning_message AS QM ON QC.produce_ratio_id = QM.crew1_modele_id
-                                     LEFT JOIN quality_test_project AS QTP ON QC.produce_custom_num = QTP.client_num
+                                     INNER JOIN quality_proportioning_model AS QPM ON QM.id = QPM.message_id
                             WHERE
-                                    QC.produce_crewNum = 1
+                                    YEAR (QPM.create_time) = YEAR (NOW())
+                              AND QC.produce_crewNum = 1
                             ORDER BY
                                      QC.id DESC
                             LIMIT 1
@@ -39,14 +38,14 @@
                             UNION ALL
                             (
                             SELECT
-                                   QC.*, QM.pro_name,
-                                   QTP.project_name
+                                   QC.*, QM.pro_name
                             FROM
                                  quality_warning_promessage_crew AS QC
                                      INNER JOIN quality_proportioning_message AS QM ON QC.produce_ratio_id = QM.crew2_modele_id
-                                     LEFT JOIN quality_test_project AS QTP ON QC.produce_custom_num = QTP.client_num
+                                     INNER JOIN quality_proportioning_model AS QPM ON QM.id = QPM.message_id
                             WHERE
-                                    QC.produce_crewNum = 2
+                                    YEAR (QPM.create_time) = YEAR (NOW())
+                              AND QC.produce_crewNum = 2
                             ORDER BY
                                      QC.id DESC
                             LIMIT 1

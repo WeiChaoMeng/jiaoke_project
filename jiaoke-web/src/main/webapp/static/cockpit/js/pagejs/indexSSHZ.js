@@ -1,1131 +1,410 @@
-
 (function () {
-	//左上雷达图
-    //var radarechart = echarts.init(document.getElementById('radar_echart'));
-    //停车位数量及占比
-    //var bar_l_echart = echarts.init(document.getElementById('bar_l_echart'));
-    //停车场数量及占比
-    // var pie_l_echart = echarts.init(document.getElementById('pie_l_echart'));
-    //设备数量
-    //中间地图
-    var map_c_echart = echarts.init(document.getElementById('map_c_echart'));
-//  var qlztzsEchart = echarts.init(document.getElementById('container-speed'));
-//  var qlztzsEchart1 = echarts.init(document.getElementById('container-rpm'));
-    var ldwhlEchart = echarts.init(document.getElementById('ldlxtj'));
-        var ldgdztEchart = echarts.init(document.getElementById('ldgdzt'));
-    //右上线上线下排行榜图
-   // var bar_r_echart = echarts.init(document.getElementById('bar_r_echart'));
-    //车位配比
-    //var line_r_echart = echarts.init(document.getElementById('line_r_echart'));
-    //定义某个地市要显示的区县
-    var displayCountry = [];
-    //赤峰的省市区县
-    var RKvalue_chifeng = [
-        {
-            name:'红山区',
-            value:'123'
-
-        },
-        {
-            name:'松山区',
-            value:456
-        },
-        {
-            name:'元宝山区',
-            value:678
-        },
-        {
-            name:'阿鲁科尔沁旗',
-            value:0
-        },
-        {
-            name:'巴林左旗',
-            value:0
-        },
-        {
-            name:'巴林右旗',
-            value:0
-        },
-        {
-            name:'林西县',
-            value:0
-        },
-        {
-            name:'克什克腾旗',
-            value:0
-        },
-        {
-            name:'翁牛特旗',
-            value:0
-        },
-        {
-            name:'喀喇沁旗',
-            value:0
-        },
-        {
-            name:'宁城县',
-            value:0
-        },
-        {
-            name:'敖汉旗',
-            value:0
-        }
-    ];
-    var RKvalue_chifeng = [
-        {
-            name:'红山区',
-            value:103
-
-        },
-        {
-            name:'松山区',
-            value:103
-
-        },
-        {
-            name:'元宝山区',
-            value:10
-
-        },
-        {
-            name:'阿鲁科尔沁旗',
-            value:10
-
-        },
-        {
-            name:'巴林左旗',
-            value:103
-
-        },
-        {
-            name:'巴林右旗',
-            value:103
-
-        },
-        {
-            name:'林西县',
-            value:103
-
-        },
-        {
-            name:'克什克腾旗',
-            value:103
-
-        },
-        {
-            name:'翁牛特旗',
-            value:103
-
-        },
-        {
-            name:'喀喇沁旗',
-            value:103
-
-        },
-        {
-            name:'宁城县',
-            value:103
-
-        },
-        {
-            name:'敖汉旗',
-            value:103
-
-        }
-    ];
-    var RKvalue_chifeng1 = [
-        {
-            name:'红山区',
-            value:32
-
-        },
-        {
-            name:'松山区',
-            value:312
-        },
-        {
-            name:'元宝山区',
-            value:32
-        },
-        {
-            name:'阿鲁科尔沁旗',
-            value:422
-        },
-        {
-            name:'巴林左旗',
-            value:232
-        },
-        {
-            name:'巴林右旗',
-            value:322
-        },
-        {
-            name:'林西县',
-            value:132
-        },
-        {
-            name:'克什克腾旗',
-            value:32
-        },
-        {
-            name:'翁牛特旗',
-            value:29
-        },
-        {
-            name:'喀喇沁旗',
-            value:33
-        },
-        {
-            name:'宁城县',
-            value:34
-        },
-        {
-            name:'敖汉旗',
-            value:132
-        }
-    ];
-    var RKvalue_chifeng2 = [
-        {
-            name:'红山区',
-            value:18
-
-        },
-        {
-            name:'松山区',
-            value:24
-        },
-        {
-            name:'元宝山区',
-            value:12
-        },
-        {
-            name:'阿鲁科尔沁旗',
-            value:32
-        },
-        {
-            name:'巴林左旗',
-            value:18
-        },
-        {
-            name:'巴林右旗',
-            value:66
-        },
-        {
-            name:'林西县',
-            value:78
-        },
-        {
-            name:'克什克腾旗',
-            value:28
-        },
-        {
-            name:'翁牛特旗',
-            value:48
-        },
-        {
-            name:'喀喇沁旗',
-            value:38
-        },
-        {
-            name:'宁城县',
-            value:118
-        },
-        {
-            name:'敖汉旗',
-            value:128
-        }
-    ];
-    var RKvalue_chifeng3 = [
-        {
-            name:'红山区',
-            value:'3200'
-
-        },
-        {
-            name:'松山区',
-            value:'323'
-        },
-        {
-            name:'元宝山区',
-            value:'234'
-        },
-        {
-            name:'阿鲁科尔沁旗',
-            value:'128'
-        },
-        {
-            name:'巴林左旗',
-            value:'300'
-        },
-        {
-            name:'巴林右旗',
-            value:'639'
-        },
-        {
-            name:'林西县',
-            value:'231'
-        },
-        {
-            name:'克什克腾旗',
-            value:'320'
-        },
-        {
-            name:'翁牛特旗',
-            value:'780'
-        },
-        {
-            name:'喀喇沁旗',
-            value:'156'
-        },
-        {
-            name:'宁城县',
-            value:'380'
-        },
-        {
-            name:'敖汉旗',
-            value:'30'
-        }
-    ];
-    function ChiFengMapSeries(name,dataValue){
-    	var obj = {
-	        // center:[118.361313,42.27018],//中心点
-	        // zoom:1.5,//当前视角的缩放比例。
-	        // roam:'scale',//是否支持鼠标缩放
-	        //selectedMode:true,//选中模式，表示是否支持多个选中，默认关闭
-	        name:name,
-	        type:'map',
-	        map:'chifeng',
-
-	        // markPoint:{
-	        //     symbol:'circle'
-	        // },
-	        label: {
-	            normal: {
-	                show: true
-	            },
-	            emphasis: {
-	                show: true
-	            }
-	        },
-	        mapLocation:{
-	            y:60
-	        },
-	        itemStyle: {
-	            normal: {
-	                borderWidth: 1,
-	                borderColor: 'rgba(147,191,245,.3)',
-
-	                label: {
-	                    show: false,
-	                    textStyle: {
-	                        color: "#fff"
-	                    }
-	                }
-	            },
-	            emphasis:{
-	                areaColor: '#fff',
-	                label: {
-	                    show: false,
-	                    textStyle: {
-	                        color: "#00a2ff"
-	                    }
-	                }
-	            }
-	        },
-            markPoint:{
-                symbol:'image://./../img/cf_map_icon.png',
-                silent:true,
-                symbolSize:[17, 17],
-                data: [
-
-                    {
-                        name: '',
-                        coord: [118.973508,42.147919]
-                    },
-                    {
-                        name: '',
-                        coord: [118.528685,42.498721]
-                    },
-                    {
-                        name: '',
-                        coord: [117.337082,42.934712]
-                    },
-                    {
-                        name: '',
-                        coord: [120.016476,42.428608]
-                    },
-                    {
-                        name: '',
-                        coord: [119.294298,42.159577]
-                    },
-                    {
-                        name: '',
-                        coord: [118.390652,41.816981]
-                    },
-                    {
-                        name: '',
-                        coord: [119.026903,42.764439]
-                    },
-                    {
-                        name: '',
-                        coord: [118.662191,43.951086]
-                    },
-                    {
-                        name: '',
-                        coord: [118.730749,41.616497]
-                    },
-                    {
-                        name: '',
-                        coord: [118.053212,43.750996]
-                    },
-                    {
-                        name: '',
-                        coord: [119.393627,44.411986]
-                    },
-                    {
-                        name: '',
-                        coord: [120.070303,44.345238]
-                    },
-                ],
-                label:{
-                    normal:{
-                        show:false
-                    },
-                    emphasis:{
-                        show:false
-                    }
-
-                }
-            },
-
-	        data:dataValue
-	    };
-	    return obj;
-
-    };
-
-    var map_c_option = {
-        tooltip: {
-            trigger: 'item',
-            formatter: function(params) {
-                var res = params.name+'<br/>';
-                var myseries = map_c_option.series;
-                for (var i = 0; i < myseries.length; i++) {
-                    res+= myseries[i].name;
-                    for(var j=0;j<myseries[i].data.length;j++){
-                        if(myseries[i].data[j].name==params.name){
-                            res+= ' : '+ myseries[i].data[j].value+'<br/>';
-                        }
-                    }
-                }
-                return res;
-            }
-        },
-
-        // dataRange:{
-        //     show:false,
-        // },
-        visualMap: {
-            show: false,
-            min: 1,
-            max: 10000,
-            itemWidth: 0,//图形的宽度，即长条的宽度
-            itemHeight: 90,//图形的高度，即长条的高度
-            left: 5,
-            bottom: 0,
-            //text: ['High', 'Low'],
-            realtime: false,//拖拽时，是否实时更新
-            calculable: false,//是否显示拖拽用的手柄
-            inRange: {
-                //color: ['rgba(29,71,193,.3)', 'rgba(33,77,203,.7)','rgba(29,71,193,.2)','rgba(33,77,203,.6)']
-                color:['#72ab12','#dc380e','#ff8c01','#3a85be']
-            }
-        },
-        series:[
-        	//前三项位置固定，后面的动态添加
-            new ChiFengMapSeries("道路",RKvalue_chifeng),
-            new ChiFengMapSeries("桥梁",RKvalue_chifeng1),
-            new ChiFengMapSeries("设施",RKvalue_chifeng2),
-            new ChiFengMapSeries("绿化",RKvalue_chifeng3)
-            /*new ChiFengMapSeries("地磁数")*/
-        ]
-    };
-
-    var fun = {
-        init:function () {
-
-            $('#line_r_echart').highcharts({
-                chart: {
-                    zoomType: 'xy',
-                    type:'column',
-                    options3d: {
-                        enabled: false,
-                        alpha: 15,
-                        beta: 15,
-                        depth: 50,
-                        viewDistance: 25
-                    }, backgroundColor: 'rgba(0,0,0,0)'
-                },
-                title: {
-                    text: ''
-                }, credits:{
-                    enabled:false // 禁用版权信息
-                },
-                xAxis: [{
-                    categories: ['红山区', '松山区', '元宝山区', '其他区'],
-                    crosshair: true
-                }],
-                yAxis: [{ // Primary yAxis
-                    labels: {
-                        format: '{value}km',
-                        style: {
-                            color: Highcharts.getOptions().colors[2]
-                        }
-                    },
-                    title: {
-                        text: '里程',
-                        style: {
-                            color: Highcharts.getOptions().colors[2]
-                        }
-                    },
-                    opposite: true
-                }, { // Secondary yAxis
-                    gridLineWidth: 0,
-                    title: {
-                        text: '桥梁数',
-                        style: {
-                            color: Highcharts.getOptions().colors[0]
-                        }
-                    },
-                    labels: {
-                        format: '{value} 座',
-                        style: {
-                            color: Highcharts.getOptions().colors[0]
-                        }
-                    }
-                }],
-                tooltip: {
-                    shared: true
-                },
-                colors:['rgba(0,204,255,0.8)','rgba(8,220,128,0.8)','rgba(250,5,218,0.8)','rgba(255,204,0,0.8)'],
-                legend: {
-                    layout: 'vertical',
-                    align: 'right',
-                    x: 0,
-                    verticalAlign: 'top',
-                    y: 10,
-                    floating: true,
-                    backgroundColor: 'rgba(0,0,0,0)',
-                    symbolWidth:8,
-                    symbolRadius:4,
-                    symbolPadding:2,
-                    symbolHeight:8,
-                    itemStyle:
-                    { fontWeight: "normal",
-                        color:"#fff",
-                        fontSize:"12px",
-                        height:"12px"
-                    },
-                    itemHoverStyle: { color: '#fff' }
-                },
-                series: [{
-                    name: '里程',
-                    type: 'column',
-                    yAxis: 0,
-                    data: [1416.9, 1016,1015, 7129.2],
-                    tooltip: {
-                        valueSuffix: 'km'
-                    }
-                }, {
-                    name: '桥梁数',
-                    type: 'column',
-                    yAxis: 1,
-                    data: [35, 55, 26,200],
-                    marker: {
-                        enabled: false
-                    },
-                    dashStyle: 'shortdot',
-                    tooltip: {
-                        valueSuffix: '座'
-                    }
-                }]
-            });
-
-            $('#xctj').highcharts({
-                chart: {
-                    type: 'column',
-                    options3d: {
-                        enabled: true,
-                        alpha: 0,
-                        beta: 0,
-                        viewDistance: 25,
-                        depth: 40, backgroundColor: 'rgba(0,0,0,0)'
-                    },backgroundColor: 'rgba(0,0,0,0)'
-                },title:'',
-                credits:{
-                    enabled:false // 禁用版权信息
-                },colors:['#72ab12','#dc380e','#ff8c01','#3a85be','#fe8c00'],
-                legend: {
-                    layout: 'vertical',
-                    align: 'right',
-                    x: 0,
-                    verticalAlign: 'top',
-                    y: 10,
-                    floating: true,
-                    backgroundColor: 'rgba(0,0,0,0)',
-                    symbolWidth:8,
-                    symbolRadius:4,
-                    symbolPadding:2,
-                    symbolHeight:8,
-                    itemStyle:
-                    { fontWeight: "normal",
-                        color:"#fff",
-                        fontSize:"12px",
-                        height:"12px"
-                    },
-                    itemHoverStyle: { color: '#fff' }
-                },xAxis: {
-                    categories: ['参数1', '参数2', '参数3'],
-                    labels: {
-                        format: '{value} ',
-                        style: {
-                            color: 'white'
-                        }
-                    }
-                },
-                yAxis: {
-                    allowDecimals: false,
-                    min: 0,
-                    title: {
-                        text: ''
-                    }, labels: {
-                        format: '{value} ',
-                        style: {
-                            color: 'white'
-                        }
-                    }
-                },
-                tooltip: {
-                    headerFormat: '<b>{point.key}</b><br>',
-                    pointFormat: '<span style="color:{series.color}">\u25CF</span> {series.name}: {point.y}座'
-                },
-                plotOptions: {
-                    column: {
-                        stacking: 'normal',
-                        depth: 70
-                    }
-                },
-                series: [{
-                    name: '参数1',
-                    data: [5, 3, 4],
-                    stack: 'male'
-                }, {
-                    name: '参数2',
-                    data: [3, 4, 4],
-                    stack: 'male'
-                }, {
-                    name: '参数3',
-                    data: [2, 5, 6],
-                    stack: 'male'
-                }, {
-                    name: '参数4',
-                    data: [3, 1, 4],
-                    stack: 'male'
-                }]
-            });
-             $('#sssjtj').highcharts({
-                chart: {
-                    type: 'column',
-                    options3d: {
-                        enabled: true,
-                        alpha: 0,
-                        beta: 0,
-                        viewDistance: 25,
-                        depth: 40, backgroundColor: 'rgba(0,0,0,0)'
-                    },backgroundColor: 'rgba(0,0,0,0)'
-                },title:'',
-                credits:{
-                    enabled:false // 禁用版权信息
-                },colors:['#72ab12','#dc380e','#ff8c01','#3a85be','#fe8c00'],
-                legend: {
-                    layout: 'vertical',
-                    align: 'right',
-                    x: 0,
-                    verticalAlign: 'top',
-                    y: 10,
-                    floating: true,
-                    backgroundColor: 'rgba(0,0,0,0)',
-                    symbolWidth:8,
-                    symbolRadius:4,
-                    symbolPadding:2,
-                    symbolHeight:8,
-                    itemStyle:
-                    { fontWeight: "normal",
-                        color:"#fff",
-                        fontSize:"12px",
-                        height:"12px"
-                    },
-                    itemHoverStyle: { color: '#fff' }
-                },xAxis: {
-                    categories: ['参数1', '参数2', '参数3'],
-                    labels: {
-                        format: '{value} ',
-                        style: {
-                            color: 'white'
-                        }
-                    }
-                },
-                yAxis: {
-                    allowDecimals: false,
-                    min: 0,
-                    title: {
-                        text: ''
-                    }, labels: {
-                        format: '{value} ',
-                        style: {
-                            color: 'white'
-                        }
-                    }
-                },
-                tooltip: {
-                    headerFormat: '<b>{point.key}</b><br>',
-                    pointFormat: '<span style="color:{series.color}">\u25CF</span> {series.name}: {point.y}座'
-                },
-                plotOptions: {
-                    column: {
-                        stacking: 'normal',
-                        depth: 70
-                    }
-                },
-                series: [{
-                    name: '参数',
-                    data: [12,14,13],
-                    stack: 'male'
-                }]
-            });
-
-             $('#ldwhl').highcharts({
-                chart: {
-                    type: 'column',
-                    options3d: {
-                        enabled: true,
-                        alpha: 0,
-                        beta: 0,
-                        viewDistance: 25,
-                        depth: 40, backgroundColor: 'rgba(0,0,0,0)'
-                    },backgroundColor: 'rgba(0,0,0,0)'
-                },title:'',
-                credits:{
-                    enabled:false // 禁用版权信息
-                },colors:['#dc380e','#dc380e','#ff8c01','#3a85be','#fe8c00'],
-                legend: {
-                    layout: 'vertical',
-                    align: 'right',
-                    x: 0,
-                    verticalAlign: 'top',
-                    y: 10,
-                    floating: true,
-                    backgroundColor: 'rgba(0,0,0,0)',
-                    symbolWidth:8,
-                    symbolRadius:4,
-                    symbolPadding:2,
-                    symbolHeight:8,
-                    itemStyle:
-                    { fontWeight: "normal",
-                        color:"#fff",
-                        fontSize:"12px",
-                        height:"12px"
-                    },
-                    itemHoverStyle: { color: '#fff' }
-                },xAxis: {
-                    categories: ['参数1', '参数2', '参数3'],
-                    labels: {
-                        format: '{value} ',
-                        style: {
-                            color: 'white'
-                        }
-                    }
-                },
-                yAxis: {
-                    allowDecimals: false,
-                    min: 0,
-                    title: {
-                        text: ''
-                    }, labels: {
-                        format: '{value} ',
-                        style: {
-                            color: 'white'
-                        }
-                    }
-                },
-                tooltip: {
-                    headerFormat: '<b>{point.key}</b><br>',
-                    pointFormat: '<span style="color:{series.color}">\u25CF</span> {series.name}: {point.y}棵'
-                },
-                plotOptions: {
-                    column: {
-                        stacking: 'normal',
-                        depth: 70
-                    }
-                },
-                series: [{
-                    name: '参数',
-                    data: [12213,14314,11323],
-                    stack: 'male'
-                }]
-            });
-        	//中间地图
-        	map_c_echart.setOption(map_c_option,true);
-            //currentIndex = -1;
-            //var dataLen = map_c_option.series[0].data.length;
-            // 取消之前高亮的图形
-            //map_c_echart.dispatchAction({
-            //    type: 'downplay',
-            //    seriesIndex: 0,
-            //    dataIndex: currentIndex
-            //});
-            //currentIndex = (currentIndex + 1) % dataLen;
-            // 高亮当前图形
-            //map_c_echart.dispatchAction({
-            //    type: 'highlight',
-            //    seriesIndex: 0,
-            //    dataIndex:currentIndex
-            //});
-            // 显示 tooltip
-            //map_c_echart.dispatchAction({
-            //    type: 'showTip',
-            //    seriesIndex: 0,
-            //    dataIndex: currentIndex
-            //});
-            //桥梁状态指数
-
-           var QLZTZSoption = {
-                tooltip : {
-                    formatter: "{a} <br/>{b} : {c}"
-                },
-               series: [
-                   {
-                       name: '状态指数', splitNumber: 4,
-                       type: 'gauge',
-                       detail: {formatter:'{value}'},  title : {
-                       show : true,
-                       offsetCenter: [0, '-120%'],       // x, y，单位px
-                       textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-                           fontWeight: 'bolder' ,color:'white'
-                       }
-                   },
-                       data: [{value: 100, name: '松洲桥'}],       // 分割段数，默认为5
-                       axisLine: {            // 坐标轴线
-                           lineStyle: {       // 属性lineStyle控制线条样式
-                               color: [[0.2, 'red'],[0.8, '#48b'],[1, 'green']],
-                               width: 2
-                           }
-                       }
-                   }
-               ]
-            };
-            var QLZTZSoption1 =  {
-                tooltip : {
-                    formatter: "{a} <br/>{b} : {c}"
-                },  title : {
-                    show : true,
-                    offsetCenter: [0, '-120%']        // x, y，单位px
-                },
-                series: [
-                    {
-                        name: '状态指数', splitNumber: 4,
-                        type: 'gauge',
-                        detail: {formatter:'{value}'},  title : {
-                        show : true,
-                        offsetCenter: [0, '-120%'],       // x, y，单位px
-                        textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-                            fontWeight: 'bolder' ,color:'white'
-                        }
-                    },
-                        data: [{value: 60, name: '昭乌达桥'}],       // 分割段数，默认为5
-                        axisLine: {            // 坐标轴线
-                            lineStyle: {       // 属性lineStyle控制线条样式
-                                color: [[0.2, 'red'],[0.8, '#48b'],[1, 'green']],
-                                width: 2
-                            }
-                        }
-                    }
-                ]
-            };
-//          //绿化率统计
-//          $('#ldwhl').highcharts({
-//              chart: {
-//                  type: 'area',backgroundColor: 'rgba(0,0,0,0)'
-//              }, max: 100, credits:{
-//                  enabled:false // 禁用版权信息
-//              },
-//              title: {
-//                  text: ''
-//              },colors:['#72ab12','#dc380e','#3a85be','#fe8c00'],
-//              xAxis: {
-//                  allowDecimals: false,
-//                  labels: {
-//                      formatter: function () {
-//                          return this.value; // clean, unformatted number for year
-//                      }
-//                  },title: {
-//                      text: '',
-//                      style: {
-//                          color: 'white'
-//                      }
-//                  }
-//              },
-//              yAxis: {
-//                  title: {
-//                      text: ''
-//                  },max:100,
-//                  labels: {
-//                      formatter: function () {
-//                          return this.value  + '%';
-//                      }
-//                  }
-//              },
-//              tooltip: {
-//                  pointFormat: '{series.name} <b>{point.y}</b>%'
-//              },
-//              plotOptions: {
-//                  area: {
-//                      pointStart: 2010,
-//                      marker: {
-//                          enabled: false,
-//                          symbol: 'circle',
-//                          radius: 3,
-//                          states: {
-//                              hover: {
-//                                  enabled: true
-//                              }
-//                          }
-//                      }
-//                  }
-//              },
-//              series: [{
-//                  name: '草坪',
-//                  data: [ 36, 91, 32, 90, 35, 69]
-//              }]
-//          });
-            var ldgdlxOption = {
-                tooltip : {
-                    trigger: 'axis'
-                }
-                ,
-                legend: {
-                    data:[
-                        '参数1','参数2','参数3','参数4',
-                    ],textStyle:{
-                        color:'white'
-                    }
-                }
-                ,
-                grid: {y: 23, y2:50, x2:20},
-                xAxis : [
-                    {
-                        type : 'category',
-                        data : ['参数1','参数2','参数3'],
-                        axisLabel: {
-                        show: true,
-                        textStyle: {
-                            color: 'white'
-                        }
-                     }
-                    },
-                    {
-                        type : 'category',
-                        axisLine: {show:false},
-                        axisTick: {show:false},
-                        axisLabel: {show:false},
-                        splitArea: {show:false},
-                        splitLine: {show:false},
-                        data : ['参数1','参数2','参数3']
-                    }
-                ],
-                yAxis : [
-                    {
-                        type : 'value',
-                        axisLabel:{formatter:'{value}盏',textStyle:{color:'white'}}
-                    }
-                ],
-                series : [//colors:['#72ab12','#dc380e','#3a85be','#fe8c00'],
-                    {
-                        name:'参数1',
-                        type:'bar',
-                        itemStyle: {normal: {color:'#72ab12', label:{show:true}}},
-                        data:[3340,2710,2788],barGap:'20%'
-                    },
-                    {
-                        name:'参数2',
-                        type:'bar',
-                        itemStyle: {normal: {color:'#FE3F72', label:{show:true,textStyle:{color:'#27727B'}}}},
-                        data:[1600,3120,2087],barGap:'20%'
-                    },
-                    {
-                        name:'参数3',
-                        type:'bar',
-                        //xAxisIndex:1,
-                        itemStyle: {normal: {color:'#dc380e', label:{show:true}}},
-                        data:[1291,1035,1689],barGap:'20%'
-                    },
-                    {
-                        name:'参数4',
-                        type:'bar',
-                       // xAxisIndex:1,
-                        itemStyle: {normal: {color:'#fe8c00', label:{show:true,formatter:function(p){return p.value > 0 ? (p.value +'+'):'';}}}},
-                        data:[7303,4030,4817],barGap:'20%'
-                    }
-                ]
-            };
-            ldgdztEchart.setOption(ldgdlxOption);
-//          qlztzsEchart.setOption(QLZTZSoption);
-//          qlztzsEchart1.setOption(QLZTZSoption1);
-            //自适应ldwhlEchart
-            var LDWHoption = {
-                tooltip : {
-                    trigger: 'axis'
-                }
-                ,
-                legend: {
-                    data:[
-                        '参数1','参数2','参数3','参数4','其他'
-                    ],textStyle:{
-                        color:'white'
-                    }
-                }
-                ,
-                grid: {y: 23, y2:50, x2:20},
-                xAxis : [
-                    {
-                        type : 'category',
-                        data : ['参数1','参数2','参数3'],
-                        axisLabel: {
-                        show: true,
-                        textStyle: {
-                            color: 'white'
-                        }
-                     }
-                    },
-                    {
-                        type : 'category',
-                        axisLine: {show:false},
-                        axisTick: {show:false},
-                        axisLabel: {show:false},
-                        splitArea: {show:false},
-                        splitLine: {show:false},
-                        data : ['参数1','参数2','参数3']
-                    }
-                ],
-                yAxis : [
-                    {
-                        type : 'value',
-                        axisLabel:{formatter:'{value}个',textStyle:{color:'white'}}
-                    }
-                ],
-                series : [//colors:['#72ab12','#dc380e','#3a85be','#fe8c00'],
-                    {
-                        name:'参数1',
-                        type:'bar',
-                        itemStyle: {normal: {color:'#72ab12', label:{show:true}}},
-                        data:[1340,1710,1788,1975],barGap:'20%'
-                    },
-                    {
-                        name:'参数2',
-                        type:'bar',
-                        itemStyle: {normal: {color:'#FE3F72', label:{show:true,textStyle:{color:'#27727B'}}}},
-                        data:[1600,1120,1087,1650],barGap:'20%'
-                    },
-                    {
-                        name:'参数3',
-                        type:'bar',
-                        //xAxisIndex:1,
-                        itemStyle: {normal: {color:'#dc380e', label:{show:true}}},
-                        data:[1291,1035,1689,1000],barGap:'20%'
-                    },
-                    {
-                        name:'参数4',
-                        type:'bar',
-                       // xAxisIndex:1,
-                        itemStyle: {normal: {color:'#fe8c00', label:{show:true,formatter:function(p){return p.value > 0 ? (p.value +'+'):'';}}}},
-                        data:[1303,1030,817,130],barGap:'20%'
-                    },
-                    {
-                        name:'其他',
-                        type:'bar',
-                       // xAxisIndex:1,
-                        itemStyle: {normal: {color:'#fe8c00', label:{show:true,formatter:function(p){return p.value > 0 ? (p.value +'+'):'';}}}},
-                        data:[333,330,817,430],barGap:'20%'
-                    }
-                ]
-            };
-            ldwhlEchart.setOption(LDWHoption);
-
-            //停车位占比
-            $('#radar_echart').highcharts({
-                chart: {
-                    type: 'pie',
-                    options3d: {
-                        enabled: true,
-                        alpha: 45,beta:0
-                    }, backgroundColor: 'rgba(0,0,0,0)'
-                },
-                title: {
-                    text: ' '
-                }, credits:{
-                    enabled:false // 禁用版权信息
-                },
-                plotOptions: {
-                    pie: {
-                        innerSize: 100,
-                        depth: 15, dataLabels: {
-                            enabled: true,
-                            format: '{point.name}: {point.y}公里',  
-                            style: {
-		                        color: 'white'
-		                    }
-                        }  
-                    }
-                },tooltip: {
-                    pointFormat: '{series.name}: <b>{point.y}km</b>'
-                },
-                series: [{
-                    name: '公路等级',
-                    data: [
-                        ['快速路', 18],
-                        ['快速辅路', 5],
-                        ['主干道', 120],
-                        ['次干道', 30],
-                        ['支路', 44]
-                    ],colors:['#72ab12','#dc380e','#ff8c01','#3a85be','#fe8c00']
-                }]
-            });
-            window.onresize = function () {
-                //radarechart.resize();
-                // bar_l_echart.resize();
-                // pie_l_echart.resize();
-                // bar_c_echart.resize();
-                map_c_echart.resize();
-                //line_r_echart.resize();
-            }
-        }
+    /**
+     * 左一、右一图表级配图
+     */
+    getRealTimeData();
 
 
-
-
-
-    };
-    //获取某个城市要显示的区县
-    function getDisplayCountryByCity(){
-    	var req = {
-            sysCode:sysComm.sysCode,
-            cityId:sysComm.cityId
-    	};
-    	if(displayCountry.length>0){
-    		return displayCountry;
-    	}
-    }
-    var stompClient = null;
-    getDisplayCountryByCity();
-    fun.init();
 })();
+
+/**
+ * 定时调用
+ */
+setInterval(getRealTimeData(),40000);
+
+
+/**
+ * 展示基本信息
+ */
+function  getRealTimeData() {
+    var basePath = $("#path").val();
+    $.ajax({
+        url:basePath + "/getRealTimeData.do",
+        // url:"http://47.105.114.70/getRealTimeData.do",
+        type:"get",
+        dataType:"json",
+        success:function (res) {
+            renderDataToPage(res);
+        }
+
+    })
+    /*******echars温度图表方法********/
+    // getRealTimeDataEcharsTemp();
+    /*******echars材料图表方法********/
+    showGradingCurve();
+    /*******油石比图表方法********/
+    getAsphaltAggregateRatio();
+};
+function getAsphaltAggregateRatio() {
+    var basePath = $("#path").val();
+    $.ajax({
+        url:basePath + "/getAsphaltAggregateRatio.do",
+        type:"get",
+        dataType:"json",
+        success:function (res) {
+            if (res.message === 'success'){
+                var xList = res.body.xList;
+                var dataList = res.body.dataList;
+                var ration = res.body.ration;
+                showAsphaltAggregateRatio(xList,dataList,ration);
+            }
+            if (res.message === 'empty'){
+                console.log("当前数据不足两条");
+            }
+            if (res.message === 'error'){
+                console.log("后台错误，请联系管理员");
+            }
+        }
+    })
+}
+/**
+ * 展示基本信息
+ * @param listStr
+ */
+function renderDataToPage(listStr) {
+
+    if (listStr){
+        for (var i=0;i<listStr.length;i++){
+            var todayDate = getNowFormatDate();
+            if ( listStr[i].crewNum == 'crew1' ){
+                var proDate = new Date(listStr[i].produce_date);
+                if (todayDate - proDate != 0  ) {
+                    $("#crew1_date").html("生产日期：" + listStr[i].produce_date);
+                    $("#crew1_time").html("生产时间：" + listStr[i].produce_time);
+                    if (listStr[i].pro_name){
+                        $("#crew1_ratio_name").html("产品类型：" + listStr[i].pro_name);
+                        $("#aar1_title").html(listStr[i].pro_name + "三日内同类型产品油石比走势图");
+                    } else {
+                        $("#crew1_ratio_name").html('产品类型：未找到产品类型');
+                    };
+                    var stone = listStr[i].material_stone_2 == 0? Number(listStr[i].material_stone_1).toFixed(1):Number(listStr[i].material_stone_2).toFixed(1);
+                    $("#crew1_stone").html("矿粉总量：" + stone +  "<i>%</i>");
+                    $("#crew1_asphalt").html("沥青含量：" +  listStr[i].material_asphalt+ "<i>%</i>");
+                    $("#crew1_regenerate").html("再生料含量：" + listStr[i].material_regenerate+ "<i>%</i>");
+                    $("#crew1_additive").html("添加剂含量：" + listStr[i].material_additive+ "<i>%</i>");
+
+                    // $("#crew1_data_warehouse1").html(listStr[i].temperature_warehouse_1 + " <i>℃</i>");
+                    // $("#crew1_data_duster").html(listStr[i].temperature_duster+ " <i>℃</i>");
+                    // $("#crew1_data_temasphalt").html(listStr[i].temperature_asphalt+ " <i>℃</i>");
+                    // $("#crew1_data_aggregate").html(listStr[i].temperature_aggregate+ " <i>℃</i>");
+                }
+            }else {
+                var proDate = new Date(listStr[i].produce_date);
+                if (todayDate - proDate != 0 ) {
+                    $("#crew2_date").html("生产日期：" + listStr[i].produce_date);
+                    $("#crew2_time").html("生产时间：" + listStr[i].produce_time);
+                    if (listStr[i].pro_name){
+                        $("#crew2_ratio_name").html("产品类型：" + listStr[i].pro_name);
+                        $("#aar2_title").html(listStr[i].pro_name + "三日内同类型产品油石比走势图");
+                    } else {
+                        $("#crew2_ratio_name").html('产品类型：未找到产品类型');
+                    };
+                    var stone = listStr[i].material_stone_2 == 0? Number(listStr[i].material_stone_1).toFixed(1):Number(listStr[i].material_stone_2).toFixed(1);
+                    $("#crew2_stone").html("矿粉总量：" + stone +  "<i>%</i>");
+                    $("#crew2_asphalt").html("沥青含量：" +  listStr[i].material_asphalt+ "<i>%</i>");
+                    $("#crew2_regenerate").html("再生料含量：" + listStr[i].material_regenerate+ "<i>%</i>");
+                    $("#crew2_additive").html("添加剂含量：" + listStr[i].material_additive+ "<i>%</i>");
+                }
+
+            }
+        }
+    }
+
+
+
+}
+/**
+ * 展示实时Echar
+ */
+function showGradingCurve() {
+    var basePath = $("#path").val();
+    $.ajax({
+        url:basePath + "/getRealTimeDataEcharsMaterial.do",
+        // url:"http://47.105.114.70/getRealTimeDataEcharsMaterial.do",
+        type:"post",
+        dataType:"json",
+        success:function (res) {
+            eachMaterialList(res);
+        }
+    })
+}
+
+function eachMaterialList(res) {
+
+
+    for (var i = 0; i < res.length;i++){
+
+        var arr = res[i]['crew1'];
+
+        if (res[i]['crew1']){
+
+            var arr = returnJsonArray(res[i]['crew1']['moudleList']);
+            var temArray  = returnArrayToJson(res[i]['crew1']['moudleList']);
+
+            if(arr){
+                option7.xAxis.max = arr[arr.length - 1][0];
+            }
+            option7.series[0].markLine.data = temArray;
+            option7.series[1].data = returnJsonArray(res[i]['crew1']['moudleList']);
+            option7.series[2].data = returnJsonArray(res[i]['crew1']['realList']);
+            option7.series[3].data = returnJsonArray(res[i]['crew1']['upList']);
+            option7.series[4].data = returnJsonArray(res[i]['crew1']['midList']);
+            option7.series[5].data = returnJsonArray(res[i]['crew1']['downList']);
+            myChart7.setOption(option7);
+            window.addEventListener("resize", function () {
+                myChart7.resize();
+            });
+
+        }else {
+            var temArr = returnJsonArray(res[i]['crew2']['moudleList']);
+            if(temArr){
+                option4.xAxis.max = temArr[temArr.length - 1][0];
+            }
+            option4.series[0].markLine.data = returnArrayToJson(res[i]['crew2']['moudleList']);
+            option4.series[1].data = returnJsonArray(res[i]['crew2']['moudleList']);
+            option4.series[2].data = returnJsonArray(res[i]['crew2']['realList']);
+            option4.series[3].data = returnJsonArray(res[i]['crew2']['upList']);
+            option4.series[4].data = returnJsonArray(res[i]['crew2']['midList']);
+            option4.series[5].data = returnJsonArray(res[i]['crew2']['downList']);
+            myChart4.setOption(option4);
+            window.addEventListener("resize", function () {
+                myChart4.resize();
+            });
+        }
+    }
+
+
+
+}
+window.addEventListener("resize", function () {
+    myChart7.resize();
+});
+window.addEventListener("resize", function () {
+    myChart4.resize();
+});
+
+function showAsphaltAggregateRatio(xList,dataList,ration) {
+
+    option3.xAxis[0].data = xList.crew1XList;
+    option6.xAxis[0].data = xList.crew2XList;
+    option3.series[0].data = dataList.crew1data;
+    option6.series[0].data = dataList.crew2data;
+    var crew1Ration = Number(ration.crew1Ration);
+    var crew2Ration = Number(ration.crew2Ration);
+    option3.yAxis[0].max = Number(crew1Ration)+ 0.5;
+    option3.yAxis[0].min = Number(crew1Ration) - 0.5;
+    option6.yAxis[0].max = Number(crew2Ration) + 0.5;
+    option6.yAxis[0].min = Number(crew2Ration) - 0.5;
+
+    var yaxisUp = Number(crew1Ration) + 0.3;
+    var yaxisModel = Number(crew1Ration);
+    var yaxisDown = Number(crew1Ration - 0.3);
+
+    option3.series[0].markLine.data = [{name: '上限', yAxis: yaxisUp,},{name: '模板占比',  yAxis: yaxisModel,},{name: '下限',  yAxis: yaxisDown }];
+    option6.series[0].markLine.data = [{name: '上限', yAxis: crew2Ration + 0.3},{name: '模板占比',  yAxis: crew2Ration },{name: '下限',  yAxis:  crew2Ration - 0.3}];
+
+    myChart3.setOption(option3);
+    window.addEventListener("resize", function () {
+        myChart3.resize();
+    });
+
+    myChart6.setOption(option6);
+    window.addEventListener("resize", function () {
+        myChart6.resize();
+    });
+}
+
+
+//遍历json，返回指定格式数据
+function returnJsonArray(jsonArray) {
+    var array = new Array();
+
+    for (var i = 0 ; i < jsonArray.length; i++) {
+
+        for (var key in jsonArray[i]){
+
+            var temArray = new Array();
+
+
+            switch (key) {
+                case '0.075':
+                    temArray.push(0.312);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+                case '0.15':
+                    temArray.push(0.426);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+                case '0.3':
+                    temArray.push(0.582);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+                case '0.6':
+                    temArray.push(0.795);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+                case '1.18':
+                    temArray.push(1.007);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+                case '2.36':
+                    temArray.push(1.472);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+                case '4.75':
+                    temArray.push(2.016);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+                case '6.7':
+                    temArray.push(2.354);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+                case '7.0':
+                    temArray.push(2.400);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+                case '7.2':
+                    temArray.push(2.431);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+                case '9.5':
+                    temArray.push(2.754);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+                case '13.2':
+                    temArray.push(3.193);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+
+                case '16':
+                    temArray.push(3.482);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+                case '19':
+                    temArray.push(3.762);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+                case '26.5':
+                    temArray.push(4.370);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+                case '31.5':
+                    temArray.push(4.723);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+                case '37.5':
+                    temArray.push(5.109);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+                case '53':
+                    temArray.push(5.969);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+                case '63':
+                    temArray.push(6.452);
+                    temArray.push(parseFloat(jsonArray[i][key]));
+                    break;
+            }
+
+            array.push(temArray);
+        }
+    }
+    array.sort(sortNumber);
+
+    return array;
+}
+
+//返回筛孔数组，用于X轴
+function returnArrayToJson(json) {
+
+    var array = new Array();
+
+    for (var i = 0 ; i < json.length; i++){
+        for (var key in json[i]){
+            switch (key) {
+                case '0.075':
+                    array.push({xAxis:0.312,label: { normal: {formatter:key}}});
+                    break;
+                case '0.15':
+                    array.push({xAxis:0.426,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                    break;
+                case '0.3':
+                    array.push({xAxis:0.582,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                    break;
+                case '0.6':
+                    array.push({xAxis:0.795,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                    break;
+                case '1.18':
+                    array.push({xAxis:1.007,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                    break;
+                case '2.36':
+                    array.push({xAxis:1.472,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                    break;
+                case '4.75':
+                    array.push({xAxis:2.016,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                    break;
+                case '6.7':
+                    array.push({xAxis:2.354,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                    break;
+                case '7.0':
+                    array.push({xAxis:2.400,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                    break;
+                case '7.2':
+                    array.push({xAxis:2.431,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                    break;
+                case '9.5':
+                    array.push({xAxis:2.754,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                    break;
+                case '13.2':
+                    array.push({xAxis:3.193,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                    break;
+                case '16':
+                    array.push({xAxis:3.482,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                    break;
+                case '19':
+                    array.push({xAxis:3.762,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                    break;
+                case '26.5':
+                    array.push({xAxis:4.370,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                    break;
+                case '31.5':
+                    array.push({xAxis:4.723,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                    break;
+                case '37.5':
+                    array.push({xAxis:5.109,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                    break;
+                case '53':
+                    array.push({xAxis:5.969,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                    break;
+                case '63':
+                    array.push({xAxis:6.452,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                    break;
+            }
+
+        }
+    }
+
+    return array;
+}
+
+//排序
+function sortNumber(a, b)
+{
+    return a[0] - b[0]
+}
+
+function getNowFormatDate() {
+    var date = new Date();
+    var seperator1 = "-";
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    if (month >= 1 && month <= 9) {
+        month = "0" + month;
+    }
+    if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+    }
+    var currentdate = year + seperator1 + month + seperator1 + strDate;
+    return currentdate;
+}

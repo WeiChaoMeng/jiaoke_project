@@ -109,4 +109,5 @@
         WHERE
                 DATE_FORMAT(produce_date, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')
     </select>
+
 </mapper>

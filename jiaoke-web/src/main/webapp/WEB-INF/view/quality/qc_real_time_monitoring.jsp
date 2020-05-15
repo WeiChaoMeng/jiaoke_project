@@ -254,6 +254,7 @@
                 <td id="crew2_basic_ratio_name" ></td>
                 <td id="crew2_basic_carNum" ></td>
                 <td id="crew2_basic_discNum" ></td>
+
             </tr>
             </tbody>
         </table>

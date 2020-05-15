@@ -16,10 +16,10 @@
 .echart_con{
     width: 100%;
     height: calc(100% - 11px);
-    height: -webkit-calc(100% - 11px);
+    height: -webkit-calc(100% - 33px);
     height: -moz-calc(100% - 11px);
-    height: -ms-calc(100% - 11px);
-    height: -o-calc(100% - 11px);
+    /*height: -ms-calc(100% - 11px);*/
+    /*height: -o-calc(100% - 11px);*/
 }
 .echart_con1{
     width: 100%;
