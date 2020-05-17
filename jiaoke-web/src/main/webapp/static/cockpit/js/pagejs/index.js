@@ -16,14 +16,14 @@
         });
     });
     /**
-     * 左二图表
+     * 左二、左三图表
      */
     getThisMonthYield();
 
     /**
      * 左三图表
      */
-    showYearChar();
+    // showYearChar();
 
     /**
      * 中间数据(查询本月总产量)
@@ -203,7 +203,7 @@ function showOption(crew1Total, crew2Total) {
 }
 
 /**
- * 左二图表
+ * 左二图表、左三图表
  */
 function getThisMonthYield() {
 
@@ -218,27 +218,44 @@ function getThisMonthYield() {
                 var series = [];
                 var crew1Array = [];
                 var crew2Array = [];
-
+                var crew1Gross = 0;
+                var crew2Gross = 0;
                 //处理一二号机组本月生产总数
                 var total = res.thisMonthYield;
                 for (var i = 0; i < total.length;i++){
                     var crew = total[i].crew;
                     var proSum = total[i].gross;
                     if (crew === 'crew1'){
-                        series.push({name:'机组一本月产量',data:[proSum, 0, 0],stack: 'male'});
+                        series.push({name:'机组一本月产量',data:[proSum, null, null],stack: 'male'});
+                        crew1Gross = proSum;
                     }else {
-                        series.push({name:'机组二本月产量',data:[0, proSum, 0],stack: 'male'});
+                        series.push({name:'机组二本月产量',data:[null, proSum, null],stack: 'male'});
+                        crew2Gross = proSum;
                     }
                 }
-                //处理本月各机组产品前十
+                //另一个柱状图
+                series.push({name:'本月总产量',data:[null, null,crew1Gross + crew2Gross ],stack: 'male'});
+
+
+                //处理本月各机组产品前十。左三饼图
                 var monthProduct = res.thisMonthProduct;
+                var serData = [];
+                var otherData = 0;
                 for (var j = 0; j < monthProduct.length;j++){
                     if (monthProduct[j]){
                         var total = monthProduct[j].total;
                         var proName = monthProduct[j].pro_name;
-                        series.push({name:proName,data:[0, 0, total],stack: 'male'});
+                        if (j === 0){
+                            serData.push({name:proName,y:total,sliced: true, selected: true});
+                        }else  if (j > 0 && j < 6){
+                            serData.push([proName,total]);
+                        }else {
+                            otherData += total;
+                        }
                     }
-                }
+                };
+                serData.push(["其他类型",otherData]);
+                showProdauctPie(serData);
             }
 
             if (res.message === "error") {
@@ -250,70 +267,6 @@ function getThisMonthYield() {
     });
 };
 function showLeftTwoEchars(series) {
-    // $('#xctj').highcharts({
-    //     chart: {
-    //         type: 'column',
-    //         options3d: {
-    //             enabled: true,
-    //             alpha: 0,
-    //             beta: 0,
-    //             viewDistance: 25,
-    //             depth: 40, backgroundColor: 'rgba(0,0,0,0)'
-    //         },backgroundColor: 'rgba(0,0,0,0)'
-    //     },title:'',
-    //     credits:{
-    //         enabled:false // 禁用版权信息
-    //     },colors:['#72ab12','#dc380e','#ff8c01','#3a85be','#fe8c00'],
-    //     legend: {
-    //         enabled: false
-    //     },xAxis: {
-    //         categories: ['红山区', '松山区', '元宝山区','xxx区'],
-    //         labels: {
-    //             format: '{value} ',
-    //             style: {
-    //                 color: 'white'
-    //             }
-    //         }
-    //     },
-    //     yAxis: {
-    //         allowDecimals: false,
-    //         min: 0,
-    //         title: {
-    //             text: ''
-    //         }, labels: {
-    //             format: '{value} ',
-    //             style: {
-    //                 color: 'white'
-    //             }
-    //         }
-    //     },
-    //     tooltip: {
-    //         headerFormat: '<b>{point.key}</b><br>',
-    //         pointFormat: '<span style="color:{series.color}">\u25CF</span> {series.name}: {point.y}座'
-    //     },
-    //
-    //     // plotOptions: {
-    //     //     column: {
-    //     //         stacking: 'normal',
-    //     //         depth: 70
-    //     //     }
-    //     // },
-    //     plotOptions: {
-    //         series: {
-    //             borderWidth: 0,
-    //             dataLabels: {
-    //                 enabled: true,
-    //                 format: '{point.y:.1f}%'
-    //             }
-    //         }
-    //     },
-    //     series: [{
-    //         name: '泵站数量',
-    //         data: [12,14,13,13],
-    //         stack: 'male'
-    //     }]
-    // });
-
     $('#xctj').highcharts({
         chart: {
             type: 'column',
@@ -331,7 +284,7 @@ function showLeftTwoEchars(series) {
         legend: {
             enabled: false
         },xAxis: {
-            categories: ['机组一本月产量', '机组二本月产量', '本月产品前十'],
+            categories: ['机组一本月产量', '机组二本月产量', '本月总产量'],
             labels: {
                 format: '{value} ',
                 style: {
@@ -358,8 +311,19 @@ function showLeftTwoEchars(series) {
         plotOptions: {
             column: {
                 stacking: 'normal',
-                depth: 70
-            }
+                depth: 70,
+                dataLabels: { //图上是否显示数据标签
+                    enabled: true,
+                    align: "center",
+                    formatter: function()
+                    {
+                        return this.y + '吨'
+                    },
+                    // rotation: 270,
+                    // staggerLines: 0,
+                },
+            },
+
         },
         series: series
     });
@@ -439,6 +403,51 @@ function showYearOption(crew1Total, crew2Total) {
             ],colors:['#72ab12','#dc380e','#ff8c01','#3a85be','#fe8c00']
         }]
     });
+}
+
+/**
+ * 正在使用
+ */
+function showProdauctPie(serData) {
+    $('#sssjtj').highcharts({
+        chart: {
+            type: 'pie',
+            options3d: {
+                enabled: true,
+                alpha: 45,
+                beta: 0
+            } , backgroundColor: 'rgba(0,0,0,0)'
+        },
+        credits:{
+            enabled:false // 禁用版权信息
+        },colors:['#72ab12','#dc380e','#ff8c01','#3a85be','#fe8c00'],
+        title: {
+            text: ''
+        },
+        tooltip: {
+            pointFormat: '{series.name}: {point.y}个，占比{point.percentage:.1f}%'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                depth: 35,
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.name}: {point.y}吨',
+                    style: {
+                        color: 'white'
+                    }
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: '本月产品类型构成',
+            data: serData
+        }]
+    });
+
 }
 
 /**

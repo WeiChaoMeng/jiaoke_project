@@ -117,7 +117,7 @@
             </div>
         </div>
         <div class="modelpub">
-            <div class="common-tit">本年各机组产量</div>
+            <div class="common-tit">本月产品类别</div>
             <span class="tilt"></span>
             <div class="echart_con" style="height: 170px;" id="sssjtj">
 

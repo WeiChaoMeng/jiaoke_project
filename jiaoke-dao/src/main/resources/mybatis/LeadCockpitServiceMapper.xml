@@ -62,7 +62,6 @@
              ) AS TEM
         GROUP BY TEM.pro_name
         ORDER BY total DESC
-        LIMIT 10
 
     </select>
 

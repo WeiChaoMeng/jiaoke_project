@@ -725,3 +725,11 @@ function editMidChar(geoCoord,BData) {
         myChart.resize();
     });
 }
+
+function isBlank (str) {
+    var s = $.trim(str);
+    if (s == "undefined" || s == null || s == "" || s.length == 0) {
+        return true;
+    }
+    return false;
+};
