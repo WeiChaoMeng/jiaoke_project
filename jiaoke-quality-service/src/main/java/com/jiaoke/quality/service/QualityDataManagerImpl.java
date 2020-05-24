@@ -252,6 +252,12 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
             }
         }
 
+        //查询当天每种数据平均值
+        List<Map<String,String>> avgList =  qualityDataManagerDao.selectProducedSVGToGrading(date,crew);
+        //返回的结果集 一层Key为机组 二层为模板级配等 三层Key为筛孔
+        List<Map<String,Map<String,List<Map<String,String>>>>> result = new ArrayList<>();
+        String grading = QualityGradingUtil.getModelGradingResultJson(avgList,qualityDataMontoringDao,result);
+
         String total = JSON.toJSONString(list);
         String SVG = JSON.toJSONString(SVGList);
         String model = JSON.toJSONString(rationMessageList);
@@ -264,6 +270,7 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
         //js用
         request.setAttribute("ProSVG",SVG);
         request.setAttribute("model",model);
+        request.setAttribute("gradingMap",grading);
         //客户相关展示
         request.setAttribute("userProList",userProList);
         request.setAttribute("userProTotal",userProTotal);
@@ -510,9 +517,7 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
                 map.put("list",list);
             }
         }catch (Exception e){
-            System.out.println(e.fillInStackTrace());
-            map.put("message","exception");
-        }finally {
+            e.fillInStackTrace();
             map.put("message","exception");
         }
         return JSON.toJSONString(map);

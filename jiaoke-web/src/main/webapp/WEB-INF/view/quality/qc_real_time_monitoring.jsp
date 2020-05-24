@@ -16,7 +16,7 @@
     <script src="/static/js/echarts/echarts.js"></script>
 </head>
 
-<body style="padding:15px 8px 1000px 8px;background: #fff7f7;">
+<body style="padding:15px 8px 1000px 8px;background: #e5f0f0;">
 
 <%
     request.setAttribute("path",request.getContextPath());
@@ -449,15 +449,22 @@
         var colors = ['#5793f3', '#d14a61', '#675bba'];
         var option7= {
             title: {
-                text: '一号机组级配曲线图'
+                text: '一号机组级配曲线图',
+                x: 'left',
+                textStyle:{
+                    color:'#685489',
+                    fontSize: 16
+                },
+                padding: [5,0,0,40]
             },
             legend: {
                 data:['合成级配','实际级配','上限','中值','下限'],
-                x:'right'
+                x:'left',
+                left:'35%'
             },
             grid:{
-                left: '2%',
-                right: '2%',
+                left: '3.7%',
+                right: '3.7%',
                 bottom: '3%',
                 containLabel: true
             },
@@ -466,7 +473,7 @@
             },
             xAxis: {
                 type: 'value',
-                name: '筛孔',
+                // name: '筛孔',
                 nameGap: 16,
                 nameTextStyle: {
                     color: '#000',
@@ -501,7 +508,7 @@
             },
             yAxis: {
                 type: 'value',
-                name: '占比 %',
+                // name: '占比 %',
                 nameLocation: 'end',
                 nameGap: 20,
                 position: 'left',
@@ -553,6 +560,13 @@
                     type: 'line',
                     name:'合成级配',
                     symbolSize:6,
+                    lineStyle: {
+                        normal: {
+                            type: 'solid',
+                            width:0.6,
+                            color: '#96ceb4'
+                        }
+                    },
                     data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
                 },
                 {
@@ -560,6 +574,12 @@
                     type: 'line',
                     name:'实际级配',
                     symbolSize:6,
+                    lineStyle: {
+                        normal: {
+                            type: 'solid',
+                            color: '#23c6c8'
+                        }
+                    },
                     data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
                 },
                 {
@@ -567,6 +587,12 @@
                     type: 'line',
                     name:'上限',
                     symbolSize:6,
+                    lineStyle: {
+                        normal: {
+                            type: 'solid',
+                            color: '#ed5565'
+                        }
+                    },
                     data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
                 },
                 {
@@ -581,12 +607,16 @@
                     type: 'line',
                     name:'下限',
                     symbolSize:6,
+                    lineStyle: {
+                        normal: {
+                            type: 'solid',
+                            color: '#ed5565'
+                        }
+                    },
                     data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
                 }
             ]
         };
-
-
     </script>
 </div>
 
@@ -604,15 +634,22 @@
         var colors = ['#5793f3', '#d14a61', '#675bba'];
         var option4 ={
             title: {
-                text: '二号机组级配曲线图'
+                text: '二号机组级配曲线图',
+                x: 'left',
+                textStyle:{
+                    color:'#685489',
+                    fontSize: 16
+                },
+                padding: [5,0,0,40]
             },
             legend: {
                 data:['合成级配','实际级配','上限','中值','下限'],
-                x:'right'
+                x:'left',
+                left:'35%'
             },
             grid:{
-                left: '2%',
-                right: '2%',
+                left: '3.7%',
+                right: '3.7%',
                 bottom: '3%',
                 containLabel: true
             },
@@ -621,7 +658,7 @@
             },
             xAxis: {
                 type: 'value',
-                name: '筛孔',
+                // name: '筛孔',
                 nameGap: 16,
                 nameTextStyle: {
                     color: '#000000',
@@ -650,7 +687,7 @@
             },
             yAxis: {
                 type: 'value',
-                name: '占比 %',
+                // name: '占比 %',
                 nameLocation: 'end',
                 nameGap: 20,
                 position: 'left',
@@ -716,6 +753,12 @@
                     type: 'line',
                     name:'上限',
                     symbolSize:6,
+                    lineStyle: {
+                        normal: {
+                            type: 'solid',
+                            color: '#ed5565'
+                        }
+                    },
                     data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
                 },
                 {
@@ -730,6 +773,12 @@
                     type: 'line',
                     name:'下限',
                     symbolSize:6,
+                    lineStyle: {
+                        normal: {
+                            type: 'solid',
+                            color: '#ed5565'
+                        }
+                    },
                     data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
                 }
             ]
@@ -754,20 +803,34 @@
             var colors = ['#5793f3', '#d14a61', '#675bba'];
             var option1 =  {
                 title: {
-                    text: '一号机产品温度走势'
-                },
-                legend: {
-                    data:['一仓温度','混合料温度','沥青温度','骨料温度','除尘器温度'],
-                    x:'right'
+                    text: '一号机产品温度走势',
+                    x: 'left',
+                    textStyle:{
+                        color:'#685489',
+                        fontSize: 16
+                    },
+                    padding: [5,0,0,70]
                 },
                 tooltip: {
                     trigger: 'axis'
                 },
                 grid:{
-                    left: '2%',
-                    right: '2%',
-                    bottom: '3%',
+                    left: '5%',
+                    right: '20%',
+                    bottom: '5%',
                     containLabel: true
+                },
+                legend: {
+                    data:['一仓温度','混合料温度','沥青温度','骨料温度','除尘器温度'],
+                    x:'right',
+                    orient:'vertical',
+                    itemGap:20,
+                    top:'25%',
+                    left:'85%',
+                    textStyle:{
+                        color: '#53332b',
+                        fontWeight : 'bold'
+                    }
                 },
                 xAxis:  {
                     type: 'category',
@@ -790,8 +853,7 @@
                         data:[11, 11, 15, 13, 12, 13, 10],
                         markPoint: {
                             data: [
-                                {type: 'max', name: '最大值'},
-                                {type: 'min', name: '最小值'}
+                                {type: 'max', name: '最大值'}
                             ]
                         }
                     },        {
@@ -801,7 +863,6 @@
                         markPoint: {
                             data: [
                                 {type: 'max', name: '最大值'},
-                                {type: 'min', name: '最小值'}
                             ]
                         }
                     },        {
@@ -811,7 +872,6 @@
                         markPoint: {
                             data: [
                                 {type: 'max', name: '最大值'},
-                                {type: 'min', name: '最小值'}
                             ]
                         }
                     },
@@ -848,20 +908,34 @@
             var colors = ['#5793f3', '#d14a61', '#675bba'];
             var option5= {
                 title: {
-                    text: '二号机产品温度走势'
-                },
-                legend: {
-                    data:['一仓温度','混合料温度','沥青温度','骨料温度','除尘器温度'],
-                    x:'right'
+                    text: '二号机产品温度走势',
+                    x: 'left',
+                    textStyle:{
+                        color:'#685489',
+                        fontSize: 16
+                    },
+                    padding: [5,0,0,70]
                 },
                 tooltip: {
                     trigger: 'axis'
                 },
                 grid:{
-                    left: '2%',
-                    right: '2%',
-                    bottom: '3%',
+                    left: '5%',
+                    right: '20%',
+                    bottom: '5%',
                     containLabel: true
+                },
+                legend: {
+                    data:['一仓温度','混合料温度','沥青温度','骨料温度','除尘器温度'],
+                    x:'right',
+                    orient:'vertical',
+                    itemGap:20,
+                    top:'25%',
+                    left:'85%',
+                    textStyle:{
+                        color: '#53332b',
+                        fontWeight : 'bold'
+                    }
                 },
                 xAxis:  {
                     type: 'category',
@@ -884,28 +958,20 @@
                         data:[11, 11, 15, 13, 12, 13, 10],
                         markPoint: {
                             data: [
-                                {type: 'max', name: '最大值'},
-                                {type: 'min', name: '最小值'}
+                                {type: 'max', name: '最大值'}
                             ]
                         }
                     },        {
                         name:'混合料温度',
                         type:'line',
-                        data:[12, 13, 16, 17, 14, 11, 12],
-                        markPoint: {
-                            data: [
-                                {type: 'max', name: '最大值'},
-                                {type: 'min', name: '最小值'}
-                            ]
-                        }
+                        data:[12, 13, 16, 17, 14, 11, 12]
                     },        {
                         name:'沥青温度',
                         type:'line',
                         data:[11, 11, 15, 13, 12, 13, 10],
                         markPoint: {
                             data: [
-                                {type: 'max', name: '最大值'},
-                                {type: 'min', name: '最小值'}
+                                {type: 'max', name: '最大值'}
                             ]
                         }
                     },
@@ -913,6 +979,11 @@
                         name:'骨料温度',
                         type:'line',
                         data:[1, -2, 2, 5, 3, 2, 0],
+                        markPoint: {
+                            data: [
+                                {type: 'max', name: '最大值'}
+                            ]
+                        }
 
                     },
                     {

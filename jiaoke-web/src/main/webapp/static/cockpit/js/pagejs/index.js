@@ -29,7 +29,7 @@
      * 中间数据(查询本月总产量)
      */
     showMonthChar();
-
+    showYearChar();
     /**
      * 查询开工天数
      */
@@ -351,14 +351,17 @@ function showYearChar() {
                         crew2Total = dataArry[i].total;
                     }
                 }
+                var total = (Number(crew1Total) + Number(crew2Total)).toFixed(1);
+                console.log(total)
+                //更新中间总产量
+                $("#yield").empty().append("<span id='parkplace'> " + total + "万吨</span>")
             }
-            //更新中间总产量
-            $("#yield").empty().append("<span id='parkplace'> " + (crew1Total + crew2Total).toFixed(1) + "万吨</span>")
+
             if (res.message === "error") {
                 alert("后台错误，请联系管理员！");
             }
 
-            showYearOption(crew1Total.toFixed(2), crew2Total.toFixed(2));
+            // showYearOption(crew1Total.toFixed(2), crew2Total.toFixed(2));
         }
     });
 }
@@ -403,6 +406,7 @@ function showYearOption(crew1Total, crew2Total) {
             ],colors:['#72ab12','#dc380e','#ff8c01','#3a85be','#fe8c00']
         }]
     });
+
 }
 
 /**
@@ -566,13 +570,18 @@ function showTenProjectMessage() {
             if (res.message === "success") {
                var temArray = res.dataBody;
                $("#yearProduct").empty();
+                var colourArry = ['#0096fe','#3badfc','#59d4ff','#9debff','#d0f5fc','#daf8e3','#97ebdb','#b7ded2','#f7c297','#ffecb8'];
                for (var i = 0; i < temArray.length;i++){
-                   $("#yearProduct").append("<li><p>" + temArray[i].project_name +"</p></li>")
+                   var proName = temArray[i].project_name;
+                   proName = proName.split("(")[0] ? proName.split("(")[0]:proName;
+                   proName = proName.split("（")[0]? proName.split("（")[0]:proName;
+
+                   $("#yearProduct").append("<li><span class='example_span' style='background-color:" + colourArry[i] + ";display: block;width: 17px;height: 13px;float: left;margin-right: 10px;margin-top: 3px;border-radius: 5px;'></span><p>" + proName +"</p></li>")
                }
 
                 $("div.list_lh").myScroll({
                     speed:40, //数值越大，速度越慢
-                    rowHeight:60 //li的高度
+                    rowHeight:35 //li的高度
                 });
             }
             if (res.message === "empty"){

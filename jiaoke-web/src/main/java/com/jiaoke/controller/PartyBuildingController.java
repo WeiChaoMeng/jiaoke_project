@@ -25,5 +25,8 @@ public class PartyBuildingController {
     public String partyIndex(){
         return "party_building/party_index";
     }
-
+    @RequestMapping("/partyBuilding.do")
+    public String partyBuilding(){
+        return "new/party_building";
+    }
 }

@@ -191,7 +191,6 @@ public class QualityDataMontoringImpl implements QualityDataMontoringInf {
 
         List<Map<String, String>> list = qualityDataMontoringDao.selectRealTimeDataEcharsMaterial();
         //获取所有级配
-        Map<String,List<Map<String,String>>> gradingMap = new HashMap<>();
         //返回的结果集 一层Key为机组 二层为模板级配等 三层Key为筛孔
         List<Map<String,Map<String,List<Map<String,String>>>>> result = new ArrayList<>();
 

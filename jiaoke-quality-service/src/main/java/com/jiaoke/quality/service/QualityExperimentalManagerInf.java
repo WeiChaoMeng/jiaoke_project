@@ -521,4 +521,15 @@ public interface QualityExperimentalManagerInf {
      * @date 2020/4/14 18:38
      */
     String getManufacturersByMaterials(String id);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询时间段内该材料规格与厂家>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/5/24 14:54
+     */
+    String getSpecificationAndManufacturers(String startDate, String endDate, String materials);
 }

@@ -21,6 +21,7 @@
   display: inline-block;
   min-height: 202px;
   min-width: 202px;
+  width: 100%;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -427,15 +428,14 @@
 
 /*************自定义****************/
 .orgchart .motherC {
-  width: 270px;
+  width: 230px;
 }
 .orgchart .childC{
-  width: 260px;
+  width: 220px;
 }
 .orgchart .childC .name {
   background-color: #f15a00;
   border-color: #f15a00;
-
   width: 195px;
   height: 37px;
   line-height: 37px;
@@ -599,7 +599,7 @@
   border-color: #9aced8;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
-  width: 41px;
+  width: 35px;
   height: 137px;
   font-size: 12px;
 

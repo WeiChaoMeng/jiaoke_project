@@ -44,4 +44,15 @@ public interface LeadCockpitServiceInf {
      * @date 2020/5/14 16:05
      */
     Map<String, Object> getAsphaltAggregateRatio();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询本日生产记录>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/5/18 19:46
+     */
+    Map<String, Object> getTodayProductList();
 }

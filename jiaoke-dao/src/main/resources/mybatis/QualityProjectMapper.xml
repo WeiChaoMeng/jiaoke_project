@@ -158,4 +158,20 @@
         WHERE
                 str_to_date(CONCAT('',produce_date,produce_time),'%Y-%m-%d %H:%i:%s') between  &apos;${lastTime}&apos;  and &apos;${carTime}&apos;;
     </update>
+    <update id="updateWarningDataByDate" parameterType="java.lang.String">
+        UPDATE quality_warning_promessage_crew
+        set produce_car_num = &apos;${license}&apos;,
+            project_name = &apos;${proName}&apos;
+        WHERE
+                str_to_date(CONCAT('',produce_date,produce_time),'%Y-%m-%d %H:%i:%s') between  &apos;${lastTime}&apos;  and &apos;${carTime}&apos;
+        AND
+        <choose>
+            <when test="crewNum == 'data1'">
+                produce_crewNum = 1
+            </when>
+            <otherwise>
+                produce_crewNum = 2
+            </otherwise>
+        </choose>
+    </update>
 </mapper>

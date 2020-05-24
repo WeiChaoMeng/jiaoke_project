@@ -229,7 +229,7 @@ a {
 
 .behind .function-list>li {
     float: left;
-    padding-right: 3%;
+    padding-right: 1%;
 }
 
 .behind .function-list>li>a {
@@ -274,19 +274,15 @@ a {
     top: 35%;
 }
 .dy_select{
-
     border: none;
-
     outline: none;
-
     width: 100%;
     height: 30px;
     line-height: 36px;
-
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-
+    color: #908383;
     padding-left: 10px;
 }
 

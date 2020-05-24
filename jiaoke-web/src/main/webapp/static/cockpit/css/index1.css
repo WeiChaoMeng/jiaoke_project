@@ -2,10 +2,12 @@
 /* 主题内容 sta */
 .model-content{
     height: 100%;
+    margin-bottom: 20px;
     float: left;
     width: 100%;
     display: -webkit-flex; /* Safari */
     display: flex;
+    overflow: hidden;
 }
 .model-mid{
     /*overflow: hidden;*/

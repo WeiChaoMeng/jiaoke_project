@@ -34,7 +34,7 @@ function getWarningData() {
              war1Vla = "";
              war2Name = "";
              war2Vla = "";
-            if (res != "" || res != null) {
+            if (res.length) {
 
                 /******************渲染基本信息**********************/
                 for (var i = 0; i < res.length; i++) {

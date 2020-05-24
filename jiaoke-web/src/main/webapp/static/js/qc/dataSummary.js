@@ -59,10 +59,11 @@ function getDateByPageNum(currentNum){
         if (dataArray[i]){
             var project_name = dataArray[i].project_name ? dataArray[i].project_name:"";
             htmlStr += "<tr>"
-                + "<td style='width: 50px;' title=" + dataArray[i].produce_date + " >" + dataArray[i].produce_date + "</td>"
+                + "<td >" + dataArray[i].produce_date + "</td>"
                 + "<td>" + dataArray[i].produce_time  + "</td>"
                 + "<td>" + (dataArray[i].crewNums === 'data1'? '机组1':'机组2')  + "</td>"
                 + "<td>" + dataArray[i].produce_disc_num  + "</td>"
+                + "<td>" + dataArray[i].produce_car_num  + "</td>"
                 + "<td title=" + project_name + ">" + project_name  + "</td>"
                 + "<td>" + dataArray[i].pro_name  + "</td>"
                 + "<td>" + dataArray[i].material_aggregate_6  + "</td>"
@@ -150,45 +151,6 @@ function  getModelByDateTimeAndCrew(rationNum) {
 
 }
 
-// document.getElementById("inpend").addEventListener("click",
-//     function(event) {
-//         event.stopPropagation();
-//     },
-//     false);
-
-// function getProjectNameByData() {
-//     var path = $("#path").val();
-//     var start = $("#inpstart").val();
-//     var end = $("#inpend").val();
-//     if (start.isBlanks() || end.isBlanks() ){
-//         layer.alert('请先选择先日期');
-//         return false;
-//     }
-//     $("#project_id").empty();
-//     $.ajax({
-//         url: path + "/getProjectNameByDate.do",
-//         type:"post",
-//         dataType: "json",
-//         data:{"startDate":start,"endDate":end},
-//         success:function (res) {
-//             //判断后台是否出错
-//             if (res.message === "error"){
-//                 layer.alert("查询工程错误");
-//                 return false;
-//             }
-//             var proNameList = res.projectList;
-//             //判断该日期内是否有工程
-//             if (proNameList.length === 0){
-//                 layer.alert("该日期范围内无工程");
-//                 return false;
-//             }
-//             //渲染selcet
-//             for (var i = 0; i < proNameList.length;i++){
-//                 $("#project_id").append("<option selected = 'selected' value=" + proNameList[i].project_name + ">" + proNameList[i].project_name + "</option>")
-//             }
-//         }
-//     })
-// }
 
 function getProjectByDateTimeAndCrewAndRation() {
     var path = $("#path").val();
@@ -326,6 +288,7 @@ function selectPromessageByRaionModel(){
                 + "<td>" +  " " + "</td>"
                 + "<td>" +  " " + "</td>"
                 + "<td>" +  " " + "</td>"
+                + "<td>" +  proName + "</td>"
                 + "<td>" +( aggregate6/res.length).toFixed(2) + "</td>"
                 + "<td>" + ( aggregate5/res.length).toFixed(2)+ "</td>"
                 + "<td>" + ( aggregate4/res.length).toFixed(2) + "</td>"
@@ -344,8 +307,37 @@ function selectPromessageByRaionModel(){
                 + "<td>" + ( aggregate/res.length).toFixed(2) + "</td>"
                 + "<td>" +  ( duster/res.length).toFixed(2) + "</td>"
                 + "</tr>";
+
+            var modelHtml = "<tr>"
+                + "<td>" + "设定值" + "</td>"
+                + "<td>" +  " " + "</td>"
+                + "<td>" + "" + "</td>"
+                + "<td>" +  " " + "</td>"
+                + "<td>" +  " " + "</td>"
+                + "<td>" +  " " + "</td>"
+                + "<td>" +  res[0].pro_name  + "</td>"
+                + "<td>" +res[0].repertory_one + "</td>"
+                + "<td>" +res[0].repertory_two+ "</td>"
+                + "<td>" + res[0].repertory_three + "</td>"
+                + "<td>" + res[0].repertory_four + "</td>"
+                + "<td>" + res[0].repertory_five  + "</td>"
+                + "<td>" + res[0].repertory_six + "</td>"
+                + "<td>" +res[0].breeze + "</td>"
+                + "<td>" + " " + "</td>"
+                + "<td>" + res[0].ratio_stone  + "</td>"
+                + "<td>" +  res[0].ratio_regenerate1 + res[0].ratio_regenerate2 + "</td>"
+                + "<td>" +  res[0].ratio_additive + "</td>"
+                + "<td>" + " "  + "</td>"
+                + "<td>" + res[0].temperature_asphalt + "-" + res[0].temperature_asphalt_up + "</td>"
+                + "<td>" + res[0].temperature_mixture + "-" + res[0].temperature_mixture_up + "</td>"
+                + "<td>" + res[0].temperature_asphalt + "-" + res[0].temperature_asphalt  + "</td>"
+                + "<td>" + res[0].temperature_aggregate + "-" + res[0].temperature_aggregate + "</td>"
+                + "<td>" +  res[0].temperature_milling + "-" + res[0].temperature_milling + "</td>"
+                + "</tr>";
+
             getDateByPageNum(1);
             $("#productData").append(svgHtmlStr);
+            $("#productData").append(modelHtml);
         }
     });
 

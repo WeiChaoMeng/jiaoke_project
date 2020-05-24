@@ -94,7 +94,7 @@
 				if(o.className=="col666"){return}
 				oInput.value=ids['y'].innerHTML+"-"+ids['m'].innerHTML+"-"+ fillzero(o.innerHTML) 
 							+" "+ids['h'].innerHTML+":"+ids['i'].innerHTML+":"+ids['s'].innerHTML;
-                // getProjectNameByData(oInput.id);
+                getProjectNameByData(oInput.id);
 				hide();
 			})
 		})
@@ -360,10 +360,10 @@
 })();
 
 function getProjectNameByData(id) {
-	if (!(id === "inpend")) return false;
+	if (id === "inpend" || id === "inpstart" ) return false;
     var path = $("#path").val();
     var start = $("#inpstart").val();
-    var end = $("#inpend").val();
+    var end = $("#warinpend").val();
     if (start.isBlanks() || end.isBlanks() ){
         layer.alert('请先选择先日期');
         return false;
@@ -383,7 +383,7 @@ function getProjectNameByData(id) {
             $("#project_id").append("<option value='select' >请选择</option>")
             var proNameList = res.projectList;
             //判断该日期内是否有工程
-            if (proNameList.length === 0){
+            if (proNameList.length === 0 || proNameList){
                 layer.alert("该日期范围内无工程");
                 return false;
             }

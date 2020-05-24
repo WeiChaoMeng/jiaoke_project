@@ -197,7 +197,7 @@
         </div>
 
         <div class="modelpub" style="margin-top: 10px;height: -webkit-calc((100%/1.5));">
-            <div class="common-tit">厂区安全</div>
+            <div class="common-tit">生产区监控(47个)</div>
             <span class="tilt"></span>
             <div id="myPlayer" style="height: calc((100% - 30px));"></div>
             <img src="../../../../static/cockpit/img/inp_del.png" style="position: absolute;top: 10%;left: 90%;z-index: 999999;" id="closeMonitor" onclick="closeMonitor()">

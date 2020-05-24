@@ -12,12 +12,12 @@
 <head>
     <meta charset="utf-8">
     <title>辅助分析</title>
-    <link href="/static/css/default.css" rel="stylesheet" type="text/css">
+    <link href="../../../static/css/default.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
-    <link type="text/css" rel="stylesheet" href="/static/css/qc/jeDate-test.css">
-    <link type="text/css" rel="stylesheet" href="/static/css/qc/jedate.css">
-    <link type="text/css" rel="stylesheet" href="/static/css/qc/qc_select.css">
-    <link href="/static/css/qc/jqTable.css" rel="stylesheet" type="text/css">
+    <link type="text/css" rel="stylesheet" href="../../../static/css/qc/jeDate-test.css">
+    <link type="text/css" rel="stylesheet" href="../../../static/css/qc/jedate.css">
+    <link type="text/css" rel="stylesheet" href="../../../static/css/qc/qc_select.css">
+    <link href="../../../static/css/qc/jqTable.css" rel="stylesheet" type="text/css">
     <style>
 
 
@@ -34,16 +34,16 @@
                     <div style="width: 100%;height: 10%;" >
                             <div class="jeitem">
                                 <div class="jeitem">
-                                    <label class="jelabel">开始日期</label>
+                                    <label class="jelabel">开始日期：</label>
                                     <div class="dy_select_div"   >
                                         <input type="text" class="dy_select_date" id="inpstart"  placeholder="选择开始日期" >
                                     </div>
-                                    <label class="jelabel">结束日期</label>
+                                    <label class="jelabel">结束日期：</label>
                                     <div class="dy_select_div"   >
                                         <input type="text" class="dy_select_date" id="inpend" placeholder="选择开始日期" >
                                     </div>
 
-                                <label class="jelabel">机组选择</label>
+                                <label class="jelabel">机组选择：</label>
                                 <div class="dy_select_div"   >
                                     <select id="crew_num" class="dy_select" onchange="getModelByDateTimeAndCrew()" >
                                         <option value="sect">请选择</option>
@@ -52,14 +52,14 @@
                                     </select>
                                 </div>
 
-                                <label class="jelabel">模板选择</label>
+                                <label class="jelabel">模板选择：</label>
                                 <div class="dy_select_div" >
                                     <select  id="ratio_id" class="dy_select">
                                         <option value="select" >请选择</option>
                                     </select>
                                 </div>
 
-                                <label class="jelabel">预警选择</label>
+                                <label class="jelabel">预警选择：</label>
                                 <div class="dy_select_div" >
                                     <select  id="waring_leve" class="dy_select">
                                         <option value="0">无预警</option>
@@ -184,7 +184,7 @@
                 </c:choose>
             </ul>
 
-            <span class="data_manager_pageinfo">共 ${pageBean.dataCountNum} 条记录，每页 ${pageBean.eachPageDataNum} 条，当前第 ${pageBean.currentPageNum} 页，共 ${pageBean.pageCount} 页</span>
+            <span class="data_manager_pageinfo" style="margin-right: 0;">共 ${pageBean.dataCountNum} 条记录，每页 ${pageBean.eachPageDataNum} 条，当前第 ${pageBean.currentPageNum} 页，共 ${pageBean.pageCount} 页</span>
         </div>
     </div>
 

@@ -3,15 +3,142 @@
      * 左一、右一图表级配图
      */
     getRealTimeData();
+    /**
+     * 左右两个机组产品构成图
+     */
+    showTwoCrewProduct();
+    var main = document.getElementById("main");
+    var hei = document.body.clientHeight;
+    //如果不加时间控制，滚动会过度灵敏，一次翻好几屏
+    var startTime = 0, //翻屏起始时间
+        endTime = 0,
+        now = 0;
 
+    //浏览器兼容
+    if ((navigator.userAgent.toLowerCase().indexOf("firefox")!=-1)){
+        document.addEventListener("DOMMouseScroll",scrollFun,false);
+    }
+    else if (document.addEventListener) {
+        document.addEventListener("mousewheel",scrollFun,false);
+    }
+    else if (document.attachEvent) {
+        document.attachEvent("onmousewheel",scrollFun);
+    }
+    else{
+        document.onmousewheel = scrollFun;
+    }
 
-})();
+    //滚动事件处理函数
+    function scrollFun(event){
+
+        startTime = new Date().getTime();
+        var delta = event.detail || (-event.wheelDelta);
+        //mousewheel事件中的 “event.wheelDelta” 属性值：返回的如果是正值说明滚轮是向上滚动
+        //DOMMouseScroll事件中的 “event.detail” 属性值：返回的如果是负值说明滚轮是向上滚动
+        if ((endTime - startTime) < -1000){
+            if(delta>0){
+                //向下滚动
+                now = now - hei;
+                toPage(now);
+            }
+            if(delta<0 ){
+                //向上滚动
+                now = now + hei;
+                toPage(now);
+            }
+            endTime = new Date().getTime();
+        }
+        else{
+            event.preventDefault();
+        }
+    }
+    function toPage(now){
+        var show = $('#page1').css('display');
+        if (show =='block'){
+            $('#page1').css('display','none');
+            $('#page2').css('display','block');
+
+        }else {
+            $('#page2').css('display','none');
+            $('#page1').css('display','block');
+        }
+
+        // $("#main").animate({top:(now+'px')},1000);     //jquery实现动画效果
+        //setTimeout("main.style.top = now + 'px'",1000);     javascript 实现动画效果
+    }
+
+})(jQuery);
+
 
 /**
  * 定时调用
  */
-setInterval(getRealTimeData(),40000);
+setInterval(getRealTimeData,40000);
+function getRealTimeDataEcharsTemp(){
+    var basePath = $("#path").val();
+    $.ajax({
+        url:basePath + "/getRealTimeDataEcharsTemp.do",
+        // url:"http://47.105.114.70/getRealTimeDataEcharsTemp.do",
+        type:"post",
+        dataType:"json",
+        success:function (res) {
+            eachresList(res);
+        }
+    })
+}
 
+function eachresList(res){
+
+    var crew1discNum = new Array();
+    var crew1warehouse = new Array();
+    var crew1mixture = new Array();
+    var crew1duster = new Array();
+    var crew1asphalt = new Array();
+    var crew1aggregate = new Array();
+
+    var crew2discNum = new Array();
+    var crew2warehouse = new Array();
+    var crew2mixture = new Array();
+    var crew2duster = new Array();
+    var crew2asphalt = new Array();
+    var crew2aggregate = new Array();
+
+    for (var i = 0; i < res.length; i++){
+
+        if (res[i].crewNum == 'crew1'){
+            crew1discNum.push(res[i].produce_disc_num);
+            crew1warehouse.push(res[i].temperature_warehouse_1);
+            crew1mixture.push(res[i].temperature_mixture);
+            crew1duster.push(res[i].temperature_duster);
+            crew1asphalt.push(res[i].temperature_asphalt);
+            crew1aggregate.push(res[i].temperature_aggregate);
+        }else {
+            crew2discNum.push(res[i].produce_disc_num);
+            crew2warehouse.push(res[i].temperature_warehouse_1);
+            crew2mixture.push(res[i].temperature_mixture);
+            crew2duster.push(res[i].temperature_duster);
+            crew2asphalt.push(res[i].temperature_asphalt);
+            crew2aggregate.push(res[i].temperature_aggregate);
+        }
+
+    }
+
+    option9.xAxis.data = crew1discNum;
+    option9.series[0].data = crew1warehouse;
+    option9.series[1].data = crew1mixture;
+    option9.series[2].data = crew1asphalt;
+    option9.series[3].data = crew1aggregate;
+    option9.series[4].data = crew1duster;
+    myChart9.setOption(option9);
+
+    option1.xAxis.data = crew2discNum;
+    option1.series[0].data = crew2warehouse;
+    option1.series[1].data = crew2mixture;
+    option1.series[2].data = crew2asphalt;
+    option1.series[3].data = crew2aggregate;
+    option1.series[4].data = crew2duster;
+    myChart1.setOption(option1);
+}
 
 /**
  * 展示基本信息
@@ -27,9 +154,10 @@ function  getRealTimeData() {
             renderDataToPage(res);
         }
 
-    })
+    });
+
     /*******echars温度图表方法********/
-    // getRealTimeDataEcharsTemp();
+    getRealTimeDataEcharsTemp();
     /*******echars材料图表方法********/
     showGradingCurve();
     /*******油石比图表方法********/
@@ -184,34 +312,41 @@ window.addEventListener("resize", function () {
 });
 
 function showAsphaltAggregateRatio(xList,dataList,ration) {
+    var crew1XList = xList.crew1XList;
+    var crew2XList = xList.crew2XList
+    if (crew1XList.length > 0){
+        var crew1Ration = (Number(ration.crew1Ration)/(100 - Number(ration.crew1Ration)) * 100).toFixed(2);
+        option3.xAxis[0].data = xList.crew1XList;
+        option3.series[0].data = dataList.crew1data;
+        option3.yAxis[0].max = Number(crew1Ration)+ 0.5;
+        option3.yAxis[0].min = Number(crew1Ration) - 0.5;
+        var yaxisUp = Number(crew1Ration) + 0.3;
+        var yaxisModel = Number(crew1Ration);
+        var yaxisDown = Number(crew1Ration - 0.3);
+        option3.series[0].markLine.data = [{name: '上限', yAxis: yaxisUp,},{name: '模板占比',  yAxis: yaxisModel,},{name: '下限',  yAxis: yaxisDown }];
+        myChart3.setOption(option3);
+        window.addEventListener("resize", function () {
+            myChart3.resize();
+        });
+    }else {
+        $("#aar1_title").empty().append('三日内无该类型产品')
+    }
 
-    option3.xAxis[0].data = xList.crew1XList;
-    option6.xAxis[0].data = xList.crew2XList;
-    option3.series[0].data = dataList.crew1data;
-    option6.series[0].data = dataList.crew2data;
-    var crew1Ration = Number(ration.crew1Ration);
-    var crew2Ration = Number(ration.crew2Ration);
-    option3.yAxis[0].max = Number(crew1Ration)+ 0.5;
-    option3.yAxis[0].min = Number(crew1Ration) - 0.5;
-    option6.yAxis[0].max = Number(crew2Ration) + 0.5;
-    option6.yAxis[0].min = Number(crew2Ration) - 0.5;
+    if (crew2XList.length > 0){
+        option6.xAxis[0].data = xList.crew2XList;
+        option6.series[0].data = dataList.crew2data;
+        var crew2Ration = (Number(ration.crew2Ration)/(100 - Number(ration.crew2Ration)) * 100).toFixed(2);
+        option6.yAxis[0].max = Number(crew2Ration) + 0.5;
+        option6.yAxis[0].min = Number(crew2Ration) - 0.5;
+        option6.series[0].markLine.data = [{name: '上限', yAxis: crew2Ration + 0.3},{name: '模板占比',  yAxis: crew2Ration },{name: '下限',  yAxis:  crew2Ration - 0.3}];
+        myChart6.setOption(option6);
+        window.addEventListener("resize", function () {
+            myChart6.resize();
+        });
+    }else {
+        $("#aar2_title").empty().append('三日内无该类型产品')
+    }
 
-    var yaxisUp = Number(crew1Ration) + 0.3;
-    var yaxisModel = Number(crew1Ration);
-    var yaxisDown = Number(crew1Ration - 0.3);
-
-    option3.series[0].markLine.data = [{name: '上限', yAxis: yaxisUp,},{name: '模板占比',  yAxis: yaxisModel,},{name: '下限',  yAxis: yaxisDown }];
-    option6.series[0].markLine.data = [{name: '上限', yAxis: crew2Ration + 0.3},{name: '模板占比',  yAxis: crew2Ration },{name: '下限',  yAxis:  crew2Ration - 0.3}];
-
-    myChart3.setOption(option3);
-    window.addEventListener("resize", function () {
-        myChart3.resize();
-    });
-
-    myChart6.setOption(option6);
-    window.addEventListener("resize", function () {
-        myChart6.resize();
-    });
 }
 
 
@@ -407,4 +542,153 @@ function getNowFormatDate() {
     }
     var currentdate = year + seperator1 + month + seperator1 + strDate;
     return currentdate;
+}
+
+function showTwoCrewProduct() {
+    var basePath = $("#path").val();
+    $.ajax({
+        url:basePath + "/getTodayProductList.do",
+        type:"get",
+        dataType:"json",
+        success:function (res) {
+            debugger
+            if (res.message === 'success'){
+                var crew1List = [];
+                var crew2List = [];
+                var  list = res.dataList;
+                var crew1date;
+                var crew2date;
+                for (var i = 0;i < list.length;i++){
+                    if (list[i]){
+                        if (list[i].crew === 'crew1'){
+                            crew1List.push([list[i].pro_name,list[i].total]);
+                            crew1date = list[i].produce_date;
+                        }else {
+                            crew2List.push([list[i].pro_name,list[i].total]);
+                            crew2date = list[i].produce_date;
+                        }
+                    }
+                }
+                showTwoCrewProChears(crew1List,crew2List);
+                $("#crew1_product_title").text("一号机" + crew1date + "日产品占比图");
+                $("#crew2_product_title").text("二号机" + crew2date + "日产品占比图");
+            }
+            if (res.message === 'empty'){
+                $("#crew1_product_title").text("未查询到一号机产品");
+                console.log("当前无产品");
+            }
+            if (res.message === 'error'){
+                $("#crew2_product_title").text("未查询到二号机产品");
+                console.log("后台错误，请联系管理员");
+            }
+        }
+    })
+
+}
+
+function showTwoCrewProChears(crew1List,crew2List) {
+
+    if (crew1List == null || crew1List.length === 0){
+        crew1List = [["机组一今日无生产",1]];
+    }
+    if (crew2List == null || crew2List.length === 0){
+        crew2List = [["机组二今日无生产",1]];
+    }
+
+    $('#chart5').highcharts({
+        chart: {
+            type: 'pie',
+            options3d: {
+                enabled: true,
+                alpha: 45,
+                beta: 0
+            } , backgroundColor: 'rgba(0,0,0,0)'
+        },
+        legend: {//控制图例显示位置
+            layout: 'vertical',
+            align: 'left',
+            verticalAlign: 'top',
+            borderWidth: 0,
+            itemStyle:{
+                "color": "#fff"
+            }
+        },
+        credits:{
+            enabled:false // 禁用版权信息
+        },colors:['#72ab12','#dc380e','#ff8c01','#3a85be','#fe8c00'],
+        title: {
+            text: ''
+        },
+        tooltip: {
+            pointFormat: '{series.name}: {point.y}个，占比{point.percentage:.1f}%'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                depth: 35,
+                showInLegend:true,
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.name}: {point.y}吨',
+                    style: {
+                        color: 'white'
+                    }
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: '本月产品类型构成',
+            data: crew1List
+        }]
+    });
+    $('#chart2').highcharts({
+        chart: {
+            type: 'pie',
+            options3d: {
+                enabled: true,
+                alpha: 45,
+                beta: 0
+            } , backgroundColor: 'rgba(0,0,0,0)'
+        },
+        credits:{
+            enabled:false // 禁用版权信息
+        },colors:['#72ab12','#dc380e','#ff8c01','#3a85be','#fe8c00'],
+        title: {
+            text: ''
+        },
+        tooltip: {
+            pointFormat: '{series.name}: {point.y}个，占比{point.percentage:.1f}%'
+        },
+        legend: {//控制图例显示位置
+            layout: 'vertical',
+            align: 'left',
+            verticalAlign: 'top',
+            borderWidth: 0,
+            itemStyle:{
+                "color": "#fff"
+            }
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                depth: 35,
+                showInLegend:true,
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.name}: {point.y}吨',
+                    style: {
+                        color: 'white'
+                    }
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: '本月产品类型构成',
+            data: crew2List
+        }]
+    });
 }

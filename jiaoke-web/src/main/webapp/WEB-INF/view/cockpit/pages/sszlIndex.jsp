@@ -63,8 +63,8 @@
         </ul>
     </div>
 </div></div>
-<div id="afoot-Panel" class="jimu-main-absolute" style="width: 380px; height: 30px; left: 39%; right: auto; top: auto; bottom: 0.1px;"><div class="jimu-foot-content" id="jimu-foot-content">
-    <div class="jimu-foot-bg"><div class="jimu-foot-name"></div></div>
+<div id="afoot-Panel" class="jimu-main-absolute" style="width: 380px; height: 40px; left: 39%; right: auto; top: auto; bottom: 0.1px;"><div class="jimu-foot-content" id="jimu-foot-content">
+    <div class="jimu-foot-bg"><div class="jimu-foot-name" style="background-size: 160px;"></div></div>
 </div></div>
 
 <!--4个角-->
@@ -74,527 +74,857 @@
 <div class="i-common-bottom i-right-bottom"></div>
 
 <!--首页头部 end -->
-<div class="container-bgcolor">
-<div class="model-content">
-    <!--首页左侧 sta -->
-    <div class="comtab">
-        <div class="modelpub" style="height: 50%;">
-            <div class="common-tit">机组一级配图</div>
-            <span class="tilt"></span>
-            <div class="echart_con" id="chart7" style="width: 75%;float: left;" >
-                <script type="text/javascript">
-                    var myChart7= echarts.init(document.getElementById('chart7'));
-                    // 指定图表的配置项和数据
-                    var colors = ['#5793f3', '#d14a61', '#675bba'];
-                    var option7= {
-                        // title: {
-                        //     text: '一号机组级配曲线图'
-                        // },
-                        legend: {
-                            data:['合成级配','实际级配','上限','中值','下限'],
-                            x:'right',
-                            top:'7.5%',
-                            left:'27.5%',
-                            textStyle:{
-                                color: '#96ceb4'
-                            }
-                        },
-                        grid:{
-                            left: '2%',
-                            right: '3.5%',
-                            bottom: '5%',
-                            containLabel: true
-                        },
-                        tooltip: {
-                            trigger: 'item'
-                        },
-                        xAxis: {
-                            type: 'value',
-                            min:0,
-                            max:7,
-
-                            splitLine: {
-                                show: false
-                            },
-                            axisLabel: { //轴标签
-                                show: false//不显示
-                                // rotate:90
-                            },
-                            axisTick: { //轴刻度
-                                show: false //不显示
-                            },
-                            axisLine: { //轴线
-                                lineStyle: { //样式
-                                    color: '#96ceb4' //颜色
-                                }
-                            },
-                            // axisLabel:{
-                            //     interval: 0,
-                            //     formatter: function (value) {
-                            //         //x轴的文字改为竖版显示
-                            //         var str = value.split("");
-                            //         return str.join("\n");
-                            //     }
-                            // }
-                        },
-                        dataZoom:{
-                            type:'inside'
-                        },
-                        yAxis: {
-                            type: 'value',
-                            name: '占比 %',
-                            nameLocation: 'end',
-                            nameGap: 10,
-                            position: 'left',
-                            offset: 3,
-                            max:100,
-                            min:0,
-                            scale: true,
-                            nameTextStyle: {
-                                color: '#fff',
-                                fontSize: 11
-                            },
-                            axisLine: {
-                                onZero: false,
-                                lineStyle: {
-                                    color: '#96ceb4'
-                                }
-                            },
-                            splitLine: {
-                                show: true,
-                                lineStyle: {
-                                    color: '#96ceb4'
-                                }
-                            }
-                        },
-                        series: [
-                            {
-                                type: 'line',
-                                markLine: {
-                                    symbol: ['none', 'none'],
-                                    silent: true,
-                                    label: {
-                                        rotate:90,
-                                        normal: {
-                                            position: "start"
-                                        }
-                                    },
-                                    lineStyle: {
-                                        normal: {
-                                            type: 'solid',
-                                            width:0.6,
+<div class="container-bgcolor" id="dowebok" >
+    <div id="main"  style="width: 100%;height: 100%;">
+        <div class="section" id="page1" style="width: 100%;height: 100%;margin-bottom: 100px;display: block;">
+            <div class="model-content" >
+                <!--首页左侧 sta -->
+                <div class="comtab">
+                    <div class="modelpub" style="height: 50%;">
+                        <div class="common-tit">机组一级配图</div>
+                        <span class="tilt"></span>
+                        <div class="echart_con" id="chart7" style="width: 75%;float: left;" >
+                            <script type="text/javascript">
+                                var myChart7= echarts.init(document.getElementById('chart7'));
+                                // 指定图表的配置项和数据
+                                var colors = ['#5793f3', '#d14a61', '#675bba'];
+                                var option7= {
+                                    // title: {
+                                    //     text: '一号机组级配曲线图'
+                                    // },
+                                    legend: {
+                                        data:['合成级配','实际级配','上限','中值','下限'],
+                                        x:'right',
+                                        top:'7.5%',
+                                        left:'27.5%',
+                                        textStyle:{
                                             color: '#96ceb4'
                                         }
                                     },
-                                    data: []
-                                }
-                            },
-                            {
-                                id: 'a',
-                                type: 'line',
-                                name:'合成级配',
-                                symbolSize:6,
-                                data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
-                            },
-                            {
-                                id: 'b',
-                                type: 'line',
-                                name:'实际级配',
-                                symbolSize:6,
-                                data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
-                            },
-                            {
-                                id: 'c',
-                                type: 'line',
-                                name:'上限',
-                                symbolSize:6,
-                                data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
-                            },
-                            {
-                                id: 'd',
-                                type: 'line',
-                                name:'中值',
-                                symbolSize:6,
-                                data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
-                            },
-                            {
-                                id: 'e',
-                                type: 'line',
-                                name:'下限',
-                                symbolSize:6,
-                                data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
-                            }
-                        ]
-                    };
-                </script>
+                                    grid:{
+                                        left: '2%',
+                                        right: '3.5%',
+                                        bottom: '5%',
+                                        containLabel: true
+                                    },
+                                    tooltip: {
+                                        trigger: 'item'
+                                    },
+                                    xAxis: {
+                                        type: 'value',
+                                        min:0,
+                                        max:7,
 
-            </div>
-            <div style="width: 25%;height: 93%;float: left;">
-                <div class="basic_div"><span class="basic_span" style="size: 21px;font-size: 19px;color: #c4c7c0;">基本信息</span></div>
-                <div class="basic_div"><span class="basic_span" id="crew1_date"></span></div>
-                <div class="basic_div"><span class="basic_span" id="crew1_time"></span></div>
-                <div class="basic_div"><span class="basic_span" id="crew1_ratio_name"></span></div>
-                <div class="basic_div"><span class="basic_span" id="crew1_stone" ></span></div>
-                <div class="basic_div"><span class="basic_span" id="crew1_asphalt" ></span></div>
-                <div class="basic_div"><span class="basic_span" id="crew1_regenerate" ></span></div>
-                <div class="basic_div"><span class="basic_span" id="crew1_additive" ></span></div>
-            </div>
-        </div>
-        <div class="modelpub margin10" style="height: 48%;">
-            <div class="common-tit" id="aar1_title" ></div>
-            <span class="tilt"></span>
-            <div class="echart_con bar_l_echart" id="chart3">
-                <script type="text/javascript">
-                    var myChart3= echarts.init(document.getElementById('chart3'));
-                    // 指定图表的配置项和数据
-                    var option3 = {
-                        tooltip: {
-                            trigger: 'axis'
-                        },
-                        toolbox: {
-                            show: true,
-                            feature: {
-                                magicType: {type: ['line', 'bar']},
-                                restore: {},
-                                saveAsImage: {}
-                            }
-                        },
-
-                        xAxis: [{
-                            axisLine: { //轴线
-                                lineStyle: { //样式
-                                    color: '#96ceb4' //颜色
-                                }
-                            },
-                            data: []
-                        }],
-                        yAxis: [{
-                            type: 'value',
-                            interval :0.2,
-                            max:function (v) {
-                                return (v.max + 0.7).toFixed(1);
-                            },
-                            min:function (v) {
-                                return (v.min - 0.7) < 0? 0:(v.min - 0.7).toFixed(1)
-                            },
-                            axisLabel: {
-                                formatter: '{value} %'
-                            },
-                            nameTextStyle: {
-                                color: '#fff',
-                                fontSize: 11
-                            },
-                            splitLine:{
-                                lineStyle: {
-                                    color: '#96ceb4'
-                                },
-                                show:false    //去掉网格线
-                            },
-                            axisLine:{
-                                type : 'solid',
-                                lineStyle:{
-                                    color: '#96ceb4'
-                                }
-                            },
-                            axisTick:{
-                                show:true,
-                                lineStyle:{
-                                    color: '#96ceb4'
-                                }
-                            }
-                        }],
-                        grid:{
-                            left: '2%',
-                            right: '3.5%',
-                            bottom: '5%',
-                            containLabel: true
-                        },
-                        series: [{
-                            type: 'line',
-                            showSymbol: true,
-                            data: [],
-                            markLine: {
-                                symbol: ['none', 'arrow'],
-                                silent:false,
-                                lineStyle: {
-                                    type: 'solid',
-                                    normal: {
-                                        color: '#F8AC59'
-                                    }
-                                },
-                                data: []
-                            }
-                        }]
-                    };
-                    myChart3.setOption(option3);
-                </script>
-            </div>
-        </div>
-    </div>
-
-    <!--首页左侧 end -->
-
-    <!--首页右侧 sta -->
-    <div class="comtab">
-        <div class="modelpub" style="height: 50%;" >
-            <div class="common-tit">机组二级配图</div>
-            <div class="echart_con bar_c_echart"  id="chart4" style="width: 75%;float: left;">
-                <script type="text/javascript">
-                    var myChart4 = echarts.init(document.getElementById('chart4'));
-                    // 指定图表的配置项和数据
-                    var colors = ['#5793f3', '#d14a61', '#675bba'];
-                    var option4= {
-                        // title: {
-                        //     text: '一号机组级配曲线图'
-                        // },
-                        legend: {
-                            data:['合成级配','实际级配','上限','中值','下限'],
-                            x:'right',
-                            top:'7.5%',
-                            left:'27.5%',
-                            textStyle:{
-                                color: '#96ceb4'
-                            }
-                        },
-                        grid:{
-                            left: '2%',
-                            right: '3.5%',
-                            bottom: '5%',
-                            containLabel: true
-                        },
-                        tooltip: {
-                            trigger: 'item'
-                        },
-                        xAxis: {
-                            type: 'value',
-                            min:0,
-                            max:7,
-
-                            splitLine: {
-                                show: false
-                            },
-                            axisLabel: { //轴标签
-                                show: false//不显示
-                                // rotate:90
-                            },
-                            axisTick: { //轴刻度
-                                show: false //不显示
-                            },
-                            axisLine: { //轴线
-                                lineStyle: { //样式
-                                    color: '#96ceb4' //颜色
-                                }
-                            },
-                            // axisLabel:{
-                            //     interval: 0,
-                            //     formatter: function (value) {
-                            //         //x轴的文字改为竖版显示
-                            //         var str = value.split("");
-                            //         return str.join("\n");
-                            //     }
-                            // }
-                        },
-                        dataZoom:{
-                            type:'inside'
-                        },
-                        yAxis: {
-                            type: 'value',
-                            name: '占比 %',
-                            nameLocation: 'end',
-                            nameGap: 10,
-                            position: 'left',
-                            offset: 3,
-                            max:100,
-                            min:0,
-                            scale: true,
-                            nameTextStyle: {
-                                color: '#fff',
-                                fontSize: 11
-                            },
-                            axisLine: {
-                                onZero: false,
-                                lineStyle: {
-                                    color: '#96ceb4'
-                                }
-                            },
-                            splitLine: {
-                                show: true,
-                                lineStyle: {
-                                    color: '#96ceb4'
-                                }
-                            }
-                        },
-                        series: [
-                            {
-                                type: 'line',
-                                markLine: {
-                                    symbol: ['none', 'none'],
-                                    silent: true,
-                                    label: {
-                                        rotate:90,
-                                        normal: {
-                                            position: "start"
+                                        splitLine: {
+                                            show: false
+                                        },
+                                        axisLabel: { //轴标签
+                                            show: false//不显示
+                                            // rotate:90
+                                        },
+                                        axisTick: { //轴刻度
+                                            show: false //不显示
+                                        },
+                                        axisLine: { //轴线
+                                            lineStyle: { //样式
+                                                color: '#96ceb4' //颜色
+                                            }
+                                        },
+                                        // axisLabel:{
+                                        //     interval: 0,
+                                        //     formatter: function (value) {
+                                        //         //x轴的文字改为竖版显示
+                                        //         var str = value.split("");
+                                        //         return str.join("\n");
+                                        //     }
+                                        // }
+                                    },
+                                    dataZoom:{
+                                        type:'inside'
+                                    },
+                                    yAxis: {
+                                        type: 'value',
+                                        name: '占比 %',
+                                        nameLocation: 'end',
+                                        nameGap: 10,
+                                        position: 'left',
+                                        offset: 3,
+                                        max:100,
+                                        min:0,
+                                        scale: true,
+                                        nameTextStyle: {
+                                            color: '#fff',
+                                            fontSize: 11
+                                        },
+                                        axisLine: {
+                                            onZero: false,
+                                            lineStyle: {
+                                                color: '#96ceb4'
+                                            }
+                                        },
+                                        splitLine: {
+                                            show: true,
+                                            lineStyle: {
+                                                color: '#96ceb4'
+                                            }
                                         }
                                     },
-                                    lineStyle: {
-                                        normal: {
-                                            type: 'solid',
-                                            width:0.6,
+                                    series: [
+                                        {
+                                            type: 'line',
+                                            markLine: {
+                                                symbol: ['none', 'none'],
+                                                silent: true,
+                                                label: {
+                                                    rotate:90,
+                                                    normal: {
+                                                        position: "start"
+                                                    }
+                                                },
+                                                lineStyle: {
+                                                    normal: {
+                                                        type: 'solid',
+                                                        width:0.6,
+                                                        color: '#96ceb4'
+                                                    }
+                                                },
+                                                data: []
+                                            }
+                                        },
+                                        {
+                                            id: 'a',
+                                            type: 'line',
+                                            name:'合成级配',
+                                            symbolSize:6,
+                                            lineStyle: {
+                                                normal: {
+                                                    type: 'solid',
+                                                    width:0.6,
+                                                    color: '#96ceb4'
+                                                }
+                                            },
+                                            data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                                        },
+                                        {
+                                            id: 'b',
+                                            type: 'line',
+                                            name:'实际级配',
+                                            symbolSize:6,
+                                            lineStyle: {
+                                                normal: {
+                                                    type: 'solid',
+                                                    color: '#23c6c8'
+                                                }
+                                            },
+                                            data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                                        },
+                                        {
+                                            id: 'c',
+                                            type: 'line',
+                                            name:'上限',
+                                            symbolSize:6,
+                                            lineStyle: {
+                                                normal: {
+                                                    type: 'solid',
+                                                    color: '#ed5565'
+                                                }
+                                            },
+                                            data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                                        },
+                                        {
+                                            id: 'd',
+                                            type: 'line',
+                                            name:'中值',
+                                            symbolSize:6,
+                                            data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                                        },
+                                        {
+                                            id: 'e',
+                                            type: 'line',
+                                            name:'下限',
+                                            symbolSize:6,
+                                            lineStyle: {
+                                                normal: {
+                                                    type: 'solid',
+                                                    color: '#ed5565'
+                                                }
+                                            },
+                                            data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                                        }
+                                    ]
+                                };
+                            </script>
+
+                        </div>
+                        <div style="width: 25%;height: 93%;float: left;">
+                            <div class="basic_div"><span class="basic_span" style="size: 21px;font-size: 19px;color: #c4c7c0;">基本信息</span></div>
+                            <div class="basic_div"><span class="basic_span" id="crew1_date"></span></div>
+                            <div class="basic_div"><span class="basic_span" id="crew1_time"></span></div>
+                            <div class="basic_div"><span class="basic_span" id="crew1_ratio_name"></span></div>
+                            <div class="basic_div"><span class="basic_span" id="crew1_stone" ></span></div>
+                            <div class="basic_div"><span class="basic_span" id="crew1_asphalt" ></span></div>
+                            <div class="basic_div"><span class="basic_span" id="crew1_regenerate" ></span></div>
+                            <div class="basic_div"><span class="basic_span" id="crew1_additive" ></span></div>
+                        </div>
+                    </div>
+                    <div class="modelpub margin10" style="height: 48%;">
+                        <div class="common-tit" id="aar1_title" ></div>
+                        <span class="tilt"></span>
+                        <div class="echart_con" id="chart3">
+                            <script type="text/javascript">
+                                var myChart3= echarts.init(document.getElementById('chart3'));
+                                // 指定图表的配置项和数据
+                                var option3 = {
+                                    tooltip: {
+                                        trigger: 'axis'
+                                    },
+                                    toolbox: {
+                                        show: true,
+                                        feature: {
+                                            magicType: {type: ['line', 'bar']},
+                                            restore: {},
+                                            saveAsImage: {}
+                                        }
+                                    },
+                                    grid:{
+                                        left: '5%',
+                                        right: '7.5%',
+                                        bottom: '5%',
+                                        containLabel: true
+                                    },
+                                    xAxis: [{
+                                        axisLine: { //轴线
+                                            lineStyle: { //样式
+                                                color: '#96ceb4' //颜色
+                                            }
+                                        },
+                                        data: []
+                                    }],
+                                    yAxis: [{
+                                        type: 'value',
+                                        interval :0.2,
+                                        max:function (v) {
+                                            return (v.max + 0.7).toFixed(1);
+                                        },
+                                        min:function (v) {
+                                            return (v.min - 0.7) < 0? 0:(v.min - 0.7).toFixed(1)
+                                        },
+                                        axisLabel: {
+                                            formatter: '{value} %'
+                                        },
+                                        nameTextStyle: {
+                                            color: '#fff',
+                                            fontSize: 11
+                                        },
+                                        splitLine:{
+                                            lineStyle: {
+                                                color: '#96ceb4'
+                                            },
+                                            show:false    //去掉网格线
+                                        },
+                                        axisLine:{
+                                            type : 'solid',
+                                            lineStyle:{
+                                                color: '#96ceb4'
+                                            }
+                                        },
+                                        axisTick:{
+                                            show:true,
+                                            lineStyle:{
+                                                color: '#96ceb4'
+                                            }
+                                        }
+                                    }],
+
+                                    series: [{
+                                        type: 'line',
+                                        showSymbol: true,
+                                        data: [],
+                                        markLine: {
+                                            symbol: ['none', 'arrow'],
+                                            silent: true,
+                                            lineStyle: {
+                                                normal: {
+                                                    color: '#F8AC59'
+                                                }
+                                            },
+                                            data: []
+                                        }
+                                    }]
+                                };
+                            </script>
+                        </div>
+                    </div>
+                </div>
+                <!--首页左侧 end -->
+                <!--首页右侧 sta -->
+                <div class="comtab">
+                    <div class="modelpub" style="height: 50%;" >
+                        <div class="common-tit">机组二级配图</div>
+                        <div class="echart_con bar_c_echart"  id="chart4" style="width: 75%;float: left;">
+                            <script type="text/javascript">
+                                var myChart4 = echarts.init(document.getElementById('chart4'));
+                                // 指定图表的配置项和数据
+                                var colors = ['#5793f3', '#d14a61', '#675bba'];
+                                var option4= {
+                                    // title: {
+                                    //     text: '一号机组级配曲线图'
+                                    // },
+                                    legend: {
+                                        data:['合成级配','实际级配','上限','中值','下限'],
+                                        x:'right',
+                                        top:'7.5%',
+                                        left:'27.5%',
+                                        textStyle:{
                                             color: '#96ceb4'
                                         }
                                     },
-                                    data: []
-                                }
-                            },
-                            {
-                                id: 'a',
-                                type: 'line',
-                                name:'合成级配',
-                                symbolSize:6,
-                                data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
-                            },
-                            {
-                                id: 'b',
-                                type: 'line',
-                                name:'实际级配',
-                                symbolSize:6,
-                                data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
-                            },
-                            {
-                                id: 'c',
-                                type: 'line',
-                                name:'上限',
-                                symbolSize:6,
-                                data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
-                            },
-                            {
-                                id: 'd',
-                                type: 'line',
-                                name:'中值',
-                                symbolSize:6,
-                                data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
-                            },
-                            {
-                                id: 'e',
-                                type: 'line',
-                                name:'下限',
-                                symbolSize:6,
-                                data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
-                            }
-                        ]
-                    };
+                                    grid:{
+                                        left: '2%',
+                                        right: '3.5%',
+                                        bottom: '5%',
+                                        containLabel: true
+                                    },
+                                    tooltip: {
+                                        trigger: 'item'
+                                    },
+                                    xAxis: {
+                                        type: 'value',
+                                        min:0,
+                                        max:7,
 
-                </script>
-            </div>
-            <div style="width: 25%;height: 93%;float: left;">
-                <div class="basic_div"><span class="basic_span" style="size: 21px;font-size: 19px;color: #c4c7c0;">基本信息</span></div>
-                <div class="basic_div"><span class="basic_span" id="crew2_date"></span></div>
-                <div class="basic_div"><span class="basic_span" id="crew2_time"></span></div>
-                <div class="basic_div"><span class="basic_span" id="crew2_ratio_name"></span></div>
-                <div class="basic_div"><span class="basic_span" id="crew2_stone" ></span></div>
-                <div class="basic_div"><span class="basic_span" id="crew2_asphalt" ></span></div>
-                <div class="basic_div"><span class="basic_span" id="crew2_regenerate" ></span></div>
-                <div class="basic_div"><span class="basic_span" id="crew2_additive" ></span></div>
+                                        splitLine: {
+                                            show: false
+                                        },
+                                        axisLabel: { //轴标签
+                                            show: false//不显示
+                                            // rotate:90
+                                        },
+                                        axisTick: { //轴刻度
+                                            show: false //不显示
+                                        },
+                                        axisLine: { //轴线
+                                            lineStyle: { //样式
+                                                color: '#96ceb4' //颜色
+                                            }
+                                        },
+                                        // axisLabel:{
+                                        //     interval: 0,
+                                        //     formatter: function (value) {
+                                        //         //x轴的文字改为竖版显示
+                                        //         var str = value.split("");
+                                        //         return str.join("\n");
+                                        //     }
+                                        // }
+                                    },
+                                    dataZoom:{
+                                        type:'inside'
+                                    },
+                                    yAxis: {
+                                        type: 'value',
+                                        name: '占比 %',
+                                        nameLocation: 'end',
+                                        nameGap: 10,
+                                        position: 'left',
+                                        offset: 3,
+                                        max:100,
+                                        min:0,
+                                        scale: true,
+                                        nameTextStyle: {
+                                            color: '#fff',
+                                            fontSize: 11
+                                        },
+                                        axisLine: {
+                                            onZero: false,
+                                            lineStyle: {
+                                                color: '#96ceb4'
+                                            }
+                                        },
+                                        splitLine: {
+                                            show: true,
+                                            lineStyle: {
+                                                color: '#96ceb4'
+                                            }
+                                        }
+                                    },
+                                    series: [
+                                        {
+                                            type: 'line',
+                                            markLine: {
+                                                symbol: ['none', 'none'],
+                                                silent: true,
+                                                label: {
+                                                    rotate:90,
+                                                    normal: {
+                                                        position: "start"
+                                                    }
+                                                },
+                                                lineStyle: {
+                                                    normal: {
+                                                        type: 'solid',
+                                                        width:0.6,
+                                                        color: '#96ceb4'
+                                                    }
+                                                },
+                                                data: []
+                                            }
+                                        },
+                                        {
+                                            id: 'a',
+                                            type: 'line',
+                                            name:'合成级配',
+                                            symbolSize:6,
+                                            data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                                        },
+                                        {
+                                            id: 'b',
+                                            type: 'line',
+                                            name:'实际级配',
+                                            symbolSize:6,
+                                            lineStyle: {
+                                                normal: {
+                                                    type: 'solid',
+                                                    color: '#23c6c8'
+                                                }
+                                            },
+                                            data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                                        },
+                                        {
+                                            id: 'c',
+                                            type: 'line',
+                                            name:'上限',
+                                            symbolSize:6,
+                                            lineStyle: {
+                                                normal: {
+                                                    type: 'solid',
+                                                    color: '#ed5565'
+                                                }
+                                            },
+                                            data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                                        },
+                                        {
+                                            id: 'd',
+                                            type: 'line',
+                                            name:'中值',
+                                            symbolSize:6,
+                                            data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                                        },
+                                        {
+                                            id: 'e',
+                                            type: 'line',
+                                            name:'下限',
+                                            symbolSize:6,
+                                            lineStyle: {
+                                                normal: {
+                                                    type: 'solid',
+                                                    color: '#ed5565'
+                                                }
+                                            },
+                                            data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                                        }
+                                    ]
+                                };
+
+                            </script>
+                        </div>
+                        <div style="width: 25%;height: 93%;float: left;">
+                            <div class="basic_div"><span class="basic_span" style="size: 21px;font-size: 19px;color: #c4c7c0;">基本信息</span></div>
+                            <div class="basic_div"><span class="basic_span" id="crew2_date"></span></div>
+                            <div class="basic_div"><span class="basic_span" id="crew2_time"></span></div>
+                            <div class="basic_div"><span class="basic_span" id="crew2_ratio_name"></span></div>
+                            <div class="basic_div"><span class="basic_span" id="crew2_stone" ></span></div>
+                            <div class="basic_div"><span class="basic_span" id="crew2_asphalt" ></span></div>
+                            <div class="basic_div"><span class="basic_span" id="crew2_regenerate" ></span></div>
+                            <div class="basic_div"><span class="basic_span" id="crew2_additive" ></span></div>
+                        </div>
+                    </div>
+                    <div class="modelpub margin10" style="height: 48%;">
+                        <div class="common-tit" id="aar2_title"></div>
+                        <span class="tilt"></span>
+                        <div class="echart_con"  id="chart6">
+                            <script type="text/javascript">
+                                var myChart6 = echarts.init(document.getElementById('chart6'));
+                                // 指定图表的配置项和数据
+                                var option6 = {
+                                    tooltip: {
+                                        trigger: 'axis'
+                                    },
+                                    toolbox: {
+                                        show: true,
+                                        feature: {
+                                            magicType: {type: ['line', 'bar']},
+                                            restore: {},
+                                            saveAsImage: {}
+                                        }
+                                    },
+                                    xAxis: [{
+                                        axisLine: { //轴线
+                                            lineStyle: { //样式
+                                                color: '#96ceb4' //颜色
+                                            }
+                                        },
+                                        data: []
+                                    }],
+                                    yAxis: [{
+                                        type: 'value',
+                                        interval :0.2,
+                                        max:function (v) {
+                                            return (v.max + 0.7).toFixed(1);
+                                        },
+                                        min:function (v) {
+                                            return (v.min - 0.7) < 0? 0:(v.min - 0.7).toFixed(1)
+                                        },
+                                        axisLabel: {
+                                            formatter: '{value} %'
+                                        },
+                                        nameTextStyle: {
+                                            color: '#fff',
+                                            fontSize: 11
+                                        },
+                                        splitLine:{
+                                            lineStyle: {
+                                                color: '#96ceb4'
+                                            },
+                                            show:false    //去掉网格线
+                                        },
+                                        axisLine:{
+                                            type : 'solid',
+                                            lineStyle:{
+                                                color: '#96ceb4'
+                                            }
+                                        },
+                                        axisTick:{
+                                            show:true,
+                                            lineStyle:{
+                                                color: '#96ceb4'
+                                            }
+                                        }
+                                    }],
+                                    grid:{
+                                        left: '5%',
+                                        right: '7.5%',
+                                        bottom: '5%',
+                                        containLabel: true
+                                    },
+                                    series: [{
+                                        type: 'line',
+                                        showSymbol: true,
+                                        data: [],
+                                        markLine: {
+                                            symbol: ['none', 'arrow'],
+                                            silent: true,
+                                            lineStyle: {
+                                                normal: {
+                                                    color: '#F8AC59'
+                                                }
+                                            },
+                                            data: []
+                                        }
+                                    }]
+                                };
+                            </script>
+                        </div>
+                    </div>
+                </div>
+                <!--首页右侧 end -->
             </div>
         </div>
-        <div class="modelpub margin10" style="height: 48%;">
-            <div class="common-tit" id="aar2_title"></div>
-            <span class="tilt"></span>
-            <div class="echart_con"  id="chart6">
-                <script type="text/javascript">
-                    var myChart6 = echarts.init(document.getElementById('chart6'));
-                    // 指定图表的配置项和数据
-                    var option6 = {
-                        tooltip: {
-                            trigger: 'axis'
-                        },
-                        toolbox: {
-                            show: true,
-                            feature: {
-                                magicType: {type: ['line', 'bar']},
-                                restore: {},
-                                saveAsImage: {}
-                            }
-                        },
-                        xAxis: [{
-                            axisLine: { //轴线
-                                lineStyle: { //样式
-                                    color: '#96ceb4' //颜色
-                                }
-                            },
-                            data: []
-                        }],
-                        yAxis: [{
-                            type: 'value',
-                            interval :0.2,
-                            max:function (v) {
-                                return (v.max + 0.7).toFixed(1);
-                            },
-                            min:function (v) {
-                                return (v.min - 0.7) < 0? 0:(v.min - 0.7).toFixed(1)
-                            },
-                            axisLabel: {
-                                formatter: '{value} %'
-                            },
-                            nameTextStyle: {
-                                color: '#fff',
-                                fontSize: 11
-                            },
-                            splitLine:{
-                                lineStyle: {
-                                    color: '#96ceb4'
-                                },
-                                show:false    //去掉网格线
-                            },
-                            axisLine:{
-                                type : 'solid',
-                                lineStyle:{
-                                    color: '#96ceb4'
-                                }
-                            },
-                            axisTick:{
-                                show:true,
-                                lineStyle:{
-                                    color: '#96ceb4'
-                                }
-                            }
-                        }],
-                        grid:{
-                            left: '2%',
-                            right: '3.5%',
-                            bottom: '5%',
-                            containLabel: true
-                        },
-                        series: [{
-                            type: 'line',
-                            showSymbol: true,
-                            data: [],
-                            markLine: {
-                                symbol: ['none', 'arrow'],
-                                silent: true,
-                                lineStyle: {
-                                    normal: {
-                                        color: '#F8AC59'
-                                    }
-                                },
-                                data: []
-                            }
-                        }]
-                    };
+        <div class="section" id="page2"  >
+            <div class="model-content" >
+                <!--首页左侧 sta -->
+                <div class="comtab">
+                    <div class="modelpub" style="height: 50%;">
+                        <div class="common-tit">机组一生产温度曲线图</div>
+                        <span class="tilt"></span>
+                        <div class="echart_con" id="chart9" style="width: 100%;float: left;" >
+                            <script type="text/javascript">
+                                var myChart9= echarts.init(document.getElementById('chart9'));
+                                // 指定图表的配置项和数据
+                                var option9= {
+                                    legend: {
+                                        data:['一仓温度','混合料温度','沥青温度','骨料温度','除尘器温度'],
+                                        top:'7.5%',
+                                        left:'27.5%',
+                                        textStyle:{
+                                            color: '#96ceb4'
+                                        }
+                                    },
+                                    tooltip: {
+                                        trigger: 'axis'
+                                    },
+                                    grid:{
+                                        left: '5%',
+                                        right: '5%',
+                                        bottom: '5%',
+                                        containLabel: true
+                                    },
 
-                </script>
+                                    xAxis:  {
+                                        type: 'category',
+                                        boundaryGap: false,
+                                        axisLine: { //轴线
+                                            lineStyle: { //样式
+                                                color: '#96ceb4' //颜色
+                                            }
+                                        },
+                                        data: ['周一','周二','周三','周四','周五','周六','周日']
+                                    },
+                                    yAxis: {
+                                        type: 'value',
+                                        axisLabel: {
+                                            formatter: '{value} °C'
+                                        },
+                                        min:function (v) {
+                                            return (v.min - 30) < 0? 0:(v.min - 30).toFixed(1)
+                                        },
+                                        nameTextStyle: {
+                                            color: '#fff',
+                                            fontSize: 11
+                                        },
+                                        splitLine:{
+                                            lineStyle: {
+                                                color: '#96ceb4'
+                                            },
+                                            show:false    //去掉网格线
+                                        },
+                                        axisLine:{
+                                            type : 'solid',
+                                            lineStyle:{
+                                                color: '#96ceb4'
+                                            }
+                                        },
+                                        axisTick:{
+                                            show:true,
+                                            lineStyle:{
+                                                color: '#96ceb4'
+                                            }
+                                        }
+                                    },
+                                    series: [
+                                        {
+                                            name:'一仓温度',
+                                            type:'line',
+                                            data:[11, 11, 15, 13, 12, 13, 10],
+                                            itemStyle :{
+                                                color:'#96ceb4'
+                                            },
+                                            markPoint: {
+                                                data: [
+                                                    {type: 'max', name: '最大值'},
+                                                    {type: 'min', name: '最小值'}
+                                                ]
+                                            }
+                                        },        {
+                                            name:'混合料温度',
+                                            type:'line',
+                                            data:[12, 13, 16, 17, 14, 11, 12],
+                                            itemStyle :{
+                                                color:'#ffeead'
+                                            },
+                                            markPoint: {
+                                                data: [
+                                                    {type: 'max', name: '最大值'},
+                                                    {type: 'min', name: '最小值'}
+                                                ]
+                                            }
+                                        },        {
+                                            name:'沥青温度',
+                                            type:'line',
+                                            data:[11, 11, 15, 13, 12, 13, 10],
+                                            itemStyle :{
+                                                color:'#ff6f69'
+                                            },
+                                            markPoint: {
+                                                data: [
+                                                    {type: 'max', name: '最大值'},
+                                                    {type: 'min', name: '最小值'}
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            name:'骨料温度',
+                                            type:'line',
+                                            itemStyle :{
+                                                color:'#ffcc5c'
+                                            },
+                                            data:[1, -2, 2, 5, 3, 2, 0],
+
+                                        },
+                                        {
+                                            name:'除尘器温度',
+                                            type:'line',
+                                            itemStyle :{
+                                                color:'#1c84c6'
+                                            },
+                                            data:[1, -2, 2, 5, 3, 2, 0],
+
+                                        }
+                                    ]
+                                };
+                            </script>
+
+                        </div>
+                    </div>
+                    <div class="modelpub margin10" style="height: 48%;">
+                        <div class="common-tit" id="crew1_product_title" ></div>
+                        <span class="tilt"></span>
+                        <div class="echart_con bar_l_echart" id="chart5">
+
+                        </div>
+                    </div>
+                </div>
+                <!--首页左侧 end -->
+                <!--首页右侧 sta -->
+                <div class="comtab">
+                    <div class="modelpub" style="height: 50%;" >
+                        <div class="common-tit">二号机产品温度走势</div>
+                        <div class="echart_con bar_c_echart"  id="chart1" style="width: 100%;float: left;">
+                            <script type="text/javascript">
+                                var myChart1 = echarts.init(document.getElementById('chart1'));
+                                // 指定图表的配置项和数据
+                                var option1= {
+                                    legend: {
+                                        data:['一仓温度','混合料温度','沥青温度','骨料温度','除尘器温度'],
+                                        top:'7.5%',
+                                        left:'27.5%',
+                                        textStyle:{
+                                            color: '#96ceb4'
+                                        }
+                                    },
+                                    tooltip: {
+                                        trigger: 'axis'
+                                    },
+                                    grid:{
+                                        left: '5%',
+                                        right: '5%',
+                                        bottom: '5%',
+                                        containLabel: true
+                                    },
+                                    xAxis:  {
+                                        type: 'category',
+                                        boundaryGap: false,
+                                        axisLine: { //轴线
+                                            lineStyle: { //样式
+                                                color: '#96ceb4' //颜色
+                                            }
+                                        },
+                                        data: ['周一','周二','周三','周四','周五','周六','周日']
+                                    },
+                                    yAxis: {
+                                        type: 'value',
+                                        axisLabel: {
+                                            formatter: '{value} °C'
+                                        },
+                                        min:function (v) {
+                                            return (v.min - 30) < 0? 0:(v.min - 30).toFixed(1)
+                                        },
+                                        nameTextStyle: {
+                                            color: '#fff',
+                                            fontSize: 11
+                                        },
+                                        splitLine:{
+                                            lineStyle: {
+                                                color: '#96ceb4'
+                                            },
+                                            show:false    //去掉网格线
+                                        },
+                                        axisLine:{
+                                            type : 'solid',
+                                            lineStyle:{
+                                                color: '#96ceb4'
+                                            }
+                                        },
+                                        axisTick:{
+                                            show:true,
+                                            lineStyle:{
+                                                color: '#96ceb4'
+                                            }
+                                        }
+                                    },
+                                    series: [
+                                        {
+                                            name:'一仓温度',
+                                            type:'line',
+                                            data:[11, 11, 15, 13, 12, 13, 10],
+                                            itemStyle :{
+                                                color:'#96ceb4'
+                                            },
+                                            markPoint: {
+                                                data: [
+                                                    {type: 'max', name: '最大值'},
+                                                    {type: 'min', name: '最小值'}
+                                                ]
+                                            }
+                                        },        {
+                                            name:'混合料温度',
+                                            type:'line',
+                                            data:[12, 13, 16, 17, 14, 11, 12],
+                                            itemStyle :{
+                                                color:'#ffeead'
+                                            },
+                                            markPoint: {
+                                                data: [
+                                                    {type: 'max', name: '最大值'},
+                                                    {type: 'min', name: '最小值'}
+                                                ]
+                                            }
+                                        },        {
+                                            name:'沥青温度',
+                                            type:'line',
+                                            data:[11, 11, 15, 13, 12, 13, 10],
+                                            itemStyle :{
+                                                color:'#ff6f69'
+                                            },
+                                            markPoint: {
+                                                data: [
+                                                    {type: 'max', name: '最大值'},
+                                                    {type: 'min', name: '最小值'}
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            name:'骨料温度',
+                                            type:'line',
+                                            itemStyle :{
+                                                color:'#ffcc5c'
+                                            },
+                                            data:[1, -2, 2, 5, 3, 2, 0],
+
+                                        },
+                                        {
+                                            name:'除尘器温度',
+                                            type:'line',
+                                            itemStyle :{
+                                                color:'#1c84c6'
+                                            },
+                                            data:[1, -2, 2, 5, 3, 2, 0],
+
+                                        }
+                                    ]
+                                };
+                                myChart1.setOption(option1);
+                            </script>
+                        </div>
+                    </div>
+                    <div class="modelpub margin10" style="height: 48%;">
+                        <div class="common-tit" id="crew2_product_title" ></div>
+                        <span class="tilt"></span>
+                        <div class="echart_con"  id="chart2">
+
+                        </div>
+                    </div>
+                </div>
+                <!--首页右侧 end -->
             </div>
         </div>
     </div>
-    <!--首页右侧 end -->
-</div>
 </div>
 <input id="path" value="${path}" type="hidden">
 <div class="clearfix"></div>
 <!--首页底部 sta -->
-<!--<div id="model-foot" class="model-foot">
+<%--<div id="model-foot" class="model-foot">--%>
 
-</div>-->
+<%--</div>--%>
 <!--首页底部 end-->
 <script type="text/javascript" src="../../../../static/cockpit/js/lib/jquery.min.js"></script>
 <script type="text/javascript" src="../../../../static/cockpit/js/highcharts.js"></script>

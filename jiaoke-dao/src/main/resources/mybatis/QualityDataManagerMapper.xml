@@ -199,37 +199,34 @@
 
     <select id="selectProduceMessageByDate" resultType="java.util.Map">
         SELECT
-               SUM(T1.material_total)/1000 AS total,
+               ROUND(SUM(T1.material_total)/1000) AS total,
                MIN(T1.produce_time) AS startTime,
-               T1.produce_date AS produceDate,
-               T2.client_num AS clientNum,
                T2.client_name AS clientName,
-               T2.project_name AS projectName,
-               T2.construction_units AS constructionUnits
+               T2.construction_unit AS constructionUnits,
+               T1.produce_date AS produceDate,
+               T1.project_name AS projectName
         FROM
              quality_monitoring_realtime_${crewNum} AS T1
-                 INNER JOIN quality_test_project AS T2
-                     ON T1.produce_custom_num = T2.client_num
+                 INNER JOIN (
+                            SELECT project_name,client_name,construction_unit FROM quality_leave_factory_history WHERE finish_date = date &apos;${producedDate}&apos; GROUP BY project_name
+                            ) AS T2
+                     ON T1.project_name = T2.project_name
         WHERE
-                T1.produce_date = &apos;${producedDate}&apos;
-        GROUP BY
-        T1.produce_custom_num;
+                T1.produce_date =date &apos;${producedDate}&apos;
+        GROUP BY T1.project_name
+
     </select>
 
     <select id="selectUserProTotalByDate" resultType="java.util.Map">
         SELECT
-               T1.produce_custom_num as userName,
-               T2.client_name AS clientName,
-               SUM(T1.material_total)/1000 as userTotal
+               ROUND(SUM(T1.material_total)/1000) as userTotal,
+               T1.project_name AS projectName
         FROM
-             quality_monitoring_realtime_${crewNum} as T1
-                 INNER JOIN quality_test_project AS T2
-                     ON T1.produce_custom_num = T2.client_num
+             quality_monitoring_realtime_${crewNum} AS T1
         WHERE
-                T1.produce_date = &apos;${producedDate}&apos;
+                T1.produce_date = date &apos;${producedDate}&apos;
         GROUP BY
-                 T1.produce_custom_num
-
+                 T1.project_name;
     </select>
 
     <select id="selectProductMessageById" resultType="java.util.Map" >
@@ -259,6 +256,7 @@
         date_format(QMRD.produce_time,'%H:%i:%s') as produce_time,
         QMRD.produce_disc_num,
         QPM.pro_name,
+        QMRD.produce_car_num,
         QMRD.produce_proportioning_num,
         QMRD.produce_car_num,
         QMRD.produce_custom_num,
@@ -335,25 +333,61 @@
 
     <select id="selectMsgByUserAndDate" resultType="java.util.Map">
         (SELECT
-                T1.*,
-                T2.project_name
+                T1.*
          FROM
               quality_monitoring_realtime_data1 AS T1
-                  LEFT JOIN quality_test_project AS T2
-                      ON T1.produce_custom_num = T2.client_num
          WHERE
                  T1.produce_date = #{proDate}
-           AND T1.produce_custom_num = #{proDate})
+           AND T1.project_name = #{userNum})
         UNION ALL
                 (SELECT
-                        T1.*,
-                        T2.project_name
+                        T1.*
                  FROM
                       quality_monitoring_realtime_data2 AS T1
-                          LEFT JOIN quality_test_project AS T2
-                              ON T1.produce_custom_num = T2.client_num
                  WHERE
                          T1.produce_date = #{proDate}
-                   AND T1.produce_custom_num = #{proDate})
+                   AND T1.project_name = #{userNum})
+    </select>
+    <select id="selectProducedSVGToGrading" resultType="java.util.Map">
+
+        SELECT
+            <choose>
+                <when test="crew == 'data1'">
+                    'crew1' AS crewNum,
+                </when>
+                <otherwise>
+                    'crew2' AS crewNum,
+                </otherwise>
+            </choose>
+                QMRD.produce_date,
+                QMRD.produce_proportioning_num,
+               AVG(QMRD.material_aggregate_6) AS material_aggregate_6,
+               AVG(QMRD.material_aggregate_5) AS material_aggregate_5,
+               AVG(QMRD.material_aggregate_4) AS material_aggregate_4,
+               AVG(QMRD.material_aggregate_3) AS material_aggregate_3,
+               AVG(QMRD.material_aggregate_2) AS material_aggregate_2,
+               AVG(QMRD.material_aggregate_1) AS material_aggregate_1,
+               AVG(QMRD.material_stone_1) AS material_stone_1,
+               AVG(QMRD.material_stone_2) AS material_stone_2,
+               AVG(QMRD.material_asphalt) AS material_asphalt,
+               AVG(QMRD.material_regenerate) AS material_regenerate,
+               AVG(QMRD.material_additive) AS material_additive,
+               AVG(QMRD.material_total) AS material_total,
+               QPM.*
+        FROM
+             quality_monitoring_realtime_${crew} AS QMRD
+                 INNER JOIN quality_proportioning_message AS QPM
+        <choose>
+            <when test="crew == 'data1'">
+                ON QMRD.produce_proportioning_num = QPM.crew1_modele_id
+            </when>
+            <otherwise>
+                ON QMRD.produce_proportioning_num = QPM.crew2_modele_id
+            </otherwise>
+        </choose>
+        WHERE QMRD.produce_date = date &apos;${date}&apos;
+          AND YEAR(QPM.create_time) = YEAR(&apos;${date}&apos;)
+        GROUP BY QMRD.produce_proportioning_num
+
     </select>
 </mapper>

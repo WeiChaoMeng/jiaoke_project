@@ -241,6 +241,12 @@
                                 type: 'line',
                                 name:'上限',
                                 symbolSize:6,
+                                lineStyle: {
+                                    normal: {
+                                        type: 'solid',
+                                        color: '#ed5565'
+                                    }
+                                },
                                 data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
                             },
                             {
@@ -255,6 +261,12 @@
                                 type: 'line',
                                 name:'下限',
                                 symbolSize:6,
+                                lineStyle: {
+                                    normal: {
+                                        type: 'solid',
+                                        color: '#ed5565'
+                                    }
+                                },
                                 data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
                             }
                         ]
@@ -444,6 +456,12 @@
                                 type: 'line',
                                 name:'上限',
                                 symbolSize:6,
+                                lineStyle: {
+                                    normal: {
+                                        type: 'solid',
+                                        color: '#ed5565'
+                                    }
+                                },
                                 data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
                             },
                             {
@@ -458,6 +476,12 @@
                                 type: 'line',
                                 name:'下限',
                                 symbolSize:6,
+                                lineStyle: {
+                                    normal: {
+                                        type: 'solid',
+                                        color: '#ed5565'
+                                    }
+                                },
                                 data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
                             }
                         ]

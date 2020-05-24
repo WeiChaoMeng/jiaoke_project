@@ -205,7 +205,6 @@ function getRealTimeDataEcharsMaterial() {
 
 function eachMaterialList(res) {
 
-    debugger
     for (var i = 0; i < res.length;i++){
 
         var arr = res[i]['crew1'];

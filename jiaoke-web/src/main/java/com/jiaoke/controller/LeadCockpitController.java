@@ -68,4 +68,17 @@ public class LeadCockpitController {
         }
         return JSON.toJSONString(res);
     }
+
+    @ResponseBody
+    @RequestMapping("/getTodayProductList.do")
+    public String getTodayProductList(){
+        Map<String,Object> res = new HashMap<>();
+        try{
+            res = leadCockpitService.getTodayProductList();
+        }catch (Exception e){
+            res.put("message","error");
+            e.printStackTrace();
+        }
+        return JSON.toJSONString(res);
+    }
 }

@@ -156,12 +156,15 @@ function showEchars(siteArray) {
     }
     //定义地图参数二
     var BJData = [];
+    var colourArry = ['#0096fe','#3badfc','#59d4ff','#9debff','#d0f5fc','#daf8e3','#97ebdb','#b7ded2','#f7c297','#ffecb8'];
+    var tem = 0;
     for (var  key in resObj){
+        tem++;
         var temObj2;
         if (key === "路驰分公司") {
-            temObj2 = {name: key, value: 190}
+            temObj2 = {name: key, value: 190,colors:'#ed5565'}
         }else {
-            temObj2 = {name: key, value: 90};
+            temObj2 = {name: key, value: 90,colors:colourArry[tem]};
         }
         var temArray = [];
         var temObj1= {name: '路驰分公司'};
@@ -254,7 +257,7 @@ function editMidChar(geoCoord,BData) {
                 data: convertData(item[1])
             },
             {
-                name: item[0] + ' Top10',
+                name: item[0],
                 type: 'lines',
                 zlevel: 2,
                 effect: {
@@ -275,13 +278,14 @@ function editMidChar(geoCoord,BData) {
                 data: convertData(item[1])
             },
             {
-                name: item[0] + ' Top10',
+                name: item[0],
                 type: 'effectScatter',
                 coordinateSystem: 'geo',
                 zlevel: 2,
                 rippleEffect: {
                     brushType: 'stroke'
                 },
+                //不显示工程名称
                 label: {
                     normal: {
                         show: false,
@@ -289,6 +293,21 @@ function editMidChar(geoCoord,BData) {
                         formatter: '{b}'
                     }
                 },
+                //显示工程名称
+                // label: {
+                //     normal: {
+                //         show: true,
+                //         position: 'right', //显示位置
+                //         offset: [5, 0], //偏移设置
+                //         formatter: function(params){//圆环显示文字
+                //             return params.data.name;
+                //         },
+                //         fontSize: 13
+                //     },
+                //     emphasis: {
+                //         show: true
+                //     }
+                // },
                 symbolSize: function(val) {
                     return val[2] / 8;
                 },
@@ -300,8 +319,9 @@ function editMidChar(geoCoord,BData) {
                 data: item[1].map(function(dataItem) {
                     return {
                         name: dataItem[1].name,
-                        value: geoCoordMap[dataItem[1].name].concat([dataItem[1].value])
-                    };
+                        value: geoCoordMap[dataItem[1].name].concat([dataItem[1].value]),
+                        itemStyle:{normal: {color:dataItem[1].colors}}
+                    }
                 })
             },
             {
@@ -443,7 +463,7 @@ function editMidChar(geoCoord,BData) {
             //     emphasis: {
             //         show: false
             //     }
-            // },x`
+            // },
             top: 0,
             bottom: 0,
             roam: true,

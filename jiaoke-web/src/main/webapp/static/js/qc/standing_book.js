@@ -384,6 +384,50 @@ function getAsphaltStandingBook(id) {
 }
 
 /**
+ * 查询规格与厂家
+ */
+function getSpecificationAndManufacturers() {
+    var startDate = $("#searchStart").val();
+    var endDate = $("#searchEnd").val();
+    var materials = $("#materials option:selected").val();
+
+    if (startDate && endDate){
+        $.ajax({
+            type:"post",
+            url: basePath + "/getSpecificationAndManufacturers.do",
+            data:{
+                'startDate':startDate,
+                'endDate':endDate,
+                'materials':materials
+            },
+            dataType:'json',
+            success:function (res) {
+                //渲染厂家、规格
+                if (res.message === 'success'){
+                    var specificationList = res.specificationList;
+                    var manufacturersList = res.manufacturersList;
+                    $("#specification").empty().append('<option value="select">' + "请选择" + '</option>');
+                    $("#manufacturers").empty().append('<option value="select">' + "请选择" + '</option>');
+                    debugger
+                    if (specificationList.length){
+                        for (var i = 0; i < specificationList.length;i++){
+                            $("#specification").append('<option value="'+ specificationList[i].specification_num + '">' + specificationList[i].specification_name + '</option>');
+                        }
+                    }
+                    if (manufacturersList.length){
+                        for (var i = 0; i < manufacturersList.length;i++){
+                            $("#manufacturers").append('<option value="'+ manufacturersList[i].manufacturers_num + '">' + manufacturersList[i].manufacturers_name + '</option>');
+                        }
+                    }
+                }
+            }
+        })
+    }else {
+        layer.alert("请选择时间日期")
+    }
+
+}
+/**
  * 条件检索
  */
 function searchStandingBook() {

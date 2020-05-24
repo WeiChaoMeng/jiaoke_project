@@ -266,7 +266,7 @@
 }
 .list_lh{height:85%;overflow:hidden;}
 /*.list_lh ul{height:90%}*/
-.list_lh li{padding:10px;color:#00A8FE;height: 60px;}
+.list_lh li{padding:10px;padding-left:33.5px;color:#00A8FE;height: 35px;}
 /*.list_lh li p{height:24px;line-height:24px;}*/
 /*.list_lh li p a{float:left;}*/
 /*.list_lh li p em{width:80px;font:normal 12px/24px Arial;color:#ffffff;float:right;display:inline-block;}*/

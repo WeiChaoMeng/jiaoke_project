@@ -96,17 +96,24 @@ public class LeadCockpitServiceImpl implements LeadCockpitServiceInf {
 
             String crew =  list.get(i).get("crew");
             String discNum = list.get(i).get("produce_disc_num");
+            String produceTime = String.valueOf(list.get(i).get("produce_time"));
             String ratioStone = String.valueOf(list.get(i).get("ratio_stone"));
             Float total = Float.parseFloat(String.valueOf(list.get(i).get("material_total")));
             Float asphalt = Float.parseFloat(String.valueOf(list.get(i).get("material_asphalt")));
             String aar = df.format(asphalt /(total - asphalt) * 100);
 
             if ("crew1".equals(crew)){
-                crew1Xlist.add(discNum);
+                //盘号X轴
+//                crew1Xlist.add(discNum);
+                //日期X轴
+                crew1Xlist.add(produceTime);
                 crew1data.add(aar);
                 ration.put("crew1Ration",ratioStone);
             }else {
-                crew2Xlist.add(discNum);
+                //盘号X轴
+//                crew2Xlist.add(discNum);
+                //日期X轴
+                crew2Xlist.add(produceTime);
                 crew2data.add(aar);
                 ration.put("crew2Ration",ratioStone);
             }
@@ -125,6 +132,19 @@ public class LeadCockpitServiceImpl implements LeadCockpitServiceInf {
         res.put("body",body);
         res.put("message","success");
         //装填数据返回
+        return res;
+    }
+
+    @Override
+    public Map<String, Object> getTodayProductList() {
+        Map<String,Object> res = new HashMap<>();
+        //查询当前最后一条数据三日内相同产品信息及配比信息
+        List<Map<String,String>> list = leadCockpitServiceDao.selectTodayProductList();
+        res.put("dataList",list);
+        res.put("message","success");
+        if (list == null || list.size() == 0){
+            res.put("message","empty");
+        }
         return res;
     }
 }
