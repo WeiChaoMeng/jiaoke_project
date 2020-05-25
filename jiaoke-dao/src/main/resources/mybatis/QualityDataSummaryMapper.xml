@@ -36,12 +36,9 @@
                   INNER JOIN
                       quality_proportioning_message AS QPM
                       ON QMRD.produce_proportioning_num = QPM.crew1_modele_id
-                  INNER JOIN
-                      quality_proportioning_model AS QPMD
-                      ON QPMD.message_id = QPM.id
          WHERE
                  DATE_SUB(CURDATE(), INTERVAL 2 DAY) &lt;= date(QMRD.produce_date)
-           AND YEAR(QPMD.create_time) = YEAR(NOW())
+           AND YEAR(QPM.create_time) = YEAR(NOW())
          order by QMRD.id DESC )
         Union ALL
                 (SELECT
@@ -77,12 +74,9 @@
                           INNER JOIN
                               quality_proportioning_message AS QPM
                               ON QMRD.produce_proportioning_num = QPM.crew2_modele_id
-                          INNER JOIN
-                              quality_proportioning_model AS QPMD
-                              ON QPMD.message_id = QPM.id
                  WHERE
                          DATE_SUB(CURDATE(), INTERVAL 2 DAY) &lt;= date(QMRD.produce_date)
-                   AND YEAR(QPMD.create_time) = YEAR(NOW())
+                   AND YEAR(QPM.create_time) = YEAR(NOW())
                  order by QMRD.id DESC)
     </select>
 
@@ -109,6 +103,7 @@
         QD.produce_time
         ) BETWEEN &apos;${startDate}&apos;
         AND &apos;${endDate}&apos;
+        AND YEAR(QM.create_time) = YEAR(&apos;${endDate}&apos;)
         GROUP BY
         QM.pro_name,modele_id;
     </select>
@@ -191,12 +186,9 @@
                       ON QMRD.produce_proportioning_num = QPM.crew2_modele_id
                   </otherwise>
               </choose>
-        INNER JOIN
-        quality_proportioning_model AS QPMD
-        ON QPMD.message_id = QPM.id
         WHERE
           QMRD.produce_proportioning_num = ${rationId}
-         AND YEAR(QPMD.create_time) = YEAR(&apos;${startDate}&apos;)
+         AND YEAR(QPM.create_time) = YEAR(&apos;${startDate}&apos;)
           AND
                 CONCAT(
                   QMRD.produce_date,
@@ -274,11 +266,9 @@
                QPM.*
         FROM
              quality_proportioning_message AS QPM
-                 INNER JOIN quality_proportioning_model AS QPMD
-                     ON QPM.id = QPMD.message_id
         WHERE
                 ${crewNum}_modele_id = ${rationNum}
-          AND YEAR(QPMD.create_time) = YEAR(&apos;${proDate}&apos;)
+          AND YEAR(QPM.create_time) = YEAR(&apos;${proDate}&apos;)
 
     </select>
     <select id="selectAllCriticalWarning" resultType="java.util.Map">
@@ -376,15 +366,13 @@
                 QPM.temperature_mixture_up as temperatureMixtureUp,
                 QPM.temperature_milling_up as temperatureMillingUp
         from quality_proportioning_message as QPM
-        INNER JOIN  quality_proportioning_model AS QPMD
-        ON QPM.id = QPMD.message_id
         <if test="crewNum == 1">
             where crew1_modele_id = #{ratioNum}
         </if>
         <if test="crewNum == 2">
             where crew2_modele_id = #{ratioNum}
         </if>
-        AND YEAR(QPMD.create_time) = YEAR(&apos;${proDate}&apos;)
+        AND YEAR(QPM.create_time) = YEAR(&apos;${proDate}&apos;)
     </select>
     <select id="mobileGetRatioListByDate" resultType="java.util.Map">
         SELECT
@@ -404,6 +392,7 @@
         </if>
         WHERE
           QD.produce_date = &apos;${startDate}&apos;
+        AND YEAR(QM.create_time) = YEAR(&apos;${startDate}&apos;)
         GROUP BY
         QM.pro_name,modele_id;
     </select>
@@ -440,7 +429,6 @@
         quality_monitoring_realtime_${crew} AS QMRD
         INNER JOIN
         quality_proportioning_message AS QPM
-
         <choose>
             <when test="crew=='data1'.toString()">
                 ON QMRD.produce_proportioning_num = QPM.crew1_modele_id
@@ -449,14 +437,14 @@
                 ON QMRD.produce_proportioning_num = QPM.crew2_modele_id
             </otherwise>
         </choose>
-
+          WHERE YEAR(QPM.create_time) = YEAR(&apos;${startDate}&apos;)
         <choose>
             <when test="rationId=='select'.toString()">
-                WHERE
+                AND
                 QMRD.produce_date = &apos;${startDate}&apos;
             </when>
             <otherwise>
-                WHERE
+                AND
                 QMRD.produce_proportioning_num = ${rationId}
                 AND
                 QMRD.produce_date = &apos;${startDate}&apos;
@@ -471,6 +459,7 @@
               t1.*,
               'crew1' AS 'crewNum',
               t2.produce_proportioning_num,
+              t2.produce_date,
               t2.material_aggregate_1,
               t2.material_aggregate_2,
               t2.material_aggregate_3,
@@ -493,6 +482,7 @@
               INNER JOIN (
               SELECT
               produce_proportioning_num,
+              produce_date,
               material_aggregate_1,
               material_aggregate_2,
               material_aggregate_3,
@@ -516,12 +506,14 @@
               Id = #{id}
               ) as t2
               on t1.crew1_modele_id = t2.produce_proportioning_num
+              AND YEAR(t1.create_time) = YEAR(t2.produce_date)
           </when>
           <otherwise>
               SELECT
               t1.*,
               'crew2' AS 'crewNum',
               t2.produce_proportioning_num,
+              t2.produce_date,
               t2.material_aggregate_1,
               t2.material_aggregate_2,
               t2.material_aggregate_3,
@@ -544,6 +536,7 @@
               INNER JOIN (
               SELECT
               produce_proportioning_num,
+              produce_date,
               material_aggregate_1,
               material_aggregate_2,
               material_aggregate_3,
@@ -567,6 +560,7 @@
               Id = #{id}
               ) as t2
               on t1.crew2_modele_id = t2.produce_proportioning_num
+              AND YEAR(t1.create_time) = YEAR(t2.produce_date)
           </otherwise>
       </choose>
     </select>
@@ -610,7 +604,7 @@
         INNER JOIN quality_proportioning_message AS QPM ON QMRD.produce_proportioning_num = QPM.crew1_modele_id
         WHERE
         TO_DAYS(NOW()) - TO_DAYS(QMRD.produce_date) &lt;= 1
-#                 QMRD.produce_date = '2019-09-15'
+        AND  YEAR(QPM.create_time) = YEAR(QMRD.produce_date)
         )
         UNION ALL
         (
@@ -652,7 +646,7 @@
         INNER JOIN quality_proportioning_message AS QPM ON QMRD.produce_proportioning_num = QPM.crew2_modele_id
         WHERE
          TO_DAYS(NOW()) - TO_DAYS(QMRD.produce_date) &lt;= 1
- #               QMRD.produce_date = '2019-06-11'
+          AND  YEAR(QPM.create_time) = YEAR(QMRD.produce_date)
         )
     </select>
     
@@ -687,9 +681,8 @@
                QWPC.project_name,
                QWPC.produce_disc_num,
                QWPC.produce_crewNum,
-               QWD.*,
-               (SELECT QPM1.pro_name FROM quality_warning_promessage_crew AS QWPC1 INNER JOIN quality_proportioning_message AS QPM1 ON QWPC1.produce_ratio_id = QPM1.crew1_modele_id WHERE QWPC1.produce_ratio_id = QWPC.produce_ratio_id  LIMIT 1 ) AS crew1RatioName,
-               (SELECT QPM1.pro_name FROM quality_warning_promessage_crew AS QWPC1 INNER JOIN quality_proportioning_message AS QPM1 ON QWPC1.produce_ratio_id = QPM1.crew2_modele_id WHERE QWPC1.produce_ratio_id = QWPC.produce_ratio_id  LIMIT 1 ) AS crew2RatioName
+               QWPC.pro_name,
+               QWD.*
         FROM
              quality_warning_promessage_crew AS QWPC
                  INNER JOIN 	quality_warning_data AS QWD
@@ -707,9 +700,8 @@
                QWPC.project_name,
                QWPC.produce_disc_num,
                QWPC.produce_crewNum,
-               QWD.*,
-               (SELECT QPM1.pro_name FROM quality_warning_promessage_crew AS QWPC1 INNER JOIN quality_proportioning_message AS QPM1 ON QWPC1.produce_ratio_id = QPM1.crew1_modele_id WHERE QWPC1.produce_ratio_id = QWPC.produce_ratio_id  LIMIT 1 ) AS crew1RatioName,
-               (SELECT QPM1.pro_name FROM quality_warning_promessage_crew AS QWPC1 INNER JOIN quality_proportioning_message AS QPM1 ON QWPC1.produce_ratio_id = QPM1.crew2_modele_id WHERE QWPC1.produce_ratio_id = QWPC.produce_ratio_id  LIMIT 1 ) AS crew2RatioName
+                QWPC.pro_name,
+               QWD.*
 
         FROM
              quality_warning_promessage_crew AS QWPC

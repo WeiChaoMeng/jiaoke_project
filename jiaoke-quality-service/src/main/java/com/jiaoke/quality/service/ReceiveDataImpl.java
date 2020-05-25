@@ -142,7 +142,7 @@ public class ReceiveDataImpl implements ReceiveDataInf {
         }
 
         //更新预警表
-        qualityWarningDao.updateQualityWarningData(id,upWarning,criticalWarning);
+        qualityWarningDao.updateQualityWarningData(id,upWarning,criticalWarning,ratioTemplate.getProName());
     }
 
     @Override

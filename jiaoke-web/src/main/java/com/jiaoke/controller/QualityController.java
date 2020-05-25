@@ -1224,7 +1224,6 @@ public class QualityController {
         if (startDate.isEmpty() || endDate.isEmpty() || crew.isEmpty()) {
             return null;
         }
-
         Map<String,Object> map = new HashMap<>();
         try{
             map = qualityDataSummaryInf.getRatioListByDateTimeAndCrew(startDate,endDate,crew);
@@ -2975,6 +2974,7 @@ public class QualityController {
         return JSON.toJSONString(map);
 
     }
+
 
     @ResponseBody
     @RequestMapping(value = "/getMobileWarningDataByDate.do",method = RequestMethod.POST)

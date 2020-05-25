@@ -82,6 +82,7 @@
         WHERE
                 QR.produce_date = &apos;${producedDate}&apos;
         AND  QR.produce_proportioning_num != 0
+        AND YEAR(QM.create_time) = YEAR(&apos;${producedDate}&apos;)
         GROUP BY QR.produce_proportioning_num;
 
     </select>
@@ -142,9 +143,7 @@
         QPM.crew2_modele_id AS crew2ModeleId
         FROM
         quality_proportioning_message AS QPM
-        INNER JOIN quality_proportioning_model AS QPMD
-        ON QPM.id = QPMD.message_id
-        WHERE  YEAR(QPMD.create_time) = YEAR(&apos;${proDate}&apos;)
+        WHERE  YEAR(QPM.create_time) = YEAR(&apos;${proDate}&apos;)
         AND  ${crewNum}_modele_id IN
         <foreach collection="ratioNumList" item="item" open="(" close=")" separator=",">
             ${item.produce_proportioning_num}
@@ -281,7 +280,6 @@
         quality_monitoring_realtime_${crewNum} AS QMRD
         INNER JOIN
         quality_proportioning_message AS QPM
-
         <choose>
             <when test="crewNum=='data1'.toString()">
                 ON QMRD.produce_proportioning_num = QPM.crew1_modele_id
@@ -290,45 +288,41 @@
                 ON QMRD.produce_proportioning_num = QPM.crew2_modele_id
             </otherwise>
         </choose>
-        INNER JOIN
-        quality_proportioning_model AS QPMD
-        ON QPMD.message_id =  QPM.id
         WHERE
         QMRD.produce_proportioning_num = ${ratioNum}
         AND
         QMRD.produce_date = date ${date}
         AND
-        YEAR(QPMD.create_time) = YEAR(${date});
+        YEAR(QPM.create_time) = YEAR(${date});
     </select>
     <select id="selectRationById" resultType="com.jiaoke.quality.bean.QualityRatioTemplate">
         select QPM.id,
-        QPM.pro_name as proName,
-        QPM.repertory_one as repertoryOne,
-        QPM.repertory_two as repertoryTwo,
-        QPM.repertory_three as repertoryThree,
-        QPM.repertory_four as repertoryFour,
-        QPM.repertory_five as repertoryFive,
-        QPM.repertory_six as repertorySix,
-        QPM.breeze as breeze,
-        QPM.ratio_stone as ratioStone,
-        QPM.ratio_regenerate1 as ratioRegenerate1,
-        QPM.ratio_regenerate2 as ratioRegenerate2,
-        QPM.ratio_additive as ratioAdditive,
-        QPM.regenerate as regenerate,
-        QPM.additive as additive,
-        QPM.temperature_asphalt as temperatureAsphalt,
-        QPM.temperature_aggregate as temperatureAggregate,
-        QPM.temperature_mixture as temperatureMixture,
-        QPM.temperature_milling as temperatureMilling,
-        QPM.temperature_asphalt_up as temperatureAsphaltUp,
-        QPM.temperature_aggregate_up as temperatureAggregateUp,
-        QPM.temperature_mixture_up as temperatureMixtureUp,
-        QPM.temperature_milling_up as temperatureMillingUp
+               QPM.pro_name as proName,
+               QPM.repertory_one as repertoryOne,
+               QPM.repertory_two as repertoryTwo,
+               QPM.repertory_three as repertoryThree,
+               QPM.repertory_four as repertoryFour,
+               QPM.repertory_five as repertoryFive,
+               QPM.repertory_six as repertorySix,
+               QPM.breeze as breeze,
+               QPM.ratio_stone as ratioStone,
+               QPM.ratio_regenerate1 as ratioRegenerate1,
+               QPM.ratio_regenerate2 as ratioRegenerate2,
+               QPM.ratio_additive as ratioAdditive,
+               QPM.regenerate as regenerate,
+               QPM.additive as additive,
+               QPM.temperature_asphalt as temperatureAsphalt,
+               QPM.temperature_aggregate as temperatureAggregate,
+               QPM.temperature_mixture as temperatureMixture,
+               QPM.temperature_milling as temperatureMilling,
+               QPM.temperature_asphalt_up as temperatureAsphaltUp,
+               QPM.temperature_aggregate_up as temperatureAggregateUp,
+               QPM.temperature_mixture_up as temperatureMixtureUp,
+               QPM.temperature_milling_up as temperatureMillingUp
         from quality_proportioning_message AS QPM
-        INNER JOIN quality_proportioning_model AS QPMD
-        ON QPM.id = QPMD.message_id
-        where ${crewNum}_modele_id = ${ratioNum} AND
-        YEAR(QPMD.create_time) = YEAR(&apos;${proDate}&apos;);
+        where ${crewNum}_modele_id = ${ratioNum}
+          AND
+              YEAR(QPM.create_time) = YEAR(&apos;${proDate}&apos;);
     </select>
 
     <select id="selectMsgByUserAndDate" resultType="java.util.Map">
