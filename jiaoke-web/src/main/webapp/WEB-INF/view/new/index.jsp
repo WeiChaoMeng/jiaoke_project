@@ -549,22 +549,29 @@
                                     <%--<i class="iconfont">&#xe6a7;</i>--%>
                                     <%--<cite>质量首页</cite></a>--%>
                             <%--</li>--%>
-
+                            <shiro:hasPermission name="quality:monitorOuter">
                             <li>
                                 <a onclick="xadmin.add_tab('实时监测','qc_real_time_surveillance.do',true)">
                                     <i class="iconfont">&#xe6bb;</i>
                                     <cite>实时监测</cite></a>
                             </li>
+                            </shiro:hasPermission>
+
+                                <shiro:hasPermission name="quality:historyOuter">
                             <li>
                                 <a onclick="xadmin.add_tab('历史数据','qc_historical_data.do',true)">
                                     <i class="iconfont">&#xe70c;</i>
                                     <cite>历史数据</cite></a>
                             </li>
+                                </shiro:hasPermission>
+
                             <%--<li>--%>
                                 <%--<a onclick="xadmin.add_tab('工程管理','qc_project_manager.do',true)">--%>
                                     <%--<i class="iconfont">&#xe6a7;</i>--%>
                                     <%--<cite>工程管理</cite></a>--%>
                             <%--</li>--%>
+
+                                <shiro:hasPermission name="quality:proportioning">
                             <li>
                                 <a onclick="xadmin.add_tab('配比管理','qc_matching_model.do',true)">
                                     <i class="iconfont">&#xe6fa;</i>
