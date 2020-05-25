@@ -30,6 +30,14 @@ public interface OaNewsCenterService {
     List<OaNewsCenter> selectAll();
 
     /**
+     * 搜索
+     *
+     * @param title 标题
+     * @return list
+     */
+    List<OaNewsCenter> titleFilter(String title);
+
+    /**
      * 根据id查询
      *
      * @param id id
@@ -58,4 +66,12 @@ public interface OaNewsCenterService {
      * @return int
      */
     int deleteByPrimaryKey(Integer id);
+
+    /**
+     * 批量删除数据
+     *
+     * @param ids ids
+     * @return int
+     */
+    int batchDeleteNews(String[] ids);
 }

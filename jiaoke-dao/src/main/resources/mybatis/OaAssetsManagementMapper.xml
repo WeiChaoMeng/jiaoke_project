@@ -11,11 +11,10 @@
             entry_person as entryPerson,
             custodian as custodian,
             remarks as remarks,
+            state,
             create_time as createTime
         FROM
             oa_asset_management
-        WHERE
-	        state = 0
         ORDER BY
             create_time DESC
     </select>

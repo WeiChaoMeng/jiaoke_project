@@ -66,4 +66,9 @@ public class OaNoticeServiceImpl implements OaNoticeService {
         }
         return oaNoticeList;
     }
+
+    @Override
+    public int batchDeleteNotice(String[] ids) {
+        return oaNoticeMapper.batchDeleteNotice(ids);
+    }
 }

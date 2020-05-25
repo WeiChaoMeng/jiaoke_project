@@ -1,7 +1,7 @@
 /*高德地图*/
 /*领导驾驶舱首页右下角地图-厂区安全*/
 var map = new AMap.Map('container', {
-    center: [116.352654,39.698689],
+    center: [116.352766,39.698453],
     layers: [
         new AMap.TileLayer.Satellite()
     ],
@@ -10,22 +10,41 @@ var map = new AMap.Map('container', {
     mapStyle: 'amap://styles/dark'
 });
 
+//生产区
+var path = [
+    [116.354853,39.698065],
+    [116.352648,39.700042],
+    [116.350932,39.698874],
+    [116.353233,39.696922],
+    [116.354853,39.698065]
+];
+
+var polyline = new AMap.Polyline({
+    path: path,
+    isOutline: true,
+    outlineColor: '#ffeeff',
+    borderWeight: 0,
+    strokeColor: "#ff0000",
+    strokeOpacity: 1,
+    strokeWeight:2,
+    // 折线样式还支持 'dashed'
+    strokeStyle: "solid",
+    // strokeStyle是dashed时有效
+    strokeDasharray: [10, 5],
+    lineJoin: 'round',
+    lineCap: 'round',
+    zIndex: 50,
+});
+
+polyline.setMap(map)
+
 var player;
 var accessTokenStr;
 
 $(function () {
-    accessTokenStr = "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5";
-    $('#container').css('display','none');
-    player = new EZUIPlayer({
-        id: 'myPlayer',
-        url: 'ezopen://open.ys7.com/D13034612/19.hd.live',
-        autoplay: true,
-        accessToken: accessTokenStr,
-        decoderPath: '../../../static/EZUIKit/',
-        width: 458,
-        height: 381,
-        splitBasis: 1
-    });
+    accessTokenStr = $('#accessToken').val();
+    $('#myPlayer').css('display','none');
+    $('#closeMonitor').css('display','none');
 });
 
 function closeMonitor() {
@@ -85,7 +104,7 @@ marker18.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034612/18.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -118,7 +137,7 @@ marker19.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034612/19.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -151,7 +170,7 @@ marker20.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034612/20.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -184,7 +203,7 @@ marker21.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034612/21.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -217,7 +236,7 @@ marker22.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034612/22.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -250,7 +269,7 @@ marker23.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034612/23.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -283,7 +302,7 @@ marker24.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034612/24.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -316,7 +335,7 @@ marker25.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034612/25.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -349,7 +368,7 @@ marker26.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034612/26.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -382,7 +401,7 @@ marker27.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034612/27.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -415,7 +434,7 @@ marker28.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034612/28.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -448,7 +467,7 @@ marker29.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034612/29.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -481,7 +500,7 @@ marker30.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034612/30.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -514,7 +533,7 @@ marker31.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034612/31.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -547,7 +566,7 @@ marker32.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034612/32.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -580,7 +599,7 @@ marker33.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034612/33.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -613,7 +632,7 @@ marker34.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034612/34.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -646,7 +665,7 @@ marker1.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034870/1.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -679,7 +698,7 @@ marker2.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034870/2.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -712,7 +731,7 @@ marker3.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034870/3.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -745,7 +764,7 @@ marker4.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034870/4.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -778,7 +797,7 @@ marker5.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034870/5.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -811,7 +830,7 @@ marker6.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034870/6.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -844,7 +863,7 @@ marker7.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034870/7.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -877,7 +896,7 @@ marker8.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034870/8.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -910,7 +929,7 @@ marker9.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034870/9.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -943,7 +962,7 @@ marker10.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034870/10.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -976,7 +995,7 @@ marker11.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034870/11.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -1009,7 +1028,7 @@ marker12.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034870/12.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -1042,7 +1061,7 @@ marker13.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034870/13.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -1075,7 +1094,7 @@ marker14.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034870/14.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -1108,7 +1127,7 @@ marker15.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034870/15.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -1141,7 +1160,7 @@ marker16.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034870/16.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -1174,7 +1193,7 @@ marker117.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034870/17.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -1207,7 +1226,7 @@ marker118.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034870/18.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -1240,7 +1259,7 @@ marker119.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034870/19.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -1273,7 +1292,7 @@ marker120.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034870/20.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -1306,7 +1325,7 @@ marker121.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034870/21.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -1339,7 +1358,7 @@ marker122.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034870/22.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -1372,7 +1391,7 @@ marker123.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034870/23.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -1405,7 +1424,7 @@ marker124.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034870/24.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -1438,7 +1457,7 @@ marker125.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034870/25.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -1457,7 +1476,7 @@ marker125.on('mouseout',function () {
 /*东院罐区北向南*/
 marker126 = new AMap.Marker({
     icon: "../../../../static/new/images/marker.png",
-    position: [116.351377,39.699126],
+    position: [116.35142,39.69911],
     offset: new AMap.Pixel(-13, -30)
 });
 marker126.setMap(map);
@@ -1471,7 +1490,7 @@ marker126.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034870/26.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -1490,7 +1509,7 @@ marker126.on('mouseout',function () {
 /*东院垃圾站*/
 marker127 = new AMap.Marker({
     icon: "../../../../static/new/images/marker.png",
-    position: [116.351135,39.698986],
+    position: [116.351157,39.698924],
     offset: new AMap.Pixel(-13, -30)
 });
 marker127.setMap(map);
@@ -1504,7 +1523,7 @@ marker127.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034870/27.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,
@@ -1523,7 +1542,7 @@ marker127.on('mouseout',function () {
 /*东院西侧通道北向南*/
 marker128 = new AMap.Marker({
     icon: "../../../../static/new/images/marker.png",
-    position: [116.351071,39.698928],
+    position: [116.351119,39.698895],
     offset: new AMap.Pixel(-13, -30)
 });
 marker128.setMap(map);
@@ -1537,7 +1556,7 @@ marker128.on('click',function () {
         id: 'myPlayer',
         url: 'ezopen://open.ys7.com/D13034870/28.hd.live',
         autoplay: true,
-        accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
+        accessToken: accessTokenStr,
         decoderPath: '../../../static/EZUIKit/',
         width: 458,
         height: 381,

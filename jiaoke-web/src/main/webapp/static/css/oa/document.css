@@ -9,10 +9,9 @@
 }
 
 .option-window-body-bottom {
-    text-align: center;
-    padding-top: 10px;
-    top: 0;
-    left: 0;
+    position: absolute;
+    bottom: 10px;
+    left: 35%;
 }
 
 .left-spacing {
@@ -274,3 +273,159 @@
     padding: 0 5px;
     background: #e8e8e8;
 }
+
+/*oa表单中上传文件*/
+.file-input {
+    width: 45px;
+    height: 28px;
+    display: block;
+    position: absolute;
+    left: 313px;
+    top: 29px;
+    z-index: 10;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.add-but {
+    padding: 5px 10px;
+    background: #38adff;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.file-ul {
+    width: 260px;
+    height: auto;
+    min-height: 25px;
+    margin: 0;
+    float: left;
+    border: 1px #848484 solid;
+    padding: 0 5px;
+}
+
+
+.file-li {
+    height: 25px;
+    line-height: 25px;
+    float: left;
+    white-space: nowrap;
+    list-style: none;
+    margin: 0 5px;
+    line-height: 25px;
+    display: inline-block;
+}
+
+.file-name {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 100px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+
+/*修改密码*/
+.psw-new-style {
+    margin-top: 25px;
+    float: left;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.psw-new-name {
+    float: left;
+    display: block;
+    padding: 9px 15px;
+    width: 80px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: right;
+}
+
+.psw-new-input {
+    height: 38px;
+    line-height: 1.3;
+    background-color: #fff;
+    border-radius: 2px;
+    padding-left: 10px;
+    width: 100%;
+    border: 1px solid #cecccc;
+}
+
+.psw-new-tips {
+    color: #797979;
+    display: block;
+    font-size: 10px;
+    margin-top: 5px;
+    text-indent: 5px;
+    min-height: 13px;
+}
+
+.paw-confirm-style {
+    float: left;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.paw-confirm-name {
+    float: left;
+    display: block;
+    padding: 9px 15px;
+    width: 80px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: right;
+}
+
+.paw-confirm-input {
+    height: 38px;
+    line-height: 1.3;
+    background-color: #fff;
+    border-radius: 2px;
+    padding-left: 10px;
+    width: 100%;
+    border: 1px solid #cecccc;
+}
+
+.paw-confirm-tips {
+    color: #797979;
+    display: block;
+    font-size: 10px;
+    margin-top: 5px;
+    text-indent: 5px;
+    min-height: 13px
+}
+
+.confirm-modify-psw-style {
+    float: left;
+    width: 100%;
+    text-align: center
+}
+
+.confirm-modify-psw {
+    outline: none;
+    display: inline-block;
+    height: 38px;
+    line-height: 38px;
+    padding: 0 18px;
+    background-color: #2ca4f9;
+    color: #fff;
+    white-space: nowrap;
+    text-align: center;
+    font-size: 14px;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.confirm-modify-psw:hover{
+    background: #42acf9;
+}
+

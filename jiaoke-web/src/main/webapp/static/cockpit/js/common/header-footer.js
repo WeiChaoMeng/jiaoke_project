@@ -12,9 +12,9 @@
         '<div class="headtit"></div>'+
         '</div>'+
         '<div class="head-line">'+
-        // '<div class="floatr">'+
-        // '<div id="head-time" class="headright-time"></div>'+
-        // '<div id="head-date" class="headright-date"></div>'+
+        '<div class="floatr">'+
+        '<div id="head-time" class="headright-time"></div>'+
+        '<div id="head-date" class="headright-date"></div>'+
         // '<div style="margin-top: 20px;">'+
         // '<div class="return-but-tc"><a href="/logout" style="display: block;width: 100%;height: 100%"></a></div>'+
         // '<div class="return-but-yh"><span style="margin-left: 23px;color: #028dff;">'+nickname+'</span></div>'+
@@ -38,9 +38,9 @@
         '<div class="menu-arrow arrowright"></div>'+
         '</div>'+
         '<div class="foot-line">' +
-        '<div class="floatr" style="margin-top: 0;">' +
-        '<div id="head-time" class="headright-time"></div>' +
-        '<div id="head-date" class="headright-date"></div>' +
+        // '<div class="floatr" style="margin-top: 0;">' +
+        // '<div id="head-time" class="headright-time"></div>' +
+        // '<div id="head-date" class="headright-date"></div>' +
         '</div></div>'
     $("#model-foot").html(footerHtlm);
 

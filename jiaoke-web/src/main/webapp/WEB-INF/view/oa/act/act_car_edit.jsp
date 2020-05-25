@@ -286,7 +286,8 @@
                     },
                     success: function (result) {
                         if (result === "success") {
-                            window.location.href = "${path}/oaIndex.do";
+                            <%--window.location.href = "${path}/oaIndex.do";--%>
+                            window.history.back();
                             window.top.tips("发送成功！", 0, 1, 2000);
                         } else {
                             window.top.tips('发送失败！', 0, 2, 2000);
@@ -318,7 +319,8 @@
             },
             success: function (result) {
                 if (result === "success") {
-                    window.location.href = "${path}/oaIndex.do";
+                    <%--window.location.href = "${path}/oaIndex.do";--%>
+                    window.history.back();
                     window.top.tips("发送成功！", 0, 1, 2000);
                 } else {
                     window.top.tips('发送失败！', 0, 2, 2000);
@@ -326,39 +328,6 @@
             }
         })
     }
-
-    //发送
-    <%--function send() {--%>
-
-        <%--if ($.trim($("#title").val()) === '' || $.trim($("#cardinalNumber").val()) === '') {--%>
-            <%--top.window.tips("标题和公里基数不可以为空！", 6, 5, 1000);--%>
-        <%--} else {--%>
-            <%--var array = [];--%>
-            <%--$('#annexes').find('input').each(function () {--%>
-                <%--array.push($(this).val());--%>
-            <%--});--%>
-
-            <%--//发送前将上传好的附件插入form中--%>
-            <%--$('#annex').val(array);--%>
-
-            <%--$.ajax({--%>
-                <%--type: "POST",--%>
-                <%--url: '${path}/car/editAdd',--%>
-                <%--data: $('#oaActCar').serialize(),--%>
-                <%--error: function (request) {--%>
-                    <%--window.top.tips("出错！", 6, 2, 1000);--%>
-                <%--},--%>
-                <%--success: function (result) {--%>
-                    <%--if (result === "success") {--%>
-                        <%--window.location.href = "${path}/oaIndex.do";--%>
-                        <%--window.top.tips("发送成功！", 0, 1, 1000);--%>
-                    <%--} else {--%>
-                        <%--window.top.tips("发送失败！", 0, 2, 1000);--%>
-                    <%--}--%>
-                <%--}--%>
-            <%--})--%>
-        <%--}--%>
-    <%--}--%>
 
     //保存待发
     function savePending() {
@@ -382,7 +351,8 @@
                 },
                 success: function (result) {
                     if (result === "success") {
-                        window.location.href = "${path}/oaIndex.do";
+                        <%--window.location.href = "${path}/oaIndex.do";--%>
+                        window.history.back();
                         window.top.tips("保存成功！", 0, 1, 1000);
                     } else {
                         window.top.tips("保存失败！", 0, 2, 1000);

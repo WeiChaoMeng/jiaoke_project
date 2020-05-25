@@ -133,4 +133,12 @@ public interface UserInfoMapper {
      * @return int
      */
     int updatePasswordById(@Param("id") Integer id, @Param("password") String password);
+
+    /**
+     * 批量删除数据
+     *
+     * @param ids ids
+     * @return int
+     */
+    int batchDeleteUser(String[] ids);
 }

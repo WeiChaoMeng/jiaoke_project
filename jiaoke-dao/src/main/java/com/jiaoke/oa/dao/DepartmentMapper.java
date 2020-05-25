@@ -97,4 +97,12 @@ public interface DepartmentMapper extends Mapper<Department> {
      * @return list
      */
     List<Department> selectPrincipalAndSupervisor();
+
+    /**
+     * 批量删除数据
+     *
+     * @param ids ids
+     * @return int
+     */
+    int batchDeleteDepartment(String[] ids);
 }

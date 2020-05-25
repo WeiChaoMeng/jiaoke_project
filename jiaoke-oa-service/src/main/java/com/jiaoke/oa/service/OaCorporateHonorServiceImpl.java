@@ -38,6 +38,15 @@ public class OaCorporateHonorServiceImpl implements OaCorporateHonorService {
     }
 
     @Override
+    public List<OaCorporateHonor> titleFilter(String title) {
+        List<OaCorporateHonor> oaCorporateHonorList = oaCorporateHonorMapper.titleFilter(title);
+        for (OaCorporateHonor oaCorporateHonor : oaCorporateHonorList) {
+            oaCorporateHonor.setReleaseDateStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaCorporateHonor.getReleaseDate()));
+        }
+        return oaCorporateHonorList;
+    }
+
+    @Override
     public OaCorporateHonor selectByPrimaryKey(Integer id) {
         OaCorporateHonor oaCorporateHonor = oaCorporateHonorMapper.selectByPrimaryKey(id);
         oaCorporateHonor.setReleaseDateStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaCorporateHonor.getReleaseDate()));
@@ -56,5 +65,10 @@ public class OaCorporateHonorServiceImpl implements OaCorporateHonorService {
     @Override
     public int deleteByPrimaryKey(Integer id) {
         return oaCorporateHonorMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public int batchDeleteHonor(String[] ids) {
+        return oaCorporateHonorMapper.batchDeleteHonor(ids);
     }
 }

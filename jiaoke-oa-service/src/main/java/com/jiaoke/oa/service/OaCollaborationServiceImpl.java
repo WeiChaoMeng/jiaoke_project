@@ -120,6 +120,11 @@ public class OaCollaborationServiceImpl implements OaCollaborationService {
     }
 
     @Override
+    public int batchDeleteAlreadySend(String table, String id) {
+        return oaCollaborationMapper.batchDeleteAlreadySend(table,id);
+    }
+
+    @Override
     public List<OaCollaboration> selectPending(List<OaCollaboration> oaCollaborations, String title) {
         List<String> list = new ArrayList<>();
         for (OaCollaboration oaCollaboration : oaCollaborations) {

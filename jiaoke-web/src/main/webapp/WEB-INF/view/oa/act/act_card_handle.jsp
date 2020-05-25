@@ -295,7 +295,7 @@
             success: function (data) {
                 if (data === 'success') {
                     //返回上一页
-                    window.location.href = '${path}/oaHomePage/toOaHomePage';
+                    window.location.href = '${path}/basePage.do';
                     layer.msg('提交成功！');
                 } else if (data === 'backSuccess') {
                     window.location.href = '${path}/oaHomePage/toOaHomePage';

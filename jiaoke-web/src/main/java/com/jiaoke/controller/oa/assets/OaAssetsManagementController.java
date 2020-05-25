@@ -54,7 +54,7 @@ public class OaAssetsManagementController {
     @RequestMapping("/toAssetsArchives")
     public String toAssetsArchives(Model model, int page) {
         model.addAttribute("currentPage", JsonHelper.toJSONString(page));
-        return "oa/assets/oa_assets_archives";
+        return "oa/assets/assetFile";
     }
 
     /**
@@ -66,7 +66,7 @@ public class OaAssetsManagementController {
     @RequestMapping(value = "/index")
     @ResponseBody
     public String index(int page) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<OaAssetManagement> oaAssetManagementList = oaAssetsManagementService.selectAll();
         PageInfo<OaAssetManagement> pageInfo = new PageInfo<>(oaAssetManagementList);
         return JsonHelper.toJSONString(pageInfo);
@@ -170,7 +170,7 @@ public class OaAssetsManagementController {
     @RequestMapping(value = "/assetsNameFilter")
     @ResponseBody
     public String assetsNameFilter(int page, String assetsName) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<OaAssetManagement> assetManagementList = oaAssetsManagementService.fuzzyQueryByName(assetsName);
         PageInfo<OaAssetManagement> pageInfo = new PageInfo<>(assetManagementList);
         return JsonHelper.toJSONString(pageInfo);
@@ -188,7 +188,7 @@ public class OaAssetsManagementController {
     public String toAssetReplenishmentRecordPage(Model model, Integer assetManagementId, int archivesPage) {
         model.addAttribute("assetManagementId", assetManagementId);
         model.addAttribute("archivesPage", JsonHelper.toJSONString(archivesPage));
-        return "oa/assets/oa_assets_replenishment_record";
+        return "oa/assets/replenishmentRecords";
     }
 
     /**
@@ -201,7 +201,7 @@ public class OaAssetsManagementController {
     @RequestMapping(value = "/assetReplenishmentRecord")
     @ResponseBody
     public String assetReplenishmentRecord(int page, Integer assetManagementId) {
-        PageHelper.startPage(page, 14);
+        PageHelper.startPage(page, 12);
         List<OaAssetReplenishment> assetReplenishmentList = oaAssetsReplenishmentService.select(assetManagementId);
         PageInfo<OaAssetReplenishment> pageInfo = new PageInfo<>(assetReplenishmentList);
         return JsonHelper.toJSONString(pageInfo);
@@ -218,7 +218,7 @@ public class OaAssetsManagementController {
     @RequestMapping(value = "/replenishmentTimeFilter")
     @ResponseBody
     public String replenishmentTimeFilter(int page, String createTime, Integer assetManagementId) {
-        PageHelper.startPage(page, 14);
+        PageHelper.startPage(page, 12);
         List<OaAssetReplenishment> assetReplenishmentList = oaAssetsReplenishmentService.replenishmentTimeFilter(createTime, assetManagementId);
         PageInfo<OaAssetReplenishment> pageInfo = new PageInfo<>(assetReplenishmentList);
         return JsonHelper.toJSONString(pageInfo);
@@ -233,7 +233,7 @@ public class OaAssetsManagementController {
     @RequestMapping("/toAssetUse")
     public String toAssetUse(Model model, int page) {
         model.addAttribute("currentPage", JsonHelper.toJSONString(page));
-        return "oa/assets/oa_resources_use";
+        return "oa/assets/resourcesUse";
     }
 
     /**
@@ -245,7 +245,7 @@ public class OaAssetsManagementController {
     @RequestMapping(value = "/assetUse")
     @ResponseBody
     public String assetUse(int page) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<OaAssetUse> oaAssetUseList = oaAssetUseService.selectAll();
         PageInfo<OaAssetUse> pageInfo = new PageInfo<>(oaAssetUseList);
         return JsonHelper.toJSONString(pageInfo);
@@ -261,7 +261,7 @@ public class OaAssetsManagementController {
     @RequestMapping(value = "/assetNameFilter")
     @ResponseBody
     public String usernameFilter(int page, String assetName) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<OaAssetUse> oaAssetUseList = oaAssetUseService.fuzzyQueryByName(assetName);
         PageInfo<OaAssetUse> pageInfo = new PageInfo<>(oaAssetUseList);
         return JsonHelper.toJSONString(pageInfo);
@@ -275,7 +275,7 @@ public class OaAssetsManagementController {
      */
     @RequestMapping(value = "/toAssetOperatingRecordPage")
     public String toAssetOperatingRecordPage() {
-        return "oa/assets/oa_asset_operating_record";
+        return "oa/assets/operationRecord";
     }
 
     /**
@@ -287,7 +287,7 @@ public class OaAssetsManagementController {
     @RequestMapping(value = "/assetOperatingRecord")
     @ResponseBody
     public String assetOperatingRecord(int page) {
-        PageHelper.startPage(page, 14);
+        PageHelper.startPage(page, 12);
         List<OaAssetOperatingRecord> oaAssetOperatingRecordList = oaAssetsManagementService.selectOperatingRecordAll();
         PageInfo<OaAssetOperatingRecord> pageInfo = new PageInfo<>(oaAssetOperatingRecordList);
         return JsonHelper.toJSONString(pageInfo);
@@ -303,7 +303,7 @@ public class OaAssetsManagementController {
     @RequestMapping(value = "/operatorPersonFilter")
     @ResponseBody
     public String operatorPersonFilter(int page, String operatorPerson) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<OaAssetOperatingRecord> oaAssetOperatingRecordList = oaAssetsManagementService.operatorPersonFilter(operatorPerson);
         PageInfo<OaAssetOperatingRecord> pageInfo = new PageInfo<>(oaAssetOperatingRecordList);
         return JsonHelper.toJSONString(pageInfo);

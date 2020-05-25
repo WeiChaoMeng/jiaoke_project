@@ -37,4 +37,12 @@ public interface OaNoticeMapper extends Mapper<OaNotice> {
      * @return list
      */
     List<OaNotice> homePageData();
+
+    /**
+     * 批量删除数据
+     *
+     * @param ids ids
+     * @return int
+     */
+    int batchDeleteNotice(String[] ids);
 }

@@ -123,4 +123,8 @@
         WHERE
             id = #{id}
     </select>
+
+    <delete id="batchDeleteAlreadySend" parameterType="java.util.Map">
+        delete from ${table} where id = ${id}
+    </delete>
 </mapper>

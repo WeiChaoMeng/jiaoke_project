@@ -13,6 +13,7 @@ import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -62,9 +63,10 @@ public class OaNewsCenterController {
      * @return jsp
      */
     @RequestMapping(value = "/toNewsRelease")
-    public String toNewsRelease(Model model) {
+    public String toNewsRelease(Model model,String jumpFlag) {
         UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
         model.addAttribute("userInfo", userInfo);
+        model.addAttribute("jumpFlag", jumpFlag);
         return "oa/culture/oa_news_release";
     }
 
@@ -89,8 +91,9 @@ public class OaNewsCenterController {
      * @return list
      */
     @RequestMapping(value = "/toNewsList")
-    public String toNewsList() {
-        return "oa/culture/oa_news_list";
+    public String toNewsList(Model model, int page) {
+        model.addAttribute("currentPage", JsonHelper.toJSONString(page));
+        return "oa/culture/news";
     }
 
     /**
@@ -101,8 +104,24 @@ public class OaNewsCenterController {
     @RequestMapping(value = "/newsListData")
     @ResponseBody
     public String newsListData(int page) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<OaNewsCenter> oaNewsCenterList = oaNewsCenterService.selectAll();
+        PageInfo<OaNewsCenter> pageInfo = new PageInfo<>(oaNewsCenterList);
+        return JsonHelper.toJSONString(pageInfo);
+    }
+
+    /**
+     * 根据名字筛选
+     *
+     * @param page  page
+     * @param title title
+     * @return list
+     */
+    @RequestMapping(value = "/titleFilter")
+    @ResponseBody
+    public String titleFilter(int page, String title) {
+        PageHelper.startPage(page, 12);
+        List<OaNewsCenter> oaNewsCenterList = oaNewsCenterService.titleFilter(title);
         PageInfo<OaNewsCenter> pageInfo = new PageInfo<>(oaNewsCenterList);
         return JsonHelper.toJSONString(pageInfo);
     }
@@ -133,5 +152,21 @@ public class OaNewsCenterController {
             return "error";
         }
         return "success";
+    }
+
+    /**
+     * 批量删除
+     *
+     * @param ids ids
+     * @return int
+     */
+    @RequestMapping(value = "/batchDeleteNews")
+    @ResponseBody
+    public String batchDeleteNews(@RequestParam(value = "ids[]") String[] ids) {
+        if (oaNewsCenterService.batchDeleteNews(ids) >= 0) {
+            return "success";
+        } else {
+            return "error";
+        }
     }
 }

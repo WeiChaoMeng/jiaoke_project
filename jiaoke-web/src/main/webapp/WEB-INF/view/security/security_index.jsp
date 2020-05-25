@@ -1,5 +1,10 @@
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
+    request.setAttribute("path", basePath);
+%>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -10,6 +15,10 @@
 
 <div class="aerial-view-style">
     <img src="../../../static/images/security/vertical_view-1.jpg" style="width: 100%;height: 100%">
+
+    <div class="office-zone"></div>
+
+    <div class="production-zone"></div>
 
     <shiro:hasPermission name="D1303461201">
         <div class="dyndmkn-region">
@@ -286,8 +295,8 @@
     </shiro:hasPermission>
 
     <shiro:hasPermission name="D1303487006">
-        <div class="dylqgqdctdnxb-region">
-            <img class="dylqgqdctdnxb-position" onclick="guard('D13034870','6')" title="东院1号机成品料通道"
+        <div class="dy1hjcpltd-region">
+            <img class="dy1hjcpltd-position" onclick="guard('D13034870','6')" title="东院1号机成品料通道"
                  src="../../../static/images/security/dian.png">
         </div>
     </shiro:hasPermission>
@@ -733,13 +742,23 @@
             </div>
 
             <div class="legend-region-content">
-                <span class="scope-legend-img"></span>
-                <span class="scope-legend-name">监控范围</span>
+                <span class="boundary-legend-img" style="border: 2px dashed #0345ff;"></span>
+                <span class="boundary-legend-name">办公区</span>
+            </div>
+
+            <div class="legend-region-content">
+                <span class="boundary-legend-img" style="border: 2px dashed #61b91e;"></span>
+                <span class="boundary-legend-name">生产区</span>
             </div>
 
             <div class="legend-region-content">
                 <img class="scope-location-img" src="../../../static/images/security/sxt.png">
                 <span class="scope-location-name">监控位置</span>
+            </div>
+
+            <div class="legend-region-content">
+                <span class="scope-legend-img"></span>
+                <span class="scope-legend-name">监控范围</span>
             </div>
         </div>
     </div>
@@ -753,7 +772,6 @@
 <script src="../../../static/js/oa/layer/layer.js"></script>
 <script src="../../../static/EZUIKit/ezuikit.js"></script>
 <script>
-
     function guard(serial, channel) {
         window.lar = layer.open({
             title: false,
@@ -769,19 +787,29 @@
                 player.stop();
             },
             success: function (layero, index) {
-                console.log(layero, index);
             }
         });
 
-        player = new EZUIPlayer({
-            id: 'myPlayer',
-            url: 'ezopen://open.ys7.com/' + serial + '/' + channel + '.hd.live',
-            autoplay: true,
-            accessToken: "at.cbbhvp3q04slp4ip2dwkd7tu9wo0w72r-1vwv91bpb1-0yk5pqh-rddasqgu5",
-            decoderPath: '../../../static/EZUIKit/',
-            width: 800,
-            height: 448,
-            splitBasis: 1
+        $.ajax({
+            type: "post",
+            url: '${path}/security/getAccessToken',
+            async: false,
+            dataType: 'json',
+            success: function (data) {
+                player = new EZUIPlayer({
+                    id: 'myPlayer',
+                    url: 'ezopen://open.ys7.com/' + serial + '/' + channel + '.hd.live',
+                    autoplay: true,
+                    accessToken: data,
+                    decoderPath: '../../../static/EZUIKit/',
+                    width: 800,
+                    height: 448,
+                    splitBasis: 1
+                });
+            },
+            error: function (result) {
+                layer.msg("出错！");
+            }
         });
     }
 </script>

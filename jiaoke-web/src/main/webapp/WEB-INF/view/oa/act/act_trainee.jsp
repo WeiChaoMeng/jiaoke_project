@@ -17,6 +17,10 @@
         .tdLabel{
             width: 10%;
         }
+
+        .opinion-column-Juxtaposition{
+            height: 70%;
+        }
     </style>
 </head>
 
@@ -60,7 +64,7 @@
     </div>
 </div>
 
-<form id="oaActEngage">
+<form id="oaActTrainee">
     <div class="form_area" id="titleArea" style="margin-bottom: 15px">
         <table>
             <tbody>
@@ -90,9 +94,9 @@
     </div>
 
     <span class="filling-date" style="float: left">单位（部门）名称：</span>
-    <input type="text" style="float: left;width: 200px;" class="filling-date-content" name="applyTime" value="北京市政路桥建材集团路驰分公司" readonly>
+    <input type="text" style="float: left;width: 200px;" class="filling-date-content" name="corporation" value="北京市政路桥建材集团有限公司路驰分公司" readonly>
 
-    <input type="text" class="filling-date-content" name="applyTime"
+    <input type="text" class="filling-date-content" name="fillingTime"
            value="<%=new SimpleDateFormat("yyyy年MM月dd日").format(new Date())%>" readonly>
     <span class="filling-date">填表日期：</span>
 
@@ -117,7 +121,7 @@
 
             <td class="tdLabel">参加工作时间</td>
             <td class="table-td-content">
-                <input type="text" class="formInput certificate-date" name="workTime" onfocus="this.blur()">
+                <input type="text" class="formInput certificate-date" name="workingHours" onfocus="this.blur()">
             </td>
         </tr>
 
@@ -141,20 +145,20 @@
         <tr>
             <td class="tdLabel" style="width: 5%;text-align: center;padding: 15px 0;line-height: normal;">本<br/>人<br/>简<br/>(学)<br/>历</td>
             <td colspan="7" class="approval-content" style="padding: 10px;">
-                <textarea class="approval-content-textarea" style="height: 100%;" readonly></textarea>
+                <textarea class="write-approval-content-textarea" name="resume" style="height: 100%;"></textarea>
             </td>
         </tr>
 
         <tr>
             <td class="tdLabel" colspan="8" style="padding: 0;text-align: center;">大中专院校毕业见习期：从
-                <input type="text" class="formInput graduation-date" style="width: 10%" name="workTime" onfocus="this.blur()">
-                见习期工资<input type="text" class="formInput" style="width: 10%" name="education" autocomplete="off">月/元</td>
+                <input type="text" class="formInput graduation-date" style="width: 10%" name="internship" onfocus="this.blur()">
+                见习期工资<input type="text" class="formInput" style="width: 10%" name="wages" autocomplete="off">元/月</td>
         </tr>
 
         <tr>
             <td class="tdLabel" style="width: 5%;text-align: center;padding: 15px 0;line-height: normal;">自<br/>我<br/>鉴<br/>定</td>
             <td colspan="7" class="approval-content" style="padding: 10px;">
-                <textarea class="approval-content-textarea" style="height: 100%;" readonly></textarea>
+                <textarea class="write-approval-content-textarea" style="height: 100%;" name="selfAccreditation"></textarea>
             </td>
         </tr>
         </tbody>
@@ -200,7 +204,8 @@
         <tr>
             <td class="tdLabel" colspan="2">备注</td>
             <td class="table-td-content" colspan="6" style="padding: 10px;">
-                <textarea class="approval-content-textarea" readonly=""></textarea>
+                <textarea class="write-approval-content-textarea" name="remarks"></textarea>
+                <input type="hidden" id="annex" name="annex">
             </td>
         </tr>
         </tbody>
@@ -253,102 +258,65 @@
         zIndex: 100000,
     });
 
+    var itselfFrameId = window.frameElement && window.frameElement.id || '';
+
     //发送
     function send() {
         if ($.trim($("#title").val()) === '') {
             window.top.tips("标题不可以为空！", 6, 5, 2000);
         } else {
-            var principalGroup = '${principalGroup}';
-            //部门负责人是多个
-            if (principalGroup !== '') {
-                var principalList = JSON.parse(principalGroup);
-                window.top.selectPrincipal(principalList);
+            var array = [];
+            $('#annexes').find('input').each(function () {
+                array.push($(this).val());
+            });
 
-                //部门负责人是单个
-            } else {
-                $('#departmentPrincipal').val("single");
-
-                var array = [];
-                $('#annexes').find('input').each(function () {
-                    array.push($(this).val());
-                });
-
-                //发送前将上传好的附件插入form中
-                $('#annex').val(array);
-
-                $.ajax({
-                    type: "POST",
-                    url: '${path}/engage/add',
-                    data: $('#oaActEngage').serialize(),
-                    error: function (request) {
-                        layer.msg("出错！");
-                    },
-                    success: function (result) {
-                        if (result === "success") {
-                            window.location.href = "${path}/oaIndex.do";
-                            window.top.tips("发送成功！", 0, 1, 2000);
-                        } else {
-                            window.top.tips('发送失败！', 0, 2, 2000);
-                        }
-                    }
-                })
-            }
-        }
-    }
-
-    //根据勾选的部门负责人发送
-    function selectionPrincipal(principalId) {
-        $('#departmentPrincipal').val(principalId);
-
-        var array = [];
-        $('#annexes').find('input').each(function () {
-            array.push($(this).val());
-        });
-
-        //发送前将上传好的附件插入form中
-        $('#annex').val(array);
-
-        $.ajax({
-            type: "POST",
-            url: '${path}/engage/add',
-            data: $('#oaActEngage').serialize(),
-            error: function (request) {
-                layer.msg("出错！");
-            },
-            success: function (result) {
-                if (result === "success") {
-                    window.location.href = "${path}/oaIndex.do";
-                    window.top.tips("发送成功！", 0, 1, 2000);
-                } else {
-                    window.top.tips('发送失败！', 0, 2, 2000);
-                }
-            }
-        })
-    }
-
-    //保存待发
-    function savePending() {
-        var array = [];
-        $('#annexes').find('input').each(function () {
-            array.push($(this).val());
-        });
-
-        if ($.trim($("#title").val()) === '') {
-            layer.msg("标题不可以为空！")
-        } else {
             //发送前将上传好的附件插入form中
             $('#annex').val(array);
 
             $.ajax({
                 type: "POST",
-                url: '${path}/engage/savePending',
-                data: $('#oaActEngage').serialize(),
+                url: '${path}/trainee/add',
+                data: $('#oaActTrainee').serialize(),
                 error: function (request) {
                     layer.msg("出错！");
                 },
                 success: function (result) {
                     if (result === "success") {
-                        window.location.href = "${path}/oaIndex.do";
+                        <%--window.location.href = "${path}/oaIndex.do";--%>
+                        window.history.back();
+                        window.top.tips("发送成功！", 0, 1, 2000);
+                    } else {
+                        window.top.tips('发送失败！', 0, 2, 2000);
+                    }
+                }
+            })
+        }
+    }
+
+    //保存待发
+    function savePending() {
+        if ($.trim($("#title").val()) === '') {
+            layer.msg("标题不可以为空！")
+        } else {
+            var array = [];
+            $('#annexes').find('input').each(function () {
+                array.push($(this).val());
+            });
+
+            //发送前将上传好的附件插入form中
+            $('#annex').val(array);
+
+            $.ajax({
+                type: "POST",
+                url: '${path}/trainee/savePending',
+                data: $('#oaActTrainee').serialize(),
+                error: function (request) {
+                    layer.msg("出错！");
+                },
+                success: function (result) {
+                    if (result === "success") {
+                        <%--window.location.href = "${path}/oaIndex.do";--%>
+                        window.history.back();
                         window.top.tips("保存成功！", 0, 1, 1000);
                     } else {
                         window.top.tips("保存失败！", 0, 2, 1000);
@@ -360,7 +328,7 @@
 
     //插入附件
     function insertFile() {
-        window.top.uploadFile();
+        window.top.uploadFile(itselfFrameId);
     }
 
     //上传附件成功后插入form
@@ -382,7 +350,7 @@
 
     //删除已上传附件
     function whether(fileName) {
-        window.top.deleteUploaded(fileName);
+        window.top.deleteUploaded(fileName,itselfFrameId);
     }
 
     //执行删除附件

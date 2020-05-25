@@ -22,8 +22,31 @@ body {
     background-color: #fff;
 }
 
-.aerial-view-style{
-    position: relative;height: 100%;width: 100%;
+.aerial-view-style {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+/*区域划分*/
+.office-zone {
+    width: 19%;
+    height: 300px;
+    position: absolute;
+    top: 50%;
+    left: 43%;
+    border: #0345ff 4px dashed;
+    text-align: center;
+}
+
+.production-zone {
+    width: 30%;
+    height: 308px;
+    position: absolute;
+    top: 49%;
+    left: 63%;
+    border: #61b91e 4px dashed;
+    text-align: center;
 }
 
 /*右上角示意区域*/
@@ -148,6 +171,7 @@ body {
     float: right;
     cursor: pointer;
 }
+
 .dyndmkw-position:hover {
     width: 25px;
     margin-top: -13px;
@@ -241,7 +265,6 @@ body {
     position: absolute;
     margin-left: -9px;
 }
-
 
 /*东院运动场小广场南向北*/
 .dyydcxgcnxb-region {
@@ -500,7 +523,6 @@ body {
     margin-left: -12px;
     position: absolute;
 }
-
 
 /*东院燃气站*/
 .dyyqz-region {
@@ -1085,6 +1107,7 @@ body {
     position: absolute;
     margin-left: -9px;
 }
+
 /*------1号刻录机end--------*/
 
 /*------2号刻录机sta--------*/
@@ -1205,17 +1228,17 @@ body {
     position: absolute;
 }
 
-/*东院1号机成品料通道*/
+/*东院沥青罐区东侧通道南向北*/
 .dylqgqdctdnxb-region {
-    top: 63%;
-    left: 70%;
     height: 0;
-    border-top: 10px solid transparent;
-    border-right: 23px solid #ffe500;
-    border-bottom: 10px solid transparent;
     position: absolute;
     font-size: 20px;
     opacity: .7;
+    left: 74%;
+    top: 61%;
+    border-top: 21px solid transparent;
+    border-right: 23px solid #ffe500;
+    border-bottom: 2px solid transparent;
 }
 
 .dylqgqdctdnxb-position {
@@ -1227,6 +1250,35 @@ body {
 }
 
 .dylqgqdctdnxb-position:hover {
+    width: 25px;
+    cursor: pointer;
+    margin-top: -21px;
+    margin-left: -10px;
+    position: absolute;
+}
+
+/*东院1号机成品料通道*/
+.dy1hjcpltd-region {
+    top: 63%;
+    left: 70%;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-right: 23px solid #ffe500;
+    border-bottom: 10px solid transparent;
+    position: absolute;
+    font-size: 20px;
+    opacity: .7;
+}
+
+.dy1hjcpltd-position {
+    width: 20px;
+    cursor: pointer;
+    margin-top: -18px;
+    margin-left: -8px;
+    position: absolute;
+}
+
+.dy1hjcpltd-position:hover {
     width: 25px;
     cursor: pointer;
     margin-top: -21px;
@@ -2086,6 +2138,7 @@ body {
     margin-left: -10px;
     position: absolute;
 }
+
 /*------2号刻录机end--------*/
 
 /*------3号刻录机sta--------*/
@@ -2850,9 +2903,6 @@ body {
     position: absolute;
 }
 
-
-
-
 /*西院破碎车间上料口*/
 .xypscjslk-region {
     top: 20%;
@@ -3026,6 +3076,5 @@ body {
     margin-left: 5px;
     position: absolute;
 }
-
 
 /*------3号刻录机end--------*/

@@ -30,4 +30,20 @@ public interface OaCorporateHonorMapper extends Mapper<OaCorporateHonor> {
      * @return list
      */
     List<OaCorporateHonor> selectAllData();
+
+    /**
+     * 搜索
+     *
+     * @param title 标题
+     * @return list
+     */
+    List<OaCorporateHonor> titleFilter(String title);
+
+    /**
+     * 批量删除数据
+     *
+     * @param ids ids
+     * @return int
+     */
+    int batchDeleteHonor(String[] ids);
 }

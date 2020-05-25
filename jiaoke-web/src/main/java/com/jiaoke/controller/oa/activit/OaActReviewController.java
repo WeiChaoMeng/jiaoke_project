@@ -624,7 +624,7 @@ public class OaActReviewController {
     @RequestMapping(value = "/toContractManagement")
     public String toContractManagement(Model model, int page) {
         model.addAttribute("currentPage", JsonHelper.toJSONString(page));
-        return "oa/collaboration/oa_contract_management";
+        return "oa/collaborative/oa_contract_management";
     }
 
     /**

@@ -1,0 +1,24 @@
+.more-date-content {
+    position: absolute;
+    top: -31px;
+    width: 95%;
+    height: 20px;
+    text-align: right;
+}
+
+.more-date-icon {
+    line-height: 20px;
+    font-size: 20px !important;
+    cursor: pointer;
+}
+
+.text-title-style {
+    display: block;
+    float: left;
+    border: none;
+    text-align: left;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 500px;
+}

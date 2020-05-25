@@ -10,6 +10,7 @@ import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -35,8 +36,9 @@ public class OaCorporateHonorController {
      * @return jsp
      */
     @RequestMapping(value = "/toCorporateHonorList")
-    public String toCorporateHonorList() {
-        return "oa/culture/oa_corporate_honor_list";
+    public String toCorporateHonorList(Model model, int page) {
+        model.addAttribute("currentPage", JsonHelper.toJSONString(page));
+        return "oa/culture/honor";
     }
 
     /**
@@ -47,12 +49,27 @@ public class OaCorporateHonorController {
     @RequestMapping(value = "/corporateHonorListData")
     @ResponseBody
     public String corporateHonorListData(int page) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<OaCorporateHonor> oaCorporateHonorList = oaCorporateHonorService.selectAll();
         PageInfo<OaCorporateHonor> pageInfo = new PageInfo<>(oaCorporateHonorList);
         return JsonHelper.toJSONString(pageInfo);
     }
 
+    /**
+     * 根据名字筛选
+     *
+     * @param page  page
+     * @param title title
+     * @return list
+     */
+    @RequestMapping(value = "/titleFilter")
+    @ResponseBody
+    public String titleFilter(int page, String title) {
+        PageHelper.startPage(page, 12);
+        List<OaCorporateHonor> oaCorporateHonorList = oaCorporateHonorService.titleFilter(title);
+        PageInfo<OaCorporateHonor> pageInfo = new PageInfo<>(oaCorporateHonorList);
+        return JsonHelper.toJSONString(pageInfo);
+    }
 
     /**
      * 跳转企业荣誉发布
@@ -60,9 +77,10 @@ public class OaCorporateHonorController {
      * @return jsp
      */
     @RequestMapping(value = "/toCorporateHonor")
-    public String toCorporateHonor(Model model) {
+    public String toCorporateHonor(Model model,String jumpFlag) {
         UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
         model.addAttribute("userInfo", userInfo);
+        model.addAttribute("jumpFlag", jumpFlag);
         return "oa/culture/oa_corporate_honor_release";
     }
 
@@ -108,5 +126,21 @@ public class OaCorporateHonorController {
             return "error";
         }
         return "success";
+    }
+
+    /**
+     * 批量删除
+     *
+     * @param ids ids
+     * @return int
+     */
+    @RequestMapping(value = "/batchDeleteHonor")
+    @ResponseBody
+    public String batchDeleteHonor(@RequestParam(value = "ids[]") String[] ids) {
+        if (oaCorporateHonorService.batchDeleteHonor(ids) >= 0) {
+            return "success";
+        } else {
+            return "error";
+        }
     }
 }

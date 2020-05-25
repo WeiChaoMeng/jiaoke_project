@@ -34,6 +34,15 @@ public interface OaCollaborationMapper {
     List<OaCollaboration> selectAlreadySend(@Param("list") List<String> list, @Param("title") String title);
 
     /**
+     * 批量删除
+     *
+     * @param table table
+     * @param id    id
+     * @return int
+     */
+    int batchDeleteAlreadySend(@Param("table") String table, @Param("id") String id);
+
+    /**
      * 根据idList查询待发数据
      *
      * @param userId userId

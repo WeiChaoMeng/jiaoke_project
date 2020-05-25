@@ -210,6 +210,7 @@
     <!--首页右侧 end -->
 </div>
 <input type="hidden" id="nickname" value="${nickname}">
+<input type="hidden" id="accessToken" value="${accessToken}">
 
 <div class="clearfix"></div>
 <!--首页底部 sta -->
