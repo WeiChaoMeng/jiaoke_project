@@ -77,4 +77,12 @@ public interface RoleInfoMapper {
      * @return list
      */
     List<RoleInfo> selectExistingRoleInfo(Integer id);
+
+    /**
+     * 批量删除数据
+     *
+     * @param ids ids
+     * @return int
+     */
+    int batchDeleteRole(String[] ids);
 }

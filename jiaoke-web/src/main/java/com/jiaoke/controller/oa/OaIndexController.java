@@ -84,4 +84,28 @@ public class OaIndexController {
 
         return JsonHelper.toJSONString(map);
     }
+
+    /**
+     * 加载待办数据
+     *
+     * @return json
+     */
+    @RequestMapping(value = "/loadingPendingData")
+    @ResponseBody
+    public String loadingPendingData() {
+        //待办任务
+        HashMap<String, Object> map = new HashMap<>(16);
+        //根据当前登录人id获取taskList
+        List<Task> taskList = activitiUtil.getTaskByAssignee(getCurrentUser().getId().toString());
+        if (taskList.size() <= 0) {
+            map.put("upcomingMatterNumber", taskList.size());
+            map.put("upcomingMatterList", "empty");
+        } else {
+            List<OaCollaboration> oaCollaborationList = oaIndexService.upcomingMatterData(taskList);
+            Collections.reverse(oaCollaborationList);
+            map.put("upcomingMatterNumber", taskList.size());
+            map.put("upcomingMatterList", oaCollaborationList);
+        }
+        return JsonHelper.toJSONString(map);
+    }
 }

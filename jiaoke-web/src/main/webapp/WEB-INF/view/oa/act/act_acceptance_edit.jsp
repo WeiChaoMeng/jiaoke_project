@@ -213,7 +213,8 @@
                     },
                     success: function (result) {
                         if (result === "success") {
-                            window.location.href = "${path}/oaIndex.do";
+                            <%--window.location.href = "${path}/oaIndex.do";--%>
+                            window.history.back();
                             window.top.tips("发送成功！", 0, 1, 2000);
                         } else {
                             window.top.tips('发送失败！', 0, 2, 2000);
@@ -245,7 +246,8 @@
             },
             success: function (result) {
                 if (result === "success") {
-                    window.location.href = "${path}/oaIndex.do";
+                    <%--window.location.href = "${path}/oaIndex.do";--%>
+                    window.history.back();
                     window.top.tips("发送成功！", 0, 1, 2000);
                 } else {
                     window.top.tips('发送失败！', 0, 2, 2000);
@@ -276,7 +278,8 @@
                 },
                 success: function (result) {
                     if (result === "success") {
-                        window.location.href = "${path}/oaIndex.do";
+                        <%--window.location.href = "${path}/oaIndex.do";--%>
+                        window.history.back();
                         window.top.tips("保存成功！", 0, 1, 1000);
                     } else {
                         window.top.tips("保存失败！", 0, 2, 1000);

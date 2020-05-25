@@ -67,7 +67,7 @@ public class OaAssetsManagementServiceImpl implements OaAssetsManagementService 
             //不存在
             if (assetManagement == null){
                 //资产档案
-                oaAssetManagement.setStorageLocation("办公室");
+                oaAssetManagement.setStorageLocation("综合办公室");
                 oaAssetManagement.setEntryPerson(getCurrentUser().getNickname());
                 oaAssetManagement.setCustodian(userInfo.getNickname());
                 oaAssetManagement.setCreateTime(DateUtil.stringConvertYYYYMMDDHHMM(oaAssetManagement.getCreateTimeStr()));
@@ -82,7 +82,7 @@ public class OaAssetsManagementServiceImpl implements OaAssetsManagementService 
                 assetReplenishment.setReplenishmentBeforeQuantity(0);
                 assetReplenishment.setReplenishmentQuantity(oaAssetManagement.getProductQuantity());
                 assetReplenishment.setReplenishmentPerson(getCurrentUser().getNickname());
-                assetReplenishment.setReplenishmentStorageLocation("办公室");
+                assetReplenishment.setReplenishmentStorageLocation("综合办公室");
                 assetReplenishment.setReplenishmentRemarks(oaAssetManagement.getRemarks());
                 assetReplenishment.setCreateTime(DateUtil.stringConvertYYYYMMDDHHMMSS(oaAssetManagement.getCreateTimeStr()));
                 assetReplenishment.setAssetManagementId(oaAssetManagement.getId());
@@ -92,12 +92,12 @@ public class OaAssetsManagementServiceImpl implements OaAssetsManagementService 
                 oaAssetsManagementMapper.updateProductQuantityById(assetManagement.getId(),oaAssetManagement.getProductQuantity() + assetManagement.getProductQuantity());
                 //资产补货
                 OaAssetReplenishment assetReplenishment = new OaAssetReplenishment();
-                assetReplenishment.setAssetsName(assetManagement.getAssetsName());
+                assetReplenishment.setAssetsName(oaAssetManagement.getAssetsName());
                 assetReplenishment.setAssetsCustodian(userInfo.getNickname());
                 assetReplenishment.setReplenishmentBeforeQuantity(assetManagement.getProductQuantity());
                 assetReplenishment.setReplenishmentQuantity(oaAssetManagement.getProductQuantity());
                 assetReplenishment.setReplenishmentPerson(getCurrentUser().getNickname());
-                assetReplenishment.setReplenishmentStorageLocation("办公室");
+                assetReplenishment.setReplenishmentStorageLocation("综合办公室");
                 assetReplenishment.setReplenishmentRemarks(oaAssetManagement.getRemarks());
                 assetReplenishment.setCreateTime(DateUtil.stringConvertYYYYMMDDHHMMSS(oaAssetManagement.getCreateTimeStr()));
                 assetReplenishment.setAssetManagementId(assetManagement.getId());
@@ -151,6 +151,21 @@ public class OaAssetsManagementServiceImpl implements OaAssetsManagementService 
 
     @Override
     public int updateState(Integer id, Integer state) {
+        OaAssetOperatingRecord operatingRecord = new OaAssetOperatingRecord();
+        OaAssetManagement assetManagement = oaAssetsManagementMapper.selectByPrimaryKey(id);
+        operatingRecord.setBeforeAssetsName(assetManagement.getAssetsName());
+        operatingRecord.setAfterAssetsName(assetManagement.getAssetsName());
+        operatingRecord.setBeforeAssetsNumber(assetManagement.getProductQuantity().toString());
+        operatingRecord.setAfterAssetsNumber(assetManagement.getProductQuantity().toString());
+        if (state == 0){
+            operatingRecord.setOperatorType("开启");
+        }else{
+            operatingRecord.setOperatorType("关闭");
+        }
+        operatingRecord.setOperatorDescription("无");
+        operatingRecord.setOperatorPerson(getCurrentUser().getNickname());
+        operatingRecord.setOperatorTime(new Date());
+        oaAssetOperatingRecordMapper.insertSelective(operatingRecord);
         return oaAssetsManagementMapper.updateStateById(id,state);
     }
 

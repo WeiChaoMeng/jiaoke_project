@@ -10,6 +10,7 @@ import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -37,7 +38,7 @@ public class OaNoticeController {
     @RequestMapping("/toIndex")
     public String announcements(Model model, int page) {
         model.addAttribute("currentPage", JsonHelper.toJSONString(page));
-        return "oa/culture/oa_notice";
+        return "oa/culture/notice";
     }
 
     /**
@@ -49,7 +50,7 @@ public class OaNoticeController {
     @RequestMapping(value = "/loadingData")
     @ResponseBody
     public String loadingData(int page) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<OaNotice> oaNoticeList = oaNoticeService.selectAllData();
         PageInfo<OaNotice> pageInfo = new PageInfo<>(oaNoticeList);
         return JsonHelper.toJSONString(pageInfo);
@@ -65,7 +66,7 @@ public class OaNoticeController {
     @RequestMapping(value = "/titleFilter")
     @ResponseBody
     public String titleFilter(int page, String title) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<OaNotice> oaNoticeList = oaNoticeService.titleFilter(title);
         PageInfo<OaNotice> pageInfo = new PageInfo<>(oaNoticeList);
         return JsonHelper.toJSONString(pageInfo);
@@ -142,5 +143,21 @@ public class OaNoticeController {
         OaNotice oaNotice = oaNoticeService.selectByPrimaryKey(id);
         model.addAttribute("oaNotice", oaNotice);
         return "oa/culture/oa_notice_home_details";
+    }
+
+    /**
+     * 批量删除
+     *
+     * @param ids ids
+     * @return int
+     */
+    @RequestMapping(value = "/batchDeleteNotice")
+    @ResponseBody
+    public String batchDeleteNotice(@RequestParam(value = "ids[]") String[] ids) {
+        if (oaNoticeService.batchDeleteNotice(ids) >= 0) {
+            return "success";
+        } else {
+            return "error";
+        }
     }
 }

@@ -141,7 +141,8 @@ public class OaActAcceptanceWarehousingServiceImpl implements OaActAcceptanceWar
         List<OaAcceptanceWarehousing> oaAcceptanceWarehousingList = oaAcceptanceWarehousingMapper.selectByAcceptanceWarehousingId(oaActAcceptanceWarehousing.getId());
         //根据id查询验收入库详情信息
         OaActAcceptanceWarehousing actAcceptanceWarehousing = oaActAcceptanceWarehousingMapper.selectByPrimaryKey(oaActAcceptanceWarehousing.getId());
-
+        //根据权限查询保管人
+        UserInfo userInfo = userInfoMapper.selectByPermission("office_supplies_custodian");
         for (OaAcceptanceWarehousing acceptanceWarehousing : oaAcceptanceWarehousingList) {
             //根据验收入库产品名称查询是否存在与资产档案表中
             OaAssetManagement oaAssetManagement = oaAssetsManagementMapper.selectByAssetsName(acceptanceWarehousing.getName());
@@ -153,10 +154,11 @@ public class OaActAcceptanceWarehousingServiceImpl implements OaActAcceptanceWar
                 OaAssetManagement assetManagement = new OaAssetManagement();
                 assetManagement.setAssetsName(acceptanceWarehousing.getName());
                 assetManagement.setProductQuantity(Integer.valueOf(acceptanceWarehousing.getNumber()));
-                assetManagement.setStorageLocation("办公室");
+                assetManagement.setStorageLocation("综合办公室");
                 assetManagement.setEntryPerson(actAcceptanceWarehousing.getPurchaser());
-                assetManagement.setCustodian(actAcceptanceWarehousing.getPurchaser());
-                assetManagement.setRemarks("无");
+                //设置保管人员
+                assetManagement.setCustodian(userInfo.getNickname());
+                assetManagement.setRemarks(acceptanceWarehousing.getRemark());
                 assetManagement.setCreateTime(DateUtil.stringConvertYYYYMMDDHHMMSS(acceptanceWarehousing.getDate()));
 
                 //插入并返回id
@@ -165,12 +167,12 @@ public class OaActAcceptanceWarehousingServiceImpl implements OaActAcceptanceWar
                 //资产补货
                 OaAssetReplenishment assetReplenishment = new OaAssetReplenishment();
                 assetReplenishment.setAssetsName(acceptanceWarehousing.getName());
-                assetReplenishment.setAssetsCustodian(actAcceptanceWarehousing.getPurchaser());
+                assetReplenishment.setAssetsCustodian(userInfo.getNickname());
                 assetReplenishment.setReplenishmentBeforeQuantity(0);
                 assetReplenishment.setReplenishmentQuantity(Integer.valueOf(acceptanceWarehousing.getNumber()));
                 assetReplenishment.setReplenishmentPerson(actAcceptanceWarehousing.getPurchaser());
-                assetReplenishment.setReplenishmentStorageLocation("办公室");
-                assetReplenishment.setReplenishmentRemarks("无");
+                assetReplenishment.setReplenishmentStorageLocation("综合办公室");
+                assetReplenishment.setReplenishmentRemarks(acceptanceWarehousing.getRemark());
                 assetReplenishment.setCreateTime(DateUtil.stringConvertYYYYMMDDHHMMSS(acceptanceWarehousing.getDate()));
                 assetReplenishment.setAssetManagementId(assetManagement.getId());
                 oaAssetsReplenishmentMapper.insertSelective(assetReplenishment);
@@ -180,12 +182,12 @@ public class OaActAcceptanceWarehousingServiceImpl implements OaActAcceptanceWar
                 //资产补货
                 OaAssetReplenishment assetReplenishment = new OaAssetReplenishment();
                 assetReplenishment.setAssetsName(acceptanceWarehousing.getName());
-                assetReplenishment.setAssetsCustodian(actAcceptanceWarehousing.getPurchaser());
+                assetReplenishment.setAssetsCustodian(userInfo.getNickname());
                 assetReplenishment.setReplenishmentBeforeQuantity(oaAssetManagement.getProductQuantity());
                 assetReplenishment.setReplenishmentQuantity(Integer.valueOf(acceptanceWarehousing.getNumber()));
                 assetReplenishment.setReplenishmentPerson(actAcceptanceWarehousing.getPurchaser());
-                assetReplenishment.setReplenishmentStorageLocation("办公室");
-                assetReplenishment.setReplenishmentRemarks("无");
+                assetReplenishment.setReplenishmentStorageLocation("综合办公室");
+                assetReplenishment.setReplenishmentRemarks(acceptanceWarehousing.getRemark());
                 assetReplenishment.setCreateTime(DateUtil.stringConvertYYYYMMDDHHMMSS(acceptanceWarehousing.getDate()));
                 assetReplenishment.setAssetManagementId(oaAssetManagement.getId());
                 oaAssetsReplenishmentMapper.insertSelective(assetReplenishment);

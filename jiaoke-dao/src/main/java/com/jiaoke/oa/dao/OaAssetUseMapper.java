@@ -31,4 +31,11 @@ public interface OaAssetUseMapper extends Mapper<OaAssetUse> {
      * @return list
      */
     List<OaAssetUse> fuzzyQueryByName(String usePerson);
+
+    /**
+     * 查询所有数据
+     *
+     * @return list
+     */
+    List<OaAssetUse> selectAllData();
 }

@@ -127,4 +127,9 @@ public class RoleInfoServiceImpl implements RoleInfoService {
         }
         return permissionList;
     }
+
+    @Override
+    public int batchDeleteRole(String[] ids) {
+        return roleInfoMapper.batchDeleteRole(ids);
+    }
 }

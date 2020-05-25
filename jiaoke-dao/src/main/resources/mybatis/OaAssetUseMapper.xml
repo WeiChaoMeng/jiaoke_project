@@ -33,4 +33,20 @@
         WHERE
             use_person LIKE "%"#{usePerson}"%"
     </select>
+
+    <select id="selectAllData" resultType="com.jiaoke.oa.bean.OaAssetUse">
+        SELECT
+            id AS id,
+            asset_name AS assetName,
+            use_before_number AS useBeforeNumber,
+            use_number AS useNumber,
+            use_after_number AS useAfterNumber,
+            use_department AS useDepartment,
+            use_person AS usePerson,
+            use_date AS useDate,
+            custodian AS custodian
+        FROM
+            oa_asset_use
+            ORDER BY use_date DESC
+    </select>
 </mapper>

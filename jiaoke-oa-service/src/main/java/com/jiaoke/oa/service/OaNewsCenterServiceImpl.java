@@ -38,6 +38,15 @@ public class OaNewsCenterServiceImpl implements OaNewsCenterService {
     }
 
     @Override
+    public List<OaNewsCenter> titleFilter(String title) {
+        List<OaNewsCenter> oaNewsCenterList = oaNewsCenterMapper.titleFilter(title);
+        for (OaNewsCenter oaNewsCenter : oaNewsCenterList) {
+            oaNewsCenter.setReleaseDateStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaNewsCenter.getReleaseDate()));
+        }
+        return oaNewsCenterList;
+    }
+
+    @Override
     public OaNewsCenter selectByPrimaryKey(Integer id) {
         OaNewsCenter oaNewsCenter = oaNewsCenterMapper.selectByPrimaryKey(id);
         oaNewsCenter.setReleaseDateStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaNewsCenter.getReleaseDate()));
@@ -65,5 +74,10 @@ public class OaNewsCenterServiceImpl implements OaNewsCenterService {
     @Override
     public int deleteByPrimaryKey(Integer id) {
         return oaNewsCenterMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public int batchDeleteNews(String[] ids) {
+        return oaNewsCenterMapper.batchDeleteNews(ids);
     }
 }

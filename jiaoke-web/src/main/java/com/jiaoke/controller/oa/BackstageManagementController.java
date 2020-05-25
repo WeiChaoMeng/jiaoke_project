@@ -11,11 +11,11 @@ import com.jiaoke.oa.service.DepartmentService;
 import com.jiaoke.oa.service.PermissionService;
 import com.jiaoke.oa.service.RoleInfoService;
 import com.jiaoke.oa.service.UserInfoService;
-import org.apache.ibatis.ognl.OgnlParserTokenManager;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -64,7 +64,7 @@ public class BackstageManagementController {
     @RequestMapping(value = "/userManager")
     @ResponseBody
     public String userManager(int page) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<UserInfo> userInfoList = userInfoService.selectAll();
         PageInfo<UserInfo> pageInfo = new PageInfo<>(userInfoList);
         return JsonHelper.toJSONString(pageInfo);
@@ -80,7 +80,7 @@ public class BackstageManagementController {
     @RequestMapping(value = "/usernameFilter")
     @ResponseBody
     public String usernameFilter(int page, String username) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<UserInfo> userInfoList = userInfoService.usernameFilter(username);
         PageInfo<UserInfo> pageInfo = new PageInfo<>(userInfoList);
         return JsonHelper.toJSONString(pageInfo);
@@ -116,7 +116,7 @@ public class BackstageManagementController {
         model.addAttribute("departmentList", JsonHelper.toJSONString(departmentList));
         //当前页（默认为1）
         model.addAttribute("currentPage", JsonHelper.toJSONString(page));
-        return "oa/backstage/oa_user_management";
+        return "oa/backstage/user";
     }
 
     /**
@@ -206,6 +206,23 @@ public class BackstageManagementController {
         }
     }
 
+
+    /**
+     * 批量删除用户
+     *
+     * @param ids ids
+     * @return int
+     */
+    @RequestMapping(value = "/batchDeleteUser")
+    @ResponseBody
+    public String batchDeleteUser(@RequestParam(value = "ids[]") String[] ids) {
+        if (userInfoService.batchDeleteUser(ids) >= 0) {
+            return "success";
+        } else {
+            return "error";
+        }
+    }
+
     /**
      * 修改密码
      *
@@ -238,7 +255,8 @@ public class BackstageManagementController {
         model.addAttribute("permissionList", JsonHelper.toJSONString(permissionList));
         //当前页（默认为1）
         model.addAttribute("currentPage", JsonHelper.toJSONString(page));
-        return "oa/backstage/oa_role_management";
+//        return "oa/backstage/oa_role_management";
+        return "oa/backstage/role";
     }
 
     /**
@@ -250,7 +268,7 @@ public class BackstageManagementController {
     @RequestMapping(value = "/roleManager")
     @ResponseBody
     public String roleManager(int page) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<RoleInfo> roleInfoList = roleInfoService.selectAll();
         PageInfo<RoleInfo> pageInfo = new PageInfo<>(roleInfoList);
         return JsonHelper.toJSONString(pageInfo);
@@ -266,7 +284,7 @@ public class BackstageManagementController {
     @RequestMapping(value = "/roleNameFilter")
     @ResponseBody
     public String roleNameFilter(int page, String name) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<RoleInfo> roleInfoList = roleInfoService.roleNameFilter(name);
         PageInfo<RoleInfo> pageInfo = new PageInfo<>(roleInfoList);
         return JsonHelper.toJSONString(pageInfo);
@@ -377,6 +395,21 @@ public class BackstageManagementController {
         return "success";
     }
 
+    /**
+     * 批量删除角色
+     *
+     * @param ids ids
+     * @return int
+     */
+    @RequestMapping(value = "/batchDeleteRole")
+    @ResponseBody
+    public String batchDeleteRole(@RequestParam(value = "ids[]") String[] ids) {
+        if (roleInfoService.batchDeleteRole(ids) >= 0) {
+            return "success";
+        } else {
+            return "error";
+        }
+    }
 
     /**--------------------------权限管理--------------------------------*/
 
@@ -387,7 +420,7 @@ public class BackstageManagementController {
      */
     @RequestMapping(value = "/toPermissionManager")
     public String toPermissionManager() {
-        return "oa/backstage/oa_permission_management";
+        return "oa/backstage/permission";
     }
 
     /**
@@ -435,7 +468,7 @@ public class BackstageManagementController {
         model.addAttribute("departmentList", JsonHelper.toJSONString(departmentList));
         model.addAttribute("currentPage", JsonHelper.toJSONString(page));
 //        return "oa/backstage/oa_department_management";
-        return "new/oa_department_management2";
+        return "oa/backstage/department";
     }
 
     /**
@@ -447,7 +480,7 @@ public class BackstageManagementController {
     @RequestMapping(value = "/departmentManager")
     @ResponseBody
     public String departmentManager(int page) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<Department> departmentList = departmentService.selectAll();
         PageInfo<Department> pageInfo = new PageInfo<>(departmentList);
         return JsonHelper.toJSONString(pageInfo);
@@ -463,7 +496,7 @@ public class BackstageManagementController {
     @RequestMapping(value = "/departmentFilter")
     @ResponseBody
     public String departmentFilter(int page, String departmentName) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<Department> departmentList = departmentService.departmentNameFilter(departmentName);
         PageInfo<Department> pageInfo = new PageInfo<>(departmentList);
         return JsonHelper.toJSONString(pageInfo);
@@ -514,6 +547,22 @@ public class BackstageManagementController {
             return "success";
         }
         return "error";
+    }
+
+    /**
+     * 批量删除部门
+     *
+     * @param ids ids
+     * @return int
+     */
+    @RequestMapping(value = "/batchDeleteDepartment")
+    @ResponseBody
+    public String batchDeleteDepartment(@RequestParam(value = "ids[]") String[] ids) {
+        if (departmentService.batchDeleteDepartment(ids) >= 0) {
+            return "success";
+        } else {
+            return "error";
+        }
     }
 
     /**

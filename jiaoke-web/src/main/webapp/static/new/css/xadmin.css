@@ -169,7 +169,7 @@ body {
 }
 
 .container .layui-nav-child {
-    top: 50px;
+    top: 60px;
 }
 
 .container .layui-nav-child i {
@@ -197,10 +197,11 @@ body {
     width: 220px;
     max-width: 220px;
     overflow: auto;
-    overflow-x: hidden;
-    overflow: hidden;
-
     /*width: 0px;*/
+}
+
+.left-nav::-webkit-scrollbar{
+    width: 0;
 }
 
 #side-nav {
@@ -632,7 +633,14 @@ table th, table td {
 .x-admin-sm .layui-btn {
     height: 30px;
     line-height: 30px;
-    padding: 0 10px;
+    padding: 0 15px;
+}
+
+.layui-btn-xs {
+    height: 25px !important;
+    line-height: 25px !important;
+    padding: 0 6px !important;
+    font-size: 12px !important;
 }
 
 .x-admin-sm .layui-btn-lg {

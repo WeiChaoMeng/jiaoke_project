@@ -158,4 +158,12 @@ public interface UserInfoService {
      * @return nickname
      */
     String getNicknameById(Integer id);
+
+    /**
+     * 批量删除数据
+     *
+     * @param ids ids
+     * @return int
+     */
+    int batchDeleteUser(String[] ids);
 }

@@ -46,9 +46,6 @@
     $(function () {
         layui.use('form', function () {
             var form = layui.form;
-            // layer.msg('玩命卖萌中', function(){
-            //   //关闭后的操作
-            //   });
             //监听提交
             form.on('submit(login)', function (data) {
                 // alert(888)
@@ -76,29 +73,14 @@
                         }
                     }
                 });
-                // layer.msg(JSON.stringify(data.field),function(){
-                //     location.href='index.jsp'
-                // });
                 return false;
             });
         });
-    })
+    });
 
     //Cookie失效后跳转的登录页
-    if (top != window)
-
+    if (top !== window)
         top.location.href = window.location.href;
 </script>
-<!-- 底部结束 -->
-<%--<script>--%>
-    <%--//百度统计可去掉--%>
-    <%--var _hmt = _hmt || [];--%>
-    <%--(function () {--%>
-        <%--var hm = document.createElement("script");--%>
-        <%--hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";--%>
-        <%--var s = document.getElementsByTagName("script")[0];--%>
-        <%--s.parentNode.insertBefore(hm, s);--%>
-    <%--})();--%>
-<%--</script>--%>
 </body>
 </html>

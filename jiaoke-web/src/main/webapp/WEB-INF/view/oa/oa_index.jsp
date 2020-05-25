@@ -330,11 +330,11 @@
                                 </a>
                             </td>
 
-                            <%--<td class="template" valign="middle">--%>
-                                <%--<a class="check_color" onclick="commonJump('trainee')" title="毕业生见习期满考核鉴定表">--%>
-                                    <%--<em class="template-icon">&#xe695;</em>毕业生见习期满考核鉴定表--%>
-                                <%--</a>--%>
-                            <%--</td>--%>
+                            <td class="template" valign="middle">
+                                <a class="check_color" onclick="commonJump('trainee')" title="毕业生见习期满考核鉴定表">
+                                    <em class="template-icon">&#xe695;</em>毕业生见习期满考核鉴定表
+                                </a>
+                            </td>
 
                             <%--<td class="template" valign="middle">--%>
                                 <%--<a class="check_color" onclick="commonJump('meeting')" title="会议室申请单">--%>
@@ -353,8 +353,6 @@
                             <%--<em class="template-icon">&#xe695;</em>信息联络处理单--%>
                             <%--</a>--%>
                             <%--</td>--%>
-
-                            <%--未完成--%>
                         </tr>
                         </tbody>
                     </table>

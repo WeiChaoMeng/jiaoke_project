@@ -32,6 +32,15 @@ public interface OaCollaborationService {
     List<OaCollaboration> selectAlreadySend(List<OaCollaboration> oaCollaborations, String title);
 
     /**
+     * 批量删除
+     *
+     * @param table table
+     * @param id    id
+     * @return int
+     */
+    int batchDeleteAlreadySend(String table, String id);
+
+    /**
      * 查询待办事项
      *
      * @param oaCollaborations oaCollaborations

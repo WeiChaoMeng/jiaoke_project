@@ -11,19 +11,89 @@
     <meta charset="utf-8">
     <title>新闻中心</title>
     <link href="../../../../static/css/oa/oa_common.css" rel="stylesheet" type="text/css">
+    <style>
+        .news-headlines-color{
+            background-image: linear-gradient(to right, #FF5722 , #FFB800);
+        }
+
+        .news-headlines-left-content {
+            font-size: 18px;
+            color: #ffffff;
+        }
+
+        .unit_news_title {
+            padding: 5px;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .simple-table-style{
+            width: 100%;
+        }
+
+        .simple-table-style thead tr th {
+            height: 35px;
+            position: relative;
+            padding: 8px 15px;
+            min-height: 20px;
+            font-size: 14px;
+            text-align: left;
+            font-weight: 400;
+            word-break: break-all;
+            border: none;
+            background: #f2f2f2;
+        }
+
+        .simple-table-style tbody tr td{
+            text-align: left;
+            padding: 0 15px;
+            line-height: 30px;
+            border: none;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .simple-table-style tbody tr:hover {
+            background: #bdbdbd80;
+            cursor: pointer;
+        }
+
+        .publish-new-content-but {
+            padding: 5px 15px;
+            border: 0;
+            cursor: pointer;
+            background: #009688;
+            outline: none;
+            border-radius: 5px;
+            color: #FFFFFF;
+            font-size: 13px;
+            margin-right: 8px;
+        }
+
+        .publish-new-content-but:hover {
+            opacity: .8;
+        }
+
+        .more-data-style{
+            color: #00b8ff;
+            cursor: pointer;
+            font-size: 13px;
+        }
+    </style>
 </head>
 
 <body style="padding:15px 8px 0px 8px;">
 
 <table style="width: 100%;height: 100%;">
     <tbody>
-    <tr class="news_headlines_color">
-        <td width="50%">
+    <tr class="news-headlines-color">
+        <td>
             <table width="100%" height="100%">
                 <tbody>
                 <tr>
                     <td class="news_headlines_left">
-                        <span class="news_headlines_left_content">新闻中心</span>
+                        <span class="news-headlines-left-content">新闻中心</span>
                     </td>
                 </tr>
                 </tbody>
@@ -34,18 +104,20 @@
         <td colspan="2">
             <div style="width: 100%">
                 <div>
-                    <div class="unit_news_title" style="font-size: 13px">单位新闻</div>
+                    <div class="unit_news_title">单位新闻</div>
                 </div>
                 <div style="min-height: 180px">
-                    <table class="simpletable">
+                    <table class="simple-table-style" style="border: none">
 
                         <thead>
-                        <th style="width: 5%">序号</th>
-                        <th style="width: 30%">标题</th>
-                        <th style="width: 15%">发布部门</th>
-                        <th style="width: 10%">发布人</th>
-                        <th style="width: 15%">发布时间</th>
-                        <th style="width: 25%">摘要</th>
+                        <tr>
+                            <th style="width: 5%">序号</th>
+                            <th style="width: 30%">标题</th>
+                            <th style="width: 15%">发布部门</th>
+                            <th style="width: 10%">发布人</th>
+                            <th style="width: 15%">发布时间</th>
+                            <th style="width: 25%">摘要</th>
+                        </tr>
                         </thead>
 
                         <tbody>
@@ -56,12 +128,12 @@
                             <c:otherwise>
                                 <c:forEach var="newsCenter" items="${oaNewsCenterList}" varStatus="status">
                                     <tr onclick="particulars(${newsCenter.id})">
-                                        <td>${status.count}</td>
-                                        <td style="text-align: left;text-indent: 10px;">${newsCenter.newsHeadlines}</td>
+                                        <td style="text-align: center;">${status.count}</td>
+                                        <td>${newsCenter.newsHeadlines}</td>
                                         <td>${newsCenter.releaseDepartment}</td>
                                         <td>${newsCenter.publisher}</td>
                                         <td>${newsCenter.releaseDateStr}</td>
-                                        <td style="text-align: left;text-indent: 10px;">${newsCenter.summary}</td>
+                                        <td>${newsCenter.summary}</td>
                                     </tr>
                                 </c:forEach>
                             </c:otherwise>
@@ -85,20 +157,20 @@
                     <div class="unit_news_foot_right">
 
                         <shiro:hasPermission name="news:add">
-                            <button class="publish-new-content" type="button" onclick="newsRelease()">新闻发布</button>
+                            <button class="publish-new-content-but" type="button" onclick="newsRelease()">新闻发布</button>
                         </shiro:hasPermission>
 
-                        <a onclick="moreNewsData()" style="color: #00b8ff;cursor: pointer">更多</a>
+                        <a onclick="moreNewsData()" class="more-data-style">更多</a>
                     </div>
                 </div>
 
                 <div style="clear: both"></div>
 
                 <div>
-                    <div class="unit_news_title" style="font-size: 13px">企业荣誉</div>
+                    <div class="unit_news_title">企业荣誉</div>
                 </div>
                 <div style="min-height: 180px">
-                    <table class="simpletable">
+                    <table class="simple-table-style">
 
                         <thead>
                         <th style="width: 5%">序号</th>
@@ -148,11 +220,11 @@
                     <div class="unit_news_foot_right">
 
                         <shiro:hasPermission name="honour:add">
-                            <button class="publish-new-content" type="button" onclick="corporateHonorRelease()">荣誉发布
+                            <button class="publish-new-content-but" type="button" onclick="corporateHonorRelease()">荣誉发布
                             </button>
                         </shiro:hasPermission>
 
-                        <a onclick="moreCorporateHonorData()" style="color: #00b8ff;cursor: pointer">更多</a>
+                        <a onclick="moreCorporateHonorData()" class="more-data-style">更多</a>
                     </div>
                 </div>
 
@@ -168,12 +240,12 @@
 <script>
     //新闻发布
     function newsRelease() {
-        window.location.href = '/newsCenter/toNewsRelease';
+        window.location.href = '/newsCenter/toNewsRelease?jumpFlag=1';
     }
 
     //更多新闻
     function moreNewsData() {
-        window.location.href = '/newsCenter/toNewsList';
+        window.location.href = '/newsCenter/toNewsList?page=1';
     }
 
     //新闻详情
@@ -185,12 +257,12 @@
 
     //企业荣誉发布
     function corporateHonorRelease() {
-        window.location.href = '/corporateHonor/toCorporateHonor';
+        window.location.href = '/corporateHonor/toCorporateHonor?jumpFlag=1';
     }
 
     //更多企业荣誉
     function moreCorporateHonorData() {
-        window.location.href = '/corporateHonor/toCorporateHonorList';
+        window.location.href = '/corporateHonor/toCorporateHonorList?page=1';
     }
 
     //企业荣誉详情

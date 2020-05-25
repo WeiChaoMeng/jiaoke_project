@@ -13,6 +13,7 @@ import com.jiaoke.oa.bean.OaNotice;
 import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.service.OaNewsCenterService;
 import com.jiaoke.oa.service.OaNoticeService;
+import com.jiaoke.oa.service.SecurityService;
 import com.jiaoke.quality.service.QualityIndexInf;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,9 @@ public class CommonController {
 
     @Resource
     private OaNoticeService oaNoticeService;
+
+    @Resource
+    private SecurityService securityService;
 
     /**
      *
@@ -87,7 +91,10 @@ public class CommonController {
     @RequestMapping("/cockpitPage.do")
     public String cockpitPage(Model model) {
         UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
+        //获取监控token
+        String accessToken = securityService.getAccessToken();
         model.addAttribute("nickname", userInfo.getNickname());
+        model.addAttribute("accessToken",accessToken);
         return "cockpit/pages/index1";
     }
 
@@ -124,14 +131,18 @@ public class CommonController {
     }
 
     /**
-     * 登录成功后进入首页（基础层） - 未使用
+     * 登录成功后进入首页（基础层）
      *
      * @return security_index.jsp
      */
     @RequestMapping("/basePage.do")
     public String basePage(Model model) {
         UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
+        List<OaNewsCenter> oaNewsCenterList = oaNewsCenterService.homePageData();
+        List<OaNotice> oaNoticeList = oaNoticeService.homePageData();
         model.addAttribute("userInfo", userInfo);
+        model.addAttribute("oaNewsCenterList", oaNewsCenterList);
+        model.addAttribute("oaNoticeList", oaNoticeList);
         return "new/basePage";
     }
 

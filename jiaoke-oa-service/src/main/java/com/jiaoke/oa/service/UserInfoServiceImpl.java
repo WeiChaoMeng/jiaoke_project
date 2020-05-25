@@ -181,4 +181,9 @@ public class UserInfoServiceImpl implements UserInfoService {
     public String getNicknameById(Integer id) {
         return userInfoMapper.getNicknameById(id);
     }
+
+    @Override
+    public int batchDeleteUser(String[] ids) {
+        return userInfoMapper.batchDeleteUser(ids);
+    }
 }

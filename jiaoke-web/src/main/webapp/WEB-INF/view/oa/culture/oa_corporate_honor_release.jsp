@@ -34,6 +34,7 @@
         <tr>
             <td class="table_td">标题</td>
             <td colspan="4" class="table_content">
+                <input type="hidden" id="jumpFlag" value="${jumpFlag}">
                 <input type="text" class="form_input" name="title" id="title" autocomplete="off">
             </td>
 
@@ -158,6 +159,7 @@
             layer.msg('摘要不可以为空！')
         }else {
             $("#editorHTNL").val(editor.txt.html());
+            var jumpFlagNum = $('#jumpFlag').val();
 
             $.ajax({
                 type: "POST",
@@ -171,7 +173,11 @@
                     var result = JSON.parse(data);
                     if (result === "success") {
                         layer.msg("添加成功!");
-                        window.location.href = "${path}/newsCenter/toNewsCenter";
+                        if (jumpFlagNum === "1"){
+                            window.location.href = "${path}/newsCenter/toNewsCenter";
+                        } else{
+                            window.location.href = '${path}/corporateHonor/toCorporateHonorList?page=1';
+                        }
                     } else {
                         layer.msg('添加失败!');
                     }

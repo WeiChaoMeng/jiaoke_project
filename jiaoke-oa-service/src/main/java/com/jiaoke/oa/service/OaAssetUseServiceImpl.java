@@ -22,7 +22,7 @@ public class OaAssetUseServiceImpl implements OaAssetUseService {
 
     @Override
     public List<OaAssetUse> selectAll() {
-        return oaAssetUseMapper.selectAll();
+        return oaAssetUseMapper.selectAllData();
     }
 
     @Override

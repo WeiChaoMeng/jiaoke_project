@@ -423,7 +423,8 @@
             success: function (data) {
                 if (data === 'success') {
                     //返回上一页
-                    window.location.href = '${path}/oaHomePage/toOaHomePage';
+                    <%--window.location.href = '${path}/oaHomePage/toOaHomePage';--%>
+                    window.history.back();
                     layer.msg('提交成功！');
                 } else {
                     layer.msg('提交失败！');

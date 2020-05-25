@@ -60,7 +60,7 @@
 	Xadmin.prototype.add_lay_tab = function(title,url,id) {
 		element.tabAdd('xbs_tab', {
 	       title: title 
-	        ,content: '<iframe tab-id="'+id+'" frameborder="0" src="'+url+'" scrolling="yes" class="x-iframe"></iframe>'
+	        ,content: '<iframe tab-id="'+id+'" id="'+id+'" frameborder="0" src="'+url+'" scrolling="yes" class="x-iframe"></iframe>'
 	        ,id: id
 	    })
 	}
@@ -331,6 +331,16 @@ layui.use(['layer','element','jquery'],function() {
     $('.page-content,#tab_show,.container,.left-nav').click(function(event) {
         $('#tab_right').hide();
         $('#tab_show').hide();
+    });
+
+    $('.layui-tab-title').on('click','li',function () {
+        var layId = $(this).attr("lay-id");
+        if (layId === undefined) {
+            //首页
+            document.getElementById('iframes').contentWindow.location.reload(true);
+        }else{
+            document.getElementById(layId).contentWindow.location.reload(true);
+        }
     });
 
     // 页面加载完要做的

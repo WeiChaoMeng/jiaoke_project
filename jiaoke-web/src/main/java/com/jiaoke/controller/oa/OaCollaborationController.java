@@ -13,6 +13,7 @@ import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -35,7 +36,7 @@ public class OaCollaborationController {
     private ActivitiUtil activitiUtil;
 
     @Resource
-    private OaCollaborationService oaCoordinationService;
+    private OaCollaborationService oaCollaborationService;
 
     /**
      * 获取当前登录用户信息
@@ -55,7 +56,7 @@ public class OaCollaborationController {
     @RequestMapping("/waitSend")
     public String waitingMatter(int page, Model model) {
         model.addAttribute("currentPage", JsonHelper.toJSONString(page));
-        return "oa/collaboration/oa_wait_send";
+        return "oa/collaborative/oa_wait_send";
     }
 
     /**
@@ -67,8 +68,8 @@ public class OaCollaborationController {
     @RequestMapping(value = "/loadingWaitSendData")
     @ResponseBody
     public String loadingWaitSendData(int page, String title) {
-        PageHelper.startPage(page, 15);
-        List<OaCollaboration> collaborationList = oaCoordinationService.selectWaitSend(getCurrentUser().getId(), title);
+        PageHelper.startPage(page, 12);
+        List<OaCollaboration> collaborationList = oaCollaborationService.selectWaitSend(getCurrentUser().getId(), title);
         for (OaCollaboration collaboration : collaborationList) {
             HistoricProcessInstance processInstance = activitiUtil.getProcessInstanceByBusinessKey(collaboration.getTable() + collaboration.getCorrelationId());
             if (processInstance != null) {
@@ -89,11 +90,37 @@ public class OaCollaborationController {
     @RequestMapping(value = "/deleteWaitSend")
     @ResponseBody
     public String deleteWaitSend(String correlationId, String table) {
-        if (oaCoordinationService.delete(correlationId, table) < 0) {
+        if (oaCollaborationService.delete(correlationId, table) < 0) {
             return "error";
         } else {
             return "success";
         }
+    }
+
+    /**
+     * 批量删除待发数据
+     *
+     * @param ids ids
+     * @return int
+     */
+    @RequestMapping(value = "/batchDeleteWaitSend")
+    @ResponseBody
+    public String batchDeleteWaitSend(@RequestParam(value = "ids[]") String[] ids) {
+        for (int i = 0; i < ids.length; i++) {
+            if (ids[i].contains(",")) {
+                String[] split = ids[i].split(",");
+                if (oaCollaborationService.delete(split[0], split[1]) < 0) {
+                    return "error";
+                }
+            } else {
+                if (oaCollaborationService.delete(ids[0], ids[1]) < 0) {
+                    return "error";
+                } else {
+                    return "success";
+                }
+            }
+        }
+        return "success";
     }
 
     /**------------已发事项--------------*/
@@ -105,7 +132,7 @@ public class OaCollaborationController {
     @RequestMapping("/alreadySend")
     public String alreadyIssuedMatter(int page, Model model) {
         model.addAttribute("currentPage", JsonHelper.toJSONString(page));
-        return "oa/collaboration/oa_already_send";
+        return "oa/collaborative/oa_already_send";
     }
 
     /**
@@ -121,11 +148,53 @@ public class OaCollaborationController {
         if (collaborationList.size() < 1) {
             return JsonHelper.toJSONString("noData");
         } else {
-            PageHelper.startPage(page, 15);
-            List<OaCollaboration> oaCollaborationList = oaCoordinationService.selectAlreadySend(collaborationList, title);
+            PageHelper.startPage(page, 12);
+            List<OaCollaboration> oaCollaborationList = oaCollaborationService.selectAlreadySend(collaborationList, title);
             PageInfo<OaCollaboration> pageInfo = new PageInfo<>(oaCollaborationList);
             return JsonHelper.toJSONString(pageInfo);
         }
+    }
+
+    /**
+     * 批量删除已发数据
+     *
+     * @param ids ids
+     * @return int
+     */
+    @RequestMapping(value = "/batchDeleteAlreadySend")
+    @ResponseBody
+    public String batchDeleteAlreadySend(@RequestParam(value = "ids[]") String[] ids) {
+        for (int i = 0; i < ids.length; i++) {
+            if (ids[i].contains(",")) {
+                String[] split = ids[i].split(",");
+                if (oaCollaborationService.deleteByCorrelationId(split[1]) < 0) {
+                    return "error";
+                } else {
+                    if (oaCollaborationService.batchDeleteAlreadySend(split[0], split[1]) < 0) {
+                        return "error";
+                    } else {
+                        if (activitiUtil.deleteByProcessInstanceId(split[2]) < 0) {
+                            return "error";
+                        }
+                    }
+                }
+            } else {
+                if (oaCollaborationService.deleteByCorrelationId(ids[1]) < 0) {
+                    return "error";
+                } else {
+                    if (oaCollaborationService.batchDeleteAlreadySend(ids[0], ids[1]) < 0) {
+                        return "error";
+                    } else {
+                        if (activitiUtil.deleteByProcessInstanceId(ids[2]) < 0) {
+                            return "error";
+                        } else {
+                            return "success";
+                        }
+                    }
+                }
+            }
+        }
+        return "success";
     }
 
     /**------------待办事项--------------*/
@@ -137,7 +206,7 @@ public class OaCollaborationController {
     @RequestMapping("/pending")
     public String pending(int page, Model model) {
         model.addAttribute("currentPage", JsonHelper.toJSONString(page));
-        return "oa/collaboration/oa_pending";
+        return "oa/collaborative/oa_pending";
     }
 
     /**
@@ -156,8 +225,8 @@ public class OaCollaborationController {
             return JsonHelper.toJSONString("noData");
         } else {
             List<OaCollaboration> oaCollaborations = activitiUtil.getPendingProcessInstance(taskList);
-            PageHelper.startPage(page, 15);
-            List<OaCollaboration> oaCollaborationList = oaCoordinationService.selectPending(oaCollaborations, title);
+            PageHelper.startPage(page, 12);
+            List<OaCollaboration> oaCollaborationList = oaCollaborationService.selectPending(oaCollaborations, title);
             PageInfo<OaCollaboration> pageInfo = new PageInfo<>(oaCollaborationList);
             return JsonHelper.toJSONString(pageInfo);
         }
@@ -181,7 +250,7 @@ public class OaCollaborationController {
             return JsonHelper.toJSONString(map);
         } else {
             List<OaCollaboration> oaCollaborations = activitiUtil.getPendingProcessInstance(taskList);
-            List<OaCollaboration> oaCollaborationList = oaCoordinationService.selectPending(oaCollaborations, "");
+            List<OaCollaboration> oaCollaborationList = oaCollaborationService.selectPending(oaCollaborations, "");
             for (OaCollaboration collaboration : oaCollaborationList) {
                 collaboration.setCreateTimeStr(collaboration.getCreateTimeStr().substring(0, 10));
             }
@@ -203,7 +272,7 @@ public class OaCollaborationController {
     @RequestMapping("/done")
     public String managedMatter(int page, Model model) {
         model.addAttribute("currentPage", JsonHelper.toJSONString(page));
-        return "oa/collaboration/oa_done";
+        return "oa/collaborative/oa_done";
     }
 
     /**
@@ -220,8 +289,8 @@ public class OaCollaborationController {
         if (collaborationList.size() < 1) {
             return JsonHelper.toJSONString("noData");
         } else {
-            PageHelper.startPage(page, 15);
-            List<OaCollaboration> oaCollaborationList = oaCoordinationService.selectDone(collaborationList, title);
+            PageHelper.startPage(page, 12);
+            List<OaCollaboration> oaCollaborationList = oaCollaborationService.selectDone(collaborationList, title);
             PageInfo<OaCollaboration> pageInfo = new PageInfo<>(oaCollaborationList);
             return JsonHelper.toJSONString(pageInfo);
         }
@@ -244,7 +313,7 @@ public class OaCollaborationController {
             map.put("result", "null");
             return JsonHelper.toJSONString(map);
         } else {
-            List<OaCollaboration> oaCollaborationList = oaCoordinationService.selectDone(collaborationList, "");
+            List<OaCollaboration> oaCollaborationList = oaCollaborationService.selectDone(collaborationList, "");
             for (OaCollaboration collaboration : oaCollaborationList) {
                 collaboration.setCreateTimeStr(collaboration.getStartTimeStr().substring(0, 10));
             }
@@ -254,5 +323,15 @@ public class OaCollaborationController {
             map.put("result", oaCollaborationList);
             return JSON.toJSONString(map);
         }
+    }
+
+    /**
+     * 流程模板
+     *
+     * @return jsp
+     */
+    @RequestMapping("/toFlowTemplate")
+    public String toFlowTemplate() {
+        return "oa/collaborative/oa_flow";
     }
 }

@@ -30,6 +30,14 @@ public interface OaCorporateHonorService {
     List<OaCorporateHonor> selectAll();
 
     /**
+     * 搜索
+     *
+     * @param title 标题
+     * @return list
+     */
+    List<OaCorporateHonor> titleFilter(String title);
+
+    /**
      * 根据id查询
      *
      * @param id id
@@ -51,4 +59,12 @@ public interface OaCorporateHonorService {
      * @return int
      */
     int deleteByPrimaryKey(Integer id);
+
+    /**
+     * 批量删除数据
+     *
+     * @param ids ids
+     * @return int
+     */
+    int batchDeleteHonor(String[] ids);
 }

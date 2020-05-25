@@ -89,4 +89,12 @@ public interface RoleInfoService {
      * @return list
      */
     List<Permission> bindingInfo(Integer id);
+
+    /**
+     * 批量删除数据
+     *
+     * @param ids ids
+     * @return int
+     */
+    int batchDeleteRole(String[] ids);
 }

@@ -36,4 +36,20 @@ public interface OaNewsCenterMapper extends Mapper<OaNewsCenter> {
      * @return list
      */
     List<OaNewsCenter> selectAllData();
+
+    /**
+     * 搜索
+     *
+     * @param title 标题
+     * @return list
+     */
+    List<OaNewsCenter> titleFilter(String title);
+
+    /**
+     * 批量删除数据
+     *
+     * @param ids ids
+     * @return int
+     */
+    int batchDeleteNews(String[] ids);
 }

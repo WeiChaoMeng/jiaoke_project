@@ -12,10 +12,11 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport"
-          content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
+          content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8"/>
     <link rel="icon" href="../../../static/images/favicon.ico" type="image/x-icon"/>
     <link rel="stylesheet" href="../../../static/new/css/font.css">
     <link rel="stylesheet" href="../../../static/new/css/xadmin.css">
+    <link rel="stylesheet" href="../../../static/new/css/basepage.css">
     <script src="../../../static/new/lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="../../../static/new/js/xadmin.js"></script>
     <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
@@ -85,11 +86,9 @@
                 <div class="layui-card-body">
                     <div class="layui-carousel" id="test1">
                         <div carousel-item>
-                            <div><img src="../../../static/images/test/2.jpg" style="width: 100%;height: 100%;"></div>
-                            <div><img src="../../../static/images/test/3.jpg" style="width: 100%;height: 100%;"></div>
-                            <div><img src="../../../static/images/test/4.jpg" style="width: 100%;height: 100%;"></div>
-                            <div><img src="../../../static/images/test/5.jpg" style="width: 100%;height: 100%;"></div>
-                            <div><img src="../../../static/images/test/6.jpg" style="width: 100%;height: 100%;"></div>
+                            <div><img src="../../../static/new/images/lbt3.jpg" style="width: 100%;height: 100%;"></div>
+                            <div><img src="../../../static/new/images/lbt1.jpg" style="width: 100%;height: 100%;"></div>
+                            <div><img src="../../../static/new/images/lbt2.jpg" style="width: 100%;height: 100%;"></div>
                         </div>
                     </div>
                 </div>
@@ -194,7 +193,12 @@
                         </tr>
                         </tbody>
                     </table>
+
+                    <div class="layui-carousel-ind more-date-content">
+                        <i class="layui-icon more-date-icon" onclick="moreModel()">&#xe65f;</i>
+                    </div>
                 </div>
+
             </div>
         </div>
 
@@ -203,134 +207,12 @@
                 <div class="layui-card-header">待办工作</div>
                 <div class="layui-card-body" style="min-height: 190px;">
                     <table style="font-size: 14px;width: 100%;">
-                        <tbody>
-                        <tr style="line-height: 25px;cursor: pointer;">
-                            <td class="list_content" style="width: 75%;">
-                                <span class="list_content_name">
-                                    <a class="check_color" onclick="taskApprovalHandle('annualLeave','2020040214123242776391','534053')" title="年休假审批表(2020-04-02 14:11:43)">年休假审批表(2020-04-05 11:22:20)</a>
-                                </span>
-                            </td>
-                            <td class="list-content-time" style="width: 15%;">
-                                <span class="list_content_date">
-                                    <a title="申请时间">2020-04-05</a>
-                                </span>
-                            </td>
-                            <td class="list-content-proposer" style="width: 10%;">
-                                <span class="list_content_sponsor">
-                                    <a title="申请人">测试</a>
-                                </span>
-                            </td>
-                        </tr>
-
-                        <tr style="line-height: 25px;cursor: pointer;">
-                            <td class="list_content" style="width: 75%;">
-                                <span class="list_content_name">
-                                    <a class="check_color" onclick="taskApprovalHandle('annualLeave','2020040214123242776391','534053')" title="证照借用(2020-04-02 14:11:43)">证照借用(2020-04-02 14:11:43)</a>
-                                </span>
-                            </td>
-                            <td class="list-content-time" style="width: 15%;">
-                                <span class="list_content_date">
-                                    <a title="申请时间">2020-04-02</a>
-                                </span>
-                            </td>
-                            <td class="list-content-proposer" style="width: 10%;">
-                                <span class="list_content_sponsor">
-                                    <a title="申请人">测试</a>
-                                </span>
-                            </td>
-                        </tr>
-
-                        <tr style="line-height: 25px;cursor: pointer;">
-                            <td class="list_content" style="width: 75%;">
-                                <span class="list_content_name">
-                                    <a class="check_color" onclick="taskApprovalHandle('annualLeave','2020040214123242776391','534053')" title="用车审批单(2020-04-02 14:11:43)">用车审批单(2020-04-01 09:10:00)</a>
-                                </span>
-                            </td>
-                            <td class="list-content-time" style="width: 15%;">
-                                <span class="list_content_date">
-                                    <a title="申请时间">2020-04-01</a>
-                                </span>
-                            </td>
-                            <td class="list-content-proposer" style="width: 10%;">
-                                <span class="list_content_sponsor">
-                                    <a title="申请人">测试</a>
-                                </span>
-                            </td>
-                        </tr>
-
-                        <tr style="line-height: 25px;cursor: pointer;">
-                            <td class="list_content" style="width: 75%;">
-                                <span class="list_content_name">
-                                    <a class="check_color" onclick="taskApprovalHandle('annualLeave','2020040214123242776391','534053')" title="办公用品领用(2020-04-02 14:11:43)">办公用品领用(2020-04-01 09:10:00)</a>
-                                </span>
-                            </td>
-                            <td class="list-content-time" style="width: 15%;">
-                                <span class="list_content_date">
-                                    <a title="申请时间">2020-04-01</a>
-                                </span>
-                            </td>
-                            <td class="list-content-proposer" style="width: 10%;">
-                                <span class="list_content_sponsor">
-                                    <a title="申请人">测试</a>
-                                </span>
-                            </td>
-                        </tr>
-
-                        <tr style="line-height: 25px;cursor: pointer;">
-                            <td class="list_content" style="width: 75%;">
-                                <span class="list_content_name">
-                                    <a class="check_color" onclick="taskApprovalHandle('annualLeave','2020040214123242776391','534053')" title="奖罚意见表(2020-04-02 14:11:43)">奖罚意见表(2020-04-01 09:10:00)</a>
-                                </span>
-                            </td>
-                            <td class="list-content-time" style="width: 15%;">
-                                <span class="list_content_date">
-                                    <a title="申请时间">2020-04-01</a>
-                                </span>
-                            </td>
-                            <td class="list-content-proposer" style="width: 10%;">
-                                <span class="list_content_sponsor">
-                                    <a title="申请人">测试</a>
-                                </span>
-                            </td>
-                        </tr>
-
-                        <tr style="line-height: 25px;cursor: pointer;">
-                            <td class="list_content" style="width: 75%;">
-                                <span class="list_content_name">
-                                    <a class="check_color" onclick="taskApprovalHandle('annualLeave','2020040214123242776391','534053')" title="转岗审批表(2020-04-02 14:11:43)">转岗审批表(2020-04-01 09:10:00)</a>
-                                </span>
-                            </td>
-                            <td class="list-content-time" style="width: 15%;">
-                                <span class="list_content_date">
-                                    <a title="申请时间">2020-04-01</a>
-                                </span>
-                            </td>
-                            <td class="list-content-proposer" style="width: 10%;">
-                                <span class="list_content_sponsor">
-                                    <a title="申请人">测试</a>
-                                </span>
-                            </td>
-                        </tr>
-
-                        <tr style="line-height: 25px;cursor: pointer;">
-                            <td class="list_content" style="width: 75%;">
-                                <span class="list_content_name">
-                                    <a class="check_color" onclick="taskApprovalHandle('annualLeave','2020040214123242776391','534053')" title="收文阅办单(2020-04-02 14:11:43)">收文阅办单(2020-04-01 09:10:00)</a>
-                                </span>
-                            </td>
-                            <td class="list-content-time" style="width: 15%;">
-                                <span class="list_content_date">
-                                    <a title="申请时间">2020-04-01</a>
-                                </span>
-                            </td>
-                            <td class="list-content-proposer" style="width: 10%;">
-                                <span class="list_content_sponsor">
-                                    <a title="申请人">测试</a>
-                                </span>
-                            </td>
-                        </tr>
-                        </tbody>
+                        <tbody id="pending"></tbody>
                     </table>
+
+                    <div class="layui-carousel-ind more-date-content">
+                        <i class="layui-icon more-date-icon" onclick="morePending()">&#xe65f;</i>
+                    </div>
                 </div>
             </div>
         </div>
@@ -338,43 +220,19 @@
             <div class="layui-col-md6">
                 <div class="layui-card">
                     <div class="layui-card-header">公告</div>
-                    <div class="layui-card-body">
+                    <div class="layui-card-body" style="min-height: 168px;">
                         <ul>
-                            <li>
-                                <a href="notice/homePageDetails?id=11">中秋节廉洁提醒</a>
-                                <i class="layuiadmin-badge-time">2019-09-12</i>
-                            </li>
-                            <li>
-                                <span></span>
-                                <a href="notice/homePageDetails?id=10">端午小长假廉洁提醒</a>
-                                <i class="layuiadmin-badge-time">2019-06-06</i>
-                            </li>
-                            <li>
-                                <span></span>
-                                <a href="notice/homePageDetails?id=9">路驰党支部严明纪律规定，廉洁过好“五一”</a>
-                                <i class="layuiadmin-badge-time">2019-04-30</i>
-                            </li>
-                            <li>
-                                <span></span>
-                                <a href="notice/homePageDetails?id=8">【廉政】清明节廉政提醒</a>
-                                <i class="layuiadmin-badge-time">2019-04-04</i>
-                            </li>
-                            <li>
-                                <span></span>
-                                <a href="notice/homePageDetails?id=7">中共北京市政路桥集团有限公司纪委文件</a>
-                                <i class="layuiadmin-badge-time">2019-03-28</i>
-                            </li>
-                            <li>
-                                <span></span>
-                                <a href="notice/homePageDetails?id=6">中国共产党纪律处分条例</a>
-                                <i class="layuiadmin-badge-time">2019-03-12</i>
-                            </li>
-                            <li>
-                                <span></span>
-                                <a href="notice/homePageDetails?id=5">2018年职工大会</a>
-                                <i class="layuiadmin-badge-time">2018-11-22</i>
-                            </li>
+                            <c:forEach items="${oaNoticeList}" var="notice">
+                                <li>
+                                    <a class="text-title-style" href="notice/homePageDetails?id=${notice.id}">${notice.title}</a>
+                                    <i class="layuiadmin-badge-time" style="margin: 0;position: static;">${notice.releaseDateStr}</i>
+                                </li>
+                            </c:forEach>
                         </ul>
+
+                        <div class="layui-carousel-ind more-date-content">
+                            <i class="layui-icon more-date-icon" onclick="moreNotice()">&#xe65f;</i>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -382,43 +240,19 @@
         <div class="layui-col-md6">
             <div class="layui-card">
                 <div class="layui-card-header">新闻</div>
-                <div class="layui-card-body">
+                <div class="layui-card-body" style="min-height: 168px;">
                     <ul>
-                        <li>
-                            <a href="notice/homePageDetails?id=11">天气转凉 棉衣暖心</a>
-                            <i class="layuiadmin-badge-time">2019-10-31</i>
-                        </li>
-                        <li>
-                            <span></span>
-                            <a href="notice/homePageDetails?id=10">路驰分公司团支部组织开展“不忘初心、牢记使命” 主题团日活动</a>
-                            <i class="layuiadmin-badge-time">2019-10-29</i>
-                        </li>
-                        <li>
-                            <span></span>
-                            <a href="notice/homePageDetails?id=9">金秋送温暖——路驰分公司工会开展节日慰问活动</a>
-                            <i class="layuiadmin-badge-time">2019-10-26</i>
-                        </li>
-                        <li>
-                            <span></span>
-                            <a href="notice/homePageDetails?id=8">路驰分公司开展职工幸福指数调研座谈会</a>
-                            <i class="layuiadmin-badge-time">2019-04-04</i>
-                        </li>
-                        <li>
-                            <span></span>
-                            <a href="notice/homePageDetails?id=7">中共北京市政路桥集团有限公司纪委文件</a>
-                            <i class="layuiadmin-badge-time">2019-10-25</i>
-                        </li>
-                        <li>
-                            <span></span>
-                            <a href="notice/homePageDetails?id=6">路驰分公司党支部开展 “不忘初心 牢记使命”主题教育动员会</a>
-                            <i class="layuiadmin-badge-time">2019-10-20</i>
-                        </li>
-                        <li>
-                            <span></span>
-                            <a href="notice/homePageDetails?id=5">路驰分公司上半年产量、产值再创新高</a>
-                            <i class="layuiadmin-badge-time">2019-10-18</i>
-                        </li>
+                        <c:forEach items="${oaNewsCenterList}" var="newsCenter">
+                            <li>
+                                <a class="text-title-style" href="newsCenter/newsDetails?id=${newsCenter.id}">${newsCenter.newsHeadlines}</a>
+                                <i class="layuiadmin-badge-time" style="margin: 0;position: static;">${newsCenter.releaseDateStr}</i>
+                            </li>
+                        </c:forEach>
                     </ul>
+
+                    <div class="layui-carousel-ind more-date-content">
+                        <i class="layui-icon more-date-icon" onclick="moreNews()">&#xe65f;</i>
+                    </div>
                 </div>
             </div>
         </div>
@@ -426,8 +260,16 @@
     </div>
 </div>
 </body>
-
+<script type="text/javascript" src="../../../static/js/jquery.js"></script>
 <script>
+    function commonJump(classAddress) {
+        window.location.href = "${path}" + classAddress + "/toIndex";
+    }
+
+    function moreModel(){
+        window.location.href = "${path}collaboration/toFlowTemplate";
+    }
+
     layui.use('carousel', function(){
         var carousel = layui.carousel;
         //建造实例
@@ -437,5 +279,86 @@
             ,height: '209px' //设置容器宽度
         });
     });
+
+    //加载待办数据
+    $(function () {
+        $.ajax({
+            type: "post",
+            url: '/oaHomePage/loadingPendingData',
+            async: false,
+            success: function (data) {
+                var result = JSON.parse(data);
+
+                //待办
+                $('#dataNumber').text('(' + result.upcomingMatterNumber + ')');
+
+                var list = result.upcomingMatterList;
+
+                if (list === "empty") {
+                    $("#pending").html();
+                } else {
+                    var pendingList = '';
+                    for (let i = 0; i < list.length; i++) {
+                        pendingList += '<tr>';
+                        pendingList += '    <td class="list_content" style="width: 70%">';
+                        pendingList += '        <span class="list_content_name">';
+                        pendingList += '            <a class="check_color" onclick="taskApprovalHandle(\'' + list[i].url + '\',\'' + list[i].correlationId + '\',\'' + list[i].taskId + '\')" title="' + list[i].title + '">' + list[i].title + '</a>';
+                        pendingList += '        </span>';
+                        pendingList += '    </td>';
+                        pendingList += '    <td class="list-content-time">';
+                        pendingList += '        <span class="list_content_date">';
+                        pendingList += '            <a title="申请时间">' + list[i].createTimeStr + '</a>';
+                        pendingList += '        </span>';
+                        pendingList += '    </td>';
+                        pendingList += '    <td class="list-content-proposer">';
+                        pendingList += '        <span class="list_content_sponsor">';
+                        pendingList += '            <a title="申请人">' + list[i].promoterStr + '</a>';
+                        pendingList += '        </span>';
+                        pendingList += '    </td>';
+                        pendingList += '    <td class="list-content-proposer">';
+                        pendingList += '        <span class="list_content_sponsor">';
+                        if (list[i].statusCode === "被回退") {
+                            pendingList += '            <a title="状态" style="color: #ff0000;font-weight: 600;">' + list[i].statusCode + '</a>';
+                        }else{
+                            pendingList += '            <a title="状态" style="color: #2196F3;font-weight: 600;">' + list[i].statusCode + '</a>';
+                        }
+                        pendingList += '        </span>';
+                        pendingList += '    </td>';
+                        pendingList += '</tr>';
+                    }
+
+                    $("#pending").html(pendingList);
+                }
+            },
+            error: function (result) {
+                layer.msg("出错！");
+            }
+        });
+    });
+
+    //待办工作板块 - 任务审批处理页面
+    function taskApprovalHandle(url, id, taskId) {
+        if (url.indexOf('.do') !== -1) {
+            window.location.href = "${path}approval" + url + "?id=" + id + "&taskId=" + taskId;
+        } else {
+            url += "/approval";
+            window.location.href = "${path}" + url + "?id=" + id + "&taskId=" + taskId;
+        }
+    }
+
+    //更多待办任务
+    function morePending() {
+        window.location.href = "${path}/collaboration/pending?page=1";
+    }
+
+    //更多公告
+    function moreNotice() {
+        window.location.href = "${path}notice/toIndex?page=1";
+    }
+
+    //更多新闻
+    function moreNews() {
+        window.location.href = "${path}newsCenter/toNewsList?page=1";
+    }
 </script>
 </html>

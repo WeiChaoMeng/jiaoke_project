@@ -30,15 +30,17 @@ public class DepartmentServiceImpl implements DepartmentService {
     public List<Department> selectAll() {
         List<Department> departmentList = departmentMapper.selectAllDepartment();
         for (Department department : departmentList) {
-            if (department.getPrincipal().contains(",")){
-                StringBuilder stringBuilder = new StringBuilder();
-                for (String s : department.getPrincipal().split(",")) {
-                    stringBuilder.append(userInfoMapper.getNicknameById(Integer.valueOf(s))).append(",");
+            if (department.getPrincipal() != null){
+                if (department.getPrincipal().contains(",")){
+                    StringBuilder stringBuilder = new StringBuilder();
+                    for (String s : department.getPrincipal().split(",")) {
+                        stringBuilder.append(userInfoMapper.getNicknameById(Integer.valueOf(s))).append(",");
+                    }
+                    department.setPrincipal(stringBuilder.substring(0,stringBuilder.length()-1));
+                }else {
+                    String nickname = userInfoMapper.getNicknameById(Integer.valueOf(department.getPrincipal()));
+                    department.setPrincipal(nickname);
                 }
-                department.setPrincipal(stringBuilder.substring(0,stringBuilder.length()-1));
-            }else {
-                String nickname = userInfoMapper.getNicknameById(Integer.valueOf(department.getPrincipal()));
-                department.setPrincipal(nickname);
             }
         }
         return departmentList;
@@ -51,7 +53,22 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public List<Department> departmentNameFilter(String departmentName) {
-        return departmentMapper.departmentNameFilter(departmentName);
+        List<Department> departmentList = departmentMapper.departmentNameFilter(departmentName);
+        for (Department department : departmentList) {
+            if (department.getPrincipal() != null){
+                if (department.getPrincipal().contains(",")){
+                    StringBuilder stringBuilder = new StringBuilder();
+                    for (String s : department.getPrincipal().split(",")) {
+                        stringBuilder.append(userInfoMapper.getNicknameById(Integer.valueOf(s))).append(",");
+                    }
+                    department.setPrincipal(stringBuilder.substring(0,stringBuilder.length()-1));
+                }else {
+                    String nickname = userInfoMapper.getNicknameById(Integer.valueOf(department.getPrincipal()));
+                    department.setPrincipal(nickname);
+                }
+            }
+        }
+        return departmentList;
     }
 
     @Override
@@ -101,5 +118,10 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public List<Department> selectPrincipalAndSupervisor() {
         return departmentMapper.selectPrincipalAndSupervisor();
+    }
+
+    @Override
+    public int batchDeleteDepartment(String[] ids) {
+        return departmentMapper.batchDeleteDepartment(ids);
     }
 }

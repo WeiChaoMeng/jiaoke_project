@@ -71,7 +71,7 @@ public interface DepartmentService {
     /**
      * 绑定部门主管领导
      *
-     * @param id        id
+     * @param id         id
      * @param supervisor supervisor
      * @return int
      */
@@ -109,4 +109,12 @@ public interface DepartmentService {
      * @return list
      */
     List<Department> selectPrincipalAndSupervisor();
+
+    /**
+     * 批量删除数据
+     *
+     * @param ids ids
+     * @return int
+     */
+    int batchDeleteDepartment(String[] ids);
 }

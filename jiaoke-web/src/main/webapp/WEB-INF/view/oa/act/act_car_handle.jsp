@@ -338,7 +338,8 @@
                 success: function (result) {
                     if (result === "success") {
                         window.top.tips("处理成功！", 0, 1, 1000);
-                        window.location.href = "${path}/oaIndex.do";
+                        <%--window.location.href = "${path}/oaIndex.do";--%>
+                        window.history.back();
                     } else {
                         window.top.tips("处理失败！", 0, 1, 1000);
                     }
@@ -357,10 +358,12 @@
             success: function (data) {
                 if (data === 'success') {
                     //返回上一页
-                    window.location.href = '${path}/oaHomePage/toOaHomePage';
+                    <%--window.location.href = '${path}/oaHomePage/toOaHomePage';--%>
+                    window.history.back();
                     window.top.tips("处理成功！", 0, 1, 1000);
                 } else if (data === 'backSuccess') {
-                    window.location.href = '${path}/oaHomePage/toOaHomePage';
+                    <%--window.location.href = '${path}/oaHomePage/toOaHomePage';--%>
+                    window.history.back();
                     window.top.tips("提交成功,并将数据转存到待发事项中！", 6, 1, 2000);
                 } else {
                     window.top.tips("处理失败！", 0, 1, 1000);
