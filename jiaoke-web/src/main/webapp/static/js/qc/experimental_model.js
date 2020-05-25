@@ -843,7 +843,8 @@ $("#myFrom").submit(function(){
     })
 
     //文本域
-    var verdict = $("#verdict").text();
+    var verdict = $("#verdict").val();
+    debugger
     var tem = new Object();
     tem.name = 'verdict';
     tem.value = verdict;

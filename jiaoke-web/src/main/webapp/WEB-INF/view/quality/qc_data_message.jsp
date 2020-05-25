@@ -411,7 +411,8 @@
                     type: 'value',
                     interval :0.5,
                     max:function (v) {
-                        return ${baseMap.template.ratioStone + 0.3};
+                        var sMax = ${baseMap.template.ratioStone + 0.3};
+                        return sMax.toFixed(2);
                     },
                     min:function (v) {
                         return (v.min - 0.5) < 0? 0:(v.min - 0.5).toFixed(1)
@@ -461,6 +462,7 @@
                         <th>生产时间</th>
                         <th>产品名称</th>
                         <th>盘号</th>
+                        <th>车号</th>
                         <th>骨料6</th>
                         <th>骨料5</th>
                         <th>骨料4</th>
@@ -487,6 +489,7 @@
                                 <td>${item.produce_time}</td>
                                 <td>${item.pro_name}</td>
                                 <td>${item.produce_disc_num}</td>
+                                <td>${item.produce_car_num}</td>
                                 <td>${item.material_aggregate_6}</td>
                                 <td>${item.material_aggregate_5}</td>
                                 <td>${item.material_aggregate_4}</td>

@@ -62,7 +62,73 @@
              ) AS TEM
         GROUP BY TEM.pro_name
         ORDER BY total DESC
-        LIMIT 10
 
+    </select>
+
+    <select id="selectAsphaltAggregateRatio" resultType="java.util.Map">
+        SELECT
+        'crew1' AS crew,
+        QMRD.produce_disc_num,
+        QMRD.produce_time,
+        QMRD.material_total,
+        QMRD.material_asphalt,
+        QPM.ratio_stone
+        FROM
+        quality_monitoring_realtime_data1 AS QMRD
+        LEFT JOIN quality_proportioning_message AS QPM
+        ON QMRD.produce_proportioning_num = QPM.crew1_modele_id
+        WHERE
+        DATE_SUB(CURDATE(), INTERVAL 3 DAY) &lt;= DATE(QMRD.produce_date)
+        AND
+        QMRD.produce_proportioning_num = (
+        SELECT produce_proportioning_num FROM quality_monitoring_realtime_data1 ORDER BY Id DESC LIMIT 1
+        )
+        AND YEAR(QPM.create_time) = YEAR(QMRD.produce_date)
+        UNION ALL
+        SELECT
+        'crew2' AS crew,
+        QMRD.produce_disc_num,
+        QMRD.produce_time,
+        QMRD.material_total,
+        QMRD.material_asphalt,
+        QPM.ratio_stone
+        FROM
+        quality_monitoring_realtime_data2 AS QMRD
+        LEFT JOIN quality_proportioning_message AS QPM
+        ON QMRD.produce_proportioning_num = QPM.crew2_modele_id
+        WHERE
+        DATE_SUB(CURDATE(), INTERVAL 3 DAY) &lt;= DATE(QMRD.produce_date)
+        AND
+        QMRD.produce_proportioning_num = (
+        SELECT produce_proportioning_num FROM quality_monitoring_realtime_data2 ORDER BY Id DESC LIMIT 1
+        )
+        AND YEAR(QPM.create_time) = YEAR(QMRD.produce_date)
+    </select>
+    <select id="selectTodayProductList" resultType="java.util.Map">
+        SELECT
+               'crew1' AS crew,
+               QPM.pro_name,
+               DATE_FORMAT(QMRD.produce_date,'%Y-%m-%d') AS produce_date,
+               truncate(SUM(QMRD.material_total)/1000,2) AS total
+        FROM
+             quality_monitoring_realtime_data1 AS QMRD
+                 INNER JOIN quality_proportioning_message AS QPM
+                     ON QMRD.produce_proportioning_num = QPM.crew1_modele_id
+        WHERE YEAR(QPM.create_time) = YEAR(NOW())
+          AND  produce_date = (SELECT produce_date FROM quality_monitoring_realtime_data1 ORDER BY id LIMIT 1 )
+        GROUP BY pro_name
+        UNION
+        SELECT
+               'crew2' AS crew,
+               QPM.pro_name,
+               DATE_FORMAT(QMRD.produce_date,'%Y-%m-%d') AS produce_date,
+               truncate(SUM(QMRD.material_total)/1000,2) AS total
+        FROM
+             quality_monitoring_realtime_data2 AS QMRD
+                 INNER JOIN quality_proportioning_message AS QPM
+                     ON QMRD.produce_proportioning_num = QPM.crew2_modele_id
+        WHERE YEAR(QPM.create_time) = YEAR(NOW())
+          AND  produce_date = (SELECT produce_date FROM quality_monitoring_realtime_data2 ORDER BY id LIMIT 1 )
+        GROUP BY pro_name
     </select>
 </mapper>

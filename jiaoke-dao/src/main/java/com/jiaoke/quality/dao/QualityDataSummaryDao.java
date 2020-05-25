@@ -158,7 +158,7 @@ public interface QualityDataSummaryDao {
      * @auther Melone
      * @date 2019/10/16 13:19
      */
-    List<Map<String, String>> getAllCriticalWarningByDate(@Param("startDate") String startDate,@Param("endDate") String endDate);
+    List<Map<String, String>> getAllCriticalWarningByDate(@Param("startDate") String startDate,@Param("endDate") String endDate,@Param("project") String project);
 
     /**
      *

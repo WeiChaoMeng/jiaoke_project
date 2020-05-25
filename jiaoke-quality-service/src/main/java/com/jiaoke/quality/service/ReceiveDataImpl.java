@@ -125,22 +125,24 @@ public class ReceiveDataImpl implements ReceiveDataInf {
         //插入数据库
         qualityWarningDao.insertQualityWarningData(warningDataList);
 
-        //判断预警级别插入关键数据预警表
+        int criticalWarning = 0;
+        int upWarning = 0;
         for (int i = 0; i < warningDataList.size(); i++){
             String materialName = warningDataList.get(i).getMaterialName();
             String warningLevel = warningDataList.get(i).getWarningLevel();
-
+            int tem = Integer.parseInt(warningLevel);
+            //判断预警级别插入关键数据预警表
             if (materialName.equals("一仓温度") || materialName.equals("沥青") || materialName.equals("骨料1")){
-                if (Integer.parseInt(warningLevel) > 1){
-                    qualityWarningDao.insertCriticalWarning(id);
-                    break;
+                if (tem > 1){
+                    criticalWarning = tem > criticalWarning ? tem:criticalWarning;
                 }
             }
-
+            //判断预警最高等级
+            upWarning = tem > upWarning? tem:upWarning;
         }
 
-
-
+        //更新预警表
+        qualityWarningDao.updateQualityWarningData(id,upWarning,criticalWarning);
     }
 
     @Override

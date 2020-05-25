@@ -126,7 +126,7 @@ function getDateByPageNum(currentNum){
     $("#gradingList").empty();
     for (var i = arrayStart; i < arrayEnd; i++ ){
         var htmlStr = "<tr>"
-            + "<td class='tdnum'><input name='spCodeId' type='checkbox' value='" + jsonList[i].id   +"'></td>"
+            + "<td class='tdnum'><input name='spCodeId' type='checkbox' style='display: block;' value='" + jsonList[i].id   +"'></td>"
             + "<td>" + jsonList[i].crew1Id  + "</td>"
             + "<td>" + jsonList[i].crew2Id  + "</td>"
             + "<td>" + jsonList[i].grading_name + "</td>"
@@ -134,8 +134,8 @@ function getDateByPageNum(currentNum){
             + "<td>" + jsonList[i].grading_remaker  + "</td>"
             + "<td>" + jsonList[i].up_user  + "</td>"
             + "<td>"
-            + "<a   href='javascript:;'   name='" + jsonList[i].id  +"' onclick='showGrading(this.name)' style='color: rgb(114, 112, 209);' >查看</a>"
-            + "<a   href='javascript:;'   name='" + jsonList[i].id  +"' onclick='showEditGrading(this.name)' style='color: rgb(114, 112, 209);padding-left: 10px;' >编辑</a>"
+             + "<button class='layui-btn layui-btn layui-btn-xs'  name='" + jsonList[i].id  +"' onclick='showGrading(this.name)'  ><i class='layui-icon'>&#xe63c;</i>详情</button>"
+            + "<button class='layui-btn layui-btn layui-btn-xs' name='" + jsonList[i].id  +"' onclick='showEditGrading(this.name)'><i class='layui-icon'>&#xe642;</i>编辑</button>"
             + "</td>"
             + "</tr>"
 

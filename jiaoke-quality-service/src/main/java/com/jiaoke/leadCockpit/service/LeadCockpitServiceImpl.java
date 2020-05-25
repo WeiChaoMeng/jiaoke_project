@@ -12,6 +12,9 @@ import com.jiaoke.LeadCockpit.dao.LeadCockpitServiceDao;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,5 +65,86 @@ public class LeadCockpitServiceImpl implements LeadCockpitServiceInf {
         }
 
         return map ;
+    }
+
+    @Override
+    public Map<String, Object> getAsphaltAggregateRatio() {
+        Map<String,Object> res = new HashMap<>();
+        //查询当前最后一条数据三日内相同产品信息及配比信息
+        List<Map<String,String>> list = leadCockpitServiceDao.selectAsphaltAggregateRatio();
+        //计算油石比
+        DecimalFormat df = new DecimalFormat("0.00");
+        df.setRoundingMode(RoundingMode.HALF_UP);
+        if (list == null || list.size() < 2){
+            res.put("message","empty");
+            return res;
+        }
+        //定义返回内容
+        Map<String,Object> body = new HashMap<>();
+        //返回X轴使用的盘号坐标
+        Map<String,List<String>> xMap = new HashMap<>();
+        List<String> crew1Xlist = new ArrayList<>();
+        List<String> crew2Xlist = new ArrayList<>();
+        //返回data数据
+        Map<String,List<String>> dataList = new HashMap<>();
+        List<String> crew1data = new ArrayList<>();
+        List<String> crew2data = new ArrayList<>();
+        //返回配比值
+        Map<String,Object> ration = new HashMap<>();
+
+        for(int i = 0; i < list.size();i++){
+
+            String crew =  list.get(i).get("crew");
+            String discNum = list.get(i).get("produce_disc_num");
+            String produceTime = String.valueOf(list.get(i).get("produce_time"));
+            String ratioStone = String.valueOf(list.get(i).get("ratio_stone"));
+            Float total = Float.parseFloat(String.valueOf(list.get(i).get("material_total")));
+            Float asphalt = Float.parseFloat(String.valueOf(list.get(i).get("material_asphalt")));
+            String aar = df.format(asphalt /(total - asphalt) * 100);
+
+            if ("crew1".equals(crew)){
+                //盘号X轴
+//                crew1Xlist.add(discNum);
+                //日期X轴
+                crew1Xlist.add(produceTime);
+                crew1data.add(aar);
+                ration.put("crew1Ration",ratioStone);
+            }else {
+                //盘号X轴
+//                crew2Xlist.add(discNum);
+                //日期X轴
+                crew2Xlist.add(produceTime);
+                crew2data.add(aar);
+                ration.put("crew2Ration",ratioStone);
+            }
+        }
+
+        //装载数据
+        xMap.put("crew1XList",crew1Xlist);
+        xMap.put("crew2XList",crew2Xlist);
+        dataList.put("crew1data",crew1data);
+        dataList.put("crew2data",crew2data);
+
+        body.put("xList",xMap);
+        body.put("dataList",dataList);
+        body.put("ration",ration);
+
+        res.put("body",body);
+        res.put("message","success");
+        //装填数据返回
+        return res;
+    }
+
+    @Override
+    public Map<String, Object> getTodayProductList() {
+        Map<String,Object> res = new HashMap<>();
+        //查询当前最后一条数据三日内相同产品信息及配比信息
+        List<Map<String,String>> list = leadCockpitServiceDao.selectTodayProductList();
+        res.put("dataList",list);
+        res.put("message","success");
+        if (list == null || list.size() == 0){
+            res.put("message","empty");
+        }
+        return res;
     }
 }

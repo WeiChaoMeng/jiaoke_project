@@ -549,9 +549,9 @@ table {
 }
 
 /*pagination*/
-.pagination {
-    padding-top: 5%;
-}
+/*.pagination {*/
+    /*padding-top: 5%;*/
+/*}*/
 
 .pagelist {
     float: left;
@@ -566,11 +566,11 @@ table {
     display: block;
     height: 26px;
     line-height: 26px;
-    background: #d2d2d2;
-    border: solid 1px #acacac;
+    background: #c8fff0;
+    border: solid 1px #e4dfdf;
     padding: 0 10px;
     border-radius: 1px;
-    color: #000;
+    color: #777373;
 }
 
 .pagelist li a:hover {
@@ -595,6 +595,7 @@ table {
     float: right;
     line-height: 28px;
     color: #8d8d8d;
+    margin-right: 2.5%;
 }
 
 /*footer*/
@@ -733,13 +734,11 @@ table {
 }
 
 .simpletable {
-    width: 100%;
+    width: 90%;
     border: none;
     border-top: solid 1px #d4d4d4;
     page-break-after:always;
     cellspacing:0;
-    table-layout:fixed;
-    word-wrap:break-word;
 
 }
 
@@ -748,7 +747,7 @@ table {
     line-height: 30px;
     font-weight: bold;
     text-align: left;
-    background: #fff;
+    /*background: #fff;*/
     text-indent: 15px;
     border: none;
     white-space: nowrap;
@@ -767,9 +766,9 @@ table {
     color: #000;
 }
 
-.even {
-    background: #ffffff;
-}
+/*.even {*/
+    /*background: #ffffff;*/
+/*}*/
 
 .textlist {
     padding: 0 20px;
@@ -1083,7 +1082,6 @@ table {
 /*实时监控DIV */
 .infolist_realtime {
     margin-left: 1%;
-    margin-top: 1%;
     width: 48%;
     float: left;
     /*background: #e8d3d3;*/
@@ -1095,9 +1093,9 @@ table {
     width: 48%;
     float: left;
     height: 350px;
-    border: solid 1px #ffffff;
+    /*border: solid 1px #ffffff;*/
     margin-left: 15px;
-    background: #ffffff45;
+    /*background: #ffffff45;*/
 }
 
 .realtime_table {
@@ -1108,6 +1106,7 @@ table {
 
 .realtime_table thead tr th {
     height: 30px;
+    font-size: 13px;
     line-height: 30px;
     font-weight: bold;
     text-align: left;
@@ -1121,6 +1120,7 @@ table {
     line-height: 30px;
     text-indent: 15px;
     border: none;
+    font-size: 13px;
     white-space: nowrap;
 }
 
@@ -1174,7 +1174,6 @@ table {
 }
 
 .divbox_realtime {
-    padding-top: 8px;
     width: 50%;
     float: left;
     height: 350px;
@@ -1293,8 +1292,8 @@ table {
 }
 
 .form_btn {
-    padding-top: 15px;
     padding-left: 40%;
+    padding-bottom: 80px;
 }
 
 .btn_save {
@@ -1759,7 +1758,8 @@ my_echars_div_block{
 /*data_manager_pagination*/
 .data_manager_pagination {
     position: absolute;
-    top: 100%;
+    top: 90%;
+    left: 2.5%;
 }
 
 .data_manager_pagelist {
@@ -1804,7 +1804,7 @@ my_echars_div_block{
     float: right;
     line-height: 28px;
     color: #8d8d8d;
-
+    margin-right: 2.5%;
 }
 .statement_div_echar {
     width: 50%;
@@ -1854,14 +1854,9 @@ table.gridtable td {
 
 /******展示配比模板******/
 .dm_form_model {
-    width: 60%;
+    width: 90%;
     height: 90%;
-    position: fixed;
     margin: auto;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
     text-align: center;
     color: #fff;
     border-radius: 10px;

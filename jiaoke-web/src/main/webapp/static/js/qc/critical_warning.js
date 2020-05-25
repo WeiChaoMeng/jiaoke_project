@@ -9,7 +9,6 @@ function getAllCriticalWarning() {
     $.ajax({
         url:basePath + "/getAllCriticalWarning.do",
         type:"get",
-        async:false,
         dataType:"json",
         beforeSend: function (XMLHttpRequest) {
             // 过滤某种条件下才控制loading效果
@@ -40,11 +39,13 @@ function foreachDataArray(currentNum,dataArray) {
     var arrayEnd = arrayStart + 15;
     $("#criticalBody").empty();
     for (var i = arrayStart; i < arrayEnd; i++ ){
+
         if (dataArray[i]){
             var temHtml = "<tr>"
             + "<td>" + dataArray[i].produce_date+ "</td>"
             + "<td>" + dataArray[i].produce_time + "</td>"
             + "<td>" + dataArray[i].produce_disc_num + "</td>"
+                + "<td>" + (dataArray[i].project_name? dataArray[i].project_name:' ') + "</td>"
             + "<td>" + (dataArray[i].produce_crewNum === 1?  dataArray[i].crew1RatioName:dataArray[i].crew2RatioName) + "</td>"
             + "<td>" + (dataArray[i].produce_crewNum === 1? '机组1':'机组2') + "</td>"
                 + "<td style='color: #a94442;'>" + dataArray[i].骨料1 + "级预警" + "</td>"
@@ -81,8 +82,10 @@ function limitList(dataAray) {
 
 function selectCeiticalWarning() {
     var startDate = $("#inpstart").val();
-    var endDate = $("#inpend").val();
+    var endDate = $("#warinpend").val();
+    var project = $("#project_id option:selected").val();
     var basePath = $("#path").val();
+
     if (startDate && endDate){
         $.ajax({
             url:basePath + "/getAllCriticalWarningByDate.do",
@@ -90,7 +93,8 @@ function selectCeiticalWarning() {
             dataType:"json",
             data:{
                 "startDate":startDate,
-                "endDate":endDate
+                "endDate":endDate,
+                "project":project
             },
             beforeSend: function (XMLHttpRequest) {
                 // 过滤某种条件下才控制loading效果
@@ -115,4 +119,8 @@ function selectCeiticalWarning() {
     }
 
 
+}
+
+function getProjectByDate() {
+    alert(111)
 }

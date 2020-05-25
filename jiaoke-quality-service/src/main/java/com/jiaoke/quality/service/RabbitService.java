@@ -68,7 +68,7 @@ public class RabbitService implements MessageListener {
             }
             //存入车牌识别表
             qualityProjectDao.insertCarNum(license,recotime,crewId);
-            //更新对应数据表
+            //更新对应数据表(第一步更新，如果第二步更新没查到工程，还可以尝试车号查询工程)
             qualityProjectDao.updateRealTimeDataByCarNum(license,recotime,fromDate,crewNum);
 
             Map<String,String> map = QualityGetProjectByCarNumUtil.getErpData(license,carDate);
@@ -80,8 +80,10 @@ public class RabbitService implements MessageListener {
             map.put("crewNum",crewId);
             //插入出场单表`quality_leave_factory_history`
             int i = qualityProjectDao.insertLeaveFactory(map);
-            //更新读取数据
+            //更新读取数据（实时数据）
             qualityProjectDao.updateRealtimeDataByDate(license,recotime,fromDate,crewNum,map.get("gcmc"));
+            //更新预警数据(quality_warning_promessage_crew)
+            qualityProjectDao.updateWarningDataByDate(license,recotime,fromDate,crewNum,map.get("gcmc"));
             System.out.println("license = " + license);
             System.out.println("carDate = " + carDate);
             System.out.println("carTime = " + recotime);

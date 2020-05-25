@@ -277,8 +277,8 @@ public class QualityDataSummaryImpl implements QualityDataSummaryInf {
     }
 
     @Override
-    public String getAllCriticalWarningByDate(String startDate, String endDate) {
-        List<Map<String,String>> list = qualityDataSummaryDao.getAllCriticalWarningByDate(startDate,endDate);
+    public String getAllCriticalWarningByDate(String startDate, String endDate,String project) {
+        List<Map<String,String>> list = qualityDataSummaryDao.getAllCriticalWarningByDate(startDate,endDate,project);
 
         String tem = "";
         Set<String> crewIdSet = new HashSet<>();

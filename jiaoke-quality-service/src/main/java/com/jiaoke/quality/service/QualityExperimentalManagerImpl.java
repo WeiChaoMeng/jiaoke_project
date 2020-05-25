@@ -1076,5 +1076,16 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
         return JSON.toJSONString(map);
     }
     /*************************************试验设置Start****************************************************/
-
+    @Override
+    public String getSpecificationAndManufacturers(String startDate, String endDate, String materials) {
+        Map<String,Object> map = new HashMap<>();
+        //查询规格
+        List<Map<String,String>> specificationList = qualityExperimentalManagerDao.selectSpecification(startDate,endDate,materials);
+        //查询厂家
+        List<Map<String,String>> manufacturersList = qualityExperimentalManagerDao.selectManufacturersByMaterialsAndDate(startDate,endDate,materials);
+        map.put("message","success");
+        map.put("specificationList",specificationList);
+        map.put("manufacturersList",manufacturersList);
+        return JSON.toJSONString(map);
+    }
 }

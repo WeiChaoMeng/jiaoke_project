@@ -160,4 +160,19 @@ public interface QualityProjectDao {
                                         @Param("carTime")  String carTime,
                                         @Param("lastTime") String lastTime,
                                         @Param("crewNum")  String crewNum);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <更新预警表工程名称、车号冗余字段>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/5/21 14:55
+     */
+    void updateWarningDataByDate(@Param("license") String license,
+                                     @Param("carTime")  String carTime,
+                                     @Param("lastTime") String lastTime,
+                                     @Param("crewNum")  String crewNum,
+                                     @Param("proName") String proName);
 }

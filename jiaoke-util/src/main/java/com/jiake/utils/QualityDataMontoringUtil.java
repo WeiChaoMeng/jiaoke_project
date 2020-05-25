@@ -39,7 +39,7 @@ public class QualityDataMontoringUtil {
 
         double reValue = Double.parseDouble(molecule)/Double.parseDouble(total)*100;
 
-        DecimalFormat df = new DecimalFormat("#.0");
+        DecimalFormat df = new DecimalFormat("0.0");
 
         String f =  df.format(reValue);
 

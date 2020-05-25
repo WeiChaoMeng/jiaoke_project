@@ -92,37 +92,37 @@
     <div class="yyui_tab_content" id="searchDiv" >
         <form id="searchFrom">
         <div class="jeitem">
-            <label class="jelabel" >开始日期：</label>
+            <label class="jelabel" style="width: 55px;" >开始日期：</label>
             <div class="dy_select_div"   >
                 <input type="text" class="dy_select_date" id="searchStart" name="startDate" data-ajax="false"   placeholder="选择开始日期" required >
             </div>
-            <label class="jelabel">结束日期：</label>
+            <label class="jelabel" style="width: 55px;" >结束日期：</label>
             <div class="dy_select_div"   >
                 <input type="text" class="dy_select_date"  data-ajax="false" name="endDate"  id="searchEnd"  placeholder="选择开始日期" required >
             </div>
-            <label class="jelabel">材料：</label>
+            <label class="jelabel" style="width: 45px;" >材料：</label>
             <div class="dy_select_div"   >
-                <select  class="my_select" id="materials" name="materials" required>
+                <select  class="my_select" id="materials" name="materials" onchange="getSpecificationAndManufacturers()" required>
                     <option value="Job Inquiry">Job Inquiry</option>
                     <option value="General Question">General Question</option>
                 </select>
             </div>
-            <label class="jelabel">规格：</label>
+            <label class="jelabel" style="width: 45px;" >规格：</label>
             <div class="dy_select_div"   >
                 <select class="my_select" id="specification" name="specification" required>
                     <option value="Job Inquiry">Job Inquiry</option>
                     <option value="General Question">General Question</option>
                 </select>
             </div>
-            <label class="jelabel">厂家：</label>
+            <label class="jelabel" style="width: 45px;" >厂家：</label>
             <div class="dy_select_div"   >
                 <select class="my_select" id="manufacturers" name="manufacturers" required>
                     <option value="Job Inquiry">Job Inquiry</option>
                     <option value="General Question">General Question</option>
                 </select>
             </div>
-            <button  style="width: 120px;height: 36px;margin-left: 2%;" onclick="searchFrom()" >查询</button>
-            <button style="width: 120px;height: 36px;margin-left: 2%;" onclick="table2excel('searchTable','sheet1','试验检测台账')">生成Excel</button>
+            <button  style="width: 75px;height: 36px;margin-left: 2%;" onclick="searchFrom()" >查询</button>
+            <button style="width:75px;height: 36px;margin-left: 2%;" onclick="table2excel('searchTable','sheet1','试验检测台账')">生成Excel</button>
 
         </div>
         </form>

@@ -51,4 +51,26 @@ public interface LeadCockpitServiceDao {
      * @date 2020/5/13 9:16
      */
     List<Map<String, String>> selectThisMonthYield();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询俩个机组最后一条数据相同产品三日内数据>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/5/14 18:47
+     */
+    List<Map<String, String>> selectAsphaltAggregateRatio();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询本日生产两个机组生产的产品>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/5/18 19:51
+     */
+    List<Map<String, String>> selectTodayProductList();
 }

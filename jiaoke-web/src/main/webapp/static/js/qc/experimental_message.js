@@ -211,7 +211,6 @@ function showFineAggregate(msg) {
 //编写显示粗集料实验信息
 function showCoarseAggregate(msg) {
 
-
     var firstHead = '<th>实验项目</th>'
         + '<th>技术要求</th>'
         + '<th colspan="3">试验结果</th>'
@@ -282,7 +281,7 @@ function showCoarseAggregate(msg) {
         $("#secondTbody").empty().append(secondTable);
     }
 
-     $("#firstTwoHead").remove();
+    $("#firstTwoHead").remove();
     $("#firstHead").empty().append(firstHead);
     $("#firstTbody").empty().append(firstTbody);
 }

@@ -113,4 +113,11 @@
     <select id="selectWarningLevel" resultType="java.util.Map">
         SELECT * FROM `quality_warning_level`;
     </select>
+    <update id="updateQualityWarningData" >
+        UPDATE quality_warning_promessage_crew
+        SET max_warning_level = #{upWarning},
+            core_warning_level = #{criticalWarning}
+        WHERE
+                id = #{id}
+    </update>
 </mapper>

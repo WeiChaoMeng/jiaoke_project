@@ -133,4 +133,15 @@ public interface QualityDataManagerDao {
      * @date 2019/11/20 9:17
      */
     List<Map<String, Object>> selectMsgByUserAndDate(@Param("userNum")String userNum,@Param("proDate") String proDate);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询当日该机组所有产品>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/5/20 15:13
+     */
+    List<Map<String, String>> selectProducedSVGToGrading(@Param("date") String date,@Param("crew") String crew);
 }

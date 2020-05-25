@@ -16,7 +16,7 @@
     <script src="/static/js/echarts/echarts.js"></script>
 </head>
 
-<body style="padding:15px 8px 1000px 8px;background: #ffffff;">
+<body style="padding:15px 8px 1000px 8px;background: #e5f0f0;">
 
 
 
@@ -277,19 +277,29 @@
         var option7= {
             title: {
                 text: '一号机组配比图',
-                x: 'center'
+                x: 'left',
+                textStyle:{
+                    color:'#685489',
+                    fontSize: 16
+                },
+                padding: [5,0,0,70]
             },
             tooltip: {
                 trigger: 'axis'
             },
-            // legend: {
-            //     data: ['上限占比', '实际占比', '下限占比'],
-            //     x: 'left'
-            // },
+            legend: {
+                data: ['上限占比', '实际占比', '下限占比'],
+                x:'right',
+                // top:'7.5%',
+                left:'50.5%',
+                textStyle:{
+                    color: '#53332b'
+                }
+            },
             grid:{
-                left: '2%',
-                right: '2%',
-                bottom: '3%',
+                left: '5%',
+                right: '5%',
+                bottom: '5%',
                 containLabel: true
             },
             xAxis: [{
@@ -312,24 +322,15 @@
                     name: '上限占比',
                     type: 'line',
                     data: [11, 11, 15, 13, 12, 13, 10, 11, 11, 15, 13, 12, 13, 10],
-                    formatter: '{value} %',
-                    markPoint: {
-
-                        data: [
-                            { type: 'max', name: '最大值' },
-                            { type: 'min', name: '最小值' }
-                        ]
-                    }
+                    formatter: '{value} %'
                 }, {
                     name: '实际占比',
                     type: 'line',
                     data: [7, 8, 9, 10, 8, 13, 7, 9, 7, 9, 6, 8, 7, 5],
                     formatter: '{value} %',
                     markPoint: {
-
                         data: [
                             { type: 'max', name: '最大值' },
-                            { type: 'min', name: '最小值' }
                         ]
                     }
                 },
@@ -337,13 +338,7 @@
                     name: '下限占比',
                     type: 'line',
                     data: [1, 2, 2, 5, 3, 2, 0, 1, 2, 2, 5, 3, 2, 0],
-                    formatter: '{value} %',
-                    markPoint: {
-                        data: [
-                            { type: 'max', name: '最大值' },
-                            { type: 'min', name: '最小值' }
-                        ]
-                    }
+                    formatter: '{value} %'
                 }
             ]
         };
@@ -367,18 +362,29 @@
         var option4 = {
             title: {
                 text: '二号机组配比图',
-                x: 'center'
+                x: 'left',
+                textStyle:{
+                    color:'#685489',
+                    fontSize: 16
+                },
+                padding: [5,0,0,70]
             },
             tooltip: {
                 trigger: 'axis'
             },
-            // legend: {
-            //     data: ['上限占比', '实际占比', '下限占比']
-            // },
+            legend: {
+                data: ['上限占比', '实际占比', '下限占比'],
+                x:'right',
+                // top:'7.5%',
+                left:'50.5%',
+                textStyle:{
+                    color: '#53332b'
+                }
+            },
             grid:{
-                left: '2%',
-                right: '2%',
-                bottom: '3%',
+                left: '5%',
+                right: '5%',
+                bottom: '5%',
                 containLabel: true
             },
             xAxis: [{
@@ -408,10 +414,8 @@
                     data: [7, 8, 9, 10, 8, 13, 7, 9, 7, 9, 6, 8, 7, 5],
                     formatter: '{value} %',
                     markPoint: {
-
                         data: [
                             { type: 'max', name: '最大值' },
-                            { type: 'min', name: '最小值' }
                         ]
                     }
                 },
@@ -419,8 +423,7 @@
                     name: '下限占比',
                     type: 'line',
                     data: [1, 2, 2, 5, 3, 2, 0, 1, 2, 2, 5, 3, 2, 0],
-                    formatter: '{value} %',
-
+                    formatter: '{value} %'
                 }
             ]
         };
@@ -447,19 +450,33 @@
             var option1 =  {
                 title: {
                     text: '一号机组产品温度走势图',
-                    x: 'center'
+                    x: 'left',
+                    textStyle:{
+                        color:'#685489',
+                        fontSize: 16
+                    },
+                    padding: [5,0,0,70]
                 },
                 tooltip: {
                     trigger: 'axis'
                 },
                 grid:{
-                    left: '2%',
-                    right: '2%',
-                    bottom: '3%',
+                    left: '5%',
+                    right: '20%',
+                    bottom: '5%',
                     containLabel: true
                 },
                 legend: {
-                    data:['最高气温','最低气温']
+                    data:['一仓温度','混合料温度','沥青温度','骨料温度','除尘器温度'],
+                    x:'right',
+                    orient:'vertical',
+                    itemGap:20,
+                    top:'25%',
+                    left:'85%',
+                    textStyle:{
+                        color: '#53332b',
+                        fontWeight : 'bold'
+                    }
                 },
                 xAxis:  {
                     type: 'category',
@@ -476,33 +493,15 @@
                     {
                         name:'一仓温度',
                         type:'line',
-                        data:[11, 11, 15, 13, 12, 13, 10],
-                        markPoint: {
-                            data: [
-                                {type: 'max', name: '最大值'},
-                                {type: 'min', name: '最小值'}
-                            ]
-                        }
+                        data:[11, 11, 15, 13, 12, 13, 10]
                     },        {
                         name:'混合料温度',
                         type:'line',
                         data:[12, 13, 16, 17, 14, 11, 12],
-                        markPoint: {
-                            data: [
-                                {type: 'max', name: '最大值'},
-                                {type: 'min', name: '最小值'}
-                            ]
-                        }
                     },        {
                         name:'沥青温度',
                         type:'line',
                         data:[11, 11, 15, 13, 12, 13, 10],
-                        markPoint: {
-                            data: [
-                                {type: 'max', name: '最大值'},
-                                {type: 'min', name: '最小值'}
-                            ]
-                        }
                     },
                     {
                         name:'骨料温度',
@@ -538,19 +537,33 @@
             var option5= {
                 title: {
                     text: '二号机组产品温度走势图',
-                    x: 'center'
+                    x: 'left',
+                    textStyle:{
+                        color:'#685489',
+                        fontSize: 16
+                    },
+                    padding: [5,0,0,70]
                 },
                 tooltip: {
                     trigger: 'axis'
                 },
                 grid:{
-                    left: '2%',
-                    right: '2%',
-                    bottom: '3%',
+                    left: '5%',
+                    right: '20%',
+                    bottom: '5%',
                     containLabel: true
                 },
                 legend: {
-                    data:['最高气温','最低气温']
+                    data:['一仓温度','混合料温度','沥青温度','骨料温度','除尘器温度'],
+                    x:'right',
+                    orient:'vertical',
+                    itemGap:20,
+                    top:'25%',
+                    left:'85%',
+                    textStyle:{
+                        color: '#53332b',
+                        fontWeight : 'bold'
+                    }
                 },
                 xAxis:  {
                     type: 'category',
@@ -567,33 +580,15 @@
                     {
                         name:'一仓温度',
                         type:'line',
-                        data:[11, 11, 15, 13, 12, 13, 10],
-                        markPoint: {
-                            data: [
-                                {type: 'max', name: '最大值'},
-                                {type: 'min', name: '最小值'}
-                            ]
-                        }
+                        data:[11, 11, 15, 13, 12, 13, 10]
                     },        {
                         name:'混合料温度',
                         type:'line',
-                        data:[12, 13, 16, 17, 14, 11, 12],
-                        markPoint: {
-                            data: [
-                                {type: 'max', name: '最大值'},
-                                {type: 'min', name: '最小值'}
-                            ]
-                        }
+                        data:[12, 13, 16, 17, 14, 11, 12]
                     },        {
                         name:'沥青温度',
                         type:'line',
-                        data:[11, 11, 15, 13, 12, 13, 10],
-                        markPoint: {
-                            data: [
-                                {type: 'max', name: '最大值'},
-                                {type: 'min', name: '最小值'}
-                            ]
-                        }
+                        data:[11, 11, 15, 13, 12, 13, 10]
                     },
                     {
                         name:'骨料温度',

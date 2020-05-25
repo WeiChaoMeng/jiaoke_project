@@ -138,7 +138,7 @@ public class QualityWarningUtil {
 
             }
         } catch (Exception e) {
-            System.out.println( e.getStackTrace());
+            e.getStackTrace();
         } finally {
             close(ps, rs);
         }
@@ -154,7 +154,7 @@ public class QualityWarningUtil {
                 st.close();
             }
         } catch (SQLException e) {
-            System.out.println( e.getStackTrace());
+            e.getStackTrace();
         }
     }
 
@@ -171,7 +171,7 @@ public class QualityWarningUtil {
         dburl.append(port);
         dburl.append("/");
         dburl.append(dbName);
-        dburl.append("?serverTimezone=Hongkong&characterEncoding=utf-8&autoReconnect=true&useSSL=true&useUnicode=true&characterEncoding=utf8&user=");
+        dburl.append("?serverTimezone=GMT%2B8&useSSL=false&characterEncoding=utf-8&user=");
         dburl.append(userName);
         dburl.append("&password=");
         dburl.append(userPwd);

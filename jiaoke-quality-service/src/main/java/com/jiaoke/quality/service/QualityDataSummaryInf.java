@@ -122,7 +122,7 @@ public interface QualityDataSummaryInf {
      * @auther Melone
      * @date 2019/10/16 13:16
      */
-    String getAllCriticalWarningByDate(String startDate, String endDate);
+    String getAllCriticalWarningByDate(String startDate, String endDate,String project);
 
     /**
      *

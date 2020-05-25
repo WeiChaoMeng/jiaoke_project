@@ -437,7 +437,7 @@
         )
         values
         <foreach collection="coarseTestList" item="emp" separator=",">
-            (#{experimentNum},#{emp.coarse_sieve_pore},#{emp.coarse_sieve_pore_26_5},#{emp.coarse_sieve_pore_31_5},#{emp.coarse_sieve_pore_37_5},#{emp.coarse_sieve_pore_19_0},#{emp.coarse_sieve_pore_16_0},#{emp.coarse_sieve_pore_13_2},#{emp.coarse_sieve_pore_9_5},#{emp.coarse_sieve_pore_4_75},#{emp.coarse_sieve_pore_2_36},#{emp.coarse_sieve_pore_1_18},#{emp.coarse_sieve_pore_0_6},#{emp.coarse_sieve_pore_0_3},#{emp.coarse_sieve_pore_0_15},#{emp.coarse_sieve_pore_0_075})
+            (#{experimentNum},#{emp.coarse_sieve_pore},#{emp.coarse_sieve_pore_37_5},#{emp.coarse_sieve_pore_31_5},#{emp.coarse_sieve_pore_26_5},#{emp.coarse_sieve_pore_19_0},#{emp.coarse_sieve_pore_16_0},#{emp.coarse_sieve_pore_13_2},#{emp.coarse_sieve_pore_9_5},#{emp.coarse_sieve_pore_4_75},#{emp.coarse_sieve_pore_2_36},#{emp.coarse_sieve_pore_1_18},#{emp.coarse_sieve_pore_0_6},#{emp.coarse_sieve_pore_0_3},#{emp.coarse_sieve_pore_0_15},#{emp.coarse_sieve_pore_0_075})
         </foreach>
     </insert>
 
@@ -865,11 +865,13 @@
                 QTLR.sampling_date BETWEEN #{startDate} AND #{endDate}
           AND
                 QTLR.materials_num = #{materials}
-          AND
-                QTS.manufacturers_num = #{manufacturers}
-          AND
-                QTS.specification_num = #{specification}
-        GROUP BY test_num
+          <if test="manufacturers != null and manufacturers != 'select'.toString()">
+              AND QTS.manufacturers_num = #{manufacturers}
+          </if>
+           <if test="specification != null and specification != 'select'.toString()">
+              AND QTS.specification_num = #{specification}
+           </if>
+            GROUP BY test_num
     </select>
     <select id="selectCoarseAggregateStandingBookByDate" resultType="java.util.Map">
         SELECT
@@ -909,10 +911,12 @@
                 QTLR.sampling_date BETWEEN #{startDate} AND #{endDate}
           AND
                 QTLR.materials_num = #{materials}
-          AND
-                QTS.manufacturers_num = #{manufacturers}
-          AND
-                QTS.specification_num = #{specification}
+            <if test="manufacturers != null and manufacturers != 'select'.toString()">
+                AND QTS.manufacturers_num = #{manufacturers}
+            </if>
+            <if test="specification != null and specification != 'select'.toString()">
+                AND QTS.specification_num = #{specification}
+            </if>
         GROUP BY test_num
     </select>
     <select id="selectBreezeBookByDate" resultType="java.util.Map">
@@ -941,10 +945,12 @@
                     QTLR.sampling_date BETWEEN #{startDate} AND #{endDate}
               AND
                     QTLR.materials_num = #{materials}
-              AND
-                    QTS.manufacturers_num = #{manufacturers}
-              AND
-                    QTS.specification_num = #{specification}
+            <if test="manufacturers != null and manufacturers != 'select'.toString()">
+                AND QTS.manufacturers_num = #{manufacturers}
+            </if>
+            <if test="specification != null and specification != 'select'.toString()">
+                AND QTS.specification_num = #{specification}
+            </if>
             GROUP BY test_num
     </select>
     <select id="selectAsphaltStandingByDate" resultType="java.util.Map">
@@ -972,10 +978,12 @@
                 QTLR.sampling_date BETWEEN #{startDate} AND #{endDate}
           AND
                 QTLR.materials_num = #{materials}
-          AND
-                QTS.manufacturers_num = #{manufacturers}
-          AND
-                QTS.specification_num = #{specification}
+            <if test="manufacturers != null and manufacturers != 'select'.toString()">
+                AND QTS.manufacturers_num = #{manufacturers}
+            </if>
+            <if test="specification != null and specification != 'select'.toString()">
+                AND QTS.specification_num = #{specification}
+            </if>
         GROUP BY test_num
     </select>
     <select id="selectCoarseMillingStandingByDate" resultType="java.util.Map">
@@ -1016,10 +1024,12 @@
                 QTLR.sampling_date BETWEEN #{startDate} AND #{endDate}
           AND
                 QTLR.materials_num = #{materials}
-          AND
-                QTS.manufacturers_num = #{manufacturers}
-          AND
-                QTS.specification_num = #{specification}
+        <if test="manufacturers != null and manufacturers != 'select'.toString()">
+            AND QTS.manufacturers_num = #{manufacturers}
+        </if>
+        <if test="specification != null and specification != 'select'.toString()">
+            AND QTS.specification_num = #{specification}
+        </if>
         GROUP BY test_num
     </select>
     <select id="selectRockStandingByDate" resultType="java.util.Map">
@@ -1059,10 +1069,12 @@
                 QTLR.sampling_date BETWEEN #{startDate} AND #{endDate}
           AND
                 QTLR.materials_num = #{materials}
-          AND
-                QTS.manufacturers_num = #{manufacturers}
-          AND
-                QTS.specification_num = #{specification}
+        <if test="manufacturers != null and manufacturers != 'select'.toString()">
+            AND QTS.manufacturers_num = #{manufacturers}
+        </if>
+        <if test="specification != null and specification != 'select'.toString()">
+            AND QTS.specification_num = #{specification}
+        </if>
         GROUP BY test_num
     </select>
     <select id="selectFibreStandingByDate" resultType="java.util.Map">
@@ -1087,10 +1099,12 @@
                 QTLR.sampling_date BETWEEN #{startDate} AND #{endDate}
           AND
                 QTLR.materials_num = #{materials}
-          AND
-                QTS.manufacturers_num = #{manufacturers}
-          AND
-                QTS.specification_num = #{specification}
+        <if test="manufacturers != null and manufacturers != 'select'.toString()">
+            AND QTS.manufacturers_num = #{manufacturers}
+        </if>
+        <if test="specification != null and specification != 'select'.toString()">
+            AND QTS.specification_num = #{specification}
+        </if>
         GROUP BY test_num
     </select>
     <select id="selectEmulsifiedStandingByDate" resultType="java.util.Map">
@@ -1114,10 +1128,12 @@
                 QTLR.sampling_date BETWEEN #{startDate} AND #{endDate}
           AND
                 QTLR.materials_num = #{materials}
-          AND
-                QTS.manufacturers_num = #{manufacturers}
-          AND
-                QTS.specification_num = #{specification}
+        <if test="manufacturers != null and manufacturers != 'select'.toString()">
+            AND QTS.manufacturers_num = #{manufacturers}
+        </if>
+        <if test="specification != null and specification != 'select'.toString()">
+            AND QTS.specification_num = #{specification}
+        </if>
         GROUP BY test_num
     </select>
     <select id="selectMixtureStandingByDate" resultType="java.util.Map">
@@ -1165,10 +1181,12 @@
                 QTLR.sampling_date BETWEEN #{startDate} AND #{endDate}
           AND
                 QTLR.materials_num = #{materials}
-          AND
-                QTS.manufacturers_num = #{manufacturers}
-          AND
-                QTS.specification_num = #{specification}
+        <if test="manufacturers != null and manufacturers != 'select'.toString()">
+            AND QTS.manufacturers_num = #{manufacturers}
+        </if>
+        <if test="specification != null and specification != 'select'.toString()">
+            AND QTS.specification_num = #{specification}
+        </if>
         GROUP BY test_num
     </select>
     <select id="selectFineMillingStandingByDate" resultType="java.util.Map">
@@ -1208,10 +1226,12 @@
                 QTLR.sampling_date BETWEEN #{startDate} AND #{endDate}
           AND
                 QTLR.materials_num = #{materials}
-          AND
-                QTS.manufacturers_num = #{manufacturers}
-          AND
-                QTS.specification_num = #{specification}
+        <if test="manufacturers != null and manufacturers != 'select'.toString()">
+            AND QTS.manufacturers_num = #{manufacturers}
+        </if>
+        <if test="specification != null and specification != 'select'.toString()">
+            AND QTS.specification_num = #{specification}
+        </if>
         GROUP BY test_num
     </select>
     
@@ -1792,5 +1812,32 @@
                      ON QTMI.manufacturers_id = QTMD.Id
         WHERE
                 QTMI.materials_id = #{id};
+    </select>
+    <select id="selectSpecification" resultType="java.util.Map">
+        SELECT
+               QTS.specification_num,
+               QTSD.`name` AS specification_name
+        FROM
+             `quality_test_samplingPage` AS QTS
+                 INNER JOIN quality_test_specification_dictionary AS QTSD
+                     ON QTS.specification_num = QTSD.Id
+        WHERE
+                QTS.creat_time BETWEEN #{startDate} AND #{endDate}
+          AND QTS.materials_num = #{materials}
+        GROUP BY QTS.specification_num
+    </select>
+
+    <select id="selectManufacturersByMaterialsAndDate" resultType="java.util.Map">
+        SELECT
+               QTS.manufacturers_num,
+               QTMD.`name` AS manufacturers_name
+        FROM
+             `quality_test_samplingPage` AS QTS
+                 INNER JOIN quality_test_manufacturers_dictionaries AS QTMD
+                     ON QTS.manufacturers_num = QTMD.Id
+        WHERE
+                QTS.creat_time BETWEEN #{startDate} AND #{endDate}
+          AND QTS.materials_num = #{materials}
+        GROUP BY QTS.manufacturers_num
     </select>
 </mapper>

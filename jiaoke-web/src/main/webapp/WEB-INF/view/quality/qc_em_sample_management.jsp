@@ -27,7 +27,7 @@
 
     <div class="yyui_tab_content_this">
         <div class="boxdown">
-            <table class="simpletable"  style="border-top:none; text-align: center;table-layout: fixed;word-break: break-all;" id="proExcel">
+            <table class="simpletable"  style="border-top:none; text-align: center;" id="proExcel">
 
                 <thead>
                 <tr>

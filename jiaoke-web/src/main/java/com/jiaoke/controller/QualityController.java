@@ -198,6 +198,7 @@ public class QualityController {
             if ((charset == null || charset.length() == 0) && (size ==readCount))
             {
 //                qualityprojectInf.editProductionDataByCarNum(new String(buf,"UTF-8"));
+                //RabbitService
                 amqpTemplate.convertAndSend("exchangeCar","queueTestKey",new String(buf,"UTF-8"));
             }
 
@@ -2108,6 +2109,26 @@ public class QualityController {
     /**
      *
      * 功能描述: <br>
+     *  <查询时间段内该材料规格与厂家>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/5/24 14:51
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getSpecificationAndManufacturers.do",method = RequestMethod.POST)
+    public String getSpecificationAndManufacturers(@RequestParam("startDate") String startDate,@RequestParam("endDate") String endDate,@RequestParam("materials") String materials){
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.getSpecificationAndManufacturers(startDate,endDate,materials);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+    /**
+     *
+     * 功能描述: <br>
      *  <根据日期、规格、厂家、材料查询台账信息>
      * @param
      * @return
@@ -2785,10 +2806,10 @@ public class QualityController {
     }
     @ResponseBody
     @RequestMapping(value = "/getAllCriticalWarningByDate.do",method = RequestMethod.POST)
-    public String getAllCriticalWarningByDate(@RequestParam("startDate") String startDate,@RequestParam("endDate") String endDate){
+    public String getAllCriticalWarningByDate(@RequestParam("startDate") String startDate,@RequestParam("endDate") String endDate,@RequestParam("project") String project){
         String res = "";
         try{
-            res = qualityDataSummaryInf.getAllCriticalWarningByDate(startDate,endDate);
+            res = qualityDataSummaryInf.getAllCriticalWarningByDate(startDate,endDate,project);
         }catch (Exception e) {
             e.printStackTrace();
         }

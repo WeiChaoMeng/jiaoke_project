@@ -14,6 +14,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8" />
         <meta http-equiv="Cache-Control" content="no-siteapp" />
+
         <link rel="icon" href="../../../static/images/favicon.ico" type="image/x-icon"/>
         <link rel="stylesheet" href="../../../static/new/css/font.css">
         <link rel="stylesheet" href="../../../static/new/css/xadmin.css">
@@ -539,123 +540,99 @@
                     <shiro:hasPermission name="quality:quality">
                     <li>
                         <a href="javascript:;">
-                            <i class="iconfont left-nav-li" lay-tips="质量管控">&#xe6b3;</i>
+                            <i class="iconfont left-nav-li" lay-tips="质量管控">&#xe726;</i>
                             <cite>质量管控</cite>
-                            <i class="iconfont nav_right">&#xe697;</i>
-                        </a>
+                            <i class="iconfont nav_right">&#xe697;</i></a>
                         <ul class="sub-menu">
                             <%--<li>--%>
                                 <%--<a onclick="xadmin.add_tab('质量首页','qc_index.do',true)">--%>
                                     <%--<i class="iconfont">&#xe6a7;</i>--%>
-                                    <%--<cite>质量首页</cite>--%>
-                                <%--</a>--%>
+                                    <%--<cite>质量首页</cite></a>--%>
                             <%--</li>--%>
 
-                            <shiro:hasPermission name="quality:monitorOuter">
-                                <li>
-                                    <a onclick="xadmin.add_tab('实时监测','qc_real_time_surveillance.do',true)">
-                                        <i class="iconfont">&#xe6a7;</i>
-                                        <cite>实时监测</cite>
-                                    </a>
-                                </li>
-                            </shiro:hasPermission>
-
-                                <shiro:hasPermission name="quality:historyOuter">
+                            <li>
+                                <a onclick="xadmin.add_tab('实时监测','qc_real_time_surveillance.do',true)">
+                                    <i class="iconfont">&#xe6bb;</i>
+                                    <cite>实时监测</cite></a>
+                            </li>
                             <li>
                                 <a onclick="xadmin.add_tab('历史数据','qc_historical_data.do',true)">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>历史数据</cite>
-                                </a>
+                                    <i class="iconfont">&#xe70c;</i>
+                                    <cite>历史数据</cite></a>
                             </li>
-                                </shiro:hasPermission>
-
-                                <shiro:hasPermission name="quality:project">
-                            <li>
-                                <a onclick="xadmin.add_tab('工程管理','qc_project_manager.do',true)">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>工程管理</cite>
-                                </a>
-                            </li>
-                                </shiro:hasPermission>
-
-                                <shiro:hasPermission name="quality:proportioning">
+                            <%--<li>--%>
+                                <%--<a onclick="xadmin.add_tab('工程管理','qc_project_manager.do',true)">--%>
+                                    <%--<i class="iconfont">&#xe6a7;</i>--%>
+                                    <%--<cite>工程管理</cite></a>--%>
+                            <%--</li>--%>
                             <li>
                                 <a onclick="xadmin.add_tab('配比管理','qc_matching_model.do',true)">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>配比管理</cite>
-                                </a>
+                                    <i class="iconfont">&#xe6fa;</i>
+                                    <cite>配比管理</cite></a>
                             </li>
                                 </shiro:hasPermission>
 
                                 <shiro:hasPermission name="quality:grading">
                             <li>
                                 <a onclick="xadmin.add_tab('级配管理','qc_grading_manager.do',true)">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>级配管理</cite>
-                                </a>
+                                    <i class="iconfont">&#xe6b5;</i>
+                                    <cite>级配管理</cite></a>
                             </li>
                                 </shiro:hasPermission>
 
                                 <shiro:hasPermission name="quality:dynamic">
                             <li>
                                 <a onclick="xadmin.add_tab('动态管理','qc_dynamic_management.do',true)">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>动态管理</cite>
-                                </a>
+                                    <i class="iconfont">&#xe6b3;</i>
+                                    <cite>动态管理</cite></a>
                             </li>
                                 </shiro:hasPermission>
 
                                 <shiro:hasPermission name="quality:monitor">
                             <li>
                                 <a onclick="xadmin.add_tab('实时监控','qc_real_time_monitoring.do',true)">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>实时监控</cite>
-                                </a>
+                                    <i class="iconfont">&#xe829;</i>
+                                    <cite>实时监控</cite></a>
                             </li>
                                 </shiro:hasPermission>
 
                                 <shiro:hasPermission name="quality:warning">
                             <li>
                                 <a onclick="xadmin.add_tab('质量预警','qc_quality_warning.do',true)">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>质量预警</cite>
-                                </a>
+                                    <i class="iconfont">&#xe713;</i>
+                                    <cite>质量预警</cite></a>
                             </li>
                                 </shiro:hasPermission>
 
                                 <shiro:hasPermission name="quality:data">
                             <li>
                                 <a onclick="xadmin.add_tab('数据管理','qc_data_manager.do',true)">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>数据管理</cite>
-                                </a>
+                                    <i class="iconfont">&#xe70c;</i>
+                                    <cite>数据管理</cite></a>
                             </li>
                                 </shiro:hasPermission>
 
                                 <shiro:hasPermission name="quality:assist">
                             <li>
                                 <a onclick="xadmin.add_tab('辅助分析','qc_auxiliary_analysis.do',true)">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>辅助分析</cite>
-                                </a>
+                                    <i class="iconfont">&#xe704;</i>
+                                    <cite>辅助分析</cite></a>
                             </li>
                                 </shiro:hasPermission>
 
                                 <shiro:hasPermission name="quality:summary">
                             <li>
                                 <a onclick="xadmin.add_tab('数据汇总','qc_data_summary.do',true)">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>数据汇总</cite>
-                                </a>
+                                    <i class="iconfont">&#xe724;</i>
+                                    <cite>数据汇总</cite></a>
                             </li>
                                 </shiro:hasPermission>
 
                                 <shiro:hasPermission name="quality:alarm">
                             <li>
                                 <a onclick="xadmin.add_tab('警报管理','qc_critical_warning.do',true)">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>警报管理</cite>
-                                </a>
+                                    <i class="iconfont">&#xe70e;</i>
+                                    <cite>警报管理</cite></a>
                             </li>
                                 </shiro:hasPermission>
                         </ul>
@@ -665,7 +642,7 @@
                     <shiro:hasPermission name="experiment:experiment">
                     <li>
                         <a onclick="xadmin.add_tab('实验管理','experimental_management.do',true)">
-                            <i class="iconfont left-nav-li" lay-tips="实验管理">&#xe6ce;</i>
+                            <i class="iconfont left-nav-li" lay-tips="实验管理">&#xe74c;</i>
                             <cite>实验管理</cite>
                             <%--<i class="iconfont nav_right">&#xe697;</i>--%>
                         </a>
@@ -804,21 +781,18 @@
                         <ul class="sub-menu">
                             <li>
                                 <a onclick="xadmin.add_tab('学习强国','https://www.xuexi.cn/')">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>学习强国</cite>
-                                </a>
+                                    <i class="iconfont">&#xe6c0;</i>
+                                    <cite>学习强国</cite></a>
                             </li>
                             <li>
                                 <a onclick="xadmin.add_tab('共产党员网','http://www.12371.cn/')">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>共产党员网</cite>
-                                </a>
+                                    <i class="iconfont">&#xe6f7;</i>
+                                    <cite>共产党员网</cite></a>
                             </li>
                             <li>
-                                <a onclick="xadmin.add_tab('组织架构','member-list1.html',true)">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>组织架构</cite>
-                                </a>
+                                <a onclick="xadmin.add_tab('组织架构','/partyBuilding.do',true)">
+                                    <i class="iconfont">&#xe705;</i>
+                                    <cite>组织架构</cite></a>
                             </li>
                         </ul>
                     </li>

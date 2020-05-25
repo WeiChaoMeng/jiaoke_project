@@ -55,4 +55,30 @@ public class LeadCockpitController {
         }
         return JSON.toJSONString(res);
     }
+
+    @ResponseBody
+    @RequestMapping("/getAsphaltAggregateRatio.do")
+    public String getAsphaltAggregateRatio(){
+        Map<String,Object> res = new HashMap<>();
+        try{
+            res = leadCockpitService.getAsphaltAggregateRatio();
+        }catch (Exception e){
+            res.put("message","error");
+            e.printStackTrace();
+        }
+        return JSON.toJSONString(res);
+    }
+
+    @ResponseBody
+    @RequestMapping("/getTodayProductList.do")
+    public String getTodayProductList(){
+        Map<String,Object> res = new HashMap<>();
+        try{
+            res = leadCockpitService.getTodayProductList();
+        }catch (Exception e){
+            res.put("message","error");
+            e.printStackTrace();
+        }
+        return JSON.toJSONString(res);
+    }
 }

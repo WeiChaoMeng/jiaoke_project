@@ -8,142 +8,160 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"  isELIgnored="false" %>
 
-<html>
+<html class="x-admin-sm">
 <head>
     <meta charset="utf-8">
     <title>配比模板</title>
-    <link href="/static/css/default.css" rel="stylesheet" type="text/css">
-    <link href="/static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
-    <link href="/static/js/datepicker/css/bootstrap-datepicker.css" rel="stylesheet">
+    <link href="../../../static/css/default.css" rel="stylesheet" type="text/css">
+    <script src="../../../static/new/lib/layui/layui.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="../../../static/new/css/xadmin.css">
+    <script type="text/javascript" src="../../../static/new/js/xadmin.js"></script>
+
 </head>
 
-<body style="padding:0px 8px 100px 8px;">
+<body >
+<div class="x-nav">
+            <span class="layui-breadcrumb">
+                <%--<a href="/default.do" onclick="inv()">首页</a>--%>
+                <a><cite>主页</cite></a>
+                <a><cite>质量管控</cite></a>
+                <a><cite>配比管理</cite></a>
+            </span>
+</div>
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                    <div class="layui-card-body ">
+                            <button class="layui-btn layui-btn-danger" id="btn_click">
+                                <i class="layui-icon"></i>删除
+                            </button>
+                            <button class="layui-btn" id="from_click">
+                                <i class="layui-icon"></i>新建配比
+                            </button>
+                            <button class="layui-btn" id="former_years" onclick="showOldRaio()" >
+                                <i class="layui-icon"></i>查看往年配比
+                            </button>
+                    </div>
 
+                    <div class="layui-card-body ">
+                        <table class="layui-table layui-form" lay-filter="demo">
+                            <thead>
+                            <tr>
+                                <th style="width: 3%;">
+                                </th>
+                                <th style="width: 10%">一号机组编号</th>
+                                <th style="width: 10%">二号机组编号</th>
+                                <th style="width: 15%">模板名称</th>
+                                <th style="width: 15%">上传时间</th>
+                                <th style="width: 15%">备注信息</th>
+                                <th style="width: 15%">上传人</th>
+                                <th style="width: 15%">操作</th>
+                            </thead>
+                            <tbody  >
+                            <c:forEach items="${pageBean.pageData}" var="item">
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" style="display: block;" name="spCodeId" value="${item.messageId}">
+                                    </td>
+                                    <td>${item.crew1Id}</td>
+                                    <td>${item.crew2Id}</td>
+                                    <td><a href="#">${item.modelName}</a></td>
+                                    <td>${item.createTime}</td>
+                                    <td>${item.remaker}</td>
+                                    <td>${item.createUser}</td>
+                                    <td class="td-manage">
+                                        <button class="layui-btn layui-btn layui-btn-xs" name="${item.messageId}" onclick="showRatio(this.name)" ><i class="layui-icon">&#xe63c;</i>详情</button>
+                                        <button class="layui-btn layui-btn layui-btn-xs" name="${item.messageId}" onclick="editRatio(this.name)"><i class="layui-icon">&#xe642;</i>编辑</button>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </table>
+                    </div>
 
-    <ul class="toolbar">
-        <li><a href="#" id="from_click" ><i class="toolico iconfont">&#xe7e9;</i>新建配比</a></li>
-        <li><a href="#" id="btn_click"><i class="toolico iconfont">&#xe7ea;</i>删除</a></li>
-        <li><a href="#" onclick="showOldRaio()" id="former_years"><i class="toolico iconfont">&#xe64c;</i>查看往年配比</a></li>
-
-    </ul>
-    <!--toolbar end-->
-
-    <!--tablebox start-->
-    <div class="tablebox">
-        <table>
-
-            <thead>
-                <th class="num"></th>
-                <th>一号机组编号</th>
-                <th>二号机组编号</th>
-                <th>模板名称</th>
-                <th>上传时间</th>
-                <th>备注信息</th>
-                <th>上传人</th>
-                <th>操作</th>
-            </thead>
-
-            <tbody>
-
-            <c:forEach items="${pageBean.pageData}" var="item">
-                <tr>
-                    <td class="tdnum"><input name="spCodeId" type="checkbox" value="${item.messageId}" ></td>
-                    <td>${item.crew1Id}</td>
-                    <td>${item.crew2Id}</td>
-                    <td><a href="#">${item.modelName}</a></td>
-                    <td>${item.createTime}</td>
-                    <td>${item.remaker}</td>
-                    <td>${item.createUser}</td>
-                    <td>
-                        <a   href="javascript:;"   name="${item.messageId}" onclick="showRatio(this.name)" style="color: rgb(114, 112, 209);" >查看</a>
-                        <a   href="javascript:;"   name="${item.messageId}" onclick="editRatio(this.name)" style="color: rgb(114, 112, 209);" >编辑</a>
-                    </td>
-                </tr>
-            </c:forEach>
-
-            </tbody>
-
-        </table>
-    </div>
-    <!--tablebox end-->
-
-    <!--pagination start-->
-    <c:choose>
-        <c:when test="${pageBean.dataCountNum > 0}">
-            <div class="pagination">
-                <ul class="pagelist">
-                        <%--首页--%>
-                    <c:choose>
-                        <c:when test="${pageBean.currentPageNum == 1}">
-                            <li><a href="javascript:;" class="first">首页</a></li>
-                        </c:when>
-                        <c:otherwise>
-                            <li><a href="<c:url value="${pageBean.url}"></c:url> " >首页</a></li>
-                        </c:otherwise>
-                    </c:choose>
-
-                        <%-- 上一页 --%>
-                    <c:if test="${pageBean.currentPageNum > 1}">
-                        <li><a href="<c:url value="${pageBean.url}currentPageNum=${pageBean.currentPageNum - 1 }"></c:url> "><i class="iconfont">&#xe68a;</i></a></li>
-                    </c:if>
-
-                    <c:choose>
-                        <c:when test="${pageBean.pageCount <= 10 }">
-                            <c:set var="begin" value="1"></c:set>
-                            <c:set var="end" value="${pageBean.pageCount}"></c:set>
-                        </c:when>
-                        <c:otherwise>
-                            <c:set var="begin" value="${pageBean.currentPageNum - 4}"></c:set>
-                            <c:set var="end" value="${pageBean.currentPageNum + 5}"></c:set>
+                    <div class="layui-card-body" style="display: inline-block;width: 100%;">
+                        <div id="paging" class="paging-div">
                             <c:choose>
+                                <c:when test="${pageBean.dataCountNum > 0}">
+                                    <div class="pagination">
+                                        <ul class="pagelist">
+                                                <%--首页--%>
+                                            <c:choose>
+                                                <c:when test="${pageBean.currentPageNum == 1}">
+                                                    <li><a href="javascript:;" class="first">首页</a></li>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <li><a href="<c:url value="${pageBean.url}"></c:url> " >首页</a></li>
+                                                </c:otherwise>
+                                            </c:choose>
 
-                                <c:when test="${begin < 1}">
-                                    <c:set var="begin" value="1"/>
-                                    <c:set var="end" value="10"/>
-                                </c:when>
+                                                <%-- 上一页 --%>
+                                            <c:if test="${pageBean.currentPageNum > 1}">
+                                                <li><a href="<c:url value="${pageBean.url}currentPageNum=${pageBean.currentPageNum - 1 }"></c:url> "><i class="iconfont">&#xe68a;</i></a></li>
+                                            </c:if>
 
-                                <c:when test="${end > pageBean.pageCount}">
-                                    <c:set var="begin" value="${pageBean.pageCount - 9}"></c:set>
-                                    <c:set var="end" value="${pageBean.pageCount}"></c:set>
+                                            <c:choose>
+                                                <c:when test="${pageBean.pageCount <= 10 }">
+                                                    <c:set var="begin" value="1"></c:set>
+                                                    <c:set var="end" value="${pageBean.pageCount}"></c:set>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <c:set var="begin" value="${pageBean.currentPageNum - 4}"></c:set>
+                                                    <c:set var="end" value="${pageBean.currentPageNum + 5}"></c:set>
+                                                    <c:choose>
+
+                                                        <c:when test="${begin < 1}">
+                                                            <c:set var="begin" value="1"/>
+                                                            <c:set var="end" value="10"/>
+                                                        </c:when>
+
+                                                        <c:when test="${end > pageBean.pageCount}">
+                                                            <c:set var="begin" value="${pageBean.pageCount - 9}"></c:set>
+                                                            <c:set var="end" value="${pageBean.pageCount}"></c:set>
+                                                        </c:when>
+                                                    </c:choose>
+                                                </c:otherwise>
+                                            </c:choose>
+                                            <c:forEach begin="${begin}" end="${end}" var="i">
+                                                <c:choose>
+                                                    <c:when test="${i == pageBean.currentPageNum }">
+                                                        <li><a href="javascript:;" class="selected pageico" >${i}</a></li>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <li><a href="<c:url value="${pageBean.url}currentPageNum=${i}"></c:url>">${i}</a></li>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:forEach>
+
+                                                <%--下一页--%>
+                                            <c:if test="${pageBean.currentPageNum < pageBean.pageCount}">
+                                                <li><a href="<c:url value="${pageBean.url}currentPageNum=${pageBean.currentPageNum + 1 }"></c:url> " class="pageico"><i class="iconfont">&#xe673;</i></a></li>
+                                            </c:if>
+
+                                                <%--尾页--%>
+                                            <c:choose>
+                                                <c:when test="${pageBean.currentPageNum == pageBean.pageCount}">
+                                                    <li><a href="javascript:;" class="first">尾页</a></li>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <li><a href="<c:url value="${pageBean.url}currentPageNum=${pageBean.pageCount}"></c:url>  " >尾页</a></li>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </ul>
+
+                                        <span class="pageinfo">共 ${pageBean.dataCountNum} 条记录，每页 ${pageBean.eachPageDataNum} 条，当前第 ${pageBean.currentPageNum} 页，共 ${pageBean.pageCount} 页</span>
+                                    </div>
                                 </c:when>
+                                <c:otherwise>
+                                    <span style="position: absolute;top: 45%;left: 45%;font: 14px/1.5 'Microsoft YaHei',arial,tahoma,\5b8b\4f53,sans-serif;color: #a29c9c;">本年暂无配比</span>
+                                </c:otherwise>
                             </c:choose>
-                        </c:otherwise>
-                    </c:choose>
-                    <c:forEach begin="${begin}" end="${end}" var="i">
-                        <c:choose>
-                            <c:when test="${i == pageBean.currentPageNum }">
-                                <li><a href="javascript:;" class="selected pageico" >${i}</a></li>
-                            </c:when>
-                            <c:otherwise>
-                                <li><a href="<c:url value="${pageBean.url}currentPageNum=${i}"></c:url>">${i}</a></li>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:forEach>
-
-                        <%--下一页--%>
-                    <c:if test="${pageBean.currentPageNum < pageBean.pageCount}">
-                        <li><a href="<c:url value="${pageBean.url}currentPageNum=${pageBean.currentPageNum + 1 }"></c:url> " class="pageico"><i class="iconfont">&#xe673;</i></a></li>
-                    </c:if>
-
-                        <%--尾页--%>
-                    <c:choose>
-                        <c:when test="${pageBean.currentPageNum == pageBean.pageCount}">
-                            <li><a href="javascript:;" class="first">尾页</a></li>
-                        </c:when>
-                        <c:otherwise>
-                            <li><a href="<c:url value="${pageBean.url}currentPageNum=${pageBean.pageCount}"></c:url>  " >尾页</a></li>
-                        </c:otherwise>
-                    </c:choose>
-                </ul>
-
-                <span class="pageinfo">共 ${pageBean.dataCountNum} 条记录，每页 ${pageBean.eachPageDataNum} 条，当前第 ${pageBean.currentPageNum} 页，共 ${pageBean.pageCount} 页</span>
+                        </div>
+                    </div>
             </div>
-        </c:when>
-        <c:otherwise>
-            <span style="position: absolute;top: 45%;left: 45%;font: 14px/1.5 'Microsoft YaHei',arial,tahoma,\5b8b\4f53,sans-serif;color: #a29c9c;">本年暂无配比</span>
-        </c:otherwise>
-    </c:choose>
-    <!--pagination end-->
+        </div>
+    </div>
+</div>
 
     <div id="showOldRation" style="padding-top: 8px;display: none;">
 
@@ -626,10 +644,6 @@
 
 <script type="text/javascript" src="/static/js/jquery.js"></script>
 <script type="text/javascript" src="/static/js/common.js"></script>
-<script type="text/javascript" src="/static/js/jquery.select.js"></script>
-<script src="/static/js/layer/layer.js"></script>
-
-
 <script type="text/javascript" src="/static/js/datepicker/js/bootstrap-datepicker.js"></script>
 <script type="text/javascript" src="/static/js/datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
 <script type="text/javascript" src="/static/js/qc/ration_moudel.js"></script>

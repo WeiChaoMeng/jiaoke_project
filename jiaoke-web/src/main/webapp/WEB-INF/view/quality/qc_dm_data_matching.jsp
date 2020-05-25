@@ -70,91 +70,15 @@
                 <c:if test="${producedSVG.rationNum == ratioNum.produce_proportioning_num}" >
                     <div class="chartbox4">
                         <div class="my_echars_title">
-                            <span  >${ratioNum.pro_name}产品平均图</span>
+                            <span  >${ratioNum.pro_name}产品级配图</span>
                             <a href="javascript:;" name="${ratioNum.produce_proportioning_num}" id="${ratioNum.pro_name}" class="proSVG" >更多
                                 <i class="iconfont">&#xeba8;</i>
                             </a>
                         </div>
-                        <div id="chart${i.count}" class="charts"></div>
+                        <div id="chart${ratioNum.produce_proportioning_num}" class="charts"></div>
 
                         <script type="text/javascript">
-                            var myChart${i.count} = echarts.init(document.getElementById('chart${i.count}'));
-                            // 指定图表的配置项和数据
-                            var colors = ['#5793f3', '#d14a61', '#675bba'];
-                            var option${i.count} =  {
-                                tooltip: {
-                                    trigger: 'axis'
-                                },
-                                legend: {
-                                    data:['上限配比','实际配比','下限配比']
-                                },
-                                toolbox: {
-                                    show: true,
-                                    feature: {
-                                        magicType: {type: ['bar', 'line']},
-                                        restore: {},
-                                        saveAsImage: {}
-                                    }
-                                },
-                                xAxis: {
-                                    type: 'category',
-                                    // boundaryGap: false,
-                                    data:  ['骨料1', '骨料2', '骨料3', '骨料4', '骨料5', '骨料6', '石粉', '沥青', '再生料', '添加剂']
-                                },
-                                yAxis: {
-                                    type: 'value'
-                                },
-                                grid: {
-                                    left: '3%',
-                                    right: '4%',
-                                    bottom: '3%',
-                                    containLabel: true
-                                },
-                                <c:forEach items="${rationMessageList}" var="ration">
-                                    <c:if test="${producedSVG.rationNum == ration.crew1ModeleId || producedSVG.rationNum == ration.crew2ModeleId }" >
-                                        series: [
-                                            {
-                                                name:'上限配比',
-                                                type:'bar',
-                                                data: [     <fmt:formatNumber value="${ration.repertoryOne == '0'? 0:ration.repertoryOne+ 2  }" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.repertoryTwo == '0'? 0:ration.repertoryTwo+ 2 }" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.repertoryThree == '0'? 0:ration.repertoryThree+ 2 }" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.repertoryFour == '0'? 0:ration.repertoryFour+ 2 }" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.repertoryFive == '0'? 0:ration.repertoryFive+ 2  }" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.repertorySix == '0'? 0:ration.repertorySix+ 2 }" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.breeze == '0'? 0:ration.breeze+ 1}" pattern="#.00"/>,
-                                                    <fmt:formatNumber value=" ${ration.ratioStone == '0'? 0:ration.ratioStone+ 2 }" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.ratioRegenerate1 + ration.ratioRegenerate2 == '0'? 0:ration.ratioRegenerate1 + ration.ratioRegenerate2+ 2 }" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.ratioAdditive == '0'? 0:ration.ratioAdditive+ 2 }" pattern="#.00"/>]
-                                            },
-                                            {
-                                                name:'实际配比',
-                                                type:'bar',
-                                                data: [${producedSVG.aggregate_1}, ${producedSVG.aggregate_2}, ${producedSVG.aggregate_3}, ${producedSVG.aggregate_4}, ${producedSVG.aggregate_5}, ${producedSVG.aggregate_6}, ${producedSVG.stone_1 > producedSVG.stone_2 ? producedSVG.stone_1:producedSVG.stone_2 }, ${producedSVG.asphalt}, ${producedSVG.regenerate}, ${producedSVG.additive}]
-                                            },
-                                            {
-                                                name:'下限配比',
-                                                type:'bar',
-                                                data: [<fmt:formatNumber value="${ration.repertoryOne == '0'? 0:ration.repertoryOne -2}" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.repertoryTwo == '0'? 0:ration.repertoryTwo -2 }" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.repertoryThree == '0'? 0:ration.repertoryThree -2}" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.repertoryFour == '0'? 0:ration.repertoryFour -2 }" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.repertoryFive == '0'? 0:ration.repertoryFive -2 }" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.repertorySix == '0'? 0:ration.repertorySix -2}" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.breeze == '0'? 0:ration.breeze - 1}" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.ratioStone == '0'? 0:ration.ratioStone - 2 }" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.ratioRegenerate1 + ration.ratioRegenerate2 == '0'? 0:ration.ratioRegenerate1 + ration.ratioRegenerate2  - 2  }" pattern="#.00"/>,
-                                                    <fmt:formatNumber value="${ration.ratioAdditive == '0'? 0:ration.ratioAdditive - 2  }" pattern="#.00"/>]
-                                            }]
-                                    </c:if>
 
-                                </c:forEach>
-                            };
-
-                            myChart${i.count}.setOption(option${i.count});
-                            window.addEventListener("resize", function () {
-                                myChart${i.count}.resize();
-                            });
                         </script>
 
 
@@ -171,7 +95,7 @@
 
         <div class="infoboxleft">
             <div class="boxtitle">
-                <span>客户分类产品统计</span>
+                <span>工程分类产品统计</span>
                 <%--qc_dm_data_number.jsp--%>
                 <a href="javascript:;" target="_self">更多
                     <i class="iconfont">&#xeba8;</i>
@@ -199,7 +123,7 @@
                             <td>${userPro.projectName}</td>
                             <td>${userPro.constructionUnits}</td>
                             <td>
-                                <a href="javascript:void(0)" class="selected" onclick="showMsgByUserAndDate('${userPro.clientNum}','${userPro.produceDate}')">
+                                <a href="javascript:void(0)" class="selected" onclick="showMsgByUserAndDate('${userPro.projectName}','${userPro.produceDate}')">
                                     <i class="toolico iconfont" >&#xe970;</i>查看</a>
                             </td>
                         </tr>
@@ -216,7 +140,7 @@
 
     <div class="chartbox4">
         <div class="my_echars_title">
-            <span>当日客户产量占比图</span>
+            <span>当日工程产量占比图</span>
         </div>
         <div id="chart500" class="charts"></div>
 
@@ -234,21 +158,21 @@
                         trigger: 'item',
                         formatter: "{a} <br/>{b} : {c} ({d}%)"
                     },
-                    legend: {
-                        orient: 'vertical',
-                        left: 'left',
-                        data: [
-                            <c:forEach items="${userProTotal}"  var="userPro" varStatus="sta">
-                                    <c:choose>
-                                        <c:when test="${sta.last}">
-                                            '${userPro.clientName}'
-                                        </c:when>
-                                        <c:otherwise>
-                                            '${userPro.clientName}',
-                                        </c:otherwise>
-                                    </c:choose>
-                            </c:forEach>
-                        ]},
+                    <%--legend: {--%>
+                        <%--orient: 'vertical',--%>
+                        <%--// left: 'left',--%>
+                        <%--data: [--%>
+                            <%--<c:forEach items="${userProTotal}"  var="userPro" varStatus="sta">--%>
+                                    <%--<c:choose>--%>
+                                        <%--<c:when test="${sta.last}">--%>
+                                            <%--'${userPro.projectName == null? "未查询到工程":userPro.projectName}'--%>
+                                        <%--</c:when>--%>
+                                        <%--<c:otherwise>--%>
+                                            <%--'${userPro.projectName == null? "未查询到工程":userPro.projectName}',--%>
+                                        <%--</c:otherwise>--%>
+                                    <%--</c:choose>--%>
+                            <%--</c:forEach>--%>
+                        <%--]},--%>
                     series: [
                         {
                             name: '占比总量',
@@ -259,10 +183,10 @@
                                 <c:forEach items="${userProTotal}" var="userList" varStatus="stus">
                                     <c:choose>
                                         <c:when test="${sta.last}">
-                                            { value:${userList.userTotal}, name:'${userList.clientName}'}
+                                            { value:${userList.userTotal}, name:'${userList.projectName == null? "未查询到工程":userList.projectName}'}
                                         </c:when>
                                         <c:otherwise>
-                                            { value:${userList.userTotal}, name:'${userList.clientName}'},
+                                            { value:${userList.userTotal}, name:'${userList.projectName == null? "未查询到工程":userList.projectName}'},
                                         </c:otherwise>
                                     </c:choose>
                                 </c:forEach>
@@ -286,8 +210,8 @@
         <%--<!--查看模板弹出-->--%>
         <div id="showSVGBrk" class="form_background"  style="display:none;" ></div>
         <div id="showSVG" class="dm_form_model"  style="display:none;" >
-            <div id="point">
-            <table class="dm_form_table">
+            <div id="point" style="width: 100%">
+                <table class="dm_form_table">
                 <tbody>
 
                 <tr>
@@ -307,33 +231,33 @@
                 </tr>
 
                 <tr>
-                    <td class="dm_tlabels">骨料1总量(kg)：</td>
+                    <td class="dm_tlabels">骨料1总量(吨)：</td>
                     <td id="aggregate_1" class="dm_forminput dm_inputstyle" >
 
                     </td>
-                    <td class="dm_tlabels">骨料2总量(kg)：</td>
+                    <td class="dm_tlabels">骨料2总量(吨)：</td>
                     <td id="aggregate_2" class="dm_forminput dm_inputstyle" >
 
                     </td>
                 </tr>
 
                 <tr>
-                    <td class="dm_tlabels">骨料3总量(kg)：</td>
+                    <td class="dm_tlabels">骨料3总量(吨)：</td>
                     <td id="aggregate_3" class="dm_forminput dm_inputstyle" >
 
                     </td>
-                    <td class="dm_tlabels">骨料4总量(kg)：</td>
+                    <td class="dm_tlabels">骨料4总量(吨)：</td>
                     <td id="aggregate_4" class="dm_forminput dm_inputstyle" >
 
                     </td>
                 </tr>
 
                 <tr>
-                    <td class="dm_tlabels">骨料5总量(kg)：</td>
+                    <td class="dm_tlabels">骨料5总量(吨)：</td>
                     <td id="aggregate_5" class="dm_forminput dm_inputstyle" >
 
                     </td>
-                    <td class="dm_tlabels">骨料6总量(kg)：</td>
+                    <td class="dm_tlabels">骨料6总量(吨)：</td>
                     <td id="aggregate_6" class="dm_forminput dm_inputstyle" >
 
                     </td>
@@ -341,33 +265,33 @@
 
 
                 <tr>
-                    <td class="dm_tlabels">石粉1总量(kg)：</td>
+                    <td class="dm_tlabels">石粉1总量(吨)：</td>
                     <td id="stone_1" class="dm_forminput dm_inputstyle" >
 
                     </td>
-                    <td class="dm_tlabels">石粉2总量(kg)：</td>
+                    <td class="dm_tlabels">石粉2总量(吨)：</td>
                     <td id="stone_2" class="dm_forminput dm_inputstyle"  >
 
                     </td>
                 </tr>
 
                 <tr>
-                    <td class="dm_tlabels">沥青总量(kg)：</td>
+                    <td class="dm_tlabels">沥青总量(吨)：</td>
                     <td id="asphalt" class="dm_forminput dm_inputstyle" >
 
                     </td>
-                    <td class="tlabels">再生料总量(kg)：</td>
+                    <td class="tlabels">再生料总量(吨)：</td>
                     <td id="regenerate" class="dm_forminput dm_inputstyle" >
 
                     </td>
                 </tr>
 
                 <tr>
-                    <td class="dm_tlabels">添加剂总量(kg)：</td>
+                    <td class="dm_tlabels">添加剂总量(吨)：</td>
                     <td id="additive" class="dm_forminput dm_inputstyle" >
 
                     </td>
-                    <td class="tlabels">材料总使用量(kg)：</td>
+                    <td class="tlabels">材料总使用量(吨)：</td>
                     <td id="total" class="dm_forminput dm_inputstyle" >
 
                     </td>
@@ -459,17 +383,19 @@
 
                 </tbody>
             </table>
+                <div style="height: 300px;width: 100%;margin-top: 20px;" id="svgDiv" >
+                    <img src="" id="printImg" style="height: 250px;display: none;" />
+                    <div id="svgChart" style="height: 250px;"></div>
+                </div>
             </div>
             <div class="form_btn">
                 <input type="submit"  id="btn" onclick="print()" value="打印" class="btn_save">
-                <input type="button" id="from_click"  value="关闭" class="btn_cancel">
             </div>
 
             </form>
         </div>
 
     <div style="width: 100%; height: 125%;" ></div>
-
         <div class="div_dataMessage" style="display: none;"  id="promessage" >
 
             <div class="">
@@ -527,7 +453,9 @@
 <script type="text/javascript" src="/static/js/layer/layer.js"></script>
 <script language="javascript" src="/static/js/qc/jquery.jqprint-0.3.js"></script>
 <script type="text/javascript">
-
+    $(function(){
+        showGradingChears();
+    });
 
     $('#from_click').click(function () {
         $('#addSVGBrk,#showSVG').hide();
@@ -535,6 +463,7 @@
 
     //展示选定配比号相关信息
     $(".proSVG").click(function () {
+        $("#printImg").hide();
         that_ = this;
         var raionNum = this.name;
         var raionName = this.id;
@@ -549,9 +478,14 @@
         // var objArr = eval("(" + proTotalList + ")");
         for (var i in proTotalList) {
             for (var k in proTotalList[i]){
-                if (raionNum == proTotalList[i].rationNum ){
+                if (raionNum == proTotalList[i].rationNum){
                     $("#" + k).empty();
-                    $("#" + k).append(proTotalList[i][k]);
+                    if (k === 'rationNum' || k === 'procount' ){
+                        $("#" + k).append(proTotalList[i][k]);
+                    }else {
+                        $("#" + k).append((Number(proTotalList[i][k])/1000).toFixed(2));
+                    }
+
                 }
             }
         }
@@ -570,7 +504,6 @@
         }
         for (var i in modelRaion){
             if (raionName === modelRaion[i].proName ){
-                debugger
                 for (var y in modelRaion[i]){
                     if (y == 'temperatureAsphalt' || y == 'temperatureAggregate' || y == 'temperatureMixture' ||  y == 'temperatureMilling' ) {
                         var temUp = y + "Up";
@@ -582,8 +515,218 @@
                 }
             }
         }
+        //平均级配曲线图展示
+        var gradingList = ${gradingMap};
+        for (var i = 0;i < gradingList.length;i++){
+            if (gradingList[i][raionNum]){
+                    $("#svgChart").width($(document.body).width()*0.75);
+                    $("#printImg").width($(document.body).width()*0.75);
+                    var arr = returnJsonArray(gradingList[i][raionNum]['moudleList']);
+                    var temArray  = returnArrayToJson(gradingList[i][raionNum]['moudleList']);
 
-        $('#addSVGBrk,#showSVG').show();
+                    var myChart= echarts.init(document.getElementById('svgChart'),'light');
+                    // 指定图表的配置项和数据
+                    var colors = ['#5793f3', '#d14a61', '#675bba'];
+                    var option= {
+                        title: {
+                            text: '平均级配曲线图',
+                            x: 'left',
+                            textStyle:{
+                                color:'#685489',
+                                fontSize: 16
+                            },
+                            padding: [25,0,0,40]
+                        },
+                        animation:false,
+                        legend: {
+                            data:['合成级配','实际级配','上限','中值','下限'],
+                            x:'right',
+                            orient:'vertical',
+                            itemGap:20,
+                            top:'25%',
+                            left:'85%',
+                        },
+                        grid:{
+                            left: '10%',
+                            bottom: '3%',
+                            containLabel: true
+                        },
+                        tooltip: {
+                            trigger: 'item'
+                        },
+                        xAxis: {
+                            type: 'value',
+                            // name: '筛孔',
+                            nameGap: 16,
+                            nameTextStyle: {
+                                color: '#000',
+                                fontSize: 14
+                            },
+                            min:0,
+                            max:7,
+
+                            splitLine: {
+                                show: false
+                            },
+                            axisLabel: { //轴标签
+                                show: false//不显示
+                                // rotate:90
+                            },
+                            axisTick: { //轴刻度
+                                show: false //不显示
+                            },
+                            axisLine: { //轴线
+                                lineStyle: { //样式
+                                    color: '#000' //颜色
+                                }
+                            },
+                            // axisLabel:{
+                            //     interval: 0,
+                            //     formatter: function (value) {
+                            //         //x轴的文字改为竖版显示
+                            //         var str = value.split("");
+                            //         return str.join("\n");
+                            //     }
+                            // }
+                        },
+                        yAxis: {
+                            type: 'value',
+                            // name: '占比 %',
+                            nameLocation: 'end',
+                            nameGap: 20,
+                            position: 'left',
+                            offset: 3,
+                            max:100,
+                            min:0,
+                            scale: true,
+                            nameTextStyle: {
+                                color: '#fff',
+                                fontSize: 16
+                            },
+                            axisLine: {
+                                onZero: false,
+                                lineStyle: {
+                                    color: '#000'
+                                }
+                            },
+                            splitLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: '#000'
+                                }
+                            }
+                        },
+                        series: [
+                            {
+                                type: 'line',
+                                markLine: {
+                                    symbol: ['none', 'none'],
+                                    silent: true,
+                                    label: {
+                                        rotate:90,
+                                        normal: {
+                                            position: "start"
+                                        }
+                                    },
+                                    lineStyle: {
+                                        normal: {
+                                            type: 'solid',
+                                            width:0.6,
+                                            color: '#000000'
+                                        }
+                                    },
+                                    data: []
+                                }
+                            },
+                            {
+                                id: 'a',
+                                type: 'line',
+                                name:'合成级配',
+                                symbolSize:6,
+                                lineStyle: {
+                                    normal: {
+                                        type: 'solid',
+                                        width:0.6,
+                                        color: '#96ceb4'
+                                    }
+                                },
+                                data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                            },
+                            {
+                                id: 'b',
+                                type: 'line',
+                                name:'实际级配',
+                                symbolSize:6,
+                                lineStyle: {
+                                    normal: {
+                                        type: 'solid',
+                                        color: '#23c6c8'
+                                    }
+                                },
+                                data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                            },
+                            {
+                                id: 'c',
+                                type: 'line',
+                                name:'上限',
+                                symbolSize:6,
+                                lineStyle: {
+                                    normal: {
+                                        type: 'solid',
+                                        color: '#ed5565'
+                                    }
+                                },
+                                data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                            },
+                            {
+                                id: 'd',
+                                type: 'line',
+                                name:'中值',
+                                symbolSize:6,
+                                data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                            },
+                            {
+                                id: 'e',
+                                type: 'line',
+                                name:'下限',
+                                symbolSize:6,
+                                lineStyle: {
+                                    normal: {
+                                        type: 'solid',
+                                        color: '#ed5565'
+                                    }
+                                },
+                                data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                            }
+                        ]
+                    };
+                    if(arr){
+                        option.xAxis.max = arr[arr.length - 1][0];
+                    }
+
+                    option.series[0].markLine.data = temArray;
+                    option.series[1].data = returnJsonArray(gradingList[i][raionNum]['moudleList']);
+                    option.series[2].data = returnJsonArray(gradingList[i][raionNum]['realList']);
+                    option.series[3].data = returnJsonArray(gradingList[i][raionNum]['upList']);
+                    option.series[4].data = returnJsonArray(gradingList[i][raionNum]['midList']);
+                    option.series[5].data = returnJsonArray(gradingList[i][raionNum]['downList']);
+                    myChart.setOption(option,'light');
+                    window.addEventListener("resize", function () {
+                        myChart.resize();
+                    });
+
+                // 把echarts图片转成64编码的图片
+                var img = new Image();
+                var imgSrc = myChart.getDataURL();
+                $("#printImg").attr("src", imgSrc);
+            }
+        }
+        layer.open({
+            type: 1,
+            area: ['85%', '95%'], //宽高
+            content: $("#showSVG")
+        });
+        // $('#addSVGBrk,#showSVG').show();
     })
 
     //点击查看模板
@@ -593,18 +736,24 @@
 
     //打印相关
     function  print(){
-        $("#point").jqprint({
-            debug: true, //如果是true则可以显示iframe查看效果（iframe默认高和宽都很小，可以再源码中调大），默认是false
-            importCSS: true, //true表示引进原来的页面的css，默认是true。（如果是true，先会找$("link[media=print]")，若没有会去找$("link")中的css文件）
-            printContainer: true, //表示如果原来选择的对象必须被纳入打印（注意：设置为false可能会打破你的CSS规则）。
-            operaSupport: true//表示如果插件也必须支持歌opera浏览器，在这种情况下，它提供了建立一个临时的打印选项卡。默认是true
-        });
+        // 渲染到图表上面展示
+        $("#printImg").show();
+        //这里要使用延时加载，才不会在图片还没渲染出来的时候就调用打印的方法
+        setTimeout(function() {
+            $("#point").jqprint({
+                debug: true, //如果是true则可以显示iframe查看效果（iframe默认高和宽都很小，可以再源码中调大），默认是false
+                importCSS: true, //true表示引进原来的页面的css，默认是true。（如果是true，先会找$("link[media=print]")，若没有会去找$("link")中的css文件）
+                printContainer: true, //表示如果原来选择的对象必须被纳入打印（注意：设置为false可能会打破你的CSS规则）。
+                operaSupport: true//表示如果插件也必须支持歌opera浏览器，在这种情况下，它提供了建立一个临时的打印选项卡。默认是true
+            });
+        },1000);
     }
 
     function showMsgByUserAndDate(userNum,proDate) {
         var basePath  = $("#path").val();
         $.ajax({
             url: basePath + "/getMsgByUserAndDate.do",
+            type:"post",
             dataType:"json",
             data:{
                 "userNum":userNum,
@@ -621,6 +770,395 @@
                 layer.alert("请求失败")
             }
         })
+    }
+    //展示级配图
+    function showGradingChears() {
+        var rationList = ${ProSVG};
+        var gradingList = ${gradingMap};
+        for (var i = 0;i < rationList.length;i++){
+            var ration = rationList[i].rationNum;
+            for (var j = 0;j < gradingList.length;j++){
+                    if (gradingList[j][ration]){
+                        var myChart = "chart" + ration;
+                        var chart  = echarts.init(document.getElementById(myChart));
+                        // 指定图表的配置项和数据
+                        var colors = ['#5793f3', '#d14a61', '#675bba'];
+                        var option= {
+                            legend: {
+                                data:['合成级配','实际级配','上限','中值','下限'],
+                                x:'left',
+                                left:'8%'
+                            },
+                            grid:{
+                                left: '3.7%',
+                                right: '3.7%',
+                                bottom: '3%',
+                                containLabel: true
+                            },
+                            tooltip: {
+                                trigger: 'item'
+                            },
+                            xAxis: {
+                                type: 'value',
+                                // name: '筛孔',
+                                nameGap: 16,
+                                nameTextStyle: {
+                                    color: '#000',
+                                    fontSize: 14
+                                },
+                                min:0,
+                                max:7,
+
+                                splitLine: {
+                                    show: false
+                                },
+                                axisLabel: { //轴标签
+                                    show: false//不显示
+                                    // rotate:90
+                                },
+                                axisTick: { //轴刻度
+                                    show: false //不显示
+                                },
+                                axisLine: { //轴线
+                                    lineStyle: { //样式
+                                        color: '#000' //颜色
+                                    }
+                                },
+                                // axisLabel:{
+                                //     interval: 0,
+                                //     formatter: function (value) {
+                                //         //x轴的文字改为竖版显示
+                                //         var str = value.split("");
+                                //         return str.join("\n");
+                                //     }
+                                // }
+                            },
+                            yAxis: {
+                                type: 'value',
+                                // name: '占比 %',
+                                nameLocation: 'end',
+                                nameGap: 20,
+                                position: 'left',
+                                offset: 3,
+                                max:100,
+                                min:0,
+                                scale: true,
+                                nameTextStyle: {
+                                    color: '#fff',
+                                    fontSize: 16
+                                },
+                                axisLine: {
+                                    onZero: false,
+                                    lineStyle: {
+                                        color: '#000'
+                                    }
+                                },
+                                splitLine: {
+                                    show: true,
+                                    lineStyle: {
+                                        color: '#000'
+                                    }
+                                }
+                            },
+                            series: [
+                                {
+                                    type: 'line',
+                                    markLine: {
+                                        symbol: ['none', 'none'],
+                                        silent: true,
+                                        label: {
+                                            rotate:90,
+                                            normal: {
+                                                position: "start"
+                                            }
+                                        },
+                                        lineStyle: {
+                                            normal: {
+                                                type: 'solid',
+                                                width:0.6,
+                                                color: '#000000'
+                                            }
+                                        },
+                                        data: []
+                                    }
+                                },
+                                {
+                                    id: 'a',
+                                    type: 'line',
+                                    name:'合成级配',
+                                    symbolSize:6,
+                                    lineStyle: {
+                                        normal: {
+                                            type: 'solid',
+                                            width:0.6,
+                                            color: '#96ceb4'
+                                        }
+                                    },
+                                    data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                                },
+                                {
+                                    id: 'b',
+                                    type: 'line',
+                                    name:'实际级配',
+                                    symbolSize:6,
+                                    lineStyle: {
+                                        normal: {
+                                            type: 'solid',
+                                            color: '#23c6c8'
+                                        }
+                                    },
+                                    data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                                },
+                                {
+                                    id: 'c',
+                                    type: 'line',
+                                    name:'上限',
+                                    symbolSize:6,
+                                    lineStyle: {
+                                        normal: {
+                                            type: 'solid',
+                                            color: '#ed5565'
+                                        }
+                                    },
+                                    data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                                },
+                                {
+                                    id: 'd',
+                                    type: 'line',
+                                    name:'中值',
+                                    symbolSize:6,
+                                    data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                                },
+                                {
+                                    id: 'e',
+                                    type: 'line',
+                                    name:'下限',
+                                    symbolSize:6,
+                                    lineStyle: {
+                                        normal: {
+                                            type: 'solid',
+                                            color: '#ed5565'
+                                        }
+                                    },
+                                    data: [[0.1, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
+                                }
+                            ]
+                        };
+
+                        var arr = returnJsonArray(gradingList[j][ration]['moudleList']);
+                        var temArray  = returnArrayToJson(gradingList[j][ration]['moudleList']);
+
+                        if(arr){
+                            option.xAxis.max = arr[arr.length - 1][0];
+                        }
+                        option.series[0].markLine.data = temArray;
+                        option.series[1].data = returnJsonArray(gradingList[j][ration]['moudleList']);
+                        option.series[2].data = returnJsonArray(gradingList[j][ration]['realList']);
+                        option.series[3].data = returnJsonArray(gradingList[j][ration]['upList']);
+                        option.series[4].data = returnJsonArray(gradingList[j][ration]['midList']);
+                        option.series[5].data = returnJsonArray(gradingList[j][ration]['downList']);
+                        chart.setOption(option);
+                        window.addEventListener("resize", function () {
+                            chart.resize();
+                        });
+
+                    }
+            }
+        }
+    }
+
+    //遍历json，返回指定格式数据
+    function returnJsonArray(jsonArray) {
+        var array = new Array();
+
+        for (var i = 0 ; i < jsonArray.length; i++) {
+
+            for (var key in jsonArray[i]){
+
+                var temArray = new Array();
+
+
+                switch (key) {
+                    case '0.075':
+                        temArray.push(0.312);
+                        temArray.push(parseFloat(jsonArray[i][key]));
+                        break;
+                    case '0.15':
+                        temArray.push(0.426);
+                        temArray.push(parseFloat(jsonArray[i][key]));
+                        break;
+                    case '0.3':
+                        temArray.push(0.582);
+                        temArray.push(parseFloat(jsonArray[i][key]));
+                        break;
+                    case '0.6':
+                        temArray.push(0.795);
+                        temArray.push(parseFloat(jsonArray[i][key]));
+                        break;
+                    case '1.18':
+                        temArray.push(1.007);
+                        temArray.push(parseFloat(jsonArray[i][key]));
+                        break;
+                    case '2.36':
+                        temArray.push(1.472);
+                        temArray.push(parseFloat(jsonArray[i][key]));
+                        break;
+                    case '4.75':
+                        temArray.push(2.016);
+                        temArray.push(parseFloat(jsonArray[i][key]));
+                        break;
+                    case '6.7':
+                        temArray.push(2.354);
+                        temArray.push(parseFloat(jsonArray[i][key]));
+                        break;
+                    case '7.0':
+                        temArray.push(2.400);
+                        temArray.push(parseFloat(jsonArray[i][key]));
+                        break;
+                    case '7.2':
+                        temArray.push(2.431);
+                        temArray.push(parseFloat(jsonArray[i][key]));
+                        break;
+                    case '9.5':
+                        temArray.push(2.754);
+                        temArray.push(parseFloat(jsonArray[i][key]));
+                        break;
+                    case '13.2':
+                        temArray.push(3.193);
+                        temArray.push(parseFloat(jsonArray[i][key]));
+                        break;
+
+                    case '16':
+                        temArray.push(3.482);
+                        temArray.push(parseFloat(jsonArray[i][key]));
+                        break;
+                    case '19':
+                        temArray.push(3.762);
+                        temArray.push(parseFloat(jsonArray[i][key]));
+                        break;
+                    case '26.5':
+                        temArray.push(4.370);
+                        temArray.push(parseFloat(jsonArray[i][key]));
+                        break;
+                    case '31.5':
+                        temArray.push(4.723);
+                        temArray.push(parseFloat(jsonArray[i][key]));
+                        break;
+                    case '37.5':
+                        temArray.push(5.109);
+                        temArray.push(parseFloat(jsonArray[i][key]));
+                        break;
+                    case '53':
+                        temArray.push(5.969);
+                        temArray.push(parseFloat(jsonArray[i][key]));
+                        break;
+                    case '63':
+                        temArray.push(6.452);
+                        temArray.push(parseFloat(jsonArray[i][key]));
+                        break;
+                }
+
+                array.push(temArray);
+            }
+        }
+        array.sort(sortNumber);
+
+        return array;
+    }
+
+    //返回筛孔数组，用于X轴
+    function returnArrayToJson(json) {
+
+        var array = new Array();
+
+        for (var i = 0 ; i < json.length; i++){
+            for (var key in json[i]){
+                switch (key) {
+                    case '0.075':
+                        array.push({xAxis:0.312,label: {rotate:90, formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}});
+                        break;
+                    case '0.15':
+                        array.push({xAxis:0.426,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                        break;
+                    case '0.3':
+                        array.push({xAxis:0.582,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                        break;
+                    case '0.6':
+                        array.push({xAxis:0.795,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                        break;
+                    case '1.18':
+                        array.push({xAxis:1.007,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                        break;
+                    case '2.36':
+                        array.push({xAxis:1.472,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                        break;
+                    case '4.75':
+                        array.push({xAxis:2.016,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                        break;
+                    case '6.7':
+                        array.push({xAxis:2.354,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                        break;
+                    case '7.0':
+                        array.push({xAxis:2.400,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                        break;
+                    case '7.2':
+                        array.push({xAxis:2.431,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                        break;
+                    case '9.5':
+                        array.push({xAxis:2.754,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                        break;
+                    case '13.2':
+                        array.push({xAxis:3.193,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                        break;
+                    case '16':
+                        array.push({xAxis:3.482,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                        break;
+                    case '19':
+                        array.push({xAxis:3.762,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                        break;
+                    case '26.5':
+                        array.push({xAxis:4.370,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                        break;
+                    case '31.5':
+                        array.push({xAxis:4.723,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                        break;
+                    case '37.5':
+                        array.push({xAxis:5.109,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                        break;
+                    case '53':
+                        array.push({xAxis:5.969,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                        break;
+                    case '63':
+                        array.push({xAxis:6.452,label: {rotate:90, normal: {formatter:key},lineStyle: {normal: {type: 'solid', width:0.5, color: '#000000'}}}});
+                        break;
+                }
+
+            }
+        }
+
+        return array;
+    }
+
+    //排序
+    function sortNumber(a, b)
+    {
+        return a[0] - b[0]
+    }
+
+    function getNowFormatDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = year + seperator1 + month + seperator1 + strDate;
+        return currentdate;
     }
 </script>
 

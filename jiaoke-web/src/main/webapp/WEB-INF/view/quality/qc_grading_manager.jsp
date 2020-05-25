@@ -8,52 +8,69 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"  isELIgnored="false" %>
 
-<html>
+<html class="x-admin-sm">
 <head>
     <meta charset="utf-8">
     <title>级配管理</title>
     <link href="/static/css/default.css" rel="stylesheet" type="text/css">
     <link href="/static/js/datepicker/css/bootstrap-datepicker.css" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="/static/css/qc/zxf_page.css">
+    <script src="../../../static/new/lib/layui/layui.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="../../../static/new/css/xadmin.css">
+    <script type="text/javascript" src="../../../static/new/js/xadmin.js"></script>
 </head>
 
-<body style="padding:0px 8px 100px 8px;">
+<body >
+<div class="x-nav">
+            <span class="layui-breadcrumb">
+                <%--<a href="/default.do" onclick="inv()">首页</a>--%>
+                <a><cite>主页</cite></a>
+                <a><cite>质量管控</cite></a>
+                <a><cite>级配管理</cite></a>
+            </span>
+</div>
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body ">
+                    <button class="layui-btn layui-btn-danger" id="btn_click">
+                        <i class="layui-icon"></i>删除
+                    </button>
+                    <button class="layui-btn" id="showBrk">
+                        <i class="layui-icon"></i>新建级配
+                    </button>
+                    <button class="layui-btn" id="former_years" onclick="showOldGrading()" id="former_years" >
+                        <i class="layui-icon"></i>查看往年配比
+                    </button>
+                </div>
 
+                <div class="layui-card-body ">
+                    <table class="layui-table layui-form" lay-filter="demo">
+                        <thead>
+                        <tr>
+                            <th style="width: 3%;">
+                            </th>
+                            <th style="width: 10%">一号机组编号</th>
+                            <th style="width: 10%">二号机组编号</th>
+                            <th style="width: 15%">级配名称</th>
+                            <th style="width: 15%">上传时间</th>
+                            <th style="width: 15%">备注信息</th>
+                            <th style="width: 15%">上传人</th>
+                            <th style="width: 15%">操作</th>
+                        </thead>
+                        <tbody id="gradingList" >
+                        </tbody>
+                    </table>
+                </div>
 
-    <ul class="toolbar">
-        <li><a href="#" id="showBrk" ><i class="toolico iconfont">&#xe7e9;</i>新建级配</a></li>
-        <li><a href="#" id="btn_click"><i class="toolico iconfont">&#xe7ea;</i>删除</a></li>
-        <li><a href="#" onclick="showOldGrading()" id="former_years"><i class="toolico iconfont">&#xe64c;</i>查看往年级配</a></li>
-
-    </ul>
-    <!--toolbar end-->
-
-    <!--tablebox start-->
-    <div class="tablebox">
-        <table>
-
-            <thead>
-                <th class="num"></th>
-                <th>一号机组编号</th>
-                <th>二号机组编号</th>
-                <th>级配名称</th>
-                <th>上传时间</th>
-                <th>备注</th>
-                <th>上传人</th>
-                <th>操作</th>
-            </thead>
-
-            <tbody id="gradingList">
-
-            </tbody>
-
-        </table>
+                <div class="layui-card-body" style="display: inline-block;width: 100%;">
+                    <div  class="zxf_pagediv"></div>
+                </div>
+            </div>
+        </div>
     </div>
-    <!--tablebox end-->
-
-    <!--pagination start-->
-    <div  class="zxf_pagediv"></div>
-    <!--pagination end-->
+</div>
 
     <!--删除弹出-->
     <div class="popup_back" style="display:none;">
@@ -251,8 +268,6 @@
 <script type="text/javascript" src="/static/js/jquery.js"></script>
 <script type="text/javascript" src="/static/js/jquery.select.js"></script>
 <script src="/static/js/layer/layer.js"></script>
-
-
 <script type="text/javascript" src="/static/js/datepicker/js/bootstrap-datepicker.js"></script>
 <script type="text/javascript" src="/static/js/datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
 <script type="text/javascript" src="/static/js/qc/zxf_page.js"></script>

@@ -65,6 +65,7 @@ function showOldRaio() {
     $.ajax({
         url:path + "/getOldRation.do",
         type: "get",
+        async:false,
         dataType:"json",
         success:function (res) {
 
@@ -122,13 +123,18 @@ function showOldRaio() {
                 $("#" + year +"_body").append(temH)
             }
         }
-    })
-    layer.open({
-        type: 1,
-        skin: '历史配比', //加上边框
-        area: ['90%', '90%'], //宽高
-        content: $("#showOldRation")
     });
+
+    layui.use('layer', function(){
+        var layer = layui.layer;
+        layer.open({
+            type: 1,
+            skin: '历史配比', //加上边框
+            area: ['90%', '90%'], //宽高
+            content: $("#showOldRation")
+        });
+    });
+
 }
 
 function showRationDiv(id) {
