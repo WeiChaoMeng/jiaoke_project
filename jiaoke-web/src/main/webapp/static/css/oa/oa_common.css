@@ -739,9 +739,10 @@ table {
 
 .news_headlines_left {
     font-size: 20px;
-    padding: 5px 10px;
+    padding: 0 10px;
     color: #919191;
-    width: 500px;
+    height: 90px;
+    line-height: 90px;
 }
 
 .news_headlines_color {

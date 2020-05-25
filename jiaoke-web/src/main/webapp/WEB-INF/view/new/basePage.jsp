@@ -98,7 +98,7 @@
         <div class="layui-col-md6">
             <div class="layui-card">
                 <div class="layui-card-header">常用模板</div>
-                <div class="layui-card-body" style=" min-height: 190px;">
+                <div class="layui-card-body" style=" min-height: 192px;">
                     <table style="font-size: 14px;width: 100%;">
                         <tbody>
                         <tr style="line-height: 25px;cursor: pointer;">
@@ -205,7 +205,7 @@
         <div class="layui-col-md6">
             <div class="layui-card">
                 <div class="layui-card-header">待办工作</div>
-                <div class="layui-card-body" style="min-height: 190px;">
+                <div class="layui-card-body" style="min-height: 192px;">
                     <table style="font-size: 14px;width: 100%;">
                         <tbody id="pending"></tbody>
                     </table>
@@ -220,7 +220,7 @@
             <div class="layui-col-md6">
                 <div class="layui-card">
                     <div class="layui-card-header">公告</div>
-                    <div class="layui-card-body" style="min-height: 168px;">
+                    <div class="layui-card-body" style="min-height: 216px;max-height: 216px;">
                         <ul>
                             <c:forEach items="${oaNoticeList}" var="notice">
                                 <li>
@@ -240,7 +240,7 @@
         <div class="layui-col-md6">
             <div class="layui-card">
                 <div class="layui-card-header">新闻</div>
-                <div class="layui-card-body" style="min-height: 168px;">
+                <div class="layui-card-body" style="min-height: 216px;max-height: 216px;">
                     <ul>
                         <c:forEach items="${oaNewsCenterList}" var="newsCenter">
                             <li>
@@ -300,7 +300,7 @@
                     var pendingList = '';
                     for (let i = 0; i < list.length; i++) {
                         pendingList += '<tr>';
-                        pendingList += '    <td class="list_content" style="width: 70%">';
+                        pendingList += '    <td class="list_content" style="width: 70%;padding: 3px 0">';
                         pendingList += '        <span class="list_content_name">';
                         pendingList += '            <a class="check_color" onclick="taskApprovalHandle(\'' + list[i].url + '\',\'' + list[i].correlationId + '\',\'' + list[i].taskId + '\')" title="' + list[i].title + '">' + list[i].title + '</a>';
                         pendingList += '        </span>';

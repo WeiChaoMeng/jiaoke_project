@@ -48,7 +48,7 @@
     	<ul id="jimu-list-ul" class="jimu-list-ul">
             <li><a href="/cockpitPage.do"><span class="">首页</span></a></li>
             <li class="jimu-list-ul-li-select">质量管控</li>
-            <li><a href="/experimentCockpitPage.do"><span class="">实验管理</span></a></li>
+            <%--<li><a href="/experimentCockpitPage.do"><span class="">实验管理</span></a></li>--%>
             <li><a href="/logout"><span class="">退出</span></a></li>
     	</ul>
     </div>

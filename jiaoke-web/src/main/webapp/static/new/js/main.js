@@ -66,6 +66,11 @@ function selectedCode() {
     });
 }
 
+//跳转驾驶舱
+function cockpit() {
+    window.location.href = "/cockpitPage.do";
+}
+
 //修改密码
 function editPsw() {
     $('#modalWindow').html('<div id="editPassword" style="height:100%;display: none;">\n' +
@@ -1680,7 +1685,7 @@ function submissionAssetEdit() {
     }
 }
 
-//修改资产档案状态
+//修改资产档案状态(未使用)
 function modifyAssetsState(tipInfo, id, state, currentPage, itselfFrameId) {
     layer.confirm(tipInfo, {
         btn: ['确认', '取消']
@@ -1702,7 +1707,6 @@ function modifyAssetsState(tipInfo, id, state, currentPage, itselfFrameId) {
             }
         });
     });
-    layer.close(index);
 }
 
 /**--------------------文件上传------------------------*/
