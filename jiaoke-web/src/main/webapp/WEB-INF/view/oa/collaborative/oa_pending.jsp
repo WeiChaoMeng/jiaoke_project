@@ -90,6 +90,7 @@
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
 <script type="text/javascript" src="../../../../static/js/paging/jqPaginator.js"></script>
 <script type="text/javascript" src="../../../../static/new/js/xadmin.js"></script>
+<script type="text/javascript" src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
     //设置当前页
     var currentPage = '${currentPage}';

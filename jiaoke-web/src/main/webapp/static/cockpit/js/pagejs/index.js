@@ -81,7 +81,7 @@ function showMonthChar() {
             }
             $("#thisMonthCount").empty().append("<span id='parkplace'> " + (crew1Total + crew2Total).toFixed(1) + "吨</span>")
             if (res.message === "error") {
-                alert("后台错误，请联系管理员！");
+                layer.msg("后台错误，请联系管理员！");
             }
             // showOption(crew1Total, crew2Total);
         }
@@ -259,7 +259,7 @@ function getThisMonthYield() {
             }
 
             if (res.message === "error") {
-                alert("后台错误，请联系管理员！");
+                layer.msg("后台错误，请联系管理员！");
             }
 
             showLeftTwoEchars(series);
@@ -358,7 +358,7 @@ function showYearChar() {
             }
 
             if (res.message === "error") {
-                alert("后台错误，请联系管理员！");
+                layer.msg("后台错误，请联系管理员！");
             }
 
             // showYearOption(crew1Total.toFixed(2), crew2Total.toFixed(2));
@@ -482,7 +482,7 @@ function showProductionDays() {
 
             }
             if (res.message === "error") {
-                alert("后台错误，请联系管理员！");
+                layer.msg("后台错误，请联系管理员！");
             }
         }
     });
@@ -516,7 +516,7 @@ function showMaterialRegenerate() {
 
             }
             if (res.message === "error") {
-                alert("后台错误，请联系管理员！");
+                layer.msg("后台错误，请联系管理员！");
             }
         }
     });
@@ -550,7 +550,7 @@ function showThisMonthRegenerate() {
 
             }
             if (res.message === "error") {
-                alert("后台错误，请联系管理员！");
+                layer.msg("后台错误，请联系管理员！");
             }
         }
     });
@@ -585,10 +585,10 @@ function showTenProjectMessage() {
                 });
             }
             if (res.message === "empty"){
-                alert("当前无工程");
+                layer.msg("当前无工程");
             }
             if (res.message === "error") {
-                alert("后台错误，请联系管理员！");
+                layer.msg("后台错误，请联系管理员！");
             }
         }
     });

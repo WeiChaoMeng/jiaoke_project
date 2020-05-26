@@ -200,8 +200,15 @@ body {
     /*width: 0px;*/
 }
 
+/*隐藏滚动条-chrome,Safari*/
 .left-nav::-webkit-scrollbar{
     width: 0;
+}
+
+/*隐藏滚动条-firefox,IE*/
+.left-nav{
+    -ms-overflow-style: none;
+    scrollbar-width:none;
 }
 
 #side-nav {

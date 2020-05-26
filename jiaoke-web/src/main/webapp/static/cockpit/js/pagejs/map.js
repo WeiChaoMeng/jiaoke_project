@@ -22,10 +22,10 @@ function getTopTenProject() {
                 showEchars(res.dataBody);
             }
             if (res.message === "empty"){
-                alert("当前无工程");
+                layer.msg("当前无工程");
             }
             if (res.message === "error") {
-                alert("后台错误，请联系管理员！");
+                layer.msg("后台错误，请联系管理员！");
             }
         }
     });

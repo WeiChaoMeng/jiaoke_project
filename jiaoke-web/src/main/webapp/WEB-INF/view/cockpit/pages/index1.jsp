@@ -196,13 +196,13 @@
             </div>
         </div>
 
-        <div class="modelpub" style="margin-top: 10px;height: -webkit-calc((100%/1.5));">
+        <div class="modelpub" style="margin-top: 10px;height: calc((100%/1.5));">
             <div class="common-tit">生产区监控(47个)</div>
             <span class="tilt"></span>
             <div id="myPlayer" style="height: calc((100% - 30px));"></div>
             <img src="../../../../static/cockpit/img/inp_del.png" style="position: absolute;top: 10%;left: 90%;z-index: 999999;" id="closeMonitor" onclick="closeMonitor()">
 
-            <div class="echart_con bar_c_echart" style="height: -webkit-calc((100% - 30px));" id="container">
+            <div class="echart_con bar_c_echart" style="height: calc((100% - 32px));" id="container">
                 <%--<img style="width: 100%;height: 100%" src="../../../../static/new/images/monitor.png">--%>
             </div>
         </div>
@@ -229,6 +229,7 @@
 <script type="text/javascript" src="../../../../static/cockpit/js/scroll.js"></script>
 <script type="text/javascript" src="../../../../static/cockpit/js/pagejs/map.js"></script>
 <script type="text/javascript" src="../../../../static/cockpit/js/pagejs/index.js?c=2.9"></script>
+<script type="text/javascript" src="../../../../static/js/oa/layer/layer.js"></script>
 <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=5ae1365fcf3e53e6a218d9d88cd50249"></script>
 <script type="text/javascript" src="../../../../static/new/js/gdmap.js"></script>
 <script type="text/javascript" src="../../../../static/EZUIKit/ezuikit.js"></script>

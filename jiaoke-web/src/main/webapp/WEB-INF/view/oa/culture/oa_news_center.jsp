@@ -14,6 +14,10 @@
     <style>
         .news-headlines-color{
             background-image: linear-gradient(to right, #FF5722 , #FFB800);
+            margin: 0;
+            padding: 0;
+            height: 0;
+            width: 0;
         }
 
         .news-headlines-left-content {
@@ -89,17 +93,12 @@
     <tbody>
     <tr class="news-headlines-color">
         <td>
-            <table width="100%" height="100%">
-                <tbody>
-                <tr>
-                    <td class="news_headlines_left">
-                        <span class="news-headlines-left-content">新闻中心</span>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <div class="news_headlines_left">
+                <span class="news-headlines-left-content">新闻中心</span>
+            </div>
         </td>
     </tr>
+
     <tr>
         <td colspan="2">
             <div style="width: 100%">

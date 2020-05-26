@@ -55,6 +55,12 @@
                             <%--<a onclick="">个人信息</a>--%>
                         <%--</dd>--%>
 
+                        <shiro:hasPermission name="cockpitLayer">
+                            <dd>
+                                <a onclick="cockpit()">驾驶舱</a>
+                            </dd>
+                        </shiro:hasPermission>
+
                         <dd>
                             <a onclick="editPsw()">修改密码</a>
                         </dd>

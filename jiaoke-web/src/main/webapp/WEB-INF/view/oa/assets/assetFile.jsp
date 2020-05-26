@@ -292,11 +292,32 @@
         var form = layui.form;
         form.on('switch(switchFilter)', function (data) {
             if (this.checked === true) {
-                window.top.modifyAssetsState("确认开启吗？", $(this).val(), 0, $('#page').val(),itselfFrameId);
+                // window.top.modifyAssetsState("确认开启吗？", $(this).val(), 0, $('#page').val(),itselfFrameId);
+                modifyAssetsState("成功开启", $(this).val(), 0);
             } else {
-                window.top.modifyAssetsState("确认关闭吗？", $(this).val(), 1, $('#page').val(),itselfFrameId);
+                // window.top.modifyAssetsState("确认关闭吗？", $(this).val(), 1, $('#page').val(),itselfFrameId);
+                modifyAssetsState("成功关闭", $(this).val(), 1);
             }
         });
     });
+
+    //修改资产状态
+    function modifyAssetsState(tipInfo,id, state) {
+        $.ajax({
+            type: "post",
+            url: '/assetsManagement/updateState',
+            data: {'id': id, 'state': state},
+            success: function (data) {
+                if (data === 'success') {
+                    layer.msg(tipInfo);
+                } else {
+                    window.top.tips(tipInfo, 6, 2, 1000);
+                }
+            },
+            error: function (result) {
+                window.top.tips("出错！", 6, 2, 1000);
+            }
+        });
+    }
 </script>
 </html>
