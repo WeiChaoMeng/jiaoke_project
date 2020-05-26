@@ -629,7 +629,7 @@
                 <!--首页右侧 end -->
             </div>
         </div>
-        <div class="section" id="page2"  >
+        <div class="section" id="page2" style="height: 100%;" >
             <div class="model-content" >
                 <!--首页左侧 sta -->
                 <div class="comtab">
@@ -768,7 +768,7 @@
                     <div class="modelpub margin10" style="height: 48%;">
                         <div class="common-tit" id="crew1_product_title" ></div>
                         <span class="tilt"></span>
-                        <div class="echart_con bar_l_echart" id="chart5">
+                        <div class="echart_con" id="chart5" style="height: calc(100% - 33px);">
 
                         </div>
                     </div>
@@ -778,7 +778,7 @@
                 <div class="comtab">
                     <div class="modelpub" style="height: 50%;" >
                         <div class="common-tit">二号机产品温度走势</div>
-                        <div class="echart_con bar_c_echart"  id="chart1" style="width: 100%;float: left;">
+                        <div class="echart_con"  id="chart1" style="width: 100%;float: left;">
                             <script type="text/javascript">
                                 var myChart1 = echarts.init(document.getElementById('chart1'));
                                 // 指定图表的配置项和数据

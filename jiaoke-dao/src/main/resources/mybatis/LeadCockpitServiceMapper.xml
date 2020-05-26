@@ -115,7 +115,7 @@
                  INNER JOIN quality_proportioning_message AS QPM
                      ON QMRD.produce_proportioning_num = QPM.crew1_modele_id
         WHERE YEAR(QPM.create_time) = YEAR(NOW())
-          AND  produce_date = (SELECT produce_date FROM quality_monitoring_realtime_data1 ORDER BY id LIMIT 1 )
+          AND  produce_date = (SELECT produce_date FROM quality_monitoring_realtime_data1 ORDER BY id DESC LIMIT 1 )
         GROUP BY pro_name
         UNION
         SELECT
@@ -128,7 +128,7 @@
                  INNER JOIN quality_proportioning_message AS QPM
                      ON QMRD.produce_proportioning_num = QPM.crew2_modele_id
         WHERE YEAR(QPM.create_time) = YEAR(NOW())
-          AND  produce_date = (SELECT produce_date FROM quality_monitoring_realtime_data2 ORDER BY id LIMIT 1 )
+          AND  produce_date = (SELECT produce_date FROM quality_monitoring_realtime_data2 ORDER BY id DESC LIMIT 1 )
         GROUP BY pro_name
     </select>
 </mapper>

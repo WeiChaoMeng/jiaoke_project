@@ -1100,4 +1100,15 @@ public interface QualityExperimentalManagerDao {
      * @date 2020/5/24 15:15
      */
     List<Map<String, String>> selectManufacturersByMaterialsAndDate(@Param("startDate")String startDate,@Param("endDate") String endDate,@Param("materials")  String materials);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询时间段内沥青混合料试验>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/5/25 14:50
+     */
+    List<Map<String, String>> getAsphaltStandingBookTatleByDate(@Param("startDate") String startDate, @Param("endDate") String endDate,@Param("materials") String materials,@Param("specification") String specification,@Param("manufacturers") String manufacturers);
 }

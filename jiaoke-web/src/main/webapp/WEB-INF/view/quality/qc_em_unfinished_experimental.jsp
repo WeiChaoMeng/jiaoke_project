@@ -33,6 +33,7 @@
                         <th style="text-align:center;">实验编号</th>
                         <th style="text-align:center;">委托单编号</th>
                         <th style="text-align:center;">材料名称</th>
+                        <th style="text-align:center;">材料规格</th>
                         <th style="text-align:center;">所属厂家</th>
                         <th style="text-align:center;">取样时间</th>
                         <th style="text-align:center;">实验时间</th>

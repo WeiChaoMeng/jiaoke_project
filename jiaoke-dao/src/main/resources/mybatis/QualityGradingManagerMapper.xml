@@ -14,6 +14,7 @@
              quality_proportioning_grading_model AS QPGM
                  INNER JOIN quality_proportioning_grading AS QPG ON QPGM.id = QPG.model_id
         where YEAR(QPGM.create_time) = YEAR(NOW())
+        GROUP BY QPG.crew1_id
         ORDER BY QPG.crew1_id
     </select>
 

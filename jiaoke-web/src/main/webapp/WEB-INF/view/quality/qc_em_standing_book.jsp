@@ -126,9 +126,12 @@
 
         </div>
         </form>
-        <table  class="standingBookTable" border="1" id="searchTable" >
+        <div id="search_div">
+            <table  class="standingBookTable" border="1" id="searchTable" >
 
-        </table>
+            </table>
+        </div>
+
     </div>
 
 </div>

@@ -158,9 +158,9 @@
 
     <select id="selectRealTimeDataEcharsTemp" resultType="java.util.HashMap">
 
-        (SELECT produce_disc_num,temperature_warehouse_1,temperature_mixture,temperature_duster,temperature_asphalt,temperature_aggregate, 'crew1' as crewNum FROM `quality_monitoring_realtime_data1` ORDER BY id DESC LIMIT 7)
+        (SELECT produce_disc_num,date_format(produce_time,'%H:%i:%s') as produce_time,temperature_warehouse_1,temperature_mixture,temperature_duster,temperature_asphalt,temperature_aggregate, 'crew1' as crewNum FROM `quality_monitoring_realtime_data1` ORDER BY id DESC LIMIT 7)
         UNION ALL
-        (SELECT produce_disc_num,temperature_warehouse_1,temperature_mixture,temperature_duster,temperature_asphalt,temperature_aggregate, 'crew2' as crewNum FROM `quality_monitoring_realtime_data2` ORDER BY id DESC LIMIT 7);
+        (SELECT produce_disc_num,date_format(produce_time,'%H:%i:%s') as produce_time,temperature_warehouse_1,temperature_mixture,temperature_duster,temperature_asphalt,temperature_aggregate, 'crew2' as crewNum FROM `quality_monitoring_realtime_data2` ORDER BY id DESC LIMIT 7);
 
     </select>
 

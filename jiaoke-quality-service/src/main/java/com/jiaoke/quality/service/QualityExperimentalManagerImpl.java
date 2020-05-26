@@ -759,6 +759,8 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
     public String searchStandingBook(String fromData) {
         List<Map<String,String>> list = JSON.parseObject(fromData,List.class);
         Map<String,String> map = new HashMap<>();
+        List<Map<String,String>> tatleArry = new ArrayList<>();
+        Map<String,Object> result = new HashMap<>();
         for (int i = 0; i < list.size();i++){
             map.put(list.get(i).get("name"),list.get(i).get("value"));
         }
@@ -776,6 +778,7 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
                 break;
             case "4":
                 res = qualityExperimentalManagerDao.selectAsphaltStandingByDate(map.get("startDate"),map.get("endDate"),map.get("materials"),map.get("specification"),map.get("manufacturers"));
+                 tatleArry = qualityExperimentalManagerDao.getAsphaltStandingBookTatleByDate(map.get("startDate"),map.get("endDate"),map.get("materials"),map.get("specification"),map.get("manufacturers"));
                 break;
             case "5":
                 res = qualityExperimentalManagerDao.selectCoarseMillingStandingByDate(map.get("startDate"),map.get("endDate"),map.get("materials"),map.get("specification"),map.get("manufacturers"));
@@ -800,7 +803,10 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
 
 
         }
-        return JSON.toJSONString(res);
+
+        result.put("tatleArry",tatleArry);
+        result.put("dalist",res);
+        return JSON.toJSONString(result);
     }
 
     @Override
