@@ -16,7 +16,7 @@
     <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
 </head>
 
-<body id="body" style="width: 70%">
+<body id="body">
 
 <div class="table-title">
     <span>编辑劳动合同签订、续订、变更、终止审批表</span>
@@ -223,6 +223,11 @@
         zIndex: 100000,
     });
 
+    var itselfFrameId;
+    $(function () {
+        itselfFrameId = window.frameElement && window.frameElement.id || '';
+    });
+
     //发送
     function send() {
         if ($.trim($("#title").val()) === '') {
@@ -262,7 +267,8 @@
                                 },
                                 success: function (result) {
                                     if (result === "success") {
-                                        window.location.href = "${path}/oaIndex.do";
+                                        <%--window.location.href = "${path}/oaIndex.do";--%>
+                                        window.history.back();
                                         window.top.tips("发送成功！", 0, 1, 2000);
                                     } else {
                                         window.top.tips('发送失败！', 0, 2, 2000);
@@ -270,7 +276,7 @@
                                 }
                             })
                         } else {
-                            window.top.selectPrincipal(data);
+                            window.top.selectPrincipal(data,itselfFrameId);
                         }
                     }
                 });
@@ -299,7 +305,8 @@
             },
             success: function (result) {
                 if (result === "success") {
-                    window.location.href = "${path}/oaIndex.do";
+                    <%--window.location.href = "${path}/oaIndex.do";--%>
+                    window.history.back();
                     window.top.tips("发送成功！", 0, 1, 2000);
                 } else {
                     window.top.tips('发送失败！', 0, 2, 2000);
@@ -307,42 +314,6 @@
             }
         })
     }
-
-    //发送
-    <%--function send() {--%>
-        <%--if ($.trim($("#title").val()) === '') {--%>
-            <%--window.top.tips("标题不可以为空！", 6, 5, 2000);--%>
-        <%--} else {--%>
-            <%--if ($.trim($("#recipientId").val()) === '') {--%>
-                <%--window.top.tips("请选择要通知的人！", 6, 5, 2000);--%>
-            <%--} else {--%>
-                <%--var array = [];--%>
-                <%--$('#annexes').find('input').each(function () {--%>
-                    <%--array.push($(this).val());--%>
-                <%--});--%>
-
-                <%--//发送前将上传好的附件插入form中--%>
-                <%--$('#annex').val(array);--%>
-
-                <%--$.ajax({--%>
-                    <%--type: "POST",--%>
-                    <%--url: '${path}/laborContractRenewal/editAdd',--%>
-                    <%--data: $('#oaActLaborContractRenewal').serialize(),--%>
-                    <%--error: function (request) {--%>
-                        <%--layer.msg("出错！");--%>
-                    <%--},--%>
-                    <%--success: function (result) {--%>
-                        <%--if (result === "success") {--%>
-                            <%--window.location.href = "${path}/oaIndex.do";--%>
-                            <%--window.top.tips("发送成功！", 0, 1, 1000);--%>
-                        <%--} else {--%>
-                            <%--window.top.tips('发送失败！', 0, 2, 1000);--%>
-                        <%--}--%>
-                    <%--}--%>
-                <%--})--%>
-            <%--}--%>
-        <%--}--%>
-    <%--}--%>
 
     //保存待发
     function savePending() {
@@ -366,7 +337,8 @@
                 },
                 success: function (result) {
                     if (result === "success") {
-                        window.location.href = "${path}/oaIndex.do";
+                        <%--window.location.href = "${path}/oaIndex.do";--%>
+                        window.history.back();
                         window.top.tips("保存成功！", 0, 1, 1000);
                     } else {
                         window.top.tips("保存失败！", 0, 2, 1000);
@@ -378,7 +350,7 @@
 
     //插入附件
     function insertFile() {
-        window.top.uploadFile();
+        window.top.uploadFile(itselfFrameId);
     }
 
     //上传附件成功后插入form
@@ -401,7 +373,7 @@
 
     //删除已上传附件
     function whether(fileName) {
-        window.top.deleteUploaded(fileName);
+        window.top.deleteUploaded(fileName,itselfFrameId);
     }
 
 
@@ -437,7 +409,7 @@
         //执行打印
         window.print();
         $('#tool,#titleArea').show();
-        $('#body').css('width', '70%');
+        $('#body').css('width', '80%');
 
         //附件列表
         let annexesLen = $('#annexes').children().length;
@@ -454,7 +426,7 @@
         var userInfoList = JSON.parse('${userInfoList}');
         //部门
         var departmentList = JSON.parse('${departmentList}');
-        window.top.selectRecipient(userInfoList, departmentList);
+        window.top.selectRecipient(userInfoList, departmentList,itselfFrameId);
     }
 
     //确认接收人

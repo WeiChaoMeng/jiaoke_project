@@ -76,4 +76,12 @@ public interface OaReceiveDocumentService {
      * @return 影响行数
      */
     int delete(int id);
+
+    /**
+     * 批量删除数据
+     *
+     * @param ids ids
+     * @return int
+     */
+    int batchDelete(String[] ids);
 }

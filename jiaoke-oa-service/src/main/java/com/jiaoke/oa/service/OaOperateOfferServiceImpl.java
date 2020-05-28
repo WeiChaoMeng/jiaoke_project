@@ -64,4 +64,9 @@ public class OaOperateOfferServiceImpl implements OaOperateOfferService {
     public int deleteByPrimaryKey(Integer id) {
         return oaOperateOfferMapper.deleteByPrimaryKey(id);
     }
+
+    @Override
+    public int batchDelete(String[] ids) {
+        return oaOperateOfferMapper.batchDelete(ids);
+    }
 }

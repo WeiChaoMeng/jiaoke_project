@@ -63,4 +63,9 @@ public class OaOperateBidServiceImpl implements OaOperateBidService {
     public int deleteByPrimaryKey(Integer id) {
         return oaOperateBidMapper.deleteByPrimaryKey(id);
     }
+
+    @Override
+    public int batchDelete(String[] ids) {
+        return oaOperateBidMapper.batchDelete(ids);
+    }
 }

@@ -66,6 +66,9 @@ public class OaActAcceptanceWarehousingServiceImpl implements OaActAcceptanceWar
         oaActAcceptanceWarehousing.setPromoter(userId);
         oaActAcceptanceWarehousing.setUrl("acceptanceWarehousing");
         oaActAcceptanceWarehousing.setState(0);
+        if (oaActAcceptanceWarehousing.getAssociatedId() == null){
+            oaActAcceptanceWarehousing.setAssociatedId("");
+        }
         if (oaActAcceptanceWarehousingMapper.insertSelective(oaActAcceptanceWarehousing) < 0) {
             return -1;
         } else {

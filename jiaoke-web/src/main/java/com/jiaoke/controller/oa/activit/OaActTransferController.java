@@ -209,13 +209,13 @@ public class OaActTransferController {
 
                     if (oaActTransfer.getDepartmentPrincipal().contains(",")) {
 
-                        UserInfo userInfo = userInfoService.getUserInfoByPermission("notifyHumanAffairs");
+                        UserInfo userInfo = userInfoService.getUserInfoByPermission("personnel_censor");
                         Task task1 = activitiUtil.getProcessInstanceIdByTaskId(taskId);
                         List<Task> taskList = activitiUtil.getTaskListByProcessInstanceId(task1.getProcessInstanceId());
                         for (Task tasks : taskList) {
                             Map<String, Object> map = new HashMap<>(16);
                             map.put("whether", 1);
-                            map.put("humanAffairs", userInfo.getId());
+                            map.put("personnel_censor", userInfo.getId());
                             activitiUtil.approvalComplete(tasks.getId(), map);
                         }
                         oaCollaborationService.updateStatusCode(oaActTransfer.getId(), "被回退");
@@ -223,10 +223,10 @@ public class OaActTransferController {
                         return updateByPrimaryKeySelective(oaActTransfer);
 
                     } else {
-                        UserInfo userInfo = userInfoService.getUserInfoByPermission("notifyHumanAffairs");
+                        UserInfo userInfo = userInfoService.getUserInfoByPermission("personnel_censor");
                         Map<String, Object> map = new HashMap<>(16);
                         map.put("whether", 1);
-                        map.put("humanAffairs", userInfo.getId());
+                        map.put("personnel_censor", userInfo.getId());
                         activitiUtil.approvalComplete(taskId, map);
                         oaCollaborationService.updateStatusCode(oaActTransfer.getId(), "被回退");
                         oaActTransfer.setState(1);
@@ -260,13 +260,13 @@ public class OaActTransferController {
 
                     if (oaActTransfer.getDepartmentPrincipal().contains(",")) {
 
-                        UserInfo userInfo = userInfoService.getUserInfoByPermission("notifyHumanAffairs");
+                        UserInfo userInfo = userInfoService.getUserInfoByPermission("personnel_censor");
                         Task task1 = activitiUtil.getProcessInstanceIdByTaskId(taskId);
                         List<Task> taskList = activitiUtil.getTaskListByProcessInstanceId(task1.getProcessInstanceId());
                         for (Task tasks : taskList) {
                             Map<String, Object> map = new HashMap<>(16);
                             map.put("whether", 1);
-                            map.put("humanAffairs", userInfo.getId());
+                            map.put("personnel_censor", userInfo.getId());
                             activitiUtil.approvalComplete(tasks.getId(), map);
                         }
                         oaCollaborationService.updateStatusCode(oaActTransfer.getId(), "被回退");
@@ -274,10 +274,10 @@ public class OaActTransferController {
                         return updateByPrimaryKeySelective(oaActTransfer);
 
                     } else {
-                        UserInfo userInfo = userInfoService.getUserInfoByPermission("notifyHumanAffairs");
+                        UserInfo userInfo = userInfoService.getUserInfoByPermission("personnel_censor");
                         Map<String, Object> map = new HashMap<>(16);
                         map.put("whether", 1);
-                        map.put("humanAffairs", userInfo.getId());
+                        map.put("personnel_censor", userInfo.getId());
                         activitiUtil.approvalComplete(taskId, map);
                         oaCollaborationService.updateStatusCode(oaActTransfer.getId(), "被回退");
                         oaActTransfer.setState(1);
@@ -300,13 +300,13 @@ public class OaActTransferController {
 
                     if (oaActTransfer.getDepartmentPrincipal().contains(",")) {
 
-                        UserInfo userInfo = userInfoService.getUserInfoByPermission("notifyHumanAffairs");
+                        UserInfo userInfo = userInfoService.getUserInfoByPermission("personnel_censor");
                         Task task1 = activitiUtil.getProcessInstanceIdByTaskId(taskId);
                         List<Task> taskList = activitiUtil.getTaskListByProcessInstanceId(task1.getProcessInstanceId());
                         for (Task tasks : taskList) {
                             Map<String, Object> map = new HashMap<>(16);
                             map.put("whether", 1);
-                            map.put("humanAffairs", userInfo.getId());
+                            map.put("personnel_censor", userInfo.getId());
                             activitiUtil.approvalComplete(tasks.getId(), map);
                         }
                         oaCollaborationService.updateStatusCode(oaActTransfer.getId(), "被回退");
@@ -314,10 +314,10 @@ public class OaActTransferController {
                         return updateByPrimaryKeySelective(oaActTransfer);
 
                     } else {
-                        UserInfo userInfo = userInfoService.getUserInfoByPermission("notifyHumanAffairs");
+                        UserInfo userInfo = userInfoService.getUserInfoByPermission("personnel_censor");
                         Map<String, Object> map = new HashMap<>(16);
                         map.put("whether", 1);
-                        map.put("humanAffairs", userInfo.getId());
+                        map.put("personnel_censor", userInfo.getId());
                         activitiUtil.approvalComplete(taskId, map);
                         oaCollaborationService.updateStatusCode(oaActTransfer.getId(), "被回退");
                         oaActTransfer.setState(1);
@@ -334,10 +334,10 @@ public class OaActTransferController {
                     activitiUtil.approvalComplete(taskId, map);
                     return updateByPrimaryKeySelective(oaActTransfer);
                 } else {
-                    UserInfo userInfo = userInfoService.getUserInfoByPermission("notifyHumanAffairs");
+                    UserInfo userInfo = userInfoService.getUserInfoByPermission("personnel_censor");
                     Map<String, Object> map = new HashMap<>(16);
                     map.put("whether", 1);
-                    map.put("humanAffairs", userInfo.getId());
+                    map.put("personnel_censor", userInfo.getId());
                     activitiUtil.approvalComplete(taskId, map);
                     oaCollaborationService.updateStatusCode(oaActTransfer.getId(), "被回退");
                     oaActTransfer.setState(1);
@@ -355,10 +355,10 @@ public class OaActTransferController {
                     activitiUtil.approvalComplete(taskId, map);
                     return updateByPrimaryKeySelective(oaActTransfer);
                 } else {
-                    UserInfo userInfo = userInfoService.getUserInfoByPermission("notifyHumanAffairs");
+                    UserInfo userInfo = userInfoService.getUserInfoByPermission("personnel_censor");
                     Map<String, Object> map = new HashMap<>(16);
                     map.put("whether", 1);
-                    map.put("humanAffairs", userInfo.getId());
+                    map.put("personnel_censor", userInfo.getId());
                     activitiUtil.approvalComplete(taskId, map);
                     oaCollaborationService.updateStatusCode(oaActTransfer.getId(), "被回退");
                     oaActTransfer.setState(1);
@@ -373,17 +373,17 @@ public class OaActTransferController {
                     Map<String, Object> map = new HashMap<>(16);
                     List<Object> leaveNotifyList = new ArrayList<>();
                     leaveNotifyList.add(oaActTransfer.getPromoter());
-                    UserInfo userInfo = userInfoService.getUserInfoByPermission("notifyHumanAffairs");
+                    UserInfo userInfo = userInfoService.getUserInfoByPermission("personnel_censor");
                     leaveNotifyList.add(userInfo.getId());
                     map.put("whether", 0);
                     map.put("normalList", leaveNotifyList);
                     activitiUtil.approvalComplete(taskId, map);
                     return updateByPrimaryKeySelective(oaActTransfer);
                 } else {
-                    UserInfo userInfo = userInfoService.getUserInfoByPermission("notifyHumanAffairs");
+                    UserInfo userInfo = userInfoService.getUserInfoByPermission("personnel_censor");
                     Map<String, Object> map = new HashMap<>(16);
                     map.put("whether", 1);
-                    map.put("humanAffairs", userInfo.getId());
+                    map.put("personnel_censor", userInfo.getId());
                     activitiUtil.approvalComplete(taskId, map);
                     oaCollaborationService.updateStatusCode(oaActTransfer.getId(), "被回退");
                     oaActTransfer.setState(1);
@@ -581,6 +581,10 @@ public class OaActTransferController {
     public String details(String id, String taskId, Model model) {
         OaActTransfer oaActTransfer = oaActTransferService.selectByPrimaryKey(id);
         model.addAttribute("transfer", oaActTransfer);
+
+        if (oaActTransfer.getNewDepartment() == null || "".equals(oaActTransfer.getNewDepartment()) || oaActTransfer.getDepartmentPrincipal() == null || "".equals(oaActTransfer.getDepartmentPrincipal())){
+            return "oa/act/act_transfer_details";
+        }
 
         String principal = departmentService.selectEnforcerId("principal", oaActTransfer.getNewDepartment());
         if (oaActTransfer.getDepartmentPrincipal().contains(",")){

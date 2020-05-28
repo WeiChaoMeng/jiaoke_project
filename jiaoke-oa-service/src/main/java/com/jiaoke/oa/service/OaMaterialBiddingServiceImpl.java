@@ -51,4 +51,9 @@ public class OaMaterialBiddingServiceImpl implements OaMaterialBiddingService {
     public int deleteByPrimaryKey(Integer id) {
         return oaMaterialBiddingMapper.deleteByPrimaryKey(id);
     }
+
+    @Override
+    public int batchDelete(String[] ids) {
+        return oaMaterialBiddingMapper.batchDelete(ids);
+    }
 }

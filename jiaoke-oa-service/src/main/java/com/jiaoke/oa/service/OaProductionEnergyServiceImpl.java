@@ -64,4 +64,9 @@ public class OaProductionEnergyServiceImpl implements OaProductionEnergyService 
     public int deleteByPrimaryKey(Integer id) {
         return oaProductionEnergyMapper.deleteByPrimaryKey(id);
     }
+
+    @Override
+    public int batchDelete(String[] ids) {
+        return oaProductionEnergyMapper.batchDelete(ids);
+    }
 }

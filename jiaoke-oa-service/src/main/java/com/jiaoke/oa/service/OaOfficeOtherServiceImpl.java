@@ -119,4 +119,9 @@ public class OaOfficeOtherServiceImpl implements OaOfficeOtherService {
         oaOfficeOther.setId(id);
         return oaOfficeOtherMapper.delete(oaOfficeOther);
     }
+
+    @Override
+    public int batchDelete(String[] ids) {
+        return oaOfficeOtherMapper.batchDelete(ids);
+    }
 }

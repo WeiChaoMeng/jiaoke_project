@@ -64,4 +64,9 @@ public class OaOperateOtherServiceImpl implements OaOperateOtherService {
     public int deleteByPrimaryKey(Integer id) {
         return oaOperateOtherMapper.deleteByPrimaryKey(id);
     }
+
+    @Override
+    public int batchDelete(String[] ids) {
+        return oaOperateOtherMapper.batchDelete(ids);
+    }
 }

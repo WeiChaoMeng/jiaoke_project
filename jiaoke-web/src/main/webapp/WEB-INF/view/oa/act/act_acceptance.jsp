@@ -15,7 +15,7 @@
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
 </head>
 
-<body id="body" style="width: 70%">
+<body id="body">
 
 <div class="table-title">
     <span>设备维修验收单</span>
@@ -150,6 +150,12 @@
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
 <script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
+
+    var itselfFrameId;
+    $(function () {
+        itselfFrameId = window.frameElement && window.frameElement.id || '';
+    });
+
     function send() {
         if ($.trim($("#title").val()) === '') {
             window.top.tips("标题不可以为空！", 6, 5, 2000);
@@ -158,7 +164,7 @@
             //部门负责人是多个
             if (principalGroup !== '') {
                 var principalList = JSON.parse(principalGroup);
-                window.top.selectPrincipal(principalList);
+                window.top.selectPrincipal(principalList, itselfFrameId);
 
                 //部门负责人是单个
             } else {
@@ -259,7 +265,7 @@
 
     //插入附件
     function insertFile() {
-        window.top.uploadFile();
+        window.top.uploadFile(itselfFrameId);
     }
 
     //上传附件成功后插入form
@@ -282,7 +288,7 @@
 
     //删除已上传附件
     function whether(fileName) {
-        window.top.deleteUploaded(fileName);
+        window.top.deleteUploaded(fileName,itselfFrameId);
     }
 
 
@@ -318,7 +324,7 @@
         //执行打印
         window.print();
         $('#tool,#titleArea').show();
-        $('#body').css('width', '70%');
+        $('#body').css('width', '80%');
 
         //附件列表
         let annexesLen = $('#annexes').children().length;

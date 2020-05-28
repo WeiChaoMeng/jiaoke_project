@@ -16,9 +16,9 @@
     <endEvent id="end" name="结束"/>
     <exclusiveGateway gatewayDirection="Unspecified" id="principalEG" name="负责人网关"/>
     <exclusiveGateway gatewayDirection="Unspecified" id="supervisorEG" name="主管领导网关"/>
-    <userTask activiti:assignee="${humanAffairs}" activiti:exclusive="true" id="o4" name="知会人事"/>
+    <userTask activiti:assignee="${human_affairs}" activiti:exclusive="true" id="o4" name="知会人事"/>
     <userTask activiti:assignee="${promoter}" activiti:exclusive="true" id="o6" name="知会发起人"/>
-    <userTask activiti:assignee="${humanAffairs}" activiti:exclusive="true" id="o5" name="知会人事"/>
+    <userTask activiti:assignee="${human_affairs}" activiti:exclusive="true" id="o5" name="知会人事"/>
     <userTask activiti:assignee="${promoter}" activiti:exclusive="true" id="o7" name="知会发起人"/>
     <endEvent id="back" name="回退"/>
     <sequenceFlow id="_14" sourceRef="start" targetRef="o1"/>

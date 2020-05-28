@@ -142,4 +142,9 @@ public class OaReleaseDocumentServiceImpl implements OaReleaseDocumentService {
         oaReleaseDocument.setId(id);
         return oaReleaseDocumentMapper.delete(oaReleaseDocument);
     }
+
+    @Override
+    public int batchDelete(String[] ids) {
+        return oaReleaseDocumentMapper.batchDelete(ids);
+    }
 }

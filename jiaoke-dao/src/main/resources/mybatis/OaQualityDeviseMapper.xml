@@ -12,7 +12,7 @@
             create_date as createDate
         FROM oa_quality_devise
         WHERE
-            remarks LIKE "%"#{remarks}"%"
+            `name` LIKE "%"#{name}"%"
     </select>
 
     <select id="selectAllData" resultType="com.jiaoke.oa.bean.OaQualityDevise">
@@ -27,4 +27,11 @@
         order by
         create_date desc
     </select>
+
+    <delete id="batchDelete" parameterType="java.lang.String">
+        delete from `oa_quality_devise` where id in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>

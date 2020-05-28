@@ -264,7 +264,8 @@
             success: function (data) {
                 if (data === 'success') {
                     //返回上一页
-                    window.location.href = '${path}/oaHomePage/toOaHomePage';
+                    <%--window.location.href = '${path}/oaHomePage/toOaHomePage';--%>
+                    window.history.back();
                     window.top.tips("提交成功！", 0, 1, 1000);
                 } else {
                     window.top.tips("提交失败！", 0, 2, 1000);

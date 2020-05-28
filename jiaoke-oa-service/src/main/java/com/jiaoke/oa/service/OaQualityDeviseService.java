@@ -23,10 +23,10 @@ public interface OaQualityDeviseService {
     /**
      * 筛选
      *
-     * @param remarks remarks
+     * @param name name
      * @return json
      */
-    List<OaQualityDevise> searchFilter(String remarks);
+    List<OaQualityDevise> searchFilter(String name);
 
     /**
      * 新增
@@ -59,4 +59,12 @@ public interface OaQualityDeviseService {
      * @return int
      */
     int deleteByPrimaryKey(Integer id);
+
+    /**
+     * 批量删除数据
+     *
+     * @param ids ids
+     * @return int
+     */
+    int batchDelete(String[] ids);
 }

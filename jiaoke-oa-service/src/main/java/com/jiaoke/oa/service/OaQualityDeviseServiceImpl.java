@@ -32,8 +32,8 @@ public class OaQualityDeviseServiceImpl implements OaQualityDeviseService {
     }
 
     @Override
-    public List<OaQualityDevise> searchFilter(String remarks) {
-        List<OaQualityDevise> oaQualityDeviseList = oaQualityDeviseMapper.searchFilter(remarks);
+    public List<OaQualityDevise> searchFilter(String name) {
+        List<OaQualityDevise> oaQualityDeviseList = oaQualityDeviseMapper.searchFilter(name);
         for (OaQualityDevise oaQualityDevise : oaQualityDeviseList) {
             oaQualityDevise.setVersionDateStr(DateUtil.dateConvertYYYYMMDD(oaQualityDevise.getVersionDate()));
         }
@@ -63,5 +63,10 @@ public class OaQualityDeviseServiceImpl implements OaQualityDeviseService {
     @Override
     public int deleteByPrimaryKey(Integer id) {
         return oaQualityDeviseMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public int batchDelete(String[] ids) {
+        return oaQualityDeviseMapper.batchDelete(ids);
     }
 }

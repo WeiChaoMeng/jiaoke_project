@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -36,7 +37,7 @@ public class OaManagementSystemController {
     @RequestMapping(value = "/toManagementSystem")
     public String toContractAgreement(int page, Model model) {
         model.addAttribute("currentPage", JsonHelper.toJSONString(page));
-        return "oa/archives/office/management_system/index";
+        return "oa/archives/office/management_system/indexs";
     }
 
     /**
@@ -47,7 +48,7 @@ public class OaManagementSystemController {
     @RequestMapping(value = "/index")
     @ResponseBody
     public String index(int page) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<OaManagementSystem> oaManagementSystemList = oaManagementSystemService.selectAll();
         PageInfo<OaManagementSystem> pageInfo = new PageInfo<>(oaManagementSystemList);
         return JsonHelper.toJSONString(pageInfo);
@@ -87,7 +88,7 @@ public class OaManagementSystemController {
     @RequestMapping(value = "/fileNameFilter")
     @ResponseBody
     public String documentNameFilter(String fileName, int page) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<OaManagementSystem> oaManagementSystemList = oaManagementSystemService.getSelectByName(fileName);
         PageInfo<OaManagementSystem> pageInfo = new PageInfo<>(oaManagementSystemList);
         return JsonHelper.toJSONString(pageInfo);
@@ -102,7 +103,7 @@ public class OaManagementSystemController {
     @RequestMapping(value = "/dateFilter")
     @ResponseBody
     public String visitDateFilter(String date, int page) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<OaManagementSystem> oaManagementSystemList = oaManagementSystemService.getSelectByDate(date);
         PageInfo<OaManagementSystem> pageInfo = new PageInfo<>(oaManagementSystemList);
         return JsonHelper.toJSONString(pageInfo);
@@ -166,5 +167,21 @@ public class OaManagementSystemController {
         model.addAttribute("prev", JsonHelper.toJSONString(prev));
         model.addAttribute("oaManagementSystem", oaManagementSystem);
         return "oa/archives/office/management_system/details";
+    }
+
+    /**
+     * 批量删除
+     *
+     * @param ids ids
+     * @return int
+     */
+    @RequestMapping(value = "/batchDelete")
+    @ResponseBody
+    public String batchDeleteNotice(@RequestParam(value = "ids[]") String[] ids) {
+        if (oaManagementSystemService.batchDelete(ids) >= 0) {
+            return "success";
+        } else {
+            return "error";
+        }
     }
 }

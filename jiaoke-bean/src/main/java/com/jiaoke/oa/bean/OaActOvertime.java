@@ -74,6 +74,7 @@ public class OaActOvertime {
      * 部门负责人
      */
     private String departmentPrincipal;
+    private String humanAffairs;
 
     /**
      * 状态
@@ -246,5 +247,13 @@ public class OaActOvertime {
 
     public void setState(Integer state) {
         this.state = state;
+    }
+
+    public String getHumanAffairs() {
+        return humanAffairs;
+    }
+
+    public void setHumanAffairs(String humanAffairs) {
+        this.humanAffairs = humanAffairs;
     }
 }

@@ -18,7 +18,7 @@
     <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
 </head>
 
-<body id="body" style="width: 60%">
+<body id="body" style="width: 70%">
 
 <div class="table-title">
     <span>${oaActRewardsPenalties.title}</span>
@@ -477,10 +477,12 @@
             success: function (data) {
                 if (data === 'success') {
                     //返回上一页
-                    window.location.href = '${path}/oaHomePage/toOaHomePage';
-                    layer.msg('提交成功！');
+                    <%--window.location.href = '${path}/oaHomePage/toOaHomePage';--%>
+                    window.history.back();
+                    window.top.tips("提交成功！", 0, 1, 1000);
                 } else if (data === 'backSuccess') {
-                    window.location.href = '${path}/oaHomePage/toOaHomePage';
+                    <%--window.location.href = '${path}/oaHomePage/toOaHomePage';--%>
+                    window.history.back();
                     window.top.tips("提交成功,并将数据转存到待发事项中！", 6, 1, 2000);
                 } else {
                     layer.msg('提交失败！');
@@ -499,7 +501,7 @@
         //执行打印
         window.print();
         $('#tool,#return').show();
-        $('#body').css('width', '60%');
+        $('#body').css('width', '70%');
     }
 </script>
 </html>

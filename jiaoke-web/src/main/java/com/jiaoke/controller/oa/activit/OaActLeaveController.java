@@ -219,9 +219,10 @@ public class OaActLeaveController {
                         for (Task tasks : taskList) {
                             Map<String, Object> map = new HashMap<>(16);
                             map.put("whether", 1);
-                            map.put("humanAffairs", userInfo.getId());
+                            map.put("human_affairs", userInfo.getId());
                             activitiUtil.approvalComplete(tasks.getId(), map);
                         }
+                        oaActLeave.setHumanAffairs(userInfo.getNickname());
                         oaCollaborationService.updateStatusCode(oaActLeave.getId(), "被回退");
                         oaActLeave.setState(1);
                         return updateByPrimaryKeySelective(oaActLeave);
@@ -230,7 +231,8 @@ public class OaActLeaveController {
                         UserInfo userInfo = userInfoService.getUserInfoByPermission("notifyHumanAffairs");
                         Map<String, Object> map = new HashMap<>(16);
                         map.put("whether", 1);
-                        map.put("humanAffairs", userInfo.getId());
+                        map.put("human_affairs", userInfo.getId());
+                        oaActLeave.setHumanAffairs(userInfo.getNickname());
                         activitiUtil.approvalComplete(taskId, map);
                         oaCollaborationService.updateStatusCode(oaActLeave.getId(), "被回退");
                         oaActLeave.setState(1);
@@ -256,7 +258,8 @@ public class OaActLeaveController {
                     UserInfo userInfo = userInfoService.getUserInfoByPermission("notifyHumanAffairs");
                     Map<String, Object> map = new HashMap<>(16);
                     map.put("whether", 1);
-                    map.put("humanAffairs", userInfo.getId());
+                    map.put("human_affairs", userInfo.getId());
+                    oaActLeave.setHumanAffairs(userInfo.getNickname());
                     activitiUtil.approvalComplete(taskId, map);
                     oaCollaborationService.updateStatusCode(oaActLeave.getId(), "被回退");
                     oaActLeave.setState(1);

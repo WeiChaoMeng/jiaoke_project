@@ -228,7 +228,7 @@ public class OaActOfficeSuppliesController {
                         for (Task tasks : taskList) {
                             Map<String, Object> map = new HashMap<>(16);
                             map.put("whether", 1);
-                            map.put("office_supplies_review", userInfo.getId());
+                            map.put("review", userInfo.getId());
                             activitiUtil.approvalComplete(tasks.getId(), map);
                         }
                         oaCollaborationService.updateStatusCode(oaActOfficeSupplies.getId(), "被回退");
@@ -239,7 +239,7 @@ public class OaActOfficeSuppliesController {
                         UserInfo userInfo = userInfoService.getUserInfoByPermission("office_supplies_review");
                         Map<String, Object> map = new HashMap<>(16);
                         map.put("whether", 1);
-                        map.put("office_supplies_review", userInfo.getId());
+                        map.put("review", userInfo.getId());
                         activitiUtil.approvalComplete(taskId, map);
                         oaCollaborationService.updateStatusCode(oaActOfficeSupplies.getId(), "被回退");
                         oaActOfficeSupplies.setState(1);
@@ -264,7 +264,7 @@ public class OaActOfficeSuppliesController {
                     UserInfo userInfo = userInfoService.getUserInfoByPermission("office_supplies_review");
                     Map<String, Object> map = new HashMap<>(16);
                     map.put("whether", 1);
-                    map.put("humanAffairs", userInfo.getId());
+                    map.put("review", userInfo.getId());
                     activitiUtil.approvalComplete(taskId, map);
                     oaCollaborationService.updateStatusCode(oaActOfficeSupplies.getId(), "被回退");
                     oaActOfficeSupplies.setState(1);
@@ -420,10 +420,14 @@ public class OaActOfficeSuppliesController {
     public String sealsBorrowDetails(String id, String taskId, Model model) {
         OaActOfficeSupplies oaActOfficeSupplies = oaActOfficeSuppliesService.selectByPrimaryKey(id);
         model.addAttribute("oaActOfficeSupplies", oaActOfficeSupplies);
-        if (oaActOfficeSupplies.getDepartmentPrincipal().contains(",")){
-            return "oa/act/act_office_supplies_details2";
-        }else{
+        if (oaActOfficeSupplies.getDepartmentPrincipal() == null || "".equals(oaActOfficeSupplies.getDepartmentPrincipal())){
             return "oa/act/act_office_supplies_details";
+        }else{
+            if (oaActOfficeSupplies.getDepartmentPrincipal().contains(",")){
+                return "oa/act/act_office_supplies_details2";
+            }else{
+                return "oa/act/act_office_supplies_details";
+            }
         }
     }
 

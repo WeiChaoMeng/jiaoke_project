@@ -181,59 +181,6 @@ public class OaActAcceptanceWarehousingController {
                 return "success";
             }
         }
-
-        //同意
-//        if (flag == 1) {
-//
-//            //下个节点
-//            String nextNode = activitiUtil.getNextNode(task.getProcessDefinitionId(), task.getTaskDefinitionKey());
-//
-//            //下个节点是否为end直接结束
-//            if (end.equals(nextNode)) {
-//                activitiUtil.endProcess(taskId);
-//                return "success";
-//            } else {
-//                //附言
-//                String processingOpinion = "";
-//
-//                UserTask userTask = activitiUtil.getUserTask(task.getProcessDefinitionId(), nextNode);
-//                if (nextNode.equals(userTask.getId())) {
-//                    String enforcer = userTask.getAssignee().substring(userTask.getAssignee().indexOf("{") + 1, userTask.getAssignee().indexOf("}"));
-//
-//                    if (promoter.equals(enforcer)) {
-//                        Map<String, Object> map = new HashMap<>(16);
-//                        map.put(promoter, activitiUtil.getStartUserId(task.getProcessInstanceId()));
-//                        activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
-//                        //入库
-//                        if (oaActAcceptanceWarehousingService.enteringWarehouse(oaActAcceptanceWarehousing) < 1) {
-//                            return "error";
-//                        }
-//                        return "success";
-//
-//                    } else {
-//                        UserInfo userInfo = userInfoService.getUserInfoByPermission(enforcer);
-//                        activitiUtil.completeAndAppoint(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), enforcer, userInfo.getId());
-//                        //更新数据
-//                        if (oaActAcceptanceWarehousingService.updateByPrimaryKeySelective(oaActAcceptanceWarehousing) < 1) {
-//                            return "error";
-//                        }
-//                        return "success";
-//                    }
-//                } else {
-//                    return "error";
-//                }
-//            }
-//        } else {
-//            //更新数据
-//            if (oaActAcceptanceWarehousingService.updateByPrimaryKeySelective(oaActAcceptanceWarehousing) < 1) {
-//                return "error";
-//            }
-//            //驳回
-//            managementService.executeCommand(new TargetFlowNodeCommand(task.getId(), back));
-//            //修改表单状态
-//            oaCollaborationService.updateState(oaActAcceptanceWarehousing.getId(), 3);
-//            return "success";
-//        }
     }
 
     /**

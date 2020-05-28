@@ -223,6 +223,11 @@
         zIndex: 100000,
     });
 
+    var itselfFrameId;
+    $(function () {
+        itselfFrameId = window.frameElement && window.frameElement.id || '';
+    });
+
     //发送
     function send() {
         if ($.trim($("#title").val()) === '') {
@@ -262,7 +267,8 @@
                                 },
                                 success: function (result) {
                                     if (result === "success") {
-                                        window.location.href = "${path}/oaIndex.do";
+                                        <%--window.location.href = "${path}/oaIndex.do";--%>
+                                        window.history.back();
                                         window.top.tips("发送成功！", 0, 1, 2000);
                                     } else {
                                         window.top.tips('发送失败！', 0, 2, 2000);
@@ -270,7 +276,7 @@
                                 }
                             })
                         } else {
-                            window.top.selectPrincipal(data);
+                            window.top.selectPrincipal(data,itselfFrameId);
                         }
                     }
                 });
@@ -299,7 +305,8 @@
             },
             success: function (result) {
                 if (result === "success") {
-                    window.location.href = "${path}/oaIndex.do";
+                    <%--window.location.href = "${path}/oaIndex.do";--%>
+                    window.history.back();
                     window.top.tips("发送成功！", 0, 1, 2000);
                 } else {
                     window.top.tips('发送失败！', 0, 2, 2000);
@@ -330,7 +337,8 @@
                 },
                 success: function (result) {
                     if (result === "success") {
-                        window.location.href = "${path}/oaIndex.do";
+                        <%--window.location.href = "${path}/oaIndex.do";--%>
+                        window.history.back();
                         window.top.tips("保存成功！", 0, 1, 1000);
                     } else {
                         window.top.tips("保存失败！", 0, 2, 1000);
@@ -342,7 +350,7 @@
 
     //插入附件
     function insertFile() {
-        window.top.uploadFile();
+        window.top.uploadFile(itselfFrameId);
     }
 
     //上传附件成功后插入form
@@ -365,7 +373,7 @@
 
     //删除已上传附件
     function whether(fileName) {
-        window.top.deleteUploaded(fileName);
+        window.top.deleteUploaded(fileName,itselfFrameId);
     }
 
 
@@ -418,7 +426,7 @@
         var userInfoList = JSON.parse('${userInfoList}');
         //部门
         var departmentList = JSON.parse('${departmentList}');
-        window.top.selectRecipient(userInfoList, departmentList);
+        window.top.selectRecipient(userInfoList, departmentList,itselfFrameId);
     }
 
     //确认接收人

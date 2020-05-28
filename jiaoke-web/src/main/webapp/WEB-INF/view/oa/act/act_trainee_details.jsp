@@ -22,7 +22,7 @@
     </style>
 </head>
 
-<body id="body" style="width: 70%">
+<body id="body">
 
 <div class="table-title">
     <span>${oaActTrainee.title}</span>

@@ -64,4 +64,9 @@ public class OaMaterialOtherServiceImpl implements OaMaterialOtherService {
     public int deleteByPrimaryKey(Integer id) {
         return oaMaterialOtherMapper.deleteByPrimaryKey(id);
     }
+
+    @Override
+    public int batchDelete(String[] ids) {
+        return oaMaterialOtherMapper.batchDelete(ids);
+    }
 }

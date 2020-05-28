@@ -64,4 +64,9 @@ public class OaFinanceVoucherServiceImpl implements OaFinanceVoucherService {
     public int deleteByPrimaryKey(Integer id) {
         return oaFinanceVoucherMapper.deleteByPrimaryKey(id);
     }
+
+    @Override
+    public int batchDelete(String[] ids) {
+        return oaFinanceVoucherMapper.batchDelete(ids);
+    }
 }

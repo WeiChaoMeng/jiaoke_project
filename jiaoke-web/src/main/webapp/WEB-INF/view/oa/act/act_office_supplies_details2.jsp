@@ -41,7 +41,7 @@
     </style>
 </head>
 
-<body id="body" style="width: 70%">
+<body id="body">
 
 <div class="table-title">
     <span>${oaActOfficeSupplies.title}</span>
@@ -218,7 +218,7 @@
         //执行打印
         window.print();
         $('#tool').show();
-        $('#body,#return').css('width', '70%');
+        $('#body,#return').css('width', '80%');
     }
 </script>
 </html>

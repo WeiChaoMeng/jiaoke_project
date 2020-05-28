@@ -8,6 +8,7 @@ import com.jiaoke.oa.service.OaFinanceMaterialService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -35,7 +36,7 @@ public class OaFinanceMaterialController {
     @RequestMapping(value = "/toIndex")
     public String toOperateContract(int page, Model model) {
         model.addAttribute("currentPage", JsonHelper.toJSONString(page));
-        return "oa/archives/finance/material/index";
+        return "oa/archives/finance/material/indexs";
     }
 
     /**
@@ -46,7 +47,7 @@ public class OaFinanceMaterialController {
     @RequestMapping(value = "/loadingData")
     @ResponseBody
     public String operateContract(int page) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<OaFinanceMaterial> oaFinanceMaterialList = oaFinanceMaterialService.selectAll();
         PageInfo<OaFinanceMaterial> pageInfo = new PageInfo<>(oaFinanceMaterialList);
         return JsonHelper.toJSONString(pageInfo);
@@ -62,7 +63,7 @@ public class OaFinanceMaterialController {
     @RequestMapping(value = "/searchFilter")
     @ResponseBody
     public String searchFilter(int page, String remarks) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<OaFinanceMaterial> oaFinanceMaterialList = oaFinanceMaterialService.searchFilter(remarks);
         PageInfo<OaFinanceMaterial> pageInfo = new PageInfo<>(oaFinanceMaterialList);
         return JsonHelper.toJSONString(pageInfo);
@@ -154,5 +155,21 @@ public class OaFinanceMaterialController {
             return "error";
         }
         return "success";
+    }
+
+    /**
+     * 批量删除
+     *
+     * @param ids ids
+     * @return int
+     */
+    @RequestMapping(value = "/batchDelete")
+    @ResponseBody
+    public String batchDeleteNotice(@RequestParam(value = "ids[]") String[] ids) {
+        if (oaFinanceMaterialService.batchDelete(ids) >= 0) {
+            return "success";
+        } else {
+            return "error";
+        }
     }
 }

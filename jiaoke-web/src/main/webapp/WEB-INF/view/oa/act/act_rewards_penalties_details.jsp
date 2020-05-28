@@ -16,7 +16,7 @@
     <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
 </head>
 
-<body id="body" style="width: 60%">
+<body id="body" style="width: 70%">
 
 <div class="table-title">
     <span>${oaActRewardsPenalties.title}</span>
@@ -191,7 +191,7 @@
         //执行打印
         window.print();
         $('#tool').show();
-        $('#body,#return').css('width', '60%');
+        $('#body,#return').css('width', '70%');
     }
 </script>
 </html>

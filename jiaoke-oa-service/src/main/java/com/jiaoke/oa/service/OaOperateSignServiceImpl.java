@@ -66,4 +66,9 @@ public class OaOperateSignServiceImpl implements OaOperateSignService {
     public int deleteByPrimaryKey(Integer id) {
         return oaOperateSignMapper.deleteByPrimaryKey(id);
     }
+
+    @Override
+    public int batchDelete(String[] ids) {
+        return oaOperateSignMapper.batchDelete(ids);
+    }
 }

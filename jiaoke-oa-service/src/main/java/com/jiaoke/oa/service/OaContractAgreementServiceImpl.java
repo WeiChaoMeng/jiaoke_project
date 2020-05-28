@@ -142,4 +142,9 @@ public class OaContractAgreementServiceImpl implements OaContractAgreementServic
         oaContractAgreement.setId(id);
         return oaContractAgreementMapper.delete(oaContractAgreement);
     }
+
+    @Override
+    public int batchDelete(String[] ids) {
+        return oaContractAgreementMapper.batchDelete(ids);
+    }
 }

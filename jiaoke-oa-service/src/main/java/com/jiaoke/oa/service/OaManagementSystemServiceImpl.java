@@ -117,4 +117,9 @@ public class OaManagementSystemServiceImpl implements OaManagementSystemService 
         oaManagementSystem.setId(id);
         return oaManagementSystemMapper.delete(oaManagementSystem);
     }
+
+    @Override
+    public int batchDelete(String[] ids) {
+        return oaManagementSystemMapper.batchDelete(ids);
+    }
 }

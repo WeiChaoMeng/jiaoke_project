@@ -16,7 +16,7 @@
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
 </head>
 
-<body id="body" style="width: 70%">
+<body id="body">
 
 <div class="table-title">
     <span>部室用人申请表</span>
@@ -242,7 +242,10 @@
 <script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
 
-    var itselfFrameId = window.frameElement && window.frameElement.id || '';
+    var itselfFrameId;
+    $(function () {
+        itselfFrameId = window.frameElement && window.frameElement.id || '';
+    });
 
     //发送
     function send() {
@@ -413,7 +416,7 @@
         //执行打印
         window.print();
         $('#tool,#titleArea').show();
-        $('#body').css('width', '70%');
+        $('#body').css('width', '80%');
 
         //附件列表
         let annexesLen = $('#annexes').children().length;

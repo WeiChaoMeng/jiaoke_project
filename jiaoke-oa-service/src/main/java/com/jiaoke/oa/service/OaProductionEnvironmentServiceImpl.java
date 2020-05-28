@@ -64,4 +64,9 @@ public class OaProductionEnvironmentServiceImpl implements OaProductionEnvironme
     public int deleteByPrimaryKey(Integer id) {
         return oaProductionEnvironmentMapper.deleteByPrimaryKey(id);
     }
+
+    @Override
+    public int batchDelete(String[] ids) {
+        return oaProductionEnvironmentMapper.batchDelete(ids);
+    }
 }

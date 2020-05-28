@@ -19,10 +19,10 @@ public interface OaQualityDeviseMapper extends Mapper<OaQualityDevise> {
     /**
      * 筛选
      *
-     * @param remarks remarks
+     * @param name name
      * @return list
      */
-    List<OaQualityDevise> searchFilter(String remarks);
+    List<OaQualityDevise> searchFilter(String name);
 
     /**
      * 查询全部
@@ -30,4 +30,12 @@ public interface OaQualityDeviseMapper extends Mapper<OaQualityDevise> {
      * @return list
      */
     List<OaQualityDevise> selectAllData();
+
+    /**
+     * 批量删除数据
+     *
+     * @param ids ids
+     * @return int
+     */
+    int batchDelete(String[] ids);
 }

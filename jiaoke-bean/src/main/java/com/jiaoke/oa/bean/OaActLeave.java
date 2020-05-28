@@ -107,6 +107,7 @@ public class OaActLeave {
      * 部门负责人
      */
     private String departmentPrincipal;
+    private String humanAffairs;
 
     /**
      * 状态
@@ -335,5 +336,13 @@ public class OaActLeave {
 
     public void setPrincipalContentT(String principalContentT) {
         this.principalContentT = principalContentT;
+    }
+
+    public String getHumanAffairs() {
+        return humanAffairs;
+    }
+
+    public void setHumanAffairs(String humanAffairs) {
+        this.humanAffairs = humanAffairs;
     }
 }

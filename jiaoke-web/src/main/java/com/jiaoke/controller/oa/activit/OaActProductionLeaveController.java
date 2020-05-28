@@ -173,8 +173,9 @@ public class OaActProductionLeaveController {
                     UserInfo userInfo = userInfoService.getUserInfoByPermission("notifyHumanAffairs");
                     Map<String, Object> map = new HashMap<>(16);
                     map.put("whether", 1);
-                    map.put("humanAffairs", userInfo.getId());
+                    map.put("human_affairs", userInfo.getId());
                     activitiUtil.approvalComplete(taskId, map);
+                    oaActProductionLeave.setHumanAffairs(userInfo.getNickname());
                     oaCollaborationService.updateStatusCode(oaActProductionLeave.getId(), "被回退");
                     oaActProductionLeave.setSupervisor(null);
                     oaActProductionLeave.setSupervisorDate(null);
@@ -195,8 +196,9 @@ public class OaActProductionLeaveController {
                     UserInfo userInfo = userInfoService.getUserInfoByPermission("notifyHumanAffairs");
                     Map<String, Object> map = new HashMap<>(16);
                     map.put("whether", 1);
-                    map.put("humanAffairs", userInfo.getId());
+                    map.put("human_affairs", userInfo.getId());
                     activitiUtil.approvalComplete(taskId, map);
+                    oaActProductionLeave.setHumanAffairs(userInfo.getNickname());
                     oaCollaborationService.updateStatusCode(oaActProductionLeave.getId(), "被回退");
                     oaActProductionLeave.setPersonnel(null);
                     oaActProductionLeave.setPersonnelDate(null);
@@ -221,7 +223,8 @@ public class OaActProductionLeaveController {
                     UserInfo userInfo = userInfoService.getUserInfoByPermission("notifyHumanAffairs");
                     Map<String, Object> map = new HashMap<>(16);
                     map.put("whether", 1);
-                    map.put("humanAffairs", userInfo.getId());
+                    map.put("human_affairs", userInfo.getId());
+                    oaActProductionLeave.setHumanAffairs(userInfo.getNickname());
                     activitiUtil.approvalComplete(taskId, map);
                     oaCollaborationService.updateStatusCode(oaActProductionLeave.getId(), "被回退");
                     oaActProductionLeave.setCompanyPrincipal(null);

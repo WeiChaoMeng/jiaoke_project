@@ -30,4 +30,12 @@ public interface OaProductionEnvironmentMapper extends Mapper<OaProductionEnviro
      * @return list
      */
     List<OaProductionEnvironment> selectAllData();
+
+    /**
+     * 批量删除数据
+     *
+     * @param ids ids
+     * @return int
+     */
+    int batchDelete(String[] ids);
 }

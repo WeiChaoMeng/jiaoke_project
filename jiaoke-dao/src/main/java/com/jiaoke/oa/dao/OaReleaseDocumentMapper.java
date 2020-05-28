@@ -38,4 +38,12 @@ public interface OaReleaseDocumentMapper extends Mapper<OaReleaseDocument> {
      * @return list
      */
     List<OaReleaseDocument> selectAllData();
+
+    /**
+     * 批量删除数据
+     *
+     * @param ids ids
+     * @return int
+     */
+    int batchDelete(String[] ids);
 }

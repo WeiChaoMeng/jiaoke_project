@@ -8,6 +8,7 @@ import com.jiaoke.oa.service.OaProductionEngineeringService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -35,7 +36,7 @@ public class OaProductionEngineeringController {
     @RequestMapping(value = "/toIndex")
     public String toOperateContract(int page, Model model) {
         model.addAttribute("currentPage", JsonHelper.toJSONString(page));
-        return "oa/archives/production/engineering/index";
+        return "oa/archives/production/engineering/indexs";
     }
 
     /**
@@ -46,7 +47,7 @@ public class OaProductionEngineeringController {
     @RequestMapping(value = "/loadingData")
     @ResponseBody
     public String operateContract(int page) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<OaProductionEngineering> oaProductionEngineeringList = oaProductionEngineeringService.selectAll();
         PageInfo<OaProductionEngineering> pageInfo = new PageInfo<>(oaProductionEngineeringList);
         return JsonHelper.toJSONString(pageInfo);
@@ -62,7 +63,7 @@ public class OaProductionEngineeringController {
     @RequestMapping(value = "/searchFilter")
     @ResponseBody
     public String searchFilter(int page, String projectName) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<OaProductionEngineering> oaProductionEngineeringList = oaProductionEngineeringService.searchFilter(projectName);
         PageInfo<OaProductionEngineering> pageInfo = new PageInfo<>(oaProductionEngineeringList);
         return JsonHelper.toJSONString(pageInfo);
@@ -154,5 +155,21 @@ public class OaProductionEngineeringController {
             return "error";
         }
         return "success";
+    }
+
+    /**
+     * 批量删除
+     *
+     * @param ids ids
+     * @return int
+     */
+    @RequestMapping(value = "/batchDelete")
+    @ResponseBody
+    public String batchDeleteNotice(@RequestParam(value = "ids[]") String[] ids) {
+        if (oaProductionEngineeringService.batchDelete(ids) >= 0) {
+            return "success";
+        } else {
+            return "error";
+        }
     }
 }

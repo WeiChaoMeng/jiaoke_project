@@ -17,7 +17,7 @@
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
 </head>
 
-<body id="body" style="width: 70%">
+<body id="body">
 
 <div class="table-title">
     <span>${oaActCard.title}</span>
@@ -295,10 +295,12 @@
             success: function (data) {
                 if (data === 'success') {
                     //返回上一页
-                    window.location.href = '${path}/basePage.do';
-                    layer.msg('提交成功！');
+                    <%--window.location.href = '${path}/oaHomePage/toOaHomePage';--%>
+                    window.history.back();
+                    window.top.tips("提交成功！", 0, 1, 1000);
                 } else if (data === 'backSuccess') {
-                    window.location.href = '${path}/oaHomePage/toOaHomePage';
+                    <%--window.location.href = '${path}/oaHomePage/toOaHomePage';--%>
+                    window.history.back();
                     window.top.tips("提交成功,并将数据转存到待发事项中！", 6, 1, 2000);
                 } else {
                     layer.msg('提交失败！');
@@ -321,7 +323,7 @@
         //执行打印
         window.print();
         $('#tool,#return').show();
-        $('#body').css('width', '70%');
+        $('#body').css('width', '80%');
     }
 </script>
 </html>

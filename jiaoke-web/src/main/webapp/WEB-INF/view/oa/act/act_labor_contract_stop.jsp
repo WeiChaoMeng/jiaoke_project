@@ -204,6 +204,11 @@
         zIndex: 100000,
     });
 
+    var itselfFrameId;
+    $(function () {
+        itselfFrameId = window.frameElement && window.frameElement.id || '';
+    });
+
     //发送
     function send() {
         var array = [];
@@ -228,7 +233,8 @@
                 },
                 success: function (result) {
                     if (result === "success") {
-                        window.location.href = "${path}/oaIndex.do";
+                        <%--window.location.href = "${path}/oaIndex.do";--%>
+                        window.history.back();
                         window.top.tips("发送成功！", 0, 1, 2000);
                     } else {
                         window.top.tips('发送失败！', 0, 2, 2000);
@@ -260,7 +266,8 @@
                 },
                 success: function (result) {
                     if (result === "success") {
-                        window.location.href = "${path}/oaIndex.do";
+                        <%--window.location.href = "${path}/oaIndex.do";--%>
+                        window.history.back();
                         window.top.tips("保存成功！");
                     } else {
                         window.top.tips("保存失败！");
@@ -272,7 +279,7 @@
 
     //插入附件
     function insertFile() {
-        window.top.uploadFile();
+        window.top.uploadFile(itselfFrameId);
     }
 
     //上传附件成功后插入form
@@ -294,7 +301,7 @@
 
     //删除已上传附件
     function whether(fileName) {
-        window.top.deleteUploaded(fileName);
+        window.top.deleteUploaded(fileName,itselfFrameId);
     }
 
     //执行删除附件
@@ -346,7 +353,7 @@
         var userInfoList = JSON.parse('${userInfoList}');
         //部门
         var departmentList = JSON.parse('${departmentList}');
-        window.top.selectRecipient(userInfoList, departmentList);
+        window.top.selectRecipient(userInfoList, departmentList,itselfFrameId);
     }
 
     //确认接收人

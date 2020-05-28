@@ -111,7 +111,7 @@
             ${oaProductionEnvironment.richText}
         </div>
 
-        <div class="form-but">
+        <div class="form-but" style="margin-bottom: 20px">
             <button type="button" class="confirm-btn-style" onclick="commit()">提交</button>
             <button type="button" class="cancel-btn-style left-spacing" onclick="previousPage()">返回</button>
         </div>

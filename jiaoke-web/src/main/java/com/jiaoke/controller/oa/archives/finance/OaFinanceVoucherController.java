@@ -10,6 +10,7 @@ import com.jiaoke.oa.service.OaOperateOfferService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -37,7 +38,7 @@ public class OaFinanceVoucherController {
     @RequestMapping(value = "/toIndex")
     public String toOperateContract(int page, Model model) {
         model.addAttribute("currentPage", JsonHelper.toJSONString(page));
-        return "oa/archives/finance/voucher/index";
+        return "oa/archives/finance/voucher/indexs";
     }
 
     /**
@@ -48,7 +49,7 @@ public class OaFinanceVoucherController {
     @RequestMapping(value = "/loadingData")
     @ResponseBody
     public String operateContract(int page) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<OaFinanceVoucher> oaFinanceVoucherList = oaFinanceVoucherService.selectAll();
         PageInfo<OaFinanceVoucher> pageInfo = new PageInfo<>(oaFinanceVoucherList);
         return JsonHelper.toJSONString(pageInfo);
@@ -64,7 +65,7 @@ public class OaFinanceVoucherController {
     @RequestMapping(value = "/searchFilter")
     @ResponseBody
     public String searchFilter(int page, String remarks) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<OaFinanceVoucher> oaFinanceVoucherList = oaFinanceVoucherService.searchFilter(remarks);
         PageInfo<OaFinanceVoucher> pageInfo = new PageInfo<>(oaFinanceVoucherList);
         return JsonHelper.toJSONString(pageInfo);
@@ -156,5 +157,21 @@ public class OaFinanceVoucherController {
             return "error";
         }
         return "success";
+    }
+
+    /**
+     * 批量删除
+     *
+     * @param ids ids
+     * @return int
+     */
+    @RequestMapping(value = "/batchDelete")
+    @ResponseBody
+    public String batchDeleteNotice(@RequestParam(value = "ids[]") String[] ids) {
+        if (oaFinanceVoucherService.batchDelete(ids) >= 0) {
+            return "success";
+        } else {
+            return "error";
+        }
     }
 }

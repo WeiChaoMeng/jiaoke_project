@@ -51,4 +51,9 @@ public class OaOperateLawsuitServiceImpl implements OaOperateLawsuitService {
     public int deleteByPrimaryKey(Integer id) {
         return oaOperateLawsuitMapper.deleteByPrimaryKey(id);
     }
+
+    @Override
+    public int batchDelete(String[] ids) {
+        return oaOperateLawsuitMapper.batchDelete(ids);
+    }
 }

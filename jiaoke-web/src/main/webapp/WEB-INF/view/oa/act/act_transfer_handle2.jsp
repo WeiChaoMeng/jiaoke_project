@@ -529,10 +529,12 @@
             success: function (data) {
                 if (data === 'success') {
                     //返回上一页
-                    window.location.href = '${path}/oaHomePage/toOaHomePage';
-                    layer.msg('提交成功！');
+                    <%--window.location.href = '${path}/oaHomePage/toOaHomePage';--%>
+                    window.history.back();
+                    window.top.tips("提交成功！", 0, 1, 1000);
                 } else if (data === 'backSuccess') {
-                    window.location.href = '${path}/oaHomePage/toOaHomePage';
+                    <%--window.location.href = '${path}/oaHomePage/toOaHomePage';--%>
+                    window.history.back();
                     window.top.tips("提交成功,并将数据转存到待发事项中！", 6, 1, 2000);
                 } else {
                     layer.msg('提交失败！');

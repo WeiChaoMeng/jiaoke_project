@@ -69,4 +69,9 @@ public class OaOperateDevelopServiceImpl implements OaOperateDevelopService {
     public int deleteByPrimaryKey(Integer id) {
         return oaOperateDevelopMapper.deleteByPrimaryKey(id);
     }
+
+    @Override
+    public int batchDelete(String[] ids) {
+        return oaOperateDevelopMapper.batchDelete(ids);
+    }
 }

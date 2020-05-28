@@ -31,4 +31,12 @@ public interface OaOperateCustomerMapper extends Mapper<OaOperateCustomer> {
      * @return list
      */
     List<OaOperateCustomer> selectAllData();
+
+    /**
+     * 批量删除数据
+     *
+     * @param ids ids
+     * @return int
+     */
+    int batchDelete(String[] ids);
 }

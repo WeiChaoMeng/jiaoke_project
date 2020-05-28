@@ -64,4 +64,9 @@ public class OaFinanceOtherServiceImpl implements OaFinanceOtherService {
     public int deleteByPrimaryKey(Integer id) {
         return oaFinanceOtherMapper.deleteByPrimaryKey(id);
     }
+
+    @Override
+    public int batchDelete(String[] ids) {
+        return oaFinanceOtherMapper.batchDelete(ids);
+    }
 }

@@ -16,7 +16,7 @@
     <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
 </head>
 
-<body id="body" style="width: 60%">
+<body id="body" style="width: 70%">
 
 <div class="table-title">
     <span>奖罚意见表</span>
@@ -216,6 +216,11 @@
         zIndex: 100000,
     });
 
+    var itselfFrameId;
+    $(function () {
+        itselfFrameId = window.frameElement && window.frameElement.id || '';
+    });
+
     //发送
     function send() {
         var array = [];
@@ -238,7 +243,8 @@
                 },
                 success: function (result) {
                     if (result === "success") {
-                        window.location.href = "${path}/oaIndex.do";
+                        <%--window.location.href = "${path}/oaIndex.do";--%>
+                        window.history.back();
                         window.top.tips("发送成功！", 0, 1, 2000);
                     } else {
                         window.top.tips('发送失败！', 0, 2, 2000);
@@ -262,7 +268,8 @@
                 },
                 success: function (result) {
                     if (result === "success") {
-                        window.location.href = "${path}/oaIndex.do";
+                        <%--window.location.href = "${path}/oaIndex.do";--%>
+                        window.history.back();
                         window.top.tips("保存成功！");
                     } else {
                         window.top.tips("保存失败！");
@@ -274,11 +281,12 @@
 
     //插入附件
     function insertFile() {
-        window.top.uploadFile();
+        window.top.uploadFile(itselfFrameId);
     }
 
     //上传附件成功后插入form
     function writeFile(ret) {
+        $('#annexList').css("display", "block");
         for (let i = 0; i < ret.length; i++) {
             var annex = '';
             var fileId = ret[i].filePaths.substring(0, ret[i].filePaths.indexOf("_"));
@@ -295,7 +303,7 @@
 
     //删除已上传附件
     function whether(fileName) {
-        window.top.deleteUploaded(fileName);
+        window.top.deleteUploaded(fileName,itselfFrameId);
     }
 
     //执行删除附件
@@ -310,9 +318,14 @@
             success: function (result) {
                 if (result === "success") {
                     $('#file' + fileName.substring(0, fileName.indexOf("_"))).remove();
-                    window.top.tips("删除成功！", 0, 1, 2000);
+                    window.top.tips("删除成功！", 0, 1, 1000);
+
+                    let annexesLen = $('#annexes').children().length;
+                    if (annexesLen === 0) {
+                        $('#annexList').css("display", "none");
+                    }
                 } else {
-                    window.top.tips("文件不存在！", 6, 5, 2000);
+                    window.top.tips("文件不存在！", 6, 5, 1000);
                 }
             }
         });
@@ -325,7 +338,7 @@
         //执行打印
         window.print();
         $('#tool,#titleArea').show();
-        $('#body').css('width', '60%');
+        $('#body').css('width', '70%');
 
         //附件列表
         let annexesLen = $('#annexes').children().length;

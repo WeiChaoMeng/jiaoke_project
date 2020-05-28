@@ -144,4 +144,9 @@ public class OaReceiveDocumentServiceImpl implements OaReceiveDocumentService {
         oaReceiveDocument.setId(id);
         return oaReceiveDocumentMapper.delete(oaReceiveDocument);
     }
+
+    @Override
+    public int batchDelete(String[] ids) {
+        return oaReceiveDocumentMapper.batchDelete(ids);
+    }
 }

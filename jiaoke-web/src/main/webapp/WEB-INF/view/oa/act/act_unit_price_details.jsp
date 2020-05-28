@@ -41,7 +41,7 @@
     </style>
 </head>
 
-<body id="body" style="width: 70%;">
+<body id="body">
 
 <div class="table-title">
     <span>${oaActUnitPrice.title}</span>
@@ -313,14 +313,14 @@
     <tr>
         <td class="tdLabel">经营部长审核</td>
         <td class="table-td-content" colspan="3">
-            ${oaActUnitPrice.businessPrincipal}
+            ${oaActUnitPrice.operatingPrincipal}
         </td>
     </tr>
 
     <tr>
         <td class="tdLabel">经营主管审核</td>
         <td class="table-td-content" colspan="3">
-            ${oaActUnitPrice.businessSupervisor}
+            ${oaActUnitPrice.operatingSupervisor}
         </td>
     </tr>
 
@@ -349,7 +349,7 @@
         //执行打印
         window.print();
         $('#tool').show();
-        $('#body').css('width', '70%');
+        $('#body').css('width', '80%');
     }
 </script>
 </html>
