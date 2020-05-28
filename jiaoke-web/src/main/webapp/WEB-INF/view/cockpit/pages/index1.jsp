@@ -69,7 +69,7 @@
                         <div style="display: block;width: 100%;margin-top: 13px;">
                             <div class="staff-name">1#机组</div>
                             <div class="avg-time-label" style="margin-top: 13px;" >|&nbsp;&nbsp;设备型号:</div>
-                            <div class="avg-time-value" style="margin-top: 13px;"  >NBD400</div>
+                            <div class="avg-time-value" style="margin-top: 16px;"  >NBD400</div>
                         </div>
                         <div style="display: block;width: 100%" >
                             <div class="staff-cust-time">
@@ -93,7 +93,7 @@
                         <div style="display: block;width: 100%;margin-top: 13px;">
                             <div class="staff-name">2#机组</div>
                             <div class="avg-time-label" style="margin-top: 13px;" >|&nbsp;&nbsp;设备型号:</div>
-                            <div class="avg-time-value" style="margin-top: 13px;"  >NBD400</div>
+                            <div class="avg-time-value" style="margin-top: 16px;"  >NBD400</div>
                         </div>
                         <div style="display: block;width: 100%" >
                             <div class="staff-cust-time">

@@ -106,14 +106,14 @@ function eachresList(res){
     for (var i = 0; i < res.length; i++){
 
         if (res[i].crewNum == 'crew1'){
-            crew1discNum.push(res[i].produce_disc_num);
+            crew1discNum.push(res[i].produce_time);
             crew1warehouse.push(res[i].temperature_warehouse_1);
             crew1mixture.push(res[i].temperature_mixture);
             crew1duster.push(res[i].temperature_duster);
             crew1asphalt.push(res[i].temperature_asphalt);
             crew1aggregate.push(res[i].temperature_aggregate);
         }else {
-            crew2discNum.push(res[i].produce_disc_num);
+            crew2discNum.push(res[i].produce_time);
             crew2warehouse.push(res[i].temperature_warehouse_1);
             crew2mixture.push(res[i].temperature_mixture);
             crew2duster.push(res[i].temperature_duster);
@@ -659,7 +659,7 @@ function showTwoCrewProChears(crew1List,crew2List) {
             text: ''
         },
         tooltip: {
-            pointFormat: '{series.name}: {point.y}个，占比{point.percentage:.1f}%'
+            pointFormat: ' {point.y}吨，占比{point.percentage:.1f}%'
         },
         legend: {//控制图例显示位置
             layout: 'vertical',

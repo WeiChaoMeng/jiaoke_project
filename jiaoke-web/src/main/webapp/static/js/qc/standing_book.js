@@ -63,7 +63,7 @@ function yyui_menu(ulclass){
 function getRawMaterialStandingBook() {
     $.ajax({
         type:"get",
-        url: basePath + "/getSevenDayRawMaterialStandingBook.do ",
+        url: basePath + "/getSevenDayRawMaterialStandingBook.do",
         dataType:'json',
         success:function (res) {
 
@@ -408,7 +408,7 @@ function getSpecificationAndManufacturers() {
                     var manufacturersList = res.manufacturersList;
                     $("#specification").empty().append('<option value="select">' + "请选择" + '</option>');
                     $("#manufacturers").empty().append('<option value="select">' + "请选择" + '</option>');
-                    debugger
+
                     if (specificationList.length){
                         for (var i = 0; i < specificationList.length;i++){
                             $("#specification").append('<option value="'+ specificationList[i].specification_num + '">' + specificationList[i].specification_name + '</option>');
@@ -468,16 +468,59 @@ function searchFrom(){
             success:function (res) {
                 var rawMaterialHtml = '';
                 $(".messageSpan").remove();
-                if (res.length === 0){
+                if (!(res.dalist)){
                     rawMaterialHtml = '<span class="messageSpan">'
                         + '所选日期并无试验'
                         + '</span>';
+                    $("#search_div").empty();
                     $("#searchTable").empty();
                     $("#searchDiv").append(rawMaterialHtml);
                 } else {
                     var tem = $("#materials").val();
-                    $("#searchTable").empty().append(searchTableHtml(tem));
-                    $("#searchTbody").empty().append(eachArrayToHtml(res,tem));
+                    //返回的数据集合
+                    var dataArry = res.dalist;
+                    if (tem === '4'){
+                        //根据材料生成台账表格 asphaltThead
+                        $("#search_div").empty().append(returnTableHtml(tem));
+                        //判断当前是否有表格，没有就添加
+                        if (!$("#asphaltTable").length > 0){
+                            $("#asphaltDiv").append(returnAsphaltHtml());
+                        }
+
+                        //确定沥青实验头
+                        var tatelName = res.tatleArry;
+                        $("#asphaltTatle").attr("colSpan",tatelName.length + 8);
+                        $("#asphaltReslu").attr("colSpan",tatelName.length);
+                        var temHtml = '<tr class="twoHead">';
+                        for (var i = 0; i < tatelName.length; i++){
+                            temHtml += '<th>' + tatelName[i].asphaltName  + '</th>';
+                        }
+                        temHtml += '</tr>';
+                        $("#asphaltThead").append(temHtml);
+
+                        //展示沥青实验内容
+                        var asphaltArry = res.dalist;
+                        var tBoday = "";
+
+                        for (var i = 0; i < asphaltArry.length;i++){
+                            tBoday += '<tr>'
+                                +'<td>' + asphaltArry[i].testDate +'</td>'
+                                +'<td>' + asphaltArry[i].samplingStandard + asphaltArry[i].materialName +'</td>'
+                                +'<td>' + asphaltArry[i].testNum +'</td>';
+
+                            for(var j = 0; j < tatelName.length;j ++){
+                                var key = tatelName[j].remake;
+                                tBoday += (blank(asphaltArry[i][key])  ? '<td></td>':'<td>' + asphaltArry[i][key] +'</td>');
+                            }
+                            tBoday += '<td>' + asphaltArry[i].remark+'</td>' +'</tr>';
+                        }
+                        // tBoday += returnSvgHtml(tem,asphaltArry);
+                        $('#asphaltTbody').empty().append(tBoday);
+                    } else {
+                        $("#search_div").empty().append('<table  class="standingBookTable" border="1" id="searchTable" ></table>');
+                        $("#searchTable").empty().append(searchTableHtml(tem));
+                        $("#searchTbody").empty().append(eachArrayToHtml(dataArry,tem));
+                    }
                 }
             }
         })
@@ -1578,7 +1621,6 @@ function eachArrayToHtml(res,id) {
     var bodyHtml = '';
     switch (id) {
         case "1":
-
             for(var i = 0; i < res.length;i++){
                 bodyHtml += '<tr>'
                     +'<td>' + res[i].testDate +'</td>'
@@ -1838,6 +1880,7 @@ function eachArrayToHtml(res,id) {
 
 
 function returnSvgHtml(id,res) {
+    var specification = [];
     var temHtml = "";
     var sievePore37Count = 0,
         sievePore31Count= 0,
@@ -1888,6 +1931,7 @@ function returnSvgHtml(id,res) {
         case "9":
         case "10":
             for(var i = 0; i < res.length;i++) {
+
                 if (!blank(res[i].sievePore37))  sievePore37Count++;sievePore37Sum +=Number($.trim(res[i].sievePore37));
                 if (!blank(res[i].sievePore31)) sievePore31Count++;sievePore31Sum += Number($.trim(res[i].sievePore31));
                 if (!blank(res[i].sievePore26)) sievePore26Count++;sievePore26Sum += Number($.trim(res[i].sievePore26));
@@ -2135,6 +2179,26 @@ function returnSvgHtml(id,res) {
             break;
     }
 
-    return temHtml;
+    for (var j = 0;j < res.length;j++){
+        specification.push(res[j].samplingStandard);
+    }
+    debugger
+    unique(specification);
+    if (specification.length > 1){
+        temHtml = " ";
+    }
 
+    return temHtml;
+}
+
+function unique(arr){
+    for(var i=0; i<arr.length; i++){
+        for(var j=i+1; j<arr.length; j++){
+            if(arr[i]==arr[j]){         //第一个等同于第二个，splice方法删除第二个
+                arr.splice(j,1);
+                j--;
+            }
+        }
+    }
+    return arr;
 }

@@ -75,5 +75,5 @@ public interface QualityWarningDao {
      * @auther Melone
      * @date 2020/5/21 10:46
      */
-    void updateQualityWarningData(@Param("id") int id,@Param("upWarning") int upWarning,@Param("criticalWarning")  int criticalWarning);
+    void updateQualityWarningData(@Param("id") int id,@Param("upWarning") int upWarning,@Param("criticalWarning")  int criticalWarning,@Param("proName") String proName);
 }

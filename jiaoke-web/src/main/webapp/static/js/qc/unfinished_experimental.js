@@ -100,6 +100,7 @@ function echaExperimentalItem(currentNum,amplingArray) {
             htmlStr += "<td>" + amplingArray[i]["experiment_num"] + "</td>";
             htmlStr += "<td>" + amplingArray[i]["order_ticket_num"]  + "</td>";
             htmlStr += "<td>" + amplingArray[i].materials_name  + "</td>";
+            htmlStr += "<td>" + amplingArray[i].sampling_standard  + "</td>";
             htmlStr += "<td>" + amplingArray[i].manufacturers_name  + "</td>";
             htmlStr += "<td>" + amplingArray[i].sampling_date  + "</td>";
             htmlStr += "<td>" + amplingArray[i].test_date  + "</td>";
