@@ -30,4 +30,12 @@ public interface OaOperateLawsuitMapper extends Mapper<OaOperateLawsuit> {
      * @return list
      */
     List<OaOperateLawsuit> selectAllData();
+
+    /**
+     * 批量删除数据
+     *
+     * @param ids ids
+     * @return int
+     */
+    int batchDelete(String[] ids);
 }

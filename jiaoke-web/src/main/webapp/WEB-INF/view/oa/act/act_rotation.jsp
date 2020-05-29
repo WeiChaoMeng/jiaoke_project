@@ -16,7 +16,7 @@
     <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
 </head>
 
-<body id="body" style="width: 70%">
+<body id="body">
 
 <div class="table-title">
     <span>员工轮岗审批表</span>
@@ -273,6 +273,11 @@
         zIndex: 100000,
     });
 
+    var itselfFrameId;
+    $(function () {
+        itselfFrameId = window.frameElement && window.frameElement.id || '';
+    });
+
     $(document).ready(function () {
         $('#adjustReasons').find('input[type=checkbox]').bind('click', function () {
             $('#adjustReasons').find('input[type=checkbox]').not(this).prop("checked", false);
@@ -282,7 +287,7 @@
     //部门选择
     function selectDepartment(flag) {
         var departmentList = JSON.parse('${departmentList}');
-        window.top.selectionDepartment(departmentList, flag);
+        window.top.selectionDepartment(departmentList, flag, itselfFrameId);
     }
 
     function selectDepartmentComplete(id, name, flag) {
@@ -302,7 +307,7 @@
                 //部门负责人是多个
                 if (principalGroup !== '') {
                     var principalList = JSON.parse(principalGroup);
-                    window.top.selectPrincipal(principalList);
+                    window.top.selectPrincipal(principalList,itselfFrameId);
 
                     //部门负责人是单个
                 } else {
@@ -325,7 +330,8 @@
                         },
                         success: function (result) {
                             if (result === "success") {
-                                window.location.href = "${path}/oaIndex.do";
+                                <%--window.location.href = "${path}/oaIndex.do";--%>
+                                window.history.back();
                                 window.top.tips("发送成功！", 0, 1, 2000);
                             } else {
                                 window.top.tips('发送失败！', 0, 2, 2000);
@@ -358,7 +364,8 @@
             },
             success: function (result) {
                 if (result === "success") {
-                    window.location.href = "${path}/oaIndex.do";
+                    <%--window.location.href = "${path}/oaIndex.do";--%>
+                    window.history.back();
                     window.top.tips("发送成功！", 0, 1, 2000);
                 } else {
                     window.top.tips('发送失败！', 0, 2, 2000);
@@ -366,38 +373,6 @@
             }
         })
     }
-
-    //发送
-    <%--function send() {--%>
-    <%--var array = [];--%>
-    <%--$('#annexes').find('input').each(function () {--%>
-    <%--array.push($(this).val());--%>
-    <%--});--%>
-
-    <%--if ($.trim($("#title").val()) === '') {--%>
-    <%--window.top.tips("标题不可以为空！", 6, 5, 2000);--%>
-    <%--} else {--%>
-    <%--//发送前将上传好的附件插入form中--%>
-    <%--$('#annex').val(array);--%>
-
-    <%--$.ajax({--%>
-    <%--type: "POST",--%>
-    <%--url: '${path}/rotation/add',--%>
-    <%--data: $('#oaActRotation').serialize(),--%>
-    <%--error: function (request) {--%>
-    <%--layer.msg("出错！");--%>
-    <%--},--%>
-    <%--success: function (result) {--%>
-    <%--if (result === "success") {--%>
-    <%--window.location.href = "${path}/oaIndex.do";--%>
-    <%--window.top.tips("发送成功！", 0, 1, 2000);--%>
-    <%--} else {--%>
-    <%--window.top.tips('发送失败！', 0, 2, 2000);--%>
-    <%--}--%>
-    <%--}--%>
-    <%--})--%>
-    <%--}--%>
-    <%--}--%>
 
     //保存待发
     function savePending() {
@@ -421,7 +396,8 @@
                 },
                 success: function (result) {
                     if (result === "success") {
-                        window.location.href = "${path}/oaIndex.do";
+                        <%--window.location.href = "${path}/oaIndex.do";--%>
+                        window.history.back();
                         window.top.tips("保存成功！");
                     } else {
                         window.top.tips("保存失败！");
@@ -433,7 +409,7 @@
 
     //插入附件
     function insertFile() {
-        window.top.uploadFile();
+        window.top.uploadFile(itselfFrameId);
     }
 
     //上传附件成功后插入form
@@ -455,7 +431,7 @@
 
     //删除已上传附件
     function whether(fileName) {
-        window.top.deleteUploaded(fileName);
+        window.top.deleteUploaded(fileName,itselfFrameId);
     }
 
     //执行删除附件
@@ -490,7 +466,7 @@
         //执行打印
         window.print();
         $('#tool,#titleArea').show();
-        $('#body').css('width', '70%');
+        $('#body').css('width', '80%');
 
         //附件列表
         let annexesLen = $('#annexes').children().length;

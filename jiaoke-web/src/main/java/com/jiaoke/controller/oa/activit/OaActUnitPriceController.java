@@ -90,7 +90,7 @@ public class OaActUnitPriceController {
             UserInfo userInfo = userInfoService.getUserInfoByPermission("operating_principal");
             //开启流程
             Map<String, Object> map = new HashMap<>(16);
-            map.put("business_principal", userInfo.getId());
+            map.put("operating_principal", userInfo.getId());
             String instance = activitiUtil.startProcessInstanceByKey("oa_unit_price", "oa_act_unit_price:" + randomId, map, getCurrentUser().getId().toString());
             if (instance != null) {
                 return "success";
@@ -158,7 +158,7 @@ public class OaActUnitPriceController {
                     UserInfo userInfo = userInfoService.getUserInfoByPermission("operating_supervisor");
                     Map<String, Object> map = new HashMap<>(16);
                     map.put("whether", 0);
-                    map.put("business_supervisor", userInfo.getId());
+                    map.put("operating_supervisor", userInfo.getId());
                     activitiUtil.approvalComplete(taskId, map);
                     return updateByPrimaryKeySelective(oaActUnitPrice);
                 } else {
@@ -167,8 +167,8 @@ public class OaActUnitPriceController {
                     map.put("promoter", oaActUnitPrice.getPromoter());
                     activitiUtil.approvalComplete(taskId, map);
                     oaCollaborationService.updateStatusCode(oaActUnitPrice.getId(), "被回退");
-                    oaActUnitPrice.setBusinessPrincipal(null);
-                    oaActUnitPrice.setBusinessPrincipalDate(null);
+                    oaActUnitPrice.setOperatingPrincipal(null);
+                    oaActUnitPrice.setOperatingPrincipalDate(null);
                     oaActUnitPrice.setState(1);
                     return updateByPrimaryKeySelective(oaActUnitPrice);
                 }
@@ -189,8 +189,8 @@ public class OaActUnitPriceController {
                     map.put("promoter", oaActUnitPrice.getPromoter());
                     activitiUtil.approvalComplete(taskId, map);
                     oaCollaborationService.updateStatusCode(oaActUnitPrice.getId(), "被回退");
-                    oaActUnitPrice.setBusinessSupervisor(null);
-                    oaActUnitPrice.setBusinessSupervisorDate(null);
+                    oaActUnitPrice.setOperatingSupervisor(null);
+                    oaActUnitPrice.setOperatingSupervisorDate(null);
                     oaActUnitPrice.setState(1);
                     return updateByPrimaryKeySelective(oaActUnitPrice);
                 }
@@ -328,7 +328,7 @@ public class OaActUnitPriceController {
             //获取拥有权限的用户
             UserInfo userInfo = userInfoService.getUserInfoByPermission("operating_principal");
             Map<String, Object> map = new HashMap<>(16);
-            map.put("business_principal", userInfo.getId());
+            map.put("operating_principal", userInfo.getId());
             String instance = activitiUtil.startProcessInstanceByKey("oa_unit_price", "oa_act_unit_price:" + oaActUnitPrice.getId(), map, getCurrentUser().getId().toString());
             if (instance != null) {
                 //发送成功后更新状态

@@ -69,4 +69,9 @@ public class OaProductionEquipmentServiceImpl implements OaProductionEquipmentSe
     public int deleteByPrimaryKey(Integer id) {
         return oaProductionEquipmentMapper.deleteByPrimaryKey(id);
     }
+
+    @Override
+    public int batchDelete(String[] ids) {
+        return oaProductionEquipmentMapper.batchDelete(ids);
+    }
 }

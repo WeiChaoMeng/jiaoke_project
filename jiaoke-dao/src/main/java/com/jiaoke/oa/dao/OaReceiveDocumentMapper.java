@@ -38,4 +38,13 @@ public interface OaReceiveDocumentMapper extends Mapper<OaReceiveDocument> {
      * @return list
      */
     List<OaReceiveDocument> selectAllData();
+
+
+    /**
+     * 批量删除数据
+     *
+     * @param ids ids
+     * @return int
+     */
+    int batchDelete(String[] ids);
 }

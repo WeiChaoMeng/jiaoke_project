@@ -1567,12 +1567,9 @@ function deleteAssetsArchivs(assetsArchivsId, currentPage, itselfFrameId) {
         title: '删除原因',
         area: ['300px', '150px'] //自定义文本域宽高
     }, function (value, index, elem) {
-        // alert(value); //得到value
         layer.confirm('该操作不能恢复,是否进行删除操作？', {
             btn: ['确认', '取消']
         }, function () {
-            console.log(value);
-            console.log(assetsArchivsId);
             $.ajax({
                 type: "post",
                 url: "/assetsManagement/delete",
@@ -1838,4 +1835,610 @@ function deleteUploaded(fileName, itselfFrameId) {
         $("#"+itselfFrameId)[0].contentWindow.delFile(fileName);
         }
     );
+}
+
+/**---------------档案管理----------------*/
+//删除档案数据
+function deleteArchivesData(tab, id, itselfFrameId) {
+    //提示窗
+    layer.confirm('确定要删除吗？', {
+            btn: ['确认', '取消']
+        }, function () {
+            $.ajax({
+                type: "post",
+                url: tab + '/delete',
+                data: {'id': id},
+                async: false,
+                success: function (data) {
+                    if (data === 'success') {
+                        layer.msg('删除成功！');
+                        $("#"+itselfFrameId)[0].contentWindow.reloadArchivesData(1);
+                    } else {
+                        layer.msg('删除失败！');
+                    }
+                },
+                error: function (result) {
+                    layer.msg("出错！");
+                }
+            });
+        }
+    );
+}
+
+/**-----------------------关联表单----------------------*/
+//关联表单-选择
+function selectRelevanceForms(list,itselfFrameId) {
+    $('#modalWindow').html('<div id="relevanceForms" style="display: none;">\n' +
+        '    <div style="padding: 10px 15px">\n' +
+        '        <div style="height: 79%;overflow: auto;margin-bottom: 20px;">\n' +
+        '            <table class="relevance-table">\n' +
+        '                <thead>\n' +
+        '                <tr>\n' +
+        '                    <th colspan="2" style="width: 50%">表单名称</th>\n' +
+        '                    <th style="width: 15%">部门</th>\n' +
+        '                    <th style="width: 15%">填表日期</th>\n' +
+        '                    <th style="width: 10%">总金额(元)</th>\n' +
+        '                    <th style="width: 10%">填表人</th>\n' +
+        '                </tr>\n' +
+        '                </thead>\n' +
+        '                <tbody id="relevanceFormsTbo">\n' +
+        '                </tbody>\n' +
+        '            </table>\n' +
+        '        </div>\n' +
+        '        <div class="confirm-modify-psw-style">\n' +
+        '            <button onclick="confirmRelevanceForms()" class="layui-btn">确认</button>\n' +
+        '        </div>\n' +
+        '    </div>\n' +
+        '</div>');
+
+    window.lar = layer.open({
+        title: '选择关联的表单',
+        type: 1,
+        area: ['60%', '60%'],
+        shadeClose: false, //点击遮罩关闭
+        content: $("#relevanceForms"),
+        offset: "auto",
+        end:function () {
+            $('#modalWindow').html("");
+        }
+    });
+
+    $('#subFrameId').val(itselfFrameId);
+
+    var relevanceFormsContent = '';
+    for (let i = 0; i < list.length; i++) {
+        relevanceFormsContent += '<tr>';
+        relevanceFormsContent += '<td style="width:30px;"><input type="checkbox" value="' + list[i].id + ',' + list[i].title + '" onclick="relevanceFormsCheckbox()" style="zoom: 130%;"></td>';
+        relevanceFormsContent += '<td style="text-align: left;text-indent: 8px;">'+ list[i].title +'</td>';
+        relevanceFormsContent += '<td>'+ list[i].department +'</td>';
+        relevanceFormsContent += '<td>'+ list[i].fillingDate +'</td>';
+        relevanceFormsContent += '<td>'+ list[i].total +'</td>';
+        relevanceFormsContent += '<td>'+ list[i].preparer +'</td>';
+        relevanceFormsContent += '</tr>';
+    }
+    $('#relevanceFormsTbo').html(relevanceFormsContent)
+}
+
+//关联表单-复选框
+function relevanceFormsCheckbox(){
+    $('#relevanceFormsTbo').find('input[type=checkbox]').bind('click', function(){
+        $("#relevanceFormsTbo").find('input[type=checkbox]').not(this).attr("checked", false);
+    });
+}
+
+//关联表单-提交
+function confirmRelevanceForms() {
+    var subFrameId = $('#subFrameId').val();
+    let length = $("#relevanceFormsTbo input:checked").length;
+    if (length !== 1) {
+        tips("请选择一条数据！！", 6, 0, 1000);
+        return false;
+    } else {
+        var val = $("#relevanceFormsTbo input:checked").val();
+        var id = val.substring(0,val.indexOf(','));
+        var name = val.substring(val.indexOf(',') + 1);
+        $("#"+subFrameId)[0].contentWindow.relevanceFormsBinding(id,name);
+    }
+
+    //关闭弹窗
+    cancel()
+}
+
+//关联表单-预览
+function relevanceFormsDetailsPreview(id) {
+    $('#modalWindow').html('<div id="relevanceFormsPreview" style="display: none;">\n' +
+        '    <div id="relevanceFormsPreviewContent" style="padding:10px 15px"></div>\n' +
+        '</div>');
+
+    window.lar = layer.open({
+        title: '预览',
+        type: 1,
+        area: ['60%', '60%'],
+        shadeClose: false, //点击遮罩关闭
+        content: $("#relevanceFormsPreview"),
+        offset: "auto",
+        end:function () {
+            $('#modalWindow').html("");
+        }
+    });
+
+    $.ajax({
+        type: "POST",
+        url: '/officeSupplies/details',
+        data: {'id': id},
+        cache: false,
+        dataType: 'html',
+        error: function (request) {
+            alert("出错了");
+        },
+        success: function (data) {
+            //截取需要展示的部分
+            var newHtml = data.substring(data.indexOf('<flag>'),data.indexOf('</flag>'));
+            $("#relevanceFormsPreviewContent").html(newHtml);
+        }
+    });
+}
+
+//关联表单-删除
+function relevanceFormsDelete(fileName,id,itselfFrameId) {
+    //提示窗
+    layer.confirm('确定要删除"' + fileName + '"吗？', {
+            btn: ['确认', '取消']
+        }, function (index) {
+            $("#"+itselfFrameId)[0].contentWindow.executeRelevanceFormsDelete(id);
+            layer.close(index);
+        }
+    );
+}
+
+//公文-选择拟稿人
+function selectReviewers(userInfoList, draftedPerson, flag, itselfFrameId ) {
+    $('#modalWindow').html('<div id="singleSelection" class="single-option-window" style="display: none">\n' +
+        '    <input type="hidden" id="pendingDocumentPage">\n' +
+        '    <input type="hidden" id="singleFlag" value="'+flag+'">\n' +
+        '    <div class="option-window-body-head">\n' +
+        '        <ul id="singleSelectionContent"></ul>\n' +
+        '    </div>\n' +
+        '    <div class="option-window-body-bottom" style="left: 35%;">\n' +
+        '        <input type="button" value="确认" onclick="confirmReviewers()" class="layui-btn">\n' +
+        '        <input type="button" value="取消" onclick="cancel()" class="layui-btn layui-btn-primary">\n' +
+        '    </div>\n' +
+        '</div>');
+
+    window.lar = layer.open({
+        title: '请选择',
+        type: 1,
+        area: ['25%', '55%'],
+        shadeClose: true, //点击遮罩关闭
+        content: $("#singleSelection"),
+        offset: "auto",
+        end:function () {
+            $('#modalWindow').html("");
+        }
+    });
+
+    $('#subFrameId').val(itselfFrameId);
+
+    var content = '';
+    if (userInfoList.length <= 0) {
+        //当前部门没有人员
+        content += '<img style="padding: 28% 32%;" src="../../../static/images/icon/empty.png">';
+    } else {
+        for (let i = 0; i < userInfoList.length; i++) {
+            if (draftedPerson === userInfoList[i].nickname) {
+                content +=
+                    '<li class="single-election-box-li">' +
+                    '<img src="../../static/images/icon/personnel.png">' +
+                    '<span id="' + userInfoList[i].id + '">' + userInfoList[i].nickname + '</span>' +
+                    '<div class="selectedDrafter"></div>' +
+                    '</li>';
+            } else {
+                content +=
+                    '<li class="single-election-box-li">' +
+                    '<img src="../../static/images/icon/personnel.png">' +
+                    '<span id="' + userInfoList[i].id + '">' + userInfoList[i].nickname + '</span>' +
+                    '<div></div>' +
+                    '</li>';
+            }
+
+        }
+    }
+    //添加到选择列表
+    $("#singleSelectionContent").html(content);
+
+    //单选弹窗 - li选择器
+    $("#singleSelectionContent").on('click', 'li', function () {
+        if ($(this).find("div").hasClass("selectedDrafter")) {
+            $(this).find("div").removeClass("selectedDrafter");
+        } else {
+            var trs = $(this).parent().find("li").find("div");
+            trs.removeClass("selectedDrafter");
+            $(this).find("div").addClass("selectedDrafter");
+        }
+    });
+}
+
+
+//单选弹窗 - 确认
+function confirmReviewers() {
+    var subFrameId = $('#subFrameId').val();
+    var flag = $('#singleFlag').val();
+    var lis = $("#singleSelectionContent").find("li").find("div");
+    //是否包含selectedDrafter
+    if (lis.hasClass("selectedDrafter")) {
+        if (flag === "meetingCompere") {
+            $("#"+subFrameId)[0].contentWindow.insertMeetingCompere($(".selectedDrafter").prev().text());
+        } else if (flag === "meetingRecorder") {
+            $("#"+subFrameId)[0].contentWindow.insertMeetingRecorder($(".selectedDrafter").prev().text());
+        } else if (flag === "draftAuthor") {
+            $("#"+subFrameId)[0].contentWindow.insertReviewer($(".selectedDrafter").prev().text());
+        } else if (flag === "editReviewer") {
+            $("#"+subFrameId)[0].contentWindow.insertReviewerEdit($(".selectedDrafter").prev().text());
+        }
+        cancel();
+    } else {
+        layer.msg('请选择拟稿人！')
+    }
+}
+
+//公文-选择抄送人员
+function selectNotifyPerson(userInfoList, departmentList, flag, itselfFrameId) {
+    $('#modalWindow').html('<div id="selectWindow" class="option-window" style="display: none">\n' +
+        '\n' +
+        '    <div class="option-window-body-head cursor_hand">\n' +
+        '        <input type="hidden" id="multiFlag" value="'+flag+'">\n' +
+        '        <div class="selection-box">\n' +
+        '            <div class="selection-box-title">\n' +
+        '                <span>选择</span>\n' +
+        '            </div>\n' +
+        '            <div class="selection-content-outer">\n' +
+        '                <div id="selectDiv" class="selection-content-inside">\n' +
+        '                    <ul id="selectContent"></ul>\n' +
+        '                </div>\n' +
+        '            </div>\n' +
+        '        </div>\n' +
+        '        <div class="selected-box">\n' +
+        '            <div class="selection-box-title">\n' +
+        '                <span>已选</span>\n' +
+        '            </div>\n' +
+        '            <div class="selection-content-outer">\n' +
+        '                <div id="" class="selection-content-inside">\n' +
+        '                    <ul id="selectedNotifyPerson">\n' +
+        '                    </ul>\n' +
+        '                </div>\n' +
+        '            </div>\n' +
+        '        </div>\n' +
+        '    </div>\n' +
+        '    <input id="path" type="hidden" value="${path}"/>\n' +
+        '    <div class="option-window-body-bottom">\n' +
+        '        <input type="button" value="确认" onclick="consentNotifyPerson()" class="layui-btn">\n' +
+        '        <input type="button" value="取消" onclick="cancel()" class="layui-btn layui-btn-primary">\n' +
+        '    </div>\n' +
+        '</div>');
+
+    window.lar = layer.open({
+        title: '请选择',
+        type: 1,
+        area: ['50%', '66%'],
+        shadeClose: true, //点击遮罩关闭
+        content: $("#selectWindow"),
+        offset: "auto",
+        end:function () {
+            $('#modalWindow').html("");
+        }
+    });
+
+    $('#subFrameId').val(itselfFrameId);
+
+    //清空已选列表
+    $('#selectedNotifyPerson li').remove();
+
+    //加载部门和员工
+    var department = "";
+    for (let i = 0; i < departmentList.length; i++) {
+        department += '<li class="selection-box-li">';
+        department += '<img src="../../../static/images/icon/department.png">';
+        department += '<span onclick="departmentSelect(this)" id="' + departmentList[i].departmentKey + '">' + departmentList[i].departmentName + '</span>';
+        department += '<div></div>';
+
+        for (let j = 0; j < userInfoList.length; j++) {
+            if (userInfoList[j].department === departmentList[i].departmentKey) {
+                department += '<ul class="submenu-ul">';
+                department += '<li onclick="addNotifyPerson(this)">';
+                department += '<img src="../../../static/images/icon/personnel.png">';
+                department += '<span id="' + userInfoList[j].id + '">' + userInfoList[j].nickname + '</span>';
+                department += '<div></div>';
+                department += '</li>';
+                department += '</ul>';
+            }
+        }
+        department += '</li>';
+    }
+    //添加到选择列表
+    $("#selectContent").html(department);
+}
+
+//确认
+function consentNotifyPerson() {
+    var subFrameId = $('#subFrameId').val();
+    var flag = $('#multiFlag').val();
+    //存储名字
+    var array = new Array();
+    //存储id
+    var arrayId = new Array();
+    $("#selectedNotifyPerson").each(function () {
+        $(this).find('li').find("span").each(function () {
+            array.push($(this).text());
+            arrayId.push($(this).attr('id'));
+        });
+
+        if (flag === 'meetingParticipants') {
+            $("#"+subFrameId)[0].contentWindow.insertParticipants(array, arrayId);
+        } else {
+            $("#"+subFrameId)[0].contentWindow.insertCopyGive(array, arrayId);
+        }
+        cancel();
+    });
+}
+
+//选择框中的展开与收缩
+function departmentSelect(own) {
+    if ($(own).siblings('ul').css('display') == "none") {
+        //展开未展开
+        $(own).siblings('ul').slideUp(300);
+        $(own).siblings('ul').slideDown(300);
+    } else {
+        //收缩已展开
+        $(own).siblings('ul').slideUp(300);
+    }
+    preventBubble();
+}
+
+//选择列表的选择与取消
+function addNotifyPerson(own) {
+    var id = $(own).children('span').attr('id');
+    var text = $(own).children('span').text();
+    if ($(own).children('div').hasClass("selection")) {
+        $(own).children('div').removeClass("selection");
+        //遍历已选列表
+        $("#selectedNotifyPerson").each(function () {
+            $(this).find('li').each(function () {
+                if ($(this).children('span').attr('id') === id) {
+                    $(this).remove();
+                }
+            });
+        });
+    } else {
+        $(own).children('div').addClass("selection");
+        $('#selectedNotifyPerson').append(' <li style="padding:5px 20px">' +
+            '<img src="../../static/images/icon/personnel.png" style="vertical-align:middle;">' +
+            '<span style="margin-left:8px" id="' + id + '">' + text + '</span>' +
+            '<img src="../../static/images/icon/delete.png" style="float:right">' +
+            '</li>')
+    }
+    preventBubble();
+}
+
+//删除已选列表选中的标签并且删除选择列表中选中的样式
+$('#selectedNotifyPerson').on("click", "li", function () {
+    //获取选中li的id
+    var selectedId = $(this).children('span').attr('id');
+    //删除选中的li
+    $(this).remove();
+    //遍历选择列表
+    $('#selectDiv').each(function () {
+        $(this).find('ul').each(function () {
+            $(this).find('li').each(function () {
+                // alert($(this).children('span').attr('id'));
+                var selectId = $(this).children('span').attr('id');
+                if (selectedId === selectId) {
+                    //删除选择列表对应已选列表li-div-class
+                    $(this).children('span').next('div').removeClass();
+                }
+            })
+        })
+    });
+});
+
+//组织冒泡
+function preventBubble(event) {
+    var e = arguments.callee.caller.arguments[0] || event; //若省略此句，下面的e改为event，IE运行可以，但是其他浏览器就不兼容
+    if (e && e.stopPropagation) {
+        e.stopPropagation();
+    } else if (window.event) {
+        window.event.cancelBubble = true;
+    }
+}
+
+//公文-选择主送人员
+function selectMainGive(itselfFrameId) {
+    $('#modalWindow').html('<div id="selectMainGive" class="window-body-add" style="display: none">\n' +
+        '    <div id="mainGiveContent"></div>\n' +
+        '    <div style="padding-top: 20px">\n' +
+        '        <input type="button" value="确认" onclick="commitMainGive()" class="layui-btn">\n' +
+        '        <input type="button" value="取消" onclick="cancel()" class="layui-btn layui-btn-primary">\n' +
+        '    </div>\n' +
+        '</div>');
+
+    window.lar = layer.open({
+        title: '所在部门负责人',
+        type: 1,
+        area: ['20%', '30%'],
+        shadeClose: true, //点击遮罩关闭
+        content: $("#selectMainGive"),
+        offset: "auto",
+        end:function () {
+            $('#modalWindow').html("");
+        }
+    });
+
+    $('#subFrameId').val(itselfFrameId);
+
+    var principal = "";
+    // principal += '<div id="radioChecked" style="text-align: left;">';
+    // principal += '<div style="margin: 10px;"><input type="radio" name="abc" value="'+principalList[1]+','+principalList[3]+'" checked style="zoom: 120%;vertical-align: middle;margin-right: 10px;"><span>全部</span></div>';
+    // principal += '<div style="margin: 10px;"><input type="radio" name="abc" value="'+principalList[1]+'" style="zoom: 120%;vertical-align: middle;margin-right: 10px;"><span>'+principalList[0]+'</span></div>';
+    // principal += '<div style="margin: 10px;"><input type="radio" name="abc" value="'+principalList[3]+'" style="zoom: 120%;vertical-align: middle;margin-right: 10px;"><span>'+principalList[2]+'</span></div>';
+    // principal += '</div>';
+    principal += '<div id="radioChecked" style="text-align: left;">';
+    principal += '<div style="margin: 10px;"><input type="radio" name="name" value="1" checked style="zoom: 120%;vertical-align: middle;margin-right: 10px;"><span>领导班子</span></div>';
+    principal += '<div style="margin: 10px;"><input type="radio" name="name" value="2" style="zoom: 120%;vertical-align: middle;margin-right: 10px;"><span>各部室负责人</span></div>';
+    principal += '<div style="margin: 10px;"><input type="radio" name="name" value="0" style="zoom: 120%;vertical-align: middle;margin-right: 10px;"><span>无</span></div>';
+    principal += '</div>';
+    $('#mainGiveContent').html(principal);
+}
+
+//提交-表单发送前选择部门负责人
+function commitMainGive() {
+    var subFrameId = $('#subFrameId').val();
+    let val = $('#radioChecked input[type="radio"]:checked').val();
+    var text = $('#radioChecked input[type="radio"]:checked').next('span').html();
+    $("#"+subFrameId)[0].contentWindow.insetMainGive(val,text);
+    layer.close(window.lar);
+}
+
+/**---------------OA审批表单-----------------*/
+//OA审批单，部门选择
+function selectionDepartment(departmentList, flag, itselfFrameId) {
+    $('#modalWindow').html('<div id="departmentSelector" style="display: none;width: 96%;height: 96%;padding: 2%">\n' +
+        '    <div class="option-window-body-head cursor_hand">\n' +
+        '        <input type="hidden" id="departmentFlag">\n' +
+        '        <div id="selectionDep" class="selection-content-inside">\n' +
+        '            <ul id="departmentList"></ul>\n' +
+        '        </div>\n' +
+        '    </div>\n' +
+        '    <div class="option-window-body-bottom" style="left: 30%">\n' +
+        '        <input type="button" value="确认" onclick="confirmDepartmentSelection()" class="layui-btn">\n' +
+        '        <input type="button" value="取消" onclick="cancel()" class="layui-btn layui-btn-primary">\n' +
+        '    </div>\n' +
+        '</div>');
+
+    window.lar = layer.open({
+        title: '选择部门',
+        type: 1,
+        area: ['20%', '50%'],
+        shadeClose: true, //点击遮罩关闭
+        content: $("#departmentSelector"),
+        offset: "auto",
+        end:function () {
+            $('#modalWindow').html("");
+        }
+    });
+
+    $('#subFrameId').val(itselfFrameId);
+    $('#departmentFlag').val(flag);
+
+    //加载部门
+    var department = "";
+    for (let i = 0; i < departmentList.length; i++) {
+        department += '<li class="selection-box-li">';
+        department += '<img src="../../../static/images/icon/department.png">';
+        department += '<span onclick="selectedDepartment(this)" id="' + departmentList[i].departmentKey + '">' + departmentList[i].departmentName + '</span>';
+        department += '<div></div>';
+        department += '</li>';
+    }
+    $("#departmentList").html(department);
+}
+
+//部门选择器
+function selectedDepartment(own) {
+    if ($(own).nextAll('div').hasClass("selection")) {
+        $(own).nextAll('div').removeClass("selection");
+    } else {
+        $('#selectionDep').find('div').removeClass("selection");
+        $(own).nextAll("div").addClass("selection");
+    }
+}
+
+//提交
+function confirmDepartmentSelection() {
+    var subFrameId = $('#subFrameId').val();
+    var lis = $("#selectionDep").find("div");
+    //是否包含selectedDrafter
+    if (lis.hasClass("selection")) {
+        var id = $(".selection").prev().attr('id')
+        var name = $(".selection").prev().text()
+        var flag = $('#departmentFlag').val();
+        $("#"+subFrameId)[0].contentWindow.selectDepartmentComplete(id, name, flag);
+        layer.close(window.lar);
+    } else {
+        layer.msg('请选择部门！')
+    }
+}
+
+//OA审批表中使用
+function selectRecipient(userInfoList, departmentList,itselfFrameId) {
+    $('#modalWindow').html('<div id="selectRecipientModel" style="display: none;width: 96%;height: 96%;padding: 2%">\n' +
+        '    <div class="option-window-body-head cursor_hand">\n' +
+        '        <div id="selectDepartmentRecipient" class="selection-content-inside">\n' +
+        '            <ul id="departmentAndUserRecipient"></ul>\n' +
+        '        </div>\n' +
+        '    </div>\n' +
+        '    <div class="option-window-body-bottom" style="left: 30%;">\n' +
+        '        <input type="button" value="确认" onclick="confirmDepartmentRecipient()" class="layui-btn">\n' +
+        '        <input type="button" value="取消" onclick="cancel()" class="layui-btn layui-btn-primary">\n' +
+        '    </div>\n' +
+        '</div>');
+
+    window.lar = layer.open({
+        title: '请选择',
+        type: 1,
+        area: ['20%', '50%'],
+        shadeClose: true, //点击遮罩关闭
+        content: $("#selectRecipientModel"),
+        offset: "auto",
+        end:function () {
+            $('#modalWindow').html("");
+        }
+    });
+
+    $('#subFrameId').val(itselfFrameId);
+
+    //加载部门和员工
+    var department = "";
+    for (let i = 0; i < departmentList.length; i++) {
+        department += '<li class="selection-box-li">';
+        department += '<img src="../../../static/images/icon/department.png">';
+        department += '<span onclick="departmentSelect(this)" id="' + departmentList[i].departmentKey + '">' + departmentList[i].departmentName + '</span>';
+        department += '<div></div>';
+        for (let j = 0; j < userInfoList.length; j++) {
+            if (userInfoList[j].department === departmentList[i].departmentKey) {
+                department += '<ul class="submenu-ul">';
+                department += '<li onclick="addSelectionUserRecipient(this)">';
+                department += '<img src="../../../static/images/icon/personnel.png">';
+                department += '<span id="' + userInfoList[j].id + '">' + userInfoList[j].nickname + '</span>';
+                department += '<div></div>';
+                department += '</li>';
+                department += '</ul>';
+            }
+        }
+        department += '</li>';
+    }
+    $("#departmentAndUserRecipient").html(department);
+}
+
+//用户选择器
+function addSelectionUserRecipient(own) {
+    if ($(own).children('div').hasClass("selection")) {
+        $(own).children('div').removeClass("selection");
+    } else {
+        $('#selectDepartmentRecipient').find('div').removeClass("selection");
+        $(own).find("div").addClass("selection");
+    }
+}
+
+//提交
+function confirmDepartmentRecipient() {
+    var subFrameId = $('#subFrameId').val();
+    var lis = $("#selectDepartmentRecipient").find("div");
+    //是否包含selectedDrafter
+    if (lis.hasClass("selection")) {
+        //选择的用户id
+        var principal = $(".selection").prev().attr('id');
+        var principalStr = $(".selection").prev().text();
+        $("#"+subFrameId)[0].contentWindow.confirmSelectRecipient(principal, principalStr);
+        layer.close(window.lar);
+    } else {
+        layer.msg('请选择被通知人！')
+    }
 }

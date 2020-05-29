@@ -255,6 +255,11 @@
         zIndex: 100000,
     });
 
+    var itselfFrameId;
+    $(function () {
+        itselfFrameId = window.frameElement && window.frameElement.id || '';
+    });
+
     function send() {
         if ($.trim($("#title").val()) === '' || $.trim($("#cardinalNumber").val()) === '') {
             window.top.tips("标题或公里基数不可以为空！", 6, 5, 2000);
@@ -263,7 +268,7 @@
             //部门负责人是多个
             if (principalGroup !== '') {
                 var principalList = JSON.parse(principalGroup);
-                window.top.selectPrincipal(principalList);
+                window.top.selectPrincipal(principalList,itselfFrameId);
 
                 //部门负责人是单个
             } else {
@@ -364,7 +369,7 @@
 
     //插入附件
     function insertFile() {
-        window.top.uploadFile();
+        window.top.uploadFile(itselfFrameId);
     }
 
     //上传附件成功后插入form
@@ -386,7 +391,7 @@
 
     //删除已上传附件
     function whether(fileName) {
-        window.top.deleteUploaded(fileName);
+        window.top.deleteUploaded(fileName,itselfFrameId);
     }
 
     //执行删除附件

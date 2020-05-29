@@ -162,6 +162,11 @@
         zIndex: 100000,
     });
 
+    var itselfFrameId;
+    $(function () {
+        itselfFrameId = window.frameElement && window.frameElement.id || '';
+    });
+
     //发送
     function send() {
         if ($.trim($("#title").val()) === '') {
@@ -171,7 +176,7 @@
             //部门负责人是多个
             if (principalGroup !== '') {
                 var principalList = JSON.parse(principalGroup);
-                window.top.selectPrincipal(principalList);
+                window.top.selectPrincipal(principalList,itselfFrameId);
 
                 //部门负责人是单个
             } else {
@@ -194,7 +199,8 @@
                     },
                     success: function (result) {
                         if (result === "success") {
-                            window.location.href = "${path}/oaIndex.do";
+                            <%--window.location.href = "${path}/oaIndex.do";--%>
+                            window.history.back();
                             window.top.tips("发送成功！", 0, 1, 2000);
                         } else {
                             window.top.tips('发送失败！', 0, 2, 2000);
@@ -226,7 +232,8 @@
             },
             success: function (result) {
                 if (result === "success") {
-                    window.location.href = "${path}/oaIndex.do";
+                    <%--window.location.href = "${path}/oaIndex.do";--%>
+                    window.history.back();
                     window.top.tips("发送成功！", 0, 1, 2000);
                 } else {
                     window.top.tips('发送失败！', 0, 2, 2000);
@@ -257,7 +264,8 @@
                 },
                 success: function (result) {
                     if (result === "success") {
-                        window.location.href = "${path}/oaIndex.do";
+                        <%--window.location.href = "${path}/oaIndex.do";--%>
+                        window.history.back();
                         window.top.tips("保存成功！");
                     } else {
                         window.top.tips("保存失败！");
@@ -269,7 +277,7 @@
 
     //插入附件
     function insertFile() {
-        window.top.uploadFile();
+        window.top.uploadFile(itselfFrameId);
     }
 
     //上传附件成功后插入form
@@ -291,7 +299,7 @@
 
     //删除已上传附件
     function whether(fileName) {
-        window.top.deleteUploaded(fileName);
+        window.top.deleteUploaded(fileName,itselfFrameId);
     }
 
     //执行删除附件

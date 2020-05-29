@@ -117,4 +117,9 @@ public class OaEiaMonitorServiceImpl implements OaEiaMonitorService {
         oaEiaMonitor.setId(id);
         return oaEiaMonitorMapper.delete(oaEiaMonitor);
     }
+
+    @Override
+    public int batchDelete(String[] ids) {
+        return oaEiaMonitorMapper.batchDelete(ids);
+    }
 }

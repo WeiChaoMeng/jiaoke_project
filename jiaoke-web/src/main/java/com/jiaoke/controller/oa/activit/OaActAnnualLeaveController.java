@@ -173,7 +173,8 @@ public class OaActAnnualLeaveController {
                     UserInfo userInfo = userInfoService.getUserInfoByPermission("notifyHumanAffairs");
                     Map<String, Object> map = new HashMap<>(16);
                     map.put("whether", 1);
-                    map.put("humanAffairs", userInfo.getId());
+                    map.put("human_affairs", userInfo.getId());
+                    oaActAnnualLeave.setHumanAffairs(userInfo.getNickname());
                     activitiUtil.approvalComplete(taskId, map);
                     oaCollaborationService.updateStatusCode(oaActAnnualLeave.getId(), "被回退");
                     oaActAnnualLeave.setSupervisor(null);
@@ -195,7 +196,8 @@ public class OaActAnnualLeaveController {
                     UserInfo userInfo = userInfoService.getUserInfoByPermission("notifyHumanAffairs");
                     Map<String, Object> map = new HashMap<>(16);
                     map.put("whether", 1);
-                    map.put("humanAffairs", userInfo.getId());
+                    map.put("human_affairs", userInfo.getId());
+                    oaActAnnualLeave.setHumanAffairs(userInfo.getNickname());
                     activitiUtil.approvalComplete(taskId, map);
                     oaCollaborationService.updateStatusCode(oaActAnnualLeave.getId(), "被回退");
                     oaActAnnualLeave.setPersonnel(null);
@@ -221,7 +223,8 @@ public class OaActAnnualLeaveController {
                     UserInfo userInfo = userInfoService.getUserInfoByPermission("notifyHumanAffairs");
                     Map<String, Object> map = new HashMap<>(16);
                     map.put("whether", 1);
-                    map.put("humanAffairs", userInfo.getId());
+                    map.put("human_affairs", userInfo.getId());
+                    oaActAnnualLeave.setHumanAffairs(userInfo.getNickname());
                     activitiUtil.approvalComplete(taskId, map);
                     oaCollaborationService.updateStatusCode(oaActAnnualLeave.getId(), "被回退");
                     oaActAnnualLeave.setCompanyPrincipal(null);

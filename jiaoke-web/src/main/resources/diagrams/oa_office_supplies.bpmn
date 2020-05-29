@@ -18,8 +18,8 @@
     <exclusiveGateway gatewayDirection="Unspecified" id="reviewEG" name="审核网关"/>
     <exclusiveGateway gatewayDirection="Unspecified" id="principalEG" name="负责人网关"/>
     <exclusiveGateway gatewayDirection="Unspecified" id="supervisorEG" name="主管网关"/>
-    <userTask activiti:assignee="${office_supplies_review}" activiti:exclusive="true" id="os6" name="知会审核"/>
-    <userTask activiti:assignee="${office_supplies_review}" activiti:exclusive="true" id="os7" name="知会审核"/>
+    <userTask activiti:assignee="${review}" activiti:exclusive="true" id="os6" name="知会审核"/>
+    <userTask activiti:assignee="${review}" activiti:exclusive="true" id="os7" name="知会审核"/>
     <userTask activiti:assignee="${promoter}" activiti:exclusive="true" id="os8" name="知会发起人"/>
     <userTask activiti:assignee="${promoter}" activiti:exclusive="true" id="os9" name="知会发起人"/>
     <userTask activiti:assignee="${promoter}" activiti:exclusive="true" id="os10" name="知会发起人"/>

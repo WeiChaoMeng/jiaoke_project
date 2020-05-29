@@ -30,4 +30,13 @@ public interface OaOperateBidMapper extends Mapper<OaOperateBid> {
      * @return list
      */
     List<OaOperateBid> selectAllData();
+
+    /**
+     * 批量删除数据
+     *
+     * @param ids ids
+     * @return int
+     */
+    int batchDelete(String[] ids);
+
 }

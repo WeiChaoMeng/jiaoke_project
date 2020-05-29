@@ -265,6 +265,11 @@
         zIndex: 100000,
     });
 
+    var itselfFrameId;
+    $(function () {
+        itselfFrameId = window.frameElement && window.frameElement.id || '';
+    });
+
     //添加数据行
     function addRow(row) {
 
@@ -291,7 +296,7 @@
             //部门负责人是多个
             if (principalGroup !== '') {
                 var principalList = JSON.parse(principalGroup);
-                window.top.selectPrincipal(principalList);
+                window.top.selectPrincipal(principalList,itselfFrameId);
 
                 //部门负责人是单个
             } else {
@@ -350,7 +355,8 @@
                     },
                     success: function (result) {
                         if (result === "success") {
-                            window.location.href = "${path}/oaIndex.do";
+                            <%--window.location.href = "${path}/oaIndex.do";--%>
+                            window.history.back();
                             window.top.tips("发送成功！", 0, 1, 2000);
                         } else {
                             window.top.tips('发送失败！', 0, 2, 2000);
@@ -417,7 +423,8 @@
             },
             success: function (result) {
                 if (result === "success") {
-                    window.location.href = "${path}/oaIndex.do";
+                    <%--window.location.href = "${path}/oaIndex.do";--%>
+                    window.history.back();
                     window.top.tips("发送成功！", 0, 1, 2000);
                 } else {
                     window.top.tips('发送失败！', 0, 2, 2000);
@@ -425,74 +432,6 @@
             }
         })
     }
-
-    //发送
-    <%--function send() {--%>
-    <%--var actOvertimeList = [];--%>
-    <%--var tel = $('#tbo').find('tr');--%>
-    <%--for (let i = 0; i < tel.length; i++) {--%>
-    <%--var n = $(tel[i]).find('td').find('#name').val();--%>
-    <%--var w = $(tel[i]).find('td').find('#weekend').val();--%>
-    <%--var lh = $(tel[i]).find('td').find('#legalHolidays').val();--%>
-    <%--var r = $(tel[i]).find('td').find('#restDown').val();--%>
-    <%--var wt = $(tel[i]).find('td').find('#weekendTotal').val();--%>
-    <%--var lt = $(tel[i]).find('td').find('#legalTotal').val();--%>
-    <%--actOvertimeList.push({--%>
-    <%--name: n,--%>
-    <%--weekend: w,--%>
-    <%--legalHolidays: lh,--%>
-    <%--restDown: r,--%>
-    <%--weekendTotal: wt,--%>
-    <%--legalTotal: lt--%>
-    <%--})--%>
-    <%--}--%>
-
-    <%--var array = [];--%>
-    <%--$('#annexes').find('input').each(function () {--%>
-    <%--array.push($(this).val());--%>
-    <%--});--%>
-
-    <%--//发送前将上传好的附件插入form中--%>
-    <%--$('#annex').val(array);--%>
-
-    <%--if ($.trim($("#title").val()) === '') {--%>
-    <%--window.top.tips("标题不可以为空！", 6, 5, 2000);--%>
-    <%--} else {--%>
-    <%--var tit = $('#title').val();--%>
-    <%--var id = $('#id').val();--%>
-    <%--var dep = $('#department').val();--%>
-    <%--var sd = $('#statisticalDate').val();--%>
-    <%--var pp = $('#preparer').val();--%>
-    <%--var an = $('#annex').val();--%>
-    <%--var oaActOvertime = {--%>
-    <%--title: tit,--%>
-    <%--id: id,--%>
-    <%--department: dep,--%>
-    <%--statisticalDate: sd,--%>
-    <%--oaOvertimeStatisticsList: actOvertimeList,--%>
-    <%--preparer: pp,--%>
-    <%--annex: an--%>
-    <%--};--%>
-
-    <%--$.ajax({--%>
-    <%--type: "POST",--%>
-    <%--url: '${path}/overtime/editAdd',--%>
-    <%--contentType: "application/json;charset=utf-8",--%>
-    <%--data: JSON.stringify(oaActOvertime),--%>
-    <%--error: function (request) {--%>
-    <%--layer.msg("出错！");--%>
-    <%--},--%>
-    <%--success: function (result) {--%>
-    <%--if (result === "success") {--%>
-    <%--window.location.href = "${path}/oaIndex.do";--%>
-    <%--window.top.tips("发送成功！", 0, 1, 2000);--%>
-    <%--} else {--%>
-    <%--window.top.tips('发送失败！', 0, 2, 2000);--%>
-    <%--}--%>
-    <%--}--%>
-    <%--})--%>
-    <%--}--%>
-    <%--}--%>
 
     //保存待发
     function savePending() {
@@ -553,7 +492,8 @@
                 },
                 success: function (result) {
                     if (result === "success") {
-                        window.location.href = "${path}/oaIndex.do";
+                        <%--window.location.href = "${path}/oaIndex.do";--%>
+                        window.history.back();
                         window.top.tips("保存成功！");
                     } else {
                         window.top.tips("保存失败！");
@@ -565,7 +505,7 @@
 
     //插入附件
     function insertFile() {
-        window.top.uploadFile();
+        window.top.uploadFile(itselfFrameId);
     }
 
     //上传附件成功后插入form
@@ -588,7 +528,7 @@
 
     //删除已上传附件
     function whether(fileName) {
-        window.top.deleteUploaded(fileName);
+        window.top.deleteUploaded(fileName,itselfFrameId);
     }
 
 

@@ -10,6 +10,7 @@ import com.jiaoke.oa.service.OaOperateSignService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -37,7 +38,7 @@ public class OaOperateSignController {
     @RequestMapping(value = "/toIndex")
     public String toOperateContract(int page, Model model) {
         model.addAttribute("currentPage", JsonHelper.toJSONString(page));
-        return "oa/archives/operate/operate_sign/index";
+        return "oa/archives/operate/operate_sign/indexs";
     }
 
     /**
@@ -48,7 +49,7 @@ public class OaOperateSignController {
     @RequestMapping(value = "/loadingData")
     @ResponseBody
     public String operateContract(int page) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<OaOperateSign> oaOperateSignList = oaOperateSignService.selectAll();
         PageInfo<OaOperateSign> pageInfo = new PageInfo<>(oaOperateSignList);
         return JsonHelper.toJSONString(pageInfo);
@@ -64,7 +65,7 @@ public class OaOperateSignController {
     @RequestMapping(value = "/searchFilter")
     @ResponseBody
     public String searchFilter(int page, String purchaser) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<OaOperateSign> oaOperateSignList = oaOperateSignService.searchFilter(purchaser);
         PageInfo<OaOperateSign> pageInfo = new PageInfo<>(oaOperateSignList);
         return JsonHelper.toJSONString(pageInfo);
@@ -156,5 +157,21 @@ public class OaOperateSignController {
             return "error";
         }
         return "success";
+    }
+
+    /**
+     * 批量删除
+     *
+     * @param ids ids
+     * @return int
+     */
+    @RequestMapping(value = "/batchDelete")
+    @ResponseBody
+    public String batchDeleteNotice(@RequestParam(value = "ids[]") String[] ids) {
+        if (oaOperateSignService.batchDelete(ids) >= 0) {
+            return "success";
+        } else {
+            return "error";
+        }
     }
 }

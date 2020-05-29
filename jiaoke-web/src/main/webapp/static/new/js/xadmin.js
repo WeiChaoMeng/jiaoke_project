@@ -211,6 +211,17 @@ layui.use(['layer','element','jquery'],function() {
         var id  = $(this).parent().attr('lay-id');
         xadmin.del_data(id);
     });
+
+    element.on('tab(xbs_tab)', function(data){
+        var layId = $(this).attr("lay-id");
+        if (layId === undefined) {
+            //首页
+            document.getElementById('iframes').contentWindow.location.reload(true);
+        }else{
+            document.getElementById(layId).contentWindow.location.reload(true);
+        }
+    });
+
     //左侧菜单
     $('.left-nav #nav').on('click', 'li', function(event) {
 
@@ -331,16 +342,6 @@ layui.use(['layer','element','jquery'],function() {
     $('.page-content,#tab_show,.container,.left-nav').click(function(event) {
         $('#tab_right').hide();
         $('#tab_show').hide();
-    });
-
-    $('.layui-tab-title').on('click','li',function () {
-        var layId = $(this).attr("lay-id");
-        if (layId === undefined) {
-            //首页
-            document.getElementById('iframes').contentWindow.location.reload(true);
-        }else{
-            document.getElementById(layId).contentWindow.location.reload(true);
-        }
     });
 
     // 页面加载完要做的

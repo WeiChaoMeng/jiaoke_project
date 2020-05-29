@@ -30,4 +30,12 @@ public interface OaFinanceOtherMapper extends Mapper<OaFinanceOther> {
      * @return list
      */
     List<OaFinanceOther> selectAllData();
+
+    /**
+     * 批量删除数据
+     *
+     * @param ids ids
+     * @return int
+     */
+    int batchDelete(String[] ids);
 }

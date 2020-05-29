@@ -66,7 +66,7 @@
     </style>
 </head>
 
-<body id="body" style="width: 70%">
+<body id="body">
 
 <div class="table-title">
     <span>编辑验收入库单</span>
@@ -140,7 +140,7 @@
     </c:choose>
 
     <c:choose>
-        <c:when test="${oaActAcceptanceWarehousing.associatedId != null} || ${oaActAcceptanceWarehousing.associatedId != ''}">
+        <c:when test="${oaActAcceptanceWarehousing.associatedId != ''}">
             <div class="relevance-tool" id="relevanceList">
                 <div class="relevance-tool-padding">
 
@@ -296,6 +296,11 @@
 <script src="../../../../static/js/oa/layer/layer.js"></script>
 <script>
 
+    var itselfFrameId;
+    $(function () {
+        itselfFrameId = window.frameElement && window.frameElement.id || '';
+    });
+
     //数据行id递增
     let rowId = $('#listSize').val();
 
@@ -382,7 +387,8 @@
                 },
                 success: function (result) {
                     if (result === "success") {
-                        window.location.href = "${path}/oaIndex.do";
+                        <%--window.location.href = "${path}/oaIndex.do";--%>
+                        window.history.back();
                         window.top.tips("发送成功！", 0, 1, 1000);
                     } else {
                         window.top.tips("发送失败！", 0, 2, 1000);
@@ -450,7 +456,8 @@
                 },
                 success: function (result) {
                     if (result === "success") {
-                        window.location.href = "${path}/oaIndex.do";
+                        <%--window.location.href = "${path}/oaIndex.do";--%>
+                        window.history.back();
                         window.top.tips("保存成功！", 0, 1, 1000);
                     } else {
                         window.top.tips("保存失败！", 0, 2, 1000);
@@ -462,7 +469,7 @@
 
     //插入附件
     function insertFile() {
-        window.top.uploadFile();
+        window.top.uploadFile(itselfFrameId);
     }
 
     //上传附件成功后插入form
@@ -485,7 +492,7 @@
 
     //删除已上传附件
     function whether(fileName) {
-        window.top.deleteUploaded(fileName);
+        window.top.deleteUploaded(fileName,itselfFrameId);
     }
 
 
@@ -524,7 +531,7 @@
                 window.top.tips("出错！", 6, 2, 1000);
             },
             success: function (data) {
-                window.top.selectRelevanceForms(JSON.parse(data));
+                window.top.selectRelevanceForms(JSON.parse(data),itselfFrameId);
             }
         });
     }
@@ -550,7 +557,7 @@
 
     //删除已关联文件
     function relevanceFormsDelete(fileName, id) {
-        window.top.relevanceFormsDelete(fileName, id);
+        window.top.relevanceFormsDelete(fileName, id,itselfFrameId);
     }
 
     //执行删除关联文件
@@ -569,7 +576,7 @@
         //执行打印
         window.print();
         $('#tool,#titleArea,#addRow').show();
-        $('#body').css('width', '70%');
+        $('#body').css('width', '80%');
 
         //附件列表
         let annexesLen = $('#annexes').children().length;

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -36,7 +37,7 @@ public class OaReleaseDocumentController {
     @RequestMapping(value = "/toReleaseDocument")
     public String toReleaseDocument(int page, Model model) {
         model.addAttribute("currentPage", JsonHelper.toJSONString(page));
-        return "oa/archives/office/release_document/index";
+        return "oa/archives/office/release_document/indexs";
     }
 
     /**
@@ -47,7 +48,7 @@ public class OaReleaseDocumentController {
     @RequestMapping(value = "/index")
     @ResponseBody
     public String index(int page) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<OaReleaseDocument> oaReleaseDocumentList = oaReleaseDocumentService.selectAll();
         PageInfo<OaReleaseDocument> pageInfo = new PageInfo<>(oaReleaseDocumentList);
         return JsonHelper.toJSONString(pageInfo);
@@ -87,7 +88,7 @@ public class OaReleaseDocumentController {
     @RequestMapping(value = "/docTypeFilter")
     @ResponseBody
     public String docTypeFilter(int documentType, int page) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<OaReleaseDocument> oaReleaseDocumentList = oaReleaseDocumentService.select(documentType);
         PageInfo<OaReleaseDocument> pageInfo = new PageInfo<>(oaReleaseDocumentList);
         return JsonHelper.toJSONString(pageInfo);
@@ -102,7 +103,7 @@ public class OaReleaseDocumentController {
     @RequestMapping(value = "/documentNameFilter")
     @ResponseBody
     public String documentNameFilter(String documentName, int page) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<OaReleaseDocument> oaReleaseDocumentList = oaReleaseDocumentService.getSelectByName(documentName);
         PageInfo<OaReleaseDocument> pageInfo = new PageInfo<>(oaReleaseDocumentList);
         return JsonHelper.toJSONString(pageInfo);
@@ -117,7 +118,7 @@ public class OaReleaseDocumentController {
     @RequestMapping(value = "/visitDateFilter")
     @ResponseBody
     public String visitDateFilter(String visitDate, int page) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<OaReleaseDocument> oaReleaseDocumentList = oaReleaseDocumentService.getSelectByVisitDate(visitDate);
         PageInfo<OaReleaseDocument> pageInfo = new PageInfo<>(oaReleaseDocumentList);
         return JsonHelper.toJSONString(pageInfo);
@@ -181,5 +182,21 @@ public class OaReleaseDocumentController {
         model.addAttribute("prev", JsonHelper.toJSONString(prev));
         model.addAttribute("oaReleaseDocument", oaReleaseDocument);
         return "oa/archives/office/release_document/details";
+    }
+
+    /**
+     * 批量删除
+     *
+     * @param ids ids
+     * @return int
+     */
+    @RequestMapping(value = "/batchDelete")
+    @ResponseBody
+    public String batchDeleteNotice(@RequestParam(value = "ids[]") String[] ids) {
+        if (oaReleaseDocumentService.batchDelete(ids) >= 0) {
+            return "success";
+        } else {
+            return "error";
+        }
     }
 }

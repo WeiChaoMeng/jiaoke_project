@@ -16,7 +16,7 @@
     <link type="text/css" rel="stylesheet" href="../../../../static/js/jeDate/skin/jedate.css">
 </head>
 
-<body id="body" style="width: 75%">
+<body id="body">
 
 <div class="table-title">
     <span>职称（技术等级）考试申请表</span>
@@ -249,7 +249,10 @@
         zIndex: 100000,
     });
 
-    var itselfFrameId = window.frameElement && window.frameElement.id || '';
+    var itselfFrameId;
+    $(function () {
+        itselfFrameId = window.frameElement && window.frameElement.id || '';
+    });
 
     //发送
     function send() {
@@ -420,7 +423,7 @@
         //执行打印
         window.print();
         $('#tool,#titleArea').show();
-        $('#body').css('width', '75%');
+        $('#body').css('width', '80%');
 
         //附件列表
         let annexesLen = $('#annexes').children().length;

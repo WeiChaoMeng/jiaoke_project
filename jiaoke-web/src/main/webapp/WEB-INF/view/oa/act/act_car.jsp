@@ -202,7 +202,10 @@
         zIndex: 100000,
     });
 
-    var itselfFrameId = window.frameElement && window.frameElement.id || '';
+    var itselfFrameId;
+    $(function () {
+        itselfFrameId = window.frameElement && window.frameElement.id || '';
+    });
 
     function send() {
         if ($.trim($("#title").val()) === '' || $.trim($("#cardinalNumber").val()) === '') {

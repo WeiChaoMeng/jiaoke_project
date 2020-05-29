@@ -14,7 +14,7 @@
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
 </head>
 
-<body id="body" style="width: 80%">
+<body id="body">
 
 <div class="table-title">
     <span>${oaActEngage.title}</span>

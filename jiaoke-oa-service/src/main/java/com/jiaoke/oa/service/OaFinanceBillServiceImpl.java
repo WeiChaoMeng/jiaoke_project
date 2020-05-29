@@ -64,4 +64,9 @@ public class OaFinanceBillServiceImpl implements OaFinanceBillService {
     public int deleteByPrimaryKey(Integer id) {
         return oaFinanceBillMapper.deleteByPrimaryKey(id);
     }
+
+    @Override
+    public int batchDelete(String[] ids) {
+        return oaFinanceBillMapper.batchDelete(ids);
+    }
 }

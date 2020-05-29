@@ -30,4 +30,12 @@ public interface OaOperateSignMapper extends Mapper<OaOperateSign> {
      * @return list
      */
     List<OaOperateSign> selectAllData();
+
+    /**
+     * 批量删除数据
+     *
+     * @param ids ids
+     * @return int
+     */
+    int batchDelete(String[] ids);
 }

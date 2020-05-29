@@ -51,4 +51,9 @@ public class OaFinanceConfirmServiceImpl implements OaFinanceConfirmService {
     public int deleteByPrimaryKey(Integer id) {
         return oaFinanceConfirmMapper.deleteByPrimaryKey(id);
     }
+
+    @Override
+    public int batchDelete(String[] ids) {
+        return oaFinanceConfirmMapper.batchDelete(ids);
+    }
 }

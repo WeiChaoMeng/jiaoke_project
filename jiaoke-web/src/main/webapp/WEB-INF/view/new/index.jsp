@@ -23,6 +23,7 @@
         <!-- <link rel="stylesheet" href="./css/theme5.css"> -->
         <script src="../../../static/new/lib/layui/layui.js" charset="utf-8"></script>
         <script type="text/javascript" src="../../../static/new/js/xadmin.js"></script>
+        <script type="text/javascript" src="../../../static/js/jquery.js"></script>
         <script type="text/javascript" src="../../../static/new/js/main.js"></script>
         <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
         <!--[if lt IE 9]>
@@ -222,9 +223,9 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a onclick="xadmin.add_tab('其他文件','officeOther/toOfficeOther?page=1',true)">
+                                                <a onclick="xadmin.add_tab('其它文件','officeOther/toOfficeOther?page=1',true)">
                                                     <i class="iconfont">&#xe6a7;</i>
-                                                    <cite>其他文件</cite>
+                                                    <cite>其它文件</cite>
                                                 </a>
                                             </li>
                                         </ul>
@@ -282,9 +283,9 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a onclick="xadmin.add_tab('其他文件','operateOther/toIndex?page=1',true)">
+                                                <a onclick="xadmin.add_tab('其它文件','operateOther/toIndex?page=1',true)">
                                                     <i class="iconfont">&#xe6a7;</i>
-                                                    <cite>其他文件</cite>
+                                                    <cite>其它文件</cite>
                                                 </a>
                                             </li>
                                         </ul>
@@ -330,9 +331,9 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a onclick="xadmin.add_tab('其他文件','productionOther/toIndex?page=1',true)">
+                                                <a onclick="xadmin.add_tab('其它文件','productionOther/toIndex?page=1',true)">
                                                     <i class="iconfont">&#xe6a7;</i>
-                                                    <cite>其他文件</cite>
+                                                    <cite>其它文件</cite>
                                                 </a>
                                             </li>
                                         </ul>
@@ -402,9 +403,9 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a onclick="xadmin.add_tab('其他文件','materialOther/toIndex?page=1',true)">
+                                                <a onclick="xadmin.add_tab('其它文件','materialOther/toIndex?page=1',true)">
                                                     <i class="iconfont">&#xe6a7;</i>
-                                                    <cite>其他文件</cite>
+                                                    <cite>其它文件</cite>
                                                 </a>
                                             </li>
                                         </ul>

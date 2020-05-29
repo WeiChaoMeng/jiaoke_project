@@ -43,7 +43,7 @@
     </style>
 </head>
 
-<body id="body" style="width: 70%;">
+<body id="body">
 
 <div class="table-title">
     <span>${oaActUnitPrice.title}</span>
@@ -323,7 +323,7 @@
                 </shiro:hasPermission>
 
                 <shiro:lacksPermission name="operating_principal">
-                    ${oaActUnitPrice.businessPrincipal}
+                    ${oaActUnitPrice.operatingPrincipal}
                 </shiro:lacksPermission>
             </td>
         </tr>
@@ -336,7 +336,7 @@
                 </shiro:hasPermission>
 
                 <shiro:lacksPermission name="operating_supervisor">
-                    ${oaActUnitPrice.businessSupervisor}
+                    ${oaActUnitPrice.operatingSupervisor}
                 </shiro:lacksPermission>
             </td>
         </tr>
@@ -381,27 +381,27 @@
 
     if (unitPrice.state === 0) {
         if (flag === 0) {
-            if (unitPrice.businessPrincipal === "" || unitPrice.businessPrincipal === undefined) {
-                $('#operatingPrincipalContent').append('<input type="text" class="formInput-readonly" name="businessPrincipal" value="${nickname}" readonly>\n' +
-                    '                    <input type="hidden" name="businessPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+            if (unitPrice.operatingPrincipal === "" || unitPrice.operatingPrincipal === undefined) {
+                $('#operatingPrincipalContent').append('<input type="text" class="formInput-readonly" name="operatingPrincipal" value="${nickname}" readonly>\n' +
+                    '                    <input type="hidden" name="operatingPrincipalDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
                 flag = 1;
             } else {
-                $('#operatingPrincipalContent').append(unitPrice.businessPrincipal);
+                $('#operatingPrincipalContent').append(unitPrice.operatingPrincipal);
             }
         } else {
-            $('#operatingPrincipalContent').append(unitPrice.businessPrincipal);
+            $('#operatingPrincipalContent').append(unitPrice.operatingPrincipal);
         }
 
         if (flag === 0) {
-            if (unitPrice.businessSupervisor === "" || unitPrice.businessSupervisor === undefined) {
-                $('#operatingSupervisorContent').append('<input type="text" class="formInput-readonly" name="businessSupervisor" value="${nickname}" readonly>\n' +
-                    '                    <input type="hidden" name="businessSupervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
+            if (unitPrice.operatingSupervisor === "" || unitPrice.operatingSupervisor === undefined) {
+                $('#operatingSupervisorContent').append('<input type="text" class="formInput-readonly" name="operatingSupervisor" value="${nickname}" readonly>\n' +
+                    '                    <input type="hidden" name="operatingSupervisorDate" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>">');
                 flag = 1;
             } else {
-                $('#operatingSupervisorContent').append(unitPrice.businessSupervisor);
+                $('#operatingSupervisorContent').append(unitPrice.operatingSupervisor);
             }
         } else {
-            $('#operatingSupervisorContent').append(unitPrice.businessSupervisor);
+            $('#operatingSupervisorContent').append(unitPrice.operatingSupervisor);
         }
 
         if (flag === 0) {
@@ -421,8 +421,8 @@
             $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
         }
     } else {
-        $('#operatingPrincipalContent').append(unitPrice.businessPrincipal);
-        $('#operatingSupervisorContent').append(unitPrice.businessSupervisor);
+        $('#operatingPrincipalContent').append(unitPrice.operatingPrincipal);
+        $('#operatingSupervisorContent').append(unitPrice.operatingSupervisor);
         $('#companyPrincipalContent').append(unitPrice.companyPrincipal);
         $('#return').html("");
         $('#return').append('<button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>');
@@ -441,10 +441,12 @@
             success: function (data) {
                 if (data === 'success') {
                     //返回上一页
-                    window.location.href = '${path}/oaHomePage/toOaHomePage';
+                    <%--window.location.href = '${path}/oaHomePage/toOaHomePage';--%>
+                    window.history.back();
                     window.top.tips("提交成功！", 0, 1, 1000);
                 } else if (data === 'backSuccess') {
-                    window.location.href = '${path}/oaHomePage/toOaHomePage';
+                    <%--window.location.href = '${path}/oaHomePage/toOaHomePage';--%>
+                    window.history.back();
                     window.top.tips("提交成功,并将数据转存到待发事项中！", 6, 1, 2000);
                 } else {
                     window.top.tips("提交失败！", 0, 2, 1000);
@@ -463,7 +465,7 @@
         //执行打印
         window.print();
         $('#tool,#return').show();
-        $('#body').css('width', '70%');
+        $('#body').css('width', '80%');
     }
 </script>
 </html>

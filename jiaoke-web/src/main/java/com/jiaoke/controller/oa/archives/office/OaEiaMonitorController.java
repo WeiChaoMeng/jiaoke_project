@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -36,7 +37,7 @@ public class OaEiaMonitorController {
     @RequestMapping(value = "/toEiaMonitor")
     public String toContractAgreement(int page, Model model) {
         model.addAttribute("currentPage", JsonHelper.toJSONString(page));
-        return "oa/archives/office/eia_monitor/index";
+        return "oa/archives/office/eia_monitor/indexs";
     }
 
     /**
@@ -47,7 +48,7 @@ public class OaEiaMonitorController {
     @RequestMapping(value = "/index")
     @ResponseBody
     public String index(int page) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<OaEiaMonitor> oaEiaMonitorList = oaEiaMonitorService.selectAll();
         PageInfo<OaEiaMonitor> pageInfo = new PageInfo<>(oaEiaMonitorList);
         return JsonHelper.toJSONString(pageInfo);
@@ -87,7 +88,7 @@ public class OaEiaMonitorController {
     @RequestMapping(value = "/sampleNameFilter")
     @ResponseBody
     public String documentNameFilter(String sampleName, int page) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<OaEiaMonitor> oaEiaMonitorList = oaEiaMonitorService.getSelectBySampleName(sampleName);
         PageInfo<OaEiaMonitor> pageInfo = new PageInfo<>(oaEiaMonitorList);
         return JsonHelper.toJSONString(pageInfo);
@@ -102,7 +103,7 @@ public class OaEiaMonitorController {
     @RequestMapping(value = "/testingDateFilter")
     @ResponseBody
     public String visitDateFilter(String testingDate, int page) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<OaEiaMonitor> oaEiaMonitorList = oaEiaMonitorService.getSelectByTestingDate(testingDate);
         PageInfo<OaEiaMonitor> pageInfo = new PageInfo<>(oaEiaMonitorList);
         return JsonHelper.toJSONString(pageInfo);
@@ -166,5 +167,21 @@ public class OaEiaMonitorController {
         model.addAttribute("prev", JsonHelper.toJSONString(prev));
         model.addAttribute("oaEiaMonitor", oaEiaMonitor);
         return "oa/archives/office/eia_monitor/details";
+    }
+
+    /**
+     * 批量删除
+     *
+     * @param ids ids
+     * @return int
+     */
+    @RequestMapping(value = "/batchDelete")
+    @ResponseBody
+    public String batchDeleteNotice(@RequestParam(value = "ids[]") String[] ids) {
+        if (oaEiaMonitorService.batchDelete(ids) >= 0) {
+            return "success";
+        } else {
+            return "error";
+        }
     }
 }

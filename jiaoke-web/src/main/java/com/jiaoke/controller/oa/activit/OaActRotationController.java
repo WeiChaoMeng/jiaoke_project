@@ -240,9 +240,10 @@ public class OaActRotationController {
                         for (Task tasks : taskList) {
                             Map<String, Object> map = new HashMap<>(16);
                             map.put("whether", 1);
-                            map.put("humanAffairs", userInfo.getId());
+                            map.put("human_affairs", userInfo.getId());
                             activitiUtil.approvalComplete(tasks.getId(), map);
                         }
+                        oaActRotation.setHumanAffairs(userInfo.getNickname());
                         oaCollaborationService.updateStatusCode(oaActRotation.getId(), "被回退");
                         oaActRotation.setState(1);
                         return updateByPrimaryKeySelective(oaActRotation);
@@ -251,8 +252,9 @@ public class OaActRotationController {
                         UserInfo userInfo = userInfoService.getUserInfoByPermission("notifyHumanAffairs");
                         Map<String, Object> map = new HashMap<>(16);
                         map.put("whether", 1);
-                        map.put("humanAffairs", userInfo.getId());
+                        map.put("human_affairs", userInfo.getId());
                         activitiUtil.approvalComplete(taskId, map);
+                        oaActRotation.setHumanAffairs(userInfo.getNickname());
                         oaCollaborationService.updateStatusCode(oaActRotation.getId(), "被回退");
                         oaActRotation.setState(1);
                         return updateByPrimaryKeySelective(oaActRotation);
@@ -278,9 +280,10 @@ public class OaActRotationController {
                         for (Task tasks : taskList) {
                             Map<String, Object> map = new HashMap<>(16);
                             map.put("whether", 1);
-                            map.put("humanAffairs", userInfo.getId());
+                            map.put("human_affairs", userInfo.getId());
                             activitiUtil.approvalComplete(tasks.getId(), map);
                         }
+                        oaActRotation.setHumanAffairs(userInfo.getNickname());
                         oaCollaborationService.updateStatusCode(oaActRotation.getId(), "被回退");
                         oaActRotation.setState(1);
                         return updateByPrimaryKeySelective(oaActRotation);
@@ -289,8 +292,9 @@ public class OaActRotationController {
                         UserInfo userInfo = userInfoService.getUserInfoByPermission("notifyHumanAffairs");
                         Map<String, Object> map = new HashMap<>(16);
                         map.put("whether", 1);
-                        map.put("humanAffairs", userInfo.getId());
+                        map.put("human_affairs", userInfo.getId());
                         activitiUtil.approvalComplete(taskId, map);
+                        oaActRotation.setHumanAffairs(userInfo.getNickname());
                         oaCollaborationService.updateStatusCode(oaActRotation.getId(), "被回退");
                         oaActRotation.setState(1);
                         return updateByPrimaryKeySelective(oaActRotation);
@@ -311,8 +315,9 @@ public class OaActRotationController {
                     UserInfo userInfo = userInfoService.getUserInfoByPermission("notifyHumanAffairs");
                     Map<String, Object> map = new HashMap<>(16);
                     map.put("whether", 1);
-                    map.put("humanAffairs", userInfo.getId());
+                    map.put("human_affairs", userInfo.getId());
                     activitiUtil.approvalComplete(taskId, map);
+                    oaActRotation.setHumanAffairs(userInfo.getNickname());
                     oaCollaborationService.updateStatusCode(oaActRotation.getId(), "被回退");
                     oaActRotation.setState(1);
                     return updateByPrimaryKeySelective(oaActRotation);
@@ -336,7 +341,8 @@ public class OaActRotationController {
                     UserInfo userInfo = userInfoService.getUserInfoByPermission("notifyHumanAffairs");
                     Map<String, Object> map = new HashMap<>(16);
                     map.put("whether", 1);
-                    map.put("humanAffairs", userInfo.getId());
+                    map.put("human_affairs", userInfo.getId());
+                    oaActRotation.setHumanAffairs(userInfo.getNickname());
                     activitiUtil.approvalComplete(taskId, map);
                     oaCollaborationService.updateStatusCode(oaActRotation.getId(), "被回退");
                     oaActRotation.setState(1);
@@ -585,6 +591,10 @@ public class OaActRotationController {
     public String details(String id, String taskId, Model model) {
         OaActRotation oaActRotation = oaActRotationService.selectByPrimaryKey(id);
         model.addAttribute("oaActRotation", oaActRotation);
+
+        if (oaActRotation.getNewDepartment() == null || "".equals(oaActRotation.getNewDepartment()) || oaActRotation.getDepartmentPrincipal() == null || "".equals(oaActRotation.getDepartmentPrincipal())){
+            return "oa/act/act_rotation_details";
+        }
 
         String principal = departmentService.selectEnforcerId("principal", oaActRotation.getNewDepartment());
         if (oaActRotation.getDepartmentPrincipal().contains(",")){

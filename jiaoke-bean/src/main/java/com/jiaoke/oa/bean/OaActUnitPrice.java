@@ -102,22 +102,22 @@ public class OaActUnitPrice {
     /**
      * 经营部长
      */
-    private String businessPrincipal;
+    private String operatingPrincipal;
 
     /**
      * 经营部长审批时间
      */
-    private String businessPrincipalDate;
+    private String operatingPrincipalDate;
 
     /**
      * 经营主管
      */
-    private String businessSupervisor;
+    private String operatingSupervisor;
 
     /**
      * 经营主管审批时间
      */
-    private String businessSupervisorDate;
+    private String operatingSupervisorDate;
 
     /**
      * 总经理
@@ -291,36 +291,36 @@ public class OaActUnitPrice {
         this.modeShipping = modeShipping;
     }
 
-    public String getBusinessPrincipal() {
-        return businessPrincipal;
+    public String getOperatingPrincipal() {
+        return operatingPrincipal;
     }
 
-    public void setBusinessPrincipal(String businessPrincipal) {
-        this.businessPrincipal = businessPrincipal;
+    public void setOperatingPrincipal(String operatingPrincipal) {
+        this.operatingPrincipal = operatingPrincipal;
     }
 
-    public String getBusinessPrincipalDate() {
-        return businessPrincipalDate;
+    public String getOperatingPrincipalDate() {
+        return operatingPrincipalDate;
     }
 
-    public void setBusinessPrincipalDate(String businessPrincipalDate) {
-        this.businessPrincipalDate = businessPrincipalDate;
+    public void setOperatingPrincipalDate(String operatingPrincipalDate) {
+        this.operatingPrincipalDate = operatingPrincipalDate;
     }
 
-    public String getBusinessSupervisor() {
-        return businessSupervisor;
+    public String getOperatingSupervisor() {
+        return operatingSupervisor;
     }
 
-    public void setBusinessSupervisor(String businessSupervisor) {
-        this.businessSupervisor = businessSupervisor;
+    public void setOperatingSupervisor(String operatingSupervisor) {
+        this.operatingSupervisor = operatingSupervisor;
     }
 
-    public String getBusinessSupervisorDate() {
-        return businessSupervisorDate;
+    public String getOperatingSupervisorDate() {
+        return operatingSupervisorDate;
     }
 
-    public void setBusinessSupervisorDate(String businessSupervisorDate) {
-        this.businessSupervisorDate = businessSupervisorDate;
+    public void setOperatingSupervisorDate(String operatingSupervisorDate) {
+        this.operatingSupervisorDate = operatingSupervisorDate;
     }
 
     public String getCompanyPrincipal() {

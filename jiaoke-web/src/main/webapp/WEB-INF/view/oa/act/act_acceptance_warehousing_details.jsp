@@ -67,7 +67,7 @@
     </style>
 </head>
 
-<body id="body" style="width: 70%">
+<body id="body">
 
 <div class="table-title">
     <span>${oaActAcceptanceWarehousing.title}</span>
@@ -114,7 +114,7 @@
     </c:choose>
 
     <c:choose>
-        <c:when test="${oaActAcceptanceWarehousing.associatedId != null} || ${oaActAcceptanceWarehousing.associatedId != ''}">
+        <c:when test="${oaActAcceptanceWarehousing.associatedId != ''}">
             <div class="relevance-tool" id="relevanceList">
                 <div class="relevance-tool-padding">
 
@@ -199,7 +199,7 @@
         //执行打印
         window.print();
         $('#tool').show();
-        $('#body,#return').css('width', '70%');
+        $('#body,#return').css('width', '80%');
     }
 </script>
 </html>

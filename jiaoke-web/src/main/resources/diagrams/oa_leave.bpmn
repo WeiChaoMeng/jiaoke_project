@@ -27,9 +27,9 @@
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${whether == 0}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_20" sourceRef="l3" targetRef="end"/>
-    <userTask activiti:assignee="${humanAffairs}" activiti:exclusive="true" id="l4" name="知会人事"/>
+    <userTask activiti:assignee="${human_affairs}" activiti:exclusive="true" id="l4" name="知会人事"/>
     <userTask activiti:assignee="${promoter}" activiti:exclusive="true" id="l5" name="知会发起人"/>
-    <userTask activiti:assignee="${humanAffairs}" activiti:exclusive="true" id="l6" name="知会人事"/>
+    <userTask activiti:assignee="${human_affairs}" activiti:exclusive="true" id="l6" name="知会人事"/>
     <userTask activiti:assignee="${promoter}" activiti:exclusive="true" id="l7" name="知会发起人"/>
     <sequenceFlow id="_6" sourceRef="principalEG" targetRef="l4"/>
     <sequenceFlow id="_7" sourceRef="l4" targetRef="l5"/>

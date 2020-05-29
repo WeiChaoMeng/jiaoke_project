@@ -93,6 +93,8 @@ public class OaActAnnualLeave {
      */
     private String personnelDate;
 
+    private String humanAffairs;
+
     /**
      * 状态
      */
@@ -296,5 +298,13 @@ public class OaActAnnualLeave {
 
     public void setState(Integer state) {
         this.state = state;
+    }
+
+    public String getHumanAffairs() {
+        return humanAffairs;
+    }
+
+    public void setHumanAffairs(String humanAffairs) {
+        this.humanAffairs = humanAffairs;
     }
 }

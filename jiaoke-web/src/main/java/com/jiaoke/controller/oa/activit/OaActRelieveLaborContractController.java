@@ -194,13 +194,13 @@ public class OaActRelieveLaborContractController {
 
                     if (oaActRelieveLaborContract.getDepartmentPrincipal().contains(",")) {
 
-                        UserInfo userInfo = userInfoService.getUserInfoByPermission("notifyHumanAffairs");
+                        UserInfo userInfo = userInfoService.getUserInfoByPermission("personnel_censor");
                         Task task1 = activitiUtil.getProcessInstanceIdByTaskId(taskId);
                         List<Task> taskList = activitiUtil.getTaskListByProcessInstanceId(task1.getProcessInstanceId());
                         for (Task tasks : taskList) {
                             Map<String, Object> map = new HashMap<>(16);
                             map.put("whether", 1);
-                            map.put("humanAffairs", userInfo.getId());
+                            map.put("personnel_censor", userInfo.getId());
                             activitiUtil.approvalComplete(tasks.getId(), map);
                         }
                         oaCollaborationService.updateStatusCode(oaActRelieveLaborContract.getId(), "被回退");
@@ -208,10 +208,10 @@ public class OaActRelieveLaborContractController {
                         return updateByPrimaryKeySelective(oaActRelieveLaborContract);
 
                     } else {
-                        UserInfo userInfo = userInfoService.getUserInfoByPermission("notifyHumanAffairs");
+                        UserInfo userInfo = userInfoService.getUserInfoByPermission("personnel_censor");
                         Map<String, Object> map = new HashMap<>(16);
                         map.put("whether", 1);
-                        map.put("humanAffairs", userInfo.getId());
+                        map.put("personnel_censor", userInfo.getId());
                         activitiUtil.approvalComplete(taskId, map);
                         oaCollaborationService.updateStatusCode(oaActRelieveLaborContract.getId(), "被回退");
                         oaActRelieveLaborContract.setState(1);
@@ -228,10 +228,10 @@ public class OaActRelieveLaborContractController {
                     activitiUtil.approvalComplete(taskId, map);
                     return updateByPrimaryKeySelective(oaActRelieveLaborContract);
                 } else {
-                    UserInfo userInfo = userInfoService.getUserInfoByPermission("notifyHumanAffairs");
+                    UserInfo userInfo = userInfoService.getUserInfoByPermission("personnel_censor");
                     Map<String, Object> map = new HashMap<>(16);
                     map.put("whether", 1);
-                    map.put("humanAffairs", userInfo.getId());
+                    map.put("personnel_censor", userInfo.getId());
                     activitiUtil.approvalComplete(taskId, map);
                     oaCollaborationService.updateStatusCode(oaActRelieveLaborContract.getId(), "被回退");
                     oaActRelieveLaborContract.setState(1);
@@ -248,10 +248,10 @@ public class OaActRelieveLaborContractController {
                     activitiUtil.approvalComplete(taskId, map);
                     return updateByPrimaryKeySelective(oaActRelieveLaborContract);
                 } else {
-                    UserInfo userInfo = userInfoService.getUserInfoByPermission("notifyHumanAffairs");
+                    UserInfo userInfo = userInfoService.getUserInfoByPermission("personnel_censor");
                     Map<String, Object> map = new HashMap<>(16);
                     map.put("whether", 1);
-                    map.put("humanAffairs", userInfo.getId());
+                    map.put("personnel_censor", userInfo.getId());
                     activitiUtil.approvalComplete(taskId, map);
                     oaCollaborationService.updateStatusCode(oaActRelieveLaborContract.getId(), "被回退");
                     oaActRelieveLaborContract.setState(1);
@@ -266,17 +266,17 @@ public class OaActRelieveLaborContractController {
                     Map<String, Object> map = new HashMap<>(16);
                     List<Object> leaveNotifyList = new ArrayList<>();
                     leaveNotifyList.add(oaActRelieveLaborContract.getPromoter());
-                    UserInfo userInfo = userInfoService.getUserInfoByPermission("notifyHumanAffairs");
+                    UserInfo userInfo = userInfoService.getUserInfoByPermission("personnel_censor");
                     leaveNotifyList.add(userInfo.getId());
                     map.put("whether", 0);
                     map.put("normalList", leaveNotifyList);
                     activitiUtil.approvalComplete(taskId, map);
                     return updateByPrimaryKeySelective(oaActRelieveLaborContract);
                 } else {
-                    UserInfo userInfo = userInfoService.getUserInfoByPermission("notifyHumanAffairs");
+                    UserInfo userInfo = userInfoService.getUserInfoByPermission("personnel_censor");
                     Map<String, Object> map = new HashMap<>(16);
                     map.put("whether", 1);
-                    map.put("humanAffairs", userInfo.getId());
+                    map.put("personnel_censor", userInfo.getId());
                     activitiUtil.approvalComplete(taskId, map);
                     oaCollaborationService.updateStatusCode(oaActRelieveLaborContract.getId(), "被回退");
                     oaActRelieveLaborContract.setState(1);

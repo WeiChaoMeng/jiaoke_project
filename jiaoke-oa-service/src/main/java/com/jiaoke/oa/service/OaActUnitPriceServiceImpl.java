@@ -71,10 +71,10 @@ public class OaActUnitPriceServiceImpl implements OaActUnitPriceService {
     @Override
     public int edit(OaActUnitPrice oaActUnitPrice) {
         oaActUnitPrice.setState(0);
-        oaActUnitPrice.setBusinessPrincipal("");
-        oaActUnitPrice.setBusinessPrincipalDate("");
-        oaActUnitPrice.setBusinessSupervisor("");
-        oaActUnitPrice.setBusinessSupervisorDate("");
+        oaActUnitPrice.setOperatingPrincipal("");
+        oaActUnitPrice.setOperatingPrincipalDate("");
+        oaActUnitPrice.setOperatingSupervisor("");
+        oaActUnitPrice.setOperatingSupervisorDate("");
         oaActUnitPrice.setCompanyPrincipal("");
         oaActUnitPrice.setCompanyPrincipalDate("");
         oaActUnitPrice.setCreateTime(new Date());

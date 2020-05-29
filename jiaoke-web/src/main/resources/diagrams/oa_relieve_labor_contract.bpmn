@@ -23,11 +23,11 @@
     <exclusiveGateway gatewayDirection="Unspecified" id="supervisorEG" name="主管领导网关"/>
     <exclusiveGateway gatewayDirection="Unspecified" id="personnelEG" name="人事部门网关"/>
     <exclusiveGateway gatewayDirection="Unspecified" id="companyEG" name="总经理网关"/>
-    <userTask activiti:assignee="${humanAffairs}" activiti:exclusive="true" id="aw7" name="知会人事"/>
-    <userTask activiti:assignee="${humanAffairs}" activiti:exclusive="true" id="aw8" name="知会人事"/>
-    <userTask activiti:assignee="${humanAffairs}" activiti:exclusive="true" id="aw9" name="知会人事"/>
+    <userTask activiti:assignee="${personnel_censor}" activiti:exclusive="true" id="aw7" name="知会人事"/>
+    <userTask activiti:assignee="${personnel_censor}" activiti:exclusive="true" id="aw8" name="知会人事"/>
+    <userTask activiti:assignee="${personnel_censor}" activiti:exclusive="true" id="aw9" name="知会人事"/>
     <userTask activiti:assignee="${promoter}" activiti:exclusive="true" id="aw11" name="知会发起人"/>
-    <userTask activiti:assignee="${humanAffairs}" activiti:exclusive="true" id="aw10" name="知会人事"/>
+    <userTask activiti:assignee="${personnel_censor}" activiti:exclusive="true" id="aw10" name="知会人事"/>
     <userTask activiti:assignee="${promoter}" activiti:exclusive="true" id="aw12" name="知会发起人"/>
     <userTask activiti:assignee="${promoter}" activiti:exclusive="true" id="aw14" name="知会发起人"/>
     <userTask activiti:assignee="${promoter}" activiti:exclusive="true" id="aw13" name="知会发起人"/>

@@ -66,4 +66,9 @@ public class OaFinanceMaterialServiceImpl implements OaFinanceMaterialService {
     public int deleteByPrimaryKey(Integer id) {
         return oaFinanceMaterialMapper.deleteByPrimaryKey(id);
     }
+
+    @Override
+    public int batchDelete(String[] ids) {
+        return oaFinanceMaterialMapper.batchDelete(ids);
+    }
 }

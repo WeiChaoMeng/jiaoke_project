@@ -30,4 +30,12 @@ public interface OaFinanceConfirmMapper extends Mapper<OaFinanceConfirm> {
      * @return list
      */
     List<OaFinanceConfirm> selectAllData();
+
+    /**
+     * 批量删除数据
+     *
+     * @param ids ids
+     * @return int
+     */
+    int batchDelete(String[] ids);
 }

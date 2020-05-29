@@ -64,4 +64,9 @@ public class OaProductionEngineeringServiceImpl implements OaProductionEngineeri
     public int deleteByPrimaryKey(Integer id) {
         return oaProductionEngineeringMapper.deleteByPrimaryKey(id);
     }
+
+    @Override
+    public int batchDelete(String[] ids) {
+        return oaProductionEngineeringMapper.batchDelete(ids);
+    }
 }

@@ -30,4 +30,12 @@ public interface OaQualityPersonnelMapper extends Mapper<OaQualityPersonnel> {
      * @return list
      */
     List<OaQualityPersonnel> selectAllData();
+
+    /**
+     * 批量删除数据
+     *
+     * @param ids ids
+     * @return int
+     */
+    int batchDelete(String[] ids);
 }

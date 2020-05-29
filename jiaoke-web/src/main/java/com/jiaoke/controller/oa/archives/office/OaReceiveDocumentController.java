@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -36,7 +37,7 @@ public class OaReceiveDocumentController {
     @RequestMapping(value = "/toReceiveDocument")
     public String toReceiveDocument(int page, Model model) {
         model.addAttribute("currentPage", JsonHelper.toJSONString(page));
-        return "oa/archives/office/receive_document/index";
+        return "oa/archives/office/receive_document/indexs";
     }
 
     /**
@@ -47,7 +48,7 @@ public class OaReceiveDocumentController {
     @RequestMapping(value = "/index")
     @ResponseBody
     public String index(int page) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<OaReceiveDocument> oaReceiveDocumentList = oaReceiveDocumentService.selectAll();
         PageInfo<OaReceiveDocument> pageInfo = new PageInfo<>(oaReceiveDocumentList);
         return JsonHelper.toJSONString(pageInfo);
@@ -87,7 +88,7 @@ public class OaReceiveDocumentController {
     @RequestMapping(value = "/docTypeFilter")
     @ResponseBody
     public String docTypeFilter(int publishingDepartment, int page) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<OaReceiveDocument> oaReceiveDocumentList = oaReceiveDocumentService.select(publishingDepartment);
         PageInfo<OaReceiveDocument> pageInfo = new PageInfo<>(oaReceiveDocumentList);
         return JsonHelper.toJSONString(pageInfo);
@@ -102,7 +103,7 @@ public class OaReceiveDocumentController {
     @RequestMapping(value = "/documentNameFilter")
     @ResponseBody
     public String documentNameFilter(String documentName, int page) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<OaReceiveDocument> oaReceiveDocumentList = oaReceiveDocumentService.getSelectByName(documentName);
         PageInfo<OaReceiveDocument> pageInfo = new PageInfo<>(oaReceiveDocumentList);
         return JsonHelper.toJSONString(pageInfo);
@@ -117,7 +118,7 @@ public class OaReceiveDocumentController {
     @RequestMapping(value = "/receiveDateFilter")
     @ResponseBody
     public String receiveDateFilter(String receiveDate, int page) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<OaReceiveDocument> oaReceiveDocumentList = oaReceiveDocumentService.getSelectByReceiveDate(receiveDate);
         PageInfo<OaReceiveDocument> pageInfo = new PageInfo<>(oaReceiveDocumentList);
         return JsonHelper.toJSONString(pageInfo);
@@ -176,10 +177,26 @@ public class OaReceiveDocumentController {
      * @return edit.jsp
      */
     @RequestMapping(value = "/toReceiveDocumentDetails")
-    public String particulars(int id, int prev,Model model) {
+    public String particulars(int id, int prev, Model model) {
         OaReceiveDocument oaReceiveDocument = oaReceiveDocumentService.selectByPrimaryKey(id);
         model.addAttribute("oaReceiveDocument", oaReceiveDocument);
         model.addAttribute("prev", JsonHelper.toJSONString(prev));
         return "oa/archives/office/receive_document/details";
+    }
+
+    /**
+     * 批量删除
+     *
+     * @param ids ids
+     * @return int
+     */
+    @RequestMapping(value = "/batchDelete")
+    @ResponseBody
+    public String batchDeleteNotice(@RequestParam(value = "ids[]") String[] ids) {
+        if (oaReceiveDocumentService.batchDelete(ids) >= 0) {
+            return "success";
+        } else {
+            return "error";
+        }
     }
 }

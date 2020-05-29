@@ -64,4 +64,9 @@ public class OaOperateMeetingServiceImpl implements OaOperateMeetingService {
     public int deleteByPrimaryKey(Integer id) {
         return oaOperateMeetingMapper.deleteByPrimaryKey(id);
     }
+
+    @Override
+    public int batchDelete(String[] ids) {
+        return oaOperateMeetingMapper.batchDelete(ids);
+    }
 }

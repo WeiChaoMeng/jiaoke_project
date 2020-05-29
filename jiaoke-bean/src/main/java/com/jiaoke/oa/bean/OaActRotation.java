@@ -184,6 +184,7 @@ public class OaActRotation {
      * 部门负责人
      */
     private String departmentPrincipal;
+    private String humanAffairs;
 
     /**
      * 状态
@@ -541,5 +542,13 @@ public class OaActRotation {
 
     public void setTransferPrincipalDateT(String transferPrincipalDateT) {
         this.transferPrincipalDateT = transferPrincipalDateT;
+    }
+
+    public String getHumanAffairs() {
+        return humanAffairs;
+    }
+
+    public void setHumanAffairs(String humanAffairs) {
+        this.humanAffairs = humanAffairs;
     }
 }

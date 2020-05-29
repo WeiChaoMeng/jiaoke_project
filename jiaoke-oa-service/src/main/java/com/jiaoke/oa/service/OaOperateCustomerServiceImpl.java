@@ -64,4 +64,9 @@ public class OaOperateCustomerServiceImpl implements OaOperateCustomerService {
     public int deleteByPrimaryKey(Integer id) {
         return oaOperateCustomerMapper.deleteByPrimaryKey(id);
     }
+
+    @Override
+    public int batchDelete(String[] ids) {
+        return oaOperateCustomerMapper.batchDelete(ids);
+    }
 }

@@ -10,6 +10,7 @@ import com.jiaoke.oa.service.OaOperateCustomerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -37,7 +38,7 @@ public class OaOperateCustomerController {
     @RequestMapping(value = "/toIndex")
     public String toOperateContract(int page, Model model) {
         model.addAttribute("currentPage", JsonHelper.toJSONString(page));
-        return "oa/archives/operate/operate_customer/index";
+        return "oa/archives/operate/operate_customer/indexs";
     }
 
     /**
@@ -48,7 +49,7 @@ public class OaOperateCustomerController {
     @RequestMapping(value = "/loadingData")
     @ResponseBody
     public String operateContract(int page) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<OaOperateCustomer> oaOperateCustomerList = oaOperateCustomerService.selectAll();
         PageInfo<OaOperateCustomer> pageInfo = new PageInfo<>(oaOperateCustomerList);
         return JsonHelper.toJSONString(pageInfo);
@@ -64,7 +65,7 @@ public class OaOperateCustomerController {
     @RequestMapping(value = "/searchFilter")
     @ResponseBody
     public String searchFilter(int page, String projectName) {
-        PageHelper.startPage(page, 15);
+        PageHelper.startPage(page, 12);
         List<OaOperateCustomer> oaOperateCustomerList = oaOperateCustomerService.searchFilter(projectName);
         PageInfo<OaOperateCustomer> pageInfo = new PageInfo<>(oaOperateCustomerList);
         return JsonHelper.toJSONString(pageInfo);
@@ -156,5 +157,21 @@ public class OaOperateCustomerController {
             return "error";
         }
         return "success";
+    }
+
+    /**
+     * 批量删除
+     *
+     * @param ids ids
+     * @return int
+     */
+    @RequestMapping(value = "/batchDelete")
+    @ResponseBody
+    public String batchDeleteNotice(@RequestParam(value = "ids[]") String[] ids) {
+        if (oaOperateCustomerService.batchDelete(ids) >= 0) {
+            return "success";
+        } else {
+            return "error";
+        }
     }
 }

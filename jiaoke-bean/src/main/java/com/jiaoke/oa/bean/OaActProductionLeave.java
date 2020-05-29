@@ -92,6 +92,7 @@ public class OaActProductionLeave {
      * 人事审批时间
      */
     private String personnelDate;
+    private String humanAffairs;
 
     /**
      * 状态
@@ -296,5 +297,13 @@ public class OaActProductionLeave {
 
     public void setState(Integer state) {
         this.state = state;
+    }
+
+    public String getHumanAffairs() {
+        return humanAffairs;
+    }
+
+    public void setHumanAffairs(String humanAffairs) {
+        this.humanAffairs = humanAffairs;
     }
 }

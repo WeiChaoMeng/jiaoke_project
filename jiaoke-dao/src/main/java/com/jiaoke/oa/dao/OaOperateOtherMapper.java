@@ -30,4 +30,12 @@ public interface OaOperateOtherMapper extends Mapper<OaOperateOther> {
      * @return list
      */
     List<OaOperateOther> selectAllData();
+
+    /**
+     * 批量删除数据
+     *
+     * @param ids ids
+     * @return int
+     */
+    int batchDelete(String[] ids);
 }
