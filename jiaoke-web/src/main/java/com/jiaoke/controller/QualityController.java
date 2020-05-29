@@ -24,6 +24,7 @@ import com.jiaoke.quality.bean.QualityProjectItem;
 import com.jiaoke.quality.bean.QualityRatioModel;
 import com.jiaoke.quality.bean.QualityRatioTemplate;
 import com.jiaoke.quality.service.*;
+import org.activiti.bpmn.model.UserTask;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.ManagementService;
 import org.activiti.engine.TaskService;
@@ -1767,111 +1768,126 @@ public class QualityController {
      */
     @RequestMapping(value = "/experimentApprovalSubmit")
     @ResponseBody
-    public String experimentApprovalSubmit(String processingOpinion, String taskId,Integer flag,String chargePerson,String checkPerson,String id) {
+    public String experimentApprovalSubmit(String processingOpinion, String taskId,Integer flag,String chargePerson,String checkPerson,String id, Integer noticeDepartment) {
 
         //结束标识
         String end = "end";
+
         //发起人
-        String promoter = "promoter";
-        //回退
-        String back = "back";
-        //审核人处理结果
-        String experimentReviewerDecide = "eg0";
-        //负责人处理结果
-        String experimentPrincipalDecide = "eg1";
-        //知会组
-        String notifyGroup = "notifyGroup";
+        String reportPerson = "report_person";
+        //网关-审核人
+        String reviewerEG = "reviewerEG";
+        //网关-负责人
+        String supervisorEG = "principalEG";
 
         if (processingOpinion == null){
             processingOpinion = " ";
         }
 
         if (chargePerson != null | checkPerson != null){
+            String noticeDepStr = "";
+            if (noticeDepartment == 0){
+                noticeDepStr = "全部";
+            }else if(noticeDepartment == 1){
+                noticeDepStr = "材料部";
+            }else if(noticeDepartment == 2){
+                noticeDepStr = "生产设备部";
+            }
             //更新审批人签字
-            qualityExperimentalManagerInf.updateExperimentalItemApproval(id,chargePerson,checkPerson);
+            qualityExperimentalManagerInf.updateExperimentalItemApproval(id,chargePerson,checkPerson,noticeDepartment,noticeDepStr);
         }
 
+        /**/
         Task task = activitiUtil.getTaskByTaskId(taskId);
         if (task == null) {
             return "error";
-        }
-
-        //同意
-        if (flag == 1) {
-            //下个节点
+        }else{
             String nextNode = activitiUtil.getNextNode(task.getProcessDefinitionId(), task.getTaskDefinitionKey());
 
-            //下个节点是否为end直接结束
-            if (end.equals(nextNode)) {
-                //更新实验项目状态
-                qualityExperimentalManagerInf.updateExperimentalItemStateById(id,3);
-                //插入批注
-                Authentication.setAuthenticatedUserId(getCurrentUser().getNickname());
-                taskService.addComment(taskId, task.getProcessInstanceId(), processingOpinion);
+            //网关
+            if (reviewerEG.equals(nextNode)) {
+                //同意
+                if (flag.equals(1)) {
+                    Map<String, Object> map = new HashMap<>(16);
+                    UserInfo userInfo = userInfoService.getUserInfoByPermission("experimentPrincipal");
+                    map.put("charge_person", userInfo.getId());
+                    map.put("whether", 0);
+                    activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
+                    return "success";
+                } else {
+                    List<Object> notifyGroupList = new ArrayList<>();
+                    if (noticeDepartment == 0){
+                        UserInfo materialPrincipal = userInfoService.getUserInfoByPermission("materialPrincipal");
+                        UserInfo producePrincipal = userInfoService.getUserInfoByPermission("producePrincipal");
+                        notifyGroupList.add(materialPrincipal.getId());
+                        notifyGroupList.add(producePrincipal.getId());
+                    }else if (noticeDepartment == 1){
+                        UserInfo materialPrincipal = userInfoService.getUserInfoByPermission("materialPrincipal");
+                        notifyGroupList.add(materialPrincipal.getId());
+                    }else{
+                        UserInfo producePrincipal = userInfoService.getUserInfoByPermission("producePrincipal");
+                        notifyGroupList.add(producePrincipal.getId());
+                    }
+                    Map<String, Object> map = new HashMap<>(16);
+                    map.put("whether", 1);
+                    map.put("notice_dep_str_list", notifyGroupList);
+                    activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
+                    return "success";
+                }
+
+            } else if (supervisorEG.equals(nextNode)) {
+                //同意
+                if (flag.equals(1)) {
+                    Map<String, Object> map = new HashMap<>(16);
+                    map.put("whether", 0);
+                    map.put("report_person", activitiUtil.getStartUserId(task.getProcessInstanceId()));
+                    activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
+                    return "success";
+                } else {
+                    List<Object> notifyGroupList = new ArrayList<>();
+                    if (noticeDepartment == 0){
+                        UserInfo materialPrincipal = userInfoService.getUserInfoByPermission("materialPrincipal");
+                        UserInfo producePrincipal = userInfoService.getUserInfoByPermission("producePrincipal");
+                        notifyGroupList.add(materialPrincipal.getId());
+                        notifyGroupList.add(producePrincipal.getId());
+                    }else if (noticeDepartment == 1){
+                        UserInfo materialPrincipal = userInfoService.getUserInfoByPermission("materialPrincipal");
+                        notifyGroupList.add(materialPrincipal.getId());
+                    }else if (noticeDepartment == 2){
+                        UserInfo producePrincipal = userInfoService.getUserInfoByPermission("producePrincipal");
+                        notifyGroupList.add(producePrincipal.getId());
+                    }
+                    Map<String, Object> map = new HashMap<>(16);
+                    map.put("whether", 1);
+                    map.put("notice_dep_str_list", notifyGroupList);
+                    activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
+                    return "success";
+                }
+
+            }  else if (end.equals(nextNode)) {
                 activitiUtil.endProcess(taskId);
                 return "success";
+            } else {
+                UserTask userTask = activitiUtil.getUserTask(task.getProcessDefinitionId(), nextNode);
+                if (nextNode.equals(userTask.getId())) {
+                    String enforcer = userTask.getAssignee().substring(userTask.getAssignee().indexOf("{") + 1, userTask.getAssignee().indexOf("}"));
 
-                //材料部审批后的知会
-            } else if(notifyGroup.equals(nextNode)){
-                Map<String, Object> map = new HashMap<>(16);
-                ArrayList<String> list = new ArrayList<>();
-                //当前执行人批注
-                Authentication.setAuthenticatedUserId(getCurrentUser().getNickname());
-                taskService.addComment(taskId, task.getProcessInstanceId(), processingOpinion);
-                //查询知会人（多个）
-                List<UserInfo> userInfoList = userInfoService.selectMultipleByPermission(notifyGroup);
-                for (UserInfo userInfo : userInfoList) {
-                    list.add(userInfo.getId().toString());
+                    if (reportPerson.equals(enforcer)) {
+                        Map<String, Object> map = new HashMap<>(16);
+                        map.put(reportPerson, activitiUtil.getStartUserId(task.getProcessInstanceId()));
+                        activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
+                        return "success";
+                    } else {
+                        //直接结束
+                        activitiUtil.endProcess(taskId);
+                        return "success";
+                    }
+                } else {
+                    //直接结束
+                    activitiUtil.endProcess(taskId);
+                    return "success";
                 }
-                map.put("userList", list);
-                taskService.complete(taskId, map);
-                return "success";
-
-                //审核人通过
-            } else if(experimentReviewerDecide.equals(nextNode)){
-                Map<String, Object> map = new HashMap<>(16);
-                UserInfo userInfo = userInfoService.getUserInfoByPermission("experimentPrincipal");
-                Authentication.setAuthenticatedUserId(getCurrentUser().getNickname());
-                taskService.addComment(taskId, task.getProcessInstanceId(), processingOpinion);
-                map.put("decide", 0);
-                map.put("experimentPrincipal",  userInfo.getId());
-                taskService.complete(taskId, map);
-                return "success";
-
-                //负责人通过
-            }else if (experimentPrincipalDecide.equals(nextNode)) {
-                Map<String, Object> map = new HashMap<>(16);
-                map.put("decide", 0);
-                map.put(promoter, activitiUtil.getStartUserId(task.getProcessInstanceId()));
-                activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
-                return "success";
-            }else {
-                return "error";
             }
-
-            //发送材料部
-        } else if (flag == 3){
-            Map<String, Object> map = new HashMap<>(16);
-            UserInfo userInfo = userInfoService.getUserInfoByPermission("materialPrincipal");
-            Authentication.setAuthenticatedUserId(getCurrentUser().getNickname());
-            taskService.addComment(taskId, task.getProcessInstanceId(), processingOpinion);
-            map.put("decide", 1);
-            map.put("materialPrincipal",  userInfo.getId());
-            taskService.complete(taskId, map);
-            return "success";
-
-            //回退
-        } else {
-            //插入批注
-            Authentication.setAuthenticatedUserId(getCurrentUser().getNickname());
-            taskService.addComment(taskId, task.getProcessInstanceId(), processingOpinion);
-            //驳回
-            managementService.executeCommand(new TargetFlowNodeCommand(task.getId(), back));
-            //修改协同表单表单状态
-            oaCollaborationService.updateState(id,3);
-            //更新实验项目状态
-            qualityExperimentalManagerInf.updateExperimentalItemStateById(id,2);
-            return "success";
         }
     }
 

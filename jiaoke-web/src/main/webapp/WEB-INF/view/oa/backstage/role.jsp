@@ -12,7 +12,6 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link rel="stylesheet" href="../../../../static/new/css/font.css">
-    <script src="../../../../static/new/lib/layui/layui.js" charset="utf-8"></script>
     <link rel="stylesheet" href="../../../../static/new/css/xadmin.css">
     <link rel="stylesheet" href="../../../../static/new/css/paging.css">
 </head>
@@ -93,10 +92,11 @@
         </div>
     </div>
 </div>
-
+<div id="modalWindowRole"></div>
 </body>
-<script type="text/javascript" src="../../../../static/js/jquery.js"></script>
+<script src="../../../../static/js/jquery.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="../../../../static/js/paging/jqPaginator.js"></script>
+<script src="../../../../static/tree/assets/layui/layui.js"></script>
 <script type="text/javascript" src="../../../../static/new/js/xadmin.js"></script>
 <script>
     //设置当前页
@@ -111,6 +111,9 @@
         loadData(currentPageNum);
         loadPage(1);
         itselfFrameId = window.frameElement && window.frameElement.id || '';
+        layui.extend({
+            treetable: 'treetable-lay/treetable'
+        })
     });
 
     //加载数据
@@ -221,7 +224,7 @@
                     '<td class="td-manage" style="white-space: nowrap;">\n' +
                     '<button class="layui-btn layui-btn layui-btn-xs" onclick="editRole(' + roleInfoList[i].id + ')"><i class="layui-icon">&#xe642;</i>编辑</button>\n' +
                     '<button class="layui-btn-danger layui-btn layui-btn-xs" onclick="deleteRole(' + roleInfoList[i].id + ')"><i class="layui-icon">&#xe640;</i>删除</button>\n' +
-                    '<button class="layui-btn layui-btn-warm layui-btn-xs" onclick="binding(' + roleInfoList[i].id + ')"><i class="layui-icon">&#xe64c;</i>绑定权限</button>\n' +
+                    '<button class="layui-btn layui-btn-warm layui-btn-xs" onclick="bindingPowerTest(' + roleInfoList[i].id + ')"><i class="layui-icon">&#xe64c;</i>绑定权限</button>\n' +
                     '</td>';
                 roleInfo += '</tr>';
             }
@@ -257,11 +260,6 @@
                 layer.msg("出错！");
             }
         })
-    }
-
-    //绑定权限
-    function binding(id) {
-        window.parent.bindingPowerTest(id, $('#page').val(), itselfFrameId);
     }
 
     //删除用户
@@ -318,6 +316,111 @@
         layui.use(['laydate', 'form'], function () {
             var form = layui.form;
             form.render('checkbox');
+        })
+    }
+
+    //绑定权限
+    function binding(id) {
+        bindingPowerTest(id, $('#page').val(), itselfFrameId);
+    }
+
+    //后台管理 - 权限管理 - 展示数据
+    function bindingPowerTest(id) {
+        $('#modalWindowRole').html('<div id="bindingPowerTest" style="padding: 15px 0">\n' +
+            '    <div class="cursor_hand layui-container layui-text" style="width: 850px;">\n' +
+            '        <table id="table1" lay-filter="table1"></table>\n' +
+            '    </div>\n' +
+            '    <div style="margin-top: 15px;text-align: center">\n' +
+            '        <input type="button" value="确认" onclick="confirmTest()" class="layui-btn">\n' +
+            '    </div>\n' +
+            '    <input type="hidden" id="bindingPermissionId" value="' + id + '">\n' +
+            '</div>');
+
+        window.lar = layer.open({
+            title: '绑定权限',
+            type: 1,
+            area: ['922px', '456px'],
+            shadeClose: true, //点击遮罩关闭
+            content: $("#bindingPowerTest"),
+            offset: "auto",
+            end: function () {
+                $('#modalWindowRole').html("");
+            }
+        });
+
+        layui.config({
+            base: '../../static/tree/module/'
+        }).use(['layer', 'table', 'treetable'], function () {
+            var $ = layui.jquery;
+            var table = layui.table;
+            var layer = layui.layer;
+            var treetable = layui.treetable;
+
+            // 渲染表格
+            var renderTable = function () {
+                //加载层
+                layer.load(2);
+                treetable.render({
+                    treeColIndex: 1,
+                    treeSpid: -1,
+                    treeIdName: 'id',
+                    treePidName: 'pid',
+                    treeDefaultClose: true,
+                    treeLinkage: false,
+                    elem: '#table1',
+                    // url: '../../../../static/tree/newdata.json',
+                    url: '/backstageManagement/toBindingPower?id=' + id,
+                    page: false,
+                    cols: [[
+                        {type: 'checkbox'},
+                        {field: 'description', title: '权限名称'},
+                        {field: 'url', title: '权限标识'},
+                        {field: 'createTime', title: '创建日期'}
+                    ]],
+                    done: function () {
+                        layer.closeAll('loading');
+                    }
+                });
+            };
+            renderTable();
+        });
+    }
+
+
+    //提交绑定
+    function confirmTest() {
+        var table = layui.table;
+        var form = layui.form;
+
+        //用户id
+        var roleId = $('#bindingPermissionId').val();
+        var array = [];
+
+        var checkStatus = table.checkStatus('table1');
+        var checkData = checkStatus.data; //获取选中的数据
+        for (var i = 0; i < checkData.length; i++) {
+            array.push(checkData[i].id);
+        }
+
+        form.render();
+
+        $.ajax({
+            type: "post",
+            url: '/backstageManagement/bindingPower',
+            data: 'roleId=' + roleId + '&array=' + array,
+            success: function (data) {
+                if (data === 'success') {
+                    layer.close(window.lar);
+                    layer.msg('绑定角色成功！');
+                    window.location.href = "${path}/backstageManagement/toRoleManager?page=" + $('#page').val();
+                    $('#modalWindow').html("");
+                } else {
+                    layer.msg('绑定角色失败！');
+                }
+            },
+            error: function (result) {
+                layer.msg("出错！");
+            }
         })
     }
 </script>

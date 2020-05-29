@@ -47,7 +47,7 @@
                 <a><i title="展开左侧栏" class="iconfont">&#xe699;</i></a>
             </div>
 
-            <ul class="layui-nav right" lay-filter="">
+            <ul class="layui-nav right" style="padding: 0 40px" lay-filter="">
                 <li class="layui-nav-item">
                     <a href="javascript:;">${userInfo.nickname}</a>
                     <dl class="layui-nav-child">

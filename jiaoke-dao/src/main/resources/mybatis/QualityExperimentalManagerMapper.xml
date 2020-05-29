@@ -739,6 +739,12 @@
         <if test="checkPerson != null" >
             check_person = #{checkPerson}
         </if>
+        <if test="noticeDep != null" >
+            , notice_dep = #{noticeDep}
+        </if>
+        <if test="noticeDepStr != null" >
+            , notice_dep_str = #{noticeDepStr}
+        </if>
         WHERE Id =#{id}
     </update>
 

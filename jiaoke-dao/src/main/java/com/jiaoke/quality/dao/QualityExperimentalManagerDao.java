@@ -513,7 +513,11 @@ public interface QualityExperimentalManagerDao {
      * @param checkPerson 审核人
      * @return int
      */
-    int updateExperimentalApproval(@Param("id") String id,@Param("chargePerson") String chargePerson,@Param("checkPerson") String checkPerson);
+    int updateExperimentalApproval(@Param("id") String id,
+                                   @Param("chargePerson") String chargePerson,
+                                   @Param("checkPerson") String checkPerson,
+                                   @Param("noticeDep") Integer noticeDep,
+                                   @Param("noticeDepStr") String noticeDepStr);
 
     /**
      * 根据id更新实验数据状态

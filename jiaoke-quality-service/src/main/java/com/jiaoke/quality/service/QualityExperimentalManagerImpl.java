@@ -515,15 +515,20 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
 
                 //添加成功后开启流程
                 if (oaCollaborationMapper.insertData(collaboration) > 0) {
-                    //获取拥有查表计数人权限的用户信息
-                    UserInfo userInfo = userInfoMapper.selectByPermission("experimentReviewer");
+
                     Map<String, Object> map = new HashMap<>(16);
-                    map.put("experimentReviewer", userInfo.getId());
+                    List<Object> experimentReviewerList = new ArrayList<>();
+                    List<UserInfo> userInfoList = userInfoMapper.selectMultipleByPermission("experimentReviewer");
+                    for (UserInfo userInfo : userInfoList) {
+                        experimentReviewerList.add(userInfo.getId());
+                    }
+//                    UserInfo userInfo = userInfoMapper.selectByPermission("experimentReviewer");
+                    map.put("check_person_list", experimentReviewerList);
                     //businessKey格式为 mysql表名：新增数据id
                     ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
                     processEngine.getIdentityService().setAuthenticatedUserId(getCurrentUser().getId().toString());
                     //开启流程实例
-                    processEngine.getRuntimeService().startProcessInstanceByKey("qc_experimental2", "quality_test_lab_report:" + id, map);
+                    processEngine.getRuntimeService().startProcessInstanceByKey("qc_experimental3", "quality_test_lab_report:" + id, map);
                 }
 
             }
@@ -840,8 +845,8 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
     /*************************************未完实验End****************************************************/
 
     @Override
-    public int updateExperimentalItemApproval(String id, String chargePerson, String checkPerson) {
-        return qualityExperimentalManagerDao.updateExperimentalApproval(id,chargePerson,checkPerson);
+    public int updateExperimentalItemApproval(String id, String chargePerson, String checkPerson, Integer noticeDep, String noticeDepStr) {
+        return qualityExperimentalManagerDao.updateExperimentalApproval(id,chargePerson,checkPerson,noticeDep,noticeDepStr);
     }
 
     @Override

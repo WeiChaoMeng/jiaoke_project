@@ -168,18 +168,29 @@ public class OaActCardController {
     @ResponseBody
     public String approvalApi(String id, String taskId) {
         HashMap<String, Object> map = new HashMap<>(16);
-        OaActCard oaActCard = oaActCardService.selectByPrimaryKey(id);
         String nickname = getCurrentUser().getNickname();
-        //根据发起者id获取所属部门id
+        OaActCard oaActCard = oaActCardService.selectByPrimaryKey(id);
+        String principal;
+        String principalT = null;
         String departmentId = userInfoService.selectDepartmentByUserId(oaActCard.getPromoter());
+        if ("single".equals(oaActCard.getDepartmentPrincipal())){
+            String principalId = departmentService.selectEnforcerId("principal", departmentId);
+            principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        }else if (oaActCard.getDepartmentPrincipal().contains(",")){
+            String[] split = oaActCard.getDepartmentPrincipal().split(",");
+            principal = userInfoService.getNicknameById(Integer.valueOf(split[0]));
+            principalT = userInfoService.getNicknameById(Integer.valueOf(split[1]));
+        }else{
+             principal = userInfoService.getNicknameById(Integer.valueOf(oaActCard.getDepartmentPrincipal()));
+        }
+
         //选择执行者Id
-        String principalId = departmentService.selectEnforcerId("principal", departmentId);
         String supervisorId = departmentService.selectEnforcerId("supervisor", departmentId);
         UserInfo userInfo = userInfoService.getUserInfoByPermission("card_approval");
-        String principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
         String supervisor = userInfoService.getNicknameById(Integer.valueOf(supervisorId));
         map.put("nickname", nickname);
         map.put("principal", principal);
+        map.put("principalT", principalT);
         map.put("supervisor", supervisor);
         map.put("cardSupervisor", userInfo.getNickname());
         map.put("card", oaActCard);
@@ -480,15 +491,27 @@ public class OaActCardController {
     public String cardDetailsApi(String id) {
         HashMap<String, Object> map = new HashMap<>(16);
         OaActCard oaActCard = oaActCardService.selectByPrimaryKey(id);
-        //根据发起者id获取所属部门id
+
+        String principal;
+        String principalT = null;
         String departmentId = userInfoService.selectDepartmentByUserId(oaActCard.getPromoter());
+        if ("single".equals(oaActCard.getDepartmentPrincipal())){
+            String principalId = departmentService.selectEnforcerId("principal", departmentId);
+            principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        }else if (oaActCard.getDepartmentPrincipal().contains(",")){
+            String[] split = oaActCard.getDepartmentPrincipal().split(",");
+            principal = userInfoService.getNicknameById(Integer.valueOf(split[0]));
+            principalT = userInfoService.getNicknameById(Integer.valueOf(split[1]));
+        }else{
+            principal = userInfoService.getNicknameById(Integer.valueOf(oaActCard.getDepartmentPrincipal()));
+        }
+
         //选择执行者Id
-        String principalId = departmentService.selectEnforcerId("principal", departmentId);
         String supervisorId = departmentService.selectEnforcerId("supervisor", departmentId);
-        UserInfo userInfo = userInfoService.getUserInfoByPermission("cardApproval");
-        String principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        UserInfo userInfo = userInfoService.getUserInfoByPermission("card_approval");
         String supervisor = userInfoService.getNicknameById(Integer.valueOf(supervisorId));
         map.put("principal", principal);
+        map.put("principalT", principalT);
         map.put("supervisor", supervisor);
         map.put("cardSupervisor", userInfo.getNickname());
         map.put("card", oaActCard);
