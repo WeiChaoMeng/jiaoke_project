@@ -3,81 +3,83 @@
 <mapper namespace="com.jiaoke.quality.dao.QualityDataSummaryDao">
 
     <select id="selectThreeDayData" resultType="java.util.Map">
+        SELECT * FROM
+        (
         (SELECT
-                'data1' AS crewNums,
-                date_format(QMRD.produce_date,'%Y-%m-%d') as  produce_date,
-                date_format(QMRD.produce_time,'%H:%i:%S') as produce_time,
-                QMRD.produce_car_num,
-                QMRD.produce_disc_num,
-                QMRD.project_name,
-                QMRD.produce_proportioning_num,
-                QPM.pro_name,
-                QMRD.produce_car_num,
-                QMRD.produce_custom_num,
-                QMRD.material_aggregate_6,
-                QMRD.material_aggregate_5,
-                QMRD.material_aggregate_4,
-                QMRD.material_aggregate_3,
-                QMRD.material_aggregate_2,
-                QMRD.material_aggregate_1,
-                QMRD.material_stone_1,
-                QMRD.material_stone_2,
-                QMRD.material_asphalt,
-                QMRD.material_regenerate,
-                QMRD.material_additive,
-                QMRD.material_total,
-                QMRD.temperature_warehouse_1,
-                QMRD.temperature_mixture,
-                QMRD.temperature_duster,
-                QMRD.temperature_asphalt,
-                QMRD.temperature_aggregate
-         FROM
-              quality_monitoring_realtime_data1 AS QMRD
-                  INNER JOIN
-                      quality_proportioning_message AS QPM
-                      ON QMRD.produce_proportioning_num = QPM.crew1_modele_id
-         WHERE
-                 DATE_SUB(CURDATE(), INTERVAL 2 DAY) &lt;= date(QMRD.produce_date)
-           AND YEAR(QPM.create_time) = YEAR(NOW())
-         order by QMRD.id DESC )
+        'data1' AS crewNums,
+        date_format(QMRD.produce_date,'%Y-%m-%d') as  produce_date,
+        date_format(QMRD.produce_time,'%H:%i:%S') as produce_time,
+        QMRD.produce_car_num,
+        QMRD.produce_disc_num,
+        QMRD.project_name,
+        QMRD.produce_proportioning_num,
+        QPM.pro_name,
+        QMRD.produce_custom_num,
+        QMRD.material_aggregate_6,
+        QMRD.material_aggregate_5,
+        QMRD.material_aggregate_4,
+        QMRD.material_aggregate_3,
+        QMRD.material_aggregate_2,
+        QMRD.material_aggregate_1,
+        QMRD.material_stone_1,
+        QMRD.material_stone_2,
+        QMRD.material_asphalt,
+        QMRD.material_regenerate,
+        QMRD.material_additive,
+        QMRD.material_total,
+        QMRD.temperature_warehouse_1,
+        QMRD.temperature_mixture,
+        QMRD.temperature_duster,
+        QMRD.temperature_asphalt,
+        QMRD.temperature_aggregate
+        FROM
+        quality_monitoring_realtime_data1 AS QMRD
+        INNER JOIN
+        quality_proportioning_message AS QPM
+        ON QMRD.produce_proportioning_num = QPM.crew1_modele_id
+        WHERE
+        DATE_SUB(CURDATE(), INTERVAL 2 DAY) &lt;= date(QMRD.produce_date)
+        AND YEAR(QPM.create_time) = YEAR(NOW())
+        order by QMRD.id DESC )
         Union ALL
-                (SELECT
-                        'data2' AS crewNums,
-                        date_format(QMRD.produce_date,'%Y-%m-%d') as  produce_date,
-                        date_format(QMRD.produce_time,'%H:%i:%S') as produce_time,
-                        QMRD.produce_car_num,
-                        QMRD.produce_disc_num,
-                        QMRD.project_name,
-                        QMRD.produce_proportioning_num,
-                        QPM.pro_name,
-                        QMRD.produce_car_num,
-                        QMRD.produce_custom_num,
-                        QMRD.material_aggregate_6,
-                        QMRD.material_aggregate_5,
-                        QMRD.material_aggregate_4,
-                        QMRD.material_aggregate_3,
-                        QMRD.material_aggregate_2,
-                        QMRD.material_aggregate_1,
-                        QMRD.material_stone_1,
-                        QMRD.material_stone_2,
-                        QMRD.material_asphalt,
-                        QMRD.material_regenerate,
-                        QMRD.material_additive,
-                        QMRD.material_total,
-                        QMRD.temperature_warehouse_1,
-                        QMRD.temperature_mixture,
-                        QMRD.temperature_duster,
-                        QMRD.temperature_asphalt,
-                        QMRD.temperature_aggregate
-                 FROM
-                      quality_monitoring_realtime_data2 AS QMRD
-                          INNER JOIN
-                              quality_proportioning_message AS QPM
-                              ON QMRD.produce_proportioning_num = QPM.crew2_modele_id
-                 WHERE
-                         DATE_SUB(CURDATE(), INTERVAL 2 DAY) &lt;= date(QMRD.produce_date)
-                   AND YEAR(QPM.create_time) = YEAR(NOW())
-                 order by QMRD.id DESC)
+        (SELECT
+        'data2' AS crewNums,
+        date_format(QMRD.produce_date,'%Y-%m-%d') as  produce_date,
+        date_format(QMRD.produce_time,'%H:%i:%S') as produce_time,
+        QMRD.produce_car_num,
+        QMRD.produce_disc_num,
+        QMRD.project_name,
+        QMRD.produce_proportioning_num,
+        QPM.pro_name,
+        QMRD.produce_custom_num,
+        QMRD.material_aggregate_6,
+        QMRD.material_aggregate_5,
+        QMRD.material_aggregate_4,
+        QMRD.material_aggregate_3,
+        QMRD.material_aggregate_2,
+        QMRD.material_aggregate_1,
+        QMRD.material_stone_1,
+        QMRD.material_stone_2,
+        QMRD.material_asphalt,
+        QMRD.material_regenerate,
+        QMRD.material_additive,
+        QMRD.material_total,
+        QMRD.temperature_warehouse_1,
+        QMRD.temperature_mixture,
+        QMRD.temperature_duster,
+        QMRD.temperature_asphalt,
+        QMRD.temperature_aggregate
+        FROM
+        quality_monitoring_realtime_data2 AS QMRD
+        INNER JOIN
+        quality_proportioning_message AS QPM
+        ON QMRD.produce_proportioning_num = QPM.crew2_modele_id
+        WHERE
+        DATE_SUB(CURDATE(), INTERVAL 2 DAY) &lt;= date(QMRD.produce_date)
+        AND YEAR(QPM.create_time) = YEAR(NOW())
+        order by QMRD.id DESC)
+        )AS T1
+        ORDER BY T1.produce_date DESC
     </select>
 
     <select id="selectRatioListByDateTimeAndCrew" resultType="java.util.Map">
@@ -259,7 +261,7 @@
             AND QMRD.produce_proportioning_num = ${rationId}
         </if>
         AND YEAR(QPMD.create_time) = YEAR(&apos;${startDate}&apos;)
-
+        ORDER BY QMRD.Id
     </select>
     <select id="selectRaionModelById" resultType="java.util.Map">
         SELECT
@@ -280,9 +282,8 @@
                QWPC.project_name,
                QWPC.produce_disc_num,
                QWPC.produce_crewNum,
-               QWD.*,
-               (SELECT QPM1.pro_name FROM quality_warning_promessage_crew AS QWPC1 INNER JOIN quality_proportioning_message AS QPM1 ON QWPC1.produce_ratio_id = QPM1.crew1_modele_id WHERE QWPC1.produce_ratio_id = QWPC.produce_ratio_id  LIMIT 1 ) AS crew1RatioName,
-               (SELECT QPM1.pro_name FROM quality_warning_promessage_crew AS QWPC1 INNER JOIN quality_proportioning_message AS QPM1 ON QWPC1.produce_ratio_id = QPM1.crew2_modele_id WHERE QWPC1.produce_ratio_id = QWPC.produce_ratio_id  LIMIT 1 ) AS crew2RatioName
+               QWPC.pro_name,
+               QWD.*
 
         FROM
              quality_warning_promessage_crew AS QWPC

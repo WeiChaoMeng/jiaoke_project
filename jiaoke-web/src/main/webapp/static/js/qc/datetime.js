@@ -383,7 +383,7 @@ function getProjectNameByData(id) {
             $("#project_id").append("<option value='select' >请选择</option>")
             var proNameList = res.projectList;
             //判断该日期内是否有工程
-            if (proNameList.length === 0 || proNameList){
+            if (proNameList.length === 0 || !(proNameList)){
                 layer.alert("该日期范围内无工程");
                 return false;
             }

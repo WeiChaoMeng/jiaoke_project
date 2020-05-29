@@ -56,7 +56,6 @@
             <artifactId>axiom-impl</artifactId>
             <version>1.2.12</version>
             <type>jar</type>
-            <scope>provided</scope>
         </dependency>
 
 

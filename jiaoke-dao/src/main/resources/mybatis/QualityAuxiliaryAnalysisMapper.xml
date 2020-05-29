@@ -3,46 +3,27 @@
 <mapper namespace="com.jiaoke.quality.dao.QualityAuxiliaryAnalysisDao">
 
     <select id="selelectWarningLiveDataToList" resultType="java.util.Map">
-
-        SELECT
-        sub1.*
-        FROM
-        (
         SELECT
         t1.id,
         date_format(t1.produce_date, '%Y-%m-%d') AS produce_date,
         date_format(t1.produce_time, '%H:%i:%s') AS produce_time,
         t1.produce_ratio_id,
-        t3.pro_name,
+        t1.pro_name,
         t1.produce_car_num,
         t1.produce_disc_num,
         t1.produce_user,
         t1.produce_custom_num,
         t1.produce_crewNum,
-        MAX(t2.warning_level) AS maxLevel
+        t1.max_warning_level
         FROM
         quality_warning_promessage_crew t1
-        INNER JOIN quality_warning_data t2 ON t1.id = t2.crew_id
-        INNER JOIN quality_proportioning_message t3
-
-        <choose>
-            <when test="crew == 'data1'.toString()">
-                ON t1.produce_ratio_id = t3.crew1_modele_id
-            </when>
-            <otherwise>
-                ON t1.produce_ratio_id = t3.crew2_modele_id
-            </otherwise>
-        </choose>
-
         WHERE
-
         <if test="startDate == '' and endDate == ''">
             DATE_SUB(CURDATE(), INTERVAL 3 DAY) &lt;= produce_date
         </if>
         <if test="startDate != '' and endDate != ''">
             produce_date BETWEEN #{startDate} AND #{endDate}
         </if>
-
         <if test="crew != null">
             <if test="crew == 'data1'">
                 AND produce_crewNum  = 1
@@ -51,29 +32,18 @@
                 AND produce_crewNum  = 2
             </if>
         </if>
-
         <if test="rationId != null and rationId != 'select'">
             AND produce_ratio_id = #{rationId}
         </if>
-
-        GROUP BY
-        t1.id
-        ) AS sub1
-        WHERE
-        sub1.maxLevel = #{warningLive}
-        LIMIT #{pageFirstNum},#{eachPageDataNum}
+        AND max_warning_level = #{warningLive}
+        LIMIT #{pageFirstNum},#{eachPageDataNum};
     </select>
 
     <select id="selelectCountWarningLive" resultType="int">
-
         SELECT
-        COUNT(SUB1.id)
-        FROM
-        (SELECT
-        t1.*, MAX(t2.warning_level) AS maxLevel
+        COUNT(t1.id)
         FROM
         quality_warning_promessage_crew t1
-        INNER JOIN quality_warning_data t2 ON t1.id = t2.crew_id
         WHERE
         <if test="startDate == '' and endDate == ''">
             DATE_SUB(CURDATE(), INTERVAL 3 DAY) &lt;= produce_date
@@ -92,9 +62,7 @@
         <if test="rationId != null and rationId != 'select'">
             AND produce_ratio_id = #{rationId}
         </if>
-        GROUP BY
-        t1.id) AS SUB1
-        WHERE SUB1.maxLevel &lt;= #{warningLive};
+        AND max_warning_level = #{warningLive};
     </select>
     <select id="selectWaringData" resultType="java.util.Map">
         SELECT * FROM quality_warning_data WHERE crew_id in

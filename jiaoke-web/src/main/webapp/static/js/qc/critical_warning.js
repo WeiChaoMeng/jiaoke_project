@@ -46,7 +46,7 @@ function foreachDataArray(currentNum,dataArray) {
             + "<td>" + dataArray[i].produce_time + "</td>"
             + "<td>" + dataArray[i].produce_disc_num + "</td>"
                 + "<td>" + (dataArray[i].project_name? dataArray[i].project_name:' ') + "</td>"
-            + "<td>" + (dataArray[i].produce_crewNum === 1?  dataArray[i].crew1RatioName:dataArray[i].crew2RatioName) + "</td>"
+            + "<td>" + (dataArray[i].pro_name) + "</td>"
             + "<td>" + (dataArray[i].produce_crewNum === 1? '机组1':'机组2') + "</td>"
                 + "<td style='color: #a94442;'>" + dataArray[i].骨料1 + "级预警" + "</td>"
                 + "<td>" + dataArray[i].骨料1deviation + "%" + "</td>"
