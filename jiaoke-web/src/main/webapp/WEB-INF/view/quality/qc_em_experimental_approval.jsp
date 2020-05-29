@@ -348,7 +348,7 @@
 
     <div class="handle-container">
 
-        <shiro:hasAnyPermission name="experimentPrincipal,experimentReviewer,materialPrincipal">
+        <shiro:hasAnyPermission name="experimentPrincipal,experimentReviewer,materialPrincipal,producePrincipal">
             <div class="handle-title">
                 <div class="handle-title-script">处理意见</div>
             </div>
@@ -358,15 +358,17 @@
 
         <div class="form-but" style="margin-top: 20px;">
 
-            <shiro:hasAnyPermission name="experimentPrincipal,experimentReviewer">
-                <button type="button" class="return-but" style="margin-right: 10px;" onclick="commitApproval(2)">回退
-                </button>
-            </shiro:hasAnyPermission>
+            <%--<shiro:hasAnyPermission name="experimentPrincipal,experimentReviewer">--%>
+                <%--<button type="button" class="return-but" style="margin-right: 10px;" onclick="commitApproval(2)">回退--%>
+                <%--</button>--%>
+            <%--</shiro:hasAnyPermission>--%>
 
-            <button type="button" class="commit-but" onclick="commitApproval(1)">同意</button>
+            <button type="button" class="commit-but" style="margin-right: 10px;" onclick="commitApproval(1,99)">同意</button>
 
             <shiro:hasAnyPermission name="experimentPrincipal,experimentReviewer">
-                <button type="button" class="return-but" style="margin-right: 10px;" onclick="commitApproval(3)">发送材料部</button>
+                <button type="button" class="return-but" style="margin-right: 10px;" onclick="commitApproval(2,0)">同时发送</button>
+                <button type="button" class="return-but" style="margin-right: 10px;" onclick="commitApproval(2,1)">发送材料部</button>
+                <button type="button" class="return-but" style="margin-right: 10px;" onclick="commitApproval(2,2)">发送生产设备部</button>
             </shiro:hasAnyPermission>
         </div>
     </div>
@@ -401,7 +403,7 @@
 <script>
 
     //处理结果
-    function commitApproval(flag) {
+    function commitApproval(flag,noticeDepartment) {
         var processingOpinion = $('#processingOpinion').val();
         var taskId = $('#taskId').val();
         var chargePerson = $('#chargePerson').val();
@@ -416,6 +418,7 @@
                 'processingOpinion': processingOpinion,
                 'taskId': taskId,
                 'flag': flag,
+                'noticeDepartment': noticeDepartment,
                 'chargePerson': chargePerson,
                 'checkPerson': checkPerson,
                 'id': id

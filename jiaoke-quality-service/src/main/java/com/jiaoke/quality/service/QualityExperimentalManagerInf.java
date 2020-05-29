@@ -223,7 +223,7 @@ public interface QualityExperimentalManagerInf {
      * @param checkPerson 审核人
      * @return int
      */
-    int updateExperimentalItemApproval(String id,String chargePerson,String checkPerson);
+    int updateExperimentalItemApproval(String id,String chargePerson,String checkPerson,Integer noticeDep,String noticeDepStr);
 
     /**
      * 根据id删除实验数据

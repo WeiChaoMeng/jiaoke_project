@@ -1300,112 +1300,6 @@ function deleteRole(id, itselfFrameId) {
     );
 }
 
-//后台管理 - 权限管理 - 展示数据
-function bindingPowerTest(id, currentPage, itselfFrameId) {
-
-    $('#modalWindow').html('<div id="bindingPowerTest" style="padding: 15px 0">\n' +
-        '    <div class="cursor_hand layui-container layui-text" style="width: 850px;">\n' +
-        '        <table id="table1" lay-filter="table1"></table>\n' +
-        '    </div>\n' +
-        '    <div style="margin-top: 15px;text-align: center">\n' +
-        '        <input type="button" value="确认" onclick="confirmTest()" class="layui-btn">\n' +
-        '    </div>\n' +
-        '    <input type="hidden" id="rolePage" value="' + currentPage + '">\n' +
-        '    <input type="hidden" id="bindingPermissionId" value="' + id + '">\n' +
-        '</div>');
-
-    window.lar = layer.open({
-        title: '绑定权限',
-        type: 1,
-        area: ['922px', '456px'],
-        shadeClose: true, //点击遮罩关闭
-        content: $("#bindingPowerTest"),
-        offset: "auto",
-        end: function () {
-            $('#modalWindow').html("");
-        }
-    });
-
-    $('#subFrameId').val(itselfFrameId);
-
-    layui.config({
-        base: '../../static/tree/module/'
-    }).extend({
-        treetable: 'treetable-lay/treetable'
-    }).use(['layer', 'table', 'treetable'], function () {
-        var $ = layui.jquery;
-        var table = layui.table;
-        var layer = layui.layer;
-        var treetable = layui.treetable;
-
-        // 渲染表格
-        var renderTable = function () {
-            //加载层
-            layer.load(2);
-            treetable.render({
-                treeColIndex: 1,
-                treeSpid: -1,
-                treeIdName: 'id',
-                treePidName: 'pid',
-                treeDefaultClose: true,
-                treeLinkage: false,
-                elem: '#table1',
-                // url: '../../../../static/tree/newdata.json',
-                url: '/backstageManagement/toBindingPower?id=' + id,
-                page: false,
-                cols: [[
-                    {type: 'checkbox'},
-                    {field: 'description', title: '权限名称'},
-                    {field: 'url', title: '权限标识'},
-                    {field: 'createTime', title: '创建日期'}
-                ]],
-                done: function () {
-                    layer.closeAll('loading');
-                }
-            });
-        };
-        renderTable();
-    });
-}
-
-//提交绑定
-function confirmTest() {
-    var subFrameId = $('#subFrameId').val();
-    var table = layui.table;
-    var form = layui.form;
-
-    //用户id
-    var roleId = $('#bindingPermissionId').val();
-    var array = [];
-
-    var checkStatus = table.checkStatus('table1');
-    var checkData = checkStatus.data; //获取选中的数据
-    for (var i = 0; i < checkData.length; i++) {
-        array.push(checkData[i].id);
-    }
-
-    form.render();
-
-    $.ajax({
-        type: "post",
-        url: '/backstageManagement/bindingPower',
-        data: 'roleId=' + roleId + '&array=' + array,
-        success: function (data) {
-            if (data === 'success') {
-                layer.close(window.lar);
-                layer.msg('绑定角色成功！');
-                $("#" + subFrameId)[0].contentWindow.roleInfoPageReload($('#rolePage').val());
-                $('#modalWindow').html("");
-            } else {
-                layer.msg('绑定角色失败！');
-            }
-        },
-        error: function (result) {
-            layer.msg("出错！");
-        }
-    })
-}
-
 /**---------------协同工作----------------*/
 //协同-删除已发事项
 function deleteAlreadySend(url, id, processInstanceId, currentPage, itselfFrameId) {
@@ -2440,5 +2334,15 @@ function confirmDepartmentRecipient() {
         layer.close(window.lar);
     } else {
         layer.msg('请选择被通知人！')
+    }
+}
+
+//checkbox选中事件
+function checkboxEvent(own) {
+    var checkbox = $(own).children('td').children('input').prop('checked');
+    if (checkbox) {
+        $(own).children('td').children('input').attr("checked", false);
+    } else {
+        $(own).children('td').children('input').attr("checked", true);
     }
 }
