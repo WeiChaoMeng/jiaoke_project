@@ -11,6 +11,7 @@ import com.jiaoke.oa.service.DepartmentService;
 import com.jiaoke.oa.service.PermissionService;
 import com.jiaoke.oa.service.RoleInfoService;
 import com.jiaoke.oa.service.UserInfoService;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -603,6 +604,22 @@ public class BackstageManagementController {
     @RequestMapping(value = "/bindingDepartmentPrincipal")
     @ResponseBody
     public String bindingDepartmentPrincipal(Integer id, String principal) {
+        if (departmentService.bindingDepartmentPrincipal(id, principal) < 0) {
+            return "error";
+        }
+        return "success";
+    }
+
+    /**
+     * 绑定部门负责人（多个）
+     *
+     * @param array 角色
+     * @return userInfo
+     */
+    @RequestMapping(value = "/bindingMultiplePrincipal")
+    @ResponseBody
+    public String bindingMultiplePrincipal(Integer id, String[] array) {
+        String principal = StringUtils.join(array, ",");
         if (departmentService.bindingDepartmentPrincipal(id, principal) < 0) {
             return "error";
         }

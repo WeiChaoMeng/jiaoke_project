@@ -60,7 +60,7 @@ function selectedCode() {
         shade: [0.95, '#A8A0A1'],
         shadeClose: true, //点击遮罩关闭
         content: $('#layerDemo'),
-        end:function () {
+        end: function () {
             $('#modalWindow').html("");
         }
     });
@@ -102,7 +102,7 @@ function editPsw() {
         shadeClose: true, //点击遮罩关闭
         content: $("#editPassword"),
         offset: "auto",
-        end:function () {
+        end: function () {
             $('#modalWindow').html("");
         }
     });
@@ -1060,6 +1060,92 @@ function confirmDepartmentHead() {
     }
 }
 
+//绑定部门负责人
+function bindingPrincipal(roleList, id, currentPage, itselfFrameId) {
+    $('#modalWindow').html('<div id="bindingPrincipal" class="tab-right-div"></div>');
+    window.lar = layer.open({
+        title: '绑定部门负责人',
+        type: 1,
+        area: ['384px', '418px'],
+        shadeClose: true, //点击遮罩关闭
+        content: $("#bindingPrincipal"),
+        offset: "auto",
+        end: function () {
+            $('#modalWindow').html("");
+        }
+    });
+
+    $('#subFrameId').val(itselfFrameId);
+
+    // //角色信息
+    // var roleList = roleInfo.roleInfoList;
+    // //已绑定角色信息
+    // var possessRoleList = roleInfo.existingRoleInfo;
+
+    var roleInfoList = '';
+    roleInfoList += '<div id="RoleInformationTab" style="height: 80%;overflow: auto">';
+    roleInfoList += '<table id="permissionList" class="table-list">';
+    roleInfoList += '<tbody id="perListTbody">';
+    roleInfoList += '<input id="departmentId" type="hidden" value="' + id + '">';
+    roleInfoList += '<input id="currentPage" type="hidden" value="' + currentPage + '">';
+    for (var i = 0; i < roleList.length; i++) {
+        roleInfoList += '<tr onclick="checkboxEvent(this)" style="height: 18px">';
+        roleInfoList += '<td class="table-list-td-checkbox">';
+        roleInfoList += '<input type="checkbox" style="zoom: 120%" value="' + roleList[i].id + '" onclick="window.event.cancelBubble=true;">';
+        roleInfoList += '</td>';
+        roleInfoList += '<td class="per-list-td">' + roleList[i].nickname + '</td>';
+        roleInfoList += '</tr>';
+    }
+    roleInfoList += '</tbody>';
+    roleInfoList += '</table>';
+    roleInfoList += '</div>';
+    roleInfoList += '<div style="padding-top: 20px;text-align: center">';
+    roleInfoList += '<input type="button" value="确认" onclick="confirmBindingPrincipal()" class="layui-btn">';
+    roleInfoList += '<input type="button" value="取消" onclick="cancel()" class="layui-btn layui-btn-primary">';
+    roleInfoList += '</div>';
+
+    $('#bindingPrincipal').html(roleInfoList);
+
+    // //勾选已有角色
+    // for (var j = 0; j < possessRoleList.length; j++) {
+    //     $('#perListTbody').children('tr').find('input').each(function () {
+    //         if ($(this).val() == possessRoleList[j].id) {
+    //             this.checked = true;
+    //         }
+    //     });
+    // }
+}
+
+//提交绑定
+function confirmBindingPrincipal() {
+    var subFrameId = $('#subFrameId').val();
+    var id = $('#departmentId').val();
+    var array = [];
+    var list = $("#perListTbody input:checked");
+    for (var i = 0; i < list.length; i++) {
+        array.push(list[i].value);
+    }
+    console.log(array);
+    $.ajax({
+        type: "post",
+        url: '/backstageManagement/bindingMultiplePrincipal',
+        data: 'id=' + id + '&array=' + array,
+        success: function (data) {
+            if (data === 'success') {
+                $("#" + subFrameId)[0].contentWindow.departmentInfoPageReload($('#currentPage').val());
+                layer.close(window.lar);
+                $('#modalWindow').html("");
+                layer.msg('绑定成功！');
+            } else {
+                layer.msg('绑定失败！');
+            }
+        },
+        error: function (result) {
+            layer.msg("出错！");
+        }
+    })
+}
+
 /**-------------------------角色管理-------------------------*/
 //新增角色
 function addRole(currentPage, itselfFrameId) {
@@ -1400,7 +1486,7 @@ function selectPrincipal(principalList, itselfFrameId) {
         shadeClose: true, //点击遮罩关闭
         content: $("#selectPrincipal"),
         offset: "auto",
-        end:function () {
+        end: function () {
             $('#modalWindow').html("");
         }
     });
@@ -1409,9 +1495,9 @@ function selectPrincipal(principalList, itselfFrameId) {
 
     var principal = "";
     principal += '<div id="radioChecked" style="text-align: left;">';
-    principal += '<div style="margin: 10px;"><input type="radio" name="abc" value="'+principalList[1]+','+principalList[3]+'" checked style="zoom: 120%;vertical-align: middle;margin-right: 10px;"><span>全部</span></div>';
-    principal += '<div style="margin: 10px;"><input type="radio" name="abc" value="'+principalList[1]+'" style="zoom: 120%;vertical-align: middle;margin-right: 10px;"><span>'+principalList[0]+'</span></div>';
-    principal += '<div style="margin: 10px;"><input type="radio" name="abc" value="'+principalList[3]+'" style="zoom: 120%;vertical-align: middle;margin-right: 10px;"><span>'+principalList[2]+'</span></div>';
+    principal += '<div style="margin: 10px;"><input type="radio" name="abc" value="' + principalList[1] + ',' + principalList[3] + '" checked style="zoom: 120%;vertical-align: middle;margin-right: 10px;"><span>全部</span></div>';
+    principal += '<div style="margin: 10px;"><input type="radio" name="abc" value="' + principalList[1] + '" style="zoom: 120%;vertical-align: middle;margin-right: 10px;"><span>' + principalList[0] + '</span></div>';
+    principal += '<div style="margin: 10px;"><input type="radio" name="abc" value="' + principalList[3] + '" style="zoom: 120%;vertical-align: middle;margin-right: 10px;"><span>' + principalList[2] + '</span></div>';
     principal += '</div>';
     $('#principalContent').html(principal);
 }
@@ -1420,7 +1506,7 @@ function selectPrincipal(principalList, itselfFrameId) {
 function commitPrincipal() {
     var subFrameId = $('#subFrameId').val();
     let val = $('#radioChecked input[type="radio"]:checked').val();
-    $("#"+subFrameId)[0].contentWindow.selectionPrincipal(val);
+    $("#" + subFrameId)[0].contentWindow.selectionPrincipal(val);
     layer.close(window.lar);
     $('#modalWindow').html("");
 }
@@ -1704,7 +1790,7 @@ function fileConfirm() {
         success: function (ret) {
             if (ret[0].message === "success") {
                 layer.msg("上传成功");
-                $("#"+subFrameId)[0].contentWindow.writeFile(ret);
+                $("#" + subFrameId)[0].contentWindow.writeFile(ret);
                 $('#modalWindow').html("");
             } else {
                 layer.msg("上传失败");
@@ -1726,7 +1812,7 @@ function deleteUploaded(fileName, itselfFrameId) {
     layer.confirm('确定要删除"' + fileId + '"吗？', {
             btn: ['确认', '取消']
         }, function () {
-        $("#"+itselfFrameId)[0].contentWindow.delFile(fileName);
+            $("#" + itselfFrameId)[0].contentWindow.delFile(fileName);
         }
     );
 }
@@ -1746,7 +1832,7 @@ function deleteArchivesData(tab, id, itselfFrameId) {
                 success: function (data) {
                     if (data === 'success') {
                         layer.msg('删除成功！');
-                        $("#"+itselfFrameId)[0].contentWindow.reloadArchivesData(1);
+                        $("#" + itselfFrameId)[0].contentWindow.reloadArchivesData(1);
                     } else {
                         layer.msg('删除失败！');
                     }
@@ -1761,7 +1847,7 @@ function deleteArchivesData(tab, id, itselfFrameId) {
 
 /**-----------------------关联表单----------------------*/
 //关联表单-选择
-function selectRelevanceForms(list,itselfFrameId) {
+function selectRelevanceForms(list, itselfFrameId) {
     $('#modalWindow').html('<div id="relevanceForms" style="display: none;">\n' +
         '    <div style="padding: 10px 15px">\n' +
         '        <div style="height: 79%;overflow: auto;margin-bottom: 20px;">\n' +
@@ -1792,7 +1878,7 @@ function selectRelevanceForms(list,itselfFrameId) {
         shadeClose: false, //点击遮罩关闭
         content: $("#relevanceForms"),
         offset: "auto",
-        end:function () {
+        end: function () {
             $('#modalWindow').html("");
         }
     });
@@ -1803,19 +1889,19 @@ function selectRelevanceForms(list,itselfFrameId) {
     for (let i = 0; i < list.length; i++) {
         relevanceFormsContent += '<tr>';
         relevanceFormsContent += '<td style="width:30px;"><input type="checkbox" value="' + list[i].id + ',' + list[i].title + '" onclick="relevanceFormsCheckbox()" style="zoom: 130%;"></td>';
-        relevanceFormsContent += '<td style="text-align: left;text-indent: 8px;">'+ list[i].title +'</td>';
-        relevanceFormsContent += '<td>'+ list[i].department +'</td>';
-        relevanceFormsContent += '<td>'+ list[i].fillingDate +'</td>';
-        relevanceFormsContent += '<td>'+ list[i].total +'</td>';
-        relevanceFormsContent += '<td>'+ list[i].preparer +'</td>';
+        relevanceFormsContent += '<td style="text-align: left;text-indent: 8px;">' + list[i].title + '</td>';
+        relevanceFormsContent += '<td>' + list[i].department + '</td>';
+        relevanceFormsContent += '<td>' + list[i].fillingDate + '</td>';
+        relevanceFormsContent += '<td>' + list[i].total + '</td>';
+        relevanceFormsContent += '<td>' + list[i].preparer + '</td>';
         relevanceFormsContent += '</tr>';
     }
     $('#relevanceFormsTbo').html(relevanceFormsContent)
 }
 
 //关联表单-复选框
-function relevanceFormsCheckbox(){
-    $('#relevanceFormsTbo').find('input[type=checkbox]').bind('click', function(){
+function relevanceFormsCheckbox() {
+    $('#relevanceFormsTbo').find('input[type=checkbox]').bind('click', function () {
         $("#relevanceFormsTbo").find('input[type=checkbox]').not(this).attr("checked", false);
     });
 }
@@ -1829,9 +1915,9 @@ function confirmRelevanceForms() {
         return false;
     } else {
         var val = $("#relevanceFormsTbo input:checked").val();
-        var id = val.substring(0,val.indexOf(','));
+        var id = val.substring(0, val.indexOf(','));
         var name = val.substring(val.indexOf(',') + 1);
-        $("#"+subFrameId)[0].contentWindow.relevanceFormsBinding(id,name);
+        $("#" + subFrameId)[0].contentWindow.relevanceFormsBinding(id, name);
     }
 
     //关闭弹窗
@@ -1851,7 +1937,7 @@ function relevanceFormsDetailsPreview(id) {
         shadeClose: false, //点击遮罩关闭
         content: $("#relevanceFormsPreview"),
         offset: "auto",
-        end:function () {
+        end: function () {
             $('#modalWindow').html("");
         }
     });
@@ -1867,29 +1953,29 @@ function relevanceFormsDetailsPreview(id) {
         },
         success: function (data) {
             //截取需要展示的部分
-            var newHtml = data.substring(data.indexOf('<flag>'),data.indexOf('</flag>'));
+            var newHtml = data.substring(data.indexOf('<flag>'), data.indexOf('</flag>'));
             $("#relevanceFormsPreviewContent").html(newHtml);
         }
     });
 }
 
 //关联表单-删除
-function relevanceFormsDelete(fileName,id,itselfFrameId) {
+function relevanceFormsDelete(fileName, id, itselfFrameId) {
     //提示窗
     layer.confirm('确定要删除"' + fileName + '"吗？', {
             btn: ['确认', '取消']
         }, function (index) {
-            $("#"+itselfFrameId)[0].contentWindow.executeRelevanceFormsDelete(id);
+            $("#" + itselfFrameId)[0].contentWindow.executeRelevanceFormsDelete(id);
             layer.close(index);
         }
     );
 }
 
 //公文-选择拟稿人
-function selectReviewers(userInfoList, draftedPerson, flag, itselfFrameId ) {
+function selectReviewers(userInfoList, draftedPerson, flag, itselfFrameId) {
     $('#modalWindow').html('<div id="singleSelection" class="single-option-window" style="display: none">\n' +
         '    <input type="hidden" id="pendingDocumentPage">\n' +
-        '    <input type="hidden" id="singleFlag" value="'+flag+'">\n' +
+        '    <input type="hidden" id="singleFlag" value="' + flag + '">\n' +
         '    <div class="option-window-body-head">\n' +
         '        <ul id="singleSelectionContent"></ul>\n' +
         '    </div>\n' +
@@ -1906,7 +1992,7 @@ function selectReviewers(userInfoList, draftedPerson, flag, itselfFrameId ) {
         shadeClose: true, //点击遮罩关闭
         content: $("#singleSelection"),
         offset: "auto",
-        end:function () {
+        end: function () {
             $('#modalWindow').html("");
         }
     });
@@ -1961,13 +2047,13 @@ function confirmReviewers() {
     //是否包含selectedDrafter
     if (lis.hasClass("selectedDrafter")) {
         if (flag === "meetingCompere") {
-            $("#"+subFrameId)[0].contentWindow.insertMeetingCompere($(".selectedDrafter").prev().text());
+            $("#" + subFrameId)[0].contentWindow.insertMeetingCompere($(".selectedDrafter").prev().text());
         } else if (flag === "meetingRecorder") {
-            $("#"+subFrameId)[0].contentWindow.insertMeetingRecorder($(".selectedDrafter").prev().text());
+            $("#" + subFrameId)[0].contentWindow.insertMeetingRecorder($(".selectedDrafter").prev().text());
         } else if (flag === "draftAuthor") {
-            $("#"+subFrameId)[0].contentWindow.insertReviewer($(".selectedDrafter").prev().text());
+            $("#" + subFrameId)[0].contentWindow.insertReviewer($(".selectedDrafter").prev().text());
         } else if (flag === "editReviewer") {
-            $("#"+subFrameId)[0].contentWindow.insertReviewerEdit($(".selectedDrafter").prev().text());
+            $("#" + subFrameId)[0].contentWindow.insertReviewerEdit($(".selectedDrafter").prev().text());
         }
         cancel();
     } else {
@@ -1975,12 +2061,12 @@ function confirmReviewers() {
     }
 }
 
-//公文-选择抄送人员
+//公文-选择抄送人员（未使用）
 function selectNotifyPerson(userInfoList, departmentList, flag, itselfFrameId) {
     $('#modalWindow').html('<div id="selectWindow" class="option-window" style="display: none">\n' +
         '\n' +
         '    <div class="option-window-body-head cursor_hand">\n' +
-        '        <input type="hidden" id="multiFlag" value="'+flag+'">\n' +
+        '        <input type="hidden" id="multiFlag" value="' + flag + '">\n' +
         '        <div class="selection-box">\n' +
         '            <div class="selection-box-title">\n' +
         '                <span>选择</span>\n' +
@@ -2017,7 +2103,7 @@ function selectNotifyPerson(userInfoList, departmentList, flag, itselfFrameId) {
         shadeClose: true, //点击遮罩关闭
         content: $("#selectWindow"),
         offset: "auto",
-        end:function () {
+        end: function () {
             $('#modalWindow').html("");
         }
     });
@@ -2067,9 +2153,9 @@ function consentNotifyPerson() {
         });
 
         if (flag === 'meetingParticipants') {
-            $("#"+subFrameId)[0].contentWindow.insertParticipants(array, arrayId);
+            $("#" + subFrameId)[0].contentWindow.insertParticipants(array, arrayId);
         } else {
-            $("#"+subFrameId)[0].contentWindow.insertCopyGive(array, arrayId);
+            $("#" + subFrameId)[0].contentWindow.insertCopyGive(array, arrayId);
         }
         cancel();
     });
@@ -2145,23 +2231,23 @@ function preventBubble(event) {
 }
 
 //公文-选择主送人员
-function selectMainGive(itselfFrameId) {
+function selectMainGive(mainDeliveryList, itselfFrameId) {
     $('#modalWindow').html('<div id="selectMainGive" class="window-body-add" style="display: none">\n' +
         '    <div id="mainGiveContent"></div>\n' +
-        '    <div style="padding-top: 20px">\n' +
+        '    <div style="position: absolute;bottom: 15px;left: 30%;">\n' +
         '        <input type="button" value="确认" onclick="commitMainGive()" class="layui-btn">\n' +
         '        <input type="button" value="取消" onclick="cancel()" class="layui-btn layui-btn-primary">\n' +
         '    </div>\n' +
         '</div>');
 
     window.lar = layer.open({
-        title: '所在部门负责人',
+        title: '选择主送人员',
         type: 1,
-        area: ['20%', '30%'],
+        area: ['310px', '340px'],
         shadeClose: true, //点击遮罩关闭
         content: $("#selectMainGive"),
         offset: "auto",
-        end:function () {
+        end: function () {
             $('#modalWindow').html("");
         }
     });
@@ -2169,25 +2255,65 @@ function selectMainGive(itselfFrameId) {
     $('#subFrameId').val(itselfFrameId);
 
     var principal = "";
-    // principal += '<div id="radioChecked" style="text-align: left;">';
-    // principal += '<div style="margin: 10px;"><input type="radio" name="abc" value="'+principalList[1]+','+principalList[3]+'" checked style="zoom: 120%;vertical-align: middle;margin-right: 10px;"><span>全部</span></div>';
-    // principal += '<div style="margin: 10px;"><input type="radio" name="abc" value="'+principalList[1]+'" style="zoom: 120%;vertical-align: middle;margin-right: 10px;"><span>'+principalList[0]+'</span></div>';
-    // principal += '<div style="margin: 10px;"><input type="radio" name="abc" value="'+principalList[3]+'" style="zoom: 120%;vertical-align: middle;margin-right: 10px;"><span>'+principalList[2]+'</span></div>';
-    // principal += '</div>';
-    principal += '<div id="radioChecked" style="text-align: left;">';
-    principal += '<div style="margin: 10px;"><input type="radio" name="name" value="1" checked style="zoom: 120%;vertical-align: middle;margin-right: 10px;"><span>领导班子</span></div>';
-    principal += '<div style="margin: 10px;"><input type="radio" name="name" value="2" style="zoom: 120%;vertical-align: middle;margin-right: 10px;"><span>各部室负责人</span></div>';
-    principal += '<div style="margin: 10px;"><input type="radio" name="name" value="0" style="zoom: 120%;vertical-align: middle;margin-right: 10px;"><span>无</span></div>';
+
+    principal += '<div id="radioChecked" style="text-align: left;height: 70%;overflow: auto;">';
+    for (let i = 0; i < mainDeliveryList.length; i++) {
+        principal += '<div style="margin: 10px;"><input type="radio" name="name" value="' + mainDeliveryList[i].id + '" checked style="zoom: 120%;vertical-align: middle;margin-right: 10px;"><span>' + mainDeliveryList[i].name + '</span></div>';
+    }
     principal += '</div>';
     $('#mainGiveContent').html(principal);
 }
 
-//提交-表单发送前选择部门负责人
+//提交主送
 function commitMainGive() {
     var subFrameId = $('#subFrameId').val();
     let val = $('#radioChecked input[type="radio"]:checked').val();
     var text = $('#radioChecked input[type="radio"]:checked').next('span').html();
-    $("#"+subFrameId)[0].contentWindow.insetMainGive(val,text);
+    $("#" + subFrameId)[0].contentWindow.insetMainGive(val, text);
+    layer.close(window.lar);
+}
+
+
+//公文-选择抄送人员
+function selectCopyPerson(copyDeliveryList, itselfFrameId) {
+    $('#modalWindow').html('<div id="selectCopyGive" class="window-body-add" style="display: none">\n' +
+        '    <div id="copyGiveContent"></div>\n' +
+        '    <div style="position: absolute;bottom: 15px;left: 30%;">\n' +
+        '        <input type="button" value="确认" onclick="commitCopyGive()" class="layui-btn">\n' +
+        '        <input type="button" value="取消" onclick="cancel()" class="layui-btn layui-btn-primary">\n' +
+        '    </div>\n' +
+        '</div>');
+
+    window.lar = layer.open({
+        title: '选择抄送人员',
+        type: 1,
+        area: ['310px', '340px'],
+        shadeClose: true, //点击遮罩关闭
+        content: $("#selectCopyGive"),
+        offset: "auto",
+        end: function () {
+            $('#modalWindow').html("");
+        }
+    });
+
+    $('#subFrameId').val(itselfFrameId);
+
+    var principal = "";
+
+    principal += '<div id="radioCheckedCopy" style="text-align: left;height: 70%;overflow: auto;">';
+    for (let i = 0; i < copyDeliveryList.length; i++) {
+        principal += '<div style="margin: 10px;"><input type="radio" name="name" value="' + copyDeliveryList[i].id + '" checked style="zoom: 120%;vertical-align: middle;margin-right: 10px;"><span>' + copyDeliveryList[i].name + '</span></div>';
+    }
+    principal += '</div>';
+    $('#copyGiveContent').html(principal);
+}
+
+//提交抄送
+function commitCopyGive() {
+    var subFrameId = $('#subFrameId').val();
+    let val = $('#radioCheckedCopy input[type="radio"]:checked').val();
+    var text = $('#radioCheckedCopy input[type="radio"]:checked').next('span').html();
+    $("#" + subFrameId)[0].contentWindow.insertCopyGive(val, text);
     layer.close(window.lar);
 }
 
@@ -2214,7 +2340,7 @@ function selectionDepartment(departmentList, flag, itselfFrameId) {
         shadeClose: true, //点击遮罩关闭
         content: $("#departmentSelector"),
         offset: "auto",
-        end:function () {
+        end: function () {
             $('#modalWindow').html("");
         }
     });
@@ -2253,7 +2379,7 @@ function confirmDepartmentSelection() {
         var id = $(".selection").prev().attr('id')
         var name = $(".selection").prev().text()
         var flag = $('#departmentFlag').val();
-        $("#"+subFrameId)[0].contentWindow.selectDepartmentComplete(id, name, flag);
+        $("#" + subFrameId)[0].contentWindow.selectDepartmentComplete(id, name, flag);
         layer.close(window.lar);
     } else {
         layer.msg('请选择部门！')
@@ -2261,7 +2387,7 @@ function confirmDepartmentSelection() {
 }
 
 //OA审批表中使用
-function selectRecipient(userInfoList, departmentList,itselfFrameId) {
+function selectRecipient(userInfoList, departmentList, itselfFrameId) {
     $('#modalWindow').html('<div id="selectRecipientModel" style="display: none;width: 96%;height: 96%;padding: 2%">\n' +
         '    <div class="option-window-body-head cursor_hand">\n' +
         '        <div id="selectDepartmentRecipient" class="selection-content-inside">\n' +
@@ -2281,7 +2407,7 @@ function selectRecipient(userInfoList, departmentList,itselfFrameId) {
         shadeClose: true, //点击遮罩关闭
         content: $("#selectRecipientModel"),
         offset: "auto",
-        end:function () {
+        end: function () {
             $('#modalWindow').html("");
         }
     });
@@ -2330,7 +2456,7 @@ function confirmDepartmentRecipient() {
         //选择的用户id
         var principal = $(".selection").prev().attr('id');
         var principalStr = $(".selection").prev().text();
-        $("#"+subFrameId)[0].contentWindow.confirmSelectRecipient(principal, principalStr);
+        $("#" + subFrameId)[0].contentWindow.confirmSelectRecipient(principal, principalStr);
         layer.close(window.lar);
     } else {
         layer.msg('请选择被通知人！')
@@ -2345,4 +2471,294 @@ function checkboxEvent(own) {
     } else {
         $(own).children('td').children('input').attr("checked", true);
     }
+}
+
+/**-----------------参数管理---------------------*/
+//新增主送
+function addMainDelivery(methodPath,currentPage, itselfFrameId) {
+    $('#modalWindow').html('<div id="addParameterConfiguration" class="window-body-add">\n' +
+        '    <form id="roleInfo">\n' +
+        '        <table class="window-table">\n' +
+        '            <tbody>\n' +
+        '            <tr>\n' +
+        '                <td class="form_title_check"><i class="required_mark">*</i>名称:</td>\n' +
+        '                <td class="form_content_check">\n' +
+        '                    <input type="hidden" id="methodPath" value="' + methodPath + '">\n' +
+        '                    <input type="hidden" id="departmentPage" value="' + currentPage + '">\n' +
+        '<input class="font_input" id="mainDeliveryName" type="text" autocomplete="off" placeholder="请输入名称" maxlength="16" onkeyup="this.value=this.value.replace(/^\\s+|\\s+$/g,\'\')">\n' +
+        '                </td>\n' +
+        '            </tr>\n' +
+        '            <tr>\n' +
+        '                <td class="form_title_check">说明:</td>\n' +
+        '                <td class="form_content_check">\n' +
+        '<textarea class="description-text" placeholder="请输入说明" name="description" id="description" onkeyup="this.value=this.value.replace(/^\\s+|\\s+$/g,\'\')" ></textarea>\n' +
+        '                    <span class="prompt-span"></span>\n' +
+        '                </td>\n' +
+        '            </tr>\n' +
+        '            </tbody>\n' +
+        '        </table>\n' +
+        '    </form>\n' +
+        '    <div style="padding-top: 20px">\n' +
+        '        <input type="button" value="确认" onclick="commitParameterConfiguration()" class="layui-btn">\n' +
+        '        <input type="button" value="取消" onclick="cancel()" class="layui-btn layui-btn-primary">\n' +
+        '    </div>\n' +
+        '</div>');
+
+    window.lar = layer.open({
+        title: '添加主送',
+        type: 1,
+        area: ['380px', '312px'],
+        shadeClose: true, //点击遮罩关闭
+        content: $("#addParameterConfiguration"),
+        offset: "auto",
+        end: function () {
+            $('#modalWindow').html("");
+        }
+    });
+
+    $('#subFrameId').val(itselfFrameId);
+}
+
+//提交新增主送
+function commitParameterConfiguration() {
+    var mainDeliveryName = $('#mainDeliveryName').val();
+    var description = $('#description').val();
+    var methodPath = $('#methodPath').val();
+    var subFrameId = $('#subFrameId').val();
+    if (mainDeliveryName !== "") {
+        if (parameterConfigurationWhetherRegister(mainDeliveryName,methodPath)) {
+            layer.msg('该名称已存在');
+        } else {
+            $.ajax({
+                type: "post",
+                url: methodPath + '/add',
+                data: {'name': mainDeliveryName, 'description': description},
+                success: function (data) {
+                    if (data === 'success') {
+                        $("#" + subFrameId)[0].contentWindow.parameterConfigurationPage($('#departmentPage').val());
+                        layer.close(window.lar);
+                        $('#modalWindow').html("");
+                        layer.msg("添加成功!");
+                    } else {
+                        layer.msg("添加失败!");
+                    }
+                },
+                error: function (result) {
+                    layer.msg("出错！");
+                }
+            })
+        }
+    } else {
+        layer.msg("部门名称不可以为空！");
+    }
+}
+
+//检查主送名称是否存在
+function parameterConfigurationWhetherRegister(name,methodPath) {
+    var res = false;
+    $.ajax({
+        type: "post",
+        url: methodPath + '/checkName',
+        data: {'name': name},
+        async: false,
+        success: function (data) {
+            if (data === "true") {
+                res = true;
+            } else {
+                res = false;
+            }
+        },
+        error: function (result) {
+            alert("出错！");
+        }
+    });
+    return res;
+}
+
+//删除主送
+function deleteMainDelivery(id,methodPath, itselfFrameId) {
+    //提示窗
+    layer.confirm('确定要删除吗？', {
+            btn: ['确认', '取消']
+        }, function () {
+            $.ajax({
+                type: "post",
+                url: methodPath + '/delete',
+                data: {'id': id},
+                async: false,
+                success: function (data) {
+                    if (data === 'success') {
+                        layer.msg('删除成功！')
+                        $("#" + itselfFrameId)[0].contentWindow.parameterConfigurationPage(1);
+                    } else {
+                        layer.msg('删除失败！')
+                    }
+                },
+                error: function (result) {
+                    layer.msg("出错！");
+                }
+            });
+        }
+    );
+}
+
+//编辑主送
+function editMainDelivery(id, name, description,methodPath, currentPage, itselfFrameId) {
+    $('#modalWindow').html('<div id="editMainDelivery" class="window-body-add">\n' +
+        '    <table class="window-table">\n' +
+        '        <tbody>\n' +
+        '        <tr>\n' +
+        '            <td class="form_title_check"><i class="required_mark">*</i>名称:</td>\n' +
+        '            <td class="form_content_check">\n' +
+        '                <input type="hidden" id="mainPage" value="' + currentPage + '">\n' +
+        '                <input type="hidden" id="methodPath" value="' + methodPath + '">\n' +
+        '                <input type="hidden" id="editMainId" value="' + id + '">\n' +
+        '                <input class="font_input" value="' + name + '" type="text"\n' +
+        '                       placeholder="请输入名称" maxlength="16" onkeyup="this.value=this.value.replace(/^\\s+|\\s+$/g,\'\')"\n' +
+        '                       autocomplete="off" style="background: #e8e8e8;" readonly>\n' +
+        '                <span class="prompt-span"></span>\n' +
+        '            </td>\n' +
+        '        </tr>\n' +
+        '        <tr>\n' +
+        '            <td class="form_title">说明:</td>\n' +
+        '            <td class="form_content" style="margin: 0">\n' +
+        '<textarea class="description-text" id="editMainDescription" placeholder="请输入说明" onkeyup="this.value=this.value.replace(/^\\s+|\\s+$/g,\'\')" >' + description + '</textarea>\n' +
+        '            </td>\n' +
+        '        </tr>\n' +
+        '        </tbody>\n' +
+        '    </table>\n' +
+        '    <div style="padding-top: 20px">\n' +
+        '        <input type="button" value="确认" onclick="commitEditMainDelivery()" class="layui-btn">\n' +
+        '        <input type="button" value="取消" onclick="cancel()" class="layui-btn layui-btn-primary">\n' +
+        '    </div>\n' +
+        '</div>');
+
+    window.lar = layer.open({
+        title: '编辑主送',
+        type: 1,
+        area: ['380px', '310px'],
+        shadeClose: true, //点击遮罩关闭
+        content: $("#editMainDelivery"),
+        offset: "auto",
+        end: function () {
+            $('#modalWindow').html("");
+        }
+    });
+
+    $('#subFrameId').val(itselfFrameId);
+}
+
+//提交编辑后的主送
+function commitEditMainDelivery() {
+    var editMainId = $('#editMainId').val();
+    var editMainDescription = $('#editMainDescription').val();
+    var methodPath = $('#methodPath').val();
+    var subFrameId = $('#subFrameId').val();
+    $.ajax({
+        type: "post",
+        url: methodPath + '/edit',
+        data: {'id': editMainId, 'description':editMainDescription},
+        success: function (data) {
+            if (data === 'success') {
+                $("#" + subFrameId)[0].contentWindow.parameterConfigurationPage($('#mainPage').val());
+                layer.close(window.lar);
+                $('#modalWindow').html("");
+                layer.msg("编辑成功!");
+            } else {
+                layer.msg("编辑失败!");
+            }
+        },
+        error: function (result) {
+            layer.msg("出错！");
+        }
+    })
+}
+
+//绑定
+function bindingMainDelivery(dataInfo, id, methodPath, currentPage, itselfFrameId) {
+    $('#modalWindow').html('<div id="bindingParameterDelivery" class="tab-right-div"></div>');
+    window.lar = layer.open({
+        title: '绑定用户',
+        type: 1,
+        area: ['384px', '418px'],
+        shadeClose: true, //点击遮罩关闭
+        content: $("#bindingParameterDelivery"),
+        offset: "auto",
+        end: function () {
+            $('#modalWindow').html("");
+        }
+    });
+
+    $('#subFrameId').val(itselfFrameId);
+
+    //角色信息
+    var roleList = dataInfo.userInfoList;
+    //已绑定角色信息
+    var possessRoleList = dataInfo.boundUserList;
+
+    var roleInfoList = '';
+    roleInfoList += '<div id="RoleInformationTab" style="height: 80%;overflow: auto">';
+    roleInfoList += '<table id="permissionList" class="table-list">';
+    roleInfoList += '<tbody id="perListTbody">';
+    roleInfoList += '<input id="bindingParameterId" type="hidden" value="' + id + '">';
+    roleInfoList += '<input id="bindingParameterMethodPath" type="hidden" value="' + methodPath + '">';
+    roleInfoList += '<input id="bindingParameterPage" type="hidden" value="' + currentPage + '">';
+    for (var i = 0; i < roleList.length; i++) {
+        roleInfoList += '<tr onclick="checkboxEvent(this)" style="height: 18px">';
+        roleInfoList += '<td class="table-list-td-checkbox">';
+        roleInfoList += '<input type="checkbox" style="zoom: 120%" value="' + roleList[i].id + '" onclick="window.event.cancelBubble=true;">';
+        roleInfoList += '</td>';
+        roleInfoList += '<td class="per-list-td">' + roleList[i].nickname + '</td>';
+        roleInfoList += '</tr>';
+    }
+    roleInfoList += '</tbody>';
+    roleInfoList += '</table>';
+    roleInfoList += '</div>';
+    roleInfoList += '<div style="padding-top: 20px;text-align: center">';
+    roleInfoList += '<input type="button" value="确认" onclick="submissionBindingMain()" class="layui-btn">';
+    roleInfoList += '<input type="button" value="取消" onclick="cancel()" class="layui-btn layui-btn-primary">';
+    roleInfoList += '</div>';
+
+    $('#bindingParameterDelivery').html(roleInfoList);
+
+    //勾选已有角色
+    for (var j = 0; j < possessRoleList.length; j++) {
+        $('#perListTbody').children('tr').find('input').each(function () {
+            if ($(this).val() == possessRoleList[j]) {
+                this.checked = true;
+            }
+        });
+    }
+}
+
+//提交绑定
+function submissionBindingMain() {
+    var methodPath = $('#bindingParameterMethodPath').val();
+    var subFrameId = $('#subFrameId').val();
+    //用户id
+    var id = $('#bindingParameterId').val();
+    //选中的角色列表
+    var array = [];
+    var list = $("#perListTbody input:checked");
+    for (var i = 0; i < list.length; i++) {
+        array.push(list[i].value);
+    }
+    $.ajax({
+        type: "post",
+        url: methodPath + '/binding',
+        data: 'id=' + id + '&array=' + array,
+        success: function (data) {
+            if (data === 'success') {
+                $("#" + subFrameId)[0].contentWindow.parameterConfigurationPage($('#bindingParameterPage').val());
+                layer.close(window.lar);
+                $('#modalWindow').html("");
+                layer.msg('绑定成功！');
+            } else {
+                layer.msg('绑定失败！');
+            }
+        },
+        error: function (result) {
+            layer.msg("出错！");
+        }
+    })
 }

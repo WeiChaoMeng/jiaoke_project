@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.oa.dao.OaReceiptReadingMapper">
+
+    <select id="nameFilter" parameterType="java.lang.String" resultType="com.jiaoke.oa.bean.OaReceiptReading">
+       SELECT
+            id,`name`,description
+        FROM
+            `oa_receipt_reading`
+        WHERE
+            `name` LIKE "%"#{name}"%"
+    </select>
+
+    <delete id="batchDeleteData" parameterType="java.lang.String">
+        delete from `oa_receipt_reading` where id in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!--main_user表操作-->
+    <select id="selectBoundUser" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT
+            user_id
+        FROM
+            `oa_receipt_user`
+        WHERE
+            main_delivery_id = #{id}
+    </select>
+
+    <delete id="deleteByReceiptId">
+        delete from oa_receipt_user where main_delivery_id = #{mainId}
+    </delete>
+
+    <insert id="insertData" parameterType="map">
+        INSERT INTO oa_receipt_user ( main_delivery_id, user_id )
+        VALUES
+        <foreach collection="array" item="item" index="index" separator=",">
+            (#{mainId},#{item})
+        </foreach>
+    </insert>
+
+    <delete id="batchDeleteRelation" parameterType="java.lang.String">
+        delete from `oa_receipt_user` where main_delivery_id in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

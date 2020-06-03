@@ -1,8 +1,7 @@
 package com.jiaoke.controller.oa;
 
-import com.jiaoke.oa.bean.OaPersonalWages;
-import com.jiaoke.oa.bean.OaWageStatistics;
-import com.jiaoke.oa.bean.UserInfo;
+import com.jiake.utils.JsonHelper;
+import com.jiaoke.oa.bean.*;
 import com.jiaoke.oa.service.OaWageStatisticsService;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
@@ -67,16 +66,6 @@ public class OaWageStatisticsController {
         }
     }
 
-    /**
-     * 跳转外包员工页面
-     *
-     * @return oa_outsourced_staff.jsp
-     */
-    @RequestMapping(value = "/toOutsourcedStaff")
-    public String toOutsourcedStaff() {
-        return "oa/personal/oa_outsourced_staff";
-    }
-
     @RequestMapping(value = "/toRegularEmployeeDetails")
     public String toRegularEmployeeDetails(int wageStatisticsId, Model model) {
         int total = oaWageStatisticsService.getTotalByWageStatisticsId(wageStatisticsId);
@@ -106,5 +95,48 @@ public class OaWageStatisticsController {
         OaPersonalWages personalWages = oaWageStatisticsService.getPersonalWagesByNickName(userInfo.getNickname());
         model.addAttribute("personalWages", personalWages);
         return "oa/personal/oa_personal_salary";
+    }
+
+    /**-----------------外包职工-------------------*/
+    /**
+     * 跳转外包员工页面
+     *
+     * @return oa_outsourced_staff.jsp
+     */
+    @RequestMapping(value = "/toOutsourcedStaff")
+    public String toOutsourcedStaff(Model model) {
+        List<OaOutsourcedStatistics> outsourcedStatisticsList = oaWageStatisticsService.getAllOutsourcedStatistics();
+        model.addAttribute("outsourcedStatisticsList", outsourcedStatisticsList);
+        return "oa/personal/oa_outsourced_staff";
+    }
+
+    /**
+     * 导入外包职工工资
+     *
+     * @param file file
+     * @return s/e
+     * @throws IOException
+     */
+    @RequestMapping(value = "/importOutsourcedStaffWages")
+    @ResponseBody
+    public String importOutsourcedStaffWages(@RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
+        if (oaWageStatisticsService.importOutsourcedStaffWages(file) > 0) {
+            return "success";
+        }
+        return "error";
+    }
+
+    /**
+     * 查询外包员工工资详情
+     *
+     * @param wageStatisticsId wageStatisticsId
+     * @param model            model
+     * @return jsp
+     */
+    @RequestMapping(value = "/toOutsourcedDetails")
+    public String toOutsourcedDetails(int wageStatisticsId, Model model) {
+        List<OaOutsourcedStaff> outsourcedStaffList = oaWageStatisticsService.selectOutsourcedStaffByWageStatisticsId(wageStatisticsId);
+        model.addAttribute("outsourcedStaffListJson", JsonHelper.toJSONString(outsourcedStaffList));
+        return "oa/personal/oa_outsourced_details";
     }
 }

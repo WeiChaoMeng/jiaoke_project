@@ -22,9 +22,6 @@
     <link rel="stylesheet" href="../../../static/css/party_building/font-awesome.min.css" >
     <link rel="stylesheet" href="../../../static/css/party_building/style2.css" >
     <link rel="stylesheet" href="../../../static/css/party_building/jquery.orgchart.css" >
-<%--<link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">--%>
-    <%--<link id="layuicss-layer" rel="stylesheet" href="http://x.xuebingsi.com/x-admin/v2.2/lib/layui/css/modules/layer/default/layer.css?v=3.1.1" media="all">--%>
-    <%--<link id="layuicss-laydate" rel="stylesheet" href="http://x.xuebingsi.com/x-admin/v2.2/lib/layui/css/modules/laydate/default/laydate.css?v=5.0.9" media="all">--%>
 </head>
 
 <body>
@@ -54,7 +51,6 @@
 
 </body>
 <script type="text/javascript" src="../../../static/js/jquery.js"></script>
-<script type="text/javascript" src="../../../static/js/paging/jqPaginator.js"></script>
 <script type="text/javascript" src="../../../static/js/jquery.min.js"></script>
 <script type="text/javascript" src="../../../static/js/party_building/jquery.orgchart.js"></script>
 <script type="text/javascript" src="../../../static/js/party_building/scripts.js"></script>

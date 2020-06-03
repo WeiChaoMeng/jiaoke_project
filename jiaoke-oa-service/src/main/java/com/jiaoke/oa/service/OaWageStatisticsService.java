@@ -1,5 +1,7 @@
 package com.jiaoke.oa.service;
 
+import com.jiaoke.oa.bean.OaOutsourcedStaff;
+import com.jiaoke.oa.bean.OaOutsourcedStatistics;
 import com.jiaoke.oa.bean.OaPersonalWages;
 import com.jiaoke.oa.bean.OaWageStatistics;
 import org.springframework.web.multipart.MultipartFile;
@@ -65,4 +67,30 @@ public interface OaWageStatisticsService {
      * @return OaPersonalWages
      */
     OaPersonalWages getPersonalWagesByNickName(String nickName);
+
+
+    /**-----------------外包职工-------------------*/
+    /**
+     * 导入外包职工工资
+     *
+     * @param file file
+     * @return NumberOfAffectedRows
+     * @throws IOException exc
+     */
+    int importOutsourcedStaffWages(MultipartFile file) throws IOException;
+
+    /**
+     * 获取外包职工统计数据
+     *
+     * @return list
+     */
+    List<OaOutsourcedStatistics> getAllOutsourcedStatistics();
+
+    /**
+     * 根据统计ID查询数据
+     *
+     * @param wageStatisticsId wageStatisticsId
+     * @return list
+     */
+    List<OaOutsourcedStaff> selectOutsourcedStaffByWageStatisticsId(int wageStatisticsId);
 }

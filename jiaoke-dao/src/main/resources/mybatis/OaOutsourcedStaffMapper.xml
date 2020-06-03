@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.oa.dao.OaOutsourcedStaffMapper">
+
+    <select id="getGrossActualAmount" parameterType="java.lang.Integer" resultType="java.math.BigDecimal">
+        SELECT
+            SUM( CAST( actual_amount AS DECIMAL ( 16, 2 ) ) )
+        FROM
+	        `oa_outsourced_staff`
+	    WHERE
+	        wage_statistics_id = #{wageStatisticsId}
+    </select>
+
+    <insert id="bulkInsertOutsourcedStaff" parameterType="java.util.Map">
+        insert into oa_outsourced_staff (serial_number, department, `name`,
+        `position`, position_salary, technical_title_allowance,
+        special_work_allowance, ceyn_xjm, travel_allowance,
+        oil_filling, duty_fee, advance_wages,
+        monthly_award, megathermal_allowance, overtime_pay,
+        withholding_wages, wages_payable,accumulation_fund,
+        individual_income_tax, actual_amount,company_gold,
+        service_fee, other, total_expenses,settlement_date, wage_statistics_id)
+        values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            <foreach collection="item" item="item2" index="index2" separator=",">
+                #{item2}
+            </foreach>
+            ,#{wageStatisticsId})
+        </foreach>
+
+    </insert>
+
+    <select id="selectOutsourcedStaffByWageStatisticsId" parameterType="java.lang.Integer" resultType="com.jiaoke.oa.bean.OaOutsourcedStaff">
+        select
+            serial_number as serialNumber,
+             department,
+              `name`,
+        `position`,
+        position_salary AS positionSalary,
+        technical_title_allowance AS technicalTitleAllowance,
+        special_work_allowance AS specialWorkAllowance,
+        ceyn_xjm AS ceynXjm,
+        travel_allowance AS travelAllowance,
+        oil_filling AS oilFilling,
+        duty_fee AS dutyFee,
+        advance_wages AS advanceWages,
+        monthly_award AS monthlyAward,
+        megathermal_allowance AS megathermalAllowance,
+        overtime_pay AS overtimePay,
+        withholding_wages AS withholdingWages,
+        wages_payable AS wagesPayable,
+        accumulation_fund AS accumulationFund,
+        individual_income_tax AS individualIncomeTax,
+        actual_amount AS actualAmount,
+        company_gold AS companyGold,
+        service_fee AS serviceFee,
+        other,
+        total_expenses AS totalExpenses,
+        settlement_date AS settlementDate
+        from oa_outsourced_staff
+        where wage_statistics_id = #{wageStatisticsId}
+    </select>
+</mapper>

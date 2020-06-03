@@ -3,10 +3,12 @@ package com.jiaoke.oa.service;
 import com.jiake.utils.DateUtil;
 import com.jiake.utils.ExcelUtils;
 import com.jiake.utils.RandomUtil;
-import com.jiaoke.oa.bean.OaPersonalWages;
-import com.jiaoke.oa.bean.OaWageStatistics;
+import com.jiaoke.oa.bean.*;
+import com.jiaoke.oa.dao.OaOutsourcedStaffMapper;
+import com.jiaoke.oa.dao.OaOutsourcedStatisticsMapper;
 import com.jiaoke.oa.dao.OaPersonalWagesMapper;
 import com.jiaoke.oa.dao.OaWageStatisticsMapper;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,6 +33,21 @@ public class OaWageStatisticsServiceImpl implements OaWageStatisticsService {
 
     @Resource
     private OaWageStatisticsMapper oaWageStatisticsMapper;
+
+    @Resource
+    private OaOutsourcedStaffMapper oaOutsourcedStaffMapper;
+
+    @Resource
+    private OaOutsourcedStatisticsMapper oaOutsourcedStatisticsMapper;
+
+    /**
+     * 获取当前登录用户信息
+     *
+     * @return userInfo
+     */
+    private UserInfo getCurrentUser() {
+        return (UserInfo) SecurityUtils.getSubject().getPrincipal();
+    }
 
     @Override
     public int importPersonalWages(MultipartFile file) throws IOException {
@@ -99,5 +116,55 @@ public class OaWageStatisticsServiceImpl implements OaWageStatisticsService {
     @Override
     public OaPersonalWages getPersonalWagesByNickName(String nickName) {
         return oaPersonalWagesMapper.getPersonalWagesByNickName(nickName);
+    }
+
+    @Override
+    public int importOutsourcedStaffWages(MultipartFile file) throws IOException {
+        int result = 0;
+        //获取工资统计id
+        Integer wageStatisticsId = RandomUtil.random();
+        List<String[]> list = ExcelUtils.readExcel(file);
+        //获取结算日期
+        String settlementDate = list.get(0)[list.get(0).length - 1];
+
+        try {
+            //批量插入excel
+            result = oaOutsourcedStaffMapper.bulkInsertOutsourcedStaff(list, String.valueOf(wageStatisticsId));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (result > 0) {
+            //查询实发总额
+            BigDecimal grossActualAmount = oaOutsourcedStaffMapper.getGrossActualAmount(wageStatisticsId);
+            OaOutsourcedStatistics outsourcedStatistics = new OaOutsourcedStatistics();
+            outsourcedStatistics.setId(wageStatisticsId);
+            outsourcedStatistics.setName(file.getOriginalFilename().substring(0, file.getOriginalFilename().lastIndexOf(".")));
+            outsourcedStatistics.setTotalAmount(grossActualAmount.toString());
+            outsourcedStatistics.setSettlementMonth(settlementDate);
+            outsourcedStatistics.setTotal(String.valueOf(list.size()));
+            outsourcedStatistics.setCreateDate(DateUtil.dateConvertYYYYMMDDHHMMSS(new Date()));
+            outsourcedStatistics.setUploadUsers(getCurrentUser().getNickname());
+            outsourcedStatistics.setState(0);
+            //插入到工资统计
+            int i = oaOutsourcedStatisticsMapper.insertSelective(outsourcedStatistics);
+            if (i > 0) {
+                return result;
+            } else {
+                return i;
+            }
+        } else {
+            return result;
+        }
+    }
+
+    @Override
+    public List<OaOutsourcedStatistics> getAllOutsourcedStatistics() {
+        return oaOutsourcedStatisticsMapper.selectAll();
+    }
+
+    @Override
+    public List<OaOutsourcedStaff> selectOutsourcedStaffByWageStatisticsId(int wageStatisticsId) {
+        return oaOutsourcedStaffMapper.selectOutsourcedStaffByWageStatisticsId(wageStatisticsId);
     }
 }
