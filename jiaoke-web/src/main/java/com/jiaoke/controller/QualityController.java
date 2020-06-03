@@ -200,7 +200,7 @@ public class QualityController {
             {
 //                qualityprojectInf.editProductionDataByCarNum(new String(buf,"UTF-8"));
                 //RabbitService
-                amqpTemplate.convertAndSend("exchangeCar","queueTestKey",new String(buf,"UTF-8"));
+                amqpTemplate.convertSendAndReceive("exchangeCar","queueTestKey",new String(buf,"UTF-8"));
             }
 
         }catch (Exception e){

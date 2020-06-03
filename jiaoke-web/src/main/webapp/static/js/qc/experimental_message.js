@@ -18,11 +18,15 @@ function getExperimentalProjectMessage(id) {
         dataType:'JSON',
         success:function (res) {
             if (res){
+                debugger
                 for (var i = 0 ; i < res.length;i++) {
                     for (var p in  res[i]){
 
                         if ($.trim(res[i][p]) !== ""){
                             $("input[name='"+p+"']").val(res[i][p]);
+                            if (p === 'verdict') {
+                                $("#verdict").val(res[i][p]);
+                            }
                         }
                     }
 

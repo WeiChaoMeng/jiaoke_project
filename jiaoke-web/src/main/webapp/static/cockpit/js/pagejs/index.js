@@ -79,7 +79,9 @@ function showMonthChar() {
                     }
                 }
             }
-            $("#thisMonthCount").empty().append("<span id='parkplace'> " + (crew1Total + crew2Total).toFixed(1) + "吨</span>")
+            var crew1 = crew1Total? crew1Total:0;
+            var crew2 = crew2Total? crew2Total:0;
+            $("#thisMonthCount").empty().append("<span id='parkplace'> " + (crew1 + crew2).toFixed(1) + "吨</span>")
             if (res.message === "error") {
                 layer.msg("后台错误，请联系管理员！");
             }
@@ -233,8 +235,10 @@ function getThisMonthYield() {
                         crew2Gross = proSum;
                     }
                 }
+                var crew1 = crew1Gross? crew1Gross:0;
+                var crew2 = crew2Gross? crew2Gross:0;
                 //另一个柱状图
-                series.push({name:'本月总产量',data:[null, null,crew1Gross + crew2Gross ],stack: 'male'});
+                series.push({name:'本月总产量',data:[null, null,crew1 + crew2 ],stack: 'male'});
 
 
                 //处理本月各机组产品前十。左三饼图
@@ -544,7 +548,10 @@ function showThisMonthRegenerate() {
                         crew2Num = dataArry[i].total;
                     }
                 }
-                var sum = (crew1Num + crew2Num).toFixed(1);
+                var crew1 = crew1Num? crew1Num:0;
+                var crew2 = crew2Num? crew2Num:0;
+
+                var sum = (crew1 + crew2).toFixed(1);
 
                 $("#thisUsageAmount").empty().append("<span>" + sum + "吨</span>");
 
