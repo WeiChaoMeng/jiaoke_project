@@ -4,14 +4,8 @@ import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
 import com.jiaoke.controller.oa.TargetFlowNodeCommand;
-import com.jiaoke.oa.bean.Comments;
-import com.jiaoke.oa.bean.Department;
-import com.jiaoke.oa.bean.OaActDocument;
-import com.jiaoke.oa.bean.UserInfo;
-import com.jiaoke.oa.service.DepartmentService;
-import com.jiaoke.oa.service.OaActDocumentService;
-import com.jiaoke.oa.service.OaCollaborationService;
-import com.jiaoke.oa.service.UserInfoService;
+import com.jiaoke.oa.bean.*;
+import com.jiaoke.oa.service.*;
 import org.activiti.bpmn.model.UserTask;
 import org.activiti.engine.ManagementService;
 import org.activiti.engine.task.Task;
@@ -57,6 +51,12 @@ public class OaActDocumentController {
     @Resource
     private ManagementService managementService;
 
+    @Resource
+    private OaMainDeliveryService oaMainDeliveryService;
+
+    @Resource
+    private OaCopyDeliveryService oaCopyDeliveryService;
+
     /**
      * 获取当前登录用户信息
      *
@@ -76,10 +76,14 @@ public class OaActDocumentController {
         //所有用户
         List<UserInfo> userInfoList = userInfoService.selectIdAndNicknameAndDepartment();
         List<Department> departmentList = departmentService.selectKeyAndName();
+        List<OaMainDelivery> mainDeliveryList = oaMainDeliveryService.selectAllData();
+        List<OaCopyDelivery> copyDeliveryList = oaCopyDeliveryService.selectAllData();
         model.addAttribute("nickname", getCurrentUser().getNickname());
         model.addAttribute("departmentName", getCurrentUser().getDepartment());
         model.addAttribute("userInfoList", JsonHelper.toJSONString(userInfoList));
         model.addAttribute("departmentListJson", JsonHelper.toJSONString(departmentList));
+        model.addAttribute("mainDeliveryListJson", JsonHelper.toJSONString(mainDeliveryList));
+        model.addAttribute("copyDeliveryListJson", JsonHelper.toJSONString(copyDeliveryList));
         model.addAttribute("departmentList", departmentList);
         return "oa/act/act_document";
     }
@@ -234,29 +238,8 @@ public class OaActDocumentController {
                     if (!"".equals(oaActDocument.getMainGiveId())){
                         Map<String, Object> map = new HashMap<>(16);
                         List<Object> mainGiveList = new ArrayList<>();
-
-                        //领导班子
-                        if ("1".equals(oaActDocument.getMainGiveId())){
-                            mainGiveList.add(1);
-                            mainGiveList.add(2);
-                            mainGiveList.add(3);
-                            mainGiveList.add(4);
-                            mainGiveList.add(23);
-                        }else{
-                            mainGiveList.add(5);
-                            mainGiveList.add(6);
-                            mainGiveList.add(22);
-                            mainGiveList.add(34);
-                            mainGiveList.add(38);
-                            mainGiveList.add(47);
-                            mainGiveList.add(48);
-                            mainGiveList.add(58);
-                        }
-//                         String mainGive = oaActDocument.getMainGiveId();
-//                        String[] users = mainGive.split(",");
-//                        for (String user : users) {
-//                            mainGiveList.add(user);
-//                        }
+                        List<String> userList = oaMainDeliveryService.selectBoundUser(oaActDocument.getMainGiveId());
+                        mainGiveList.addAll(userList);
                         map.put("whether", 0);
                         map.put("main_give_list", mainGiveList);
                         activitiUtil.approvalComplete(taskId, map);
@@ -266,11 +249,14 @@ public class OaActDocumentController {
                         if (!"".equals(oaActDocument.getCopyGiveId())){
                             Map<String, Object> map = new HashMap<>(16);
                             List<Object> copyGiveList = new ArrayList<>();
-                            String copyGive = oaActDocument.getCopyGiveId();
-                            String[] users = copyGive.split(",");
-                            for (String user : users) {
-                                copyGiveList.add(user);
-                            }
+//                            String copyGive = oaActDocument.getCopyGiveId();
+//                            String[] users = copyGive.split(",");
+
+                            List<String> userList = oaCopyDeliveryService.selectBoundUser(oaActDocument.getCopyGiveId());
+                            copyGiveList.addAll(userList);
+//                            for (String user : users) {
+//                                copyGiveList.add(user);
+//                            }
                             map.put("whether", 1);
                             map.put("copy_give_list", copyGiveList);
                             activitiUtil.approvalComplete(taskId, map);
@@ -298,11 +284,14 @@ public class OaActDocumentController {
                 if (!"".equals(oaActDocument.getCopyGiveId())){
                     Map<String, Object> map = new HashMap<>(16);
                     List<Object> copyGiveList = new ArrayList<>();
-                    String copyGive = oaActDocument.getCopyGiveId();
-                    String[] users = copyGive.split(",");
-                    for (String user : users) {
-                        copyGiveList.add(user);
-                    }
+//                    String copyGive = oaActDocument.getCopyGiveId();
+//                    String[] users = copyGive.split(",");
+//                    for (String user : users) {
+//                        copyGiveList.add(user);
+//                    }
+
+                    List<String> userList = oaCopyDeliveryService.selectBoundUser(oaActDocument.getCopyGiveId());
+                    copyGiveList.addAll(userList);
                     map.put("whether", 0);
                     map.put("copy_give_list", copyGiveList);
                     activitiUtil.approvalComplete(taskId, map);
@@ -394,6 +383,10 @@ public class OaActDocumentController {
         //所有用户
         List<UserInfo> userInfoList = userInfoService.selectIdAndNicknameAndDepartment();
         List<Department> departmentList = departmentService.selectKeyAndName();
+        List<OaMainDelivery> mainDeliveryList = oaMainDeliveryService.selectAllData();
+        List<OaCopyDelivery> copyDeliveryList = oaCopyDeliveryService.selectAllData();
+        model.addAttribute("mainDeliveryListJson", JsonHelper.toJSONString(mainDeliveryList));
+        model.addAttribute("copyDeliveryListJson", JsonHelper.toJSONString(copyDeliveryList));
         model.addAttribute("oaActDocument", oaActDocument);
         model.addAttribute("userInfoList", JsonHelper.toJSONString(userInfoList));
         model.addAttribute("departmentListJson", JsonHelper.toJSONString(departmentList));

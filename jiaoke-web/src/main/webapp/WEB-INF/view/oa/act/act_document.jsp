@@ -358,22 +358,25 @@
 
     //选择抄送人员
     function carbonCopy() {
-        //用户
-        var userInfoList = JSON.parse('${userInfoList}');
-        //部门
-        var departmentList = JSON.parse('${departmentListJson}');
-        window.top.selectNotifyPerson(userInfoList, departmentList, "", itselfFrameId);
+        var copyDeliveryList = JSON.parse('${copyDeliveryListJson}');
+        window.top.selectCopyPerson(copyDeliveryList, itselfFrameId);
     }
 
-    //插入已选抄送人员
-    function insertCopyGive(array, arrayId) {
-        $('#copyGive').val(array);
-        $('#copyGiveId').val(arrayId);
+    //插入已选主送人员
+    function insertCopyGive(id,text) {
+        if (id === "0"){
+            $('#copyGive').val(text);
+            $('#copyGiveId').val("");
+        } else{
+            $('#copyGive').val(text);
+            $('#copyGiveId').val(id);
+        }
     }
 
     //主送
     function mainCopy() {
-        window.top.selectMainGive(itselfFrameId);
+        var mainDeliveryList = JSON.parse('${mainDeliveryListJson}');
+        window.top.selectMainGive(mainDeliveryList,itselfFrameId);
     }
 
     //插入已选主送人员

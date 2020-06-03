@@ -11,7 +11,6 @@
     <meta charset="utf-8">
     <title>外包员工详情</title>
     <link href="../../../../static/css/oa/oa_common.css" rel="stylesheet" type="text/css">
-    <link href="../../../../static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
 </head>
 <style>
     .simpletable thead tr th {
@@ -30,47 +29,37 @@
 <table class="simpletable simpletable_color" style="margin-top: 10px;">
 
     <thead>
-    <th>员工编号</th>
-    <th>部门</th>
-    <th>姓名</th>
-    <th>岗位</th>
-    <th>岗位工资</th>
-    <th>技术职称津贴</th>
-    <th>特殊工种津贴</th>
-    <th>补发工资</th>
-    <th>月奖</th>
-    <th>高温津贴</th>
-    <th>超时服务费</th>
-    <th>应发工资</th>
-    <th style="width: 140px">操作</th>
-    <th style="width: 10px;"></th>
+    <tr>
+        <th>序号</th>
+        <th>部门</th>
+        <th>姓名</th>
+        <th>岗位</th>
+        <th>现岗位工资</th>
+        <th>技术职称津贴</th>
+        <th>特殊工种津贴</th>
+        <th>通讯费</th>
+        <th>交通补助</th>
+        <th>交通油费补助</th>
+        <th>值班费</th>
+        <th>预支工资</th>
+        <th>月奖</th>
+        <th>高温津贴</th>
+        <th>超时服务费</th>
+        <th>扣发工资</th>
+        <th>应发工资</th>
+        <th>个人保险公积金</th>
+        <th>个人所得税</th>
+        <th>实发工资</th>
+        <th>公司保险公积金</th>
+        <th>服务费</th>
+        <th>其他</th>
+        <th>费用合计</th>
+        <th>实结算日期</th>
+        <th style="width: 10px;"></th>
+    </tr>
     </thead>
 
-    <tbody>
-
-    <tr></tr>
-    <tr class="even">
-        <td>W601</td>
-        <td>技术部</td>
-        <td>李四</td>
-        <td>仪器仪表</td>
-        <td>8000</td>
-        <td>300</td>
-        <td>600</td>
-        <td>100</td>
-        <td>400</td>
-        <td>200</td>
-        <td>0</td>
-        <td>9600</td>
-        <td>
-            <div class="more-operation cursor_hand">
-                <i class="toolico iconfont">&#xe7ea;</i>
-                <i class="toolico iconfont">&#xe7e9;</i>
-            </div>
-        </td>
-    </tr>
-
-    </tbody>
+    <tbody id="TBody"></tbody>
 
 </table>
 
@@ -94,5 +83,38 @@
             $(".head_right_side_select").css("display", "none");
         }
     });
+
+    var data = JSON.parse('${outsourcedStaffListJson}');
+    var resultData = '';
+    for (let i = 0; i < data.length; i++) {
+        resultData += '<tr>';
+        resultData += '<td>' + data[i].serialNumber + '</td>';
+        resultData += '<td>' + data[i].department + '</td>';
+        resultData += '<td>' + data[i].name + '</td>';
+        resultData += '<td>' + data[i].position + '</td>';
+        resultData += '<td>' + data[i].positionSalary + '</td>';
+        resultData += '<td>' + data[i].technicalTitleAllowance + '</td>';
+        resultData += '<td>' + data[i].specialWorkAllowance + '</td>';
+        resultData += '<td>' + data[i].ceynXjm + '</td>';
+        resultData += '<td>' + data[i].travelAllowance + '</td>';
+        resultData += '<td>' + data[i].oilFilling + '</td>';
+        resultData += '<td>' + data[i].dutyFee + '</td>';
+        resultData += '<td>' + data[i].advanceWages + '</td>';
+        resultData += '<td>' + data[i].monthlyAward + '</td>';
+        resultData += '<td>' + data[i].megathermalAllowance + '</td>';
+        resultData += '<td>' + data[i].overtimePay + '</td>';
+        resultData += '<td>' + data[i].withholdingWages + '</td>';
+        resultData += '<td>' + data[i].wagesPayable + '</td>';
+        resultData += '<td>' + data[i].accumulationFund + '</td>';
+        resultData += '<td>' + data[i].individualIncometax + '</td>';
+        resultData += '<td>' + data[i].actualAmount + '</td>';
+        resultData += '<td>' + data[i].companyGold + '</td>';
+        resultData += '<td>' + data[i].serviceFee + '</td>';
+        resultData += '<td>' + data[i].other + '</td>';
+        resultData += '<td>' + data[i].totalExpenses + '</td>';
+        resultData += '<td>' + data[i].settlementDate + '</td>';
+        resultData += '</tr>';
+    }
+    $("#TBody").html(resultData);
 </script>
 </html>

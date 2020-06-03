@@ -6,9 +6,11 @@ import com.jiaoke.controller.oa.ActivitiUtil;
 import com.jiaoke.controller.oa.TargetFlowNodeCommand;
 import com.jiaoke.oa.bean.Comments;
 import com.jiaoke.oa.bean.OaActRead;
+import com.jiaoke.oa.bean.OaReceiptReading;
 import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.service.OaActReadService;
 import com.jiaoke.oa.service.OaCollaborationService;
+import com.jiaoke.oa.service.OaReceiptReadingService;
 import com.jiaoke.oa.service.UserInfoService;
 import org.activiti.bpmn.model.UserTask;
 import org.activiti.engine.ManagementService;
@@ -51,6 +53,9 @@ public class OaActReadController {
 
     @Resource
     private ManagementService managementService;
+
+    @Resource
+    private OaReceiptReadingService oaReceiptReadingService;
 
     /**
      * 获取当前登录用户信息
@@ -127,6 +132,8 @@ public class OaActReadController {
                 return "oa/act/oa_document_reading_handle2";
             }
         }
+        List<OaReceiptReading> receiptReadingList = oaReceiptReadingService.selectAllData();
+        model.addAttribute("receiptReadingListJson", JsonHelper.toJSONString(receiptReadingList));
         return "oa/act/oa_document_reading_handle";
     }
 
@@ -223,37 +230,46 @@ public class OaActReadController {
                         //选择部门
                     } else if (depOpinion.equals(enforcer)) {
 
+                        Map<String, Object> map = new HashMap<>(16);
+                        List<Object> depOpinionList = new ArrayList<>();
                         String[] strings = oaActRead.getDepOpinion().split(",");
+                        List<String> boundUser = oaReceiptReadingService.selectBoundUser(strings[0]);
+                        depOpinionList.addAll(boundUser);
+                        map.put("dep_opinion_list", depOpinionList);
+                        activitiUtil.approvalComplete(taskId, map);
+                        oaActRead.setDepOpinion(strings[1]);
+                        return updateByPrimaryKeySelective(oaActRead);
+
 //                        领导班子
-                        if ("1".equals(strings[0])) {
-                            Map<String, Object> map = new HashMap<>(16);
-                            List<Object> depOpinionList = new ArrayList<>();
-                            depOpinionList.add(3);
-                            depOpinionList.add(4);
-                            depOpinionList.add(23);
-                            map.put("dep_opinion_list", depOpinionList);
-                            activitiUtil.approvalComplete(taskId, map);
-                            oaActRead.setDepOpinion(strings[1]);
-                            return updateByPrimaryKeySelective(oaActRead);
-
-                        } else {
-                            Map<String, Object> map = new HashMap<>(16);
-                            List<Object> depOpinionList = new ArrayList<>();
-                            depOpinionList.add(5);
-                            depOpinionList.add(6);
-                            depOpinionList.add(22);
-                            depOpinionList.add(34);
-                            depOpinionList.add(38);
-                            depOpinionList.add(47);
-                            depOpinionList.add(48);
-                            depOpinionList.add(58);
-                            map.put("dep_opinion_list", depOpinionList);
-                            activitiUtil.approvalComplete(taskId, map);
-                            oaActRead.setDepOpinion(strings[1]);
-                            return updateByPrimaryKeySelective(oaActRead);
-
-                            //无-直接结束
-                        }
+//                        if ("1".equals(strings[0])) {
+//                            Map<String, Object> map = new HashMap<>(16);
+//                            List<Object> depOpinionList = new ArrayList<>();
+//                            depOpinionList.add(3);
+//                            depOpinionList.add(4);
+//                            depOpinionList.add(23);
+//                            map.put("dep_opinion_list", depOpinionList);
+//                            activitiUtil.approvalComplete(taskId, map);
+//                            oaActRead.setDepOpinion(strings[1]);
+//                            return updateByPrimaryKeySelective(oaActRead);
+//
+//                        } else {
+//                            Map<String, Object> map = new HashMap<>(16);
+//                            List<Object> depOpinionList = new ArrayList<>();
+//                            depOpinionList.add(5);
+//                            depOpinionList.add(6);
+//                            depOpinionList.add(22);
+//                            depOpinionList.add(34);
+//                            depOpinionList.add(38);
+//                            depOpinionList.add(47);
+//                            depOpinionList.add(48);
+//                            depOpinionList.add(58);
+//                            map.put("dep_opinion_list", depOpinionList);
+//                            activitiUtil.approvalComplete(taskId, map);
+//                            oaActRead.setDepOpinion(strings[1]);
+//                            return updateByPrimaryKeySelective(oaActRead);
+//
+//                            //无-直接结束
+//                        }
                         //领导批示
                     } else if (companyPrincipal.equals(enforcer)){
                         UserInfo userInfo = userInfoService.getUserInfoByPermission("company_principal");

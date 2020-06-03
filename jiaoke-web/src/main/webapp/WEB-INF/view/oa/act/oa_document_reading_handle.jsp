@@ -16,15 +16,16 @@
     <link href="../../../../static/css/oa/act_table.css" rel="stylesheet" type="text/css">
     <style>
         .input-radio-div {
-            width: 100px;
             display: inline-block;
             text-align: center;
+            padding: 0 10px;
         }
 
         .radio-style {
             vertical-align: middle;
             outline: none;
             zoom: 120%;
+            margin-right: 3px;
         }
 
         .deadline-select {
@@ -321,14 +322,15 @@
 
         if (flag === 0) {
             if (read.depOpinion === "" || read.depOpinion === undefined || read.depOpinion === null) {
-                $('#depOpinionSel').append('<div class="input-radio-div">\n' +
-                    '                            <input type="radio" class="radio-style" name="depOpinion" value="1,领导班子成员" checked>\n' +
-                    '                            <span style="font-size: 13px;">领导班子成员</span>\n' +
-                    '                        </div>\n' +
-                    '                        <div class="input-radio-div">\n' +
-                    '                            <input type="radio" class="radio-style" name="depOpinion" value="2,各部室负责人">\n' +
-                    '                            <span style="font-size: 13px;">各部室负责人</span>\n' +
-                    '                        </div>');
+                var receiptReadingList = JSON.parse('${receiptReadingListJson}');
+                var depOpinionSelStr = "";
+                for (let i = 0; i < receiptReadingList.length; i++) {
+                    depOpinionSelStr += '<div class="input-radio-div">';
+                    depOpinionSelStr += '<input type="radio" class="radio-style" name="depOpinion" value="'+receiptReadingList[i].id+','+receiptReadingList[i].name+'" checked>';
+                    depOpinionSelStr += '<span style="font-size: 13px;">'+receiptReadingList[i].name+'</span>';
+                    depOpinionSelStr += '</div>';
+                }
+                $('#depOpinionSel').append(depOpinionSelStr);
                 flag = 1;
             } else {
                 $('#depOpinionSel').html('');

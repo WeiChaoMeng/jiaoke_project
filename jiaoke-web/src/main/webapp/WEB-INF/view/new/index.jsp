@@ -537,6 +537,27 @@
                                                 </a>
                                             </li>
                                             </shiro:hasPermission>
+
+                                            <li>
+                                                <a onclick="xadmin.add_tab('主送参数','mainDelivery/toIndex?page=1',true)">
+                                                    <i class="iconfont">&#xe6a7;</i>
+                                                    <cite>主送参数</cite>
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a onclick="xadmin.add_tab('抄送参数','copyDelivery/toIndex?page=1',true)">
+                                                    <i class="iconfont">&#xe6a7;</i>
+                                                    <cite>抄送参数</cite>
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a onclick="xadmin.add_tab('收文参数','receiptReading/toIndex?page=1',true)">
+                                                    <i class="iconfont">&#xe6a7;</i>
+                                                    <cite>收文参数</cite>
+                                                </a>
+                                            </li>
                                         </ul>
                                     </li>
                                 </shiro:hasPermission>

@@ -17,7 +17,6 @@
     <meta charset="utf-8">
     <title>正式员工</title>
     <link href="../../../../static/css/oa/oa_common.css" rel="stylesheet" type="text/css">
-    <link href="../../../../static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
 </head>
 <style>
     .simpletable thead tr th {

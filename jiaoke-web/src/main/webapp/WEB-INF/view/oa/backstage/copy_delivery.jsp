@@ -8,7 +8,7 @@
 <html class="x-admin-sm">
 <head>
     <meta charset="UTF-8">
-    <title>部门管理</title>
+    <title>发送公文-抄送</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link rel="stylesheet" href="../../../../static/new/css/font.css">
@@ -23,7 +23,7 @@
         <a><cite>主页</cite></a>
         <a><cite>OA系统</cite></a>
         <a><cite>后台管理</cite></a>
-        <a><cite>部门管理</cite></a>
+        <a><cite>抄送参数</cite></a>
     </span>
 
     <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
@@ -41,7 +41,7 @@
                         <i class="layui-icon"></i>批量删除
                     </button>
 
-                    <button class="layui-btn" onclick="addDepartment()">
+                    <button class="layui-btn" onclick="addCopyDelivery()">
                         <i class="layui-icon"></i>添加
                     </button>
 
@@ -51,7 +51,7 @@
                     </div>
 
                     <div class="layui-input-inline layui-show-xs-block" style="float: right;">
-                        <input type="text" id="departmentName" placeholder="请输入部门名称" autocomplete="off"
+                        <input type="text" id="name" placeholder="请输入名称" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
@@ -64,15 +64,14 @@
                                 <input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose" id="allChoose">
                             </th>
                             <th style="width: 7%">序号</th>
-                            <th style="width: 20%">部门名称</th>
-                            <th style="width: 20%">部门负责人</th>
-                            <th style="width: 20%">部门主管领导</th>
-                            <th style="width: 30%">操作</th>
+                            <th style="width: 40%">名称</th>
+                            <th style="width: 30%">说明</th>
+                            <th style="width: 20%">操作</th>
                         </thead>
 
                         <tbody id="tbody">
                         <tr>
-                            <td colspan="6" style="text-align: center;">没有查询到匹配记录</td>
+                            <td colspan="5" style="text-align: center;">没有查询到匹配记录</td>
                         </tr>
                         </tbody>
                     </table>
@@ -105,6 +104,7 @@
 
     var itselfFrameId;
 
+    //分页
     $(function () {
         $('#page').val(currentPageNum);
         loadData(currentPageNum);
@@ -116,16 +116,16 @@
     function loadData(page) {
         $.ajax({
             type: "post",
-            url: '/backstageManagement/departmentManager',
+            url: '/copyDelivery/getAllData',
             data: {'page': page},
             async: false,
             success: function (data) {
-                var departments = JSON.parse(data);
+                var userInfos = JSON.parse(data);
                 //总数
-                $("#PageCount").val(departments.total);
+                $("#PageCount").val(userInfos.total);
                 //每页显示条数
                 $("#PageSize").val("12");
-                parseResult(departments);
+                parseResult(userInfos);
             },
             error: function (result) {
                 layer.msg("出错！");
@@ -135,20 +135,20 @@
 
     //名字搜索
     function searchButton(page, parameter) {
-        var departmentName = $('#departmentName').val();
+        var name = $('#name').val();
         $.ajax({
             type: "post",
-            url: '/backstageManagement/departmentFilter',
-            data: {'page': page, 'departmentName': departmentName},
+            url: '/copyDelivery/copyDeliveryFilter',
+            data: {'page': page, 'name': name},
             async: false,
             success: function (data) {
                 $('#page').val(1);
-                var departments = JSON.parse(data);
+                var userInfos = JSON.parse(data);
                 //总数
-                $("#PageCount").val(departments.total);
+                $("#PageCount").val(userInfos.total);
                 //每页显示条数
                 $("#PageSize").val("12");
-                parseResult(departments);
+                parseResult(userInfos);
                 loadPage(parameter);
             },
             error: function (result) {
@@ -195,115 +195,95 @@
     }
 
     //解析list
-    function parseResult(departments) {
+    function parseResult(userInfos) {
         //结果集
-        var departmentList = departments.list;
+        var userInfoList = userInfos.list;
         //当前页
-        var pageNum = departments.pageNum;
+        var pageNum = userInfos.pageNum;
         //插入tbody
-        var department = '';
-        if (departmentList.length === 0) {
-            department += '<tr>';
-            department += '<td colspan="6"  style="text-align: center;">' + '没有查询到匹配记录' + '</td>';
-            department += '</tr>';
+        var userInfo = '';
+        if (userInfoList.length === 0) {
+            userInfo += '<tr>';
+            userInfo += '<td colspan="5" style="text-align: center;">' + '没有查询到匹配记录' + '</td>';
+            userInfo += '</tr>';
         } else {
-            for (let i = 0; i < departmentList.length; i++) {
-                department += '<tr>';
-                department += '<td><input type="checkbox" name="show" lay-skin="primary" lay-filter="choose" value="' + departmentList[i].id + '">' +
+            for (let i = 0; i < userInfoList.length; i++) {
+                userInfo += '<tr>';
+                userInfo += '<td><input type="checkbox" name="show" lay-skin="primary" lay-filter="choose" value="' + userInfoList[i].id + '">' +
                     '<div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></td>';
-                department += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 12 + i + 1) + '</td>';
-                department += '<td>' + departmentList[i].departmentName + '</td>';
-                if (typeof(departmentList[i].principal) == "undefined") {
-                    department += '<td></td>';
-                } else {
-                    department += '<td>' + departmentList[i].principal + '</td>';
-                }
-
-                if (typeof(departmentList[i].supervisor) == "undefined") {
-                    department += '<td></td>';
-                } else {
-                    department += '<td>' + departmentList[i].supervisor + '</td>';
-                }
-                department +=
+                userInfo += '<td>' + (pageNum === 1 ? pageNum + i : (pageNum - 1) * 12 + i + 1) + '</td>';
+                userInfo += '<td>' + userInfoList[i].name + '</td>';
+                userInfo += '<td>' + userInfoList[i].description + '</td>';
+                userInfo +=
                     '<td class="td-manage" style="white-space: nowrap;">\n' +
-                    '<button class="layui-btn layui-btn layui-btn-xs" onclick="editDepartment(' + departmentList[i].id + ')"><i class="layui-icon">&#xe642;</i>编辑</button>\n' +
-                    '<button class="layui-btn-danger layui-btn layui-btn-xs" onclick="del(' + departmentList[i].id + ')"><i class="layui-icon">&#xe640;</i>删除</button>\n' +
-                    // '<button class="layui-btn layui-btn-warm layui-btn-xs" onclick="binding(1,' + departmentList[i].id + ')"><i class="layui-icon">&#xe64c;</i>绑定负责人</button>\n' +
-                    '<button class="layui-btn layui-btn-warm layui-btn-xs" onclick="bindingPrincipal(' + departmentList[i].id + ',' + departmentList[i].departmentKey + ')"><i class="layui-icon">&#xe64c;</i>绑定负责人</button>\n' +
-                    '<button class="layui-btn layui-btn-normal layui-btn-xs" onclick="binding(2,' + departmentList[i].id + ')"><i class="layui-icon">&#xe64c;</i>绑定主管领导</button>\n' +
+                    '<button class="layui-btn layui-btn layui-btn-xs" onclick="editCopyDelivery(\'' + userInfoList[i].id + '\',\'' + userInfoList[i].name + '\',\'' + userInfoList[i].description + '\')"><i class="layui-icon">&#xe642;</i>编辑</button>\n' +
+                    '<button class="layui-btn-danger layui-btn layui-btn-xs" onclick="deleteCopyDelivery(' + userInfoList[i].id + ')"><i class="layui-icon">&#xe640;</i>删除</button>\n' +
+                    '<button class="layui-btn layui-btn-warm layui-btn-xs" onclick="binding(' + userInfoList[i].id + ')"><i class="layui-icon">&#xe64c;</i>绑定用户</button>\n' +
                     '</td>';
-                department += '</tr>';
+                userInfo += '</tr>';
             }
         }
-        $('#tbody').html(department);
+        $('#tbody').html(userInfo);
         renderCheckBox();
     }
 
     //新增
-    function addDepartment() {
-        //主页fun
-        window.top.addDepartment($('#page').val(), itselfFrameId);
+    function addCopyDelivery() {
+        window.top.addMainDelivery("/copyDelivery", $('#page').val(), itselfFrameId);
     }
 
     //重载页面
-    function departmentInfoPageReload(page) {
-        window.location.href = "${path}/backstageManagement/toDepartmentManager?page=" + page;
+    function parameterConfigurationPage(page) {
+        window.location.href = "${path}/copyDelivery/toIndex?page=" + page;
     }
 
     //编辑
-    function editDepartment(id) {
+    function editCopyDelivery(id, name, description) {
+        window.top.editMainDelivery(id, name, description, "/copyDelivery", $('#page').val(), itselfFrameId);
+    }
+
+    //绑定角色
+    function binding(id) {
         $.ajax({
             type: "post",
-            url: '/backstageManagement/toDepartmentEdit',
+            url: '/copyDelivery/toBinding',
             data: {'id': id},
+            dataType: 'json',
             success: function (data) {
-                //部门信息
-                var department = JSON.parse(data);
                 //主页fun
-                window.top.editDepartment(department, $('#page').val(), itselfFrameId);
+                window.top.bindingMainDelivery(data, id, "/copyDelivery", $('#page').val(), itselfFrameId);
             },
             error: function (result) {
-                alert("出错！");
+                layer.msg("出错！");
             }
         })
     }
 
-    //绑定部门主管
-    function binding(target, id) {
-        var page = $('#page').val();
-        //用户
-        var userInfoList = JSON.parse('${userInfoList}');
-        //部门
-        var departmentList = JSON.parse('${departmentList}');
-        window.top.bindingDepartmentHead(userInfoList, departmentList, id, page, target, itselfFrameId);
+    //删除
+    function deleteCopyDelivery(id) {
+        window.top.deleteMainDelivery(id, "/copyDelivery", itselfFrameId);
     }
 
-    //绑定部门负责人
-    function bindingPrincipal(id,key) {
-        var page = $('#page').val();
+    function delAll() {
+        var ids = [];
 
-        $.ajax({
-            cache: true,
-            type: "POST",
-            url: '${path}/document/departmentMember',
-            data: {"departmentKey": key},
-            error: function (request) {
-                window.top.tips("出错！", 6, 2, 1000);
-            },
-            success: function (result) {
-                window.top.bindingPrincipal(JSON.parse(result), id, page, itselfFrameId);
+        // 获取选中的id
+        $('tbody input').each(function (index, el) {
+            if ($(this).prop('checked')) {
+                ids.push($(this).val())
             }
         });
+
+        window.top.batchDeleteData("/copyDelivery/batchDeleteMain", ids, itselfFrameId);
     }
 
-    //删除用户
-    function del(id) {
-        window.top.deleteDepartment(id, itselfFrameId);
+    //重载页面（批量删除）
+    function batchDeletePageReload(page) {
+        window.location.href = "${path}/copyDelivery/toIndex?page=" + page;
     }
 
     //批量删除全选
     layui.use(['laydate', 'form'], function () {
-        var laydate = layui.laydate;
         var form = layui.form;
 
         // 监听全选
@@ -327,24 +307,6 @@
             form.render('checkbox');
         });
     });
-
-    function delAll() {
-        var ids = [];
-
-        // 获取选中的id
-        $('tbody input').each(function (index, el) {
-            if ($(this).prop('checked')) {
-                ids.push($(this).val())
-            }
-        });
-
-        window.top.batchDeleteData("/backstageManagement/batchDeleteDepartment", ids, itselfFrameId);
-    }
-
-    //重载页面（批量删除）
-    function batchDeletePageReload(page) {
-        window.location.href = "${path}/backstageManagement/toDepartmentManager?page=" + page;
-    }
 
     //重新渲染checkbox
     function renderCheckBox() {

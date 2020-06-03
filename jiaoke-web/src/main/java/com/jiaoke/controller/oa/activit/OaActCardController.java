@@ -255,8 +255,6 @@ public class OaActCardController {
                             activitiUtil.approvalComplete(tasks.getId(), map);
                         }
                         oaCollaborationService.updateStatusCode(oaActCard.getId(), "被回退");
-                        oaActCard.setPrincipal(null);
-                        oaActCard.setPrincipalDate(null);
                         oaActCard.setState(1);
                         return updateByPrimaryKeySelective(oaActCard);
 

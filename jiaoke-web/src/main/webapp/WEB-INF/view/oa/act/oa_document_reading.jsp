@@ -188,26 +188,6 @@
                 <textarea class="approval-content-textarea" readonly></textarea>
             </td>
         </tr>
-
-
-        <tr>
-            <td>
-                <div class="dep-radio">
-                    <div class="input-radio-div">
-                        <input type="radio" class="radio-style" name="receiptDepartment" value="1" checked>
-                        <span style="font-size: 13px;">领导班子成员</span>
-                    </div>
-                    <div class="input-radio-div">
-                        <input type="radio" class="radio-style" name="receiptDepartment" value="2">
-                        <span style="font-size: 13px;">各部室负责人</span>
-                    </div>
-                    <div class="input-radio-div">
-                        <input type="radio" class="radio-style" name="receiptDepartment" value="0">
-                        <span style="font-size: 13px;">无</span>
-                    </div>
-                </div>
-            </td>
-        </tr>
         </tbody>
     </table>
 </form>
