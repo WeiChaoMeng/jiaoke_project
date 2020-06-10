@@ -55,4 +55,59 @@ public interface LeadCockpitServiceInf {
      * @date 2020/5/18 19:46
      */
     Map<String, Object> getTodayProductList();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询本日两个机组生产的产品>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/6/9 17:35
+     */
+    Map<String, Object> getThisDayProduct();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询本日两个机组产量最多产品温度曲线>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/6/9 17:35
+     */
+    Map<String, Object> getThisDayMaxProductTemperature();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询本日各材料预警占比>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/6/10 15:05
+     */
+    Map<String, Object> getWarningProportion();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询本日产量最高的产品的平均级配曲线>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/6/10 16:18
+     */
+    Map<String, Object> getProductSvgGrading();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询基本信息>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/6/10 20:22
+     */
+    Map<String, Object> getProductBasicMsg();
 }

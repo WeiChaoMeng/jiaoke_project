@@ -81,4 +81,70 @@ public class LeadCockpitController {
         }
         return JSON.toJSONString(res);
     }
+
+    @ResponseBody
+    @RequestMapping("/getThisDayProduct.do")
+    public String getThisDayProduct(){
+        Map<String,Object> res = new HashMap<>();
+        try{
+            res = leadCockpitService.getThisDayProduct();
+        }catch (Exception e){
+            res.put("message","error");
+            e.printStackTrace();
+        }
+        return JSON.toJSONString(res);
+    }
+
+    @ResponseBody
+    @RequestMapping("/getThisDayMaxProductTemperature.do")
+    public String getThisDayMaxProductTemperature(){
+        Map<String,Object> res = new HashMap<>();
+        try{
+            res = leadCockpitService.getThisDayMaxProductTemperature();
+        }catch (Exception e){
+            res.put("message","error");
+            e.printStackTrace();
+        }
+        return JSON.toJSONString(res);
+    }
+
+
+    @ResponseBody
+    @RequestMapping("/getWarningProportion.do")
+    public String getWarningProportion(){
+        Map<String,Object> res = new HashMap<>();
+        try{
+            res = leadCockpitService.getWarningProportion();
+        }catch (Exception e){
+            res.put("message","error");
+            e.printStackTrace();
+        }
+        return JSON.toJSONString(res);
+    }
+
+    @ResponseBody
+    @RequestMapping("/getProductSvgGrading.do")
+    public String getProductSvgGrading(){
+        Map<String,Object> res = new HashMap<>();
+        try{
+            res = leadCockpitService.getProductSvgGrading();
+        }catch (Exception e){
+            res.put("message","error");
+            e.printStackTrace();
+        }
+        return JSON.toJSONString(res);
+    }
+
+    @ResponseBody
+    @RequestMapping("/getProductBasicMsg.do")
+    public String getProductBasicMsg(){
+        Map<String,Object> res = new HashMap<>();
+        try{
+            res = leadCockpitService.getProductBasicMsg();
+        }catch (Exception e){
+            res.put("message","error");
+            e.printStackTrace();
+        }
+        return JSON.toJSONString(res);
+    }
 }

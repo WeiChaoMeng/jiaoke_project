@@ -32,7 +32,7 @@ public class RabbitService implements MessageListener {
     @Resource
     private QualityProjectDao qualityProjectDao;
     @Override
-    public synchronized  void onMessage(Message message) {
+    public void onMessage(Message message) {
         try {
             String carNum=new String(message.getBody(),"UTF-8");
             //获取设备名称

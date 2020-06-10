@@ -113,9 +113,9 @@ public class CommonController {
      *
      * @return jsp
      */
-    @RequestMapping("/experimentCockpitPage.do")
+    @RequestMapping("/summaryCockpitPage.do")
     public String experimentCockpitPage(){
-        return "cockpit/pages/szxcIndex";
+        return "cockpit/pages/summary";
     }
 
     /**

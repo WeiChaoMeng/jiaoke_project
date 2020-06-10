@@ -775,6 +775,7 @@
     function showGradingChears() {
         var rationList = ${ProSVG};
         var gradingList = ${gradingMap};
+        debugger
         for (var i = 0;i < rationList.length;i++){
             var ration = rationList[i].rationNum;
             for (var j = 0;j < gradingList.length;j++){
@@ -948,7 +949,7 @@
                         var arr = returnJsonArray(gradingList[j][ration]['moudleList']);
                         var temArray  = returnArrayToJson(gradingList[j][ration]['moudleList']);
 
-                        if(arr){
+                        if(arr.length > 0){
                             option.xAxis.max = arr[arr.length - 1][0];
                         }
                         option.series[0].markLine.data = temArray;

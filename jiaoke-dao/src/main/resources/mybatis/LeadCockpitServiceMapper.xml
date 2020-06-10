@@ -131,4 +131,262 @@
           AND  produce_date = (SELECT produce_date FROM quality_monitoring_realtime_data2 ORDER BY id DESC LIMIT 1 )
         GROUP BY pro_name
     </select>
+    <select id="getThisDayProduct" resultType="java.util.Map">
+        SELECT
+               T1.produce_proportioning_num,
+               T1.pro_name,
+               round(SUM(T1.total),2) as total
+        FROM
+             (SELECT
+                     QMRD.produce_proportioning_num,
+                     QPM.pro_name,
+                     SUM(QMRD.material_total)/1000 as total
+              FROM
+                   `quality_monitoring_realtime_data1` AS QMRD
+                       INNER JOIN quality_proportioning_message AS QPM
+                           ON QMRD.produce_proportioning_num = QPM.crew1_modele_id
+              WHERE
+                      YEAR(QPM.create_time) = YEAR(QMRD.produce_date)
+                AND
+                      DATE_FORMAT( QMRD.produce_date, '%Y%m%d' ) = DATE_FORMAT( CURDATE( ) , '%Y%m%d' )
+              GROUP BY QMRD.produce_proportioning_num
+              UNION ALL
+              SELECT
+                     QMRD.produce_proportioning_num,
+                     QPM.pro_name,
+                     SUM(QMRD.material_total)/1000 as total
+              FROM
+                   `quality_monitoring_realtime_data2` AS QMRD
+                       INNER JOIN quality_proportioning_message AS QPM
+                           ON QMRD.produce_proportioning_num = QPM.crew2_modele_id
+              WHERE
+                      YEAR(QPM.create_time) = YEAR(QMRD.produce_date)
+                AND
+                      DATE_FORMAT( QMRD.produce_date, '%Y%m%d' ) = DATE_FORMAT( CURDATE( ) , '%Y%m%d' )
+              GROUP BY QMRD.produce_proportioning_num) AS T1
+        GROUP BY T1.produce_proportioning_num
+        ORDER BY T1.total DESC
+    </select>
+    <select id="getThisDayMaxProductTemperature" resultType="java.util.Map">
+        SELECT
+               CONCAT(produce_date," ",produce_time) AS dateTime,
+               produce_proportioning_num,
+               temperature_warehouse_1,
+               temperature_mixture,
+               temperature_duster,
+               temperature_asphalt,
+               temperature_aggregate
+        FROM quality_monitoring_realtime_data1
+        WHERE DATE_FORMAT(produce_date, '%Y%m%d' ) = DATE_FORMAT( CURDATE( ) , '%Y%m%d' )
+          AND produce_proportioning_num = #{proportioningNum}
+        UNION ALL
+        SELECT
+               CONCAT(produce_date," ",produce_time) AS dateTime,
+               produce_proportioning_num,
+               temperature_warehouse_1,
+               temperature_mixture,
+               temperature_duster,
+               temperature_asphalt,
+               temperature_aggregate
+        FROM quality_monitoring_realtime_data2
+        WHERE DATE_FORMAT(produce_date, '%Y%m%d' ) = DATE_FORMAT( CURDATE( ) , '%Y%m%d')
+          AND produce_proportioning_num = #{proportioningNum}
+    </select>
+    <select id="getThisDayMaxProportioningNum" resultType="java.util.Map">
+        SELECT
+               T1.produce_proportioning_num
+        FROM
+             (SELECT
+                     QMRD.produce_proportioning_num,
+                     QPM.pro_name,
+                     SUM(QMRD.material_total)/1000 as total
+              FROM
+                   `quality_monitoring_realtime_data1` AS QMRD
+                       INNER JOIN quality_proportioning_message AS QPM
+                           ON QMRD.produce_proportioning_num = QPM.crew1_modele_id
+              WHERE
+                      YEAR(QPM.create_time) = YEAR(QMRD.produce_date)
+                AND
+                      DATE_FORMAT( QMRD.produce_date, '%Y%m%d' ) = DATE_FORMAT( CURDATE( ) , '%Y%m%d' )
+              GROUP BY QMRD.produce_proportioning_num
+              UNION ALL
+              SELECT
+                     QMRD.produce_proportioning_num,
+                     QPM.pro_name,
+                     SUM(QMRD.material_total)/1000 as total
+              FROM
+                   `quality_monitoring_realtime_data2` AS QMRD
+                       INNER JOIN quality_proportioning_message AS QPM
+                           ON QMRD.produce_proportioning_num = QPM.crew2_modele_id
+              WHERE
+                      YEAR(QPM.create_time) = YEAR(QMRD.produce_date)
+                AND
+                      DATE_FORMAT( QMRD.produce_date, '%Y%m%d' ) = DATE_FORMAT( CURDATE( ) , '%Y%m%d' )
+              GROUP BY QMRD.produce_proportioning_num) AS T1
+        GROUP BY T1.produce_proportioning_num
+        ORDER BY T1.total DESC
+        LIMIT 1
+    </select>
+    <select id="getWarningProportion" resultType="java.util.Map">
+        SELECT
+               QWD.material_name,
+               COUNT(*) as countSum
+        FROM
+             quality_warning_data AS QWD
+                 INNER JOIN
+                     quality_warning_promessage_crew AS QWPC
+                     ON QWD.crew_id = QWPC.id
+        WHERE
+                DATE_FORMAT( QWPC.produce_date , '%Y%m%d' ) = DATE_FORMAT( CURDATE( ) , '%Y%m%d' )
+          AND QWPC.produce_ratio_id = #{proportioningNum}
+          AND QWD.warning_level = 3
+        GROUP BY QWD.material_name
+        ORDER BY countSum DESC
+    </select>
+    <select id="getThisDayMaxproductNumMap" resultType="java.util.Map">
+        SELECT
+               COUNT(*) as countSum
+        FROM
+             quality_warning_promessage_crew
+        WHERE
+                DATE_FORMAT(produce_date , '%Y%m%d' ) = DATE_FORMAT( CURDATE( ) , '%Y%m%d' )
+          AND
+                produce_ratio_id = #{proportioningNum}
+    </select>
+    <select id="getProductSvg" resultType="java.util.Map">
+        SELECT
+               'crew1' AS crewNum,
+               T1.produce_date,
+               T1.produce_proportioning_num,
+               AVG(T1.material_aggregate_6) AS material_aggregate_6,
+               AVG(T1.material_aggregate_5) AS material_aggregate_5,
+               AVG(T1.material_aggregate_4) AS material_aggregate_4,
+               AVG(T1.material_aggregate_3) AS material_aggregate_3,
+               AVG(T1.material_aggregate_2) AS material_aggregate_2,
+               AVG(T1.material_aggregate_1) AS material_aggregate_1,
+               AVG(T1.material_stone_1) AS material_stone_1,
+               AVG(T1.material_stone_2) AS material_stone_2,
+               AVG(T1.material_asphalt) AS material_asphalt,
+               AVG(T1.material_regenerate) AS material_regenerate,
+               AVG(T1.material_additive) AS material_additive,
+               AVG(T1.material_total) AS material_total,
+               T1.pro_name,
+               T1.repertory_one,
+               T1.repertory_two,
+               T1.repertory_three,
+               T1.repertory_four,
+               T1.repertory_five,
+               T1.repertory_six,
+               T1.breeze,
+               T1.ratio_stone,
+               T1.ratio_regenerate1,
+               T1.ratio_additive,
+               T1.regenerate,
+               T1.additive,
+               T1.temperature_asphalt,
+               T1.temperature_asphalt_up,
+               T1.temperature_aggregate,
+               T1.temperature_aggregate_up,
+               T1.temperature_mixture,
+               T1.temperature_mixture_up,
+               T1.temperature_milling,
+               T1.temperature_milling_up,
+               T1.crew1_modele_id,
+               T1.crew2_modele_id,
+               T1.ratio_regenerate2,
+               T1.create_time
+        FROM
+             (
+             SELECT
+                    QMRD.produce_date,
+                    QMRD.produce_proportioning_num,
+                    QMRD.material_aggregate_6,
+                    QMRD.material_aggregate_5,
+                    QMRD.material_aggregate_4,
+                    QMRD.material_aggregate_3,
+                    QMRD.material_aggregate_2,
+                    QMRD.material_aggregate_1,
+                    QMRD.material_stone_1,
+                    QMRD.material_stone_2,
+                    QMRD.material_asphalt,
+                    QMRD.material_regenerate,
+                    QMRD.material_additive,
+                    QMRD.material_total,
+                    QPM.*
+             FROM
+                  quality_monitoring_realtime_data1 AS QMRD
+                      INNER JOIN quality_proportioning_message AS QPM ON QMRD.produce_proportioning_num = QPM.crew1_modele_id
+             WHERE
+                     DATE_FORMAT(QMRD.produce_date, '%Y%m%d') = DATE_FORMAT(CURDATE(), '%Y%m%d')
+               AND YEAR (QPM.create_time) = YEAR (QMRD.produce_date)
+               AND QMRD.produce_proportioning_num = #{proportioningNum}
+             UNION ALL
+             SELECT
+                    QMRD.produce_date,
+                    QMRD.produce_proportioning_num,
+                    QMRD.material_aggregate_6,
+                    QMRD.material_aggregate_5,
+                    QMRD.material_aggregate_4,
+                    QMRD.material_aggregate_3,
+                    QMRD.material_aggregate_2,
+                    QMRD.material_aggregate_1,
+                    QMRD.material_stone_1,
+                    QMRD.material_stone_2,
+                    QMRD.material_asphalt,
+                    QMRD.material_regenerate,
+                    QMRD.material_additive,
+                    QMRD.material_total,
+                    QPM.*
+             FROM
+                  quality_monitoring_realtime_data2 AS QMRD
+                      INNER JOIN quality_proportioning_message AS QPM ON QMRD.produce_proportioning_num = QPM.crew2_modele_id
+             WHERE
+                     DATE_FORMAT(QMRD.produce_date, '%Y%m%d') = DATE_FORMAT(CURDATE(), '%Y%m%d')
+               AND YEAR (QPM.create_time) = YEAR (QMRD.produce_date)
+               AND QMRD.produce_proportioning_num = #{proportioningNum}
+             ) AS T1
+        GROUP BY
+                 T1.produce_proportioning_num
+    </select>
+    <select id="getProductBasicMsg" resultType="java.util.Map">
+        SELECT
+               DATE_FORMAT(T1.produce_date, '%Y-%m-%d') AS produce_date,
+               QPM.pro_name,
+               SUM(T1.material_total)/1000 AS total,
+               AVG(T1.material_total) AS avgTotal,
+               AVG(T1.material_asphalt) AS materialAsphalt,
+               AVG(T1.material_additive) AS materialAdditive,
+               AVG(T1.temperature_warehouse_1) AS warehouse1
+        FROM
+             (SELECT
+                     produce_date,
+                     produce_proportioning_num,
+                     material_total,
+                     material_asphalt,
+                     material_additive,
+                     temperature_warehouse_1
+              FROM
+                   quality_monitoring_realtime_data1
+              WHERE
+                      DATE_FORMAT(produce_date, '%Y%m%d') = DATE_FORMAT(CURDATE(), '%Y%m%d')
+                AND produce_proportioning_num = #{proportioningNum}
+              UNION ALL
+              SELECT
+                     produce_date,
+                     produce_proportioning_num,
+                     material_total,
+                     material_asphalt,
+                     material_additive,
+                     temperature_warehouse_1
+              FROM
+                   quality_monitoring_realtime_data2
+              WHERE
+                      DATE_FORMAT(produce_date, '%Y%m%d') = DATE_FORMAT(CURDATE(), '%Y%m%d')
+                AND produce_proportioning_num = #{proportioningNum}) AS T1
+                 INNER JOIN quality_proportioning_message AS QPM
+                     ON T1.produce_proportioning_num = QPM.crew1_modele_id
+        WHERE
+                YEAR(QPM.create_time) = YEAR(T1.produce_date)
+        GROUP BY T1.produce_date
+    </select>
 </mapper>

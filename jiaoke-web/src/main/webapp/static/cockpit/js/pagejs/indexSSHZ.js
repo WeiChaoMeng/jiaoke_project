@@ -315,8 +315,11 @@ function showAsphaltAggregateRatio(xList,dataList,ration) {
     var crew1XList = xList.crew1XList;
     var crew2XList = xList.crew2XList
     if (crew1XList.length > 0){
-        var crew1Ration = (Number(ration.crew1Ration)/(100 - Number(ration.crew1Ration)) * 100).toFixed(2);
-        option3.xAxis[0].data = xList.crew1XList;
+        //油石比
+        // var crew1Ration = (Number(ration.crew1Ration)/(100 - Number(ration.crew1Ration)) * 100).toFixed(2);
+        //含量
+        var crew1Ration = Number(ration.crew1Ration);
+            option3.xAxis[0].data = xList.crew1XList;
         option3.series[0].data = dataList.crew1data;
         option3.yAxis[0].max = Number(crew1Ration)+ 0.5;
         option3.yAxis[0].min = Number(crew1Ration) - 0.5;
@@ -335,7 +338,10 @@ function showAsphaltAggregateRatio(xList,dataList,ration) {
     if (crew2XList.length > 0){
         option6.xAxis[0].data = xList.crew2XList;
         option6.series[0].data = dataList.crew2data;
-        var crew2Ration = (Number(ration.crew2Ration)/(100 - Number(ration.crew2Ration)) * 100).toFixed(2);
+        //油石比
+        // var crew2Ration = (Number(ration.crew2Ration)/(100 - Number(ration.crew2Ration)) * 100).toFixed(2);
+        //含量
+        var crew2Ration =Number(ration.crew2Ration);
         option6.yAxis[0].max = Number(crew2Ration) + 0.5;
         option6.yAxis[0].min = Number(crew2Ration) - 0.5;
         option6.series[0].markLine.data = [{name: '上限', yAxis: crew2Ration + 0.3},{name: '模板占比',  yAxis: crew2Ration },{name: '下限',  yAxis:  crew2Ration - 0.3}];

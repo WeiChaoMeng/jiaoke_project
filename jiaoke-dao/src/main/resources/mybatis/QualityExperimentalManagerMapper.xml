@@ -1774,6 +1774,7 @@
              `quality_test_lab_report` AS QTLR
                  INNER JOIN quality_test_material_dictionary AS QTMD ON QTLR.materials_num = QTMD.Id
         WHERE QTLR.test_date = #{startDate}
+          AND QTLR.experiment_status > 0
         ORDER BY QTLR.experiment_status,QTLR.test_date DESC;
     </select>
     <select id="selectOrderTicketCountByDateAndLogogramName" resultType="java.util.Map">
