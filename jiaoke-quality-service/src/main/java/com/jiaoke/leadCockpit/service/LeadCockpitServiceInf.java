@@ -110,4 +110,59 @@ public interface LeadCockpitServiceInf {
      * @date 2020/6/10 20:22
      */
     Map<String, Object> getProductBasicMsg();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期范围、配比号查询温度曲线>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/6/11 10:01
+     */
+    Map<String, Object> getMaxProductTemperatureByRationAndDate(String startDate, String endDate, String ration);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期范围、配比号查询预警占比>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/6/11 10:21
+     */
+    Map<String, Object> getWarningProportionByRationAndDate(String startDate, String endDate, String ration);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期范围、配比号查询平均级配>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/6/11 11:00
+     */
+    Map<String, Object> getProductSvgGradingByRationAndDate(String startDate, String endDate, String ration);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期范围、配比号查询基本信息>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/6/11 11:11
+     */
+    Map<String, Object> getProductBasicMsgByRationAndDate(String startDate, String endDate, String ration);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期范围查询日期范围内生产的产品类型>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/6/11 13:43
+     */
+    Map<String, Object> getProductToEchars(String startDate, String endDate);
 }

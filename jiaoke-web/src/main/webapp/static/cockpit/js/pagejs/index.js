@@ -46,7 +46,7 @@
     /**
      * 右一文字动态
      */
-    showTenProjectMessage();
+    // showTenProjectMessage();
 })();
 
 /**
@@ -567,6 +567,9 @@ function showThisMonthRegenerate() {
 /**
  * 查询本年工程
  */
+window.onload = function() {
+    showTenProjectMessage();
+};
 function showTenProjectMessage() {
     var basePath = $("#path").val();
     //ajax查后台数据
@@ -601,8 +604,11 @@ function showTenProjectMessage() {
     //     }
     // });
 
-    var proObj = sessionStorage.getItem("projectObj");
-    proObj = JSON.parse(proObj);
+    var proObj = JSON.parse(sessionStorage.getItem("projectObj"));
+    do {
+        proObj = JSON.parse(sessionStorage.getItem("projectObj"));
+    } while (isNull(proObj));
+
     var colourArry = ['#ffffe1','#e87a00','#0cd402','#efa900','#f4f513','#00ffd0','#cccb00','#5382ff','#2ec2ff','#ca001e'];
     var tem = 0;
 
@@ -629,3 +635,14 @@ function showTenProjectMessage() {
     }
     return false;
 };
+
+/**
+ * 判断是否null
+ * @param data
+ */
+function isNull(data){
+    if (data == "" || data == undefined || data == null) {
+        return true;
+    }
+    return false;
+}

@@ -33,12 +33,11 @@ layui.use('laydate', function(){
         theme: 'molv',
         isInitValue: false,
         done: function(value, date, endDate){
-            alert($("#startDate").val());
-            alert(value);
+            getProductToEchars();
         }
     });
 });
-
+/***********************************进入时加载显示start*********************************/
 /**
  *  进入时加载饼图
  */
@@ -248,6 +247,318 @@ function getProductBasicMsg() {
     })
 }
 
+/***********************************进入时加载显示end*********************************/
+/*********************************** 点击饼图展示start ************************************/
+
+/**
+ * 点击饼图时跳转
+ */
+function getProductAllMsg(startDate,endDate,ration) {
+    //查询温度曲线
+    getMaxProductTemperatureByRationAndDate(startDate,endDate,ration);
+    //进入时查询预警占比
+    getWarningProportionByRationAndDate(startDate,endDate,ration);
+    //进入时查询级配图
+     getProductSvgGradingByRationAndDate(startDate,endDate,ration);
+    //进入时查询基本信息
+    getProductBasicMsgByRationAndDate(startDate,endDate,ration);
+}
+
+/**
+ * 根据日期查询温度曲线图
+ * @param startDate
+ * @param endDate
+ * @param ration
+ */
+function getMaxProductTemperatureByRationAndDate(startDate,endDate,ration) {
+    var basePath = $("#path").val();
+    $.ajax({
+        url: basePath + "/getMaxProductTemperatureByRationAndDate.do",
+        type: "post",
+        data:{
+            "startDate":startDate,
+            "endDate":endDate,
+            "ration":ration
+        },
+        dataType: "json",
+        success:function (res) {
+            var msg = res.message;
+            var proDuctList = res.dataList;
+            var warehouse1Array = [];
+            var mixtureArray = [];
+            var dusterArray = [];
+            var asphaltArray = [];
+            var aggregateArray = [];
+            var xData = [];
+            if (proDuctList.length === 0){
+                layui.use('layer', function(){
+                    var layer = layui.layer;
+                    layer.msg('查询温度曲线图失败');
+                });
+            } else if (msg === 'success'){
+                for (var i = 0; i < proDuctList.length;i++){
+                    warehouse1Array.push(proDuctList[i].temperature_warehouse_1);
+                    mixtureArray.push(proDuctList[i].temperature_mixture);
+                    dusterArray.push(proDuctList[i].temperature_duster);
+                    asphaltArray.push(proDuctList[i].temperature_asphalt);
+                    aggregateArray.push(proDuctList[i].temperature_aggregate);
+                    var arr = proDuctList[i].dateTime.split(" ");
+                    xData.push(arr[0] + "\n" + arr[1]);
+                }
+                setLineEchars(warehouse1Array,mixtureArray,dusterArray,asphaltArray,aggregateArray,xData);
+            } else {
+                layui.use('layer', function(){
+                    var layer = layui.layer;
+                    layer.msg('查询温度曲线图失败');
+                });
+            }
+        }
+    })
+}
+
+/**
+ * 根据日期查询预警占比
+ * @param startDate
+ * @param endDate
+ * @param ration
+ */
+function getWarningProportionByRationAndDate(startDate,endDate,ration) {
+    var basePath = $("#path").val();
+    $.ajax({
+        url: basePath + "/getWarningProportionByRationAndDate.do",
+        type: "post",
+        data:{
+            "startDate":startDate,
+            "endDate":endDate,
+            "ration":ration
+        },
+        dataType: "json",
+        success:function (res) {
+            var msg = res.message;
+            var proDuctList = res.dataList;
+            if (msg === 'success'){
+                var strHtml = " ";
+                for (var i = 0; i < proDuctList.length;i++){
+
+                    strHtml +='<li>'
+                        + '<div class="liIn liIn' + (i+1) + '">'
+                        + ' <div class="liIn_left"><span class="bot"></span><span class="zi">' + proDuctList[i].proDuctName +'</span></div>'
+                        + '<div class="liIn_line"><div class="line_lineIn" style="width:' + proDuctList[i].proportion +'%;"></div></div>'
+                        + '<p class="num">' + proDuctList[i].proportion +'%</p>'
+                        + '</div>'
+                        + '</li>';
+                }
+                $("#list_ul").empty().append(strHtml);
+
+            } else if (proDuctList.length === 0){
+                layui.use('layer', function(){
+                    var layer = layui.layer;
+                    layer.msg('报警比例信息查询失败');
+                });
+            } else {
+                layui.use('layer', function(){
+                    var layer = layui.layer;
+                    layer.msg('报警比例信息查询失败');
+                });
+            }
+        }
+    })
+}
+/**
+ * 根据日期查询预警占比
+ * @param startDate
+ * @param endDate
+ * @param ration
+ */
+function getProductSvgGradingByRationAndDate(startDate,endDate,ration) {
+    var basePath = $("#path").val();
+    $.ajax({
+        url: basePath + "/getProductSvgGradingByRationAndDate.do",
+        type: "post",
+        data:{
+            "startDate":startDate,
+            "endDate":endDate,
+            "ration":ration
+        },
+        dataType: "json",
+        success:function (res) {
+            var msg = res.message;
+            var proDuctList = res.dataList;
+            var ration = res.ration;
+            if (msg === 'success'){
+                setGradingEchar(proDuctList,ration);
+            } else if (proDuctList.length === 0){
+                layui.use('layer', function(){
+                    var layer = layui.layer;
+                    layer.msg('报警比例信息查询失败');
+                });
+            } else {
+                layui.use('layer', function(){
+                    var layer = layui.layer;
+                    layer.msg('报警比例信息查询失败');
+                });
+            }
+        }
+    })
+}
+
+/**
+ * 根据日期查询基本信息
+ * @param startDate
+ * @param endDate
+ * @param ration
+ */
+function getProductBasicMsgByRationAndDate(startDate,endDate,ration) {
+    var basePath = $("#path").val();
+    $.ajax({
+        url: basePath + "/getProductBasicMsgByRationAndDate.do",
+        type: "post",
+        data:{
+            "startDate":startDate,
+            "endDate":endDate,
+            "ration":ration
+        },
+        dataType: "json",
+        success:function (res) {
+            var msg = res.message;
+            var proDuctList = res.dataList;
+            var ration = res.ration;
+            if (msg === 'success'){
+                setBasicMsg(proDuctList);
+            } else if (proDuctList.length === 0){
+                layui.use('layer', function(){
+                    var layer = layui.layer;
+                    layer.msg('报警比例信息查询失败');
+                });
+            } else {
+                layui.use('layer', function(){
+                    var layer = layui.layer;
+                    layer.msg('报警比例信息查询失败');
+                });
+            }
+        }
+    })
+}
+/*********************************** 点击饼图展示end************************************/
+/*********************************** 日期查询 start************************************/
+/**
+ * 根据日期查询产品类型
+ * @param startDate
+ * @param endDate
+ * @param ration
+ */
+function getProductToEchars() {
+    var basePath = $("#path").val();
+    var startDate = $("#startDate").val();
+    var endDate = $("#endDate").val();
+    if (isBlank(startDate)){
+        layui.use('layer', function(){
+            var layer = layui.layer;
+            layer.msg('请选择开始日期');
+        });
+        return
+    }
+    $.ajax({
+        url: basePath + "/getProductToEchars.do",
+        type: "post",
+        data:{
+            "startDate":startDate,
+            "endDate":endDate
+        },
+        dataType: "json",
+        success:function (res) {
+            var msg = res.message;
+            var proDuctList = res.dataList;
+            var barArry = [];
+            var barNameArray = [];
+            if (msg === 'success'){
+                var colorList = [[
+                    '#ff7f50', '#87cefa', '#da70d6', '#32cd32', '#6495ed',
+                    '#ff69b4', '#ba55d3', '#cd5c5c', '#ffa500', '#40e0d0',
+                    '#1e90ff', '#ff6347', '#7b68ee', '#d0648a', '#ffd700',
+                    '#6b8e23', '#4ea397', '#3cb371', '#b8860b', '#7bd9a5',
+                    '#ff7f50', '#87cefa', '#da70d6', '#32cd32', '#6495ed',
+                    '#ff69b4', '#ba55d3', '#cd5c5c', '#ffa500', '#40e0d0',
+                    '#1e90ff', '#ff6347', '#7b68ee', '#00fa9a', '#ffd700',
+                    '#6b8e23', '#ff00ff', '#3cb371', '#b8860b', '#30e0e0'
+                ],
+                    [
+                        '#ff7f50', '#87cefa', '#da70d6', '#32cd32', '#6495ed',
+                        '#ff69b4', '#ba55d3', '#cd5c5c', '#ffa500', '#40e0d0',
+                        '#1e90ff', '#ff6347', '#7b68ee', '#00fa9a', '#ffd700',
+                        '#6b8e23', '#ff00ff', '#3cb371', '#b8860b', '#30e0e0',
+                        '#929fff', '#9de0ff', '#ffa897', '#af87fe', '#7dc3fe',
+                        '#bb60b2', '#433e7c', '#f47a75', '#009db2', '#024b51',
+                        '#0780cf', '#765005', '#e75840', '#26ccd8', '#3685fe',
+                        '#9977ef', '#f5616f', '#f7b13f', '#f9e264', '#50c48f'
+                    ],
+                    [
+                        '#929fff', '#9de0ff', '#ffa897', '#af87fe', '#7dc3fe',
+                        '#bb60b2', '#433e7c', '#f47a75', '#009db2', '#024b51',
+                        '#0780cf', '#765005', '#e75840', '#26ccd8', '#3685fe',
+                        '#9977ef', '#f5616f', '#f7b13f', '#f9e264', '#50c48f',
+                        '#ff7f50', '#87cefa', '#da70d6', '#32cd32', '#6495ed',
+                        '#ff69b4', '#ba55d3', '#cd5c5c', '#ffa500', '#40e0d0',
+                        '#1e90ff', '#ff6347', '#7b68ee', '#d0648a', '#ffd700',
+                        '#6b8e23', '#4ea397', '#3cb371', '#b8860b', '#7bd9a5'
+                    ]][2];
+                var temSzie = 50;
+                var temDivisor = 5;
+                switch (proDuctList.length) {
+                    case  proDuctList.length > 40:
+                        temSzie = 10;
+                        temDivisor = 1;
+                        break;
+                    case  proDuctList.length > 30:
+                        temSzie = 20;
+                        temDivisor = 2;
+                        break;
+                    case  proDuctList.length > 20:
+                        temSzie = 30;
+                        temDivisor = 3;
+                        break;
+                    case  proDuctList.length > 10:
+                        temSzie = 40;
+                        temDivisor = 4;
+                        break;
+                    default:
+                        temSzie = 20;
+                }
+                for (var i = 0; i < proDuctList.length;i++){
+
+                    barArry.push({
+                        "name": proDuctList[i].pro_name,
+                        "value": proDuctList[i].total,
+                        "symbolSize": temSzie + ((proDuctList.length - i) * temDivisor),
+                        "z":proDuctList[i].produce_proportioning_num,
+                        "draggable": true,
+                        "itemStyle": {
+                            "normal": {
+                                "shadowBlur": 100,
+                                "shadowColor": colorList[i],
+                                "color": colorList[i]
+                            }
+                        }
+                    });
+                    barNameArray.push(proDuctList[i].pro_name);
+                }
+                setBarEchars(barArry,barNameArray);
+            } else if (proDuctList.length === 0){
+                layui.use('layer', function(){
+                    var layer = layui.layer;
+                    layer.msg('本日两个机组无生产');
+                });
+            } else {
+                layui.use('layer', function(){
+                    var layer = layui.layer;
+                    layer.msg('查询本日工程失败');
+                });
+            }
+        }
+    })
+}
+/*********************************** 日期查询 end************************************/
+
 /**
  * 展示饼图
  * @param barArry
@@ -260,8 +571,17 @@ function setBarEchars(barArry,barNameArray) {
 
 //跳转代码
     myChart.on('click', function(params) {
-        alert(params.name);
-        alert(params.data.z);
+        var ration = params.data.z;
+        var startDate = $("#startDate").val();
+        var endDate = $("#endDate").val();
+        if (isBlank(startDate) || isBlank(endDate)){
+            var day2 = new Date();
+            day2.setTime(day2.getTime());
+            startDate = day2.getFullYear()+"-" + (day2.getMonth()+1) + "-" + day2.getDate();
+            endDate = day2.getFullYear()+"-" + (day2.getMonth()+1) + "-" + day2.getDate();
+        }
+        //调用展示
+        getProductAllMsg(startDate,endDate,ration);
     });
 
 
@@ -278,7 +598,7 @@ function setBarEchars(barArry,barNameArray) {
             type: 'graph',
             layout: 'force',
             force: {
-                repulsion: 200,
+                repulsion: 300,
                 edgeLength: 10
             },
             roam: true,
@@ -297,7 +617,7 @@ function setBarEchars(barArry,barNameArray) {
 
 /**
  * 展示温度线图
- * 
+ *
  */
 function setLineEchars(warehouse1Array,mixtureArray,dusterArray,asphaltArray,aggregateArray,xData) {
     //获取dom容器
@@ -311,7 +631,7 @@ function setLineEchars(warehouse1Array,mixtureArray,dusterArray,asphaltArray,agg
         },
         legend: {
             x: '20%',
-            top: '2%',
+            top: '0%',
             textStyle: {
                 color: '#f2f2f2',
             },
@@ -638,6 +958,10 @@ function setGradingEchar(gradingList,ration) {
 
 }
 
+/**
+ * 展示基本信息
+ * @param proDuctList
+ */
 function setBasicMsg(proDuctList) {
     for (var i = 0; i < proDuctList.length;i++){
         var svgTotal = proDuctList[i].avgTotal;
@@ -646,12 +970,12 @@ function setBasicMsg(proDuctList) {
         $("#pro_total").empty().append((proDuctList[i].total).toFixed(1) + "吨");
         var svgAsphalt = (proDuctList[i].materialAsphalt/svgTotal *100).toFixed(1);
         var svgAdditive = (proDuctList[i].materialAdditive/svgTotal *100).toFixed(1);
-        debugger
         $("#asphalt_proportion").empty().append(svgAsphalt + "%" );
         $("#additive_proportion").empty().append(svgAdditive + "%");
         $("#warehouse_1").empty().append((proDuctList[i].warehouse1).toFixed(1) + "℃");
     }
 }
+
 
 //遍历json，返回指定格式数据
 function returnJsonArray(jsonArray) {
@@ -825,6 +1149,13 @@ function returnArrayToJson(json) {
     return array;
 }
 
+function isBlank(str) {
+    var s = $.trim(str);
+    if (s == "undefined" || s == null || s == "" || s.length == 0) {
+        return true;
+    }
+    return false;
+};
 //排序
 function sortNumber(a, b)
 {

@@ -247,4 +247,90 @@ public class LeadCockpitServiceImpl implements LeadCockpitServiceInf {
         }
         return res;
     }
+
+    @Override
+    public Map<String, Object> getMaxProductTemperatureByRationAndDate(String startDate, String endDate, String ration) {
+        Map<String,Object> res = new HashMap<>();
+        //查询当前最后一条数据三日内相同产品信息及配比信息
+        List<Map<String,String>> list = leadCockpitServiceDao.getMaxProductTemperatureByRationAndDate(startDate,endDate,ration);
+        res.put("dataList",list);
+        res.put("message","success");
+        if (list == null || list.size() == 0){
+            res.put("message","empty");
+        }
+        return res;
+    }
+
+    @Override
+    public Map<String, Object> getWarningProportionByRationAndDate(String startDate, String endDate, String ration) {
+        Map<String,Object> res = new HashMap<>();
+        //查询今日生产最多的产品盘数
+        Map<String,String> productNumMap = leadCockpitServiceDao.getMaxproductNumMapByDate(startDate,endDate,ration);
+        //查询当日最高产量配比的各材料三级预警盘数
+        List<Map<String,String>> list = leadCockpitServiceDao.getWarningProportionByRationAndDate(startDate,endDate,ration);
+
+        int productCount = Integer.parseInt(String.valueOf(productNumMap.get("countSum")));
+        List<Map<String,String>> resList = new ArrayList<>();
+        for (int i = 0; i < list.size();i++){
+            Map<String,String> temMap = new HashMap<>();
+            double temCount = Double.parseDouble(String.valueOf(list.get(i).get("countSum")));
+            String materialName = list.get(i).get("material_name");
+            double  proportion = (temCount/productCount) * 100;
+            temMap.put("proDuctName",materialName);
+            temMap.put("proportion",String.format("%.2f", proportion));
+            resList.add(temMap);
+        }
+
+        res.put("dataList",resList);
+        res.put("message","success");
+        if (resList == null || resList.size() == 0){
+            res.put("message","empty");
+        }
+        return res;
+    }
+
+    @Override
+    public Map<String, Object> getProductSvgGradingByRationAndDate(String startDate, String endDate, String ration) {
+        Map<String,Object> res = new HashMap<>();
+        //查询今日产量最高产品平均信息
+        List<Map<String,String>> avgList = leadCockpitServiceDao.getProductSvgByRationAndDate(startDate,endDate,ration);
+
+        //返回的结果集 一层Key为机组 二层为模板级配等 三层Key为筛孔
+        List<Map<String,Map<String,List<Map<String,String>>>>> result = new ArrayList<>();
+        String grading = QualityGradingUtil.getModelGradingResultJson(avgList,qualityDataMontoringDao,result);
+
+        res.put("dataList",grading);
+        res.put("ration",ration);
+        res.put("message","success");
+        if (grading == null || "".equals(grading)){
+            res.put("message","empty");
+        }
+        return res;
+    }
+
+    @Override
+    public Map<String, Object> getProductBasicMsgByRationAndDate(String startDate, String endDate, String ration) {
+        Map<String,Object> res = new HashMap<>();
+        //查询基本信息
+        List<Map<String,String>> list = leadCockpitServiceDao.getProductBasicMsgByDateAndRation(startDate,endDate,ration);
+        res.put("dataList",list);
+        res.put("message","success");
+        if (list == null || list.size() == 0){
+            res.put("message","empty");
+        }
+        return res;
+    }
+
+    @Override
+    public Map<String, Object> getProductToEchars(String startDate, String endDate) {
+        Map<String,Object> res = new HashMap<>();
+        //查询当前最后一条数据三日内相同产品信息及配比信息
+        List<Map<String,String>> list = leadCockpitServiceDao.getProductToEchars(startDate,endDate);
+        res.put("dataList",list);
+        res.put("message","success");
+        if (list == null || list.size() == 0){
+            res.put("message","empty");
+        }
+        return res;
+    }
 }
