@@ -1,5 +1,6 @@
 package com.jiaoke.controller.oa.activit;
 
+import com.alibaba.fastjson.JSON;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
@@ -98,6 +99,27 @@ public class OaActLaborContractStopController {
             }
             return "error";
         }
+    }
+
+    /**
+     * app获取审批页面信息
+     *
+     * @param id     id
+     * @param taskId taskId
+     * @return json
+     */
+    @RequestMapping(value = "/approval.api")
+    @ResponseBody
+    public String approvalApi(String id, String taskId) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActLaborContractStop oaActLaborContractStop = oaActLaborContractStopService.selectByPrimaryKey(id);
+
+        String nickname = getCurrentUser().getNickname();
+
+        map.put("nickname", nickname);
+        map.put("taskId", taskId);
+        map.put("laborContractStop", oaActLaborContractStop);
+        return JSON.toJSONString(map);
     }
 
     /**
@@ -294,6 +316,22 @@ public class OaActLaborContractStopController {
         model.addAttribute("oaActLaborContractStop", oaActLaborContractStop);
         model.addAttribute("commentsList", commentsList);
         return "oa/act/act_labor_contract_stop_details";
+    }
+
+    /**
+     * app获取详细信息
+     *
+     * @param id id
+     * @return json
+     */
+    @RequestMapping(value = "/details.api")
+    @ResponseBody
+    public String cardDetailsApi(String id) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActLaborContractStop oaActLaborContractStop = oaActLaborContractStopService.selectByPrimaryKey(id);
+
+        map.put("laborContractStop", oaActLaborContractStop);
+        return JsonHelper.toJSONString(map);
     }
 
     /**

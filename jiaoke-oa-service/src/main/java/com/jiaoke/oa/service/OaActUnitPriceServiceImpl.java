@@ -78,7 +78,7 @@ public class OaActUnitPriceServiceImpl implements OaActUnitPriceService {
         oaActUnitPrice.setCompanyPrincipal("");
         oaActUnitPrice.setCompanyPrincipalDate("");
         oaActUnitPrice.setCreateTime(new Date());
-        if (oaActUnitPriceMapper.updateByPrimaryKey(oaActUnitPrice) < 0) {
+        if (oaActUnitPriceMapper.updateByPrimaryKeySelective(oaActUnitPrice) < 0) {
             return -1;
         } else {
             //删除详情关联数据

@@ -85,7 +85,7 @@ public class OaActConfirmServiceImpl implements OaActConfirmService {
         oaActConfirm.setOperatingStatistics("");
         oaActConfirm.setOperatingStatisticsDate("");
         oaActConfirm.setCreateTime(new Date());
-        if (oaActConfirmMapper.updateByPrimaryKey(oaActConfirm) < 0) {
+        if (oaActConfirmMapper.updateByPrimaryKeySelective(oaActConfirm) < 0) {
             return -1;
         } else {
             //删除详情关联数据

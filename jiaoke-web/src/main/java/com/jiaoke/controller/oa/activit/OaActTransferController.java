@@ -1,5 +1,6 @@
 package com.jiaoke.controller.oa.activit;
 
+import com.alibaba.fastjson.JSON;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
@@ -115,6 +116,72 @@ public class OaActTransferController {
             }
             return "error";
         }
+    }
+
+    /**
+     * app获取审批页面信息
+     *
+     * @param id     id
+     * @param taskId taskId
+     * @return json
+     */
+    @RequestMapping(value = "/approval.api")
+    @ResponseBody
+    public String approvalApi(String id, String taskId) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActTransfer oaActTransfer = oaActTransferService.selectByPrimaryKey(id);
+
+        String nickname = getCurrentUser().getNickname();
+
+        String principal;
+        String principalT = null;
+        String departmentId = userInfoService.selectDepartmentByUserId(oaActTransfer.getPromoter());
+        if ("single".equals(oaActTransfer.getDepartmentPrincipal())){
+            String principalId = departmentService.selectEnforcerId("principal", departmentId);
+            principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        }else if (oaActTransfer.getDepartmentPrincipal().contains(",")){
+            String[] split = oaActTransfer.getDepartmentPrincipal().split(",");
+            principal = userInfoService.getNicknameById(Integer.valueOf(split[0]));
+            principalT = userInfoService.getNicknameById(Integer.valueOf(split[1]));
+        }else{
+            principal = userInfoService.getNicknameById(Integer.valueOf(oaActTransfer.getDepartmentPrincipal()));
+        }
+
+        String newPrincipal;
+        String newPrincipalT = null;
+        String newDepartmentPrincipal = departmentService.selectEnforcerId("principal", oaActTransfer.getNewDepartment());
+        if (newDepartmentPrincipal.contains(",")){
+            String[] split = newDepartmentPrincipal.split(",");
+            newPrincipal = userInfoService.getNicknameById(Integer.valueOf(split[0]));
+            newPrincipalT = userInfoService.getNicknameById(Integer.valueOf(split[1]));
+        }else{
+            newPrincipal = userInfoService.getNicknameById(Integer.valueOf(newDepartmentPrincipal));
+        }
+
+        //部门主管领导
+        String newSupervisorId = departmentService.selectEnforcerId("supervisor", oaActTransfer.getNewDepartment());
+        String newSupervisor = userInfoService.getNicknameById(Integer.valueOf(newSupervisorId));
+
+        //部门主管领导
+        String supervisorId = departmentService.selectEnforcerId("supervisor", departmentId);
+        String supervisor = userInfoService.getNicknameById(Integer.valueOf(supervisorId));
+        //人事
+        String personnel = userInfoService.getUserInfoByPermission("personnel").getNickname();
+        //主要领导（总经理）
+        String companyPrincipal = userInfoService.getUserInfoByPermission("company_principal").getNickname();
+
+        map.put("nickname", nickname);
+        map.put("principal", principal);
+        map.put("principalT", principalT);
+        map.put("transferPrincipal", newPrincipal);
+        map.put("transferPrincipalT", newPrincipalT);
+        map.put("supervisor", supervisor);
+        map.put("transferSupervisor", newSupervisor);
+        map.put("personnel", personnel);
+        map.put("companyPrincipal", companyPrincipal);
+        map.put("taskId", taskId);
+        map.put("transfer", oaActTransfer);
+        return JSON.toJSONString(map);
     }
 
     /**
@@ -602,6 +669,67 @@ public class OaActTransferController {
             //1-1
             return "oa/act/act_transfer_details";
         }
+    }
+
+    /**
+     * app获取详细信息
+     *
+     * @param id id
+     * @return json
+     */
+    @RequestMapping(value = "/details.api")
+    @ResponseBody
+    public String cardDetailsApi(String id) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActTransfer oaActTransfer = oaActTransferService.selectByPrimaryKey(id);
+
+        String principal;
+        String principalT = null;
+        String departmentId = userInfoService.selectDepartmentByUserId(oaActTransfer.getPromoter());
+        if ("single".equals(oaActTransfer.getDepartmentPrincipal())){
+            String principalId = departmentService.selectEnforcerId("principal", departmentId);
+            principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        }else if (oaActTransfer.getDepartmentPrincipal().contains(",")){
+            String[] split = oaActTransfer.getDepartmentPrincipal().split(",");
+            principal = userInfoService.getNicknameById(Integer.valueOf(split[0]));
+            principalT = userInfoService.getNicknameById(Integer.valueOf(split[1]));
+        }else{
+            principal = userInfoService.getNicknameById(Integer.valueOf(oaActTransfer.getDepartmentPrincipal()));
+        }
+
+        String newPrincipal;
+        String newPrincipalT = null;
+        String newDepartmentPrincipal = departmentService.selectEnforcerId("principal", oaActTransfer.getNewDepartment());
+        if (newDepartmentPrincipal.contains(",")){
+            String[] split = newDepartmentPrincipal.split(",");
+            newPrincipal = userInfoService.getNicknameById(Integer.valueOf(split[0]));
+            newPrincipalT = userInfoService.getNicknameById(Integer.valueOf(split[1]));
+        }else{
+            newPrincipal = userInfoService.getNicknameById(Integer.valueOf(newDepartmentPrincipal));
+        }
+
+        //部门主管领导
+        String newSupervisorId = departmentService.selectEnforcerId("supervisor", oaActTransfer.getNewDepartment());
+        String newSupervisor = userInfoService.getNicknameById(Integer.valueOf(newSupervisorId));
+
+        //部门主管领导
+        String supervisorId = departmentService.selectEnforcerId("supervisor", departmentId);
+        String supervisor = userInfoService.getNicknameById(Integer.valueOf(supervisorId));
+        //人事
+        String personnel = userInfoService.getUserInfoByPermission("personnel").getNickname();
+        //主要领导（总经理）
+        String companyPrincipal = userInfoService.getUserInfoByPermission("company_principal").getNickname();
+
+        map.put("principal", principal);
+        map.put("principalT", principalT);
+        map.put("transferPrincipal", newPrincipal);
+        map.put("transferPrincipalT", newPrincipalT);
+        map.put("supervisor", supervisor);
+        map.put("transferSupervisor", newSupervisor);
+        map.put("personnel", personnel);
+        map.put("companyPrincipal", companyPrincipal);
+        map.put("transfer", oaActTransfer);
+        return JSON.toJSONString(map);
     }
 
     /**

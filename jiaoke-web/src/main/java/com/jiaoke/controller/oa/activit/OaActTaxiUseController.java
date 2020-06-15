@@ -1,10 +1,12 @@
 package com.jiaoke.controller.oa.activit;
 
+import com.alibaba.fastjson.JSON;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
 import com.jiaoke.controller.oa.TargetFlowNodeCommand;
 import com.jiaoke.oa.bean.Comments;
+import com.jiaoke.oa.bean.OaActLicenceBorrow;
 import com.jiaoke.oa.bean.OaActTaxiUse;
 import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.service.DepartmentService;
@@ -133,6 +135,47 @@ public class OaActTaxiUseController {
             }
             return "error";
         }
+    }
+
+    /**
+     * app获取审批页面信息
+     *
+     * @param id     id
+     * @param taskId taskId
+     * @return json
+     */
+    @RequestMapping(value = "/approval.api")
+    @ResponseBody
+    public String approvalApi(String id, String taskId) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActTaxiUse oaActTaxiUse = oaActTaxiUseService.selectByPrimaryKey(id);
+
+        String nickname = getCurrentUser().getNickname();
+
+        String principal;
+        String principalT = null;
+        String departmentId = userInfoService.selectDepartmentByUserId(oaActTaxiUse.getPromoter());
+        if ("single".equals(oaActTaxiUse.getDepartmentPrincipal())){
+            String principalId = departmentService.selectEnforcerId("principal", departmentId);
+            principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        }else if (oaActTaxiUse.getDepartmentPrincipal().contains(",")){
+            String[] split = oaActTaxiUse.getDepartmentPrincipal().split(",");
+            principal = userInfoService.getNicknameById(Integer.valueOf(split[0]));
+            principalT = userInfoService.getNicknameById(Integer.valueOf(split[1]));
+        }else{
+            principal = userInfoService.getNicknameById(Integer.valueOf(oaActTaxiUse.getDepartmentPrincipal()));
+        }
+
+        String supervisorId = departmentService.selectEnforcerId("supervisor", departmentId);
+        String supervisor = userInfoService.getNicknameById(Integer.valueOf(supervisorId));
+
+        map.put("nickname", nickname);
+        map.put("principal", principal);
+        map.put("principalT", principalT);
+        map.put("supervisor", supervisor);
+        map.put("taxiUse", oaActTaxiUse);
+        map.put("taskId", taskId);
+        return JSON.toJSONString(map);
     }
 
     /**
@@ -420,6 +463,42 @@ public class OaActTaxiUseController {
         model.addAttribute("oaActTaxiUse", oaActTaxiUse);
         model.addAttribute("commentsList", commentsList);
         return "oa/act/act_taxi_use_details";
+    }
+
+    /**
+     * app获取详细信息
+     *
+     * @param id id
+     * @return json
+     */
+    @RequestMapping(value = "/details.api")
+    @ResponseBody
+    public String detailsApi(String id) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActTaxiUse oaActTaxiUse = oaActTaxiUseService.selectByPrimaryKey(id);
+
+        String principal;
+        String principalT = null;
+        String departmentId = userInfoService.selectDepartmentByUserId(oaActTaxiUse.getPromoter());
+        if ("single".equals(oaActTaxiUse.getDepartmentPrincipal())){
+            String principalId = departmentService.selectEnforcerId("principal", departmentId);
+            principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        }else if (oaActTaxiUse.getDepartmentPrincipal().contains(",")){
+            String[] split = oaActTaxiUse.getDepartmentPrincipal().split(",");
+            principal = userInfoService.getNicknameById(Integer.valueOf(split[0]));
+            principalT = userInfoService.getNicknameById(Integer.valueOf(split[1]));
+        }else{
+            principal = userInfoService.getNicknameById(Integer.valueOf(oaActTaxiUse.getDepartmentPrincipal()));
+        }
+
+        String supervisorId = departmentService.selectEnforcerId("supervisor", departmentId);
+        String supervisor = userInfoService.getNicknameById(Integer.valueOf(supervisorId));
+
+        map.put("principal", principal);
+        map.put("principalT", principalT);
+        map.put("supervisor", supervisor);
+        map.put("taxiUse", oaActTaxiUse);
+        return JSON.toJSONString(map);
     }
 
     /**

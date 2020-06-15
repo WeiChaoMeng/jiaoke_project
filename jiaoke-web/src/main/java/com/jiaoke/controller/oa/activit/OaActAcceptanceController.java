@@ -162,11 +162,21 @@ public class OaActAcceptanceController {
         OaActAcceptance oaActAcceptance = oaActAcceptanceService.selectByPrimaryKey(id);
 
         String nickname = getCurrentUser().getNickname();
-        //根据发起者id获取所属部门id
+
+        String principal;
+        String principalT = null;
         String departmentId = userInfoService.selectDepartmentByUserId(oaActAcceptance.getPromoter());
-        //部门负责人
-        String principalId = departmentService.selectEnforcerId("principal", departmentId);
-        String principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        if ("single".equals(oaActAcceptance.getDepartmentPrincipal())){
+            String principalId = departmentService.selectEnforcerId("principal", departmentId);
+            principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        }else if (oaActAcceptance.getDepartmentPrincipal().contains(",")){
+            String[] split = oaActAcceptance.getDepartmentPrincipal().split(",");
+            principal = userInfoService.getNicknameById(Integer.valueOf(split[0]));
+            principalT = userInfoService.getNicknameById(Integer.valueOf(split[1]));
+        }else{
+            principal = userInfoService.getNicknameById(Integer.valueOf(oaActAcceptance.getDepartmentPrincipal()));
+        }
+
         //部门主管领导
         String supervisorId = departmentService.selectEnforcerId("supervisor", departmentId);
         String supervisor = userInfoService.getNicknameById(Integer.valueOf(supervisorId));
@@ -177,6 +187,7 @@ public class OaActAcceptanceController {
 
         map.put("nickname", nickname);
         map.put("principal", principal);
+        map.put("principalT", principalT);
         map.put("supervisor", supervisor);
         map.put("accepter", accepter);
         map.put("companyPrincipal", companyPrincipal);
@@ -517,12 +528,20 @@ public class OaActAcceptanceController {
         HashMap<String, Object> map = new HashMap<>(16);
         OaActAcceptance oaActAcceptance = oaActAcceptanceService.selectByPrimaryKey(id);
 
-        String nickname = getCurrentUser().getNickname();
-        //根据发起者id获取所属部门id
+        String principal;
+        String principalT = null;
         String departmentId = userInfoService.selectDepartmentByUserId(oaActAcceptance.getPromoter());
-        //部门负责人
-        String principalId = departmentService.selectEnforcerId("principal", departmentId);
-        String principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        if ("single".equals(oaActAcceptance.getDepartmentPrincipal())){
+            String principalId = departmentService.selectEnforcerId("principal", departmentId);
+            principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        }else if (oaActAcceptance.getDepartmentPrincipal().contains(",")){
+            String[] split = oaActAcceptance.getDepartmentPrincipal().split(",");
+            principal = userInfoService.getNicknameById(Integer.valueOf(split[0]));
+            principalT = userInfoService.getNicknameById(Integer.valueOf(split[1]));
+        }else{
+            principal = userInfoService.getNicknameById(Integer.valueOf(oaActAcceptance.getDepartmentPrincipal()));
+        }
+
         //部门主管领导
         String supervisorId = departmentService.selectEnforcerId("supervisor", departmentId);
         String supervisor = userInfoService.getNicknameById(Integer.valueOf(supervisorId));
@@ -531,8 +550,8 @@ public class OaActAcceptanceController {
         //主要领导（总经理）
         String companyPrincipal = userInfoService.getUserInfoByPermission("company_principal").getNickname();
 
-        map.put("nickname", nickname);
         map.put("principal", principal);
+        map.put("principalT", principalT);
         map.put("supervisor", supervisor);
         map.put("accepter", accepter);
         map.put("companyPrincipal", companyPrincipal);

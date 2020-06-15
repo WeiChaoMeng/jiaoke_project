@@ -1,10 +1,12 @@
 package com.jiaoke.controller.oa.activit;
 
+import com.alibaba.fastjson.JSON;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
 import com.jiaoke.controller.oa.TargetFlowNodeCommand;
 import com.jiaoke.oa.bean.Comments;
+import com.jiaoke.oa.bean.OaActEmployment;
 import com.jiaoke.oa.bean.OaActOfficeSupplies;
 import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.service.DepartmentService;
@@ -115,6 +117,48 @@ public class OaActOfficeSuppliesController {
             }
             return "error";
         }
+    }
+
+    /**
+     * app获取审批页面信息
+     *
+     * @param id     id
+     * @param taskId taskId
+     * @return json
+     */
+    @RequestMapping(value = "/approval.api")
+    @ResponseBody
+    public String approvalApi(String id, String taskId) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActOfficeSupplies oaActOfficeSupplies = oaActOfficeSuppliesService.selectByPrimaryKey(id);
+
+        String nickname = getCurrentUser().getNickname();
+
+        String principal;
+        String principalT = null;
+        String departmentId = userInfoService.selectDepartmentByUserId(oaActOfficeSupplies.getPromoter());
+        if ("single".equals(oaActOfficeSupplies.getDepartmentPrincipal())){
+            String principalId = departmentService.selectEnforcerId("principal", departmentId);
+            principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        }else if (oaActOfficeSupplies.getDepartmentPrincipal().contains(",")){
+            String[] split = oaActOfficeSupplies.getDepartmentPrincipal().split(",");
+            principal = userInfoService.getNicknameById(Integer.valueOf(split[0]));
+            principalT = userInfoService.getNicknameById(Integer.valueOf(split[1]));
+        }else{
+            principal = userInfoService.getNicknameById(Integer.valueOf(oaActOfficeSupplies.getDepartmentPrincipal()));
+        }
+
+        String review = userInfoService.getUserInfoByPermission("office_supplies_review").getNickname();
+        String officeSuppliesSupervisor = userInfoService.getUserInfoByPermission("office_supplies_supervisor").getNickname();
+
+        map.put("nickname", nickname);
+        map.put("principal", principal);
+        map.put("principalT", principalT);
+        map.put("supervisor", officeSuppliesSupervisor);
+        map.put("review", review);
+        map.put("taskId", taskId);
+        map.put("officeSupplies", oaActOfficeSupplies);
+        return JSON.toJSONString(map);
     }
 
     /**
@@ -430,6 +474,44 @@ public class OaActOfficeSuppliesController {
             }
         }
     }
+
+    /**
+     * app获取详细信息
+     *
+     * @param id id
+     * @return json
+     */
+    @RequestMapping(value = "/details.api")
+    @ResponseBody
+    public String cardDetailsApi(String id) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActOfficeSupplies oaActOfficeSupplies = oaActOfficeSuppliesService.selectByPrimaryKey(id);
+
+        String principal;
+        String principalT = null;
+        String departmentId = userInfoService.selectDepartmentByUserId(oaActOfficeSupplies.getPromoter());
+        if ("single".equals(oaActOfficeSupplies.getDepartmentPrincipal())){
+            String principalId = departmentService.selectEnforcerId("principal", departmentId);
+            principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        }else if (oaActOfficeSupplies.getDepartmentPrincipal().contains(",")){
+            String[] split = oaActOfficeSupplies.getDepartmentPrincipal().split(",");
+            principal = userInfoService.getNicknameById(Integer.valueOf(split[0]));
+            principalT = userInfoService.getNicknameById(Integer.valueOf(split[1]));
+        }else{
+            principal = userInfoService.getNicknameById(Integer.valueOf(oaActOfficeSupplies.getDepartmentPrincipal()));
+        }
+
+        String review = userInfoService.getUserInfoByPermission("office_supplies_review").getNickname();
+        String officeSuppliesSupervisor = userInfoService.getUserInfoByPermission("office_supplies_supervisor").getNickname();
+
+        map.put("principal", principal);
+        map.put("principalT", principalT);
+        map.put("supervisor", officeSuppliesSupervisor);
+        map.put("review", review);
+        map.put("officeSupplies", oaActOfficeSupplies);
+        return JsonHelper.toJSONString(map);
+    }
+
 
     /**
      * 删除

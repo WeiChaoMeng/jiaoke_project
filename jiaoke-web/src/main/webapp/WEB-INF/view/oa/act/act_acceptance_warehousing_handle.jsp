@@ -176,24 +176,24 @@
 
             <td class="tdLabel" style="width: 10%">验收人</td>
             <td class="table-td-content" style="width: 15%;">
-                <shiro:hasPermission name="acceptanceWarehousingAcceptor">
+                <shiro:hasPermission name="acceptor">
                     <input type="text" class="formInput-readonly" name="acceptor" id="acceptor" value="${nickname}"
                            readonly>
                 </shiro:hasPermission>
 
-                <shiro:lacksPermission name="acceptanceWarehousingAcceptor">
+                <shiro:lacksPermission name="acceptor">
                     ${oaActAcceptanceWarehousing.acceptor}
                 </shiro:lacksPermission>
             </td>
 
             <td class="tdLabel" style="width: 10%">签字时间</td>
             <td class="table-td-content">
-                <shiro:hasPermission name="acceptanceWarehousingAcceptor">
+                <shiro:hasPermission name="acceptor">
                     <input type="text" class="formInput-readonly" name="acceptorDate" id="acceptorDate"
                            value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())%>" readonly>
                 </shiro:hasPermission>
 
-                <shiro:lacksPermission name="acceptanceWarehousingAcceptor">
+                <shiro:lacksPermission name="acceptor">
                     ${oaActAcceptanceWarehousing.acceptorDate}
                 </shiro:lacksPermission>
             </td>
@@ -202,7 +202,7 @@
 </form>
 
 <div class="form-but" id="return">
-    <shiro:hasAnyPermission name="acceptanceWarehousingAcceptor">
+    <shiro:hasAnyPermission name="acceptor">
         <button type="button" class="return-but" style="margin-right: 10px;" onclick="approvalProcessing(2)">回退</button>
     </shiro:hasAnyPermission>
     <button type="button" class="commit-but" onclick="approvalProcessing(1)">同意</button>

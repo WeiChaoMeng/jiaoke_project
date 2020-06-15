@@ -123,6 +123,7 @@
                    value="${oaActLaborContractRenewal.endDate}" onfocus="this.blur()">前签署意见。
             <input type="hidden" id="annex" name="annex">
             <input type="hidden" id="id" name="id" value="${oaActLaborContractRenewal.id}">
+            <input type="hidden" id="url" name="url" value="${oaActLaborContractRenewal.url}">
             <input type="hidden" id="recipientId" name="notifiedPerson"
                    value="${oaActLaborContractRenewal.notifiedPerson}">
             <input type="hidden" id="departmentPrincipal" name="departmentPrincipal">

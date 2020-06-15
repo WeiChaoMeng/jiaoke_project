@@ -1,13 +1,11 @@
 package com.jiaoke.controller.oa.activit;
 
+import com.alibaba.fastjson.JSON;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
 import com.jiaoke.controller.oa.TargetFlowNodeCommand;
-import com.jiaoke.oa.bean.Comments;
-import com.jiaoke.oa.bean.OaActRead;
-import com.jiaoke.oa.bean.OaReceiptReading;
-import com.jiaoke.oa.bean.UserInfo;
+import com.jiaoke.oa.bean.*;
 import com.jiaoke.oa.service.OaActReadService;
 import com.jiaoke.oa.service.OaCollaborationService;
 import com.jiaoke.oa.service.OaReceiptReadingService;
@@ -100,6 +98,50 @@ public class OaActReadController {
             }
             return "error";
         }
+    }
+
+    /**
+     * app获取审批页面信息
+     *
+     * @param id     id
+     * @param taskId taskId
+     * @return json
+     */
+    @RequestMapping(value = "/approval.api")
+    @ResponseBody
+    public String approvalApi(String id, String taskId) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActRead oaActRead = oaActReadService.selectByPrimaryKey(id);
+
+        String nickname = getCurrentUser().getNickname();
+
+        List<OaReceiptReading> receiptReadingList = oaReceiptReadingService.selectAllData();
+        String receiptProposed = userInfoService.getUserInfoByPermission("receipt_proposed").getNickname();
+        String companyPrincipal = userInfoService.getUserInfoByPermission("company_principal").getNickname();
+        String outcome = userInfoService.getUserInfoByPermission("handling_result").getNickname();
+
+        if (oaActRead.getDepOpinion() != null){
+            Task task = activitiUtil.getTaskByTaskId(taskId);
+            String nextNode = activitiUtil.getNextNode(task.getProcessDefinitionId(), task.getTaskDefinitionKey());
+            if ("general_manager".equals(nextNode)){
+                map.put("nextNode",nextNode);
+            }else {
+                map.put("nextNode","");
+            }
+        }
+
+        Task task1 = activitiUtil.getProcessInstanceIdByTaskId(taskId);
+        List<Comments> commentsList = activitiUtil.selectHistoryComment(task1.getProcessInstanceId());
+
+        map.put("nickname", nickname);
+        map.put("receiptReadingList", receiptReadingList);
+        map.put("commentsList", commentsList);
+        map.put("receiptProposed", receiptProposed);
+        map.put("companyPrincipal", companyPrincipal);
+        map.put("outcome", outcome);
+        map.put("taskId", taskId);
+        map.put("read", oaActRead);
+        return JSON.toJSONString(map);
     }
 
     /**

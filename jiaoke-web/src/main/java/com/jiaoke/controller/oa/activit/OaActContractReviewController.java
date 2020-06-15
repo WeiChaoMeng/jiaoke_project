@@ -1,10 +1,12 @@
 package com.jiaoke.controller.oa.activit;
 
+import com.alibaba.fastjson.JSON;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
 import com.jiaoke.controller.oa.TargetFlowNodeCommand;
 import com.jiaoke.oa.bean.Comments;
+import com.jiaoke.oa.bean.OaActAdjustWages;
 import com.jiaoke.oa.bean.OaActContractReview;
 import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.service.DepartmentService;
@@ -98,6 +100,40 @@ public class OaActContractReviewController {
             }
             return "error";
         }
+    }
+
+    /**
+     * app获取审批页面信息
+     *
+     * @param id     id
+     * @param taskId taskId
+     * @return json
+     */
+    @RequestMapping(value = "/approval.api")
+    @ResponseBody
+    public String approvalApi(String id, String taskId) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActContractReview oaActContractReview = oaActContractReviewService.selectByPrimaryKey(id);
+
+        String nickname = getCurrentUser().getNickname();
+
+        String materialPrincipal = userInfoService.getUserInfoByPermission("HTPS_material").getNickname();
+        String financePrincipal = userInfoService.getUserInfoByPermission("HTPS_finance").getNickname();
+        String qualityPrincipal = userInfoService.getUserInfoByPermission("HTPS_quality").getNickname();
+        String operatingPrincipal = userInfoService.getUserInfoByPermission("HTPS_operating").getNickname();
+        String legalAffairs = userInfoService.getUserInfoByPermission("legal_affairs").getNickname();
+        String companyPrincipal = userInfoService.getUserInfoByPermission("company_principal").getNickname();
+
+        map.put("nickname", nickname);
+        map.put("materialPrincipal", materialPrincipal);
+        map.put("financePrincipal", financePrincipal);
+        map.put("qualityPrincipal", qualityPrincipal);
+        map.put("operatingPrincipal", operatingPrincipal);
+        map.put("legalAffairs", legalAffairs);
+        map.put("companyPrincipal", companyPrincipal);
+        map.put("taskId", taskId);
+        map.put("contractReview", oaActContractReview);
+        return JSON.toJSONString(map);
     }
 
     /**
@@ -413,6 +449,35 @@ public class OaActContractReviewController {
         model.addAttribute("oaActContractReview", oaActContractReview);
         model.addAttribute("commentsList", commentsList);
         return "oa/act/act_contract_review_details";
+    }
+
+    /**
+     * app获取详细信息
+     *
+     * @param id id
+     * @return json
+     */
+    @RequestMapping(value = "/details.api")
+    @ResponseBody
+    public String cardDetailsApi(String id) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActContractReview oaActContractReview = oaActContractReviewService.selectByPrimaryKey(id);
+
+        String materialPrincipal = userInfoService.getUserInfoByPermission("HTPS_material").getNickname();
+        String financePrincipal = userInfoService.getUserInfoByPermission("HTPS_finance").getNickname();
+        String qualityPrincipal = userInfoService.getUserInfoByPermission("HTPS_quality").getNickname();
+        String operatingPrincipal = userInfoService.getUserInfoByPermission("HTPS_operating").getNickname();
+        String legalAffairs = userInfoService.getUserInfoByPermission("legal_affairs").getNickname();
+        String companyPrincipal = userInfoService.getUserInfoByPermission("company_principal").getNickname();
+
+        map.put("materialPrincipal", materialPrincipal);
+        map.put("financePrincipal", financePrincipal);
+        map.put("qualityPrincipal", qualityPrincipal);
+        map.put("operatingPrincipal", operatingPrincipal);
+        map.put("legalAffairs", legalAffairs);
+        map.put("companyPrincipal", companyPrincipal);
+        map.put("contractReview", oaActContractReview);
+        return JsonHelper.toJSONString(map);
     }
 
     /**

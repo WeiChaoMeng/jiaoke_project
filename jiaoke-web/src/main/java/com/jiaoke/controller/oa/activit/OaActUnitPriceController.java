@@ -1,10 +1,12 @@
 package com.jiaoke.controller.oa.activit;
 
+import com.alibaba.fastjson.JSON;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
 import com.jiaoke.controller.oa.TargetFlowNodeCommand;
 import com.jiaoke.oa.bean.Comments;
+import com.jiaoke.oa.bean.OaActOvertime;
 import com.jiaoke.oa.bean.OaActUnitPrice;
 import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.service.OaActUnitPriceService;
@@ -97,6 +99,34 @@ public class OaActUnitPriceController {
             }
             return "error";
         }
+    }
+
+    /**
+     * app获取审批页面信息
+     *
+     * @param id     id
+     * @param taskId taskId
+     * @return json
+     */
+    @RequestMapping(value = "/approval.api")
+    @ResponseBody
+    public String approvalApi(String id, String taskId) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActUnitPrice oaActUnitPrice = oaActUnitPriceService.selectByPrimaryKey(id);
+
+        String nickname = getCurrentUser().getNickname();
+
+        String principal = userInfoService.getUserInfoByPermission("operating_principal").getNickname();
+        String supervisor = userInfoService.getUserInfoByPermission("operating_supervisor").getNickname();
+        String companyPrincipal = userInfoService.getUserInfoByPermission("company_principal").getNickname();
+
+        map.put("nickname", nickname);
+        map.put("principal", principal);
+        map.put("supervisor", supervisor);
+        map.put("companyPrincipal", companyPrincipal);
+        map.put("unitPrice", oaActUnitPrice);
+        map.put("taskId", taskId);
+        return JSON.toJSONString(map);
     }
 
     /**
@@ -356,6 +386,29 @@ public class OaActUnitPriceController {
         model.addAttribute("oaActUnitPrice", oaActUnitPrice);
         model.addAttribute("commentsList", commentsList);
         return "oa/act/act_unit_price_details";
+    }
+
+    /**
+     * app获取详细信息
+     *
+     * @param id id
+     * @return json
+     */
+    @RequestMapping(value = "/details.api")
+    @ResponseBody
+    public String detailsApi(String id) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActUnitPrice oaActUnitPrice = oaActUnitPriceService.selectByPrimaryKey(id);
+
+        String principal = userInfoService.getUserInfoByPermission("operating_principal").getNickname();
+        String supervisor = userInfoService.getUserInfoByPermission("operating_supervisor").getNickname();
+        String companyPrincipal = userInfoService.getUserInfoByPermission("company_principal").getNickname();
+
+        map.put("principal", principal);
+        map.put("supervisor", supervisor);
+        map.put("companyPrincipal", companyPrincipal);
+        map.put("unitPrice", oaActUnitPrice);
+        return JSON.toJSONString(map);
     }
 
     /**

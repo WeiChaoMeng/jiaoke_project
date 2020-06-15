@@ -5,6 +5,7 @@ import com.jiaoke.oa.bean.OaActDocument;
 import com.jiaoke.oa.bean.OaCollaboration;
 import com.jiaoke.oa.dao.OaActDocumentMapper;
 import com.jiaoke.oa.dao.OaCollaborationMapper;
+import com.jiaoke.oa.dao.UserInfoMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -26,6 +27,9 @@ public class OaActDocumentServiceImpl implements OaActDocumentService {
     @Resource
     private OaCollaborationMapper oaCollaborationMapper;
 
+    @Resource
+    private UserInfoMapper userInfoMapper;
+
     @Override
     public int insert(OaActDocument oaActDocument, Integer userId, String randomId, Integer state) {
         oaActDocument.setId(randomId);
@@ -44,7 +48,7 @@ public class OaActDocumentServiceImpl implements OaActDocumentService {
             oaCollaboration.setTable("oa_act_document");
             oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("公文审批");
-            oaCollaboration.setDataOne("标题:" + oaActDocument.getTitle());
+            oaCollaboration.setDataOne("标题:" + oaActDocument.getTextTitle());
             if (oaActDocument.getDocType() == 0) {
                 oaCollaboration.setDataTwo("公文类型:公文");
             } else if (oaActDocument.getDocType() == 1) {
@@ -56,7 +60,7 @@ public class OaActDocumentServiceImpl implements OaActDocumentService {
             } else if (oaActDocument.getDocType() == 4) {
                 oaCollaboration.setDataTwo("公文类型:通告");
             } else {
-                oaCollaboration.setDataOne("公文类型:函");
+                oaCollaboration.setDataTwo("公文类型:函");
             }
 
             oaCollaboration.setState(state);
@@ -84,6 +88,7 @@ public class OaActDocumentServiceImpl implements OaActDocumentService {
     public OaActDocument selectByPrimaryKey(String id) {
         OaActDocument oaActDocument = oaActDocumentMapper.selectByPrimaryKey(id);
         oaActDocument.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActDocument.getCreateTime()));
+        oaActDocument.setPromoterStr(userInfoMapper.getNicknameById(oaActDocument.getPromoter()));
         return oaActDocument;
     }
 

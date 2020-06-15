@@ -127,6 +127,7 @@
             <td class="table-td-content">
                 <input type="text" class="formInput-readonly" name="department" value="${oaActExamination.department}" readonly>
                 <input type="hidden" name="id" id="id" value="${oaActExamination.id}">
+                <input type="hidden" name="url" id="url" value="${oaActExamination.url}">
                 <input type="hidden" name="promoter" id="promoter" value="${oaActExamination.promoter}">
                 <input type="hidden" id="departmentPrincipal" name="departmentPrincipal">
             </td>

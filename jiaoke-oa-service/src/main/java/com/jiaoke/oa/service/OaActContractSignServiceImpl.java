@@ -63,6 +63,9 @@ public class OaActContractSignServiceImpl implements OaActContractSignService {
         oaActContractSign.setPrincipal("");
         oaActContractSign.setPrincipalDate("");
         oaActContractSign.setPrincipalContent("");
+        oaActContractSign.setPrincipalT("");
+        oaActContractSign.setPrincipalDateT("");
+        oaActContractSign.setPrincipalContentT("");
         oaActContractSign.setSupervisor("");
         oaActContractSign.setSupervisorDate("");
         oaActContractSign.setSupervisorContent("");
@@ -72,6 +75,7 @@ public class OaActContractSignServiceImpl implements OaActContractSignService {
         oaActContractSign.setCompanyPrincipal("");
         oaActContractSign.setCompanyPrincipalDate("");
         oaActContractSign.setCompanyPrincipalContent("");
+        oaActContractSign.setCreateTime(new Date());
         if (oaActContractSignMapper.updateByPrimaryKeySelective(oaActContractSign) < 0) {
             return -1;
         } else {

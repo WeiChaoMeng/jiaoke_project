@@ -184,11 +184,21 @@ public class OaActReviewController {
         OaActReview oaActReview = oaActReviewService.selectByPrimaryKey(id);
 
         String nickname = getCurrentUser().getNickname();
-        //根据发起者id获取所属部门id
+
+        String principal;
+        String principalT = null;
         String departmentId = userInfoService.selectDepartmentByUserId(oaActReview.getPromoter());
-        //部门负责人
-        String principalId = departmentService.selectEnforcerId("principal", departmentId);
-        String principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        if ("single".equals(oaActReview.getDepartmentPrincipal())){
+            String principalId = departmentService.selectEnforcerId("principal", departmentId);
+            principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        }else if (oaActReview.getDepartmentPrincipal().contains(",")){
+            String[] split = oaActReview.getDepartmentPrincipal().split(",");
+            principal = userInfoService.getNicknameById(Integer.valueOf(split[0]));
+            principalT = userInfoService.getNicknameById(Integer.valueOf(split[1]));
+        }else{
+            principal = userInfoService.getNicknameById(Integer.valueOf(oaActReview.getDepartmentPrincipal()));
+        }
+
         //部门主管领导
         String supervisorId = departmentService.selectEnforcerId("supervisor", departmentId);
         String supervisor = userInfoService.getNicknameById(Integer.valueOf(supervisorId));
@@ -201,6 +211,7 @@ public class OaActReviewController {
 
         map.put("nickname", nickname);
         map.put("principal", principal);
+        map.put("principalT", principalT);
         map.put("supervisor", supervisor);
         map.put("legalAffairs", legalAffairs);
         map.put("finance", finance);
@@ -267,8 +278,6 @@ public class OaActReviewController {
                             activitiUtil.approvalComplete(tasks.getId(), map);
                         }
                         oaCollaborationService.updateStatusCode(oaActReview.getId(), "被回退");
-                        oaActReview.setPrincipal(null);
-                        oaActReview.setPrincipalDate(null);
                         oaActReview.setState(1);
                         return updateByPrimaryKeySelective(oaActReview);
 
@@ -278,8 +287,6 @@ public class OaActReviewController {
                         map.put("promoter", oaActReview.getPromoter());
                         activitiUtil.approvalComplete(taskId, map);
                         oaCollaborationService.updateStatusCode(oaActReview.getId(), "被回退");
-                        oaActReview.setPrincipal(null);
-                        oaActReview.setPrincipalDate(null);
                         oaActReview.setState(1);
                         return updateByPrimaryKeySelective(oaActReview);
                     }
@@ -543,12 +550,20 @@ public class OaActReviewController {
         HashMap<String, Object> map = new HashMap<>(16);
         OaActReview oaActReview = oaActReviewService.selectByPrimaryKey(id);
 
-        String nickname = getCurrentUser().getNickname();
-        //根据发起者id获取所属部门id
+        String principal;
+        String principalT = null;
         String departmentId = userInfoService.selectDepartmentByUserId(oaActReview.getPromoter());
-        //部门负责人
-        String principalId = departmentService.selectEnforcerId("principal", departmentId);
-        String principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        if ("single".equals(oaActReview.getDepartmentPrincipal())){
+            String principalId = departmentService.selectEnforcerId("principal", departmentId);
+            principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        }else if (oaActReview.getDepartmentPrincipal().contains(",")){
+            String[] split = oaActReview.getDepartmentPrincipal().split(",");
+            principal = userInfoService.getNicknameById(Integer.valueOf(split[0]));
+            principalT = userInfoService.getNicknameById(Integer.valueOf(split[1]));
+        }else{
+            principal = userInfoService.getNicknameById(Integer.valueOf(oaActReview.getDepartmentPrincipal()));
+        }
+
         //部门主管领导
         String supervisorId = departmentService.selectEnforcerId("supervisor", departmentId);
         String supervisor = userInfoService.getNicknameById(Integer.valueOf(supervisorId));
@@ -559,8 +574,8 @@ public class OaActReviewController {
         //主要领导（总经理）
         String companyPrincipal = userInfoService.getUserInfoByPermission("company_principal").getNickname();
 
-        map.put("nickname", nickname);
         map.put("principal", principal);
+        map.put("principalT", principalT);
         map.put("supervisor", supervisor);
         map.put("legalAffairs", legalAffairs);
         map.put("finance", finance);

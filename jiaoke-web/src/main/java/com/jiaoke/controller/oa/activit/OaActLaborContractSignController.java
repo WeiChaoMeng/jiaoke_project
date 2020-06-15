@@ -1,5 +1,6 @@
 package com.jiaoke.controller.oa.activit;
 
+import com.alibaba.fastjson.JSON;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
@@ -144,6 +145,54 @@ public class OaActLaborContractSignController {
             }
             return "error";
         }
+    }
+
+    /**
+     * app获取审批页面信息
+     *
+     * @param id     id
+     * @param taskId taskId
+     * @return json
+     */
+    @RequestMapping(value = "/approval.api")
+    @ResponseBody
+    public String approvalApi(String id, String taskId) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActLaborContractSign oaActLaborContractSign = oaActLaborContractSignService.selectByPrimaryKey(id);
+
+        String nickname = getCurrentUser().getNickname();
+
+        String principal;
+        String principalT = null;
+        String departmentId = userInfoService.selectDepartmentByUserId(oaActLaborContractSign.getNotifiedPerson());
+        if ("single".equals(oaActLaborContractSign.getDepartmentPrincipal())){
+            String principalId = departmentService.selectEnforcerId("principal", departmentId);
+            principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        }else if (oaActLaborContractSign.getDepartmentPrincipal().contains(",")){
+            String[] split = oaActLaborContractSign.getDepartmentPrincipal().split(",");
+            principal = userInfoService.getNicknameById(Integer.valueOf(split[0]));
+            principalT = userInfoService.getNicknameById(Integer.valueOf(split[1]));
+        }else{
+            principal = userInfoService.getNicknameById(Integer.valueOf(oaActLaborContractSign.getDepartmentPrincipal()));
+        }
+
+        //部门主管领导
+        String supervisorId = departmentService.selectEnforcerId("supervisor", departmentId);
+        String supervisor = userInfoService.getNicknameById(Integer.valueOf(supervisorId));
+        //法务
+        String personnel = userInfoService.getUserInfoByPermission("personnel").getNickname();
+        //主要领导（总经理）
+        String companyPrincipal = userInfoService.getUserInfoByPermission("company_principal").getNickname();
+
+        map.put("nickname", nickname);
+        map.put("principal", principal);
+        map.put("principalT", principalT);
+        map.put("supervisor", supervisor);
+        map.put("personnel", personnel);
+        map.put("companyPrincipal", companyPrincipal);
+        map.put("taskId", taskId);
+        map.put("laborContractSign", oaActLaborContractSign);
+        return JSON.toJSONString(map);
     }
 
     /**
@@ -476,6 +525,49 @@ public class OaActLaborContractSignController {
         } else {
             return "oa/act/act_labor_contract_sign_details";
         }
+    }
+
+    /**
+     * app获取详细信息
+     *
+     * @param id id
+     * @return json
+     */
+    @RequestMapping(value = "/details.api")
+    @ResponseBody
+    public String cardDetailsApi(String id) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActLaborContractSign oaActLaborContractSign = oaActLaborContractSignService.selectByPrimaryKey(id);
+
+        String principal;
+        String principalT = null;
+        String departmentId = userInfoService.selectDepartmentByUserId(oaActLaborContractSign.getNotifiedPerson());
+        if ("single".equals(oaActLaborContractSign.getDepartmentPrincipal())){
+            String principalId = departmentService.selectEnforcerId("principal", departmentId);
+            principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        }else if (oaActLaborContractSign.getDepartmentPrincipal().contains(",")){
+            String[] split = oaActLaborContractSign.getDepartmentPrincipal().split(",");
+            principal = userInfoService.getNicknameById(Integer.valueOf(split[0]));
+            principalT = userInfoService.getNicknameById(Integer.valueOf(split[1]));
+        }else{
+            principal = userInfoService.getNicknameById(Integer.valueOf(oaActLaborContractSign.getDepartmentPrincipal()));
+        }
+
+        //部门主管领导
+        String supervisorId = departmentService.selectEnforcerId("supervisor", departmentId);
+        String supervisor = userInfoService.getNicknameById(Integer.valueOf(supervisorId));
+        //法务
+        String personnel = userInfoService.getUserInfoByPermission("personnel").getNickname();
+        //主要领导（总经理）
+        String companyPrincipal = userInfoService.getUserInfoByPermission("company_principal").getNickname();
+
+        map.put("principal", principal);
+        map.put("principalT", principalT);
+        map.put("supervisor", supervisor);
+        map.put("personnel", personnel);
+        map.put("companyPrincipal", companyPrincipal);
+        map.put("laborContractSign", oaActLaborContractSign);
+        return JsonHelper.toJSONString(map);
     }
 
     /**

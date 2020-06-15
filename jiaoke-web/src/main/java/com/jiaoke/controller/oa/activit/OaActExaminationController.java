@@ -1,9 +1,11 @@
 package com.jiaoke.controller.oa.activit;
 
+import com.alibaba.fastjson.JSON;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
 import com.jiaoke.controller.oa.TargetFlowNodeCommand;
+import com.jiaoke.oa.bean.OaActEmployment;
 import com.jiaoke.oa.bean.OaActExamination;
 import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.service.DepartmentService;
@@ -114,6 +116,54 @@ public class OaActExaminationController {
             }
             return "error";
         }
+    }
+
+    /**
+     * app获取审批页面信息
+     *
+     * @param id     id
+     * @param taskId taskId
+     * @return json
+     */
+    @RequestMapping(value = "/approval.api")
+    @ResponseBody
+    public String approvalApi(String id, String taskId) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActExamination oaActExamination = oaActExaminationService.selectByPrimaryKey(id);
+
+        String nickname = getCurrentUser().getNickname();
+
+        String principal;
+        String principalT = null;
+        String departmentId = userInfoService.selectDepartmentByUserId(oaActExamination.getPromoter());
+        if ("single".equals(oaActExamination.getDepartmentPrincipal())){
+            String principalId = departmentService.selectEnforcerId("principal", departmentId);
+            principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        }else if (oaActExamination.getDepartmentPrincipal().contains(",")){
+            String[] split = oaActExamination.getDepartmentPrincipal().split(",");
+            principal = userInfoService.getNicknameById(Integer.valueOf(split[0]));
+            principalT = userInfoService.getNicknameById(Integer.valueOf(split[1]));
+        }else{
+            principal = userInfoService.getNicknameById(Integer.valueOf(oaActExamination.getDepartmentPrincipal()));
+        }
+
+        //部门主管领导
+        String supervisorId = departmentService.selectEnforcerId("supervisor", departmentId);
+        String supervisor = userInfoService.getNicknameById(Integer.valueOf(supervisorId));
+        //人事
+        String personnel = userInfoService.getUserInfoByPermission("personnel").getNickname();
+        //主要领导（总经理）
+        String companyPrincipal = userInfoService.getUserInfoByPermission("company_principal").getNickname();
+
+        map.put("nickname", nickname);
+        map.put("principal", principal);
+        map.put("principalT", principalT);
+        map.put("supervisor", supervisor);
+        map.put("personnel", personnel);
+        map.put("companyPrincipal", companyPrincipal);
+        map.put("taskId", taskId);
+        map.put("examination", oaActExamination);
+        return JSON.toJSONString(map);
     }
 
     /**
@@ -470,6 +520,49 @@ public class OaActExaminationController {
         } else {
             return "oa/act/act_examination_details";
         }
+    }
+
+    /**
+     * app获取详细信息
+     *
+     * @param id id
+     * @return json
+     */
+    @RequestMapping(value = "/details.api")
+    @ResponseBody
+    public String cardDetailsApi(String id) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActExamination oaActExamination = oaActExaminationService.selectByPrimaryKey(id);
+
+        String principal;
+        String principalT = null;
+        String departmentId = userInfoService.selectDepartmentByUserId(oaActExamination.getPromoter());
+        if ("single".equals(oaActExamination.getDepartmentPrincipal())){
+            String principalId = departmentService.selectEnforcerId("principal", departmentId);
+            principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        }else if (oaActExamination.getDepartmentPrincipal().contains(",")){
+            String[] split = oaActExamination.getDepartmentPrincipal().split(",");
+            principal = userInfoService.getNicknameById(Integer.valueOf(split[0]));
+            principalT = userInfoService.getNicknameById(Integer.valueOf(split[1]));
+        }else{
+            principal = userInfoService.getNicknameById(Integer.valueOf(oaActExamination.getDepartmentPrincipal()));
+        }
+
+        //部门主管领导
+        String supervisorId = departmentService.selectEnforcerId("supervisor", departmentId);
+        String supervisor = userInfoService.getNicknameById(Integer.valueOf(supervisorId));
+        //人事
+        String personnel = userInfoService.getUserInfoByPermission("personnel").getNickname();
+        //主要领导（总经理）
+        String companyPrincipal = userInfoService.getUserInfoByPermission("company_principal").getNickname();
+
+        map.put("principal", principal);
+        map.put("principalT", principalT);
+        map.put("supervisor", supervisor);
+        map.put("personnel", personnel);
+        map.put("companyPrincipal", companyPrincipal);
+        map.put("examination", oaActExamination);
+        return JsonHelper.toJSONString(map);
     }
 
     /**

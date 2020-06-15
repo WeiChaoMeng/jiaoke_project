@@ -254,7 +254,6 @@ public class OaCollaborationController {
             for (OaCollaboration collaboration : oaCollaborationList) {
                 collaboration.setCreateTimeStr(collaboration.getCreateTimeStr().substring(0, 10));
             }
-            Collections.reverse(oaCollaborationList);
             map.put("resultCode", "200");
             map.put("reason", "success");
             map.put("result", oaCollaborationList);
@@ -317,7 +316,6 @@ public class OaCollaborationController {
             for (OaCollaboration collaboration : oaCollaborationList) {
                 collaboration.setCreateTimeStr(collaboration.getStartTimeStr().substring(0, 10));
             }
-            Collections.reverse(oaCollaborationList);
             map.put("resultCode", "200");
             map.put("reason", "success");
             map.put("result", oaCollaborationList);

@@ -1,11 +1,13 @@
 package com.jiaoke.controller.oa.activit;
 
+import com.alibaba.fastjson.JSON;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
 import com.jiaoke.controller.oa.TargetFlowNodeCommand;
 import com.jiaoke.oa.bean.Comments;
 import com.jiaoke.oa.bean.OaActAnnualLeave;
+import com.jiaoke.oa.bean.OaActEngineering;
 import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.service.DepartmentService;
 import com.jiaoke.oa.service.OaActAnnualLeaveService;
@@ -99,6 +101,36 @@ public class OaActAnnualLeaveController {
             }
             return "error";
         }
+    }
+
+    /**
+     * app获取审批页面信息
+     *
+     * @param id     id
+     * @param taskId taskId
+     * @return json
+     */
+    @RequestMapping(value = "/approval.api")
+    @ResponseBody
+    public String approvalApi(String id, String taskId) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActAnnualLeave oaActAnnualLeave = oaActAnnualLeaveService.selectByPrimaryKey(id);
+
+        String nickname = getCurrentUser().getNickname();
+
+        String departmentId = userInfoService.selectDepartmentByUserId(oaActAnnualLeave.getPromoter());
+        String supervisorId = departmentService.selectEnforcerId("supervisor", departmentId);
+        String supervisor = userInfoService.getNicknameById(Integer.valueOf(supervisorId));
+        String personnel = userInfoService.getUserInfoByPermission("personnel").getNickname();
+        String companyPrincipal = userInfoService.getUserInfoByPermission("company_principal").getNickname();
+
+        map.put("nickname", nickname);
+        map.put("supervisor", supervisor);
+        map.put("personnel", personnel);
+        map.put("companyPrincipal", companyPrincipal);
+        map.put("taskId", taskId);
+        map.put("annualLeave", oaActAnnualLeave);
+        return JSON.toJSONString(map);
     }
 
     /**
@@ -374,6 +406,31 @@ public class OaActAnnualLeaveController {
         model.addAttribute("oaActAnnualLeave", oaActAnnualLeave);
         model.addAttribute("commentsList", commentsList);
         return "oa/act/act_annual_leave_details";
+    }
+
+    /**
+     * app获取详细信息
+     *
+     * @param id id
+     * @return json
+     */
+    @RequestMapping(value = "/details.api")
+    @ResponseBody
+    public String cardDetailsApi(String id) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActAnnualLeave oaActAnnualLeave = oaActAnnualLeaveService.selectByPrimaryKey(id);
+
+        String departmentId = userInfoService.selectDepartmentByUserId(oaActAnnualLeave.getPromoter());
+        String supervisorId = departmentService.selectEnforcerId("supervisor", departmentId);
+        String supervisor = userInfoService.getNicknameById(Integer.valueOf(supervisorId));
+        String personnel = userInfoService.getUserInfoByPermission("personnel").getNickname();
+        String companyPrincipal = userInfoService.getUserInfoByPermission("company_principal").getNickname();
+
+        map.put("supervisor", supervisor);
+        map.put("personnel", personnel);
+        map.put("companyPrincipal", companyPrincipal);
+        map.put("annualLeave", oaActAnnualLeave);
+        return JsonHelper.toJSONString(map);
     }
 
     /**

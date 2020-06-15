@@ -32,7 +32,7 @@ public class OaActLaborContractSignServiceImpl implements OaActLaborContractSign
 
     @Override
     public int insert(OaActLaborContractSign oaActLaborContractSign, Integer userId, String randomId, Integer state) {
-        String notifier = userInfoMapper.getNicknameById(oaActLaborContractSign.getPromoter());
+        String notifier = userInfoMapper.getNicknameById(oaActLaborContractSign.getNotifiedPerson());
         oaActLaborContractSign.setId(randomId);
         oaActLaborContractSign.setCreateTime(new Date());
         oaActLaborContractSign.setPromoter(userId);
@@ -49,7 +49,7 @@ public class OaActLaborContractSignServiceImpl implements OaActLaborContractSign
             oaCollaboration.setTable("oa_act_labor_contract_sign");
             oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("劳动合同签订审批表");
-            oaCollaboration.setDataOne("通知人：：" + notifier);
+            oaCollaboration.setDataOne("通知人：" + notifier);
             oaCollaboration.setDataTwo("通知时间：" + DateUtil.dateConvertYYYYMMDD(oaActLaborContractSign.getCreateTime()));
             oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
@@ -64,6 +64,9 @@ public class OaActLaborContractSignServiceImpl implements OaActLaborContractSign
         oaActLaborContractSign.setPrincipal("");
         oaActLaborContractSign.setPrincipalDate("");
         oaActLaborContractSign.setPrincipalContent("");
+        oaActLaborContractSign.setPrincipalT("");
+        oaActLaborContractSign.setPrincipalDateT("");
+        oaActLaborContractSign.setPrincipalContentT("");
         oaActLaborContractSign.setSupervisor("");
         oaActLaborContractSign.setSupervisorDate("");
         oaActLaborContractSign.setSupervisorContent("");
@@ -73,6 +76,7 @@ public class OaActLaborContractSignServiceImpl implements OaActLaborContractSign
         oaActLaborContractSign.setCompanyPrincipal("");
         oaActLaborContractSign.setCompanyPrincipalDate("");
         oaActLaborContractSign.setCompanyPrincipalContent("");
+        oaActLaborContractSign.setCreateTime(new Date());
         if (oaActLaborContractSignMapper.updateByPrimaryKeySelective(oaActLaborContractSign) < 0) {
             return -1;
         } else {

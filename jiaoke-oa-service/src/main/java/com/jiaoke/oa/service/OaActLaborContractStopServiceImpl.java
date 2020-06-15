@@ -32,7 +32,7 @@ public class OaActLaborContractStopServiceImpl implements OaActLaborContractStop
 
     @Override
     public int insert(OaActLaborContractStop oaActLaborContractStop, Integer userId, String randomId, Integer state) {
-        String notifier = userInfoMapper.getNicknameById(oaActLaborContractStop.getPromoter());
+        String notifier = userInfoMapper.getNicknameById(userId);
         oaActLaborContractStop.setId(randomId);
         oaActLaborContractStop.setCreateTime(new Date());
         oaActLaborContractStop.setPromoter(userId);

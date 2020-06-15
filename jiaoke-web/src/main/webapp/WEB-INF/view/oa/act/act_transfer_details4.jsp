@@ -201,7 +201,7 @@
 
             <div class="opinion-supervisor" style="float: right;width: 34%;">
                 <label class="opinion-principal-title">主管</label>
-                <textarea class="opinion-column-Juxtaposition" readonly>${transfer.transferSupervisorDate}</textarea>
+                <textarea class="opinion-column-Juxtaposition" readonly>${transfer.transferSupervisorContent}</textarea>
                 <div class="approval-date">
                     <label class="approval-date-label">日期 </label>
                     <input class="approval-date-input" type="text" value="${transfer.transferSupervisorDate}" readonly>
