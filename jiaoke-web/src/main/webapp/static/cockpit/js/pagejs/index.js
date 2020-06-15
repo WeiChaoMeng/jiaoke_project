@@ -46,7 +46,7 @@
     /**
      * 右一文字动态
      */
-    showTenProjectMessage();
+    // showTenProjectMessage();
 })();
 
 /**
@@ -79,7 +79,9 @@ function showMonthChar() {
                     }
                 }
             }
-            $("#thisMonthCount").empty().append("<span id='parkplace'> " + (crew1Total + crew2Total).toFixed(1) + "吨</span>")
+            var crew1 = crew1Total? crew1Total:0;
+            var crew2 = crew2Total? crew2Total:0;
+            $("#thisMonthCount").empty().append("<span id='parkplace'> " + (crew1 + crew2).toFixed(1) + "吨</span>")
             if (res.message === "error") {
                 layer.msg("后台错误，请联系管理员！");
             }
@@ -225,6 +227,7 @@ function getThisMonthYield() {
                 for (var i = 0; i < total.length;i++){
                     var crew = total[i].crew;
                     var proSum = total[i].gross;
+                    debugger
                     if (crew === 'crew1'){
                         series.push({name:'机组一本月产量',data:[proSum, null, null],stack: 'male'});
                         crew1Gross = proSum;
@@ -233,8 +236,10 @@ function getThisMonthYield() {
                         crew2Gross = proSum;
                     }
                 }
+                var crew1 = crew1Gross? crew1Gross:0;
+                var crew2 = crew2Gross? crew2Gross:0;
                 //另一个柱状图
-                series.push({name:'本月总产量',data:[null, null,crew1Gross + crew2Gross ],stack: 'male'});
+                series.push({name:'本月总产量',data:[null, null,crew1 + crew2 ],stack: 'male'});
 
 
                 //处理本月各机组产品前十。左三饼图
@@ -544,7 +549,10 @@ function showThisMonthRegenerate() {
                         crew2Num = dataArry[i].total;
                     }
                 }
-                var sum = (crew1Num + crew2Num).toFixed(1);
+                var crew1 = crew1Num? crew1Num:0;
+                var crew2 = crew2Num? crew2Num:0;
+
+                var sum = (crew1 + crew2).toFixed(1);
 
                 $("#thisUsageAmount").empty().append("<span>" + sum + "吨</span>");
 
@@ -559,40 +567,65 @@ function showThisMonthRegenerate() {
 /**
  * 查询本年工程
  */
+window.onload = function() {
+    showTenProjectMessage();
+};
 function showTenProjectMessage() {
     var basePath = $("#path").val();
     //ajax查后台数据
-    $.ajax({
-        url: basePath + "/getTopTenProject.do",
-        type: "get",
-        dataType: "json",
-        success: function (res) {
-            if (res.message === "success") {
-               var temArray = res.dataBody;
-               $("#yearProduct").empty();
-                var colourArry = ['#0096fe','#3badfc','#59d4ff','#9debff','#d0f5fc','#daf8e3','#97ebdb','#b7ded2','#f7c297','#ffecb8'];
-               for (var i = 0; i < temArray.length;i++){
-                   var proName = temArray[i].project_name;
-                   proName = proName.split("(")[0] ? proName.split("(")[0]:proName;
-                   proName = proName.split("（")[0]? proName.split("（")[0]:proName;
+    // $.ajax({
+    //     url: basePath + "/getTopTenProject.do",
+    //     type: "get",
+    //     dataType: "json",
+    //     success: function (res) {
+    //         if (res.message === "success") {
+    //            var temArray = res.dataBody;
+    //            $("#yearProduct").empty();
+    //             var colourArry = ['#43457f','#5e508e','#0cd402','#daeeff','#f4f513','#ffb3b0','#b967ff','#5382ff','#ff71ce','#ca001e'];
+    //            for (var i = 0; i < temArray.length;i++){
+    //                var proName = temArray[i].project_name;
+    //                proName = proName.split("(")[0] ? proName.split("(")[0]:proName;
+    //                proName = proName.split("（")[0]? proName.split("（")[0]:proName;
+    //
+    //                $("#yearProduct").append("<li><span class='example_span' style='background-color:" + colourArry[i] + ";display: block;width: 17px;height: 13px;float: left;margin-right: 10px;margin-top: 3px;border-radius: 5px;'></span><p>" + proName +"</p></li>")
+    //            }
+    //
+    //             $("div.list_lh").myScroll({
+    //                 speed:40, //数值越大，速度越慢
+    //                 rowHeight:35 //li的高度
+    //             });
+    //         }
+    //         if (res.message === "empty"){
+    //             layer.msg("当前无工程");
+    //         }
+    //         if (res.message === "error") {
+    //             layer.msg("后台错误，请联系管理员！");
+    //         }
+    //     }
+    // });
 
-                   $("#yearProduct").append("<li><span class='example_span' style='background-color:" + colourArry[i] + ";display: block;width: 17px;height: 13px;float: left;margin-right: 10px;margin-top: 3px;border-radius: 5px;'></span><p>" + proName +"</p></li>")
-               }
+    var proObj = JSON.parse(sessionStorage.getItem("projectObj"));
+    do {
+        proObj = JSON.parse(sessionStorage.getItem("projectObj"));
+    } while (isNull(proObj));
 
-                $("div.list_lh").myScroll({
-                    speed:40, //数值越大，速度越慢
-                    rowHeight:35 //li的高度
-                });
-            }
-            if (res.message === "empty"){
-                layer.msg("当前无工程");
-            }
-            if (res.message === "error") {
-                layer.msg("后台错误，请联系管理员！");
-            }
+    var colourArry = ['#ffffe1','#e87a00','#0cd402','#efa900','#f4f513','#00ffd0','#cccb00','#5382ff','#2ec2ff','#ca001e'];
+    var tem = 0;
+
+    for(var key in proObj){
+        if (key === "路驰分公司") {
+
+        }else {
+            $("#yearProduct").append("<li><span class='example_span' style='background-color:" + colourArry[tem] + ";display: block;width: 17px;height: 13px;float: left;margin-right: 10px;margin-top: 3px;border-radius: 5px;'></span><p>" + key +"</p></li>")
+
         }
-    });
+        tem++;
+    }
 
+    $("div.list_lh").myScroll({
+        speed:40, //数值越大，速度越慢
+        rowHeight:35 //li的高度
+    });
 }
 
  function isBlank (str) {
@@ -602,3 +635,14 @@ function showTenProjectMessage() {
     }
     return false;
 };
+
+/**
+ * 判断是否null
+ * @param data
+ */
+function isNull(data){
+    if (data == "" || data == undefined || data == null) {
+        return true;
+    }
+    return false;
+}

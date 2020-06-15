@@ -66,6 +66,8 @@ public class QualityRatioTemplate {
     private String upUser;
     //备注
     private String remark;
+    //创建时间
+    private String creatTime;
 
     public int getId() {
         return id;

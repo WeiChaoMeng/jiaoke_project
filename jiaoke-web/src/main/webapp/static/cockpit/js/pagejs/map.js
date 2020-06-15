@@ -77,6 +77,7 @@ function showEchars(siteArray) {
             // resObj['北京市政路桥建材集团'] = [116.454483,39.834912];
             // resObj['天安门'] = [116.404413,39.91433];
             var geoArray = res.geocodes;
+
             for (var i = 0; i < geoArray.length;i++){
                 var contion = geoArray[i].formatted_address;
                 if(!isBlank(contion)){
@@ -94,7 +95,13 @@ function showEchars(siteArray) {
                     if (projectName.indexOf("（") >= 0) {
                         projectName = projectName.split("（")[0];
                     }
-                    resObj[projectName] = temArray;
+                    if (resObj[projectName]){
+                        var twoProName = projectName + "_";
+                        resObj[twoProName] = temArray;
+                    } else {
+                        resObj[projectName] = temArray;
+                    }
+
                 }else {
                     var obj = {};
                     var proName = siteArray[i].project_name;
@@ -156,21 +163,22 @@ function showEchars(siteArray) {
     }
     //定义地图参数二
     var BJData = [];
-    var colourArry = ['#0096fe','#3badfc','#59d4ff','#9debff','#d0f5fc','#daf8e3','#97ebdb','#b7ded2','#f7c297','#ffecb8'];
+    var colourArry = ['#ffffe1','#e87a00','#0cd402','#efa900','#f4f513','#00ffd0','#cccb00','#5382ff','#2ec2ff','#ca001e'];
     var tem = 0;
+    sessionStorage.setItem("projectObj",JSON.stringify(resObj));
     for (var  key in resObj){
-        tem++;
         var temObj2;
         if (key === "路驰分公司") {
-            temObj2 = {name: key, value: 190,colors:'#ed5565'}
+            temObj2 = {name: key, value: 0,colors:'#3badfc'}
         }else {
-            temObj2 = {name: key, value: 90,colors:colourArry[tem]};
+            temObj2 = {name: key, value: (90 + (200/tem)),colors:colourArry[tem]};
         }
         var temArray = [];
         var temObj1= {name: '路驰分公司'};
         temArray.push(temObj1);
         temArray.push(temObj2);
         BJData.push(temArray);
+        tem++;
     }
 
     //渲染echars
@@ -232,7 +240,7 @@ function editMidChar(geoCoord,BData) {
 
         return res;
     };
-    var color = ['#ffd700', '#ffa022', '#3ed4ff'];
+    var color = ['#ffffe1','#e87a00','#0cd402','#efa900','#f4f513','#00ffd0','#cccb00','#5382ff','#2ec2ff','#ca001e'];
     var series = [];
     [['北京', BJData]].forEach(function(item, i) {
         series.push(
@@ -242,16 +250,17 @@ function editMidChar(geoCoord,BData) {
                 zlevel: 1,
                 effect: {
                     show: true,
-                    period: 6,
-                    trailLength: 0.7,
-                    // color: '#fff',
-                    symbolSize: 3
+                    period: 2,
+                    trailLength:0.7,
+                    color: '#c5ffe6',
+                    symbolSize: 4
                 },
                 lineStyle: {
                     normal: {
-                        color: color[i],
-                        width: 0,
-                        curveness: 0.2
+                        width: 1, //尾迹线条宽度
+                        opacity: 0.5, //尾迹线条透明度
+                        curveness: .3,//尾迹线条曲直度
+                        color: '#3d4ff'
                     }
                 },
                 data: convertData(item[1])
@@ -260,19 +269,34 @@ function editMidChar(geoCoord,BData) {
                 name: item[0],
                 type: 'lines',
                 zlevel: 2,
-                effect: {
+                rippleEffect: {
                     show: true,
-                    period: 6,
+                    period: 2,
                     trailLength: 0,
                     symbol: planePath,
-                    symbolSize: 15
+                    symbolSize: 5
+                },
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'right', //显示位置
+                        offset: [5, 0], //偏移设置
+                        formatter: function(params){//圆环显示文字
+                            return params.data.name;
+                        },
+                        fontSize: 13
+                    },
+                    emphasis: {
+                        show: true
+                    }
                 },
                 lineStyle: {
                     normal: {
-                        color: color[i],
-                        width: 1,
-                        opacity: 0.4,
-                        curveness: 0.2
+                        // color: color[i],f6f632
+                        width: 1, //尾迹线条宽度
+                        opacity: 10, //尾迹线条透明度
+                        curveness: 0.3,//尾迹线条曲直度
+                        color: '#ebfef8'
                     }
                 },
                 data: convertData(item[1])
@@ -293,7 +317,7 @@ function editMidChar(geoCoord,BData) {
                         formatter: '{b}'
                     }
                 },
-                //显示工程名称
+                // //显示工程名称
                 // label: {
                 //     normal: {
                 //         show: true,
@@ -430,6 +454,39 @@ function editMidChar(geoCoord,BData) {
                     value: [116.454483,39.834912]
                 }
                 ]
+            },
+            {
+                type: 'scatter',
+                coordinateSystem: 'geo',
+                zlevel: 2,
+                rippleEffect: {
+                    period: 4,
+                    brushType: 'stroke',
+                    scale: 4
+                },
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'right',
+                        //offset:[5, 0],
+                        color: '#0f0',
+                        formatter: '{b}',
+                        textStyle: {
+                            color: "#0f0"
+                        }
+                    },
+                    emphasis: {
+                        show: true,
+                        color: "#f60"
+                    }
+                },
+                symbol:"image://../../../../static/images/qc/luci.png",
+                symbolSize: [25, 25],
+                data: [{
+                    name: '路驰公司',
+                    value: [116.360115,39.701526]
+                }
+                ]
             }
         );
     });
@@ -444,17 +501,17 @@ function editMidChar(geoCoord,BData) {
             top: 0,
             bottom: 0
         },
-        // tooltip: {
-        //     formatter: function(params, ticket, callback) {
-        //         //根据业务自己拓展要显示的内容
-        //         var res = "";
-        //         console.log(params)
-        //         var name = params.name;
-        //         var value = params.value[2];
-        //         res = "<span style='color:#fff;'>" + name + "</span><br/>数据：" + value;
-        //         return res;
-        //     }
-        // },
+        tooltip: {
+            formatter: function(params, ticket, callback) {
+                //根据业务自己拓展要显示的内容
+                var res = "";
+                console.log(params)
+                var name = params.name;
+                var value = params.value[2];
+                res = "<span style='color:#fff;'>" + name + "</span><br/>产量：" + value.toFixed(2) +"吨";
+                return res;
+            }
+        },
         geo: {
             map: 'beijing',
             // center: [116.4716, 39.6352],

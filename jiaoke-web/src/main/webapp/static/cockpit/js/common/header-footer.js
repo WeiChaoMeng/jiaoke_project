@@ -31,7 +31,7 @@
         '<ul class="menu-bar" id="menu-bar">'+
         '<li class="common-menu"><a href="index.jsp"><span class="mli">主页</span></a></li>'+
         '<li class="common-menu"><a href="/qualityCockpitPage.do"><span class="">质量管控</span></a></li>'+
-        // '<li class="common-menu"><a href="/experimentCockpitPage.do"><span class="">实验管理</span></a></li>'+
+        '<li class="common-menu"><a href="/summaryCockpitPage.do"><span class="">汇总分析</span></a></li>'+
         '<li class="common-menu"><a href="/logout"><span class="">退出</span></a></li>'+
         // '<li class="common-menu"><a href="ssglIndex.html"><span class="">设施管理</span></a></li>'+
         // '<li class="common-menu"><a href="http://console.rnting.com/datacentercf/"><span class="">智慧停车</span></a></li>'+
@@ -46,7 +46,7 @@
     $("#model-foot").html(footerHtlm);
 
 
-})();
+})(jQuery);
 //设施总量、巡查维修、设施管理、智慧停车
 /*获取并显示当前日期时间和星期*/
 function showTime(){

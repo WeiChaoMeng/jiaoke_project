@@ -95,7 +95,8 @@
                 temperature_milling,
                 temperature_milling_up,
                 crew1_modele_id,
-                crew2_modele_id
+                crew2_modele_id,
+                create_time
                 )
         VALUES
                (
@@ -122,7 +123,8 @@
                        #{temperatureMilling},
                        #{temperatureMillingUp},
                        #{crew1ModeleId},
-                       #{crew2ModeleId})
+                       #{crew2ModeleId},
+                       #{creatTime})
     </insert>
     <!--end-->
 

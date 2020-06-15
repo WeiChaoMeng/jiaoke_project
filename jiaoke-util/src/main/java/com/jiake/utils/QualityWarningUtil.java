@@ -194,9 +194,14 @@ public class QualityWarningUtil {
 
         String[] dataArray = messageData.split(",");
 
-
+        String[] temDate= new String[2];
         //获取生产时间
-        String[] temDate = dataArray[0].split("/");
+        if (dataArray[0].contains("/")){
+            temDate = dataArray[0].split("/");
+        }else {
+            temDate[0] = dataArray[0].split("月")[0];
+            temDate[1] = dataArray[0].split("日")[0].split("月")[1];
+        }
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
 

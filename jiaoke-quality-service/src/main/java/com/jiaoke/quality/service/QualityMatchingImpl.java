@@ -94,7 +94,7 @@ public class QualityMatchingImpl implements QualityMatchingInf{
 
         String format = sdf.format(now);
 
-
+        qualityRatioTemplate.setCreatTime(format);
         int id = qualityMatchingDao.insetRatioTemplate(qualityRatioTemplate);
 
         boolean bo = id > 0? true:false;

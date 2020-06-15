@@ -14,7 +14,6 @@ import com.jiake.utils.JsonHelper;
 import com.jiake.utils.QualityMatchingUtil;
 import com.jiaoke.common.bean.PageBean;
 import com.jiaoke.controller.oa.ActivitiUtil;
-import com.jiaoke.controller.oa.TargetFlowNodeCommand;
 import com.jiaoke.oa.bean.Comments;
 import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.service.OaCollaborationService;
@@ -28,7 +27,6 @@ import org.activiti.bpmn.model.UserTask;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.ManagementService;
 import org.activiti.engine.TaskService;
-import org.activiti.engine.impl.identity.Authentication;
 import org.activiti.engine.task.Task;
 import org.apache.logging.log4j.util.Strings;
 import org.apache.shiro.SecurityUtils;
@@ -46,10 +44,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  *  <一句话功能描述>
@@ -161,8 +156,6 @@ public class QualityController {
         }catch (Exception e){
             e.printStackTrace();
         }
-
-
     }
 
     /**

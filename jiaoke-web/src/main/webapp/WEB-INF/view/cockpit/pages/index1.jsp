@@ -228,7 +228,7 @@
 <script type="text/javascript" src="../../../../static/cockpit/js/common/header-footer.js"></script>
 <script type="text/javascript" src="../../../../static/cockpit/js/scroll.js"></script>
 <script type="text/javascript" src="../../../../static/cockpit/js/pagejs/map.js"></script>
-<script type="text/javascript" src="../../../../static/cockpit/js/pagejs/index.js?c=2.9"></script>
+<script type="text/javascript" src="../../../../static/cockpit/js/pagejs/index.js?c=2.9" defer></script>
 <script type="text/javascript" src="../../../../static/js/oa/layer/layer.js"></script>
 <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=5ae1365fcf3e53e6a218d9d88cd50249"></script>
 <script type="text/javascript" src="../../../../static/new/js/gdmap.js"></script>
