@@ -101,7 +101,7 @@ function echaExperimentalItem(currentNum,amplingArray) {
             htmlStr += "<td>" + amplingArray[i]["experiment_num"] + "</td>";
             htmlStr += "<td>" + amplingArray[i]["order_ticket_num"]  + "</td>";
             htmlStr += "<td>" + amplingArray[i].materials_name  + "</td>";
-            htmlStr += "<td>" + samplingStandard + "</td>";
+            htmlStr += "<td>" + samplingStandard  + "</td>";
             htmlStr += "<td>" +  manufacturersName + "</td>";
             htmlStr += "<td>" + amplingArray[i].sampling_date  + "</td>";
             htmlStr += "<td>" + amplingArray[i].test_date  + "</td>";
@@ -121,12 +121,13 @@ function echaExperimentalItem(currentNum,amplingArray) {
             htmlStr += "</tr>";
         } else {
             var samplingStandard = amplingArray[i].sampling_standard ? amplingArray[i].sampling_standard:" ";
+            var manufacturersName = amplingArray[i].manufacturers_name ? amplingArray[i].manufacturers_name:" ";
             htmlStr += "<tr>";
             htmlStr += "<td>" + amplingArray[i]["experiment_num"] + "</td>";
             htmlStr += "<td>" + amplingArray[i]["order_ticket_num"]  + "</td>";
             htmlStr += "<td>" + amplingArray[i].materials_name  + "</td>";
-            htmlStr += "<td>" + amplingArray[i].manufacturers_name  + "</td>";
             htmlStr += "<td>" + samplingStandard  + "</td>";
+            htmlStr += "<td>" + manufacturersName  + "</td>";
             htmlStr += "<td>" + amplingArray[i].sampling_date  + "</td>";
             htmlStr += "<td>" + amplingArray[i].test_date  + "</td>";
             if(amplingArray[i].experiment_status === 0){

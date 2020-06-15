@@ -598,8 +598,8 @@ function setBarEchars(barArry,barNameArray) {
             type: 'graph',
             layout: 'force',
             force: {
-                repulsion: 300,
-                edgeLength: 10
+                repulsion: 150,
+                edgeLength: 5
             },
             roam: true,
             label: {
