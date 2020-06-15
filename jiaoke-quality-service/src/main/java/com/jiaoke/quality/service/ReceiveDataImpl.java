@@ -23,6 +23,7 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  *  <一句话功能描述>
@@ -99,8 +100,12 @@ public class ReceiveDataImpl implements ReceiveDataInf {
         //插入数据库表quality_warning_promessage_crew，返回主键ID
         qualityWarningDao.insertQualityWarningCrew(map);
         int id =Integer.parseInt(map.get("id"));
-
-
+        try {
+            //毫秒
+            TimeUnit.MILLISECONDS.sleep(1000);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         //一仓温度
         int warehouse = Integer.parseInt(messageArray[18]);
         //混合料温度
