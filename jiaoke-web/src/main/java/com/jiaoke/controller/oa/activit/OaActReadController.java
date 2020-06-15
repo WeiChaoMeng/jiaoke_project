@@ -12,6 +12,7 @@ import com.jiaoke.oa.service.OaReceiptReadingService;
 import com.jiaoke.oa.service.UserInfoService;
 import org.activiti.bpmn.model.UserTask;
 import org.activiti.engine.ManagementService;
+import org.activiti.engine.TaskService;
 import org.activiti.engine.impl.identity.Authentication;
 import org.activiti.engine.task.Task;
 import org.apache.shiro.SecurityUtils;
@@ -54,6 +55,9 @@ public class OaActReadController {
 
     @Resource
     private OaReceiptReadingService oaReceiptReadingService;
+
+    @Resource
+    private TaskService taskService;
 
     /**
      * 获取当前登录用户信息
@@ -442,6 +446,55 @@ public class OaActReadController {
         return "oa/act/oa_document_reading_details";
     }
 
+    /**
+     * app获取详细信息
+     *
+     * @param id id
+     * @return json
+     */
+    @RequestMapping(value = "/details.api")
+    @ResponseBody
+    public String cardDetailsApi(String id, String taskId) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActRead oaActRead = oaActReadService.selectByPrimaryKey(id);
+
+        List<OaReceiptReading> receiptReadingList = oaReceiptReadingService.selectAllData();
+        String receiptProposed = userInfoService.getUserInfoByPermission("receipt_proposed").getNickname();
+        String companyPrincipal = userInfoService.getUserInfoByPermission("company_principal").getNickname();
+        String outcome = userInfoService.getUserInfoByPermission("handling_result").getNickname();
+
+        if (oaActRead.getDepOpinion() != null){
+            List<Task> taskList = taskService.createTaskQuery().processInstanceId(taskId).list();
+            if (taskList.size() > 0){
+                for (Task task1 : taskList) {
+                    if (task1 == null){
+                        map.put("nextNode","");
+                    } else {
+                        Task task = activitiUtil.getTaskByTaskId(task1.getId());
+                        String nextNode = activitiUtil.getNextNode(task.getProcessDefinitionId(), task.getTaskDefinitionKey());
+                        if ("general_manager".equals(nextNode)){
+                            map.put("nextNode",nextNode);
+                        }else {
+                            map.put("nextNode","");
+                        }
+                    }
+                }
+            }else{
+                map.put("nextNode","");
+            }
+        }
+
+        List<Comments> commentsList = activitiUtil.selectHistoryComment(taskId);
+
+        map.put("receiptReadingList", receiptReadingList);
+        map.put("commentsList", commentsList);
+        map.put("receiptProposed", receiptProposed);
+        map.put("companyPrincipal", companyPrincipal);
+        map.put("outcome", outcome);
+        map.put("taskId", taskId);
+        map.put("read", oaActRead);
+        return JSON.toJSONString(map);
+    }
 
     /**
      * 删除
