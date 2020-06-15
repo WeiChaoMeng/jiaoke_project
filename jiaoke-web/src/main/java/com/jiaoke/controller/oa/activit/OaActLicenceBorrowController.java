@@ -182,11 +182,20 @@ public class OaActLicenceBorrowController {
         OaActLicenceBorrow oaActLicenceBorrow = oaActLicenceBorrowService.selectByPrimaryKey(id);
 
         String nickname = getCurrentUser().getNickname();
-        //根据发起者id获取所属部门id
+
+        String principal;
+        String principalT = null;
         String departmentId = userInfoService.selectDepartmentByUserId(oaActLicenceBorrow.getPromoter());
-        //部门负责人
-        String principalId = departmentService.selectEnforcerId("principal", departmentId);
-        String principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        if ("single".equals(oaActLicenceBorrow.getDepartmentPrincipal())){
+            String principalId = departmentService.selectEnforcerId("principal", departmentId);
+            principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        }else if (oaActLicenceBorrow.getDepartmentPrincipal().contains(",")){
+            String[] split = oaActLicenceBorrow.getDepartmentPrincipal().split(",");
+            principal = userInfoService.getNicknameById(Integer.valueOf(split[0]));
+            principalT = userInfoService.getNicknameById(Integer.valueOf(split[1]));
+        }else{
+            principal = userInfoService.getNicknameById(Integer.valueOf(oaActLicenceBorrow.getDepartmentPrincipal()));
+        }
 
         //证照主管领导
         String licenceManage = userInfoService.getUserInfoByPermission("licence_manage").getNickname();
@@ -196,6 +205,7 @@ public class OaActLicenceBorrowController {
 
         map.put("nickname", nickname);
         map.put("principal", principal);
+        map.put("principalT", principalT);
         map.put("licenceManage", licenceManage);
         map.put("licenceOperator", licenceOperator);
         map.put("licenceBorrow", oaActLicenceBorrow);
@@ -496,11 +506,19 @@ public class OaActLicenceBorrowController {
         HashMap<String, Object> map = new HashMap<>(16);
         OaActLicenceBorrow oaActLicenceBorrow = oaActLicenceBorrowService.selectByPrimaryKey(id);
 
-        //根据发起者id获取所属部门id
+        String principal;
+        String principalT = null;
         String departmentId = userInfoService.selectDepartmentByUserId(oaActLicenceBorrow.getPromoter());
-        //部门负责人
-        String principalId = departmentService.selectEnforcerId("principal", departmentId);
-        String principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        if ("single".equals(oaActLicenceBorrow.getDepartmentPrincipal())){
+            String principalId = departmentService.selectEnforcerId("principal", departmentId);
+            principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        }else if (oaActLicenceBorrow.getDepartmentPrincipal().contains(",")){
+            String[] split = oaActLicenceBorrow.getDepartmentPrincipal().split(",");
+            principal = userInfoService.getNicknameById(Integer.valueOf(split[0]));
+            principalT = userInfoService.getNicknameById(Integer.valueOf(split[1]));
+        }else{
+            principal = userInfoService.getNicknameById(Integer.valueOf(oaActLicenceBorrow.getDepartmentPrincipal()));
+        }
 
         //证照主管领导
         String licenceManage = userInfoService.getUserInfoByPermission("licence_manage").getNickname();
@@ -509,6 +527,7 @@ public class OaActLicenceBorrowController {
         String licenceOperator = userInfoService.getUserInfoByPermission("licence_operator").getNickname();
 
         map.put("principal", principal);
+        map.put("principalT", principalT);
         map.put("licenceManage", licenceManage);
         map.put("licenceOperator", licenceOperator);
         map.put("licenceBorrow", oaActLicenceBorrow);

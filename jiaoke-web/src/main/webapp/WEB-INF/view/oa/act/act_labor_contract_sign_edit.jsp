@@ -121,6 +121,7 @@
                    value="${oaActLaborContractSign.notifiedPerson}">
             <input type="hidden" id="annex" name="annex">
             <input type="hidden" id="id" name="id" value="${oaActLaborContractSign.id}">
+            <input type="hidden" id="url" name="url" value="${oaActLaborContractSign.url}">
             <input type="hidden" id="departmentPrincipal" name="departmentPrincipal">
         </div>
     </div>

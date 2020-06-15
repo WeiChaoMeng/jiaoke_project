@@ -175,7 +175,7 @@
             <td colspan="2.5" class="table-td-content">
                 <shiro:hasPermission name="countersign">
                     <div style="width: 100%;height: 100%;" id="countersignContent">
-                        <textarea class="textarea-style" name="countersign" readonly>${oaActDocument.countersign}  ${nickname}</textarea>
+                        <textarea class="textarea-style" name="countersign" readonly>${oaActDocument.countersign} ${nickname}</textarea>
                     </div>
                 </shiro:hasPermission>
 

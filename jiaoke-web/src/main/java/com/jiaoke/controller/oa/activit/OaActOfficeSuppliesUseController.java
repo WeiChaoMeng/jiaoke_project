@@ -1,13 +1,11 @@
 package com.jiaoke.controller.oa.activit;
 
+import com.alibaba.fastjson.JSON;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
 import com.jiaoke.controller.oa.TargetFlowNodeCommand;
-import com.jiaoke.oa.bean.Comments;
-import com.jiaoke.oa.bean.OaActOfficeSuppliesUse;
-import com.jiaoke.oa.bean.OaAssetManagement;
-import com.jiaoke.oa.bean.UserInfo;
+import com.jiaoke.oa.bean.*;
 import com.jiaoke.oa.service.DepartmentService;
 import com.jiaoke.oa.service.OaActOfficeSuppliesUseService;
 import com.jiaoke.oa.service.OaCollaborationService;
@@ -101,6 +99,27 @@ public class OaActOfficeSuppliesUseController {
             }
             return "error";
         }
+    }
+
+    /**
+     * app获取审批页面信息
+     *
+     * @param id     id
+     * @param taskId taskId
+     * @return json
+     */
+    @RequestMapping(value = "/approval.api")
+    @ResponseBody
+    public String approvalApi(String id, String taskId) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActOfficeSuppliesUse oaActOfficeSuppliesUse = oaActOfficeSuppliesUseService.selectByPrimaryKey(id);
+
+        String nickname = getCurrentUser().getNickname();
+
+        map.put("nickname", nickname);
+        map.put("officeSuppliesUse", oaActOfficeSuppliesUse);
+        map.put("taskId", taskId);
+        return JSON.toJSONString(map);
     }
 
     /**
@@ -208,6 +227,22 @@ public class OaActOfficeSuppliesUseController {
         model.addAttribute("oaActOfficeSuppliesUse", oaActOfficeSuppliesUse);
         model.addAttribute("commentsList", commentsList);
         return "oa/act/act_office_supplies_use_details";
+    }
+
+    /**
+     * app获取详细信息
+     *
+     * @param id id
+     * @return json
+     */
+    @RequestMapping(value = "/details.api")
+    @ResponseBody
+    public String detailsApi(String id) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActOfficeSuppliesUse oaActOfficeSuppliesUse = oaActOfficeSuppliesUseService.selectByPrimaryKey(id);
+
+        map.put("officeSuppliesUse", oaActOfficeSuppliesUse);
+        return JSON.toJSONString(map);
     }
 
     /**

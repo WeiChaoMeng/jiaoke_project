@@ -82,6 +82,7 @@ public class OaActReadServiceImpl implements OaActReadService {
     public OaActRead selectByPrimaryKey(String id) {
         OaActRead oaActRead = oaActReadMapper.selectByPrimaryKey(id);
         oaActRead.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActRead.getCreateTime()));
+        oaActRead.setPromoterStr(userInfoMapper.getNicknameById(oaActRead.getPromoter()));
         return oaActRead;
     }
 

@@ -265,6 +265,7 @@
                     <input type="text" class="formInput-readonly" name="purchaser" id="purchaser" value="${oaActAcceptanceWarehousing.purchaser}"
                            readonly>
                     <input type="hidden" name="id" id="id" value="${oaActAcceptanceWarehousing.id}">
+                    <input type="hidden" name="url" id="url" value="${oaActAcceptanceWarehousing.url}">
                     <input type="hidden" name="promoter" id="promoter" value="${oaActAcceptanceWarehousing.promoter}">
                     <input type="hidden" id="listSize" value="${oaActAcceptanceWarehousing.oaAcceptanceWarehousingList.size()}">
                 </td>

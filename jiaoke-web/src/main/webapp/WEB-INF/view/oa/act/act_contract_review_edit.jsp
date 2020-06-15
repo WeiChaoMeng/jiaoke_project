@@ -127,6 +127,7 @@
             <td colspan="3" class="table-td-content">
                 <input type="text" class="formInput" name="contractName" value="${oaActContractReview.contractName}" autocomplete="off">
                 <input type="hidden" id="id" name="id" value="${oaActContractReview.id}">
+                <input type="hidden" name="url" id="url" value="${oaActContractReview.url}">
                 <input type="hidden" id="promoter" name="promoter" value="${oaActContractReview.promoter}">
             </td>
         </tr>

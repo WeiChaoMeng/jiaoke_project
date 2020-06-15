@@ -5,6 +5,7 @@ import com.jiaoke.oa.bean.OaActEngineering;
 import com.jiaoke.oa.bean.OaCollaboration;
 import com.jiaoke.oa.dao.OaActEngineeringMapper;
 import com.jiaoke.oa.dao.OaCollaborationMapper;
+import com.jiaoke.oa.dao.UserInfoMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -25,6 +26,9 @@ public class OaActEngineeringServiceImpl implements OaActEngineeringService {
 
     @Resource
     private OaCollaborationMapper oaCollaborationMapper;
+
+    @Resource
+    private UserInfoMapper userInfoMapper;
 
     @Override
     public int insert(OaActEngineering oaActEngineering, Integer userId, String randomId, Integer state) {
@@ -78,6 +82,7 @@ public class OaActEngineeringServiceImpl implements OaActEngineeringService {
     public OaActEngineering selectByPrimaryKey(String id) {
         OaActEngineering oaActEngineering = oaActEngineeringMapper.selectByPrimaryKey(id);
         oaActEngineering.setCreateTimeStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaActEngineering.getCreateTime()));
+        oaActEngineering.setPromoterStr(userInfoMapper.getNicknameById(oaActEngineering.getPromoter()));
         return oaActEngineering;
     }
 

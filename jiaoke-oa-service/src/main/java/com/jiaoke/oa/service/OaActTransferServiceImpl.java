@@ -80,6 +80,13 @@ public class OaActTransferServiceImpl implements OaActTransferService {
         oaActTransfer.setCompanyPrincipal("");
         oaActTransfer.setCompanyPrincipalDate("");
         oaActTransfer.setCompanyPrincipalContent("");
+        oaActTransfer.setPrincipalT("");
+        oaActTransfer.setPrincipalDateT("");
+        oaActTransfer.setPrincipalContentT("");
+        oaActTransfer.setTransferPrincipalT("");
+        oaActTransfer.setTransferPrincipalDateT("");
+        oaActTransfer.setTransferPrincipalContentT("");
+        oaActTransfer.setPersonnelCensor("");
         oaActTransfer.setCreateTime(new Date());
         if (oaActTransferMapper.updateByPrimaryKeySelective(oaActTransfer) < 0) {
             return -1;

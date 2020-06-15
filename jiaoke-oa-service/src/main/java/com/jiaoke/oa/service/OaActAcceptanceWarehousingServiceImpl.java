@@ -95,7 +95,7 @@ public class OaActAcceptanceWarehousingServiceImpl implements OaActAcceptanceWar
         oaActAcceptanceWarehousing.setAcceptor("");
         oaActAcceptanceWarehousing.setAcceptorDate("");
         oaActAcceptanceWarehousing.setCreateTime(new Date());
-        if (oaActAcceptanceWarehousingMapper.updateByPrimaryKey(oaActAcceptanceWarehousing) < 0) {
+        if (oaActAcceptanceWarehousingMapper.updateByPrimaryKeySelective(oaActAcceptanceWarehousing) < 0) {
             return -1;
         } else {
             //删除详情表关联数据

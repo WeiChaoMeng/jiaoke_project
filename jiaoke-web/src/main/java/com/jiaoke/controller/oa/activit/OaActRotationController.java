@@ -1,5 +1,6 @@
 package com.jiaoke.controller.oa.activit;
 
+import com.alibaba.fastjson.JSON;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
@@ -136,6 +137,63 @@ public class OaActRotationController {
             }
             return "error";
         }
+    }
+
+    /**
+     * app获取审批页面信息
+     *
+     * @param id     id
+     * @param taskId taskId
+     * @return json
+     */
+    @RequestMapping(value = "/approval.api")
+    @ResponseBody
+    public String approvalApi(String id, String taskId) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActRotation oaActRotation = oaActRotationService.selectByPrimaryKey(id);
+
+        String nickname = getCurrentUser().getNickname();
+
+        String principal;
+        String principalT = null;
+        String departmentId = userInfoService.selectDepartmentByUserId(oaActRotation.getPromoter());
+        if ("single".equals(oaActRotation.getDepartmentPrincipal())){
+            String principalId = departmentService.selectEnforcerId("principal", departmentId);
+            principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        }else if (oaActRotation.getDepartmentPrincipal().contains(",")){
+            String[] split = oaActRotation.getDepartmentPrincipal().split(",");
+            principal = userInfoService.getNicknameById(Integer.valueOf(split[0]));
+            principalT = userInfoService.getNicknameById(Integer.valueOf(split[1]));
+        }else{
+            principal = userInfoService.getNicknameById(Integer.valueOf(oaActRotation.getDepartmentPrincipal()));
+        }
+
+        String newPrincipal;
+        String newPrincipalT = null;
+        String newDepartmentPrincipal = departmentService.selectEnforcerId("principal", oaActRotation.getNewDepartment());
+        if (newDepartmentPrincipal.contains(",")){
+            String[] split = newDepartmentPrincipal.split(",");
+            newPrincipal = userInfoService.getNicknameById(Integer.valueOf(split[0]));
+            newPrincipalT = userInfoService.getNicknameById(Integer.valueOf(split[1]));
+        }else{
+            newPrincipal = userInfoService.getNicknameById(Integer.valueOf(newDepartmentPrincipal));
+        }
+
+        //人事
+        String personnel = userInfoService.getUserInfoByPermission("personnel").getNickname();
+        //主要领导（总经理）
+        String companyPrincipal = userInfoService.getUserInfoByPermission("company_principal").getNickname();
+
+        map.put("nickname", nickname);
+        map.put("principal", principal);
+        map.put("principalT", principalT);
+        map.put("transferPrincipal", newPrincipal);
+        map.put("transferPrincipalT", newPrincipalT);
+        map.put("personnel", personnel);
+        map.put("companyPrincipal", companyPrincipal);
+        map.put("taskId", taskId);
+        map.put("rotation", oaActRotation);
+        return JSON.toJSONString(map);
     }
 
     /**
@@ -612,6 +670,58 @@ public class OaActRotationController {
             //1-1
             return "oa/act/act_rotation_details";
         }
+    }
+
+    /**
+     * app获取详细信息
+     *
+     * @param id id
+     * @return json
+     */
+    @RequestMapping(value = "/details.api")
+    @ResponseBody
+    public String cardDetailsApi(String id) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActRotation oaActRotation = oaActRotationService.selectByPrimaryKey(id);
+
+        String principal;
+        String principalT = null;
+        String departmentId = userInfoService.selectDepartmentByUserId(oaActRotation.getPromoter());
+        if ("single".equals(oaActRotation.getDepartmentPrincipal())){
+            String principalId = departmentService.selectEnforcerId("principal", departmentId);
+            principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        }else if (oaActRotation.getDepartmentPrincipal().contains(",")){
+            String[] split = oaActRotation.getDepartmentPrincipal().split(",");
+            principal = userInfoService.getNicknameById(Integer.valueOf(split[0]));
+            principalT = userInfoService.getNicknameById(Integer.valueOf(split[1]));
+        }else{
+            principal = userInfoService.getNicknameById(Integer.valueOf(oaActRotation.getDepartmentPrincipal()));
+        }
+
+        String newPrincipal;
+        String newPrincipalT = null;
+        String newDepartmentPrincipal = departmentService.selectEnforcerId("principal", oaActRotation.getNewDepartment());
+        if (newDepartmentPrincipal.contains(",")){
+            String[] split = newDepartmentPrincipal.split(",");
+            newPrincipal = userInfoService.getNicknameById(Integer.valueOf(split[0]));
+            newPrincipalT = userInfoService.getNicknameById(Integer.valueOf(split[1]));
+        }else{
+            newPrincipal = userInfoService.getNicknameById(Integer.valueOf(newDepartmentPrincipal));
+        }
+
+        //人事
+        String personnel = userInfoService.getUserInfoByPermission("personnel").getNickname();
+        //主要领导（总经理）
+        String companyPrincipal = userInfoService.getUserInfoByPermission("company_principal").getNickname();
+
+        map.put("principal", principal);
+        map.put("principalT", principalT);
+        map.put("transferPrincipal", newPrincipal);
+        map.put("transferPrincipalT", newPrincipalT);
+        map.put("personnel", personnel);
+        map.put("companyPrincipal", companyPrincipal);
+        map.put("rotation", oaActRotation);
+        return JSON.toJSONString(map);
     }
 
     /**

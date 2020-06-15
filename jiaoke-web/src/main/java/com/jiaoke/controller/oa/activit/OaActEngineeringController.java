@@ -1,10 +1,12 @@
 package com.jiaoke.controller.oa.activit;
 
+import com.alibaba.fastjson.JSON;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
 import com.jiaoke.controller.oa.TargetFlowNodeCommand;
 import com.jiaoke.oa.bean.Comments;
+import com.jiaoke.oa.bean.OaActAcceptance;
 import com.jiaoke.oa.bean.OaActEngineering;
 import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.service.DepartmentService;
@@ -98,6 +100,33 @@ public class OaActEngineeringController {
             return "error";
         }
     }
+
+    /**
+     * app获取审批页面信息
+     *
+     * @param id     id
+     * @param taskId taskId
+     * @return json
+     */
+    @RequestMapping(value = "/approval.api")
+    @ResponseBody
+    public String approvalApi(String id, String taskId) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActEngineering oaActEngineering = oaActEngineeringService.selectByPrimaryKey(id);
+
+        String nickname = getCurrentUser().getNickname();
+
+        String operatingPrincipal = userInfoService.getUserInfoByPermission("operating_principal").getNickname();
+        String operatingSupervisor = userInfoService.getUserInfoByPermission("operating_supervisor").getNickname();
+
+        map.put("nickname", nickname);
+        map.put("principal", operatingPrincipal);
+        map.put("supervisor", operatingSupervisor);
+        map.put("taskId", taskId);
+        map.put("engineering", oaActEngineering);
+        return JSON.toJSONString(map);
+    }
+
 
     /**
      * 审批
@@ -331,6 +360,27 @@ public class OaActEngineeringController {
         model.addAttribute("oaActEngineering", oaActEngineering);
         model.addAttribute("commentsList", commentsList);
         return "oa/act/act_engineering_details";
+    }
+
+    /**
+     * app获取详细信息
+     *
+     * @param id id
+     * @return json
+     */
+    @RequestMapping(value = "/details.api")
+    @ResponseBody
+    public String cardDetailsApi(String id) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActEngineering oaActEngineering = oaActEngineeringService.selectByPrimaryKey(id);
+
+        String operatingPrincipal = userInfoService.getUserInfoByPermission("operating_principal").getNickname();
+        String operatingSupervisor = userInfoService.getUserInfoByPermission("operating_supervisor").getNickname();
+
+        map.put("principal", operatingPrincipal);
+        map.put("supervisor", operatingSupervisor);
+        map.put("engineering", oaActEngineering);
+        return JsonHelper.toJSONString(map);
     }
 
     /**

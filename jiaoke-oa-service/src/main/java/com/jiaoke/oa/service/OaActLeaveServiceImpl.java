@@ -63,9 +63,13 @@ public class OaActLeaveServiceImpl implements OaActLeaveService {
         oaActLeave.setPrincipal("");
         oaActLeave.setPrincipalDate("");
         oaActLeave.setPrincipalContent("");
+        oaActLeave.setPrincipalT("");
+        oaActLeave.setPrincipalDateT("");
+        oaActLeave.setPrincipalContentT("");
         oaActLeave.setSupervisor("");
         oaActLeave.setSupervisorDate("");
         oaActLeave.setSupervisorContent("");
+        oaActLeave.setCreateTime(new Date());
         if (oaActLeaveMapper.updateByPrimaryKeySelective(oaActLeave) < 0) {
             return -1;
         } else {

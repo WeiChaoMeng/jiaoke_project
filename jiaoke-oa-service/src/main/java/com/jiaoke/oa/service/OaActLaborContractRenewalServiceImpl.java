@@ -63,6 +63,9 @@ public class OaActLaborContractRenewalServiceImpl implements OaActLaborContractR
         oaActLaborContractRenewal.setPrincipal("");
         oaActLaborContractRenewal.setPrincipalDate("");
         oaActLaborContractRenewal.setPrincipalContent("");
+        oaActLaborContractRenewal.setPrincipalT("");
+        oaActLaborContractRenewal.setPrincipalDateT("");
+        oaActLaborContractRenewal.setPrincipalContentT("");
         oaActLaborContractRenewal.setSupervisor("");
         oaActLaborContractRenewal.setSupervisorDate("");
         oaActLaborContractRenewal.setSupervisorContent("");
@@ -72,6 +75,7 @@ public class OaActLaborContractRenewalServiceImpl implements OaActLaborContractR
         oaActLaborContractRenewal.setCompanyPrincipal("");
         oaActLaborContractRenewal.setCompanyPrincipalDate("");
         oaActLaborContractRenewal.setCompanyPrincipalContent("");
+        oaActLaborContractRenewal.setCreateTime(new Date());
         if (oaActLaborContractRenewalMapper.updateByPrimaryKeySelective(oaActLaborContractRenewal) < 0) {
             return -1;
         } else {

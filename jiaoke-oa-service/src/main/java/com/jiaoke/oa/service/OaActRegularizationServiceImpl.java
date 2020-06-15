@@ -61,9 +61,13 @@ public class OaActRegularizationServiceImpl implements OaActRegularizationServic
     @Override
     public int edit(OaActRegularization oaActRegularization) {
         oaActRegularization.setState(0);
+        oaActRegularization.setPersonnelCensor("");
         oaActRegularization.setPrincipal("");
         oaActRegularization.setPrincipalDate("");
         oaActRegularization.setPrincipalContent("");
+        oaActRegularization.setPrincipalT("");
+        oaActRegularization.setPrincipalDateT("");
+        oaActRegularization.setPrincipalContentT("");
         oaActRegularization.setSupervisor("");
         oaActRegularization.setSupervisorDate("");
         oaActRegularization.setSupervisorContent("");

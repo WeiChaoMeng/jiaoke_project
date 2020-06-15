@@ -126,6 +126,7 @@
             <td class="table-td-content">
                 <input type="text" class="formInput-readonly" name="department" value="${oaActEngage.department}" readonly>
                 <input type="hidden" name="id" id="id" value="${oaActEngage.id}">
+                <input type="hidden" name="url" id="url" value="${oaActEngage.url}">
                 <input type="hidden" name="promoter" id="promoter" value="${oaActEngage.promoter}">
                 <input type="hidden" id="departmentPrincipal" name="departmentPrincipal">
             </td>

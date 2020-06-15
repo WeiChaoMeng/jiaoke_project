@@ -419,7 +419,7 @@
     //部门选择
     function selectDepartment(flag) {
         var departmentList = JSON.parse('${departmentList}');
-        window.top.selectionDepartment(departmentList, flag, itselfFrameId));
+        window.top.selectionDepartment(departmentList, flag, itselfFrameId);
     }
 
     function selectDepartmentComplete(id, name, flag) {

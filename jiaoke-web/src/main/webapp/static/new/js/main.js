@@ -49,7 +49,7 @@ function tips(tipsContent, anim, icon, time) {
 //app二维码
 function selectedCode() {
     $('#modalWindow').html('<div id="layerDemo" style="width: 200px;height: 200px;display: none;">\n' +
-        '    <img style="width:100%;height:100%;background-color: #fff" src="/static/images/logo/download.png" alt="移动端二维码">\n' +
+        '    <img style="width:100%;height:100%;background-color: #fff" src="/static/images/logo/AppCode20200608.png" alt="移动端二维码">\n' +
         '</div>');
 
     layer.open({

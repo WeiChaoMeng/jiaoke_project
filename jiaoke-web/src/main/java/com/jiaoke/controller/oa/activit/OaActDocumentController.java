@@ -1,5 +1,6 @@
 package com.jiaoke.controller.oa.activit;
 
+import com.alibaba.fastjson.JSON;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
@@ -126,6 +127,45 @@ public class OaActDocumentController {
             }
             return "error";
         }
+    }
+
+    /**
+     * app获取审批页面信息
+     *
+     * @param id     id
+     * @param taskId taskId
+     * @return json
+     */
+    @RequestMapping(value = "/approval.api")
+    @ResponseBody
+    public String approvalApi(String id, String taskId) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActDocument oaActDocument = oaActDocumentService.selectByPrimaryKey(id);
+
+        String nickname = getCurrentUser().getNickname();
+
+        //核稿人
+        String departmentId = userInfoService.selectDepartmentByUserId(oaActDocument.getPromoter());
+        String supervisorId = departmentService.selectEnforcerId("supervisor", departmentId);
+        String supervisor = userInfoService.getNicknameById(Integer.valueOf(supervisorId));
+
+        //会签
+        List<UserInfo> countersignList = userInfoService.selectMultipleByPermission("countersign");
+        StringBuilder countersignUser = new StringBuilder();
+        for (UserInfo userInfo : countersignList) {
+            countersignUser.append(userInfoService.getNicknameById(userInfo.getId())).append(" ");
+        }
+
+        //主要领导（总经理）
+        String companyPrincipal = userInfoService.getUserInfoByPermission("company_principal").getNickname();
+
+        map.put("nickname", nickname);
+        map.put("supervisor", supervisor);
+        map.put("countersignUser", countersignUser);
+        map.put("companyPrincipal", companyPrincipal);
+        map.put("taskId", taskId);
+        map.put("document", oaActDocument);
+        return JSON.toJSONString(map);
     }
 
     /**
@@ -456,6 +496,40 @@ public class OaActDocumentController {
         model.addAttribute("oaActDocument", oaActDocument);
         model.addAttribute("commentsList", commentsList);
         return "oa/act/act_document_details";
+    }
+
+    /**
+     * app获取详细信息
+     *
+     * @param id id
+     * @return json
+     */
+    @RequestMapping(value = "/details.api")
+    @ResponseBody
+    public String cardDetailsApi(String id) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActDocument oaActDocument = oaActDocumentService.selectByPrimaryKey(id);
+
+        //核稿人
+        String departmentId = userInfoService.selectDepartmentByUserId(oaActDocument.getPromoter());
+        String supervisorId = departmentService.selectEnforcerId("supervisor", departmentId);
+        String supervisor = userInfoService.getNicknameById(Integer.valueOf(supervisorId));
+
+        //会签
+        List<UserInfo> countersignList = userInfoService.selectMultipleByPermission("countersign");
+        StringBuilder countersignUser = new StringBuilder();
+        for (UserInfo userInfo : countersignList) {
+            countersignUser.append(userInfoService.getNicknameById(userInfo.getId())).append(" ");
+        }
+
+        //主要领导（总经理）
+        String companyPrincipal = userInfoService.getUserInfoByPermission("company_principal").getNickname();
+
+        map.put("supervisor", supervisor);
+        map.put("countersignUser", countersignUser);
+        map.put("companyPrincipal", companyPrincipal);
+        map.put("document", oaActDocument);
+        return JsonHelper.toJSONString(map);
     }
 
     /**

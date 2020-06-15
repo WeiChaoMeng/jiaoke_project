@@ -66,9 +66,13 @@ public class OaActRelieveLaborContractServiceImpl implements OaActRelieveLaborCo
     @Override
     public int edit(OaActRelieveLaborContract oaActRelieveLaborContract) {
         oaActRelieveLaborContract.setState(0);
+        oaActRelieveLaborContract.setPersonnelCensor("");
         oaActRelieveLaborContract.setPrincipal("");
         oaActRelieveLaborContract.setPrincipalDate("");
         oaActRelieveLaborContract.setPrincipalContent("");
+        oaActRelieveLaborContract.setPrincipalT("");
+        oaActRelieveLaborContract.setPrincipalDateT("");
+        oaActRelieveLaborContract.setPrincipalContentT("");
         oaActRelieveLaborContract.setSupervisor("");
         oaActRelieveLaborContract.setSupervisorDate("");
         oaActRelieveLaborContract.setSupervisorContent("");

@@ -32,7 +32,7 @@ public class OaActPactStopServiceImpl implements OaActPactStopService {
 
     @Override
     public int insert(OaActPactStop oaActPactStop, Integer userId, String randomId, Integer state) {
-        String notifier = userInfoMapper.getNicknameById(oaActPactStop.getPromoter());
+        String notifier = userInfoMapper.getNicknameById(userId);
         oaActPactStop.setId(randomId);
         oaActPactStop.setCreateTime(new Date());
         oaActPactStop.setPromoter(userId);

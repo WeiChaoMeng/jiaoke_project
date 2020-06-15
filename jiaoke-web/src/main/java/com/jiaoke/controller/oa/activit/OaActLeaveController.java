@@ -1,13 +1,11 @@
 package com.jiaoke.controller.oa.activit;
 
+import com.alibaba.fastjson.JSON;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
 import com.jiaoke.controller.oa.TargetFlowNodeCommand;
-import com.jiaoke.oa.bean.Comments;
-import com.jiaoke.oa.bean.OaActLeave;
-import com.jiaoke.oa.bean.OaActSealsBorrow;
-import com.jiaoke.oa.bean.UserInfo;
+import com.jiaoke.oa.bean.*;
 import com.jiaoke.oa.service.DepartmentService;
 import com.jiaoke.oa.service.OaActLeaveService;
 import com.jiaoke.oa.service.OaCollaborationService;
@@ -135,6 +133,48 @@ public class OaActLeaveController {
             }
             return "error";
         }
+    }
+
+    /**
+     * app获取审批页面信息
+     *
+     * @param id     id
+     * @param taskId taskId
+     * @return json
+     */
+    @RequestMapping(value = "/approval.api")
+    @ResponseBody
+    public String approvalApi(String id, String taskId) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActLeave oaActLeave = oaActLeaveService.selectByPrimaryKey(id);
+
+        String nickname = getCurrentUser().getNickname();
+
+        String principal;
+        String principalT = null;
+        String departmentId = userInfoService.selectDepartmentByUserId(oaActLeave.getPromoter());
+        if ("single".equals(oaActLeave.getDepartmentPrincipal())){
+            String principalId = departmentService.selectEnforcerId("principal", departmentId);
+            principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        }else if (oaActLeave.getDepartmentPrincipal().contains(",")){
+            String[] split = oaActLeave.getDepartmentPrincipal().split(",");
+            principal = userInfoService.getNicknameById(Integer.valueOf(split[0]));
+            principalT = userInfoService.getNicknameById(Integer.valueOf(split[1]));
+        }else{
+            principal = userInfoService.getNicknameById(Integer.valueOf(oaActLeave.getDepartmentPrincipal()));
+        }
+
+        //部门主管领导
+        String supervisorId = departmentService.selectEnforcerId("supervisor", departmentId);
+        String supervisor = userInfoService.getNicknameById(Integer.valueOf(supervisorId));
+
+        map.put("nickname", nickname);
+        map.put("principal", principal);
+        map.put("principalT", principalT);
+        map.put("supervisor", supervisor);
+        map.put("taskId", taskId);
+        map.put("leave", oaActLeave);
+        return JSON.toJSONString(map);
     }
 
     /**
@@ -503,6 +543,43 @@ public class OaActLeaveController {
         }else{
             return "oa/act/act_leave_details";
         }
+    }
+
+    /**
+     * app获取详细信息
+     *
+     * @param id id
+     * @return json
+     */
+    @RequestMapping(value = "/details.api")
+    @ResponseBody
+    public String cardDetailsApi(String id) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActLeave oaActLeave = oaActLeaveService.selectByPrimaryKey(id);
+
+        String principal;
+        String principalT = null;
+        String departmentId = userInfoService.selectDepartmentByUserId(oaActLeave.getPromoter());
+        if ("single".equals(oaActLeave.getDepartmentPrincipal())){
+            String principalId = departmentService.selectEnforcerId("principal", departmentId);
+            principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        }else if (oaActLeave.getDepartmentPrincipal().contains(",")){
+            String[] split = oaActLeave.getDepartmentPrincipal().split(",");
+            principal = userInfoService.getNicknameById(Integer.valueOf(split[0]));
+            principalT = userInfoService.getNicknameById(Integer.valueOf(split[1]));
+        }else{
+            principal = userInfoService.getNicknameById(Integer.valueOf(oaActLeave.getDepartmentPrincipal()));
+        }
+
+        //部门主管领导
+        String supervisorId = departmentService.selectEnforcerId("supervisor", departmentId);
+        String supervisor = userInfoService.getNicknameById(Integer.valueOf(supervisorId));
+
+        map.put("principal", principal);
+        map.put("principalT", principalT);
+        map.put("supervisor", supervisor);
+        map.put("leave", oaActLeave);
+        return JsonHelper.toJSONString(map);
     }
 
     /**

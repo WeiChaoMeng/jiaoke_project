@@ -179,13 +179,22 @@ public class OaActSealsBorrowController {
         HashMap<String, Object> map = new HashMap<>(16);
         OaActSealsBorrow oaActSealsBorrow = oaActSealsBorrowService.selectByPrimaryKey(id);
 
-
         String nickname = getCurrentUser().getNickname();
-        //根据发起者id获取所属部门id
+
+        String principal;
+        String principalT = null;
         String departmentId = userInfoService.selectDepartmentByUserId(oaActSealsBorrow.getPromoter());
-        //部门负责人
-        String principalId = departmentService.selectEnforcerId("principal", departmentId);
-        String principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        if ("single".equals(oaActSealsBorrow.getDepartmentPrincipal())){
+            String principalId = departmentService.selectEnforcerId("principal", departmentId);
+            principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        }else if (oaActSealsBorrow.getDepartmentPrincipal().contains(",")){
+            String[] split = oaActSealsBorrow.getDepartmentPrincipal().split(",");
+            principal = userInfoService.getNicknameById(Integer.valueOf(split[0]));
+            principalT = userInfoService.getNicknameById(Integer.valueOf(split[1]));
+        }else{
+            principal = userInfoService.getNicknameById(Integer.valueOf(oaActSealsBorrow.getDepartmentPrincipal()));
+        }
+
         //印章主管领导
         String sealSupervisor;
         if (oaActSealsBorrow.getSeal() == 4 || oaActSealsBorrow.getSeal() == 5) {
@@ -206,6 +215,7 @@ public class OaActSealsBorrowController {
 
         map.put("nickname", nickname);
         map.put("principal", principal);
+        map.put("principalT", principalT);
         map.put("sealSupervisor", sealSupervisor);
         map.put("sealOperator", sealOperator);
         map.put("sealsBorrow", oaActSealsBorrow);
@@ -521,11 +531,20 @@ public class OaActSealsBorrowController {
         HashMap<String, Object> map = new HashMap<>(16);
         OaActSealsBorrow oaActSealsBorrow = oaActSealsBorrowService.selectByPrimaryKey(id);
 
-        //根据发起者id获取所属部门id
+        String principal;
+        String principalT = null;
         String departmentId = userInfoService.selectDepartmentByUserId(oaActSealsBorrow.getPromoter());
-        //部门负责人
-        String principalId = departmentService.selectEnforcerId("principal", departmentId);
-        String principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        if ("single".equals(oaActSealsBorrow.getDepartmentPrincipal())){
+            String principalId = departmentService.selectEnforcerId("principal", departmentId);
+            principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        }else if (oaActSealsBorrow.getDepartmentPrincipal().contains(",")){
+            String[] split = oaActSealsBorrow.getDepartmentPrincipal().split(",");
+            principal = userInfoService.getNicknameById(Integer.valueOf(split[0]));
+            principalT = userInfoService.getNicknameById(Integer.valueOf(split[1]));
+        }else{
+            principal = userInfoService.getNicknameById(Integer.valueOf(oaActSealsBorrow.getDepartmentPrincipal()));
+        }
+
         //印章主管领导
         String sealSupervisor;
         if (oaActSealsBorrow.getSeal() == 4 || oaActSealsBorrow.getSeal() == 5) {
@@ -545,6 +564,7 @@ public class OaActSealsBorrowController {
         }
 
         map.put("principal", principal);
+        map.put("principalT", principalT);
         map.put("sealSupervisor", sealSupervisor);
         map.put("sealOperator", sealOperator);
         map.put("sealsBorrow", oaActSealsBorrow);

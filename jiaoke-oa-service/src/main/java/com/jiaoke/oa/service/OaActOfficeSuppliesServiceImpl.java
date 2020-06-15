@@ -89,11 +89,14 @@ public class OaActOfficeSuppliesServiceImpl implements OaActOfficeSuppliesServic
         oaActOfficeSupplies.setPrincipal("");
         oaActOfficeSupplies.setPrincipalDate("");
         oaActOfficeSupplies.setPrincipalContent("");
+        oaActOfficeSupplies.setPrincipalT("");
+        oaActOfficeSupplies.setPrincipalDateT("");
+        oaActOfficeSupplies.setPrincipalContentT("");
         oaActOfficeSupplies.setSupervisor("");
         oaActOfficeSupplies.setSupervisorDate("");
         oaActOfficeSupplies.setSupervisorContent("");
         oaActOfficeSupplies.setCreateTime(new Date());
-        if (oaActOfficeSuppliesMapper.updateByPrimaryKey(oaActOfficeSupplies) < 0) {
+        if (oaActOfficeSuppliesMapper.updateByPrimaryKeySelective(oaActOfficeSupplies) < 0) {
             return -1;
         } else {
             //删除详情表关联数据

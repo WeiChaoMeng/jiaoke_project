@@ -82,6 +82,7 @@ public class OaActOvertimeServiceImpl implements OaActOvertimeService {
         oaActOvertime.setPrincipalDate("");
         oaActOvertime.setSupervisor("");
         oaActOvertime.setSupervisorDate("");
+        oaActOvertime.setCreateTime(new Date());
         if (oaActOvertimeMapper.updateByPrimaryKeySelective(oaActOvertime) < 0) {
             return -1;
         } else {

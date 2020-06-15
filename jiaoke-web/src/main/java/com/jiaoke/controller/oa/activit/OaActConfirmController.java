@@ -1,11 +1,13 @@
 package com.jiaoke.controller.oa.activit;
 
+import com.alibaba.fastjson.JSON;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
 import com.jiaoke.controller.oa.TargetFlowNodeCommand;
 import com.jiaoke.oa.bean.Comments;
 import com.jiaoke.oa.bean.OaActConfirm;
+import com.jiaoke.oa.bean.OaActUnitPrice;
 import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.service.OaActConfirmService;
 import com.jiaoke.oa.service.OaCollaborationService;
@@ -99,6 +101,38 @@ public class OaActConfirmController {
     }
 
     /**
+     * app获取审批页面信息
+     *
+     * @param id     id
+     * @param taskId taskId
+     * @return json
+     */
+    @RequestMapping(value = "/approval.api")
+    @ResponseBody
+    public String approvalApi(String id, String taskId) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActConfirm oaActConfirm = oaActConfirmService.selectByPrimaryKey(id);
+
+        String nickname = getCurrentUser().getNickname();
+
+        String operatingStatistics = userInfoService.getUserInfoByPermission("operating_statistics").getNickname();
+        String financialAudit = userInfoService.getUserInfoByPermission("finance_review").getNickname();
+        String financeSupervisor = userInfoService.getUserInfoByPermission("finance_principal").getNickname();
+        String businessSupervisor = userInfoService.getUserInfoByPermission("operating_supervisor").getNickname();
+        String companyPrincipal = userInfoService.getUserInfoByPermission("company_principal").getNickname();
+
+        map.put("nickname", nickname);
+        map.put("operatingStatistics", operatingStatistics);
+        map.put("financialAudit", financialAudit);
+        map.put("financeSupervisor", financeSupervisor);
+        map.put("businessSupervisor", businessSupervisor);
+        map.put("companyPrincipal", companyPrincipal);
+        map.put("confirm", oaActConfirm);
+        map.put("taskId", taskId);
+        return JSON.toJSONString(map);
+    }
+
+    /**
      * 跳转审批页面
      *
      * @param id     id
@@ -166,8 +200,6 @@ public class OaActConfirmController {
                     map.put("promoter", oaActConfirm.getPromoter());
                     activitiUtil.approvalComplete(taskId, map);
                     oaCollaborationService.updateStatusCode(oaActConfirm.getId(), "被回退");
-                    oaActConfirm.setOperatingStatistics(null);
-                    oaActConfirm.setOperatingStatisticsDate(null);
                     oaActConfirm.setState(1);
                     return updateByPrimaryKeySelective(oaActConfirm);
                 }
@@ -187,8 +219,6 @@ public class OaActConfirmController {
                     map.put("promoter", oaActConfirm.getPromoter());
                     activitiUtil.approvalComplete(taskId, map);
                     oaCollaborationService.updateStatusCode(oaActConfirm.getId(), "被回退");
-                    oaActConfirm.setFinancialAudit(null);
-                    oaActConfirm.setFinancialAuditDate(null);
                     oaActConfirm.setState(1);
                     return updateByPrimaryKeySelective(oaActConfirm);
                 }
@@ -209,8 +239,6 @@ public class OaActConfirmController {
                     map.put("promoter", oaActConfirm.getPromoter());
                     activitiUtil.approvalComplete(taskId, map);
                     oaCollaborationService.updateStatusCode(oaActConfirm.getId(), "被回退");
-                    oaActConfirm.setFinanceSupervisor(null);
-                    oaActConfirm.setFinanceSupervisorDate(null);
                     oaActConfirm.setState(1);
                     return updateByPrimaryKeySelective(oaActConfirm);
                 }
@@ -231,8 +259,6 @@ public class OaActConfirmController {
                     map.put("promoter", oaActConfirm.getPromoter());
                     activitiUtil.approvalComplete(taskId, map);
                     oaCollaborationService.updateStatusCode(oaActConfirm.getId(), "被回退");
-                    oaActConfirm.setBusinessSupervisor(null);
-                    oaActConfirm.setBusinessSupervisorDate(null);
                     oaActConfirm.setState(1);
                     return updateByPrimaryKeySelective(oaActConfirm);
                 }
@@ -252,8 +278,6 @@ public class OaActConfirmController {
                     map.put("promoter", oaActConfirm.getPromoter());
                     activitiUtil.approvalComplete(taskId, map);
                     oaCollaborationService.updateStatusCode(oaActConfirm.getId(), "被回退");
-                    oaActConfirm.setCompanyPrincipal(null);
-                    oaActConfirm.setCompanyPrincipalDate(null);
                     oaActConfirm.setState(1);
                     return updateByPrimaryKeySelective(oaActConfirm);
                 }
@@ -400,6 +424,33 @@ public class OaActConfirmController {
         model.addAttribute("commentsList", commentsList);
         model.addAttribute("nickname", getCurrentUser().getNickname());
         return "oa/act/act_confirm_details";
+    }
+
+    /**
+     * app获取详细信息
+     *
+     * @param id id
+     * @return json
+     */
+    @RequestMapping(value = "/details.api")
+    @ResponseBody
+    public String detailsApi(String id) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActConfirm oaActConfirm = oaActConfirmService.selectByPrimaryKey(id);
+
+        String operatingStatistics = userInfoService.getUserInfoByPermission("operating_statistics").getNickname();
+        String financialAudit = userInfoService.getUserInfoByPermission("finance_review").getNickname();
+        String financeSupervisor = userInfoService.getUserInfoByPermission("finance_principal").getNickname();
+        String businessSupervisor = userInfoService.getUserInfoByPermission("operating_supervisor").getNickname();
+        String companyPrincipal = userInfoService.getUserInfoByPermission("company_principal").getNickname();
+
+        map.put("operatingStatistics", operatingStatistics);
+        map.put("financialAudit", financialAudit);
+        map.put("financeSupervisor", financeSupervisor);
+        map.put("businessSupervisor", businessSupervisor);
+        map.put("companyPrincipal", companyPrincipal);
+        map.put("confirm", oaActConfirm);
+        return JSON.toJSONString(map);
     }
 
     /**

@@ -83,6 +83,12 @@ public class OaActRotationServiceImpl implements OaActRotationService {
         oaActRotation.setCompanyPrincipal("");
         oaActRotation.setCompanyPrincipalDate("");
         oaActRotation.setCompanyPrincipalContent("");
+        oaActRotation.setPrincipalT("");
+        oaActRotation.setPrincipalDateT("");
+        oaActRotation.setPrincipalContentT("");
+        oaActRotation.setTransferPrincipalT("");
+        oaActRotation.setTransferPrincipalDateT("");
+        oaActRotation.setTransferPrincipalContentT("");
         oaActRotation.setCreateTime(new Date());
         if (oaActRotationMapper.updateByPrimaryKeySelective(oaActRotation) < 0) {
             return -1;

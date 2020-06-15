@@ -208,6 +208,7 @@
                 <td class="table-td-content">
                     <input type="text" class="formInput-readonly" name="preparer" id="preparer" value="${oaActOfficeSupplies.preparer}" readonly>
                     <input type="hidden" name="id" id="id" value="${oaActOfficeSupplies.id}">
+                    <input type="hidden" name="url" id="url" value="${oaActOfficeSupplies.url}">
                     <input type="hidden" name="promoter" id="promoter" value="${oaActOfficeSupplies.promoter}">
                     <input type="hidden" id="listSize" value="${oaActOfficeSupplies.oaOfficeSuppliesList.size()}">
                 </td>

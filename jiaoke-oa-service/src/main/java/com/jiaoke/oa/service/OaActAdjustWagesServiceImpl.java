@@ -61,9 +61,13 @@ public class OaActAdjustWagesServiceImpl implements OaActAdjustWagesService {
     @Override
     public int edit(OaActAdjustWages oaActAdjustWages) {
         oaActAdjustWages.setState(0);
+        oaActAdjustWages.setPersonnelCensor("");
         oaActAdjustWages.setPrincipal("");
         oaActAdjustWages.setPrincipalDate("");
         oaActAdjustWages.setPrincipalContent("");
+        oaActAdjustWages.setPrincipalT("");
+        oaActAdjustWages.setPrincipalDateT("");
+        oaActAdjustWages.setPrincipalContentT("");
         oaActAdjustWages.setSupervisor("");
         oaActAdjustWages.setSupervisorDate("");
         oaActAdjustWages.setSupervisorContent("");
@@ -73,6 +77,7 @@ public class OaActAdjustWagesServiceImpl implements OaActAdjustWagesService {
         oaActAdjustWages.setCompanyPrincipal("");
         oaActAdjustWages.setCompanyPrincipalDate("");
         oaActAdjustWages.setCompanyPrincipalContent("");
+        oaActAdjustWages.setCreateTime(new Date());
         if (oaActAdjustWagesMapper.updateByPrimaryKeySelective(oaActAdjustWages) < 0) {
             return -1;
         } else {

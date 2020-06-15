@@ -1,9 +1,11 @@
 package com.jiaoke.controller.oa.activit;
 
+import com.alibaba.fastjson.JSON;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
 import com.jiaoke.controller.oa.TargetFlowNodeCommand;
+import com.jiaoke.oa.bean.OaActEmployment;
 import com.jiaoke.oa.bean.OaActTrainee;
 import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.service.DepartmentService;
@@ -101,6 +103,31 @@ public class OaActTraineeController {
             }
             return "error";
         }
+    }
+
+    /**
+     * app获取审批页面信息
+     *
+     * @param id     id
+     * @param taskId taskId
+     * @return json
+     */
+    @RequestMapping(value = "/approval.api")
+    @ResponseBody
+    public String approvalApi(String id, String taskId) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActTrainee oaActTrainee = oaActTraineeService.selectByPrimaryKey(id);
+
+        String nickname = getCurrentUser().getNickname();
+
+        //主要领导（总经理）
+        String companyPrincipal = userInfoService.getUserInfoByPermission("company_principal").getNickname();
+
+        map.put("nickname", nickname);
+        map.put("companyPrincipal", companyPrincipal);
+        map.put("taskId", taskId);
+        map.put("trainee", oaActTrainee);
+        return JSON.toJSONString(map);
     }
 
     /**
@@ -313,6 +340,26 @@ public class OaActTraineeController {
         OaActTrainee oaActTrainee = oaActTraineeService.selectByPrimaryKey(id);
         model.addAttribute("oaActTrainee", oaActTrainee);
         return "oa/act/act_trainee_details";
+    }
+
+    /**
+     * app获取详细信息
+     *
+     * @param id id
+     * @return json
+     */
+    @RequestMapping(value = "/details.api")
+    @ResponseBody
+    public String cardDetailsApi(String id) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActTrainee oaActTrainee = oaActTraineeService.selectByPrimaryKey(id);
+
+        //主要领导（总经理）
+        String companyPrincipal = userInfoService.getUserInfoByPermission("company_principal").getNickname();
+
+        map.put("companyPrincipal", companyPrincipal);
+        map.put("trainee", oaActTrainee);
+        return JsonHelper.toJSONString(map);
     }
 
     /**

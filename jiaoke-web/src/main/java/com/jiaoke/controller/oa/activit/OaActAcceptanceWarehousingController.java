@@ -1,5 +1,6 @@
 package com.jiaoke.controller.oa.activit;
 
+import com.alibaba.fastjson.JSON;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
@@ -83,7 +84,7 @@ public class OaActAcceptanceWarehousingController {
         if (oaActAcceptanceWarehousingService.insert(oaActAcceptanceWarehousing, getCurrentUser().getId(), randomId, 0) < 1) {
             return "error";
         } else {
-            UserInfo userInfo = userInfoService.getUserInfoByPermission("acceptanceWarehousingAcceptor");
+            UserInfo userInfo = userInfoService.getUserInfoByPermission("acceptor");
             Map<String, Object> map = new HashMap<>(16);
             map.put("acceptor", userInfo.getId());
             String instance = activitiUtil.startProcessInstanceByKey("oa_acceptance_warehousing", "oa_act_acceptance_warehousing:" + randomId, map, getCurrentUser().getId().toString());
@@ -92,6 +93,30 @@ public class OaActAcceptanceWarehousingController {
             }
             return "error";
         }
+    }
+
+    /**
+     * app获取审批页面信息
+     *
+     * @param id     id
+     * @param taskId taskId
+     * @return json
+     */
+    @RequestMapping(value = "/approval.api")
+    @ResponseBody
+    public String approvalApi(String id, String taskId) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActAcceptanceWarehousing oaActAcceptanceWarehousing = oaActAcceptanceWarehousingService.selectByPrimaryKey(id);
+
+        String nickname = getCurrentUser().getNickname();
+
+        String acceptor = userInfoService.getUserInfoByPermission("acceptor").getNickname();
+
+        map.put("nickname", nickname);
+        map.put("acceptor", acceptor);
+        map.put("acceptanceWarehousing", oaActAcceptanceWarehousing);
+        map.put("taskId", taskId);
+        return JSON.toJSONString(map);
     }
 
     /**
@@ -257,7 +282,7 @@ public class OaActAcceptanceWarehousingController {
         if (oaActAcceptanceWarehousingService.edit(oaActAcceptanceWarehousing) < 0) {
             return "error";
         } else {
-            UserInfo userInfo = userInfoService.getUserInfoByPermission("acceptanceWarehousingAcceptor");
+            UserInfo userInfo = userInfoService.getUserInfoByPermission("acceptor");
             Map<String, Object> map = new HashMap<>(16);
             map.put("acceptor", userInfo.getId());
             String instance = activitiUtil.startProcessInstanceByKey("oa_acceptance_warehousing", "oa_act_acceptance_warehousing:" + oaActAcceptanceWarehousing.getId(), map, getCurrentUser().getId().toString());
@@ -288,6 +313,25 @@ public class OaActAcceptanceWarehousingController {
         model.addAttribute("oaActAcceptanceWarehousing", oaActAcceptanceWarehousing);
         model.addAttribute("commentsList", commentsList);
         return "oa/act/act_acceptance_warehousing_details";
+    }
+
+    /**
+     * app获取详细信息
+     *
+     * @param id id
+     * @return json
+     */
+    @RequestMapping(value = "/details.api")
+    @ResponseBody
+    public String detailsApi(String id) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActAcceptanceWarehousing oaActAcceptanceWarehousing = oaActAcceptanceWarehousingService.selectByPrimaryKey(id);
+
+        String acceptor = userInfoService.getUserInfoByPermission("acceptor").getNickname();
+
+        map.put("acceptor", acceptor);
+        map.put("acceptanceWarehousing", oaActAcceptanceWarehousing);
+        return JSON.toJSONString(map);
     }
 
     /**

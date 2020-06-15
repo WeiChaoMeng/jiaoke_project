@@ -263,7 +263,6 @@
                     if (result === "success") {
                         <%--window.location.href = "${path}/oaIndex.do";--%>
                         window.history.back();
-                        window.location.href = "${path}/oaIndex.do";
                     } else {
                         window.top.tips("发送失败！", 0, 2, 1000);
                     }
