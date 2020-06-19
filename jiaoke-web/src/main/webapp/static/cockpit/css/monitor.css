@@ -1,0 +1,63 @@
+/*去除高德地图左下角logo*/
+.amap-logo {
+    opacity: 0;
+}
+
+.amap-copyright {
+    opacity: 0;
+}
+
+/*地图Label样式*/
+.label-style {
+    margin: -5px;
+    background: #FFFFFF;
+    color: #000000;
+    font-size: 15px;
+    border: none;
+    padding: 8px 10px;
+}
+
+.player-view{
+    height: calc((100% - 30px));display: none
+}
+
+.closeMonitor {
+    position: absolute;
+    top: 10%;
+    left: 90%;
+    z-index: 999999;
+    display: none;
+    cursor: pointer;
+}
+
+.crew-container-style {
+    height: calc(100% - 32px);
+    width: 100%;
+    display: none;
+}
+
+.crew-content-row {
+    height: calc((100% / 4) - 5px);
+    margin-top: 5px;
+    text-align: center;
+}
+
+.crew-content-passage {
+    width: calc((100% / 4) - 4px);
+    height: 100%;
+    background: #ffffff;
+    float: left;
+    margin-right: 5px;
+}
+
+.crew-content-passage span {
+    padding: 0;
+    margin: 0;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.crew-content-passage img {
+    width: 100%;
+    height: 100%;
+}

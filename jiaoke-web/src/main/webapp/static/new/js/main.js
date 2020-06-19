@@ -1806,10 +1806,10 @@ function fileConfirm() {
 }
 
 //删除已上传文件
-function deleteUploaded(fileName, itselfFrameId) {
-    var fileId = fileName.substring(fileName.indexOf("_") + 1);
+function deleteUploaded(fileName,originalName, itselfFrameId) {
+    // var fileId = fileName.substring(fileName.indexOf("_") + 1);
     //提示窗
-    layer.confirm('确定要删除"' + fileId + '"吗？', {
+    layer.confirm('确定要删除"' + originalName + '"吗？', {
             btn: ['确认', '取消']
         }, function () {
             $("#" + itselfFrameId)[0].contentWindow.delFile(fileName);
@@ -2761,4 +2761,31 @@ function submissionBindingMain() {
             layer.msg("出错！");
         }
     })
+}
+
+/**---------------工资管理----------------*/
+//删除企业文化建设数据
+function payrollDelete(tab, id, currentPage, itselfFrameId) {
+    layer.confirm('确定要删除吗？', {
+            btn: ['确认', '取消']
+        }, function () {
+            $.ajax({
+                type: "post",
+                url: '/wageStatistics' + tab,
+                data: {'id': id},
+                async: false,
+                success: function (data) {
+                    if (data === 'success') {
+                        layer.msg('删除成功！');
+                        $("#" + itselfFrameId)[0].contentWindow.reloadPayrollData(1);
+                    } else {
+                        layer.msg('删除失败！')
+                    }
+                },
+                error: function (result) {
+                    layer.msg("出错！");
+                }
+            });
+        }
+    );
 }

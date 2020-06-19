@@ -48,8 +48,8 @@ public class OaActLaborContractStopServiceImpl implements OaActLaborContractStop
             oaCollaboration.setTable("oa_act_labor_contract_stop");
             oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("劳动合同终止通知书");
-            oaCollaboration.setDataOne("合同剩余天数：" + oaActLaborContractStop.getNumber());
-            oaCollaboration.setDataTwo("通知人：" + notifier);
+            oaCollaboration.setDataOne("合同剩余天数:" + oaActLaborContractStop.getNumber());
+            oaCollaboration.setDataTwo("通知人:" + notifier);
             oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);

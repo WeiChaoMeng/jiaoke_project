@@ -1,5 +1,7 @@
 package com.jiaoke.controller.oa;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.jiake.utils.JsonHelper;
 import com.jiaoke.oa.bean.*;
 import com.jiaoke.oa.service.OaWageStatisticsService;
@@ -29,6 +31,54 @@ public class OaWageStatisticsController {
     @Resource
     private OaWageStatisticsService oaWageStatisticsService;
 
+    /**
+     * 跳转正式员工统计页面
+     *
+     * @return oa_outsourced_staff.jsp
+     */
+    @RequestMapping(value = "/toRegularStaff")
+    public String toRegularStaff(Model model, int page) {
+        model.addAttribute("currentPage", JsonHelper.toJSONString(page));
+        return "oa/personal/regular_staff";
+    }
+
+    /**
+     * 加载正式员工首页数据
+     *
+     * @param page page
+     * @return list
+     */
+    @RequestMapping(value = "/loadingRegularStaffData")
+    @ResponseBody
+    public String loadingRegularStaffData(int page) {
+        PageHelper.startPage(page, 12);
+        List<OaWageStatistics> oaWageStatisticsList = oaWageStatisticsService.getAllRegularEmployee();
+        PageInfo<OaWageStatistics> pageInfo = new PageInfo<>(oaWageStatisticsList);
+        return JsonHelper.toJSONString(pageInfo);
+    }
+
+    /**
+     * 根据正式员工结算月份筛选
+     *
+     * @param page  page
+     * @param settlementDate settlementDate
+     * @return list
+     */
+    @RequestMapping(value = "/settlementMonthRegularStaffFilter")
+    @ResponseBody
+    public String settlementMonthRegularStaffFilter(int page, String settlementDate) {
+        PageHelper.startPage(page, 12);
+        List<OaWageStatistics> oaWageStatisticsList = oaWageStatisticsService.settlementMonthRegularStaffFilter(settlementDate);
+        PageInfo<OaWageStatistics> pageInfo = new PageInfo<>(oaWageStatisticsList);
+        return JsonHelper.toJSONString(pageInfo);
+    }
+
+    /**
+     * 正式职工工资导入
+     * @param file file
+     * @return s/e
+     * @throws IOException ice
+     */
     @RequestMapping(value = "/importPersonalWages")
     @ResponseBody
     public String importPersonalWages(@RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
@@ -39,49 +89,49 @@ public class OaWageStatisticsController {
     }
 
     /**
-     * 跳转正式员工tab页面
+     * 删除
      *
-     * @return oa_regular_employee.jsp
+     * @param id id
+     * @return 影响行数
      */
-    @RequestMapping(value = "/toRegularEmployee")
-    public String toRegularEmployee(Model model) {
-        List<OaWageStatistics> oaWageStatisticsList = oaWageStatisticsService.getAllRegularEmployee();
-        model.addAttribute("oaWageStatisticsList", oaWageStatisticsList);
-        return "oa/personal/oa_regular_employee";
+    @RequestMapping(value = "/deleteRegularStaff")
+    @ResponseBody
+    public String deleteRegularStaff(Integer id) {
+        if (oaWageStatisticsService.deleteRegularStaffByPrimaryKey(id) != 1) {
+            return "error";
+        } else {
+            return "success";
+        }
     }
 
     /**
-     * 根据工资统计id跳转到正式员工列表
+     * 批量删除
      *
-     * @param wageStatisticsId 工资统计id
-     * @return oa_regular_details.jsp
+     * @param ids ids
+     * @return int
      */
-    @RequestMapping(value = "/sendAll")
+    @RequestMapping(value = "/batchDeleteRegularStaff")
     @ResponseBody
-    public String sendAll(int wageStatisticsId) {
-        if (oaWageStatisticsService.sendAll(wageStatisticsId) > 0) {
-            return "success";
-        } else {
-            return "error";
+    public String batchDeleteRegularStaff(@RequestParam(value = "ids[]") String[] ids) {
+        for (String id : ids) {
+            if (oaWageStatisticsService.deleteRegularStaffByPrimaryKey(Integer.valueOf(id)) != 1){
+                return "error";
+            }
         }
+        return "success";
     }
 
+    /**
+     * 正式职工工资详情
+     * @param wageStatisticsId wageStatisticsId
+     * @param model model
+     * @return jsp
+     */
     @RequestMapping(value = "/toRegularEmployeeDetails")
     public String toRegularEmployeeDetails(int wageStatisticsId, Model model) {
-        int total = oaWageStatisticsService.getTotalByWageStatisticsId(wageStatisticsId);
-        model.addAttribute("wageStatisticsId", wageStatisticsId);
-        model.addAttribute("total", total);
-        return "oa/personal/oa_regular_details";
-    }
-
-    @RequestMapping(value = "/pagingList")
-    @ResponseBody
-    public Object getPagingByWageStatisticsId(int wageStatisticsId, int page, int rows) {
-        List<OaPersonalWages> personalWagesList = oaWageStatisticsService.getPagingByWageStatisticsId(wageStatisticsId, page, rows);
-        if (personalWagesList != null) {
-            return personalWagesList;
-        }
-        return "error";
+        List<OaPersonalWages> oaPersonalWagesList = oaWageStatisticsService.selectRegularStaffByWageStatisticsId(wageStatisticsId);
+        model.addAttribute("oaPersonalWagesList",JsonHelper.toJSONString(oaPersonalWagesList));
+        return "oa/personal/oa_regular _staff_details";
     }
 
     /**
@@ -98,16 +148,80 @@ public class OaWageStatisticsController {
     }
 
     /**-----------------外包职工-------------------*/
+
     /**
-     * 跳转外包员工页面
+     * 跳转外包员工统计页面
      *
      * @return oa_outsourced_staff.jsp
      */
-    @RequestMapping(value = "/toOutsourcedStaff")
-    public String toOutsourcedStaff(Model model) {
+    @RequestMapping(value = "/toOutsourcingStaff")
+    public String toOutsourcingStaff(Model model, int page) {
+        model.addAttribute("currentPage", JsonHelper.toJSONString(page));
+        return "oa/personal/outsourcing_staff";
+    }
+
+    /**
+     * 加载外包员工数据
+     *
+     * @param page page
+     * @return list
+     */
+    @RequestMapping(value = "/loadingData")
+    @ResponseBody
+    public String loadingData(int page) {
+        PageHelper.startPage(page, 12);
         List<OaOutsourcedStatistics> outsourcedStatisticsList = oaWageStatisticsService.getAllOutsourcedStatistics();
-        model.addAttribute("outsourcedStatisticsList", outsourcedStatisticsList);
-        return "oa/personal/oa_outsourced_staff";
+        PageInfo<OaOutsourcedStatistics> pageInfo = new PageInfo<>(outsourcedStatisticsList);
+        return JsonHelper.toJSONString(pageInfo);
+    }
+
+    /**
+     * 根据外包员工结算月份筛选
+     *
+     * @param page  page
+     * @param settlementMonth settlementMonth
+     * @return list
+     */
+    @RequestMapping(value = "/settlementMonthFilter")
+    @ResponseBody
+    public String settlementMonthFilter(int page, String settlementMonth) {
+        PageHelper.startPage(page, 12);
+        List<OaOutsourcedStaff> oaOutsourcedStaffs = oaWageStatisticsService.settlementMonthFilter(settlementMonth);
+        PageInfo<OaOutsourcedStaff> pageInfo = new PageInfo<>(oaOutsourcedStaffs);
+        return JsonHelper.toJSONString(pageInfo);
+    }
+
+    /**
+     * 删除
+     *
+     * @param id id
+     * @return 影响行数
+     */
+    @RequestMapping(value = "/deleteOutsourcingStaff")
+    @ResponseBody
+    public String delete(Integer id) {
+        if (oaWageStatisticsService.deleteByPrimaryKey(id) != 1) {
+            return "error";
+        } else {
+            return "success";
+        }
+    }
+
+    /**
+     * 批量删除
+     *
+     * @param ids ids
+     * @return int
+     */
+    @RequestMapping(value = "/batchDeleteOutsourcingStaff")
+    @ResponseBody
+    public String batchDeleteNotice(@RequestParam(value = "ids[]") String[] ids) {
+        for (String id : ids) {
+            if (oaWageStatisticsService.deleteByPrimaryKey(Integer.valueOf(id)) != 1){
+                return "error";
+            }
+        }
+        return "success";
     }
 
     /**
@@ -115,7 +229,7 @@ public class OaWageStatisticsController {
      *
      * @param file file
      * @return s/e
-     * @throws IOException
+     * @throws IOException i
      */
     @RequestMapping(value = "/importOutsourcedStaffWages")
     @ResponseBody

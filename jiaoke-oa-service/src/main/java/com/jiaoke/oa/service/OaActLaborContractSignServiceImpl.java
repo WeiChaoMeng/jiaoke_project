@@ -49,8 +49,8 @@ public class OaActLaborContractSignServiceImpl implements OaActLaborContractSign
             oaCollaboration.setTable("oa_act_labor_contract_sign");
             oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("劳动合同签订审批表");
-            oaCollaboration.setDataOne("通知人：" + notifier);
-            oaCollaboration.setDataTwo("通知时间：" + DateUtil.dateConvertYYYYMMDD(oaActLaborContractSign.getCreateTime()));
+            oaCollaboration.setDataOne("通知人:" + notifier);
+            oaCollaboration.setDataTwo("通知时间:" + DateUtil.dateConvertYYYYMMDD(oaActLaborContractSign.getCreateTime()));
             oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);

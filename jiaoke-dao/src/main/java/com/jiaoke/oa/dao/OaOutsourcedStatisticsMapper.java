@@ -1,8 +1,11 @@
 package com.jiaoke.oa.dao;
 
+import com.jiaoke.oa.bean.OaOutsourcedStaff;
 import com.jiaoke.oa.bean.OaOutsourcedStatistics;
 import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
+
+import java.util.List;
 
 /**
  * 外包员工工资统计
@@ -14,4 +17,11 @@ import tk.mybatis.mapper.common.Mapper;
 @Repository
 public interface OaOutsourcedStatisticsMapper extends Mapper<OaOutsourcedStatistics> {
 
+    /**
+     * 根据结算月份筛选
+     *
+     * @param settlementMonth settlementMonth
+     * @return list
+     */
+    List<OaOutsourcedStaff> settlementMonthFilter(String settlementMonth);
 }

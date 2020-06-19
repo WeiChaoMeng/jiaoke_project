@@ -96,6 +96,9 @@ public class OaActDeparture {
     private String companyPrincipal;
     private String companyPrincipalRemark;
 
+
+    private String humanAffairs;
+
     /**
      * 状态
      */
@@ -459,5 +462,13 @@ public class OaActDeparture {
 
     public void setResignationCountersign(String resignationCountersign) {
         this.resignationCountersign = resignationCountersign;
+    }
+
+    public String getHumanAffairs() {
+        return humanAffairs;
+    }
+
+    public void setHumanAffairs(String humanAffairs) {
+        this.humanAffairs = humanAffairs;
     }
 }

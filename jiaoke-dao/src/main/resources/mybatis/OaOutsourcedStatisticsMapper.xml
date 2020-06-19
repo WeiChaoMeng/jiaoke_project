@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.oa.dao.OaOutsourcedStatisticsMapper">
+
+    <select id="settlementMonthFilter" resultType="com.jiaoke.oa.bean.OaOutsourcedStatistics">
+        SELECT
+            id,
+            `name`,
+            total_amount as totalAmount,
+            settlement_month as settlementMonth,
+            total,
+            create_date as createDate,
+            upload_users as uploadUsers
+        FROM `oa_outsourced_statistics`
+        where
+            settlement_month LIKE "%"#{settlementMonth}"%"
+        ORDER BY
+            settlement_month desc
+    </select>
+
+</mapper>

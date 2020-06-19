@@ -48,8 +48,8 @@ public class OaActContractSignServiceImpl implements OaActContractSignService {
             oaCollaboration.setTable("oa_act_contract_sign");
             oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("劳务派遣员工合同签订、续订、变更、终止审批");
-            oaCollaboration.setDataOne("通知时间：" + DateUtil.dateConvertYYYYMMDD(oaActContractSign.getCreateTime()));
-            oaCollaboration.setDataTwo("劳动合同到期时间：" + oaActContractSign.getStartDate());
+            oaCollaboration.setDataOne("通知时间:" + DateUtil.dateConvertYYYYMMDD(oaActContractSign.getCreateTime()));
+            oaCollaboration.setDataTwo("劳动合同到期时间:" + oaActContractSign.getStartDate());
             oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);

@@ -48,8 +48,8 @@ public class OaActProductionLeaveServiceImpl implements OaActProductionLeaveServ
             oaCollaboration.setTable("oa_act_production_leave");
             oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("生产假审批");
-            oaCollaboration.setDataOne("生育假天数" + oaActProductionLeave.getMaternityLeave());
-            oaCollaboration.setDataTwo("申请休假时间" + oaActProductionLeave.getApplyDate());
+            oaCollaboration.setDataOne("生育假天数:" + oaActProductionLeave.getMaternityLeave());
+            oaCollaboration.setDataTwo("申请休假时间:" + oaActProductionLeave.getApplyDate());
             oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);
