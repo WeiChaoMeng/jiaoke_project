@@ -48,7 +48,10 @@ public class RabbitService implements MessageListener {
             String carDate = recotime.split(" ")[0];
             //获取当前机组最后一条车号数据
             String crewId = "data1".equals(crewNum) ? "1":"2";
-            Map<String,Object> lastCarNumMap = qualityProjectDao.selectLastCarNumByCrewNum(crewId);
+            //直接查询第一条数据
+//            Map<String,Object> lastCarNumMap = qualityProjectDao.selectLastCarNumByCrewNum(crewId);
+            //查询距离此时间最近的时间的车号
+            Map<String,Object> lastCarNumMap = qualityProjectDao.selectLastCarNumByCrewNumAndTime(crewId,recotime);
             //根据时间差值与车号对比确认是否是重复数据
             String fromDate = lastCarNumMap.get("upTime").toString();
             int minutes = CarDateUtil.twoTimeDifference(fromDate,recotime,"yyyy-MM-dd HH:mm:ss");
@@ -67,9 +70,9 @@ public class RabbitService implements MessageListener {
                 return;
             }
             //存入车牌识别表
-            qualityProjectDao.insertCarNum(license,recotime,crewId);
+//            qualityProjectDao.insertCarNum(license,recotime,crewId);
             //更新对应数据表(第一步更新，如果第二步更新没查到工程，还可以尝试车号查询工程)
-            qualityProjectDao.updateRealTimeDataByCarNum(license,recotime,fromDate,crewNum);
+//            qualityProjectDao.updateRealTimeDataByCarNum(license,recotime,fromDate,crewNum);
 
             Map<String,String> map = QualityGetProjectByCarNumUtil.getErpData(license,carDate);
 

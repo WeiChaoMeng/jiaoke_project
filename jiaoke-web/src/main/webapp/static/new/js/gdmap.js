@@ -581,3 +581,12 @@ marker126.on('mouseover',function () {
 marker126.on('mouseout',function () {
     marker126.setIcon("../../../../static/new/images/marker.png");
 });
+
+/*一号机弹出*/
+marker130 = new AMap.Marker({
+    icon: "../../../../static/new/images/marker.png",
+    position: [116.3529,39.69823],
+    offset: new AMap.Pixel(-13, -30)
+});
+marker130.setMap(map);
+marker130.setTitle('罐区');

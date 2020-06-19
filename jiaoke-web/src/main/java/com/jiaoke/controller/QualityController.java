@@ -191,7 +191,8 @@ public class QualityController {
 
             if ((charset == null || charset.length() == 0) && (size ==readCount))
             {
-//                qualityprojectInf.editProductionDataByCarNum(new String(buf,"UTF-8"));
+                qualityprojectInf.editProductionDataByCarNum(new String(buf,"UTF-8"));
+
                 //RabbitService
                 amqpTemplate.convertAndSend("exchangeCar","queueTestKey",new String(buf,"UTF-8"));
             }

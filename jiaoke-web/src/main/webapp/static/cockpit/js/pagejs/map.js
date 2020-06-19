@@ -18,6 +18,7 @@ function getTopTenProject() {
         type: "get",
         dataType: "json",
         success: function (res) {
+            // debugger
             if (res.message === "success") {
                 showEchars(res.dataBody);
             }
@@ -43,6 +44,8 @@ function showEchars(siteArray) {
     var coordinate = [];
     //未查询到的工程数组
     var unSelectArray = [];
+    //产量数组
+    var totalArray = [];
     for (var i = 0 ;i < siteArray.length;i++){
         var siteName = siteArray[i].construction_site_name;
         if (siteName){
@@ -68,6 +71,7 @@ function showEchars(siteArray) {
         },
         dataType: "json",
         success: function (res) {
+            var tem = JSON.parse(JSON.stringify(res));
             if (res.status === '0') {
                 console.log("查询地址信息失败，失败原因" + res.info);
                 return
@@ -89,6 +93,8 @@ function showEchars(siteArray) {
                     temArray.push(lo);
                     temArray.push(lat);
                     var projectName = siteArray[i].project_name;
+                    var total = siteArray[i].total;
+                    totalArray.push(total);
                     if (projectName.indexOf("(") >= 0) {
                         projectName = projectName.split("(")[0];
                     }
@@ -115,6 +121,7 @@ function showEchars(siteArray) {
                         obj.location = proName.indexOf("廊坊") >= 0? "廊坊":"保定";
                         obj.proName = proName;
                         obj.siteName = siteNameArray[i];
+                        obj.total = siteArray[i].total;
                         unSelectArray.push(obj);
                         continue
                     }
@@ -130,6 +137,9 @@ function showEchars(siteArray) {
         var location = unSelectArray[j].location;
         var proName = unSelectArray[j].proName;
         var site = unSelectArray[j].siteName;
+        var total = unSelectArray[j].total;
+        totalArray.push(total);
+
         //再次查询未查询到的数据,
         $.ajax({
             url: "https://restapi.amap.com/v3/geocode/geo",
@@ -163,22 +173,25 @@ function showEchars(siteArray) {
     }
     //定义地图参数二
     var BJData = [];
-    var colourArry = ['#ffffe1','#e87a00','#0cd402','#efa900','#f4f513','#00ffd0','#cccb00','#5382ff','#2ec2ff','#ca001e'];
+    var colourArry = ['#ffdfba','#e87a00','#0cd402','#efa900','#f4f513','#00ffd0','#cccb00','#5382ff','#2ec2ff','#ca001e'];
     var tem = 0;
     sessionStorage.setItem("projectObj",JSON.stringify(resObj));
+
     for (var  key in resObj){
         var temObj2;
+        debugger
         if (key === "路驰分公司") {
-            temObj2 = {name: key, value: 0,colors:'#3badfc'}
+            temObj2 = {name: key, value: 0,colors:'#3badfc',total:0}
         }else {
-            temObj2 = {name: key, value: (90 + (200/tem)),colors:colourArry[tem]};
+            temObj2 = {name: key, value: (90 + (200/(tem + 1))),colors:colourArry[tem],total:totalArray[tem]};
+            tem++;
         }
         var temArray = [];
         var temObj1= {name: '路驰分公司'};
         temArray.push(temObj1);
         temArray.push(temObj2);
         BJData.push(temArray);
-        tem++;
+
     }
 
     //渲染echars
@@ -344,7 +357,8 @@ function editMidChar(geoCoord,BData) {
                     return {
                         name: dataItem[1].name,
                         value: geoCoordMap[dataItem[1].name].concat([dataItem[1].value]),
-                        itemStyle:{normal: {color:dataItem[1].colors}}
+                        itemStyle:{normal: {color:dataItem[1].colors}},
+                        total: dataItem[1].total
                     }
                 })
             },
@@ -505,10 +519,16 @@ function editMidChar(geoCoord,BData) {
             formatter: function(params, ticket, callback) {
                 //根据业务自己拓展要显示的内容
                 var res = "";
-                console.log(params)
                 var name = params.name;
-                var value = params.value[2];
-                res = "<span style='color:#fff;'>" + name + "</span><br/>产量：" + value.toFixed(2) +"吨";
+                // var value = params.value[2];
+
+                var value = params.data.total;
+                if(typeof(value)=='undefined'){
+                    value =  0
+                }else{
+                    value = Number(value.toFixed(2))
+                }
+                res = "<span style='color:#fff;'>" + name + "</span><br/>产量：" + value +"吨";
                 return res;
             }
         },

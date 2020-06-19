@@ -175,4 +175,15 @@ public interface QualityProjectDao {
                                      @Param("lastTime") String lastTime,
                                      @Param("crewNum")  String crewNum,
                                      @Param("proName") String proName);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询该机组下距离该时间最近的时间>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/6/17 16:59
+     */
+    Map<String, Object> selectLastCarNumByCrewNumAndTime(@Param("crewId") String crewId,@Param("recotime") String recotime);
 }

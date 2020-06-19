@@ -201,7 +201,7 @@ function renderDataToPage(listStr) {
                     $("#crew1_time").html("生产时间：" + listStr[i].produce_time);
                     if (listStr[i].pro_name){
                         $("#crew1_ratio_name").html("产品类型：" + listStr[i].pro_name);
-                        $("#aar1_title").html(listStr[i].pro_name + "三日内同类型产品油石比走势图");
+                        $("#aar1_title").html(listStr[i].pro_name + "三日内同类型产品沥青含量走势图");
                     } else {
                         $("#crew1_ratio_name").html('产品类型：未找到产品类型');
                     };
@@ -223,7 +223,7 @@ function renderDataToPage(listStr) {
                     $("#crew2_time").html("生产时间：" + listStr[i].produce_time);
                     if (listStr[i].pro_name){
                         $("#crew2_ratio_name").html("产品类型：" + listStr[i].pro_name);
-                        $("#aar2_title").html(listStr[i].pro_name + "三日内同类型产品油石比走势图");
+                        $("#aar2_title").html(listStr[i].pro_name + "三日内同类型产品沥青含量走势图");
                     } else {
                         $("#crew2_ratio_name").html('产品类型：未找到产品类型');
                     };

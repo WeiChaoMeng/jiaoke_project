@@ -609,7 +609,7 @@ function showTenProjectMessage() {
         proObj = JSON.parse(sessionStorage.getItem("projectObj"));
     } while (isNull(proObj));
 
-    var colourArry = ['#ffffe1','#e87a00','#0cd402','#efa900','#f4f513','#00ffd0','#cccb00','#5382ff','#2ec2ff','#ca001e'];
+    var colourArry = ['#ffdfba','#e87a00','#0cd402','#efa900','#f4f513','#00ffd0','#cccb00','#5382ff','#2ec2ff','#ca001e'];
     var tem = 0;
 
     for(var key in proObj){
@@ -617,9 +617,9 @@ function showTenProjectMessage() {
 
         }else {
             $("#yearProduct").append("<li><span class='example_span' style='background-color:" + colourArry[tem] + ";display: block;width: 17px;height: 13px;float: left;margin-right: 10px;margin-top: 3px;border-radius: 5px;'></span><p>" + key +"</p></li>")
-
+            tem++;
         }
-        tem++;
+
     }
 
     $("div.list_lh").myScroll({

@@ -91,6 +91,21 @@
                  up_time DESC
         LIMIT 1;
     </select>
+    <select id="selectLastCarNumByCrewNumAndTime" resultType="java.util.Map">
+        SELECT
+        id,
+        car_num AS carNum,
+        up_time AS upTime,
+        crew_num AS crewNum
+        FROM
+        `quality_car_num_history`
+        WHERE
+        crew_num = #{crewId}
+        AND up_time &lt;  #{recotime}
+        ORDER BY
+        up_time DESC
+        LIMIT 1;
+    </select>
     <insert id="insertCarNum" parameterType="java.lang.String" useGeneratedKeys="true">
         INSERT INTO quality_car_num_history (car_num, up_time, crew_num)
         VALUES
