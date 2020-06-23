@@ -4,14 +4,12 @@ import com.google.gson.Gson;
 import com.jiake.utils.OaResources;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -29,15 +27,62 @@ import java.util.Properties;
 public class DownLoadServlet {
 
     private static String FILE_PATH;
+    private static String DOWNLOAD_PATH;
 
     static {
         String name = "conf/db.properties";
         Properties props = OaResources.readAsProperties(name);
         FILE_PATH = props.getProperty("file.path");
+        DOWNLOAD_PATH = props.getProperty("download.path");
     }
 
+    /**
+     * * 如果SFTP器配置Nginx，可通过URL路径直接下载文件
+     *      *
+     * @param fileName 文件名称
+     * @param request request
+     * @param response response
+     * @throws IOException e
+     */
     @RequestMapping(value = "/download")
     @ResponseBody
+    public void fileDownNg(String fileName, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        BufferedInputStream dis = null;
+        BufferedOutputStream fos = null;
+
+        try {
+            String url = DOWNLOAD_PATH + URLEncoder.encode(fileName, "utf-8");
+            String realName = fileName.substring(fileName.indexOf("_") + 1);
+            URL httpUrl = new URL(url);
+            response.setContentType("application/x-msdownload;");
+            response.setHeader("Content-disposition", "attachment; filename=" + new String(realName.getBytes("UTF-8"), "ISO-8859-1"));
+            response.setHeader("Content-Length", String.valueOf(httpUrl.openConnection().getContentLength()));
+
+            dis = new BufferedInputStream(httpUrl.openStream());
+            fos = new BufferedOutputStream(response.getOutputStream());
+
+            byte[] buff = new byte[1024];
+            int bytesRead;
+            while (-1 != (bytesRead = dis.read(buff, 0, buff.length))) {
+                fos.write(buff, 0, bytesRead);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (dis != null) {
+                dis.close();
+            }
+            if (fos != null) {
+                fos.close();
+            }
+
+        }
+    }
+
+
+//    @RequestMapping(value = "/download")
+//    @ResponseBody
     public void download(String fileName, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         fileName = URLDecoder.decode(fileName,"UTF-8");

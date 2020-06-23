@@ -52,7 +52,7 @@
                                 <span class="table-file-title"
                                       title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
                                 <a class="table-file-download icon"
-                                   href="/fileDownloadHandle/download?fileName=${fn:substring(annex,0,annex.indexOf("_"))}${fn:substring(annex,annex.lastIndexOf("."),annex.length())}"
+                                   href="/fileDownloadHandle/download?fileName=${annex}"
                                    title="下载">&#xebda;</a>
                             </div>
                         </div>
@@ -72,7 +72,7 @@
                 ${oaActTaxiUse.applicant}
                 <input type="hidden" id="id" name="id" value="${oaActTaxiUse.id}">
                 <input type="hidden" id="promoter" name="promoter" value="${oaActTaxiUse.promoter}">
-                    <input type="hidden" name="departmentPrincipal" value="${oaActTaxiUse.departmentPrincipal}">
+                <input type="hidden" name="departmentPrincipal" value="${oaActTaxiUse.departmentPrincipal}">
             </td>
 
             <td class="tdLabel">填表日期</td>
