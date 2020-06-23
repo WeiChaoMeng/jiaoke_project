@@ -55,7 +55,12 @@ public class DownLoadServlet {
             String realName = fileName.substring(fileName.indexOf("_") + 1);
             URL httpUrl = new URL(url);
             response.setContentType("application/x-msdownload;");
-            response.setHeader("Content-disposition", "attachment; filename=" + new String(realName.getBytes("GB2312"), "ISO-8859-1"));
+            String userAgent = request.getHeader("User-Agent");
+            if (userAgent.contains("MSIE")||userAgent.contains("Trident")) {
+                response.setHeader("Content-disposition", "attachment; filename=" + new String(realName.getBytes("UTF-8"), "ISO8859-1"));
+            }else{
+                response.setHeader("Content-disposition", "attachment; filename=" + java.net.URLEncoder.encode(realName,"UTF-8"));
+            }
             response.setHeader("Content-Length", String.valueOf(httpUrl.openConnection().getContentLength()));
 
             dis = new BufferedInputStream(httpUrl.openStream());
