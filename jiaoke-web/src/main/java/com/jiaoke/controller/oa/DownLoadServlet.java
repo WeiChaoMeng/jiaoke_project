@@ -55,7 +55,7 @@ public class DownLoadServlet {
             String realName = fileName.substring(fileName.indexOf("_") + 1);
             URL httpUrl = new URL(url);
             response.setContentType("application/x-msdownload;");
-            response.setHeader("Content-disposition", "attachment; filename=" + new String(realName.getBytes("UTF-8"), "ISO-8859-1"));
+            response.setHeader("Content-disposition", "attachment; filename=" + new String(realName.getBytes("GB2312"), "ISO-8859-1"));
             response.setHeader("Content-Length", String.valueOf(httpUrl.openConnection().getContentLength()));
 
             dis = new BufferedInputStream(httpUrl.openStream());
