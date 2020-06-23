@@ -35,19 +35,14 @@ public class OaWageStatistics implements Serializable {
     private String overallNumberPeople;
 
     /**
-     * 已发数
+     * 上传人
      */
-    private String quantityIssued;
+    private String uploadUsers;
 
     /**
      * 创建日期
      */
-    private Date createDate;
-
-    /**
-     * 创建日期Str
-     */
-    private String createDateStr;
+    private String createDate;
 
     /**
      * 状态
@@ -96,19 +91,19 @@ public class OaWageStatistics implements Serializable {
         this.overallNumberPeople = overallNumberPeople;
     }
 
-    public String getQuantityIssued() {
-        return quantityIssued;
+    public String getUploadUsers() {
+        return uploadUsers;
     }
 
-    public void setQuantityIssued(String quantityIssued) {
-        this.quantityIssued = quantityIssued;
+    public void setUploadUsers(String uploadUsers) {
+        this.uploadUsers = uploadUsers;
     }
 
-    public Date getCreateDate() {
+    public String getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(String createDate) {
         this.createDate = createDate;
     }
 
@@ -120,11 +115,7 @@ public class OaWageStatistics implements Serializable {
         this.state = state;
     }
 
-    public String getCreateDateStr() {
-        return createDateStr;
-    }
-
-    public void setCreateDateStr(String createDateStr) {
-        this.createDateStr = createDateStr;
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 }

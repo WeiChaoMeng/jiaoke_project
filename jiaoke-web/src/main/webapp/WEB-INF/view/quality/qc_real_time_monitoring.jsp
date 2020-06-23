@@ -469,7 +469,15 @@
                 containLabel: true
             },
             tooltip: {
-                trigger: 'item'
+                trigger: 'axis',
+                formatter: function(params, ticket, callback) {
+                    return  '筛孔:' + returnX(params[0].value[0])  + '的通过率<br/>'
+                        +params[0].marker  + params[0].seriesName + ' :  ' + (params[0].value[1]).toFixed(1)+'%<br/>'
+                        +params[1].marker  + params[1].seriesName+':  '+(params[1].value[1]).toFixed(1)+'%<br/>'
+                        +params[2].marker  + params[2].seriesName+':  '+(params[2].value[1]).toFixed(1)+'%<br/>'
+                        +params[3].marker  + params[3].seriesName+':  '+(params[3].value[1]).toFixed(1)+'%<br/>'
+                        +params[4].marker  + params[4].seriesName+':  '+(params[4].value[1]).toFixed(1)+'%<br/>';
+                }
             },
             xAxis: {
                 type: 'value',
@@ -654,7 +662,15 @@
                 containLabel: true
             },
             tooltip: {
-                trigger: 'item'
+                trigger: 'axis',
+                formatter: function(params, ticket, callback) {
+                    return  '筛孔:' + returnX(params[0].value[0])+ '的通过率<br/>'
+                        +params[0].marker  + params[0].seriesName + ' :  ' + (params[0].value[1]).toFixed(1)+'%<br/>'
+                        +params[1].marker  + params[1].seriesName+':  '+(params[1].value[1]).toFixed(1)+'%<br/>'
+                        +params[2].marker  + params[2].seriesName+':  '+(params[2].value[1]).toFixed(1)+'%<br/>'
+                        +params[3].marker  + params[3].seriesName+':  '+(params[3].value[1]).toFixed(1)+'%<br/>'
+                        +params[4].marker  + params[4].seriesName+':  '+(params[4].value[1]).toFixed(1)+'%<br/>';
+                }
             },
             xAxis: {
                 type: 'value',

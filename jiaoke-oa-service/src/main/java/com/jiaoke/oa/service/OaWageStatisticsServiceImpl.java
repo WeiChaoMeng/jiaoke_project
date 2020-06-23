@@ -74,7 +74,9 @@ public class OaWageStatisticsServiceImpl implements OaWageStatisticsService {
             oaWageStatistics.setGrossActualAmount(grossActualAmount.toString());
             oaWageStatistics.setSettlementDate(settlementDate);
             oaWageStatistics.setOverallNumberPeople(String.valueOf(list.size()));
-            oaWageStatistics.setCreateDate(new Date());
+            oaWageStatistics.setCreateDate(DateUtil.dateConvertYYYYMMDDHHMMSS(new Date()));
+            oaWageStatistics.setUploadUsers(getCurrentUser().getNickname());
+            oaWageStatistics.setState(0);
             //插入到工资统计
             int i = oaWageStatisticsMapper.insertSelective(oaWageStatistics);
             if (i > 0) {
@@ -88,29 +90,36 @@ public class OaWageStatisticsServiceImpl implements OaWageStatisticsService {
     }
 
     @Override
-    public List<OaWageStatistics> getAllRegularEmployee() {
-        List<OaWageStatistics> wageStatisticsList = oaWageStatisticsMapper.getAllRegularEmployee();
-        for (OaWageStatistics oaWageStatistics : wageStatisticsList) {
-            oaWageStatistics.setCreateDateStr(DateUtil.dateConvertYYYYMMDDHHMMSS(oaWageStatistics.getCreateDate()));
+    public int deleteRegularStaffByPrimaryKey(Integer id) {
+        if (oaWageStatisticsMapper.deleteByPrimaryKey(id) < 0){
+            return -1;
+        }else{
+            if (oaPersonalWagesMapper.deleteByWageStatisticsId(id) < 0){
+                return -1;
+            }else{
+                return 1;
+            }
         }
-        return wageStatisticsList;
     }
 
     @Override
-    public int sendAll(int wageStatisticsId) {
+    public List<OaWageStatistics> settlementMonthRegularStaffFilter(String settlementDate) {
+        return oaWageStatisticsMapper.settlementMonthRegularStaffFilter(settlementDate);
+    }
+
+    @Override
+    public List<OaPersonalWages> selectRegularStaffByWageStatisticsId(int wageStatisticsId) {
+        return oaPersonalWagesMapper.selectRegularStaffByWageStatisticsId(wageStatisticsId);
+    }
+
+    @Override
+    public List<OaWageStatistics> getAllRegularEmployee() {
+        return oaWageStatisticsMapper.getAllRegularEmployee();
+    }
+
+    @Override
+    public int updateStateByWageStatisticsId(int wageStatisticsId) {
         return oaPersonalWagesMapper.updateStateByWageStatisticsId(wageStatisticsId,1);
-    }
-
-    @Override
-    public int getTotalByWageStatisticsId(int wageStatisticsId) {
-        return oaPersonalWagesMapper.getTotalByWageStatisticsId(wageStatisticsId);
-    }
-
-    @Override
-    public List<OaPersonalWages> getPagingByWageStatisticsId(int wageStatisticsId, int page, int rows) {
-        int one = 1;
-        int start = (page - one) * rows;
-        return oaPersonalWagesMapper.getPagingByWageStatisticsId(wageStatisticsId, start, rows);
     }
 
     @Override
@@ -166,5 +175,23 @@ public class OaWageStatisticsServiceImpl implements OaWageStatisticsService {
     @Override
     public List<OaOutsourcedStaff> selectOutsourcedStaffByWageStatisticsId(int wageStatisticsId) {
         return oaOutsourcedStaffMapper.selectOutsourcedStaffByWageStatisticsId(wageStatisticsId);
+    }
+
+    @Override
+    public int deleteByPrimaryKey(Integer id) {
+        if (oaOutsourcedStatisticsMapper.deleteByPrimaryKey(id) < 0){
+            return -1;
+        }else{
+            if (oaOutsourcedStaffMapper.deleteByWageStatisticsId(id) < 0){
+                return -1;
+            }else{
+                return 1;
+            }
+        }
+    }
+
+    @Override
+    public List<OaOutsourcedStaff> settlementMonthFilter(String settlementMonth) {
+        return oaOutsourcedStatisticsMapper.settlementMonthFilter(settlementMonth);
     }
 }

@@ -174,6 +174,7 @@ function showGrading(id) {
                     +"<td>" + res[i].repertory_one_grading + "</td>"
                     +"<td>" + res[i].breeze_grading + "</td>"
                     +"<td>" + res[i].rough_regenerate_grading + "</td>"
+                    +"<td>" + res[i].middle_regenerate_grading + "</td>"
                     +"<td>" + res[i].thin_regenerate_grading + "</td>"
                     +"<td>" + res[i].additive_grading + "</td>"
                     +"<td>" + res[i].synthesis_grading + "</td>"
@@ -262,6 +263,7 @@ function showEditGrading(id) {
                     +"<td><input type='number'  name='repertory_one_grading' class='my_grading_edit_input'  value='" + res[i].repertory_one_grading + "' ></td>"
                     +"<td><input type='number'  name='breeze_grading' class='my_grading_edit_input'  value='" + res[i].breeze_grading + "' ></td>"
                     +"<td><input type='number'  name='rough_regenerate_grading' class='my_grading_edit_input'  value='" + res[i].rough_regenerate_grading + "' ></td>"
+                    +"<td><input type='number'  name='middle_regenerate_grading' class='my_grading_edit_input'  value='" + res[i].middle_regenerate_grading + "' ></td>"
                     +"<td><input type='number'  name='thin_regenerate_grading' class='my_grading_edit_input'  value='" + res[i].thin_regenerate_grading + "' ></td>"
                     +"<td><input type='number'  name='additive_grading' class='my_grading_edit_input'  value='" + res[i].additive_grading + "' ></td>"
                     +"<td><input type='number'  name='synthesis_grading' class='my_grading_edit_input'  value='" + res[i].synthesis_grading + "' ></td>"
@@ -289,7 +291,13 @@ function closeGrading() {
 }
 
 $('#showBrk').click(function () {
-    $('#showGradingBrk,#showGrading').show();
+    layer.open({
+        type: 1,
+        skin: '添加级配', //加上边框
+        area: ['90%', '90%'], //宽高
+        content: $('#showGrading')
+    })
+    // $('#showGradingBrk,#showGrading').show();
 });
 
 //关闭展示
@@ -344,7 +352,7 @@ $('#excel-file').change(function (e) {
 
             readWorkbook(workbook);
 
-            if(getCharts(workbook,0) != 'A'  || getCharts(workbook,3) != 'O' ){
+            if(getCharts(workbook,0) != 'A'  || getCharts(workbook,3) != 'P' ){
                 layer.alert('Excell格式不对', {
                     skin: 'layui-layer-lan'
                     ,closeBtn: 0
@@ -440,7 +448,7 @@ function isAllJsonData(jsonStr) {
         for (var i in jsonStr[i]) {
             array.push(i);
         }
-        if(array.length != 15){
+        if(array.length != 16){
             resBoole = true;
             break;
         }
@@ -506,7 +514,7 @@ function sendGrading(){
                         ,anim: 4 //动画类型
                     });
                 }
-                closeGrading();
+               layer.closeAll();
             }
         })
     }

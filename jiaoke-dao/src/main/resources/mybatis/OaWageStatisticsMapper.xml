@@ -7,32 +7,27 @@
         <result column="gross_actual_amount" jdbcType="VARCHAR" property="grossActualAmount"/>
         <result column="settlement_date" jdbcType="VARCHAR" property="settlementDate"/>
         <result column="overall_number_people" jdbcType="VARCHAR" property="overallNumberPeople"/>
-        <result column="quantity_issued" jdbcType="VARCHAR" property="quantityIssued"/>
-        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="create_date" jdbcType="VARCHAR" property="createDate"/>
+        <result column="upload_users" jdbcType="VARCHAR" property="uploadUsers"/>
         <result column="state" jdbcType="INTEGER" property="state"/>
     </resultMap>
+
     <sql id="Base_Column_List">
-    id, `name`, gross_actual_amount, settlement_date, overall_number_people, quantity_issued, 
-    create_date, `state`
-  </sql>
+        id, `name`, gross_actual_amount, settlement_date, overall_number_people, create_date, `state`, upload_users
+    </sql>
+
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List"/>
+          <include refid="Base_Column_List"/>
         from oa_wage_statistics
         where id = #{id,jdbcType=INTEGER}
     </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from oa_wage_statistics
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-    <insert id="insert" parameterType="com.jiaoke.oa.bean.OaWageStatistics">
-    insert into oa_wage_statistics (id, `name`, gross_actual_amount, 
-      settlement_date, overall_number_people, quantity_issued, 
-      create_date, `state`)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{grossActualAmount,jdbcType=VARCHAR}, 
-      #{settlementDate,jdbcType=VARCHAR}, #{overallNumberPeople,jdbcType=VARCHAR}, #{quantityIssued,jdbcType=VARCHAR}, 
-      #{createDate,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER})
-  </insert>
+        delete from oa_wage_statistics
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
     <insert id="insertSelective" parameterType="com.jiaoke.oa.bean.OaWageStatistics">
         insert into oa_wage_statistics
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -51,11 +46,11 @@
             <if test="overallNumberPeople != null">
                 overall_number_people,
             </if>
-            <if test="quantityIssued != null">
-                quantity_issued,
-            </if>
             <if test="createDate != null">
                 create_date,
+            </if>
+            <if test="uploadUsers != null">
+                upload_users,
             </if>
             <if test="state != null">
                 `state`,
@@ -77,61 +72,33 @@
             <if test="overallNumberPeople != null">
                 #{overallNumberPeople,jdbcType=VARCHAR},
             </if>
-            <if test="quantityIssued != null">
-                #{quantityIssued,jdbcType=VARCHAR},
-            </if>
             <if test="createDate != null">
-                #{createDate,jdbcType=TIMESTAMP},
+                #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="uploadUsers != null">
+                #{uploadUsers,jdbcType=VARCHAR},
             </if>
             <if test="state != null">
                 #{state,jdbcType=INTEGER},
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.jiaoke.oa.bean.OaWageStatistics">
-        update oa_wage_statistics
-        <set>
-            <if test="name != null">
-                `name` = #{name,jdbcType=VARCHAR},
-            </if>
-            <if test="grossActualAmount != null">
-                gross_actual_amount = #{grossActualAmount,jdbcType=VARCHAR},
-            </if>
-            <if test="settlementDate != null">
-                settlement_date = #{settlementDate,jdbcType=VARCHAR},
-            </if>
-            <if test="overallNumberPeople != null">
-                overall_number_people = #{overallNumberPeople,jdbcType=VARCHAR},
-            </if>
-            <if test="quantityIssued != null">
-                quantity_issued = #{quantityIssued,jdbcType=VARCHAR},
-            </if>
-            <if test="createDate != null">
-                create_date = #{createDate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="state != null">
-                `state` = #{state,jdbcType=INTEGER},
-            </if>
-        </set>
-        where id = #{id,jdbcType=INTEGER}
-    </update>
-    <update id="updateByPrimaryKey" parameterType="com.jiaoke.oa.bean.OaWageStatistics">
-    update oa_wage_statistics
-    set `name` = #{name,jdbcType=VARCHAR},
-      gross_actual_amount = #{grossActualAmount,jdbcType=VARCHAR},
-      settlement_date = #{settlementDate,jdbcType=VARCHAR},
-      overall_number_people = #{overallNumberPeople,jdbcType=VARCHAR},
-      quantity_issued = #{quantityIssued,jdbcType=VARCHAR},
-      create_date = #{createDate,jdbcType=TIMESTAMP},
-      `state` = #{state,jdbcType=INTEGER}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
 
     <select id="getAllRegularEmployee" resultMap="BaseResultMap">
         SELECT
-        <include refid="Base_Column_List"/>
+          <include refid="Base_Column_List"/>
         FROM oa_wage_statistics
         ORDER BY
-        settlement_date DESC
+          settlement_date DESC
+    </select>
+
+    <select id="settlementMonthRegularStaffFilter" resultMap="BaseResultMap">
+        SELECT
+          <include refid="Base_Column_List"/>
+        FROM oa_wage_statistics
+        where
+          settlement_date LIKE "%"#{settlementDate}"%"
+        ORDER BY
+          settlement_date DESC
     </select>
 </mapper>

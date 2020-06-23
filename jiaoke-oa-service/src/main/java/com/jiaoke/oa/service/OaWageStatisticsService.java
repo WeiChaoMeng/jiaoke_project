@@ -35,30 +35,36 @@ public interface OaWageStatisticsService {
     List<OaWageStatistics> getAllRegularEmployee();
 
     /**
-     * 发送全部
+     * 根据主键删除
+     *
+     * @param id id
+     * @return int
+     */
+    int deleteRegularStaffByPrimaryKey(Integer id);
+
+    /**
+     * 根据结算月筛选
+     *
+     * @param settlementDate settlementDate
+     * @return o
+     */
+    List<OaWageStatistics> settlementMonthRegularStaffFilter(String settlementDate);
+
+    /**
+     * 根据统计ID查询数据
+     *
+     * @param wageStatisticsId wageStatisticsId
+     * @return list
+     */
+    List<OaPersonalWages> selectRegularStaffByWageStatisticsId(int wageStatisticsId);
+
+    /**
+     * 更新正式职工状态
      *
      * @param wageStatisticsId 工资统计id
      * @return NumberOfAffectedRows
      */
-    int sendAll(int wageStatisticsId);
-
-    /**
-     * 通过工资统计Id得到总数
-     *
-     * @param wageStatisticsId 工资统计id
-     * @return total
-     */
-    int getTotalByWageStatisticsId(int wageStatisticsId);
-
-    /**
-     * 通过工资统计Id获得分页
-     *
-     * @param wageStatisticsId 工资统计id
-     * @param page             page
-     * @param rows             rows
-     * @return list
-     */
-    List<OaPersonalWages> getPagingByWageStatisticsId(int wageStatisticsId, int page, int rows);
+    int updateStateByWageStatisticsId(int wageStatisticsId);
 
     /**
      * 根据登录人昵称获取工资
@@ -93,4 +99,20 @@ public interface OaWageStatisticsService {
      * @return list
      */
     List<OaOutsourcedStaff> selectOutsourcedStaffByWageStatisticsId(int wageStatisticsId);
+
+    /**
+     * 根据主键删除
+     *
+     * @param id id
+     * @return int
+     */
+    int deleteByPrimaryKey(Integer id);
+
+    /**
+     * 根据结算月筛选
+     *
+     * @param settlementMonth settlementMonth
+     * @return o
+     */
+    List<OaOutsourcedStaff> settlementMonthFilter(String settlementMonth);
 }

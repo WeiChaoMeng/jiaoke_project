@@ -64,6 +64,7 @@
                t1.regenerate,
                t1.additive,
                t1.ratio_regenerate2,
+               t1.ratio_regenerate3,
                'crew1' AS 'crewNum',
                t2.*
         FROM
@@ -127,6 +128,7 @@
                        t1.regenerate,
                        t1.additive,
                        t1.ratio_regenerate2,
+                       t1.ratio_regenerate3,
                        'crew2' AS 'crewNum',
                        t2.*
                 FROM

@@ -1,11 +1,13 @@
 package com.jiaoke.controller.oa.activit;
 
+import com.alibaba.fastjson.JSON;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
 import com.jiaoke.controller.oa.TargetFlowNodeCommand;
 import com.jiaoke.oa.bean.Comments;
 import com.jiaoke.oa.bean.OaActEngage;
+import com.jiaoke.oa.bean.OaActExamination;
 import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.service.DepartmentService;
 import com.jiaoke.oa.service.OaActEngageService;
@@ -115,6 +117,68 @@ public class OaActEngageController {
             }
             return "error";
         }
+    }
+
+    /**
+     * app获取审批页面信息
+     *
+     * @param id     id
+     * @param taskId taskId
+     * @return json
+     */
+    @RequestMapping(value = "/approval.api")
+    @ResponseBody
+    public String approvalApi(String id, String taskId) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActEngage oaActEngage = oaActEngageService.selectByPrimaryKey(id);
+
+        String nickname = getCurrentUser().getNickname();
+
+        String principal;
+        String principalT = null;
+        String departmentId = userInfoService.selectDepartmentByUserId(oaActEngage.getPromoter());
+        if ("single".equals(oaActEngage.getDepartmentPrincipal())){
+            String principalId = departmentService.selectEnforcerId("principal", departmentId);
+            principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        }else if (oaActEngage.getDepartmentPrincipal().contains(",")){
+            String[] split = oaActEngage.getDepartmentPrincipal().split(",");
+            principal = userInfoService.getNicknameById(Integer.valueOf(split[0]));
+            principalT = userInfoService.getNicknameById(Integer.valueOf(split[1]));
+        }else{
+            principal = userInfoService.getNicknameById(Integer.valueOf(oaActEngage.getDepartmentPrincipal()));
+        }
+
+        //部门主管领导
+        String supervisorId = departmentService.selectEnforcerId("supervisor", departmentId);
+        String supervisor = userInfoService.getNicknameById(Integer.valueOf(supervisorId));
+        //人事
+        String personnel = userInfoService.getUserInfoByPermission("personnel").getNickname();
+        //主要领导（总经理）
+        String companyPrincipal = userInfoService.getUserInfoByPermission("company_principal").getNickname();
+
+        String evaluateTeamMember = "";
+        if (oaActEngage.getUndoutedlyTeam() != null) {
+            Task task = activitiUtil.getTaskByTaskId(taskId);
+            String nextNode = activitiUtil.getNextNode(task.getProcessDefinitionId(), task.getTaskDefinitionKey());
+            if ("_10".equals(nextNode)){
+                evaluateTeamMember = "yes";
+            }
+        }
+
+        Task task = activitiUtil.getProcessInstanceIdByTaskId(taskId);
+        List<Comments> commentsList = activitiUtil.selectHistoryComment(task.getProcessInstanceId());
+
+        map.put("nickname", nickname);
+        map.put("principal", principal);
+        map.put("principalT", principalT);
+        map.put("supervisor", supervisor);
+        map.put("personnel", personnel);
+        map.put("companyPrincipal", companyPrincipal);
+        map.put("evaluateTeamMember", evaluateTeamMember);
+        map.put("commentsList", commentsList);
+        map.put("taskId", taskId);
+        map.put("engage", oaActEngage);
+        return JSON.toJSONString(map);
     }
 
     /**
@@ -527,6 +591,52 @@ public class OaActEngageController {
         } else {
             return "oa/act/act_engage_details";
         }
+    }
+
+    /**
+     * app获取详细信息
+     *
+     * @param id id
+     * @return json
+     */
+    @RequestMapping(value = "/details.api")
+    @ResponseBody
+    public String cardDetailsApi(String id, String taskId) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActEngage oaActEngage = oaActEngageService.selectByPrimaryKey(id);
+
+        String principal;
+        String principalT = null;
+        String departmentId = userInfoService.selectDepartmentByUserId(oaActEngage.getPromoter());
+        if ("single".equals(oaActEngage.getDepartmentPrincipal())){
+            String principalId = departmentService.selectEnforcerId("principal", departmentId);
+            principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        }else if (oaActEngage.getDepartmentPrincipal().contains(",")){
+            String[] split = oaActEngage.getDepartmentPrincipal().split(",");
+            principal = userInfoService.getNicknameById(Integer.valueOf(split[0]));
+            principalT = userInfoService.getNicknameById(Integer.valueOf(split[1]));
+        }else{
+            principal = userInfoService.getNicknameById(Integer.valueOf(oaActEngage.getDepartmentPrincipal()));
+        }
+
+        //部门主管领导
+        String supervisorId = departmentService.selectEnforcerId("supervisor", departmentId);
+        String supervisor = userInfoService.getNicknameById(Integer.valueOf(supervisorId));
+        //人事
+        String personnel = userInfoService.getUserInfoByPermission("personnel").getNickname();
+        //主要领导（总经理）
+        String companyPrincipal = userInfoService.getUserInfoByPermission("company_principal").getNickname();
+
+        List<Comments> commentsList = activitiUtil.selectHistoryComment(taskId);
+
+        map.put("principal", principal);
+        map.put("principalT", principalT);
+        map.put("supervisor", supervisor);
+        map.put("personnel", personnel);
+        map.put("companyPrincipal", companyPrincipal);
+        map.put("commentsList", commentsList);
+        map.put("engage", oaActEngage);
+        return JsonHelper.toJSONString(map);
     }
 
     /**

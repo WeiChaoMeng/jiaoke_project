@@ -203,6 +203,8 @@ public class QualityMatchingImpl implements QualityMatchingInf{
             map.put("breeze_grading",arg8);
             String arg9 = jsonObject.getString("粗再生料");
             map.put("rough_regenerate",arg9);
+            String arg16 = jsonObject.getString("中再生料");
+            map.put("middle_regenerate",arg16);
             String arg10 = jsonObject.getString("细再生料");
             map.put("thin_regenerate",arg10);
             String arg11 = jsonObject.getString("添加剂矿料");

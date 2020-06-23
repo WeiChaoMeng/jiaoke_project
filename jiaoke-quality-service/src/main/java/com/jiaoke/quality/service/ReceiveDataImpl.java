@@ -279,13 +279,14 @@ public class ReceiveDataImpl implements ReceiveDataInf {
         //再生料
         BigDecimal ratioRegenerate1 = new BigDecimal(templateRatio.getRatioRegenerate1());
         BigDecimal ratioRegenerate2 = new BigDecimal(templateRatio.getRatioRegenerate2());
-        double ratioRegeneratePercentage = positiveAndNegativeRandomDecimals(Double.parseDouble(format.format(ratioRegenerate1.add(ratioRegenerate2))),1,2);
+        BigDecimal ratioRegenerate3 = new BigDecimal(templateRatio.getRatioRegenerate3());
+        double ratioRegeneratePercentage = positiveAndNegativeRandomDecimals(Double.parseDouble(format.format(getBigDecimalSum(ratioRegenerate1,ratioRegenerate2,ratioRegenerate3))),1,2);
 
         //添加预警表相关信息
         QualityWaringDataFalse regenerate = new QualityWaringDataFalse();
         regenerate.setActualRatio(Double.parseDouble(format.format(ratioRegeneratePercentage)));
-        regenerate.setMoudleRatio(Double.parseDouble(format.format(ratioRegenerate1.add(ratioRegenerate2))));
-        regenerate.setDeviationRatio(Double.parseDouble(format.format(Double.parseDouble(format.format(ratioRegenerate1.add(ratioRegenerate2))) - ratioRegeneratePercentage)));
+        regenerate.setMoudleRatio(Double.parseDouble(format.format(getBigDecimalSum(ratioRegenerate1,ratioRegenerate2,ratioRegenerate3))));
+        regenerate.setDeviationRatio(Double.parseDouble(format.format(Double.parseDouble(format.format(getBigDecimalSum(ratioRegenerate1,ratioRegenerate2,ratioRegenerate3))) - ratioRegeneratePercentage)));
         regenerate.setMaterialName("再生料");
         myWaringDataList.add(regenerate);
 
@@ -521,5 +522,20 @@ public class ReceiveDataImpl implements ReceiveDataInf {
             int randomNum = random.nextInt(max - (min) + 1) + (min);
             return initialValue + randomNum;
         }
+    }
+
+    /**
+     * 多个BigDecimal数相加和
+     *
+     * @param i
+     * @param arg
+     * @return
+     */
+    public static BigDecimal getBigDecimalSum(BigDecimal i, BigDecimal... arg) {
+        BigDecimal sum = i;
+        for (BigDecimal b : arg) {
+            sum = sum.add(b);
+        }
+        return sum;
     }
 }

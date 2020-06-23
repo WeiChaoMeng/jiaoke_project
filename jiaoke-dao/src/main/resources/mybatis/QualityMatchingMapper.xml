@@ -83,6 +83,7 @@
                 ratio_stone,
                 ratio_regenerate1,
                 ratio_regenerate2,
+                ratio_regenerate3,
                 ratio_additive,
                 regenerate,
                 additive,
@@ -111,6 +112,7 @@
                        #{ratioStone},
                        #{ratioRegenerate1},
                        #{ratioRegenerate2},
+                       #{ratioRegenerate3},
                        #{ratioAdditive},
                        #{regenerate},
                        #{additive},
@@ -177,6 +179,7 @@
                t1.ratio_stone AS ratioStone,
                t1.ratio_regenerate1 AS ratioRegenerate1,
                t1.ratio_regenerate2 AS ratioRegenerate2,
+               t1.ratio_regenerate3 AS ratioRegenerate3,
                t1.ratio_additive AS ratioAdditive,
                t1.temperature_asphalt AS temperatureAsphalt,
                t1.temperature_asphalt_up AS temperatureAsphaltUp,
@@ -210,6 +213,7 @@
                 repertory_one_grading,
                 breeze_grading,
                 rough_regenerate_grading,
+                middle_regenerate_grading,
                 thin_regenerate_grading,
                 additive_grading,
                 synthesis_grading,
@@ -223,7 +227,7 @@
                        (
                         #{list.crew1_id}, #{list.crew2_id},#{list.sieve_pore}, #{list.six_warehouse},
                       #{list.five_warehouse}, #{list.four_warehouse},#{list.three_warehouse}, #{list.two_warehouse},
-                      #{list.one_warehouse}, #{list.breeze_grading},#{list.rough_regenerate}, #{list.thin_regenerate},
+                      #{list.one_warehouse}, #{list.breeze_grading},#{list.rough_regenerate},#{list.middle_regenerate}, #{list.thin_regenerate},
                       #{list.additive_aggregate}, #{list.compound_grading},#{list.mid_value}, #{list.up_value}, #{list.down_value},#{id}
                         )
                   </foreach >
@@ -248,6 +252,7 @@
             QPM.ratio_stone = #{ratioTemplate.ratioStone},
             QPM.ratio_regenerate1 = #{ratioTemplate.ratioRegenerate1},
             QPM.ratio_regenerate2 = #{ratioTemplate.ratioRegenerate2},
+            QPM.ratio_regenerate3 = #{ratioTemplate.ratioRegenerate3},
             QPM.ratio_additive = #{ratioTemplate.ratioAdditive},
             QPM.regenerate = #{ratioTemplate.regenerate},
             QPM.additive = #{ratioTemplate.additive},

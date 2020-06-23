@@ -19,20 +19,13 @@
     <link rel="stylesheet" href="../../../../static/cockpit/css/logo.css">
     <link rel="stylesheet" href="../../../../static/cockpit/css/index.css">
     <link rel="stylesheet" href="../../../../static/cockpit/css/common.css">
+    <link rel="stylesheet" href="../../../../static/cockpit/css/monitor.css">
     <link rel="stylesheet" href="../../../../static/layui/css/layui.css">
     <link rel="icon" href="../../../../static/images/favicon.ico" type="image/x-icon"/>
     <style>
         .my_div span{
             width: 100%;
             height: 20%;
-        }
-
-        /*去除高德地图左下角logo*/
-        .amap-logo{
-            opacity:0;
-        }
-        .amap-copyright{
-            opacity:0;
         }
     </style>
 </head>
@@ -197,14 +190,169 @@
         </div>
 
         <div class="modelpub" style="margin-top: 10px;height: calc((100%/1.5));">
-            <div class="common-tit">生产区监控(47个)</div>
+            <div class="common-tit">生产区监控(48个)</div>
             <span class="tilt"></span>
-            <div id="myPlayer" style="height: calc((100% - 30px));"></div>
-            <img src="../../../../static/cockpit/img/inp_del.png" style="position: absolute;top: 10%;left: 90%;z-index: 999999;" id="closeMonitor" onclick="closeMonitor()">
 
-            <div class="echart_con bar_c_echart" style="height: calc((100% - 32px));" id="container">
-                <%--<img style="width: 100%;height: 100%" src="../../../../static/new/images/monitor.png">--%>
+            <%--监控视图--%>
+            <div id="myPlayer" class="player-view"></div>
+            <img src="../../../../static/cockpit/img/close.png" class="closeMonitor" id="closeMonitor" onclick="closeMonitor()">
+
+            <%--1号机--%>
+            <div class="crew-container-style" id="productionGroup1">
+                <div class="crew-content-row">
+                    <div class="crew-content-passage">
+                        <img src="../../../../static/cockpit/img/passage/aisle1-1.jpg" class="1">
+                    </div>
+
+                    <div class="crew-content-passage">
+                        <img src="../../../../static/cockpit/img/passage/aisle1-2.jpg" class="2">
+                    </div>
+
+                    <div class="crew-content-passage">
+                        <img src="../../../../static/cockpit/img/passage/aisle1-3.jpg" class="3">
+                    </div>
+
+                    <div class="crew-content-passage" style="margin: 0">
+                        <img src="../../../../static/cockpit/img/passage/aisle1-4.jpg" class="4">
+                    </div>
+                </div>
+
+                <div class="crew-content-row">
+                    <div class="crew-content-passage">
+                        <img src="../../../../static/cockpit/img/passage/aisle1-5.jpg" class="5">
+                    </div>
+
+                    <div class="crew-content-passage">
+                        <img src="../../../../static/cockpit/img/passage/aisle1-6.jpg" class="6">
+                    </div>
+
+                    <div class="crew-content-passage">
+                        <img src="../../../../static/cockpit/img/passage/aisle1-7.jpg" class="7">
+                    </div>
+
+                    <div class="crew-content-passage" style="margin: 0">
+                        <img src="../../../../static/cockpit/img/passage/aisle1-8.jpg" class="8">
+                    </div>
+                </div>
+
+                <div class="crew-content-row">
+                    <div class="crew-content-passage">
+                        <img src="../../../../static/cockpit/img/passage/aisle1-9.jpg" class="9">
+                    </div>
+
+                    <div class="crew-content-passage">
+                        <img src="../../../../static/cockpit/img/passage/aisle1-10.jpg" class="10">
+                    </div>
+
+                    <div class="crew-content-passage">
+                        <img src="../../../../static/cockpit/img/passage/aisle1-11.jpg" class="11">
+                    </div>
+
+                    <div class="crew-content-passage" style="margin: 0">
+                        <img src="../../../../static/cockpit/img/passage/aisle1-12.jpg" class="12">
+                    </div>
+                </div>
+
+                <div class="crew-content-row">
+                    <div class="crew-content-passage">
+                        <img src="../../../../static/cockpit/img/passage/aisle1-13.jpg" class="13">
+                    </div>
+
+                    <div class="crew-content-passage">
+                        <img src="../../../../static/cockpit/img/passage/aisle1-14.jpg" class="14">
+                    </div>
+
+                    <div class="crew-content-passage">
+                        <img src="../../../../static/cockpit/img/passage/aisle1-15.jpg" class="15">
+                    </div>
+
+                    <div class="crew-content-passage" style="margin: 0">
+                        <img src="../../../../static/cockpit/img/passage/aisle1-16.jpg" class="16">
+                    </div>
+                </div>
             </div>
+            <img src="../../../../static/cockpit/img/close.png" class="closeMonitor" id="monitorPreviewView1" onclick="closePreviewView1()">
+            <img src="../../../../static/cockpit/img/close.png" class="closeMonitor" id="monitorRealTime1" onclick="closeMonitorRealTime1()">
+
+            <%--2号机--%>
+            <div class="crew-container-style" id="productionGroup2">
+                <div class="crew-content-row">
+                    <div class="crew-content-passage">
+                        <img src="../../../../static/cockpit/img/passage/aisle2-1.jpg" class="1">
+                    </div>
+
+                    <div class="crew-content-passage">
+                        <img src="../../../../static/cockpit/img/passage/aisle2-2.jpg" class="2">
+                    </div>
+
+                    <div class="crew-content-passage">
+                        <img src="../../../../static/cockpit/img/passage/aisle2-3.jpg" class="3">
+                    </div>
+
+                    <div class="crew-content-passage" style="margin: 0">
+                        <img src="../../../../static/cockpit/img/passage/aisle2-4.jpg" class="4">
+                    </div>
+                </div>
+
+                <div class="crew-content-row">
+                    <div class="crew-content-passage">
+                        <img src="../../../../static/cockpit/img/passage/aisle2-5.jpg" class="5">
+                    </div>
+
+                    <div class="crew-content-passage">
+                        <img src="../../../../static/cockpit/img/passage/aisle2-6.jpg" class="6">
+                    </div>
+
+                    <div class="crew-content-passage">
+                        <img src="../../../../static/cockpit/img/passage/aisle2-7.jpg" class="7">
+                    </div>
+
+                    <div class="crew-content-passage" style="margin: 0">
+                        <img src="../../../../static/cockpit/img/passage/aisle2-8.jpg" class="8">
+                    </div>
+                </div>
+
+                <div class="crew-content-row">
+                    <div class="crew-content-passage">
+                        <img src="../../../../static/cockpit/img/passage/aisle2-9.jpg" class="9">
+                    </div>
+
+                    <div class="crew-content-passage">
+                        <img src="../../../../static/cockpit/img/passage/aisle2-10.jpg" class="10">
+                    </div>
+
+                    <div class="crew-content-passage">
+                        <img src="../../../../static/cockpit/img/passage/aisle2-11.jpg" class="11">
+                    </div>
+
+                    <div class="crew-content-passage" style="margin: 0">
+                        <img src="../../../../static/cockpit/img/passage/aisle2-12.jpg" class="12">
+                    </div>
+                </div>
+
+                <div class="crew-content-row">
+                    <div class="crew-content-passage">
+                        <img src="../../../../static/cockpit/img/passage/aisle2-13.jpg" class="13">
+                    </div>
+
+                    <div class="crew-content-passage">
+                        <img src="../../../../static/cockpit/img/passage/aisle2-14.jpg" class="14">
+                    </div>
+
+                    <div class="crew-content-passage">
+                        <img src="../../../../static/cockpit/img/passage/aisle2-15.jpg" class="15">
+                    </div>
+
+                    <div class="crew-content-passage" style="margin: 0">
+                        <img src="../../../../static/cockpit/img/passage/aisle2-16.jpg" class="16">
+                    </div>
+                </div>
+            </div>
+            <img src="../../../../static/cockpit/img/close.png" class="closeMonitor" id="monitorPreviewView2" onclick="closePreviewView2()">
+            <img src="../../../../static/cockpit/img/close.png" class="closeMonitor" id="monitorRealTime2" onclick="closeMonitorRealTime2()">
+
+            <%--地图视图--%>
+            <div style="height: calc((100% - 32px));" id="container"></div>
         </div>
     </div>
     <!--首页右侧 end -->

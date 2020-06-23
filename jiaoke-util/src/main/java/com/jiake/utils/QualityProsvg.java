@@ -127,6 +127,7 @@ public class QualityProsvg {
                 map.put("regenerate",list.get(1).get("regenerate").toString());
                 map.put("additive",list.get(1).get("additive").toString());
                 map.put("ratio_regenerate2",list.get(1).get("ratio_regenerate2").toString());
+                map.put("ratio_regenerate3",list.get(1).get("ratio_regenerate3").toString());
             }
         }
 

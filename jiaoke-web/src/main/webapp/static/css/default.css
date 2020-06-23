@@ -1292,20 +1292,26 @@ table {
 }
 
 .form_btn {
-    padding-left: 40%;
+    padding-left: 45%;
     padding-bottom: 80px;
 }
 
 .btn_save {
-    height: 30px;
     line-height: 30px;
     text-align: center;
     color: #000;
     display: block;
-    width: 74px;
-    border-radius: 2px;
+    width: 100px;
     cursor: pointer;
     float: left;
+    touch-action: manipulation;
+    height: 32px;
+    padding: 0 15px;
+    font-size: 14px;
+    border-radius: 4px;
+    color: rgba(0,0,0,0.65);
+    /*background-color: #fff;*/
+    /*border-color: #d9d9d9;*/
 }
 
 .btn_cancel {
@@ -1494,7 +1500,7 @@ table {
 
 .my_form_table {
     border-bottom: none;
-    margin-top: 5%;
+    margin-top: 1.5%;
     margin-left: 5%;
     width: 100%;
 }
@@ -1621,7 +1627,7 @@ my_echars_div_block{
 
 /******展示配比模板******/
 .ration_form_model {
-    width: 70%;
+    width: 100%;
     height: 98%;
     position: absolute;
     margin: auto;
@@ -1650,7 +1656,6 @@ my_echars_div_block{
     outline: 0;
     background: #fff;
     line-height: 26px;
-    text-indent: 8px;
 }
 .ration_form_table td {
     line-height: 40px;
@@ -1694,14 +1699,19 @@ my_echars_div_block{
 }
 
 .ration_btn_cancel {
-    display: block;
-    width: 74px;
-    height: 30px;
-    background: #dedede;
-    border: solid 1px #dedede;
+    line-height: 30px;
     text-align: center;
-    float: left;
+    color: #000;
+    display: block;
+    width: 100px;
     cursor: pointer;
+    float: left;
+    touch-action: manipulation;
+    height: 32px;
+    font-size: 13px;
+    margin-top: 10px;
+    border-radius: 4px;
+    color: rgba(0,0,0,0.65);
 }
 
 .ration_form_swidth {

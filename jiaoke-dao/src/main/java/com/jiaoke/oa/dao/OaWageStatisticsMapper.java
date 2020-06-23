@@ -5,19 +5,39 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * 正式职工工资统计
+ *
+ * @author lihui
+ * @version 1.0
+ * @date 2018/11/28 2:58
+ */
 @Repository
 public interface OaWageStatisticsMapper {
+
+    /**
+     * 根据主键删除
+     *
+     * @param id id
+     * @return int
+     */
     int deleteByPrimaryKey(Integer id);
 
-    int insert(OaWageStatistics record);
-
+    /**
+     * 选择性插入
+     *
+     * @param record record
+     * @return int
+     */
     int insertSelective(OaWageStatistics record);
 
+    /**
+     * 根据主键查询
+     *
+     * @param id id
+     * @return o
+     */
     OaWageStatistics selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(OaWageStatistics record);
-
-    int updateByPrimaryKey(OaWageStatistics record);
 
     /**
      * 获取所有正式员工
@@ -25,4 +45,12 @@ public interface OaWageStatisticsMapper {
      * @return list
      */
     List<OaWageStatistics> getAllRegularEmployee();
+
+    /**
+     * 根据结算月筛选
+     *
+     * @param settlementDate settlementDate
+     * @return list
+     */
+    List<OaWageStatistics> settlementMonthRegularStaffFilter(String settlementDate);
 }

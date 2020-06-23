@@ -13,7 +13,6 @@
     <meta charset="utf-8">
     <title>正式员工详情</title>
     <link href="../../../../static/css/oa/oa_common.css" rel="stylesheet" type="text/css">
-    <link href="../../../../static/css/style/green.css" rel="stylesheet" type="text/css" id='link'>
     <link href="../../../../static/css/paging/htmleaf-demo.css" rel="stylesheet" type="text/css">
     <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -72,12 +71,7 @@
     <th style="width: 10px"></th>
     </thead>
 
-    <tbody id="tbody">
-    <div style="display: none">
-        <input type="hidden" id="wageStatisticsId" value="${wageStatisticsId}">
-        <input type="hidden" id="total" value="${total}">
-    </div>
-    </tbody>
+    <tbody id="tbody"></tbody>
 
 </table>
 
@@ -100,25 +94,8 @@
 </div>
 </body>
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
-<script type="text/javascript" src="../../../../static/js/oa/oa_common.js"></script>
-<script type="text/javascript" src="../../../../static/js/skin.js"></script>
 <script type="text/javascript" src="../../../../static/js/paging/jqPaginator.js"></script>
 <script>
-
-    /* 预定撤销 - 查询条件*/
-    $("#condition5").on("change", function () {
-        var opt = $("#condition5").val();
-        if (opt == 2) {
-            $(".head_right_side_select").css("display", "block");
-            $(".head_right_side_input").css("display", "none");
-        } else if (opt == 1) {
-            $(".head_right_side_input").css("display", "block");
-            $(".head_right_side_select").css("display", "none");
-        } else {
-            $(".head_right_side_input").css("display", "none");
-            $(".head_right_side_select").css("display", "none");
-        }
-    });
 
     var total = $('#total').val();
 

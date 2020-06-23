@@ -28,6 +28,45 @@ body {
     width: 100%;
 }
 
+/*机组监控视图*/
+.monitor-preview-view1{
+    width: 28%;
+    height: 55%;
+    position: absolute;
+    left: 1%;
+    text-align: center;
+    bottom: 3%;
+    background: #ffffff;
+    display: none;
+}
+
+.crew-content-row {
+    height: calc((100% / 4) - 5px);
+    margin-top: 5px;
+    text-align: center;
+}
+
+.crew-content-passage {
+    width: calc((100% / 4) - 4px);
+    height: 100%;
+    background: #ffffff;
+    float: left;
+    margin-right: 5px;
+}
+
+.crew-content-passage img {
+    width: 100%;
+    height: 100%;
+}
+
+.monitor-preview-view-name{
+    font-size: 17px;text-align: left;padding: 5px 0 0 10px;
+}
+
+.monitor-preview-view-close{
+    width: 13px;position: absolute;top: 3%;right: 3%;cursor: pointer;
+}
+
 /*区域划分*/
 .office-zone {
     width: 19%;

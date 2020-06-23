@@ -37,6 +37,7 @@
                QPM.ratio_stone as ratioStone,
                QPM.ratio_regenerate1 as ratioRegenerate1,
                QPM.ratio_regenerate2 as ratioRegenerate2,
+               QPM.ratio_regenerate3 as ratioRegenerate3,
                QPM.ratio_additive as ratioAdditive,
                QPM.regenerate as regenerate,
                QPM.additive as additive,
@@ -49,10 +50,8 @@
                QPM.temperature_mixture_up as temperatureMixtureUp,
                QPM.temperature_milling_up as temperatureMillingUp
         from quality_proportioning_message AS QPM
-        INNER JOIN  quality_proportioning_model AS QPMD
-        ON QPM.id = QPMD.message_id
         where ${columeName} = ${crewMoudelId}
-        AND YEAR(QPMD.create_time) = YEAR(&apos;${proDate}&apos;)
+        AND YEAR(QPM.create_time) = YEAR(&apos;${proDate}&apos;)
 
     </select>
     
@@ -86,6 +85,7 @@
                QPM.ratio_stone as ratioStone,
                QPM.ratio_regenerate1 as ratioRegenerate1,
                QPM.ratio_regenerate2 as ratioRegenerate2,
+               QPM.ratio_regenerate3 as ratioRegenerate3,
                QPM.ratio_additive as ratioAdditive,
                QPM.regenerate as regenerate,
                QPM.additive as additive,
@@ -98,10 +98,8 @@
                QPM.temperature_mixture_up as temperatureMixtureUp,
                QPM.temperature_milling_up as temperatureMillingUp
         from quality_proportioning_message AS QPM
-                 INNER JOIN  quality_proportioning_model AS QPMD
-                     ON QPM.id = QPMD.message_id
         where ${crewNum}_modele_id = ${id}
-          AND YEAR(QPMD.create_time) = YEAR(&apos;${proDate}&apos;)
+          AND YEAR(QPM.create_time) = YEAR(&apos;${proDate}&apos;)
 
     </select>
     

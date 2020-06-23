@@ -393,7 +393,15 @@
 
             },
             tooltip: {
-                trigger: 'item'
+                trigger: 'axis',
+                formatter: function(params, ticket, callback) {
+                    return  '筛孔:' + returnX(params[0].value[0]) + '的通过率<br/>'
+                        +params[0].marker  + params[0].seriesName + ' :  ' + (params[0].value[1]).toFixed(1)+'%<br/>'
+                        +params[1].marker  + params[1].seriesName+':  '+(params[1].value[1]).toFixed(1)+'%<br/>'
+                        +params[2].marker  + params[2].seriesName+':  '+(params[2].value[1]).toFixed(1)+'%<br/>'
+                        +params[3].marker  + params[3].seriesName+':  '+(params[3].value[1]).toFixed(1)+'%<br/>'
+                        +params[4].marker  + params[4].seriesName+':  '+(params[4].value[1]).toFixed(1)+'%<br/>';
+                }
             },
             xAxis: {
                 type: 'value',
@@ -733,6 +741,73 @@
     function sortNumber(a, b)
     {
         return a[0] - b[0]
+    }
+
+    function returnX(key) {
+        var s = 0;
+        key = key +'';
+        switch (key) {
+            case '0.312':
+                s = 0.075;
+                break;
+            case '0.426':
+                s = 0.15;
+                break;
+            case '0.582':
+                s = 0.3;
+                break;
+            case '0.795':
+                s = 0.6;
+                break;
+            case '1.007':
+                s = 1.18;
+                break;
+            case '1.472':
+                s = 2.36;
+                break;
+            case '2.016':
+                s = 4.75;
+                break;
+            case '2.354':
+                s = 6.7;
+                break;
+            case '2.4':
+                s = 7.0;
+                break;
+            case '2.431':
+                s = 7.2;
+                break;
+            case '2.754':
+                s = 9.5;
+                break;
+            case '3.193':
+                s = 13.2;
+                break;
+
+            case '3.482':
+                s = 16;
+                break;
+            case '3.762':
+                s = 19;
+                break;
+            case '4.37':
+                s = 26.5;
+                break;
+            case '4.723':
+                s = 31.5;
+                break;
+            case '5.109':
+                s = 37.5;
+                break;
+            case '5.969':
+                s = 53;
+                break;
+            case '6.452':
+                s = 63;
+                break;
+        }
+
+        return s;
     }
 </script>
 </html>

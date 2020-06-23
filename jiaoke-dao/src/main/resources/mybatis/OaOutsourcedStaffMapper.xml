@@ -61,4 +61,12 @@
         from oa_outsourced_staff
         where wage_statistics_id = #{wageStatisticsId}
     </select>
+
+    <delete id="deleteByWageStatisticsId" parameterType="java.lang.Integer">
+        DELETE
+        FROM
+            `oa_outsourced_staff`
+        WHERE
+            wage_statistics_id = #{wageStatisticsId}
+    </delete>
 </mapper>

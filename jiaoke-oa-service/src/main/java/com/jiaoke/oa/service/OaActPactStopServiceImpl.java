@@ -48,8 +48,8 @@ public class OaActPactStopServiceImpl implements OaActPactStopService {
             oaCollaboration.setTable("oa_act_pact_stop");
             oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("劳务协议终止通知书");
-            oaCollaboration.setDataOne("合同剩余天数：" + oaActPactStop.getNumber());
-            oaCollaboration.setDataTwo("通知人：" + notifier);
+            oaCollaboration.setDataOne("合同剩余天数:" + oaActPactStop.getNumber());
+            oaCollaboration.setDataTwo("通知人:" + notifier);
             oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);

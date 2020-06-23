@@ -74,8 +74,9 @@ public class QualityGradingUtil {
             List<Map<String,String>> gradingList =  qualityDataMontoringDao.selectGradingBycrewNumAndRationNum(crewNum,rationNum,proDate);
 
 
-            //取出粗的再生，细的再生，添加剂 通知单配比
+            //取出粗的再生，中的再生、细的再生，添加剂 通知单配比
             String regenerateRoughRation = String.valueOf(list.get(i).get("ratio_regenerate2"));
+            String regenerateMiddleRation = String.valueOf(list.get(i).get("ratio_regenerate3"));
             String regenerateThinRation = String.valueOf(list.get(i).get("ratio_regenerate1"));
             String additiveRation = String.valueOf(list.get(i).get("ratio_additive"));
 
@@ -83,15 +84,17 @@ public class QualityGradingUtil {
             //计算矿料总量
             float breezeTotal;
             float regenerateRough = 0;
+            float regenerateMiddle = 0;
             float regenerateThin = 0;
-            float regenerateRationCondition = Float.parseFloat(regenerateRoughRation) + Float.parseFloat(regenerateThinRation);
+            float regenerateRationCondition = Float.parseFloat(regenerateRoughRation) + Float.parseFloat(regenerateMiddleRation) + Float.parseFloat(regenerateThinRation);
             if (regenerateRationCondition > 0){
-               regenerateRough = Float.parseFloat(regenerate)/(Float.parseFloat(regenerateRoughRation) + Float.parseFloat(regenerateThinRation))*Float.parseFloat(regenerateRoughRation);
-               regenerateThin = Float.parseFloat(regenerate)/(Float.parseFloat(regenerateRoughRation) + Float.parseFloat(regenerateThinRation)) * Float.parseFloat(regenerateThinRation);
+               regenerateRough = Float.parseFloat(regenerate)/regenerateRationCondition*Float.parseFloat(regenerateRoughRation);
+               regenerateMiddle = Float.parseFloat(regenerate)/regenerateRationCondition*Float.parseFloat(regenerateMiddleRation);
+               regenerateThin = Float.parseFloat(regenerate)/regenerateRationCondition * Float.parseFloat(regenerateThinRation);
             }
 
             float additiveGrading = Float.parseFloat(additive);
-            breezeTotal = Float.parseFloat(aggregate1) + Float.parseFloat(stone) + regenerateRough + regenerateThin + Float.parseFloat(additive);
+            breezeTotal = Float.parseFloat(aggregate1) + Float.parseFloat(stone) + regenerateRough + regenerateMiddle + regenerateThin + Float.parseFloat(additive);
 
             //计算实际配合比
             float aggregate6Real = Float.parseFloat(aggregate6)/breezeTotal;
@@ -102,6 +105,7 @@ public class QualityGradingUtil {
             float aggregate1Real = (Float.parseFloat(aggregate1) - Float.parseFloat(aggregate2))/breezeTotal;
             float stoneReal =  Float.parseFloat(stone)/breezeTotal;
             float regenerateRoughReal = regenerateRough/breezeTotal;
+            float regenerateMiddleReal = regenerateMiddle/breezeTotal;
             float regenerateThinReal = regenerateThin/breezeTotal;
             float additiveReal = additiveGrading/breezeTotal;
 
@@ -117,6 +121,7 @@ public class QualityGradingUtil {
                 String repertoryOne = String.valueOf(gradingList.get(j).get("repertory_one_grading"));
                 String breezeGrading = String.valueOf(gradingList.get(j).get("breeze_grading"));
                 String roughRegenerate = String.valueOf(gradingList.get(j).get("rough_regenerate_grading"));
+                String middleRegenerate = String.valueOf(gradingList.get(j).get("middle_regenerate_grading"));
                 String thinRegenerate = String.valueOf(gradingList.get(j).get("thin_regenerate_grading"));
                 String additiveG = String.valueOf(gradingList.get(j).get("additive_grading"));
 
@@ -136,10 +141,11 @@ public class QualityGradingUtil {
                 float repertory1 =  aggregate1Real*Float.parseFloat(repertoryOne);
                 float breeze =  stoneReal*Float.parseFloat(breezeGrading);
                 float roughRegenerate1 =  regenerateRoughReal*Float.parseFloat(roughRegenerate);
+                float midRegenerate1 =  regenerateRoughReal*Float.parseFloat(middleRegenerate);
                 float thinRegenerate1 =  regenerateThinReal*Float.parseFloat(thinRegenerate);
                 float additiveG1 =  additiveReal*Float.parseFloat(additiveG);
 
-                Float realGrading = repertory6 + repertory5 + repertory4 + repertory3 + repertory2 + repertory1 + breeze + roughRegenerate1 + thinRegenerate1 + additiveG1;
+                Float realGrading = repertory6 + repertory5 + repertory4 + repertory3 + repertory2 + repertory1 + breeze + roughRegenerate1 + midRegenerate1 +  thinRegenerate1 + additiveG1;
 
                 //添加真实级配
                 Map<String,String> map = new HashMap<>();
@@ -222,6 +228,7 @@ public class QualityGradingUtil {
 
             //取出粗的再生，细的再生，添加剂 通知单配比
             String regenerateRoughRation = String.valueOf(list.get(i).get("ratio_regenerate2"));
+            String regenerateMiddleRation = String.valueOf(list.get(i).get("ratio_regenerate3"));
             String regenerateThinRation = String.valueOf(list.get(i).get("ratio_regenerate1"));
             String additiveRation = String.valueOf(list.get(i).get("ratio_additive"));
 
@@ -229,15 +236,17 @@ public class QualityGradingUtil {
             //计算矿料总量
             float breezeTotal;
             float regenerateRough = 0;
+            float regenerateMiddle = 0;
             float regenerateThin = 0;
-            float regenerateRationCondition = Float.parseFloat(regenerateRoughRation) + Float.parseFloat(regenerateThinRation);
+            float regenerateRationCondition = Float.parseFloat(regenerateRoughRation) + Float.parseFloat(regenerateThinRation)+ Float.parseFloat(regenerateMiddleRation);
             if (regenerateRationCondition > 0){
-                regenerateRough = Float.parseFloat(regenerate)/(Float.parseFloat(regenerateRoughRation) + Float.parseFloat(regenerateThinRation))*Float.parseFloat(regenerateRoughRation);
-                regenerateThin = Float.parseFloat(regenerate)/(Float.parseFloat(regenerateRoughRation) + Float.parseFloat(regenerateThinRation)) * Float.parseFloat(regenerateThinRation);
+                regenerateRough = Float.parseFloat(regenerate)/regenerateRationCondition*Float.parseFloat(regenerateRoughRation);
+                regenerateMiddle = Float.parseFloat(regenerate)/regenerateRationCondition*Float.parseFloat(regenerateMiddleRation);
+                regenerateThin = Float.parseFloat(regenerate)/regenerateRationCondition * Float.parseFloat(regenerateThinRation);
             }
 
             float additiveGrading = Float.parseFloat(additive);
-            breezeTotal = Float.parseFloat(aggregate1) + Float.parseFloat(stone) + regenerateRough + regenerateThin + Float.parseFloat(additive);
+            breezeTotal = Float.parseFloat(aggregate1) + Float.parseFloat(stone) + regenerateRough + regenerateMiddle + regenerateThin + Float.parseFloat(additive);
 
             //计算实际配合比
             float aggregate6Real = Float.parseFloat(aggregate6)/breezeTotal;
@@ -248,6 +257,7 @@ public class QualityGradingUtil {
             float aggregate1Real = (Float.parseFloat(aggregate1) - Float.parseFloat(aggregate2))/breezeTotal;
             float stoneReal =  Float.parseFloat(stone)/breezeTotal;
             float regenerateRoughReal = regenerateRough/breezeTotal;
+            float regenerateMiddleReal = regenerateMiddle/breezeTotal;
             float regenerateThinReal = regenerateThin/breezeTotal;
             float additiveReal = additiveGrading/breezeTotal;
 
@@ -263,6 +273,7 @@ public class QualityGradingUtil {
                 String repertoryOne = String.valueOf(gradingList.get(j).get("repertory_one_grading"));
                 String breezeGrading = String.valueOf(gradingList.get(j).get("breeze_grading"));
                 String roughRegenerate = String.valueOf(gradingList.get(j).get("rough_regenerate_grading"));
+                String middleRegenerate = String.valueOf(gradingList.get(j).get("middle_regenerate_grading"));
                 String thinRegenerate = String.valueOf(gradingList.get(j).get("thin_regenerate_grading"));
                 String additiveG = String.valueOf(gradingList.get(j).get("additive_grading"));
 
@@ -282,10 +293,11 @@ public class QualityGradingUtil {
                 float repertory1 =  aggregate1Real*Float.parseFloat(repertoryOne);
                 float breeze =  stoneReal*Float.parseFloat(breezeGrading);
                 float roughRegenerate1 =  regenerateRoughReal*Float.parseFloat(roughRegenerate);
-                float thinRegenerate1 =  regenerateThinReal*Float.parseFloat(thinRegenerate);
+                float middleRegenerate1 =  regenerateRoughReal*Float.parseFloat(middleRegenerate);
+                float thinRegenerate1 =  regenerateMiddleReal*Float.parseFloat(thinRegenerate);
                 float additiveG1 =  additiveReal*Float.parseFloat(additiveG);
 
-                Float realGrading = repertory6 + repertory5 + repertory4 + repertory3 + repertory2 + repertory1 + breeze + roughRegenerate1 + thinRegenerate1 + additiveG1;
+                Float realGrading = repertory6 + repertory5 + repertory4 + repertory3 + repertory2 + repertory1 + breeze + roughRegenerate1 + middleRegenerate1 +  thinRegenerate1 + additiveG1;
 
                 //添加真实级配
                 Map<String,String> map = new HashMap<>();

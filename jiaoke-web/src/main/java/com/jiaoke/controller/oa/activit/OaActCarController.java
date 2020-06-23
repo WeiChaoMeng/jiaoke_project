@@ -5,10 +5,7 @@ import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
 import com.jiaoke.controller.oa.TargetFlowNodeCommand;
-import com.jiaoke.oa.bean.Comments;
-import com.jiaoke.oa.bean.OaActCar;
-import com.jiaoke.oa.bean.OaActLicenceUse;
-import com.jiaoke.oa.bean.UserInfo;
+import com.jiaoke.oa.bean.*;
 import com.jiaoke.oa.service.DepartmentService;
 import com.jiaoke.oa.service.OaActCarService;
 import com.jiaoke.oa.service.OaCollaborationService;
@@ -173,8 +170,29 @@ public class OaActCarController {
     public String approvalApi(String id, String taskId) {
         HashMap<String, Object> map = new HashMap<>(16);
         OaActCar oaActCar = oaActCarService.selectByPrimaryKey(id);
+
         String nickname = getCurrentUser().getNickname();
+
+        String principal;
+        String principalT = null;
+        String departmentId = userInfoService.selectDepartmentByUserId(oaActCar.getPromoter());
+        if ("single".equals(oaActCar.getDepartmentPrincipal())){
+            String principalId = departmentService.selectEnforcerId("principal", departmentId);
+            principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        }else if (oaActCar.getDepartmentPrincipal().contains(",")){
+            String[] split = oaActCar.getDepartmentPrincipal().split(",");
+            principal = userInfoService.getNicknameById(Integer.valueOf(split[0]));
+            principalT = userInfoService.getNicknameById(Integer.valueOf(split[1]));
+        }else{
+            principal = userInfoService.getNicknameById(Integer.valueOf(oaActCar.getDepartmentPrincipal()));
+        }
+
+        String lookup = userInfoService.getUserInfoByPermission("lookup").getNickname();
+
         map.put("nickname", nickname);
+        map.put("principal", principal);
+        map.put("principalT", principalT);
+        map.put("lookup", lookup);
         map.put("car", oaActCar);
         map.put("taskId", taskId);
         return JSON.toJSONString(map);
@@ -445,6 +463,41 @@ public class OaActCarController {
         model.addAttribute("commentsList", commentsList);
         model.addAttribute("commentsListSize", commentsList.size());
         return "oa/act/act_car_details";
+    }
+
+    /**
+     * app获取详细信息
+     *
+     * @param id id
+     * @return json
+     */
+    @RequestMapping(value = "/details.api")
+    @ResponseBody
+    public String cardDetailsApi(String id) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActCar oaActCar = oaActCarService.selectByPrimaryKey(id);
+
+        String principal;
+        String principalT = null;
+        String departmentId = userInfoService.selectDepartmentByUserId(oaActCar.getPromoter());
+        if ("single".equals(oaActCar.getDepartmentPrincipal())){
+            String principalId = departmentService.selectEnforcerId("principal", departmentId);
+            principal = userInfoService.getNicknameById(Integer.valueOf(principalId));
+        }else if (oaActCar.getDepartmentPrincipal().contains(",")){
+            String[] split = oaActCar.getDepartmentPrincipal().split(",");
+            principal = userInfoService.getNicknameById(Integer.valueOf(split[0]));
+            principalT = userInfoService.getNicknameById(Integer.valueOf(split[1]));
+        }else{
+            principal = userInfoService.getNicknameById(Integer.valueOf(oaActCar.getDepartmentPrincipal()));
+        }
+
+        String lookup = userInfoService.getUserInfoByPermission("lookup").getNickname();
+
+        map.put("principal", principal);
+        map.put("principalT", principalT);
+        map.put("lookup", lookup);
+        map.put("car", oaActCar);
+        return JsonHelper.toJSONString(map);
     }
 
     /**

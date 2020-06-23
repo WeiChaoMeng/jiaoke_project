@@ -41,4 +41,12 @@ public interface OaOutsourcedStaffMapper {
      * @return list
      */
     List<OaOutsourcedStaff> selectOutsourcedStaffByWageStatisticsId(int wageStatisticsId);
+
+    /**
+     * 根据关联表主键删除
+     *
+     * @param wageStatisticsId wageStatisticsId
+     * @return int
+     */
+    int deleteByWageStatisticsId(Integer wageStatisticsId);
 }

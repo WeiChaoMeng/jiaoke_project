@@ -294,6 +294,7 @@
                T1.crew1_modele_id,
                T1.crew2_modele_id,
                T1.ratio_regenerate2,
+               T1.ratio_regenerate3,
                T1.create_time
         FROM
              (
@@ -482,6 +483,7 @@
                T1.crew1_modele_id,
                T1.crew2_modele_id,
                T1.ratio_regenerate2,
+               T1.ratio_regenerate3,
                T1.create_time
         FROM
              (

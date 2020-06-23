@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * 工资统计
+ * 正式工资统计
  *
  * @author lihui
  * @version 1.0
@@ -16,17 +16,14 @@ import java.util.List;
  */
 @Repository
 public interface OaPersonalWagesMapper {
-    int deleteByPrimaryKey(Integer id);
 
-    int insert(OaPersonalWages record);
-
-    int insertSelective(OaPersonalWages record);
-
-    OaPersonalWages selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(OaPersonalWages record);
-
-    int updateByPrimaryKey(OaPersonalWages record);
+    /**
+     * 根据管理id删除
+     *
+     * @param wageStatisticsId wageStatisticsId
+     * @return int
+     */
+    int deleteByWageStatisticsId(Integer wageStatisticsId);
 
     /**
      * 批量插入
@@ -57,30 +54,18 @@ public interface OaPersonalWagesMapper {
                                       @Param("sendState") int sendState);
 
     /**
-     * 通过工资统计Id得到总数
-     *
-     * @param wageStatisticsId 工资统计id
-     * @return total
-     */
-    int getTotalByWageStatisticsId(int wageStatisticsId);
-
-    /**
-     * 通过工资统计Id获得分页
-     *
-     * @param wageStatisticsId 工资统计id
-     * @param start            start
-     * @param rows             rows
-     * @return list
-     */
-    List<OaPersonalWages> getPagingByWageStatisticsId(@Param("wageStatisticsId") int wageStatisticsId,
-                                                      @Param("start") int start,
-                                                      @Param("rows") int rows);
-
-    /**
      * 根据登录人昵称获取工资
      *
      * @param nickName 登录人昵称
      * @return OaPersonalWages
      */
     OaPersonalWages getPersonalWagesByNickName(String nickName);
+
+    /**
+     * 根据统计ID查询数据
+     *
+     * @param wageStatisticsId wageStatisticsId
+     * @return list
+     */
+    List<OaPersonalWages> selectRegularStaffByWageStatisticsId(int wageStatisticsId);
 }

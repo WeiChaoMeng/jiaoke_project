@@ -620,7 +620,7 @@ public class QualityWarningUtil {
                 ratioTemplate.getRepertoryOne(),
                 ratioTemplate.getBreeze(),
                 ratioTemplate.getRatioStone(),
-                ratioTemplate.getRatioRegenerate1() + ratioTemplate.getRatioRegenerate2(),
+                ratioTemplate.getRatioRegenerate1() + ratioTemplate.getRatioRegenerate2()+ ratioTemplate.getRatioRegenerate3(),
                 ratioTemplate.getRatioAdditive()};
 
 

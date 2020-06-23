@@ -52,6 +52,7 @@ public class FilesUploadHandle {
         ArrayList<Map<String, Object>> list = new ArrayList<>();
 
         for (int i = 0; i < files.length; i++) {
+            String uuid = UUID.randomUUID().toString().replace("-", "");
             Map<String, Object> map = new HashMap<>(16);
             //消息提示
             String message = "";
@@ -70,10 +71,14 @@ public class FilesUploadHandle {
                     return;
                 }
                 filename = filename.substring(filename.lastIndexOf("\\") + 1);
-                String fileExtName = filename.substring(filename.lastIndexOf(".") + 1);
+                String fileSuffixName = filename.substring(filename.lastIndexOf("."));
                 InputStream in = files[i].getInputStream();
-                String saveFilename = makeFileName(filename);
-                FileOutputStream out = new FileOutputStream(FILE_PATH +  saveFilename);
+//                String saveFilename = makeFileName(filename);
+                String saveFilename = uuid + "_" + filename;
+
+//                String serverFilename = makeSuffixName(fileSuffixName);
+                String serverFilename = uuid + fileSuffixName;
+                FileOutputStream out = new FileOutputStream(FILE_PATH +  serverFilename);
                 byte buffer[] = new byte[1024];
                 int len = 0;
                 while ((len = in.read(buffer)) > 0) {
@@ -84,6 +89,7 @@ public class FilesUploadHandle {
 
                 map.put("message", "success");
                 map.put("filePaths", saveFilename);
+                map.put("serverPaths", serverFilename);
                 map.put("originalName", filename);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -196,6 +202,15 @@ public class FilesUploadHandle {
     private String makeFileName(String filename) {  //2.jpg
         //为防止文件覆盖的现象发生，要为上传文件产生一个唯一的文件名
         return UUID.randomUUID().toString().replace("-", "") + "_" + filename;
+    }
+
+    /**
+     * @param fileSuffixName 文件的后缀名称
+     * @return uuid+"_"+文件的原始名称
+     */
+    private String makeSuffixName(String fileSuffixName) {  //2.jpg
+        //为防止文件覆盖的现象发生，要为上传文件产生一个唯一的文件名
+        return UUID.randomUUID().toString().replace("-", "") + fileSuffixName;
     }
 
     /**

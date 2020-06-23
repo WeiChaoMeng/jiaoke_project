@@ -20,6 +20,165 @@
 
     <div class="production-zone"></div>
 
+    <div class="monitor-preview-view1" id="monitorPreviewView1">
+        <div class="monitor-preview-view-name">1号机组操作间</div>
+        <img class="monitor-preview-view-close" src="../../../static/images/security/close.png" onclick="closeMonitorPreviewView1()">
+        <div style="height: calc(100% - 30px);">
+            <div class="crew-content-row">
+                <div class="crew-content-passage">
+                    <img src="../../../static/cockpit/img/passage/aisle1-1.jpg" onclick="guard('760303618','1')">
+                </div>
+
+                <div class="crew-content-passage">
+                    <img src="../../../static/cockpit/img/passage/aisle1-2.jpg" onclick="guard('760303618','2')">
+                </div>
+
+                <div class="crew-content-passage">
+                    <img src="../../../static/cockpit/img/passage/aisle1-3.jpg" onclick="guard('760303618','3')">
+                </div>
+
+                <div class="crew-content-passage" style="margin: 0">
+                    <img src="../../../static/cockpit/img/passage/aisle1-4.jpg" onclick="guard('760303618','4')">
+                </div>
+            </div>
+
+            <div class="crew-content-row">
+                <div class="crew-content-passage">
+                    <img src="../../../static/cockpit/img/passage/aisle1-5.jpg" onclick="guard('760303618','5')">
+                </div>
+
+                <div class="crew-content-passage">
+                    <img src="../../../static/cockpit/img/passage/aisle1-6.jpg" onclick="guard('760303618','6')">
+                </div>
+
+                <div class="crew-content-passage">
+                    <img src="../../../static/cockpit/img/passage/aisle1-7.jpg" onclick="guard('760303618','7')">
+                </div>
+
+                <div class="crew-content-passage" style="margin: 0">
+                    <img src="../../../static/cockpit/img/passage/aisle1-8.jpg" onclick="guard('760303618','8')">
+                </div>
+            </div>
+
+            <div class="crew-content-row">
+                <div class="crew-content-passage">
+                    <img src="../../../static/cockpit/img/passage/aisle1-9.jpg" onclick="guard('760303618','9')">
+                </div>
+
+                <div class="crew-content-passage">
+                    <img src="../../../static/cockpit/img/passage/aisle1-10.jpg" onclick="guard('760303618','10')">
+                </div>
+
+                <div class="crew-content-passage">
+                    <img src="../../../static/cockpit/img/passage/aisle1-11.jpg" onclick="guard('760303618','11')">
+                </div>
+
+                <div class="crew-content-passage" style="margin: 0">
+                    <img src="../../../static/cockpit/img/passage/aisle1-12.jpg" onclick="guard('760303618','12')">
+                </div>
+            </div>
+
+            <div class="crew-content-row">
+                <div class="crew-content-passage">
+                    <img src="../../../static/cockpit/img/passage/aisle1-13.jpg" onclick="guard('760303618','13')">
+                </div>
+
+                <div class="crew-content-passage">
+                    <img src="../../../static/cockpit/img/passage/aisle1-14.jpg" onclick="guard('760303618','14')">
+                </div>
+
+                <div class="crew-content-passage">
+                    <img src="../../../static/cockpit/img/passage/aisle1-15.jpg" onclick="guard('760303618','15')">
+                </div>
+
+                <div class="crew-content-passage" style="margin: 0">
+                    <img src="../../../static/cockpit/img/passage/aisle1-16.jpg" onclick="guard('760303618','16')">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <img src="../../../static/cockpit/img/passage/crew1.png" style="position: absolute;left: 73%;top: 66%;" title="1号机组"  onclick="openMonitorPreviewView1()">
+
+    <div class="monitor-preview-view1" id="monitorPreviewView2">
+        <div class="monitor-preview-view-name">2号机组操作间</div>
+        <img class="monitor-preview-view-close" src="../../../static/images/security/close.png" onclick="closeMonitorPreviewView2()">
+        <div style="height: calc(100% - 30px);">
+            <div class="crew-content-row">
+                <div class="crew-content-passage">
+                    <img src="../../../static/cockpit/img/passage/aisle2-1.jpg" onclick="guard('C60480112','1')">
+                </div>
+
+                <div class="crew-content-passage">
+                    <img src="../../../static/cockpit/img/passage/aisle2-2.jpg" onclick="guard('C60480112','2')">
+                </div>
+
+                <div class="crew-content-passage">
+                    <img src="../../../static/cockpit/img/passage/aisle2-3.jpg" onclick="guard('C60480112','3')">
+                </div>
+
+                <div class="crew-content-passage" style="margin: 0">
+                    <img src="../../../static/cockpit/img/passage/aisle2-4.jpg" onclick="guard('C60480112','4')">
+                </div>
+            </div>
+
+            <div class="crew-content-row">
+                <div class="crew-content-passage">
+                    <img src="../../../static/cockpit/img/passage/aisle2-5.jpg" onclick="guard('C60480112','5')">
+                </div>
+
+                <div class="crew-content-passage">
+                    <img src="../../../static/cockpit/img/passage/aisle2-6.jpg" onclick="guard('C60480112','6')">
+                </div>
+
+                <div class="crew-content-passage">
+                    <img src="../../../static/cockpit/img/passage/aisle2-7.jpg" onclick="guard('C60480112','7')">
+                </div>
+
+                <div class="crew-content-passage" style="margin: 0">
+                    <img src="../../../static/cockpit/img/passage/aisle2-8.jpg" onclick="guard('C60480112','8')">
+                </div>
+            </div>
+
+            <div class="crew-content-row">
+                <div class="crew-content-passage">
+                    <img src="../../../static/cockpit/img/passage/aisle2-9.jpg" onclick="guard('C60480112','9')">
+                </div>
+
+                <div class="crew-content-passage">
+                    <img src="../../../static/cockpit/img/passage/aisle2-10.jpg" onclick="guard('C60480112','10')">
+                </div>
+
+                <div class="crew-content-passage">
+                    <img src="../../../static/cockpit/img/passage/aisle2-11.jpg" onclick="guard('C60480112','11')">
+                </div>
+
+                <div class="crew-content-passage" style="margin: 0">
+                    <img src="../../../static/cockpit/img/passage/aisle2-12.jpg" onclick="guard('C60480112','12')">
+                </div>
+            </div>
+
+            <div class="crew-content-row">
+                <div class="crew-content-passage">
+                    <img src="../../../static/cockpit/img/passage/aisle2-13.jpg" onclick="guard('C60480112','13')">
+                </div>
+
+                <div class="crew-content-passage">
+                    <img src="../../../static/cockpit/img/passage/aisle2-14.jpg" onclick="guard('C60480112','14')">
+                </div>
+
+                <div class="crew-content-passage">
+                    <img src="../../../static/cockpit/img/passage/aisle2-15.jpg" onclick="guard('C60480112','15')">
+                </div>
+
+                <div class="crew-content-passage" style="margin: 0">
+                    <img src="../../../static/cockpit/img/passage/aisle2-16.jpg" onclick="guard('C60480112','16')">
+                </div>
+            </div>
+        </div>
+    </div>
+    <img src="../../../static/cockpit/img/passage/crew2.png" style="position: absolute;left: 84%;top: 66%;" title="2号机组" onclick="openMonitorPreviewView2()">
+
     <shiro:hasPermission name="D1303461201">
         <div class="dyndmkn-region">
             <img class="dyndmkn-position" onclick="guard('D13034612','1')" title="东院南大门口内"
@@ -811,6 +970,26 @@
                 layer.msg("出错！");
             }
         });
+    }
+
+    //1号机监控视图
+    function openMonitorPreviewView1() {
+        $('#monitorPreviewView2').css('display','none');
+        $('#monitorPreviewView1').css('display','block');
+    }
+
+    function closeMonitorPreviewView1() {
+        $('#monitorPreviewView1').css('display','none');
+    }
+
+    //2号机监控视图
+    function openMonitorPreviewView2() {
+        $('#monitorPreviewView1').css('display','none');
+        $('#monitorPreviewView2').css('display','block');
+    }
+
+    function closeMonitorPreviewView2() {
+        $('#monitorPreviewView2').css('display','none');
     }
 </script>
 </html>

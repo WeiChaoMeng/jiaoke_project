@@ -1,5 +1,6 @@
 package com.jiaoke.controller.oa.activit;
 
+import com.alibaba.fastjson.JSON;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.controller.oa.ActivitiUtil;
@@ -11,6 +12,7 @@ import com.jiaoke.oa.service.OaCollaborationService;
 import com.jiaoke.oa.service.UserInfoService;
 import org.activiti.bpmn.model.UserTask;
 import org.activiti.engine.ManagementService;
+import org.activiti.engine.TaskService;
 import org.activiti.engine.task.Task;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
@@ -52,6 +54,9 @@ public class OaActRewardsPenaltiesController {
 
     @Resource
     private ManagementService managementService;
+
+    @Resource
+    private TaskService taskService;
 
     /**
      * 获取当前登录用户信息
@@ -99,6 +104,50 @@ public class OaActRewardsPenaltiesController {
             }
             return "error";
         }
+    }
+
+    /**
+     * app获取审批页面信息
+     *
+     * @param id     id
+     * @param taskId taskId
+     * @return json
+     */
+    @RequestMapping(value = "/approval.api")
+    @ResponseBody
+    public String approvalApi(String id, String taskId) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActRewardsPenalties oaActRewardsPenalties = oaActRewardsPenaltiesService.selectByPrimaryKey(id);
+
+        String nickname = getCurrentUser().getNickname();
+
+        //权限
+        List<Permission> permissionList = userInfoService.getPermissionsByUserInfoId(getCurrentUser().getId());
+        //人事
+        String personnelCensor = userInfoService.getUserInfoByPermission("personnel_censor").getNickname();
+        //人事主管
+        String personnel = userInfoService.getUserInfoByPermission("personnel").getNickname();
+        //主要领导（总经理）
+        String companyPrincipal = userInfoService.getUserInfoByPermission("company_principal").getNickname();
+
+        String supervisorCountersignMember = "";
+        if (oaActRewardsPenalties.getSupervisorCountersign() != null) {
+            Task task = activitiUtil.getTaskByTaskId(taskId);
+            String nextNode = activitiUtil.getNextNode(task.getProcessDefinitionId(), task.getTaskDefinitionKey());
+            if ("countersignEG".equals(nextNode)){
+                supervisorCountersignMember = "yes";
+            }
+        }
+
+        map.put("nickname", nickname);
+        map.put("permissionList", permissionList);
+        map.put("personnelCensor", personnelCensor);
+        map.put("personnel", personnel);
+        map.put("companyPrincipal", companyPrincipal);
+        map.put("supervisorCountersignMember", supervisorCountersignMember);
+        map.put("taskId", taskId);
+        map.put("rewardsPenalties", oaActRewardsPenalties);
+        return JSON.toJSONString(map);
     }
 
     /**
@@ -387,6 +436,57 @@ public class OaActRewardsPenaltiesController {
             }
         }
         return url;
+    }
+
+    /**
+     * app获取详细信息
+     *
+     * @param id id
+     * @return json
+     */
+    @RequestMapping(value = "/details.api")
+    @ResponseBody
+    public String cardDetailsApi(String id, String taskId) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        OaActRewardsPenalties oaActRewardsPenalties = oaActRewardsPenaltiesService.selectByPrimaryKey(id);
+
+        //权限
+        List<Permission> permissionList = userInfoService.getPermissionsByUserInfoId(getCurrentUser().getId());
+        //人事
+        String personnelCensor = userInfoService.getUserInfoByPermission("personnel_censor").getNickname();
+        //人事主管
+        String personnel = userInfoService.getUserInfoByPermission("personnel").getNickname();
+        //主要领导（总经理）
+        String companyPrincipal = userInfoService.getUserInfoByPermission("company_principal").getNickname();
+
+        if (oaActRewardsPenalties.getSupervisorCountersign() != null){
+            List<Task> taskList = taskService.createTaskQuery().processInstanceId(taskId).list();
+            if (taskList.size() > 0){
+                for (Task task1 : taskList) {
+                    if (task1 == null){
+                        map.put("supervisorCountersignMember","");
+                    } else {
+                        Task task = activitiUtil.getTaskByTaskId(task1.getId());
+                        String nextNode = activitiUtil.getNextNode(task.getProcessDefinitionId(), task.getTaskDefinitionKey());
+                        if ("countersignEG".equals(nextNode)){
+                            map.put("supervisorCountersignMember","yes");
+                        }else {
+                            map.put("supervisorCountersignMember","");
+                        }
+                    }
+                }
+            }else{
+                map.put("supervisorCountersignMember","");
+            }
+        }
+
+        map.put("permissionList", permissionList);
+        map.put("personnelCensor", personnelCensor);
+        map.put("personnel", personnel);
+        map.put("companyPrincipal", companyPrincipal);
+        map.put("taskId", taskId);
+        map.put("rewardsPenalties", oaActRewardsPenalties);
+        return JSON.toJSONString(map);
     }
 
     /**

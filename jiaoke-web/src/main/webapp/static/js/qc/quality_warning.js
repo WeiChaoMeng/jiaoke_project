@@ -542,11 +542,77 @@ function returnArrayToJson(json) {
     return array;
 }
 
-
 //排序
 function sortNumber(a, b)
 {
     return a[0] - b[0]
+}
+
+function returnX(key) {
+    var s = 0;
+    key = key +'';
+    switch (key) {
+        case '0.312':
+            s = 0.075;
+            break;
+        case '0.426':
+            s = 0.15;
+            break;
+        case '0.582':
+            s = 0.3;
+            break;
+        case '0.795':
+            s = 0.6;
+            break;
+        case '1.007':
+            s = 1.18;
+            break;
+        case '1.472':
+            s = 2.36;
+            break;
+        case '2.016':
+            s = 4.75;
+            break;
+        case '2.354':
+            s = 6.7;
+            break;
+        case '2.4':
+            s = 7.0;
+            break;
+        case '2.431':
+            s = 7.2;
+            break;
+        case '2.754':
+            s = 9.5;
+            break;
+        case '3.193':
+            s = 13.2;
+            break;
+
+        case '3.482':
+            s = 16;
+            break;
+        case '3.762':
+            s = 19;
+            break;
+        case '4.37':
+            s = 26.5;
+            break;
+        case '4.723':
+            s = 31.5;
+            break;
+        case '5.109':
+            s = 37.5;
+            break;
+        case '5.969':
+            s = 53;
+            break;
+        case '6.452':
+            s = 63;
+            break;
+    }
+
+    return s;
 }
 /******************************** Echart材料比渲染End********************************************/
 

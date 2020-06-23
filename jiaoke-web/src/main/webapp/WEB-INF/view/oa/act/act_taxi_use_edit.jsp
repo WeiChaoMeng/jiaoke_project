@@ -57,7 +57,7 @@
                         <c:forTokens items="${oaActTaxiUse.annex}" delims="," var="annex">
                             <div id="file${fn:substring(annex,0,annex.indexOf("_"))}" class="table-file">
                                 <div class="table-file-content">
-                                    <a class="table-file-title" href="/fileDownloadHandle/download?fileName=${annex}"
+                                    <a class="table-file-title" href="/fileDownloadHandle/download?fileName=${fn:substring(annex,0,annex.indexOf("_"))}${fn:substring(annex,annex.lastIndexOf("."),annex.length())}"
                                        title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}
                                     </a>
                                     <span class="delete-file" title="删除" onclick="whether('${annex}')"></span>
@@ -322,8 +322,8 @@
             var fileId = ret[i].filePaths.substring(0, ret[i].filePaths.indexOf("_"));
             annex += '<div id="file' + fileId + '" class="table-file">';
             annex += '<div class="table-file-content">';
-            annex += '<a class="table-file-title" href="/fileDownloadHandle/download?fileName=' + ret[i].filePaths + '" title="' + ret[i].originalName + '">' + ret[i].originalName + '</a>';
-            annex += '<span class="delete-file" title="删除" onclick="whether(\'' + ret[i].filePaths + '\')">&#xeabb;</span>';
+            annex += '<a class="table-file-title" href="/fileDownloadHandle/download?fileName=' + ret[i].serverPaths + '" title="' + ret[i].originalName + '">' + ret[i].originalName + '</a>';
+            annex += '<span class="delete-file" title="删除" onclick="whether(\'' + ret[i].serverPaths + '\',\'' + ret[i].originalName + '\')">&#xeabb;</span>';
             annex += '<input type="hidden" value="' + ret[i].filePaths + '">';
             annex += '</div>';
             annex += '</div>';
@@ -334,7 +334,13 @@
 
     //删除已上传附件
     function whether(fileName) {
-        window.top.deleteUploaded(fileName,itselfFrameId);
+        //文件路径
+        var name = fileName.substring(0,fileName.indexOf("_"));
+        var suffix = fileName.substring(fileName.lastIndexOf("."),fileName.length);
+
+        //文件名称
+        var originalName = fileName.substring(fileName.indexOf("_") + 1,fileName.lastIndexOf("."));
+        window.top.deleteUploaded(name + suffix,originalName,itselfFrameId);
     }
 
 
@@ -349,7 +355,7 @@
             },
             success: function (result) {
                 if (result === "success") {
-                    $('#file' + fileName.substring(0, fileName.indexOf("_"))).remove();
+                    $('#file' + fileName.substring(0, fileName.indexOf("."))).remove();
                     window.top.tips("删除成功！", 0, 1, 1000);
 
                     let annexesLen = $('#annexes').children().length;

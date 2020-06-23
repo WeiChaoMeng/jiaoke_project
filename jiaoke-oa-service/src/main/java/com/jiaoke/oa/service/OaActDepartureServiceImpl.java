@@ -49,8 +49,8 @@ public class OaActDepartureServiceImpl implements OaActDepartureService {
             oaCollaboration.setTable("oa_act_departure");
             oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("离职会签");
-            oaCollaboration.setDataOne("姓名：" + oaActDeparture.getName());
-            oaCollaboration.setDataTwo("离职日期：" + oaActDeparture.getDepartureDate());
+            oaCollaboration.setDataOne("姓名:" + oaActDeparture.getName());
+            oaCollaboration.setDataTwo("离职日期:" + oaActDeparture.getDepartureDate());
             oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);
@@ -87,8 +87,8 @@ public class OaActDepartureServiceImpl implements OaActDepartureService {
         oaActDeparture.setMaterialSupervisorRemark("");
         oaActDeparture.setFinancePrincipal("");
         oaActDeparture.setFinancePrincipalRemark("");
-        oaActDeparture.setFinanceSupervisor("'");
-        oaActDeparture.setFinanceSupervisorRemark("'");
+        oaActDeparture.setFinanceSupervisor("");
+        oaActDeparture.setFinanceSupervisorRemark("");
         oaActDeparture.setCompanyPrincipal("");
         oaActDeparture.setCompanyPrincipalRemark("");
         oaActDeparture.setCreateTime(new Date());

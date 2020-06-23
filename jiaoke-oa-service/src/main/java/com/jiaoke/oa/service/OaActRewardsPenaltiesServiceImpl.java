@@ -49,6 +49,9 @@ public class OaActRewardsPenaltiesServiceImpl implements OaActRewardsPenaltiesSe
             oaCollaboration.setUrl("rewardsPenalties");
             oaCollaboration.setTable("oa_act_rewards_penalties");
             oaCollaboration.setStatusCode("协同");
+            oaCollaboration.setName("奖罚意见表");
+            oaCollaboration.setDataOne("奖罚月份:" + oaActRewardsPenalties.getMonth());
+            oaCollaboration.setDataTwo("申请时间：" + DateUtil.dateConvertYYYYMMDDHHMMSS(new Date()));
             oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);

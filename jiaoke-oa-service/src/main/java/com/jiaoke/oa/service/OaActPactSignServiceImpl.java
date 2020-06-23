@@ -49,8 +49,8 @@ public class OaActPactSignServiceImpl implements OaActPactSignService {
             oaCollaboration.setTable("oa_act_pact_sign");
             oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("劳动合同签订、续订、变更、终止审批表");
-            oaCollaboration.setDataOne("通知时间：" + DateUtil.dateConvertYYYYMMDD(oaActPactSign.getCreateTime()));
-            oaCollaboration.setDataTwo("劳务协议到期时间：" + oaActPactSign.getStartDate());
+            oaCollaboration.setDataOne("通知时间:" + DateUtil.dateConvertYYYYMMDD(oaActPactSign.getCreateTime()));
+            oaCollaboration.setDataTwo("劳务协议到期时间:" + oaActPactSign.getStartDate());
             oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);

@@ -49,8 +49,8 @@ public class OaActAnnualLeaveServiceImpl implements OaActAnnualLeaveService {
             oaCollaboration.setTable("oa_act_annual_leave");
             oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("年休假审批");
-            oaCollaboration.setDataOne("享受休假天数" + oaActAnnualLeave.getPlanDate());
-            oaCollaboration.setDataTwo("累计享受休假天数" + oaActAnnualLeave.getTotal());
+            oaCollaboration.setDataOne("享受休假天数:" + oaActAnnualLeave.getPlanDate());
+            oaCollaboration.setDataTwo("累计享受休假天数:" + oaActAnnualLeave.getTotal());
             oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);

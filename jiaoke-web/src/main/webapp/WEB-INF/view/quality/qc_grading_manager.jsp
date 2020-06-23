@@ -125,6 +125,7 @@
                     <td>一仓</td>
                     <td>矿粉</td>
                     <td>粗再生料</td>
+                    <td>中再生料</td>
                     <td>细再生料</td>
                     <td>添加剂矿料</td>
                     <td>合成级配</td>
@@ -187,7 +188,6 @@
         <div id="result"></div>
         <div class="form_btn">
             <input type="button" onclick="sendGrading()" value="上传" class="ration_btn_cancel" style="padding-top: 0px">
-            <input type="button" onclick="closeGrading()" value="关闭" class="ration_btn_cancel">
         </div>
 
         </form>
@@ -237,6 +237,7 @@
                     <td>一仓</td>
                     <td>矿粉</td>
                     <td>粗再生料</td>
+                    <td>中再生料</td>
                     <td>细再生料</td>
                     <td>添加剂矿料</td>
                     <td>合成级配</td>
@@ -252,7 +253,6 @@
 
         <div class="form_btn">
             <input type="button" onclick="editGrading()" value="修改" class="ration_btn_cancel" style="padding-top: 0px">
-            <input type="button" onclick="closeEditGrading()" value="关闭" class="ration_btn_cancel">
         </div>
 
         </form>

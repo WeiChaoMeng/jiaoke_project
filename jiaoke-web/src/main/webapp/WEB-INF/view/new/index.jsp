@@ -788,13 +788,13 @@
                                 </a>
                                 <ul class="sub-menu">
                                     <li>
-                                        <a onclick="xadmin.add_tab('正式职工','wageStatistics/toRegularEmployee',true)">
+                                        <a onclick="xadmin.add_tab('正式职工','wageStatistics/toRegularStaff?page=1',true)">
                                             <i class="iconfont">&#xe6a7;</i>
                                             <cite>正式职工</cite>
                                         </a>
                                     </li>
                                     <li>
-                                        <a onclick="xadmin.add_tab('外包职工','wageStatistics/toOutsourcedStaff',true)">
+                                        <a onclick="xadmin.add_tab('外包职工','wageStatistics/toOutsourcingStaff?page=1',true)">
                                             <i class="iconfont">&#xe6a7;</i>
                                             <cite>外包职工</cite>
                                         </a>

@@ -103,7 +103,7 @@
         SELECT
                t1.*, 'crew1' AS 'crewNum',
                t2.produce_proportioning_num,
-        t2.produce_date,
+                t2.produce_date,
                t2.material_aggregate_1,
                t2.material_aggregate_2,
                t2.material_aggregate_3,
@@ -148,9 +148,7 @@
                                  quality_monitoring_realtime_${crewNum}
                             WHERE Id = ${id}
                             ) AS t2 ON t1.crew1_modele_id = t2.produce_proportioning_num
-                 INNER JOIN quality_proportioning_model AS t3
-                     ON t1.id = t3.message_id
-        WHERE YEAR(t3.create_time) = YEAR(t2.produce_date)
+        WHERE YEAR(t1.create_time) = YEAR(t2.produce_date)
     </select>
 
     <select id="selectGradingBycrewNumAndRationNum" resultType="java.util.Map">

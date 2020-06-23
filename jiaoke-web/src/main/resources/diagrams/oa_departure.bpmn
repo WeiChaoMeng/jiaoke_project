@@ -17,7 +17,7 @@
     </userTask>
     <sequenceFlow id="_11" sourceRef="d2" targetRef="end"/>
     <exclusiveGateway gatewayDirection="Unspecified" id="countersignEG" name="会签网关"/>
-    <userTask activiti:assignee="${humanAffairs}" activiti:exclusive="true" id="r3" name="人事"/>
+    <userTask activiti:assignee="${human_affairs}" activiti:exclusive="true" id="r3" name="人事"/>
     <sequenceFlow id="_4" name="不同意" sourceRef="countersignEG" targetRef="r3">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${whether == 1}]]></conditionExpression>
     </sequenceFlow>

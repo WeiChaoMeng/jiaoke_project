@@ -415,7 +415,7 @@
                         return sMax.toFixed(2);
                     },
                     min:function (v) {
-                        return (v.min - 0.5) < 0? 0:(v.min - 0.5).toFixed(1)
+                        return (${baseMap.template.ratioStone - 0.5}) < 0? 0:(${baseMap.template.ratioStone - 0.5}).toFixed(1)
                     },
                     axisLabel: {
                         formatter: '{value} %'

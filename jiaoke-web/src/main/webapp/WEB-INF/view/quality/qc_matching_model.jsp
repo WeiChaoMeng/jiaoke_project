@@ -269,10 +269,11 @@
                             </c:forEach>
                         </select>
                     </td>
-                    <td class="tlabels">再生料比1、2：</td>
+                    <td class="tlabels">再生料粗、中、细：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01" name="ratioRegenerate1" class="my_form_input" value="0.0">
-                        <input type="number" min="0.0" step="0.01" name="ratioRegenerate2" class="my_form_input" value="0.0">
+                        <input type="number" min="0.0" step="0.01" name="ratioRegenerate1" class="my_form_input" style="width: 54px;" value="0.0">
+                        <input type="number" min="0.0" step="0.01" name="ratioRegenerate3" class="my_form_input" style="width: 54px;" value="0.0">
+                        <input type="number" min="0.0" step="0.01" name="ratioRegenerate2" class="my_form_input" style="width: 54px;" value="0.0">
                     </td>
                 </tr>
 
@@ -320,7 +321,6 @@
 
             <div class="form_btn">
                 <input type="submit"  id="btn"  value="保存" class="btn_save">
-                <input type="button" onclick="closefrom()" value="关闭" class="btn_cancel">
             </div>
 
         </form>
@@ -411,11 +411,11 @@
 
 
                 <tr>
-
-                    <td class="ration_tlabels">再生料比1、2：</td>
+                    <td class="ration_tlabels">再生料粗、中、细：</td>
                     <td>
-                        <input type="number" disabled="disabled" data-value="ratioRegenerate1" class="ration_form_input" value="1">
-                        <input type="number" disabled="disabled" data-value="ratioRegenerate2" class="ration_form_input" value="1">
+                        <input type="number" disabled="disabled" data-value="ratioRegenerate1" class="ration_form_input" style="width: 54px;" value="1">
+                        <input type="number"  disabled="disabled" data-value="ratioRegenerate3"  class="ration_form_input" style="width: 54px;" value="1">
+                        <input type="number" disabled="disabled" data-value="ratioRegenerate2" class="ration_form_input" style="width: 54px;" value="1">
                     </td>
                     <td class="ration_tlabels">添加剂比：</td>
                     <td>
@@ -545,10 +545,11 @@
                         </c:forEach>
                     </select>
                 </td>
-                <td class="tlabels">再生料比1、2：</td>
+                <td class="tlabels">再生料粗、中、细：</td>
                 <td>
-                    <input type="number" min="0.0" step="0.01" data-value="ratioRegenerate1" name="ratioRegenerate1" class="my_form_input" value="0.0">
-                    <input type="number" min="0.0" step="0.01" data-value="ratioRegenerate2" name="ratioRegenerate2" class="my_form_input" value="0.0">
+                    <input type="number" min="0.0" step="0.01" data-value="ratioRegenerate1" name="ratioRegenerate1" class="my_form_input" style="width: 54px;" value="0.0">
+                    <input type="number" min="0.0" step="0.01" data-value="ratioRegenerate3" name="ratioRegenerate3" class="my_form_input" style="width: 54px;" value="0.0">
+                    <input type="number" min="0.0" step="0.01" data-value="ratioRegenerate2" name="ratioRegenerate2" class="my_form_input" style="width: 54px;" value="0.0">
                 </td>
             </tr>
 

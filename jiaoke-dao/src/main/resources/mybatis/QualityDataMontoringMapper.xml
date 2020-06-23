@@ -181,14 +181,8 @@
                  left JOIN
                      quality_proportioning_message AS QM
                      ON QR.produce_proportioning_num = QM.crew1_modele_id
-                 LEFT JOIN
-                     quality_proportioning_model AS QPM
-                     ON QM.id = QPM.message_id
-                 left JOIN
-                     quality_test_project AS QTP
-                     ON QR.produce_custom_num = QTP.client_num
         WHERE  QR.Id = (SELECT Id FROM quality_monitoring_realtime_data1 ORDER BY Id DESC LIMIT 1)
-          AND	YEAR(QPM.create_time) = YEAR(QR.produce_date)
+          AND	YEAR(QM.create_time) = YEAR(QR.produce_date)
         )
         UNION ALL
                 (
@@ -219,16 +213,9 @@
                          left JOIN
                              quality_proportioning_message AS QM
                              ON QR.produce_proportioning_num = QM.crew1_modele_id
-                         LEFT JOIN
-                             quality_proportioning_model AS QPM
-                             ON QM.id = QPM.message_id
-                         left JOIN
-                             quality_test_project AS QTP
-                             ON QR.produce_custom_num = QTP.client_num
                 WHERE  QR.Id = (SELECT Id FROM quality_monitoring_realtime_data2 ORDER BY Id DESC LIMIT 1)
-                  AND	YEAR(QPM.create_time) = YEAR(QR.produce_date)
+                  AND	YEAR(QM.create_time) = YEAR(QR.produce_date)
                 )
-
     </select>
 
     <select id="selectGradingBycrewNumAndRationNum" resultType="java.util.Map">

@@ -155,7 +155,7 @@ function editRatio(ratioId) {
         },
         dataType:"json",
         success:function (res) {
-
+debugger
             if (res == null || res == "") {
                 layer.msg('获取模板失败');
 
@@ -228,7 +228,6 @@ function showRatio( ratioId ) {
                 layer.msg('获取模板失败');
 
             }
-
             for (var k in res){
                 $("input[data-value='" +k + "']").val(res[k])
             }

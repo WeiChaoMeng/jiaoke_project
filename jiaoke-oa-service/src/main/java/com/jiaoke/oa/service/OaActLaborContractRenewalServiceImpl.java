@@ -48,8 +48,8 @@ public class OaActLaborContractRenewalServiceImpl implements OaActLaborContractR
             oaCollaboration.setTable("oa_act_labor_contract_renewal");
             oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("劳务派遣员工协议签订、续订、变更、终止审批");
-            oaCollaboration.setDataOne("通知时间：" + DateUtil.dateConvertYYYYMMDD(oaActLaborContractRenewal.getCreateTime()));
-            oaCollaboration.setDataTwo("劳动合同到期时间：" + oaActLaborContractRenewal.getStartDate());
+            oaCollaboration.setDataOne("通知时间:" + DateUtil.dateConvertYYYYMMDD(oaActLaborContractRenewal.getCreateTime()));
+            oaCollaboration.setDataTwo("劳动合同到期时间:" + oaActLaborContractRenewal.getStartDate());
             oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);
