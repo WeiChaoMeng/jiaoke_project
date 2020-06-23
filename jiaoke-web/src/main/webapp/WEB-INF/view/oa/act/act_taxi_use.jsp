@@ -288,8 +288,8 @@
             var fileId = ret[i].filePaths.substring(0, ret[i].filePaths.indexOf("_"));
             annex += '<div id="file' + fileId + '" class="table-file">';
             annex += '<div class="table-file-content">';
-            annex += '<a class="table-file-title" href="/fileDownloadHandle/download?fileName=' + ret[i].serverPaths + '" title="' + ret[i].originalName + '">' + ret[i].originalName + '</a>';
-            annex += '<span class="delete-file" title="删除" onclick="whether(\'' + ret[i].serverPaths + '\',\'' + ret[i].originalName + '\')">&#xeabb;</span>';
+            annex += '<a class="table-file-title" href="/fileDownloadHandle/download?fileName=' + ret[i].filePaths + '" title="' + ret[i].originalName + '">' + ret[i].originalName + '</a>';
+            annex += '<span class="delete-file" title="删除" onclick="whether(\'' + ret[i].filePaths + '\')">&#xeabb;</span>';
             annex += '<input type="hidden" value="' + ret[i].filePaths + '">';
             annex += '</div>';
             annex += '</div>';
@@ -298,8 +298,8 @@
     }
 
     //删除已上传附件
-    function whether(fileName,originalName) {
-        window.top.deleteUploaded(fileName,originalName,itselfFrameId);
+    function whether(fileName) {
+        window.top.deleteUploaded(fileName,itselfFrameId);
     }
 
     //执行删除附件
@@ -313,7 +313,7 @@
             },
             success: function (result) {
                 if (result === "success") {
-                    $('#file' + fileName.substring(0, fileName.indexOf("."))).remove();
+                    $('#file' + fileName.substring(0, fileName.indexOf("_"))).remove();
                     window.top.tips("删除成功！", 0, 1, 2000);
 
                     let annexesLen = $('#annexes').children().length;

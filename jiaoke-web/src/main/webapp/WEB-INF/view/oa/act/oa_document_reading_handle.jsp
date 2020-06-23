@@ -321,25 +321,6 @@
         }
 
         if (flag === 0) {
-            if (read.depOpinion === "" || read.depOpinion === undefined || read.depOpinion === null) {
-                var receiptReadingList = JSON.parse('${receiptReadingListJson}');
-                var depOpinionSelStr = "";
-                for (let i = 0; i < receiptReadingList.length; i++) {
-                    depOpinionSelStr += '<div class="input-radio-div">';
-                    depOpinionSelStr += '<input type="radio" class="radio-style" name="depOpinion" value="'+receiptReadingList[i].id+','+receiptReadingList[i].name+'" checked>';
-                    depOpinionSelStr += '<span style="font-size: 13px;">'+receiptReadingList[i].name+'</span>';
-                    depOpinionSelStr += '</div>';
-                }
-                $('#depOpinionSel').append(depOpinionSelStr);
-                flag = 1;
-            } else {
-                $('#depOpinionSel').html('');
-            }
-        } else {
-            $('#depOpinionSel').html('');
-        }
-
-        if (flag === 0) {
             if (read.companyPrincipal === "" || read.companyPrincipal === undefined) {
                 $('#companyPrincipalContent').append('<textarea oninput="value=value.replace(/\\s+/g,\'\')" class="approval-content-textarea" name="companyPrincipalContent" style="background-color: #ffffff"></textarea>\n' +
                     '                    <div class="approval-date">\n' +
@@ -371,6 +352,25 @@
                 '                        <label class="approval-signature-label">签字 </label>\n' +
                 '                        <input class="approval-signature-input" type="text" value="${oaActRead.companyPrincipal}" readonly>\n' +
                 '                    </div>');
+        }
+
+        if (flag === 0) {
+            if (read.depOpinion === "" || read.depOpinion === undefined || read.depOpinion === null) {
+                var receiptReadingList = JSON.parse('${receiptReadingListJson}');
+                var depOpinionSelStr = "";
+                for (let i = 0; i < receiptReadingList.length; i++) {
+                    depOpinionSelStr += '<div class="input-radio-div">';
+                    depOpinionSelStr += '<input type="radio" class="radio-style" name="depOpinion" value="'+receiptReadingList[i].id+','+receiptReadingList[i].name+'" checked>';
+                    depOpinionSelStr += '<span style="font-size: 13px;">'+receiptReadingList[i].name+'</span>';
+                    depOpinionSelStr += '</div>';
+                }
+                $('#depOpinionSel').append(depOpinionSelStr);
+                flag = 1;
+            } else {
+                $('#depOpinionSel').html('');
+            }
+        } else {
+            $('#depOpinionSel').html('');
         }
 
         if (flag === 0) {

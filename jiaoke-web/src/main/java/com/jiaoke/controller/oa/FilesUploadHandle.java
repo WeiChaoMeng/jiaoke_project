@@ -1,10 +1,7 @@
 package com.jiaoke.controller.oa;
 
 import com.google.gson.Gson;
-import com.jiake.utils.JsonHelper;
 import com.jiake.utils.OaResources;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadBase;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.stereotype.Controller;
@@ -14,11 +11,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.*;
 
 /**
@@ -52,7 +50,6 @@ public class FilesUploadHandle {
         ArrayList<Map<String, Object>> list = new ArrayList<>();
 
         for (int i = 0; i < files.length; i++) {
-            String uuid = UUID.randomUUID().toString().replace("-", "");
             Map<String, Object> map = new HashMap<>(16);
             //消息提示
             String message = "";
@@ -71,14 +68,10 @@ public class FilesUploadHandle {
                     return;
                 }
                 filename = filename.substring(filename.lastIndexOf("\\") + 1);
-                String fileSuffixName = filename.substring(filename.lastIndexOf("."));
+                String fileExtName = filename.substring(filename.lastIndexOf(".") + 1);
                 InputStream in = files[i].getInputStream();
-//                String saveFilename = makeFileName(filename);
-                String saveFilename = uuid + "_" + filename;
-
-//                String serverFilename = makeSuffixName(fileSuffixName);
-                String serverFilename = uuid + fileSuffixName;
-                FileOutputStream out = new FileOutputStream(FILE_PATH +  serverFilename);
+                String saveFilename = makeFileName(filename);
+                FileOutputStream out = new FileOutputStream(FILE_PATH + saveFilename);
                 byte buffer[] = new byte[1024];
                 int len = 0;
                 while ((len = in.read(buffer)) > 0) {
@@ -89,7 +82,6 @@ public class FilesUploadHandle {
 
                 map.put("message", "success");
                 map.put("filePaths", saveFilename);
-                map.put("serverPaths", serverFilename);
                 map.put("originalName", filename);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -202,15 +194,6 @@ public class FilesUploadHandle {
     private String makeFileName(String filename) {  //2.jpg
         //为防止文件覆盖的现象发生，要为上传文件产生一个唯一的文件名
         return UUID.randomUUID().toString().replace("-", "") + "_" + filename;
-    }
-
-    /**
-     * @param fileSuffixName 文件的后缀名称
-     * @return uuid+"_"+文件的原始名称
-     */
-    private String makeSuffixName(String fileSuffixName) {  //2.jpg
-        //为防止文件覆盖的现象发生，要为上传文件产生一个唯一的文件名
-        return UUID.randomUUID().toString().replace("-", "") + fileSuffixName;
     }
 
     /**

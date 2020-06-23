@@ -211,7 +211,7 @@
                 result += '<td style="color: #2196F3;font-weight: 600;">' + resultList[i].currentExecutor + '</td>';
                 result +=
                     '<td class="td-manage" style="white-space: nowrap;">\n' +
-                    '<button class="layui-btn layui-btn layui-btn-xs" onclick="particulars(\'' + resultList[i].url + '\',\'' + resultList[i].correlationId + '\',\'' + resultList[i].taskId + '\')"><i class="layui-icon">&#xe642;</i>详情</button>\n' +
+                    '<button class="layui-btn layui-btn layui-btn-xs" onclick="particulars(\'' + resultList[i].url + '\',\'' + resultList[i].correlationId + '\',\'' + resultList[i].processInstanceId + '\')"><i class="layui-icon">&#xe642;</i>详情</button>\n' +
                     '</td>';
                 result += '</tr>';
             }
