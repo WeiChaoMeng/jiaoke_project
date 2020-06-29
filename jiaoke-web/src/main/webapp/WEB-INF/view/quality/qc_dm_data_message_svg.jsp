@@ -542,7 +542,7 @@
                 //更新状态
                 // localStorage.getItem("ProductSVGAndModel");
                 // localStorage.setItem("ProductSVGAndModel",msg);
-                $("#ratio_regenerate").prepend(msg.ratio_regenerate1 + msg.ratio_regenerate2);
+                $("#ratio_regenerate").prepend(msg.ratio_regenerate1 + msg.ratio_regenerate2 + msg.ratio_regenerate3);
                 $("#temperature_asphalt").empty();
                 $("#temperature_asphalt").prepend(msg.temperature_asphalt + "-" + msg.temperature_asphalt_up);
                 $("#temperature_aggregate").empty();
