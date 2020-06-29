@@ -57,8 +57,8 @@
                         <c:forTokens items="${oaActContractReview.annex}" delims="," var="annex">
                             <div id="file${fn:substring(annex,0,annex.indexOf("_"))}" class="table-file">
                                 <div class="table-file-content">
-                                    <a class="table-file-title" href="/fileDownloadHandle/download?fileName=${annex}"
-                                       title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}
+                                    <a class="table-file-title" href="javascript:location.href=encodeURI('/fileDownloadHandle/download?fileName=${annex}')"
+                                       title="${fn:substring(annex,annex.indexOf("_")+1,annex.length())}">${fn:substring(annex,annex.indexOf("_")+1,annex.length())}
                                     </a>
                                     <span class="delete-file" title="删除"
                                           onclick="whether('${annex}')"></span>
@@ -381,7 +381,7 @@
             var fileId = ret[i].filePaths.substring(0, ret[i].filePaths.indexOf("_"));
             annex += '<div id="file' + fileId + '" class="table-file">';
             annex += '<div class="table-file-content">';
-            annex += '<a class="table-file-title" href="/fileDownloadHandle/download?fileName=' + ret[i].filePaths + '" title="' + ret[i].originalName + '">' + ret[i].originalName + '</a>';
+            annex += '<a class="table-file-title" href="javascript:location.href=encodeURI(\'' + "/fileDownloadHandle/download?fileName=" + ret[i].filePaths + '\')" title="' + ret[i].originalName + '">' + ret[i].originalName + '</a>';
             annex += '<span class="delete-file" title="删除" onclick="whether(\'' + ret[i].filePaths + '\')">&#xeabb;</span>';
             annex += '<input type="hidden" value="' + ret[i].filePaths + '">';
             annex += '</div>';

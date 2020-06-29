@@ -47,7 +47,7 @@ public class OaActDocumentServiceImpl implements OaActDocumentService {
             oaCollaboration.setUrl("document");
             oaCollaboration.setTable("oa_act_document");
             oaCollaboration.setStatusCode("协同");
-            oaCollaboration.setName("公文审批");
+            oaCollaboration.setName(oaActDocument.getTextTitle());
             oaCollaboration.setDataOne("标题:" + oaActDocument.getTextTitle());
             if (oaActDocument.getDocType() == 0) {
                 oaCollaboration.setDataTwo("公文类型:公文");

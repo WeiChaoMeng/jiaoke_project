@@ -68,6 +68,9 @@ public class FilesUploadHandle {
                     return;
                 }
                 filename = filename.substring(filename.lastIndexOf("\\") + 1);
+                if (filename.contains(",")){
+                    filename = filename.replace(",","，");
+                }
                 String fileExtName = filename.substring(filename.lastIndexOf(".") + 1);
                 InputStream in = files[i].getInputStream();
                 String saveFilename = makeFileName(filename);

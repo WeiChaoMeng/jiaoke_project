@@ -1806,10 +1806,10 @@ function fileConfirm() {
 }
 
 //删除已上传文件
-function deleteUploaded(fileName,originalName, itselfFrameId) {
-    // var fileId = fileName.substring(fileName.indexOf("_") + 1);
+function deleteUploaded(fileName, itselfFrameId) {
+    var fileId = fileName.substring(fileName.indexOf("_") + 1);
     //提示窗
-    layer.confirm('确定要删除"' + originalName + '"吗？', {
+    layer.confirm('确定要删除"' + fileId + '"吗？', {
             btn: ['确认', '取消']
         }, function () {
             $("#" + itselfFrameId)[0].contentWindow.delFile(fileName);
