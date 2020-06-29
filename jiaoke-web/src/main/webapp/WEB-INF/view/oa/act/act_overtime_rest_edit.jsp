@@ -41,19 +41,49 @@
             <button type="button" class="cursor_hand" onclick="printContent()">&#xea0e; 打印</button>
         </div>
     </div>
-</div>
 
-<%--附件列表--%>
-<div class="top_toolbar" id="annexList" style="display: none;">
-    <div class="top-toolbar-annexes">
+    <%--附件列表--%>
+    <c:choose>
+        <c:when test="${oaActPactSign.annex != ''}">
+            <div class="top_toolbar" id="annexList" style="display: block;">
+                <div class="top-toolbar-annexes">
 
-        <div class="annexes-icon">
-            <button type="button" class="cursor_hand">&#xeac1; ：</button>
-        </div>
+                    <div class="annexes-icon">
+                        <button type="button" class="cursor_hand">&#xeac1; ：</button>
+                    </div>
 
-        <div id="annexes"></div>
+                    <div id="annexes">
+                        <c:forTokens items="${oaActPactSign.annex}" delims="," var="annex">
+                            <div id="file${fn:substring(annex,0,annex.indexOf("_"))}" class="table-file">
+                                <div class="table-file-content">
+                                    <a class="table-file-title" href="javascript:location.href=encodeURI('/fileDownloadHandle/download?fileName=${annex}')"
+                                       title="${fn:substring(annex,annex.indexOf("_")+1,annex.length())}">${fn:substring(annex,annex.indexOf("_")+1,annex.length())}
+                                    </a>
+                                    <span class="delete-file" title="删除"
+                                          onclick="whether('${annex}')"></span>
+                                    <input type="hidden" value="${annex}">
+                                </div>
+                            </div>
+                        </c:forTokens>
+                    </div>
 
-    </div>
+                </div>
+            </div>
+        </c:when>
+        <c:otherwise>
+            <div class="top_toolbar" id="annexList" style="display: none;">
+                <div class="top-toolbar-annexes">
+
+                    <div class="annexes-icon">
+                        <button type="button" class="cursor_hand">&#xeac1; ：</button>
+                    </div>
+
+                    <div id="annexes"></div>
+
+                </div>
+            </div>
+        </c:otherwise>
+    </c:choose>
 </div>
 
 <form id="oaActOvertimeRest">
@@ -293,7 +323,7 @@
             var fileId = ret[i].filePaths.substring(0, ret[i].filePaths.indexOf("_"));
             annex += '<div id="file' + fileId + '" class="table-file">';
             annex += '<div class="table-file-content">';
-            annex += '<a class="table-file-title" href="/fileDownloadHandle/download?fileName=' + ret[i].filePaths + '" title="' + ret[i].originalName + '">' + ret[i].originalName + '</a>';
+            annex += '<a class="table-file-title" href="javascript:location.href=encodeURI(\'' + "/fileDownloadHandle/download?fileName=" + ret[i].filePaths + '\')" title="' + ret[i].originalName + '">' + ret[i].originalName + '</a>';
             annex += '<span class="delete-file" title="删除" onclick="whether(\'' + ret[i].filePaths + '\')">&#xeabb;</span>';
             annex += '<input type="hidden" value="' + ret[i].filePaths + '">';
             annex += '</div>';
@@ -310,52 +340,23 @@
     //执行删除附件
     function delFile(fileName) {
         $.ajax({
-            async: false,
             type: "POST",
             url: '${path}/fileUploadHandle/deleteFile',
             data: {"fileName": fileName},
             error: function (request) {
-                layer.msg("出错！");
+                window.top.tips("出错！", 6, 2, 1000);
             },
             success: function (result) {
                 if (result === "success") {
-
-                    //删除页面中文件
                     $('#file' + fileName.substring(0, fileName.indexOf("_"))).remove();
+                    window.top.tips("删除成功！", 0, 1, 1000);
 
-                    //影藏页面中附件列表
                     let annexesLen = $('#annexes').children().length;
                     if (annexesLen === 0) {
                         $('#annexList').css("display", "none");
                     }
-
-                    //删除数据库中附件
-                    var array = [];
-                    $('#annexes').find('input').each(function () {
-                        array.push($(this).val());
-                    });
-
-                    var id = $('#id').val();
-
-                    $.ajax({
-                        type: "POST",
-                        url: '${path}/overtimeRest/deleteAnnexes',
-                        data: {'array': array, 'id': id},
-                        traditional: true,
-                        async: false,
-                        error: function (request) {
-                            layer.msg("出错！");
-                        },
-                        success: function (result) {
-                            if (result === "success") {
-                                window.top.tips("删除成功！", 0, 1, 2000);
-                            } else {
-                                window.top.tips("删除失败！", 0, 2, 1000);
-                            }
-                        }
-                    });
                 } else {
-                    window.top.tips("文件不存在！", 6, 5, 2000);
+                    window.top.tips("文件不存在！", 6, 5, 1000);
                 }
             }
         });

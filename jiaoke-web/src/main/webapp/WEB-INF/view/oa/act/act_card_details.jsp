@@ -47,9 +47,9 @@
                     <c:forTokens items="${oaActCard.annex}" delims="," var="annex">
                         <div class="table-file">
                             <div class="table-file-content">
-                                <span class="table-file-title" title="${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}">${fn:substring(annex,annex.lastIndexOf("_")+1,annex.length())}</span>
+                                <span class="table-file-title" title="${fn:substring(annex,annex.indexOf("_")+1,annex.length())}">${fn:substring(annex,annex.indexOf("_")+1,annex.length())}</span>
                                 <a class="table-file-download icon"
-                                   onclick="downloadFile('${annex}')" href="javascript:void(0);"
+                                   href="javascript:location.href=encodeURI('/fileDownloadHandle/download?fileName=${annex}')"
                                    title="下载">&#xebda;</a>
                             </div>
                         </div>

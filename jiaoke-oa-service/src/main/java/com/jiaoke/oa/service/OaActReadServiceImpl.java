@@ -48,9 +48,9 @@ public class OaActReadServiceImpl implements OaActReadService {
             oaCollaboration.setUrl("read");
             oaCollaboration.setTable("oa_act_read");
             oaCollaboration.setStatusCode("协同");
-            oaCollaboration.setName("收文阅办单");
+            oaCollaboration.setName(oaActRead.getFileTitle());
             oaCollaboration.setDataOne("来文机关:" + oaActRead.getOrgan());
-            oaCollaboration.setDataTwo("收文字号:" + oaActRead.getReceiptTime());
+            oaCollaboration.setDataTwo("收文字号:" + oaActRead.getFontSize());
             oaCollaboration.setState(state);
             oaCollaboration.setCreateTime(new Date());
             oaCollaborationMapper.insertData(oaCollaboration);

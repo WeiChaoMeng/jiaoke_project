@@ -420,7 +420,7 @@
             var fileId = ret[i].filePaths.substring(0, ret[i].filePaths.indexOf("_"));
             annex += '<div id="file' + fileId + '" class="table-file">';
             annex += '<div class="table-file-content">';
-            annex += '<a class="table-file-title" href="/fileDownloadHandle/download?fileName=' + ret[i].filePaths + '" title="' + ret[i].originalName + '">' + ret[i].originalName + '</a>';
+            annex += '<a class="table-file-title" href="javascript:location.href=encodeURI(\'' + "/fileDownloadHandle/download?fileName=" + ret[i].filePaths + '\')" title="' + ret[i].originalName + '">' + ret[i].originalName + '</a>';
             annex += '<span class="delete-file" title="删除" onclick="whether(\'' + ret[i].filePaths + '\')">&#xeabb;</span>';
             annex += '<input type="hidden" value="' + ret[i].filePaths + '">';
             annex += '</div>';

@@ -127,7 +127,7 @@ public class OaActReadController {
         if (oaActRead.getDepOpinion() != null){
             Task task = activitiUtil.getTaskByTaskId(taskId);
             String nextNode = activitiUtil.getNextNode(task.getProcessDefinitionId(), task.getTaskDefinitionKey());
-            if ("general_manager".equals(nextNode)){
+            if ("_7".equals(nextNode)){
                 map.put("nextNode",nextNode);
             }else {
                 map.put("nextNode","");
@@ -442,7 +442,7 @@ public class OaActReadController {
                     } else {
                         Task task = activitiUtil.getTaskByTaskId(task1.getId());
                         String nextNode = activitiUtil.getNextNode(task.getProcessDefinitionId(), task.getTaskDefinitionKey());
-                        if ("general_manager".equals(nextNode)){
+                        if ("_7".equals(nextNode)){
                             map.put("nextNode",nextNode);
                         }else {
                             map.put("nextNode","");
