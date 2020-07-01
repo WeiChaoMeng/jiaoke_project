@@ -18,4 +18,7 @@
             settlement_month desc
     </select>
 
+    <update id="updateState" parameterType="java.lang.Integer">
+        update oa_outsourced_statistics set state = #{state} where id = #{id}
+    </update>
 </mapper>

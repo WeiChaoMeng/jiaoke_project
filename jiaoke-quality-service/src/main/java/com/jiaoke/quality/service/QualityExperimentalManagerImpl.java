@@ -484,6 +484,9 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
         Map<String,String> insertMap = new HashMap<>();
         //暂存实验数据主键
         String id = "";
+        //暂存样品名称、规格，APP审批使用
+        String materialsName = "";
+        String samplingStandard = "";
 
         //修改实验报告表
         for(Map<String,String> mapList : listObjectSec){
@@ -491,6 +494,10 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
             String valName = mapList.get("name");
             if ("Id".equals(valName)){
                 id = val;
+            }else if("materials_name".equals(valName)){
+                materialsName = val;
+            }else if("sampling_standard".equals(valName)){
+                samplingStandard = val;
             }
             insertMap.put(valName,val);
         }
@@ -512,6 +519,9 @@ public class QualityExperimentalManagerImpl implements  QualityExperimentalManag
                 collaboration.setState(0);
                 collaboration.setStatusCode("协同");
                 collaboration.setCreateTime(new Date());
+                collaboration.setName("实验报告");
+                collaboration.setDataOne("样品名称:" + materialsName);
+                collaboration.setDataTwo("样品规格:" + samplingStandard);
 
                 //添加成功后开启流程
                 if (oaCollaborationMapper.insertData(collaboration) > 0) {

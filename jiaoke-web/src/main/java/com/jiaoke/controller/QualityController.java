@@ -14,7 +14,9 @@ import com.jiake.utils.JsonHelper;
 import com.jiake.utils.QualityMatchingUtil;
 import com.jiaoke.common.bean.PageBean;
 import com.jiaoke.controller.oa.ActivitiUtil;
+import com.jiaoke.controller.oa.TargetFlowNodeCommand;
 import com.jiaoke.oa.bean.Comments;
+import com.jiaoke.oa.bean.Permission;
 import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.service.OaCollaborationService;
 import com.jiaoke.oa.service.UserInfoService;
@@ -27,6 +29,7 @@ import org.activiti.bpmn.model.UserTask;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.ManagementService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.impl.identity.Authentication;
 import org.activiti.engine.task.Task;
 import org.apache.logging.log4j.util.Strings;
 import org.apache.shiro.SecurityUtils;
@@ -1725,6 +1728,29 @@ public class QualityController {
     }
 
     /**
+     * app获取实验详情信息
+     *
+     * @param id     id
+     * @param taskId taskId
+     * @return json
+     */
+    @RequestMapping(value = "/experimentDetails.api")
+    @ResponseBody
+    public String experimentDetails(String id, String taskId) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        try{
+            //获取批注信息
+            List<Comments> commentsList = activitiUtil.selectHistoryComment(taskId);
+
+            map.put("commentsList",commentsList);
+            map.put("commentsSize",commentsList.size());
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return JSON.toJSONString(map);
+    }
+
+    /**
      * 跳转审批页面
      * @param id 主键
      * @param taskId 任务id
@@ -1748,6 +1774,37 @@ public class QualityController {
         }
 
         return "quality/qc_em_experimental_approval";
+    }
+
+    /**
+     * app获取审批页面信息
+     *
+     * @param id     id
+     * @param taskId taskId
+     * @return json
+     */
+    @RequestMapping(value = "/experimentalItemsApproval.api")
+    @ResponseBody
+    public String approvalApi(String id, String taskId) {
+        HashMap<String, Object> map = new HashMap<>(16);
+        try{
+            //获取批注信息
+            List<Comments> commentsList = activitiUtil.selectHistoryComment(activitiUtil.getTaskByTaskId(taskId).getProcessInstanceId());
+            //获取当前登录用户
+            UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
+            //获取用户绑定的权限
+            List<Permission> permissionList = userInfoService.getPermissionsByUserInfoId(userInfo.getId());
+
+            map.put("nickname",getCurrentUser().getNickname());
+            map.put("id",id);
+            map.put("taskId",taskId);
+            map.put("commentsList",commentsList);
+            map.put("commentsSize",commentsList.size());
+            map.put("authority",permissionList);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return JSON.toJSONString(map);
     }
 
     /**
@@ -1776,6 +1833,14 @@ public class QualityController {
 
         if (processingOpinion == null){
             processingOpinion = " ";
+        }
+
+        if("".equals(chargePerson)){
+            chargePerson = null;
+        }
+
+        if("".equals(checkPerson)){
+            checkPerson = null;
         }
 
         if (chargePerson != null | checkPerson != null){
@@ -1808,6 +1873,17 @@ public class QualityController {
                     map.put("whether", 0);
                     activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
                     return "success";
+                    //回退
+                } else if(flag.equals(3)){
+                    Map<String, Object> map = new HashMap<>(16);
+                    map.put("whether", 2);
+                    map.put("report_person", activitiUtil.getStartUserId(task.getProcessInstanceId()));
+                    activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
+                    //修改协同表单表单状态
+                    oaCollaborationService.updateStatusCode(id, "被回退");
+                    //更新实验项目状态:被回退
+                    qualityExperimentalManagerInf.updateExperimentalItemStateById(id,2);
+                    return "success";
                 } else {
                     List<Object> notifyGroupList = new ArrayList<>();
                     if (noticeDepartment == 0){
@@ -1836,6 +1912,18 @@ public class QualityController {
                     map.put("whether", 0);
                     map.put("report_person", activitiUtil.getStartUserId(task.getProcessInstanceId()));
                     activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
+                    //更新实验项目状态：已完成
+                    qualityExperimentalManagerInf.updateExperimentalItemStateById(id,3);
+                    return "success";
+                } else if(flag.equals(3)){
+                    Map<String, Object> map = new HashMap<>(16);
+                    map.put("whether", 2);
+                    map.put("report_person", activitiUtil.getStartUserId(task.getProcessInstanceId()));
+                    activitiUtil.completeAndAppointNextNode(task.getProcessInstanceId(), processingOpinion, taskId, getCurrentUser().getNickname(), map);
+                    //修改协同表单表单状态
+                    oaCollaborationService.updateStatusCode(id, "被回退");
+                    //更新实验项目状态：被回退
+                    qualityExperimentalManagerInf.updateExperimentalItemStateById(id,2);
                     return "success";
                 } else {
                     List<Object> notifyGroupList = new ArrayList<>();

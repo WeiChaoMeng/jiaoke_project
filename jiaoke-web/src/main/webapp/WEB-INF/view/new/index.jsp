@@ -111,7 +111,7 @@
 
                                     <shiro:hasPermission name="personal:wage">
                                         <li>
-                                            <a onclick="xadmin.add_tab('个人工资','wageStatistics/toPersonalSalary',true)">
+                                            <a onclick="xadmin.add_tab('个人工资','wageStatistics/viewPersonalSalary?page=1',true)">
                                                 <i class="iconfont">&#xe6a7;</i>
                                                 <cite>个人工资</cite>
                                             </a>

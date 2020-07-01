@@ -43,6 +43,23 @@ public interface OaWageStatisticsService {
     int deleteRegularStaffByPrimaryKey(Integer id);
 
     /**
+     * 根据ID查询数据
+     *
+     * @param id id
+     * @return list
+     */
+    OaPersonalWages selectRegularStaffById(int id);
+
+    /**
+     * 更新状态
+     *
+     * @param id    id
+     * @param state s
+     * @return int
+     */
+    int updatePersonalWagesState(Integer id, Integer state);
+
+    /**
      * 根据结算月筛选
      *
      * @param settlementDate settlementDate
@@ -57,23 +74,6 @@ public interface OaWageStatisticsService {
      * @return list
      */
     List<OaPersonalWages> selectRegularStaffByWageStatisticsId(int wageStatisticsId);
-
-    /**
-     * 更新正式职工状态
-     *
-     * @param wageStatisticsId 工资统计id
-     * @return NumberOfAffectedRows
-     */
-    int updateStateByWageStatisticsId(int wageStatisticsId);
-
-    /**
-     * 根据登录人昵称获取工资
-     *
-     * @param nickName 登录人昵称
-     * @return OaPersonalWages
-     */
-    OaPersonalWages getPersonalWagesByNickName(String nickName);
-
 
     /**-----------------外包职工-------------------*/
     /**
@@ -101,6 +101,22 @@ public interface OaWageStatisticsService {
     List<OaOutsourcedStaff> selectOutsourcedStaffByWageStatisticsId(int wageStatisticsId);
 
     /**
+     * 根据ID查询数据
+     *
+     * @param id id
+     * @return list
+     */
+    OaOutsourcedStaff selectOutsourcedStaffById(int id);
+
+    /**
+     * 更新状态
+     *
+     * @param id    id
+     * @param state s
+     * @return int
+     */
+    int updateOutsourcingStaffState(Integer id, Integer state);
+    /**
      * 根据主键删除
      *
      * @param id id
@@ -115,4 +131,21 @@ public interface OaWageStatisticsService {
      * @return o
      */
     List<OaOutsourcedStaff> settlementMonthFilter(String settlementMonth);
+
+    /**-------------------------------------------------*/
+    /**
+     * 根据登录人昵称获取工资
+     *
+     * @param nickName 登录人昵称
+     * @return OaPersonalWages
+     */
+    List<OaOutsourcedStaff> getOutsourcingStaffByNickName(String nickName);
+
+    /**
+     * 根据登录人昵称获取工资
+     *
+     * @param nickName 登录人昵称
+     * @return OaPersonalWages
+     */
+    List<OaPersonalWages> getPersonalWagesByNickName(String nickName);
 }

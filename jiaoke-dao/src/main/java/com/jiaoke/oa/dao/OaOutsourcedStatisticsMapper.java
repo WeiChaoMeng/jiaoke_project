@@ -2,6 +2,7 @@ package com.jiaoke.oa.dao;
 
 import com.jiaoke.oa.bean.OaOutsourcedStaff;
 import com.jiaoke.oa.bean.OaOutsourcedStatistics;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -24,4 +25,13 @@ public interface OaOutsourcedStatisticsMapper extends Mapper<OaOutsourcedStatist
      * @return list
      */
     List<OaOutsourcedStaff> settlementMonthFilter(String settlementMonth);
+
+    /**
+     * 更新状态
+     *
+     * @param id    id
+     * @param state s
+     * @return int
+     */
+    int updateState(@Param("id") Integer id, @Param("state") Integer state);
 }

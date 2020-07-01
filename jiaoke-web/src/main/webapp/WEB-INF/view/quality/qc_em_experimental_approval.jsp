@@ -72,6 +72,22 @@
             color: #FFFFFF;
         }
 
+        .back-but {
+            cursor: pointer;
+            outline: none;
+            border-radius: 5px;
+            color: #FFFFFF;
+            margin-right: 10px;
+            background: #FF5722;
+            padding: 8px 21px;
+            border: none;
+        }
+
+        .back-but:hover {
+            background: #fd6839;
+            color: #FFFFFF;
+        }
+
         .receipt-container {
             margin-bottom: 20px;
             height: auto;
@@ -363,9 +379,10 @@
                 <%--</button>--%>
             <%--</shiro:hasAnyPermission>--%>
 
-            <button type="button" class="commit-but" style="margin-right: 10px;" onclick="commitApproval(1,99)">同意</button>
+            <button type="button" class="commit-but" style="margin-right: 10px;padding: 8px 21px;border: none;" onclick="commitApproval(1,99)">同意</button>
 
             <shiro:hasAnyPermission name="experimentPrincipal,experimentReviewer">
+                <button type="button" class="back-but" onclick="commitApproval(3,99)">回退</button>
                 <button type="button" class="return-but" style="margin-right: 10px;" onclick="commitApproval(2,0)">同时发送</button>
                 <button type="button" class="return-but" style="margin-right: 10px;" onclick="commitApproval(2,1)">发送材料部</button>
                 <button type="button" class="return-but" style="margin-right: 10px;" onclick="commitApproval(2,2)">发送生产设备部</button>

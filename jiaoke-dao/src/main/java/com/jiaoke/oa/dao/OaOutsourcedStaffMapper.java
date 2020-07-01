@@ -1,6 +1,7 @@
 package com.jiaoke.oa.dao;
 
 import com.jiaoke.oa.bean.OaOutsourcedStaff;
+import com.jiaoke.oa.bean.OaPersonalWages;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -43,10 +44,35 @@ public interface OaOutsourcedStaffMapper {
     List<OaOutsourcedStaff> selectOutsourcedStaffByWageStatisticsId(int wageStatisticsId);
 
     /**
+     * 根据ID查询数据
+     *
+     * @param id id
+     * @return list
+     */
+    OaOutsourcedStaff selectOutsourcedStaffById(int id);
+
+    /**
+     * 更新状态
+     *
+     * @param wageStatisticsId wageStatisticsId
+     * @param state            s
+     * @return int
+     */
+    int updateStateByWageStatisticsId(@Param("wageStatisticsId") Integer wageStatisticsId, @Param("state") Integer state);
+
+    /**
      * 根据关联表主键删除
      *
      * @param wageStatisticsId wageStatisticsId
      * @return int
      */
     int deleteByWageStatisticsId(Integer wageStatisticsId);
+
+    /**
+     * 根据登录人昵称获取工资
+     *
+     * @param nickName 登录人昵称
+     * @return OaPersonalWages
+     */
+    List<OaOutsourcedStaff> getOutsourcingStaffByNickName(String nickName);
 }

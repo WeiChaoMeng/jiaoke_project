@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.jiake.utils.JsonHelper;
 import com.jiaoke.oa.bean.*;
 import com.jiaoke.oa.service.OaWageStatisticsService;
+import org.activiti.engine.task.Task;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -89,6 +90,23 @@ public class OaWageStatisticsController {
     }
 
     /**
+     * 更新状态
+     *
+     * @param id    id
+     * @param state state
+     * @return list
+     */
+    @RequestMapping(value = "/updatePersonalWagesState")
+    @ResponseBody
+    public String updatePersonalWagesState(Integer id, Integer state) {
+        if (oaWageStatisticsService.updatePersonalWagesState(id, state) < 0) {
+            return "error";
+        } else {
+            return "success";
+        }
+    }
+
+    /**
      * 删除
      *
      * @param id id
@@ -142,8 +160,8 @@ public class OaWageStatisticsController {
     @RequestMapping("/toPersonalSalary")
     public String personalSalary(Model model) {
         UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
-        OaPersonalWages personalWages = oaWageStatisticsService.getPersonalWagesByNickName(userInfo.getNickname());
-        model.addAttribute("personalWages", personalWages);
+//        OaPersonalWages personalWages = oaWageStatisticsService.getPersonalWagesByNickName(userInfo.getNickname());
+//        model.addAttribute("personalWages", personalWages);
         return "oa/personal/oa_personal_salary";
     }
 
@@ -189,6 +207,23 @@ public class OaWageStatisticsController {
         List<OaOutsourcedStaff> oaOutsourcedStaffs = oaWageStatisticsService.settlementMonthFilter(settlementMonth);
         PageInfo<OaOutsourcedStaff> pageInfo = new PageInfo<>(oaOutsourcedStaffs);
         return JsonHelper.toJSONString(pageInfo);
+    }
+
+    /**
+     * 更新状态
+     *
+     * @param id    id
+     * @param state state
+     * @return list
+     */
+    @RequestMapping(value = "/updateOutsourcingStaffState")
+    @ResponseBody
+    public String updateOutsourcingStaffState(Integer id, Integer state) {
+        if (oaWageStatisticsService.updateOutsourcingStaffState(id, state) < 0) {
+            return "error";
+        } else {
+            return "success";
+        }
     }
 
     /**
@@ -252,5 +287,81 @@ public class OaWageStatisticsController {
         List<OaOutsourcedStaff> outsourcedStaffList = oaWageStatisticsService.selectOutsourcedStaffByWageStatisticsId(wageStatisticsId);
         model.addAttribute("outsourcedStaffListJson", JsonHelper.toJSONString(outsourcedStaffList));
         return "oa/personal/oa_outsourced_details";
+    }
+
+    /**-----------------------------------------------*/
+    /**
+     * 查看个人工资
+     *
+     * @return jsp
+     */
+    @RequestMapping("/viewPersonalSalary")
+    public String viewPersonalSalary(int page,Model model) {
+        model.addAttribute("currentPage", JsonHelper.toJSONString(page));
+        UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
+        List<OaPersonalWages> oaPersonalWagesList = oaWageStatisticsService.getPersonalWagesByNickName(userInfo.getNickname());
+        if (oaPersonalWagesList.size() > 0){
+            //正式职工个人工资
+            return "oa/personal/personal_salary_formal";
+        }else{
+            //外包职工个人工资
+            return "oa/personal/personal_salary_outsource";
+        }
+    }
+
+    /**
+     * 加载正式职工个人工资数据
+     *
+     * @param page page
+     * @return json
+     */
+    @RequestMapping(value = "/loadingPersonalSalaryFormalData")
+    @ResponseBody
+    public String loadingPersonalSalaryFormalData(int page) {
+        UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
+        PageHelper.startPage(page, 13);
+        List<OaPersonalWages> oaPersonalWagesList = oaWageStatisticsService.getPersonalWagesByNickName(userInfo.getNickname());
+        PageInfo<OaPersonalWages> pageInfo = new PageInfo<>(oaPersonalWagesList);
+        return JsonHelper.toJSONString(pageInfo);
+    }
+
+    /**
+     * 正式职工个人工资详情
+     *
+     * @return jsp
+     */
+    @RequestMapping("/personalSalaryDetails")
+    public String personalSalaryDetails(int id,Model model) {
+        OaPersonalWages oaPersonalWages = oaWageStatisticsService.selectRegularStaffById(id);
+        model.addAttribute("oaPersonalWages",oaPersonalWages);
+        return "oa/personal/personal_salary_details";
+    }
+
+    /**
+     * 加载外包职工个人工资数据
+     *
+     * @param page page
+     * @return json
+     */
+    @RequestMapping(value = "/loadingPersonalSalaryOutsourceData")
+    @ResponseBody
+    public String loadingPersonalSalaryOutsourceData(int page) {
+        UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
+        PageHelper.startPage(page, 13);
+        List<OaOutsourcedStaff> oaOutsourcedStaffList = oaWageStatisticsService.getOutsourcingStaffByNickName(userInfo.getNickname());
+        PageInfo<OaOutsourcedStaff> pageInfo = new PageInfo<>(oaOutsourcedStaffList);
+        return JsonHelper.toJSONString(pageInfo);
+    }
+
+    /**
+     * 外包职工个人工资详情
+     *
+     * @return jsp
+     */
+    @RequestMapping("/outsourceSalaryDetails")
+    public String outsourceSalaryDetails(int id,Model model) {
+        OaOutsourcedStaff oaOutsourcedStaff = oaWageStatisticsService.selectOutsourcedStaffById(id);
+        model.addAttribute("oaOutsourcedStaff",oaOutsourcedStaff);
+        return "oa/personal/outsource_salary_details";
     }
 }

@@ -103,6 +103,23 @@ public class OaWageStatisticsServiceImpl implements OaWageStatisticsService {
     }
 
     @Override
+    public OaPersonalWages selectRegularStaffById(int id) {
+        return oaPersonalWagesMapper.selectRegularStaffById(id);
+    }
+
+    @Override
+    public int updatePersonalWagesState(Integer id, Integer state) {
+        if (oaWageStatisticsMapper.updateState(id,state) < 0){
+            return -1;
+        }else{
+            if (oaPersonalWagesMapper.updateStateByWageStatisticsId(id,state) < 0){
+                return -1;
+            }
+            return 0;
+        }
+    }
+
+    @Override
     public List<OaWageStatistics> settlementMonthRegularStaffFilter(String settlementDate) {
         return oaWageStatisticsMapper.settlementMonthRegularStaffFilter(settlementDate);
     }
@@ -115,16 +132,6 @@ public class OaWageStatisticsServiceImpl implements OaWageStatisticsService {
     @Override
     public List<OaWageStatistics> getAllRegularEmployee() {
         return oaWageStatisticsMapper.getAllRegularEmployee();
-    }
-
-    @Override
-    public int updateStateByWageStatisticsId(int wageStatisticsId) {
-        return oaPersonalWagesMapper.updateStateByWageStatisticsId(wageStatisticsId,1);
-    }
-
-    @Override
-    public OaPersonalWages getPersonalWagesByNickName(String nickName) {
-        return oaPersonalWagesMapper.getPersonalWagesByNickName(nickName);
     }
 
     @Override
@@ -178,6 +185,23 @@ public class OaWageStatisticsServiceImpl implements OaWageStatisticsService {
     }
 
     @Override
+    public OaOutsourcedStaff selectOutsourcedStaffById(int id) {
+        return oaOutsourcedStaffMapper.selectOutsourcedStaffById(id);
+    }
+
+    @Override
+    public int updateOutsourcingStaffState(Integer id, Integer state) {
+        if (oaOutsourcedStatisticsMapper.updateState(id,state) < 0){
+            return -1;
+        }else{
+            if (oaOutsourcedStaffMapper.updateStateByWageStatisticsId(id,state) < 0){
+                return -1;
+            }
+            return 0;
+        }
+    }
+
+    @Override
     public int deleteByPrimaryKey(Integer id) {
         if (oaOutsourcedStatisticsMapper.deleteByPrimaryKey(id) < 0){
             return -1;
@@ -193,5 +217,15 @@ public class OaWageStatisticsServiceImpl implements OaWageStatisticsService {
     @Override
     public List<OaOutsourcedStaff> settlementMonthFilter(String settlementMonth) {
         return oaOutsourcedStatisticsMapper.settlementMonthFilter(settlementMonth);
+    }
+
+    @Override
+    public List<OaOutsourcedStaff> getOutsourcingStaffByNickName(String nickName) {
+        return oaOutsourcedStaffMapper.getOutsourcingStaffByNickName(nickName);
+    }
+
+    @Override
+    public List<OaPersonalWages> getPersonalWagesByNickName(String nickName) {
+        return oaPersonalWagesMapper.getPersonalWagesByNickName(nickName);
     }
 }

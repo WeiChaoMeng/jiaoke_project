@@ -44,22 +44,12 @@ public interface OaPersonalWagesMapper {
     BigDecimal getGrossActualAmount(int wageStatisticsId);
 
     /**
-     * 修改状态根据工资统计id
-     *
-     * @param wageStatisticsId 工资统计id
-     * @param sendState        发送状态
-     * @return NumberOfAffectedRows
-     */
-    int updateStateByWageStatisticsId(@Param("wageStatisticsId") int wageStatisticsId,
-                                      @Param("sendState") int sendState);
-
-    /**
      * 根据登录人昵称获取工资
      *
      * @param nickName 登录人昵称
      * @return OaPersonalWages
      */
-    OaPersonalWages getPersonalWagesByNickName(String nickName);
+    List<OaPersonalWages> getPersonalWagesByNickName(String nickName);
 
     /**
      * 根据统计ID查询数据
@@ -68,4 +58,21 @@ public interface OaPersonalWagesMapper {
      * @return list
      */
     List<OaPersonalWages> selectRegularStaffByWageStatisticsId(int wageStatisticsId);
+
+    /**
+     * 根据ID查询数据
+     *
+     * @param id id
+     * @return list
+     */
+    OaPersonalWages selectRegularStaffById(int id);
+
+    /**
+     * 更新状态
+     *
+     * @param wageStatisticsId wageStatisticsId
+     * @param state            s
+     * @return int
+     */
+    int updateStateByWageStatisticsId(@Param("wageStatisticsId") Integer wageStatisticsId, @Param("state") Integer state);
 }
