@@ -235,7 +235,6 @@
 
 </body>
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
-<script type="text/javascript" src="../../../../static/js/oa/oa_common.js"></script>
 <script>
     //新闻发布
     function newsRelease() {

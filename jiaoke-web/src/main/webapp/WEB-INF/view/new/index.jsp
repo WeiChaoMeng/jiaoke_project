@@ -17,6 +17,7 @@
 
         <link rel="icon" href="../../../static/images/favicon.ico" type="image/x-icon"/>
         <link rel="stylesheet" href="../../../static/new/css/font.css">
+        <link href="../../../static/css/personnel/personnelStyle.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="../../../static/new/css/xadmin.css">
         <link href="../../../static/css/oa/backstage_style.css" rel="stylesheet" type="text/css">
         <link href="../../../static/css/oa/document.css" rel="stylesheet" type="text/css">
@@ -538,26 +539,32 @@
                                             </li>
                                             </shiro:hasPermission>
 
+                                            <shiro:hasPermission name="backstage:main">
                                             <li>
                                                 <a onclick="xadmin.add_tab('主送参数','mainDelivery/toIndex?page=1',true)">
                                                     <i class="iconfont">&#xe6a7;</i>
                                                     <cite>主送参数</cite>
                                                 </a>
                                             </li>
+                                            </shiro:hasPermission>
 
+                                            <shiro:hasPermission name="backstage:copy">
                                             <li>
                                                 <a onclick="xadmin.add_tab('抄送参数','copyDelivery/toIndex?page=1',true)">
                                                     <i class="iconfont">&#xe6a7;</i>
                                                     <cite>抄送参数</cite>
                                                 </a>
                                             </li>
+                                            </shiro:hasPermission>
 
+                                            <shiro:hasPermission name="backstage:receipt">
                                             <li>
                                                 <a onclick="xadmin.add_tab('收文参数','receiptReading/toIndex?page=1',true)">
                                                     <i class="iconfont">&#xe6a7;</i>
                                                     <cite>收文参数</cite>
                                                 </a>
                                             </li>
+                                            </shiro:hasPermission>
                                         </ul>
                                     </li>
                                 </shiro:hasPermission>

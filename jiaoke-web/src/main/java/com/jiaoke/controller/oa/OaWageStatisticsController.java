@@ -152,19 +152,6 @@ public class OaWageStatisticsController {
         return "oa/personal/oa_regular _staff_details";
     }
 
-    /**
-     * 个人工资
-     *
-     * @return oa_schedule_planning.jsp
-     */
-    @RequestMapping("/toPersonalSalary")
-    public String personalSalary(Model model) {
-        UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
-//        OaPersonalWages personalWages = oaWageStatisticsService.getPersonalWagesByNickName(userInfo.getNickname());
-//        model.addAttribute("personalWages", personalWages);
-        return "oa/personal/oa_personal_salary";
-    }
-
     /**-----------------外包职工-------------------*/
 
     /**

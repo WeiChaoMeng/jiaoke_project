@@ -215,7 +215,7 @@
                 userInfo += '<td>' + userInfoList[i].amount + '</td>';
                 userInfo += '<td>' + userInfoList[i].number + '</td>';
                 userInfo += '<td>' + userInfoList[i].promoterStr + '</td>';
-                result +=
+                userInfo +=
                     '<td class="td-manage" style="white-space: nowrap;">\n' +
                     '<button class="layui-btn layui-btn layui-btn-xs" onclick="particulars(\'' + userInfoList[i].id + '\')"><i class="layui-icon">&#xe642;</i>详情</button>\n' +
                     '</td>';

@@ -67,6 +67,7 @@
 
     //设置当前页
     var currentPageNum = JSON.parse('${currentPage}');
+    var itselfFrameId;
 
     //初始化分页
     $(function () {
@@ -74,6 +75,7 @@
         $('#page').val(currentPageNum);
         loadData(currentPageNum);
         loadPage(1);
+        itselfFrameId = window.frameElement && window.frameElement.id || '';
     });
 
     //加载数据
@@ -243,7 +245,7 @@
     }
 
     function del(id) {
-        window.top.deletePersonnel(id, $('#page').val());
+        window.top.deletePersonnel(id, $('#page').val(),itselfFrameId);
     }
 
     //重载页面

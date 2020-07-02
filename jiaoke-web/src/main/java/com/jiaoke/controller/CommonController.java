@@ -148,8 +148,7 @@ public class CommonController {
 
     /**
      *
-     * 功能描述: <br>
-     *  <iframe返回页面>
+     * 功能描述: <br>     *  <iframe返回页面>
      * @param: []
      * @return: java.lang.String
      * @auther:
@@ -162,21 +161,6 @@ public class CommonController {
         model.addAttribute("oaNewsCenterList", oaNewsCenterList);
         model.addAttribute("oaNoticeList", oaNoticeList);
         return  "default";
-    }
-
-    /**
-     *
-     * 功能描述: <br>
-     *  <返回ifreame标签OA首页>
-     * @param: []
-     * @return: java.lang.String
-     * @auther:
-     * @date: 2018/9/29 18:31
-     */
-    @RequestMapping("/oaIndex.do")
-    public String go_oaIndex(){
-
-        return "oa/oa_index";
     }
 
     /**
@@ -217,32 +201,6 @@ public class CommonController {
     }
 
     /**
-     *
-     * 功能描述: <br>
-     *  <返回iframe标签oa日期页面>
-     * @param: []
-     * @return: java.lang.String
-     * @auther:
-     * @date: 2018/9/29 18:50
-     */
-    @RequestMapping("/calendar_index.do")
-    public String calendarIndex(){
-        return "oa/calendar/calendar_index";
-    }
-
-    /**
-     * 跳转oa_navigation.jsp
-     *
-     * @return oa_navigation.jsp
-     * @author lihui
-     * @date 2018/10/8 12:00
-     */
-    @RequestMapping("/oaNavigation.do")
-    public String toOANavigation() {
-        return "oa/oa_navigation";
-    }
-
-    /**
      * 跳转人事管理模块
      *
      * @return oa_navigation.jsp
@@ -278,14 +236,6 @@ public class CommonController {
         return "security/security_index";
     }
 
-    /**
-     * 跳转环保监控
-     * @return milieu_index.jsp
-     */
-    @RequestMapping("/milieuIndex.do")
-    public String milieuIndex(){
-        return "milieu/milieu_index";
-    }
  /**
      * 跳转环保监控-实时数据
      * @return real_time_data.jsp

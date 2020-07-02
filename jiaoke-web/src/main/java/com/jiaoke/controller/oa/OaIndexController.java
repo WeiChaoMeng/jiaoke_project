@@ -43,11 +43,6 @@ public class OaIndexController {
         return (UserInfo) SecurityUtils.getSubject().getPrincipal();
     }
 
-    @RequestMapping(value = "/toOaHomePage")
-    public String toOaHomePage() {
-        return "oa/oa_index";
-    }
-
     /**
      * 加载数据
      *
