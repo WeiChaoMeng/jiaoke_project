@@ -55,7 +55,7 @@ public interface QualityMatchingDao {
      * @param qualityRatioTemplate
      * @return
      */
-    int insetRatioTemplate(  QualityRatioTemplate qualityRatioTemplate);
+    int insetRatioTemplate(QualityRatioTemplate qualityRatioTemplate);
 
 
     /**
@@ -76,7 +76,7 @@ public interface QualityMatchingDao {
      * @param idStr
      * @return
      */
-    QualityRatioTemplate selectRationById(@Param("idStr") String idStr);
+    Map<String,String> selectRationById(@Param("idStr") String idStr);
 
     /**
      * 插入级配
@@ -93,7 +93,7 @@ public interface QualityMatchingDao {
      * @auther Melone
      * @date 2019/5/28 11:49
      */
-    int updateRatioById(@Param("ratioTemplate") QualityRatioTemplate qualityRatioTemplate);
+    int updateRatioById(@Param("ratioTemplate") Map<String, Object> qualityRatioTemplate);
 
     /**
      *
@@ -149,4 +149,15 @@ public interface QualityMatchingDao {
      * @date 2020/3/25 15:52
      */
     List<QualityRatioModel> selectAllGrading();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/7/7 15:41
+     */
+    int insetWarningTemplateByRationId(@Param("map") Map<String, Object> map, @Param("id") int id);
 }

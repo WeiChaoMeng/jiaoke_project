@@ -407,7 +407,7 @@ public class QualityController {
      * @date 2018/10/25 18:45
      */
     @RequestMapping(value ={"/addRation.do"} , method = RequestMethod.POST)
-    public String addRation(QualityRatioTemplate qualityRatioTemplate){
+    public String addRation(@RequestParam  Map<String, Object> qualityRatioTemplate){
 
         try{
             boolean bo =  qualityMatchingInf.insetRatioTemplate(qualityRatioTemplate);
@@ -480,7 +480,7 @@ public class QualityController {
 
 
     @RequestMapping(value ={"/EditRation.do"} , method = RequestMethod.POST)
-    public String EditRation(QualityRatioTemplate qualityRatioTemplate){
+    public String EditRation(@RequestParam  Map<String, Object> qualityRatioTemplate){
         try{
             Boolean res =   qualityMatchingInf.EditRationById(qualityRatioTemplate);
         }catch (Exception e){

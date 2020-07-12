@@ -84,7 +84,7 @@ public class QualityMatchingImpl implements QualityMatchingInf{
 
 
     @Override
-    public boolean insetRatioTemplate(QualityRatioTemplate qualityRatioTemplate) {
+    public boolean insetRatioTemplate(Map<String, Object>  map) {
 
 
         //获取创建时间
@@ -94,21 +94,58 @@ public class QualityMatchingImpl implements QualityMatchingInf{
 
         String format = sdf.format(now);
 
+        QualityRatioTemplate qualityRatioTemplate = new QualityRatioTemplate();
+        qualityRatioTemplate.setProName(map.get("proName").toString());
         qualityRatioTemplate.setCreatTime(format);
-        int id = qualityMatchingDao.insetRatioTemplate(qualityRatioTemplate);
+        qualityRatioTemplate.setRepertoryOne(Float.parseFloat(map.get("repertoryOne").toString()));
+        qualityRatioTemplate.setRepertoryTwo(Float.parseFloat(map.get("repertoryTwo").toString()));
+        qualityRatioTemplate.setRepertoryThree(Float.parseFloat(map.get("repertoryThree").toString()));
+        qualityRatioTemplate.setRepertoryFour(Float.parseFloat(map.get("repertoryFour").toString()));
+        qualityRatioTemplate.setRepertoryFive(Float.parseFloat(map.get("repertoryFive").toString()));
+        qualityRatioTemplate.setRepertorySix(Float.parseFloat(map.get("repertorySix").toString()));
+        qualityRatioTemplate.setRepertorySeven(Float.parseFloat(map.get("repertorySeven").toString()));
+        qualityRatioTemplate.setRepertoryEight(Float.parseFloat(map.get("repertoryEight").toString()));
+        qualityRatioTemplate.setRepertoryNine(Float.parseFloat(map.get("repertoryNine").toString()));
+        qualityRatioTemplate.setRepertoryTen(Float.parseFloat(map.get("repertoryTen").toString()));
+        qualityRatioTemplate.setBreeze(Float.parseFloat(map.get("breeze").toString()));
+        qualityRatioTemplate.setBreezeTwo(Float.parseFloat(map.get("breeze2").toString()));
+        qualityRatioTemplate.setBreezeThree(Float.parseFloat(map.get("breeze3").toString()));
+        qualityRatioTemplate.setBreezeFour(Float.parseFloat(map.get("breeze4").toString()));
+        qualityRatioTemplate.setRatioStone(Float.parseFloat(map.get("ratioStone").toString()));
+        qualityRatioTemplate.setRatioRegenerate1(Float.parseFloat(map.get("ratioRegenerate1").toString()));
+        qualityRatioTemplate.setRatioRegenerate2(Float.parseFloat(map.get("ratioRegenerate2").toString()));
+        qualityRatioTemplate.setRatioRegenerate3(Float.parseFloat(map.get("ratioRegenerate3").toString()));
+        qualityRatioTemplate.setRatioAdditive(Float.parseFloat(map.get("ratioAdditive").toString()));
+        qualityRatioTemplate.setRatioAdditiveTwo(Float.parseFloat(map.get("ratioAdditiveTwo").toString()));
+        qualityRatioTemplate.setRatioAdditiveThree(Float.parseFloat(map.get("ratioAdditiveThree").toString()));
+        qualityRatioTemplate.setRatioAdditiveFour(Float.parseFloat(map.get("ratioAdditiveFour").toString()));
+        qualityRatioTemplate.setTemperatureAsphalt(Integer.parseInt(map.get("temperatureAsphalt").toString()));
+        qualityRatioTemplate.setTemperatureAsphaltUp(Integer.parseInt(map.get("temperatureAsphaltUp").toString()));
+        qualityRatioTemplate.setTemperatureAggregate(Integer.parseInt(map.get("temperatureAggregate").toString()));
+        qualityRatioTemplate.setTemperatureAggregateUp(Integer.parseInt(map.get("temperatureAggregateUp").toString()));
+        qualityRatioTemplate.setTemperatureMixture(Integer.parseInt(map.get("temperatureMixture").toString()));
+        qualityRatioTemplate.setTemperatureMixtureUp(Integer.parseInt(map.get("temperatureMixtureUp").toString()));
+        qualityRatioTemplate.setTemperatureMilling(Integer.parseInt(map.get("temperatureMilling").toString()));
+        qualityRatioTemplate.setTemperatureMillingUp(Integer.parseInt(map.get("temperatureMillingUp").toString()));
+        qualityRatioTemplate.setCrew1ModeleId(Integer.parseInt(map.get("crew1ModeleId").toString()));
+        qualityRatioTemplate.setCrew2ModeleId(Integer.parseInt(map.get("crew2ModeleId").toString()));
+
+        qualityMatchingDao.insetRatioTemplate(qualityRatioTemplate);
+        int id = qualityRatioTemplate.getId();
+        int rows = qualityMatchingDao.insetWarningTemplateByRationId(map,id);
 
         boolean bo = id > 0? true:false;
 
         System.out.println(id);
 
         if (bo){
-            Map<String,String> map = new HashMap<String, String>();
-            map.put("messageId",String.valueOf(qualityRatioTemplate.getId()));
-            map.put("modelName",qualityRatioTemplate.getProName());
-            map.put("createTime",format);
-            map.put("remaker",qualityRatioTemplate.getRemark());
-            map.put("createUser",qualityRatioTemplate.getUpUser());
-            int reId = qualityMatchingDao.insertRationCreateMessage(map);
+            Map<String,String> mapModel = new HashMap<String, String>();
+            mapModel.put("messageId",String.valueOf(id));
+            mapModel.put("modelName",qualityRatioTemplate.getProName());
+            mapModel.put("createTime",format);
+            mapModel.put("remaker",map.get("remark").toString());
+            mapModel.put("createUser",map.get("upUser").toString());
+            int reId = qualityMatchingDao.insertRationCreateMessage(mapModel);
             bo =  reId > 0? true:false;
         }
 
@@ -155,9 +192,9 @@ public class QualityMatchingImpl implements QualityMatchingInf{
 
         if(idStr == null || idStr == "") return null;
 
-        QualityRatioTemplate qualityRatioTemplate = qualityMatchingDao.selectRationById(idStr);
+       Map<String,String> map = qualityMatchingDao.selectRationById(idStr);
 
-        String jsonStr = JSON.toJSONString(qualityRatioTemplate);
+        String jsonStr = JSON.toJSONString(map);
 
         return jsonStr;
     }
@@ -185,30 +222,50 @@ public class QualityMatchingImpl implements QualityMatchingInf{
         for (Object obj : jsonArray) {
             JSONObject jsonObject = (JSONObject) obj;
             Map<String,String> map = new HashMap<>();
-            String arg1 = jsonObject.getString("筛孔");
-            map.put("sieve_pore",arg1);
-            String arg2 = jsonObject.getString("六仓");
-            map.put("six_warehouse",arg2);
-            String arg3 = jsonObject.getString("五仓");
-            map.put("five_warehouse",arg3);
-            String arg4 = jsonObject.getString("四仓");
-            map.put("four_warehouse",arg4);
-            String arg5 = jsonObject.getString("三仓");
-            map.put("three_warehouse",arg5);
-            String arg6 = jsonObject.getString("二仓");
-            map.put("two_warehouse",arg6);
-            String arg7 = jsonObject.getString("一仓");
-            map.put("one_warehouse",arg7);
-            String arg8 = jsonObject.getString("矿粉");
-            map.put("breeze_grading",arg8);
+            String sieve = jsonObject.getString("筛孔");
+            map.put("sieve_pore",sieve);
+            String ten = jsonObject.getString("十仓");
+            map.put("ten_warehouse",ten);
+            String nine = jsonObject.getString("九仓");
+            map.put("nine_warehouse",nine);
+            String eight = jsonObject.getString("八仓");
+            map.put("eight_warehouse",eight);
+            String seven = jsonObject.getString("七仓");
+            map.put("seven_warehouse",seven);
+            String six = jsonObject.getString("六仓");
+            map.put("six_warehouse",six);
+            String five = jsonObject.getString("五仓");
+            map.put("five_warehouse",five);
+            String four = jsonObject.getString("四仓");
+            map.put("four_warehouse",four);
+            String three = jsonObject.getString("三仓");
+            map.put("three_warehouse",three);
+            String two = jsonObject.getString("二仓");
+            map.put("two_warehouse",two);
+            String one = jsonObject.getString("一仓");
+            map.put("one_warehouse",one);
+            String breeze1 = jsonObject.getString("矿粉1");
+            map.put("breeze1_grading",breeze1);
+            String breeze2 = jsonObject.getString("矿粉2");
+            map.put("breeze2_grading",breeze2);
+            String breeze3 = jsonObject.getString("矿粉3");
+            map.put("breeze3_grading",breeze3);
+            String breeze4 = jsonObject.getString("矿粉4");
+            map.put("breeze4_grading",breeze4);
             String arg9 = jsonObject.getString("粗再生料");
             map.put("rough_regenerate",arg9);
             String arg16 = jsonObject.getString("中再生料");
             map.put("middle_regenerate",arg16);
             String arg10 = jsonObject.getString("细再生料");
             map.put("thin_regenerate",arg10);
-            String arg11 = jsonObject.getString("添加剂矿料");
-            map.put("additive_aggregate",arg11);
+            String additive1 = jsonObject.getString("添加剂1");
+            map.put("additive1_aggregate",additive1);
+            String additive2 = jsonObject.getString("添加剂2");
+            map.put("additive2_aggregate",additive2);
+            String additive3 = jsonObject.getString("添加剂3");
+            map.put("additive3_aggregate",additive3);
+            String additive4 = jsonObject.getString("添加剂4");
+            map.put("additive4_aggregate",additive4);
             String arg12 = jsonObject.getString("合成级配");
             map.put("compound_grading",arg12);
             String arg13 = jsonObject.getString("中值");
@@ -233,7 +290,7 @@ public class QualityMatchingImpl implements QualityMatchingInf{
     }
 
     @Override
-    public Boolean EditRationById(QualityRatioTemplate qualityRatioTemplate) {
+    public Boolean EditRationById(Map<String, Object> qualityRatioTemplate) {
         Map<String,String> map = new HashMap<>();
         if ( null == qualityRatioTemplate){
             map.put("res","error");

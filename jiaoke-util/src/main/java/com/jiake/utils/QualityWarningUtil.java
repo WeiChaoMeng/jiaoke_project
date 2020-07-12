@@ -29,7 +29,7 @@ import java.util.Date;
  */
 public class QualityWarningUtil {
 
-
+    /**
     private static Map<String,String> aggregate1 = new HashMap<>();
     private static Map<String,String> aggregate2 = new HashMap<>();
     private static Map<String,String> aggregate3 = new HashMap<>();
@@ -113,7 +113,7 @@ public class QualityWarningUtil {
             }
         }
     }
-
+    **/
 
     private static List<Map<String,String>> getDouyinAccountMap(Connection conn) {
 
@@ -241,6 +241,28 @@ public class QualityWarningUtil {
 
     /**
      * 功能描述: <br>
+     * <计算千分比>
+     *
+     * @param: [total, individual]
+     * @return: java.lang.String
+     * @auther:
+     * @date: 2018/10/8 19:18
+     */
+
+    public static String millesimalRatio(double total, double individual) {
+
+
+        if (total == 0 || individual == 0) return "0";
+
+        DecimalFormat df = new DecimalFormat("##.#");
+
+        String result = df.format((float) individual / (float) total * 1000);
+
+        return result;
+
+    }
+    /**
+     * 功能描述: <br>
      * <填充并返回预警对象>
      *
      * @param: [str, obj]
@@ -283,7 +305,7 @@ public class QualityWarningUtil {
      * @auther:
      * @date: 2018/10/8 20:04
      */
-    public static QualityWarningData temperatureWarningLevel(int temperatureMoudel, int temperatureMoudelUp, int temperatureReal, int id, String name) {
+    public static QualityWarningData temperatureWarningLevel(Map<String,String> warningLeveMap,int temperatureMoudel, int temperatureMoudelUp, int temperatureReal, int id, String name) {
 
         QualityWarningData qualityWarningData;
         //温度对比
@@ -305,36 +327,36 @@ public class QualityWarningUtil {
 
         switch (name){
             case "一仓温度":
-                levelOneUp = Double.parseDouble(warehouse1.get("level_one_up"));
-                levelOneDown = Double.parseDouble(warehouse1.get("level_one_down"));
-                levelTwoUp = Double.parseDouble(warehouse1.get("level_two_up"));
-                levelTwoDown = Double.parseDouble(warehouse1.get("level_two_down"));
-                levelThreeUp = Double.parseDouble(warehouse1.get("level_three_up"));
-                levelThreeDown = Double.parseDouble(warehouse1.get("level_three_down"));
+                levelOneUp = Double.parseDouble(String.valueOf(warningLeveMap.get("temperatureMilling_leve1_up")));
+                levelOneDown = Double.parseDouble(String.valueOf(warningLeveMap.get("temperatureMilling_leve1_down")));
+                levelTwoUp = Double.parseDouble(String.valueOf(warningLeveMap.get("temperatureMilling_leve2_up")));
+                levelTwoDown = Double.parseDouble(String.valueOf(warningLeveMap.get("temperatureMilling_leve2_down")));
+                levelThreeUp = Double.parseDouble(String.valueOf(warningLeveMap.get("temperatureMilling_leve3_up")));
+                levelThreeDown = Double.parseDouble(String.valueOf(warningLeveMap.get("temperatureMilling_leve3_down")));
                 break;
             case "沥青温度":
-                levelOneUp = Double.parseDouble(temperatureAsphalt.get("level_one_up"));
-                levelOneDown = Double.parseDouble(temperatureAsphalt.get("level_one_down"));
-                levelTwoUp = Double.parseDouble(temperatureAsphalt.get("level_two_up"));
-                levelTwoDown = Double.parseDouble(temperatureAsphalt.get("level_two_down"));
-                levelThreeUp = Double.parseDouble(temperatureAsphalt.get("level_three_up"));
-                levelThreeDown = Double.parseDouble(temperatureAsphalt.get("level_three_down"));
+                levelOneUp = Double.parseDouble(String.valueOf(warningLeveMap.get("temperatureAsphalt_leve1_up")));
+                levelOneDown = Double.parseDouble(String.valueOf(warningLeveMap.get("temperatureAsphalt_leve1_down")));
+                levelTwoUp = Double.parseDouble(String.valueOf(warningLeveMap.get("temperatureAsphalt_leve2_up")));
+                levelTwoDown = Double.parseDouble(String.valueOf(warningLeveMap.get("temperatureAsphalt_leve2_down")));
+                levelThreeUp = Double.parseDouble(String.valueOf(warningLeveMap.get("temperatureAsphalt_leve3_up")));
+                levelThreeDown = Double.parseDouble(String.valueOf(warningLeveMap.get("temperatureAsphalt_leve3_down")));
                 break;
             case "混合料温度":
-                levelOneUp = Double.parseDouble(temperatureMixture.get("level_one_up"));
-                levelOneDown = Double.parseDouble(temperatureMixture.get("level_one_down"));
-                levelTwoUp = Double.parseDouble(temperatureMixture.get("level_two_up"));
-                levelTwoDown = Double.parseDouble(temperatureMixture.get("level_two_down"));
-                levelThreeUp = Double.parseDouble(temperatureMixture.get("level_three_up"));
-                levelThreeDown = Double.parseDouble(temperatureMixture.get("level_three_down"));
+                levelOneUp = Double.parseDouble(String.valueOf(warningLeveMap.get("temperatureMixture_leve1_up")));
+                levelOneDown = Double.parseDouble(String.valueOf(warningLeveMap.get("temperatureMixture_leve1_down")));
+                levelTwoUp = Double.parseDouble(String.valueOf(warningLeveMap.get("temperatureMixture_leve2_up")));
+                levelTwoDown = Double.parseDouble(String.valueOf(warningLeveMap.get("temperatureMixture_leve2_down")));
+                levelThreeUp = Double.parseDouble(String.valueOf(warningLeveMap.get("temperatureMixture_leve3_up")));
+                levelThreeDown = Double.parseDouble(String.valueOf(warningLeveMap.get("temperatureMixture_leve3_down")));
             break;
             case "骨料温度":
-                levelOneUp = Double.parseDouble(temperatureAggregate.get("level_one_up"));
-                levelOneDown = Double.parseDouble(temperatureAggregate.get("level_one_down"));
-                levelTwoUp = Double.parseDouble(temperatureAggregate.get("level_two_up"));
-                levelTwoDown = Double.parseDouble(temperatureAggregate.get("level_two_down"));
-                levelThreeUp = Double.parseDouble(temperatureAggregate.get("level_three_up"));
-                levelThreeDown = Double.parseDouble(temperatureAggregate.get("level_three_down"));
+                levelOneUp = Double.parseDouble(String.valueOf(warningLeveMap.get("temperatureAggregate_leve1_up")));
+                levelOneDown = Double.parseDouble(String.valueOf(warningLeveMap.get("temperatureAggregate_leve1_down")));
+                levelTwoUp = Double.parseDouble(String.valueOf(warningLeveMap.get("temperatureAggregate_leve2_up")));
+                levelTwoDown = Double.parseDouble(String.valueOf(warningLeveMap.get("temperatureAggregate_leve2_down")));
+                levelThreeUp = Double.parseDouble(String.valueOf(warningLeveMap.get("temperatureAggregate_leve3_up")));
+                levelThreeDown = Double.parseDouble(String.valueOf(warningLeveMap.get("temperatureAggregate_leve3_down")));
                 break;
                 default:
                     break;
@@ -378,200 +400,248 @@ public class QualityWarningUtil {
      * @date: 2018/10/9 11:21
      */
 
-    public static QualityWarningData materialWarningLevel(float materialRationMoudel, float materialRationReal, int id, String name) {
+    public static QualityWarningData materialWarningLevel(float materialRationMoudel, float materialRationReal, int id, String name,Map<String,String> warningLeveMap) {
 
         if (0 == materialRationReal) return null;
 
         QualityWarningData qualityWarningData = new QualityWarningData();
 
-        double aggregate1LevelOneUp = Double.parseDouble(aggregate1.get("level_one_up"));
-        double aggregate1LevelOneDown = Double.parseDouble(aggregate1.get("level_one_down"));
-        double aggregate1LevelTwoUp = Double.parseDouble(aggregate1.get("level_two_up"));
-        double aggregate1LevelTwoDown = Double.parseDouble(aggregate1.get("level_two_down"));
-        double aggregate1LevelThreeUp = Double.parseDouble(aggregate1.get("level_three_up"));
-        double aggregate1LevelThreeDown = Double.parseDouble(aggregate1.get("level_three_down"));
-
-        double aggregate2LevelOneUp = Double.parseDouble(aggregate2.get("level_one_up"));
-        double aggregate2LevelOneDown = Double.parseDouble(aggregate2.get("level_one_down"));
-        double aggregate2LevelTwoUp = Double.parseDouble(aggregate2.get("level_two_up"));
-        double aggregate2LevelTwoDown = Double.parseDouble(aggregate2.get("level_two_down"));
-        double aggregate2LevelThreeUp = Double.parseDouble(aggregate2.get("level_three_up"));
-        double aggregate2LevelThreeDown = Double.parseDouble(aggregate2.get("level_three_down"));
-
-        double aggregate3LevelOneUp = Double.parseDouble(aggregate3.get("level_one_up"));
-        double aggregate3LevelOneDown = Double.parseDouble(aggregate3.get("level_one_down"));
-        double aggregate3LevelTwoUp = Double.parseDouble(aggregate3.get("level_two_up"));
-        double aggregate3LevelTwoDown = Double.parseDouble(aggregate3.get("level_two_down"));
-        double aggregate3LevelThreeUp = Double.parseDouble(aggregate3.get("level_three_up"));
-        double aggregate3LevelThreeDown = Double.parseDouble(aggregate3.get("level_three_down"));
-
-        double aggregate4LevelOneUp = Double.parseDouble(aggregate4.get("level_one_up"));
-        double aggregate4LevelOneDown = Double.parseDouble(aggregate4.get("level_one_down"));
-        double aggregate4LevelTwoUp = Double.parseDouble(aggregate4.get("level_two_up"));
-        double aggregate4LevelTwoDown = Double.parseDouble(aggregate4.get("level_two_down"));
-        double aggregate4LevelThreeUp = Double.parseDouble(aggregate4.get("level_three_up"));
-        double aggregate4LevelThreeDown = Double.parseDouble(aggregate4.get("level_three_down"));
-
-        double aggregate5LevelOneUp = Double.parseDouble(aggregate5.get("level_one_up"));
-        double aggregate5LevelOneDown = Double.parseDouble(aggregate5.get("level_one_down"));
-        double aggregate5LevelTwoUp = Double.parseDouble(aggregate5.get("level_two_up"));
-        double aggregate5LevelTwoDown = Double.parseDouble(aggregate5.get("level_two_down"));
-        double aggregate5LevelThreeUp = Double.parseDouble(aggregate5.get("level_three_up"));
-        double aggregate5LevelThreeDown = Double.parseDouble(aggregate5.get("level_three_down"));
-
-        double aggregate6LevelOneUp = Double.parseDouble(aggregate6.get("level_one_up"));
-        double aggregate6LevelOneDown = Double.parseDouble(aggregate6.get("level_one_down"));
-        double aggregate6LevelTwoUp = Double.parseDouble(aggregate6.get("level_two_up"));
-        double aggregate6LevelTwoDown = Double.parseDouble(aggregate6.get("level_two_down"));
-        double aggregate6LevelThreeUp = Double.parseDouble(aggregate6.get("level_three_up"));
-        double aggregate6LevelThreeDown = Double.parseDouble(aggregate6.get("level_three_down"));
-
-        double breezeLevelOneUp = Double.parseDouble(breeze.get("level_one_up"));
-        double breezeLevelOneDown = Double.parseDouble(breeze.get("level_one_down"));
-        double breezeLevelTwoUp = Double.parseDouble(breeze.get("level_two_up"));
-        double breezeLevelTwoDown = Double.parseDouble(breeze.get("level_two_down"));
-        double breezeLevelThreeUp = Double.parseDouble(breeze.get("level_three_up"));
-        double breezeLevelThreeDown = Double.parseDouble(breeze.get("level_three_down"));
-
-
-        double asphaltLevelOneUp = Double.parseDouble(asphalt.get("level_one_up"));
-        double asphaltLevelOneDown = Double.parseDouble(asphalt.get("level_one_down"));
-        double asphaltLevelTwoUp = Double.parseDouble(asphalt.get("level_two_up"));
-        double asphaltLevelTwoDown = Double.parseDouble(asphalt.get("level_two_down"));
-        double asphaltLevelThreeUp = Double.parseDouble(asphalt.get("level_three_up"));
-        double asphaltLevelThreeDown = Double.parseDouble(asphalt.get("level_three_down"));
-
-        double regenerateLevelOneUp = Double.parseDouble(regenerate.get("level_one_up"));
-        double regenerateLevelOneDown = Double.parseDouble(regenerate.get("level_one_down"));
-        double regenerateLevelTwoUp = Double.parseDouble(regenerate.get("level_two_up"));
-        double regenerateLevelTwoDown = Double.parseDouble(regenerate.get("level_two_down"));
-        double regenerateLevelThreeUp = Double.parseDouble(regenerate.get("level_three_up"));
-        double regenerateLevelThreeDown = Double.parseDouble(regenerate.get("level_three_down"));
-
-        double additiveLevelOneUp = Double.parseDouble(additive.get("level_one_up"));
-        double additiveLevelOneDown = Double.parseDouble(additive.get("level_one_down"));
-        double additiveLevelTwoUp = Double.parseDouble(additive.get("level_two_up"));
-        double additiveLevelTwoDown = Double.parseDouble(additive.get("level_two_down"));
-        double additiveLevelThreeUp = Double.parseDouble(additive.get("level_three_up"));
-        double additiveLevelThreeDown = Double.parseDouble(additive.get("level_three_down"));
-
-
         switch (name) {
+            case "骨料10":
+                qualityWarningData = compareDifference(Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryTen_leve1_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryTen_leve1_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryTen_leve2_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryTen_leve2_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryTen_leve3_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryTen_leve3_down"))),
+                        materialRationReal,
+                        materialRationMoudel,
+                        id,
+                        name);
+                break;
+            case "骨料9":
+                qualityWarningData = compareDifference(Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryNine_leve1_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryNine_leve1_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryNine_leve2_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryNine_leve2_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryNine_leve3_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryNine_leve3_down"))),
+                        materialRationReal,
+                        materialRationMoudel,
+                        id,
+                        name);
+                break;
+            case "骨料8":
+                qualityWarningData = compareDifference(Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryEight_leve1_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryEight_leve1_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryEight_leve2_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryEight_leve2_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryEight_leve3_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryEight_leve3_down"))),
+                        materialRationReal,
+                        materialRationMoudel,
+                        id,
+                        name);
+                break;
+            case "骨料7":
+                qualityWarningData = compareDifference(Double.parseDouble(String.valueOf(warningLeveMap.get("repertorySeven_leve1_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertorySeven_leve1_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertorySeven_leve2_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertorySeven_leve2_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertorySeven_leve3_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertorySeven_leve3_down"))),
+                        materialRationReal,
+                        materialRationMoudel,
+                        id,
+                        name);
+                break;
             case "骨料6":
-                qualityWarningData = compareDifference(aggregate6LevelOneUp,
-                                                            aggregate6LevelOneDown,
-                                                            aggregate6LevelTwoUp,
-                                                            aggregate6LevelTwoDown,
-                                                            aggregate6LevelThreeUp,
-                                                            aggregate6LevelThreeDown,
+                qualityWarningData = compareDifference(Double.parseDouble(String.valueOf(warningLeveMap.get("repertorySix_leve1_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertorySix_leve1_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertorySix_leve2_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertorySix_leve2_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertorySix_leve3_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertorySix_leve3_down"))),
                                                             materialRationReal,
                                                             materialRationMoudel,
                                                             id,
                                                             name);
                 break;
             case "骨料5":
-                qualityWarningData = compareDifference(aggregate5LevelOneUp,
-                        aggregate5LevelOneDown,
-                        aggregate5LevelTwoUp,
-                        aggregate5LevelTwoDown,
-                        aggregate5LevelThreeUp,
-                        aggregate5LevelThreeDown,
+                qualityWarningData = compareDifference(Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryFive_leve1_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryFive_leve1_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryFive_leve2_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryFive_leve2_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryFive_leve3_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryFive_leve3_down"))),
                         materialRationReal,
                         materialRationMoudel,
                         id,
                         name);
                 break;
             case "骨料4":
-                qualityWarningData = compareDifference(aggregate4LevelOneUp,
-                        aggregate4LevelOneDown,
-                        aggregate4LevelTwoUp,
-                        aggregate4LevelTwoDown,
-                        aggregate4LevelThreeUp,
-                        aggregate4LevelThreeDown,
+                qualityWarningData = compareDifference(Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryFour_leve1_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryFour_leve1_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryFour_leve2_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryFour_leve2_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryFour_leve3_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryFour_leve3_down"))),
                         materialRationReal,
                         materialRationMoudel,
                         id,
                         name);
                 break;
             case "骨料3":
-                qualityWarningData = compareDifference(aggregate3LevelOneUp,
-                        aggregate3LevelOneDown,
-                        aggregate3LevelTwoUp,
-                        aggregate3LevelTwoDown,
-                        aggregate3LevelThreeUp,
-                        aggregate3LevelThreeDown,
+                qualityWarningData = compareDifference(Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryThree_leve1_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryThree_leve1_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryThree_leve2_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryThree_leve2_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryThree_leve3_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryThree_leve3_down"))),
                         materialRationReal,
                         materialRationMoudel,
                         id,
                         name);
                 break;
             case "骨料2":
-                qualityWarningData = compareDifference(aggregate2LevelOneUp,
-                        aggregate2LevelOneDown,
-                        aggregate2LevelTwoUp,
-                        aggregate2LevelTwoDown,
-                        aggregate2LevelThreeUp,
-                        aggregate2LevelThreeDown,
+                qualityWarningData = compareDifference(Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryTwo_leve1_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryTwo_leve1_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryTwo_leve2_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryTwo_leve2_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryTwo_leve3_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryTwo_leve3_down"))),
                         materialRationReal,
                         materialRationMoudel,
                         id,
                         name);
                 break;
             case "骨料1":
-                qualityWarningData = compareDifference(aggregate1LevelOneUp,
-                        aggregate1LevelOneDown,
-                        aggregate1LevelTwoUp,
-                        aggregate1LevelTwoDown,
-                        aggregate1LevelThreeUp,
-                        aggregate1LevelThreeDown,
+                qualityWarningData = compareDifference(Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryOne_leve1_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryOne_leve1_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryOne_leve2_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryOne_leve2_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryOne_leve3_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("repertoryOne_leve3_down"))),
                         materialRationReal,
                         materialRationMoudel,
                         id,
                         name);
                 break;
-            case "矿粉":
-                qualityWarningData = compareDifference(breezeLevelOneUp,
-                        breezeLevelOneDown,
-                        breezeLevelTwoUp,
-                        breezeLevelTwoDown,
-                        breezeLevelThreeUp,
-                        breezeLevelThreeDown,
+            case "矿粉4":
+                qualityWarningData = compareDifference(Double.parseDouble(String.valueOf(warningLeveMap.get("breeze4_leve1_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("breeze4_leve1_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("breeze4_leve2_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("breeze4_leve2_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("breeze4_leve3_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("breeze4_leve3_down"))),
+                        materialRationReal,
+                        materialRationMoudel,
+                        id,
+                        name);
+                break;
+            case "矿粉3":
+                qualityWarningData = compareDifference(Double.parseDouble(String.valueOf(warningLeveMap.get("breeze3_leve1_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("breeze3_leve1_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("breeze3_leve2_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("breeze3_leve2_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("breeze3_leve3_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("breeze3_leve3_down"))),
+                        materialRationReal,
+                        materialRationMoudel,
+                        id,
+                        name);
+                break;
+            case "矿粉2":
+                qualityWarningData = compareDifference(Double.parseDouble(String.valueOf(warningLeveMap.get("breeze2_leve1_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("breeze2_leve1_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("breeze2_leve2_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("breeze2_leve2_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("breeze2_leve3_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("breeze2_leve3_down"))),
+                        materialRationReal,
+                        materialRationMoudel,
+                        id,
+                        name);
+                break;
+            case "矿粉1":
+                qualityWarningData = compareDifference(Double.parseDouble(String.valueOf(warningLeveMap.get("breeze1_leve1_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("breeze1_leve1_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("breeze1_leve2_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("breeze1_leve2_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("breeze1_leve3_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("breeze1_leve3_down"))),
                         materialRationReal,
                         materialRationMoudel,
                         id,
                         name);
                 break;
             case "沥青":
-                    qualityWarningData = compareDifference(asphaltLevelOneUp,
-                            asphaltLevelOneDown,
-                            asphaltLevelTwoUp,
-                            asphaltLevelTwoDown,
-                            asphaltLevelThreeUp,
-                            asphaltLevelThreeDown,
+                    qualityWarningData = compareDifference(Double.parseDouble(String.valueOf(warningLeveMap.get("ratioStone_leve1_up"))),
+                            Double.parseDouble(String.valueOf(warningLeveMap.get("ratioStone_leve1_down"))),
+                            Double.parseDouble(String.valueOf(warningLeveMap.get("ratioStone_leve2_up"))),
+                            Double.parseDouble(String.valueOf(warningLeveMap.get("ratioStone_leve2_down"))),
+                            Double.parseDouble(String.valueOf(warningLeveMap.get("ratioStone_leve3_up"))),
+                            Double.parseDouble(String.valueOf(warningLeveMap.get("ratioStone_leve3_down"))),
                             materialRationReal,
                             materialRationMoudel,
                             id,
                             name);
                 break;
             case "再生料":
-                qualityWarningData = compareDifference(regenerateLevelOneUp,
-                        regenerateLevelOneDown,
-                        regenerateLevelTwoUp,
-                        regenerateLevelTwoDown,
-                        regenerateLevelThreeUp,
-                        regenerateLevelThreeDown,
+                qualityWarningData = compareDifference(Double.parseDouble(String.valueOf(warningLeveMap.get("regenerate_leve1_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("regenerate_leve1_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("regenerate_leve2_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("regenerate_leve2_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("regenerate_leve3_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("regenerate_leve3_down"))),
                         materialRationReal,
                         materialRationMoudel,
                         id,
                         name);
                 break;
-            case "岩沥青":
-                qualityWarningData = compareDifference(additiveLevelOneUp,
-                        additiveLevelOneDown,
-                        additiveLevelTwoUp,
-                        additiveLevelTwoDown,
-                        additiveLevelThreeUp,
-                        additiveLevelThreeDown,
+            case "添加剂1":
+                qualityWarningData = compareDifference(Double.parseDouble(String.valueOf(warningLeveMap.get("additive_leve1_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("additive_leve1_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("additive_leve2_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("additive_leve2_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("additive_leve3_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("additive_leve3_down"))),
+                        materialRationReal,
+                        materialRationMoudel,
+                        id,
+                        name);
+                break;
+            case "添加剂2":
+                qualityWarningData = compareDifference(Double.parseDouble(String.valueOf(warningLeveMap.get("additive_leve1_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("additive1_leve1_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("additive1_leve2_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("additive1_leve2_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("additive1_leve3_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("additive1_leve3_down"))),
+                        materialRationReal,
+                        materialRationMoudel,
+                        id,
+                        name);
+                break;
+            case "添加剂3":
+                qualityWarningData = compareDifference(Double.parseDouble(String.valueOf(warningLeveMap.get("additive2_leve1_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("additive2_leve1_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("additive2_leve2_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("additive2_leve2_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("additive2_leve3_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("additive2_leve3_down"))),
+                        materialRationReal,
+                        materialRationMoudel,
+                        id,
+                        name);
+                break;
+            case "添加剂4":
+                qualityWarningData = compareDifference(Double.parseDouble(String.valueOf(warningLeveMap.get("additive3_leve1_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("additive3_leve1_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("additive3_leve2_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("additive3_leve2_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("additive3_leve3_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("additive3_leve3_down"))),
                         materialRationReal,
                         materialRationMoudel,
                         id,
@@ -595,7 +665,7 @@ public class QualityWarningUtil {
      * @auther:
      * @date: 2018/10/9 11:14
      */
-    public static List<QualityWarningData> materialWarningObj(int id, String[] temArray, QualityRatioTemplate ratioTemplate) {
+    public static List<QualityWarningData> materialWarningObj(int id,Map<String,String> warningLeveMap, String[] temArray, QualityRatioTemplate ratioTemplate) {
 
         if (0 == temArray.length || null == ratioTemplate) {
             return null;
@@ -606,43 +676,68 @@ public class QualityWarningUtil {
         //从模板中获取总数
         float total = Float.parseFloat(temArray[temArray.length - 1]);
         //在数组中删除最后一位
-        String[] temarry1 = ArrayUtils.remove(temArray, temArray.length - 1);
+        String[] array = ArrayUtils.remove(temArray, temArray.length - 1);
 
-        String[] array = Float.parseFloat(temarry1[6]) > Float.parseFloat(temarry1[7]) ? ArrayUtils.remove(temarry1, 7) : ArrayUtils.remove(temarry1, 6);
+        String[] materialName = {"骨料10", "骨料9", "骨料8", "骨料7","骨料6", "骨料5", "骨料4", "骨料3", "骨料2", "骨料1","矿粉4","矿粉3", "矿粉2", "矿粉1","沥青", "再生料", "添加剂1", "添加剂2", "添加剂3", "添加剂4"};
 
-        String[] materialName = {"骨料6", "骨料5", "骨料4", "骨料3", "骨料2", "骨料1", "矿粉", "沥青", "再生料", "岩沥青"};
-
-        float[] ratioMoudel = {ratioTemplate.getRepertorySix(),
+        Float[] ratioMoudel = {
+                ratioTemplate.getRepertoryTen(),
+                ratioTemplate.getRepertoryNine(),
+                ratioTemplate.getRepertoryEight(),
+                ratioTemplate.getRepertorySeven(),
+                ratioTemplate.getRepertorySix(),
                 ratioTemplate.getRepertoryFive(),
                 ratioTemplate.getRepertoryFour(),
                 ratioTemplate.getRepertoryThree(),
                 ratioTemplate.getRepertoryTwo(),
                 ratioTemplate.getRepertoryOne(),
+                ratioTemplate.getBreezeFour(),
+                ratioTemplate.getBreezeThree(),
+                ratioTemplate.getBreezeTwo(),
                 ratioTemplate.getBreeze(),
                 ratioTemplate.getRatioStone(),
                 ratioTemplate.getRatioRegenerate1() + ratioTemplate.getRatioRegenerate2()+ ratioTemplate.getRatioRegenerate3(),
-                ratioTemplate.getRatioAdditive()};
+                ratioTemplate.getRatioAdditive(),
+                ratioTemplate.getRatioAdditiveTwo(),
+                ratioTemplate.getRatioAdditiveThree(),
+                ratioTemplate.getRatioAdditiveFour()};
 
 
         for (int i = 0; i < array.length; i++) {
 
-            if (0 == Float.parseFloat(array[i])) continue;
-            if (i != 0 && i < 6) {
+            if (0 == Float.parseFloat(array[i])) {continue;};
+            if (i != 0 && i < 10) {
                 //处理骨料递增百分比
                 float materialsValue = Float.parseFloat(array[i]) - Float.parseFloat(array[i - 1]);
 
                 //处理特殊数据 骨料累加 下一个比上一个小
-                if (materialsValue < 0) continue;
+                if (materialsValue <= 0) continue;
 
                 String realRatio = QualityWarningUtil.calculateRatio(total, materialsValue);
 
-                list.add(QualityWarningUtil.materialWarningLevel(ratioMoudel[i], Float.parseFloat(realRatio), id, materialName[i]));
+                list.add(QualityWarningUtil.materialWarningLevel(ratioMoudel[i], Float.parseFloat(realRatio), id, materialName[i],warningLeveMap));
 
             } else {
-                //处理正常材料百分比
-                String realRatio = QualityWarningUtil.calculateRatio(total, Float.parseFloat(array[i]));
-
-                list.add(QualityWarningUtil.materialWarningLevel(ratioMoudel[i], Float.parseFloat(realRatio), id, materialName[i]));
+                //处理矿粉
+                if (i > 10 && i < 14){
+                    float materialsValue = Float.parseFloat(array[i]) - Float.parseFloat(array[i - 1]);
+                    //处理正常材料百分比
+                    String realRatio = QualityWarningUtil.calculateRatio(total,materialsValue);
+                    list.add(QualityWarningUtil.materialWarningLevel(ratioMoudel[i], Float.parseFloat(realRatio), id, materialName[i],warningLeveMap));
+                }else {
+                    String realRatio;
+                    //处理添加剂千分占比
+                    if (i > 15){
+                         realRatio = QualityWarningUtil.millesimalRatio(total, Float.parseFloat(array[i]));
+                    }else {
+                        //处理正常材料百分比
+                         realRatio = QualityWarningUtil.calculateRatio(total, Float.parseFloat(array[i]));
+                    }
+                    if (Double.parseDouble(realRatio) <= 0){
+                        continue;
+                    };
+                    list.add(QualityWarningUtil.materialWarningLevel(ratioMoudel[i], Float.parseFloat(realRatio), id, materialName[i],warningLeveMap));
+                }
             }
 
         }

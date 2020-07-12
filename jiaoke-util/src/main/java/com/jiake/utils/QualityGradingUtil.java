@@ -49,6 +49,10 @@ public class QualityGradingUtil {
 
 
             String rationNum = String.valueOf(list.get(i).get("produce_proportioning_num"));
+            String aggregate10 = String.valueOf(list.get(i).get("material_aggregate_10"));
+            String aggregate9 = String.valueOf(list.get(i).get("material_aggregate_9"));
+            String aggregate8 = String.valueOf(list.get(i).get("material_aggregate_8"));
+            String aggregate7 = String.valueOf(list.get(i).get("material_aggregate_7"));
             String aggregate6 = String.valueOf(list.get(i).get("material_aggregate_6"));
             String aggregate5 = String.valueOf(list.get(i).get("material_aggregate_5"));
             String aggregate4 = String.valueOf(list.get(i).get("material_aggregate_4"));
@@ -57,9 +61,15 @@ public class QualityGradingUtil {
             String aggregate1 = String.valueOf(list.get(i).get("material_aggregate_1"));
             String stone1 = String.valueOf(list.get(i).get("material_stone_1"));
             String stone2 = String.valueOf(list.get(i).get("material_stone_2"));
+            String stone3 = String.valueOf(list.get(i).get("material_stone_3"));
+            String stone4 = String.valueOf(list.get(i).get("material_stone_4"));
             String stone = Float.parseFloat(stone1) > Float.parseFloat(stone2)? stone1:stone2;
             String regenerate = String.valueOf(list.get(i).get("material_regenerate"));
             String additive = String.valueOf(list.get(i).get("material_additive"));
+            String additive1 = String.valueOf(list.get(i).get("material_additive_1"));
+            String additive2 = String.valueOf(list.get(i).get("material_additive_2"));
+            String additive3 = String.valueOf(list.get(i).get("material_additive_3"));
+
 
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             String proDate;
@@ -94,36 +104,61 @@ public class QualityGradingUtil {
             }
 
             float additiveGrading = Float.parseFloat(additive);
-            breezeTotal = Float.parseFloat(aggregate1) + Float.parseFloat(stone) + regenerateRough + regenerateMiddle + regenerateThin + Float.parseFloat(additive);
+            float additive1Grading = Float.parseFloat(additive1);
+            float additive2Grading = Float.parseFloat(additive2);
+            float additive3Grading = Float.parseFloat(additive3);
+
+            breezeTotal = Float.parseFloat(aggregate1) + Float.parseFloat(stone) + regenerateRough + regenerateMiddle + regenerateThin + Float.parseFloat(additive) + Float.parseFloat(additive1) + Float.parseFloat(additive2) + Float.parseFloat(additive3);
 
             //计算实际配合比
-            float aggregate6Real = Float.parseFloat(aggregate6)/breezeTotal;
+            float aggregate10Real = Float.parseFloat(aggregate10)/breezeTotal;
+            float aggregate9Real = (Float.parseFloat(aggregate9) - Float.parseFloat(aggregate10))/breezeTotal;
+            float aggregate8Real = (Float.parseFloat(aggregate8) - Float.parseFloat(aggregate9))/breezeTotal;
+            float aggregate7Real = (Float.parseFloat(aggregate7) - Float.parseFloat(aggregate8))/breezeTotal;
+            float aggregate6Real = (Float.parseFloat(aggregate6) - Float.parseFloat(aggregate7))/breezeTotal;
             float aggregate5Real = (Float.parseFloat(aggregate5) - Float.parseFloat(aggregate6))/breezeTotal;
             float aggregate4Real = (Float.parseFloat(aggregate4) - Float.parseFloat(aggregate5))/breezeTotal;
             float aggregate3Real = (Float.parseFloat(aggregate3) - Float.parseFloat(aggregate4))/breezeTotal;
             float aggregate2Real = (Float.parseFloat(aggregate2) - Float.parseFloat(aggregate3))/breezeTotal;
             float aggregate1Real = (Float.parseFloat(aggregate1) - Float.parseFloat(aggregate2))/breezeTotal;
+            float stone1Real =  Float.parseFloat(stone1)/breezeTotal;
+            float stone2Real =  Float.parseFloat(stone2)/breezeTotal;
+            float stone3Real =  Float.parseFloat(stone3)/breezeTotal;
+            float stone4Real =  Float.parseFloat(stone4)/breezeTotal;
             float stoneReal =  Float.parseFloat(stone)/breezeTotal;
             float regenerateRoughReal = regenerateRough/breezeTotal;
             float regenerateMiddleReal = regenerateMiddle/breezeTotal;
             float regenerateThinReal = regenerateThin/breezeTotal;
             float additiveReal = additiveGrading/breezeTotal;
+            float additive1Real = additive1Grading/breezeTotal;
+            float additive2Real = additive2Grading/breezeTotal;
+            float additive3Real = additive3Grading/breezeTotal;
 
             //取出各筛孔及材料的比计算合成级配
             for (int j = 0; j < gradingList.size();j++){
 
                 String sieveDiameter = String.valueOf(gradingList.get(j).get("sieve_diameter_grading"));
+                String repertoryTen = String.valueOf(gradingList.get(j).get("repertory_Ten_grading"));
+                String repertoryNine = String.valueOf(gradingList.get(j).get("repertory_nine_grading"));
+                String repertoryEight = String.valueOf(gradingList.get(j).get("repertory_eight_grading"));
+                String repertorySeven = String.valueOf(gradingList.get(j).get("repertory_seven_grading"));
                 String repertorySix = String.valueOf(gradingList.get(j).get("repertory_six_grading"));
                 String repertoryFive = String.valueOf(gradingList.get(j).get("repertory_five_grading"));
                 String repertoryFour = String.valueOf(gradingList.get(j).get("repertory_four_grading"));
                 String repertoryThree = String.valueOf(gradingList.get(j).get("repertory_three_grading"));
                 String repertoryTwo = String.valueOf(gradingList.get(j).get("repertory_two_grading"));
                 String repertoryOne = String.valueOf(gradingList.get(j).get("repertory_one_grading"));
-                String breezeGrading = String.valueOf(gradingList.get(j).get("breeze_grading"));
+                String breeze1Grading = String.valueOf(gradingList.get(j).get("breeze1_grading"));
+                String breeze2Grading = String.valueOf(gradingList.get(j).get("breeze2_grading"));
+                String breeze3Grading = String.valueOf(gradingList.get(j).get("breeze3_grading"));
+                String breeze4Grading = String.valueOf(gradingList.get(j).get("breeze4_grading"));
                 String roughRegenerate = String.valueOf(gradingList.get(j).get("rough_regenerate_grading"));
                 String middleRegenerate = String.valueOf(gradingList.get(j).get("middle_regenerate_grading"));
                 String thinRegenerate = String.valueOf(gradingList.get(j).get("thin_regenerate_grading"));
-                String additiveG = String.valueOf(gradingList.get(j).get("additive_grading"));
+                String additive1G = String.valueOf(gradingList.get(j).get("additive1_grading"));
+                String additive2G = String.valueOf(gradingList.get(j).get("additive2_grading"));
+                String additive3G = String.valueOf(gradingList.get(j).get("additive3_grading"));
+                String additive4G = String.valueOf(gradingList.get(j).get("additive4_grading"));
 
                 //取出模板级配、上限、下限、中值等
                 String moudleGrading = String.valueOf(gradingList.get(j).get("synthesis_grading"));
@@ -133,19 +168,29 @@ public class QualityGradingUtil {
 
 
                 //计算实际级配
+                float repertory10 =  aggregate10Real*Float.parseFloat(repertoryTen);
+                float repertory9 =  aggregate9Real*Float.parseFloat(repertoryNine);
+                float repertory8 =  aggregate8Real*Float.parseFloat(repertoryEight);
+                float repertory7 =  aggregate7Real*Float.parseFloat(repertorySeven);
                 float repertory6 =  aggregate6Real*Float.parseFloat(repertorySix);
                 float repertory5 =  aggregate5Real*Float.parseFloat(repertoryFive);
                 float repertory4 =  aggregate4Real*Float.parseFloat(repertoryFour);
                 float repertory3 =  aggregate3Real*Float.parseFloat(repertoryThree);
                 float repertory2 =  aggregate2Real*Float.parseFloat(repertoryTwo);
                 float repertory1 =  aggregate1Real*Float.parseFloat(repertoryOne);
-                float breeze =  stoneReal*Float.parseFloat(breezeGrading);
+                float breeze1 =  stone1Real*Float.parseFloat(breeze1Grading);
+                float breeze2 =  stone2Real*Float.parseFloat(breeze2Grading);
+                float breeze3 =  stone3Real*Float.parseFloat(breeze3Grading);
+                float breeze4 =  stone4Real*Float.parseFloat(breeze4Grading);
                 float roughRegenerate1 =  regenerateRoughReal*Float.parseFloat(roughRegenerate);
                 float midRegenerate1 =  regenerateMiddleReal*Float.parseFloat(middleRegenerate);
                 float thinRegenerate1 =  regenerateThinReal*Float.parseFloat(thinRegenerate);
-                float additiveG1 =  additiveReal*Float.parseFloat(additiveG);
+                float additiveG1 =  additiveReal*Float.parseFloat(additive1G);
+                float additiveG2 =  additive1Real*Float.parseFloat(additive2G);
+                float additiveG3 =  additive2Real*Float.parseFloat(additive3G);
+                float additiveG4 =  additive3Real*Float.parseFloat(additive4G);
 
-                Float realGrading = repertory6 + repertory5 + repertory4 + repertory3 + repertory2 + repertory1 + breeze + roughRegenerate1 + midRegenerate1 +  thinRegenerate1 + additiveG1;
+                Float realGrading = repertory10 + repertory9 + repertory8 + repertory7 + repertory6 + repertory5 + repertory4 + repertory3 + repertory2 + repertory1 + breeze1 + breeze2 + breeze3 + breeze4  + roughRegenerate1 + midRegenerate1 +  thinRegenerate1 + additiveG1 + additiveG2 + additiveG3 + additiveG4;
 
                 //添加真实级配
                 Map<String,String> map = new HashMap<>();
@@ -191,6 +236,10 @@ public class QualityGradingUtil {
             String crewNum = list.get(i).get("crewNum");
 
             String rationNum = String.valueOf(list.get(i).get("produce_proportioning_num"));
+            String aggregate10 = String.valueOf(list.get(i).get("material_aggregate_10"));
+            String aggregate9 = String.valueOf(list.get(i).get("material_aggregate_9"));
+            String aggregate8 = String.valueOf(list.get(i).get("material_aggregate_8"));
+            String aggregate7 = String.valueOf(list.get(i).get("material_aggregate_7"));
             String aggregate6 = String.valueOf(list.get(i).get("material_aggregate_6"));
             String aggregate5 = String.valueOf(list.get(i).get("material_aggregate_5"));
             String aggregate4 = String.valueOf(list.get(i).get("material_aggregate_4"));
@@ -199,9 +248,14 @@ public class QualityGradingUtil {
             String aggregate1 = String.valueOf(list.get(i).get("material_aggregate_1"));
             String stone1 = String.valueOf(list.get(i).get("material_stone_1"));
             String stone2 = String.valueOf(list.get(i).get("material_stone_2"));
+            String stone3 = String.valueOf(list.get(i).get("material_stone_3"));
+            String stone4 = String.valueOf(list.get(i).get("material_stone_4"));
             String stone = Float.parseFloat(stone1) > Float.parseFloat(stone2)? stone1:stone2;
             String regenerate = String.valueOf(list.get(i).get("material_regenerate"));
             String additive = String.valueOf(list.get(i).get("material_additive"));
+            String additive1 = String.valueOf(list.get(i).get("material_additive_1"));
+            String additive2 = String.valueOf(list.get(i).get("material_additive_2"));
+            String additive3 = String.valueOf(list.get(i).get("material_additive_3"));
 
 
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -246,36 +300,61 @@ public class QualityGradingUtil {
             }
 
             float additiveGrading = Float.parseFloat(additive);
-            breezeTotal = Float.parseFloat(aggregate1) + Float.parseFloat(stone) + regenerateRough + regenerateMiddle + regenerateThin + Float.parseFloat(additive);
+            float additive1Grading = Float.parseFloat(additive1);
+            float additive2Grading = Float.parseFloat(additive2);
+            float additive3Grading = Float.parseFloat(additive3);
+
+            breezeTotal = Float.parseFloat(aggregate1) + Float.parseFloat(stone) + regenerateRough + regenerateMiddle + regenerateThin + Float.parseFloat(additive) + Float.parseFloat(additive1) + Float.parseFloat(additive2) + Float.parseFloat(additive3);
 
             //计算实际配合比
-            float aggregate6Real = Float.parseFloat(aggregate6)/breezeTotal;
+            float aggregate10Real = Float.parseFloat(aggregate10)/breezeTotal;
+            float aggregate9Real = (Float.parseFloat(aggregate9) - Float.parseFloat(aggregate10))/breezeTotal;
+            float aggregate8Real = (Float.parseFloat(aggregate8) - Float.parseFloat(aggregate9))/breezeTotal;
+            float aggregate7Real = (Float.parseFloat(aggregate7) - Float.parseFloat(aggregate8))/breezeTotal;
+            float aggregate6Real = (Float.parseFloat(aggregate6) - Float.parseFloat(aggregate7))/breezeTotal;
             float aggregate5Real = (Float.parseFloat(aggregate5) - Float.parseFloat(aggregate6))/breezeTotal;
             float aggregate4Real = (Float.parseFloat(aggregate4) - Float.parseFloat(aggregate5))/breezeTotal;
             float aggregate3Real = (Float.parseFloat(aggregate3) - Float.parseFloat(aggregate4))/breezeTotal;
             float aggregate2Real = (Float.parseFloat(aggregate2) - Float.parseFloat(aggregate3))/breezeTotal;
             float aggregate1Real = (Float.parseFloat(aggregate1) - Float.parseFloat(aggregate2))/breezeTotal;
+            float stone1Real =  Float.parseFloat(stone1)/breezeTotal;
+            float stone2Real =  Float.parseFloat(stone2)/breezeTotal;
+            float stone3Real =  Float.parseFloat(stone3)/breezeTotal;
+            float stone4Real =  Float.parseFloat(stone4)/breezeTotal;
             float stoneReal =  Float.parseFloat(stone)/breezeTotal;
             float regenerateRoughReal = regenerateRough/breezeTotal;
             float regenerateMiddleReal = regenerateMiddle/breezeTotal;
             float regenerateThinReal = regenerateThin/breezeTotal;
             float additiveReal = additiveGrading/breezeTotal;
+            float additive1Real = additive1Grading/breezeTotal;
+            float additive2Real = additive2Grading/breezeTotal;
+            float additive3Real = additive3Grading/breezeTotal;
 
             //取出各筛孔及材料的比计算合成级配
             for (int j = 0; j < gradingList.size();j++){
 
                 String sieveDiameter = String.valueOf(gradingList.get(j).get("sieve_diameter_grading"));
+                String repertoryTen = String.valueOf(gradingList.get(j).get("repertory_Ten_grading"));
+                String repertoryNine = String.valueOf(gradingList.get(j).get("repertory_nine_grading"));
+                String repertoryEight = String.valueOf(gradingList.get(j).get("repertory_eight_grading"));
+                String repertorySeven = String.valueOf(gradingList.get(j).get("repertory_seven_grading"));
                 String repertorySix = String.valueOf(gradingList.get(j).get("repertory_six_grading"));
                 String repertoryFive = String.valueOf(gradingList.get(j).get("repertory_five_grading"));
                 String repertoryFour = String.valueOf(gradingList.get(j).get("repertory_four_grading"));
                 String repertoryThree = String.valueOf(gradingList.get(j).get("repertory_three_grading"));
                 String repertoryTwo = String.valueOf(gradingList.get(j).get("repertory_two_grading"));
                 String repertoryOne = String.valueOf(gradingList.get(j).get("repertory_one_grading"));
-                String breezeGrading = String.valueOf(gradingList.get(j).get("breeze_grading"));
+                String breeze1Grading = String.valueOf(gradingList.get(j).get("breeze1_grading"));
+                String breeze2Grading = String.valueOf(gradingList.get(j).get("breeze2_grading"));
+                String breeze3Grading = String.valueOf(gradingList.get(j).get("breeze3_grading"));
+                String breeze4Grading = String.valueOf(gradingList.get(j).get("breeze4_grading"));
                 String roughRegenerate = String.valueOf(gradingList.get(j).get("rough_regenerate_grading"));
                 String middleRegenerate = String.valueOf(gradingList.get(j).get("middle_regenerate_grading"));
                 String thinRegenerate = String.valueOf(gradingList.get(j).get("thin_regenerate_grading"));
-                String additiveG = String.valueOf(gradingList.get(j).get("additive_grading"));
+                String additive1G = String.valueOf(gradingList.get(j).get("additive1_grading"));
+                String additive2G = String.valueOf(gradingList.get(j).get("additive2_grading"));
+                String additive3G = String.valueOf(gradingList.get(j).get("additive3_grading"));
+                String additive4G = String.valueOf(gradingList.get(j).get("additive4_grading"));
 
                 //取出模板级配、上限、下限、中值等
                 String moudleGrading = String.valueOf(gradingList.get(j).get("synthesis_grading"));
@@ -285,19 +364,29 @@ public class QualityGradingUtil {
 
 
                 //计算实际级配
+                float repertory10 =  aggregate10Real*Float.parseFloat(repertoryTen);
+                float repertory9 =  aggregate9Real*Float.parseFloat(repertoryNine);
+                float repertory8 =  aggregate8Real*Float.parseFloat(repertoryEight);
+                float repertory7 =  aggregate7Real*Float.parseFloat(repertorySeven);
                 float repertory6 =  aggregate6Real*Float.parseFloat(repertorySix);
                 float repertory5 =  aggregate5Real*Float.parseFloat(repertoryFive);
                 float repertory4 =  aggregate4Real*Float.parseFloat(repertoryFour);
                 float repertory3 =  aggregate3Real*Float.parseFloat(repertoryThree);
                 float repertory2 =  aggregate2Real*Float.parseFloat(repertoryTwo);
                 float repertory1 =  aggregate1Real*Float.parseFloat(repertoryOne);
-                float breeze =  stoneReal*Float.parseFloat(breezeGrading);
+                float breeze1 =  stone1Real*Float.parseFloat(breeze1Grading);
+                float breeze2 =  stone2Real*Float.parseFloat(breeze2Grading);
+                float breeze3 =  stone3Real*Float.parseFloat(breeze3Grading);
+                float breeze4 =  stone4Real*Float.parseFloat(breeze4Grading);
                 float roughRegenerate1 =  regenerateRoughReal*Float.parseFloat(roughRegenerate);
-                float middleRegenerate1 =  regenerateMiddleReal*Float.parseFloat(middleRegenerate);
-                float thinRegenerate1 = regenerateThinReal *Float.parseFloat(thinRegenerate);
-                float additiveG1 =  additiveReal*Float.parseFloat(additiveG);
+                float midRegenerate1 =  regenerateMiddleReal*Float.parseFloat(middleRegenerate);
+                float thinRegenerate1 =  regenerateThinReal*Float.parseFloat(thinRegenerate);
+                float additiveG1 =  additiveReal*Float.parseFloat(additive1G);
+                float additiveG2 =  additive1Real*Float.parseFloat(additive2G);
+                float additiveG3 =  additive2Real*Float.parseFloat(additive3G);
+                float additiveG4 =  additive3Real*Float.parseFloat(additive4G);
 
-                Float realGrading = repertory6 + repertory5 + repertory4 + repertory3 + repertory2 + repertory1 + breeze + roughRegenerate1 + middleRegenerate1 +  thinRegenerate1 + additiveG1;
+                Float realGrading = repertory10 + repertory9 + repertory8 + repertory7 + repertory6 + repertory5 + repertory4 + repertory3 + repertory2 + repertory1 + breeze1 + breeze2 + breeze3 + breeze4  + roughRegenerate1 + midRegenerate1 +  thinRegenerate1 + additiveG1 + additiveG2 + additiveG3 + additiveG4;
 
                 //添加真实级配
                 Map<String,String> map = new HashMap<>();

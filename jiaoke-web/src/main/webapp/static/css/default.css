@@ -1501,22 +1501,41 @@ table {
 .my_form_table {
     border-bottom: none;
     margin-top: 1.5%;
-    margin-left: 5%;
+    margin-left: 1%;
     width: 100%;
+    border-collapse: separate;
+    border-spacing: 0px 10px;
 }
 .my_form_table td {
     line-height: 40px;
-    text-indent: 15px;
+    text-indent: 5px;
+}
+.my_tlabels{
+    background: #ffffff;
+    width: 79px;
+    /*text-align: right;*/
+    padding-right: 0px;
+    white-space: nowrap;
 }
 .my_form_input{
-    width: 88px;
+    width: 60px;
     height: 26px;
     border: solid 1px #c6c6c6;
     line-height: 26px;
     text-indent: 8px;
     font-family: '微软雅黑';
     float: left;
-    margin-left: 15px;
+}
+
+.my_form_swidth {
+    width: 190px;
+    position: relative;
+    min-width: 134px;
+    height: 26px;
+    border: 1px solid #c6c6c6;
+    cursor: pointer;
+    text-indent: 0;
+    margin-right: 20px;
 }
 .my_grading_input{
     width: 60px;

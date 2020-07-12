@@ -94,8 +94,15 @@ public class ReceiveDataImpl implements ReceiveDataInf {
         String proDate = map.get("produce_date");
         //根据配比号，获取模板数据
         QualityRatioTemplate ratioTemplate = qualityWarningDao.selectRatioTemplateByCrew1MoudelId(map.get("produce_ratio_id"), fieldName,proDate);
+        //根据配比ID，获取预警数据
+        Map<String,String> warningLeveMap = qualityWarningDao.selectWarningLevelByRatioId(ratioTemplate.getId());
 
-        if (null == ratioTemplate) return;
+        if (null == ratioTemplate) {
+            return;
+        }
+        if (null == warningLeveMap || warningLeveMap.isEmpty()){
+            return;
+        }
 
         //插入数据库表quality_warning_promessage_crew，返回主键ID
         qualityWarningDao.insertQualityWarningCrew(map);
@@ -107,25 +114,28 @@ public class ReceiveDataImpl implements ReceiveDataInf {
             e.printStackTrace();
         }
         //一仓温度
-        int warehouse = Integer.parseInt(messageArray[18]);
+        int warehouse = Integer.parseInt(messageArray[27]);
         //混合料温度
-        int mixture = Integer.parseInt(messageArray[19]);
-        //骨料温度
-        int aggregate = Integer.parseInt(messageArray[22]);
+        int mixture = Integer.parseInt(messageArray[28]);
+        //除尘器温度
+//        int mixture = Integer.parseInt(messageArray[29]);
         //沥青温度
-        int temperatureAsphalt = Integer.parseInt(messageArray[21]);
+        int temperatureAsphalt = Integer.parseInt(messageArray[30]);
+        //骨料温度
+        int  aggregate = Integer.parseInt(messageArray[31]);
         //截取材料实际数值到数组
         String[] temArray;
-        temArray = Arrays.copyOfRange(messageArray,6,18);
+        temArray = Arrays.copyOfRange(messageArray,6,27);
 
         //判断材料百分比差值后插入
-        List<QualityWarningData>  warningDataList = QualityWarningUtil.materialWarningObj(id,temArray,ratioTemplate);
+        List<QualityWarningData>  warningDataList = QualityWarningUtil.materialWarningObj(id,warningLeveMap,temArray,ratioTemplate);
 
         //获取温度差值判断后插入
-        warningDataList.add(QualityWarningUtil.temperatureWarningLevel(ratioTemplate.getTemperatureMilling(), ratioTemplate.getTemperatureMillingUp(), warehouse, id, "一仓温度"));
-        warningDataList.add(QualityWarningUtil.temperatureWarningLevel(ratioTemplate.getTemperatureAsphalt(), ratioTemplate.getTemperatureAsphaltUp(), temperatureAsphalt, id, "沥青温度"));
-        warningDataList.add(QualityWarningUtil.temperatureWarningLevel(ratioTemplate.getTemperatureMixture(), ratioTemplate.getTemperatureMixtureUp(), mixture, id, "混合料温度"));
-        warningDataList.add(QualityWarningUtil.temperatureWarningLevel(ratioTemplate.getTemperatureAggregate(), ratioTemplate.getTemperatureAggregateUp(), aggregate, id, "骨料温度"));
+        warningDataList.add(QualityWarningUtil.temperatureWarningLevel(warningLeveMap,ratioTemplate.getTemperatureMilling(), ratioTemplate.getTemperatureMillingUp(), warehouse, id, "一仓温度"));
+        warningDataList.add(QualityWarningUtil.temperatureWarningLevel(warningLeveMap,ratioTemplate.getTemperatureAsphalt(), ratioTemplate.getTemperatureAsphaltUp(), temperatureAsphalt, id, "沥青温度"));
+        warningDataList.add(QualityWarningUtil.temperatureWarningLevel(warningLeveMap,ratioTemplate.getTemperatureMixture(), ratioTemplate.getTemperatureMixtureUp(), mixture, id, "混合料温度"));
+        warningDataList.add(QualityWarningUtil.temperatureWarningLevel(warningLeveMap,ratioTemplate.getTemperatureAggregate(), ratioTemplate.getTemperatureAggregateUp(), aggregate, id, "骨料温度"));
+
 
         //插入数据库
         qualityWarningDao.insertQualityWarningData(warningDataList);
@@ -172,7 +182,7 @@ public class ReceiveDataImpl implements ReceiveDataInf {
         crewNum =  "1".equals(crewNum)?  "crew1":"crew2";
 
         //分解出总重量
-        String materialTotal = messageArray[17];
+        String materialTotal = messageArray[26];
 
         //用于写入假预警数据表
         List<QualityWaringDataFalse> myWaringDataList = new ArrayList<>();
@@ -185,6 +195,38 @@ public class ReceiveDataImpl implements ReceiveDataInf {
         if (templateRatio == null ) return;
         crewNum = "crew1".equals(crewNum)? "1":"2";
         //根据模板随机比例(6-3仓 2%  2,1仓,矿粉仓 1%  沥青上下3kg  温度 上下5)
+        double repertoryTenPercentage = positiveAndNegativeRandomDecimals(templateRatio.getRepertoryTen(), 2, 4);
+        //添加预警表相关信息
+        QualityWaringDataFalse ten = new QualityWaringDataFalse();
+        ten.setActualRatio(Double.parseDouble(format.format(repertoryTenPercentage)));
+        ten.setMoudleRatio(Double.parseDouble(format.format(templateRatio.getRepertoryTen())));
+        ten.setDeviationRatio(Double.parseDouble(format.format(templateRatio.getRepertoryTen() - repertoryTenPercentage)));
+        ten.setMaterialName("骨料10");
+        myWaringDataList.add(ten);
+        double repertoryNinePercentage = positiveAndNegativeRandomDecimals(templateRatio.getRepertoryNine(), 2, 4);
+        //添加预警表相关信息
+        QualityWaringDataFalse nine = new QualityWaringDataFalse();
+        nine.setActualRatio(Double.parseDouble(format.format(repertoryNinePercentage)));
+        nine.setMoudleRatio(Double.parseDouble(format.format(templateRatio.getRepertoryNine())));
+        nine.setDeviationRatio(Double.parseDouble(format.format(templateRatio.getRepertoryNine() - repertoryNinePercentage)));
+        nine.setMaterialName("骨料9");
+        myWaringDataList.add(nine);
+        double repertoryEightPercentage = positiveAndNegativeRandomDecimals(templateRatio.getRepertoryEight(), 2, 4);
+        //添加预警表相关信息
+        QualityWaringDataFalse eight = new QualityWaringDataFalse();
+        eight.setActualRatio(Double.parseDouble(format.format(repertoryEightPercentage)));
+        eight.setMoudleRatio(Double.parseDouble(format.format(templateRatio.getRepertoryEight())));
+        eight.setDeviationRatio(Double.parseDouble(format.format(templateRatio.getRepertoryEight() - repertoryEightPercentage)));
+        eight.setMaterialName("骨料8");
+        myWaringDataList.add(eight);
+        double repertorySevenPercentage = positiveAndNegativeRandomDecimals(templateRatio.getRepertorySeven(), 2, 4);
+        //添加预警表相关信息
+        QualityWaringDataFalse seven = new QualityWaringDataFalse();
+        seven.setActualRatio(Double.parseDouble(format.format(repertorySevenPercentage)));
+        seven.setMoudleRatio(Double.parseDouble(format.format(templateRatio.getRepertorySeven())));
+        seven.setDeviationRatio(Double.parseDouble(format.format(templateRatio.getRepertorySeven() - repertorySevenPercentage)));
+        seven.setMaterialName("骨料7");
+        myWaringDataList.add(seven);
         double repertorySixPercentage = positiveAndNegativeRandomDecimals(templateRatio.getRepertorySix(), 2, 4);
         //添加预警表相关信息
         QualityWaringDataFalse six = new QualityWaringDataFalse();
@@ -253,11 +295,40 @@ public class ReceiveDataImpl implements ReceiveDataInf {
         breeze.setActualRatio(Double.parseDouble(format.format(breezePercentage)));
         breeze.setMoudleRatio(Double.parseDouble(format.format(templateRatio.getBreeze())));
         breeze.setDeviationRatio(Double.parseDouble(format.format(templateRatio.getBreeze() - breezePercentage)));
-        breeze.setMaterialName("石粉");
+        breeze.setMaterialName("石粉1");
         myWaringDataList.add(breeze);
 
+        double breezeTwoPercentage = positiveAndNegativeRandomDecimals(templateRatio.getBreezeTwo(), 1, 2);
 
+        //添加预警表相关信息
+        QualityWaringDataFalse breezeTwo = new QualityWaringDataFalse();
+        breezeTwo.setActualRatio(Double.parseDouble(format.format(breezeTwoPercentage)));
+        breezeTwo.setMoudleRatio(Double.parseDouble(format.format(templateRatio.getBreezeTwo())));
+        breezeTwo.setDeviationRatio(Double.parseDouble(format.format(templateRatio.getBreezeTwo() - breezeTwoPercentage)));
+        breezeTwo.setMaterialName("石粉2");
+        myWaringDataList.add(breezeTwo);
 
+        //矿粉3
+        double breezeThreePercentage = positiveAndNegativeRandomDecimals(templateRatio.getBreezeThree(), 1, 2);
+
+        //添加预警表相关信息
+        QualityWaringDataFalse breezeThree = new QualityWaringDataFalse();
+        breezeThree.setActualRatio(Double.parseDouble(format.format(breezeThreePercentage)));
+        breezeThree.setMoudleRatio(Double.parseDouble(format.format(templateRatio.getBreezeThree())));
+        breezeThree.setDeviationRatio(Double.parseDouble(format.format(templateRatio.getBreezeThree() - breezeThreePercentage)));
+        breezeThree.setMaterialName("石粉3");
+        myWaringDataList.add(breezeThree);
+
+        //矿粉
+        double breezeFourPercentage = positiveAndNegativeRandomDecimals(templateRatio.getBreezeFour(), 1, 2);
+
+        //添加预警表相关信息
+        QualityWaringDataFalse breezeFour = new QualityWaringDataFalse();
+        breezeFour.setActualRatio(Double.parseDouble(format.format(breezeFourPercentage)));
+        breezeFour.setMoudleRatio(Double.parseDouble(format.format(templateRatio.getBreezeFour())));
+        breezeFour.setDeviationRatio(Double.parseDouble(format.format(templateRatio.getBreezeFour() - breezeFourPercentage)));
+        breezeFour.setMaterialName("石粉1");
+        myWaringDataList.add(breezeFour);
         //沥青实际重量
         double asphaltActualWeight = Double.parseDouble(calculationWeightByPercentage(templateRatio.getRatioStone(),materialTotal,"#0.0"));
         //沥青数据美化
@@ -301,6 +372,38 @@ public class ReceiveDataImpl implements ReceiveDataInf {
         dditive.setMaterialName("添加剂");
         myWaringDataList.add(dditive);
 
+        //添加剂2
+        double ratioAdditiveTwoPercentage = positiveAndNegativeRandomDecimals(templateRatio.getRatioAdditiveTwo(), 1, 2);
+
+        //添加预警表相关信息
+        QualityWaringDataFalse dditiveTwo = new QualityWaringDataFalse();
+        dditiveTwo.setActualRatio(Double.parseDouble(format.format(ratioAdditiveTwoPercentage)));
+        dditiveTwo.setMoudleRatio(Double.parseDouble(format.format(templateRatio.getRatioAdditiveTwo())));
+        dditiveTwo.setDeviationRatio(Double.parseDouble(format.format(templateRatio.getRatioAdditiveTwo() - ratioAdditiveTwoPercentage)));
+        dditiveTwo.setMaterialName("添加剂2");
+        myWaringDataList.add(dditiveTwo);
+
+        //添加剂3
+        double ratioAdditiveThreePercentage = positiveAndNegativeRandomDecimals(templateRatio.getRatioAdditiveThree(), 1, 2);
+
+        //添加预警表相关信息
+        QualityWaringDataFalse dditiveThree = new QualityWaringDataFalse();
+        dditiveThree.setActualRatio(Double.parseDouble(format.format(ratioAdditiveThreePercentage)));
+        dditiveThree.setMoudleRatio(Double.parseDouble(format.format(templateRatio.getRatioAdditiveThree())));
+        dditiveThree.setDeviationRatio(Double.parseDouble(format.format(templateRatio.getRatioAdditiveThree() - ratioAdditiveThreePercentage)));
+        dditiveThree.setMaterialName("添加剂3");
+        myWaringDataList.add(dditiveThree);
+
+        //添加剂3
+        double ratioAdditiveFourPercentage = positiveAndNegativeRandomDecimals(templateRatio.getRatioAdditiveFour(), 1, 2);
+
+        //添加预警表相关信息
+        QualityWaringDataFalse dditiveFour = new QualityWaringDataFalse();
+        dditiveFour.setActualRatio(Double.parseDouble(format.format(ratioAdditiveFourPercentage)));
+        dditiveFour.setMoudleRatio(Double.parseDouble(format.format(templateRatio.getRatioAdditiveFour())));
+        dditiveFour.setDeviationRatio(Double.parseDouble(format.format(templateRatio.getRatioAdditiveFour() - ratioAdditiveFourPercentage)));
+        dditiveFour.setMaterialName("添加剂4");
+        myWaringDataList.add(dditiveFour);
         //沥青温度
         int temperatureAsphalt = randomNegativeAndPositiveInteger(templateRatio.getTemperatureAsphalt(),5, -5);
 
@@ -352,6 +455,14 @@ public class ReceiveDataImpl implements ReceiveDataInf {
         qualityTimelyDataFalse.setProduceCustomNum(messageArray[5]);
 
         //骨料
+        int materialAggregate10 = Integer.parseInt(calculationWeightByPercentage(repertoryTenPercentage,materialTotal,"#0"));
+
+        int materialAggregate9 = Integer.parseInt(calculationWeightByPercentage(repertoryNinePercentage,materialTotal,"#0"));
+
+        int materialAggregate8 = Integer.parseInt(calculationWeightByPercentage(repertoryEightPercentage,materialTotal,"#0"));
+
+        int materialAggregate7 = Integer.parseInt(calculationWeightByPercentage(repertorySevenPercentage,materialTotal,"#0"));
+
         int materialAggregate6 = Integer.parseInt(calculationWeightByPercentage(repertorySixPercentage,materialTotal,"#0"));
 
         int materialAggregate5 = Integer.parseInt(calculationWeightByPercentage(repertoryFivePercentage,materialTotal,"#0"));
@@ -365,6 +476,10 @@ public class ReceiveDataImpl implements ReceiveDataInf {
         int materialAggregate1 = Integer.parseInt(calculationWeightByPercentage(repertoryOnePercentage,materialTotal,"#0"));
 
         ArrayList<Integer> list = new ArrayList<>();
+        list.add(materialAggregate10);
+        list.add(materialAggregate9);
+        list.add(materialAggregate8);
+        list.add(materialAggregate7);
         list.add(materialAggregate6);
         list.add(materialAggregate5);
         list.add(materialAggregate4);
@@ -375,35 +490,51 @@ public class ReceiveDataImpl implements ReceiveDataInf {
         List<Integer> integerList = increaseProgressively(list);
 
         //骨料
-        qualityTimelyDataFalse.setMaterialAggregate6(integerList.get(0));
-        qualityTimelyDataFalse.setMaterialAggregate5(integerList.get(1));
-        qualityTimelyDataFalse.setMaterialAggregate4(integerList.get(2));
-        qualityTimelyDataFalse.setMaterialAggregate3(integerList.get(3));
-        qualityTimelyDataFalse.setMaterialAggregate2(integerList.get(4));
-        qualityTimelyDataFalse.setMaterialAggregate1(integerList.get(5));
+        qualityTimelyDataFalse.setMaterialAggregate10(integerList.get(0));
+        qualityTimelyDataFalse.setMaterialAggregate9(integerList.get(1));
+        qualityTimelyDataFalse.setMaterialAggregate8(integerList.get(2));
+        qualityTimelyDataFalse.setMaterialAggregate7(integerList.get(3));
+        qualityTimelyDataFalse.setMaterialAggregate6(integerList.get(4));
+        qualityTimelyDataFalse.setMaterialAggregate5(integerList.get(5));
+        qualityTimelyDataFalse.setMaterialAggregate4(integerList.get(6));
+        qualityTimelyDataFalse.setMaterialAggregate3(integerList.get(7));
+        qualityTimelyDataFalse.setMaterialAggregate2(integerList.get(8));
+        qualityTimelyDataFalse.setMaterialAggregate1(integerList.get(9));
 
         //矿粉
-        qualityTimelyDataFalse.setMaterialStone1(0.0);
-        qualityTimelyDataFalse.setMaterialStone2(Double.parseDouble(calculationWeightByPercentage(breezePercentage,materialTotal,"#0.0")));
+        qualityTimelyDataFalse.setMaterialStone4(Double.parseDouble(calculationWeightByPercentage(breezeFourPercentage,materialTotal,"#0.0")));
+        qualityTimelyDataFalse.setMaterialStone3(Double.parseDouble(calculationWeightByPercentage(breezeThreePercentage,materialTotal,"#0.0")));
+        qualityTimelyDataFalse.setMaterialStone1(Double.parseDouble(calculationWeightByPercentage(breezePercentage,materialTotal,"#0.0")));
+        qualityTimelyDataFalse.setMaterialStone2(Double.parseDouble(calculationWeightByPercentage(breezeTwoPercentage,materialTotal,"#0.0")));
 
+        //沥青
         qualityTimelyDataFalse.setMaterialAsphalt(asphaltFalseWeight);
+        //再生
         qualityTimelyDataFalse.setMaterialRegenerate(Double.parseDouble(calculationWeightByPercentage(ratioRegeneratePercentage,materialTotal,"#0.0")));
+        //添加剂
         qualityTimelyDataFalse.setMaterialAdditive(Double.parseDouble(calculationWeightByPercentage(ratioAdditivePercentage,materialTotal,"#0.0")));
+        qualityTimelyDataFalse.setMaterialAdditive1(Double.parseDouble(calculationWeightByPercentage(ratioAdditiveTwoPercentage,materialTotal,"#0.0")));
+        qualityTimelyDataFalse.setMaterialAdditive2(Double.parseDouble(calculationWeightByPercentage(ratioAdditiveThreePercentage,materialTotal,"#0.0")));
+        qualityTimelyDataFalse.setMaterialAdditive3(Double.parseDouble(calculationWeightByPercentage(ratioAdditiveFourPercentage,materialTotal,"#0.0")));
 
         //计算总量，写入数据库
         double myMaterialTotal = qualityTimelyDataFalse.getMaterialAggregate1()
                                     + qualityTimelyDataFalse.getMaterialAdditive()
+                                    + qualityTimelyDataFalse.getMaterialAdditive1()
+                                    + qualityTimelyDataFalse.getMaterialAdditive2()
+                                    + qualityTimelyDataFalse.getMaterialAdditive3()
                                     + qualityTimelyDataFalse.getMaterialAsphalt()
                                     + qualityTimelyDataFalse.getMaterialRegenerate()
                                     + qualityTimelyDataFalse.getMaterialStone1()
-                                    + qualityTimelyDataFalse.getMaterialStone2();
-
+                                    + qualityTimelyDataFalse.getMaterialStone2()
+                                    + qualityTimelyDataFalse.getMaterialStone3()
+                                    + qualityTimelyDataFalse.getMaterialStone4();
         qualityTimelyDataFalse.setMaterialTotal(myMaterialTotal);
 
         //温度
-        qualityTimelyDataFalse.setTemperatureWarehouse1(Integer.parseInt(messageArray[18]));
+        qualityTimelyDataFalse.setTemperatureWarehouse1(Integer.parseInt(messageArray[27]));
         qualityTimelyDataFalse.setTemperatureMixture(temperatureMixture);
-        qualityTimelyDataFalse.setTemperatureDuster(Integer.parseInt(messageArray[20]));
+        qualityTimelyDataFalse.setTemperatureDuster(Integer.parseInt(messageArray[29]));
         qualityTimelyDataFalse.setTemperatureAsphalt(temperatureAsphalt);
         qualityTimelyDataFalse.setTemperatureAggregate(temperatureAggregate);
         qualityTimelyDataFalse.setCrewNum(Integer.parseInt(crewNum));
@@ -412,12 +543,16 @@ public class ReceiveDataImpl implements ReceiveDataInf {
         int id = qualityTimelyDataFalse.getId();
 
         //多线程执行生产Excel同时写入指定Ip电脑
-
-
-        //为所有的预警数据对象添加id
-        for (int i = 0; i < myWaringDataList.size(); i ++){
-            myWaringDataList.get(i).setWarningLevel(0);
-            myWaringDataList.get(i).setRealtimeDataShamId(id);
+        //删除配比为0的元素 、为所有的预警数据对象添加id
+        Iterator<QualityWaringDataFalse> it = myWaringDataList.iterator();
+        while(it.hasNext()){
+            QualityWaringDataFalse x = it.next();
+            if(0 == x.getMoudleRatio()){
+                it.remove();
+            }else {
+                x.setWarningLevel(0);
+                x.setRealtimeDataShamId(id);
+            }
         }
 
         qualityTimelyDataFalseMapper.insertWarningPromessage(myWaringDataList);

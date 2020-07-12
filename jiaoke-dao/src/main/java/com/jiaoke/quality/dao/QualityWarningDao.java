@@ -76,4 +76,14 @@ public interface QualityWarningDao {
      * @date 2020/5/21 10:46
      */
     void updateQualityWarningData(@Param("id") int id,@Param("upWarning") int upWarning,@Param("criticalWarning")  int criticalWarning,@Param("proName") String proName);
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据配比ID查询该配比预警信息>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/7/8 10:52
+     */
+    Map<String,String> selectWarningLevelByRatioId(@Param("ratioId") int ratioId);
 }

@@ -117,17 +117,27 @@
             <table class="simpletable">
                 <tr class="even">
                     <td>筛孔</td>
+                    <td>十仓</td>
+                    <td>九仓</td>
+                    <td>八仓</td>
+                    <td>七仓</td>
                     <td>六仓</td>
                     <td>五仓</td>
                     <td>四仓</td>
                     <td>三仓</td>
                     <td>二仓</td>
                     <td>一仓</td>
-                    <td>矿粉</td>
+                    <td>矿粉1</td>
+                    <td>矿粉2</td>
+                    <td>矿粉3</td>
+                    <td>矿粉4</td>
                     <td>粗再生料</td>
                     <td>中再生料</td>
                     <td>细再生料</td>
-                    <td>添加剂矿料</td>
+                    <td>添加剂1</td>
+                    <td>添加剂2</td>
+                    <td>添加剂3</td>
+                    <td>添加剂4</td>
                     <td>合成级配</td>
                     <td>中值</td>
                     <td>上限</td>
@@ -229,17 +239,27 @@
             <table class="simpletable">
                 <tr class="even">
                     <td>筛孔</td>
+                    <td>十仓</td>
+                    <td>九仓</td>
+                    <td>八仓</td>
+                    <td>七仓</td>
                     <td>六仓</td>
                     <td>五仓</td>
                     <td>四仓</td>
                     <td>三仓</td>
                     <td>二仓</td>
                     <td>一仓</td>
-                    <td>矿粉</td>
+                    <td>矿粉1</td>
+                    <td>矿粉2</td>
+                    <td>矿粉3</td>
+                    <td>矿粉4</td>
                     <td>粗再生料</td>
                     <td>中再生料</td>
                     <td>细再生料</td>
-                    <td>添加剂矿料</td>
+                    <td>添加剂1</td>
+                    <td>添加剂2</td>
+                    <td>添加剂3</td>
+                    <td>添加剂4</td>
                     <td>合成级配</td>
                     <td>中值</td>
                     <td>上限</td>

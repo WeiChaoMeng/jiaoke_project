@@ -95,6 +95,18 @@
             <if test="produceCustomNum != null">
                 produce_custom_num,
             </if>
+            <if test="materialAggregate10 != null">
+                material_aggregate_10,
+            </if>
+            <if test="materialAggregate9 != null">
+                material_aggregate_9,
+            </if>
+            <if test="materialAggregate8 != null">
+                material_aggregate_8,
+            </if>
+            <if test="materialAggregate7 != null">
+                material_aggregate_7,
+            </if>
             <if test="materialAggregate6 != null">
                 material_aggregate_6,
             </if>
@@ -119,6 +131,12 @@
             <if test="materialStone2 != null">
                 material_stone_2,
             </if>
+            <if test="materialStone3 != null">
+                material_stone_3,
+            </if>
+            <if test="materialStone4 != null">
+                material_stone_4,
+            </if>
             <if test="materialAsphalt != null">
                 material_asphalt,
             </if>
@@ -127,6 +145,15 @@
             </if>
             <if test="materialAdditive != null">
                 material_additive,
+            </if>
+            <if test="materialAdditive1 != null">
+                material_additive1,
+            </if>
+            <if test="materialAdditive2 != null">
+                material_additive2,
+            </if>
+            <if test="materialAdditive3 != null">
+                material_additive3,
             </if>
             <if test="materialTotal != null">
                 material_total,
@@ -172,6 +199,18 @@
             <if test="produceCustomNum != null">
                 #{produceCustomNum,jdbcType=VARCHAR},
             </if>
+            <if test="materialAggregate10 != null">
+                #{materialAggregate10,jdbcType=INTEGER},
+            </if>
+            <if test="materialAggregate9 != null">
+                #{materialAggregate9,jdbcType=INTEGER},
+            </if>
+            <if test="materialAggregate8 != null">
+                #{materialAggregate8,jdbcType=INTEGER},
+            </if>
+            <if test="materialAggregate7 != null">
+                #{materialAggregate7,jdbcType=INTEGER},
+            </if>
             <if test="materialAggregate6 != null">
                 #{materialAggregate6,jdbcType=INTEGER},
             </if>
@@ -196,6 +235,12 @@
             <if test="materialStone2 != null">
                 #{materialStone2,jdbcType=DOUBLE},
             </if>
+            <if test="materialStone3 != null">
+                #{materialStone3,jdbcType=DOUBLE},
+            </if>
+            <if test="materialStone4 != null">
+                #{materialStone4,jdbcType=DOUBLE},
+            </if>
             <if test="materialAsphalt != null">
                 #{materialAsphalt,jdbcType=DOUBLE},
             </if>
@@ -204,6 +249,15 @@
             </if>
             <if test="materialAdditive != null">
                 #{materialAdditive,jdbcType=DOUBLE},
+            </if>
+            <if test="materialAdditive1 != null">
+                #{materialAdditive1,jdbcType=DOUBLE},
+            </if>
+            <if test="materialAdditive2 != null">
+                #{materialAdditive2,jdbcType=DOUBLE},
+            </if>
+            <if test="materialAdditive3 != null">
+                #{materialAdditive3,jdbcType=DOUBLE},
             </if>
             <if test="materialTotal != null">
                 #{materialTotal,jdbcType=DOUBLE},

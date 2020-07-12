@@ -10,7 +10,6 @@ package com.jiaoke.quality.service;
 
 import com.jiaoke.common.bean.PageBean;
 import com.jiaoke.quality.bean.QualityRatioModel;
-import com.jiaoke.quality.bean.QualityRatioTemplate;
 
 import java.util.List;
 import java.util.Map;
@@ -47,7 +46,7 @@ public interface QualityMatchingInf {
      * @param qualityRatioTemplate
      * @return
      */
-    boolean insetRatioTemplate(QualityRatioTemplate qualityRatioTemplate);
+    boolean insetRatioTemplate(Map<String, Object> qualityRatioTemplate);
 
     /**
      * 根据id传入待删除的配比模板id
@@ -82,7 +81,7 @@ public interface QualityMatchingInf {
      * @auther Melone
      * @date 2019/5/28 11:26
      */
-    Boolean EditRationById(QualityRatioTemplate qualityRatioTemplate);
+    Boolean EditRationById(Map<String, Object> qualityRatioTemplate);
 
     /**
      *

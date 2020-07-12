@@ -163,21 +163,31 @@ function showGrading(id) {
                 $('input[name=grading_name]').val(res[i].grading_name);
                 $('input[name=up_user]').val(res[i].up_user);
                 $('input[name=grading_remaker]').val(res[i].grading_remaker);
-
+                debugger
                 var htmlStr ="<tr class='even'>"
-                    +"<td>" + res[i].sieve_diameter_grading + "</td>"
-                    +"<td>" + res[i].repertory_six_grading + "</td>"
-                    +" <td>" + res[i].repertory_five_grading + "</td>"
-                    +"<td>" + res[i].repertory_four_grading + "</td>"
-                    +"<td>" + res[i].repertory_three_grading + "</td>"
-                    +"<td>" + res[i].repertory_two_grading + "</td>"
-                    +"<td>" + res[i].repertory_one_grading + "</td>"
-                    +"<td>" + res[i].breeze_grading + "</td>"
-                    +"<td>" + res[i].rough_regenerate_grading + "</td>"
-                    +"<td>" + res[i].middle_regenerate_grading + "</td>"
-                    +"<td>" + res[i].thin_regenerate_grading + "</td>"
-                    +"<td>" + res[i].additive_grading + "</td>"
-                    +"<td>" + res[i].synthesis_grading + "</td>"
+                    +"<td>" + (blank(res[i].sieve_diameter_grading) ? 0:res[i].sieve_diameter_grading) + "</td>"
+                    +"<td>" +( blank(res[i].repertory_ten_grading) ? 0:res[i].repertory_ten_grading )+ "</td>"
+                    +" <td>" + (blank(res[i].repertory_nine_grading) ? 0:res[i].repertory_nine_grading)  + "</td>"
+                    +"<td>" + (blank(res[i].repertory_eight_grading) ? 0:res[i].repertory_eight_grading) + "</td>"
+                    +"<td>" + (blank(res[i].repertory_seven_grading) ? 0:res[i].repertory_seven_grading) + "</td>"
+                    +"<td>" + (blank(res[i].repertory_six_grading) ? 0:res[i].repertory_six_grading) + "</td>"
+                    +"<td>" + (blank(res[i].repertory_five_grading) ? 0:res[i].repertory_five_grading) + "</td>"
+                    +"<td>" + (blank(res[i].repertory_four_grading) ? 0:res[i].repertory_four_grading) + "</td>"
+                    +"<td>" + (blank(res[i].repertory_three_grading) ? 0:res[i].repertory_three_grading) + "</td>"
+                    +"<td>" + (blank(res[i].repertory_two_grading) ? 0:res[i].repertory_two_grading) + "</td>"
+                    +"<td>" + (blank(res[i].repertory_one_grading) ? 0:res[i].repertory_one_grading) + "</td>"
+                    +"<td>" + (blank(res[i].breeze1_grading) ? 0:res[i].breeze1_grading)  + "</td>"
+                    +"<td>" + (blank(res[i].breeze2_grading) ? 0:res[i].breeze2_grading) + "</td>"
+                    +"<td>" + (blank(res[i].breeze3_grading) ? 0:res[i].breeze3_grading) + "</td>"
+                    +"<td>" + (blank(res[i].breeze4_grading) ? 0:res[i].breeze4_grading) + "</td>"
+                    +"<td>" + (blank(res[i].rough_regenerate_grading) ? 0:res[i].rough_regenerate_grading) + "</td>"
+                    +"<td>" + (blank(res[i].middle_regenerate_grading) ? 0:res[i].middle_regenerate_grading) + "</td>"
+                    +"<td>" + (blank(res[i].thin_regenerate_grading) ? 0:res[i].thin_regenerate_grading) + "</td>"
+                    +"<td>" + (blank(res[i].additive1_grading) ? 0:res[i].additive1_grading) + "</td>"
+                    +"<td>" + (blank(res[i].additive2_grading) ? 0:res[i].additive2_grading) + "</td>"
+                    +"<td>" + (blank(res[i].additive3_grading) ? 0:res[i].additive3_grading) + "</td>"
+                    +"<td>" + (blank(res[i].additive4_grading) ? 0:res[i].additive4_grading) + "</td>"
+                    +"<td>" + (blank(res[i].synthesis_grading) ? 0:res[i].synthesis_grading) + "</td>"
                     +"<td>" + res[i].mid_value + "</td>"
                     +"<td>" + res[i].up_value + "</td>"
                     +"<td>" + res[i].down_value + "</td>"
@@ -255,17 +265,27 @@ function showEditGrading(id) {
 
                 var htmlStr ="<tr class='even'>"
                     +"<td>" + res[i].sieve_diameter_grading + "</td>"
+                    +"<td><input type='number'  name='repertory_ten_grading' class='my_grading_edit_input'  value='" + res[i].repertory_ten_grading + "' ></td>"
+                    +" <td><input type='number'  name='repertory_nine_grading' class='my_grading_edit_input'  value='" + res[i].repertory_nine_grading + "' ></td>"
+                    +"<td><input type='number'  name='repertory_eight_grading' class='my_grading_edit_input'  value='" + res[i].repertory_eight_grading + "' ></td>"
+                    +"<td><input type='number'  name='repertory_seven_grading' class='my_grading_edit_input'  value='" + res[i].repertory_seven_grading + "' ></td>"
                     +"<td><input type='number'  name='repertory_six_grading' class='my_grading_edit_input'  value='" + res[i].repertory_six_grading + "' ></td>"
                     +" <td><input type='number'  name='repertory_five_grading' class='my_grading_edit_input'  value='" + res[i].repertory_five_grading + "' ></td>"
                     +"<td><input type='number'  name='repertory_four_grading' class='my_grading_edit_input'  value='" + res[i].repertory_four_grading + "' ></td>"
                     +"<td><input type='number'  name='repertory_three_grading' class='my_grading_edit_input'  value='" + res[i].repertory_three_grading + "' ></td>"
                     +"<td><input type='number'  name='repertory_two_grading' class='my_grading_edit_input'  value='" + res[i].repertory_two_grading + "' ></td>"
                     +"<td><input type='number'  name='repertory_one_grading' class='my_grading_edit_input'  value='" + res[i].repertory_one_grading + "' ></td>"
-                    +"<td><input type='number'  name='breeze_grading' class='my_grading_edit_input'  value='" + res[i].breeze_grading + "' ></td>"
+                    +"<td><input type='number'  name='breeze1_grading' class='my_grading_edit_input'  value='" + res[i].breeze1_grading + "' ></td>"
+                    +"<td><input type='number'  name='breeze2_grading' class='my_grading_edit_input'  value='" + res[i].breeze2_grading + "' ></td>"
+                    +"<td><input type='number'  name='breeze3_grading' class='my_grading_edit_input'  value='" + res[i].breeze3_grading + "' ></td>"
+                    +"<td><input type='number'  name='breeze4_grading' class='my_grading_edit_input'  value='" + res[i].breeze4_grading + "' ></td>"
                     +"<td><input type='number'  name='rough_regenerate_grading' class='my_grading_edit_input'  value='" + res[i].rough_regenerate_grading + "' ></td>"
                     +"<td><input type='number'  name='middle_regenerate_grading' class='my_grading_edit_input'  value='" + res[i].middle_regenerate_grading + "' ></td>"
                     +"<td><input type='number'  name='thin_regenerate_grading' class='my_grading_edit_input'  value='" + res[i].thin_regenerate_grading + "' ></td>"
-                    +"<td><input type='number'  name='additive_grading' class='my_grading_edit_input'  value='" + res[i].additive_grading + "' ></td>"
+                    +"<td><input type='number'  name='additive1_grading' class='my_grading_edit_input'  value='" + res[i].additive1_grading + "' ></td>"
+                    +"<td><input type='number'  name='additive2_grading' class='my_grading_edit_input'  value='" + res[i].additive2_grading + "' ></td>"
+                    +"<td><input type='number'  name='additive3_grading' class='my_grading_edit_input'  value='" + res[i].additive3_grading + "' ></td>"
+                    +"<td><input type='number'  name='additive4_grading' class='my_grading_edit_input'  value='" + res[i].additive4_grading + "' ></td>"
                     +"<td><input type='number'  name='synthesis_grading' class='my_grading_edit_input'  value='" + res[i].synthesis_grading + "' ></td>"
                     +"<td><input type='number'  name='mid_value' class='my_grading_edit_input'  value='" + res[i].mid_value + "' ></td>"
                     +"<td><input type='number'  name='up_value' class='my_grading_edit_input'  value='" + res[i].up_value + "' ></td>"
@@ -352,7 +372,7 @@ $('#excel-file').change(function (e) {
 
             readWorkbook(workbook);
 
-            if(getCharts(workbook,0) != 'A'  || getCharts(workbook,3) != 'P' ){
+            if(getCharts(workbook,0) != 'A'  || getCharts(workbook,3) != 'Z' ){
                 layer.alert('Excell格式不对', {
                     skin: 'layui-layer-lan'
                     ,closeBtn: 0
@@ -441,14 +461,13 @@ function getjsonList(workbook){
 }
 //判断json中是否存在空对象
 function isAllJsonData(jsonStr) {
-
     var resBoole = false;
     for (var i = 0; i < jsonStr.length;i++) {
         var array = [];
         for (var i in jsonStr[i]) {
             array.push(i);
         }
-        if(array.length != 16){
+        if(array.length != 26){
             resBoole = true;
             break;
         }
@@ -528,3 +547,11 @@ String.prototype.isBlanks = function () {
     }
     return false;
 };
+
+function blank(s) {
+
+    if (s == "undefined" || s == null || s == "" || s.length == 0) {
+        return true;
+    }
+    return false;
+}
