@@ -2789,3 +2789,429 @@ function payrollDelete(tab, id, currentPage, itselfFrameId) {
         }
     );
 }
+
+/**-------------------人事管理start-------------------*/
+//删除员工信息
+function deletePersonnel(id, currentPage,itselfFrameId) {
+    //提示窗
+    layer.confirm('确认后关联的合同也会被删除！', {
+            btn: ['确认', '取消']
+        }, function () {
+            $.ajax({
+                type: "post",
+                url: '/personnel/delete',
+                data: {'id': id},
+                async: false,
+                success: function (data) {
+                    if (data === 'success') {
+                        layer.msg('删除成功！');
+                        $("#" + itselfFrameId)[0].contentWindow.reloadPersonnelPage(1);
+                    } else {
+                        layer.msg('删除失败！')
+                    }
+                },
+                error: function (result) {
+                    layer.msg("出错！");
+                }
+
+            });
+        }
+    );
+}
+
+/*用户详情信息*/
+function personnelDetails(id) {
+    $('#modalWindow').html('<div id="userDetails" style="display: none;padding: 20px;">\n' +
+        '    <dl id="userDetailsInfoShow"></dl>\n' +
+        '</div>');
+    window.lar = layer.open({
+        title: false,
+        type: 1,
+        area: '90%',
+        shadeClose: false, //点击遮罩关闭
+        content: $("#userDetails"),
+        offset: "20%"
+    });
+
+    $.ajax({
+        type: "post",
+        url: "/personnel/personnelDetails",
+        data: {'id': id},
+        async: false,
+        dataType: "json",
+        success: function (data) {
+
+            var personnelInfo = '';
+
+            personnelInfo += '<table class="basic-details-style-table">';
+            personnelInfo += '<tbody>';
+            personnelInfo += '<tr>';
+            personnelInfo += '<td class="table-td-name">部门</td>';
+            personnelInfo += '<td style="width: 11.9%">' + data.department + '</td>';
+            personnelInfo += '<td class="table-td-name">岗位类别</td>';
+            if (data.jobCategory === 0) {
+                personnelInfo += '<td style="width: 11.9%">领导班子</td>';
+            } else if (data.jobCategory === 1) {
+                personnelInfo += '<td style="width: 11.9%">中层管理人员</td>';
+            }
+            if (data.jobCategory === 2) {
+                personnelInfo += '<td style="width: 11.9%">一般管理人员</td>';
+            }
+            if (data.jobCategory === 3) {
+                personnelInfo += '<td style="width: 11.9%">一线生产工人</td>';
+            }
+            if (data.jobCategory === 4) {
+                personnelInfo += '<td style="width: 11.9%">其它</td>';
+            }
+            personnelInfo += '<td class="table-td-name">职务(岗位)</td>';
+            personnelInfo += '<td style="width: 11.9%">' + data.job + '</td>';
+            personnelInfo += '<td class="table-td-name">副职</td>';
+            personnelInfo += '<td style="width: 11.9%">' + data.viceJob + '</td>';
+            personnelInfo += '<td class="table-td-name">身份证号</td>';
+            personnelInfo += '<td>' + data.idCard + '</td>';
+            personnelInfo += '</tr>';
+
+            personnelInfo += '<tr>';
+            personnelInfo += '<td class="table-td-name">姓名</td>';
+            personnelInfo += '<td>' + data.name + '</td>';
+            personnelInfo += '<td class="table-td-name">性别</td>';
+            personnelInfo += '<td>' + data.sex + '</td>';
+            personnelInfo += '<td class="table-td-name">出生日期</td>';
+            personnelInfo += '<td>' + data.birthday + '</td>';
+            personnelInfo += '<td class="table-td-name">年龄</td>';
+            personnelInfo += '<td>' + data.age + '</td>';
+            personnelInfo += '<td class="table-td-name">民族</td>';
+            personnelInfo += '<td>' + data.nation + '</td>';
+            personnelInfo += '</tr>';
+
+            personnelInfo += '<tr>';
+
+            personnelInfo += '<td class="table-td-name">籍贯</td>';
+            personnelInfo += '<td>' + data.nativePlace + '</td>';
+            personnelInfo += '<td class="table-td-name">户口所在地</td>';
+            personnelInfo += '<td>' + data.registeredResidence + '</td>';
+            personnelInfo += '<td class="table-td-name">户口性质</td>';
+            if (data.accountNature === 0) {
+                personnelInfo += '<td>本埠城镇</td>';
+            } else if (data.accountNature === 1) {
+                personnelInfo += '<td>本埠农村</td>';
+            } else if (data.accountNature === 2) {
+                personnelInfo += '<td>外埠城镇</td>';
+            } else if (data.accountNature === 3) {
+                personnelInfo += '<td>外埠农村</td>';
+            }
+            personnelInfo += '<td class="table-td-name">联系电话</td>';
+            personnelInfo += '<td>' + data.phone + '</td>';
+            personnelInfo += '<td class="table-td-name">政治面貌</td>';
+            if (data.politicCountenance === 0) {
+                personnelInfo += '<td>群众</td>';
+            } else if (data.politicCountenance === 1) {
+                personnelInfo += '<td>团员</td>';
+            } else if (data.politicCountenance === 2) {
+                personnelInfo += '<td>中共党员</td>';
+            }
+            personnelInfo += '</tr>';
+
+            personnelInfo += '<tr>';
+            personnelInfo += '<td class="table-td-name">入党日期</td>';
+            personnelInfo += '<td>' + data.joinPartyDate + '</td>';
+            personnelInfo += '<td class="table-td-name">参加工作时间</td>';
+            personnelInfo += '<td>' + data.joinWorkDate + '</td>';
+            personnelInfo += '<td class="table-td-name">工作年限</td>';
+            personnelInfo += '<td>' + data.workingYears + '</td>';
+            personnelInfo += '<td class="table-td-name">入职日期</td>';
+            personnelInfo += '<td>' + data.joinedDate + '</td>';
+            personnelInfo += '<td class="table-td-name">转正日期</td>';
+            personnelInfo += '<td>' + data.correctionDate + '</td>';
+            personnelInfo += '</tr>';
+
+            personnelInfo += '<tr>';
+            personnelInfo += '<td class="table-td-name">职称级别</td>';
+            if (data.titleLevel === 0) {
+                personnelInfo += '<td>未取得职称</td>';
+            } else if (data.titleLevel === 1) {
+                personnelInfo += '<td>员级</td>';
+            } else if (data.titleLevel === 2) {
+                personnelInfo += '<td>助理</td>';
+            } else if (data.titleLevel === 3) {
+                personnelInfo += '<td>中级</td>';
+            } else if (data.titleLevel === 4) {
+                personnelInfo += '<td>副高级</td>';
+            } else if (data.titleLevel === 5) {
+                personnelInfo += '<td>正高级</td>';
+            }
+            personnelInfo += '<td class="table-td-name">职称系列</td>';
+            personnelInfo += '<td>' + data.titleSeries + '</td>';
+            personnelInfo += '<td class="table-td-name">职称名称</td>';
+            personnelInfo += '<td>' + data.titleName + '</td>';
+            personnelInfo += '<td class="table-td-name">工种名称</td>';
+            personnelInfo += '<td>' + data.professionName + '</td>';
+            personnelInfo += '<td class="table-td-name">工人技术等级</td>';
+            if (data.technologyGrade === 0) {
+                personnelInfo += '<td>未取证</td>';
+            } else if (data.technologyGrade === 1) {
+                personnelInfo += '<td>初级</td>';
+            } else if (data.technologyGrade === 2) {
+                personnelInfo += '<td>中级</td>';
+            } else if (data.technologyGrade === 3) {
+                personnelInfo += '<td>高级</td>';
+            } else if (data.technologyGrade === 4) {
+                personnelInfo += '<td>技师</td>';
+            } else if (data.technologyGrade === 5) {
+                personnelInfo += '<td>高级技师</td>';
+            }
+            personnelInfo += '</tr>';
+
+            personnelInfo += '<tr>';
+            personnelInfo += '<td class="table-td-name">原学历</td>';
+            if (data.originalEducation === 0) {
+                personnelInfo += '<td>初中及以下</td>';
+            } else if (data.originalEducation === 1) {
+                personnelInfo += '<td>高中</td>';
+            } else if (data.originalEducation === 2) {
+                personnelInfo += '<td>技校</td>';
+            } else if (data.originalEducation === 3) {
+                personnelInfo += '<td>中专</td>';
+            } else if (data.originalEducation === 4) {
+                personnelInfo += '<td>专科</td>';
+            } else if (data.originalEducation === 5) {
+                personnelInfo += '<td>本科</td>';
+            } else if (data.originalEducation === 6) {
+                personnelInfo += '<td>硕士</td>';
+            } else if (data.originalEducation === 7) {
+                personnelInfo += '<td>博士</td>';
+            }
+            personnelInfo += '<td class="table-td-name">原学位</td>';
+            if (data.originalDegree === 0) {
+                personnelInfo += '<td>无</td>';
+            } else if (data.originalDegree === 1) {
+                personnelInfo += '<td>学士</td>';
+            } else if (data.originalDegree === 2) {
+                personnelInfo += '<td>硕士</td>';
+            } else if (data.originalDegree === 3) {
+                personnelInfo += '<td>博士</td>';
+            } else if (data.originalDegree === 4) {
+                personnelInfo += '<td>博士后</td>';
+            }
+            personnelInfo += '<td class="table-td-name">原毕业学校</td>';
+            personnelInfo += '<td>' + data.originalGraduationSchool + '</td>';
+            personnelInfo += '<td class="table-td-name">原专业</td>';
+            personnelInfo += '<td>' + data.originalProfession + '</td>';
+            personnelInfo += '<td class="table-td-name">原毕业时间</td>';
+            personnelInfo += '<td>' + data.originalGraduationDate + '</td>';
+            personnelInfo += '</tr>';
+
+            personnelInfo += '<tr>';
+            personnelInfo += '<td class="table-td-name">现学历</td>';
+            if (data.nowEducation === 0) {
+                personnelInfo += '<td>初中及以下</td>';
+            } else if (data.nowEducation === 1) {
+                personnelInfo += '<td>高中</td>';
+            } else if (data.nowEducation === 2) {
+                personnelInfo += '<td>技校</td>';
+            } else if (data.nowEducation === 3) {
+                personnelInfo += '<td>中专</td>';
+            } else if (data.nowEducation === 4) {
+                personnelInfo += '<td>专科</td>';
+            } else if (data.nowEducation === 5) {
+                personnelInfo += '<td>本科</td>';
+            } else if (data.nowEducation === 6) {
+                personnelInfo += '<td>硕士</td>';
+            } else if (data.nowEducation === 7) {
+                personnelInfo += '<td>博士</td>';
+            }
+            personnelInfo += '<td class="table-td-name">现学位</td>';
+            if (data.nowDegree === 0) {
+                personnelInfo += '<td>无</td>';
+            } else if (data.nowDegree === 1) {
+                personnelInfo += '<td>学士</td>';
+            } else if (data.nowDegree === 2) {
+                personnelInfo += '<td>硕士</td>';
+            } else if (data.nowDegree === 3) {
+                personnelInfo += '<td>博士</td>';
+            } else if (data.nowDegree === 4) {
+                personnelInfo += '<td>博士后</td>';
+            }
+            personnelInfo += '<td class="table-td-name">现毕业学校</td>';
+            personnelInfo += '<td>' + data.nowGraduationSchool + '</td>';
+            personnelInfo += '<td class="table-td-name">现专业</td>';
+            personnelInfo += '<td>' + data.nowProfession + '</td>';
+            personnelInfo += '<td class="table-td-name">现毕业时间</td>';
+            personnelInfo += '<td>' + data.nowGraduationDate + '</td>';
+            personnelInfo += '</tr>';
+
+            personnelInfo += '<tr>';
+            personnelInfo += '<td class="table-td-name">用工类型</td>';
+            if (data.workType === 0) {
+                personnelInfo += '<td>自有职工</td>';
+            } else if (data.workType === 1) {
+                personnelInfo += '<td>外包职工</td>';
+            }
+            personnelInfo += '<td class="table-td-name">原职务</td>';
+            personnelInfo += '<td>' + data.originalPosition + '</td>';
+            personnelInfo += '<td class="table-td-name">原岗位</td>';
+            personnelInfo += '<td>' + data.originalPost + '</td>';
+            personnelInfo += '<td class="table-td-name">现岗位任职时间</td>';
+            personnelInfo += '<td>' + data.currentPosition + '</td>';
+            personnelInfo += '<td class="table-td-name">转岗时间</td>';
+            personnelInfo += '<td>' + data.transfer + '</td>';
+            personnelInfo += '</tr>';
+
+            personnelInfo += '<tr>';
+            personnelInfo += '<td class="table-td-name">在岗情况</td>';
+            personnelInfo += '<td>' + data.postSituation + '</td>';
+            personnelInfo += '<td class="table-td-name">身体情况</td>';
+            personnelInfo += '<td>' + data.physicalCondition + '</td>';
+            personnelInfo += '<td class="table-td-name">其他证书</td>';
+            personnelInfo += '<td colspan="3">' + data.otherCertificates + '</td>';
+            personnelInfo += '<td class="table-td-name">提交离职申请日期</td>';
+            personnelInfo += '<td>' + data.submissionApply + '</td>';
+            personnelInfo += '</tr>';
+
+            personnelInfo += '<tr>';
+            personnelInfo += '<td class="table-td-name">申请离职日期</td>';
+            personnelInfo += '<td>' + data.applyLeave + '</td>';
+            personnelInfo += '<td class="table-td-name">离职日期</td>';
+            personnelInfo += '<td>' + data.leaveDate + '</td>';
+            personnelInfo += '<td class="table-td-name">预计退休时间</td>';
+            personnelInfo += '<td>' + data.estimateRetirementDate + '</td>';
+            personnelInfo += '<td class="table-td-name">退休时间</td>';
+            personnelInfo += '<td>' + data.retirementDate + '</td>';
+            personnelInfo += '<td class="table-td-name">退休单位</td>';
+            personnelInfo += '<td>' + data.retirementCompany + '</td>';
+            personnelInfo += '</tr>';
+            personnelInfo += '</tbody>';
+            personnelInfo += '</table>';
+            $('#userDetailsInfoShow').html(personnelInfo);
+        },
+        error: function (result) {
+            layer.msg("出错！");
+        }
+    });
+}
+
+/*人事合同详情*/
+function contractDetails(id) {
+    window.lar = layer.open({
+        title: false,
+        type: 1,
+        area: '50%',
+        shadeClose: false, //点击遮罩关闭
+        content: $("#contractDetails"),
+        offset: "20%"
+    });
+
+    $.ajax({
+        type: "post",
+        url: "/personnel/contractDetails",
+        data: {'id': id},
+        async: false,
+        dataType: "json",
+        success: function (data) {
+            var personnelInfo = '';
+            personnelInfo += '<table class="basic-details-style-table">';
+            personnelInfo += '<tbody>';
+            personnelInfo += '<tr>';
+            personnelInfo += '<td class="table-td-name">姓名</td>';
+            personnelInfo += '<td style="width: 19.5%">' + data.name + '</td>';
+            personnelInfo += '<td class="table-td-name">性别</td>';
+            personnelInfo += '<td style="width: 19.5%">' + data.sex + '</td>';
+            personnelInfo += '<td class="table-td-name">入职日期</td>';
+            personnelInfo += '<td style="width: 19.5%">' + data.joinedDate + '</td>';
+            personnelInfo += '</tr>';
+
+            personnelInfo += '<tr>';
+            personnelInfo += '<td class="table-td-name">首次签订期限</td>';
+            if (data.firstTerm === 0) {
+                personnelInfo += '<td>—</td>';
+            } else if (data.firstTerm === 1) {
+                personnelInfo += '<td>三年</td>';
+            } else if (data.firstTerm === 2) {
+                personnelInfo += '<td>五年</td>';
+            } else if (data.firstTerm === 3) {
+                personnelInfo += '<td>无固定</td>';
+            } else if (data.firstTerm === 4) {
+                personnelInfo += '<td>其他</td>';
+            }
+
+            personnelInfo += '<td class="table-td-name">首次签订日期</td>';
+            if (data.firstSign == undefined || data.firstSign == "") {
+                personnelInfo += '<td>—</td>';
+            } else {
+                personnelInfo += '<td>' + data.firstSign + '</td>';
+            }
+
+            personnelInfo += '<td class="table-td-name">首次签订终止日期</td>';
+            if (data.firstStop == undefined || data.firstStop == "") {
+                personnelInfo += '<td>—</td>';
+            } else {
+                personnelInfo += '<td>' + data.firstStop + '</td>';
+            }
+            personnelInfo += '</tr>';
+
+            personnelInfo += '<tr>';
+            personnelInfo += '<td class="table-td-name">续签期限</td>';
+            if (data.renewTerm === 0) {
+                personnelInfo += '<td>—</td>';
+            } else if (data.renewTerm === 1) {
+                personnelInfo += '<td>三年</td>';
+            } else if (data.renewTerm === 2) {
+                personnelInfo += '<td>五年</td>';
+            } else if (data.renewTerm === 3) {
+                personnelInfo += '<td>无固定</td>';
+            } else if (data.renewTerm === 4) {
+                personnelInfo += '<td>其他</td>';
+            }
+
+            personnelInfo += '<td class="table-td-name">续签签订日期</td>';
+            if (data.renewSign == undefined || data.renewSign == "") {
+                personnelInfo += '<td>—</td>';
+            } else {
+                personnelInfo += '<td>' + data.renewSign + '</td>';
+            }
+
+            personnelInfo += '<td class="table-td-name">续签终止日期</td>';
+            if (data.renewStop == undefined || data.renewStop == "") {
+                personnelInfo += '<td>—</td>';
+            } else {
+                personnelInfo += '<td>' + data.renewStop + '</td>';
+            }
+            personnelInfo += '</tr>';
+
+            personnelInfo += '<tr>';
+            personnelInfo += '<td class="table-td-name">最终签订期限</td>';
+            if (data.lastTerm === 0) {
+                personnelInfo += '<td>—</td>';
+            } else if (data.lastTerm === 1) {
+                personnelInfo += '<td>三年</td>';
+            } else if (data.lastTerm === 2) {
+                personnelInfo += '<td>五年</td>';
+            } else if (data.lastTerm === 3) {
+                personnelInfo += '<td>无固定</td>';
+            } else if (data.lastTerm === 4) {
+                personnelInfo += '<td>其他</td>';
+            }
+            personnelInfo += '<td class="table-td-name">最终签订日期</td>';
+            if (data.lastSign == undefined || data.lastSign == "") {
+                personnelInfo += '<td>—</td>';
+            } else {
+                personnelInfo += '<td>' + data.lastSign + '</td>';
+            }
+            personnelInfo += '<td class="table-td-name">最终签订终止日期</td>';
+            if (data.lastStop == undefined || data.lastStop == "") {
+                personnelInfo += '<td>—</td>';
+            } else {
+                personnelInfo += '<td>' + data.lastStop + '</td>';
+            }
+            personnelInfo += '</tr>';
+            personnelInfo += '</tbody>';
+            personnelInfo += '</table>';
+            $('#contractDetailsInfoShow').html(personnelInfo);
+        },
+        error: function (result) {
+            layer.msg("出错！");
+        }
+    });
+}
+
+/**-------------------人事管理end-------------------*/

@@ -24,21 +24,6 @@
 
 <div class="personal-attendance">
 
-    <!--导出-->
-    <div class="derive-report">
-        <table>
-            <tbody>
-            <tr>
-                <td>
-                    <ul class="tab-switch" id="tab">
-                        <li><a href="javascript:;">导出报表</a></li>
-                    </ul>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
     <div id="rrr" class="attendance-list" onscroll="myFunction()">
 
         <table class="attendance-list-content" id="aaa">
@@ -187,7 +172,6 @@
 <script type="text/javascript" src="../../../../static/js/jquery.js"></script>
 <script type="text/javascript" src="../../../../static/js/common.js"></script>
 <script type="text/javascript" src="../../../../static/js/skin.js"></script>
-<script type="text/javascript" src="../../../../static/js/oa/oa_common.js"></script>
 <script>
     //同步姓名栏tr高度
     $(function () {

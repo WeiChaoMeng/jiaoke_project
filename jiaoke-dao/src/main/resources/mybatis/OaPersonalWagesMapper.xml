@@ -71,22 +71,14 @@
 	        wage_statistics_id = #{wageStatisticsId,jdbcType=INTEGER}
     </select>
 
-    <update id="updateStateByWageStatisticsId" parameterType="java.lang.Integer">
-        UPDATE oa_personal_wages
-        SET state = #{sendState,jdbcType=INTEGER}
-        WHERE
-	        wage_statistics_id = #{wageStatisticsId,jdbcType=INTEGER}
-    </update>
-
     <select id="getPersonalWagesByNickName" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List"/>
+            <include refid="Base_Column_List"/>
         from oa_personal_wages
         where `name` = #{nickName,jdbcType=VARCHAR}
         AND state = 1
         ORDER BY
-        settlement_date DESC
-        LIMIT 1
+            settlement_date DESC
     </select>
 
     <delete id="deleteByWageStatisticsId" parameterType="java.lang.Integer">
@@ -98,5 +90,16 @@
           <include refid="Base_Column_List"/>
         from oa_personal_wages
         where wage_statistics_id = #{wageStatisticsId}
+    </select>
+
+    <update id="updateStateByWageStatisticsId" parameterType="java.lang.Integer">
+        update oa_personal_wages set state = #{state} where wage_statistics_id = #{wageStatisticsId}
+    </update>
+
+    <select id="selectRegularStaffById" parameterType="java.lang.Integer"  resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from oa_personal_wages
+        where id = #{id}
     </select>
 </mapper>

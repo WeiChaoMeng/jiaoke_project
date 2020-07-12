@@ -1,6 +1,7 @@
 package com.jiaoke.oa.dao;
 
 import com.jiaoke.oa.bean.OaWageStatistics;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -53,4 +54,13 @@ public interface OaWageStatisticsMapper {
      * @return list
      */
     List<OaWageStatistics> settlementMonthRegularStaffFilter(String settlementDate);
+
+    /**
+     * 更新状态
+     *
+     * @param id    id
+     * @param state s
+     * @return int
+     */
+    int updateState(@Param("id") Integer id, @Param("state") Integer state);
 }

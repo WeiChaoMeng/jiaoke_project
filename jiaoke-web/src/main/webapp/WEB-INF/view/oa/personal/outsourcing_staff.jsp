@@ -70,12 +70,13 @@
                                 <input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose" id="allChoose">
                             </th>
                             <th style="width: 7%">序号</th>
-                            <th style="width: 25%">表名称</th>
-                            <th style="width: 14%">实发总金额(元)</th>
+                            <th style="width: 19%">表名称</th>
+                            <th style="width: 12%">实发总金额(元)</th>
                             <th style="width: 10%">总数</th>
                             <th style="width: 10%">结算月份</th>
                             <th style="width: 15%">上传日期</th>
                             <th style="width: 10%">上传人</th>
+                            <th style="width: 8%">状态</th>
                             <th style="width: 6%">操作</th>
                         </thead>
 
@@ -240,6 +241,11 @@
                 userInfo += '<td>' + userInfoList[i].settlementMonth + '</td>';
                 userInfo += '<td>' + userInfoList[i].createDate + '</td>';
                 userInfo += '<td>' + userInfoList[i].uploadUsers + '</td>';
+                if (userInfoList[i].state === 0) {
+                    userInfo += '<td><input type="checkbox" lay-skin="switch" value="' + userInfoList[i].id + '" lay-filter="switchFilter" lay-text="开启|关闭"></td>';
+                }else{
+                    userInfo += '<td><input type="checkbox" lay-skin="switch" value="' + userInfoList[i].id + '" lay-filter="switchFilter" checked lay-text="开启|关闭"></td>';
+                }
                 userInfo +=
                     '<td class="td-manage" style="white-space: nowrap;">\n' +
                     '<button class="layui-btn-danger layui-btn layui-btn-xs" onclick="del(' + userInfoList[i].id + ')"><i class="layui-icon">&#xe640;</i>删除</button>\n' +
@@ -356,6 +362,37 @@
             var form = layui.form;
             form.render('checkbox');
         })
+    }
+
+    //状态切换：0-开启。1-关闭
+    layui.use(['form'], function () {
+        var form = layui.form;
+        form.on('switch(switchFilter)', function (data) {
+            if (this.checked === true) {
+                modifyAssetsState("成功开启", $(this).val(), 1);
+            } else {
+                modifyAssetsState("成功关闭", $(this).val(), 0);
+            }
+        });
+    });
+
+    //修改资产状态
+    function modifyAssetsState(tipInfo,id, state) {
+        $.ajax({
+            type: "post",
+            url: '/wageStatistics/updateOutsourcingStaffState',
+            data: {'id': id, 'state': state},
+            success: function (data) {
+                if (data === 'success') {
+                    layer.msg(tipInfo);
+                } else {
+                    window.top.tips(tipInfo, 6, 2, 1000);
+                }
+            },
+            error: function (result) {
+                window.top.tips("出错！", 6, 2, 1000);
+            }
+        });
     }
 </script>
 </html>

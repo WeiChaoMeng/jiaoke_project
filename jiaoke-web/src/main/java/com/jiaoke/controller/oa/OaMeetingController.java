@@ -273,24 +273,4 @@ public class OaMeetingController {
     public String meetingSchedule() {
         return "oa/meeting/oa_meeting_schedule";
     }
-
-    /**
-     * 会议日历
-     *
-     * @return oa_schedule_planning.jsp
-     */
-    @RequestMapping("/OAConferenceCalendar.do")
-    public String conferenceCalendar() {
-        return "oa/meeting/oa_conference_calendar";
-    }
-
-    /**
-     * 会议资源
-     *
-     * @return oa_schedule_planning.jsp
-     */
-    @RequestMapping("/OAConferenceResources.do")
-    public String conferenceResources() {
-        return "oa/meeting/oa_conference_resources";
-    }
 }

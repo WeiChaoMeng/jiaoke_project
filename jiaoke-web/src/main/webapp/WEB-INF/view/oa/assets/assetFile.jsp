@@ -36,14 +36,19 @@
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md12">
             <div class="layui-card">
-                <div class="layui-card-body ">
+                <div class="layui-card-body" style="min-height: 30px;">
+
+                    <shiro:hasPermission name="resource:operateLog">
                     <button class="layui-btn layui-btn-danger" data-type="getid" onclick="operatingRecord()">
                         <i class="layui-icon">&#xe6b2;</i>操作记录
                     </button>
+                    </shiro:hasPermission>
 
+                    <shiro:hasPermission name="resource:add">
                     <button class="layui-btn" onclick="addAssets()">
                         <i class="layui-icon">&#xe61f;</i>添加
                     </button>
+                    </shiro:hasPermission>
 
                     <div class="layui-input-inline layui-show-xs-block" style="float: right;margin-left: 10px;">
                         <button class="layui-btn" lay-submit="" lay-filter="sreach" onclick="searchButton(1,2)">
@@ -66,8 +71,14 @@
                             <th style="width: 12%">录入人员</th>
                             <th style="width: 12%">存放地点</th>
                             <th style="width: 12%">保管人员</th>
+
+                            <shiro:hasPermission name="resource:state">
                             <th style="width: 8%">状态</th>
+                            </shiro:hasPermission>
+
+                            <shiro:hasPermission name="resource:operate">
                             <th style="width: 14%">操作</th>
+                            </shiro:hasPermission>
                         </thead>
 
                         <tbody id="tbody">
@@ -216,17 +227,22 @@
                 oaAssetsManagement += '<td>' + oaAssetsManagementList[i].entryPerson + '</td>';
                 oaAssetsManagement += '<td>' + oaAssetsManagementList[i].storageLocation + '</td>';
                 oaAssetsManagement += '<td>' + oaAssetsManagementList[i].custodian + '</td>';
+
+                <shiro:hasPermission name="resource:state">
                 if (oaAssetsManagementList[i].state == 0) {
                     oaAssetsManagement += '<td><input type="checkbox" lay-skin="switch" value="' + oaAssetsManagementList[i].id + '" lay-filter="switchFilter" checked lay-text="开启|关闭"></td>';
                 } else {
                     oaAssetsManagement += '<td><input type="checkbox" lay-skin="switch" value="' + oaAssetsManagementList[i].id + '" lay-filter="switchFilter" lay-text="开启|关闭"></td>';
                 }
+                </shiro:hasPermission>
+
+                <shiro:hasPermission name="resource:operate">
                 oaAssetsManagement +=
                     '<td class="td-manage" style="white-space: nowrap;">\n' +
                     '<button class="layui-btn layui-btn layui-btn-xs" onclick="edit(' + oaAssetsManagementList[i].id + ')"><i class="layui-icon">&#xe642;</i>编辑</button>\n' +
-                    // '<button class="layui-btn-danger layui-btn layui-btn-xs" onclick="del(' + oaAssetsManagementList[i].id + ')"><i class="layui-icon">&#xe640;</i>删除</button>\n' +
                     '<button class="layui-btn layui-btn-warm layui-btn-xs" onclick="replenishmentRecord(' + oaAssetsManagementList[i].id + ')"><i class="layui-icon">&#xe60e;</i>补货记录</button>\n' +
                     '</td>';
+                </shiro:hasPermission>
                 oaAssetsManagement += '</tr>';
             }
         }

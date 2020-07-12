@@ -46,7 +46,7 @@ public class OaActTaxiUseServiceImpl implements OaActTaxiUseService {
             oaCollaboration.setPromoter(userId);
             oaCollaboration.setTitle(oaActTaxiUse.getTitle());
             oaCollaboration.setUrl("taxiUse");
-            oaCollaboration.setTable("oa_act_taxi_Use");
+            oaCollaboration.setTable("oa_act_taxi_use");
             oaCollaboration.setStatusCode("协同");
             oaCollaboration.setName("用车审批表（出租车）");
             oaCollaboration.setDataOne("用车时间:" + oaActTaxiUse.getUseTime());

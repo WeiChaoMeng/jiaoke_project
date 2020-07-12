@@ -36,10 +36,8 @@ public class ShiroSecurityRealm extends AuthorizingRealm {
         UserInfo userInfo = (UserInfo) principalCollection.getPrimaryPrincipal();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         if (userInfo != null) {
-            System.out.println("当前用户id：" + userInfo.getId());
             List<Permission> permissionList = userInfoService.getPermissionsByUserInfoId(userInfo.getId());
             for (Permission permission : permissionList) {
-                System.out.println("权限：" + permission.getUrl());
                 info.addStringPermission(permission.getUrl());
             }
             return info;
@@ -58,17 +56,12 @@ public class ShiroSecurityRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        System.out.println("进入验证");
         //验证账户密码
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
-        System.out.println("账户:" + token.getUsername());
         UserInfo userInfo = userInfoService.getUserInfoByUserName(token.getUsername());
-        System.out.println(userInfo);
         if (userInfo == null){
-            System.out.println("是个空的");
             return null;
         }else {
-            System.out.println("不是空的");
             return new SimpleAuthenticationInfo(userInfo, userInfo.getPassword(), this.getClass().getSimpleName());
         }
     }
