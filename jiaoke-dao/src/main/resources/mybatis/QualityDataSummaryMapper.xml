@@ -150,54 +150,63 @@
     </select>
     <select id="selectPromessageByRaionModel" resultType="java.util.Map">
         SELECT
-               &apos;${crew}&apos; as crewNums,
-              date_format(QMRD.produce_date,'%Y-%m-%d') as  produce_date,
-               date_format(QMRD.produce_time,'%H:%i:%s') as produce_time,
-               QMRD.produce_disc_num,
-               QPM.pro_name,
-               QMRD.produce_proportioning_num,
-               QMRD.produce_car_num,
-               QMRD.produce_custom_num,
-               QMRD.material_aggregate_6,
-               QMRD.material_aggregate_5,
-               QMRD.material_aggregate_4,
-               QMRD.material_aggregate_3,
-               QMRD.material_aggregate_2,
-               QMRD.material_aggregate_1,
-               QMRD.material_stone_1,
-               QMRD.material_stone_2,
-               QMRD.material_asphalt,
-               QMRD.material_regenerate,
-               QMRD.material_additive,
-               QMRD.material_total,
-               QMRD.temperature_warehouse_1,
-               QMRD.temperature_mixture,
-               QMRD.temperature_duster,
-               QMRD.temperature_asphalt,
-               QMRD.temperature_aggregate
+        &apos;${crew}&apos; as crewNums,
+        date_format(QMRD.produce_date,'%Y-%m-%d') as  produce_date,
+        date_format(QMRD.produce_time,'%H:%i:%s') as produce_time,
+        QMRD.produce_disc_num,
+        QPM.pro_name,
+        QMRD.produce_proportioning_num,
+        QMRD.produce_car_num,
+        QMRD.produce_custom_num,
+        MRD.material_aggregate_10,
+        MRD.material_aggregate_9,
+        MRD.material_aggregate_8,
+        QMRD.material_aggregate_7,
+        QMRD.material_aggregate_6,
+        QMRD.material_aggregate_5,
+        QMRD.material_aggregate_4,
+        QMRD.material_aggregate_3,
+        QMRD.material_aggregate_2,
+        QMRD.material_aggregate_1,
+        QMRD.material_stone_1,
+        QMRD.material_stone_2,
+        QMRD.material_stone_3,
+        QMRD.material_stone_4,
+        QMRD.material_asphalt,
+        QMRD.material_regenerate,
+        QMRD.material_additive,
+        QMRD.material_additive_1,
+        QMRD.material_additive_2,
+        QMRD.material_additive_3,
+        QMRD.material_total,
+        QMRD.temperature_warehouse_1,
+        QMRD.temperature_mixture,
+        QMRD.temperature_duster,
+        QMRD.temperature_asphalt,
+        QMRD.temperature_aggregate
         FROM
-             quality_monitoring_realtime_${crew} AS QMRD
-                 INNER JOIN
-                     quality_proportioning_message AS QPM
+        quality_monitoring_realtime_${crew} AS QMRD
+        INNER JOIN
+        quality_proportioning_message AS QPM
 
-              <choose>
-                  <when test="crew=='data1'.toString()">
-                      ON QMRD.produce_proportioning_num = QPM.crew1_modele_id
-                  </when>
-                  <otherwise>
-                      ON QMRD.produce_proportioning_num = QPM.crew2_modele_id
-                  </otherwise>
-              </choose>
+        <choose>
+            <when test="crew=='data1'.toString()">
+                ON QMRD.produce_proportioning_num = QPM.crew1_modele_id
+            </when>
+            <otherwise>
+                ON QMRD.produce_proportioning_num = QPM.crew2_modele_id
+            </otherwise>
+        </choose>
         WHERE
-          QMRD.produce_proportioning_num = ${rationId}
-         AND YEAR(QPM.create_time) = YEAR(&apos;${startDate}&apos;)
-          AND
-                CONCAT(
-                  QMRD.produce_date,
-                    ' ',
-                  QMRD.produce_time
-                        ) BETWEEN &apos;${startDate}&apos;
-                        AND &apos;${endDate}&apos;
+        QMRD.produce_proportioning_num = ${rationId}
+        AND YEAR(QPM.create_time) = YEAR(&apos;${startDate}&apos;)
+        AND
+        CONCAT(
+        QMRD.produce_date,
+        ' ',
+        QMRD.produce_time
+        ) BETWEEN &apos;${startDate}&apos;
+        AND &apos;${endDate}&apos;
     </select>
 
     <select id="selectPromessageByRaionModelAndProject" resultType="java.util.Map">
@@ -467,9 +476,18 @@
               t2.material_aggregate_4,
               t2.material_aggregate_5,
               t2.material_aggregate_6,
+              t2.material_aggregate_10,
+              t2.material_aggregate_9,
+              t2.material_aggregate_8,
+              t2.material_aggregate_7,
               t2.material_stone_1,
               t2.material_stone_2,
+              t2.material_stone_3,
+              t2.material_stone_4,
               t2.material_asphalt,
+              t2.material_additive_1,
+              t2.material_additive_2,
+              t2.material_additive_3,
               t2.material_regenerate,
               t2.material_additive,
               t2.temperature_warehouse_1 as tem_warehouse_1,
@@ -490,11 +508,20 @@
               material_aggregate_4,
               material_aggregate_5,
               material_aggregate_6,
+              material_aggregate_7,
+              material_aggregate_8,
+              material_aggregate_9,
+              material_aggregate_10,
               material_stone_1,
               material_stone_2,
+              material_stone_3,
+              material_stone_4,
               material_asphalt,
               material_regenerate,
               material_additive,
+              material_additive_1,
+              material_additive_2,
+              material_additive_3,
               temperature_warehouse_1,
               temperature_mixture,
               temperature_duster,
@@ -521,9 +548,18 @@
               t2.material_aggregate_4,
               t2.material_aggregate_5,
               t2.material_aggregate_6,
+              t2.material_aggregate_10,
+              t2.material_aggregate_9,
+              t2.material_aggregate_8,
+              t2.material_aggregate_7,
               t2.material_stone_1,
               t2.material_stone_2,
+              t2.material_stone_3,
+              t2.material_stone_4,
               t2.material_asphalt,
+              t2.material_additive_1,
+              t2.material_additive_2,
+              t2.material_additive_3,
               t2.material_regenerate,
               t2.material_additive,
               t2.temperature_warehouse_1 as tem_warehouse_1,
@@ -544,11 +580,20 @@
               material_aggregate_4,
               material_aggregate_5,
               material_aggregate_6,
+              material_aggregate_7,
+              material_aggregate_8,
+              material_aggregate_9,
+              material_aggregate_10,
               material_stone_1,
               material_stone_2,
+              material_stone_3,
+              material_stone_4,
               material_asphalt,
               material_regenerate,
               material_additive,
+              material_additive_1,
+              material_additive_2,
+              material_additive_3,
               temperature_warehouse_1,
               temperature_mixture,
               temperature_duster,

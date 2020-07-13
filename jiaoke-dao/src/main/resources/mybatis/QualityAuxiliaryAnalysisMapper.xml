@@ -103,16 +103,25 @@
         SELECT
                t1.*, 'crew1' AS 'crewNum',
                t2.produce_proportioning_num,
-                t2.produce_date,
+               t2.produce_date,
                t2.material_aggregate_1,
                t2.material_aggregate_2,
                t2.material_aggregate_3,
                t2.material_aggregate_4,
                t2.material_aggregate_5,
                t2.material_aggregate_6,
+               t2.material_aggregate_10,
+               t2.material_aggregate_9,
+               t2.material_aggregate_8,
+               t2.material_aggregate_7,
                t2.material_stone_1,
                t2.material_stone_2,
+               t2.material_stone_3,
+               t2.material_stone_4,
                t2.material_asphalt,
+               t2.material_additive_1,
+               t2.material_additive_2,
+               t2.material_additive_3,
                t2.material_regenerate,
                t2.material_additive,
                t2.temperature_warehouse_1 AS tem_warehouse_1,
@@ -127,17 +136,25 @@
                             SELECT
                                    produce_proportioning_num,
                                    produce_date,
-                                   material_aggregate_1,
                                    material_aggregate_2,
                                    material_aggregate_3,
                                    material_aggregate_4,
                                    material_aggregate_5,
                                    material_aggregate_6,
+                                   material_aggregate_7,
+                                   material_aggregate_8,
+                                   material_aggregate_9,
+                                   material_aggregate_10,
                                    material_stone_1,
                                    material_stone_2,
+                                   material_stone_3,
+                                   material_stone_4,
                                    material_asphalt,
                                    material_regenerate,
                                    material_additive,
+                                   material_additive_1,
+                                   material_additive_2,
+                                   material_additive_3,
                                    temperature_warehouse_1,
                                    temperature_mixture,
                                    temperature_duster,
@@ -145,10 +162,12 @@
                                    temperature_aggregate,
                                    material_total
                             FROM
-                                 quality_monitoring_realtime_${crewNum}
-                            WHERE Id = ${id}
+                                 quality_monitoring_realtime_$ { crewNum }
+                                    WHERE
+                                    Id = $ { id }
                             ) AS t2 ON t1.crew1_modele_id = t2.produce_proportioning_num
-        WHERE YEAR(t1.create_time) = YEAR(t2.produce_date)
+        WHERE
+                YEAR (t1.create_time) = YEAR (t2.produce_date)
     </select>
 
     <select id="selectGradingBycrewNumAndRationNum" resultType="java.util.Map">

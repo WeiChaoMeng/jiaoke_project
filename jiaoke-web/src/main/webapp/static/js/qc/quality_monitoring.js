@@ -28,16 +28,13 @@ function  getRealTimeData() {
     getThreeProductSVG();
 }
 
-function renderDataToPage(listStr) {
+function renderDataToPage(resStr) {
 
-    if (listStr){
+    if (resStr){
+        var listStr = resStr.ratioList;
         for (var i=0;i<listStr.length;i++){
-
-            var todayDate = getNowFormatDate();
             if ( listStr[i].crewNum == 'crew1' ){
-
                 var proDate = new Date(listStr[i].produce_date);
-                if (todayDate - proDate != 0  ) {
                     $("#crew1_basic_date").html(listStr[i].produce_date);
                     $("#crew1_basic_time").html(listStr[i].produce_time);
                     $("#crew1_basic_ratio").html(listStr[i].produce_proportioning_num);
@@ -56,24 +53,27 @@ function renderDataToPage(listStr) {
                     $("#crew1_data_Aggregate4").html(listStr[i].material_aggregate_4 + "<i>%</i>");
                     $("#crew1_data_Aggregate5").html(listStr[i].material_aggregate_5 + "<i>%</i>");
                     $("#crew1_data_Aggregate6").html(listStr[i].material_aggregate_6 + "<i>%</i>");
-                    $("#crew1_data_warehouse1").html(listStr[i].temperature_warehouse_1 + " <i>℃</i>");
-                    $("#crew1_data_duster").html(listStr[i].temperature_duster+ " <i>℃</i>");
-
+                    $("#crew1_data_Aggregate7").html((isBlank(listStr[i].material_aggregate_7) ? 0:listStr[i].material_aggregate_7) + "<i>%</i>");
+                    $("#crew1_data_Aggregate8").html((isBlank(listStr[i].material_aggregate_8) ? 0:listStr[i].material_aggregate_8)  + "<i>%</i>");
+                    $("#crew1_data_Aggregate9").html((isBlank(listStr[i].material_aggregate_9) ? 0:listStr[i].material_aggregate_9) + "<i>%</i>");
+                    $("#crew1_data_Aggregate10").html((isBlank(listStr[i].material_aggregate_10) ? 0:listStr[i].material_aggregate_10) + "<i>%</i>");
                     $("#crew1_data_stone1").html( listStr[i].material_stone_1+ "<i>%</i>");
-                    var material_stone_2 = listStr[i].material_stone_2 == 0? 0:(listStr[i].material_stone_2 - listStr[i].material_stone_1).toFixed(1);
-                    $("#crew1_data_stone2").html(material_stone_2 +  "<i>%</i>");
+                    // var material_stone_2 = listStr[i].material_stone_2 == 0? 0:(listStr[i].material_stone_2 - listStr[i].material_stone_1).toFixed(1);
+                    $("#crew1_data_stone2").html(listStr[i].material_stone_2 +  "<i>%</i>");
+                    $("#crew1_data_stone3").html((isBlank(listStr[i].material_stone_3 ) ? 0:listStr[i].material_stone_3)+  "<i>%</i>");
+                    $("#crew1_data_stone4").html((isBlank(listStr[i].material_stone_4 ) ? 0:listStr[i].material_stone_4) +  "<i>%</i>");
                     $("#crew1_data_asphalt").html(listStr[i].material_asphalt+ "<i>%</i>");
                     $("#crew1_data_regenerate").html(listStr[i].material_regenerate+ "<i>%</i>");
                     $("#crew1_data_additive").html(listStr[i].material_additive+ "<i>%</i>");
+                    $("#crew1_data_additive1").html((isBlank(listStr[i].material_additive_1 ) ? 0:listStr[i].material_additive_1) + "<i>%</i>");
+                    $("#crew1_data_additive2").html((isBlank(listStr[i].material_additive_2 ) ? 0:listStr[i].material_additive_2) + "<i>%</i>");
+                    $("#crew1_data_additive3").html((isBlank(listStr[i].material_additive_3 ) ? 0:listStr[i].material_additive_3) + "<i>%</i>");
                     $("#crew1_data_total").html(listStr[i].material_total+ "<i>Kg</i>");
+                    $("#crew1_data_warehouse1").html(listStr[i].temperature_warehouse_1 + " <i>℃</i>");
+                    $("#crew1_data_duster").html(listStr[i].temperature_duster+ " <i>℃</i>");
                     $("#crew1_data_temasphalt").html(listStr[i].temperature_asphalt+ " <i>℃</i>");
                     $("#crew1_data_aggregate").html(listStr[i].temperature_aggregate+ " <i>℃</i>");
-                }
-
-
-            }else {
-                var proDate = new Date(listStr[i].produce_date);
-                if (todayDate - proDate != 0 ) {
+            } else {
                     $("#crew2_basic_date").html(listStr[i].produce_date);
                     $("#crew2_basic_time").html(listStr[i].produce_time);
                     $("#crew2_basic_ratio").html(listStr[i].produce_proportioning_num);
@@ -84,34 +84,94 @@ function renderDataToPage(listStr) {
                     }
                     $("#crew2_basic_carNum").html(listStr[i].produce_car_num);
                     $("#crew2_basic_discNum").html(listStr[i].produce_disc_num);
-                    // $("#crew2_basic_userNum").html(listStr[i].project_name);
+                    // $("#crew1_basic_userNum").html(listStr[i].project_name);
                     $("#crew2_data_Aggregate1").html(listStr[i].material_aggregate_1 + "<i>%</i>");
                     $("#crew2_data_Aggregate2").html(listStr[i].material_aggregate_2 + "<i>%</i>");
                     $("#crew2_data_Aggregate3").html(listStr[i].material_aggregate_3 + "<i>%</i>");
                     $("#crew2_data_Aggregate4").html(listStr[i].material_aggregate_4 + "<i>%</i>");
                     $("#crew2_data_Aggregate5").html(listStr[i].material_aggregate_5 + "<i>%</i>");
                     $("#crew2_data_Aggregate6").html(listStr[i].material_aggregate_6 + "<i>%</i>");
+                    $("#crew2_data_Aggregate7").html((isBlank(listStr[i].material_aggregate_7) ? 0:listStr[i].material_aggregate_7) + "<i>%</i>");
+                    $("#crew2_data_Aggregate8").html((isBlank(listStr[i].material_aggregate_8) ? 0:listStr[i].material_aggregate_8)  + "<i>%</i>");
+                    $("#crew2_data_Aggregate9").html((isBlank(listStr[i].material_aggregate_9) ? 0:listStr[i].material_aggregate_9) + "<i>%</i>");
+                    $("#crew2_data_Aggregate10").html((isBlank(listStr[i].material_aggregate_10) ? 0:listStr[i].material_aggregate_10) + "<i>%</i>");
+                    $("#crew2_data_stone1").html( listStr[i].material_stone_1+ "<i>%</i>");
+                    // var material_stone_2 = listStr[i].material_stone_2 == 0? 0:(listStr[i].material_stone_2 - listStr[i].material_stone_1).toFixed(1);
+                    $("#crew2_data_stone2").html(listStr[i].material_stone_2 +  "<i>%</i>");
+                    $("#crew2_data_stone3").html((isBlank(listStr[i].material_stone_3 ) ? 0:listStr[i].material_stone_3)+  "<i>%</i>");
+                    $("#crew2_data_stone4").html((isBlank(listStr[i].material_stone_4 ) ? 0:listStr[i].material_stone_4) +  "<i>%</i>");
+                    $("#crew2_data_asphalt").html(listStr[i].material_asphalt+ "<i>%</i>");
+                    $("#crew2_data_regenerate").html(listStr[i].material_regenerate+ "<i>%</i>");
+                    $("#crew2_data_additive").html(listStr[i].material_additive+ "<i>%</i>");
+                    $("#crew2_data_additive1").html((isBlank(listStr[i].material_additive_1 ) ? 0:listStr[i].material_additive_1) + "<i>%</i>");
+                    $("#crew2_data_additive2").html((isBlank(listStr[i].material_additive_2 ) ? 0:listStr[i].material_additive_2) + "<i>%</i>");
+                    $("#crew2_data_additive3").html((isBlank(listStr[i].material_additive_3 ) ? 0:listStr[i].material_additive_3) + "<i>%</i>");
+                    $("#crew2_data_total").html(listStr[i].material_total+ "<i>Kg</i>");
                     $("#crew2_data_warehouse1").html(listStr[i].temperature_warehouse_1 + " <i>℃</i>");
-                    $("#crew2_data_duster").html(listStr[i].temperature_duster + " <i>℃</i>");
-                    $("#crew2_data_stone1").html( listStr[i].material_stone_1 + "<i>%</i>");
-                    var material_stone_2 = listStr[i].material_stone_2 == 0? 0:(listStr[i].material_stone_2 - listStr[i].material_stone_1).toFixed(1);
-                    $("#crew2_data_stone2").html(material_stone_2 + "<i>%</i>");
-                    $("#crew2_data_asphalt").html(listStr[i].material_asphalt + "<i>%</i>");
-                    $("#crew2_data_regenerate").html(listStr[i].material_regenerate + "<i>%</i>");
-                    $("#crew2_data_additive").html(listStr[i].material_additive + "<i>%</i>");
-                    $("#crew2_data_total").html(listStr[i].material_total + "<i>Kg</i>");
-                    $("#crew2_data_temasphalt").html(listStr[i].temperature_asphalt + " <i>℃</i>");
-                    $("#crew2_data_aggregate").html(listStr[i].temperature_aggregate + " <i>℃</i>");
-                }
+                    $("#crew2_data_duster").html(listStr[i].temperature_duster+ " <i>℃</i>");
+                    $("#crew2_data_temasphalt").html(listStr[i].temperature_asphalt+ " <i>℃</i>");
+                    $("#crew2_data_aggregate").html(listStr[i].temperature_aggregate+ " <i>℃</i>");
 
             }
         }
+
+        var proList = resStr.proList;
+        //展示实际值
+        showRealDataToPage(proList);
     }
-
-
-
 }
 
+function showRealDataToPage(proList) {
+    if (proList){
+        for (var i=0;i<proList.length;i++){
+            if ( proList[i].crewNum == 'crew1' ){
+                    $("#crew1_data_Aggregate1_real").html((isBlank(proList[i].material_aggregate_1) ? 0:proList[i].material_aggregate_1) + "<i>kg</i>");
+                    $("#crew1_data_Aggregate2_real").html((proList[i].material_aggregate_2  ) + "<i>kg</i>");
+                    $("#crew1_data_Aggregate3_real").html((proList[i].material_aggregate_3 ) + "<i>kg</i>");
+                    $("#crew1_data_Aggregate4_real").html((proList[i].material_aggregate_4) + "<i>kg</i>");
+                    $("#crew1_data_Aggregate5_real").html((proList[i].material_aggregate_5 ) + "<i>kg</i>");
+                    $("#crew1_data_Aggregate6_real").html(proList[i].material_aggregate_6 + "<i>kg</i>");
+                    $("#crew1_data_Aggregate7_real").html((isBlank(proList[i].material_aggregate_7) ? 0:proList[i].material_aggregate_7) + "<i>kg</i>");
+                    $("#crew1_data_Aggregate8_real").html((isBlank(proList[i].material_aggregate_8) ? 0:proList[i].material_aggregate_8)+ "<i>kg</i>");
+                    $("#crew1_data_Aggregate9_real").html((isBlank(proList[i].material_aggregate_9) ? 0:proList[i].material_aggregate_9) + "<i>kg</i>");
+                    $("#crew1_data_Aggregate10_real").html((isBlank(proList[i].material_aggregate_10) ? 0:proList[i].material_aggregate_10)+ "<i>kg</i>");
+                    $("#crew1_data_stone1_real").html( proList[i].material_stone_1+ "<i>kg</i>");
+                    // var material_stone_2 = listStr[i].material_stone_2 == 0? 0:(listStr[i].material_stone_2 - listStr[i].material_stone_1).toFixed(1);
+                    $("#crew1_data_stone2_real").html(proList[i].material_stone_2 +  "<i>kg</i>");
+                    $("#crew1_data_stone3_real").html((isBlank(proList[i].material_stone_3) ? 0:proList[i].material_stone_3) +  "<i>kg</i>");
+                    $("#crew1_data_stone4_real").html((isBlank(proList[i].material_stone_4) ? 0:proList[i].material_stone_4) +  "<i>kg</i>");
+                    $("#crew1_data_asphalt_real").html(proList[i].material_asphalt+ "<i>kg</i>");
+                    $("#crew1_data_regenerate_real").html(proList[i].material_regenerate+ "<i>kg</i>");
+                    $("#crew1_data_additive_real").html(proList[i].material_additive+ "<i>kg</i>");
+                    $("#crew1_data_additive1_real").html((isBlank(proList[i].material_additive_1) ? 0:proList[i].material_additive_1) + "<i>kg</i>");
+                    $("#crew1_data_additive2_real").html((isBlank(proList[i].material_additive_2) ? 0:proList[i].material_additive_2) + "<i>kg</i>");
+                    $("#crew1_data_additive3_real").html((isBlank(proList[i].material_additive_3) ? 0:proList[i].material_additive_3)+ "<i>kg</i>");
+            }else {
+                    $("#crew2_data_Aggregate1_real").html((proList[i].material_aggregate_1 ) + "<i>kg</i>");
+                    $("#crew2_data_Aggregate2_real").html((proList[i].material_aggregate_2  ) + "<i>kg</i>");
+                    $("#crew2_data_Aggregate3_real").html((proList[i].material_aggregate_3 ) + "<i>kg</i>");
+                    $("#crew2_data_Aggregate4_real").html((proList[i].material_aggregate_4) + "<i>kg</i>");
+                    $("#crew2_data_Aggregate5_real").html((proList[i].material_aggregate_5) + "<i>kg</i>");
+                    $("#crew2_data_Aggregate6_real").html(proList[i].material_aggregate_6 + "<i>kg</i>");
+                    $("#crew2_data_Aggregate7_real").html((isBlank(proList[i].material_aggregate_7) ? 0:proList[i].material_aggregate_7) + "<i>kg</i>");
+                    $("#crew2_data_Aggregate8_real").html((isBlank(proList[i].material_aggregate_8) ? 0:proList[i].material_aggregate_8)+ "<i>kg</i>");
+                    $("#crew2_data_Aggregate9_real").html((isBlank(proList[i].material_aggregate_9) ? 0:proList[i].material_aggregate_9) + "<i>kg</i>");
+                    $("#crew2_data_Aggregate10_real").html((isBlank(proList[i].material_aggregate_10) ? 0:proList[i].material_aggregate_10)+ "<i>kg</i>");
+                    $("#crew2_data_stone1_real").html( proList[i].material_stone_1+ "<i>kg</i>");
+                    // var material_stone_2 = listStr[i].material_stone_2 == 0? 0:(listStr[i].material_stone_2 - listStr[i].material_stone_1).toFixed(1);
+                    $("#crew2_data_stone2_real").html(proList[i].material_stone_2 +  "<i>kg</i>");
+                    $("#crew2_data_stone3_real").html((isBlank(proList[i].material_stone_3) ? 0:proList[i].material_stone_3) +  "<i>kg</i>");
+                    $("#crew2_data_stone4_real").html((isBlank(proList[i].material_stone_4) ? 0:proList[i].material_stone_4) +  "<i>kg</i>");
+                    $("#crew2_data_asphalt_real").html(proList[i].material_asphalt+ "<i>kg</i>");
+                    $("#crew2_data_regenerate_real").html(proList[i].material_regenerate+ "<i>kg</i>");
+                    $("#crew2_data_additive_real").html(proList[i].material_additive+ "<i>kg</i>");
+                    $("#crew2_data_additive1_real").html((isBlank(proList[i].material_additive_1) ? 0:proList[i].material_additive_1) + "<i>kg</i>");
+                    $("#crew2_data_additive2_real").html((isBlank(proList[i].material_additive_2) ? 0:proList[i].material_additive_2) + "<i>kg</i>");
+                    $("#crew2_data_additive3_real").html((isBlank(proList[i].material_additive_3) ? 0:proList[i].material_additive_3)+ "<i>kg</i>");
+            }
+        }
+    }
+}
 
 
 /******************************** 数据渲染End********************************************/
@@ -139,15 +199,24 @@ function getThreeProductSVG() {
                             $("#crew1_data_Aggregate4_svg").html(listStr[i].material_aggregate_4 + "<i>Kg</i>");
                             $("#crew1_data_Aggregate5_svg").html(listStr[i].material_aggregate_5 + "<i>Kg</i>");
                             $("#crew1_data_Aggregate6_svg").html(listStr[i].material_aggregate_6 + "<i>Kg</i>");
+                            $("#crew1_data_Aggregate7_svg").html((isBlank(listStr[i].material_aggregate_7) ? 0 :listStr[i].material_aggregate_7) + "<i>Kg</i>");
+                            $("#crew1_data_Aggregate8_svg").html((isBlank(listStr[i].material_aggregate_8) ? 0 :listStr[i].material_aggregate_8)  + "<i>Kg</i>");
+                            $("#crew1_data_Aggregate9_svg").html((isBlank(listStr[i].material_aggregate_9) ? 0 :listStr[i].material_aggregate_9)  + "<i>Kg</i>");
+                            $("#crew1_data_Aggregate10_svg").html((isBlank(listStr[i].material_aggregate_10) ? 0 :listStr[i].material_aggregate_10) + "<i>Kg</i>");
                             $("#crew1_data_warehouse1_svg").html(listStr[i].temperature_warehouse_1 + " <i>℃</i>");
                             $("#crew1_data_duster_svg").html(listStr[i].temperature_duster+ " <i>℃</i>");
-
                             $("#crew1_data_stone1_svg").html( listStr[i].material_stone_1+ "<i>Kg</i>");
-                            var material_stone_2 = listStr[i].material_stone_2 == 0? 0:(listStr[i].material_stone_2 - listStr[i].material_stone_1).toFixed(1);
-                            $("#crew1_data_stone2_svg").html(material_stone_2 + "<i>Kg</i>");
+                            $("#crew1_data_stone2_svg").html( (isBlank(listStr[i].material_stone_2) ? 0 :listStr[i].material_stone_2)+ "<i>Kg</i>");
+                            // var material_stone_2 = listStr[i].material_stone_2 == 0? 0:(listStr[i].material_stone_2 - listStr[i].material_stone_1).toFixed(1);
+                            // $("#crew1_data_stone2_svg").html(material_stone_2 + "<i>Kg</i>");
+                            $("#crew1_data_stone3_svg").html( (isBlank(listStr[i].material_stone_3) ? 0 :listStr[i].material_stone_3)+ "<i>Kg</i>");
+                            $("#crew1_data_stone4_svg").html( (isBlank(listStr[i].material_stone_4) ? 0 :listStr[i].material_stone_4)+ "<i>Kg</i>");
                             $("#crew1_data_asphalt_svg").html(listStr[i].material_asphalt+ "<i>Kg</i>");
                             $("#crew1_data_regenerate_svg").html(listStr[i].material_regenerate+ "<i>Kg</i>");
                             $("#crew1_data_additive_svg").html(listStr[i].material_additive+ "<i>Kg</i>");
+                            $("#crew1_data_additive1_svg").html( (isBlank(listStr[i].material_additive_1) ? 0 :listStr[i].material_additive_1)+ "<i>Kg</i>");
+                            $("#crew1_data_additive2_svg").html( (isBlank(listStr[i].material_additive_2) ? 0 :listStr[i].material_additive_2)+ "<i>Kg</i>");
+                            $("#crew1_data_additive3_svg").html( (isBlank(listStr[i].material_additive_3) ? 0 :listStr[i].material_additive_3)+ "<i>Kg</i>");
                             $("#crew1_data_total_svg").html(listStr[i].material_total+ "<i>Kg</i>");
                             $("#crew1_data_temasphalt_svg").html(listStr[i].temperature_asphalt+ " <i>℃</i>");
                             $("#crew1_data_aggregate_svg").html(listStr[i].temperature_aggregate+ " <i>℃</i>");
@@ -164,14 +233,24 @@ function getThreeProductSVG() {
                             $("#crew2_data_Aggregate4_svg").html(listStr[i].material_aggregate_4 + "<i>Kg</i>");
                             $("#crew2_data_Aggregate5_svg").html(listStr[i].material_aggregate_5 + "<i>Kg</i>");
                             $("#crew2_data_Aggregate6_svg").html(listStr[i].material_aggregate_6 + "<i>Kg</i>");
+                            $("#crew2_data_Aggregate7_svg").html((isBlank(listStr[i].material_aggregate_7) ? 0 :listStr[i].material_aggregate_7) + "<i>Kg</i>");
+                            $("#crew2_data_Aggregate8_svg").html((isBlank(listStr[i].material_aggregate_8) ? 0 :listStr[i].material_aggregate_8)  + "<i>Kg</i>");
+                            $("#crew2_data_Aggregate9_svg").html((isBlank(listStr[i].material_aggregate_9) ? 0 :listStr[i].material_aggregate_9)  + "<i>Kg</i>");
+                            $("#crew2_data_Aggregate10_svg").html((isBlank(listStr[i].material_aggregate_10) ? 0 :listStr[i].material_aggregate_10) + "<i>Kg</i>");
                             $("#crew2_data_warehouse1_svg").html(listStr[i].temperature_warehouse_1 + " <i>℃</i>");
                             $("#crew2_data_duster_svg").html(listStr[i].temperature_duster + " <i>℃</i>");
                             $("#crew2_data_stone1_svg").html(listStr[i].material_stone_1+ "<i>Kg</i>");
-                            var material_stone_2 = listStr[i].material_stone_2 == 0? 0:(listStr[i].material_stone_2 - listStr[i].material_stone_1).toFixed(1);
-                            $("#crew2_data_stone2_svg").html(material_stone_2 + "<i>Kg</i>");
+                            // var material_stone_2 = listStr[i].material_stone_2 == 0? 0:(listStr[i].material_stone_2 - listStr[i].material_stone_1).toFixed(1);
+                            // $("#crew2_data_stone2_svg").html(material_stone_2 + "<i>Kg</i>");
+                            $("#crew2_data_stone2_svg").html( (isBlank(listStr[i].material_stone_2) ? 0 :listStr[i].material_stone_2)+ "<i>Kg</i>");
+                            $("#crew2_data_stone3_svg").html( (isBlank(listStr[i].material_stone_3) ? 0 :listStr[i].material_stone_3)+ "<i>Kg</i>");
+                            $("#crew2_data_stone4_svg").html( (isBlank(listStr[i].material_stone_4) ? 0 :listStr[i].material_stone_4)+ "<i>Kg</i>");
                             $("#crew2_data_asphalt_svg").html(listStr[i].material_asphalt + "<i>Kg</i>");
                             $("#crew2_data_regenerate_svg").html(listStr[i].material_regenerate + "<i>Kg</i>");
                             $("#crew2_data_additive_svg").html(listStr[i].material_additive + "<i>Kg</i>");
+                            $("#crew2_data_additive1_svg").html( (isBlank(listStr[i].material_additive_1) ? 0 :listStr[i].material_additive_1)+ "<i>Kg</i>");
+                            $("#crew2_data_additive2_svg").html( (isBlank(listStr[i].material_additive_2) ? 0 :listStr[i].material_additive_2)+ "<i>Kg</i>");
+                            $("#crew2_data_additive3_svg").html( (isBlank(listStr[i].material_additive_3) ? 0 :listStr[i].material_additive_3)+ "<i>Kg</i>");
                             $("#crew2_data_total_svg").html(listStr[i].material_total + "<i>Kg</i>");
                             $("#crew2_data_temasphalt_svg").html(listStr[i].temperature_asphalt + " <i>℃</i>");
                             $("#crew2_data_aggregate_svg").html(listStr[i].temperature_aggregate + " <i>℃</i>");
@@ -598,3 +677,9 @@ function returnX(key) {
 
     return s;
 }
+function isBlank(s) {
+    if (s == "undefined" || s == null || s == "" || s.length == 0) {
+        return true;
+    }
+    return false;
+};

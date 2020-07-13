@@ -51,14 +51,18 @@ public class QualityDataMontoringImpl implements QualityDataMontoringInf {
         List<Map<String, Object>> list = qualityDataMontoringDao.selectProductionData();
         //专门用来放骨料百分比
         List<Map<String, Object>> reList = new ArrayList<>();
+        //结果集MAP
+        Map<String,Object> res = new HashMap<>();
+        res.put("proList",JSON.toJSON(list));
         String str = "";
 
         String[] cloumName = {
-                "material_stone_1",
-                "material_stone_2",
                 "material_asphalt",
                 "material_regenerate",
-                "material_additive"
+                "material_additive",
+                "material_additive_1",
+                "material_additive_2",
+                "material_additive_3"
         };
 
         if (null != list) {
@@ -136,6 +140,38 @@ public class QualityDataMontoringImpl implements QualityDataMontoringInf {
                             Double material_aggregate_6_total = Double.parseDouble(String.valueOf(m.get(k)));
                             reList.get(i).put(k, QualityDataMontoringUtil.calculateRatio(String.valueOf(m.get("material_total")), String.valueOf(material_aggregate_6_total)));
                             break;
+                        case "material_stone_4":
+                            Double material_stone_4_total = Double.parseDouble(String.valueOf(m.get(k)));
+                            reList.get(i).put(k, QualityDataMontoringUtil.calculateRatio(String.valueOf(m.get("material_total")), String.valueOf(material_stone_4_total)));
+                            break;
+                        case "material_stone_3":
+                            Double material_stone_3_total = Double.parseDouble(String.valueOf(m.get(k)));
+                            double material_stone_3 = 0.0;
+                            if (0.0 != material_stone_3_total) {
+                                Double prev = Double.parseDouble(String.valueOf(m.get("material_stone_4")));
+                                material_stone_3 = material_stone_3_total - prev;
+                            }
+                            reList.get(i).put(k, QualityDataMontoringUtil.calculateRatio(String.valueOf(m.get("material_total")), String.valueOf(material_stone_3)));
+                            break;
+                        case "material_stone_2":
+                            Double material_stone_2_total = Double.parseDouble(String.valueOf(m.get(k)));
+                            double material_stone_2 = 0.0;
+                            if (0.0 != material_stone_2_total) {
+                                Double prev = Double.parseDouble(String.valueOf(m.get("material_stone_3")));
+                                material_stone_2 = material_stone_2_total - prev;
+                            }
+                            reList.get(i).put(k, QualityDataMontoringUtil.calculateRatio(String.valueOf(m.get("material_total")), String.valueOf(material_stone_2)));
+                            break;
+                        case "material_stone_1":
+                            Double material_stone_1_total = Double.parseDouble(String.valueOf(m.get(k)));
+                            double material_stone_1 = 0.0;
+                            if (0.0 != material_stone_1_total) {
+                                Double prev = Double.parseDouble(String.valueOf(m.get("material_stone_2")));
+                                material_stone_1 = material_stone_1_total - prev;
+                            }
+                            reList.get(i).put(k, QualityDataMontoringUtil.calculateRatio(String.valueOf(m.get("material_total")), String.valueOf(material_stone_1)));
+                            break;
+                            default:break ;
                     }
 
                 }
@@ -148,7 +184,8 @@ public class QualityDataMontoringImpl implements QualityDataMontoringInf {
                 }
             }
 
-            str = JSONArray.parseArray(JSONObject.toJSONString(list)).toString();
+            res.put("ratioList",JSON.toJSON(list));
+            str = JSONObject.toJSONString(res);
         }
         return str;
     }
