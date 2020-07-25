@@ -9,6 +9,10 @@
         <result column="produce_proportioning_num" jdbcType="VARCHAR" property="produceProportioningNum"/>
         <result column="produce_car_num" jdbcType="VARCHAR" property="produceCarNum"/>
         <result column="produce_custom_num" jdbcType="VARCHAR" property="produceCustomNum"/>
+        <result column="material_aggregate_10" jdbcType="INTEGER" property="materialAggregate10"/>
+        <result column="material_aggregate_9" jdbcType="INTEGER" property="materialAggregate9"/>
+        <result column="material_aggregate_8" jdbcType="INTEGER" property="materialAggregate8"/>
+        <result column="material_aggregate_7" jdbcType="INTEGER" property="materialAggregate7"/>
         <result column="material_aggregate_6" jdbcType="INTEGER" property="materialAggregate6"/>
         <result column="material_aggregate_5" jdbcType="INTEGER" property="materialAggregate5"/>
         <result column="material_aggregate_4" jdbcType="INTEGER" property="materialAggregate4"/>
@@ -17,9 +21,14 @@
         <result column="material_aggregate_1" jdbcType="INTEGER" property="materialAggregate1"/>
         <result column="material_stone_1" jdbcType="DOUBLE" property="materialStone1"/>
         <result column="material_stone_2" jdbcType="DOUBLE" property="materialStone2"/>
+        <result column="material_stone_3" jdbcType="DOUBLE" property="materialStone3"/>
+        <result column="material_stone_4" jdbcType="DOUBLE" property="materialStone4"/>
         <result column="material_asphalt" jdbcType="DOUBLE" property="materialAsphalt"/>
         <result column="material_regenerate" jdbcType="DOUBLE" property="materialRegenerate"/>
         <result column="material_additive" jdbcType="DOUBLE" property="materialAdditive"/>
+        <result column="material_additive1" jdbcType="DOUBLE" property="materialAdditive1"/>
+        <result column="material_additive2" jdbcType="DOUBLE" property="materialAdditive2"/>
+        <result column="material_additive3" jdbcType="DOUBLE" property="materialAdditive3"/>
         <result column="material_total" jdbcType="DOUBLE" property="materialTotal"/>
         <result column="temperature_warehouse_1" jdbcType="INTEGER" property="temperatureWarehouse1"/>
         <result column="temperature_mixture" jdbcType="INTEGER" property="temperatureMixture"/>
@@ -30,9 +39,9 @@
     </resultMap>
     <sql id="Base_Column_List">
     id, produce_date, product_time, produce_disc_num, produce_proportioning_num, produce_car_num,
-    produce_custom_num, material_aggregate_6, material_aggregate_5, material_aggregate_4,
+    produce_custom_num,material_aggregate_10,material_aggregate_9,material_aggregate_8, material_aggregate_7,material_aggregate_6, material_aggregate_5, material_aggregate_4,
     material_aggregate_3, material_aggregate_2, material_aggregate_1, material_stone_1,
-    material_stone_2, material_asphalt, material_regenerate, material_additive, material_total,
+    material_stone_2,material_stone_3,material_stone_4, material_asphalt, material_regenerate, material_additive,material_additive1,material_additive2,material_additive3, material_total,
     temperature_warehouse_1, temperature_mixture, temperature_duster, temperature_asphalt,
     temperature_aggregate, crew_num
   </sql>
@@ -49,21 +58,21 @@
     <insert id="insert"   parameterType="com.jiaoke.quality.bean.QualityTimelyDataFalse">
     insert into quality_timely_data_false (id, produce_date, product_time,
       produce_disc_num, produce_proportioning_num,
-      produce_car_num, produce_custom_num, material_aggregate_6,
+      produce_car_num, produce_custom_num,material_aggregate_10,material_aggregate_9,material_aggregate_8, material_aggregate_7,material_aggregate_6,
       material_aggregate_5, material_aggregate_4,
       material_aggregate_3, material_aggregate_2,
-      material_aggregate_1, material_stone_1, material_stone_2,
-      material_asphalt, material_regenerate, material_additive,
+      material_aggregate_1, material_stone_1, material_stone_2,material_stone_3,material_stone_4,
+      material_asphalt, material_regenerate, material_additive,material_additive1,material_additive2,material_additive3,
       material_total, temperature_warehouse_1, temperature_mixture,
       temperature_duster, temperature_asphalt,
       temperature_aggregate, crew_num)
     values (#{id,jdbcType=INTEGER}, #{produceDate,jdbcType=DATE}, #{productTime,jdbcType=TIME},
       #{produceDiscNum,jdbcType=VARCHAR}, #{produceProportioningNum,jdbcType=VARCHAR},
-      #{produceCarNum,jdbcType=VARCHAR}, #{produceCustomNum,jdbcType=VARCHAR}, #{materialAggregate6,jdbcType=INTEGER},
+      #{produceCarNum,jdbcType=VARCHAR}, #{produceCustomNum,jdbcType=VARCHAR}, #{materialAggregate10,jdbcType=INTEGER}, #{materialAggregate9,jdbcType=INTEGER}, #{materialAggregate8,jdbcType=INTEGER}, #{materialAggregate7,jdbcType=INTEGER}, #{materialAggregate6,jdbcType=INTEGER},
       #{materialAggregate5,jdbcType=INTEGER}, #{materialAggregate4,jdbcType=INTEGER},
       #{materialAggregate3,jdbcType=INTEGER}, #{materialAggregate2,jdbcType=INTEGER},
-      #{materialAggregate1,jdbcType=INTEGER}, #{materialStone1,jdbcType=DOUBLE}, #{materialStone2,jdbcType=DOUBLE},
-      #{materialAsphalt,jdbcType=DOUBLE}, #{materialRegenerate,jdbcType=DOUBLE}, #{materialAdditive,jdbcType=DOUBLE},
+      #{materialAggregate1,jdbcType=INTEGER}, #{materialStone1,jdbcType=DOUBLE}, #{materialStone2,jdbcType=DOUBLE},#{materialStone3,jdbcType=DOUBLE},#{materialStone4,jdbcType=DOUBLE},
+      #{materialAsphalt,jdbcType=DOUBLE}, #{materialRegenerate,jdbcType=DOUBLE}, #{materialAdditive,jdbcType=DOUBLE},#{materialAdditive1,jdbcType=DOUBLE},#{materialAdditive2,jdbcType=DOUBLE},#{materialAdditive3,jdbcType=DOUBLE},
       #{materialTotal,jdbcType=DOUBLE}, #{temperatureWarehouse1,jdbcType=INTEGER}, #{temperatureMixture,jdbcType=INTEGER},
       #{temperatureDuster,jdbcType=INTEGER}, #{temperatureAsphalt,jdbcType=INTEGER},
       #{temperatureAggregate,jdbcType=INTEGER}, #{crewNum,jdbcType=INTEGER})
@@ -301,11 +310,20 @@
                QR.material_aggregate_4,
                QR.material_aggregate_5,
                QR.material_aggregate_6,
+               QR.material_aggregate_7,
+               QR.material_aggregate_8,
+               QR.material_aggregate_9,
+               QR.material_aggregate_10,
                QR.material_stone_1,
                QR.material_stone_2,
+               QR.material_stone_3,
+               QR.material_stone_4,
                QR.material_asphalt,
                QR.material_regenerate,
                QR.material_additive,
+               QR.material_additive1,
+               QR.material_additive2,
+               QR.material_additive3,
                QR.material_total,
                QR.temperature_warehouse_1,
                QR.temperature_mixture,
@@ -340,11 +358,20 @@
                        QR.material_aggregate_4,
                        QR.material_aggregate_5,
                        QR.material_aggregate_6,
+                       QR.material_aggregate_7,
+                       QR.material_aggregate_8,
+                       QR.material_aggregate_9,
+                       QR.material_aggregate_10,
                        QR.material_stone_1,
                        QR.material_stone_2,
+                       QR.material_stone_3,
+                       QR.material_stone_4,
                        QR.material_asphalt,
                        QR.material_regenerate,
                        QR.material_additive,
+                       QR.material_additive1,
+                       QR.material_additive2,
+                       QR.material_additive3,
                        QR.material_total,
                        QR.temperature_warehouse_1,
                        QR.temperature_mixture,
@@ -424,11 +451,20 @@
                t2.material_aggregate_4,
                t2.material_aggregate_5,
                t2.material_aggregate_6,
+               t2.material_aggregate_7,
+               t2.material_aggregate_8,
+               t2.material_aggregate_9,
+               t2.material_aggregate_10,
                t2.material_stone_1,
                t2.material_stone_2,
+               t2.material_stone_3,
+               t2.material_stone_4,
                t2.material_asphalt,
                t2.material_regenerate,
                t2.material_additive,
+               t2.material_additive1,
+               t2.material_additive2,
+               t2.material_additive3,
                t2.temperature_warehouse_1 AS tem_warehouse_1,
                t2.temperature_mixture AS tem_mixture,
                t2.temperature_duster AS tem_duster,
@@ -447,11 +483,20 @@
                                    material_aggregate_4,
                                    material_aggregate_5,
                                    material_aggregate_6,
+                                   material_aggregate_7,
+                                   material_aggregate_8,
+                                   material_aggregate_9,
+                                   material_aggregate_10,
                                    material_stone_1,
                                    material_stone_2,
+                                   material_stone_3,
+                                   material_stone_4,
                                    material_asphalt,
                                    material_regenerate,
                                    material_additive,
+                                   material_additive1,
+                                   material_additive2,
+                                   material_additive3,
                                    temperature_warehouse_1,
                                    temperature_mixture,
                                    temperature_duster,
@@ -480,11 +525,20 @@
                        t2.material_aggregate_4,
                        t2.material_aggregate_5,
                        t2.material_aggregate_6,
+                       t2.material_aggregate_7,
+                       t2.material_aggregate_8,
+                       t2.material_aggregate_9,
+                       t2.material_aggregate_10,
                        t2.material_stone_1,
                        t2.material_stone_2,
+                       t2.material_stone_3,
+                       t2.material_stone_4,
                        t2.material_asphalt,
                        t2.material_regenerate,
                        t2.material_additive,
+                       t2.material_additive1,
+                       t2.material_additive2,
+                       t2.material_additive3,
                        t2.temperature_warehouse_1 AS tem_warehouse_1,
                        t2.temperature_mixture AS tem_mixture,
                        t2.temperature_duster AS tem_duster,
@@ -503,11 +557,20 @@
                                            material_aggregate_4,
                                            material_aggregate_5,
                                            material_aggregate_6,
+                                           material_aggregate_7,
+                                           material_aggregate_8,
+                                           material_aggregate_9,
+                                           material_aggregate_10,
                                            material_stone_1,
                                            material_stone_2,
+                                           material_stone_3,
+                                           material_stone_4,
                                            material_asphalt,
                                            material_regenerate,
                                            material_additive,
+                                           material_additive1,
+                                           material_additive2,
+                                           material_additive3,
                                            temperature_warehouse_1,
                                            temperature_mixture,
                                            temperature_duster,

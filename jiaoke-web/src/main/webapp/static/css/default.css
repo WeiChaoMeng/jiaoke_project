@@ -1857,6 +1857,7 @@ my_echars_div_block{
 
 table.gridtable {
     font-family: verdana,arial,sans-serif;
+    margin-bottom: 10px;
     font-size:11px;
     color:#333333;
     border-width: 1px;
@@ -1877,6 +1878,7 @@ table.gridtable td {
     border-style: solid;
     border-color: #666666;
     background-color: #ffffff;
+    text-align: center;
 }
 
 /*******数据管理每日弹窗*******/

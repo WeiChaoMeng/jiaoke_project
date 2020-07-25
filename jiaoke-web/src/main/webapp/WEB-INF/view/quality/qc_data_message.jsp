@@ -463,6 +463,10 @@
                         <th>产品名称</th>
                         <th>盘号</th>
                         <th>车号</th>
+                        <%--<th>骨料10</th>--%>
+                        <%--<th>骨料9</th>--%>
+                        <%--<th>骨料8</th>--%>
+                        <%--<th>骨料7</th>--%>
                         <th>骨料6</th>
                         <th>骨料5</th>
                         <th>骨料4</th>
@@ -471,9 +475,14 @@
                         <th>骨料1</th>
                         <th>石粉1</th>
                         <th>石粉2</th>
+                        <%--<th>石粉3</th>--%>
+                        <%--<th>石粉4</th>--%>
                         <th>沥青</th>
                         <th>再生料</th>
-                        <th>添加剂</th>
+                        <th>添加剂1</th>
+                        <th>添加剂2</th>
+                        <th>添加剂3</th>
+                        <th>添加剂4</th>
                         <th>总计</th>
                         <th>一仓温度</th>
                         <th>混合料温度</th>
@@ -490,6 +499,10 @@
                                 <td>${item.pro_name}</td>
                                 <td>${item.produce_disc_num}</td>
                                 <td>${item.produce_car_num}</td>
+                                <%--<td>${item.material_aggregate_10}</td>--%>
+                                <%--<td>${item.material_aggregate_9}</td>--%>
+                                <%--<td>${item.material_aggregate_8}</td>--%>
+                                <%--<td>${item.material_aggregate_7}</td>--%>
                                 <td>${item.material_aggregate_6}</td>
                                 <td>${item.material_aggregate_5}</td>
                                 <td>${item.material_aggregate_4}</td>
@@ -498,9 +511,14 @@
                                 <td>${item.material_aggregate_1}</td>
                                 <td>${item.material_stone_1}</td>
                                 <td>${item.material_stone_2}</td>
+                                <%--<td>${item.material_stone_3}</td>--%>
+                                <%--<td>${item.material_stone_4}</td>--%>
                                 <td>${item.material_asphalt}</td>
                                 <td>${item.material_regenerate}</td>
                                 <td>${item.material_additive}</td>
+                                <td>${item.material_additive_1}</td>
+                                <td>${item.material_additive_2}</td>
+                                <td>${item.material_additive_3}</td>
                                 <td>${item.material_total}</td>
                                 <td>${item.temperature_warehouse_1}</td>
                                 <td>${item.temperature_mixture}</td>
@@ -569,6 +587,10 @@
         var pro_name;
         var proDate;
         var produce_proportioning_num ;
+        var material_aggregate_10_total = 0;
+        var material_aggregate_9_total = 0;
+        var material_aggregate_8_total = 0;
+        var material_aggregate_7_total = 0;
         var material_aggregate_6_total = 0;
         var material_aggregate_5_total = 0;
         var material_aggregate_4_total = 0;
@@ -577,9 +599,14 @@
         var material_aggregate_1_total = 0;
         var material_stone_1_total = 0;
         var material_stone_2_total = 0;
+        var material_stone_3_total = 0;
+        var material_stone_4_total = 0;
         var material_asphalt_total = 0;
         var material_regenerate_total = 0;
         var material_additive_total = 0;
+        var material_additive1_total = 0;
+        var material_additive2_total = 0;
+        var material_additive3_total = 0;
         var material_total_total = 0;
         var temperature_warehouse_1_total = 0;
         var temperature_mixture_total = 0;
@@ -596,6 +623,10 @@
             pro_name = jsonList[i].pro_name;
             proDate = jsonList[i].produce_date;
             produce_proportioning_num = jsonList[i].produce_proportioning_num;
+            material_aggregate_10_total += Number(jsonList[i].material_aggregate_10);
+            material_aggregate_9_total += Number(jsonList[i].material_aggregate_9);
+            material_aggregate_8_total+= Number(jsonList[i].material_aggregate_8);
+            material_aggregate_7_total += Number(jsonList[i].material_aggregate_7);
             material_aggregate_6_total += Number(jsonList[i].material_aggregate_6);
             material_aggregate_5_total += Number(jsonList[i].material_aggregate_5);
             material_aggregate_4_total+= Number(jsonList[i].material_aggregate_4);
@@ -604,9 +635,14 @@
             material_aggregate_1_total += Number(jsonList[i].material_aggregate_1);
             material_stone_1_total += Number(jsonList[i].material_stone_1);
             material_stone_2_total += Number(jsonList[i].material_stone_2);
+            material_stone_3_total += Number(jsonList[i].material_stone_3);
+            material_stone_4_total += Number(jsonList[i].material_stone_4);
             material_asphalt_total += Number(jsonList[i].material_asphalt);
             material_regenerate_total += Number(jsonList[i].material_regenerate);
             material_additive_total += Number(jsonList[i].material_additive);
+            material_additive1_total += Number(jsonList[i].material_additive_1);
+            material_additive2_total += Number(jsonList[i].material_additive_2);
+            material_additive3_total += Number(jsonList[i].material_additive_3);
             material_total_total += Number(jsonList[i].material_total);
             temperature_warehouse_1_total += Number(jsonList[i].temperature_warehouse_1);
             temperature_mixture_total += Number(jsonList[i].temperature_mixture);
@@ -620,6 +656,10 @@
         svgPro.pro_name = pro_name;
         svgPro.proDate = proDate;
         svgPro.produce_proportioning_num = produce_proportioning_num;
+        svgPro.material_aggregate_10 = material_aggregate_10_total/forCount;
+        svgPro.material_aggregate_9 = material_aggregate_9_total/forCount;
+        svgPro.material_aggregate_8 = material_aggregate_8_total/forCount;
+        svgPro.material_aggregate_7 = material_aggregate_7_total/forCount;
         svgPro.material_aggregate_6 = material_aggregate_6_total/forCount;
         svgPro.material_aggregate_5 = material_aggregate_5_total/forCount;
         svgPro.material_aggregate_4 = material_aggregate_4_total/forCount;
@@ -628,9 +668,14 @@
         svgPro.material_aggregate_1 = material_aggregate_1_total/forCount;
         svgPro.material_stone_1 = material_stone_1_total/forCount;
         svgPro.material_stone_2 = material_stone_2_total/forCount;
+        svgPro.material_stone_3 = material_stone_3_total/forCount;
+        svgPro.material_stone_4 = material_stone_4_total/forCount;
         svgPro.material_asphalt = material_asphalt_total/forCount;
         svgPro.material_regenerate = material_regenerate_total/forCount;
         svgPro.material_additive = material_additive_total/forCount;
+        svgPro.material_additive_1 = material_additive1_total/forCount;
+        svgPro.material_additive_2 = material_additive2_total/forCount;
+        svgPro.material_additive_3 = material_additive3_total/forCount;
         svgPro.material_total = material_total_total/forCount;
         svgPro.temperature_warehouse_1 = temperature_warehouse_1_total/forCount;
         svgPro.temperature_mixture = temperature_mixture_total/forCount;

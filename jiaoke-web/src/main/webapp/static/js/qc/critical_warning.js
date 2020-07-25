@@ -35,6 +35,9 @@ function getAllCriticalWarning() {
 //循环list
 function foreachDataArray(currentNum,dataArray) {
 
+    if (dataArray.length <= 0){
+        return
+    }
     var arrayStart = (currentNum - 1) * 15;
     var arrayEnd = arrayStart + 15;
     $("#criticalBody").empty();

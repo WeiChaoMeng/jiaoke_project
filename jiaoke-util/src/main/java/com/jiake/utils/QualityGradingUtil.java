@@ -254,20 +254,19 @@ public class QualityGradingUtil {
             String stone1;
             double stoneOne = Double.parseDouble(String.valueOf(list.get(i).get("material_stone_1")));
             double stoneTwo = Double.parseDouble(String.valueOf(list.get(i).get("material_stone_2")));
-            stone1 =  stoneOne > 0 ? String.valueOf(stoneOne - stoneTwo):"0";
+            stone1 =  stoneOne > stoneTwo ? String.valueOf(stoneOne - stoneTwo):"0";
             String stone2;
             double stoneThree = Double.parseDouble(String.valueOf(list.get(i).get("material_stone_3")));
-            stone2 =  stoneTwo > 0 ? String.valueOf(stoneTwo - stoneThree):"0";
+            stone2 =  stoneTwo > stoneThree ? String.valueOf(stoneTwo - stoneThree):"0";
             String stone3;
             double stoneFour = Double.parseDouble(String.valueOf(list.get(i).get("material_stone_4")));
-            stone3 =  stoneThree > 0 ? String.valueOf(stoneThree - stoneFour):"0";
+            stone3 =  stoneThree > stoneFour ? String.valueOf(stoneThree - stoneFour):"0";
             String stone4 = String.valueOf(list.get(i).get("material_stone_4"));
             String regenerate = String.valueOf(list.get(i).get("material_regenerate"));
             String additive = String.valueOf(list.get(i).get("material_additive"));
             String additive1 = String.valueOf(list.get(i).get("material_additive_1"));
             String additive2 = String.valueOf(list.get(i).get("material_additive_2"));
             String additive3 = String.valueOf(list.get(i).get("material_additive_3"));
-
 
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             String proDate;

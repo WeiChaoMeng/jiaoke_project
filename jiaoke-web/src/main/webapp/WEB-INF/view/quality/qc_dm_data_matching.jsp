@@ -220,12 +220,12 @@
                 </tr>
 
                 <tr>
-                    <td class="dm_tlabels">配比编号：</td>
-                    <td class="dm_forminput dm_inputstyle" id="rationNum" >
-
-                    </td>
                     <td class="dm_tlabels">产品总数(盘)：</td>
                     <td class="dm_forminput dm_inputstyle" id="procount"  >
+
+                    </td>
+                    <td class="tlabels">材料总使用量(吨)：</td>
+                    <td id="total" class="dm_forminput dm_inputstyle" >
 
                     </td>
                 </tr>
@@ -263,6 +263,27 @@
                     </td>
                 </tr>
 
+                <tr>
+                    <td class="dm_tlabels">骨料7总量(吨)：</td>
+                    <td id="aggregate_7" class="dm_forminput dm_inputstyle" >
+                    </td>
+                    <td class="dm_tlabels">骨料8总量(吨)：</td>
+                    <td id="aggregate_8" class="dm_forminput dm_inputstyle" >
+
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="dm_tlabels">骨料9总量(吨)：</td>
+                    <td id="aggregate_9" class="dm_forminput dm_inputstyle" >
+
+                    </td>
+                    <td class="dm_tlabels">骨料10总量(吨)：</td>
+                    <td id="aggregate_10" class="dm_forminput dm_inputstyle" >
+
+                    </td>
+                </tr>
 
                 <tr>
                     <td class="dm_tlabels">石粉1总量(吨)：</td>
@@ -272,6 +293,15 @@
                     <td class="dm_tlabels">石粉2总量(吨)：</td>
                     <td id="stone_2" class="dm_forminput dm_inputstyle"  >
 
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="dm_tlabels">石粉3总量(吨)：</td>
+                    <td id="stone_3" class="dm_forminput dm_inputstyle" >
+                    </td>
+                    <td class="dm_tlabels">石粉4总量(吨)：</td>
+                    <td id="stone_4" class="dm_forminput dm_inputstyle"  >
                     </td>
                 </tr>
 
@@ -287,16 +317,25 @@
                 </tr>
 
                 <tr>
-                    <td class="dm_tlabels">添加剂总量(吨)：</td>
+                    <td class="dm_tlabels">添加剂1总量(吨)：</td>
                     <td id="additive" class="dm_forminput dm_inputstyle" >
 
                     </td>
-                    <td class="tlabels">材料总使用量(吨)：</td>
-                    <td id="total" class="dm_forminput dm_inputstyle" >
+                    <td class="dm_tlabels">添加剂2总量(吨)：</td>
+                    <td id="additive1" class="dm_forminput dm_inputstyle" >
 
                     </td>
                 </tr>
+                <tr>
+                    <td class="dm_tlabels">添加剂3总量(吨)：</td>
+                    <td id="additive2" class="dm_forminput dm_inputstyle" >
 
+                    </td>
+                    <td class="dm_tlabels">添加剂4总量(吨)：</td>
+                    <td id="additive3" class="dm_forminput dm_inputstyle" >
+
+                    </td>
+                </tr>
                 <tr>
                     <td colspan="4">
                         <input type="text" disabled="disabled"  style="color: #000;outline: 0;background: #fff;margin-top: 1%;font-size: 18px;margin-bottom: 20px;padding-left: 40%;" style="width: 72%;" value="平均配比信息">
@@ -309,15 +348,12 @@
                             <th>骨料4</th>
                             <th>骨料5</th>
                             <th>骨料6</th>
-                            <th>石粉</th>
-                            <th>沥青</th>
-                            <th>再生料</th>
-                            <th>添加剂</th>
-                            <th>1仓温度</th>
+                            <th>骨料7</th>
+                            <th>骨料8</th>
+                            <th>骨料9</th>
+                            <th>骨料10</th>
                             <th>混合料温度</th>
                             <th>除尘器入口温度</th>
-                            <th>沥青温度</th>
-                            <th>骨料温度</th>
                         </tr>
                         <tr>
                             <td id="aggregate_1_svg" ><i>%</i></td>
@@ -326,13 +362,40 @@
                             <td id="aggregate_4_svg" ><i>%</i></td>
                             <td id="aggregate_5_svg" ><i>%</i></td>
                             <td id="aggregate_6_svg" ><i>%</i></td>
-                            <td id="breeze_svg" ><i>%</i></td>
+                            <td id="aggregate_7_svg" ><i>%</i></td>
+                            <td id="aggregate_8_svg" ><i>%</i></td>
+                            <td id="aggregate_9_svg" ><i>%</i></td>
+                            <td id="aggregate_10_svg" ><i>%</i></td>
+                            <td id="mixture_svg" ><i>℃</i></td>
+                            <td id="duster_svg" ><i>℃</i></td>
+                        </tr>
+                    </table>
+                    <table class="gridtable">
+                        <tr>
+                            <th>石粉1</th>
+                            <th>石粉2</th>
+                            <th>石粉3</th>
+                            <th>石粉4</th>
+                            <th>沥青</th>
+                            <th>再生料</th>
+                            <th>添加剂1</th>
+                            <th>添加剂2</th>
+                            <th>添加剂3</th>
+                            <th>添加剂4</th>
+                            <th>沥青温度</th>
+                            <th>骨料温度</th>
+                        </tr>
+                        <tr>
+                            <td id="stone_1_svg" ><i>%</i></td>
+                            <td id="stone_2_svg" ><i>%</i></td>
+                            <td id="stone_3_svg" ><i>%</i></td>
+                            <td id="stone_4_svg" ><i>%</i></td>
                             <td id="asphalt_svg" ><i>%</i></td>
                             <td id="regenerate_svg" ><i>%</i></td>
                             <td id="additive_svg" ><i>%</i></td>
-                            <td id="warehouse_1_svg"><i>℃</i></td>
-                            <td id="mixture_svg" ><i>℃</i></td>
-                            <td id="duster_svg" ><i>℃</i></td>
+                            <td id="additive1_svg" ><i>%</i></td>
+                            <td id="additive2_svg" ><i>%</i></td>
+                            <td id="additive3_svg" ><i>%</i></td>
                             <td id="temAsphalt_svg" ><i>℃</i></td>
                             <td id="aggregate_svg" ><i>℃</i></td>
                         </tr>
@@ -351,15 +414,12 @@
                             <th>骨料4</th>
                             <th>骨料5</th>
                             <th>骨料6</th>
-                            <th>石粉</th>
-                            <th>沥青</th>
-                            <th>再生料1</th>
-                            <th>再生料2</th>
-                            <th>添加剂</th>
-                            <th>1仓温度</th>
+                            <th>骨料7</th>
+                            <th>骨料8</th>
+                            <th>骨料9</th>
+                            <th>骨料10</th>
                             <th>混合料温度</th>
-                            <th>沥青温度</th>
-                            <th>骨料温度</th>
+                            <th>除尘器温度</th>
                         </tr>
                         <tr>
                             <td id="repertoryOne" ><i>%</i></td>
@@ -368,13 +428,44 @@
                             <td id="repertoryFour" ><i>%</i></td>
                             <td id="repertoryFive" ><i>%</i></td>
                             <td id="repertorySix" ><i>%</i></td>
+                            <td id="repertorySeven" ><i>%</i></td>
+                            <td id="repertoryEight" ><i>%</i></td>
+                            <td id="repertoryNine" ><i>%</i></td>
+                            <td id="repertoryTen" ><i>%</i></td>
+                            <td id="temperatureMilling"><i>℃</i></td>
+                            <td id="temperatureMixture" ><i>℃</i></td>
+                        </tr>
+                    </table>
+                    <table class="gridtable">
+                        <tr>
+                            <th>石粉1</th>
+                            <th>石粉2</th>
+                            <th>石粉3</th>
+                            <th>石粉4</th>
+                            <th>沥青</th>
+                            <th>再生料1</th>
+                            <th>再生料2</th>
+                            <th>再生料3</th>
+                            <th>添加剂1</th>
+                            <th>添加剂2</th>
+                            <th>添加剂3</th>
+                            <th>添加剂4</th>
+                            <th>沥青温度</th>
+                            <th>骨料温度</th>
+                        </tr>
+                        <tr>
                             <td id="breeze" ><i>%</i></td>
+                            <td id="breezeTwo" ><i>%</i></td>
+                            <td id="breezeThree" ><i>%</i></td>
+                            <td id="breezeFour" ><i>%</i></td>
                             <td id="ratioStone" ><i>%</i></td>
                             <td id="ratioRegenerate1" ><i>%</i></td>
                             <td id="ratioRegenerate2" ><i>%</i></td>
+                            <td id="ratioRegenerate3" ><i>%</i></td>
                             <td id="ratioAdditive" ><i>%</i></td>
-                            <td id="temperatureMilling"><i>℃</i></td>
-                            <td id="temperatureMixture" ><i>℃</i></td>
+                            <td id="ratioAdditiveTwo" ><i>%</i></td>
+                            <td id="ratioAdditiveThree" ><i>%</i></td>
+                            <td id="ratioAdditiveFour" ><i>%</i></td>
                             <td id="temperatureAsphalt" ><i>℃</i></td>
                             <td id="temperatureAggregate" ><i>℃</i></td>
                         </tr>

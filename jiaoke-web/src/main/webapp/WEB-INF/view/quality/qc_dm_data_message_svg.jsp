@@ -87,11 +87,20 @@
                 <th style="width: 70px">骨料4</th>
                 <th style="width: 70px">骨料5</th>
                 <th style="width: 70px">骨料6</th>
+                <th style="width: 70px">骨料7</th>
+                <th style="width: 70px">骨料8</th>
+                <th style="width: 70px">骨料9</th>
+                <th style="width: 70px">骨料10</th>
+                <th style="width: 70px ">石粉4</th>
+                <th style="width: 70px ">石粉3</th>
                 <th style="width: 70px ">石粉2</th>
                 <th style="width: 70px ">石粉1</th>
                 <th style="width: 70px ">沥青</th>
                 <th style="width: 70px " >再生料</th>
-                <th style="width: 70px " >添加剂</th>
+                <th style="width: 70px " >添加剂1</th>
+                <th style="width: 70px " >添加剂2</th>
+                <th style="width: 70px " >添加剂3</th>
+                <th style="width: 70px " >添加剂4</th>
                 <th style="width: 100px">合计(kg)</th>
                 </thead>
 
@@ -105,11 +114,20 @@
                     <td  id="material_aggregate_4_svg"><em></em>kg</td></td>
                     <td  id="material_aggregate_5_svg"><em></em>kg</td></td>
                     <td  id="material_aggregate_6_svg"><em>kg</em></td>
+                    <td  id="material_aggregate_7_svg"><em></em>kg</td></td>
+                    <td  id="material_aggregate_8_svg"><em></em>kg</td></td>
+                    <td  id="material_aggregate_9_svg"><em></em>kg</td></td>
+                    <td  id="material_aggregate_10_svg"><em>kg</em></td>
+                    <td  id="material_stone_4_svg"><em>kg</em></td>
+                    <td  id="material_stone_3_svg"><em>kg</em></td>
                     <td  id="material_stone_2_svg"><em>kg</em></td>
                     <td  id="material_stone_1_svg"><em>kg</em></td>
                     <td  id="material_asphalt_svg"><em>kg</em></td>
                     <td id="material_regenerate_svg"><em>kg</em></td>
                     <td id="material_additive_svg"><em>kg</em></td>
+                    <td id="material_additive1_svg"><em>kg</em></td>
+                    <td id="material_additive2_svg"><em>kg</em></td>
+                    <td id="material_additive3_svg"><em>kg</em></td>
                     <td  id="material_total_svg"><em>kg</em></td>
                 </tr>
 
@@ -126,6 +144,10 @@
                 <th style="width: 100px ">骨料4比例</th>
                 <th style="width: 100px ">骨料5比例</th>
                 <th style="width: 100px ">骨料6比例</th>
+                <th style="width: 100px ">骨料7比例</th>
+                <th style="width: 100px ">骨料8比例</th>
+                <th style="width: 100px ">骨料9比例</th>
+                <th style="width: 100px ">骨料10比例</th>
                 <th style="width: 100px ">矿料比例</th>
                 <th style="width: 100px ">沥青占比</th>
                 <th style="width: 100px ">再生料占比</th>
@@ -142,6 +164,10 @@
                 <td id="material_aggregate_4_real_up" ><em>%</em></td>
                 <td id="material_aggregate_5_real_up" ><em>%</em></td>
                 <td id="material_aggregate_6_real_up" ><em>%</em></td>
+                <td id="material_aggregate_7_real_up" ><em>%</em></td>
+                <td id="material_aggregate_8_real_up" ><em>%</em></td>
+                <td id="material_aggregate_9_real_up" ><em>%</em></td>
+                <td id="material_aggregate_10_real_up" ><em>%</em></td>
                 <td id="breeze_real_up" ><em>%</em></td>
                 <td id="ratio_stone_real_up" ><em>%</em></td>
                 <td id="ratio_regenerate_real_up" ><em>%</em></td>
@@ -197,28 +223,78 @@
 
                     </tr>
                     <tr>
-                        <td>骨料6</td>
-                        <td id="material_aggregate_6_real"><i>%</i></td>
-                        <td  id="repertory_six"><i>%</i></td>
+                        <td>骨料7</td>
+                        <td id="material_aggregate_7_real"><i>%</i></td>
+                        <td  id="repertory_seven"><i>%</i></td>
 
                     </tr>
                     <tr>
-                        <td>矿粉</td>
+                        <td>骨料8</td>
+                        <td id="material_aggregate_8_real"><i>%</i></td>
+                        <td  id="repertory_eight"><i>%</i></td>
+
+                    </tr>
+                    <tr>
+                        <td>骨料9</td>
+                        <td id="material_aggregate_9_real"><i>%</i></td>
+                        <td  id="repertory_nine"><i>%</i></td>
+
+                    </tr>
+                    <tr>
+                        <td>骨料10</td>
+                        <td id="material_aggregate_10_real"><i>%</i></td>
+                        <td  id="repertory_ten"><i>%</i></td>
+
+                    </tr>
+                    <tr>
+                        <td>矿粉1</td>
                         <td id="breeze_real"><i>%</i></td>
                         <td id="breeze"><i>%</i></td>
-
+                    </tr>
+                    <tr>
+                        <td>矿粉2</td>
+                        <td id="breeze1_real"><i>%</i></td>
+                        <td id="breeze_two"><i>%</i></td>
+                    </tr>
+                    <tr>
+                        <td>矿粉3</td>
+                        <td id="breeze2_real"><i>%</i></td>
+                        <td id="breeze_three"><i>%</i></td>
+                    </tr>
+                    <tr>
+                        <td>矿粉4</td>
+                        <td id="breeze3_real"><i>%</i></td>
+                        <td id="breeze_four"><i>%</i></td>
                     </tr>
                     <tr>
                         <td>沥青</td>
                         <td id="ratio_stone_real"><i>%</i></td>
                         <td id="ratio_stone"><i>%</i></td>
-
                     </tr>
                     <tr>
                         <td>再生料</td>
                         <td  id="ratio_regenerate_real"><i>%</i></td>
                         <td id="ratio_regenerate"><i>%</i></td>
-
+                    </tr>
+                    <tr>
+                        <td>添加剂1</td>
+                        <td  id="ratio_additive_real"><i>%</i></td>
+                        <td id="ratio_additive"><i>%</i></td>
+                    </tr>
+                    <tr>
+                        <td>添加剂2</td>
+                        <td  id="ratio_additive1_real"><i>%</i></td>
+                        <td id="ratio_additive_two"><i>%</i></td>
+                    </tr>
+                    <tr>
+                        <td>添加剂3</td>
+                        <td  id="ratio_additive2_real"><i>%</i></td>
+                        <td id="ratio_additive_three"><i>%</i></td>
+                    </tr>
+                    <tr>
+                        <td>添加剂4</td>
+                        <td  id="ratio_additive3_real"><i>%</i></td>
+                        <td id="ratio_additive_four"><i>%</i></td>
                     </tr>
                     <tr>
                         <td>骨料温度</td>
@@ -476,9 +552,21 @@
     function showProMessage(jsonStr) {
         var obj = JSON.parse(jsonStr);
         $("#pro_names").text(obj.pro_name);
-        $("#material_aggregate_6_svg").prepend(obj.material_aggregate_6.toFixed(2));
-        $("#material_aggregate_6_real").prepend(((obj.material_aggregate_6.toFixed(2)/obj.material_total)*100).toFixed(2));
-        $("#material_aggregate_6_real_up").prepend(((obj.material_aggregate_6.toFixed(2)/obj.material_total)*100).toFixed(2));
+        $("#material_aggregate_10_svg").prepend(obj.material_aggregate_10.toFixed(2));
+        $("#material_aggregate_10_real").prepend((((obj.material_aggregate_10).toFixed(2)/obj.material_total)*100).toFixed(2));
+        $("#material_aggregate_10_real_up").prepend((((obj.material_aggregate_10).toFixed(2)/obj.material_total)*100).toFixed(2));
+        $("#material_aggregate_9_svg").prepend((obj.material_aggregate_9 - obj.material_aggregate_10).toFixed(2));
+        $("#material_aggregate_9_real").prepend((((obj.material_aggregate_9 - obj.material_aggregate_10).toFixed(2)/obj.material_total)*100).toFixed(2));
+        $("#material_aggregate_9_real_up").prepend((((obj.material_aggregate_9 - obj.material_aggregate_10).toFixed(2)/obj.material_total)*100).toFixed(2));
+        $("#material_aggregate_8_svg").prepend((obj.material_aggregate_8 - obj.material_aggregate_9).toFixed(2));
+        $("#material_aggregate_8_real").prepend((((obj.material_aggregate_8 - obj.material_aggregate_9).toFixed(2)/obj.material_total)*100).toFixed(2));
+        $("#material_aggregate_8_real_up").prepend((((obj.material_aggregate_8 - obj.material_aggregate_9).toFixed(2)/obj.material_total)*100).toFixed(2));
+        $("#material_aggregate_7_svg").prepend((obj.material_aggregate_7 - obj.material_aggregate_8).toFixed(2));
+        $("#material_aggregate_7_real").prepend((((obj.material_aggregate_7 - obj.material_aggregate_8).toFixed(2)/obj.material_total)*100).toFixed(2));
+        $("#material_aggregate_7_real_up").prepend((((obj.material_aggregate_7 - obj.material_aggregate_8).toFixed(2)/obj.material_total)*100).toFixed(2));
+        $("#material_aggregate_6_svg").prepend((obj.material_aggregate_6 - obj.material_aggregate_7).toFixed(2));
+        $("#material_aggregate_6_real").prepend((((obj.material_aggregate_6 - obj.material_aggregate_7).toFixed(2)/obj.material_total)*100).toFixed(2));
+        $("#material_aggregate_6_real_up").prepend((((obj.material_aggregate_6 - obj.material_aggregate_7).toFixed(2)/obj.material_total)*100).toFixed(2));
         $("#material_aggregate_5_real_up").prepend((((obj.material_aggregate_5 - obj.material_aggregate_6).toFixed(2)/obj.material_total) *100).toFixed(2));
         $("#material_aggregate_5_real").prepend((((obj.material_aggregate_5 - obj.material_aggregate_6).toFixed(2)/obj.material_total) *100).toFixed(2));
         $("#material_aggregate_5_svg").prepend(((obj.material_aggregate_5 - obj.material_aggregate_6).toFixed(2)));
@@ -500,15 +588,32 @@
 
         $("#material_stone_1_svg").prepend(obj.material_stone_1.toFixed(2));
         $("#material_stone_2_svg").prepend(obj.material_stone_2.toFixed(2));
-        var breeze = obj.material_stone_1 > obj.material_stone_2? obj.material_stone_1:obj.material_stone_2;
+        $("#material_stone_3_svg").prepend(obj.material_stone_3.toFixed(2));
+        $("#material_stone_4_svg").prepend(obj.material_stone_4.toFixed(2));
 
-        $("#breeze_real").prepend((breeze/obj.material_total *100).toFixed(2));
+        var breeze = obj.material_stone_1 > obj.material_stone_2? obj.material_stone_1 - obj.material_stone_2:obj.material_stone_1;
+        $("#breeze_real").prepend((breeze /obj.material_total *100).toFixed(2));
+        var breeze1 = obj.material_stone_2 > obj.material_stone_3? obj.material_stone_2 - obj.material_stone_3:obj.material_stone_2;
+        $("#breeze1_real").prepend((breeze1/obj.material_total *100).toFixed(2));
+        var breeze2 = obj.material_stone_3 > obj.material_stone_4? obj.material_stone_3 - obj.material_stone_4:obj.material_stone_3;
+        $("#breeze2_real").prepend((breeze2 /obj.material_total *100).toFixed(2));
+        $("#breeze3_real").prepend((obj.material_stone_4 /obj.material_total *100).toFixed(2));
         $("#breeze_real_up").prepend((breeze/obj.material_total *100).toFixed(2));
 
-        $("#material_additive_svg").prepend(obj.material_additive);
-        $("#ratio_stone_real").prepend((obj.material_asphalt.toFixed(2)/obj.material_total *100).toFixed(2));
-        $("#ratio_stone_real_up").prepend((obj.material_asphalt.toFixed(2)/obj.material_total *100).toFixed(2));
+        $("#ratio_stone_real").prepend((obj.material_asphalt/obj.material_total *100).toFixed(2));
+        $("#ratio_stone_real_up").prepend((obj.material_asphalt/obj.material_total *100).toFixed(2));
         $("#material_asphalt_svg").prepend(obj.material_asphalt.toFixed(2));
+
+        $("#material_additive_svg").prepend((obj.material_additive).toFixed(2));
+        $("#material_additive1_svg").prepend((obj.material_additive_1).toFixed(2));
+        $("#material_additive2_svg").prepend((obj.material_additive_2).toFixed(2));
+        $("#material_additive3_svg").prepend((obj.material_additive_3).toFixed(2));
+
+        $("#ratio_additive_real").prepend((obj.material_additive/obj.material_total *100).toFixed(2));
+        $("#ratio_additive1_real").prepend((obj.material_additive_1/obj.material_total *100).toFixed(2));
+        $("#ratio_additive2_real").prepend((obj.material_additive_2/obj.material_total *100).toFixed(2));
+        $("#ratio_additive3_real").prepend((obj.material_additive_3/obj.material_total *100).toFixed(2));
+
 
         $("#ratio_regenerate_real_up").prepend((obj.material_regenerate.toFixed(2)/obj.material_total *100).toFixed(2));
         $("#ratio_regenerate_real").prepend((obj.material_regenerate.toFixed(2)/obj.material_total *100).toFixed(2));
@@ -536,7 +641,6 @@
             success: function(msg){
                 for(var p in msg){//遍历json数组时，这么写p为索引，0,1
                     $("#" + p).prepend(msg[p]);
-
                 }
                 debugger
                 //更新状态
@@ -573,8 +677,6 @@
     }
 
     function eachMaterialList(res) {
-        debugger
-
         for (var i = 0; i < res.length;i++){
 
 

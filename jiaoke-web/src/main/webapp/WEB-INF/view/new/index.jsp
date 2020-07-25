@@ -677,6 +677,11 @@
                                     <cite>警报管理</cite></a>
                             </li>
                                 </shiro:hasPermission>
+                                <li>
+                                    <a onclick="xadmin.add_tab('警报处理','qc_warning_dispose.do',true)">
+                                        <i class="iconfont">&#xe6b2;</i>
+                                        <cite>警报处理</cite></a>
+                                </li>
                         </ul>
                     </li>
                     </shiro:hasPermission>

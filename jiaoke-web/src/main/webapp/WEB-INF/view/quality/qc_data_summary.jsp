@@ -86,17 +86,26 @@
                             <th>车号</th>
                             <th>工程名称</th>
                             <th>产品名称</th>
+                            <th>骨料10</th>
+                            <th>骨料9</th>
+                            <th>骨料8</th>
+                            <th>骨料7</th>
                             <th>骨料6</th>
                             <th>骨料5</th>
                             <th>骨料4</th>
                             <th>骨料3</th>
                             <th>骨料2</th>
                             <th>骨料1</th>
-                            <th>石粉1</th>
+                            <th>石粉4</th>
+                            <th>石粉3</th>
                             <th>石粉2</th>
+                            <th>石粉1</th>
                             <th>沥青</th>
                             <th>再生料</th>
-                            <th>添加剂</th>
+                            <th>添加剂1</th>
+                            <th>添加剂2</th>
+                            <th>添加剂3</th>
+                            <th>添加剂4</th>
                             <th>总计</th>
                             <th>一仓温度</th>
                             <th>混合料温度</th>

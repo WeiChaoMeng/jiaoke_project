@@ -51,7 +51,7 @@ function getThreeDayData() {
  * @param currentNum
  */
 function getDateByPageNum(currentNum){
-
+debugger
     var arrayStart = (currentNum - 1) * 50;
     var arrayEnd = arrayStart + 50;
     var htmlStr;
@@ -66,16 +66,25 @@ function getDateByPageNum(currentNum){
                 + "<td>" + dataArray[i].produce_car_num  + "</td>"
                 + "<td title=" + project_name + ">" + project_name  + "</td>"
                 + "<td>" + dataArray[i].pro_name  + "</td>"
+                + "<td>" + dataArray[i].material_aggregate_10  + "</td>"
+                + "<td>" + dataArray[i].material_aggregate_9  + "</td>"
+                + "<td>" + dataArray[i].material_aggregate_8  + "</td>"
+                + "<td>" + dataArray[i].material_aggregate_7  + "</td>"
                 + "<td>" + dataArray[i].material_aggregate_6  + "</td>"
                 + "<td>" + dataArray[i].material_aggregate_5  + "</td>"
                 + "<td>" + dataArray[i].material_aggregate_4  + "</td>"
                 + "<td>" + dataArray[i].material_aggregate_3  + "</td>"
                 + "<td>" + dataArray[i].material_aggregate_2  + "</td>"
                 + "<td>" + dataArray[i].material_aggregate_1  + "</td>"
-                + "<td>" + dataArray[i].material_stone_1  + "</td>"
+                + "<td>" + dataArray[i].material_stone_4  + "</td>"
+                + "<td>" + dataArray[i].material_stone_3  + "</td>"
                 + "<td>" + dataArray[i].material_stone_2  + "</td>"
+                + "<td>" + dataArray[i].material_stone_1  + "</td>"
                 + "<td>" + dataArray[i].material_asphalt  + "</td>"
                 + "<td>" + dataArray[i].material_regenerate  + "</td>"
+                + "<td>" + dataArray[i].material_additive_3  + "</td>"
+                + "<td>" + dataArray[i].material_additive_2  + "</td>"
+                + "<td>" + dataArray[i].material_additive_1  + "</td>"
                 + "<td>" + dataArray[i].material_additive  + "</td>"
                 + "<td>" + dataArray[i].material_total  + "</td>"
                 + "<td>" + dataArray[i].temperature_warehouse_1  + "</td>"
@@ -233,6 +242,7 @@ function selectPromessageByRaionModel(){
         },
         success:function (res) {
             dataArray = res;
+            debugger
             if (!(rationId === 'select')){
                 var htmlStr = '<a href="#" id="submits"  onclick="showPromessageSVG()" >更多<i class="iconfont"></i></a>';
             }
@@ -243,6 +253,10 @@ function selectPromessageByRaionModel(){
             // var proDate = "";
             var crew = "";
             var proName = "";
+            var aggregate10 = 0;
+            var aggregate9 = 0;
+            var aggregate8 = 0;
+            var aggregate7 = 0;
             var aggregate6 = 0;
             var aggregate5 = 0;
             var aggregate4 = 0;
@@ -251,9 +265,14 @@ function selectPromessageByRaionModel(){
             var aggregate1 = 0;
             var stone1 = 0;
             var stone2 = 0;
+            var stone3 = 0;
+            var stone4 = 0;
             var asphalt = 0;
             var regenerate = 0;
-            var additive = 0;
+            var additive1 = 0;
+            var additive2 = 0;
+            var additive3 = 0;
+            var additive4 = 0;
             var total = 0;
             var warehouse1 = 0;
             var mixture = 0;
@@ -264,17 +283,26 @@ function selectPromessageByRaionModel(){
             for (var i = 0; i < res.length;i++){
                 crew = res[i].crewNums === 'data1'? '机组1':'机组2';
                 proName = res[i].pro_name;
+                aggregate6 += res[i].material_aggregate_10;
+                aggregate5 += res[i].material_aggregate_9;
+                aggregate4 += res[i].material_aggregate_8;
+                aggregate3 += res[i].material_aggregate_7;
                 aggregate6 += res[i].material_aggregate_6;
                 aggregate5 += res[i].material_aggregate_5;
                 aggregate4 += res[i].material_aggregate_4;
                 aggregate3 += res[i].material_aggregate_3;
                 aggregate2 += res[i].material_aggregate_2;
                 aggregate1 += res[i].material_aggregate_1;
-                stone1 += res[i].material_stone_1;
+                stone4 += res[i].material_stone_4;
+                stone3 += res[i].material_stone_3;
                 stone2 += res[i].material_stone_2;
+                stone1 += res[i].material_stone_1;
                 asphalt += res[i].material_asphalt;
                 regenerate += res[i].material_regenerate;
-                additive += res[i].material_additive;
+                additive1 += res[i].material_additive;
+                additive2 += res[i].material_additive_1;
+                additive3 += res[i].material_additive_2;
+                additive4 += res[i].material_additive_3;
                 total += res[i].material_total;
                 warehouse1 += res[i].temperature_warehouse_1;
                 mixture += res[i].temperature_mixture;
@@ -290,17 +318,26 @@ function selectPromessageByRaionModel(){
                 + "<td>" +  " " + "</td>"
                 + "<td>" +  " " + "</td>"
                 + "<td>" +  proName + "</td>"
+                + "<td>" +( aggregate10/1000).toFixed(2) + "吨</td>"
+                + "<td>" + ( aggregate9/1000).toFixed(2)+ "吨</td>"
+                + "<td>" + ( aggregate8/1000).toFixed(2) + "吨</td>"
+                + "<td>" + ( aggregate7/1000).toFixed(2) + "吨</td>"
                 + "<td>" +( aggregate6/1000).toFixed(2) + "吨</td>"
                 + "<td>" + ( aggregate5/1000).toFixed(2)+ "吨</td>"
                 + "<td>" + ( aggregate4/1000).toFixed(2) + "吨</td>"
                 + "<td>" + ( aggregate3/1000).toFixed(2) + "吨</td>"
                 + "<td>" + ( aggregate2/1000).toFixed(2)  + "吨</td>"
                 + "<td>" + ( aggregate1/1000).toFixed(2)  + "吨</td>"
-                + "<td>" + ( stone1/1000).toFixed(2)  + "吨</td>"
-                + "<td>" + ( stone2/1000).toFixed(2) + "吨</td>"
+                + "<td>" + ( stone4/1000).toFixed(2)  + "吨</td>"
+                + "<td>" + ( stone3/1000).toFixed(2) + "吨</td>"
+                + "<td>" + ( stone2/1000).toFixed(2)  + "吨</td>"
+                + "<td>" + ( stone1/1000).toFixed(2) + "吨</td>"
                 + "<td>" + (asphalt/1000).toFixed(2)  + "吨</td>"
                 + "<td>" +  (regenerate/1000).toFixed(2) + "吨</td>"
-                + "<td>" +  (additive/1000).toFixed(2) + "吨</td>"
+                + "<td>" +  (additive1/1000).toFixed(2) + "吨</td>"
+                + "<td>" +  (additive2/1000).toFixed(2) + "吨</td>"
+                + "<td>" +  (additive3/1000).toFixed(2) + "吨</td>"
+                + "<td>" +  (additive4/1000).toFixed(2) + "吨</td>"
                 + "<td>" + (total/1000).toFixed(2)  + "吨</td>"
                 + "<td>" + ( warehouse1/res.length).toFixed(2) + "℃</td>"
                 + "<td>" +  ( mixture/res.length).toFixed(2) + "℃</td>"
@@ -317,17 +354,26 @@ function selectPromessageByRaionModel(){
                 + "<td>" +  " " + "</td>"
                 + "<td>" +  " " + "</td>"
                 + "<td>" +  proName + "</td>"
-                + "<td>" +( aggregate6/res.length/svgTotal*100).toFixed(2) + "%</td>"
+                + "<td>" +( aggregate10 /res.length/svgTotal*100).toFixed(2) + "%</td>"
+                + "<td>" +( (aggregate9 - aggregate10) /res.length/svgTotal*100).toFixed(2) + "%</td>"
+                + "<td>" +( (aggregate8 - aggregate9) /res.length/svgTotal*100).toFixed(2) + "%</td>"
+                + "<td>" +( (aggregate7 - aggregate8) /res.length/svgTotal*100).toFixed(2) + "%</td>"
+                + "<td>" +( (aggregate6 - aggregate7) /res.length/svgTotal*100).toFixed(2) + "%</td>"
                 + "<td>" + ( (aggregate5 - aggregate6) /res.length/svgTotal*100).toFixed(2)+ "%</td>"
                 + "<td>" + ( (aggregate4 - aggregate5)/res.length/svgTotal*100).toFixed(2) + "%</td>"
                 + "<td>" + (( aggregate3 - aggregate4 )/res.length/svgTotal*100).toFixed(2) + "%</td>"
                 + "<td>" + ( (aggregate2 - aggregate3) /res.length/svgTotal*100).toFixed(2)  + "%</td>"
                 + "<td>" + ( (aggregate1 - aggregate2)/res.length/svgTotal*100).toFixed(2)  + "%</td>"
-                + "<td>" + ( stone1/res.length/svgTotal*100).toFixed(2)  + "%</td>"
-                + "<td>" + ( stone2/res.length/svgTotal*100).toFixed(2) + "%</td>"
+                + "<td>" + ( stone4/res.length/svgTotal*100).toFixed(2)  + "%</td>"
+                + "<td>" + ( stone3/res.length/svgTotal*100).toFixed(2) + "%</td>"
+                + "<td>" + ( stone2/res.length/svgTotal*100).toFixed(2)  + "%</td>"
+                + "<td>" + ( stone1/res.length/svgTotal*100).toFixed(2) + "%</td>"
                 + "<td>" + ( asphalt/res.length/svgTotal*100).toFixed(2)  + "%</td>"
                 + "<td>" +  ( regenerate/res.length/svgTotal*100).toFixed(2) + "%</td>"
-                + "<td>" +  ( additive/res.length/svgTotal*100).toFixed(2) + "%</td>"
+                + "<td>" +  ( additive1/res.length/svgTotal*100).toFixed(2) + "%</td>"
+                + "<td>" +  ( additive2/res.length/svgTotal*100).toFixed(2) + "%</td>"
+                + "<td>" +  ( additive3/res.length/svgTotal*100).toFixed(2) + "%</td>"
+                + "<td>" +  ( additive4/res.length/svgTotal*100).toFixed(2) + "%</td>"
                 + "<td>" + ( total/res.length).toFixed(2)  + "</td>"
                 + "<td>" + ( warehouse1/res.length).toFixed(2) + "℃</td>"
                 + "<td>" +  ( mixture/res.length).toFixed(2) + "℃</td>"
@@ -344,17 +390,26 @@ function selectPromessageByRaionModel(){
                 + "<td>" +  " " + "</td>"
                 + "<td>" +  " " + "</td>"
                 + "<td>" +  res[0].pro_name  + "</td>"
+                + "<td>" + res[0].repertory_ten + "%</td>"
+                + "<td>" + res[0].repertory_nine + "%</td>"
+                + "<td>" +  res[0].repertory_eight + "%</td>"
+                + "<td>" + res[0].repertory_seven + "%</td>"
                 + "<td>" + res[0].repertory_six + "%</td>"
                 + "<td>" + res[0].repertory_five + "%</td>"
                 + "<td>" +  res[0].repertory_four + "%</td>"
                 + "<td>" + res[0].repertory_three + "%</td>"
                 + "<td>" +  res[0].repertory_two + "%</td>"
                 + "<td>" +  res[0].repertory_one + "%</td>"
+                + "<td>" +res[0].breeze_four + "%</td>"
+                + "<td>" +res[0].breeze_three + "%</td>"
+                + "<td>" +res[0].breeze_two + "%</td>"
                 + "<td>" +res[0].breeze + "%</td>"
-                + "<td>" + " " + "</td>"
                 + "<td>" + res[0].ratio_stone  + "%</td>"
-                + "<td>" +  Number(res[0].ratio_regenerate1) + Number(res[0].ratio_regenerate2) + "%</td>"
+                + "<td>" +  (Number(res[0].ratio_regenerate1) + Number(res[0].ratio_regenerate2) + Number(res[0].ratio_regenerate3))  + "%</td>"
                 + "<td>" +  res[0].ratio_additive + "%</td>"
+                + "<td>" +  res[0].ratio_additive_two + "%</td>"
+                + "<td>" +  res[0].ratio_additive_three + "%</td>"
+                + "<td>" +  res[0].ratio_additive_four + "%</td>"
                 + "<td>" + " "  + "</td>"
                 + "<td>" + res[0].temperature_asphalt + "℃-" + res[0].temperature_asphalt_up + "℃</td>"
                 + "<td>" + res[0].temperature_mixture + "℃-" + res[0].temperature_mixture_up + "℃</td>"

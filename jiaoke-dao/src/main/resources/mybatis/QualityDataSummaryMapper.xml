@@ -4,81 +4,99 @@
 
     <select id="selectThreeDayData" resultType="java.util.Map">
         SELECT * FROM
-        (
-        (SELECT
-        'data1' AS crewNums,
-        date_format(QMRD.produce_date,'%Y-%m-%d') as  produce_date,
-        date_format(QMRD.produce_time,'%H:%i:%S') as produce_time,
-        QMRD.produce_car_num,
-        QMRD.produce_disc_num,
-        QMRD.project_name,
-        QMRD.produce_proportioning_num,
-        QPM.pro_name,
-        QMRD.produce_custom_num,
-        QMRD.material_aggregate_6,
-        QMRD.material_aggregate_5,
-        QMRD.material_aggregate_4,
-        QMRD.material_aggregate_3,
-        QMRD.material_aggregate_2,
-        QMRD.material_aggregate_1,
-        QMRD.material_stone_1,
-        QMRD.material_stone_2,
-        QMRD.material_asphalt,
-        QMRD.material_regenerate,
-        QMRD.material_additive,
-        QMRD.material_total,
-        QMRD.temperature_warehouse_1,
-        QMRD.temperature_mixture,
-        QMRD.temperature_duster,
-        QMRD.temperature_asphalt,
-        QMRD.temperature_aggregate
-        FROM
-        quality_monitoring_realtime_data1 AS QMRD
-        INNER JOIN
-        quality_proportioning_message AS QPM
-        ON QMRD.produce_proportioning_num = QPM.crew1_modele_id
-        WHERE
-        DATE_SUB(CURDATE(), INTERVAL 2 DAY) &lt;= date(QMRD.produce_date)
-        AND YEAR(QPM.create_time) = YEAR(NOW())
-        order by QMRD.id DESC )
-        Union ALL
-        (SELECT
-        'data2' AS crewNums,
-        date_format(QMRD.produce_date,'%Y-%m-%d') as  produce_date,
-        date_format(QMRD.produce_time,'%H:%i:%S') as produce_time,
-        QMRD.produce_car_num,
-        QMRD.produce_disc_num,
-        QMRD.project_name,
-        QMRD.produce_proportioning_num,
-        QPM.pro_name,
-        QMRD.produce_custom_num,
-        QMRD.material_aggregate_6,
-        QMRD.material_aggregate_5,
-        QMRD.material_aggregate_4,
-        QMRD.material_aggregate_3,
-        QMRD.material_aggregate_2,
-        QMRD.material_aggregate_1,
-        QMRD.material_stone_1,
-        QMRD.material_stone_2,
-        QMRD.material_asphalt,
-        QMRD.material_regenerate,
-        QMRD.material_additive,
-        QMRD.material_total,
-        QMRD.temperature_warehouse_1,
-        QMRD.temperature_mixture,
-        QMRD.temperature_duster,
-        QMRD.temperature_asphalt,
-        QMRD.temperature_aggregate
-        FROM
-        quality_monitoring_realtime_data2 AS QMRD
-        INNER JOIN
-        quality_proportioning_message AS QPM
-        ON QMRD.produce_proportioning_num = QPM.crew2_modele_id
-        WHERE
-        DATE_SUB(CURDATE(), INTERVAL 2 DAY) &lt;= date(QMRD.produce_date)
-        AND YEAR(QPM.create_time) = YEAR(NOW())
-        order by QMRD.id DESC)
-        )AS T1
+                      (
+                      (SELECT
+                              'data1' AS crewNums,
+                              date_format(QMRD.produce_date,'%Y-%m-%d') as  produce_date,
+                              date_format(QMRD.produce_time,'%H:%i:%S') as produce_time,
+                              QMRD.produce_car_num,
+                              QMRD.produce_disc_num,
+                              QMRD.project_name,
+                              QMRD.produce_proportioning_num,
+                              QPM.pro_name,
+                              QMRD.produce_custom_num,
+                              QMRD.material_aggregate_10,
+                              QMRD.material_aggregate_9,
+                              QMRD.material_aggregate_8,
+                              QMRD.material_aggregate_7,
+                              QMRD.material_aggregate_6,
+                              QMRD.material_aggregate_5,
+                              QMRD.material_aggregate_4,
+                              QMRD.material_aggregate_3,
+                              QMRD.material_aggregate_2,
+                              QMRD.material_aggregate_1,
+                              QMRD.material_stone_1,
+                              QMRD.material_stone_2,
+                              QMRD.material_stone_3,
+                              QMRD.material_stone_4,
+                              QMRD.material_asphalt,
+                              QMRD.material_regenerate,
+                              QMRD.material_additive,
+                              QMRD.material_additive_1,
+                              QMRD.material_additive_2,
+                              QMRD.material_additive_3,
+                              QMRD.material_total,
+                              QMRD.temperature_warehouse_1,
+                              QMRD.temperature_mixture,
+                              QMRD.temperature_duster,
+                              QMRD.temperature_asphalt,
+                              QMRD.temperature_aggregate
+                       FROM
+                            quality_monitoring_realtime_data1 AS QMRD
+                                INNER JOIN
+                                    quality_proportioning_message AS QPM
+                                    ON QMRD.produce_proportioning_num = QPM.crew1_modele_id
+                       WHERE
+                               DATE_SUB(CURDATE(), INTERVAL 2 DAY) &lt;= date(QMRD.produce_date)
+                         AND YEAR(QPM.create_time) = YEAR(NOW())
+                       order by QMRD.id DESC )
+                      Union ALL
+                      (SELECT
+                              'data2' AS crewNums,
+                              date_format(QMRD.produce_date,'%Y-%m-%d') as  produce_date,
+                              date_format(QMRD.produce_time,'%H:%i:%S') as produce_time,
+                              QMRD.produce_car_num,
+                              QMRD.produce_disc_num,
+                              QMRD.project_name,
+                              QMRD.produce_proportioning_num,
+                              QPM.pro_name,
+                              QMRD.produce_custom_num,
+                              QMRD.material_aggregate_10,
+                              QMRD.material_aggregate_9,
+                              QMRD.material_aggregate_8,
+                              QMRD.material_aggregate_7,
+                              QMRD.material_aggregate_6,
+                              QMRD.material_aggregate_5,
+                              QMRD.material_aggregate_4,
+                              QMRD.material_aggregate_3,
+                              QMRD.material_aggregate_2,
+                              QMRD.material_aggregate_1,
+                              QMRD.material_stone_1,
+                              QMRD.material_stone_2,
+                              QMRD.material_stone_3,
+                              QMRD.material_stone_4,
+                              QMRD.material_asphalt,
+                              QMRD.material_regenerate,
+                              QMRD.material_additive,
+                              QMRD.material_additive_1,
+                              QMRD.material_additive_2,
+                              QMRD.material_additive_3,
+                              QMRD.material_total,
+                              QMRD.temperature_warehouse_1,
+                              QMRD.temperature_mixture,
+                              QMRD.temperature_duster,
+                              QMRD.temperature_asphalt,
+                              QMRD.temperature_aggregate
+                       FROM
+                            quality_monitoring_realtime_data2 AS QMRD
+                                INNER JOIN
+                                    quality_proportioning_message AS QPM
+                                    ON QMRD.produce_proportioning_num = QPM.crew2_modele_id
+                       WHERE
+                               DATE_SUB(CURDATE(), INTERVAL 2 DAY) &lt;= date(QMRD.produce_date)
+                         AND YEAR(QPM.create_time) = YEAR(NOW())
+                       order by QMRD.id DESC)
+                      )AS T1
         ORDER BY T1.produce_date DESC
     </select>
 
@@ -226,6 +244,10 @@
         QMRD.produce_proportioning_num,
         QMRD.project_name,
         QMRD.produce_custom_num,
+        QMRD.material_aggregate_10,
+        QMRD.material_aggregate_9,
+        QMRD.material_aggregate_8,
+        QMRD.material_aggregate_7,
         QMRD.material_aggregate_6,
         QMRD.material_aggregate_5,
         QMRD.material_aggregate_4,
@@ -234,9 +256,14 @@
         QMRD.material_aggregate_1,
         QMRD.material_stone_1,
         QMRD.material_stone_2,
+        QMRD.material_stone_3,
+        QMRD.material_stone_4,
         QMRD.material_asphalt,
         QMRD.material_regenerate,
         QMRD.material_additive,
+        QMRD.material_additive_1,
+        QMRD.material_additive_2,
+        QMRD.material_additive_3,
         QMRD.material_total,
         QMRD.temperature_warehouse_1,
         QMRD.temperature_mixture,
@@ -293,7 +320,6 @@
                QWPC.produce_crewNum,
                QWPC.pro_name,
                QWD.*
-
         FROM
              quality_warning_promessage_crew AS QWPC
                  INNER JOIN 	quality_warning_data AS QWD
@@ -312,6 +338,10 @@
                produce_proportioning_num,
                produce_car_num,
                produce_custom_num,
+               material_aggregate_10,
+               material_aggregate_9,
+               material_aggregate_8,
+               material_aggregate_7,
                material_aggregate_6,
                material_aggregate_5,
                material_aggregate_4,
@@ -320,9 +350,14 @@
                material_aggregate_1,
                material_stone_1,
                material_stone_2,
+               material_stone_3,
+               material_stone_4,
                material_asphalt,
                material_regenerate,
                material_additive,
+               material_additive_1,
+               material_additive_2,
+               material_additive_3,
                material_total,
                temperature_warehouse_1,
                temperature_mixture,
@@ -353,28 +388,37 @@
     </select>
     <select id="selectRationById" resultType="com.jiaoke.quality.bean.QualityRatioTemplate" >
         select
-                QPM.pro_name as proName,
-                QPM.repertory_one as repertoryOne,
-                QPM.repertory_two as repertoryTwo,
-                QPM.repertory_three as repertoryThree,
-                QPM.repertory_four as repertoryFour,
-                QPM.repertory_five as repertoryFive,
-                QPM.repertory_six as repertorySix,
-                QPM.breeze as breeze,
-                QPM.ratio_stone as ratioStone,
-                QPM.ratio_regenerate1 as ratioRegenerate1,
-                QPM.ratio_regenerate2 as ratioRegenerate2,
-                QPM.ratio_additive as ratioAdditive,
-                QPM.regenerate as regenerate,
-                QPM.additive as additive,
-                QPM.temperature_asphalt as temperatureAsphalt,
-                QPM.temperature_aggregate as temperatureAggregate,
-                QPM.temperature_mixture as temperatureMixture,
-                QPM.temperature_milling as temperatureMilling,
-                QPM.temperature_asphalt_up as temperatureAsphaltUp,
-                QPM.temperature_aggregate_up as temperatureAggregateUp,
-                QPM.temperature_mixture_up as temperatureMixtureUp,
-                QPM.temperature_milling_up as temperatureMillingUp
+        QPM.pro_name as proName,
+        QPM.repertory_one as repertoryOne,
+        QPM.repertory_two as repertoryTwo,
+        QPM.repertory_three as repertoryThree,
+        QPM.repertory_four as repertoryFour,
+        QPM.repertory_five as repertoryFive,
+        QPM.repertory_six as repertorySix,
+        QPM.repertory_seven as repertorySeven,
+        QPM.repertory_eight as repertoryEight,
+        QPM.repertory_nine as repertoryNine,
+        QPM.repertory_ten as repertoryTen,
+        QPM.breeze as breeze,
+        QPM.breeze_two as breezeTwo,
+        QPM.breeze_three as breezeThree,
+        QPM.breeze_four as breezeFour,
+        QPM.ratio_stone as ratioStone,
+        QPM.ratio_regenerate1 as ratioRegenerate1,
+        QPM.ratio_regenerate3 as ratioRegenerate3,
+        QPM.ratio_regenerate2 as ratioRegenerate2,
+        QPM.ratio_additive as ratioAdditive,
+        QPM.ratio_additive_two as ratioAdditive1,
+        QPM.ratio_additive_three as ratioAdditive2,
+        QPM.ratio_additive_four as ratioAdditive3,
+        QPM.temperature_asphalt as temperatureAsphalt,
+        QPM.temperature_aggregate as temperatureAggregate,
+        QPM.temperature_mixture as temperatureMixture,
+        QPM.temperature_milling as temperatureMilling,
+        QPM.temperature_asphalt_up as temperatureAsphaltUp,
+        QPM.temperature_aggregate_up as temperatureAggregateUp,
+        QPM.temperature_mixture_up as temperatureMixtureUp,
+        QPM.temperature_milling_up as temperatureMillingUp
         from quality_proportioning_message as QPM
         <if test="crewNum == 1">
             where crew1_modele_id = #{ratioNum}
@@ -418,6 +462,10 @@
         QMRD.produce_proportioning_num,
         QMRD.produce_car_num,
         QMRD.produce_custom_num,
+        QMRD.material_aggregate_10,
+        QMRD.material_aggregate_9,
+        QMRD.material_aggregate_8,
+        QMRD.material_aggregate_7,
         QMRD.material_aggregate_6,
         QMRD.material_aggregate_5,
         QMRD.material_aggregate_4,
@@ -426,9 +474,14 @@
         QMRD.material_aggregate_1,
         QMRD.material_stone_1,
         QMRD.material_stone_2,
+        QMRD.material_stone_3,
+        QMRD.material_stone_4,
         QMRD.material_asphalt,
         QMRD.material_regenerate,
         QMRD.material_additive,
+        QMRD.material_additive_1,
+        QMRD.material_additive_2,
+        QMRD.material_additive_3,
         QMRD.material_total,
         QMRD.temperature_warehouse_1,
         QMRD.temperature_mixture,
@@ -628,6 +681,10 @@
         QMRD.produce_proportioning_num,
         QMRD.produce_car_num,
         QMRD.produce_custom_num,
+        QMRD.material_aggregate_10,
+        QMRD.material_aggregate_9,
+        QMRD.material_aggregate_8,
+        QMRD.material_aggregate_7,
         QMRD.material_aggregate_6,
         QMRD.material_aggregate_5,
         QMRD.material_aggregate_4,
@@ -636,9 +693,14 @@
         QMRD.material_aggregate_1,
         QMRD.material_stone_1,
         QMRD.material_stone_2,
+        QMRD.material_stone_3,
+        QMRD.material_stone_4,
         QMRD.material_asphalt,
         QMRD.material_regenerate,
         QMRD.material_additive,
+        QMRD.material_additive_1,
+        QMRD.material_additive_2,
+        QMRD.material_additive_3,
         QMRD.material_total,
         QMRD.temperature_warehouse_1,
         QMRD.temperature_mixture,
@@ -670,6 +732,10 @@
         QMRD.produce_proportioning_num,
         QMRD.produce_car_num,
         QMRD.produce_custom_num,
+        QMRD.material_aggregate_10,
+        QMRD.material_aggregate_9,
+        QMRD.material_aggregate_8,
+        QMRD.material_aggregate_7,
         QMRD.material_aggregate_6,
         QMRD.material_aggregate_5,
         QMRD.material_aggregate_4,
@@ -678,9 +744,14 @@
         QMRD.material_aggregate_1,
         QMRD.material_stone_1,
         QMRD.material_stone_2,
+        QMRD.material_stone_3,
+        QMRD.material_stone_4,
         QMRD.material_asphalt,
         QMRD.material_regenerate,
         QMRD.material_additive,
+        QMRD.material_additive_1,
+        QMRD.material_additive_2,
+        QMRD.material_additive_3,
         QMRD.material_total,
         QMRD.temperature_warehouse_1,
         QMRD.temperature_mixture,

@@ -70,15 +70,14 @@
                     <th style="width: 70px">骨料4</th>
                     <th style="width: 70px">骨料5</th>
                     <th style="width: 70px">骨料6</th>
-                    <th style="width: 70px ">石粉2</th>
-                    <th style="width: 70px ">石粉1</th>
-                    <th style="width: 70px;color: #a94442; ">沥青</th>
-                    <th style="width: 70px ">再生料</th>
-                    <th style="width: 70px ">添加剂</th>
+                    <th style="width: 70px">骨料7</th>
+                    <th style="width: 70px">骨料8</th>
+                    <th style="width: 70px">骨料9</th>
+                    <th style="width: 70px">骨料10</th>
+                    <th style="width: 70px ">沥青</th>
                     <th style="width: 100px">合计(kg)</th>
                    
                 </thead>
-                
                 <tbody>
                     <tr></tr>
                     <tr>
@@ -89,50 +88,78 @@
                         <td>${product.proBase.material_aggregate_3 - product.proBase.material_aggregate_4}<i>kg</i></td>
                         <td>${product.proBase.material_aggregate_4 - product.proBase.material_aggregate_5}<i>kg</i></td>
                         <td>${product.proBase.material_aggregate_5 - product.proBase.material_aggregate_6}<i>kg</i></td>
-                        <td>${product.proBase.material_aggregate_6}<i>kg</i></td>
-                        <td>${product.proBase.material_stone_1}<i>kg</i></td>
-                        <td>${product.proBase.material_stone_2}<i>kg</i></td>
+                        <td>${product.proBase.material_aggregate_6 - product.proBase.material_aggregate_7}<i>kg</i></td>
+                        <td>${product.proBase.material_aggregate_7 - product.proBase.material_aggregate_8}<i>kg</i></td>
+                        <td>${product.proBase.material_aggregate_8 - product.proBase.material_aggregate_9}<i>kg</i></td>
+                        <td>${product.proBase.material_aggregate_9 - product.proBase.material_aggregate_10}<i>kg</i></td>
+                        <td>${product.proBase.material_aggregate_10}<i>kg</i></td>
                         <td style="color: #a94442;" >${product.proBase.material_asphalt}<i>kg</i></td>
-                        <td>${product.proBase.material_regenerate}<i>kg</i></td>
-                        <td>${product.proBase.material_additive}<i>kg</i></td>
                         <td>${product.proBase.material_total}<i>kg</i></td>
                     </tr>
                 
                 </tbody>
                 <thead>
-                    <th style="width: 100px;color: #a94442; ">1仓温度</th>
-                    <th style="width: 100px ">混合料温度</th>
-                    <th style="width: 100px ">除尘器入口温度</th>
-                    <th style="width: 100px ">沥青温度</th>
-                    <th style="width: 100px ">再生料温度</th>
+                <th style="width: 70px ">石粉4</th>
+                <th style="width: 70px ">石粉3</th>
+                <th style="width: 70px ">石粉2</th>
+                <th style="width: 70px ">石粉1</th>
+                <th style="width: 70px ">再生料</th>
+                <th style="width: 70px ">添加剂1</th>
+                <th style="width: 70px ">添加剂2</th>
+                <th style="width: 70px ">添加剂3</th>
+                <th style="width: 70px ">添加剂4</th>
+                <th style="width: 100px">骨料温度</th>
+                <th style="width: 100px">混合料温度</th>
+                <th style="width: 100px">除尘器温度</th>
+                <th style="width: 100px">沥青温度</th>
+                </thead>
+                <tbody>
+                <tr></tr>
+                <tr>
+                    <td>${product.proBase.material_stone_4}<i>kg</i></td>
+                    <td>${product.proBase.material_stone_3 > 0? product.proBase.material_stone_3 - product.proBase.material_stone_4:0 }<i>kg</i></td>
+                    <td>${product.proBase.material_stone_2 > 0? product.proBase.material_stone_2 - product.proBase.material_stone_3:0 }<i>kg</i></td>
+                    <td>${product.proBase.material_stone_1 > 0? product.proBase.material_stone_1 - product.proBase.material_stone_2:0 }<i>kg</i></td>
+                    <td>${product.proBase.material_regenerate}<i>kg</i></td>
+                    <td>${product.proBase.material_additive}<i>kg</i></td>
+                    <td>${product.proBase.material_additive_1}<i>kg</i></td>
+                    <td>${product.proBase.material_additive_2}<i>kg</i></td>
+                    <td>${product.proBase.material_additive_3}<i>kg</i></td>
+                    <td>${product.proBase.temperature_aggregate}<i>℃</i></td>
+                    <td>${product.proBase.temperature_mixture}<i>℃</i></td>
+                    <td>${product.proBase.temperature_duster}<i>℃</i></td>
+                    <td>${product.proBase.temperature_asphalt}<i>℃</i></td>
+                </tr>
+                </tbody>
+                <thead>
                     <th style="width: 100px;color: #a94442; ">骨料1比例</th>
                     <th style="width: 100px ">骨料2比例</th>
                     <th style="width: 100px ">骨料3比例</th>
                     <th style="width: 100px ">骨料4比例</th>
                     <th style="width: 100px ">骨料5比例</th>
                     <th style="width: 100px ">骨料6比例</th>
-                    <th style="width: 100px ">矿料1比例</th>
+                    <th style="width: 100px ">骨料7比例</th>
+                    <th style="width: 100px ">骨料8比例</th>
+                    <th style="width: 100px ">骨料9比例</th>
+                    <th style="width: 100px ">骨料10比例</th>
                     <th style="width: 100px;color: #a94442;  ">沥青占比</th>
                     <th style="width: 100px ">再生料占比</th>
                 </thead>
                 <tbody>
-                    <td style="color: #a94442;" >${product.proBase.temperature_warehouse_1}<i>℃</i></td>
-                    <td>${product.proBase.temperature_mixture}<i>℃</i></td>
-                    <td>${product.proBase.temperature_duster}<i>℃</i></td>
-                    <td>${product.proBase.temperature_asphalt}<i>℃</i></td>
-                    <td>${product.proBase.temperature_aggregate}<i>℃</i></td>
                     <td style="color: #a94442;" id="one">0</td>
                     <td id="two" >0</td>
                     <td id="three" >0</td>
                     <td id="four" >0</td>
                     <td id="five" >0</td>
                     <td id="six" >0</td>
-                    <td id="k" >0</td>
+                    <td id="seven" >0</td>
+                    <td id="eight" >0</td>
+                    <td id="nine" >0</td>
+                    <td id="ten" >0</td>
                     <td style="color: #a94442;"  id="l" >0</td>
                     <td id="z" >0</td>
                     <c:forEach items="${product.proMessage}" var="item">
                         <script type="text/javascript">
-
                                 switch ('${item.material_name}') {
                                     case '骨料1' :
                                         $('#one').empty().append(${item.actual_ratio} + "<i>%</i>");
@@ -152,8 +179,17 @@
                                     case '骨料6' :
                                         $('#six').empty().append(${item.actual_ratio}  + "<i>%</i>");
                                         break;
-                                    case '矿粉' :
-                                        $('#k').empty().append(${item.actual_ratio}  + "<i>%</i>");
+                                    case '骨料7' :
+                                        $('#seven').empty().append(${item.actual_ratio}  + "<i>%</i>");
+                                        break;
+                                    case '骨料8' :
+                                        $('#eight').empty().append(${item.actual_ratio}  + "<i>%</i>");
+                                        break;
+                                    case '骨料9' :
+                                        $('#nine').empty().append(${item.actual_ratio}  + "<i>%</i>");
+                                        break;
+                                    case '骨料10' :
+                                        $('#ten').empty().append(${item.actual_ratio}  + "<i>%</i>");
                                         break;
                                     case '沥青' :
                                         $('#l').empty().append(${item.actual_ratio}  + "<i>%</i>");
@@ -166,37 +202,91 @@
                     </c:forEach>
                 </tbody>
                 <thead>
-                <th style="width: 100px ">1仓模板温度</th>
+                <th style="width: 100px;color: #a94442; ">矿料1比例</th>
+                <th style="width: 100px ">矿料2比例</th>
+                <th style="width: 100px ">矿料3比例</th>
+                <th style="width: 100px ">矿料4比例</th>
+                <th style="width: 100px ">添加剂1比例</th>
+                <th style="width: 100px ">添加剂2比例</th>
+                <th style="width: 100px ">添加剂3比例</th>
+                <th style="width: 100px;color: #a94442;  ">添加剂4比例</th>
                 <th style="width: 100px ">混合料模板温度</th>
                 <th style="width: 100px ">除尘器模板温度</th>
                 <th style="width: 100px ">沥青模板温度</th>
                 <th style="width: 100px ">再生料模板温度</th>
+                </thead>
+                <tbody>
+                <td style="color: #a94442;" id="one">0</td>
+                <td id="two" >0</td>
+                <td id="three" >0</td>
+                <td id="four" >0</td>
+                <td id="add1" >0</td>
+                <td id="add2" >0</td>
+                <td id="add3" >0</td>
+                <td style="color: #a94442;"  id="add4" >0</td>
+                <c:forEach items="${product.proMessage}" var="item">
+                    <script type="text/javascript">
+                        switch ('${item.material_name}') {
+                            case '矿粉1' :
+                                $('#one').empty().append(${item.actual_ratio} + "<i>%</i>");
+                                break;
+                            case '矿粉2' :
+                                $('#two').empty().append(${item.actual_ratio} + "<i>%</i>");
+                                break;
+                            case '矿粉3' :
+                                $('#three').empty().append(${item.actual_ratio}  + "<i>%</i>");
+                                break;
+                            case '矿粉4' :
+                                $('#four').empty().append(${item.actual_ratio}  + "<i>%</i>");
+                                break;
+                            case '添加剂1' :
+                                $('#add1').empty().append(${item.actual_ratio}  + "<i>%</i>");
+                                break;
+                            case '添加剂2' :
+                                $('#add2').empty().append(${item.actual_ratio}  + "<i>%</i>");
+                                break;
+                            case '添加剂3' :
+                                $('#add3').empty().append(${item.actual_ratio}  + "<i>%</i>");
+                                break;
+                            case '添加剂4' :
+                                $('#add4').empty().append(${item.actual_ratio}  + "<i>%</i>");
+                                break;
+                        }
+                    </script>
+                </c:forEach>
+                <td id="hhModel">${product.modelMessage.temperatureMixture} - ${product.modelMessage.temperatureMixtureUp}</td>
+                <td id="ccqModel">${product.modelMessage.temperatureMilling} - ${product.modelMessage.temperatureMillingUp}</td>
+                <td id="lqModel">${product.modelMessage.temperatureAsphalt} - ${product.modelMessage.temperatureAsphaltUp}</td>
+                <td id="zslModel">${product.modelMessage.temperatureMilling} - ${product.modelMessage.temperatureMillingUp}</td>
+                </tbody>
+                <thead>
+
                 <th style="width: 100px ">骨料1模板比例</th>
                 <th style="width: 100px ">骨料2模板比例</th>
                 <th style="width: 100px ">骨料3模板比例</th>
                 <th style="width: 100px ">骨料4模板比例</th>
                 <th style="width: 100px ">骨料5模板比例</th>
                 <th style="width: 100px ">骨料6模板比例</th>
-                <th style="width: 100px ">矿料1模板比例</th>
+                <th style="width: 100px ">骨料7模板比例</th>
+                <th style="width: 100px ">骨料8模板比例</th>
+                <th style="width: 100px ">骨料9模板比例</th>
+                <th style="width: 100px ">骨料10模板比例</th>
                 <th style="width: 100px ">沥青模板占比</th>
                 <th style="width: 100px ">再生料模板占比</th>
                 </thead>
                 <tbody>
-                <td id="1cModel">${product.modelMessage.temperatureAggregate} - ${product.modelMessage.temperatureAggregateUp}</td>
-                <td id="hhModel">${product.modelMessage.temperatureMixture} - ${product.modelMessage.temperatureMixtureUp}</td>
-                <td id="ccqModel">${product.modelMessage.temperatureMilling} - ${product.modelMessage.temperatureMillingUp}</td>
-                <td id="lqModel">${product.modelMessage.temperatureAsphalt} - ${product.modelMessage.temperatureAsphaltUp}</td>
-                <td id="zslModel">${product.modelMessage.temperatureMilling} - ${product.modelMessage.temperatureMillingUp}</td>
                 <td id="oneModel">0<i>%</i></td>
                 <td id="twoModel" >0<i>%</i></td>
                 <td id="threeModel" >0<i>%</i></td>
                 <td id="fourModel" >0<i>%</i></td>
                 <td id="fiveModel" >0<i>%</i></td>
                 <td id="sixModel" >0<i>%</i></td>
-                <td id="kModel" >0<i>%</i></td>
+                <td id="sevenModel" >0<i>%</i></td>
+                <td id="eightModel" >0<i>%</i></td>
+                <td id="nineModel" >0<i>%</i></td>
+                <td id="tenModel" >0<i>%</i></td>
                 <td id="lModel" >0<i>%</i></td>
                 <td id="zModel" >0<i>%</i></td>
-
 
                 <c:forEach items="${product.proMessage}" var="items">
                     <script type="text/javascript">
@@ -220,14 +310,76 @@
                             case '骨料6' :
                                 $('#sixModel').empty().append(${items.moudle_ratio}   + "<i>%</i>");
                                 break;
-                            case '矿粉' :
-                                $('#kModel').empty().append(${items.moudle_ratio}   + "<i>%</i>");
+                            case '骨料7' :
+                                $('#sevenModel').empty().append(${items.moudle_ratio}   + "<i>%</i>");
+                                break;
+                            case '骨料8' :
+                                $('#eightModel').empty().append(${items.moudle_ratio}   + "<i>%</i>");
+                                break;
+                            case '骨料9' :
+                                $('#nineModel').empty().append(${items.moudle_ratio}   + "<i>%</i>");
+                                break;
+                            case '骨料10' :
+                                $('#tenModel').empty().append(${items.moudle_ratio}   + "<i>%</i>");
                                 break;
                             case '沥青' :
                                 $('#lModel').empty().append(${items.moudle_ratio}   + "<i>%</i>");
                                 break;
                             case '再生料' :
                                 $('#zModel').empty().append(${items.moudle_ratio}   + "<i>%</i>");
+                                break;
+                        }
+                    </script>
+                </c:forEach>
+                </tbody>
+
+                <thead>
+                <th style="width: 100px ">矿料1模板比例</th>
+                <th style="width: 100px ">矿料2模板比例</th>
+                <th style="width: 100px ">矿料3模板比例</th>
+                <th style="width: 100px ">矿料4模板比例</th>
+                <th style="width: 100px ">添加剂1模板比例</th>
+                <th style="width: 100px ">添加剂2模板比例</th>
+                <th style="width: 100px ">添加剂3模板比例</th>
+                <th style="width: 100px ">添加剂4模板比例</th>
+                </thead>
+                <tbody>
+                <td id="oneModel">0<i>%</i></td>
+                <td id="twoModel" >0<i>%</i></td>
+                <td id="threeModel" >0<i>%</i></td>
+                <td id="fourModel" >0<i>%</i></td>
+                <td id="addOneModel" >0<i>%</i></td>
+                <td id="addTwoModel" >0<i>%</i></td>
+                <td id="addThreeModel" >0<i>%</i></td>
+                <td id="addFourModel" >0<i>%</i></td>
+
+                <c:forEach items="${product.proMessage}" var="items">
+                    <script type="text/javascript">
+
+                        switch ('${items.material_name}') {
+                            case '矿料1' :
+                                $('#oneModel').empty().append(${items.moudle_ratio}   + "<i>%</i>");
+                                break;
+                            case '矿料2' :
+                                $('#twoModel').empty().append(${items.moudle_ratio}   + "<i>%</i>");
+                                break;
+                            case '矿料3' :
+                                $('#threeModel').empty().append(${items.moudle_ratio}   + "<i>%</i>");
+                                break;
+                            case '矿料4' :
+                                $('#fourModel').empty().append(${items.moudle_ratio}   + "<i>%</i>");
+                                break;
+                            case '添加剂1' :
+                                $('#addOneModel').empty().append(${items.moudle_ratio}   + "<i>%</i>");
+                                break;
+                            case '添加剂2' :
+                                $('#addTwoModel').empty().append(${items.moudle_ratio}   + "<i>%</i>");
+                                break;
+                            case '添加剂3' :
+                                $('#addThreeModel').empty().append(${items.moudle_ratio}   + "<i>%</i>");
+                                break;
+                            case '添加剂4' :
+                                $('#addFourModel').empty().append(${items.moudle_ratio}   + "<i>%</i>");
                                 break;
                         }
                     </script>

@@ -106,6 +106,8 @@ public class QualityController {
     @Resource
     private QualityLeadingCockpitInf qualityLeadingCockpitInf;
     @Resource
+    private QualityWarningDisposeInf qualityWarningDisposeInf;
+    @Resource
     private AmqpTemplate amqpTemplate;
 
     /**
@@ -2926,6 +2928,64 @@ public class QualityController {
     }
     /********************************  关键预警数据 End *****************************************/
 
+    /********************************  警报处理 start *****************************************/
+    @RequestMapping("/qc_warning_dispose.do")
+    public String warningDispose(){
+        return "quality/qc_warning_dispose";
+    }
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <警报处理 查询本日两个机组各产品类型各级预警数量>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/7/21 9:23
+     */
+    @ResponseBody
+    @RequestMapping("/getTwoCrewPro.do")
+    public String getTwoCrewPro(){
+        String res = qualityWarningDisposeInf.getTwoCrewPro();
+        return res;
+    }
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期配比获取三级预警的产品>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/7/23 14:18
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getProDataByRation.do",method = RequestMethod.POST)
+    public String getProDataByRation(@RequestParam("proDate") String proDate,@RequestParam("rationNum") String rationNum,@RequestParam("crewNum") String crewNum){
+        String res = qualityWarningDisposeInf.getProDataByRation(proDate,rationNum,crewNum);
+        return res;
+    }
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <更新报警数据说明>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/7/23 14:18
+     */
+    @ResponseBody
+    @RequestMapping(value = "/addProductWarningMsg.do",method = RequestMethod.POST)
+    public String addProductWarningMsg(@RequestParam("proMsg") String proMsg,@RequestParam("idArr") String idArr){
+        List<String> list = new ArrayList<>();
+        String[] split = idArr.split(",");
+        for (int i = 0;i < split.length;i++){
+            list.add(split[i]);
+        }
+        String res = qualityWarningDisposeInf.addProductWarningMsg(proMsg,list);
+        return res;
+    }
+    /********************************  警报处理 End *****************************************/
 
     /*********************************移动端数据管理start***************************************/
     /**
