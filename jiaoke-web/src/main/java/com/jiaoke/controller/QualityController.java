@@ -10,11 +10,11 @@ package com.jiaoke.controller;
 
 import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSON;
+import com.jiake.utils.DateUtil;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.QualityMatchingUtil;
 import com.jiaoke.common.bean.PageBean;
 import com.jiaoke.controller.oa.ActivitiUtil;
-import com.jiaoke.controller.oa.TargetFlowNodeCommand;
 import com.jiaoke.oa.bean.Comments;
 import com.jiaoke.oa.bean.Permission;
 import com.jiaoke.oa.bean.UserInfo;
@@ -23,14 +23,13 @@ import com.jiaoke.oa.service.UserInfoService;
 import com.jiaoke.quality.bean.QualityDataManagerDay;
 import com.jiaoke.quality.bean.QualityProjectItem;
 import com.jiaoke.quality.bean.QualityRatioModel;
-import com.jiaoke.quality.bean.QualityRatioTemplate;
 import com.jiaoke.quality.service.*;
 import org.activiti.bpmn.model.UserTask;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.ManagementService;
 import org.activiti.engine.TaskService;
-import org.activiti.engine.impl.identity.Authentication;
 import org.activiti.engine.task.Task;
+import org.apache.ibatis.annotations.Param;
 import org.apache.logging.log4j.util.Strings;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.amqp.core.AmqpTemplate;
@@ -372,13 +371,9 @@ public class QualityController {
             if (null == pageBean) {return null;}
 
 
-            //获取再生料以及添加剂类型
-            List<Map<String,String>> listAdditive = qualityMatchingInf.selectAdditiveTypeList();
-            List<Map<String,String>> listRegenerate = qualityMatchingInf.selectRegenerateTypeList();
+
 
             //添加到域对象内
-            request.setAttribute("listAdditive",listAdditive);
-            request.setAttribute("listRegenerate",listRegenerate);
             request.setAttribute("pageBean",pageBean);
         }catch (Exception e){
             e.printStackTrace();
@@ -2979,6 +2974,7 @@ public class QualityController {
     public String addProductWarningMsg(@RequestParam("proMsg") String proMsg,@RequestParam("idArr") String idArr){
         List<String> list = new ArrayList<>();
         String[] split = idArr.split(",");
+
         for (int i = 0;i < split.length;i++){
             list.add(split[i]);
         }
@@ -3207,6 +3203,44 @@ public class QualityController {
             e.printStackTrace();
         }
         return res;
+    }
+    @ResponseBody
+    @RequestMapping("/selectAllProduct.do")
+    public String selectAllProduct(){
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.selectAllProduct();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getDataManagerRationByDate.do",method = RequestMethod.POST)
+    public String getDataManagerRationByDate(@Param("produceDate") String produceDate,@Param("crewNum")  String crewNum){
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.getDataManagerRationByDate(produceDate,crewNum);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getProductMsgByDate.do",method = RequestMethod.POST)
+    public String getProductMsgByDate(@Param("produceDate") String produceDate,@Param("crewNum")  String crewNum,@Param("rationNum")  String rationNum){
+
+        if (produceDate.isEmpty() || crewNum.isEmpty() || rationNum.isEmpty()) {return null;}
+        Map<String,Object> prolist = new HashMap<>();
+        try{
+            prolist = qualityDataManagerInf.selectProListByRatioNumAndDate(rationNum,crewNum,produceDate);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return JSON.toJSONString(prolist);
     }
     /*********************************移动端数据管理end***************************************/
 

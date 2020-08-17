@@ -65,7 +65,7 @@
 
         SELECT
                QR.produce_proportioning_num,
-               QM.pro_name
+               QM.*
         FROM
              quality_monitoring_realtime_${crewNum} AS QR
                  INNER JOIN
@@ -429,5 +429,54 @@
           AND YEAR(QPM.create_time) = YEAR(&apos;${date}&apos;)
         GROUP BY QMRD.produce_proportioning_num
 
+    </select>
+    <select id="selectAllProduceByDate" resultType="java.util.Map">
+                SELECT
+                <choose>
+                    <when test="crew == 'data1'">
+                        'crew1' AS crewNum,
+                    </when>
+                    <otherwise>
+                        'crew2' AS crewNum,
+                    </otherwise>
+                </choose>
+               `Id`,
+               DATE_FORMAT(produce_date,'%Y-%m-%d') AS produce_date,
+               `produce_time`,
+               `produce_disc_num`,
+               `produce_proportioning_num`,
+               `project_name`,
+               `produce_car_num`,
+               `produce_custom_num`,
+               `material_aggregate_10`,
+               `material_aggregate_9`,
+               `material_aggregate_8`,
+               `material_aggregate_7`,
+               `material_aggregate_6`,
+               `material_aggregate_5`,
+               `material_aggregate_4`,
+               `material_aggregate_3`,
+               `material_aggregate_2`,
+               `material_aggregate_1`,
+               `material_stone_1`,
+               `material_stone_2`,
+               `material_stone_3`,
+               `material_stone_4`,
+               `material_asphalt`,
+               `material_regenerate`,
+               `material_additive`,
+               `material_additive_1`,
+               `material_additive_2`,
+               `material_additive_3`,
+               `material_total`,
+               `temperature_warehouse_1`,
+               `temperature_mixture`,
+               `temperature_duster`,
+               `temperature_asphalt`,
+               `temperature_aggregate`
+        FROM
+             quality_monitoring_realtime_${crew}
+        WHERE
+                produce_date = &apos;${date}&apos;
     </select>
 </mapper>

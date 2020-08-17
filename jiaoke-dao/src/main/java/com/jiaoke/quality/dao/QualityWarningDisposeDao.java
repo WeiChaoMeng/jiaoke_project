@@ -52,5 +52,5 @@ public interface QualityWarningDisposeDao {
      * @auther Melone
      * @date 2020/7/23 9:36
      */
-    int insertProductWarningMsg(@Param("proMsg") String proMsg, @Param("idList") List<String> idList);
+    int insertProductWarningMsg(@Param("proMsg") String proMsg,@Param("upUser") String upUser,@Param("upTime") String upTime, @Param("idList") List<String> idList);
 }

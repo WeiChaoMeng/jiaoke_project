@@ -87,7 +87,6 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
     @Override
     public Map<String, Object> selectProducttionByDate(String producedDate, String crewNum, HttpServletRequest request) {
 
-        long startTime = System.currentTimeMillis();
 
         if (Strings.isBlank(producedDate) || Strings.isBlank(crewNum) ) {return null;}
 
@@ -97,197 +96,181 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
         //待返回集合
         Map<String,Object> map = new HashMap<>();
 
-        long DBstartTime = System.currentTimeMillis();
         //当天使用的模板集合
-        List<Map<String,Object>> ratioNumList  = qualityDataManagerDao.selectRatioNumListByDate(date,crew);
-//        if (ratioNumList == null || ratioNumList.size() == 0)
+        List<Map<String,String>> ratioNumList  = qualityDataManagerDao.selectRatioNumListByDate(date,crew);
+
         //获取当天使用模板的模板数据
         List<QualityRatioTemplate> rationMessageList =  qualityDataManagerDao.selectRatioMessageById(crewNum,ratioNumList,date);
         //当天每种模板产品各材料总和
-        List<Map<String,String>> list =  qualityDataManagerDao.selectProducedSVG(date,crew);
-        long SEstartTime = System.currentTimeMillis();
-        //获取当天所有产品
+        List<Map<String,String>> list =  new ArrayList<>();
+        //获取当天每种产品七条产品
         List<Map<String,String>> producedList = qualityDataManagerDao.selectProduceByDate(date,crew);
-        long SEendTime = System.currentTimeMillis();
-        System.out.println("程序运行时间：" + (SEendTime - SEstartTime) + "ms");
         //获取每种模板下所有产品平均的实际百分比
         List<Map<String,String>> SVGList = new ArrayList<Map<String, String>>();
-
         //获取客户指定日期内产品的基本信息
         List<Map<String,String>> userProList = qualityDataManagerDao.selectProduceMessageByDate(date,crew);
         //根据日期获取客户各客户生产总量
         List<Map<String,String>> userProTotal =qualityDataManagerDao.selectUserProTotalByDate(date,crew);
-        long DBendTime = System.currentTimeMillis();
-        System.out.println("数据库查询运行时间：" + (DBendTime - DBstartTime) + "ms");
-        //计算平均值
-        String[] array1 = {"rationNum","procount"};
-        String[] array2 = {"total","warehouse_1","mixture","duster","temAsphalt","aggregate"};
-        DecimalFormat df = new DecimalFormat("0.00");
+        //查询当天每种数据平均值(高改为 矿粉 每盘计算)
+        List<Map<String,String>> avgList =  new ArrayList<>();
+        //查询当日所有生产数据
+        List<Map<String,String>> proList = qualityDataManagerDao.selectAllProduceByDate(date,crew);
+        List<Map<String,String>> totalList = QualityGradingUtil.returnGradingTotalList(proList);
 
 
+        for (int i = 0; i < ratioNumList.size();i++){
+           String rationNum = String.valueOf(ratioNumList.get(i).get("produce_proportioning_num"));
+           //取出各材料总量
+            double aggregate10 = 0.00;
+            double aggregate9 = 0.00;
+            double aggregate8 = 0.00;
+            double aggregate7 = 0.00;
+            double aggregate6 = 0.00;
+            double aggregate5 = 0.00;
+            double aggregate4 = 0.00;
+            double aggregate3 = 0.00;
+            double aggregate2 = 0.00;
+            double aggregate1 = 0.00;
+            double stone1 = 0.00;
+            double stone2 = 0.00;
+            double stone3 = 0.00;
+            double stone4 = 0.00;
+            double asphalt = 0.00;
+            double regenerate = 0.00;
+            double additive = 0.00;
+            double additive1 = 0.00;
+            double additive2 = 0.00;
+            double additive3 = 0.00;
+            double total = 0.00;
+            double warehouse1Tem = 0.00;
+            double mixtureTem = 0.00;
+            double dusterTem = 0.00;
+            double asphaltTem = 0.00;
+            double aggregateTem = 0.00;
+            int count = 0;
 
-        for (int i = 0; i < list.size();i++){
-
-            SVGList.add(new HashMap<>());
-            String total = String.valueOf(list.get(i).get("total"));
-            String count = String.valueOf(list.get(i).get("procount"));
-
-
-            Iterator<Map.Entry<String, String>> entries = list.get(i).entrySet().iterator();
-            while (entries.hasNext()){
-                Map.Entry entry = (Map.Entry) entries.next();
-                String key = String.valueOf(entry.getKey());
-                String value = String.valueOf(entry.getValue());
-
-                if (QualityDataMontoringUtil.judgeKeyInArray(key,array1)) {
-                    SVGList.get(i).put(key,value);
-                    continue;
-                };
-
-                //温度、总量不需要百分比
-                if (QualityDataMontoringUtil.judgeKeyInArray(key,array2)){
-                    String  temSVG =  QualityDataMontoringUtil.calculateSVG(count,value);
-                    SVGList.get(i).put(key,temSVG);
-                }else {
-                    //获取平均值后计算百分比
-                    String  materialsSVG =  QualityDataMontoringUtil.calculateSVG(count,total,value);
-                    SVGList.get(i).put(key,materialsSVG);
-
-                    switch (key){
-                        case "aggregate_1":
-                            Object obj1 = list.get(i).get("aggregate_2");
-                            double  temp1 = Double.parseDouble(value) - Double.parseDouble(obj1.toString());
-                            materialsSVG =  QualityDataMontoringUtil.calculateSVG(count,total,String.valueOf(temp1));
-                            SVGList.get(i).put(key,materialsSVG);
-                            break;
-                        case "aggregate_2":
-                            Object obj2 = list.get(i).get("aggregate_3");
-                            double  temp2 = Double.parseDouble(value) - Double.parseDouble(obj2.toString());
-                            materialsSVG =  QualityDataMontoringUtil.calculateSVG(count,total,String.valueOf(temp2));
-                            SVGList.get(i).put(key,materialsSVG);
-                            break;
-                        case "aggregate_3":
-                            Object obj3 = list.get(i).get("aggregate_4");
-                            double  temp3 = Double.parseDouble(value) - Double.parseDouble(obj3.toString());
-                            materialsSVG =  QualityDataMontoringUtil.calculateSVG(count,total,String.valueOf(temp3));
-                            SVGList.get(i).put(key,materialsSVG);
-                            break;
-                        case "aggregate_4":
-                            Object obj4 = list.get(i).get("aggregate_5");
-                            double  temp4 = Double.parseDouble(value) - Double.parseDouble(obj4.toString());
-                            materialsSVG =  QualityDataMontoringUtil.calculateSVG(count,total,String.valueOf(temp4));
-                            SVGList.get(i).put(key,materialsSVG);
-                            break;
-                        case "aggregate_5":
-                            Object obj5 = list.get(i).get("aggregate_6");
-                            double  temp5 = Double.parseDouble(value) - Double.parseDouble(obj5.toString());
-                            materialsSVG =  QualityDataMontoringUtil.calculateSVG(count,total,String.valueOf(temp5));
-                            SVGList.get(i).put(key,materialsSVG);
-                            break;
-                        case "aggregate_6":
-                            Object obj6 = list.get(i).get("aggregate_7");
-                            double  temp6 = Double.parseDouble(value) - Double.parseDouble(obj6.toString());
-                            materialsSVG =  QualityDataMontoringUtil.calculateSVG(count,total,String.valueOf(temp6));
-                            SVGList.get(i).put(key,materialsSVG);
-                            break;
-                        case "aggregate_7":
-                            Object obj7 = list.get(i).get("aggregate_8");
-                            double  temp7 = Double.parseDouble(value) - Double.parseDouble(obj7.toString());
-                            materialsSVG =  QualityDataMontoringUtil.calculateSVG(count,total,String.valueOf(temp7));
-                            SVGList.get(i).put(key,materialsSVG);
-                            break;
-                        case "aggregate_8":
-                            Object obj8 = list.get(i).get("aggregate_9");
-                            double  temp8 = Double.parseDouble(value) - Double.parseDouble(obj8.toString());
-                            materialsSVG =  QualityDataMontoringUtil.calculateSVG(count,total,String.valueOf(temp8));
-                            SVGList.get(i).put(key,materialsSVG);
-                            break;
-                        case "aggregate_9":
-                            Object obj9 = list.get(i).get("aggregate_10");
-                            double  temp9 = Double.parseDouble(value) - Double.parseDouble(obj9.toString());
-                            materialsSVG =  QualityDataMontoringUtil.calculateSVG(count,total,String.valueOf(temp9));
-                            SVGList.get(i).put(key,materialsSVG);
-                            break;
-                        case "stone_1":
-                            Double stone2 = Double.valueOf(String.valueOf(list.get(i).get("stone_2")));
-                            Double stone1 = Double.parseDouble(value);
-                            String stone1Svg = "0";
-                            if (stone1 > stone2){
-                                stone1Svg = QualityDataMontoringUtil.calculateSVG(count,total,String.valueOf(stone1 -stone2));
-                            }
-                            SVGList.get(i).put(key,stone1Svg);
-                            break;
-                        case "stone_2":
-                            Double stone3 = Double.valueOf(String.valueOf(list.get(i).get("stone_3")));
-                            Double stone2tem = Double.parseDouble(value);
-                            String stone2Svg = "0";
-                            if (stone2tem > stone3){
-                                stone2Svg = QualityDataMontoringUtil.calculateSVG(count,total,String.valueOf(stone2tem -stone3));
-                            }
-                            SVGList.get(i).put(key,stone2Svg);
-                            break;
-                        case "stone_3":
-                            Double stone4 = Double.valueOf(String.valueOf(list.get(i).get("stone_4")));
-                            Double stone3tem = Double.parseDouble(value);
-                            String stone3Svg =  "0";
-                            if (stone3tem > stone4){
-                                stone3Svg = QualityDataMontoringUtil.calculateSVG(count,total,String.valueOf(stone3tem -stone4));
-                            }
-                            SVGList.get(i).put(key,stone3Svg);
-                            break;
-                        case "stone_4":
-                            Double stone4Tem = Double.valueOf(String.valueOf(list.get(i).get("stone_4")));
-                            String   stone4Svg = QualityDataMontoringUtil.calculateSVG(count,total,String.valueOf(stone4Tem));
-                            SVGList.get(i).put(key,stone4Svg);
-                            break;
-                            default:
-                                break;
-                    }
-
-
+            //获取数据
+            for (int j = 0; j < totalList.size();j++ ){
+                String proRation = totalList.get(j).get("produce_proportioning_num");
+                if (rationNum.equals(proRation)){
+                    count = Integer.parseInt(totalList.get(j).get("count"));
+                    aggregate10 = Double.parseDouble(totalList.get(j).get("material_aggregate_10"));
+                    aggregate9 = Double.parseDouble(totalList.get(j).get("material_aggregate_9"));
+                    aggregate8 = Double.parseDouble(totalList.get(j).get("material_aggregate_8"));
+                    aggregate7 = Double.parseDouble(totalList.get(j).get("material_aggregate_7"));
+                    aggregate6 = Double.parseDouble(totalList.get(j).get("material_aggregate_6"));
+                    aggregate5 = Double.parseDouble(totalList.get(j).get("material_aggregate_5"));
+                    aggregate4 = Double.parseDouble(totalList.get(j).get("material_aggregate_4"));
+                    aggregate3 = Double.parseDouble(totalList.get(j).get("material_aggregate_3"));
+                    aggregate2 = Double.parseDouble(totalList.get(j).get("material_aggregate_2"));
+                    aggregate1 = Double.parseDouble(totalList.get(j).get("material_aggregate_1"));
+                    stone1 = Double.parseDouble(totalList.get(j).get("material_stone_1"));
+                    stone2 = Double.parseDouble(totalList.get(j).get("material_stone_2"));
+                    stone3 = Double.parseDouble(totalList.get(j).get("material_stone_3"));
+                    stone4 = Double.parseDouble(totalList.get(j).get("material_stone_4"));
+                    asphalt = Double.parseDouble(totalList.get(j).get("material_asphalt"));
+                    regenerate = Double.parseDouble(totalList.get(j).get("material_regenerate"));
+                    additive = Double.parseDouble(totalList.get(j).get("material_additive"));
+                    additive1 = Double.parseDouble(totalList.get(j).get("material_additive_1"));
+                    additive2 = Double.parseDouble(totalList.get(j).get("material_additive_2"));
+                    additive3 = Double.parseDouble(totalList.get(j).get("material_additive_3"));
+                    total = Double.parseDouble(totalList.get(j).get("material_total"));
+                    warehouse1Tem = Double.parseDouble(totalList.get(j).get("temperature_warehouse_1"));
+                    mixtureTem = Double.parseDouble(totalList.get(j).get("temperature_mixture"));
+                    dusterTem = Double.parseDouble(totalList.get(j).get("temperature_duster"));
+                    asphaltTem = Double.parseDouble(totalList.get(j).get("temperature_asphalt"));
+                    aggregateTem = Double.parseDouble(totalList.get(j).get("temperature_aggregate"));
                 }
-
             }
 
+            //平均占比修改
+            Map<String,String> svgRationMap = new HashMap<>();
+            svgRationMap.put("rationNum",rationNum);
+            svgRationMap.put("aggregate_1",QualityDataMontoringUtil.calculateSVG(String.valueOf(count),String.valueOf(total),String.valueOf(aggregate1)));
+            svgRationMap.put("aggregate_2",QualityDataMontoringUtil.calculateSVG(String.valueOf(count),String.valueOf(total),String.valueOf(aggregate2)));
+            svgRationMap.put("aggregate_3",QualityDataMontoringUtil.calculateSVG(String.valueOf(count),String.valueOf(total),String.valueOf(aggregate3)));
+            svgRationMap.put("aggregate_4",QualityDataMontoringUtil.calculateSVG(String.valueOf(count),String.valueOf(total),String.valueOf(aggregate4)));
+            svgRationMap.put("aggregate_5",QualityDataMontoringUtil.calculateSVG(String.valueOf(count),String.valueOf(total),String.valueOf(aggregate5)));
+            svgRationMap.put("aggregate_6",QualityDataMontoringUtil.calculateSVG(String.valueOf(count),String.valueOf(total),String.valueOf(aggregate6)));
+            svgRationMap.put("aggregate_7",QualityDataMontoringUtil.calculateSVG(String.valueOf(count),String.valueOf(total),String.valueOf(aggregate7)));
+            svgRationMap.put("aggregate_8",QualityDataMontoringUtil.calculateSVG(String.valueOf(count),String.valueOf(total),String.valueOf(aggregate8)));
+            svgRationMap.put("aggregate_9",QualityDataMontoringUtil.calculateSVG(String.valueOf(count),String.valueOf(total),String.valueOf(aggregate9)));
+            svgRationMap.put("aggregate_10",QualityDataMontoringUtil.calculateSVG(String.valueOf(count),String.valueOf(total),String.valueOf(aggregate10)));
+            svgRationMap.put("stone_1",QualityDataMontoringUtil.calculateSVG(String.valueOf(count),String.valueOf(total),String.valueOf(stone1)));
+            svgRationMap.put("stone_2",QualityDataMontoringUtil.calculateSVG(String.valueOf(count),String.valueOf(total),String.valueOf(stone2)));
+            svgRationMap.put("stone_3",QualityDataMontoringUtil.calculateSVG(String.valueOf(count),String.valueOf(total),String.valueOf(stone3)));
+            svgRationMap.put("stone_4",QualityDataMontoringUtil.calculateSVG(String.valueOf(count),String.valueOf(total),String.valueOf(stone4)));
+            svgRationMap.put("asphalt",QualityDataMontoringUtil.calculateSVG(String.valueOf(count),String.valueOf(total),String.valueOf(asphalt)));
+            svgRationMap.put("regenerate",QualityDataMontoringUtil.calculateSVG(String.valueOf(count),String.valueOf(total),String.valueOf(regenerate)));
+            svgRationMap.put("additive",QualityDataMontoringUtil.calculateSVG(String.valueOf(count),String.valueOf(total),String.valueOf(additive)));
+            svgRationMap.put("additive1",QualityDataMontoringUtil.calculateSVG(String.valueOf(count),String.valueOf(total),String.valueOf(additive1)));
+            svgRationMap.put("additive2",QualityDataMontoringUtil.calculateSVG(String.valueOf(count),String.valueOf(total),String.valueOf(additive2)));
+            svgRationMap.put("additive3",QualityDataMontoringUtil.calculateSVG(String.valueOf(count),String.valueOf(total),String.valueOf(additive3)));
+            svgRationMap.put("mixture",String.valueOf(QualityDataMontoringUtil.calculateSVG(String.valueOf(count),String.valueOf(mixtureTem))));
+            svgRationMap.put("duster",String.valueOf(QualityDataMontoringUtil.calculateSVG(String.valueOf(count),String.valueOf(dusterTem))));
+            svgRationMap.put("temAsphalt",String.valueOf(QualityDataMontoringUtil.calculateSVG(String.valueOf(count),String.valueOf(asphaltTem))));
+            svgRationMap.put("aggregate",String.valueOf(QualityDataMontoringUtil.calculateSVG(String.valueOf(count),String.valueOf(aggregateTem))));
+            SVGList.add(svgRationMap);
+            //总量修改
+            Map<String,String> totalMap = new HashMap<>();
+            totalMap.put("procount",String.valueOf(count));
+            totalMap.put("total",String.valueOf(total));
+            totalMap.put("rationNum",rationNum);
+            totalMap.put("aggregate_10",String.valueOf(aggregate10));
+            totalMap.put("aggregate_9",String.valueOf(aggregate9));
+            totalMap.put("aggregate_8",String.valueOf(aggregate8));
+            totalMap.put("aggregate_7",String.valueOf(aggregate7));
+            totalMap.put("aggregate_6",String.valueOf(aggregate6));
+            totalMap.put("aggregate_5",String.valueOf(aggregate5));
+            totalMap.put("aggregate_4",String.valueOf(aggregate4));
+            totalMap.put("aggregate_3",String.valueOf(aggregate3));
+            totalMap.put("aggregate_2",String.valueOf(aggregate2));
+            totalMap.put("aggregate_1",String.valueOf(aggregate1));
+            totalMap.put("stone_1",String.valueOf(stone1));
+            totalMap.put("stone_2",String.valueOf(stone2));
+            totalMap.put("stone_3",String.valueOf(stone3));
+            totalMap.put("stone_4",String.valueOf(stone4));
+            totalMap.put("asphalt",String.valueOf(asphalt));
+            totalMap.put("regenerate",String.valueOf(regenerate));
+            totalMap.put("additive",String.valueOf(additive));
+            totalMap.put("additive1",String.valueOf(additive1));
+            totalMap.put("additive2",String.valueOf(additive2));
+            totalMap.put("additive3",String.valueOf(additive3));
+
+            list.add(totalMap);
+
+            //平均值修改
+            Map<String,String> svgMap = new HashMap<>();
+            svgMap.put("produce_date",date);
+            svgMap.put("crewNum",crewNum);
+            svgMap.put("produce_proportioning_num",rationNum);
+            svgMap.put("material_aggregate_10",String.valueOf(aggregate10/count));
+            svgMap.put("material_aggregate_9",String.valueOf(aggregate9/count));
+            svgMap.put("material_aggregate_8",String.valueOf(aggregate8/count));
+            svgMap.put("material_aggregate_7",String.valueOf(aggregate7/count));
+            svgMap.put("material_aggregate_6",String.valueOf(aggregate6/count));
+            svgMap.put("material_aggregate_5",String.valueOf(aggregate5/count));
+            svgMap.put("material_aggregate_4",String.valueOf(aggregate4/count));
+            svgMap.put("material_aggregate_3",String.valueOf(aggregate3/count));
+            svgMap.put("material_aggregate_2",String.valueOf(aggregate2/count));
+            svgMap.put("material_aggregate_1",String.valueOf(aggregate1/count));
+            svgMap.put("material_stone_1",String.valueOf(stone1/count));
+            svgMap.put("material_stone_2",String.valueOf(stone2/count));
+            svgMap.put("material_stone_3",String.valueOf(stone3/count));
+            svgMap.put("material_stone_4",String.valueOf(stone4/count));
+            svgMap.put("material_asphalt",String.valueOf(asphalt/count));
+            svgMap.put("material_regenerate",String.valueOf(regenerate/count));
+            svgMap.put("material_additive",String.valueOf(additive/count));
+            svgMap.put("material_additive_1",String.valueOf(additive1/count));
+            svgMap.put("material_additive_2",String.valueOf(additive2/count));
+            svgMap.put("material_additive_3",String.valueOf(additive3/count));
+            svgMap.put("material_total",String.valueOf(total/count));
+            svgMap.putAll(ratioNumList.get(i));
+            avgList.add(svgMap);
         }
 
-        //修改总量数据累减
-        for (int i = 0; i < list.size();i++){
-            Object arrg1 =  list.get(i).get("aggregate_1");
-            Object arrg2 =  list.get(i).get("aggregate_2");
-            Object arrg3 =  list.get(i).get("aggregate_3");
-            Object arrg4 =  list.get(i).get("aggregate_4");
-            Object arrg5 =  list.get(i).get("aggregate_5");
-            Object arrg6 =  list.get(i).get("aggregate_6");
-            Object arrg7 =  list.get(i).get("aggregate_7");
-            Object arrg8 =  list.get(i).get("aggregate_8");
-            Object arrg9 =  list.get(i).get("aggregate_9");
-            Object arrg10 =  list.get(i).get("aggregate_10");
 
-            double aggregate_1 =  Double.parseDouble(arrg1.toString()) - Double.parseDouble(arrg2.toString());
-            double aggregate_2 =  Double.parseDouble(arrg2.toString()) - Double.parseDouble(arrg3.toString());
-            double aggregate_3 =  Double.parseDouble(arrg3.toString()) - Double.parseDouble(arrg4.toString());
-            double aggregate_4 =  Double.parseDouble(arrg4.toString()) - Double.parseDouble(arrg5.toString());
-            double aggregate_5 =  Double.parseDouble(arrg5.toString()) - Double.parseDouble(arrg6.toString());
-            double aggregate_6 =  Double.parseDouble(arrg6.toString()) - Double.parseDouble(arrg7.toString());
-            double aggregate_7 =  Double.parseDouble(arrg7.toString()) - Double.parseDouble(arrg8.toString());
-            double aggregate_8 =  Double.parseDouble(arrg8.toString()) - Double.parseDouble(arrg9.toString());
-            double aggregate_9 =  Double.parseDouble(arrg9.toString()) - Double.parseDouble(arrg10.toString());
 
-            list.get(i).put("aggregate_1",String.valueOf(aggregate_1));
-            list.get(i).put("aggregate_2",String.valueOf(aggregate_2));
-            list.get(i).put("aggregate_3",String.valueOf(aggregate_3));
-            list.get(i).put("aggregate_4",String.valueOf(aggregate_4));
-            list.get(i).put("aggregate_5",String.valueOf(aggregate_5));
-            list.get(i).put("aggregate_6",String.valueOf(aggregate_6));
-            list.get(i).put("aggregate_7",String.valueOf(aggregate_7));
-            list.get(i).put("aggregate_8",String.valueOf(aggregate_8));
-            list.get(i).put("aggregate_9",String.valueOf(aggregate_9));
-
-        }
-
-        //查询当天每种数据平均值
-        List<Map<String,String>> avgList =  qualityDataManagerDao.selectProducedSVGToGrading(date,crew);
         //返回的结果集 一层Key为机组 二层为模板级配等 三层Key为筛孔
         List<Map<String,Map<String,List<Map<String,String>>>>> result = new ArrayList<>();
         String grading = QualityGradingUtil.getModelGradingResultJson(avgList,qualityDataMontoringDao,result);
@@ -312,9 +295,6 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
         request.setAttribute("date",producedDate);
         request.setAttribute("crewNum",crewNum);
 
-        long endTime = System.currentTimeMillis();
-
-        System.out.println("程序运行时间：" + (endTime - startTime) + "ms");
 
         return map;
     }
@@ -433,7 +413,8 @@ public class QualityDataManagerImpl implements QualityDataManagerInf {
         map.put("asphaltMin",Collections.min(asphalt));
         map.put("warehouse1Max",Collections.max(warehouse1));
         map.put("warehouse1Min",Collections.min(warehouse1));
-
+        map.put("proDate",date);
+        map.put("crewNum",crewNum);
         return map;
     }
 

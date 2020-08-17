@@ -1890,4 +1890,39 @@
         GROUP BY
                  QTCA.asphalt_name
     </select>
+    <select id="selectAllProductToData" resultType="java.util.Map">
+        SELECT *
+        FROM
+             (
+
+             (SELECT
+                     'crew1' as crewNum,
+                     date_format(produce_date, '%Y-%m-%d') AS produceDate,
+                     SUM(material_total) DIV 1000 AS materialTotal,
+                     date_format(MIN(produce_time), '%T') AS startTime,
+                     date_format(MAX(produce_time), '%T') AS endTime
+              FROM
+                   quality_monitoring_realtime_data1
+              WHERE YEAR(produce_date) = YEAR(NOW())
+              GROUP BY
+                       produceDate)
+
+             UNION ALL
+
+             (SELECT
+                     'crew2' as crewNum,
+                     date_format(produce_date, '%Y-%m-%d') AS produceDate,
+                     SUM(material_total) DIV 1000 AS materialTotal,
+                     date_format(MIN(produce_time), '%T') AS startTime,
+                     date_format(MAX(produce_time), '%T') AS endTime
+              FROM
+                   quality_monitoring_realtime_data2
+              WHERE YEAR(produce_date) = YEAR(NOW())
+              GROUP BY
+                       produceDate)
+
+             ) AS t
+        ORDER BY
+                 t.produceDate DESC
+    </select>
 </mapper>

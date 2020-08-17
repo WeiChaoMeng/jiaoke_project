@@ -41,6 +41,49 @@ function getThreeDayData() {
         },
         success:function (res) {
             dataArray = res;
+            var htmlStr = '';
+            for (var i = 0; i < dataArray.length;i++){
+                if (dataArray[i]){
+                    var project_name = dataArray[i].project_name ? dataArray[i].project_name:"";
+                    htmlStr += "<tr>"
+                        + "<td >" + dataArray[i].produce_date + "</td>"
+                        + "<td>" + dataArray[i].produce_time  + "</td>"
+                        + "<td>" + (dataArray[i].crewNums === 'data1'? '机组1':'机组2')  + "</td>"
+                        + "<td>" + dataArray[i].produce_disc_num  + "</td>"
+                        + "<td>" + dataArray[i].produce_car_num  + "</td>"
+                        + "<td title=" + project_name + ">" + project_name  + "</td>"
+                        + "<td>" + dataArray[i].pro_name  + "</td>"
+                        + "<td>" + dataArray[i].material_aggregate_10  + "</td>"
+                        + "<td>" + dataArray[i].material_aggregate_9  + "</td>"
+                        + "<td>" + dataArray[i].material_aggregate_8  + "</td>"
+                        + "<td>" + dataArray[i].material_aggregate_7  + "</td>"
+                        + "<td>" + dataArray[i].material_aggregate_6  + "</td>"
+                        + "<td>" + dataArray[i].material_aggregate_5  + "</td>"
+                        + "<td>" + dataArray[i].material_aggregate_4  + "</td>"
+                        + "<td>" + dataArray[i].material_aggregate_3  + "</td>"
+                        + "<td>" + dataArray[i].material_aggregate_2  + "</td>"
+                        + "<td>" + dataArray[i].material_aggregate_1  + "</td>"
+                        + "<td>" + dataArray[i].material_stone_4  + "</td>"
+                        + "<td>" + dataArray[i].material_stone_3  + "</td>"
+                        + "<td>" + dataArray[i].material_stone_2  + "</td>"
+                        + "<td>" + dataArray[i].material_stone_1  + "</td>"
+                        + "<td>" + dataArray[i].material_asphalt  + "</td>"
+                        + "<td>" + dataArray[i].material_regenerate  + "</td>"
+                        + "<td>" + dataArray[i].material_additive_3  + "</td>"
+                        + "<td>" + dataArray[i].material_additive_2  + "</td>"
+                        + "<td>" + dataArray[i].material_additive_1  + "</td>"
+                        + "<td>" + dataArray[i].material_additive  + "</td>"
+                        + "<td>" + dataArray[i].material_total  + "</td>"
+                        + "<td>" + dataArray[i].temperature_warehouse_1  + "</td>"
+                        + "<td>" + dataArray[i].temperature_mixture  + "</td>"
+                        + "<td>" + dataArray[i].temperature_asphalt  + "</td>"
+                        + "<td>" + dataArray[i].temperature_aggregate  + "</td>"
+                        + "<td>" + dataArray[i].temperature_duster  + "</td>"
+                        + "</tr>";
+                }
+            }
+
+            $("#allProductData").empty().append(htmlStr);
         }
     })
     layer.close(index);
@@ -51,7 +94,6 @@ function getThreeDayData() {
  * @param currentNum
  */
 function getDateByPageNum(currentNum){
-debugger
     var arrayStart = (currentNum - 1) * 50;
     var arrayEnd = arrayStart + 50;
     var htmlStr;
@@ -59,7 +101,7 @@ debugger
         if (dataArray[i]){
             var project_name = dataArray[i].project_name ? dataArray[i].project_name:"";
             htmlStr += "<tr>"
-                + "<td >" + dataArray[i].produce_date + "</td>"
+                + "<td class='prodate' >" + dataArray[i].produce_date + "</td>"
                 + "<td>" + dataArray[i].produce_time  + "</td>"
                 + "<td>" + (dataArray[i].crewNums === 'data1'? '机组1':'机组2')  + "</td>"
                 + "<td>" + dataArray[i].produce_disc_num  + "</td>"
@@ -242,12 +284,57 @@ function selectPromessageByRaionModel(){
         },
         success:function (res) {
             dataArray = res;
-            debugger
+
             if (!(rationId === 'select')){
                 var htmlStr = '<a href="#" id="submits"  onclick="showPromessageSVG()" >更多<i class="iconfont"></i></a>';
             }
             $("#submits").remove();
             $(".boxtitle").append(htmlStr);
+
+            //全部产品渲染
+            var htmlStrs = '';
+            for (var i = 0; i < dataArray.length;i++){
+                if (dataArray[i]){
+                    var project_name = dataArray[i].project_name ? dataArray[i].project_name:"";
+                    htmlStrs += "<tr>"
+                        + "<td class='prodate' >" + dataArray[i].produce_date + "</td>"
+                        + "<td>" + dataArray[i].produce_time  + "</td>"
+                        + "<td>" + (dataArray[i].crewNums === 'data1'? '机组1':'机组2')  + "</td>"
+                        + "<td>" + dataArray[i].produce_disc_num  + "</td>"
+                        + "<td>" + dataArray[i].produce_car_num  + "</td>"
+                        + "<td title=" + project_name + ">" + project_name  + "</td>"
+                        + "<td>" + dataArray[i].pro_name  + "</td>"
+                        + "<td>" + dataArray[i].material_aggregate_10  + "</td>"
+                        + "<td>" + dataArray[i].material_aggregate_9  + "</td>"
+                        + "<td>" + dataArray[i].material_aggregate_8  + "</td>"
+                        + "<td>" + dataArray[i].material_aggregate_7  + "</td>"
+                        + "<td>" + dataArray[i].material_aggregate_6  + "</td>"
+                        + "<td>" + dataArray[i].material_aggregate_5  + "</td>"
+                        + "<td>" + dataArray[i].material_aggregate_4  + "</td>"
+                        + "<td>" + dataArray[i].material_aggregate_3  + "</td>"
+                        + "<td>" + dataArray[i].material_aggregate_2  + "</td>"
+                        + "<td>" + dataArray[i].material_aggregate_1  + "</td>"
+                        + "<td>" + dataArray[i].material_stone_4  + "</td>"
+                        + "<td>" + dataArray[i].material_stone_3  + "</td>"
+                        + "<td>" + dataArray[i].material_stone_2  + "</td>"
+                        + "<td>" + dataArray[i].material_stone_1  + "</td>"
+                        + "<td>" + dataArray[i].material_asphalt  + "</td>"
+                        + "<td>" + dataArray[i].material_regenerate  + "</td>"
+                        + "<td>" + dataArray[i].material_additive_3  + "</td>"
+                        + "<td>" + dataArray[i].material_additive_2  + "</td>"
+                        + "<td>" + dataArray[i].material_additive_1  + "</td>"
+                        + "<td>" + dataArray[i].material_additive  + "</td>"
+                        + "<td>" + dataArray[i].material_total  + "</td>"
+                        + "<td>" + dataArray[i].temperature_warehouse_1  + "</td>"
+                        + "<td>" + dataArray[i].temperature_mixture  + "</td>"
+                        + "<td>" + dataArray[i].temperature_asphalt  + "</td>"
+                        + "<td>" + dataArray[i].temperature_aggregate  + "</td>"
+                        + "<td>" + dataArray[i].temperature_duster  + "</td>"
+                        + "</tr>";
+                }
+            }
+
+            $("#allProductData").empty().append(htmlStrs);
 
             //计算平均值
             // var proDate = "";
@@ -420,8 +507,11 @@ function selectPromessageByRaionModel(){
 
             getDateByPageNum(1);
             $("#productData").append(totalStr);
+            $("#allProductData").append(totalStr);
             $("#productData").append(svgHtmlStr);
+            $("#allProductData").append(svgHtmlStr);
             $("#productData").append(modelHtml);
+            $("#allProductData").append(modelHtml);
         }
     });
 
@@ -477,6 +567,9 @@ function getExplorer() {
 }
 
 function method5(tableid) {
+    var temName;
+    var ahtml = ' <a href="#" id="exportExcel" style="display:none" ></a>';//提供给下面自定义文件名的操作
+    $("#"+tableid).after(ahtml);
     if(getExplorer() === 'ie') {
         var curTbl = document.getElementById(tableid);
         var oXL = new ActiveXObject("Excel.Application");
@@ -491,7 +584,8 @@ function method5(tableid) {
 
         try {
             var fname = oXL.Application.GetSaveAsFilename("Excel.xls",
-                "Excel Spreadsheets (*.xls), *.xls");
+                // "Excel Spreadsheets (*.xls), *.xls");
+                "Excel Spreadsheets (" + temName +".xls), " + temName + ".xls");
         } catch(e) {
             print("Nested catch caught " + e);
         } finally {
@@ -503,7 +597,15 @@ function method5(tableid) {
         }
 
     } else {
-        tableToExcel(tableid)
+
+        var startDate = $("#inpstart").val();
+        if (startDate){
+            temName = startDate;
+        } else {
+            var date = new Date();
+            temName = date.toLocaleDateString();
+        }
+        tableToExcel(tableid,temName)
     }
 }
 
@@ -512,6 +614,7 @@ function Cleanup() {
     CollectGarbage();
 }
 var tableToExcel = (function() {
+
     var uri = 'data:application/vnd.ms-excel;base64,',
         template = '<html><head><meta charset="UTF-8"></head><body><table  border="1">{table}</table></body></html>',
         base64 = function(
@@ -530,7 +633,12 @@ var tableToExcel = (function() {
             worksheet: name || 'Worksheet',
             table: table.innerHTML
         }
-         window.location.href = uri + base64(format(template, ctx))
+
+        document.getElementById("exportExcel").href = uri
+            + base64(format(template, ctx));
+        document.getElementById("exportExcel").download = name + ".xls";//自定义文件名
+        document.getElementById("exportExcel").click();
+         // window.location.href = uri + base64(format(template, ctx))
     }
 })()
 

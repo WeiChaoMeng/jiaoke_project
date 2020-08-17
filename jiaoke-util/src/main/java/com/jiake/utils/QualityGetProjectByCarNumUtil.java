@@ -103,7 +103,7 @@ public class QualityGetProjectByCarNumUtil {
             xml.append("</PACKET>");
             System.out.println("请求获取用户"+xml);
             /*****  接口连接   必须写   固定值  不要改*****/
-            url = "http://119.90.97.107:9022/services/XmlGhqrd";
+            url = "http://erp.jcjt.bmrb.com.cn/services/XmlGhqrd";
             repack = "http://services.com";
             method = "getValues";
             /***** *****/

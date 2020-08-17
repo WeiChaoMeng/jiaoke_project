@@ -48,7 +48,7 @@ public interface QualityDataManagerDao {
      * @auther Melone
      * @date 2018/10/26 16:16
      */
-    List<Map<String,Object>> selectRatioNumListByDate(@Param("producedDate") String producedDate,  @Param("crewNum") String crewNum);
+    List<Map<String,String>> selectRatioNumListByDate(@Param("producedDate") String producedDate,  @Param("crewNum") String crewNum);
 
     /**
      * 返回指定日期每种配比的总值
@@ -64,7 +64,7 @@ public interface QualityDataManagerDao {
      * @param ratioNumList
      * @return
      */
-    List<QualityRatioTemplate> selectRatioMessageById(@Param("crewNum") String crewNum, @Param("ratioNumList") List<Map<String,Object>> ratioNumList ,@Param("proDate")  String date);
+    List<QualityRatioTemplate> selectRatioMessageById(@Param("crewNum") String crewNum, @Param("ratioNumList") List<Map<String,String>> ratioNumList ,@Param("proDate")  String date);
 
     /**
      *  根据传入日期返回当天所有项目
@@ -144,4 +144,14 @@ public interface QualityDataManagerDao {
      * @date 2020/5/20 15:13
      */
     List<Map<String, String>> selectProducedSVGToGrading(@Param("date") String date,@Param("crew") String crew);
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期机组查询所有数据>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/7/27 18:32
+     */
+    List<Map<String,String>> selectAllProduceByDate(@Param("date") String date,@Param("crew") String crew);
 }

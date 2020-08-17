@@ -219,4 +219,37 @@ public interface LeadCockpitServiceDao {
      * @date 2020/6/11 13:45
      */
     List<Map<String, String>> getProductToEchars(@Param("startDate") String startDate,@Param("endDate")   String endDate);
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询本日指定配比下所有产品>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/7/28 9:21
+     */
+    List<Map<String, String>> getAllProduct(@Param("proportioningNum") String proportioningNum);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据配比好获取指定配比>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/7/28 9:39
+     */
+    Map<String, String> getRationModel(@Param("proportioningNum") String proportioningNum);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期间隔查询所有产品>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/7/28 10:33
+     */
+    List<Map<String, String>> getAllProductByDate(@Param("startDate") String startDate,@Param("endDate") String endDate,@Param("ration") String ration);
+
 }

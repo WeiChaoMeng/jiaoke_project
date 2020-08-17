@@ -685,4 +685,225 @@
         GROUP BY T1.produce_proportioning_num
         ORDER BY T1.total DESC
     </select>
+    <select id="getAllProduct" resultType="java.util.Map">
+        SELECT
+               'crew1' AS crewNum,
+               T1.produce_date,
+               T1.produce_proportioning_num,
+               T1.material_aggregate_10 AS material_aggregate_10,
+               T1.material_aggregate_9 AS material_aggregate_9,
+               T1.material_aggregate_8 AS material_aggregate_8,
+               T1.material_aggregate_7 AS material_aggregate_7,
+               T1.material_aggregate_6 AS material_aggregate_6,
+               T1.material_aggregate_5 AS material_aggregate_5,
+               T1.material_aggregate_4 AS material_aggregate_4,
+               T1.material_aggregate_3 AS material_aggregate_3,
+               T1.material_aggregate_2 AS material_aggregate_2,
+               T1.material_aggregate_1 AS material_aggregate_1,
+               T1.material_stone_1 AS material_stone_1,
+               T1.material_stone_2 AS material_stone_2,
+               T1.material_stone_3 AS material_stone_3,
+               T1.material_stone_4 AS material_stone_4,
+               T1.material_asphalt AS material_asphalt,
+               T1.material_regenerate AS material_regenerate,
+               T1.material_additive AS material_additive,
+               T1.material_additive_1 AS material_additive_1,
+               T1.material_additive_2 AS material_additive_2,
+               T1.material_additive_3 AS material_additive_3,
+               T1.material_total AS material_total,
+               T1.temperature_warehouse_1,
+               T1.temperature_mixture,
+               T1.temperature_duster,
+               T1.temperature_asphalt,
+               T1.temperature_aggregate
+        FROM
+             (
+             SELECT
+                    QMRD.produce_date,
+                    QMRD.produce_proportioning_num,
+                    QMRD.material_aggregate_10,
+                    QMRD.material_aggregate_9,
+                    QMRD.material_aggregate_8,
+                    QMRD.material_aggregate_7,
+                    QMRD.material_aggregate_6,
+                    QMRD.material_aggregate_5,
+                    QMRD.material_aggregate_4,
+                    QMRD.material_aggregate_3,
+                    QMRD.material_aggregate_2,
+                    QMRD.material_aggregate_1,
+                    QMRD.material_stone_1,
+                    QMRD.material_stone_2,
+                    QMRD.material_stone_3,
+                    QMRD.material_stone_4,
+                    QMRD.material_asphalt,
+                    QMRD.material_regenerate,
+                    QMRD.material_additive,
+                    QMRD.material_additive_1,
+                    QMRD.material_additive_2,
+                    QMRD.material_additive_3,
+                    QMRD.material_total,
+                    QMRD.temperature_warehouse_1,
+                    QMRD.temperature_mixture,
+                    QMRD.temperature_duster,
+                    QMRD.temperature_asphalt,
+                    QMRD.temperature_aggregate
+             FROM
+                  quality_monitoring_realtime_data1 AS QMRD
+             WHERE
+                     DATE_FORMAT(QMRD.produce_date, '%Y%m%d') = DATE_FORMAT(CURDATE(), '%Y%m%d')
+               AND QMRD.produce_proportioning_num =  #{proportioningNum}
+             UNION ALL
+             SELECT
+                    QMRD.produce_date,
+                    QMRD.produce_proportioning_num,
+                    QMRD.material_aggregate_10,
+                    QMRD.material_aggregate_9,
+                    QMRD.material_aggregate_8,
+                    QMRD.material_aggregate_7,
+                    QMRD.material_aggregate_6,
+                    QMRD.material_aggregate_5,
+                    QMRD.material_aggregate_4,
+                    QMRD.material_aggregate_3,
+                    QMRD.material_aggregate_2,
+                    QMRD.material_aggregate_1,
+                    QMRD.material_stone_1,
+                    QMRD.material_stone_2,
+                    QMRD.material_stone_3,
+                    QMRD.material_stone_4,
+                    QMRD.material_asphalt,
+                    QMRD.material_regenerate,
+                    QMRD.material_additive,
+                    QMRD.material_additive_1,
+                    QMRD.material_additive_2,
+                    QMRD.material_additive_3,
+                    QMRD.material_total,
+                    QMRD.temperature_warehouse_1,
+                    QMRD.temperature_mixture,
+                    QMRD.temperature_duster,
+                    QMRD.temperature_asphalt,
+                    QMRD.temperature_aggregate
+             FROM
+                  quality_monitoring_realtime_data2 AS QMRD
+             WHERE
+                     DATE_FORMAT(QMRD.produce_date, '%Y%m%d') = DATE_FORMAT(CURDATE(), '%Y%m%d')
+               AND QMRD.produce_proportioning_num = #{proportioningNum}
+             ) AS T1
+    </select>
+    <select id="getRationModel" resultType="java.util.Map">
+        SELECT
+                *,
+                'crew1' AS crew
+        FROM
+             quality_proportioning_message
+        WHERE
+                crew1_modele_id = #{proportioningNum}
+          AND
+                YEAR(create_time) = YEAR(NOW())
+    </select>
+    <select id="getAllProductByDate" resultType="java.util.Map">
+        SELECT
+               'crew1' AS crewNum,
+               T1.produce_date,
+               T1.produce_proportioning_num,
+               T1.material_aggregate_10 AS material_aggregate_10,
+               T1.material_aggregate_9 AS material_aggregate_9,
+               T1.material_aggregate_8 AS material_aggregate_8,
+               T1.material_aggregate_7 AS material_aggregate_7,
+               T1.material_aggregate_6 AS material_aggregate_6,
+               T1.material_aggregate_5 AS material_aggregate_5,
+               T1.material_aggregate_4 AS material_aggregate_4,
+               T1.material_aggregate_3 AS material_aggregate_3,
+               T1.material_aggregate_2 AS material_aggregate_2,
+               T1.material_aggregate_1 AS material_aggregate_1,
+               T1.material_stone_1 AS material_stone_1,
+               T1.material_stone_2 AS material_stone_2,
+               T1.material_stone_3 AS material_stone_3,
+               T1.material_stone_4 AS material_stone_4,
+               T1.material_asphalt AS material_asphalt,
+               T1.material_regenerate AS material_regenerate,
+               T1.material_additive AS material_additive,
+               T1.material_additive_1 AS material_additive_1,
+               T1.material_additive_2 AS material_additive_2,
+               T1.material_additive_3 AS material_additive_3,
+               T1.material_total AS material_total,
+               T1.temperature_warehouse_1,
+               T1.temperature_mixture,
+               T1.temperature_duster,
+               T1.temperature_asphalt,
+               T1.temperature_aggregate
+
+        FROM
+             (
+             SELECT
+                    QMRD.produce_date,
+                    QMRD.produce_proportioning_num,
+                    QMRD.material_aggregate_10,
+                    QMRD.material_aggregate_9,
+                    QMRD.material_aggregate_8,
+                    QMRD.material_aggregate_7,
+                    QMRD.material_aggregate_6,
+                    QMRD.material_aggregate_5,
+                    QMRD.material_aggregate_4,
+                    QMRD.material_aggregate_3,
+                    QMRD.material_aggregate_2,
+                    QMRD.material_aggregate_1,
+                    QMRD.material_stone_1,
+                    QMRD.material_stone_2,
+                    QMRD.material_stone_3,
+                    QMRD.material_stone_4,
+                    QMRD.material_asphalt,
+                    QMRD.material_regenerate,
+                    QMRD.material_additive,
+                    QMRD.material_additive_1,
+                    QMRD.material_additive_2,
+                    QMRD.material_additive_3,
+                    QMRD.material_total,
+                    QMRD.temperature_warehouse_1,
+                    QMRD.temperature_mixture,
+                    QMRD.temperature_duster,
+                    QMRD.temperature_asphalt,
+                    QMRD.temperature_aggregate
+             FROM
+                  quality_monitoring_realtime_data1 AS QMRD
+             WHERE
+                     QMRD.produce_date BETWEEN #{startDate} AND #{endDate}
+               AND QMRD.produce_proportioning_num =  #{ration}
+             UNION ALL
+             SELECT
+                    QMRD.produce_date,
+                    QMRD.produce_proportioning_num,
+                    QMRD.material_aggregate_10,
+                    QMRD.material_aggregate_9,
+                    QMRD.material_aggregate_8,
+                    QMRD.material_aggregate_7,
+                    QMRD.material_aggregate_6,
+                    QMRD.material_aggregate_5,
+                    QMRD.material_aggregate_4,
+                    QMRD.material_aggregate_3,
+                    QMRD.material_aggregate_2,
+                    QMRD.material_aggregate_1,
+                    QMRD.material_stone_1,
+                    QMRD.material_stone_2,
+                    QMRD.material_stone_3,
+                    QMRD.material_stone_4,
+                    QMRD.material_asphalt,
+                    QMRD.material_regenerate,
+                    QMRD.material_additive,
+                    QMRD.material_additive_1,
+                    QMRD.material_additive_2,
+                    QMRD.material_additive_3,
+                    QMRD.material_total,
+                    QMRD.temperature_warehouse_1,
+                    QMRD.temperature_mixture,
+                    QMRD.temperature_duster,
+                    QMRD.temperature_asphalt,
+                    QMRD.temperature_aggregate
+
+             FROM
+                  quality_monitoring_realtime_data2 AS QMRD
+             WHERE
+                     QMRD.produce_date BETWEEN #{startDate} AND #{endDate}
+               AND QMRD.produce_proportioning_num = #{ration}
+             ) AS T1
+    </select>
 </mapper>

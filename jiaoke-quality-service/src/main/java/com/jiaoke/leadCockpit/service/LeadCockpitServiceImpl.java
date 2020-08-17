@@ -8,6 +8,7 @@
  **/
 package com.jiaoke.leadCockpit.service;
 
+import com.jiake.utils.QualityDataMontoringUtil;
 import com.jiake.utils.QualityGradingUtil;
 import com.jiaoke.LeadCockpit.dao.LeadCockpitServiceDao;
 import com.jiaoke.quality.dao.QualityDataMontoringDao;
@@ -16,10 +17,8 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  *  <一句话功能描述>
@@ -229,8 +228,41 @@ public class LeadCockpitServiceImpl implements LeadCockpitServiceInf {
             res.put("message","empty");
         }else {
             //查询今日产量最高产品平均信息
-            List<Map<String,String>> avgList = leadCockpitServiceDao.getProductSvg(proportioningNum.get("produce_proportioning_num"));
-
+            //查询今日产量最高产品所有产品
+            List<Map<String,String>> proList = leadCockpitServiceDao.getAllProduct(proportioningNum.get("produce_proportioning_num"));
+            Map<String,String> map = leadCockpitServiceDao.getRationModel(proportioningNum.get("produce_proportioning_num"));
+            List<Map<String, String>> totalList = QualityGradingUtil.returnGradingTotalList(proList);
+            List<Map<String, String>> avgList = new ArrayList<>();
+            Map<String,String> temMap = new HashMap<>();
+            for (int i = 0; i < totalList.size();i++){
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                temMap.put("produce_date",df.format(new Date()));
+                temMap.put("crewNum","crew1");
+                temMap.put("produce_proportioning_num",totalList.get(i).get("produce_proportioning_num"));
+                temMap.put("material_aggregate_10", QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_aggregate_10")));
+                temMap.put("material_aggregate_9", QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_aggregate_9")));
+                temMap.put("material_aggregate_8",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_aggregate_8")));
+                temMap.put("material_aggregate_7",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_aggregate_7")));
+                temMap.put("material_aggregate_6",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_aggregate_6")));
+                temMap.put("material_aggregate_5",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_aggregate_5")));
+                temMap.put("material_aggregate_4",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_aggregate_4")));
+                temMap.put("material_aggregate_3",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_aggregate_3")));
+                temMap.put("material_aggregate_2",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_aggregate_2")));
+                temMap.put("material_aggregate_1",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_aggregate_1")));
+                temMap.put("material_stone_1",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_stone_1")));
+                temMap.put("material_stone_2",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_stone_2")));
+                temMap.put("material_stone_3",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_stone_3")));
+                temMap.put("material_stone_4",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_stone_4")));
+                temMap.put("material_asphalt",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_asphalt")));
+                temMap.put("material_regenerate",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_regenerate")));
+                temMap.put("material_additive",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_additive")));
+                temMap.put("material_additive_1",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_additive_1")));
+                temMap.put("material_additive_2",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_additive_2")));
+                temMap.put("material_additive_3",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_additive_3")));
+                temMap.put("material_total",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_total")));
+                temMap.putAll(map);
+            }
+            avgList.add(temMap);
             //返回的结果集 一层Key为机组 二层为模板级配等 三层Key为筛孔
             List<Map<String,Map<String,List<Map<String,String>>>>> result = new ArrayList<>();
             String grading = QualityGradingUtil.getModelGradingResultJson(avgList,qualityDataMontoringDao,result);
@@ -314,7 +346,41 @@ public class LeadCockpitServiceImpl implements LeadCockpitServiceInf {
     public Map<String, Object> getProductSvgGradingByRationAndDate(String startDate, String endDate, String ration) {
         Map<String,Object> res = new HashMap<>();
         //查询今日产量最高产品平均信息
-        List<Map<String,String>> avgList = leadCockpitServiceDao.getProductSvgByRationAndDate(startDate,endDate,ration);
+        List<Map<String,String>> avgList = new ArrayList<>();
+        List<Map<String,String>> proList = leadCockpitServiceDao.getAllProductByDate(startDate,endDate,ration);
+        Map<String, String> rationModel = leadCockpitServiceDao.getRationModel(ration);
+        List<Map<String, String>> totalList = QualityGradingUtil.returnGradingTotalList(proList);
+        Map<String,String> temMap = new HashMap<>();
+        for (int i = 0; i < totalList.size();i++){
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            temMap.put("produce_date",df.format(new Date()));
+            temMap.put("crewNum","crew1");
+            temMap.put("produce_proportioning_num",totalList.get(i).get("produce_proportioning_num"));
+            temMap.put("material_aggregate_10", QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_aggregate_10")));
+            temMap.put("material_aggregate_9", QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_aggregate_9")));
+            temMap.put("material_aggregate_8",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_aggregate_8")));
+            temMap.put("material_aggregate_7",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_aggregate_7")));
+            temMap.put("material_aggregate_6",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_aggregate_6")));
+            temMap.put("material_aggregate_5",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_aggregate_5")));
+            temMap.put("material_aggregate_4",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_aggregate_4")));
+            temMap.put("material_aggregate_3",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_aggregate_3")));
+            temMap.put("material_aggregate_2",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_aggregate_2")));
+            temMap.put("material_aggregate_1",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_aggregate_1")));
+            temMap.put("material_stone_1",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_stone_1")));
+            temMap.put("material_stone_2",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_stone_2")));
+            temMap.put("material_stone_3",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_stone_3")));
+            temMap.put("material_stone_4",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_stone_4")));
+            temMap.put("material_asphalt",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_asphalt")));
+            temMap.put("material_regenerate",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_regenerate")));
+            temMap.put("material_additive",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_additive")));
+            temMap.put("material_additive_1",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_additive_1")));
+            temMap.put("material_additive_2",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_additive_2")));
+            temMap.put("material_additive_3",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_additive_3")));
+            temMap.put("material_total",QualityDataMontoringUtil.calculateSVG(totalList.get(i).get("count"),totalList.get(i).get("material_total")));
+            temMap.putAll(rationModel);
+        }
+        avgList.add(temMap);
+
         if (avgList == null || avgList.isEmpty()){
             res.put("message","empty");
         }else {

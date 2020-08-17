@@ -229,6 +229,7 @@
                     });
                 }
 
+                debugger
                 if (crew1Arr.length > 0 ){
                     showChar1Bar(crew1Arr);
                     $("#crew1warning0").empty().append(crew1Leve0Num + "<i>盘<i>");
@@ -437,6 +438,8 @@
                     , {field: 'warehouseOneDeviation', title: '一仓偏差比', width: 150}
                     , {field: 'warehouseOneLeve', title: '一仓预警级别', width: 150}
                     , {field: 'warning_reason', title: '报警原因', width: 300}
+                    , {field: 'warning_up_user', title: '填写人', width: 150}
+                    , {field: 'warning_up_time', title: '填写时间', width: 150}
                    // ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
                 ]]
             });

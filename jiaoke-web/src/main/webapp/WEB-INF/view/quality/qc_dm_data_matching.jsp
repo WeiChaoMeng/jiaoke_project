@@ -27,7 +27,7 @@
             <div class="infolist1">
                 <div class="infoboxleft">
                     <div class="boxtitle">
-                        <span>${ratioNum.pro_name}</span>
+                        <span><span>${date}</span><span style="padding-left:30px;" >${crewNum == "crew1"? "机组一":"机组二"}</span><span style="padding-left:30px;" >${ratioNum.pro_name}</span></span>
                         <a href="${path}/getProListByRatioNumAndDate.do?ratioNum=${ratioNum.produce_proportioning_num}&date=${date}&crewNum=${crewNum}" target="_self">更多
                             <i class="iconfont">&#xeba8;</i>
                         </a>
@@ -218,7 +218,16 @@
                     <td colspan="4" style="width: 97%;font-size: 24px;padding-bottom: 13px;padding-left: 35%;" id="proNam">
                     </td>
                 </tr>
-
+                <tr>
+                    <td class="dm_tlabels">生产日期：</td>
+                    <td class="dm_forminput dm_inputstyle">
+                        ${date}
+                    </td>
+                    <td class="tlabels">机组：</td>
+                    <td id="crewNum" class="dm_forminput dm_inputstyle" >
+                        ${crewNum == "crew1"? "机组一":"机组二"}
+                    </td>
+                </tr>
                 <tr>
                     <td class="dm_tlabels">产品总数(盘)：</td>
                     <td class="dm_forminput dm_inputstyle" id="procount"  >
@@ -558,17 +567,18 @@
         that_ = this;
         var raionNum = this.name;
         var raionName = this.id;
-        //获取当天各模板总数
+        //获取当天各模板总数proList
         var proTotalList = ${produceTotal};
         //获取当天各模板实际配比
         var proSVGList = ${ProSVG};
         //获取当天模板配比
         var modelRaion = ${model};
         $("#proNam").empty();
-        $("#proNam").append("今日"+raionName + "生产信息");
+        $("#proNam").append( raionName + "生产信息");
         // var objArr = eval("(" + proTotalList + ")");
         for (var i in proTotalList) {
             for (var k in proTotalList[i]){
+                debugger
                 if (raionNum == proTotalList[i].rationNum){
                     $("#" + k).empty();
                     if (k === 'rationNum' || k === 'procount' ){
@@ -874,7 +884,6 @@
     function showGradingChears() {
         var rationList = ${ProSVG};
         var gradingList = ${gradingMap};
-        debugger
         for (var i = 0;i < rationList.length;i++){
             var ration = rationList[i].rationNum;
             for (var j = 0;j < gradingList.length;j++){

@@ -575,6 +575,18 @@ public class QualityWarningUtil {
                         id,
                         name);
                 break;
+            case "矿粉":
+                qualityWarningData = compareDifference(Double.parseDouble(String.valueOf(warningLeveMap.get("breeze1_leve1_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("breeze1_leve1_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("breeze1_leve2_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("breeze1_leve2_down"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("breeze1_leve3_up"))),
+                        Double.parseDouble(String.valueOf(warningLeveMap.get("breeze1_leve3_down"))),
+                        materialRationReal,
+                        materialRationMoudel,
+                        id,
+                        name);
+                break;
             case "沥青":
                     qualityWarningData = compareDifference(Double.parseDouble(String.valueOf(warningLeveMap.get("ratioStone_leve1_up"))),
                             Double.parseDouble(String.valueOf(warningLeveMap.get("ratioStone_leve1_down"))),
@@ -600,7 +612,7 @@ public class QualityWarningUtil {
                         name);
                 break;
             case "添加剂1":
-                qualityWarningData = compareDifference(Double.parseDouble(String.valueOf(warningLeveMap.get("additive_leve1_up"))),
+                qualityWarningData = millesimal(Double.parseDouble(String.valueOf(warningLeveMap.get("additive_leve1_up"))),
                         Double.parseDouble(String.valueOf(warningLeveMap.get("additive_leve1_down"))),
                         Double.parseDouble(String.valueOf(warningLeveMap.get("additive_leve2_up"))),
                         Double.parseDouble(String.valueOf(warningLeveMap.get("additive_leve2_down"))),
@@ -612,7 +624,7 @@ public class QualityWarningUtil {
                         name);
                 break;
             case "添加剂2":
-                qualityWarningData = compareDifference(Double.parseDouble(String.valueOf(warningLeveMap.get("additive_leve1_up"))),
+                qualityWarningData = millesimal(Double.parseDouble(String.valueOf(warningLeveMap.get("additive_leve1_up"))),
                         Double.parseDouble(String.valueOf(warningLeveMap.get("additive1_leve1_down"))),
                         Double.parseDouble(String.valueOf(warningLeveMap.get("additive1_leve2_up"))),
                         Double.parseDouble(String.valueOf(warningLeveMap.get("additive1_leve2_down"))),
@@ -624,7 +636,7 @@ public class QualityWarningUtil {
                         name);
                 break;
             case "添加剂3":
-                qualityWarningData = compareDifference(Double.parseDouble(String.valueOf(warningLeveMap.get("additive2_leve1_up"))),
+                qualityWarningData = millesimal(Double.parseDouble(String.valueOf(warningLeveMap.get("additive2_leve1_up"))),
                         Double.parseDouble(String.valueOf(warningLeveMap.get("additive2_leve1_down"))),
                         Double.parseDouble(String.valueOf(warningLeveMap.get("additive2_leve2_up"))),
                         Double.parseDouble(String.valueOf(warningLeveMap.get("additive2_leve2_down"))),
@@ -636,7 +648,7 @@ public class QualityWarningUtil {
                         name);
                 break;
             case "添加剂4":
-                qualityWarningData = compareDifference(Double.parseDouble(String.valueOf(warningLeveMap.get("additive3_leve1_up"))),
+                qualityWarningData = millesimal(Double.parseDouble(String.valueOf(warningLeveMap.get("additive3_leve1_up"))),
                         Double.parseDouble(String.valueOf(warningLeveMap.get("additive3_leve1_down"))),
                         Double.parseDouble(String.valueOf(warningLeveMap.get("additive3_leve2_up"))),
                         Double.parseDouble(String.valueOf(warningLeveMap.get("additive3_leve2_down"))),
@@ -701,7 +713,9 @@ public class QualityWarningUtil {
                 ratioTemplate.getRatioAdditiveTwo(),
                 ratioTemplate.getRatioAdditiveThree(),
                 ratioTemplate.getRatioAdditiveFour()};
-
+        //处理矿粉
+        double breeze = Double.parseDouble(array[10]);
+        float breezeRation = ratioMoudel[10] + ratioMoudel[11] + ratioMoudel[12] + ratioMoudel[13];
 
         for (int i = 0; i < array.length; i++) {
 
@@ -715,19 +729,27 @@ public class QualityWarningUtil {
 
                 String realRatio = QualityWarningUtil.calculateRatio(total, materialsValue);
 
-                list.add(QualityWarningUtil.materialWarningLevel(ratioMoudel[i], Float.parseFloat(realRatio), id, materialName[i],warningLeveMap));
-
+                QualityWarningData qualityWarningData = QualityWarningUtil.materialWarningLevel(ratioMoudel[i], Float.parseFloat(realRatio), id, materialName[i], warningLeveMap);
+                if (qualityWarningData != null){
+                    list.add(qualityWarningData);
+                }
             } else {
                 //处理矿粉
                 if (i > 10 && i < 14){
-                    float materialsValue = Float.parseFloat(array[i]) - Float.parseFloat(array[i - 1]);
-                    //处理正常材料百分比
-                    String realRatio = QualityWarningUtil.calculateRatio(total,materialsValue);
-                    list.add(QualityWarningUtil.materialWarningLevel(ratioMoudel[i], Float.parseFloat(realRatio), id, materialName[i],warningLeveMap));
+                    if ((ratioMoudel[10] + ratioMoudel[11] + ratioMoudel[12]) > 0){
+                        float materialsValue = Float.parseFloat(array[i]) - Float.parseFloat(array[i - 1]);
+                        //处理正常材料百分比
+                        String realRatio = QualityWarningUtil.calculateRatio(total,materialsValue);
+                        list.add(QualityWarningUtil.materialWarningLevel(ratioMoudel[i], Float.parseFloat(realRatio), id, materialName[i],warningLeveMap));
+                    }else {
+                        breeze += Float.parseFloat(array[i]);
+                    }
+
                 }else {
                     String realRatio;
                     //处理添加剂千分占比
                     if (i > 15){
+                         if (0 == ratioMoudel[i]){continue;}
                          realRatio = QualityWarningUtil.millesimalRatio(total, Float.parseFloat(array[i]));
                     }else {
                         //处理正常材料百分比
@@ -735,17 +757,32 @@ public class QualityWarningUtil {
                     }
                     if (Double.parseDouble(realRatio) <= 0){
                         continue;
-                    };
-                    list.add(QualityWarningUtil.materialWarningLevel(ratioMoudel[i], Float.parseFloat(realRatio), id, materialName[i],warningLeveMap));
+                    }
+                    QualityWarningData qualityWarningData = QualityWarningUtil.materialWarningLevel(ratioMoudel[i], Float.parseFloat(realRatio), id, materialName[i], warningLeveMap);
+
+                    if (qualityWarningData != null){
+                        list.add(qualityWarningData);
+                    }
                 }
             }
-
         }
 
+        //处理矿粉
+        String realRatio = QualityWarningUtil.calculateRatio(total,breeze);
+        QualityWarningData qualityWarningData = QualityWarningUtil.materialWarningLevel(breezeRation, Float.parseFloat(realRatio), id, "矿粉", warningLeveMap);
+        list.add(qualityWarningData);
         return list;
     }
 
-
+    /**
+     *
+     * 功能描述: <br>
+     *  <百分占比方式>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/7/28 14:47
+     */
     public static QualityWarningData compareDifference(double leve1Up,double leve1Down, double leve2Up,double leve2Down, double leve3Up,double leve3Down,  float materialRationReal, float materialRationMoudel, int id, String name) {
 
         float diffMaterialRation = materialRationReal - materialRationMoudel;
@@ -767,4 +804,33 @@ public class QualityWarningUtil {
         return qualityWarningData;
     }
 
+    /**
+     *
+     * 功能描述: <br>
+     *  <处理添加剂千分占比方式>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/7/28 14:47
+     */
+    public static QualityWarningData millesimal(double leve1Up,double leve1Down, double leve2Up,double leve2Down, double leve3Up,double leve3Down,  float materialRationReal, float materialRationMoudel, int id, String name) {
+
+        float diffMaterialRation = materialRationReal - (materialRationMoudel * 10);
+        DecimalFormat decimalFormat = new DecimalFormat("##.##");
+        String diffStr = decimalFormat.format(diffMaterialRation);
+
+        QualityWarningData qualityWarningData = new QualityWarningData();
+
+        if (diffMaterialRation <  leve3Down || diffMaterialRation > leve3Up) {
+            qualityWarningData = QualityWarningUtil.pushMapByParam(id, name, materialRationReal, materialRationMoudel, diffStr, "3");
+        } else if (diffMaterialRation < leve2Down || diffMaterialRation > leve2Up) {
+            qualityWarningData = QualityWarningUtil.pushMapByParam(id, name, materialRationReal, materialRationMoudel, diffStr, "2");
+        } else if (diffMaterialRation < leve1Down || diffMaterialRation > leve1Up) {
+            qualityWarningData = QualityWarningUtil.pushMapByParam(id, name, materialRationReal, materialRationMoudel, diffStr, "1");
+        } else {
+            qualityWarningData = QualityWarningUtil.pushMapByParam(id, name, materialRationReal, materialRationMoudel, diffStr, "0");
+        }
+
+        return qualityWarningData;
+    }
 }

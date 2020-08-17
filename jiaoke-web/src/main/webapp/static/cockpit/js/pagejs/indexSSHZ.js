@@ -151,7 +151,8 @@ function  getRealTimeData() {
         type:"get",
         dataType:"json",
         success:function (res) {
-            renderDataToPage(res);
+            debugger
+            renderDataToPage(res.ratioList);
         }
 
     });
@@ -193,6 +194,7 @@ function renderDataToPage(listStr) {
 
     if (listStr){
         for (var i=0;i<listStr.length;i++){
+            debugger
             var todayDate = getNowFormatDate();
             if ( listStr[i].crewNum == 'crew1' ){
                 var proDate = new Date(listStr[i].produce_date);

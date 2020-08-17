@@ -70,7 +70,8 @@
                                 </select>
                             </div>
                             <button style="width: 100px;height: 36px;margin-left: 1%;" class="query-but" onclick="selectPromessageByRaionModel()" >查询</button>
-                            <button style="width: 100px;height: 36px;margin-left: 1%;" class="query-but" onclick="method5('proExcel')" >导出excel</button>
+                            <button style="width: 100px;height: 36px;margin-left: 1%;" class="query-but" onclick="method5('proExcel')" >导出单页excel</button>
+                            <button style="width: 100px;height: 36px;margin-left: 1%;" class="query-but" onclick="method5('allProExcel')" >导出全部excel</button>
                         </div>
                     </div>
                 </div>
@@ -114,6 +115,46 @@
                             <th>除尘器温度</th>
                         </thead>
                         <tbody id="productData" >
+                        </tbody>
+                    </table>
+                    <table class="layui-table layui-form" id="allProExcel" style='white-space: nowrap;display: none'>
+                        <thead>
+                        <tr>
+                            <th>生产日期</th>
+                            <th>生产时间</th>
+                            <th>机组号</th>
+                            <th>盘号</th>
+                            <th>车号</th>
+                            <th>工程名称</th>
+                            <th>产品名称</th>
+                            <th>骨料10</th>
+                            <th>骨料9</th>
+                            <th>骨料8</th>
+                            <th>骨料7</th>
+                            <th>骨料6</th>
+                            <th>骨料5</th>
+                            <th>骨料4</th>
+                            <th>骨料3</th>
+                            <th>骨料2</th>
+                            <th>骨料1</th>
+                            <th>石粉4</th>
+                            <th>石粉3</th>
+                            <th>石粉2</th>
+                            <th>石粉1</th>
+                            <th>沥青</th>
+                            <th>再生料</th>
+                            <th>添加剂1</th>
+                            <th>添加剂2</th>
+                            <th>添加剂3</th>
+                            <th>添加剂4</th>
+                            <th>总计</th>
+                            <th>一仓温度</th>
+                            <th>混合料温度</th>
+                            <th>沥青温度</th>
+                            <th>骨料温度</th>
+                            <th>除尘器温度</th>
+                        </thead>
+                        <tbody id="allProductData" >
                         </tbody>
                     </table>
                 </div>

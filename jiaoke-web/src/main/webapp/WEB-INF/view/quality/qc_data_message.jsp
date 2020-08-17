@@ -134,7 +134,6 @@
         <script type="text/javascript">
             var myChart5= echarts.init(document.getElementById('chart5'));
             // 指定图表的配置项和数据
-
             option5 = {
                 title: {
                     text: '混合料温度走势图'
@@ -415,7 +414,7 @@
                         return sMax.toFixed(2);
                     },
                     min:function (v) {
-                        return (${baseMap.template.ratioStone - 0.5}) < 0? 0:(${baseMap.template.ratioStone - 0.5}).toFixed(1)
+                            return (${baseMap.template.ratioStone - 0.5}) < 0? 0:(${baseMap.template.ratioStone - 0.5}).toFixed(1)
                     },
                     axisLabel: {
                         formatter: '{value} %'
@@ -536,6 +535,8 @@
 
     </div>
     <input  id="path" value="${path}" type="hidden" >
+    <input  id="prodate" value="${prodate}" type="hidden" >
+    <input  id="crew" value="${crewNum}" type="hidden" >
 </body>
 <script type="text/javascript" src="/static/js/jquery.js"></script>
 <script language="javascript" src="/static/js/qc/jquery.jqprint-0.3.js"></script>
@@ -715,6 +716,9 @@
     }
 
     function printExcle(tableid) {
+        var temName;
+        var ahtml = ' <a href="#" id="exportExcel" style="display:none" ></a>';//提供给下面自定义文件名的操作
+        $("#"+tableid).after(ahtml);
         if(getExplorer() == 'ie') {
             var curTbl = document.getElementById(tableid);
             var oXL = new ActiveXObject("Excel.Application");
@@ -741,7 +745,16 @@
             }
 
         } else {
-            tableToExcel(tableid)
+            var startDate = $("#prodate").val();
+            var temName = $("#crew").val() == "crew1"? "机组一":"机组二";
+            if (startDate){
+                temName += startDate;
+            } else {
+                var date = new Date();
+                temName += date.toLocaleDateString();
+            }
+
+            tableToExcel(tableid,temName)
         }
     }
 
@@ -768,7 +781,11 @@
                 worksheet: name || 'Worksheet',
                 table: table.innerHTML
             }
-            window.location.href = uri + base64(format(template, ctx))
+            document.getElementById("exportExcel").href = uri
+                + base64(format(template, ctx));
+            document.getElementById("exportExcel").download = name + ".xls";//自定义文件名
+            document.getElementById("exportExcel").click();
+            // window.location.href = uri + base64(format(template, ctx))
         }
     })()
 

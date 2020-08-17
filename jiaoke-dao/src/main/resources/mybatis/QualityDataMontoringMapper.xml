@@ -39,7 +39,12 @@
                QR.temperature_duster ,
                QR.temperature_asphalt ,
                QR.temperature_aggregate,
-               QR.project_name
+               QR.project_name,
+               QM.temperature_asphalt AS temperature_asphalt_model,
+               QM.temperature_aggregate AS temperature_aggregate_model,
+               QM.temperature_mixture AS temperature_mixture_model,
+               QM.temperature_milling AS temperature_milling_model,
+               QM.*
         FROM
              quality_monitoring_realtime_data1 AS QR
                  INNER JOIN
@@ -85,7 +90,12 @@
                        QR.temperature_duster ,
                        QR.temperature_asphalt ,
                        QR.temperature_aggregate,
-                       QR.project_name
+                       QR.project_name,
+                       QM.temperature_asphalt AS temperature_asphalt_model,
+                       QM.temperature_aggregate AS temperature_aggregate_model,
+                       QM.temperature_mixture AS temperature_mixture_model,
+                       QM.temperature_milling AS temperature_milling_model,
+                       QM.*
                 FROM
                      quality_monitoring_realtime_data2 AS QR
                          INNER JOIN

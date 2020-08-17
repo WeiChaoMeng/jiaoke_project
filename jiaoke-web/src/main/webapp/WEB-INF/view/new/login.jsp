@@ -24,6 +24,24 @@
     <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
+<style>
+    .login-bottom {
+        position: absolute;
+        top: 93%;
+        left: 27%;
+        width: 700px;
+        /* height: 60px; */
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .login-bottom-copyright {
+        width: 100%;
+        padding-top: 20px;
+        font-size: 15px;
+        color: #7c7c7c;
+    }
+</style>
 <body class="login-bg">
 
 <div class="login layui-anim layui-anim-up">
@@ -41,7 +59,11 @@
         <hr class="hr20">
     </form>
 </div>
-
+<div class="login-bottom">
+    <div class="login-bottom-copyright">
+        <span>Copyright © 2008-2020  北京市政路桥建材集团有限公司路驰分公司 版权所有 版本v200730-1.1</span>
+    </div>
+</div>
 <script>
     $(function () {
         layui.use('form', function () {

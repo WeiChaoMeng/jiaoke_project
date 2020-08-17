@@ -10,7 +10,10 @@ package com.jiaoke.quality.service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.jiake.utils.DateUtil;
+import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.quality.dao.QualityWarningDisposeDao;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -129,7 +132,14 @@ public class QualityWarningDisposeImpl implements QualityWarningDisposeInf {
     @Override
     public String addProductWarningMsg(String proMsg, List<String> idList) {
         Map<String,String> map = new HashMap<>();
-        int res = qualityWarningDisposeDao.insertProductWarningMsg(proMsg,idList);
+        UserInfo principal = (UserInfo) SecurityUtils.getSubject().getPrincipal();
+        if (principal == null){
+            System.out.println("获取报警信息报告人错误");
+            map.put("message","error");
+            return JSON.toJSONString(map);
+        }
+        String date = DateUtil.dateConvertYYYYMMDDHHMMSS(new Date());
+        int res = qualityWarningDisposeDao.insertProductWarningMsg(proMsg,principal.getNickname(),date,idList);
         map.put("message","success");
         if (res <= 0){
             map.put("message","error");

@@ -532,4 +532,26 @@ public interface QualityExperimentalManagerInf {
      * @date 2020/5/24 14:54
      */
     String getSpecificationAndManufacturers(String startDate, String endDate, String materials);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询每日所有产品>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/8/3 9:23
+     */
+    String selectAllProduct();
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期、机组查询平均值、级配信息>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/8/3 10:58
+     */
+    String getDataManagerRationByDate(String produceDate, String crewNum);
 }

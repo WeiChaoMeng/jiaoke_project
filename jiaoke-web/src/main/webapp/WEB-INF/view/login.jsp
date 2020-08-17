@@ -29,7 +29,7 @@
         <div class="dowebok">
             <div class="logo">
                 <img src="/static/images/login-logo.jpg" alt="" style="width: 15%;float: left;padding: 10px 0px;margin-left: 25px;">
-                <span style="    height: 25px;width: 80%;font-size: 20px;display: block;padding-top: 6px;padding-left: 33px;">路驰公司企业综合管理平台</span>
+                <span style="    height: 25px;width: 80%;font-size: 20px;display: block;padding-top: 6px;padding-left: 33px;">路驰公司企业综合管理平台<i>v200730-v1.1</i></span>
             </div>
 
             <div class="login-form">

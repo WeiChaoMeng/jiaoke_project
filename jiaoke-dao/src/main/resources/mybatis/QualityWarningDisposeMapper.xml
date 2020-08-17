@@ -12,8 +12,7 @@
         FROM
              quality_warning_promessage_crew
         WHERE
-                -- AND produce_date = NOW()
-                produce_date = '2020-06-22'
+                TO_DAYS(produce_date) = TO_DAYS(NOW())
         GROUP BY
                  produce_date,
                  produce_crewNum,
@@ -52,7 +51,9 @@
     </select>
     <insert id="insertProductWarningMsg" useGeneratedKeys="true" keyProperty="id">
         UPDATE quality_warning_promessage_crew
-        SET warning_reason = #{proMsg}
+        SET warning_reason = #{proMsg},
+            warning_up_user =  #{upUser},
+            warning_up_time =  #{upTime}
         WHERE id in
             <foreach collection="idList" item="item" open="(" close=")" separator=",">
                 #{item}
