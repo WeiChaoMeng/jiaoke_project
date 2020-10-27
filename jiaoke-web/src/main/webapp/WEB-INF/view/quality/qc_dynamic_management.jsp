@@ -101,7 +101,7 @@
                                     <li class="function"><a href="" onclick="chengeHref(this.id)" id="material_aggregate_5">五仓材料</a></li>
                                     <li class="function"><a href="" onclick="chengeHref(this.id)" id="material_aggregate_6">六仓材料</a></li>
                                     <li class="function"><a href="" onclick="chengeHref(this.id)" id="material_asphalt">油石比</a></li>
-                                    <li class="function"><a href="" onclick="chengeHref(this.id)" id="material_stone">石粉比</a></li>
+                                    <li class="function"><a href="" onclick="chengeHref(this.id)" id="material_stone">填料</a></li>
                                     <li class="function"><a href="" onclick="chengeHref(this.id)" id="material_regenerate">铣刨料</a></li>
                                 </ul>
                             </div>
@@ -142,7 +142,7 @@
                                             </c:forEach>
                                         </c:otherwise>
                                     </c:choose>
-                                    <p class="short-info">直观显示 一键生成</p>
+
                                 </div>
                             </div>
                             <div class="card-content content-first bg-e8e8e8">
@@ -310,8 +310,6 @@
                                             <h1>${rationName}产品${material}极差走势图</h1>
                                         </c:otherwise>
                                     </c:choose>
-
-                                    <p class="short-info">自动计算 轻松工作</p>
                                 </div>
                             </div>
                             <div class="card-content content-first bg-e8e8e8">
@@ -491,8 +489,6 @@
                                             <h1>${rationName}产品平均${material}走势图</h1>
                                         </c:otherwise>
                                     </c:choose>
-
-                                    <p class="short-info">直观展示 简单保存</p>
                                 </div>
                             </div>
                             <div class="card-content content-first bg-e8e8e8">

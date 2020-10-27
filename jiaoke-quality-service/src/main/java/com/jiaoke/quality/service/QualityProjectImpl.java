@@ -8,6 +8,7 @@
  **/
 package com.jiaoke.quality.service;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.jiake.utils.CarDateUtil;
 import com.jiake.utils.QualityGetProjectByCarNumUtil;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.text.ParseException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -105,5 +107,21 @@ public class QualityProjectImpl implements QualityProjectInf {
         }
         //存入车牌识别表
          qualityProjectDao.insertCarNum(license,recotime,crewId);
+    }
+
+    @Override
+    public Map<String, String> addWeighingInformation(String weighingMessage) {
+        Map<String,String> map = new HashMap<>();
+        try{
+            JSONObject jsonObject = JSON.parseObject(weighingMessage);
+            System.out.println(jsonObject);
+            map.put("code","200");
+            map.put("message","接收成功");
+        }catch (Exception e){
+            e.printStackTrace();
+            map.put("code","500");
+            map.put("message","解析json失败");
+        }
+        return map;
     }
 }

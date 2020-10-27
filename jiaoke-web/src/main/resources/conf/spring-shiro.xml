@@ -30,6 +30,8 @@
                 <!--质量数据写入-->
                 /qualityData.do = anon
                 /getCarNum.do = anon
+                <!--ERP数据写入-->
+                /getWeighingInformation.do = anon
                 <!--登录-->
                 /login/login.do = anon
                 /login/*.do = authc

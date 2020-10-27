@@ -138,4 +138,54 @@
     <select id="selectWarningLevelByRatioId" resultType="java.util.Map">
         SELECT * FROM quality_warning_dictionary WHERE ration_id = #{ratioId}
     </select>
+    <select id="selectLastProductTime" resultType="java.util.Map">
+            SELECT
+            MAX(STR_TO_DATE(concat(produce_date,' ',produce_time),'%Y-%m-%d %H:%i:%s')) AS lastTime
+            FROM
+            quality_monitoring_realtime_data${crewNum}
+            WHERE
+            STR_TO_DATE(concat(produce_date,' ',produce_time),'%Y-%m-%d %H:%i:%s') &lt;=  &apos;${produceTime}&apos;
+    </select>
+    <select id="selectThreeProductByTime" resultType="java.util.Map">
+        <choose>
+            <when test="crewNum == '1'">
+                SELECT
+                *
+                FROM
+                quality_monitoring_realtime_data1
+                WHERE
+                STR_TO_DATE(concat(produce_date,' ',produce_time),'%Y-%m-%d %H:%i:%s') BETWEEN DATE_SUB(#{productTime}, INTERVAL 30 MINUTE) AND #{productTime}
+                AND
+                produce_proportioning_num =  #{rationNum}
+                ORDER BY STR_TO_DATE(concat(produce_date,' ',produce_time),'%Y-%m-%d %H:%i:%s') DESC
+                LIMIT 3
+            </when>
+            <otherwise>
+                SELECT
+                *
+                FROM
+                quality_monitoring_realtime_data2
+                WHERE
+                STR_TO_DATE(concat(produce_date,' ',produce_time),'%Y-%m-%d %H:%i:%s') BETWEEN DATE_SUB(#{productTime}, INTERVAL 30 MINUTE) AND #{productTime}
+                AND
+                produce_proportioning_num = #{rationNum}
+                ORDER BY STR_TO_DATE(concat(produce_date,' ',produce_time),'%Y-%m-%d %H:%i:%s') DESC
+                LIMIT 3
+            </otherwise>
+        </choose>
+
+    </select>
+    <select id="selectProductionPeople" resultType="java.util.Map">
+        SELECT * FROM `quality_job_scheduling` WHERE crew_num = #{crewNum};
+    </select>
+    <update id="updateProductPeopleToRealTimeDate">
+        <choose>
+            <when test="crewNum == '1'">
+                UPDATE quality_monitoring_realtime_data1 SET produce_people = #{productPeople} WHERE produce_date = #{proDate} AND produce_time = #{produceTime}
+            </when>
+            <otherwise>
+                UPDATE quality_monitoring_realtime_data2 SET produce_people = #{productPeople} WHERE produce_date = #{proDate} AND produce_time = #{produceTime}
+            </otherwise>
+        </choose>
+    </update>
 </mapper>

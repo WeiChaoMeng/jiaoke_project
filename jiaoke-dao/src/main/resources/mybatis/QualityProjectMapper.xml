@@ -189,4 +189,9 @@
             </otherwise>
         </choose>
     </update>
+    <insert id="insertErrorCarNum" parameterType="java.lang.String" >
+        INSERT INTO `quality_error_car_num` ( `car_num`, `uptime`)
+        VALUES
+               ( #{license},  #{carTime});
+    </insert>
 </mapper>

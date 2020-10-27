@@ -88,6 +88,7 @@ function showOldRaio() {
                             + '<th>一号机组编号</th>'
                             + '<th>二号机组编号</th>'
                             + '<th>模板名称</th>'
+                            + '<th>再生类型</th>'
                             + '<th>上传时间</th>'
                             + '<th>备注信息</th>'
                             + '<th>上传人</th>'
@@ -106,12 +107,26 @@ function showOldRaio() {
             for (var j = 0; j < rationArr.length;j++){
 
                 year = rationArr[j]['createTime'].split("-")[0];
+                var regenerationName = "未选择再生类型";
+
+                switch (rationArr[j].regenerationType) {
+                    case '1':
+                        regenerationName = "无再生"
+                        break
+                    case '2':
+                        regenerationName = "可添加再生"
+                        break
+                    case '3':
+                        regenerationName = "必须添加再生"
+                        break
+                }
 
                 temH = '<tr>'
                     + '<td class="tdnum"></td>'
                     + '<td>' + rationArr[j].crew1Id + '</td>'
                     + '<td>' + rationArr[j].crew2Id + '</td>'
                     +'<td>' + rationArr[j].modelName + '</td>'
+                    +'<td>' + regenerationName + '</td>'
                     +'<td>' + rationArr[j].createTime + '</td>'
                     +'<td>' + rationArr[j].remaker + '</td>'
                     +'<td>' + rationArr[j].createUser + '</td>'
@@ -159,7 +174,10 @@ function editRatio(ratioId) {
                 layer.msg('获取模板失败');
             }
             for (var k in res){
-                $("input[data-value='" +k + "']").val(res[k])
+                $("input[data-value='" +k + "']").val(res[k]);
+                if (k === 'regenerationType'){
+                    $("#editRegenerationType").find("option[value='" + res[k] +"']").attr("selected", "selected");
+                }
             }
             layer.open({
                 type: 1,
@@ -225,8 +243,12 @@ function showRatio( ratioId ) {
                 layer.msg('获取模板失败');
 
             }
+            $("#regenerationType option:first").prop("selected", 'selected')
             for (var k in res){
                 $("input[data-value='" +k + "']").val(res[k])
+                if (k === 'regenerationType'){
+                        $("#regenerationType").find("option[value='" + res[k] +"']").attr("selected", "selected");
+                }
             }
         }
     })

@@ -9,6 +9,7 @@
 package com.jiaoke.quality.service;
 
 import com.alibaba.druid.util.StringUtils;
+import com.jiake.utils.QualityDataMontoringUtil;
 import com.jiake.utils.QualityWarningUtil;
 import com.jiaoke.quality.bean.QualityRatioTemplate;
 import com.jiaoke.quality.bean.QualityTimelyDataFalse;
@@ -40,7 +41,10 @@ public class ReceiveDataImpl implements ReceiveDataInf {
     @Resource
     private QualityTimelyDataFalseMapper qualityTimelyDataFalseMapper;
 
-
+    /**
+     *  存入两个机组最后一盘生产时间，用于判断生产时预热时间
+     */
+    private Map<String,Object> productDate = new HashMap<>();
     /**
      *
      * 功能描述: <br>
@@ -52,7 +56,7 @@ public class ReceiveDataImpl implements ReceiveDataInf {
      */
 
     @Override
-    public void receiveDataToDB(String messageData) {
+    public synchronized void receiveDataToDB(String messageData)  throws Exception  {
 
         if(StringUtils.isEmpty(messageData)) return;
 
@@ -64,7 +68,10 @@ public class ReceiveDataImpl implements ReceiveDataInf {
         if (0 == messageArray.length || null == messageArray) return;
         //分解出机组号
         String crewNum = messageArray[messageArray.length - 1];
-
+        //定义最后一个时间的key
+        String lastTimeKey = "productTime_" + crewNum;
+        //定义记录盘数
+        String countKey = "productCount_" + crewNum;
         //根据机组获取字段名称
         String fieldName = "";
 
@@ -75,7 +82,6 @@ public class ReceiveDataImpl implements ReceiveDataInf {
             case 2:
                 fieldName = "crew2_modele_id";
                 break;
-
             default:
                 fieldName = "";
 
@@ -91,44 +97,134 @@ public class ReceiveDataImpl implements ReceiveDataInf {
 
         //获取生产时间，确定所使用得模板
         String proDate = map.get("produce_date");
+
+        //1. 判断生产时间间隔,产生两种可能性 一、生产间隔大于半个小时，前十盘处于热仓情况 二、小于半个小时，处于连续生产情况
+            //拼接日期时间
+        SimpleDateFormat dateFormat  = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String produceTime = proDate + " " + map.get("produce_time");
+        //程序第一次没有存入最后一条生产信息
+        if (!productDate.containsKey(lastTimeKey)){
+            String initTime = "2020-09-01 00:00:00";
+//            Map<String,Date> lastProductMap = qualityWarningDao.selectLastProductTime(produceTime,crewNum);
+            productDate.put(lastTimeKey,initTime);
+            productDate.put(countKey,0);
+        }
+
         //根据配比号，获取模板数据
         QualityRatioTemplate ratioTemplate = qualityWarningDao.selectRatioTemplateByCrew1MoudelId(map.get("produce_ratio_id"), fieldName,proDate);
         //根据配比ID，获取预警数据
         Map<String,String> warningLeveMap = qualityWarningDao.selectWarningLevelByRatioId(ratioTemplate.getId());
-
         if (null == ratioTemplate) {
             return;
         }
         if (null == warningLeveMap || warningLeveMap.isEmpty()){
             return;
         }
-
         //插入数据库表quality_warning_promessage_crew，返回主键ID
         qualityWarningDao.insertQualityWarningCrew(map);
         int id =Integer.parseInt(map.get("id"));
+        //更新当日生产人员
+        List<Map<String,String>> userList  = qualityWarningDao.selectProductionPeople(crewNum);
+        //初始化生产时间
+        String initTime = "2020-09-28 08:00:00";
+        String productPeople = "";
+        String phone = "";
+        Date workTime = dateFormat.parse(initTime);
+        Date proTime = dateFormat.parse(produceTime);
+        //做取余 查看是否在班
+        double workPoor = QualityDataMontoringUtil.getWorkTime(proTime, workTime);
+        //班组号
+        String teamNum = "";
+        //根据取余结果确认班组
+        if (workPoor <= 10){
+            teamNum = "1";
+        }else if ( workPoor <= 24){
+            teamNum = "2";
+        }else if (workPoor <= 34){
+            teamNum = "3";
+        }else if (workPoor <= 48){
+            teamNum = "1";
+        }else if (workPoor <= 58){
+            teamNum = "2";
+        }else if (workPoor <= 72){
+            teamNum = "3";
+        }
+        for (int i = 0;i < userList.size();i++){
+            String teamCode =String.valueOf(userList.get(i).get("team_num"));
+            if (teamNum.equals(teamCode)){
+                productPeople =  userList.get(i).get("team_leader");
+                phone = userList.get(i).get("message_phone");
+                qualityWarningDao.updateProductPeopleToRealTimeDate(proDate,map.get("produce_time"),crewNum,productPeople);
+            }
+        }
+        //判断生产时间间隔
+        String lastTime = productDate.get(lastTimeKey).toString();
+        String count = productDate.get(countKey).toString();
+        Date lastProductTime = dateFormat.parse(lastTime);
+        Date productTime = dateFormat.parse(produceTime);
+        //生产间隔时间分钟数
+        long datePoor = QualityDataMontoringUtil.getDatePoor(productTime,lastProductTime);
+        //插入数据库的预警集合
+        List<QualityWarningData>  warningDataList = new ArrayList<>();
 
-        //一仓温度
-        int warehouse = Integer.parseInt(messageArray[27]);
-        //混合料温度
-        int mixture = Integer.parseInt(messageArray[28]);
-        //除尘器温度
-//        int mixture = Integer.parseInt(messageArray[29]);
-        //沥青温度
-        int temperatureAsphalt = Integer.parseInt(messageArray[30]);
-        //骨料温度
-        int  aggregate = Integer.parseInt(messageArray[31]);
         //截取材料实际数值到数组
         String[] temArray;
         temArray = Arrays.copyOfRange(messageArray,6,27);
 
-        //判断材料百分比差值后插入
-        List<QualityWarningData>  warningDataList = QualityWarningUtil.materialWarningObj(id,warningLeveMap,temArray,ratioTemplate);
+        //2. 计数大于10盘后更新日期map，
+        if (datePoor > 30 && Integer.parseInt(count) <= 10){
+            productDate.put(countKey,Integer.parseInt(count) + 1);
+            //温度类型不预警
+            warningDataList.add(QualityWarningUtil.threeTemperatureWarningLevel(warningLeveMap,ratioTemplate.getTemperatureMilling(), ratioTemplate.getTemperatureMillingUp(), Integer.parseInt(messageArray[27]), id, "一仓温度"));
+            warningDataList.add(QualityWarningUtil.threeTemperatureWarningLevel(warningLeveMap,ratioTemplate.getTemperatureAsphalt(), ratioTemplate.getTemperatureAsphaltUp(), Integer.parseInt(messageArray[28]), id, "沥青温度"));
+            warningDataList.add(QualityWarningUtil.threeTemperatureWarningLevel(warningLeveMap,ratioTemplate.getTemperatureMixture(), ratioTemplate.getTemperatureMixtureUp(), Integer.parseInt(messageArray[30]), id, "混合料温度"));
+            warningDataList.add(QualityWarningUtil.threeTemperatureWarningLevel(warningLeveMap,ratioTemplate.getTemperatureAggregate(), ratioTemplate.getTemperatureAggregateUp(), Integer.parseInt(messageArray[31]), id, "骨料温度"));
+            //刚开始生产的不进行三盘平均
+            if (Integer.parseInt(count) < 3){
+                //判断材料百分比差值后插入
+                warningDataList.addAll(QualityWarningUtil.materialWarningObj(id,warningLeveMap,temArray,ratioTemplate));
+            }else {
+                //根据时间、机组号、产品类型获取最近的三盘数据
+                List<Map<String,String>>  threeList =  qualityWarningDao.selectThreeProductByTime(productTime,crewNum,map.get("produce_ratio_id"));
+                //获取平均后的三盘数据，计算差值
+                warningDataList.addAll(QualityWarningUtil.avgThreeProductWarningLeve(id,threeList,warningLeveMap,ratioTemplate));
+            }
 
-        //获取温度差值判断后插入
-        warningDataList.add(QualityWarningUtil.temperatureWarningLevel(warningLeveMap,ratioTemplate.getTemperatureMilling(), ratioTemplate.getTemperatureMillingUp(), warehouse, id, "一仓温度"));
-        warningDataList.add(QualityWarningUtil.temperatureWarningLevel(warningLeveMap,ratioTemplate.getTemperatureAsphalt(), ratioTemplate.getTemperatureAsphaltUp(), temperatureAsphalt, id, "沥青温度"));
-        warningDataList.add(QualityWarningUtil.temperatureWarningLevel(warningLeveMap,ratioTemplate.getTemperatureMixture(), ratioTemplate.getTemperatureMixtureUp(), mixture, id, "混合料温度"));
-        warningDataList.add(QualityWarningUtil.temperatureWarningLevel(warningLeveMap,ratioTemplate.getTemperatureAggregate(), ratioTemplate.getTemperatureAggregateUp(), aggregate, id, "骨料温度"));
+            if (Integer.parseInt(count) == 10){
+                productDate.put(lastTimeKey,produceTime);
+                productDate.put(countKey,0);
+            }
+        }else {
+            productDate.put(lastTimeKey,produceTime);
+            //同类型半个小时内的同类型三盘产品
+            List<Map<String,String>>  threeList =  qualityWarningDao.selectThreeProductByTime(productTime,crewNum,map.get("produce_ratio_id"));
+
+            //处理温度差值
+            //一仓温度
+            int warehouse = 0;
+            //混合料温度
+            int mixture = 0;
+            //除尘器温度
+//        int mixture = Integer.parseInt(messageArray[29]);
+            //沥青温度
+            int temperatureAsphalt = 0;
+            //骨料温度
+            int  aggregate = 0;
+            for (int i = 0; i < threeList.size();i++){
+                warehouse += Integer.parseInt(String.valueOf(threeList.get(i).get("temperature_warehouse_1")));
+                mixture += Integer.parseInt(String.valueOf(threeList.get(i).get("temperature_mixture")));
+                temperatureAsphalt += Integer.parseInt(String.valueOf(threeList.get(i).get("temperature_asphalt")));
+                aggregate += Integer.parseInt(String.valueOf(threeList.get(i).get("temperature_aggregate")));
+            }
+            warningDataList.add(QualityWarningUtil.temperatureWarningLevel(warningLeveMap,ratioTemplate.getTemperatureMilling(), ratioTemplate.getTemperatureMillingUp(), warehouse/threeList.size(), id, "一仓温度"));
+            warningDataList.add(QualityWarningUtil.temperatureWarningLevel(warningLeveMap,ratioTemplate.getTemperatureAsphalt(), ratioTemplate.getTemperatureAsphaltUp(), temperatureAsphalt/threeList.size(), id, "沥青温度"));
+            warningDataList.add(QualityWarningUtil.temperatureWarningLevel(warningLeveMap,ratioTemplate.getTemperatureMixture(), ratioTemplate.getTemperatureMixtureUp(), mixture/threeList.size(), id, "混合料温度"));
+            warningDataList.add(QualityWarningUtil.temperatureWarningLevel(warningLeveMap,ratioTemplate.getTemperatureAggregate(), ratioTemplate.getTemperatureAggregateUp(), aggregate/threeList.size(), id, "骨料温度"));
+
+            //处理材料温度差值
+            warningDataList.addAll(QualityWarningUtil.avgThreeProductWarningLeve(id,threeList,warningLeveMap,ratioTemplate));
+
+        }
 
         //插入数据库
          qualityWarningDao.insertQualityWarningData(warningDataList);

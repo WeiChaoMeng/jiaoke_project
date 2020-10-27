@@ -48,6 +48,8 @@ public class QualityRatioTemplate {
     private float ratioRegenerate2;
     //再生料比中
     private float ratioRegenerate3;
+    //再生料比中
+    private int regenerateType;
     //添加剂比
     private float ratioAdditive;
     //添加剂比2

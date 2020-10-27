@@ -52,10 +52,11 @@
                                 </th>
                                 <th style="width: 10%">一号机组编号</th>
                                 <th style="width: 10%">二号机组编号</th>
-                                <th style="width: 15%">模板名称</th>
+                                <th style="width: 10%">模板名称</th>
+                                <th style="width: 10%">再生类型</th>
                                 <th style="width: 15%">上传时间</th>
                                 <th style="width: 15%">备注信息</th>
-                                <th style="width: 15%">上传人</th>
+                                <th style="width: 10%">上传人</th>
                                 <th style="width: 15%">操作</th>
                             </thead>
                             <tbody  >
@@ -67,6 +68,18 @@
                                     <td>${item.crew1Id}</td>
                                     <td>${item.crew2Id}</td>
                                     <td><a href="#">${item.modelName}</a></td>
+                                        <c:choose>
+                                            <c:when test="${item.regenerationType == '1'}">
+                                            <td>无再生</td>
+                                            </c:when>
+                                            <c:when test="${item.regenerationType == '2'}">
+                                                <td>可添加再生</td>
+                                            </c:when>
+                                            <c:when test="${item.regenerationType == '3'}">
+                                                <td>必须添加再生</td>
+                                            </c:when>
+                                            <c:otherwise><td>未选择再生</td></c:otherwise>
+                                        </c:choose>
                                     <td>${item.createTime}</td>
                                     <td>${item.remaker}</td>
                                     <td>${item.createUser}</td>
@@ -506,15 +519,23 @@
                 <tr>
                     <td class="my_tlabels">粗再生料：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01" name="ratioRegenerate1" class="my_form_input" placeholder="0.0">
+                        <input type="number" min="0.0" step="0.01" style="width: 120px;" name="ratioRegenerate1" class="my_form_input" placeholder="0.0">
                     </td>
                     <td class="my_tlabels">细再生料：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01" name="ratioRegenerate2" class="my_form_input" placeholder="0.0">
+                        <input type="number" min="0.0" step="0.01" style="width: 120px;" name="ratioRegenerate2" class="my_form_input" placeholder="0.0">
                     </td>
                     <td class="my_tlabels">中再生料：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01" name="ratioRegenerate3" class="my_form_input" placeholder="0.0">
+                        <input type="number" min="0.0" step="0.01" style="width: 120px;" name="ratioRegenerate3" class="my_form_input" placeholder="0.0">
+                    </td>
+                    <td class="my_tlabels">再生类型：</td>
+                    <td>
+                        <select class="my_form_input" style="width: 120px;" name="regenerationType" data-value="regeneration_type">
+                            <option value ="1">无再生</option>
+                            <option value ="2">可添加再生</option>
+                            <option value="3">必须添加再生</option>
+                        </select>
                     </td>
                 </tr>
                 <tr>
@@ -1075,6 +1096,14 @@
                 <td>
                     <input type="number" min="0.0" step="0.01" data-value="ratioRegenerate3" class="my_form_input" placeholder="0.0">
                 </td>
+                <td class="my_tlabels">再生类型：</td>
+                <td>
+                    <select class="my_select" name="regeneration_type" id="regenerationType" data-value="regenerationType">
+                        <option value ="1"  >无再生</option>
+                        <option value ="2">可添加再生</option>
+                        <option value="3">必须添加再生</option>
+                    </select>
+                </td>
             </tr>
             <tr>
                 <td class="my_tlabels">再生料一级预警上/下限：</td>
@@ -1288,7 +1317,7 @@
         </table>
     </form>
     </div>
-    <!--编辑机组模板弹出-->
+    <!--编辑模板弹出-->
     <div id="editRatio" class="ration_form_model" style="display:none;" >
         <form  id="myEditForm"   action="/EditRation.do" method="post" >
             <table class="my_form_table">
@@ -1630,6 +1659,14 @@
                     <td>
                         <input type="number" min="0.0" step="0.01" data-value="ratioRegenerate3"  name="ratioRegenerate3" class="my_form_input" placeholder="0.0">
                     </td>
+                    <td class="my_tlabels">再生类型：</td>
+                    <td>
+                        <select class="my_form_input" style="width: 120px;" id="editRegenerationType" name="regenerationType" data-value="regeneration_type">
+                            <option value ="1">无再生</option>
+                            <option value ="2">可添加再生</option>
+                            <option value="3">必须添加再生</option>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <td class="my_tlabels">再生料一级预警上/下限：</td>
@@ -1849,7 +1886,6 @@
 
         </form>
     </div>
-
     <!--级配模板弹出-->
     <div id="showGradingBrk" class="form_background"  style="display:none;" ></div>
     <div id="showGrading" class="ration_form_model" style="display:none;" >

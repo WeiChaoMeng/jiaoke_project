@@ -11,6 +11,7 @@ package com.jiake.utils;
 import org.apache.logging.log4j.util.Strings;
 
 import java.text.DecimalFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -125,6 +126,42 @@ public class QualityDataMontoringUtil {
         return bo;
 
     }
+    public static long getDatePoor(Date endDate, Date nowDate) {
 
+//        long nd = 1000 * 24 * 60 * 60;
+//        long nh = 1000 * 60 * 60;
+        long nm = 1000 * 60;
+        // long ns = 1000;
+        // 获得两个时间的毫秒时间差异
+        long diff = endDate.getTime() - nowDate.getTime();
+        // 计算差多少天
+        //long day = diff / nd;
+        // 计算差多少小时
+        //long hour = diff % nd / nh;
+        // 计算差多少分钟
+        long min = diff/nm;
+        // 计算差多少秒//输出结果
+        //long sec = diff % nd % nh % nm / ns;
+        return min;
+    }
 
+    public static double getWorkTime(Date endDate, Date nowDate) {
+
+        long nd = 1000 * 24 * 60 * 60;
+        long nh = 1000 * 60 * 60;
+//        long nm = 1000 * 60;
+        // long ns = 1000;
+        // 获得两个时间的毫秒时间差异
+        long diff = endDate.getTime() - nowDate.getTime();
+        // 计算差多少天
+        //long day = diff / nd;
+        // 计算差多少小时
+//        float hour = (diff/ nh) % 72;
+        double hour = ((double) diff)/ nh;
+        // 计算差多少分钟
+//        long min = diff/nh;
+        // 计算差多少秒//输出结果
+        //long sec = diff % nd % nh % nm / ns;
+        return hour;
+    }
 }

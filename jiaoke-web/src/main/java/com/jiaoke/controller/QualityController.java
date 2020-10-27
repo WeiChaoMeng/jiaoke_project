@@ -10,6 +10,7 @@ package com.jiaoke.controller;
 
 import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.jiake.utils.DateUtil;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.QualityMatchingUtil;
@@ -107,6 +108,8 @@ public class QualityController {
     @Resource
     private QualityWarningDisposeInf qualityWarningDisposeInf;
     @Resource
+    private QualityPooledProdyctInf qualityPooledProdyctInf;
+    @Resource
     private AmqpTemplate amqpTemplate;
 
     /**
@@ -162,6 +165,19 @@ public class QualityController {
         }
     }
 
+    @ResponseBody
+    @RequestMapping(value = {"/getWeighingInformation.do"} ,method = RequestMethod.POST)
+    public String  getWeighingInformation(@RequestParam("weighingMessage") String weighingMessage){
+        Map<String,String> res = new HashMap<>();
+        if (weighingMessage == null || weighingMessage.equals("")){
+            res.put("code","400");
+            res.put("message","发送或接收错误，json为空");
+            return JSON.toJSONString(res);
+        }
+        Map<String,String> map = qualityprojectInf.addWeighingInformation(weighingMessage);
+        return JSON.toJSONString(map);
+    }
+
     /**
      *
      * 功能描述: <br>
@@ -195,6 +211,15 @@ public class QualityController {
 
             if ((charset == null || charset.length() == 0) && (size ==readCount))
             {
+                String carNum = new String(buf,"UTF-8");
+                //获取设备名称
+                JSONObject Json = JSONObject.parseObject(carNum);
+                //获取车牌号
+                String license= Json.getJSONObject("AlarmInfoPlate").getJSONObject("result").getJSONObject("PlateResult").getString("license");
+                //固定的几个车牌不是有效值
+                if ("京A30910".equals(license)){
+                    return;
+                }
                 qualityprojectInf.editProductionDataByCarNum(new String(buf,"UTF-8"));
 
                 //RabbitService
@@ -2878,7 +2903,7 @@ public class QualityController {
         }
         return res;
     }
-    /********************************  设置相关 end *****getExperimentalProjectMessage************************************/
+    /********************************  设置相关 end *****************************************/
 
     /********************************  关键预警数据 Start *****************************************/
 
@@ -2982,6 +3007,129 @@ public class QualityController {
         return res;
     }
     /********************************  警报处理 End *****************************************/
+    /********************************  分析汇总 Start *****************************************/
+    @RequestMapping("/qc_pooled_analysis.do")
+    public String goPooledAnalysisPage(){
+        return "quality/qc_pooled_analysis";
+    }
+
+    @RequestMapping("/qc_pooled_product.do")
+    public String goPooledProductPage(){
+        return "quality/qc_pooled_product";
+    }
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询日期范围内两个机组总量信息>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/10/26 8:43
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getProdycyTotalByDate.do",method = RequestMethod.POST)
+    public String getProdycyTotalByDate(@RequestParam("startDate") String startDate,@RequestParam("lastDate") String lastDate){
+        Map<String,Object> map = new HashMap<>();
+        if (lastDate == null|| startDate == null ){
+            map.put("message","error");
+        }else {
+            try{
+                List<Map<String,String>>  res = qualityPooledProdyctInf.getProdycyTotalByDate(startDate,lastDate);
+                map.put("message","success");
+                map.put("body",res);
+            }catch (Exception e){
+                e.printStackTrace();
+                map.put("message","error");
+            }
+        }
+        return JSON.toJSONString(map);
+    }
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询日期范围内每日产量信息>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/10/26 8:43
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getEverDayProdacuByDate.do",method = RequestMethod.POST)
+    public String getEverDayProdacuByDate(@RequestParam("startDate") String startDate,@RequestParam("lastDate") String lastDate){
+        Map<String,Object> map = new HashMap<>();
+        if (lastDate == null|| startDate == null ){
+            map.put("message","error");
+        }else {
+            try{
+                List<Map<String,String>>  res = qualityPooledProdyctInf.getEverDayProdacuByDate(startDate,lastDate);
+                map.put("message","success");
+                map.put("body",res);
+            }catch (Exception e){
+                e.printStackTrace();
+                map.put("message","error");
+            }
+        }
+        return JSON.toJSONString(map);
+    }
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询每种类型产品产量>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/10/26 14:55
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getAllProductTypeTotal.do",method = RequestMethod.POST)
+    public String getAllProductTypeTotal(@RequestParam("startDate") String startDate,@RequestParam("lastDate") String lastDate){
+        Map<String,Object> map = new HashMap<>();
+        if (lastDate == null|| startDate == null ){
+            map.put("message","error");
+        }else {
+            try{
+                List<Map<String,String>>  res = qualityPooledProdyctInf.getAllProductTypeTotal(startDate,lastDate);
+                map.put("message","success");
+                map.put("body",res);
+            }catch (Exception e){
+                e.printStackTrace();
+                map.put("message","error");
+            }
+        }
+        return JSON.toJSONString(map);
+    }
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查看每个机组产品产量情况>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/10/26 16:47
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getTwoCrewProduct.do",method = RequestMethod.POST)
+    public String getTwoCrewProduct(@RequestParam("startDate") String startDate,@RequestParam("lastDate") String lastDate){
+        Map<String,Object> map = new HashMap<>();
+        if (lastDate == null|| startDate == null ){
+            map.put("message","error");
+        }else {
+            try{
+                List<Map<String,String>>  res = qualityPooledProdyctInf.getTwoCrewProduct(startDate,lastDate);
+                map.put("message","success");
+                map.put("body",res);
+            }catch (Exception e){
+                e.printStackTrace();
+                map.put("message","error");
+            }
+        }
+        return JSON.toJSONString(map);
+    }
+    /********************************  分析汇总 End *****************************************/
 
     /*********************************移动端数据管理start***************************************/
     /**

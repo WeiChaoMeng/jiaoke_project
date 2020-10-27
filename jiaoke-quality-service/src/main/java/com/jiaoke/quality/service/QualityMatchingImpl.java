@@ -115,6 +115,7 @@ public class QualityMatchingImpl implements QualityMatchingInf{
         qualityRatioTemplate.setRatioRegenerate1(Float.parseFloat(map.get("ratioRegenerate1").toString()));
         qualityRatioTemplate.setRatioRegenerate2(Float.parseFloat(map.get("ratioRegenerate2").toString()));
         qualityRatioTemplate.setRatioRegenerate3(Float.parseFloat(map.get("ratioRegenerate3").toString()));
+        qualityRatioTemplate.setRegenerateType(Integer.parseInt(map.get("regenerationType").toString()));
         qualityRatioTemplate.setRatioAdditive(Float.parseFloat(map.get("ratioAdditive").toString()));
         qualityRatioTemplate.setRatioAdditiveTwo(Float.parseFloat(map.get("ratioAdditiveTwo").toString()));
         qualityRatioTemplate.setRatioAdditiveThree(Float.parseFloat(map.get("ratioAdditiveThree").toString()));

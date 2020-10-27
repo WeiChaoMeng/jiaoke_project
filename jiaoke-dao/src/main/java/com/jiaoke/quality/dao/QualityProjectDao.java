@@ -186,4 +186,15 @@ public interface QualityProjectDao {
      * @date 2020/6/17 16:59
      */
     Map<String, Object> selectLastCarNumByCrewNumAndTime(@Param("crewId") String crewId,@Param("recotime") String recotime);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <未读取到的车牌汇总>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/8/18 14:55
+     */
+    void insertErrorCarNum(@Param("license") String license,@Param("carTime")  String carTime);
 }

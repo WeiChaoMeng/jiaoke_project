@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.quality.dao.QualityPooledProdyctDao">
+
+    <select id="selectProdycyTotalByDate" resultType="java.util.Map">
+
+        SELECT
+               ROUND(
+                   SUM(T1.material_total) / 1000
+                       ) AS total,
+               T1.crew
+        FROM
+             (
+             SELECT
+                     *, 'crew1' AS crew
+             FROM
+                  quality_monitoring_realtime_data1
+             WHERE
+                     produce_date BETWEEN #{startDate}
+                             AND #{lastDate}
+             UNION ALL
+             SELECT
+                     *, 'crew2' AS crew
+             FROM
+                  quality_monitoring_realtime_data2
+             WHERE
+                     produce_date BETWEEN #{startDate}
+                             AND #{lastDate}
+             ) AS T1
+        GROUP BY
+                 crew
+    </select>
+
+    <select id="selectEverDayProdacuByDate" resultType="java.util.Map">
+        SELECT
+               'crew1' AS crew,
+               ROUND(SUM(material_total)/1000) AS total,
+               DATE_FORMAT(produce_date,'%Y-%m-%d') AS produce_date
+        FROM
+             quality_monitoring_realtime_data1
+        WHERE
+                produce_date BETWEEN #{startDate}
+                        AND #{lastDate}
+        GROUP BY
+                 produce_date
+        UNION ALL
+        SELECT
+               'crew2' AS crew,
+               ROUND(SUM(material_total)/1000) as total,
+               DATE_FORMAT(produce_date,'%Y-%m-%d') AS produce_date
+        FROM
+             quality_monitoring_realtime_data2
+        WHERE
+                produce_date BETWEEN #{startDate}
+                        AND #{lastDate}
+        GROUP BY
+                 produce_date,crew
+        ORDER BY
+                 produce_date
+    </select>
+    <select id="getAllProductTypeTotal" resultType="java.util.Map">
+        SELECT
+               ROUND(SUM(T1.material_total)/1000) AS total,
+               ROUND(SUM(T1.material_regenerate)/1000) AS regenerateTotal,
+               T1.pro_name
+        FROM
+             (
+             SELECT
+                    QMRD.*, QPM.pro_name
+             FROM
+                  quality_monitoring_realtime_data1 AS QMRD
+                      INNER JOIN quality_proportioning_message AS QPM ON QMRD.produce_proportioning_num = QPM.crew1_modele_id
+             WHERE
+                     YEAR (QPM.create_time) = YEAR (QMRD.produce_date)
+               AND produce_date BETWEEN #{startDate}
+                             AND #{lastDate}
+             UNION
+             SELECT
+                    QMRD.*, QPM.pro_name
+             FROM
+                  quality_monitoring_realtime_data2 AS QMRD
+                      INNER JOIN quality_proportioning_message AS QPM ON QMRD.produce_proportioning_num = QPM.crew2_modele_id
+             WHERE
+                     YEAR (QPM.create_time) = YEAR (QMRD.produce_date)
+               AND
+                     produce_date BETWEEN #{startDate}
+                             AND #{lastDate}
+             ) AS T1
+        GROUP BY
+                 T1.pro_name
+        ORDER BY total DESC
+    </select>
+    <select id="getTwoCrewProduct" resultType="java.util.Map">
+        (SELECT
+                'crew1' AS crew,
+                ROUND(SUM(QMRD.material_total)/1000 )AS total,
+                ROUND(SUM(QMRD.material_regenerate)/1000) AS regenerate,
+                QPM.pro_name
+         FROM
+              quality_monitoring_realtime_data1 AS QMRD
+                  INNER JOIN quality_proportioning_message AS QPM
+                      ON QMRD.produce_proportioning_num = QPM.crew1_modele_id
+         WHERE
+                 YEAR(QPM.create_time) = YEAR(QMRD.produce_date)
+           AND
+                 produce_date BETWEEN #{startDate}
+                         AND #{lastDate}
+         GROUP BY
+                  QPM.pro_name
+         ORDER BY
+                  total DESC
+         LIMIT 10)
+        UNION ALL
+                (SELECT
+                        'crew2' AS crew,
+                        ROUND(SUM(QMRD.material_total)/1000 )AS total,
+                        ROUND(SUM(QMRD.material_regenerate)/1000) AS regenerate,
+                        QPM.pro_name
+                 FROM
+                      quality_monitoring_realtime_data2 AS QMRD
+                          INNER JOIN quality_proportioning_message AS QPM
+                              ON QMRD.produce_proportioning_num = QPM.crew2_modele_id
+                 WHERE
+                         YEAR(QPM.create_time) = YEAR(QMRD.produce_date)
+                   AND
+                         produce_date BETWEEN #{startDate}
+                                 AND #{lastDate}
+                 GROUP BY
+                          QPM.pro_name
+                 ORDER BY
+                          total DESC
+                 LIMIT 10)
+    </select>
+</mapper>

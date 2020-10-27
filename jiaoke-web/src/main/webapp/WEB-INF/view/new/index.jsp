@@ -677,11 +677,20 @@
                                     <cite>警报管理</cite></a>
                             </li>
                                 </shiro:hasPermission>
+                                <shiro:hasPermission name="quality:dispose">
                                 <li>
                                     <a onclick="xadmin.add_tab('警报处理','qc_warning_dispose.do',true)">
                                         <i class="iconfont">&#xe6b2;</i>
                                         <cite>警报处理</cite></a>
                                 </li>
+                                </shiro:hasPermission>
+                                <shiro:hasPermission name="quality:pooledAnalysis">
+                                    <li>
+                                        <a onclick="xadmin.add_tab('汇总分析','qc_pooled_analysis.do',true)">
+                                            <i class="iconfont">&#xe6b2;</i>
+                                            <cite>汇总分析</cite></a>
+                                    </li>
+                                </shiro:hasPermission>
                         </ul>
                     </li>
                     </shiro:hasPermission>
@@ -853,7 +862,12 @@
                         </a>
                     </li>
                     </shiro:hasPermission>
-
+                    <li>
+                        <a onclick="xadmin.add_tab('能源管理','/energyManager.do',true)">
+                            <i class="iconfont left-nav-li" lay-tips="能源管理">&#xe6bf;</i>
+                            <cite>能源管理</cite>
+                        </a>
+                    </li>
                     <shiro:hasPermission name="milieu:milieu">
                         <li>
                             <a href="javascript:;">

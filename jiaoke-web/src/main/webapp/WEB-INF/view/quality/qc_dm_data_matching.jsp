@@ -740,7 +740,7 @@
                                     lineStyle: {
                                         normal: {
                                             type: 'solid',
-                                            width:0.6,
+                                            width:1,
                                             color: '#000000'
                                         }
                                     },
@@ -755,7 +755,7 @@
                                 lineStyle: {
                                     normal: {
                                         type: 'solid',
-                                        width:0.6,
+                                        width:1,
                                         color: '#96ceb4'
                                     }
                                 },
@@ -769,6 +769,7 @@
                                 lineStyle: {
                                     normal: {
                                         type: 'solid',
+                                        width:1,
                                         color: '#23c6c8'
                                     }
                                 },
@@ -782,6 +783,7 @@
                                 lineStyle: {
                                     normal: {
                                         type: 'solid',
+                                        width:1,
                                         color: '#ed5565'
                                     }
                                 },
@@ -802,6 +804,7 @@
                                 lineStyle: {
                                     normal: {
                                         type: 'solid',
+                                        width:1,
                                         color: '#ed5565'
                                     }
                                 },

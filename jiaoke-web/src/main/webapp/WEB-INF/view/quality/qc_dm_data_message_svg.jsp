@@ -223,6 +223,12 @@
 
                     </tr>
                     <tr>
+                        <td>骨料6</td>
+                        <td id="material_aggregate_6_real"><i>%</i></td>
+                        <td id="repertory_six"><i>%</i></td>
+
+                    </tr>
+                    <tr>
                         <td>骨料7</td>
                         <td id="material_aggregate_7_real"><i>%</i></td>
                         <td  id="repertory_seven"><i>%</i></td>

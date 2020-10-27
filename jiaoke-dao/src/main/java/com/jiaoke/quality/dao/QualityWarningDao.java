@@ -12,6 +12,7 @@ import com.jiaoke.quality.bean.QualityRatioTemplate;
 import com.jiaoke.quality.bean.QualityWarningData;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -86,4 +87,50 @@ public interface QualityWarningDao {
      * @date 2020/7/8 10:52
      */
     Map<String,String> selectWarningLevelByRatioId(@Param("ratioId") int ratioId);
+
+
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期时间、机组查询距离该时间最近的生产时间>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/9/23 15:47
+     */
+    Map<String, Date> selectLastProductTime(@Param("produceTime") String produceTime,@Param("crewNum")  String crewNum);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据时间、机组号、产品类型获取最近的三盘数据>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/9/24 11:13
+     */
+    List<Map<String, String>> selectThreeProductByTime(@Param("productTime")  Date productTime,@Param("crewNum") String crewNum,@Param("rationNum") String rationNum);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据机组查询生产人集合>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/9/28 9:53
+     */
+    List<Map<String, String>> selectProductionPeople(@Param("crewNum") String crewNum);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <更新生产数据绑定生产人>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/9/29 10:13
+     */
+    void updateProductPeopleToRealTimeDate(@Param("proDate") String proDate,@Param("produceTime") String produce_time,@Param("crewNum") String crewNum,@Param("productPeople") String productPeople);
 }

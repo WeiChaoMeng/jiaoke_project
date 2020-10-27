@@ -391,6 +391,41 @@ public class QualityWarningUtil {
     }
 
     /**
+     *
+     * 功能描述: <br>
+     *  <三盘以内温度不进行预警>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/9/24 9:53
+     */
+    public static QualityWarningData threeTemperatureWarningLevel(Map<String,String> warningLeveMap,int temperatureMoudel, int temperatureMoudelUp, int temperatureReal, int id, String name) {
+
+        QualityWarningData qualityWarningData;
+        //温度对比
+        int diffTemperature = 0;
+
+        //温度在区间时判断
+        if (temperatureReal <= temperatureMoudelUp && temperatureReal >= temperatureMoudel){
+            qualityWarningData = QualityWarningUtil.pushMapByParam(id, name, temperatureReal, temperatureMoudel, temperatureMoudelUp, 0, "0");
+            return qualityWarningData;
+        }
+
+        //温度大于上限、小于下限时逻辑
+        if (temperatureReal > temperatureMoudelUp){
+            diffTemperature = temperatureReal - temperatureMoudelUp;
+
+        }else{
+            diffTemperature = temperatureMoudel - temperatureReal;
+        }
+
+        //返回相应数据
+        qualityWarningData = QualityWarningUtil.pushMapByParam(id, name, temperatureReal, temperatureMoudel, temperatureMoudelUp, diffTemperature, "0");
+        return qualityWarningData;
+
+    }
+
+    /**
      * 功能描述: <br>
      * <根据各材料返回返回材料预警级别对象>
      *
@@ -725,7 +760,7 @@ public class QualityWarningUtil {
                 float materialsValue = Float.parseFloat(array[i]) - Float.parseFloat(array[i - 1]);
 
                 //处理特殊数据 骨料累加 下一个比上一个小
-                if (materialsValue <= 0) continue;
+                if (materialsValue <= 0) {continue;};
 
                 String realRatio = QualityWarningUtil.calculateRatio(total, materialsValue);
 
@@ -832,5 +867,161 @@ public class QualityWarningUtil {
         }
 
         return qualityWarningData;
+    }
+
+    public static List<QualityWarningData> avgThreeProductWarningLeve(int id, List<Map<String, String>> threeList, Map<String, String> warningLeveMap, QualityRatioTemplate ratioTemplate) {
+
+        if (threeList ==null || 0 == threeList.size() || null == ratioTemplate) {
+            return null;
+        }
+        List<QualityWarningData> list = new ArrayList<QualityWarningData>();
+
+        //计算三盘平均值
+        double materialAggregate10 = 0.00;
+        double materialAggregate9 = 0.00;
+        double materialAggregate8 = 0.00;
+        double materialAggregate7 = 0.00;
+        double materialAggregate6 = 0.00;
+        double materialAggregate5 = 0.00;
+        double materialAggregate4 = 0.00;
+        double materialAggregate3 = 0.00;
+        double materialAggregate2 = 0.00;
+        double materialAggregate1 = 0.00;
+        double materialStone1 = 0.00;
+        double materialStone2 = 0.00;
+        double materialStone3 = 0.00;
+        double materialStone4 = 0.00;
+        double materialAsphalt = 0.00;
+        double materialRegenerate = 0.00;
+        double materialAdditive = 0.00;
+        double materialAdditive1 = 0.00;
+        double materialAdditive2 = 0.00;
+        double materialAdditive3 = 0.00;
+        double materialTotal = 0.00;
+
+        for (int i = 0; i < threeList.size();i++){
+            materialAggregate10 +=  Double.parseDouble(String.valueOf(threeList.get(i).get("material_aggregate_10")));
+            materialAggregate9 +=  Double.parseDouble(String.valueOf(threeList.get(i).get("material_aggregate_9"))) - Double.parseDouble(String.valueOf(threeList.get(i).get("material_aggregate_10")));
+            materialAggregate8 +=  Double.parseDouble(String.valueOf(threeList.get(i).get("material_aggregate_8"))) - Double.parseDouble(String.valueOf(threeList.get(i).get("material_aggregate_9")));
+            materialAggregate7 +=  Double.parseDouble(String.valueOf(threeList.get(i).get("material_aggregate_7"))) - Double.parseDouble(String.valueOf(threeList.get(i).get("material_aggregate_8")));
+            materialAggregate6 +=  Double.parseDouble(String.valueOf(threeList.get(i).get("material_aggregate_6"))) - Double.parseDouble(String.valueOf(threeList.get(i).get("material_aggregate_7")));
+            materialAggregate5 +=  Double.parseDouble(String.valueOf(threeList.get(i).get("material_aggregate_5"))) - Double.parseDouble(String.valueOf(threeList.get(i).get("material_aggregate_6")));
+            materialAggregate4 +=  Double.parseDouble(String.valueOf(threeList.get(i).get("material_aggregate_4"))) - Double.parseDouble(String.valueOf(threeList.get(i).get("material_aggregate_5")));
+            materialAggregate3 +=  Double.parseDouble(String.valueOf(threeList.get(i).get("material_aggregate_3"))) - Double.parseDouble(String.valueOf(threeList.get(i).get("material_aggregate_4")));
+            materialAggregate2 +=  Double.parseDouble(String.valueOf(threeList.get(i).get("material_aggregate_2"))) - Double.parseDouble(String.valueOf(threeList.get(i).get("material_aggregate_3")));
+            materialAggregate1 +=  Double.parseDouble(String.valueOf(threeList.get(i).get("material_aggregate_1"))) - Double.parseDouble(String.valueOf(threeList.get(i).get("material_aggregate_2")));
+            double stone1 =  Double.parseDouble(String.valueOf(threeList.get(i).get("material_stone_1")));
+            double stone2 =  Double.parseDouble(String.valueOf(threeList.get(i).get("material_stone_2")));
+            double stone3 =  Double.parseDouble(String.valueOf(threeList.get(i).get("material_stone_3")));
+            double stone4 =  Double.parseDouble(String.valueOf(threeList.get(i).get("material_stone_4")));
+            if ((stone2 + stone3 + stone4) > 0){
+                materialStone2 += stone2 - stone3;
+                materialStone3 += stone3 - stone4;
+                materialStone4 += stone4;
+            }else {
+                materialStone1 += stone1 - stone2;
+                materialStone2 += stone2 - stone3;
+                materialStone3 += stone3 - stone4;
+                materialStone4 += stone4;
+            }
+            materialAsphalt += Double.parseDouble(String.valueOf(threeList.get(i).get("material_asphalt")));
+            materialRegenerate += Double.parseDouble(String.valueOf(threeList.get(i).get("material_regenerate")));
+            materialAdditive += Double.parseDouble(String.valueOf(threeList.get(i).get("material_additive")));
+            materialAdditive1 += Double.parseDouble(String.valueOf(threeList.get(i).get("material_additive_1")));
+            materialAdditive2 += Double.parseDouble(String.valueOf(threeList.get(i).get("material_additive_2")));
+            materialAdditive3 += Double.parseDouble(String.valueOf(threeList.get(i).get("material_additive_3")));
+            materialTotal += Double.parseDouble(String.valueOf(threeList.get(i).get("material_total")));
+        }
+
+        //判断预警级别
+        //骨料10
+        if (materialAggregate10 > 0){
+            String realRatio = QualityWarningUtil.calculateRatio(materialTotal/threeList.size(), materialAggregate10/threeList.size());
+            list.add(QualityWarningUtil.materialWarningLevel(ratioTemplate.getRepertoryTen(), Float.parseFloat(realRatio), id, "骨料10",warningLeveMap));
+        }
+        if (materialAggregate9 > 0){
+            String realRatio = QualityWarningUtil.calculateRatio(materialTotal/threeList.size(), materialAggregate9/threeList.size());
+            list.add(QualityWarningUtil.materialWarningLevel(ratioTemplate.getRepertoryNine(), Float.parseFloat(realRatio), id, "骨料9",warningLeveMap));
+        }
+        if (materialAggregate8 > 0){
+            String realRatio = QualityWarningUtil.calculateRatio(materialTotal/threeList.size(), materialAggregate8/threeList.size());
+            list.add(QualityWarningUtil.materialWarningLevel(ratioTemplate.getRepertoryEight(), Float.parseFloat(realRatio), id, "骨料8",warningLeveMap));
+        }
+        if (materialAggregate7 > 0){
+            String realRatio = QualityWarningUtil.calculateRatio(materialTotal/threeList.size(), materialAggregate7/threeList.size());
+            list.add(QualityWarningUtil.materialWarningLevel(ratioTemplate.getRepertorySeven(), Float.parseFloat(realRatio), id, "骨料7",warningLeveMap));
+        }
+        if (materialAggregate6 > 0){
+            String realRatio = QualityWarningUtil.calculateRatio(materialTotal/threeList.size(), materialAggregate6/threeList.size());
+            list.add(QualityWarningUtil.materialWarningLevel(ratioTemplate.getRepertorySix(), Float.parseFloat(realRatio), id, "骨料6",warningLeveMap));
+        }
+        if (materialAggregate5 > 0){
+            String realRatio = QualityWarningUtil.calculateRatio(materialTotal/threeList.size(), materialAggregate5/threeList.size());
+            list.add(QualityWarningUtil.materialWarningLevel(ratioTemplate.getRepertoryFive(), Float.parseFloat(realRatio), id, "骨料5",warningLeveMap));
+        }
+        if (materialAggregate4 > 0){
+            String realRatio = QualityWarningUtil.calculateRatio(materialTotal/threeList.size(), materialAggregate4/threeList.size());
+            list.add(QualityWarningUtil.materialWarningLevel(ratioTemplate.getRepertoryFour(), Float.parseFloat(realRatio), id, "骨料4",warningLeveMap));
+        }
+        if (materialAggregate3 > 0){
+            String realRatio = QualityWarningUtil.calculateRatio(materialTotal/threeList.size(), materialAggregate3/threeList.size());
+            list.add(QualityWarningUtil.materialWarningLevel(ratioTemplate.getRepertoryThree(), Float.parseFloat(realRatio), id, "骨料3",warningLeveMap));
+        }
+        if (materialAggregate2 > 0){
+            String realRatio = QualityWarningUtil.calculateRatio(materialTotal/threeList.size(), materialAggregate2/threeList.size());
+            list.add(QualityWarningUtil.materialWarningLevel(ratioTemplate.getRepertoryTwo(), Float.parseFloat(realRatio), id, "骨料2",warningLeveMap));
+        }
+        if (materialAggregate1 > 0){
+            String realRatio = QualityWarningUtil.calculateRatio(materialTotal/threeList.size(), materialAggregate1/threeList.size());
+            list.add(QualityWarningUtil.materialWarningLevel(ratioTemplate.getRepertoryOne(), Float.parseFloat(realRatio), id, "骨料1",warningLeveMap));
+        }
+        if (materialStone1 > 0){
+            String realRatio = QualityWarningUtil.calculateRatio(materialTotal/threeList.size(), materialStone1/threeList.size());
+            list.add(QualityWarningUtil.materialWarningLevel(ratioTemplate.getBreeze(), Float.parseFloat(realRatio), id, "矿粉1",warningLeveMap));
+        }
+        if (materialStone2 > 0){
+            if (ratioTemplate.getBreezeTwo() > 0){
+                String realRatio = QualityWarningUtil.calculateRatio(materialTotal/threeList.size(), materialStone2/threeList.size());
+                list.add(QualityWarningUtil.materialWarningLevel(ratioTemplate.getBreezeTwo(), Float.parseFloat(realRatio), id, "矿粉2",warningLeveMap));
+            }else {
+                String realRatio = QualityWarningUtil.calculateRatio(materialTotal/threeList.size(), materialStone2/threeList.size());
+                list.add(QualityWarningUtil.materialWarningLevel(ratioTemplate.getBreezeTwo() + ratioTemplate.getBreeze(), Float.parseFloat(realRatio), id, "矿粉2",warningLeveMap));
+            }
+
+        }
+        if (materialStone3 > 0){
+            String realRatio = QualityWarningUtil.calculateRatio(materialTotal/threeList.size(), materialStone3/threeList.size());
+            list.add(QualityWarningUtil.materialWarningLevel(ratioTemplate.getBreezeThree(), Float.parseFloat(realRatio), id, "矿粉3",warningLeveMap));
+        }
+        if (materialStone4 > 0){
+            String realRatio = QualityWarningUtil.calculateRatio(materialTotal/threeList.size(), materialStone4/threeList.size());
+            list.add(QualityWarningUtil.materialWarningLevel(ratioTemplate.getBreezeFour(), Float.parseFloat(realRatio), id, "矿粉4",warningLeveMap));
+        }
+        if (materialAsphalt > 0){
+            String realRatio = QualityWarningUtil.calculateRatio(materialTotal/threeList.size(), materialAsphalt/threeList.size());
+            list.add(QualityWarningUtil.materialWarningLevel(ratioTemplate.getRatioStone(), Float.parseFloat(realRatio), id, "沥青",warningLeveMap));
+        }
+        if (materialRegenerate > 0){
+            String realRatio = QualityWarningUtil.calculateRatio(materialTotal/threeList.size(), materialRegenerate/threeList.size());
+            list.add(QualityWarningUtil.materialWarningLevel(ratioTemplate.getRatioRegenerate1() + ratioTemplate.getRatioRegenerate2() + ratioTemplate.getRatioRegenerate3(), Float.parseFloat(realRatio), id, "再生料",warningLeveMap));
+        }
+        if (materialAdditive > 0){
+            String realRatio = QualityWarningUtil.calculateRatio(materialTotal/threeList.size(), materialAdditive/threeList.size());
+            list.add(QualityWarningUtil.materialWarningLevel(ratioTemplate.getRatioAdditive(), Float.parseFloat(realRatio), id, "添加剂1",warningLeveMap));
+        }
+        if (materialAdditive1 > 0){
+            String realRatio = QualityWarningUtil.calculateRatio(materialTotal/threeList.size(), materialAdditive1/threeList.size());
+            list.add(QualityWarningUtil.materialWarningLevel(ratioTemplate.getRatioAdditiveTwo(), Float.parseFloat(realRatio), id, "添加剂2",warningLeveMap));
+        }
+        if (materialAdditive2 > 0){
+            String realRatio = QualityWarningUtil.calculateRatio(materialTotal/threeList.size(), materialAdditive2/threeList.size());
+            list.add(QualityWarningUtil.materialWarningLevel(ratioTemplate.getRatioAdditiveThree(), Float.parseFloat(realRatio), id, "添加剂3",warningLeveMap));
+        }
+        if (materialAdditive3 > 0){
+            String realRatio = QualityWarningUtil.calculateRatio(materialTotal/threeList.size(), materialAdditive3/threeList.size());
+            list.add(QualityWarningUtil.materialWarningLevel(ratioTemplate.getRatioAdditiveFour(), Float.parseFloat(realRatio), id, "添加剂4",warningLeveMap));
+        }
+
+        return list;
     }
 }

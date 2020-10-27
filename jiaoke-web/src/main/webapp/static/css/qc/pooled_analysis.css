@@ -1,0 +1,319 @@
+/* 公共样式表css */
+html,body {
+    color: #333;
+    margin: 0;
+    font-family: "Myriad Set Pro","Helvetica Neue",Helvetica,Arial,Verdana,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: normal;
+    overflow: auto;
+}
+::-webkit-scrollbar {/*滚动条整体样式*/
+    width: 1px;     /*高宽分别对应横竖滚动条的尺寸*/
+    height: 1px;
+}
+::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    background: rgba(0,0,0,0.2);
+}
+::-webkit-scrollbar-track {/*滚动条里面轨道*/
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    border-radius: 0;
+    background: rgba(0,0,0,0.1);
+}
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+img {
+    border: 0;
+}
+
+body {
+    background: #fff;
+    color: #666;
+}
+
+html, body, div, dl, dt, dd, ol, ul, li, h1, h2, h3, h4, h5, h6, p, blockquote, pre, button, fieldset, form, input, legend, textarea, th, td {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: #08acee;
+}
+
+button {
+    outline: 0;
+}
+
+img {
+    border: 0;
+}
+
+button,input,optgroup,select,textarea {
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    outline: none;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    color: #666;
+}
+
+a:hover {
+    color: #eee;
+}
+
+.clearfix::after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+
+.clearfix {
+}
+
+/* 必要布局样式css */
+.large-content {
+	height: 725px;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center 50%;
+	-webkit-transition: all 1s;
+	-moz-transition: all 1s;
+	-ms-transition: all 1s;
+	-o-transition: all 1s;
+	transition: all 1s;
+	padding: 80px 0;
+	background-color: rgba(37,37,37,1.00);
+}
+
+.large-group {
+    width: 1180px;
+    margin: 0 auto;
+    position: relative;
+    height: auto;
+}
+
+.large-header {
+    font-weight: normal;
+    text-align: center;
+    margin-bottom: 40px;
+    color: #fff;
+}
+
+.large-header em {
+    display: block;
+    margin-bottom: 14px;
+    font-style: normal;
+    font-size: 30px;
+}
+
+.large-switch-circle ul {
+    font-size: 16px;
+    color: #fff;
+    text-align: center;
+}
+
+.large-switch-circle ul li {
+    opacity: .8;
+    cursor: pointer;
+    margin: 0 20px;
+    position: relative;
+    display: inline-block;
+}
+
+.large-switch-circle ul li:hover {
+    color: #fff;
+    opacity: 1;
+}
+
+.large-switch-circle ul .on {
+    opacity: 1;
+}
+
+.large-switch-circle ul .on:after {
+    content: '';
+    width: 20px;
+    height: 1px;
+    display: inline-block;
+    background: #fff;
+    position: absolute;
+    bottom: -10px;
+    left: calc(50% - 10px);
+    animation: bigdata-underline-grow both .3s;
+}
+
+.large-switch-middle {
+    width: 1180px;
+    margin-top: 40px;
+    position: absolute;
+    z-index: 1;
+}
+
+.large-switch-middle ul li {
+    cursor: pointer;
+    width: 234px;
+    height: 210px;
+    color: #fff;
+    overflow: hidden;
+    float: left;
+    margin: .5px;
+    background-image: -webkit-linear-gradient(bottom, rgba(47, 42, 65, 0.5) 0%, #2e3d50 100%);
+    background-image: -moz-linear-gradient(bottom, rgba(47, 42, 65, 0.5) 0%, #2e3d50 100%);
+    background-image: -moz-linear-gradient(to top, rgba(47, 42, 65, 0.5) 0%, #2e3d50 100%);
+    background-image: -o-linear-gradient(to top, rgba(47, 42, 65, 0.5) 0%, #2e3d50 100%);
+    background-image: linear-gradient(to top, rgba(47, 42, 65, 0.5) 0%, #2e3d50 100%);
+    background-repeat: repeat;
+}
+
+.large-switch-item {
+    opacity: 1;
+    -webkit-transition: opacity 0.3s;
+    -moz-transition: opacity 0.3s;
+    -ms-transition: opacity 0.3s;
+    -o-transition: opacity 0.3s;
+    transition: opacity 0.3s;
+}
+
+.large-item-img {
+    width: 60px;
+    display: block;
+    text-align: center;
+    height: 80px;
+    margin: 0 auto;
+    -webkit-transition: all 0.8s;
+    -moz-transition: all 0.8s;
+    -ms-transition: all 0.8s;
+    -o-transition: all 0.8s;
+    transition: all 0.8s;
+}
+
+.large-item-img img {
+    width: 50px;
+    height: 50px;
+}
+
+.large-item-title {
+    position: relative;
+    text-align: center;
+}
+
+.large-item-title:after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 20px;
+    height: 1px;
+    background: #fff;
+    bottom: -10px;
+    left: calc(50% - 10px);
+}
+
+.large-item-text {
+    opacity: .4;
+    height: 0;
+    margin: 20px 0;
+    padding: 0 20px;
+    text-align: center;
+    font-size: 12px;
+    overflow: hidden;
+    line-height: 20px;
+}
+
+.large-item-link {
+    opacity: 0;
+    display: block;
+    width: 100px;
+    margin: auto;
+    color: #fff;
+    font-size: 12px;
+    text-align: center;
+    line-height: 28px;
+    border: 1px solid #fff;
+    text-decoration: none;
+    cursor: pointer;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.large-switch-middle .large-item-link:hover {
+    color: #fff;
+    border-color: #108cee;
+    background: #108cee
+}
+
+.large-switch-middle .large-switch-item:hover {
+    background-image: -webkit-linear-gradient(top, #406594 0%, rgba(87, 17, 118, 0.4) 100%);
+    background-image: -moz-linear-gradient(top, #406594 0%, rgba(87, 17, 118, 0.4) 100%);
+    background-image: -moz-linear-gradient(to bottom, #406594 0%, rgba(87, 17, 118, 0.4) 100%);
+    background-image: -o-linear-gradient(to bottom, #406594 0%, rgba(87, 17, 118, 0.4) 100%);
+    background-image: linear-gradient(to bottom, #406594 0%, rgba(87, 17, 118, 0.4) 100%);
+    background-repeat: repeat
+}
+
+.large-switch-middle ul li:hover .large-item-img {
+    height: 45px;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+    margin-top: 15px;
+}
+
+.large-switch-middle .large-switch-item:hover .large-item-img img {
+    width: 30px;
+    height: 30px;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+}
+
+.large-switch-middle .large-switch-item:hover .large-item-text {
+    height: initial;
+}
+
+.large-switch-middle .large-switch-item:hover .large-item-link {
+    opacity: 1;
+}
+
+.large-switch-item .large-item-img {
+    margin-top: 50px;
+}
+
+.large-switch-dx {
+    position: relative;
+    text-align: center;
+    line-height: 212px;
+}
+
+.large-switch-middle .large-switch-item-clear:hover {
+}
+
+.large-switch {
+    width: 100%;
+}

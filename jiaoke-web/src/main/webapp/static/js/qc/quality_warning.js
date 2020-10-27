@@ -143,7 +143,12 @@ function getWarningData() {
 
 $("#crew1_material").hover(
     function () {
-        var msg = "一号机组材料：" + war1Name + "偏差较大，已经构成三级报警。偏差值为："+ war1Vla ;
+        var msg = "";
+        if (war1Name === ""){
+            msg = "当前产品无预警";
+        }else {
+            msg =  "一号机组材料：" + war1Name + "偏差较大，已经构成三级报警。偏差值为："+ war1Vla ;
+        }
         layui.use('layer', function() {
             var layer = layui.layer;
             layer.tips(msg, $("#warning"), {
@@ -165,7 +170,12 @@ $("#crew1_material").hover(
 
 $("#crew2_material").hover(
     function () {
-        var msg = "二号机组材料：" + war2Name + "偏差较大，已经构成三级报警。偏差值为："+ war2Vla ;
+        var msg = "";
+        if (war2Name === ""){
+            msg = "当前产品无预警";
+        }else {
+            msg =  "一号机组材料：" + war2Name + "偏差较大，已经构成三级报警。偏差值为："+ war2Vla ;
+        }
         layui.use('layer', function() {
             var layer = layui.layer;
             layer.tips(msg, $("#warning"), {

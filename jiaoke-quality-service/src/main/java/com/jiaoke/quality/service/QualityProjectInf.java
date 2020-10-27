@@ -12,6 +12,7 @@ import com.jiaoke.quality.bean.QualityProjectItem;
 
 import java.text.ParseException;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -99,4 +100,15 @@ public interface QualityProjectInf {
      * @date 2020/4/16 9:34
      */
     void  editProductionDataByCarNum(String carNum) throws ExecutionException, InterruptedException, ParseException;
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <推送过来的车号处理>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/10/27 16:17
+     */
+    Map<String, String> addWeighingInformation(String weighingMessage);
 }

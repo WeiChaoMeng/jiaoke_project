@@ -39,6 +39,10 @@ public class RabbitService implements MessageListener {
             JSONObject Json = JSONObject.parseObject(carNum);
             //获取识别车牌号
             String license= Json.getJSONObject("AlarmInfoPlate").getJSONObject("result").getJSONObject("PlateResult").getString("license");
+            //固定车牌不用读取
+            if ("京A30910".equals(license)){
+                return;
+            }
             //获取时间
             String recotime= Json.getJSONObject("AlarmInfoPlate").getJSONObject("result").getJSONObject("PlateResult").getString("recotime");
             //获取机组号
@@ -78,6 +82,7 @@ public class RabbitService implements MessageListener {
 
                         //解析ERP传回来的数据
             if (map == null ||!("0".equals(map.get("Result")))){
+                qualityProjectDao.insertErrorCarNum(license,recotime);
                 return;
             }
             map.put("crewNum",crewId);
