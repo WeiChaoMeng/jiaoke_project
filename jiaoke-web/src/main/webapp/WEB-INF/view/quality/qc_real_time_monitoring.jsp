@@ -401,12 +401,12 @@
                         <p class="text-muted mb-2" id="crew1_data_duster_svg" ><i>℃</i><span class="fe fe-arrow-up fe-12 text-success"></span></p>
                     </div>
                     <div class="col-1 text-center mb-3 border-right">
-                        <p class="text-muted mb-1">沥青温度</p>
+                        <p class="text-muted mb-1">混合料温度</p>
                         <h3 class="mb-1" id="crew1_data_temasphalt"><i>℃</i></h3>
                         <p class="text-muted mb-2" id="crew1_data_temasphalt_svg" ><i>℃</i><span class="fe fe-arrow-up fe-12 text-success"></span></p>
                     </div>
                     <div class="col-1 text-center mb-3">
-                        <p class="text-muted mb-1">混合料温度</p>
+                        <p class="text-muted mb-1">沥青温度</p>
                         <h3 class="mb-1" id="crew1_data_aggregate"><i>℃</i></h3>
                         <p class="text-muted mb-2" id="crew1_data_aggregate_svg" ><i>℃</i><span class="fe fe-arrow-up fe-12 text-success"></span></p>
                     </div>
@@ -779,12 +779,12 @@
                         <p class="text-muted mb-2" id="crew2_data_duster_svg" ><i>℃</i><span class="fe fe-arrow-up fe-12 text-success"></span></p>
                     </div>
                     <div class="col-1 text-center mb-3 border-right">
-                        <p class="text-muted mb-1">沥青温度</p>
+                        <p class="text-muted mb-1">混合料温度</p>
                         <h3 class="mb-1" id="crew2_data_temasphalt"><i>℃</i></h3>
                         <p class="text-muted mb-2" id="crew2_data_temasphalt_svg" ><i>℃</i><span class="fe fe-arrow-up fe-12 text-success"></span></p>
                     </div>
                     <div class="col-1 text-center mb-3">
-                        <p class="text-muted mb-1">混合料温度</p>
+                        <p class="text-muted mb-1">沥青温度</p>
                         <h3 class="mb-1" id="crew2_data_aggregate"><i>℃</i></h3>
                         <p class="text-muted mb-2" id="crew2_data_aggregate_svg" ><i>℃</i><span class="fe fe-arrow-up fe-12 text-success"></span></p>
                     </div>

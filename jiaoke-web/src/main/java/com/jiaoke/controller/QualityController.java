@@ -11,7 +11,6 @@ package com.jiaoke.controller;
 import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.jiake.utils.DateUtil;
 import com.jiake.utils.JsonHelper;
 import com.jiake.utils.QualityMatchingUtil;
 import com.jiaoke.common.bean.PageBean;
@@ -47,7 +46,11 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
-import java.util.*;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  *  <一句话功能描述>
@@ -167,7 +170,7 @@ public class QualityController {
 
     @ResponseBody
     @RequestMapping(value = {"/getWeighingInformation.do"} ,method = RequestMethod.POST)
-    public String  getWeighingInformation(@RequestParam("weighingMessage") String weighingMessage){
+    public String  getWeighingInformation(@RequestParam("weighingMessage") String weighingMessage) {
         Map<String,String> res = new HashMap<>();
         if (weighingMessage == null || weighingMessage.equals("")){
             res.put("code","400");
@@ -221,9 +224,6 @@ public class QualityController {
                     return;
                 }
                 qualityprojectInf.editProductionDataByCarNum(new String(buf,"UTF-8"));
-
-                //RabbitService
-                amqpTemplate.convertAndSend("exchangeCar","queueTestKey",new String(buf,"UTF-8"));
             }
 
         }catch (Exception e){
@@ -3017,7 +3017,20 @@ public class QualityController {
     public String goPooledProductPage(){
         return "quality/qc_pooled_product";
     }
+    @RequestMapping("/qc_pooled_regenerate.do")
+    public String goPooledRegeneratePage(){
+        return "quality/qc_pooled_regenerate";
+    }
 
+    @RequestMapping("/qc_pooled_squad.do")
+    public String goPooledSquadPage(){
+        return "quality/qc_pooled_squad";
+    }
+
+    @RequestMapping("/qc_pooled_project.do")
+    public String goPooledProjectPage(){
+        return "quality/qc_pooled_project";
+    }
     /**
      *
      * 功能描述: <br>
@@ -3120,6 +3133,255 @@ public class QualityController {
         }else {
             try{
                 List<Map<String,String>>  res = qualityPooledProdyctInf.getTwoCrewProduct(startDate,lastDate);
+                map.put("message","success");
+                map.put("body",res);
+            }catch (Exception e){
+                e.printStackTrace();
+                map.put("message","error");
+            }
+        }
+        return JSON.toJSONString(map);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getProductTotalAndReagenerateTotal.do",method = RequestMethod.POST)
+    public String getProductTotalAndReagenerateTotal(@RequestParam("startDate") String startDate,@RequestParam("lastDate") String lastDate){
+        Map<String,Object> map = new HashMap<>();
+        if (lastDate == null|| startDate == null ){
+            map.put("message","error");
+        }else {
+            try{
+                List<Map<String,String>>  res = qualityPooledProdyctInf.getProductTotalAndReagenerateTotal(startDate,lastDate);
+                map.put("message","success");
+                map.put("body",res);
+            }catch (Exception e){
+                e.printStackTrace();
+                map.put("message","error");
+            }
+        }
+        return JSON.toJSONString(map);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getTwoCrewMoreThan100Regenerate.do",method = RequestMethod.POST)
+    public String getTwoCrewMoreThan100Regenerate(@RequestParam("startDate") String startDate,@RequestParam("lastDate") String lastDate){
+        Map<String,Object> map = new HashMap<>();
+        if (lastDate == null|| startDate == null ){
+            map.put("message","error");
+        }else {
+            try{
+                List<Map<String,String>>  res = qualityPooledProdyctInf.getTwoCrewMoreThan100Regenerate(startDate,lastDate);
+                map.put("message","success");
+                map.put("body",res);
+            }catch (Exception e){
+                e.printStackTrace();
+                map.put("message","error");
+            }
+        }
+        return JSON.toJSONString(map);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getwoCrewMoreThan100Product.do",method = RequestMethod.POST)
+    public String getwoCrewMoreThan100Product(@RequestParam("startDate") String startDate,@RequestParam("lastDate") String lastDate){
+        Map<String,Object> map = new HashMap<>();
+        if (lastDate == null|| startDate == null ){
+            map.put("message","error");
+        }else {
+            try{
+                List<Map<String,String>>  res = qualityPooledProdyctInf.getwoCrewMoreThan100Product(startDate,lastDate);
+                map.put("message","success");
+                map.put("body",res);
+            }catch (Exception e){
+                e.printStackTrace();
+                map.put("message","error");
+            }
+        }
+        return JSON.toJSONString(map);
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/getTwoCrewMoreThan100RegenerateProduct.do",method = RequestMethod.POST)
+    public String getTwoCrewMoreThan100RegenerateProduct(@RequestParam("startDate") String startDate,@RequestParam("lastDate") String lastDate){
+        Map<String,Object> map = new HashMap<>();
+        if (lastDate == null|| startDate == null ){
+            map.put("message","error");
+        }else {
+            try{
+                List<Map<String,String>>  res = qualityPooledProdyctInf.getTwoCrewMoreThan100RegenerateProduct(startDate,lastDate);
+                map.put("message","success");
+                map.put("body",res);
+            }catch (Exception e){
+                e.printStackTrace();
+                map.put("message","error");
+            }
+        }
+        return JSON.toJSONString(map);
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/getRegenerateTypeTotal.do",method = RequestMethod.POST)
+    public String getRegenerateTypeTotal(@RequestParam("startDate") String startDate,@RequestParam("lastDate") String lastDate){
+        Map<String,Object> map = new HashMap<>();
+        if (lastDate == null|| startDate == null ){
+            map.put("message","error");
+        }else {
+            try{
+                List<Map<String,String>>  res = qualityPooledProdyctInf.getRegenerateTypeTotal(startDate,lastDate);
+                map.put("message","success");
+                map.put("body",res);
+            }catch (Exception e){
+                e.printStackTrace();
+                map.put("message","error");
+            }
+        }
+        return JSON.toJSONString(map);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getTwoCrewContinuousThanProduct.do",method = RequestMethod.POST)
+    public String getTwoCrewContinuousThanProduct(@RequestParam("startDate") String startDate,@RequestParam("lastDate") String lastDate){
+        Map<String,Object> map = new HashMap<>();
+        if (lastDate == null|| startDate == null ){
+            map.put("message","error");
+        }else {
+            try{
+                Map<String,Map<String,List<Map<String,Double>>>> res = qualityPooledProdyctInf.getTwoCrewContinuousThanProduct(startDate,lastDate);
+                map.put("message","success");
+                map.put("body",res);
+            }catch (Exception e){
+                e.printStackTrace();
+                map.put("message","error");
+            }
+        }
+        return JSON.toJSONString(map);
+    }
+    @ResponseBody
+    @RequestMapping(value = "/getAllSquadTotal.do",method = RequestMethod.POST)
+    public String getAllSquadTotal(@RequestParam("startDate") String startDate,@RequestParam("lastDate") String lastDate){
+        Map<String,Object> map = new HashMap<>();
+        if (lastDate == null|| startDate == null ){
+            map.put("message","error");
+        }else {
+            try{
+                List<Map<String,String>>  res = qualityPooledProdyctInf.getAllSquadTotal(startDate,lastDate);
+                map.put("message","success");
+                map.put("body",res);
+            }catch (Exception e){
+                e.printStackTrace();
+                map.put("message","error");
+            }
+        }
+        return JSON.toJSONString(map);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getAllSquadRegenerate.do",method = RequestMethod.POST)
+    public String getAllSquadRegenerate(@RequestParam("startDate") String startDate,@RequestParam("lastDate") String lastDate){
+        Map<String,Object> map = new HashMap<>();
+        if (lastDate == null|| startDate == null ){
+            map.put("message","error");
+        }else {
+            try{
+                List<Map<String,String>>  res = qualityPooledProdyctInf.getAllSquadRegenerate(startDate,lastDate);
+                map.put("message","success");
+                map.put("body",res);
+            }catch (Exception e){
+                e.printStackTrace();
+                map.put("message","error");
+            }
+        }
+        return JSON.toJSONString(map);
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/geAllSquadProduct.do",method = RequestMethod.POST)
+    public String geAllSquadProduct(@RequestParam("startDate") String startDate,@RequestParam("lastDate") String lastDate){
+        Map<String,Object> map = new HashMap<>();
+        if (lastDate == null|| startDate == null ){
+            map.put("message","error");
+        }else {
+            try{
+                List<Map<String,String>>  res = qualityPooledProdyctInf.geAllSquadProduct(startDate,lastDate);
+                map.put("message","success");
+                map.put("body",res);
+            }catch (Exception e){
+                e.printStackTrace();
+                map.put("message","error");
+            }
+        }
+        return JSON.toJSONString(map);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getAllSquadProductMakeUp.do",method = RequestMethod.POST)
+    public String getAllSquadProductMakeUp(@RequestParam("startDate") String startDate,@RequestParam("lastDate") String lastDate){
+        Map<String,Object> map = new HashMap<>();
+        if (lastDate == null|| startDate == null ){
+            map.put("message","error");
+        }else {
+            try{
+                List<Map<String,String>>  res = qualityPooledProdyctInf.getAllSquadProductMakeUp(startDate,lastDate);
+                map.put("message","success");
+                map.put("body",res);
+            }catch (Exception e){
+                e.printStackTrace();
+                map.put("message","error");
+            }
+        }
+        return JSON.toJSONString(map);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getProjectTotal.do",method = RequestMethod.POST)
+    public String getProjectTotal(@RequestParam("startDate") String startDate,@RequestParam("lastDate") String lastDate){
+        Map<String,Object> map = new HashMap<>();
+        if (lastDate == null|| startDate == null ){
+            map.put("message","error");
+        }else {
+            try{
+                List<Map<String,String>>  res = qualityPooledProdyctInf.getProjectTotal(startDate,lastDate);
+                map.put("message","success");
+                map.put("body",res);
+            }catch (Exception e){
+                e.printStackTrace();
+                map.put("message","error");
+            }
+        }
+        return JSON.toJSONString(map);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getProjectTotalByDate.do",method = RequestMethod.POST)
+    public String getProjectTotalByDate(@RequestParam("startDate") String startDate,@RequestParam("lastDate") String lastDate){
+        Map<String,Object> map = new HashMap<>();
+        if (lastDate == null|| startDate == null ){
+            map.put("message","error");
+        }else {
+            try{
+                List<Map<String,String>>  res = qualityPooledProdyctInf.getProjectTotalByDate(startDate,lastDate);
+                map.put("message","success");
+                map.put("body",res);
+            }catch (Exception e){
+                e.printStackTrace();
+                map.put("message","error");
+            }
+        }
+        return JSON.toJSONString(map);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getPlateNumberByDate.do",method = RequestMethod.POST)
+    public String getPlateNumberByDate(@RequestParam("startDate") String startDate,@RequestParam("lastDate") String lastDate){
+        Map<String,Object> map = new HashMap<>();
+        if (lastDate == null|| startDate == null ){
+            map.put("message","error");
+        }else {
+            try{
+                List<Map<String,String>>  res = qualityPooledProdyctInf.getPlateNumberByDate(startDate,lastDate);
                 map.put("message","success");
                 map.put("body",res);
             }catch (Exception e){

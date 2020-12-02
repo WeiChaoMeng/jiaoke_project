@@ -17,6 +17,43 @@ To change this template use File | Settings | File Templates.
 	<script src="../../../static/js/echarts/echarts.js"></script>
 	<script src="../../../static/layui/layui.js"></script>
 </head>
+<style type="text/css">
+	table {
+		border-collapse: collapse;
+		margin: 0 auto;
+		text-align: center;
+	}
+
+	table td, table th {
+		border: 1px solid #cad9ea;
+		color: #666;
+		height: 30px;
+		width: 25%;
+	}
+
+	table thead th {
+		background-color: #f2fdfe;
+		width: 100px;
+	}
+
+	table tr:nth-child(odd) {
+		background: #fff;
+	}
+
+	table tr:nth-child(even) {
+		background: #F5FAFA;
+	}
+	h2{
+		margin-left: 40%;
+		font-weight: bold;
+		color: #5e5a5a;
+	}
+	.titleDiv{
+		margin: 1% 5%;
+		font-weight: bold;
+		color: #5e5a5a;
+	}
+</style>
 <body>
 
 <div class="container-content">
@@ -24,16 +61,16 @@ To change this template use File | Settings | File Templates.
 		<div class="count-base" >
 			<ul class="use-data">
 				<li>
-					<p class="data-count" id="total">0</p>
+					<p class="data-count" id="leave_factory_total">0</p>
+					<span class="data-name">出厂总量</span>
+				</li>
+				<li>
+					<p class="data-count" id="production_total" > 0</p>
 					<span class="data-name">生产总量</span>
 				</li>
 				<li>
-					<p class="data-count" id="crew1_total" > 0</p>
-					<span class="data-name">一号机总量</span>
-				</li>
-				<li>
-					<p class="data-count" id="crew2_total"  >0</p>
-					<span class="data-name">二号机总量</span>
+					<p class="data-count" id="regeneration_total"  >0</p>
+					<span class="data-name">再生用量</span>
 				</li>
 			</ul>
 			<div class="com-count-title"></div>
@@ -42,7 +79,7 @@ To change this template use File | Settings | File Templates.
 					<div class="selectDiv" >
 						<input type="text" class="layui-input" autocomplete="off" placeholder = "开始日期" id="startDate">
 						<input type="text" class="layui-input" autocomplete="off" placeholder = "结束日期" id="endDate">
-						<input type="button" class="layui-input" autocomplete="off" value= "查看报告" onclick="showProductStatement()">
+						<input type="button" class="layui-input" autocomplete="off" value= "查看报告" onclick="showProjectStatementPage()">
 					</div>
 				</div>
 			</div>
@@ -102,7 +139,7 @@ To change this template use File | Settings | File Templates.
 	
 	<div class="bottom">
 		<div class="count-topic e1" >
-			<div class="com-count-title">一号机每日生产情况</div>
+			<div class="com-count-title">一号机可添加再生产品情况</div>
 			<div class="com-screen-content">
 			<div id="main6" style="width:100%;height:300px;"></div>
 			</div>
@@ -112,7 +149,7 @@ To change this template use File | Settings | File Templates.
 			<span class="right-bottom"></span>
 		</div>
 		<div class="count-topic e2" >
-			<div class="com-count-title">二号机每日生产情况</div>
+			<div class="com-count-title">二号机可添加再生产品情况</div>
 			<div class="com-screen-content">
 			 <div id="main7" style="width:100%;height:300px;"></div>
 			</div>
@@ -124,22 +161,81 @@ To change this template use File | Settings | File Templates.
 	</div>
 	<div class="clearfix"></div>
 </div>
-
-
 <input  id="path" value="${path}" type="hidden" >
-<script src="../../../static/js/qc/pooled_product.js"></script>
+<div id="productStatement" style="width: 100%;height:95%;display: none;">
+	<h2>各工程生产情况汇总</h2>
+	<div style="width: 100%;">
+		<div class="titleDiv">两台机组生产盘数与出厂盘数对比情况</div>
+		<table width="90%" class="table">
+			<thead>
+			<tr>
+				<th colspan="4">
+					1#机组
+				</th>
+			</tr>
+			</thead>
+			<thead>
+			<tr>
+				<th>
+					生产开始时间
+				</th>
+				<th>
+					生产结束时间
+				</th>
+				<th>
+					生产盘数
+				</th>
+				<th>
+					出厂盘数
+				</th>
+			</tr>
+			</thead>
+			<tbody id="crew1Body">
 
-<script type="text/javascript"> 
-	  function autoScroll(obj){  
-			$(obj).find("ul").animate({  
-				marginTop : "-39px"  
-			},500,function(){  
-				$(this).css({marginTop : "0px"}).find("li:first").appendTo(this);  
-			})  
-		}  
+			</tbody>
+			<thead>
+			<tr>
+				<th colspan="4">
+					2#机组
+				</th>
+			</tr>
+			</thead>
+			<thead>
+			<tr>
+				<th>
+					生产开始时间
+				</th>
+				<th>
+					生产结束时间
+				</th>
+				<th>
+					生产盘数
+				</th>
+				<th>
+					出厂盘数
+				</th>
+			</tr>
+			</thead>
+			<tbody  id="crew2Body">
 
-
-
-</script> 
+			</tbody>
+		</table>
+	</div>
+	<button id="print_button" style="width: 15%;margin-top:20px;margin-left: 40%;margin-bottom: 50px;height: 40px;" onclick="printReport('productStatement');">打印报告</button>
+</div>
 </body>
+<script src="../../../static/js/qc/pooled_project.js"></script>
+
+<script type="text/javascript">
+    function autoScroll(obj){
+        $(obj).find("ul").animate({
+            marginTop : "-39px"
+        },500,function(){
+            $(this).css({marginTop : "0px"}).find("li:first").appendTo(this);
+        })
+    }
+
+
+
+</script>
 </html>

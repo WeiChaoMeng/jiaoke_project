@@ -148,7 +148,7 @@
     </select>
     <select id="selectThreeProductByTime" resultType="java.util.Map">
         <choose>
-            <when test="crewNum == '1'">
+            <when test= 'crewNum == "1"'>
                 SELECT
                 *
                 FROM
@@ -180,7 +180,7 @@
     </select>
     <update id="updateProductPeopleToRealTimeDate">
         <choose>
-            <when test="crewNum == '1'">
+            <when test='crewNum == "1"'>
                 UPDATE quality_monitoring_realtime_data1 SET produce_people = #{productPeople} WHERE produce_date = #{proDate} AND produce_time = #{produceTime}
             </when>
             <otherwise>

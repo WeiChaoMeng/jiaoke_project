@@ -194,4 +194,91 @@
         VALUES
                ( #{license},  #{carTime});
     </insert>
+    <insert id="insertWeighingInformation" parameterType="java.util.Map">
+        INSERT INTO `luchi_date`.`quality_leave_factory_history` (
+                `project_name`,
+                `client_name`,
+                `construction_site_name`,
+                `traffic_unit`,
+                `construction_unit`,
+                `car_num`,
+                `finish_date`,
+                `finish_time`,
+                `haul_distance`,
+                `amount`,
+                `product_variety`,
+                `crewNum`
+                )
+        VALUES
+               (
+                       #{insertMap.project_name},
+                       #{insertMap.client_name},
+                       #{insertMap.construction_site_name},
+                       #{insertMap.traffic_unit},
+                       #{insertMap.construction_unit},
+                       #{insertMap.car_num},
+                       #{insertMap.finish_date},
+                       #{insertMap.finish_time},
+                       #{insertMap.haul_distance},
+                       #{insertMap.amount},
+                       #{insertMap.product_variety},
+                       #{insertMap.crewNum}
+                       );
+
+
+    </insert>
+    <select id="selectLeaveFactory" resultType="java.util.Map">
+        SELECT
+                *
+        FROM
+             quality_leave_factory_history
+        WHERE
+                finish_date = #{map.fhrq}
+          AND finish_time = #{map.fhsj}
+          AND car_num = #{map.ch}
+    </select>
+    <select id="selectCarNumByWeighing" resultType="java.util.Map">
+        SELECT
+               T1.*,
+        (SELECT up_time AS lastTime FROM quality_car_num_history WHERE up_time &lt; T1.up_time ORDER BY up_time DESC limit 1) AS lastTime
+        FROM
+        quality_car_num_history AS T1
+        WHERE
+                T1.up_time &lt;  DATE_ADD(STR_TO_DATE(CONCAT(#{insertMap.finish_date},' ',#{insertMap.finish_time}),'%Y-%m-%d %H:%i:%s'),interval 30 MINUTE)
+        AND T1.crew_num = #{insertMap.crewNum}
+        AND T1.car_num = #{insertMap.car_num}
+        AND TIMESTAMPDIFF(HOUR,T1.up_time,DATE_ADD(STR_TO_DATE(CONCAT(#{insertMap.finish_date},' ',#{insertMap.finish_time}),'%Y-%m-%d %H:%i:%s'),interval 30 MINUTE)) &lt; 1
+        ORDER BY T1.up_time DESC
+        LIMIT 1
+    </select>
+    <select id="selectCarNumByLeaveFactory" resultType="java.util.Map">
+        SELECT
+        T1.*,
+        (SELECT up_time AS lastTime FROM quality_car_num_history WHERE up_time &lt; T1.up_time ORDER BY up_time DESC limit 1) AS lastTime
+        FROM
+        quality_car_num_history AS T1
+        WHERE
+        T1.up_time &lt; DATE_ADD(STR_TO_DATE(CONCAT(#{insertMap.finish_date},' ',#{insertMap.finish_time}),'%Y-%m-%d %H:%i:%s'),interval 30 MINUTE)
+        AND T1.crew_num = #{insertMap.crewNum}
+        AND TIMESTAMPDIFF(MINUTE,T1.up_time,DATE_ADD(STR_TO_DATE(CONCAT(#{insertMap.finish_date},' ',#{insertMap.finish_time}),'%Y-%m-%d %H:%i:%s'),interval 30 MINUTE)) &lt; 30
+        ORDER BY T1.up_time DESC
+    </select>
+    <update id="updateRealTimeCarNumAndProject" parameterType="java.lang.String" >
+        <choose>
+            <when test="crewNum == '1'.toString()">
+                UPDATE quality_monitoring_realtime_data1
+                SET project_name = #{projectName},
+                produce_car_num = #{carNum}
+                WHERE
+                str_to_date(CONCAT('',produce_date,produce_time),'%Y-%m-%d %H:%i:%s')  BETWEEN #{lastTime} AND  #{upTime};
+            </when>
+            <otherwise>
+                UPDATE quality_monitoring_realtime_data2
+                SET project_name = #{projectName},
+                produce_car_num = #{carNum}
+                WHERE
+                str_to_date(CONCAT('',produce_date,produce_time),'%Y-%m-%d %H:%i:%s')  BETWEEN #{lastTime} AND  #{upTime};
+            </otherwise>
+        </choose>
+    </update>
 </mapper>

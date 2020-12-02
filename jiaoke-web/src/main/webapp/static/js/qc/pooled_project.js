@@ -1,4 +1,5 @@
 
+
 var Tpl1 = '<li>' +
     '<p class="data-count">5681</p>' +
     '<span class="data-name">生产总量</span>' +
@@ -69,16 +70,76 @@ $(function(){
     var formatwdate = y+'-'+m+'-'+d;
     var nowformatwdate = y+'-'+(nowdate.getMonth()+1)+'-'+d;
 
-    getProductTotal(formatwdate,nowformatwdate);
+    showProjectStatement(formatwdate,nowformatwdate);
 
-    getEverDayProdacuByDate(formatwdate,nowformatwdate);
-
-    getAllProductTypeTotal(formatwdate,nowformatwdate);
-
-    getTwoCrewProduct(formatwdate,nowformatwdate);
 })
-function showProductStatement() {
-    
+function showProjectStatement(startDate ,endDate) {
+    $.ajax({
+        url: basePath + "/getPlateNumberByDate.do",
+        type: "post",
+        data:{
+            "startDate":  startDate,
+            "lastDate":endDate
+        },
+        dataType: "json",
+        success:function (res) {
+            var sumTotal = 0;
+            if (res.message === 'success'){
+                var list = res.body;
+                if (list.length > 0){
+                    var crew1Html = "";
+                    var crew2Html = "";
+                    for (var i = 0;i < list.length;i++ ) {
+                        if (list[i].crew === 'crew1') {
+                            crew1Html += '<tr>'
+                                + '<th>' + list[i].startDate + '</th>'
+                                + '<th>' + list[i].endDate + '</th>'
+                                + '<th>' + list[i].productCount  + '</th>'
+                                + '<th>' + list[i].weighCount + '</th>'
+                                + '</tr>';
+                        }else {
+                            crew2Html += '<tr>'
+                                + '<th>' + list[i].startDate + '</th>'
+                                + '<th>' + list[i].endDate + '</th>'
+                                + '<th>' + list[i].productCount  + '</th>'
+                                + '<th>' + list[i].weighCount + '</th>'
+                                + '</tr>';
+                        }
+                    }
+
+                    //更新报告
+                    $("#crew1Body").html(crew1Html);
+                    $("#crew2Body").html(crew2Html);
+                }else {
+                    layui.use('layer', function(){
+                        layer.alert("该时间段无生产数据")
+                    })
+
+                }
+            } else {
+                layui.use('layer', function(){
+                    layer.alert("查询生产盘数失败")
+                })
+            }
+        }
+    })
+}
+
+function showProjectStatementPage() {
+    layui.use('layer', function(){
+        var layer = layui.layer;
+        //执行一个laydate实例
+        parent.layer.open({
+            type: 1,
+            shade: false,
+            scrollbar:false,
+            skin: 'layui-layer-demo', //样式类
+            maxmin: true, //开启最大化最小化按钮
+            area: ['70%', '70%'],
+            shadeClose: true, //开启遮罩关闭
+            content: $('#productStatement').html()
+        });
+    });
 }
 function getALLEcharDataByDate() {
     var startDate = $("#startDate").val();
@@ -91,258 +152,19 @@ function getALLEcharDataByDate() {
         return
     }
 
-    getProductTotal(startDate,endDate);
-
-    getEverDayProdacuByDate(startDate,endDate);
-
-    getAllProductTypeTotal(startDate,endDate);
-
-    getTwoCrewProduct(startDate,endDate);
+    showProjectStatement(startDate,endDate);
 }
-
-/**
- * 查询日期范围内总产量（图一）
- * @param startDate
- * @param lastDate
- */
-function getProductTotal(startDate,lastDate) {
-    $.ajax({
-        url: basePath + "/getProdycyTotalByDate.do",
-        type: "post",
-        data:{
-          "startDate":  startDate,
-            "lastDate":lastDate
-        },
-        dataType: "json",
-        success:function (res) {
-            var sumTotal = 0;
-            if (res.message === 'success'){
-                var list = res.body;
-                if (list.length > 0){
-                    for (var i = 0;i < list.length;i++ ) {
-                        if (list[i].crew === 'crew1') {
-                            $("#crew1_total").html(list[i].total + "吨")
-                        }else {
-                            $("#crew2_total").html(list[i].total+ "吨")
-                        }
-                        sumTotal += Number(list[i].total);
-                    }
-                    $("#total").html(sumTotal + "吨");
-                }else {
-                    layui.use('layer', function(){
-                        layer.alert("前一个月无生产数据")
-                    })
-
-                }
-            } else {
-                layui.use('layer', function(){
-                    layer.alert("查询生产总量失败")
-                })
-            }
-        }
-    })
-}
-
-/**
- * 查询日期范围内每日产量情况
- * @param startDate
- * @param lastDate
- */
-function getEverDayProdacuByDate(startDate,lastDate) {
-    $.ajax({
-        url: basePath + "/getEverDayProdacuByDate.do",
-        type: "post",
-        data:{
-            "startDate":  startDate,
-            "lastDate":lastDate
-        },
-        dataType: "json",
-        success:function (res) {
-            var sumTotal = 0;
-            if (res.message === 'success'){
-                var list = res.body;
-
-                if (list.length > 0){
-                    var crew1 = [];
-                    var crew2 = [];
-                    var twoCrew = [];
-                    var xAxis = [];
-                    for (var i = 0; i < list.length ; i++) {
-                        var product_date =  list[i].produce_date;
-                        if (!xAxis.includes(product_date)){
-                            xAxis.push(product_date)
-                        }
-                    }
-                    for (var i = 0; i < xAxis.length ; i++){
-                        crew1.push({
-                            "name":xAxis[i],
-                            "value":0
-                        })
-                        crew2.push({
-                            "name":xAxis[i],
-                            "value":0
-                        })
-                        twoCrew.push({
-                            "name":xAxis[i],
-                            "value":0
-                        })
-                    }
-
-                    for (var i = 0; i < list.length ; i++) {
-                        var date =  list[i].produce_date;
-                        var crewNum =  list[i].crew;
-                        //定义机组一数组
-                        if (crewNum === 'crew1'){
-                            for (var j = 0;j < crew1.length;j++){
-                                var pDate = crew1[j].name;
-                                if (date === pDate ){
-                                    crew1[j].value = list[i].total;
-                                    break
-                                }
-                            }
-                        } else {
-                            //定义机组二数组
-                            for (var k = 0;k < crew2.length;k++){
-                                var p2Date = crew2[k].name;
-                                if (date === p2Date){
-                                    crew2[k].value = list[i].total;
-                                    break
-                                }
-                            }
-                        }
-                    }
-                    //定义总量数组
-                    for (var  r= 0;r < twoCrew.length;r++){
-                        var crew1Total = crew1[r].value;
-                        var crew2Total  = crew2[r].value;
-                        twoCrew[r].value = Number(crew1Total) + Number(crew2Total);
-                    }
-                    init_myChart1(crew1,crew2,twoCrew,xAxis);
-                }else {
-                    layui.use('layer', function(){
-                        layer.alert("前一个月无生产数据")
-                    })
-                }
-            } else {
-                layui.use('layer', function(){
-                    layer.alert("查询生产总量失败")
-                })
-            }
-        }
-    })
-    
-}
-
-/**
- * 查询所有产品类型的产品总量与前十产品
- * @param startDate
- * @param lastDate
- */
-function getAllProductTypeTotal(startDate,lastDate) {
-    $.ajax({
-        url: basePath + "/getAllProductTypeTotal.do",
-        type: "post",
-        data:{
-            "startDate":  startDate,
-            "lastDate":lastDate
-        },
-        dataType: "json",
-        success:function (res) {
-            var sumTotal = 0;
-            if (res.message === 'success'){
-                var list = res.body;
-                if (list.length > 0){
-                    var xData = [];
-                    var totalData = [];
-                    var regenerateData = [];
-                    var htm = '';
-                    for (var i = 0;i < list.length;i++){
-                        if (i < 10){
-                            xData.push(list[i].pro_name);
-                            totalData.push(list[i].total);
-                            regenerateData.push(list[i].regenerateTotal);
-                        }
-                        htm += '<li>'
-                            + '<div>' + list[i].pro_name + '</div>'
-                            + '<div>' +  list[i].total + '</div>'
-                            + '<div>' + list[i].regenerateTotal + '</div>'
-                            + '<div>' + ((list[i].regenerateTotal/list[i].total)*100).toFixed(2) + '<i>%</i></div>'
-                            + '</li>';
-                    }
-                    $("#maquee").append(htm);
-                    //更新前十
-                    init_myChart5(xData,totalData,regenerateData);
-                } else {
-                    layui.use('layer', function(){
-                        layer.alert("日期段内无生产")
-                    })
-                }
-            } else {
-                layui.use('layer', function(){
-                    layer.alert("查询生产总量失败")
-                })
-            }
-        }
-    })
-}
-
-/**
- * 根据日期时间查询产品情况
- * @param startDate
- * @param lastDate
- */
-function getTwoCrewProduct(startDate,lastDate) {
-    $.ajax({
-        url: basePath + "/getTwoCrewProduct.do",
-        type: "post",
-        data:{
-            "startDate":  startDate,
-            "lastDate":lastDate
-        },
-        dataType: "json",
-        success:function (res) {
-            if (res.message === 'success'){
-                var list = res.body;
-                if (list.length > 0){
-                    //取出一二号机组所有日期
-                    //取出一二号机组每种产品生产总量
-                    //取出一二号机组再生料总量
-                    var crew1_xData = [];
-                    var crew1_totalData = [];
-                    var crew1_regenerateData = [];
-                    var crew2_xData = [];
-                    var crew2_totalData = [];
-                    var crew2_regenerateData = [];
-
-                    for (var i = 0;i < list.length;i++){
-                        var crewNum = list[i].crew;
-                        if ( crewNum === 'crew1'){
-                            crew1_xData.push(list[i].produce_date);
-                            crew1_totalData.push(list[i].total);
-                            crew1_regenerateData.push(list[i].regenerate);
-                        }else {
-                            crew2_xData.push(list[i].produce_date);
-                            crew2_totalData.push(list[i].total);
-                            crew2_regenerateData.push(list[i].regenerate);
-                        }
-                    }
-                    //更新一号机前十
-                    init_myChart6(crew1_xData,crew1_totalData,crew1_regenerateData);
-                    //更新二号机前十
-                    init_myChart7(crew2_xData,crew2_totalData,crew2_regenerateData);
-                } else {
-                    layui.use('layer', function(){
-                        layer.alert("日期段内无生产")
-                    })
-                }
-            } else {
-                layui.use('layer', function(){
-                    layer.alert("查询生产总量失败")
-                })
-            }
-        }
-    })
-}
+function printReport(printpage) {
+    $("#print_button").remove();
+    var headstr = "<html><head><title></title></head><body>";
+    var footstr = "</body>";
+    var newstr = document.all.item(printpage).innerHTML;
+    var oldstr = document.body.innerHTML;
+    document.body.innerHTML = headstr+newstr+footstr;
+    window.print();
+    document.body.innerHTML = oldstr;
+    return false;
+};
 // 基于准备好的dom，初始化echarts实例
 var myChart1 = echarts.init(document.getElementById('main1'));
 var myChart5 = echarts.init(document.getElementById('main5'));

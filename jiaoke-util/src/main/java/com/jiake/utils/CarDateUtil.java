@@ -8,6 +8,8 @@
  **/
 package com.jiake.utils;
 
+import lombok.experimental.var;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -90,4 +92,36 @@ public class CarDateUtil {
         long to = parse(toDate,pattern).getTime();
         return (int) ((to - from)/(1000 * 60));
     }
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <对比两个车号相似度>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/11/30 16:57
+     */
+    public static double getSimilarityRatio (String str,String target){
+        double res = 0.0;
+        if (str.length() == 0) {
+            return res;
+        }
+        int strLength = str.length();
+        int targetLength = target.length();
+        double rationOne = 100/strLength;
+        for (int i = 0; i < strLength;i++){
+            char strChar = str.charAt(i);
+            char tarGetChar = ' ';
+            if (i < targetLength){
+                tarGetChar = target.charAt(i);
+            } ;
+            if (strChar == tarGetChar){
+                res += rationOne;
+            }
+        }
+
+        return res;
+    }
+
 }

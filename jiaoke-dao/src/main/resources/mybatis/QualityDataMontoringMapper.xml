@@ -100,7 +100,7 @@
                      quality_monitoring_realtime_data2 AS QR
                          INNER JOIN
                              quality_proportioning_message AS QM
-                             ON QR.produce_proportioning_num = QM.crew1_modele_id
+                             ON QR.produce_proportioning_num = QM.crew2_modele_id
                 WHERE  QR.Id = (SELECT Id FROM quality_monitoring_realtime_data2 ORDER BY Id DESC LIMIT 1)
                   AND	YEAR(QM.create_time) = YEAR(QR.produce_date)
                 )

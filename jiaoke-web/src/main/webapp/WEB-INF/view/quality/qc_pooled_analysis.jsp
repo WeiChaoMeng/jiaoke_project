@@ -13,6 +13,43 @@
     <script src="../../../static/js/jquery.js"></script>
     <script src="../../../static/js/layer/layer.js"></script>
 </head>
+<style type="text/css">
+    table {
+        border-collapse: collapse;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    table td, table th {
+        border: 1px solid #cad9ea;
+        color: #666;
+        height: 30px;
+        width: 25%;
+    }
+
+    table thead th {
+        background-color: #f2fdfe;
+        width: 100px;
+    }
+
+    table tr:nth-child(odd) {
+        background: #fff;
+    }
+
+    table tr:nth-child(even) {
+        background: #F5FAFA;
+    }
+    h2{
+        margin-left: 40%;
+        font-weight: bold;
+        color: #5e5a5a;
+    }
+    .titleDiv{
+        margin: 1% 5%;
+        font-weight: bold;
+        color: #5e5a5a;
+    }
+</style>
 <body>
 <div class="large-content">
     <div class="large-group clearfix">
@@ -37,7 +74,7 @@
                         </div>
                         <div class="large-item-title">班组生产统计</div>
                         <div class="large-item-text">根据班组分类分析生产情况</div>
-                        <a href="#" class="large-item-link">查看详情</a>
+                        <a href="#" class="large-item-link"  onclick="goSquadPooled()">查看详情</a>
                     </li>
                     <li class="large-switch-item">
                         <div class="large-item-img">
@@ -45,7 +82,7 @@
                         </div>
                         <div class="large-item-title">再生料统计</div>
                         <div class="large-item-text">根据日期时间段统计再生料使用情况</div>
-                        <a href="#" class="large-item-link">查看详情</a>
+                        <a href="#" class="large-item-link" onclick="goRegenerationPooled()"  >查看详情</a>
                     </li>
                     <li class="large-switch-item">
                         <div class="large-item-img">
@@ -53,7 +90,7 @@
                         </div>
                         <div class="large-item-title">工程用料统计</div>
                         <div class="large-item-text">根据工程类型统计各类生产情况</div>
-                        <a href="#" class="large-item-link">查看详情</a>
+                        <a href="#" class="large-item-link" onclick="goProjectPooled()" >查看详情</a>
                     </li>
 
                     <li class="large-switch-item-clear">
@@ -89,6 +126,51 @@
             maxmin: true, //开启最大化最小化按钮
             area: ['90%', '90%'],
             content: path + '/qc_pooled_product.do'
+        });
+    }
+    
+    function goRegenerationPooled() {
+        var path = $("#path").val();
+        layer.open({
+            type: 2,
+            title: '再生使用统计',
+            skin: 'layer-ext-yourskin',
+            shadeClose: true,
+            shade: false,
+            scrollbar:false,
+            maxmin: true, //开启最大化最小化按钮
+            area: ['90%', '90%'],
+            content: path + '/qc_pooled_regenerate.do'
+        });
+    }
+
+    function goSquadPooled() {
+        var path = $("#path").val();
+        layer.open({
+            type: 2,
+            title: '班组生产统计',
+            skin: 'layer-ext-yourskin',
+            shadeClose: true,
+            shade: false,
+            scrollbar:false,
+            maxmin: true, //开启最大化最小化按钮
+            area: ['90%', '90%'],
+            content: path + '/qc_pooled_squad.do'
+        });
+    }
+    
+    function goProjectPooled() {
+        var path = $("#path").val();
+        layer.open({
+            type: 2,
+            title: '工程统计',
+            skin: 'layer-ext-yourskin',
+            shadeClose: true,
+            shade: false,
+            scrollbar:false,
+            maxmin: true, //开启最大化最小化按钮
+            area: ['90%', '90%'],
+            content: path + '/qc_pooled_project.do'
         });
     }
 </script>

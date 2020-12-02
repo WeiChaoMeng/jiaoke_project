@@ -29,4 +29,34 @@ public interface QualityPooledProdyctDao {
     List<Map<String, String>> getAllProductTypeTotal(@Param("startDate") String startDate,@Param("lastDate")   String lastDate);
 
     List<Map<String, String>> getTwoCrewProduct(@Param("startDate") String startDate,@Param("lastDate")   String lastDate);
+
+    List<Map<String, String>> getProductTotalAndReagenerateTotal(@Param("startDate") String startDate,@Param("lastDate")   String lastDate);
+
+    List<Map<String, String>> getTwoCrewMoreThan100Regenerate(@Param("startDate") String startDate,@Param("lastDate")   String lastDate);
+
+    List<Map<String, String>> getwoCrewMoreThan100Product(@Param("startDate") String startDate,@Param("lastDate")   String lastDate);
+
+    List<Map<String, String>> getTwoCrewMoreThan100RegenerateProduct(@Param("startDate") String startDate,@Param("lastDate")   String lastDate);
+
+    List<Map<String, String>> getAllSquadTotal(@Param("startDate") String startDate,@Param("lastDate")   String lastDate);
+
+    List<Map<String, String>> getAllSquadRegenerate(@Param("startDate") String startDate,@Param("lastDate")   String lastDate);
+
+    List<Map<String, String>> getAllSquadProductMakeUp(@Param("startDate") String startDate,@Param("lastDate")   String lastDate);
+
+    List<Map<String, String>> getProjectTotal(@Param("startDate") String startDate,@Param("lastDate")   String lastDate);
+
+    List<Map<String, String>> getProjectTotalByDate(@Param("startDate") String startDate,@Param("lastDate")   String lastDate);
+
+    List<Map<String, String>> getTwoCrewNotAddRegenerateProduct(@Param("startDate") String startDate,@Param("lastDate")   String lastDate);
+
+    List<Map<String, String>> getRegenerateTypeTotal(@Param("startDate") String startDate,@Param("lastDate")   String lastDate);
+
+    List<Map<String, String>> getTwoCrewContinuousThanProduct(@Param("startDate") String startDate,@Param("lastDate")   String lastDate);
+
+    List<Map<String, String>> getTwoCrewProductByDate(@Param("startDate") String startDate,@Param("lastDate")   String lastDate);
+
+    Map<String, String> getCrew1WeighDataByDate(@Param("startDate") String beforeDate,@Param("lastDate")  String afterDate);
+
+    Map<String, String> getCrew2WeighDataByDate(@Param("startDate") String beforeDate,@Param("lastDate") String afterDate);
 }

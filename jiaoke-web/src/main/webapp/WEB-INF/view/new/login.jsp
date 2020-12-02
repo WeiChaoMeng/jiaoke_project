@@ -61,7 +61,7 @@
 </div>
 <div class="login-bottom">
     <div class="login-bottom-copyright">
-        <span>Copyright © 2008-2020  北京市政路桥建材集团有限公司路驰分公司 版权所有 版本v20200818-1.3</span>
+        <span>Copyright © 2008-2020  北京市政路桥建材集团有限公司路驰分公司 版权所有 版本v20201121-1.4</span>
     </div>
 </div>
 <script>

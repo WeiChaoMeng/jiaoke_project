@@ -80,12 +80,17 @@ public class RabbitService implements MessageListener {
 
             Map<String,String> map = QualityGetProjectByCarNumUtil.getErpData(license,carDate);
 
-                        //解析ERP传回来的数据
+            //解析ERP传回来的数据
             if (map == null ||!("0".equals(map.get("Result")))){
                 qualityProjectDao.insertErrorCarNum(license,recotime);
                 return;
             }
             map.put("crewNum",crewId);
+            //查看当前该条数据是否已经存入,存入就退出
+            Map<String,String> bol = qualityProjectDao.selectLeaveFactory(map);
+            if (!bol.isEmpty()){
+                return;
+            }
             //插入出场单表`quality_leave_factory_history`
             int i = qualityProjectDao.insertLeaveFactory(map);
             //更新读取数据（实时数据）

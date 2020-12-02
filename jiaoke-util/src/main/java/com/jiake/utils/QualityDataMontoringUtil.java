@@ -156,8 +156,8 @@ public class QualityDataMontoringUtil {
         // 计算差多少天
         //long day = diff / nd;
         // 计算差多少小时
-//        float hour = (diff/ nh) % 72;
-        double hour = ((double) diff)/ nh;
+        float hour = (diff/ nh) % 72;
+//        double hour = ((double) diff)/ nh;
         // 计算差多少分钟
 //        long min = diff/nh;
         // 计算差多少秒//输出结果

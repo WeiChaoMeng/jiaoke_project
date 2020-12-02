@@ -197,4 +197,61 @@ public interface QualityProjectDao {
      * @date 2020/8/18 14:55
      */
     void insertErrorCarNum(@Param("license") String license,@Param("carTime")  String carTime);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <插入过磅信息>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/10/29 15:08
+     */
+    void insertWeighingInformation(@Param("insertMap") Map<String, String> insertMap);
+
+
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <查询该条数据是否存在>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/10/29 19:27
+     */
+    Map<String, String> selectLeaveFactory(Map<String, String> map);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据车号查询生产时的车号>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/11/17 14:10
+     */
+    Map<String,String> selectCarNumByWeighing(@Param("insertMap")  Map<String, String> insertMap);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据出厂日期时间查询半个小时内车牌号>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/11/30 16:36
+     */
+    List<Map<String, String>> selectCarNumByLeaveFactory(@Param("insertMap")  Map<String, String> insertMap);
+
+    /**
+     *
+     * 功能描述: <br>
+     *  <根据日期更新车号和工程>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2020/12/2 9:42
+     */
+    int updateRealTimeCarNumAndProject(@Param("crewNum") String crewNum,@Param("carNum") String carNum,@Param("upTime")  String upTime,@Param("lastTime") String lastTime,@Param("projectName")  String projectName);
 }

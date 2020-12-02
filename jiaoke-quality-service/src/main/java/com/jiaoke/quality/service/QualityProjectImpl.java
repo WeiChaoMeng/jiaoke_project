@@ -15,13 +15,12 @@ import com.jiake.utils.QualityGetProjectByCarNumUtil;
 import com.jiaoke.quality.bean.QualityProjectItem;
 import com.jiaoke.quality.dao.QualityProjectDao;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.text.ParseException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  *  <一句话功能描述>
@@ -35,6 +34,9 @@ public class QualityProjectImpl implements QualityProjectInf {
 
     @Resource
     private QualityProjectDao qualityProjectDao;
+    @Resource
+    private AmqpTemplate amqpTemplate;
+
 
     @Override
     public int addProjectItem(QualityProjectItem fromData) {
@@ -114,7 +116,55 @@ public class QualityProjectImpl implements QualityProjectInf {
         Map<String,String> map = new HashMap<>();
         try{
             JSONObject jsonObject = JSON.parseObject(weighingMessage);
-            System.out.println(jsonObject);
+            Map<String,String> insertMap = new HashMap<>();
+            Set<String> keys = jsonObject.keySet();
+            Iterator<String> iterator = keys.iterator();
+            while (iterator.hasNext()){
+                String key = (String) iterator.next();
+                String obj = String.valueOf(jsonObject.get(key));
+                if ("crewNum".equals(key)){
+                    if ("1#".equals(obj) || "2#".equals(obj)){
+                        obj = "1#".equals(obj)? "1":"2";
+                    }else {
+                        obj = "1".equals(obj)? "1":"2";
+                    }
+
+                }
+                insertMap.put(key,obj);
+            }
+            //qualityProjectDao.insertWeighingInformation(insertMap);
+            Map<String,String> carMap = new HashMap<>();
+            carMap = qualityProjectDao.selectCarNumByWeighing(insertMap);
+            if (null == carMap ){
+                //查询半小时内近似车牌
+                List<Map<String,String>> carList = qualityProjectDao.selectCarNumByLeaveFactory(insertMap);
+                //查询近似值
+                if (carList == null || carList.isEmpty()){
+
+                }else {
+                    String carNum = insertMap.get("car_num");
+                    for (int i = 0; i < carList.size();i++){
+                        String temCarNum = carList.get(i).get("car_num");
+                        double similarityRatio = CarDateUtil.getSimilarityRatio(carNum, temCarNum);
+                        if (similarityRatio > 80 ){
+                            carMap = carList.get(i);
+                        }
+                    }
+                }
+            }
+            if (carMap == null || carMap.isEmpty()){
+                amqpTemplate.convertAndSend("","delay_queue",JSON.toJSONString(insertMap));
+            }else {
+                int updataNum = qualityProjectDao.updateRealTimeCarNumAndProject(String.valueOf(carMap.get("crew_num")),carMap.get("car_num"),String.valueOf(carMap.get("up_time")),String.valueOf(carMap.get("lastTime")),insertMap.get("project_name"));
+
+                //未更新生产数据的情况
+                if (updataNum == 0 ){
+                    carMap.put("project_name",insertMap.get("project_name"));
+                    amqpTemplate.convertAndSend("","realTime_queue",JSON.toJSONString(carMap));
+                }
+
+            }
+
             map.put("code","200");
             map.put("message","接收成功");
         }catch (Exception e){

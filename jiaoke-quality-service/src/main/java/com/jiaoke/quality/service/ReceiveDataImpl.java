@@ -184,8 +184,9 @@ public class ReceiveDataImpl implements ReceiveDataInf {
                 //判断材料百分比差值后插入
                 warningDataList.addAll(QualityWarningUtil.materialWarningObj(id,warningLeveMap,temArray,ratioTemplate));
             }else {
+                String tem = dateFormat.format(productTime);
                 //根据时间、机组号、产品类型获取最近的三盘数据
-                List<Map<String,String>>  threeList =  qualityWarningDao.selectThreeProductByTime(productTime,crewNum,map.get("produce_ratio_id"));
+                List<Map<String,String>>  threeList =  qualityWarningDao.selectThreeProductByTime(tem,crewNum,map.get("produce_ratio_id"));
                 //获取平均后的三盘数据，计算差值
                 warningDataList.addAll(QualityWarningUtil.avgThreeProductWarningLeve(id,threeList,warningLeveMap,ratioTemplate));
             }
@@ -197,7 +198,7 @@ public class ReceiveDataImpl implements ReceiveDataInf {
         }else {
             productDate.put(lastTimeKey,produceTime);
             //同类型半个小时内的同类型三盘产品
-            List<Map<String,String>>  threeList =  qualityWarningDao.selectThreeProductByTime(productTime,crewNum,map.get("produce_ratio_id"));
+            List<Map<String,String>>  threeList =  qualityWarningDao.selectThreeProductByTime(dateFormat.format(productTime),crewNum,map.get("produce_ratio_id"));
 
             //处理温度差值
             //一仓温度
@@ -210,16 +211,24 @@ public class ReceiveDataImpl implements ReceiveDataInf {
             int temperatureAsphalt = 0;
             //骨料温度
             int  aggregate = 0;
+
             for (int i = 0; i < threeList.size();i++){
                 warehouse += Integer.parseInt(String.valueOf(threeList.get(i).get("temperature_warehouse_1")));
                 mixture += Integer.parseInt(String.valueOf(threeList.get(i).get("temperature_mixture")));
                 temperatureAsphalt += Integer.parseInt(String.valueOf(threeList.get(i).get("temperature_asphalt")));
                 aggregate += Integer.parseInt(String.valueOf(threeList.get(i).get("temperature_aggregate")));
             }
-            warningDataList.add(QualityWarningUtil.temperatureWarningLevel(warningLeveMap,ratioTemplate.getTemperatureMilling(), ratioTemplate.getTemperatureMillingUp(), warehouse/threeList.size(), id, "一仓温度"));
-            warningDataList.add(QualityWarningUtil.temperatureWarningLevel(warningLeveMap,ratioTemplate.getTemperatureAsphalt(), ratioTemplate.getTemperatureAsphaltUp(), temperatureAsphalt/threeList.size(), id, "沥青温度"));
-            warningDataList.add(QualityWarningUtil.temperatureWarningLevel(warningLeveMap,ratioTemplate.getTemperatureMixture(), ratioTemplate.getTemperatureMixtureUp(), mixture/threeList.size(), id, "混合料温度"));
-            warningDataList.add(QualityWarningUtil.temperatureWarningLevel(warningLeveMap,ratioTemplate.getTemperatureAggregate(), ratioTemplate.getTemperatureAggregateUp(), aggregate/threeList.size(), id, "骨料温度"));
+            if (threeList.size() > 0 ){
+                warningDataList.add(QualityWarningUtil.temperatureWarningLevel(warningLeveMap,ratioTemplate.getTemperatureMilling(), ratioTemplate.getTemperatureMillingUp(), warehouse/threeList.size(), id, "一仓温度"));
+                warningDataList.add(QualityWarningUtil.temperatureWarningLevel(warningLeveMap,ratioTemplate.getTemperatureAsphalt(), ratioTemplate.getTemperatureAsphaltUp(), temperatureAsphalt/threeList.size(), id, "沥青温度"));
+                warningDataList.add(QualityWarningUtil.temperatureWarningLevel(warningLeveMap,ratioTemplate.getTemperatureMixture(), ratioTemplate.getTemperatureMixtureUp(), mixture/threeList.size(), id, "混合料温度"));
+                warningDataList.add(QualityWarningUtil.temperatureWarningLevel(warningLeveMap,ratioTemplate.getTemperatureAggregate(), ratioTemplate.getTemperatureAggregateUp(), aggregate/threeList.size(), id, "骨料温度"));
+            }else {
+                warningDataList.add(QualityWarningUtil.temperatureWarningLevel(warningLeveMap,ratioTemplate.getTemperatureMilling(), ratioTemplate.getTemperatureMillingUp(), warehouse, id, "一仓温度"));
+                warningDataList.add(QualityWarningUtil.temperatureWarningLevel(warningLeveMap,ratioTemplate.getTemperatureAsphalt(), ratioTemplate.getTemperatureAsphaltUp(), temperatureAsphalt, id, "沥青温度"));
+                warningDataList.add(QualityWarningUtil.temperatureWarningLevel(warningLeveMap,ratioTemplate.getTemperatureMixture(), ratioTemplate.getTemperatureMixtureUp(), mixture, id, "混合料温度"));
+                warningDataList.add(QualityWarningUtil.temperatureWarningLevel(warningLeveMap,ratioTemplate.getTemperatureAggregate(), ratioTemplate.getTemperatureAggregateUp(), aggregate, id, "骨料温度"));
+            }
 
             //处理材料温度差值
             warningDataList.addAll(QualityWarningUtil.avgThreeProductWarningLeve(id,threeList,warningLeveMap,ratioTemplate));

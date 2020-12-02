@@ -22,18 +22,30 @@ To change this template use File | Settings | File Templates.
 <div class="container-content">
     <div class="top">
 		<div class="count-base" >
-			<ul class="use-data">
-				<li>
-					<p class="data-count" id="total">0</p>
-					<span class="data-name">生产总量</span>
+			<ul class="use-data" style="height: 32%;">
+				<li style="width: 30%;">
+					<p class="data-count" id="crew1_WCZ">0</p>
+					<span class="data-name">王长忠组产量</span>
 				</li>
-				<li>
-					<p class="data-count" id="crew1_total" > 0</p>
-					<span class="data-name">一号机总量</span>
+				<li style="width: 30%;">
+					<p class="data-count" id="crew1_DJM" > 0</p>
+					<span class="data-name">杜健民组产量</span>
 				</li>
-				<li>
-					<p class="data-count" id="crew2_total"  >0</p>
-					<span class="data-name">二号机总量</span>
+				<li style="width: 30%;">
+					<p class="data-count" id="crew1_WH"  >0</p>
+					<span class="data-name">王欢组产量</span>
+				</li>
+				<li style="width: 30%;">
+					<p class="data-count" id="crew2_ZDQ"  >0</p>
+					<span class="data-name">张德全组产量</span>
+				</li>
+				<li style="width: 30%;">
+					<p class="data-count" id="crew2_FYB"  >0</p>
+					<span class="data-name">范玉彬组产量</span>
+				</li>
+				<li style="width: 30%;">
+					<p class="data-count" id="crew2_ZWM"  >0</p>
+					<span class="data-name">赵文明组产量</span>
 				</li>
 			</ul>
 			<div class="com-count-title"></div>
@@ -52,7 +64,7 @@ To change this template use File | Settings | File Templates.
 			<span class="right-bottom"></span>
 		</div>
 		<div class="count-resource q1">
-			<div class="com-count-title">每日产量统计</div>
+			<div class="com-count-title">各组可添加产品添加情况</div>
 			<div class="com-screen-content2">
 				<div class="com-screen-content">
 				 <div id="main1" style="margin-top:10px;width:100%;height:300px;"></div>
@@ -67,14 +79,14 @@ To change this template use File | Settings | File Templates.
 	
 	<div class="mid">
 		<div class="count-share w1" >
-			<div class="com-count-title">产品类型产量统计</div>
+			<div class="com-count-title">各组生产量情况</div>
 			<div class="com-screen-content">
 				    <div class="topRec_List">
 						<dl>
-							<dd>产品类型</dd>
-							<dd>总产量(t)</dd>
-							<dd>再生使用量(t)</dd>
-							<dd>再生占比</dd>
+							<dd >小组</dd>
+							<dd >机组号</dd>
+							<dd >总产量(t)</dd>
+							<dd >再生使用量(t)</dd>
 						</dl>
 						<div class="maquee">
 							<ul  id="maquee">
@@ -89,7 +101,7 @@ To change this template use File | Settings | File Templates.
 			<span class="right-bottom"></span>
 		</div>
 		<div class="count-share w2" >
-			<div class="com-count-title">产量前十产品柱状图</div>
+			<div class="com-count-title">各组生产量情况柱状图</div>
 			<div class="com-screen-content">
 			 <div id="main5" style="width:100%;height:300px;"></div>
 			</div>
@@ -102,7 +114,7 @@ To change this template use File | Settings | File Templates.
 	
 	<div class="bottom">
 		<div class="count-topic e1" >
-			<div class="com-count-title">一号机每日生产情况</div>
+			<div class="com-count-title">1#机王长忠组生产情况</div>
 			<div class="com-screen-content">
 			<div id="main6" style="width:100%;height:300px;"></div>
 			</div>
@@ -112,9 +124,53 @@ To change this template use File | Settings | File Templates.
 			<span class="right-bottom"></span>
 		</div>
 		<div class="count-topic e2" >
-			<div class="com-count-title">二号机每日生产情况</div>
+			<div class="com-count-title">1#机杜健民组生产情况</div>
 			<div class="com-screen-content">
 			 <div id="main7" style="width:100%;height:300px;"></div>
+			</div>
+			<span class="left-top"></span>
+			<span class="right-top"></span>
+			<span class="left-bottom"></span>
+			<span class="right-bottom"></span>
+		</div>
+	</div>
+	<div class="bottom">
+		<div class="count-topic e1" >
+			<div class="com-count-title">1#机王欢组生产情况</div>
+			<div class="com-screen-content">
+				<div id="main8" style="width:100%;height:300px;"></div>
+			</div>
+			<span class="left-top"></span>
+			<span class="right-top"></span>
+			<span class="left-bottom"></span>
+			<span class="right-bottom"></span>
+		</div>
+		<div class="count-topic e2" >
+			<div class="com-count-title">2#机张德全组生产情况</div>
+			<div class="com-screen-content">
+				<div id="main9" style="width:100%;height:300px;"></div>
+			</div>
+			<span class="left-top"></span>
+			<span class="right-top"></span>
+			<span class="left-bottom"></span>
+			<span class="right-bottom"></span>
+		</div>
+	</div>
+	<div class="bottom">
+		<div class="count-topic e1" >
+			<div class="com-count-title">2#机范玉彬组生产情况</div>
+			<div class="com-screen-content">
+				<div id="main10" style="width:100%;height:300px;"></div>
+			</div>
+			<span class="left-top"></span>
+			<span class="right-top"></span>
+			<span class="left-bottom"></span>
+			<span class="right-bottom"></span>
+		</div>
+		<div class="count-topic e2" >
+			<div class="com-count-title">2#机赵文明组生产情况</div>
+			<div class="com-screen-content">
+				<div id="main11" style="width:100%;height:300px;"></div>
 			</div>
 			<span class="left-top"></span>
 			<span class="right-top"></span>
@@ -127,7 +183,7 @@ To change this template use File | Settings | File Templates.
 
 
 <input  id="path" value="${path}" type="hidden" >
-<script src="../../../static/js/qc/pooled_product.js"></script>
+<script src="../../../static/js/qc/pooled_squad.js"></script>
 
 <script type="text/javascript"> 
 	  function autoScroll(obj){  

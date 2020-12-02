@@ -8,33 +8,65 @@
      http://www.springframework.org/schema/rabbit
      http://www.springframework.org/schema/rabbit/spring-rabbit.xsd">
     <!--配置connection-factory，指定连接rabbit server参数 -->
-    <rabbit:connection-factory id="connectionFactory" channel-cache-size="1"
+     <rabbit:connection-factory id="connectionFactory" channel-cache-size="1"
                                username="guest" password="guest" host="localhost" port="5672" />
 
-    <!--定义rabbit template用于数据的接收和发送 -->
-    <rabbit:template id="amqpTemplate"  connection-factory="connectionFactory"
-                     exchange="exchangeCar" />
 
-
-    <!--通过指定下面的admin信息，当前producer中的exchange和queue会在rabbitmq服务器上自动生成 -->
+    <!-- 定义admin,producer中的exchange,queue会自动的利用该admin自动在spring中生成 -->
     <rabbit:admin connection-factory="connectionFactory" />
 
-    <!--定义queue -->
-    <rabbit:queue name="carQueue" durable="true" auto-delete="false" exclusive="false" />
 
-    <!-- 定义direct exchange，绑定carQueue -->
-    <rabbit:direct-exchange id="exchangeCar" name="exchangeCar" durable="true" auto-delete="false">
+    <!-- 队列声明 :
+         durable：true、false true：在服务器重启时，能够存活
+         exclusive ：当连接关闭后是否自动删除队列；是否私有队列，如果私有，其他通道不能访问当前队列
+         autodelete：当没有任何消费者使用时，自动删除该队列 -->
+    <rabbit:queue name="proData_queue" auto-declare="true"/>
+    <rabbit:queue name="task_queue" auto-declare="true"/>
+    <!--定时消费一，车号查询 -->
+    <rabbit:queue name="delay_queue" auto-declare="true">
+        <rabbit:queue-arguments>
+            <entry key="x-message-ttl" value="43200000" value-type="java.lang.Long" />
+            <entry key="x-dead-letter-exchange" value="exchange_delay" />
+            <entry key="x-dead-letter-routing-key" value="task_queue" />
+        </rabbit:queue-arguments>
+    </rabbit:queue>
+    <!--定时消费二，生产数据更新 -->
+    <rabbit:queue name="realTime_queue" auto-declare="true">
+        <rabbit:queue-arguments>
+            <entry key="x-message-ttl" value="43200000" value-type="java.lang.Long" />
+            <entry key="x-dead-letter-exchange" value="exchange_delay" />
+            <entry key="x-dead-letter-routing-key" value="proData_queue" />
+        </rabbit:queue-arguments>
+    </rabbit:queue>
+    <rabbit:direct-exchange name="exchange_delay" durable="false" auto-delete="false" id="exchange_delay">
         <rabbit:bindings>
-            <rabbit:binding queue="carQueue" key="queueTestKey"/>
+            <rabbit:binding queue="task_queue" key="task_queue" />
+            <rabbit:binding queue="proData_queue" key="proData_queue" />
         </rabbit:bindings>
     </rabbit:direct-exchange>
 
-    <!-- 消息接收者 -->
-    <bean id="messageReceiver" class="com.jiaoke.quality.service.RabbitService"/>
+    <!--定义rabbit template用于数据的接收和发送 -->
+    <rabbit:template id="amqpTemplate"  connection-factory="connectionFactory"/>
 
-    <!-- queue litener  观察 监听模式 当有消息到达时会通知监听在对应的队列上的监听对象-->
-    <rabbit:listener-container connection-factory="connectionFactory">
-        <rabbit:listener queues="carQueue" ref="messageReceiver"/>
+     <!-- 配置线程池 -->
+    <bean id ="taskExecutor"  class ="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor" >
+        <!-- 线程池维护线程的最少数量 -->
+        <property name ="corePoolSize" value ="5" />
+        <!-- 线程池维护线程所允许的空闲时间 -->
+        <property name ="keepAliveSeconds" value ="30000" />
+        <!-- 线程池维护线程的最大数量 -->
+        <property name ="maxPoolSize" value ="1000" />
+        <!-- 线程池所使用的缓冲队列 -->
+        <property name ="queueCapacity" value ="200" />
+    </bean>
+
+    <bean id="delayTask" class="com.jiaoke.quality.service.DelayTask"/>
+    <bean id="productTask" class="com.jiaoke.quality.service.ProductTask"/>
+
+    <rabbit:listener-container connection-factory="connectionFactory" acknowledge="auto" task-executor="taskExecutor">
+        <rabbit:listener queues="task_queue" ref="delayTask"/>
+        <rabbit:listener queues="realTime_queue" ref="productTask"/>
     </rabbit:listener-container>
+
 
 </beans>

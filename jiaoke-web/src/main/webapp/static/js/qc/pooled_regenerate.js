@@ -37,10 +37,10 @@ var Tpl3 ='<li>' +
     '</li>' ;
 $('.com-screen-content .use-data').html(Tpl1);
 
-    var basePath = $("#path").val();
+var basePath = $("#path").val();
 $(function(){
     setInterval('autoScroll(".maquee")',2000);
-    
+
     layui.use('laydate', function(){
         var laydate = layui.laydate;
         //执行一个laydate实例
@@ -61,7 +61,7 @@ $(function(){
         });
 
     });
-    
+
     var nowdate = new Date();
     var y = nowdate.getFullYear();
     var m = nowdate.getMonth();
@@ -69,16 +69,34 @@ $(function(){
     var formatwdate = y+'-'+m+'-'+d;
     var nowformatwdate = y+'-'+(nowdate.getMonth()+1)+'-'+d;
 
-    getProductTotal(formatwdate,nowformatwdate);
+    getProductTotalAndReagenerateTotal(formatwdate,nowformatwdate);
 
-    getEverDayProdacuByDate(formatwdate,nowformatwdate);
+    getTwoCrewMoreThan100Regenerate(formatwdate,nowformatwdate);
 
-    getAllProductTypeTotal(formatwdate,nowformatwdate);
+    getwoCrewMoreThan100Product(formatwdate,nowformatwdate);
 
-    getTwoCrewProduct(formatwdate,nowformatwdate);
+    getTwoCrewMoreThan100RegenerateProduct(formatwdate,nowformatwdate);
+
+    getRegenerateTypeTotal(formatwdate,nowformatwdate);
+    //获取两个机组每日连续生产100吨未添加产品
+    getTwoCrewContinuousThanProduct(formatwdate,nowformatwdate);
 })
 function showProductStatement() {
-    
+    layui.use('layer', function(){
+        var layer = layui.layer;
+        //执行一个laydate实例
+            layer.open({
+                type: 1,
+                shadeClose: false,
+                shade: false,
+                scrollbar:false,
+                maxmin: true, //开启最大化最小化按钮
+                title: '再生料统计',
+                area: ['90%', '100%'],
+                content: $('#productStatement').html()//捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
+            });
+        });
+
 }
 function getALLEcharDataByDate() {
     var startDate = $("#startDate").val();
@@ -91,13 +109,19 @@ function getALLEcharDataByDate() {
         return
     }
 
-    getProductTotal(startDate,endDate);
+    getProductTotalAndReagenerateTotal(startDate,endDate);
 
-    getEverDayProdacuByDate(startDate,endDate);
+    getTwoCrewMoreThan100Regenerate(startDate,endDate);
 
-    getAllProductTypeTotal(startDate,endDate);
+    getwoCrewMoreThan100Product(startDate,endDate);
 
-    getTwoCrewProduct(startDate,endDate);
+    getTwoCrewMoreThan100RegenerateProduct(startDate,endDate);
+
+
+    getRegenerateTypeTotal(startDate,endDate);
+
+    //获取两个机组每日连续生产100吨未添加产品
+    getTwoCrewContinuousThanProduct(startDate,endDate);
 }
 
 /**
@@ -105,29 +129,59 @@ function getALLEcharDataByDate() {
  * @param startDate
  * @param lastDate
  */
-function getProductTotal(startDate,lastDate) {
+function getProductTotalAndReagenerateTotal(startDate,lastDate) {
     $.ajax({
-        url: basePath + "/getProdycyTotalByDate.do",
+        url: basePath + "/getProductTotalAndReagenerateTotal.do",
         type: "post",
         data:{
-          "startDate":  startDate,
+            "startDate":  startDate,
             "lastDate":lastDate
         },
         dataType: "json",
         success:function (res) {
-            var sumTotal = 0;
             if (res.message === 'success'){
                 var list = res.body;
                 if (list.length > 0){
+                    var total = 0 ;
+                    var regenerateTotal = 0 ;
+                    var crew1Proportion = 0;
+                    var crew2Proportion = 0;
+                    var totalProportion = 0;
                     for (var i = 0;i < list.length;i++ ) {
                         if (list[i].crew === 'crew1') {
-                            $("#crew1_total").html(list[i].total + "吨")
+                            if (list[i].total > 0 ){
+                                $("#crew1_total").html(list[i].total + "吨")
+                                $("#crew1_accumulative_total").html((list[i].total/10000))
+                                total += list[i].total;
+
+                            }
+                            if (list[i].reagenerate > 0 ){
+                                $("#crew1_regenerate_total").html(list[i].reagenerate+ "吨");
+                                $("#crew1_regenerate_accumulative_total").html((list[i].reagenerate/10000))
+                                regenerateTotal += list[i].reagenerate;
+                            }
+                            crew1Proportion = ((list[i].reagenerate/list[i].total)*100).toFixed(2);
                         }else {
-                            $("#crew2_total").html(list[i].total+ "吨")
+                            if (list[i].total > 0 ){
+                                $("#crew2_total").html(list[i].total + "吨")
+                                $("#crew2_accumulative_total").html((list[i].total/10000));
+                                total += list[i].total;
+                            }
+                            if (list[i].reagenerate > 0 ){
+                                $("#crew2_regenerate_total").html(list[i].reagenerate + "吨");
+                                $("#crew2_regenerate_accumulative_total").html((list[i].reagenerate/10000))
+                                regenerateTotal += list[i].reagenerate;
+                            }
+                            crew2Proportion = ((list[i].reagenerate/list[i].total)*100).toFixed(2);
                         }
-                        sumTotal += Number(list[i].total);
+
                     }
-                    $("#total").html(sumTotal + "吨");
+                    totalProportion = ((regenerateTotal/total)*100).toFixed(2);
+                    $("#accumulative_total").html((total/10000) );
+                    $("#regenerate_total").html((regenerateTotal/10000));
+                    $("#crew1_comprehensive_proportion").html(crew1Proportion );
+                    $("#crew2_comprehensive_proportion").html(crew2Proportion );
+                    $("#total_comprehensive_proportion").html(totalProportion );
                 }else {
                     layui.use('layer', function(){
                         layer.alert("前一个月无生产数据")
@@ -144,13 +198,13 @@ function getProductTotal(startDate,lastDate) {
 }
 
 /**
- * 查询日期范围内每日产量情况
+ * 查询两台机组满100吨可添加未添加情况
  * @param startDate
  * @param lastDate
  */
-function getEverDayProdacuByDate(startDate,lastDate) {
+function getTwoCrewMoreThan100Regenerate(startDate,lastDate) {
     $.ajax({
-        url: basePath + "/getEverDayProdacuByDate.do",
+        url: basePath + "/getTwoCrewMoreThan100Regenerate.do",
         type: "post",
         data:{
             "startDate":  startDate,
@@ -163,9 +217,10 @@ function getEverDayProdacuByDate(startDate,lastDate) {
                 var list = res.body;
 
                 if (list.length > 0){
-                    var crew1 = [];
-                    var crew2 = [];
-                    var twoCrew = [];
+                    var crew1total = [];
+                    var crew1regeneratetotal = [];
+                    var crew2total = [];
+                    var crew2regeneratetotal = [];
                     var xAxis = [];
                     for (var i = 0; i < list.length ; i++) {
                         var product_date =  list[i].produce_date;
@@ -174,18 +229,22 @@ function getEverDayProdacuByDate(startDate,lastDate) {
                         }
                     }
                     for (var i = 0; i < xAxis.length ; i++){
-                        crew1.push({
+                        crew1total.push({
                             "name":xAxis[i],
                             "value":0
-                        })
-                        crew2.push({
+                        });
+                        crew1regeneratetotal.push({
                             "name":xAxis[i],
                             "value":0
-                        })
-                        twoCrew.push({
+                        });
+                        crew2total.push({
                             "name":xAxis[i],
                             "value":0
-                        })
+                        });
+                        crew2regeneratetotal.push({
+                            "name":xAxis[i],
+                            "value":0
+                        });
                     }
 
                     for (var i = 0; i < list.length ; i++) {
@@ -193,31 +252,27 @@ function getEverDayProdacuByDate(startDate,lastDate) {
                         var crewNum =  list[i].crew;
                         //定义机组一数组
                         if (crewNum === 'crew1'){
-                            for (var j = 0;j < crew1.length;j++){
-                                var pDate = crew1[j].name;
+                            for (var j = 0;j < crew1total.length;j++){
+                                var pDate = crew1total[j].name;
                                 if (date === pDate ){
-                                    crew1[j].value = list[i].total;
+                                    crew1total[j].value = list[i].total;
+                                    crew1regeneratetotal[j].value = list[i].reagenerate;
                                     break
                                 }
                             }
                         } else {
                             //定义机组二数组
-                            for (var k = 0;k < crew2.length;k++){
-                                var p2Date = crew2[k].name;
+                            for (var k = 0;k < crew2total.length;k++){
+                                var p2Date = crew2total[k].name;
                                 if (date === p2Date){
-                                    crew2[k].value = list[i].total;
+                                    crew2total[k].value = list[i].total;
+                                    crew2regeneratetotal[k].value = list[i].reagenerate;
                                     break
                                 }
                             }
                         }
                     }
-                    //定义总量数组
-                    for (var  r= 0;r < twoCrew.length;r++){
-                        var crew1Total = crew1[r].value;
-                        var crew2Total  = crew2[r].value;
-                        twoCrew[r].value = Number(crew1Total) + Number(crew2Total);
-                    }
-                    init_myChart1(crew1,crew2,twoCrew,xAxis);
+                    init_myChart1(crew1total,crew1regeneratetotal,crew2total,crew2regeneratetotal,xAxis);
                 }else {
                     layui.use('layer', function(){
                         layer.alert("前一个月无生产数据")
@@ -230,7 +285,7 @@ function getEverDayProdacuByDate(startDate,lastDate) {
             }
         }
     })
-    
+
 }
 
 /**
@@ -238,9 +293,9 @@ function getEverDayProdacuByDate(startDate,lastDate) {
  * @param startDate
  * @param lastDate
  */
-function getAllProductTypeTotal(startDate,lastDate) {
+function getwoCrewMoreThan100Product(startDate,lastDate) {
     $.ajax({
-        url: basePath + "/getAllProductTypeTotal.do",
+        url: basePath + "/getwoCrewMoreThan100Product.do",
         type: "post",
         data:{
             "startDate":  startDate,
@@ -255,21 +310,14 @@ function getAllProductTypeTotal(startDate,lastDate) {
                     var xData = [];
                     var totalData = [];
                     var regenerateData = [];
-                    var htm = '';
                     for (var i = 0;i < list.length;i++){
                         if (i < 10){
                             xData.push(list[i].pro_name);
                             totalData.push(list[i].total);
-                            regenerateData.push(list[i].regenerateTotal);
+                            regenerateData.push(list[i].reagenerate);
                         }
-                        htm += '<li>'
-                            + '<div>' + list[i].pro_name + '</div>'
-                            + '<div>' +  list[i].total + '</div>'
-                            + '<div>' + list[i].regenerateTotal + '</div>'
-                            + '<div>' + ((list[i].regenerateTotal/list[i].total)*100).toFixed(2) + '<i>%</i></div>'
-                            + '</li>';
                     }
-                    $("#maquee").append(htm);
+
                     //更新前十
                     init_myChart5(xData,totalData,regenerateData);
                 } else {
@@ -291,9 +339,9 @@ function getAllProductTypeTotal(startDate,lastDate) {
  * @param startDate
  * @param lastDate
  */
-function getTwoCrewProduct(startDate,lastDate) {
+function getTwoCrewMoreThan100RegenerateProduct(startDate,lastDate) {
     $.ajax({
-        url: basePath + "/getTwoCrewProduct.do",
+        url: basePath + "/getTwoCrewMoreThan100RegenerateProduct.do",
         type: "post",
         data:{
             "startDate":  startDate,
@@ -306,26 +354,25 @@ function getTwoCrewProduct(startDate,lastDate) {
                 if (list.length > 0){
                     //取出一二号机组所有日期
                     //取出一二号机组每种产品生产总量
-                    //取出一二号机组再生料总量
                     var crew1_xData = [];
                     var crew1_totalData = [];
                     var crew1_regenerateData = [];
                     var crew2_xData = [];
                     var crew2_totalData = [];
                     var crew2_regenerateData = [];
-
                     for (var i = 0;i < list.length;i++){
                         var crewNum = list[i].crew;
                         if ( crewNum === 'crew1'){
                             crew1_xData.push(list[i].produce_date);
                             crew1_totalData.push(list[i].total);
-                            crew1_regenerateData.push(list[i].regenerate);
+                            crew1_regenerateData.push(list[i].reagenerate);
                         }else {
                             crew2_xData.push(list[i].produce_date);
                             crew2_totalData.push(list[i].total);
-                            crew2_regenerateData.push(list[i].regenerate);
+                            crew2_regenerateData.push(list[i].reagenerate);
                         }
                     }
+
                     //更新一号机前十
                     init_myChart6(crew1_xData,crew1_totalData,crew1_regenerateData);
                     //更新二号机前十
@@ -343,17 +390,215 @@ function getTwoCrewProduct(startDate,lastDate) {
         }
     })
 }
+
+
+/**
+ * 查询除去不可添加后产品总量
+ * @param startDate
+ * @param lastDate
+ */
+function getRegenerateTypeTotal(startDate,lastDate) {
+    $.ajax({
+        url: basePath + "/getRegenerateTypeTotal.do",
+        type: "post",
+        data:{
+            "startDate":  startDate,
+            "lastDate":lastDate
+        },
+        dataType: "json",
+        success:function (res) {
+            if (res.message === 'success'){
+                var list = res.body;
+                if (list.length > 0){
+                    var twoTotal = 0;
+                    var twoReagenerateTotal = 0;
+                    for (var i =0; i < list.length;i++){
+                        var crew = list[i].crew;
+                        var reagenerate = list[i].reagenerate;
+                        var material_total = list[i].total;
+                        if (crew === "crew1"){
+                            $("#pelco-d_crew1_mixture").html(material_total/10000 );
+                            $("#pelco-d_crew1_proportion").html(((reagenerate/material_total)*100).toFixed(2) );
+                        } else {
+                            $("#pelco-d_crew2_mixture").html(material_total/10000 );
+                            $("#pelco-d_crew2_proportion").html(((reagenerate/material_total)*100).toFixed(2) );
+                        }
+                        twoTotal += material_total;
+                        twoReagenerateTotal += reagenerate;
+                    }
+                    $("#pelco-d_total_mixture").html(twoTotal/10000);
+                    $("#pelco-d_total_proportion").html(((twoReagenerateTotal/twoTotal)*100).toFixed(2) );
+                } else {
+                    layui.use('layer', function(){
+                        layer.alert("日期段内无生产")
+                    })
+                }
+            } else {
+                layui.use('layer', function(){
+                    layer.alert("查询生产总量失败")
+                })
+            }
+        }
+    })
+}
+/**
+ * 查询两个机组每日连续生产100吨以上可添加未添加产品
+ * @param startDate
+ * @param lastDate
+ */
+function getTwoCrewContinuousThanProduct(startDate,lastDate) {
+    $.ajax({
+        url: basePath + "/getTwoCrewContinuousThanProduct.do",
+        type: "post",
+        data:{
+            "startDate":  startDate,
+            "lastDate":lastDate
+        },
+        dataType: "json",
+        success:function (res) {
+            if (res.message === 'success') {
+                var map = res.body;
+             if (map){
+                var crew1Prodate = map.crew1;
+                var crew2Prodate = map.crew2;
+                var crew1Data = [];
+                 var crew1Date = [];
+                var crew1Type = [];
+                 var crew2Data = [];
+                 var crew2Date = [];
+                 var crew2Type = [];
+                for (var key in crew1Prodate) {
+                    if (crew1Prodate[key].length > 0) {
+                        crew1Date.push(key);
+                        var total = 0;
+                        for (var i = 0 ; i < crew1Prodate[key].length;i++){
+                            for (var proName in crew1Prodate[key][i]){
+                                var temTotal = crew1Prodate[key][i][proName].toFixed(2);
+                                crew1Type.push({"proDate":key,"proType":proName,"total":temTotal});
+                                total += Number(temTotal);
+                            }
+                        }
+                        crew1Data.push({"adate":key,"total":total.toFixed(2)});
+                    }
+                }
+                 for (var key in crew2Prodate) {
+                     if (crew2Prodate[key].length > 0) {
+                         crew2Date.push(key);
+                         var total = 0;
+                         for (var i = 0 ; i < crew2Prodate[key].length;i++){
+                             for (var proName in crew2Prodate[key][i]){
+                                 var temTotal = crew2Prodate[key][i][proName].toFixed(2);
+                                 crew2Type.push({"proDate":key,"proType":proName,"total":temTotal});
+                                 total += Number(temTotal);
+                             }
+                         }
+                         crew2Data.push({"adate":key,"total":total.toFixed(2)});
+                     }
+                 }
+                 crew1Date.sort(function(key1, key2) {
+                     return Date.parse(key1) - Date.parse(key2)
+                 })
+                 crew2Date.sort(function(key1, key2) {
+                     return Date.parse(key1) - Date.parse(key2)
+                 })
+
+                 var crew1ChartData = [];
+                 var crew1TypeSoft = [];
+                for (var i = 0; i < crew1Date.length;i++){
+                    var date = crew1Date[i];
+                    for (var j = 0; j < crew1Data.length;j++){
+                        if (crew1Data[j].adate === date){
+                            crew1ChartData.push(crew1Data[j].total);
+                            break;
+                        }
+                    }
+                    for (var k = 0; k < crew1Type.length;k++){
+                        if (date === crew1Type[k].proDate){
+                            crew1TypeSoft.push(crew1Type[k]);
+                        }
+                    }
+                }
+                 var crew2ChartData = [];
+                 var crew2TypeSoft = [];
+                 for (var i = 0; i < crew2Date.length;i++){
+                     var date = crew2Date[i];
+                     for (var j = 0; j < crew2Data.length;j++){
+                         if (crew2Data[j].adate === date){
+                             crew2ChartData.push(crew2Data[j].total);
+                             break;
+                         }
+                     }
+                     for (var k = 0; k < crew2Type.length;k++){
+                         if (date === crew2Type[k].proDate){
+                             crew2TypeSoft.push(crew2Type[k]);
+                         }
+                     }
+                 }
+
+                 init_myChart8(crew1ChartData,crew1Date);
+                 init_myChart9(crew2ChartData,crew2Date);
+
+                 //更新talle
+                 var htm = "";
+                 var crew1Html = "";
+                 var crew2Html = "";
+                 for (var i = 0; i < crew1TypeSoft.length;i++){
+                     htm += '<li >'
+                         + '<div>' + crew1TypeSoft[i].proDate + '</div>'
+                         + '<div>' + crew1TypeSoft[i].proType + '</div>'
+                         + '<div>' + "机组一" + '</div>'
+                         + '<div>' + crew1TypeSoft[i].total + '</div>'
+                         + '</li>';
+                     crew1Html += '<tr >'
+                         + '<th>' + crew1TypeSoft[i].proDate + '</th>'
+                         + '<th>' + crew1TypeSoft[i].proType + '</th>'
+                         + '<th>' + crew1TypeSoft[i].total + '</th>'
+                         + '</tr>';
+                 }
+                 for (var i = 0; i < crew2TypeSoft.length;i++){
+                     htm += '<li >'
+                         + '<div>' + crew2TypeSoft[i].proDate + '</div>'
+                         + '<div>' + crew2TypeSoft[i].proType + '</div>'
+                         + '<div>' + "机组二" + '</div>'
+                         + '<div>' + crew2TypeSoft[i].total + '</div>'
+                         + '</li>';
+                     crew2Html += '<tr >'
+                         + '<th>' + crew2TypeSoft[i].proDate + '</th>'
+                         + '<th>' + crew2TypeSoft[i].proType + '</th>'
+                         + '<th>' + crew2TypeSoft[i].total + '</th>'
+                         + '</tr>';
+                 }
+                 $("#maquee").append(htm);
+
+                 //更新报告
+                 $("#crew1Body").html(crew1Html);
+                 $("#crew2Body").html(crew2Html);
+            } else {
+                layui.use('layer', function(){
+                    layer.alert("日期段内无生产")
+                })
+            }
+            } else {
+                layui.use('layer', function(){
+                    layer.alert("查询生产总量失败")
+                })
+            }
+        }
+    })
+}
 // 基于准备好的dom，初始化echarts实例
 var myChart1 = echarts.init(document.getElementById('main1'));
 var myChart5 = echarts.init(document.getElementById('main5'));
 var myChart6 = echarts.init(document.getElementById('main6'));
 var myChart7 = echarts.init(document.getElementById('main7'));
+var myChart8= echarts.init(document.getElementById('main8'));
+var myChart9 = echarts.init(document.getElementById('main9'));
 
 getNowFormatDate();
 init_myChart6();
 init_myChart7();
 
-function init_myChart1(crew1,crew2,twoCrew,xAxis) {
+function init_myChart1(crew1total,crew1regeneratetotal,crew2total,crew2regeneratetotal,xAxis) {
 
     option = {
 
@@ -395,8 +640,8 @@ function init_myChart1(crew1,crew2,twoCrew,xAxis) {
         },
         grid: {
             top:'4%',
-            left: '10%',
-            right: '10',
+            left: '7%',
+            right: '10%',
             //bottom: '10%',
             containLabel: false
         },
@@ -444,7 +689,7 @@ function init_myChart1(crew1,crew2,twoCrew,xAxis) {
             }
         }],
         series: [{
-            name: '数据总量',
+            name: '一号机组可添加类型产品总生产',
             type: 'line',
             smooth: true,
             showSymbol: false,
@@ -471,9 +716,9 @@ function init_myChart1(crew1,crew2,twoCrew,xAxis) {
                     color: '#1cc840'
                 }
             },
-            data: twoCrew
+            data: crew1total
         }, {
-            name: '一号机组',
+            name: '一号机组可添加类型产品再生料使用量',
             type: 'line',
             smooth: true,
             showSymbol: false,
@@ -500,9 +745,9 @@ function init_myChart1(crew1,crew2,twoCrew,xAxis) {
                     color: '#eb5690'
                 }
             },
-                data: crew1
-            },  {
-            name: '二号机组',
+            data: crew1regeneratetotal
+        },  {
+            name: '二号机组可添加类型产品总生产',
             type: 'line',
             smooth: true,
             showSymbol: false,
@@ -529,7 +774,55 @@ function init_myChart1(crew1,crew2,twoCrew,xAxis) {
                     color: '#43bbfb'
                 }
             },
-            data: crew2
+            data: crew2total
+        },  {
+            name: '二号机组可添加类型再生使用量',
+            type: 'line',
+            smooth: true,
+            showSymbol: false,
+            lineStyle: {
+                normal: {
+                    width: 2
+                }
+            },
+            areaStyle: {
+                normal: {
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                        offset: 0,
+                        color: 'rgba(0, 136, 212, 0.3)'
+                    }, {
+                        offset: 0.8,
+                        color: 'rgba(0, 136, 212, 0)'
+                    }], false),
+                    shadowColor: 'rgba(0, 0, 0, 0.1)',
+                    shadowBlur: 10
+                }
+            },
+            itemStyle: {
+                normal: {
+                    color: '#43bbfb'
+                }
+            },
+            data: crew2regeneratetotal,
+            markLine: {
+                data: [{name: '100吨的水平线',yAxis: 100}],
+                silent: true,
+                lineStyle:{
+                    color: {
+                        type: 'linear',
+                        x: 0,
+                        y: 0,
+                        x2: 0,
+                        y2: 1,
+                        colorStops: [{
+                            offset: 0, color: 'red' // 0% 处的颜色
+                        }, {
+                            offset: 1, color: 'blue' // 100% 处的颜色
+                        }],
+                        global: false // 缺省为 false
+                    }
+                }
+            }
         }
         ]
     };
@@ -1034,6 +1327,248 @@ function init_myChart7(crew2_xData,crew2_totalData,crew2_regenerateData){
 // 使用刚指定的配置项和数据显示图表。
     myChart7.setOption(option);
 }
+function init_myChart8(crew1total,xAxis) {
+    var fontColor = '#30eee9';
+    option = {
+        grid: {
+            left: '5%',
+            right: '5%',
+            top: '7%',
+            bottom: '7%',
+            containLabel: true
+        },
+        tooltip: {
+            show: true,
+            trigger: 'item'
+        },
+        legend: {
+            show:true,
+            x:'center',
+            y:'35',
+            icon: 'stack',
+            itemWidth:10,
+            itemHeight:10,
+            textStyle:{
+                color:'#1bb4f6'
+            },
+            data:['未添加']
+        },
+        xAxis: [{
+            type: 'category',
+            boundaryGap: false,
+            axisLabel: {
+                color: fontColor,
+                interval: 0,
+                rotate:40,
+                fontSize:10
+            },
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: '#397cbc'
+                }
+            },
+            axisTick: {
+                show: false,
+            },
+            splitLine: {
+                show: false,
+                lineStyle: {
+                    color: '#195384'
+                }
+            },
+            data: xAxis
+        }],
+        yAxis: [{
+            type: 'value',
+            name: '',
+            axisLabel: {
+                formatter: '{value}',
+                textStyle: {
+                    color: '#2ad1d2'
+                }
+            },
+            axisLine: {
+                lineStyle: {
+                    color: '#27b4c2'
+                }
+            },
+            axisTick: {
+                show: false,
+            },
+            splitLine: {
+                show: true,
+                lineStyle: {
+                    color: '#11366e'
+                }
+            }
+        },
+
+        ],
+        series: [{
+            name: '二号机组连续生产超过一百吨可添加未添加',
+            type: 'line',
+            stack: '总量',
+            symbol: 'circle',
+            symbolSize: 8,
+            itemStyle: {
+                normal: {
+                    color: '#0092f6',
+                    lineStyle: {
+                        color: "#0092f6",
+                        width: 1
+                    },
+                    label: {
+                        show: true,
+                        position: 'top',
+                        textStyle: {
+                            color: '#6c50f3',
+                        }
+                    },
+                }
+            },
+            markPoint: {
+                itemStyle: {
+                    normal: {
+                        color: 'red'
+                    }
+
+                }
+            },
+
+            data: crew1total
+        }
+        ]
+    };
+    myChart8.setOption(option);
+}
+function init_myChart9(crew1total,xAxis) {
+
+    var fontColor = '#30eee9';
+    option = {
+        grid: {
+            left: '5%',
+            right: '5%',
+            top: '7%',
+            bottom: '7%',
+            containLabel: true
+        },
+        tooltip: {
+            show: true,
+            trigger: 'item'
+        },
+        legend: {
+            show:true,
+            x:'center',
+            y:'35',
+            icon: 'stack',
+            itemWidth:10,
+            itemHeight:10,
+            textStyle:{
+                color:'#1bb4f6'
+            },
+            data:['未添加']
+        },
+        xAxis: [{
+            type: 'category',
+            boundaryGap: false,
+            axisLabel: {
+                color: fontColor,
+                interval: 0,
+                rotate:40,
+                fontSize:10
+            },
+            axisLine: {
+                show: true,
+                lineStyle: {
+                    color: '#397cbc'
+                }
+            },
+            axisTick: {
+                show: false,
+            },
+            splitLine: {
+                show: false,
+                lineStyle: {
+                    color: '#195384'
+                }
+            },
+            data: xAxis
+        }],
+        yAxis: [{
+            type: 'value',
+            name: '',
+            axisLabel: {
+                formatter: '{value}',
+                textStyle: {
+                    color: '#2ad1d2'
+                }
+            },
+            axisLine: {
+                lineStyle: {
+                    color: '#27b4c2'
+                }
+            },
+            axisTick: {
+                show: false,
+            },
+            splitLine: {
+                show: true,
+                lineStyle: {
+                    color: '#11366e'
+                }
+            }
+        },
+
+        ],
+        series: [{
+            name: '二号机组连续生产超过一百吨可添加未添加',
+            type: 'line',
+            stack: '总量',
+            symbol: 'circle',
+            symbolSize: 8,
+            itemStyle: {
+                normal: {
+                    color: '#0092f6',
+                    lineStyle: {
+                        color: "#0092f6",
+                        width: 1
+                    },
+                    label: {
+                        show: true,
+                        position: 'top',
+                        textStyle: {
+                            color: '#6c50f3',
+                        }
+                    },
+                }
+            },
+            markPoint: {
+                itemStyle: {
+                    normal: {
+                        color: 'red'
+                    }
+
+                }
+            },
+
+            data: crew1total
+        }
+        ]
+    };
+    myChart9.setOption(option);
+}
+function printReport(printpage) {
+    $("#print_button").remove();
+    var headstr = "<html><head><title></title></head><body>";
+    var footstr = "</body>";
+    var newstr = document.all.item(printpage).innerHTML;
+    var oldstr = document.body.innerHTML;
+    document.body.innerHTML = headstr+newstr+footstr;
+    window.print();
+    document.body.innerHTML = oldstr;
+    return false;
+};
 //获取当前时间
 function getNowFormatDate() {
     var date = new Date();
@@ -1108,16 +1643,6 @@ $('.data-label').hover(function () {
     oTimer = setInterval(resourceType, 3000);
 });
 
-/*function resize(){
-	window.addEventListener("resize", () => {
-  	this.myChart1.resize;
-	this.myChart2.resize;
-	this.myChart3.resize;
-	this.myChart5.resize;
-	this.myChart6.resize;
-	this.myChart7.resize;
-});
-}*/
 
 setInterval(function (){
     window.onresize = function () {
@@ -1125,6 +1650,8 @@ setInterval(function (){
         this.myChart5.resize;
         this.myChart6.resize;
         this.myChart7.resize;
+        this.myChart8.resize;
+        this.myChart9.resize;
     }
 },200)
 
@@ -1134,3 +1661,4 @@ function isBlank(s) {
     }
     return false;
 };
+

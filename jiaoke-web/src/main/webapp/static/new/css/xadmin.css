@@ -732,5 +732,15 @@ body.index {
 .left-nav a:hover, .left-nav a.active {
     border-color: rgba(30, 144, 255, 1) !important;
 }
-
+.my_ul{
+    float: left;
+    height: 100px;
+    width: 340px;
+    overflow: hidden;
+    background: #5FB878;
+    padding: 10px;
+}
+.my_ul li{
+    color: #f9f9f9;
+}
 

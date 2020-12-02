@@ -70,7 +70,9 @@
                         <dd>
                             <a onclick="selectedCode()">APP码</a>
                         </dd>
-
+                        <dd>
+                            <a onclick="updateMessage()">版本记录</a>
+                        </dd>
                         <dd>
                             <a href="/logout">退出</a>
                         </dd>
@@ -935,5 +937,13 @@
     <input type="hidden" id="subFrameId">
     <div id="modalWindow"></div>
     </body>
+    <div id="update" style="display: none;">
 
+        <ul class="my_ul">
+            <li style="font-size: 18px;margin-top: 4px;margin-bottom: 4px;color: #fff;">V1.4 2020.11.21</li>
+            <li>1. 整加汇总分析功能模块</li>
+            <li>2. 修改车牌读取业务</li>
+            <li>3. 生产数据与生产人员绑定</li>
+        </ul>
+    </div>
 </html>

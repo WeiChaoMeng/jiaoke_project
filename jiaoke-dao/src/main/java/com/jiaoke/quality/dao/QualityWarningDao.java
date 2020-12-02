@@ -110,7 +110,7 @@ public interface QualityWarningDao {
      * @auther Melone
      * @date 2020/9/24 11:13
      */
-    List<Map<String, String>> selectThreeProductByTime(@Param("productTime")  Date productTime,@Param("crewNum") String crewNum,@Param("rationNum") String rationNum);
+    List<Map<String, String>> selectThreeProductByTime(@Param("productTime")  String productTime,@Param("crewNum") String crewNum,@Param("rationNum") String rationNum);
 
     /**
      *
