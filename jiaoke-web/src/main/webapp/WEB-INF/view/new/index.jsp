@@ -699,9 +699,9 @@
 
                     <shiro:hasPermission name="experiment:experiment">
                     <li>
-                        <a onclick="xadmin.add_tab('实验管理','experimental_management.do',true)">
+                        <a onclick="xadmin.add_tab('试验 大幅度反对法的打发打发    管理','experimental_management.do',true)">
                             <i class="iconfont left-nav-li" lay-tips="实验管理">&#xe74c;</i>
-                            <cite>实验管理</cite>
+                            <cite>试验管理232323232</cite>
                             <%--<i class="iconfont nav_right">&#xe697;</i>--%>
                         </a>
                         <%--<ul class="sub-menu">--%>
