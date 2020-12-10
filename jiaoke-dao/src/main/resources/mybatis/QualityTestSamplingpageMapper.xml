@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.qualitytest.dao.QualityTestSamplingpageDao">
+    <!-- QualityTestSamplingpage的resultMap,column是给数据库列起的别名,它对应property类的属性 -->
+    <resultMap id="result_QualityTestSamplingpage_Map" type="com.jiaoke.qualitytest.bean.QualityTestSamplingpage">
+        <id column="Id" property="id" />
+        <result column="materials_num" property="materialsNum" />
+        <result column="manufacturers_num" property="manufacturersNum" />
+        <result column="specification_num" property="specificationNum" />
+        <result column="tunnage" property="tunnage" />
+        <result column="create_time" property="createTime" />
+        <result column="num" property="num" />
+        <result column="materials" property="materials" />
+        <result column="manufacturers" property="manufacturers" />
+        <result column="specification" property="specification" />
+        <result column="remark" property="remark" />
+        <result column="status" property="status" />
+        <result column="create_user" property="createUser" />
+        <result column="create_userid" property="createUserid"/>
+        <result column="task_time" property="taskTime" />
+        <result column="del_time" property="delTime" />
+        <result column="del_userid" property="delUserid" />
+        <result column="del_user" property="delUser" />
+        <result column="status_show" property="status_show" />
+
+        <result column="order_ticket_num" property="orderTicketNum" />
+        <result column="required_experimental" property="requiredExperimental" />
+        <result column="experiment_result" property="experimentResult" />
+
+    </resultMap>
+
+    <!-- assist是查询辅助工具类, ${req.require}表示列名,#{req.value}表示值它是防SQL注入的 -->
+    <sql id="assist">
+        <where>
+            <foreach collection="require" item="req" separator=" ">
+                ${req.require}
+                <if test="req.value != null">
+                    #{req.value}
+                </if>
+                <if test="req.values != null">
+                    <foreach collection="req.values" item="value" separator=",">
+                        #{value}
+                    </foreach>
+                </if>
+                <if test="req.customRequire !=null">
+                    <foreach collection="req.customRequire" item="cr" separator=" ">
+                        ${cr.require}
+                        <if test="cr.value != null">
+                            #{cr.value}
+                        </if>
+                        <if test="cr.values != null">
+                            <foreach collection="cr.values" item="value"
+                                     separator=",">
+                                #{value}
+                            </foreach>
+                        </if>
+                        <if test="cr.suffix != null"> ${cr.suffix}</if>
+                    </foreach>
+                </if>
+                <if test="req.suffix != null"> ${req.suffix}</if>
+            </foreach>
+        </where>
+    </sql>
+
+    <!-- updateAssist用于更新数据查询辅助工具类,作用assist与一致 -->
+    <sql id="updateAssist">
+        <where>
+            <foreach collection="assist.require" item="req" separator=" ">
+                ${req.require}
+                <if test="req.value != null">
+                    #{req.value}
+                </if>
+                <if test="req.values != null">
+                    <foreach collection="req.values" item="value" separator=",">
+                        #{value}
+                    </foreach>
+                </if>
+                <if test="req.customRequire !=null">
+                    <foreach collection="req.customRequire" item="cr" separator=" ">
+                        ${cr.require}
+                        <if test="cr.value != null">
+                            #{cr.value}
+                        </if>
+                        <if test="cr.values != null">
+                            <foreach collection="cr.values" item="value"
+                                     separator=",">
+                                #{value}
+                            </foreach>
+                        </if>
+                        <if test="cr.suffix != null"> ${cr.suffix}</if>
+                    </foreach>
+                </if>
+                <if test="req.suffix != null"> ${req.suffix}</if>
+            </foreach>
+        </where>
+    </sql>
+
+    <!-- 数据库中表名为:quality_test_samplingpage的列名 -->
+    <sql id="quality_test_samplingpage_Column">
+		Id,num,materials,specification,manufacturers,materials_num,specification_num,manufacturers_num,tunnage,status,create_user,create_userid,create_time,task_time,del_time,del_userid,del_user,remark,
+		(case status when '-1' then '已删除' when '0' then '未完成' else '已完成' end ) as status_show,order_ticket_num,required_experimental,experiment_result
+	</sql>
+
+    <!--获得类名为:QualityTestSamplingpage对应的数据库表的数据总行数 -->
+    <select id="getQualityTestSamplingpageRowCount" parameterType="com.jiaoke.common.bean.Assist" resultType="java.lang.Long">
+        select count(*) from V_quality_test_samplingpage
+        <if test="require!=null">
+            <include refid="assist" />
+        </if>
+    </select>
+
+    <!-- 获得类名为:QualityTestSamplingpage对应数据库中表的数据集合 -->
+    <select id="selectQualityTestSamplingpage" parameterType="com.jiaoke.common.bean.Assist" resultMap="result_QualityTestSamplingpage_Map">
+        select
+        <if test="distinct !=null">${distinct}</if>
+        <choose>
+            <when test="resultColumn!=null">${resultColumn}</when>
+            <otherwise>
+                <include refid="quality_test_samplingpage_Column" />
+            </otherwise>
+        </choose>
+        from V_quality_test_samplingpage
+        <if test="require!=null">
+            <include refid="assist" />
+        </if>
+        <if test="order !=null">${order}</if>
+        <choose>
+            <when test="startRow !=null and rowSize !=null">LIMIT #{startRow},#{rowSize} </when>
+            <when test="rowSize !=null">LIMIT #{rowSize}</when>
+        </choose>
+    </select>
+    <!-- 通过QualityTestSamplingpage的id获得对应数据库中表的数据对象 -->
+    <select id="selectQualityTestSamplingpageById" parameterType="Integer" resultMap="result_QualityTestSamplingpage_Map">
+        select
+        <include refid="quality_test_samplingpage_Column" />
+        from V_quality_test_samplingpage
+        where Id = #{id}
+    </select>
+
+    <!-- 获得一个QualityTestSamplingpage对象,以参数QualityTestSamplingpage对象中不为空的属性作为条件进行查询 -->
+    <select id="selectQualityTestSamplingpageObjSingle" parameterType="com.jiaoke.qualitytest.bean.QualityTestSamplingpage" resultMap="result_QualityTestSamplingpage_Map">
+        select
+        <include refid="quality_test_samplingpage_Column" />
+        from V_quality_test_samplingpage
+        <where>
+            <if test="num != null"> and num = #{num}</if>
+            <if test="materials != null"> and materials = #{materials}</if>
+            <if test="specification != null"> and specification = #{specification}</if>
+            <if test="manufacturers != null"> and manufacturers = #{manufacturers}</if>
+            <if test="materialsNum != null"> and materials_num = #{materialsNum}</if>
+            <if test="specificationNum != null"> and specification_num = #{specificationNum}</if>
+            <if test="manufacturersNum != null"> and manufacturers_num = #{manufacturersNum}</if>
+            <if test="tunnage != null"> and tunnage = #{tunnage}</if>
+            <if test="status != null"> and status = #{status}</if>
+            <if test="createUser != null"> and create_user = #{createUser}</if>
+            <if test="createUserid != null"> and create_userid = #{createUserid}</if>
+            <if test="createTime != null"> and create_time = #{createTime}</if>
+            <if test="taskTime != null"> and task_time = #{taskTime}</if>
+            <if test="delTime != null"> and del_time = #{delTime}</if>
+            <if test="delUserid != null"> and del_userid = #{delUserid}</if>
+            <if test="delUser != null"> and del_user = #{delUser}</if>
+            <if test="remark != null"> and remark = #{remark}</if>
+            <if test="id != null"> and Id = #{id} </if>
+        </where>
+        LIMIT 1
+    </select>
+
+    <!-- 获得QualityTestSamplingpage对象,以参数QualityTestSamplingpage对象中不为空的属性作为条件进行查询 -->
+    <select id="selectQualityTestSamplingpageByObj" parameterType="com.jiaoke.qualitytest.bean.QualityTestSamplingpage" resultMap="result_QualityTestSamplingpage_Map">
+        select
+        <include refid="quality_test_samplingpage_Column" />
+        from V_quality_test_samplingpage
+        <where>
+            <if test="num != null"> and num = #{num}</if>
+            <if test="materials != null"> and materials = #{materials}</if>
+            <if test="specification != null"> and specification = #{specification}</if>
+            <if test="manufacturers != null"> and manufacturers = #{manufacturers}</if>
+            <if test="materialsNum != null"> and materials_num = #{materialsNum}</if>
+            <if test="specificationNum != null"> and specification_num = #{specificationNum}</if>
+            <if test="manufacturersNum != null"> and manufacturers_num = #{manufacturersNum}</if>
+            <if test="tunnage != null"> and tunnage = #{tunnage}</if>
+            <if test="status != null"> and status = #{status}</if>
+            <if test="createUser != null"> and create_user = #{createUser}</if>
+            <if test="createUserid != null"> and create_userid = #{createUserid}</if>
+            <if test="createTime != null"> and create_time = #{createTime}</if>
+            <if test="taskTime != null"> and task_time = #{taskTime}</if>
+            <if test="delTime != null"> and del_time = #{delTime}</if>
+            <if test="delUserid != null"> and del_userid = #{delUserid}</if>
+            <if test="delUser != null"> and del_user = #{delUser}</if>
+            <if test="remark != null"> and remark = #{remark}</if>
+            <if test="id != null"> and Id = #{id} </if>
+        </where>
+    </select>
+
+    <!-- 将QualityTestSamplingpage插入到对应数据库的表中,包括属性值为null的数据 -->
+    <insert id="insertQualityTestSamplingpage" parameterType="com.jiaoke.qualitytest.bean.QualityTestSamplingpage">
+		insert into
+		quality_test_samplingpage (Id,num,materials,specification,manufacturers,materials_num,specification_num,manufacturers_num,tunnage,status,create_user,create_userid,create_time,task_time,del_time,del_userid,del_user,remark)
+		values(#{id},#{num},#{materials},#{specification},#{manufacturers},#{materialsNum},#{specificationNum},#{manufacturersNum},#{tunnage},#{status},#{createUser},#{createUserid},#{createTime},#{taskTime},#{delTime},#{delUserid},#{delUser},#{remark})
+	</insert>
+
+    <!-- 将QualityTestSamplingpage中属性值不为null的数据,插入到对应数据库的表中 -->
+    <insert id="insertNotNullQualityTestSamplingpage" parameterType="com.jiaoke.qualitytest.bean.QualityTestSamplingpage">
+        insert into quality_test_samplingpage
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">Id,</if>
+            <if test="num != null">num,</if>
+            <if test="materials != null">materials,</if>
+            <if test="specification != null">specification,</if>
+            <if test="manufacturers != null">manufacturers,</if>
+            <if test="materialsNum != null">materials_num,</if>
+            <if test="specificationNum != null">specification_num,</if>
+            <if test="manufacturersNum != null">manufacturers_num,</if>
+            <if test="tunnage != null">tunnage,</if>
+            <if test="status != null">status,</if>
+            <if test="createUser != null">create_user,</if>
+            <if test="createUserid != null">create_userid,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="taskTime != null">task_time,</if>
+            <if test="delTime != null">del_time,</if>
+            <if test="delUserid != null">del_userid,</if>
+            <if test="delUser != null">del_user,</if>
+            <if test="remark != null">remark,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="num != null">#{num},</if>
+            <if test="materials != null">#{materials},</if>
+            <if test="specification != null">#{specification},</if>
+            <if test="manufacturers != null">#{manufacturers},</if>
+            <if test="materialsNum != null">#{materialsNum},</if>
+            <if test="specificationNum != null">#{specificationNum},</if>
+            <if test="manufacturersNum != null">#{manufacturersNum},</if>
+            <if test="tunnage != null">#{tunnage},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createUser != null">#{createUser},</if>
+            <if test="createUserid != null">#{createUserid},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="taskTime != null">#{taskTime},</if>
+            <if test="delTime != null">#{delTime},</if>
+            <if test="delUserid != null">#{delUserid},</if>
+            <if test="delUser != null">#{delUser},</if>
+            <if test="remark != null">#{remark},</if>
+        </trim>
+    </insert>
+
+    <!-- 将QualityTestSamplingpage批量插入到对应数据库的表中 -->
+    <insert id="insertQualityTestSamplingpageByBatch" parameterType="ArrayList">
+        insert into quality_test_samplingpage(Id,num,materials,specification,manufacturers,materials_num,specification_num,manufacturers_num,tunnage,status,create_user,create_userid,create_time,task_time,del_time,del_userid,del_user,remark) values
+        <foreach collection="list" item="item" index="index"
+                 separator=",">
+            (#{item.id},#{item.num},#{item.materials},#{item.specification},#{item.manufacturers},#{item.materialsNum},#{item.specificationNum},#{item.manufacturersNum},#{item.tunnage},#{item.status},#{item.createUser},#{item.createUserid},#{item.createTime},#{item.taskTime},#{item.delTime},#{item.delUserid},#{item.delUser},#{item.remark})
+        </foreach>
+    </insert>
+
+    <!-- 通过QualityTestSamplingpage的id将数据库表中对应的数据删除 -->
+    <delete id="deleteQualityTestSamplingpageById" parameterType="Integer">
+		delete from quality_test_samplingpage
+		where  Id  =  #{id}
+	</delete>
+
+    <!-- 通过辅助工具Assist中的条件将QualityTestSamplingpage对应的数据库表的数据删除 -->
+    <delete id="deleteQualityTestSamplingpageByAssist" parameterType="com.jiaoke.common.bean.Assist">
+        delete from quality_test_samplingpage
+        <if test="require!=null">
+            <include refid="assist" />
+        </if>
+    </delete>
+
+    <!-- 通过QualityTestSamplingpage的id将QualityTestSamplingpage的数据更新到数据库中对应的表,包括值null的数据 -->
+    <update id="updateQualityTestSamplingpageById" parameterType="com.jiaoke.qualitytest.bean.QualityTestSamplingpage">
+        update quality_test_samplingpage set
+        <set>
+            num = #{num} ,
+            materials = #{materials} ,
+            specification = #{specification} ,
+            manufacturers = #{manufacturers} ,
+            materials_num = #{materialsNum} ,
+            specification_num = #{specificationNum} ,
+            manufacturers_num = #{manufacturersNum} ,
+            tunnage = #{tunnage} ,
+            status = #{status} ,
+            create_user = #{createUser} ,
+            create_userid = #{createUserid} ,
+            create_time = #{createTime} ,
+            task_time = #{taskTime} ,
+            del_time = #{delTime} ,
+            del_userid = #{delUserid} ,
+            del_user = #{delUser} ,
+            remark = #{remark} ,
+        </set>
+        where Id = #{id}
+    </update>
+
+    <!-- 通过QualityTestSamplingpage的id将QualityTestSamplingpage中属性值不为null的数据更新到数据库对应的表中 -->
+    <update id="updateNotNullQualityTestSamplingpageById" parameterType="com.jiaoke.qualitytest.bean.QualityTestSamplingpage">
+        update quality_test_samplingpage
+        <set>
+            <if test="num != null">num = #{num},</if>
+            <if test="materials != null">materials = #{materials},</if>
+            <if test="specification != null">specification = #{specification},</if>
+            <if test="manufacturers != null">manufacturers = #{manufacturers},</if>
+            <if test="materialsNum != null">materials_num = #{materialsNum},</if>
+            <if test="specificationNum != null">specification_num = #{specificationNum},</if>
+            <if test="manufacturersNum != null">manufacturers_num = #{manufacturersNum},</if>
+            <if test="tunnage != null">tunnage = #{tunnage},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createUser != null">create_user = #{createUser},</if>
+            <if test="createUserid != null">create_userid = #{createUserid},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="taskTime != null">task_time = #{taskTime},</if>
+            <if test="delTime != null">del_time = #{delTime},</if>
+            <if test="delUserid != null">del_userid = #{delUserid},</if>
+            <if test="delUser != null">del_user = #{delUser},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </set>
+        where Id = #{id}
+    </update>
+
+    <!-- 通过辅助工具Assist中的条件将QualityTestSamplingpage中的数据更新到数据库对应的表中,包括值为null的数据 -->
+    <update id="updateQualityTestSamplingpage" parameterType="map">
+        update quality_test_samplingpage
+        <set>
+            Id = #{enti.id},
+            num = #{enti.num},
+            materials = #{enti.materials},
+            specification = #{enti.specification},
+            manufacturers = #{enti.manufacturers},
+            materials_num = #{enti.materialsNum},
+            specification_num = #{enti.specificationNum},
+            manufacturers_num = #{enti.manufacturersNum},
+            tunnage = #{enti.tunnage},
+            status = #{enti.status},
+            create_user = #{enti.createUser},
+            create_userid = #{enti.createUserid},
+            create_time = #{enti.createTime},
+            task_time = #{enti.taskTime},
+            del_time = #{enti.delTime},
+            del_userid = #{enti.delUserid},
+            del_user = #{enti.delUser},
+            remark = #{enti.remark},
+        </set>
+        <if test="assist.require!=null">
+            <include refid="updateAssist" />
+        </if>
+    </update>
+
+    <!-- 通过辅助工具Assist中的条件将QualityTestSamplingpage中属性值不为null的数据更新到数据库对应的表中 -->
+    <update id="updateNotNullQualityTestSamplingpage" parameterType="map">
+        update quality_test_samplingpage
+        <set>
+            <if test="enti.id != null">Id = #{enti.id},</if>
+            <if test="enti.num != null">num = #{enti.num},</if>
+            <if test="enti.materials != null">materials = #{enti.materials},</if>
+            <if test="enti.specification != null">specification = #{enti.specification},</if>
+            <if test="enti.manufacturers != null">manufacturers = #{enti.manufacturers},</if>
+            <if test="enti.materialsNum != null">materials_num = #{enti.materialsNum},</if>
+            <if test="enti.specificationNum != null">specification_num = #{enti.specificationNum},</if>
+            <if test="enti.manufacturersNum != null">manufacturers_num = #{enti.manufacturersNum},</if>
+            <if test="enti.tunnage != null">tunnage = #{enti.tunnage},</if>
+            <if test="enti.status != null">status = #{enti.status},</if>
+            <if test="enti.createUser != null">create_user = #{enti.createUser},</if>
+            <if test="enti.createUserid != null">create_userid = #{enti.createUserid},</if>
+            <if test="enti.createTime != null">create_time = #{enti.createTime},</if>
+            <if test="enti.taskTime != null">task_time = #{enti.taskTime},</if>
+            <if test="enti.delTime != null">del_time = #{enti.delTime},</if>
+            <if test="enti.delUserid != null">del_userid = #{enti.delUserid},</if>
+            <if test="enti.delUser != null">del_user = #{enti.delUser},</if>
+            <if test="enti.remark != null">remark = #{enti.remark},</if>
+        </set>
+        <if test="assist.require!=null">
+            <include refid="updateAssist" />
+        </if>
+    </update>
+</mapper>

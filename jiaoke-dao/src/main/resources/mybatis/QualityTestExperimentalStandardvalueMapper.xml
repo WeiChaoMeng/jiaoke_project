@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.qualitytest.dao.QualityTestExperimentalStandardvalueDao">
+	<!-- QualityTestExperimentalStandardvalue的resultMap,column是给数据库列起的别名,它对应property类的属性 -->
+	<resultMap id="result_QualityTestExperimentalStandardvalue_Map" type="com.jiaoke.qualitytest.bean.QualityTestExperimentalStandardvalue">
+		<id column="id" property="id" />
+		<result column="materials_id" property="materialsId" />
+		<result column="materials" property="materials" />
+		<result column="specification_id" property="specificationId" />
+		<result column="specification" property="specification" />
+		<result column="specification_level" property="specificationLevel" />
+		<result column="experimental_id" property="experimentalId" />
+		<result column="experimental_name" property="experimentalName" />
+		<result column="experimental_item" property="experimentalItem" />
+		<result column="requirements" property="requirements" />
+		<result column="comparemethod" property="comparemethod" />
+		<result column="min_value" property="minValue" />
+		<result column="max_value" property="maxValue" />
+		<result column="create_time" property="createTime" />
+		<result column="remark" property="remark" />
+	</resultMap>
+
+	<!-- assist是查询辅助工具类, ${req.require}表示列名,#{req.value}表示值它是防SQL注入的 -->
+	<sql id="assist">
+		<where>
+			<foreach collection="require" item="req" separator=" ">
+				${req.require}
+				<if test="req.value != null">
+					#{req.value}
+				</if>
+				<if test="req.values != null">
+					<foreach collection="req.values" item="value" separator=",">
+						#{value}
+					</foreach>
+				</if>
+				<if test="req.customRequire !=null">
+					<foreach collection="req.customRequire" item="cr" separator=" ">
+						${cr.require}
+						<if test="cr.value != null">
+							#{cr.value}
+						</if>
+						<if test="cr.values != null">
+							<foreach collection="cr.values" item="value"
+									 separator=",">
+								#{value}
+							</foreach>
+						</if>
+						<if test="cr.suffix != null"> ${cr.suffix}</if>
+					</foreach>
+				</if>
+				<if test="req.suffix != null"> ${req.suffix}</if>
+			</foreach>
+		</where>
+	</sql>
+
+	<!-- updateAssist用于更新数据查询辅助工具类,作用assist与一致 -->
+	<sql id="updateAssist">
+		<where>
+			<foreach collection="assist.require" item="req" separator=" ">
+				${req.require}
+				<if test="req.value != null">
+					#{req.value}
+				</if>
+				<if test="req.values != null">
+					<foreach collection="req.values" item="value" separator=",">
+						#{value}
+					</foreach>
+				</if>
+				<if test="req.customRequire !=null">
+					<foreach collection="req.customRequire" item="cr" separator=" ">
+						${cr.require}
+						<if test="cr.value != null">
+							#{cr.value}
+						</if>
+						<if test="cr.values != null">
+							<foreach collection="cr.values" item="value"
+									 separator=",">
+								#{value}
+							</foreach>
+						</if>
+						<if test="cr.suffix != null"> ${cr.suffix}</if>
+					</foreach>
+				</if>
+				<if test="req.suffix != null"> ${req.suffix}</if>
+			</foreach>
+		</where>
+	</sql>
+
+	<!-- 数据库中表名为:quality_test_experimental_standardvalue的列名 -->
+	<sql id="quality_test_experimental_standardvalue_Column">
+		id,materials_id,materials,specification_id,specification,specification_level,experimental_id,experimental_name,experimental_item,requirements,comparemethod,min_value,max_value,create_time,remark
+	</sql>
+
+	<!--获得类名为:QualityTestExperimentalStandardvalue对应的数据库表的数据总行数 -->
+	<select id="getQualityTestExperimentalStandardvalueRowCount" parameterType="com.jiaoke.common.bean.Assist" resultType="java.lang.Long">
+		select count(*) from quality_test_experimental_standardvalue
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+	</select>
+
+	<!-- 获得类名为:QualityTestExperimentalStandardvalue对应数据库中表的数据集合 -->
+	<select id="selectQualityTestExperimentalStandardvalue" parameterType="com.jiaoke.common.bean.Assist" resultMap="result_QualityTestExperimentalStandardvalue_Map">
+		select
+		<if test="distinct !=null">${distinct}</if>
+		<choose>
+			<when test="resultColumn!=null">${resultColumn}</when>
+			<otherwise>
+				<include refid="quality_test_experimental_standardvalue_Column" />
+			</otherwise>
+		</choose>
+		from quality_test_experimental_standardvalue
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+		<if test="order !=null">${order}</if>
+		<choose>
+			<when test="startRow !=null and rowSize !=null">LIMIT #{startRow},#{rowSize} </when>
+			<when test="rowSize !=null">LIMIT #{rowSize}</when>
+		</choose>
+	</select>
+	<!-- 通过QualityTestExperimentalStandardvalue的id获得对应数据库中表的数据对象 -->
+	<select id="selectQualityTestExperimentalStandardvalueById" parameterType="Integer" resultMap="result_QualityTestExperimentalStandardvalue_Map">
+		select
+		<include refid="quality_test_experimental_standardvalue_Column" />
+		from quality_test_experimental_standardvalue
+		where id = #{id}
+	</select>
+
+	<!-- 获得一个QualityTestExperimentalStandardvalue对象,以参数QualityTestExperimentalStandardvalue对象中不为空的属性作为条件进行查询 -->
+	<select id="selectQualityTestExperimentalStandardvalueObjSingle" parameterType="com.jiaoke.qualitytest.bean.QualityTestExperimentalStandardvalue" resultMap="result_QualityTestExperimentalStandardvalue_Map">
+		select
+		<include refid="quality_test_experimental_standardvalue_Column" />
+		from quality_test_experimental_standardvalue
+		<where>
+			<if test="materialsId != null"> and materials_id = #{materialsId}</if>
+			<if test="materials != null"> and materials = #{materials}</if>
+			<if test="specificationId != null"> and specification_id = #{specificationId}</if>
+			<if test="specification != null"> and specification = #{specification}</if>
+			<if test="specificationLevel != null"> and specification_level = #{specificationLevel}</if>
+			<if test="experimentalId != null"> and experimental_id = #{experimentalId}</if>
+			<if test="experimentalName != null"> and experimental_name = #{experimentalName}</if>
+			<if test="experimentalItem != null"> and experimental_item = #{experimentalItem}</if>
+			<if test="requirements != null"> and requirements = #{requirements}</if>
+			<if test="comparemethod != null"> and comparemethod = #{comparemethod}</if>
+			<if test="minValue != null"> and min_value = #{minValue}</if>
+			<if test="maxValue != null"> and max_value = #{maxValue}</if>
+			<if test="createTime != null"> and create_time = #{createTime}</if>
+			<if test="remark != null"> and remark = #{remark}</if>
+			<if test="id != null"> and id = #{id} </if>
+		</where>
+		LIMIT 1
+	</select>
+
+	<!-- 获得QualityTestExperimentalStandardvalue对象,以参数QualityTestExperimentalStandardvalue对象中不为空的属性作为条件进行查询 -->
+	<select id="selectQualityTestExperimentalStandardvalueByObj" parameterType="com.jiaoke.qualitytest.bean.QualityTestExperimentalStandardvalue" resultMap="result_QualityTestExperimentalStandardvalue_Map">
+		select
+		<include refid="quality_test_experimental_standardvalue_Column" />
+		from quality_test_experimental_standardvalue
+		<where>
+			<if test="materialsId != null"> and materials_id = #{materialsId}</if>
+			<if test="materials != null"> and materials = #{materials}</if>
+			<if test="specificationId != null"> and specification_id = #{specificationId}</if>
+			<if test="specification != null"> and specification = #{specification}</if>
+			<if test="specificationLevel != null"> and specification_level = #{specificationLevel}</if>
+			<if test="experimentalId != null"> and experimental_id = #{experimentalId}</if>
+			<if test="experimentalName != null"> and experimental_name = #{experimentalName}</if>
+			<if test="experimentalItem != null"> and experimental_item = #{experimentalItem}</if>
+			<if test="requirements != null"> and requirements = #{requirements}</if>
+			<if test="comparemethod != null"> and comparemethod = #{comparemethod}</if>
+			<if test="minValue != null"> and min_value = #{minValue}</if>
+			<if test="maxValue != null"> and max_value = #{maxValue}</if>
+			<if test="createTime != null"> and create_time = #{createTime}</if>
+			<if test="remark != null"> and remark = #{remark}</if>
+			<if test="id != null"> and id = #{id} </if>
+		</where>
+	</select>
+
+	<!-- 将QualityTestExperimentalStandardvalue插入到对应数据库的表中,包括属性值为null的数据 -->
+	<insert id="insertQualityTestExperimentalStandardvalue" parameterType="com.jiaoke.qualitytest.bean.QualityTestExperimentalStandardvalue">
+		insert into 
+		quality_test_experimental_standardvalue (id,materials_id,materials,specification_id,specification,specification_level,experimental_id,experimental_name,experimental_item,requirements,comparemethod,min_value,max_value,create_time,remark) 
+		values(#{id},#{materialsId},#{materials},#{specificationId},#{specification},#{specificationLevel},#{experimentalId},#{experimentalName},#{experimentalItem},#{requirements},#{comparemethod},#{minValue},#{maxValue},#{createTime},#{remark})
+	</insert>
+
+	<!-- 将QualityTestExperimentalStandardvalue中属性值不为null的数据,插入到对应数据库的表中 -->
+	<insert id="insertNotNullQualityTestExperimentalStandardvalue" parameterType="com.jiaoke.qualitytest.bean.QualityTestExperimentalStandardvalue">
+		insert into quality_test_experimental_standardvalue
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">id,</if>
+			<if test="materialsId != null">materials_id,</if>
+			<if test="materials != null">materials,</if>
+			<if test="specificationId != null">specification_id,</if>
+			<if test="specification != null">specification,</if>
+			<if test="specificationLevel != null">specification_level,</if>
+			<if test="experimentalId != null">experimental_id,</if>
+			<if test="experimentalName != null">experimental_name,</if>
+			<if test="experimentalItem != null">experimental_item,</if>
+			<if test="requirements != null">requirements,</if>
+			<if test="comparemethod != null">comparemethod,</if>
+			<if test="minValue != null">min_value,</if>
+			<if test="maxValue != null">max_value,</if>
+			<if test="createTime != null">create_time,</if>
+			<if test="remark != null">remark,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">#{id},</if>
+			<if test="materialsId != null">#{materialsId},</if>
+			<if test="materials != null">#{materials},</if>
+			<if test="specificationId != null">#{specificationId},</if>
+			<if test="specification != null">#{specification},</if>
+			<if test="specificationLevel != null">#{specificationLevel},</if>
+			<if test="experimentalId != null">#{experimentalId},</if>
+			<if test="experimentalName != null">#{experimentalName},</if>
+			<if test="experimentalItem != null">#{experimentalItem},</if>
+			<if test="requirements != null">#{requirements},</if>
+			<if test="comparemethod != null">#{comparemethod},</if>
+			<if test="minValue != null">#{minValue},</if>
+			<if test="maxValue != null">#{maxValue},</if>
+			<if test="createTime != null">#{createTime},</if>
+			<if test="remark != null">#{remark},</if>
+		</trim>
+	</insert>
+
+	<!-- 将QualityTestExperimentalStandardvalue批量插入到对应数据库的表中 -->
+	<insert id="insertQualityTestExperimentalStandardvalueByBatch" parameterType="ArrayList">
+		insert into quality_test_experimental_standardvalue(id,materials_id,materials,specification_id,specification,specification_level,experimental_id,experimental_name,experimental_item,requirements,comparemethod,min_value,max_value,create_time,remark) values
+		<foreach collection="list" item="item" index="index"
+				 separator=",">
+			(#{item.id},#{item.materialsId},#{item.materials},#{item.specificationId},#{item.specification},#{item.specificationLevel},#{item.experimentalId},#{item.experimentalName},#{item.experimentalItem},#{item.requirements},#{item.comparemethod},#{item.minValue},#{item.maxValue},#{item.createTime},#{item.remark})
+		</foreach>
+	</insert>
+
+	<!-- 通过QualityTestExperimentalStandardvalue的id将数据库表中对应的数据删除 -->
+	<delete id="deleteQualityTestExperimentalStandardvalueById" parameterType="Integer">
+		delete from quality_test_experimental_standardvalue
+		where  id  =  #{id}
+	</delete>
+
+	<!-- 通过辅助工具Assist中的条件将QualityTestExperimentalStandardvalue对应的数据库表的数据删除 -->
+	<delete id="deleteQualityTestExperimentalStandardvalueByAssist" parameterType="com.jiaoke.common.bean.Assist">
+		delete from quality_test_experimental_standardvalue
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+	</delete>
+
+	<!-- 通过QualityTestExperimentalStandardvalue的id将QualityTestExperimentalStandardvalue的数据更新到数据库中对应的表,包括值null的数据 -->
+	<update id="updateQualityTestExperimentalStandardvalueById" parameterType="com.jiaoke.qualitytest.bean.QualityTestExperimentalStandardvalue">
+		update quality_test_experimental_standardvalue set
+		<set>
+			materials_id = #{materialsId} ,
+			materials = #{materials} ,
+			specification_id = #{specificationId} ,
+			specification = #{specification} ,
+			specification_level = #{specificationLevel} ,
+			experimental_id = #{experimentalId} ,
+			experimental_name = #{experimentalName} ,
+			experimental_item = #{experimentalItem} ,
+			requirements = #{requirements} ,
+			comparemethod = #{comparemethod} ,
+			min_value = #{minValue} ,
+			max_value = #{maxValue} ,
+			create_time = #{createTime} ,
+			remark = #{remark} ,
+		</set>
+		where id = #{id}
+	</update>
+
+	<!-- 通过QualityTestExperimentalStandardvalue的id将QualityTestExperimentalStandardvalue中属性值不为null的数据更新到数据库对应的表中 -->
+	<update id="updateNotNullQualityTestExperimentalStandardvalueById" parameterType="com.jiaoke.qualitytest.bean.QualityTestExperimentalStandardvalue">
+		update quality_test_experimental_standardvalue
+		<set>
+			<if test="materialsId != null">materials_id = #{materialsId},</if>
+			<if test="materials != null">materials = #{materials},</if>
+			<if test="specificationId != null">specification_id = #{specificationId},</if>
+			<if test="specification != null">specification = #{specification},</if>
+			<if test="specificationLevel != null">specification_level = #{specificationLevel},</if>
+			<if test="experimentalId != null">experimental_id = #{experimentalId},</if>
+			<if test="experimentalName != null">experimental_name = #{experimentalName},</if>
+			<if test="experimentalItem != null">experimental_item = #{experimentalItem},</if>
+			<if test="requirements != null">requirements = #{requirements},</if>
+			<if test="comparemethod != null">comparemethod = #{comparemethod},</if>
+			<if test="minValue != null">min_value = #{minValue},</if>
+			<if test="maxValue != null">max_value = #{maxValue},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
+			<if test="remark != null">remark = #{remark},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<!-- 通过辅助工具Assist中的条件将QualityTestExperimentalStandardvalue中的数据更新到数据库对应的表中,包括值为null的数据 -->
+	<update id="updateQualityTestExperimentalStandardvalue" parameterType="map">
+		update quality_test_experimental_standardvalue
+		<set>
+			id = #{enti.id},
+			materials_id = #{enti.materialsId},
+			materials = #{enti.materials},
+			specification_id = #{enti.specificationId},
+			specification = #{enti.specification},
+			specification_level = #{enti.specificationLevel},
+			experimental_id = #{enti.experimentalId},
+			experimental_name = #{enti.experimentalName},
+			experimental_item = #{enti.experimentalItem},
+			requirements = #{enti.requirements},
+			comparemethod = #{enti.comparemethod},
+			min_value = #{enti.minValue},
+			max_value = #{enti.maxValue},
+			create_time = #{enti.createTime},
+			remark = #{enti.remark},
+		</set>
+		<if test="assist.require!=null">
+			<include refid="updateAssist" />
+		</if>
+	</update>
+
+	<!-- 通过辅助工具Assist中的条件将QualityTestExperimentalStandardvalue中属性值不为null的数据更新到数据库对应的表中 -->
+	<update id="updateNotNullQualityTestExperimentalStandardvalue" parameterType="map">
+		update quality_test_experimental_standardvalue
+		<set>
+			<if test="enti.id != null">id = #{enti.id},</if>
+			<if test="enti.materialsId != null">materials_id = #{enti.materialsId},</if>
+			<if test="enti.materials != null">materials = #{enti.materials},</if>
+			<if test="enti.specificationId != null">specification_id = #{enti.specificationId},</if>
+			<if test="enti.specification != null">specification = #{enti.specification},</if>
+			<if test="enti.specificationLevel != null">specification_level = #{enti.specificationLevel},</if>
+			<if test="enti.experimentalId != null">experimental_id = #{enti.experimentalId},</if>
+			<if test="enti.experimentalName != null">experimental_name = #{enti.experimentalName},</if>
+			<if test="enti.experimentalItem != null">experimental_item = #{enti.experimentalItem},</if>
+			<if test="enti.requirements != null">requirements = #{enti.requirements},</if>
+			<if test="enti.comparemethod != null">comparemethod = #{enti.comparemethod},</if>
+			<if test="enti.minValue != null">min_value = #{enti.minValue},</if>
+			<if test="enti.maxValue != null">max_value = #{enti.maxValue},</if>
+			<if test="enti.createTime != null">create_time = #{enti.createTime},</if>
+			<if test="enti.remark != null">remark = #{enti.remark},</if>
+		</set>
+		<if test="assist.require!=null">
+			<include refid="updateAssist" />
+		</if>
+	</update>
+</mapper>

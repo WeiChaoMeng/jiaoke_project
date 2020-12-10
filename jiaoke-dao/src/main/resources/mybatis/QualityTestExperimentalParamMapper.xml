@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.qualitytest.dao.QualityTestExperimentalParamDao">
+	<!-- QualityTestExperimentalParam的resultMap,column是给数据库列起的别名,它对应property类的属性 -->
+	<resultMap id="result_QualityTestExperimentalParam_Map" type="com.jiaoke.qualitytest.bean.QualityTestExperimentalParam">
+		<id column="Id" property="id" />
+		<result column="material_id" property="materialId" />
+		<result column="material_name" property="materialName" />
+		<result column="experimen_id" property="experimenId" />
+		<result column="experimen_name" property="experimenName" />
+		<result column="experimen_param" property="experimenParam" />
+		<result column="formula" property="formula" />
+		<result column="status" property="status" />
+		<result column="remark" property="remark" />
+		<result column="create_user" property="createUser" />
+		<result column="create_userid" property="createUserid" />
+		<result column="create_time" property="createTime"/>
+		<result column="status_show" property="status_show" />
+	</resultMap>
+
+	<!-- assist是查询辅助工具类, ${req.require}表示列名,#{req.value}表示值它是防SQL注入的 -->
+	<sql id="assist">
+		<where>
+			<foreach collection="require" item="req" separator=" ">
+				${req.require}
+				<if test="req.value != null">
+					#{req.value}
+				</if>
+				<if test="req.values != null">
+					<foreach collection="req.values" item="value" separator=",">
+						#{value}
+					</foreach>
+				</if>
+				<if test="req.customRequire !=null">
+					<foreach collection="req.customRequire" item="cr" separator=" ">
+						${cr.require}
+						<if test="cr.value != null">
+							#{cr.value}
+						</if>
+						<if test="cr.values != null">
+							<foreach collection="cr.values" item="value"
+								separator=",">
+								#{value}
+							</foreach>
+						</if>
+						<if test="cr.suffix != null"> ${cr.suffix}</if>
+					</foreach>
+				</if>
+				<if test="req.suffix != null"> ${req.suffix}</if>
+			</foreach>
+		</where>
+	</sql>
+
+	<!-- updateAssist用于更新数据查询辅助工具类,作用assist与一致 -->
+	<sql id="updateAssist">
+		<where>
+			<foreach collection="assist.require" item="req" separator=" ">
+				${req.require}
+				<if test="req.value != null">
+					#{req.value}
+				</if>
+				<if test="req.values != null">
+					<foreach collection="req.values" item="value" separator=",">
+						#{value}
+					</foreach>
+				</if>
+				<if test="req.customRequire !=null">
+					<foreach collection="req.customRequire" item="cr" separator=" ">
+						${cr.require}
+						<if test="cr.value != null">
+							#{cr.value}
+						</if>
+						<if test="cr.values != null">
+							<foreach collection="cr.values" item="value"
+								separator=",">
+								#{value}
+							</foreach>
+						</if>
+						<if test="cr.suffix != null"> ${cr.suffix}</if>
+					</foreach>
+				</if>
+				<if test="req.suffix != null"> ${req.suffix}</if>
+			</foreach>
+		</where>
+	</sql>
+
+	<!-- 数据库中表名为:quality_test_experimental_param的列名 -->
+	<sql id="quality_test_experimental_param_Column">
+		Id,material_id,material_name,experimen_id,experimen_name,experimen_param,formula,status,remark,create_user,create_userid,create_time,
+		(case status when '-1' then '已失效' when '0' then '未应用' when '1' then '应用中' else '定制试验' end ) as status_show
+	</sql>
+
+	<!--获得类名为:QualityTestExperimentalParam对应的数据库表的数据总行数 -->
+	<select id="getQualityTestExperimentalParamRowCount" parameterType="com.jiaoke.common.bean.Assist" resultType="java.lang.Long">
+		select count(*) from quality_test_experimental_param
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+	</select>
+	
+	<!-- 获得类名为:QualityTestExperimentalParam对应数据库中表的数据集合 -->
+	<select id="selectQualityTestExperimentalParam" parameterType="com.jiaoke.common.bean.Assist" resultMap="result_QualityTestExperimentalParam_Map">
+		select
+		<if test="distinct !=null">${distinct}</if>
+		<choose>
+			<when test="resultColumn!=null">${resultColumn}</when>
+			<otherwise>
+				<include refid="quality_test_experimental_param_Column" />
+			</otherwise>
+		</choose>
+		from quality_test_experimental_param
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+		<if test="order !=null">${order}</if>
+		<choose>
+			<when test="startRow !=null and rowSize !=null">LIMIT #{startRow},#{rowSize} </when>
+			<when test="rowSize !=null">LIMIT #{rowSize}</when>
+		</choose>
+	</select>
+	<!-- 通过QualityTestExperimentalParam的id获得对应数据库中表的数据对象 -->
+	<select id="selectQualityTestExperimentalParamById" parameterType="Integer" resultMap="result_QualityTestExperimentalParam_Map">
+		select
+		<include refid="quality_test_experimental_param_Column" />
+		from quality_test_experimental_param
+		where Id = #{id}
+	</select>
+	
+	<!-- 获得一个QualityTestExperimentalParam对象,以参数QualityTestExperimentalParam对象中不为空的属性作为条件进行查询 -->
+	<select id="selectQualityTestExperimentalParamObjSingle" parameterType="com.jiaoke.qualitytest.bean.QualityTestExperimentalParam" resultMap="result_QualityTestExperimentalParam_Map">
+		select
+		<include refid="quality_test_experimental_param_Column" />
+		from quality_test_experimental_param
+		<where>
+		<if test="materialId != null"> and material_id = #{materialId}</if>
+		<if test="materialName != null"> and material_name = #{materialName}</if>
+		<if test="experimenId != null"> and experimen_id = #{experimenId}</if>
+		<if test="experimenName != null"> and experimen_name = #{experimenName}</if>
+		<if test="experimenParam != null"> and experimen_param = #{experimenParam}</if>
+		<if test="formula != null"> and formula = #{formula}</if>
+		<if test="status != null"> and status = #{status}</if>
+		<if test="remark != null"> and remark = #{remark}</if>
+		<if test="createUser != null"> and create_user = #{createUser}</if>
+		<if test="createUserid != null"> and create_userid = #{createUserid}</if>
+		<if test="createTime != null"> and create_time = #{createTime}</if>
+		<if test="id != null"> and Id = #{id} </if>
+		</where>
+		LIMIT 1
+	</select>
+	
+	<!-- 获得QualityTestExperimentalParam对象,以参数QualityTestExperimentalParam对象中不为空的属性作为条件进行查询 -->
+	<select id="selectQualityTestExperimentalParamByObj" parameterType="com.jiaoke.qualitytest.bean.QualityTestExperimentalParam" resultMap="result_QualityTestExperimentalParam_Map">
+		select
+		<include refid="quality_test_experimental_param_Column" />
+		from quality_test_experimental_param
+		<where>
+		<if test="materialId != null"> and material_id = #{materialId}</if>
+		<if test="materialName != null"> and material_name = #{materialName}</if>
+			<if test="experimenId != null"> and experimen_id = #{experimenId}</if>
+		<if test="experimenName != null"> and experimen_name = #{experimenName}</if>
+		<if test="experimenParam != null"> and experimen_param = #{experimenParam}</if>
+		<if test="formula != null"> and formula = #{formula}</if>
+		<if test="status != null"> and status = #{status}</if>
+		<if test="remark != null"> and remark = #{remark}</if>
+		<if test="createUser != null"> and create_user = #{createUser}</if>
+		<if test="createUserid != null"> and create_userid = #{createUserid}</if>
+		<if test="createTime != null"> and create_time = #{createTime}</if>
+		<if test="id != null"> and Id = #{id} </if>
+		</where>
+	</select>
+
+	<!-- 将QualityTestExperimentalParam插入到对应数据库的表中,包括属性值为null的数据 -->
+	<insert id="insertQualityTestExperimentalParam" parameterType="com.jiaoke.qualitytest.bean.QualityTestExperimentalParam">
+		insert into 
+		quality_test_experimental_param (Id,material_id,material_name,experimen_id,experimen_name,experimen_param,formula,status,remark,create_user,create_userid,create_time)
+		values(#{id},#{materialId},#{materialName},#{experimenId},#{experimenName},#{experimenParam},#{formula},#{status},#{remark},#{createUser},#{createUserid},#{createTime})
+	</insert>
+
+	<!-- 将QualityTestExperimentalParam中属性值不为null的数据,插入到对应数据库的表中 -->
+	<insert id="insertNotNullQualityTestExperimentalParam" parameterType="com.jiaoke.qualitytest.bean.QualityTestExperimentalParam">
+		insert into quality_test_experimental_param
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">Id,</if>
+			<if test="materialId != null">material_id,</if>
+			<if test="materialName != null">material_name,</if>
+			<if test="experimenId != null">experimen_id,</if>
+			<if test="experimenName != null">experimen_name,</if>
+			<if test="experimenParam != null">experimen_param,</if>
+			<if test="formula != null">formula,</if>
+			<if test="status != null">status,</if>
+			<if test="remark != null">remark,</if>
+			<if test="createUser != null">create_user,</if>
+			<if test="createUserid != null">create_userid,</if>
+			<if test="createTime != null">create_time,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">#{id},</if>
+			<if test="materialId != null">#{materialId},</if>
+			<if test="materialName != null">#{materialName},</if>
+			<if test="experimenId != null">#{experimenId},</if>
+			<if test="experimenName != null">#{experimenName},</if>
+			<if test="experimenParam != null">#{experimenParam},</if>
+			<if test="formula != null">#{formula},</if>
+			<if test="status != null">#{status},</if>
+			<if test="remark != null">#{remark},</if>
+			<if test="createUser != null">#{createUser},</if>
+			<if test="createUserid != null">#{createUserid},</if>
+			<if test="createTime != null">#{createTime},</if>
+		</trim>
+	</insert>
+
+	<!-- 将QualityTestExperimentalParam批量插入到对应数据库的表中 -->
+	<insert id="insertQualityTestExperimentalParamByBatch" parameterType="ArrayList">
+		insert into quality_test_experimental_param(Id,material_id,material_name,experimen_id,experimen_name,experimen_param,formula,status,remark,create_user,create_userid,create_time) values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.id},#{item.materialId},#{item.materialName},#{item.experimenId},#{item.experimenName},#{item.experimenParam},#{item.formula},#{item.status},#{item.remark},#{item.createUser},#{item.createUserid},#{item.createTime})
+		</foreach>
+	</insert>
+	
+	<!-- 通过QualityTestExperimentalParam的id将数据库表中对应的数据删除 -->
+	<delete id="deleteQualityTestExperimentalParamById" parameterType="Integer">
+		delete from quality_test_experimental_param
+		where  Id  =  #{id}
+	</delete>
+
+	<!-- 通过辅助工具Assist中的条件将QualityTestExperimentalParam对应的数据库表的数据删除 -->
+	<delete id="deleteQualityTestExperimentalParamByAssist" parameterType="com.jiaoke.common.bean.Assist">
+		delete from quality_test_experimental_param
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+	</delete>
+	
+	<!-- 通过QualityTestExperimentalParam的id将QualityTestExperimentalParam的数据更新到数据库中对应的表,包括值null的数据 -->
+	<update id="updateQualityTestExperimentalParamById" parameterType="com.jiaoke.qualitytest.bean.QualityTestExperimentalParam"> 
+		update quality_test_experimental_param set
+		<set>
+			material_id = #{materialId} , 
+			material_name = #{materialName} ,
+			experimen_id = #{experimenId} ,
+			experimen_name = #{experimenName} , 
+			experimen_param = #{experimenParam} , 
+			formula = #{formula} , 
+			status = #{status} , 
+			remark = #{remark} , 
+			create_user = #{createUser} , 
+			create_userid = #{createUserid} , 
+			create_time = #{createTime} , 
+		</set>
+		where Id = #{id}
+	</update>
+	
+	<!-- 通过QualityTestExperimentalParam的id将QualityTestExperimentalParam中属性值不为null的数据更新到数据库对应的表中 -->
+	<update id="updateNotNullQualityTestExperimentalParamById" parameterType="com.jiaoke.qualitytest.bean.QualityTestExperimentalParam">
+		update quality_test_experimental_param
+		<set>
+					<if test="materialId != null">material_id = #{materialId},</if>
+					<if test="materialName != null">material_name = #{materialName},</if>
+		        	<if test="experimenId != null">experimen_id = #{experimenId},</if>
+					<if test="experimenName != null">experimen_name = #{experimenName},</if>
+					<if test="experimenParam != null">experimen_param = #{experimenParam},</if>
+					<if test="formula != null">formula = #{formula},</if>
+					<if test="status != null">status = #{status},</if>
+					<if test="remark != null">remark = #{remark},</if>
+					<if test="createUser != null">create_user = #{createUser},</if>
+					<if test="createUserid != null">create_userid = #{createUserid},</if>
+					<if test="createTime != null">create_time = #{createTime},</if>
+		</set>
+		where Id = #{id}
+	</update>
+	
+	<!-- 通过辅助工具Assist中的条件将QualityTestExperimentalParam中的数据更新到数据库对应的表中,包括值为null的数据 -->
+	<update id="updateQualityTestExperimentalParam" parameterType="map">
+		update quality_test_experimental_param
+		<set>
+			Id = #{enti.id},
+			material_id = #{enti.materialId},
+			material_name = #{enti.materialName},
+			experimen_id = #{enti.experimenId},
+			experimen_name = #{enti.experimenName},
+			experimen_param = #{enti.experimenParam},
+			formula = #{enti.formula},
+			status = #{enti.status},
+			remark = #{enti.remark},
+			create_user = #{enti.createUser},
+			create_userid = #{enti.createUserid},
+			create_time = #{enti.createTime},
+		</set>
+		<if test="assist.require!=null">
+			<include refid="updateAssist" />
+		</if>
+	</update>
+
+	<!-- 通过辅助工具Assist中的条件将QualityTestExperimentalParam中属性值不为null的数据更新到数据库对应的表中 -->
+	<update id="updateNotNullQualityTestExperimentalParam" parameterType="map">
+		update quality_test_experimental_param
+		<set>
+			<if test="enti.id != null">Id = #{enti.id},</if>
+			<if test="enti.materialId != null">material_id = #{enti.materialId},</if>
+			<if test="enti.materialName != null">material_name = #{enti.materialName},</if>
+			<if test="enti.experimenId != null">experimen_id = #{enti.experimenId},</if>
+			<if test="enti.experimenName != null">experimen_name = #{enti.experimenName},</if>
+			<if test="enti.experimenParam != null">experimen_param = #{enti.experimenParam},</if>
+			<if test="enti.formula != null">formula = #{enti.formula},</if>
+			<if test="enti.status != null">status = #{enti.status},</if>
+			<if test="enti.remark != null">remark = #{enti.remark},</if>
+			<if test="enti.createUser != null">create_user = #{enti.createUser},</if>
+			<if test="enti.createUserid != null">create_userid = #{enti.createUserid},</if>
+			<if test="enti.createTime != null">create_time = #{enti.createTime},</if>
+		</set>
+		<if test="assist.require!=null">
+			<include refid="updateAssist" />
+		</if>
+	</update>
+</mapper>

@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.qualitytest.dao.report.VQualityTestReportKfDao">
+	<!-- VQualityTestReportKf的resultMap,column是给数据库列起的别名,它对应property类的属性 -->
+	<resultMap id="result_VQualityTestReportKf_Map" type="com.jiaoke.qualitytest.bean.report.VQualityTestReportKf">
+		
+		<result column="create_time" property="createTime" />
+		<result column="materials" property="materials" />
+		<result column="materials_num" property="materialsNum" />
+		<result column="manufacturers" property="manufacturers" />
+		<result column="manufacturers_num" property="manufacturersNum" />
+		<result column="specification" property="specification" />
+		<result column="specification_num" property="specificationNum" />
+		<result column="required_result" property="requiredResult" />
+		<result column="required_status" property="requiredStatus" />
+		<result column="required_status_show" property="requiredStatusShow" />
+		<result column="ID" property="iD" />
+		<result column="order_ticket_num" property="orderTicketNum" />
+		<result column="experimental_id" property="experimentalId" />
+		<result column="experimental_name" property="experimentalName" />
+		<result column="SK06" property="sK06" />
+		<result column="SK03" property="sK03" />
+		<result column="SK015" property="sK015" />
+		<result column="SK0075" property="sK0075" />
+		<result column="md" property="md" />
+		<result column="qsxs" property="qsxs" />
+		<result column="jradx" property="jradx" />
+	</resultMap>
+
+	<!-- assist是查询辅助工具类, ${req.require}表示列名,#{req.value}表示值它是防SQL注入的 -->
+	<sql id="assist">
+		<where>
+			<foreach collection="require" item="req" separator=" ">
+				${req.require}
+				<if test="req.value != null">
+					#{req.value}
+				</if>
+				<if test="req.values != null">
+					<foreach collection="req.values" item="value" separator=",">
+						#{value}
+					</foreach>
+				</if>
+				<if test="req.customRequire !=null">
+					<foreach collection="req.customRequire" item="cr" separator=" ">
+						${cr.require}
+						<if test="cr.value != null">
+							#{cr.value}
+						</if>
+						<if test="cr.values != null">
+							<foreach collection="cr.values" item="value"
+								separator=",">
+								#{value}
+							</foreach>
+						</if>
+						<if test="cr.suffix != null"> ${cr.suffix}</if>
+					</foreach>
+				</if>
+				<if test="req.suffix != null"> ${req.suffix}</if>
+			</foreach>
+		</where>
+	</sql>
+
+	<!-- updateAssist用于更新数据查询辅助工具类,作用assist与一致 -->
+	<sql id="updateAssist">
+		<where>
+			<foreach collection="assist.require" item="req" separator=" ">
+				${req.require}
+				<if test="req.value != null">
+					#{req.value}
+				</if>
+				<if test="req.values != null">
+					<foreach collection="req.values" item="value" separator=",">
+						#{value}
+					</foreach>
+				</if>
+				<if test="req.customRequire !=null">
+					<foreach collection="req.customRequire" item="cr" separator=" ">
+						${cr.require}
+						<if test="cr.value != null">
+							#{cr.value}
+						</if>
+						<if test="cr.values != null">
+							<foreach collection="cr.values" item="value"
+								separator=",">
+								#{value}
+							</foreach>
+						</if>
+						<if test="cr.suffix != null"> ${cr.suffix}</if>
+					</foreach>
+				</if>
+				<if test="req.suffix != null"> ${req.suffix}</if>
+			</foreach>
+		</where>
+	</sql>
+
+	<!-- 数据库中表名为:v_quality_test_report_kf的列名 -->
+	<sql id="v_quality_test_report_kf_Column">
+		create_time,materials,materials_num,manufacturers,manufacturers_num,specification,specification_num,required_result,required_status,required_status_show,ID,order_ticket_num,experimental_id,experimental_name,SK06,SK03,SK015,SK0075,md,qsxs,jradx
+	</sql>
+
+	<!--获得类名为:VQualityTestReportKf对应的数据库表的数据总行数 -->
+	<select id="getVQualityTestReportKfRowCount" parameterType="com.jiaoke.common.bean.Assist" resultType="java.lang.Long">
+		select count(*) from v_quality_test_report_kf
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+	</select>
+	
+	<!-- 获得类名为:VQualityTestReportKf对应数据库中表的数据集合 -->
+	<select id="selectVQualityTestReportKf" parameterType="com.jiaoke.common.bean.Assist" resultMap="result_VQualityTestReportKf_Map">
+		select
+		<if test="distinct !=null">${distinct}</if>
+		<choose>
+			<when test="resultColumn!=null">${resultColumn}</when>
+			<otherwise>
+				<include refid="v_quality_test_report_kf_Column" />
+			</otherwise>
+		</choose>
+		from v_quality_test_report_kf
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+		<if test="order !=null">${order}</if>
+		<choose>
+			<when test="startRow !=null and rowSize !=null">LIMIT #{startRow},#{rowSize} </when>
+			<when test="rowSize !=null">LIMIT #{rowSize}</when>
+		</choose>
+	</select>
+	
+	<!-- 获得一个VQualityTestReportKf对象,以参数VQualityTestReportKf对象中不为空的属性作为条件进行查询 -->
+	<select id="selectVQualityTestReportKfObjSingle" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportKf" resultMap="result_VQualityTestReportKf_Map">
+		select
+		<include refid="v_quality_test_report_kf_Column" />
+		from v_quality_test_report_kf
+		<where>
+		<if test="createTime != null"> and create_time = #{createTime}</if>
+		<if test="materials != null"> and materials = #{materials}</if>
+		<if test="materialsNum != null"> and materials_num = #{materialsNum}</if>
+		<if test="manufacturers != null"> and manufacturers = #{manufacturers}</if>
+		<if test="manufacturersNum != null"> and manufacturers_num = #{manufacturersNum}</if>
+		<if test="specification != null"> and specification = #{specification}</if>
+		<if test="specificationNum != null"> and specification_num = #{specificationNum}</if>
+		<if test="requiredResult != null"> and required_result = #{requiredResult}</if>
+		<if test="requiredStatus != null"> and required_status = #{requiredStatus}</if>
+		<if test="requiredStatusShow != null"> and required_status_show = #{requiredStatusShow}</if>
+		<if test="iD != null"> and ID = #{iD}</if>
+		<if test="orderTicketNum != null"> and order_ticket_num = #{orderTicketNum}</if>
+		<if test="experimentalId != null"> and experimental_id = #{experimentalId}</if>
+		<if test="experimentalName != null"> and experimental_name = #{experimentalName}</if>
+		<if test="sK06 != null"> and SK06 = #{sK06}</if>
+		<if test="sK03 != null"> and SK03 = #{sK03}</if>
+		<if test="sK015 != null"> and SK015 = #{sK015}</if>
+		<if test="sK0075 != null"> and SK0075 = #{sK0075}</if>
+		<if test="md != null"> and md = #{md}</if>
+		<if test="qsxs != null"> and qsxs = #{qsxs}</if>
+		<if test="jradx != null"> and jradx = #{jradx}</if>
+		
+		</where>
+		LIMIT 1
+	</select>
+	
+	<!-- 获得VQualityTestReportKf对象,以参数VQualityTestReportKf对象中不为空的属性作为条件进行查询 -->
+	<select id="selectVQualityTestReportKfByObj" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportKf" resultMap="result_VQualityTestReportKf_Map">
+		select
+		<include refid="v_quality_test_report_kf_Column" />
+		from v_quality_test_report_kf
+		<where>
+		<if test="createTime != null"> and create_time = #{createTime}</if>
+		<if test="materials != null"> and materials = #{materials}</if>
+		<if test="materialsNum != null"> and materials_num = #{materialsNum}</if>
+		<if test="manufacturers != null"> and manufacturers = #{manufacturers}</if>
+		<if test="manufacturersNum != null"> and manufacturers_num = #{manufacturersNum}</if>
+		<if test="specification != null"> and specification = #{specification}</if>
+		<if test="specificationNum != null"> and specification_num = #{specificationNum}</if>
+		<if test="requiredResult != null"> and required_result = #{requiredResult}</if>
+		<if test="requiredStatus != null"> and required_status = #{requiredStatus}</if>
+		<if test="requiredStatusShow != null"> and required_status_show = #{requiredStatusShow}</if>
+		<if test="iD != null"> and ID = #{iD}</if>
+		<if test="orderTicketNum != null"> and order_ticket_num = #{orderTicketNum}</if>
+		<if test="experimentalId != null"> and experimental_id = #{experimentalId}</if>
+		<if test="experimentalName != null"> and experimental_name = #{experimentalName}</if>
+		<if test="sK06 != null"> and SK06 = #{sK06}</if>
+		<if test="sK03 != null"> and SK03 = #{sK03}</if>
+		<if test="sK015 != null"> and SK015 = #{sK015}</if>
+		<if test="sK0075 != null"> and SK0075 = #{sK0075}</if>
+		<if test="md != null"> and md = #{md}</if>
+		<if test="qsxs != null"> and qsxs = #{qsxs}</if>
+		<if test="jradx != null"> and jradx = #{jradx}</if>
+		
+		</where>
+	</select>
+
+	<!-- 将VQualityTestReportKf插入到对应数据库的表中,包括属性值为null的数据 -->
+	<insert id="insertVQualityTestReportKf" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportKf">
+		insert into 
+		v_quality_test_report_kf (create_time,materials,materials_num,manufacturers,manufacturers_num,specification,specification_num,required_result,required_status,required_status_show,ID,order_ticket_num,experimental_id,experimental_name,SK06,SK03,SK015,SK0075,md,qsxs,jradx) 
+		values(#{createTime},#{materials},#{materialsNum},#{manufacturers},#{manufacturersNum},#{specification},#{specificationNum},#{requiredResult},#{requiredStatus},#{requiredStatusShow},#{iD},#{orderTicketNum},#{experimentalId},#{experimentalName},#{sK06},#{sK03},#{sK015},#{sK0075},#{md},#{qsxs},#{jradx})
+	</insert>
+
+	<!-- 将VQualityTestReportKf中属性值不为null的数据,插入到对应数据库的表中 -->
+	<insert id="insertNotNullVQualityTestReportKf" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportKf">
+		insert into v_quality_test_report_kf
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="createTime != null">create_time,</if>
+			<if test="materials != null">materials,</if>
+			<if test="materialsNum != null">materials_num,</if>
+			<if test="manufacturers != null">manufacturers,</if>
+			<if test="manufacturersNum != null">manufacturers_num,</if>
+			<if test="specification != null">specification,</if>
+			<if test="specificationNum != null">specification_num,</if>
+			<if test="requiredResult != null">required_result,</if>
+			<if test="requiredStatus != null">required_status,</if>
+			<if test="requiredStatusShow != null">required_status_show,</if>
+			<if test="iD != null">ID,</if>
+			<if test="orderTicketNum != null">order_ticket_num,</if>
+			<if test="experimentalId != null">experimental_id,</if>
+			<if test="experimentalName != null">experimental_name,</if>
+			<if test="sK06 != null">SK06,</if>
+			<if test="sK03 != null">SK03,</if>
+			<if test="sK015 != null">SK015,</if>
+			<if test="sK0075 != null">SK0075,</if>
+			<if test="md != null">md,</if>
+			<if test="qsxs != null">qsxs,</if>
+			<if test="jradx != null">jradx,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="createTime != null">#{createTime},</if>
+			<if test="materials != null">#{materials},</if>
+			<if test="materialsNum != null">#{materialsNum},</if>
+			<if test="manufacturers != null">#{manufacturers},</if>
+			<if test="manufacturersNum != null">#{manufacturersNum},</if>
+			<if test="specification != null">#{specification},</if>
+			<if test="specificationNum != null">#{specificationNum},</if>
+			<if test="requiredResult != null">#{requiredResult},</if>
+			<if test="requiredStatus != null">#{requiredStatus},</if>
+			<if test="requiredStatusShow != null">#{requiredStatusShow},</if>
+			<if test="iD != null">#{iD},</if>
+			<if test="orderTicketNum != null">#{orderTicketNum},</if>
+			<if test="experimentalId != null">#{experimentalId},</if>
+			<if test="experimentalName != null">#{experimentalName},</if>
+			<if test="sK06 != null">#{sK06},</if>
+			<if test="sK03 != null">#{sK03},</if>
+			<if test="sK015 != null">#{sK015},</if>
+			<if test="sK0075 != null">#{sK0075},</if>
+			<if test="md != null">#{md},</if>
+			<if test="qsxs != null">#{qsxs},</if>
+			<if test="jradx != null">#{jradx},</if>
+		</trim>
+	</insert>
+
+	<!-- 将VQualityTestReportKf批量插入到对应数据库的表中 -->
+	<insert id="insertVQualityTestReportKfByBatch" parameterType="ArrayList">
+		insert into v_quality_test_report_kf(create_time,materials,materials_num,manufacturers,manufacturers_num,specification,specification_num,required_result,required_status,required_status_show,ID,order_ticket_num,experimental_id,experimental_name,SK06,SK03,SK015,SK0075,md,qsxs,jradx) values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.createTime},#{item.materials},#{item.materialsNum},#{item.manufacturers},#{item.manufacturersNum},#{item.specification},#{item.specificationNum},#{item.requiredResult},#{item.requiredStatus},#{item.requiredStatusShow},#{item.iD},#{item.orderTicketNum},#{item.experimentalId},#{item.experimentalName},#{item.sK06},#{item.sK03},#{item.sK015},#{item.sK0075},#{item.md},#{item.qsxs},#{item.jradx})
+		</foreach>
+	</insert>
+	
+
+	<!-- 通过辅助工具Assist中的条件将VQualityTestReportKf对应的数据库表的数据删除 -->
+	<delete id="deleteVQualityTestReportKfByAssist" parameterType="com.jiaoke.common.bean.Assist">
+		delete from v_quality_test_report_kf
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+	</delete>
+	
+	
+	
+	<!-- 通过辅助工具Assist中的条件将VQualityTestReportKf中的数据更新到数据库对应的表中,包括值为null的数据 -->
+	<update id="updateVQualityTestReportKf" parameterType="map">
+		update v_quality_test_report_kf
+		<set>
+			create_time = #{enti.createTime},
+			materials = #{enti.materials},
+			materials_num = #{enti.materialsNum},
+			manufacturers = #{enti.manufacturers},
+			manufacturers_num = #{enti.manufacturersNum},
+			specification = #{enti.specification},
+			specification_num = #{enti.specificationNum},
+			required_result = #{enti.requiredResult},
+			required_status = #{enti.requiredStatus},
+			required_status_show = #{enti.requiredStatusShow},
+			ID = #{enti.iD},
+			order_ticket_num = #{enti.orderTicketNum},
+			experimental_id = #{enti.experimentalId},
+			experimental_name = #{enti.experimentalName},
+			SK06 = #{enti.sK06},
+			SK03 = #{enti.sK03},
+			SK015 = #{enti.sK015},
+			SK0075 = #{enti.sK0075},
+			md = #{enti.md},
+			qsxs = #{enti.qsxs},
+			jradx = #{enti.jradx},
+		</set>
+		<if test="assist.require!=null">
+			<include refid="updateAssist" />
+		</if>
+	</update>
+
+	<!-- 通过辅助工具Assist中的条件将VQualityTestReportKf中属性值不为null的数据更新到数据库对应的表中 -->
+	<update id="updateNotNullVQualityTestReportKf" parameterType="map">
+		update v_quality_test_report_kf
+		<set>
+			<if test="enti.createTime != null">create_time = #{enti.createTime},</if>
+			<if test="enti.materials != null">materials = #{enti.materials},</if>
+			<if test="enti.materialsNum != null">materials_num = #{enti.materialsNum},</if>
+			<if test="enti.manufacturers != null">manufacturers = #{enti.manufacturers},</if>
+			<if test="enti.manufacturersNum != null">manufacturers_num = #{enti.manufacturersNum},</if>
+			<if test="enti.specification != null">specification = #{enti.specification},</if>
+			<if test="enti.specificationNum != null">specification_num = #{enti.specificationNum},</if>
+			<if test="enti.requiredResult != null">required_result = #{enti.requiredResult},</if>
+			<if test="enti.requiredStatus != null">required_status = #{enti.requiredStatus},</if>
+			<if test="enti.requiredStatusShow != null">required_status_show = #{enti.requiredStatusShow},</if>
+			<if test="enti.iD != null">ID = #{enti.iD},</if>
+			<if test="enti.orderTicketNum != null">order_ticket_num = #{enti.orderTicketNum},</if>
+			<if test="enti.experimentalId != null">experimental_id = #{enti.experimentalId},</if>
+			<if test="enti.experimentalName != null">experimental_name = #{enti.experimentalName},</if>
+			<if test="enti.sK06 != null">SK06 = #{enti.sK06},</if>
+			<if test="enti.sK03 != null">SK03 = #{enti.sK03},</if>
+			<if test="enti.sK015 != null">SK015 = #{enti.sK015},</if>
+			<if test="enti.sK0075 != null">SK0075 = #{enti.sK0075},</if>
+			<if test="enti.md != null">md = #{enti.md},</if>
+			<if test="enti.qsxs != null">qsxs = #{enti.qsxs},</if>
+			<if test="enti.jradx != null">jradx = #{enti.jradx},</if>
+		</set>
+		<if test="assist.require!=null">
+			<include refid="updateAssist" />
+		</if>
+	</update>
+</mapper>

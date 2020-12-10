@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.qualitytest.dao.QualityTestLabReportDao">
+	<!-- QualityTestLabReport的resultMap,column是给数据库列起的别名,它对应property类的属性 -->
+	<resultMap id="result_QualityTestLabReport_Map" type="com.jiaoke.qualitytest.bean.QualityTestLabReport">
+		<id column="Id" property="id" />
+		<result column="experiment_num" property="experimentNum" />
+		<result column="order_ticket_num" property="orderTicketNum" />
+		<result column="materials_num" property="materialsNum" />
+		<result column="entrusting_party" property="entrustingParty" />
+		<result column="manufacturers_name" property="manufacturersName" />
+		<result column="sampling_date" property="samplingDate" />
+		<result column="test_date" property="testDate" />
+		<result column="required_experimental" property="requiredExperimental" />
+		<result column="experimental_procedures" property="experimentalProcedures" />
+		<result column="sampling_spot" property="samplingSpot" />
+		<result column="sampling_standard" property="samplingStandard" />
+		<result column="experiment_status" property="experimentStatus" />
+		<result column="experiment_result" property="experimentResult" />
+		<result column="verdict" property="verdict" />
+		<result column="charge_person" property="chargePerson" />
+		<result column="check_person" property="checkPerson" />
+		<result column="report_person" property="reportPerson" />
+		<result column="report_date" property="reportDate" />
+		<result column="notice_dep" property="noticeDep" />
+		<result column="notice_dep_str" property="noticeDepStr" />
+	</resultMap>
+
+	<!-- assist是查询辅助工具类, ${req.require}表示列名,#{req.value}表示值它是防SQL注入的 -->
+	<sql id="assist">
+		<where>
+			<foreach collection="require" item="req" separator=" ">
+				${req.require}
+				<if test="req.value != null">
+					#{req.value}
+				</if>
+				<if test="req.values != null">
+					<foreach collection="req.values" item="value" separator=",">
+						#{value}
+					</foreach>
+				</if>
+				<if test="req.customRequire !=null">
+					<foreach collection="req.customRequire" item="cr" separator=" ">
+						${cr.require}
+						<if test="cr.value != null">
+							#{cr.value}
+						</if>
+						<if test="cr.values != null">
+							<foreach collection="cr.values" item="value"
+								separator=",">
+								#{value}
+							</foreach>
+						</if>
+						<if test="cr.suffix != null"> ${cr.suffix}</if>
+					</foreach>
+				</if>
+				<if test="req.suffix != null"> ${req.suffix}</if>
+			</foreach>
+		</where>
+	</sql>
+
+	<!-- updateAssist用于更新数据查询辅助工具类,作用assist与一致 -->
+	<sql id="updateAssist">
+		<where>
+			<foreach collection="assist.require" item="req" separator=" ">
+				${req.require}
+				<if test="req.value != null">
+					#{req.value}
+				</if>
+				<if test="req.values != null">
+					<foreach collection="req.values" item="value" separator=",">
+						#{value}
+					</foreach>
+				</if>
+				<if test="req.customRequire !=null">
+					<foreach collection="req.customRequire" item="cr" separator=" ">
+						${cr.require}
+						<if test="cr.value != null">
+							#{cr.value}
+						</if>
+						<if test="cr.values != null">
+							<foreach collection="cr.values" item="value"
+								separator=",">
+								#{value}
+							</foreach>
+						</if>
+						<if test="cr.suffix != null"> ${cr.suffix}</if>
+					</foreach>
+				</if>
+				<if test="req.suffix != null"> ${req.suffix}</if>
+			</foreach>
+		</where>
+	</sql>
+
+	<!-- 数据库中表名为:quality_test_lab_report的列名 -->
+	<sql id="quality_test_lab_report_Column">
+		Id,experiment_num,experiment_status,experiment_result,order_ticket_num,materials_num,entrusting_party,manufacturers_name,sampling_date,test_date,required_experimental,experimental_procedures,sampling_spot,sampling_standard,verdict,charge_person,check_person,report_person,report_date,notice_dep,notice_dep_str
+	</sql>
+	<sql id="v_quality_test_lab_report_Column">
+		num,materials,materials_num,manufacturers,specification,tunnage,create_time as sampling_date,sampling_remark,order_ticket_num,required_experimental,Id,experiment_status,experiment_result,test_date,verdict,charge_person,check_person,report_person,report_date,notice_dep_str
+	</sql>
+	<!--获得类名为:QualityTestLabReport对应的数据库表的数据总行数 -->
+	<select id="getQualityTestLabReportRowCount" parameterType="com.jiaoke.common.bean.Assist" resultType="java.lang.Long">
+		select count(*) from v_quality_test_lab_report
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+	</select>
+
+	<!-- 获得类名为:QualityTestLabReport对应数据库中表的数据集合 -->
+	<select id="selectQualityTestLabReport" parameterType="com.jiaoke.common.bean.Assist" resultMap="result_QualityTestLabReport_Map">
+		select
+		<if test="distinct !=null">${distinct}</if>
+		<choose>
+			<when test="resultColumn!=null">${resultColumn}</when>
+			<otherwise>
+				<include refid="v_quality_test_lab_report_Column" />
+			</otherwise>
+		</choose>
+		from v_quality_test_lab_report
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+		<if test="order !=null">${order}</if>
+		<choose>
+			<when test="startRow !=null and rowSize !=null">LIMIT #{startRow},#{rowSize} </when>
+			<when test="rowSize !=null">LIMIT #{rowSize}</when>
+		</choose>
+	</select>
+	<!-- 通过QualityTestLabReport的id获得对应数据库中表的数据对象 -->
+	<select id="selectQualityTestLabReportById" parameterType="String" resultMap="result_QualityTestLabReport_Map">
+		select
+		<include refid="v_quality_test_lab_report_Column" />
+		from V_quality_test_lab_report
+		where Id = #{id}
+	</select>
+
+	<!-- 获得一个QualityTestLabReport对象,以参数QualityTestLabReport对象中不为空的属性作为条件进行查询 -->
+	<select id="selectQualityTestLabReportObjSingle" parameterType="com.jiaoke.qualitytest.bean.QualityTestLabReport" resultMap="result_QualityTestLabReport_Map">
+		select
+		<include refid="quality_test_lab_report_Column" />
+		from quality_test_lab_report
+		<where>
+		<if test="experimentStatus != null"> and experiment_status = #{experimentStatus}</if>
+		<if test="experimentResult != null"> and experiment_result = #{experimentResult}</if>
+		<if test="verdict != null"> and verdict = #{verdict}</if>
+		<if test="chargePerson != null"> and charge_person = #{chargePerson}</if>
+		<if test="checkPerson != null"> and check_person = #{checkPerson}</if>
+		<if test="reportPerson != null"> and report_person = #{reportPerson}</if>
+		<if test="reportDate != null"> and report_date = #{reportDate}</if>
+		<if test="noticeDep != null"> and notice_dep = #{noticeDep}</if>
+		<if test="noticeDepStr != null"> and notice_dep_str = #{noticeDepStr}</if>
+		<if test="experimentNum != null"> and experiment_num = #{experimentNum}</if>
+		<if test="orderTicketNum != null"> and order_ticket_num = #{orderTicketNum}</if>
+		<if test="materialsNum != null"> and materials_num = #{materialsNum}</if>
+		<if test="entrustingParty != null"> and entrusting_party = #{entrustingParty}</if>
+		<if test="manufacturersName != null"> and manufacturers_name = #{manufacturersName}</if>
+		<if test="samplingDate != null"> and sampling_date = #{samplingDate}</if>
+		<if test="testDate != null"> and test_date = #{testDate}</if>
+		<if test="requiredExperimental != null"> and required_experimental = #{requiredExperimental}</if>
+		<if test="experimentalProcedures != null"> and experimental_procedures = #{experimentalProcedures}</if>
+		<if test="samplingSpot != null"> and sampling_spot = #{samplingSpot}</if>
+		<if test="samplingStandard != null"> and sampling_standard = #{samplingStandard}</if>
+		<if test="id != null"> and Id = #{id} </if>
+		</where>
+		LIMIT 1
+	</select>
+
+	<!-- 获得QualityTestLabReport对象,以参数QualityTestLabReport对象中不为空的属性作为条件进行查询 -->
+	<select id="selectQualityTestLabReportByObj" parameterType="com.jiaoke.qualitytest.bean.QualityTestLabReport" resultMap="result_QualityTestLabReport_Map">
+		select
+		<include refid="quality_test_lab_report_Column" />
+		from quality_test_lab_report
+		<where>
+		<if test="experimentStatus != null"> and experiment_status = #{experimentStatus}</if>
+			<if test="experimentResult != null"> and experiment_result = #{experimentResult}</if>
+		<if test="verdict != null"> and verdict = #{verdict}</if>
+		<if test="chargePerson != null"> and charge_person = #{chargePerson}</if>
+		<if test="checkPerson != null"> and check_person = #{checkPerson}</if>
+		<if test="reportPerson != null"> and report_person = #{reportPerson}</if>
+		<if test="reportDate != null"> and report_date = #{reportDate}</if>
+		<if test="noticeDep != null"> and notice_dep = #{noticeDep}</if>
+		<if test="noticeDepStr != null"> and notice_dep_str = #{noticeDepStr}</if>
+		<if test="experimentNum != null"> and experiment_num = #{experimentNum}</if>
+		<if test="orderTicketNum != null"> and order_ticket_num = #{orderTicketNum}</if>
+		<if test="materialsNum != null"> and materials_num = #{materialsNum}</if>
+		<if test="entrustingParty != null"> and entrusting_party = #{entrustingParty}</if>
+		<if test="manufacturersName != null"> and manufacturers_name = #{manufacturersName}</if>
+		<if test="samplingDate != null"> and sampling_date = #{samplingDate}</if>
+		<if test="testDate != null"> and test_date = #{testDate}</if>
+		<if test="requiredExperimental != null"> and required_experimental = #{requiredExperimental}</if>
+		<if test="experimentalProcedures != null"> and experimental_procedures = #{experimentalProcedures}</if>
+		<if test="samplingSpot != null"> and sampling_spot = #{samplingSpot}</if>
+		<if test="samplingStandard != null"> and sampling_standard = #{samplingStandard}</if>
+		<if test="id != null"> and Id = #{id} </if>
+		</where>
+	</select>
+
+	<!-- 将QualityTestLabReport插入到对应数据库的表中,包括属性值为null的数据 -->
+	<insert id="insertQualityTestLabReport" parameterType="com.jiaoke.qualitytest.bean.QualityTestLabReport">
+	insert into
+		quality_test_lab_report (Id,experiment_num,experiment_status,experiment_result,order_ticket_num,materials_num,entrusting_party,manufacturers_name,sampling_date,test_date,required_experimental,experimental_procedures,sampling_spot,sampling_standard,verdict,charge_person,check_person,report_person,report_date,notice_dep,notice_dep_str)
+		values(#{id},#{experimentNum},#{experimentStatus},#{experimentResult},#{orderTicketNum},#{materialsNum},#{entrustingParty},#{manufacturersName},#{samplingDate},#{testDate},#{requiredExperimental},#{experimentalProcedures},#{samplingSpot},#{samplingStandard},#{verdict},#{chargePerson},#{checkPerson},#{reportPerson},#{reportDate},#{noticeDep},#{noticeDepStr})	</insert>
+
+	<!-- 将QualityTestLabReport中属性值不为null的数据,插入到对应数据库的表中 -->
+	<insert id="insertNotNullQualityTestLabReport" parameterType="com.jiaoke.qualitytest.bean.QualityTestLabReport">
+		insert into quality_test_lab_report
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">Id,</if>
+			<if test="experimentNum != null">experiment_num,</if>
+			<if test="experimentStatus != null">experiment_status,</if>
+			<if test="experimentResult != null">experiment_result,</if>
+			<if test="orderTicketNum != null">order_ticket_num,</if>
+			<if test="materialsNum != null">materials_num,</if>
+			<if test="entrustingParty != null">entrusting_party,</if>
+			<if test="manufacturersName != null">manufacturers_name,</if>
+			<if test="samplingDate != null">sampling_date,</if>
+			<if test="testDate != null">test_date,</if>
+			<if test="requiredExperimental != null">required_experimental,</if>
+			<if test="experimentalProcedures != null">experimental_procedures,</if>
+			<if test="samplingSpot != null">sampling_spot,</if>
+			<if test="samplingStandard != null">sampling_standard,</if>
+			<if test="verdict != null">verdict,</if>
+			<if test="chargePerson != null">charge_person,</if>
+			<if test="checkPerson != null">check_person,</if>
+			<if test="reportPerson != null">report_person,</if>
+			<if test="reportDate != null">report_date,</if>
+			<if test="noticeDep != null">notice_dep,</if>
+			<if test="noticeDepStr != null">notice_dep_str,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">#{id},</if>
+			<if test="experimentNum != null">#{experimentNum},</if>
+			<if test="experimentStatus != null">#{experimentStatus},</if>
+			<if test="experimentResult != null">#{experimentResult},</if>
+			<if test="orderTicketNum != null">#{orderTicketNum},</if>
+			<if test="materialsNum != null">#{materialsNum},</if>
+			<if test="entrustingParty != null">#{entrustingParty},</if>
+			<if test="manufacturersName != null">#{manufacturersName},</if>
+			<if test="samplingDate != null">#{samplingDate},</if>
+			<if test="testDate != null">#{testDate},</if>
+			<if test="requiredExperimental != null">#{requiredExperimental},</if>
+			<if test="experimentalProcedures != null">#{experimentalProcedures},</if>
+			<if test="samplingSpot != null">#{samplingSpot},</if>
+			<if test="samplingStandard != null">#{samplingStandard},</if>
+			<if test="verdict != null">#{verdict},</if>
+			<if test="chargePerson != null">#{chargePerson},</if>
+			<if test="checkPerson != null">#{checkPerson},</if>
+			<if test="reportPerson != null">#{reportPerson},</if>
+			<if test="reportDate != null">#{reportDate},</if>
+			<if test="noticeDep != null">#{noticeDep},</if>
+			<if test="noticeDepStr != null">#{noticeDepStr},</if>
+		</trim>
+	</insert>
+
+	<!-- 将QualityTestLabReport批量插入到对应数据库的表中 -->
+	<insert id="insertQualityTestLabReportByBatch" parameterType="ArrayList">
+		insert into quality_test_lab_report(Id,experiment_num,experiment_status,experiment_result,order_ticket_num,materials_num,entrusting_party,manufacturers_name,sampling_date,test_date,required_experimental,experimental_procedures,sampling_spot,sampling_standard,verdict,charge_person,check_person,report_person,report_date,notice_dep,notice_dep_str) values
+		<foreach collection="list" item="item" index="index"
+				 separator=",">
+			(#{item.id},#{item.experimentNum},#{item.experimentStatus},#{item.experimentResult},#{item.orderTicketNum},#{item.materialsNum},#{item.entrustingParty},#{item.manufacturersName},#{item.samplingDate},#{item.testDate},#{item.requiredExperimental},#{item.experimentalProcedures},#{item.samplingSpot},#{item.samplingStandard},#{item.verdict},#{item.chargePerson},#{item.checkPerson},#{item.reportPerson},#{item.reportDate},#{item.noticeDep},#{item.noticeDepStr})
+		</foreach>
+	</insert>
+
+	<!-- 通过QualityTestLabReport的id将数据库表中对应的数据删除 -->
+	<delete id="deleteQualityTestLabReportById" parameterType="String">
+		delete from quality_test_lab_report
+		where  Id  =  #{id}
+	</delete>
+
+	<!-- 通过辅助工具Assist中的条件将QualityTestLabReport对应的数据库表的数据删除 -->
+	<delete id="deleteQualityTestLabReportByAssist" parameterType="com.jiaoke.common.bean.Assist">
+		delete from quality_test_lab_report
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+	</delete>
+
+	<!-- 通过QualityTestLabReport的id将QualityTestLabReport的数据更新到数据库中对应的表,包括值null的数据 -->
+	<update id="updateQualityTestLabReportById" parameterType="com.jiaoke.qualitytest.bean.QualityTestLabReport">
+		update quality_test_lab_report set
+		<set>
+			experiment_num = #{experimentNum} ,
+			experiment_status = #{experimentStatus} ,
+			experiment_result = #{experimentResult} ,
+			order_ticket_num = #{orderTicketNum} ,
+			materials_num = #{materialsNum} ,
+			entrusting_party = #{entrustingParty} ,
+			manufacturers_name = #{manufacturersName} ,
+			sampling_date = #{samplingDate} ,
+			test_date = #{testDate} ,
+			required_experimental = #{requiredExperimental} ,
+			experimental_procedures = #{experimentalProcedures} ,
+			sampling_spot = #{samplingSpot} ,
+			sampling_standard = #{samplingStandard} ,
+			verdict = #{verdict} ,
+			charge_person = #{chargePerson} ,
+			check_person = #{checkPerson} ,
+			report_person = #{reportPerson} ,
+			report_date = #{reportDate} ,
+			notice_dep = #{noticeDep} ,
+			notice_dep_str = #{noticeDepStr} ,
+		</set>
+		where Id = #{id}
+	</update>
+
+	<!-- 通过QualityTestLabReport的id将QualityTestLabReport中属性值不为null的数据更新到数据库对应的表中 -->
+	<update id="updateNotNullQualityTestLabReportById" parameterType="com.jiaoke.qualitytest.bean.QualityTestLabReport">
+		update quality_test_lab_report
+		<set>
+					<if test="experimentNum != null">experiment_num = #{experimentNum},</if>
+					<if test="experimentStatus != null">experiment_status = #{experimentStatus},</if>
+			<if test="experimentResult != null">experiment_result = #{experimentResult},</if>
+					<if test="orderTicketNum != null">order_ticket_num = #{orderTicketNum},</if>
+					<if test="materialsNum != null">materials_num = #{materialsNum},</if>
+					<if test="entrustingParty != null">entrusting_party = #{entrustingParty},</if>
+					<if test="manufacturersName != null">manufacturers_name = #{manufacturersName},</if>
+					<if test="samplingDate != null">sampling_date = #{samplingDate},</if>
+					<if test="testDate != null">test_date = #{testDate},</if>
+					<if test="requiredExperimental != null">required_experimental = #{requiredExperimental},</if>
+					<if test="experimentalProcedures != null">experimental_procedures = #{experimentalProcedures},</if>
+					<if test="samplingSpot != null">sampling_spot = #{samplingSpot},</if>
+					<if test="samplingStandard != null">sampling_standard = #{samplingStandard},</if>
+					<if test="verdict != null">verdict = #{verdict},</if>
+					<if test="chargePerson != null">charge_person = #{chargePerson},</if>
+					<if test="checkPerson != null">check_person = #{checkPerson},</if>
+					<if test="reportPerson != null">report_person = #{reportPerson},</if>
+					<if test="reportDate != null">report_date = #{reportDate},</if>
+					<if test="noticeDep != null">notice_dep = #{noticeDep},</if>
+					<if test="noticeDepStr != null">notice_dep_str = #{noticeDepStr},</if>
+		</set>
+		where Id = #{id}
+	</update>
+
+	<!-- 通过辅助工具Assist中的条件将QualityTestLabReport中的数据更新到数据库对应的表中,包括值为null的数据 -->
+	<update id="updateQualityTestLabReport" parameterType="map">
+		update quality_test_lab_report
+		<set>
+			Id = #{enti.id},
+			experiment_num = #{enti.experimentNum},
+			experiment_status = #{enti.experimentStatus},
+			experiment_result = #{enti.experimentResult},
+			order_ticket_num = #{enti.orderTicketNum},
+			materials_num = #{enti.materialsNum},
+			entrusting_party = #{enti.entrustingParty},
+			manufacturers_name = #{enti.manufacturersName},
+			sampling_date = #{enti.samplingDate},
+			test_date = #{enti.testDate},
+			required_experimental = #{enti.requiredExperimental},
+			experimental_procedures = #{enti.experimentalProcedures},
+			sampling_spot = #{enti.samplingSpot},
+			sampling_standard = #{enti.samplingStandard},
+			verdict = #{enti.verdict},
+			charge_person = #{enti.chargePerson},
+			check_person = #{enti.checkPerson},
+			report_person = #{enti.reportPerson},
+			report_date = #{enti.reportDate},
+			notice_dep = #{enti.noticeDep},
+			notice_dep_str = #{enti.noticeDepStr},
+		</set>
+		<if test="assist.require!=null">
+			<include refid="updateAssist" />
+		</if>
+	</update>
+
+	<!-- 通过辅助工具Assist中的条件将QualityTestLabReport中属性值不为null的数据更新到数据库对应的表中 -->
+	<update id="updateNotNullQualityTestLabReport" parameterType="map">
+		update quality_test_lab_report
+		<set>
+			<if test="enti.id != null">Id = #{enti.id},</if>
+			<if test="enti.experimentNum != null">experiment_num = #{enti.experimentNum},</if>
+			<if test="enti.experimentStatus != null">experiment_status = #{enti.experimentStatus},</if>
+            <if test="enti.experimentResult != null">experiment_result = #{enti.experimentResult},</if>
+			<if test="enti.orderTicketNum != null">order_ticket_num = #{enti.orderTicketNum},</if>
+			<if test="enti.materialsNum != null">materials_num = #{enti.materialsNum},</if>
+			<if test="enti.entrustingParty != null">entrusting_party = #{enti.entrustingParty},</if>
+			<if test="enti.manufacturersName != null">manufacturers_name = #{enti.manufacturersName},</if>
+			<if test="enti.samplingDate != null">sampling_date = #{enti.samplingDate},</if>
+			<if test="enti.testDate != null">test_date = #{enti.testDate},</if>
+			<if test="enti.requiredExperimental != null">required_experimental = #{enti.requiredExperimental},</if>
+			<if test="enti.experimentalProcedures != null">experimental_procedures = #{enti.experimentalProcedures},</if>
+			<if test="enti.samplingSpot != null">sampling_spot = #{enti.samplingSpot},</if>
+			<if test="enti.samplingStandard != null">sampling_standard = #{enti.samplingStandard},</if>
+			<if test="enti.verdict != null">verdict = #{enti.verdict},</if>
+			<if test="enti.chargePerson != null">charge_person = #{enti.chargePerson},</if>
+			<if test="enti.checkPerson != null">check_person = #{enti.checkPerson},</if>
+			<if test="enti.reportPerson != null">report_person = #{enti.reportPerson},</if>
+			<if test="enti.reportDate != null">report_date = #{enti.reportDate},</if>
+			<if test="enti.noticeDep != null">notice_dep = #{enti.noticeDep},</if>
+			<if test="enti.noticeDepStr != null">notice_dep_str = #{enti.noticeDepStr},</if>
+		</set>
+		<if test="assist.require!=null">
+			<include refid="updateAssist" />
+		</if>
+	</update>
+</mapper>

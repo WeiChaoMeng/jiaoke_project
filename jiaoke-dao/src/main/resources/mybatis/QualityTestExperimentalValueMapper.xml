@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.qualitytest.dao.experimentalvalue.QualityTestExperimentalValueDao">
+	<!-- QualityTestExperimentalValue的resultMap,column是给数据库列起的别名,它对应property类的属性 -->
+	<resultMap id="result_QualityTestExperimentalValue_Map" type="com.jiaoke.qualitytest.bean.experimentalvalue.QualityTestExperimentalValue">
+		<id column="id" property="id" />
+		<result column="order_ticket_num" property="orderTicketNum" />
+		<result column="experimental_id" property="experimentalId" />
+		<result column="experimental_name" property="experimentalName" />
+		<result column="experimental_type" property="experimentalType" />
+		<result column="unit" property="unit" />
+		<result column="value" property="value" />
+		<result column="method" property="method" />
+		<result column="remark" property="remark" />
+
+		<result column="test_date" property="testDate" />
+		<result column="experimental_result" property="experimentalResult" />
+		<result column="method1" property="method1" />
+		<result column="unit1" property="unit1" />
+	</resultMap>
+
+	<!-- assist是查询辅助工具类, ${req.require}表示列名,#{req.value}表示值它是防SQL注入的 -->
+	<sql id="assist">
+		<where>
+			<foreach collection="require" item="req" separator=" ">
+				${req.require}
+				<if test="req.value != null">
+					#{req.value}
+				</if>
+				<if test="req.values != null">
+					<foreach collection="req.values" item="value" separator=",">
+						#{value}
+					</foreach>
+				</if>
+				<if test="req.customRequire !=null">
+					<foreach collection="req.customRequire" item="cr" separator=" ">
+						${cr.require}
+						<if test="cr.value != null">
+							#{cr.value}
+						</if>
+						<if test="cr.values != null">
+							<foreach collection="cr.values" item="value"
+								separator=",">
+								#{value}
+							</foreach>
+						</if>
+						<if test="cr.suffix != null"> ${cr.suffix}</if>
+					</foreach>
+				</if>
+				<if test="req.suffix != null"> ${req.suffix}</if>
+			</foreach>
+		</where>
+	</sql>
+
+	<!-- updateAssist用于更新数据查询辅助工具类,作用assist与一致 -->
+	<sql id="updateAssist">
+		<where>
+			<foreach collection="assist.require" item="req" separator=" ">
+				${req.require}
+				<if test="req.value != null">
+					#{req.value}
+				</if>
+				<if test="req.values != null">
+					<foreach collection="req.values" item="value" separator=",">
+						#{value}
+					</foreach>
+				</if>
+				<if test="req.customRequire !=null">
+					<foreach collection="req.customRequire" item="cr" separator=" ">
+						${cr.require}
+						<if test="cr.value != null">
+							#{cr.value}
+						</if>
+						<if test="cr.values != null">
+							<foreach collection="cr.values" item="value"
+								separator=",">
+								#{value}
+							</foreach>
+						</if>
+						<if test="cr.suffix != null"> ${cr.suffix}</if>
+					</foreach>
+				</if>
+				<if test="req.suffix != null"> ${req.suffix}</if>
+			</foreach>
+		</where>
+	</sql>
+
+	<!-- 数据库中表名为:quality_test_experimental_value的列名 -->
+	<sql id="quality_test_experimental_value_Column">
+		id,order_ticket_num,experimental_id,experimental_name,experimental_type,unit,value,method,remark
+	</sql>
+
+	<sql id="v_quality_test_experimental_value_Column">
+		id,order_ticket_num,experimental_id,experimental_name,experimental_type,unit,value,method,requirements,remark,test_date,experimental_result,method1,unit1
+	</sql>
+
+	<!--获得类名为:QualityTestExperimentalValue对应的数据库表的数据总行数 -->
+	<select id="getQualityTestExperimentalValueRowCount" parameterType="com.jiaoke.common.bean.Assist" resultType="java.lang.Long">
+		select count(*) from V_quality_test_experimental_value
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+	</select>
+	
+	<!-- 获得类名为:QualityTestExperimentalValue对应数据库中表的数据集合 -->
+	<select id="selectQualityTestExperimentalValue" parameterType="com.jiaoke.common.bean.Assist" resultMap="result_QualityTestExperimentalValue_Map">
+		select
+		<if test="distinct !=null">${distinct}</if>
+		<choose>
+			<when test="resultColumn!=null">${resultColumn}</when>
+			<otherwise>
+				<include refid="v_quality_test_experimental_value_Column" />
+			</otherwise>
+		</choose>
+		from V_quality_test_experimental_value
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+		<if test="order !=null">${order}</if>
+		<choose>
+			<when test="startRow !=null and rowSize !=null">LIMIT #{startRow},#{rowSize} </when>
+			<when test="rowSize !=null">LIMIT #{rowSize}</when>
+		</choose>
+	</select>
+	<!-- 通过QualityTestExperimentalValue的id获得对应数据库中表的数据对象 -->
+	<select id="selectQualityTestExperimentalValueById" parameterType="Integer" resultMap="result_QualityTestExperimentalValue_Map">
+		select
+		<include refid="v_quality_test_experimental_value_Column" />
+		from V_quality_test_experimental_value
+		where id = #{id}
+	</select>
+	
+	<!-- 获得一个QualityTestExperimentalValue对象,以参数QualityTestExperimentalValue对象中不为空的属性作为条件进行查询 -->
+	<select id="selectQualityTestExperimentalValueObjSingle" parameterType="com.jiaoke.qualitytest.bean.experimentalvalue.QualityTestExperimentalValue" resultMap="result_QualityTestExperimentalValue_Map">
+		select
+		<include refid="v_quality_test_experimental_value_Column" />
+		from V_quality_test_experimental_value
+		<where>
+		<if test="orderTicketNum != null"> and order_ticket_num = #{orderTicketNum}</if>
+		<if test="experimentalId != null"> and experimental_id = #{experimentalId}</if>
+		<if test="experimentalName != null"> and experimental_name = #{experimentalName}</if>
+		<if test="experimentalType != null"> and experimental_type = #{experimentalType}</if>
+		<if test="unit != null"> and unit = #{unit}</if>
+		<if test="value != null"> and value = #{value}</if>
+		<if test="method != null"> and method = #{method}</if>
+		<if test="remark != null"> and remark = #{remark}</if>
+		<if test="id != null"> and id = #{id} </if>
+		</where>
+		LIMIT 1
+	</select>
+	
+	<!-- 获得QualityTestExperimentalValue对象,以参数QualityTestExperimentalValue对象中不为空的属性作为条件进行查询 -->
+	<select id="selectQualityTestExperimentalValueByObj" parameterType="com.jiaoke.qualitytest.bean.experimentalvalue.QualityTestExperimentalValue" resultMap="result_QualityTestExperimentalValue_Map">
+		select
+		<include refid="v_quality_test_experimental_value_Column" />
+		from V_quality_test_experimental_value
+		<where>
+		<if test="orderTicketNum != null"> and order_ticket_num = #{orderTicketNum}</if>
+		<if test="experimentalId != null"> and experimental_id = #{experimentalId}</if>
+		<if test="experimentalName != null"> and experimental_name = #{experimentalName}</if>
+		<if test="experimentalType != null"> and experimental_type = #{experimentalType}</if>
+		<if test="unit != null"> and unit = #{unit}</if>
+		<if test="value != null"> and value = #{value}</if>
+		<if test="method != null"> and method = #{method}</if>
+		<if test="remark != null"> and remark = #{remark}</if>
+		<if test="id != null"> and id = #{id} </if>
+		</where>
+	</select>
+
+	<!-- 将QualityTestExperimentalValue插入到对应数据库的表中,包括属性值为null的数据 -->
+	<insert id="insertQualityTestExperimentalValue" parameterType="com.jiaoke.qualitytest.bean.experimentalvalue.QualityTestExperimentalValue">
+		insert into 
+		quality_test_experimental_value (id,order_ticket_num,experimental_id,experimental_name,experimental_type,unit,value,method,remark) 
+		values(#{id},#{orderTicketNum},#{experimentalId},#{experimentalName},#{experimentalType},#{unit},#{value},#{method},#{remark})
+	</insert>
+
+	<!-- 将QualityTestExperimentalValue中属性值不为null的数据,插入到对应数据库的表中 -->
+	<insert id="insertNotNullQualityTestExperimentalValue" parameterType="com.jiaoke.qualitytest.bean.experimentalvalue.QualityTestExperimentalValue">
+		insert into quality_test_experimental_value
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">id,</if>
+			<if test="orderTicketNum != null">order_ticket_num,</if>
+			<if test="experimentalId != null">experimental_id,</if>
+			<if test="experimentalName != null">experimental_name,</if>
+			<if test="experimentalType != null">experimental_type,</if>
+			<if test="unit != null">unit,</if>
+			<if test="value != null">value,</if>
+			<if test="method != null">method,</if>
+			<if test="remark != null">remark,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">#{id},</if>
+			<if test="orderTicketNum != null">#{orderTicketNum},</if>
+			<if test="experimentalId != null">#{experimentalId},</if>
+			<if test="experimentalName != null">#{experimentalName},</if>
+			<if test="experimentalType != null">#{experimentalType},</if>
+			<if test="unit != null">#{unit},</if>
+			<if test="value != null">#{value},</if>
+			<if test="method != null">#{method},</if>
+			<if test="remark != null">#{remark},</if>
+		</trim>
+	</insert>
+
+	<!-- 将QualityTestExperimentalValue批量插入到对应数据库的表中 -->
+	<insert id="insertQualityTestExperimentalValueByBatch" parameterType="ArrayList">
+		insert into quality_test_experimental_value(id,order_ticket_num,experimental_id,experimental_name,experimental_type,unit,value,method,remark) values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.id},#{item.orderTicketNum},#{item.experimentalId},#{item.experimentalName},#{item.experimentalType},#{item.unit},#{item.value},#{item.method},#{item.remark})
+		</foreach>
+	</insert>
+	
+	<!-- 通过QualityTestExperimentalValue的id将数据库表中对应的数据删除 -->
+	<delete id="deleteQualityTestExperimentalValueById" parameterType="Integer">
+		delete from quality_test_experimental_value
+		where  id  =  #{id}
+	</delete>
+
+	<!-- 通过辅助工具Assist中的条件将QualityTestExperimentalValue对应的数据库表的数据删除 -->
+	<delete id="deleteQualityTestExperimentalValueByAssist" parameterType="com.jiaoke.common.bean.Assist">
+		delete from quality_test_experimental_value
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+	</delete>
+	
+	<!-- 通过QualityTestExperimentalValue的id将QualityTestExperimentalValue的数据更新到数据库中对应的表,包括值null的数据 -->
+	<update id="updateQualityTestExperimentalValueById" parameterType="com.jiaoke.qualitytest.bean.experimentalvalue.QualityTestExperimentalValue">
+		update quality_test_experimental_value set
+		<set>
+			order_ticket_num = #{orderTicketNum} , 
+			experimental_id = #{experimentalId} , 
+			experimental_name = #{experimentalName} , 
+			experimental_type = #{experimentalType} , 
+			unit = #{unit} , 
+			value = #{value} , 
+			method = #{method} , 
+			remark = #{remark} , 
+		</set>
+		where id = #{id}
+	</update>
+	
+	<!-- 通过QualityTestExperimentalValue的id将QualityTestExperimentalValue中属性值不为null的数据更新到数据库对应的表中 -->
+	<update id="updateNotNullQualityTestExperimentalValueById" parameterType="com.jiaoke.qualitytest.bean.experimentalvalue.QualityTestExperimentalValue">
+		update quality_test_experimental_value
+		<set>
+					<if test="orderTicketNum != null">order_ticket_num = #{orderTicketNum},</if>
+					<if test="experimentalId != null">experimental_id = #{experimentalId},</if>
+					<if test="experimentalName != null">experimental_name = #{experimentalName},</if>
+					<if test="experimentalType != null">experimental_type = #{experimentalType},</if>
+					<if test="unit != null">unit = #{unit},</if>
+					<if test="value != null">value = #{value},</if>
+					<if test="method != null">method = #{method},</if>
+					<if test="remark != null">remark = #{remark},</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<!-- 通过辅助工具Assist中的条件将QualityTestExperimentalValue中的数据更新到数据库对应的表中,包括值为null的数据 -->
+	<update id="updateQualityTestExperimentalValue" parameterType="map">
+		update quality_test_experimental_value
+		<set>
+			id = #{enti.id},
+			order_ticket_num = #{enti.orderTicketNum},
+			experimental_id = #{enti.experimentalId},
+			experimental_name = #{enti.experimentalName},
+			experimental_type = #{enti.experimentalType},
+			unit = #{enti.unit},
+			value = #{enti.value},
+			method = #{enti.method},
+			remark = #{enti.remark},
+		</set>
+		<if test="assist.require!=null">
+			<include refid="updateAssist" />
+		</if>
+	</update>
+
+	<!-- 通过辅助工具Assist中的条件将QualityTestExperimentalValue中属性值不为null的数据更新到数据库对应的表中 -->
+	<update id="updateNotNullQualityTestExperimentalValue" parameterType="map">
+		update quality_test_experimental_value
+		<set>
+			<if test="enti.id != null">id = #{enti.id},</if>
+			<if test="enti.orderTicketNum != null">order_ticket_num = #{enti.orderTicketNum},</if>
+			<if test="enti.experimentalId != null">experimental_id = #{enti.experimentalId},</if>
+			<if test="enti.experimentalName != null">experimental_name = #{enti.experimentalName},</if>
+			<if test="enti.experimentalType != null">experimental_type = #{enti.experimentalType},</if>
+			<if test="enti.unit != null">unit = #{enti.unit},</if>
+			<if test="enti.value != null">value = #{enti.value},</if>
+			<if test="enti.method != null">method = #{enti.method},</if>
+			<if test="enti.remark != null">remark = #{enti.remark},</if>
+		</set>
+		<if test="assist.require!=null">
+			<include refid="updateAssist" />
+		</if>
+	</update>
+</mapper>

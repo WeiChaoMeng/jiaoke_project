@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.qualitytest.dao.report.QualityTestExperimentalPassRateDao">
+	<!-- QualityTestExperimental的resultMap,column是给数据库列起的别名,它对应property类的属性 -->
+	<resultMap id="result_QualityTestExperimentalPassRate_Map" type="com.jiaoke.qualitytest.bean.report.QualityTestExperimentalPassRate">
+		<result column="count" property="count" />
+		<result column="experimental_result" property="experimentalResult" />
+		<result column="materials_num" property="materialsNum" />
+		<result column="manufacturers" property="manufacturers" />
+		<result column="experimental_name" property="experimentalName" />
+
+	</resultMap>
+
+	<!-- assist是查询辅助工具类, ${req.require}表示列名,#{req.value}表示值它是防SQL注入的 -->
+	<sql id="assist">
+		<where>
+			<foreach collection="require" item="req" separator=" ">
+				${req.require}
+				<if test="req.value != null">
+					#{req.value}
+				</if>
+				<if test="req.values != null">
+					<foreach collection="req.values" item="value" separator=",">
+						#{value}
+					</foreach>
+				</if>
+				<if test="req.customRequire !=null">
+					<foreach collection="req.customRequire" item="cr" separator=" ">
+						${cr.require}
+						<if test="cr.value != null">
+							#{cr.value}
+						</if>
+						<if test="cr.values != null">
+							<foreach collection="cr.values" item="value"
+								separator=",">
+								#{value}
+							</foreach>
+						</if>
+						<if test="cr.suffix != null"> ${cr.suffix}</if>
+					</foreach>
+				</if>
+				<if test="req.suffix != null"> ${req.suffix}</if>
+			</foreach>
+		</where>
+	</sql>
+
+	<!-- updateAssist用于更新数据查询辅助工具类,作用assist与一致 -->
+	<sql id="updateAssist">
+		<where>
+			<foreach collection="assist.require" item="req" separator=" ">
+				${req.require}
+				<if test="req.value != null">
+					#{req.value}
+				</if>
+				<if test="req.values != null">
+					<foreach collection="req.values" item="value" separator=",">
+						#{value}
+					</foreach>
+				</if>
+				<if test="req.customRequire !=null">
+					<foreach collection="req.customRequire" item="cr" separator=" ">
+						${cr.require}
+						<if test="cr.value != null">
+							#{cr.value}
+						</if>
+						<if test="cr.values != null">
+							<foreach collection="cr.values" item="value"
+								separator=",">
+								#{value}
+							</foreach>
+						</if>
+						<if test="cr.suffix != null"> ${cr.suffix}</if>
+					</foreach>
+				</if>
+				<if test="req.suffix != null"> ${req.suffix}</if>
+			</foreach>
+		</where>
+	</sql>
+
+
+	<!-- 数据库中表名为:quality_test_experimental的列名
+	 count(*) as count,materials_num,materials,experiment_result as experimental_result
+	 count(*) as count,materials_num,materials,experiment_result as experimental_result
+	 -->
+	<sql id="v_quality_test_experimental_Column">
+		count(*) as count,materials_num,materials,experiment_result as experimental_result
+	</sql>
+	<sql id="v_quality_test_experimental_Column_materials">
+		 count(*) as count,materials_num,materials,experiment_result as experimental_result
+	</sql>
+	<sql id="v_quality_test_experimental_Column_experimental">
+		 count(*) as count,experimental_name, experimental_result
+	</sql>
+	<!-- 获得类名为:QualityTestExperimental对应数据库中表的数据集合 -->
+	<select id="selectQualityTestExperimentalPassRate_experimental" parameterType="com.jiaoke.common.bean.Assist" resultMap="result_QualityTestExperimentalPassRate_Map">
+		select
+		<if test="distinct !=null">${distinct}</if>
+		<choose>
+			<when test="resultColumn!=null">${resultColumn}</when>
+			<otherwise>
+				<include refid="v_quality_test_experimental_Column_experimental" />
+			</otherwise>
+		</choose>
+		from V_quality_test_experimental
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+		GROUP BY experimental_name,experimental_result
+		<if test="order !=null">${order}</if>
+	</select>
+
+	<!-- 获得类名为:QualityTestExperimental对应数据库中表的数据集合 -->
+	<select id="selectQualityTestExperimentalPassRate_materials" parameterType="com.jiaoke.common.bean.Assist" resultMap="result_QualityTestExperimentalPassRate_Map">
+		select
+		<if test="distinct !=null">${distinct}</if>
+		<choose>
+			<when test="resultColumn!=null">${resultColumn}</when>
+			<otherwise>
+				<include refid="v_quality_test_experimental_Column_materials" />
+			</otherwise>
+		</choose>
+		from V_quality_test_order_ticket
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+		GROUP BY materials_num,experiment_result
+		<if test="order !=null">${order}</if>
+	</select>
+
+</mapper>
