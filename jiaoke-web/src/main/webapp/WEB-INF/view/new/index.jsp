@@ -698,20 +698,135 @@
                     </shiro:hasPermission>
 
                     <shiro:hasPermission name="experiment:experiment">
-                    <li>
-                        <a onclick="xadmin.add_tab('试验管理','experimental_management.do',true)">
-                            <i class="iconfont left-nav-li" lay-tips="实验管理">&#xe74c;</i>
-                            <cite>实验管理</cite>
-                            <%--<i class="iconfont nav_right">&#xe697;</i>--%>
-                        </a>
-                        <%--<ul class="sub-menu">--%>
-                            <%--<li>--%>
-                                <%--<a onclick="xadmin.add_tab('实时监测','qc_real_time_surveillance.do')">--%>
-                                    <%--<i class="iconfont">&#xe6a7;</i>--%>
-                                    <%--<cite>实时监测</cite></a>--%>
-                            <%--</li>--%>
-                        <%--</ul>--%>
-                    </li>
+                        <li>
+                                <%--
+                                    <a onclick="xadmin.add_tab('实验管理','experimental_management.do',true)">
+                                        <i class="iconfont left-nav-li" lay-tips="实验管理">&#xe74c;</i>
+                                        <cite>实验管理</cite>--%>
+                                <%--<i class="iconfont nav_right">&#xe697;</i>--%>
+                                <%-- </a> --%>
+                            <a href="javascript:;">
+                                <i class="iconfont left-nav-li" lay-tips="试验管理">&#xe83c;</i>
+                                <cite>试验管理</cite>
+                                <i class="iconfont nav_right">&#xe697;</i>
+                            </a>
+
+                            <ul class="sub-menu">
+                                <li>
+                                    <a onclick="xadmin.add_tab('取样管理','QualityTestSamplingpage/page.do')">
+                                        <i class="iconfont">&#xe6c0;</i>
+                                        <cite>取样管理</cite></a>
+                                </li>
+                                <li>
+                                    <a onclick="xadmin.add_tab('委托单管理','QualityTestOrderTicket/page.do')">
+                                        <i class="iconfont">&#xe6f7;</i>
+                                        <cite>委托单管理</cite></a>
+                                </li>
+                                <li>
+                                    <a onclick="xadmin.add_tab('试验管理','QualityTestExperimental/page.do')">
+                                        <i class="iconfont">&#xe705;</i>
+                                        <cite>试验管理</cite></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;">
+                                        <i class="iconfont">&#xe83c;</i>
+                                        <cite>台账管理</cite>
+                                        <i class="iconfont nav_right">&#xe697;</i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li>
+                                            <a onclick="xadmin.add_tab('委托单台账','QualityTestReport/reports_wtdtz_pape.do',true)">
+                                                <i class="iconfont">&#xe6a7;</i>
+                                                <cite>委托单台账</cite>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a onclick="xadmin.add_tab('材料台账','QualityTestReport/reports_cltz_pape.do',true)">
+                                                <i class="iconfont">&#xe6a7;</i>
+                                                <cite>材料台账</cite>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a onclick="xadmin.add_tab('试验台账','QualityTestReport/reports_experimental_pape.do',true)">
+                                                <i class="iconfont">&#xe6a7;</i>
+                                                <cite>试验台账</cite>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:;">
+                                        <i class="iconfont">&#xe83c;</i>
+                                        <cite>数据分析</cite>
+                                        <i class="iconfont nav_right">&#xe697;</i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li>
+                                            <a onclick="xadmin.add_tab('试验合格率分析','QualityTestExperimentalPassRate/page.do',true)">
+                                                <i class="iconfont">&#xe6a7;</i>
+                                                <cite>试验合格率分析</cite>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a onclick="xadmin.add_tab('平均值分析','QualityTestReportAvg/page.do',true)">
+                                                <i class="iconfont">&#xe6a7;</i>
+                                                <cite>平均值分析</cite>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+
+                                    <a href="javascript:;">
+                                        <i class="iconfont">&#xe83c;</i>
+                                        <cite>参数设置</cite>
+                                        <i class="iconfont nav_right">&#xe697;</i>
+                                    </a>
+
+                                    <ul class="sub-menu">
+                                        <li>
+                                            <a onclick="xadmin.add_tab('材料厂家信息','QualityTestManufacturersDictionary/page.do',true)">
+                                                <i class="iconfont">&#xe6a7;</i>
+                                                <cite>材料厂家信息</cite>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a onclick="xadmin.add_tab('规格信息','QualityTestSpecificationDictionary/page.do',true)">
+                                                <i class="iconfont">&#xe6a7;</i>
+                                                <cite>规格信息</cite>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a onclick="xadmin.add_tab('试验项目信息','QualityTestExperimentDictionary/page.do',true)">
+                                                <i class="iconfont">&#xe6a7;</i>
+                                                <cite>试验项目信息</cite>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a onclick="xadmin.add_tab('试验过程管理','QualityTestExperimentalParam/page.do',true)">
+                                                <i class="iconfont">&#xe6a7;</i>
+                                                <cite>试验过程管理</cite>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a onclick="xadmin.add_tab('试验标准值管理','QualityTestExperimentalStandardvalue/page.do',true)">
+                                                <i class="iconfont">&#xe6a7;</i>
+                                                <cite>试验标准值管理</cite>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a onclick="xadmin.add_tab('部门报告','QualityTestLabReport/page.do')">
+                                        <i class="iconfont">&#xe705;</i>
+                                        <cite>部门报告</cite></a>
+                                </li>
+                            </ul>
+                        </li>
                     </shiro:hasPermission>
 
                     <shiro:hasPermission name="personnel:personnel">
