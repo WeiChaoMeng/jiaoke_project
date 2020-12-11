@@ -34,7 +34,20 @@ public class DateUtil {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         return simpleDateFormat.format(date);
     }
-
+    /**
+     * dateString转date（yyyy-MM-dd）
+     *
+     * @param dateString dateString
+     * @return date
+     */
+    public static Date stringConvertYYYYMMDD2(String dateString) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
+        try {
+            return simpleDateFormat.parse(dateString);
+        } catch (Exception e) {
+            return new Date();
+        }
+    }
     /**
      * date转string（yyyy-MM）
      *

@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.qualitytest.dao.report.VQualityTestReportCjlDao">
+	<!-- VQualityTestReportCjl的resultMap,column是给数据库列起的别名,它对应property类的属性 -->
+	<resultMap id="result_VQualityTestReportCjl_Map" type="com.jiaoke.qualitytest.bean.report.VQualityTestReportCjl">
+		
+		<result column="create_time" property="createTime" />
+		<result column="materials" property="materials" />
+		<result column="materials_num" property="materialsNum" />
+		<result column="manufacturers" property="manufacturers" />
+		<result column="manufacturers_num" property="manufacturersNum" />
+		<result column="specification" property="specification" />
+		<result column="specification_num" property="specificationNum" />
+		<result column="required_result" property="requiredResult" />
+		<result column="required_status" property="requiredStatus" />
+		<result column="required_status_show" property="requiredStatusShow" />
+		<result column="ID" property="iD" />
+		<result column="order_ticket_num" property="orderTicketNum" />
+		<result column="experimental_name" property="experimentalName" />
+		<result column="experimental_id" property="experimentalId" />
+		<result column="SK375" property="sK375" />
+		<result column="SK315" property="sK315" />
+		<result column="SK265" property="sK265" />
+		<result column="SK19" property="sK19" />
+		<result column="SK16" property="sK16" />
+		<result column="SK132" property="sK132" />
+		<result column="SK95" property="sK95" />
+		<result column="SK475" property="sK475" />
+		<result column="SK236" property="sK236" />
+		<result column="SK118" property="sK118" />
+		<result column="SK06" property="sK06" />
+		<result column="SK03" property="sK03" />
+		<result column="SK015" property="sK015" />
+		<result column="SK0075" property="sK0075" />
+		<result column="SD" property="sD" />
+		<result column="bgxdmd1" property="bgxdmd1" />
+		<result column="bgxdmd2" property="bgxdmd2" />
+		<result column="mtjxdmd" property="mtjxdmd" />
+		<result column="zpzkl" property="zpzkl" />
+		<result column="ysz" property="ysz" />
+		<result column="rrkl" property="rrkl" />
+		<result column="mh" property="mh" />
+	</resultMap>
+
+	<!-- assist是查询辅助工具类, ${req.require}表示列名,#{req.value}表示值它是防SQL注入的 -->
+	<sql id="assist">
+		<where>
+			<foreach collection="require" item="req" separator=" ">
+				${req.require}
+				<if test="req.value != null">
+					#{req.value}
+				</if>
+				<if test="req.values != null">
+					<foreach collection="req.values" item="value" separator=",">
+						#{value}
+					</foreach>
+				</if>
+				<if test="req.customRequire !=null">
+					<foreach collection="req.customRequire" item="cr" separator=" ">
+						${cr.require}
+						<if test="cr.value != null">
+							#{cr.value}
+						</if>
+						<if test="cr.values != null">
+							<foreach collection="cr.values" item="value"
+								separator=",">
+								#{value}
+							</foreach>
+						</if>
+						<if test="cr.suffix != null"> ${cr.suffix}</if>
+					</foreach>
+				</if>
+				<if test="req.suffix != null"> ${req.suffix}</if>
+			</foreach>
+		</where>
+	</sql>
+
+	<!-- updateAssist用于更新数据查询辅助工具类,作用assist与一致 -->
+	<sql id="updateAssist">
+		<where>
+			<foreach collection="assist.require" item="req" separator=" ">
+				${req.require}
+				<if test="req.value != null">
+					#{req.value}
+				</if>
+				<if test="req.values != null">
+					<foreach collection="req.values" item="value" separator=",">
+						#{value}
+					</foreach>
+				</if>
+				<if test="req.customRequire !=null">
+					<foreach collection="req.customRequire" item="cr" separator=" ">
+						${cr.require}
+						<if test="cr.value != null">
+							#{cr.value}
+						</if>
+						<if test="cr.values != null">
+							<foreach collection="cr.values" item="value"
+								separator=",">
+								#{value}
+							</foreach>
+						</if>
+						<if test="cr.suffix != null"> ${cr.suffix}</if>
+					</foreach>
+				</if>
+				<if test="req.suffix != null"> ${req.suffix}</if>
+			</foreach>
+		</where>
+	</sql>
+
+	<!-- 数据库中表名为:v_quality_test_report_cjl的列名 -->
+	<sql id="v_quality_test_report_cjl_Column">
+		create_time,materials,materials_num,manufacturers,manufacturers_num,specification,specification_num,required_result,required_status,required_status_show,ID,order_ticket_num,experimental_name,experimental_id,SK375,SK315,SK265,SK19,SK16,SK132,SK95,SK475,SK236,SK118,SK06,SK03,SK015,SK0075,SD,bgxdmd1,bgxdmd2,mtjxdmd,zpzkl,ysz,rrkl,mh
+	</sql>
+
+	<!--获得类名为:VQualityTestReportCjl对应的数据库表的数据总行数 -->
+	<select id="getVQualityTestReportCjlRowCount" parameterType="com.jiaoke.common.bean.Assist" resultType="java.lang.Long">
+		select count(*) from v_quality_test_report_cjl
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+	</select>
+	
+	<!-- 获得类名为:VQualityTestReportCjl对应数据库中表的数据集合 -->
+	<select id="selectVQualityTestReportCjl" parameterType="com.jiaoke.common.bean.Assist" resultMap="result_VQualityTestReportCjl_Map">
+		select
+		<if test="distinct !=null">${distinct}</if>
+		<choose>
+			<when test="resultColumn!=null">${resultColumn}</when>
+			<otherwise>
+				<include refid="v_quality_test_report_cjl_Column" />
+			</otherwise>
+		</choose>
+		from v_quality_test_report_cjl
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+		<if test="order !=null">${order}</if>
+		<choose>
+			<when test="startRow !=null and rowSize !=null">LIMIT #{startRow},#{rowSize} </when>
+			<when test="rowSize !=null">LIMIT #{rowSize}</when>
+		</choose>
+	</select>
+	
+	<!-- 获得一个VQualityTestReportCjl对象,以参数VQualityTestReportCjl对象中不为空的属性作为条件进行查询 -->
+	<select id="selectVQualityTestReportCjlObjSingle" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportCjl" resultMap="result_VQualityTestReportCjl_Map">
+		select
+		<include refid="v_quality_test_report_cjl_Column" />
+		from v_quality_test_report_cjl
+		<where>
+		<if test="createTime != null"> and create_time = #{createTime}</if>
+		<if test="materials != null"> and materials = #{materials}</if>
+		<if test="materialsNum != null"> and materials_num = #{materialsNum}</if>
+		<if test="manufacturers != null"> and manufacturers = #{manufacturers}</if>
+		<if test="manufacturersNum != null"> and manufacturers_num = #{manufacturersNum}</if>
+		<if test="specification != null"> and specification = #{specification}</if>
+		<if test="specificationNum != null"> and specification_num = #{specificationNum}</if>
+		<if test="requiredResult != null"> and required_result = #{requiredResult}</if>
+		<if test="requiredStatus != null"> and required_status = #{requiredStatus}</if>
+		<if test="requiredStatusShow != null"> and required_status_show = #{requiredStatusShow}</if>
+		<if test="iD != null"> and ID = #{iD}</if>
+		<if test="orderTicketNum != null"> and order_ticket_num = #{orderTicketNum}</if>
+		<if test="experimentalName != null"> and experimental_name = #{experimentalName}</if>
+		<if test="experimentalId != null"> and experimental_id = #{experimentalId}</if>
+		<if test="sK315 != null"> and SK315 = #{sK315}</if>
+		<if test="sK265 != null"> and SK265 = #{sK265}</if>
+		<if test="sK19 != null"> and SK19 = #{sK19}</if>
+		<if test="sK16 != null"> and SK16 = #{sK16}</if>
+		<if test="sK132 != null"> and SK132 = #{sK132}</if>
+		<if test="sK95 != null"> and SK95 = #{sK95}</if>
+		<if test="sK475 != null"> and SK475 = #{sK475}</if>
+		<if test="sK236 != null"> and SK236 = #{sK236}</if>
+		<if test="sK118 != null"> and SK118 = #{sK118}</if>
+		<if test="sK06 != null"> and SK06 = #{sK06}</if>
+		<if test="sK03 != null"> and SK03 = #{sK03}</if>
+		<if test="sK015 != null"> and SK015 = #{sK015}</if>
+		<if test="sK0075 != null"> and SK0075 = #{sK0075}</if>
+		<if test="sD != null"> and SD = #{sD}</if>
+		<if test="bgxdmd1 != null"> and bgxdmd1 = #{bgxdmd1}</if>
+		<if test="bgxdmd2 != null"> and bgxdmd2 = #{bgxdmd2}</if>
+		<if test="mtjxdmd != null"> and mtjxdmd = #{mtjxdmd}</if>
+		<if test="zpzkl != null"> and zpzkl = #{zpzkl}</if>
+		<if test="ysz != null"> and ysz = #{ysz}</if>
+		<if test="rrkl != null"> and rrkl = #{rrkl}</if>
+		<if test="mh != null"> and mh = #{mh}</if>
+		
+		</where>
+		LIMIT 1
+	</select>
+	
+	<!-- 获得VQualityTestReportCjl对象,以参数VQualityTestReportCjl对象中不为空的属性作为条件进行查询 -->
+	<select id="selectVQualityTestReportCjlByObj" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportCjl" resultMap="result_VQualityTestReportCjl_Map">
+		select
+		<include refid="v_quality_test_report_cjl_Column" />
+		from v_quality_test_report_cjl
+		<where>
+		<if test="createTime != null"> and create_time = #{createTime}</if>
+		<if test="materials != null"> and materials = #{materials}</if>
+		<if test="materialsNum != null"> and materials_num = #{materialsNum}</if>
+		<if test="manufacturers != null"> and manufacturers = #{manufacturers}</if>
+		<if test="manufacturersNum != null"> and manufacturers_num = #{manufacturersNum}</if>
+		<if test="specification != null"> and specification = #{specification}</if>
+		<if test="specificationNum != null"> and specification_num = #{specificationNum}</if>
+		<if test="requiredResult != null"> and required_result = #{requiredResult}</if>
+		<if test="requiredStatus != null"> and required_status = #{requiredStatus}</if>
+		<if test="requiredStatusShow != null"> and required_status_show = #{requiredStatusShow}</if>
+		<if test="iD != null"> and ID = #{iD}</if>
+		<if test="orderTicketNum != null"> and order_ticket_num = #{orderTicketNum}</if>
+		<if test="experimentalName != null"> and experimental_name = #{experimentalName}</if>
+		<if test="experimentalId != null"> and experimental_id = #{experimentalId}</if>
+		<if test="sK315 != null"> and SK315 = #{sK315}</if>
+		<if test="sK265 != null"> and SK265 = #{sK265}</if>
+		<if test="sK19 != null"> and SK19 = #{sK19}</if>
+		<if test="sK16 != null"> and SK16 = #{sK16}</if>
+		<if test="sK132 != null"> and SK132 = #{sK132}</if>
+		<if test="sK95 != null"> and SK95 = #{sK95}</if>
+		<if test="sK475 != null"> and SK475 = #{sK475}</if>
+		<if test="sK236 != null"> and SK236 = #{sK236}</if>
+		<if test="sK118 != null"> and SK118 = #{sK118}</if>
+		<if test="sK06 != null"> and SK06 = #{sK06}</if>
+		<if test="sK03 != null"> and SK03 = #{sK03}</if>
+		<if test="sK015 != null"> and SK015 = #{sK015}</if>
+		<if test="sK0075 != null"> and SK0075 = #{sK0075}</if>
+		<if test="sD != null"> and SD = #{sD}</if>
+		<if test="bgxdmd1 != null"> and bgxdmd1 = #{bgxdmd1}</if>
+		<if test="bgxdmd2 != null"> and bgxdmd2 = #{bgxdmd2}</if>
+		<if test="mtjxdmd != null"> and mtjxdmd = #{mtjxdmd}</if>
+		<if test="zpzkl != null"> and zpzkl = #{zpzkl}</if>
+		<if test="ysz != null"> and ysz = #{ysz}</if>
+		<if test="rrkl != null"> and rrkl = #{rrkl}</if>
+		<if test="mh != null"> and mh = #{mh}</if>
+		
+		</where>
+	</select>
+
+	<!-- 将VQualityTestReportCjl插入到对应数据库的表中,包括属性值为null的数据 -->
+	<insert id="insertVQualityTestReportCjl" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportCjl">
+		insert into 
+		v_quality_test_report_cjl (create_time,materials,materials_num,manufacturers,manufacturers_num,specification,specification_num,required_result,required_status,required_status_show,ID,order_ticket_num,experimental_name,experimental_id,SK315,SK265,SK19,SK16,SK132,SK95,SK475,SK236,SK118,SK06,SK03,SK015,SK0075,SD,bgxdmd1,bgxdmd2,mtjxdmd,zpzkl,ysz,rrkl,mh) 
+		values(#{createTime},#{materials},#{materialsNum},#{manufacturers},#{manufacturersNum},#{specification},#{specificationNum},#{requiredResult},#{requiredStatus},#{requiredStatusShow},#{iD},#{orderTicketNum},#{experimentalName},#{experimentalId},#{sK315},#{sK265},#{sK19},#{sK16},#{sK132},#{sK95},#{sK475},#{sK236},#{sK118},#{sK06},#{sK03},#{sK015},#{sK0075},#{sD},#{bgxdmd1},#{bgxdmd2},#{mtjxdmd},#{zpzkl},#{ysz},#{rrkl},#{mh})
+	</insert>
+
+	<!-- 将VQualityTestReportCjl中属性值不为null的数据,插入到对应数据库的表中 -->
+	<insert id="insertNotNullVQualityTestReportCjl" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportCjl">
+		insert into v_quality_test_report_cjl
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="createTime != null">create_time,</if>
+			<if test="materials != null">materials,</if>
+			<if test="materialsNum != null">materials_num,</if>
+			<if test="manufacturers != null">manufacturers,</if>
+			<if test="manufacturersNum != null">manufacturers_num,</if>
+			<if test="specification != null">specification,</if>
+			<if test="specificationNum != null">specification_num,</if>
+			<if test="requiredResult != null">required_result,</if>
+			<if test="requiredStatus != null">required_status,</if>
+			<if test="requiredStatusShow != null">required_status_show,</if>
+			<if test="iD != null">ID,</if>
+			<if test="orderTicketNum != null">order_ticket_num,</if>
+			<if test="experimentalName != null">experimental_name,</if>
+			<if test="experimentalId != null">experimental_id,</if>
+			<if test="sK315 != null">SK315,</if>
+			<if test="sK265 != null">SK265,</if>
+			<if test="sK19 != null">SK19,</if>
+			<if test="sK16 != null">SK16,</if>
+			<if test="sK132 != null">SK132,</if>
+			<if test="sK95 != null">SK95,</if>
+			<if test="sK475 != null">SK475,</if>
+			<if test="sK236 != null">SK236,</if>
+			<if test="sK118 != null">SK118,</if>
+			<if test="sK06 != null">SK06,</if>
+			<if test="sK03 != null">SK03,</if>
+			<if test="sK015 != null">SK015,</if>
+			<if test="sK0075 != null">SK0075,</if>
+			<if test="sD != null">SD,</if>
+			<if test="bgxdmd1 != null">bgxdmd1,</if>
+			<if test="bgxdmd2 != null">bgxdmd2,</if>
+			<if test="mtjxdmd != null">mtjxdmd,</if>
+			<if test="zpzkl != null">zpzkl,</if>
+			<if test="ysz != null">ysz,</if>
+			<if test="rrkl != null">rrkl,</if>
+			<if test="mh != null">mh,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="createTime != null">#{createTime},</if>
+			<if test="materials != null">#{materials},</if>
+			<if test="materialsNum != null">#{materialsNum},</if>
+			<if test="manufacturers != null">#{manufacturers},</if>
+			<if test="manufacturersNum != null">#{manufacturersNum},</if>
+			<if test="specification != null">#{specification},</if>
+			<if test="specificationNum != null">#{specificationNum},</if>
+			<if test="requiredResult != null">#{requiredResult},</if>
+			<if test="requiredStatus != null">#{requiredStatus},</if>
+			<if test="requiredStatusShow != null">#{requiredStatusShow},</if>
+			<if test="iD != null">#{iD},</if>
+			<if test="orderTicketNum != null">#{orderTicketNum},</if>
+			<if test="experimentalName != null">#{experimentalName},</if>
+			<if test="experimentalId != null">#{experimentalId},</if>
+			<if test="sK315 != null">#{sK315},</if>
+			<if test="sK265 != null">#{sK265},</if>
+			<if test="sK19 != null">#{sK19},</if>
+			<if test="sK16 != null">#{sK16},</if>
+			<if test="sK132 != null">#{sK132},</if>
+			<if test="sK95 != null">#{sK95},</if>
+			<if test="sK475 != null">#{sK475},</if>
+			<if test="sK236 != null">#{sK236},</if>
+			<if test="sK118 != null">#{sK118},</if>
+			<if test="sK06 != null">#{sK06},</if>
+			<if test="sK03 != null">#{sK03},</if>
+			<if test="sK015 != null">#{sK015},</if>
+			<if test="sK0075 != null">#{sK0075},</if>
+			<if test="sD != null">#{sD},</if>
+			<if test="bgxdmd1 != null">#{bgxdmd1},</if>
+			<if test="bgxdmd2 != null">#{bgxdmd2},</if>
+			<if test="mtjxdmd != null">#{mtjxdmd},</if>
+			<if test="zpzkl != null">#{zpzkl},</if>
+			<if test="ysz != null">#{ysz},</if>
+			<if test="rrkl != null">#{rrkl},</if>
+			<if test="mh != null">#{mh},</if>
+		</trim>
+	</insert>
+
+	<!-- 将VQualityTestReportCjl批量插入到对应数据库的表中 -->
+	<insert id="insertVQualityTestReportCjlByBatch" parameterType="ArrayList">
+		insert into v_quality_test_report_cjl(create_time,materials,materials_num,manufacturers,manufacturers_num,specification,specification_num,required_result,required_status,required_status_show,ID,order_ticket_num,experimental_name,experimental_id,SK315,SK265,SK19,SK16,SK132,SK95,SK475,SK236,SK118,SK06,SK03,SK015,SK0075,SD,bgxdmd1,bgxdmd2,mtjxdmd,zpzkl,ysz,rrkl,mh) values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.createTime},#{item.materials},#{item.materialsNum},#{item.manufacturers},#{item.manufacturersNum},#{item.specification},#{item.specificationNum},#{item.requiredResult},#{item.requiredStatus},#{item.requiredStatusShow},#{item.iD},#{item.orderTicketNum},#{item.experimentalName},#{item.experimentalId},#{item.sK315},#{item.sK265},#{item.sK19},#{item.sK16},#{item.sK132},#{item.sK95},#{item.sK475},#{item.sK236},#{item.sK118},#{item.sK06},#{item.sK03},#{item.sK015},#{item.sK0075},#{item.sD},#{item.bgxdmd1},#{item.bgxdmd2},#{item.mtjxdmd},#{item.zpzkl},#{item.ysz},#{item.rrkl},#{item.mh})
+		</foreach>
+	</insert>
+	
+
+	<!-- 通过辅助工具Assist中的条件将VQualityTestReportCjl对应的数据库表的数据删除 -->
+	<delete id="deleteVQualityTestReportCjlByAssist" parameterType="com.jiaoke.common.bean.Assist">
+		delete from v_quality_test_report_cjl
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+	</delete>
+	
+	
+	
+	<!-- 通过辅助工具Assist中的条件将VQualityTestReportCjl中的数据更新到数据库对应的表中,包括值为null的数据 -->
+	<update id="updateVQualityTestReportCjl" parameterType="map">
+		update v_quality_test_report_cjl
+		<set>
+			create_time = #{enti.createTime},
+			materials = #{enti.materials},
+			materials_num = #{enti.materialsNum},
+			manufacturers = #{enti.manufacturers},
+			manufacturers_num = #{enti.manufacturersNum},
+			specification = #{enti.specification},
+			specification_num = #{enti.specificationNum},
+			required_result = #{enti.requiredResult},
+			required_status = #{enti.requiredStatus},
+			required_status_show = #{enti.requiredStatusShow},
+			ID = #{enti.iD},
+			order_ticket_num = #{enti.orderTicketNum},
+			experimental_name = #{enti.experimentalName},
+			experimental_id = #{enti.experimentalId},
+			SK315 = #{enti.sK315},
+			SK265 = #{enti.sK265},
+			SK19 = #{enti.sK19},
+			SK16 = #{enti.sK16},
+			SK132 = #{enti.sK132},
+			SK95 = #{enti.sK95},
+			SK475 = #{enti.sK475},
+			SK236 = #{enti.sK236},
+			SK118 = #{enti.sK118},
+			SK06 = #{enti.sK06},
+			SK03 = #{enti.sK03},
+			SK015 = #{enti.sK015},
+			SK0075 = #{enti.sK0075},
+			SD = #{enti.sD},
+			bgxdmd1 = #{enti.bgxdmd1},
+			bgxdmd2 = #{enti.bgxdmd2},
+			mtjxdmd = #{enti.mtjxdmd},
+			zpzkl = #{enti.zpzkl},
+			ysz = #{enti.ysz},
+			rrkl = #{enti.rrkl},
+			mh = #{enti.mh},
+		</set>
+		<if test="assist.require!=null">
+			<include refid="updateAssist" />
+		</if>
+	</update>
+
+	<!-- 通过辅助工具Assist中的条件将VQualityTestReportCjl中属性值不为null的数据更新到数据库对应的表中 -->
+	<update id="updateNotNullVQualityTestReportCjl" parameterType="map">
+		update v_quality_test_report_cjl
+		<set>
+			<if test="enti.createTime != null">create_time = #{enti.createTime},</if>
+			<if test="enti.materials != null">materials = #{enti.materials},</if>
+			<if test="enti.materialsNum != null">materials_num = #{enti.materialsNum},</if>
+			<if test="enti.manufacturers != null">manufacturers = #{enti.manufacturers},</if>
+			<if test="enti.manufacturersNum != null">manufacturers_num = #{enti.manufacturersNum},</if>
+			<if test="enti.specification != null">specification = #{enti.specification},</if>
+			<if test="enti.specificationNum != null">specification_num = #{enti.specificationNum},</if>
+			<if test="enti.requiredResult != null">required_result = #{enti.requiredResult},</if>
+			<if test="enti.requiredStatus != null">required_status = #{enti.requiredStatus},</if>
+			<if test="enti.requiredStatusShow != null">required_status_show = #{enti.requiredStatusShow},</if>
+			<if test="enti.iD != null">ID = #{enti.iD},</if>
+			<if test="enti.orderTicketNum != null">order_ticket_num = #{enti.orderTicketNum},</if>
+			<if test="enti.experimentalName != null">experimental_name = #{enti.experimentalName},</if>
+			<if test="enti.experimentalId != null">experimental_id = #{enti.experimentalId},</if>
+			<if test="enti.sK315 != null">SK315 = #{enti.sK315},</if>
+			<if test="enti.sK265 != null">SK265 = #{enti.sK265},</if>
+			<if test="enti.sK19 != null">SK19 = #{enti.sK19},</if>
+			<if test="enti.sK16 != null">SK16 = #{enti.sK16},</if>
+			<if test="enti.sK132 != null">SK132 = #{enti.sK132},</if>
+			<if test="enti.sK95 != null">SK95 = #{enti.sK95},</if>
+			<if test="enti.sK475 != null">SK475 = #{enti.sK475},</if>
+			<if test="enti.sK236 != null">SK236 = #{enti.sK236},</if>
+			<if test="enti.sK118 != null">SK118 = #{enti.sK118},</if>
+			<if test="enti.sK06 != null">SK06 = #{enti.sK06},</if>
+			<if test="enti.sK03 != null">SK03 = #{enti.sK03},</if>
+			<if test="enti.sK015 != null">SK015 = #{enti.sK015},</if>
+			<if test="enti.sK0075 != null">SK0075 = #{enti.sK0075},</if>
+			<if test="enti.sD != null">SD = #{enti.sD},</if>
+			<if test="enti.bgxdmd1 != null">bgxdmd1 = #{enti.bgxdmd1},</if>
+			<if test="enti.bgxdmd2 != null">bgxdmd2 = #{enti.bgxdmd2},</if>
+			<if test="enti.mtjxdmd != null">mtjxdmd = #{enti.mtjxdmd},</if>
+			<if test="enti.zpzkl != null">zpzkl = #{enti.zpzkl},</if>
+			<if test="enti.ysz != null">ysz = #{enti.ysz},</if>
+			<if test="enti.rrkl != null">rrkl = #{enti.rrkl},</if>
+			<if test="enti.mh != null">mh = #{enti.mh},</if>
+		</set>
+		<if test="assist.require!=null">
+			<include refid="updateAssist" />
+		</if>
+	</update>
+</mapper>

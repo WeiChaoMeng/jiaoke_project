@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.qualitytest.dao.QualityTestSpecificationDictionaryDao">
+	<!-- QualityTestSpecificationDictionary的resultMap,column是给数据库列起的别名,它对应property类的属性 -->
+	<resultMap id="result_QualityTestSpecificationDictionary_Map" type="com.jiaoke.qualitytest.bean.QualityTestSpecificationDictionary">
+		<id column="Id" property="id" />
+		<result column="name" property="name" />
+		<result column="material_id" property="materialId" />
+		<result column="material_name" property="materialName" />
+		<result column="remark" property="remark" />
+	</resultMap>
+
+	<!-- assist是查询辅助工具类, ${req.require}表示列名,#{req.value}表示值它是防SQL注入的 -->
+	<sql id="assist">
+		<where>
+			<foreach collection="require" item="req" separator=" ">
+				${req.require}
+				<if test="req.value != null">
+					#{req.value}
+				</if>
+				<if test="req.values != null">
+					<foreach collection="req.values" item="value" separator=",">
+						#{value}
+					</foreach>
+				</if>
+				<if test="req.customRequire !=null">
+					<foreach collection="req.customRequire" item="cr" separator=" ">
+						${cr.require}
+						<if test="cr.value != null">
+							#{cr.value}
+						</if>
+						<if test="cr.values != null">
+							<foreach collection="cr.values" item="value"
+								separator=",">
+								#{value}
+							</foreach>
+						</if>
+						<if test="cr.suffix != null"> ${cr.suffix}</if>
+					</foreach>
+				</if>
+				<if test="req.suffix != null"> ${req.suffix}</if>
+			</foreach>
+		</where>
+	</sql>
+
+	<!-- updateAssist用于更新数据查询辅助工具类,作用assist与一致 -->
+	<sql id="updateAssist">
+		<where>
+			<foreach collection="assist.require" item="req" separator=" ">
+				${req.require}
+				<if test="req.value != null">
+					#{req.value}
+				</if>
+				<if test="req.values != null">
+					<foreach collection="req.values" item="value" separator=",">
+						#{value}
+					</foreach>
+				</if>
+				<if test="req.customRequire !=null">
+					<foreach collection="req.customRequire" item="cr" separator=" ">
+						${cr.require}
+						<if test="cr.value != null">
+							#{cr.value}
+						</if>
+						<if test="cr.values != null">
+							<foreach collection="cr.values" item="value"
+								separator=",">
+								#{value}
+							</foreach>
+						</if>
+						<if test="cr.suffix != null"> ${cr.suffix}</if>
+					</foreach>
+				</if>
+				<if test="req.suffix != null"> ${req.suffix}</if>
+			</foreach>
+		</where>
+	</sql>
+
+	<!-- 数据库中表名为:quality_test_specification_dictionary的列名 -->
+	<sql id="quality_test_specification_dictionary_Column">
+		Id,name,material_id,material_name,remark
+	</sql>
+
+	<!--获得类名为:QualityTestSpecificationDictionary对应的数据库表的数据总行数 -->
+	<select id="getQualityTestSpecificationDictionaryRowCount" parameterType="com.jiaoke.common.bean.Assist" resultType="java.lang.Long">
+		select count(*) from quality_test_specification_dictionary
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+	</select>
+	
+	<!-- 获得类名为:QualityTestSpecificationDictionary对应数据库中表的数据集合 -->
+	<select id="selectQualityTestSpecificationDictionary" parameterType="com.jiaoke.common.bean.Assist" resultMap="result_QualityTestSpecificationDictionary_Map">
+		select
+		<if test="distinct !=null">${distinct}</if>
+		<choose>
+			<when test="resultColumn!=null">${resultColumn}</when>
+			<otherwise>
+				<include refid="quality_test_specification_dictionary_Column" />
+			</otherwise>
+		</choose>
+		from quality_test_specification_dictionary
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+		<if test="order !=null">${order}</if>
+		<choose>
+			<when test="startRow !=null and rowSize !=null">LIMIT #{startRow},#{rowSize} </when>
+			<when test="rowSize !=null">LIMIT #{rowSize}</when>
+		</choose>
+	</select>
+	<!-- 通过QualityTestSpecificationDictionary的id获得对应数据库中表的数据对象 -->
+	<select id="selectQualityTestSpecificationDictionaryById" parameterType="Integer" resultMap="result_QualityTestSpecificationDictionary_Map">
+		select
+		<include refid="quality_test_specification_dictionary_Column" />
+		from quality_test_specification_dictionary
+		where Id = #{id}
+	</select>
+	
+	<!-- 获得一个QualityTestSpecificationDictionary对象,以参数QualityTestSpecificationDictionary对象中不为空的属性作为条件进行查询 -->
+	<select id="selectQualityTestSpecificationDictionaryObjSingle" parameterType="com.jiaoke.qualitytest.bean.QualityTestSpecificationDictionary" resultMap="result_QualityTestSpecificationDictionary_Map">
+		select
+		<include refid="quality_test_specification_dictionary_Column" />
+		from quality_test_specification_dictionary
+		<where>
+		<if test="name != null"> and name = #{name}</if>
+		<if test="materialId != null"> and material_id = #{materialId}</if>
+		<if test="materialName != null"> and material_name = #{materialName}</if>
+		<if test="remark != null"> and remark = #{remark}</if>
+		<if test="id != null"> and Id = #{id} </if>
+		</where>
+		LIMIT 1
+	</select>
+	
+	<!-- 获得QualityTestSpecificationDictionary对象,以参数QualityTestSpecificationDictionary对象中不为空的属性作为条件进行查询 -->
+	<select id="selectQualityTestSpecificationDictionaryByObj" parameterType="com.jiaoke.qualitytest.bean.QualityTestSpecificationDictionary" resultMap="result_QualityTestSpecificationDictionary_Map">
+		select
+		<include refid="quality_test_specification_dictionary_Column" />
+		from quality_test_specification_dictionary
+		<where>
+		<if test="name != null"> and name = #{name}</if>
+		<if test="materialId != null"> and material_id = #{materialId}</if>
+		<if test="materialName != null"> and material_name = #{materialName}</if>
+		<if test="remark != null"> and remark = #{remark}</if>
+		<if test="id != null"> and Id = #{id} </if>
+		</where>
+	</select>
+
+	<!-- 将QualityTestSpecificationDictionary插入到对应数据库的表中,包括属性值为null的数据 -->
+	<insert id="insertQualityTestSpecificationDictionary" parameterType="com.jiaoke.qualitytest.bean.QualityTestSpecificationDictionary">
+		insert into 
+		quality_test_specification_dictionary (Id,name,material_id,material_name,remark) 
+		values(#{id},#{name},#{materialId},#{materialName},#{remark})
+	</insert>
+
+	<!-- 将QualityTestSpecificationDictionary中属性值不为null的数据,插入到对应数据库的表中 -->
+	<insert id="insertNotNullQualityTestSpecificationDictionary" parameterType="com.jiaoke.qualitytest.bean.QualityTestSpecificationDictionary">
+		insert into quality_test_specification_dictionary
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">Id,</if>
+			<if test="name != null">name,</if>
+			<if test="materialId != null">material_id,</if>
+			<if test="materialName != null">material_name,</if>
+			<if test="remark != null">remark,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">#{id},</if>
+			<if test="name != null">#{name},</if>
+			<if test="materialId != null">#{materialId},</if>
+			<if test="materialName != null">#{materialName},</if>
+			<if test="remark != null">#{remark},</if>
+		</trim>
+	</insert>
+
+	<!-- 将QualityTestSpecificationDictionary批量插入到对应数据库的表中 -->
+	<insert id="insertQualityTestSpecificationDictionaryByBatch" parameterType="ArrayList">
+		insert into quality_test_specification_dictionary(Id,name,material_id,material_name,remark) values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.id},#{item.name},#{item.materialId},#{item.materialName},#{item.remark})
+		</foreach>
+	</insert>
+	
+	<!-- 通过QualityTestSpecificationDictionary的id将数据库表中对应的数据删除 -->
+	<delete id="deleteQualityTestSpecificationDictionaryById" parameterType="Integer">
+		delete from quality_test_specification_dictionary
+		where  Id  =  #{id}
+	</delete>
+
+	<!-- 通过辅助工具Assist中的条件将QualityTestSpecificationDictionary对应的数据库表的数据删除 -->
+	<delete id="deleteQualityTestSpecificationDictionaryByAssist" parameterType="com.jiaoke.common.bean.Assist">
+		delete from quality_test_specification_dictionary
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+	</delete>
+	
+	<!-- 通过QualityTestSpecificationDictionary的id将QualityTestSpecificationDictionary的数据更新到数据库中对应的表,包括值null的数据 -->
+	<update id="updateQualityTestSpecificationDictionaryById" parameterType="com.jiaoke.qualitytest.bean.QualityTestSpecificationDictionary"> 
+		update quality_test_specification_dictionary set
+		<set>
+			name = #{name} , 
+			material_id = #{materialId} , 
+			material_name = #{materialName} , 
+			remark = #{remark} , 
+		</set>
+		where Id = #{id}
+	</update>
+	
+	<!-- 通过QualityTestSpecificationDictionary的id将QualityTestSpecificationDictionary中属性值不为null的数据更新到数据库对应的表中 -->
+	<update id="updateNotNullQualityTestSpecificationDictionaryById" parameterType="com.jiaoke.qualitytest.bean.QualityTestSpecificationDictionary">
+		update quality_test_specification_dictionary
+		<set>
+					<if test="name != null">name = #{name},</if>
+					<if test="materialId != null">material_id = #{materialId},</if>
+					<if test="materialName != null">material_name = #{materialName},</if>
+					<if test="remark != null">remark = #{remark},</if>
+		</set>
+		where Id = #{id}
+	</update>
+	
+	<!-- 通过辅助工具Assist中的条件将QualityTestSpecificationDictionary中的数据更新到数据库对应的表中,包括值为null的数据 -->
+	<update id="updateQualityTestSpecificationDictionary" parameterType="map">
+		update quality_test_specification_dictionary
+		<set>
+			Id = #{enti.id},
+			name = #{enti.name},
+			material_id = #{enti.materialId},
+			material_name = #{enti.materialName},
+			remark = #{enti.remark},
+		</set>
+		<if test="assist.require!=null">
+			<include refid="updateAssist" />
+		</if>
+	</update>
+
+	<!-- 通过辅助工具Assist中的条件将QualityTestSpecificationDictionary中属性值不为null的数据更新到数据库对应的表中 -->
+	<update id="updateNotNullQualityTestSpecificationDictionary" parameterType="map">
+		update quality_test_specification_dictionary
+		<set>
+			<if test="enti.id != null">Id = #{enti.id},</if>
+			<if test="enti.name != null">name = #{enti.name},</if>
+			<if test="enti.materialId != null">material_id = #{enti.materialId},</if>
+			<if test="enti.materialName != null">material_name = #{enti.materialName},</if>
+			<if test="enti.remark != null">remark = #{enti.remark},</if>
+		</set>
+		<if test="assist.require!=null">
+			<include refid="updateAssist" />
+		</if>
+	</update>
+</mapper>

@@ -1,0 +1,88 @@
+.layui-form-label-tip {
+	font-size: 18px;
+	min-width: 800px;
+	text-align: left;
+	font-weight: bold;
+}
+
+.layui-form-label-value {
+	min-width: 500px;
+	text-align: left;
+	font-size: 16px;
+	color: #666666;
+}
+
+.layui-form-item .layui-input-inline {
+	width: 250px;
+}
+
+.layui-input {
+	outline: none;
+	border-width: 0px;
+	border-bottom: 1px solid #c8cccf;
+	font-size: 16px;
+	color: #666666;
+}
+
+.layui-form-label {
+	width: 120px;
+}
+
+.layui-input-block {
+	margin-left: 160px;
+}
+
+.layui-form-item {
+	margin-bottom: 5px;
+}
+
+.layui-table td {
+	height: 34px;
+	min-height: 34px;
+	border-width: 1px;
+	border-style: solid;
+	padding: 0px 0px;
+	text-align: center;
+}
+
+.layui-table td input {
+	text-align: center;
+}
+
+.layui-input,
+.layui-select,
+.layui-textarea {
+	height: 34px;
+
+}
+
+.layui-table-cell {
+	font-size: 14px;
+	padding: 0 5px;
+	height: auto;
+	overflow: visible;
+	text-overflow: inherit;
+	white-space: normal;
+	word-break: break-all;
+	text-align: center;
+}
+
+.layui-table-tips-main {
+	display: none;
+}
+
+.layui-table-tips-c,
+.layui-table-grid-down {
+	display: none;
+}
+
+.layui-table,
+.layui-table-view {
+	margin: -1px 0;
+}
+
+.layui-card-body .layui-table {
+	margin: 0px 0;
+}
+ 
+

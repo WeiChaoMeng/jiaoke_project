@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.qualitytest.dao.QualityTestOrderTicketDao">
+	<!-- QualityTestOrderTicket的resultMap,column是给数据库列起的别名,它对应property类的属性 -->
+	<resultMap id="result_QualityTestOrderTicket_Map" type="com.jiaoke.qualitytest.bean.QualityTestOrderTicket">
+		<id column="Id" property="id" />
+		<result column="order_ticket_num" property="orderTicketNum" />
+		<result column="sampling_id" property="samplingId" />
+		<result column="create_time" property="createTime" />
+		<result column="required_experimental" property="requiredExperimental" />
+		<result column="required_status" property="requiredStatus" />
+		<result column="required_result" property="requiredResult" />
+		<result column="status" property="status" />
+		<result column="create_user" property="createUser" />
+		<result column="create_userid" property="createUserid"/>
+		<result column="status_show" property="status_show" />
+
+		<result column="sampling_create_time" property="samplingcreateTime" />
+		<result column="num" property="num" />
+		<result column="materials" property="materials" />
+		<result column="materials_num" property="materialsNum" />
+		<result column="manufacturers" property="manufacturers" />
+		<result column="manufacturers_num" property="manufacturersNum" />
+		<result column="specification" property="specification" />
+		<result column="specification_num" property="specificationNum" />
+		<result column="tunnage" property="tunnage" />
+		<result column="sampling_remark" property="samplingremark" />
+
+		<result column="experiment_status" property="experimentStatus" />
+		<result column="experiment_result" property="experimentResult" />
+	</resultMap>
+
+	<!-- assist是查询辅助工具类, ${req.require}表示列名,#{req.value}表示值它是防SQL注入的 -->
+	<sql id="assist">
+		<where>
+			<foreach collection="require" item="req" separator=" ">
+				${req.require}
+				<if test="req.value != null">
+					#{req.value}
+				</if>
+				<if test="req.values != null">
+					<foreach collection="req.values" item="value" separator=",">
+						#{value}
+					</foreach>
+				</if>
+				<if test="req.customRequire !=null">
+					<foreach collection="req.customRequire" item="cr" separator=" ">
+						${cr.require}
+						<if test="cr.value != null">
+							#{cr.value}
+						</if>
+						<if test="cr.values != null">
+							<foreach collection="cr.values" item="value"
+								separator=",">
+								#{value}
+							</foreach>
+						</if>
+						<if test="cr.suffix != null"> ${cr.suffix}</if>
+					</foreach>
+				</if>
+				<if test="req.suffix != null"> ${req.suffix}</if>
+			</foreach>
+		</where>
+	</sql>
+
+	<!-- updateAssist用于更新数据查询辅助工具类,作用assist与一致 -->
+	<sql id="updateAssist">
+		<where>
+			<foreach collection="assist.require" item="req" separator=" ">
+				${req.require}
+				<if test="req.value != null">
+					#{req.value}
+				</if>
+				<if test="req.values != null">
+					<foreach collection="req.values" item="value" separator=",">
+						#{value}
+					</foreach>
+				</if>
+				<if test="req.customRequire !=null">
+					<foreach collection="req.customRequire" item="cr" separator=" ">
+						${cr.require}
+						<if test="cr.value != null">
+							#{cr.value}
+						</if>
+						<if test="cr.values != null">
+							<foreach collection="cr.values" item="value"
+								separator=",">
+								#{value}
+							</foreach>
+						</if>
+						<if test="cr.suffix != null"> ${cr.suffix}</if>
+					</foreach>
+				</if>
+				<if test="req.suffix != null"> ${req.suffix}</if>
+			</foreach>
+		</where>
+	</sql>
+
+	<!-- 数据库中表名为:quality_test_order_ticket的列名 -->
+	<sql id="quality_test_order_ticket_Column">
+		Id,order_ticket_num,sampling_id,required_experimental,create_time,status,create_user,create_userid
+	</sql>
+	<!-- 数据库中表名为:V_quality_test_order_ticket的列名 -->
+	<sql id="v_quality_test_order_ticket_Column">
+		num,materials,materials_num,manufacturers,manufacturers_num,specification,specification_num,tunnage,sampling_create_time,sampling_remark,Id,order_ticket_num,sampling_id,required_experimental,create_time,status,create_user,create_userid,status_show,experiment_result,experiment_status
+	</sql>
+
+	<!--获得类名为:QualityTestOrderTicket对应的数据库表的数据总行数 -->
+	<select id="getQualityTestOrderTicketRowCount" parameterType="com.jiaoke.common.bean.Assist" resultType="java.lang.Long">
+		select count(*) from V_quality_test_order_ticket
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+	</select>
+	
+	<!-- 获得类名为:QualityTestOrderTicket对应数据库中表的数据集合 -->
+	<select id="selectQualityTestOrderTicket" parameterType="com.jiaoke.common.bean.Assist" resultMap="result_QualityTestOrderTicket_Map">
+		select
+		<if test="distinct !=null">${distinct}</if>
+		<choose>
+			<when test="resultColumn!=null">${resultColumn}</when>
+			<otherwise>
+				<include refid="v_quality_test_order_ticket_Column" />
+			</otherwise>
+		</choose>
+		from V_quality_test_order_ticket
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+		<if test="order !=null">${order}</if>
+		<choose>
+			<when test="startRow !=null and rowSize !=null">LIMIT #{startRow},#{rowSize} </when>
+			<when test="rowSize !=null">LIMIT #{rowSize}</when>
+		</choose>
+	</select>
+
+	<!--获得类名为:QualityTestOrderTicket对完成试验的委托单总行数 -->
+	<select id="getUnCompleteQualityTestOrderTicketRowCount" parameterType="com.jiaoke.common.bean.Assist" resultType="java.lang.Long">
+		select count(*) from V_quality_test_order_ticket
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+		and status=2
+		and order_ticket_num not in( select DISTINCT order_ticket_num from quality_test_experimental where status=0 or status=1	)
+		and order_ticket_num not in (select DISTINCT order_ticket_num from quality_test_lab_report where experiment_status=1 or experiment_status=3)
+	</select>
+	<!--全部完成试验的委托单-->
+	<select id="selectUnCompleteQualityTestOrderTicket" parameterType="com.jiaoke.common.bean.Assist" resultMap="result_QualityTestOrderTicket_Map">
+		select
+		<if test="distinct !=null">${distinct}</if>
+		<choose>
+			<when test="resultColumn!=null">${resultColumn}</when>
+			<otherwise>
+				<include refid="v_quality_test_order_ticket_Column" />
+			</otherwise>
+		</choose>
+		from V_quality_test_order_ticket
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+		and status=2
+		and order_ticket_num not in( select DISTINCT order_ticket_num from quality_test_experimental where status=0 or status=1	)
+		and order_ticket_num not in (select DISTINCT order_ticket_num from quality_test_lab_report where experiment_status=1 or experiment_status=3)
+		<if test="order !=null">${order}</if>
+		<choose>
+			<when test="startRow !=null and rowSize !=null">LIMIT #{startRow},#{rowSize} </when>
+			<when test="rowSize !=null">LIMIT #{rowSize}</when>
+		</choose>
+	</select>
+	<!-- 通过QualityTestOrderTicket的id获得对应数据库中表的数据对象 -->
+	<select id="selectQualityTestOrderTicketById" parameterType="Integer" resultMap="result_QualityTestOrderTicket_Map">
+		select
+		<include refid="v_quality_test_order_ticket_Column" />
+		from V_quality_test_order_ticket
+		where Id = #{id}
+	</select>
+	
+	<!-- 获得一个QualityTestOrderTicket对象,以参数QualityTestOrderTicket对象中不为空的属性作为条件进行查询 -->
+	<select id="selectQualityTestOrderTicketObjSingle" parameterType="com.jiaoke.qualitytest.bean.QualityTestOrderTicket" resultMap="result_QualityTestOrderTicket_Map">
+		select
+		<include refid="quality_test_order_ticket_Column" />
+		from quality_test_order_ticket
+		<where>
+		<if test="requiredExperimental != null"> and required_experimental = #{requiredExperimental}</if>
+		<if test="status != null"> and status = #{status}</if>
+		<if test="createUser != null"> and create_user = #{createUser}</if>
+		<if test="createUserid != null"> and create_userid = #{createUserid}</if>
+		<if test="orderTicketNum != null"> and order_ticket_num = #{orderTicketNum}</if>
+		<if test="samplingId != null"> and sampling_id = #{samplingId}</if>
+		<if test="createTime != null"> and create_time = #{createTime}</if>
+		<if test="id != null"> and Id = #{id} </if>
+		</where>
+		LIMIT 1
+	</select>
+	
+	<!-- 获得QualityTestOrderTicket对象,以参数QualityTestOrderTicket对象中不为空的属性作为条件进行查询 -->
+	<select id="selectQualityTestOrderTicketByObj" parameterType="com.jiaoke.qualitytest.bean.QualityTestOrderTicket" resultMap="result_QualityTestOrderTicket_Map">
+		select
+		<include refid="quality_test_order_ticket_Column" />
+		from V_quality_test_order_ticket
+		<where>
+		<if test="requiredExperimental != null"> and required_experimental = #{requiredExperimental}</if>
+		<if test="status != null"> and status = #{status}</if>
+		<if test="createUser != null"> and create_user = #{createUser}</if>
+		<if test="createUserid != null"> and create_userid = #{createUserid}</if>
+		<if test="orderTicketNum != null"> and order_ticket_num = #{orderTicketNum}</if>
+		<if test="samplingId != null"> and sampling_id = #{samplingId}</if>
+		<if test="createTime != null"> and create_time = #{createTime}</if>
+		<if test="id != null"> and Id = #{id} </if>
+		</where>
+	</select>
+
+	<!-- 将QualityTestOrderTicket插入到对应数据库的表中,包括属性值为null的数据 -->
+	<insert id="insertQualityTestOrderTicket" parameterType="com.jiaoke.qualitytest.bean.QualityTestOrderTicket">
+		insert into 
+		quality_test_order_ticket (Id,order_ticket_num,sampling_id,required_experimental,create_time,status,create_user,create_userid)
+		values(#{id},#{orderTicketNum},#{samplingId},#{requiredExperimental},#{createTime},#{status},#{createUser},#{createUserid})
+	</insert>
+
+	<!-- 将QualityTestOrderTicket中属性值不为null的数据,插入到对应数据库的表中 -->
+	<insert id="insertNotNullQualityTestOrderTicket" parameterType="com.jiaoke.qualitytest.bean.QualityTestOrderTicket">
+		insert into quality_test_order_ticket
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">Id,</if>
+			<if test="orderTicketNum != null">order_ticket_num,</if>
+			<if test="samplingId != null">sampling_id,</if>
+			<if test="requiredExperimental != null">required_experimental,</if>
+			<if test="createTime != null">create_time,</if>
+			<if test="status != null">status,</if>
+			<if test="createUser != null">create_user,</if>
+			<if test="createUserid != null">create_userid,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">#{id},</if>
+			<if test="orderTicketNum != null">#{orderTicketNum},</if>
+			<if test="samplingId != null">#{samplingId},</if>
+			<if test="requiredExperimental != null">#{requiredExperimental},</if>
+			<if test="createTime != null">#{createTime},</if>
+			<if test="status != null">#{status},</if>
+			<if test="createUser != null">#{createUser},</if>
+			<if test="createUserid != null">#{createUserid},</if>
+		</trim>
+	</insert>
+
+	<!-- 将QualityTestOrderTicket批量插入到对应数据库的表中 -->
+	<insert id="insertQualityTestOrderTicketByBatch" parameterType="ArrayList">
+		insert into quality_test_order_ticket(Id,order_ticket_num,sampling_id,required_experimental,create_time,status,create_user,create_userid) values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.id},#{item.orderTicketNum},#{item.samplingId},#{item.requiredExperimental},#{item.createTime},#{item.status},#{item.createUser},#{item.createUserid})
+		</foreach>
+	</insert>
+	
+	<!-- 通过QualityTestOrderTicket的id将数据库表中对应的数据删除 -->
+	<delete id="deleteQualityTestOrderTicketById" parameterType="Integer">
+		delete from quality_test_order_ticket
+		where  Id  =  #{id}
+	</delete>
+
+	<!-- 通过辅助工具Assist中的条件将QualityTestOrderTicket对应的数据库表的数据删除 -->
+	<delete id="deleteQualityTestOrderTicketByAssist" parameterType="com.jiaoke.common.bean.Assist">
+		delete from quality_test_order_ticket
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+	</delete>
+	
+	<!-- 通过QualityTestOrderTicket的id将QualityTestOrderTicket的数据更新到数据库中对应的表,包括值null的数据 -->
+	<update id="updateQualityTestOrderTicketById" parameterType="com.jiaoke.qualitytest.bean.QualityTestOrderTicket">
+		update quality_test_order_ticket set
+		<set>
+			order_ticket_num = #{orderTicketNum} , 
+			sampling_id = #{samplingId} , 
+			required_experimental = #{requiredExperimental} ,
+			required_result = #{requiredResult},
+			required_status = #{requiredStatus},
+			create_time = #{createTime} , 
+			status = #{status} , 
+			create_user = #{createUser} , 
+			create_userid = #{createUserid} , 
+		</set>
+		where Id = #{id}
+	</update>
+	
+	<!-- 通过QualityTestOrderTicket的id将QualityTestOrderTicket中属性值不为null的数据更新到数据库对应的表中 -->
+	<update id="updateNotNullQualityTestOrderTicketById" parameterType="com.jiaoke.qualitytest.bean.QualityTestOrderTicket">
+		update quality_test_order_ticket
+		<set>
+					<if test="orderTicketNum != null">order_ticket_num = #{orderTicketNum},</if>
+					<if test="samplingId != null">sampling_id = #{samplingId},</if>
+					<if test="requiredExperimental != null">required_experimental = #{requiredExperimental},</if>
+					<if test="requiredResult != null">required_result = #{requiredResult},</if>
+			        <if test="requiredStatus != null">required_status = #{requiredStatus},</if>
+					<if test="createTime != null">create_time = #{createTime},</if>
+					<if test="status != null">status = #{status},</if>
+					<if test="createUser != null">create_user = #{createUser},</if>
+					<if test="createUserid != null">create_userid = #{createUserid},</if>
+		</set>
+		where Id = #{id}
+	</update>
+	
+	<!-- 通过辅助工具Assist中的条件将QualityTestOrderTicket中的数据更新到数据库对应的表中,包括值为null的数据 -->
+	<update id="updateQualityTestOrderTicket" parameterType="map">
+		update quality_test_order_ticket
+		<set>
+			Id = #{enti.id},
+			order_ticket_num = #{enti.orderTicketNum},
+			sampling_id = #{enti.samplingId},
+			required_experimental = #{enti.requiredExperimental},
+			required_result = #{requiredResult},
+			required_status = #{requiredStatus},
+			create_time = #{enti.createTime},
+			status = #{enti.status},
+			create_user = #{enti.createUser},
+			create_userid = #{enti.createUserid},
+		</set>
+		<if test="assist.require!=null">
+			<include refid="updateAssist" />
+		</if>
+	</update>
+
+	<!-- 通过辅助工具Assist中的条件将QualityTestOrderTicket中属性值不为null的数据更新到数据库对应的表中 -->
+	<update id="updateNotNullQualityTestOrderTicket" parameterType="map">
+		update quality_test_order_ticket
+		<set>
+			<if test="enti.id != null">Id = #{enti.id},</if>
+			<if test="enti.orderTicketNum != null">order_ticket_num = #{enti.orderTicketNum},</if>
+			<if test="enti.samplingId != null">sampling_id = #{enti.samplingId},</if>
+			<if test="enti.requiredExperimental != null">required_experimental = #{enti.requiredExperimental},</if>
+			<if test="enti.requiredResult != null">required_result = #{enti.requiredResult},</if>
+			<if test="enti.requiredStatus != null">required_status = #{enti.requiredStatus},</if>
+			<if test="enti.createTime != null">create_time = #{enti.createTime},</if>
+			<if test="enti.status != null">status = #{enti.status},</if>
+			<if test="enti.createUser != null">create_user = #{enti.createUser},</if>
+			<if test="enti.createUserid != null">create_userid = #{enti.createUserid},</if>
+		</set>
+		<if test="assist.require!=null">
+			<include refid="updateAssist" />
+		</if>
+	</update>
+</mapper>

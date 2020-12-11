@@ -1,0 +1,48 @@
+.layui-table td {
+	height: 34px;
+	min-height: 34px;
+	border-width: 1px;
+	border-style: solid;
+	padding: 0px 0px;
+	text-align: center;
+}
+
+.layui-table td input {
+	text-align: center;
+}
+
+.layui-input,
+.layui-select,
+.layui-textarea {
+	height: 34px;
+
+}
+
+.layui-table-cell {
+	font-size: 14px;
+	padding: 0 5px;
+	height: auto;
+	overflow: visible;
+	text-overflow: inherit;
+	white-space: normal;
+	word-break: break-all;
+	text-align: center;
+}
+
+.layui-table-tips-main {
+	display: none;
+}
+
+.layui-table-tips-c,
+.layui-table-grid-down {
+	display: none;
+}
+
+.layui-table,
+.layui-table-view {
+	margin: -1px 0;
+}
+
+.layui-card-body .layui-table {
+	margin: 0px 0;
+}

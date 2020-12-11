@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.qualitytest.dao.experimentalvalue.QualityTestExperimentalValueKfSfDao">
+	<!-- QualityTestExperimentalValueKfSf的resultMap,column是给数据库列起的别名,它对应property类的属性 -->
+	<resultMap id="result_QualityTestExperimentalValueKfSf_Map" type="com.jiaoke.qualitytest.bean.experimentalvalue.QualityTestExperimentalValueKfSf">
+		<id column="ID" property="id" />
+		<result column="order_ticket_num" property="orderTicketNum" />
+		<result column="experimental_id" property="experimentalId" />
+		<result column="experimental_name" property="experimentalName" />
+		<result column="SK06" property="sK06" />
+		<result column="SK03" property="sK03" />
+		<result column="SK015" property="sK015" />
+		<result column="SK0075" property="sK0075" />
+	</resultMap>
+
+	<!-- assist是查询辅助工具类, ${req.require}表示列名,#{req.value}表示值它是防SQL注入的 -->
+	<sql id="assist">
+		<where>
+			<foreach collection="require" item="req" separator=" ">
+				${req.require}
+				<if test="req.value != null">
+					#{req.value}
+				</if>
+				<if test="req.values != null">
+					<foreach collection="req.values" item="value" separator=",">
+						#{value}
+					</foreach>
+				</if>
+				<if test="req.customRequire !=null">
+					<foreach collection="req.customRequire" item="cr" separator=" ">
+						${cr.require}
+						<if test="cr.value != null">
+							#{cr.value}
+						</if>
+						<if test="cr.values != null">
+							<foreach collection="cr.values" item="value"
+								separator=",">
+								#{value}
+							</foreach>
+						</if>
+						<if test="cr.suffix != null"> ${cr.suffix}</if>
+					</foreach>
+				</if>
+				<if test="req.suffix != null"> ${req.suffix}</if>
+			</foreach>
+		</where>
+	</sql>
+
+	<!-- updateAssist用于更新数据查询辅助工具类,作用assist与一致 -->
+	<sql id="updateAssist">
+		<where>
+			<foreach collection="assist.require" item="req" separator=" ">
+				${req.require}
+				<if test="req.value != null">
+					#{req.value}
+				</if>
+				<if test="req.values != null">
+					<foreach collection="req.values" item="value" separator=",">
+						#{value}
+					</foreach>
+				</if>
+				<if test="req.customRequire !=null">
+					<foreach collection="req.customRequire" item="cr" separator=" ">
+						${cr.require}
+						<if test="cr.value != null">
+							#{cr.value}
+						</if>
+						<if test="cr.values != null">
+							<foreach collection="cr.values" item="value"
+								separator=",">
+								#{value}
+							</foreach>
+						</if>
+						<if test="cr.suffix != null"> ${cr.suffix}</if>
+					</foreach>
+				</if>
+				<if test="req.suffix != null"> ${req.suffix}</if>
+			</foreach>
+		</where>
+	</sql>
+
+	<!-- 数据库中表名为:quality_test_experimental_value_kf_sf的列名 -->
+	<sql id="quality_test_experimental_value_kf_sf_Column">
+		ID,order_ticket_num,experimental_id,experimental_name,SK06,SK03,SK015,SK0075
+	</sql>
+
+	<!--获得类名为:QualityTestExperimentalValueKfSf对应的数据库表的数据总行数 -->
+	<select id="getQualityTestExperimentalValueKfSfRowCount" parameterType="com.jiaoke.common.bean.Assist" resultType="java.lang.Long">
+		select count(*) from quality_test_experimental_value_kf_sf
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+	</select>
+	
+	<!-- 获得类名为:QualityTestExperimentalValueKfSf对应数据库中表的数据集合 -->
+	<select id="selectQualityTestExperimentalValueKfSf" parameterType="com.jiaoke.common.bean.Assist" resultMap="result_QualityTestExperimentalValueKfSf_Map">
+		select
+		<if test="distinct !=null">${distinct}</if>
+		<choose>
+			<when test="resultColumn!=null">${resultColumn}</when>
+			<otherwise>
+				<include refid="quality_test_experimental_value_kf_sf_Column" />
+			</otherwise>
+		</choose>
+		from quality_test_experimental_value_kf_sf
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+		<if test="order !=null">${order}</if>
+		<choose>
+			<when test="startRow !=null and rowSize !=null">LIMIT #{startRow},#{rowSize} </when>
+			<when test="rowSize !=null">LIMIT #{rowSize}</when>
+		</choose>
+	</select>
+	<!-- 通过QualityTestExperimentalValueKfSf的id获得对应数据库中表的数据对象 -->
+	<select id="selectQualityTestExperimentalValueKfSfById" parameterType="Integer" resultMap="result_QualityTestExperimentalValueKfSf_Map">
+		select
+		<include refid="quality_test_experimental_value_kf_sf_Column" />
+		from quality_test_experimental_value_kf_sf
+		where ID = #{id}
+	</select>
+	
+	<!-- 获得一个QualityTestExperimentalValueKfSf对象,以参数QualityTestExperimentalValueKfSf对象中不为空的属性作为条件进行查询 -->
+	<select id="selectQualityTestExperimentalValueKfSfObjSingle" parameterType="com.jiaoke.qualitytest.bean.experimentalvalue.QualityTestExperimentalValueKfSf" resultMap="result_QualityTestExperimentalValueKfSf_Map">
+		select
+		<include refid="quality_test_experimental_value_kf_sf_Column" />
+		from quality_test_experimental_value_kf_sf
+		<where>
+		<if test="orderTicketNum != null"> and order_ticket_num = #{orderTicketNum}</if>
+		<if test="experimentalId != null"> and experimental_id = #{experimentalId}</if>
+		<if test="experimentalName != null"> and experimental_name = #{experimentalName}</if>
+		<if test="sK06 != null"> and SK06 = #{sK06}</if>
+		<if test="sK03 != null"> and SK03 = #{sK03}</if>
+		<if test="sK015 != null"> and SK015 = #{sK015}</if>
+		<if test="sK0075 != null"> and SK0075 = #{sK0075}</if>
+		<if test="id != null"> and ID = #{id} </if>
+		</where>
+		LIMIT 1
+	</select>
+	
+	<!-- 获得QualityTestExperimentalValueKfSf对象,以参数QualityTestExperimentalValueKfSf对象中不为空的属性作为条件进行查询 -->
+	<select id="selectQualityTestExperimentalValueKfSfByObj" parameterType="com.jiaoke.qualitytest.bean.experimentalvalue.QualityTestExperimentalValueKfSf" resultMap="result_QualityTestExperimentalValueKfSf_Map">
+		select
+		<include refid="quality_test_experimental_value_kf_sf_Column" />
+		from quality_test_experimental_value_kf_sf
+		<where>
+		<if test="orderTicketNum != null"> and order_ticket_num = #{orderTicketNum}</if>
+		<if test="experimentalId != null"> and experimental_id = #{experimentalId}</if>
+		<if test="experimentalName != null"> and experimental_name = #{experimentalName}</if>
+		<if test="sK06 != null"> and SK06 = #{sK06}</if>
+		<if test="sK03 != null"> and SK03 = #{sK03}</if>
+		<if test="sK015 != null"> and SK015 = #{sK015}</if>
+		<if test="sK0075 != null"> and SK0075 = #{sK0075}</if>
+		<if test="id != null"> and ID = #{id} </if>
+		</where>
+	</select>
+
+	<!-- 将QualityTestExperimentalValueKfSf插入到对应数据库的表中,包括属性值为null的数据 -->
+	<insert id="insertQualityTestExperimentalValueKfSf" parameterType="com.jiaoke.qualitytest.bean.experimentalvalue.QualityTestExperimentalValueKfSf">
+		insert into 
+		quality_test_experimental_value_kf_sf (ID,order_ticket_num,experimental_id,experimental_name,SK06,SK03,SK015,SK0075) 
+		values(#{id},#{orderTicketNum},#{experimentalId},#{experimentalName},#{sK06},#{sK03},#{sK015},#{sK0075})
+	</insert>
+
+	<!-- 将QualityTestExperimentalValueKfSf中属性值不为null的数据,插入到对应数据库的表中 -->
+	<insert id="insertNotNullQualityTestExperimentalValueKfSf" parameterType="com.jiaoke.qualitytest.bean.experimentalvalue.QualityTestExperimentalValueKfSf">
+		insert into quality_test_experimental_value_kf_sf
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">ID,</if>
+			<if test="orderTicketNum != null">order_ticket_num,</if>
+			<if test="experimentalId != null">experimental_id,</if>
+			<if test="experimentalName != null">experimental_name,</if>
+			<if test="sK06 != null">SK06,</if>
+			<if test="sK03 != null">SK03,</if>
+			<if test="sK015 != null">SK015,</if>
+			<if test="sK0075 != null">SK0075,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">#{id},</if>
+			<if test="orderTicketNum != null">#{orderTicketNum},</if>
+			<if test="experimentalId != null">#{experimentalId},</if>
+			<if test="experimentalName != null">#{experimentalName},</if>
+			<if test="sK06 != null">#{sK06},</if>
+			<if test="sK03 != null">#{sK03},</if>
+			<if test="sK015 != null">#{sK015},</if>
+			<if test="sK0075 != null">#{sK0075},</if>
+		</trim>
+	</insert>
+
+	<!-- 将QualityTestExperimentalValueKfSf批量插入到对应数据库的表中 -->
+	<insert id="insertQualityTestExperimentalValueKfSfByBatch" parameterType="ArrayList">
+		insert into quality_test_experimental_value_kf_sf(ID,order_ticket_num,experimental_id,experimental_name,SK06,SK03,SK015,SK0075) values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.id},#{item.orderTicketNum},#{item.experimentalId},#{item.experimentalName},#{item.sK06},#{item.sK03},#{item.sK015},#{item.sK0075})
+		</foreach>
+	</insert>
+	
+	<!-- 通过QualityTestExperimentalValueKfSf的id将数据库表中对应的数据删除 -->
+	<delete id="deleteQualityTestExperimentalValueKfSfById" parameterType="Integer">
+		delete from quality_test_experimental_value_kf_sf
+		where  ID  =  #{id}
+	</delete>
+
+	<!-- 通过辅助工具Assist中的条件将QualityTestExperimentalValueKfSf对应的数据库表的数据删除 -->
+	<delete id="deleteQualityTestExperimentalValueKfSfByAssist" parameterType="com.jiaoke.common.bean.Assist">
+		delete from quality_test_experimental_value_kf_sf
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+	</delete>
+	
+	<!-- 通过QualityTestExperimentalValueKfSf的id将QualityTestExperimentalValueKfSf的数据更新到数据库中对应的表,包括值null的数据 -->
+	<update id="updateQualityTestExperimentalValueKfSfById" parameterType="com.jiaoke.qualitytest.bean.experimentalvalue.QualityTestExperimentalValueKfSf">
+		update quality_test_experimental_value_kf_sf set
+		<set>
+			order_ticket_num = #{orderTicketNum} , 
+			experimental_id = #{experimentalId} , 
+			experimental_name = #{experimentalName} , 
+			SK06 = #{sK06} , 
+			SK03 = #{sK03} , 
+			SK015 = #{sK015} , 
+			SK0075 = #{sK0075} , 
+		</set>
+		where ID = #{id}
+	</update>
+	
+	<!-- 通过QualityTestExperimentalValueKfSf的id将QualityTestExperimentalValueKfSf中属性值不为null的数据更新到数据库对应的表中 -->
+	<update id="updateNotNullQualityTestExperimentalValueKfSfById" parameterType="com.jiaoke.qualitytest.bean.experimentalvalue.QualityTestExperimentalValueKfSf">
+		update quality_test_experimental_value_kf_sf
+		<set>
+					<if test="orderTicketNum != null">order_ticket_num = #{orderTicketNum},</if>
+					<if test="experimentalId != null">experimental_id = #{experimentalId},</if>
+					<if test="experimentalName != null">experimental_name = #{experimentalName},</if>
+					<if test="sK06 != null">SK06 = #{sK06},</if>
+					<if test="sK03 != null">SK03 = #{sK03},</if>
+					<if test="sK015 != null">SK015 = #{sK015},</if>
+					<if test="sK0075 != null">SK0075 = #{sK0075},</if>
+		</set>
+		where ID = #{id}
+	</update>
+	
+	<!-- 通过辅助工具Assist中的条件将QualityTestExperimentalValueKfSf中的数据更新到数据库对应的表中,包括值为null的数据 -->
+	<update id="updateQualityTestExperimentalValueKfSf" parameterType="map">
+		update quality_test_experimental_value_kf_sf
+		<set>
+			ID = #{enti.id},
+			order_ticket_num = #{enti.orderTicketNum},
+			experimental_id = #{enti.experimentalId},
+			experimental_name = #{enti.experimentalName},
+			SK06 = #{enti.sK06},
+			SK03 = #{enti.sK03},
+			SK015 = #{enti.sK015},
+			SK0075 = #{enti.sK0075},
+		</set>
+		<if test="assist.require!=null">
+			<include refid="updateAssist" />
+		</if>
+	</update>
+
+	<!-- 通过辅助工具Assist中的条件将QualityTestExperimentalValueKfSf中属性值不为null的数据更新到数据库对应的表中 -->
+	<update id="updateNotNullQualityTestExperimentalValueKfSf" parameterType="map">
+		update quality_test_experimental_value_kf_sf
+		<set>
+			<if test="enti.id != null">ID = #{enti.id},</if>
+			<if test="enti.orderTicketNum != null">order_ticket_num = #{enti.orderTicketNum},</if>
+			<if test="enti.experimentalId != null">experimental_id = #{enti.experimentalId},</if>
+			<if test="enti.experimentalName != null">experimental_name = #{enti.experimentalName},</if>
+			<if test="enti.sK06 != null">SK06 = #{enti.sK06},</if>
+			<if test="enti.sK03 != null">SK03 = #{enti.sK03},</if>
+			<if test="enti.sK015 != null">SK015 = #{enti.sK015},</if>
+			<if test="enti.sK0075 != null">SK0075 = #{enti.sK0075},</if>
+		</set>
+		<if test="assist.require!=null">
+			<include refid="updateAssist" />
+		</if>
+	</update>
+</mapper>

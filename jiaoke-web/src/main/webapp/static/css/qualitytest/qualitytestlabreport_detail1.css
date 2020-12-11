@@ -1,0 +1,12 @@
+.layui-input {
+	outline: none;
+	border-width: 0px;
+	border-bottom: 3px solid #DDD;
+	font-size: 16px;
+	color: #888;
+}
+
+.input-title {
+	font-weight: bold;
+	font-size:14px;
+}
