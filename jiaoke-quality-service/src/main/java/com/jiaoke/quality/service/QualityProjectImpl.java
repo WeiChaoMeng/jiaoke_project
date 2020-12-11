@@ -113,6 +113,7 @@ public class QualityProjectImpl implements QualityProjectInf {
 
     @Override
     public Map<String, String> addWeighingInformation(String weighingMessage) {
+        System.out.println(weighingMessage);
         Map<String,String> map = new HashMap<>();
         try{
             JSONObject jsonObject = JSON.parseObject(weighingMessage);
@@ -132,7 +133,8 @@ public class QualityProjectImpl implements QualityProjectInf {
                 }
                 insertMap.put(key,obj);
             }
-            //qualityProjectDao.insertWeighingInformation(insertMap);
+            System.out.println(insertMap);
+            qualityProjectDao.insertWeighingInformation(insertMap);
             Map<String,String> carMap = new HashMap<>();
             carMap = qualityProjectDao.selectCarNumByWeighing(insertMap);
             if (null == carMap ){

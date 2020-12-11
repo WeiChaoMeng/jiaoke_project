@@ -65,7 +65,7 @@
 
     <rabbit:listener-container connection-factory="connectionFactory" acknowledge="auto" task-executor="taskExecutor">
         <rabbit:listener queues="task_queue" ref="delayTask"/>
-        <rabbit:listener queues="realTime_queue" ref="productTask"/>
+        <rabbit:listener queues="proData_queue" ref="productTask"/>
     </rabbit:listener-container>
 
 
