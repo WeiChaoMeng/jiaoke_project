@@ -1,0 +1,34 @@
+.layui-table-tool-temp {
+	padding-right: 20px;
+	float: right;
+}
+
+.layui-select,
+.layui-input {
+	height: 35px;
+}
+
+.layui-form-select dl dd.layui-this,
+.layui-form-checked span, .layui-form-checked:hover span{
+	background-color: #009688;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.layui-fluid {
+	padding: 15px 15px;
+}
+
+/* .layui-form-item .layui-input-inline {
+	float: left;
+	width: 130px;
+	margin-right: 5px;
+} */
+
+
+.layui-table-fixed>.layui-table-col-special
+{
+	height: 70px;
+}

@@ -1,0 +1,22 @@
+.div_context_left {
+	float: left;
+	border: 1px solid #c8cccf;
+	width: 28%;
+	height: 490px;
+}
+
+.div_context_right {
+	float: right;
+	height: 490px;
+	width: 70%;
+	/* border: 1px solid #999; */
+	margin-left: 15px;
+}
+
+.layui-form-label {
+	width: 100px;
+}
+
+.layui-input-block {
+	margin-left: 130px;
+}
