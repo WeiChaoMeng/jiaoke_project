@@ -171,6 +171,7 @@ public class QualityController {
     @ResponseBody
     @RequestMapping(value = {"/getWeighingInformation.do"} ,method = RequestMethod.POST)
     public String  getWeighingInformation(@RequestParam("weighingMessage") String weighingMessage) {
+        System.out.println(weighingMessage);
         Map<String,String> res = new HashMap<>();
         if (weighingMessage == null || weighingMessage.equals("")){
             res.put("code","400");

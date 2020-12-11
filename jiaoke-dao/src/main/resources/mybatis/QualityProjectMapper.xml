@@ -240,7 +240,7 @@
     <select id="selectCarNumByWeighing" resultType="java.util.Map">
         SELECT
                T1.*,
-        (SELECT up_time AS lastTime FROM quality_car_num_history WHERE up_time &lt; T1.up_time ORDER BY up_time DESC limit 1) AS lastTime
+        (SELECT up_time AS lastTime FROM quality_car_num_history WHERE crew_num = T1.crew_num AND up_time &lt; T1.up_time ORDER BY up_time DESC limit 1) AS lastTime
         FROM
         quality_car_num_history AS T1
         WHERE
@@ -254,7 +254,7 @@
     <select id="selectCarNumByLeaveFactory" resultType="java.util.Map">
         SELECT
         T1.*,
-        (SELECT up_time AS lastTime FROM quality_car_num_history WHERE up_time &lt; T1.up_time ORDER BY up_time DESC limit 1) AS lastTime
+        (SELECT up_time AS lastTime FROM quality_car_num_history WHERE  crew_num = T1.crew_num AND up_time &lt; T1.up_time ORDER BY up_time DESC limit 1) AS lastTime
         FROM
         quality_car_num_history AS T1
         WHERE
@@ -270,14 +270,14 @@
                 SET project_name = #{projectName},
                 produce_car_num = #{carNum}
                 WHERE
-                str_to_date(CONCAT('',produce_date,produce_time),'%Y-%m-%d %H:%i:%s')  BETWEEN #{lastTime} AND  #{upTime};
+                str_to_date(CONCAT(produce_date,' ',produce_time),'%Y-%m-%d %H:%i:%s')  BETWEEN #{lastTime} AND  #{upTime};
             </when>
             <otherwise>
                 UPDATE quality_monitoring_realtime_data2
                 SET project_name = #{projectName},
                 produce_car_num = #{carNum}
                 WHERE
-                str_to_date(CONCAT('',produce_date,produce_time),'%Y-%m-%d %H:%i:%s')  BETWEEN #{lastTime} AND  #{upTime};
+                str_to_date(CONCAT(produce_date,' ',produce_time),'%Y-%m-%d %H:%i:%s')  BETWEEN #{lastTime} AND  #{upTime};
             </otherwise>
         </choose>
     </update>

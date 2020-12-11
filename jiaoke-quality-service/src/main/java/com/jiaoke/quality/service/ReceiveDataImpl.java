@@ -112,11 +112,12 @@ public class ReceiveDataImpl implements ReceiveDataInf {
 
         //根据配比号，获取模板数据
         QualityRatioTemplate ratioTemplate = qualityWarningDao.selectRatioTemplateByCrew1MoudelId(map.get("produce_ratio_id"), fieldName,proDate);
-        //根据配比ID，获取预警数据
-        Map<String,String> warningLeveMap = qualityWarningDao.selectWarningLevelByRatioId(ratioTemplate.getId());
         if (null == ratioTemplate) {
             return;
         }
+        //根据配比ID，获取预警数据
+        Map<String,String> warningLeveMap = qualityWarningDao.selectWarningLevelByRatioId(ratioTemplate.getId());
+
         if (null == warningLeveMap || warningLeveMap.isEmpty()){
             return;
         }
