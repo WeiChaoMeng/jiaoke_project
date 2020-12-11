@@ -140,7 +140,16 @@ public class DateUtil {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
         return simpleDateFormat.format(date);
     }
-
+    /**
+     * date转string（yyyy-MM-dd HH）
+     *
+     * @param date date
+     * @return string
+     */
+    public static String dateConvertYYYYMMDD2(Date date) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日");
+        return formatter.format(date);
+    }
 
     /**
      * 获取日期（* / **）
