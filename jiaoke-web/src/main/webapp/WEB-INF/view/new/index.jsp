@@ -821,7 +821,7 @@
                                     </ul>
                                 </li>
                                 <li>
-                                    <a onclick="xadmin.add_tab('部门报告','QualityTestLabReport/page.do')">
+                                    <a onclick="xadmin.add_tab('部门报告 ','QualityTestLabReport/page.do')">
                                         <i class="iconfont">&#xe705;</i>
                                         <cite>部门报告</cite></a>
                                 </li>
