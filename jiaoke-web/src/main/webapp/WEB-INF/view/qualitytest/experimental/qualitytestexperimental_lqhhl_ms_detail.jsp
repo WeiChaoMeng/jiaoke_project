@@ -60,7 +60,7 @@
 		<script src="/static/js/jquery.js"></script>
 		<script src="/static/layui/layui.js" charset="utf-8"></script>
 		<script src="/static/js/qualitytest/common/common.js" charset="utf-8"></script>
-		<script src="/static/js/qualitytest/experimental/qualitytestexperimental_lshhl_ms_detail.js" charset="utf-8"></script>
+		<script src="/static/js/qualitytest/experimental/qualitytestexperimental_lqhhl_ms_detail.js" charset="utf-8"></script>
 		<script src="/static/js/qualitytest/qualitytestexperimental_detail.js" charset="utf-8"></script>
 
 		<input id="path" value="${path}" type="hidden">

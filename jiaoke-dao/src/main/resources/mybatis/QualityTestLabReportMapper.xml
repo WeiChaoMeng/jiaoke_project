@@ -101,7 +101,7 @@
 	</sql>
 	<!--获得类名为:QualityTestLabReport对应的数据库表的数据总行数 -->
 	<select id="getQualityTestLabReportRowCount" parameterType="com.jiaoke.common.bean.Assist" resultType="java.lang.Long">
-		select count(*) from v_quality_test_lab_report
+		select count(*) from V_quality_test_lab_report
 		<if test="require!=null">
 			<include refid="assist" />
 		</if>
@@ -117,7 +117,7 @@
 				<include refid="v_quality_test_lab_report_Column" />
 			</otherwise>
 		</choose>
-		from v_quality_test_lab_report
+		from V_quality_test_lab_report
 		<if test="require!=null">
 			<include refid="assist" />
 		</if>

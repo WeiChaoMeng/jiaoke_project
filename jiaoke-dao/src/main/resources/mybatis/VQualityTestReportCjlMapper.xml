@@ -115,7 +115,7 @@
 
 	<!--获得类名为:VQualityTestReportCjl对应的数据库表的数据总行数 -->
 	<select id="getVQualityTestReportCjlRowCount" parameterType="com.jiaoke.common.bean.Assist" resultType="java.lang.Long">
-		select count(*) from v_quality_test_report_cjl
+		select count(*) from V_quality_test_report_cjl
 		<if test="require!=null">
 			<include refid="assist" />
 		</if>
@@ -131,7 +131,7 @@
 				<include refid="v_quality_test_report_cjl_Column" />
 			</otherwise>
 		</choose>
-		from v_quality_test_report_cjl
+		from V_quality_test_report_cjl
 		<if test="require!=null">
 			<include refid="assist" />
 		</if>
@@ -146,7 +146,7 @@
 	<select id="selectVQualityTestReportCjlObjSingle" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportCjl" resultMap="result_VQualityTestReportCjl_Map">
 		select
 		<include refid="v_quality_test_report_cjl_Column" />
-		from v_quality_test_report_cjl
+		from V_quality_test_report_cjl
 		<where>
 		<if test="createTime != null"> and create_time = #{createTime}</if>
 		<if test="materials != null"> and materials = #{materials}</if>
@@ -192,7 +192,7 @@
 	<select id="selectVQualityTestReportCjlByObj" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportCjl" resultMap="result_VQualityTestReportCjl_Map">
 		select
 		<include refid="v_quality_test_report_cjl_Column" />
-		from v_quality_test_report_cjl
+		from V_quality_test_report_cjl
 		<where>
 		<if test="createTime != null"> and create_time = #{createTime}</if>
 		<if test="materials != null"> and materials = #{materials}</if>
@@ -242,7 +242,7 @@
 
 	<!-- 将VQualityTestReportCjl中属性值不为null的数据,插入到对应数据库的表中 -->
 	<insert id="insertNotNullVQualityTestReportCjl" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportCjl">
-		insert into v_quality_test_report_cjl
+		insert into V_quality_test_report_cjl
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="createTime != null">create_time,</if>
 			<if test="materials != null">materials,</if>
@@ -321,7 +321,7 @@
 
 	<!-- 将VQualityTestReportCjl批量插入到对应数据库的表中 -->
 	<insert id="insertVQualityTestReportCjlByBatch" parameterType="ArrayList">
-		insert into v_quality_test_report_cjl(create_time,materials,materials_num,manufacturers,manufacturers_num,specification,specification_num,required_result,required_status,required_status_show,ID,order_ticket_num,experimental_name,experimental_id,SK315,SK265,SK19,SK16,SK132,SK95,SK475,SK236,SK118,SK06,SK03,SK015,SK0075,SD,bgxdmd1,bgxdmd2,mtjxdmd,zpzkl,ysz,rrkl,mh) values
+		insert into V_quality_test_report_cjl(create_time,materials,materials_num,manufacturers,manufacturers_num,specification,specification_num,required_result,required_status,required_status_show,ID,order_ticket_num,experimental_name,experimental_id,SK315,SK265,SK19,SK16,SK132,SK95,SK475,SK236,SK118,SK06,SK03,SK015,SK0075,SD,bgxdmd1,bgxdmd2,mtjxdmd,zpzkl,ysz,rrkl,mh) values
 		<foreach collection="list" item="item" index="index"
 			separator=",">
 			(#{item.createTime},#{item.materials},#{item.materialsNum},#{item.manufacturers},#{item.manufacturersNum},#{item.specification},#{item.specificationNum},#{item.requiredResult},#{item.requiredStatus},#{item.requiredStatusShow},#{item.iD},#{item.orderTicketNum},#{item.experimentalName},#{item.experimentalId},#{item.sK315},#{item.sK265},#{item.sK19},#{item.sK16},#{item.sK132},#{item.sK95},#{item.sK475},#{item.sK236},#{item.sK118},#{item.sK06},#{item.sK03},#{item.sK015},#{item.sK0075},#{item.sD},#{item.bgxdmd1},#{item.bgxdmd2},#{item.mtjxdmd},#{item.zpzkl},#{item.ysz},#{item.rrkl},#{item.mh})
@@ -331,7 +331,7 @@
 
 	<!-- 通过辅助工具Assist中的条件将VQualityTestReportCjl对应的数据库表的数据删除 -->
 	<delete id="deleteVQualityTestReportCjlByAssist" parameterType="com.jiaoke.common.bean.Assist">
-		delete from v_quality_test_report_cjl
+		delete from V_quality_test_report_cjl
 		<if test="require!=null">
 			<include refid="assist" />
 		</if>
@@ -341,7 +341,7 @@
 	
 	<!-- 通过辅助工具Assist中的条件将VQualityTestReportCjl中的数据更新到数据库对应的表中,包括值为null的数据 -->
 	<update id="updateVQualityTestReportCjl" parameterType="map">
-		update v_quality_test_report_cjl
+		update V_quality_test_report_cjl
 		<set>
 			create_time = #{enti.createTime},
 			materials = #{enti.materials},
@@ -386,7 +386,7 @@
 
 	<!-- 通过辅助工具Assist中的条件将VQualityTestReportCjl中属性值不为null的数据更新到数据库对应的表中 -->
 	<update id="updateNotNullVQualityTestReportCjl" parameterType="map">
-		update v_quality_test_report_cjl
+		update V_quality_test_report_cjl
 		<set>
 			<if test="enti.createTime != null">create_time = #{enti.createTime},</if>
 			<if test="enti.materials != null">materials = #{enti.materials},</if>

@@ -404,11 +404,12 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 		}
 		if (expInfo['experimental_value_sf'] != null && expInfo['experimental_value_sf'].length > 0) {
 			myform.CJL_SF_Data = $.parseJSON(expInfo.experimental_value_sf);
-		}
-		if (==3)
-		{
-			myform.editData();
-			$("#").hide();
+		}		
+		myform.editData();
+		if (expInfo['status'] == 3) {			
+			$("#div_button").show();
+		} else {
+			$("#div_button").hide();
 		}
 	}
 	myform.init_GZSY_Value();

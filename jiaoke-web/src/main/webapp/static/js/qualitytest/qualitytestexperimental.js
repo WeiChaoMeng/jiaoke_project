@@ -55,7 +55,7 @@ layui.use(['form', 'table', 'ax', 'laydate', 'dictionary'], function() {
 				field: 'result_show',
 				title: '试验结果',
 				width: 90,
-				hide:true
+				hide: true
 			}, {
 				field: 'status_show',
 				title: '状态',
@@ -145,6 +145,9 @@ layui.use(['form', 'table', 'ax', 'laydate', 'dictionary'], function() {
 			content: '/QualityTestExperimental/detail.do?id=' + id,
 			success: function(layero, index) {
 
+			},
+			end: function() {
+				table.reload(myForm.tableId);
 			}
 		});
 	};

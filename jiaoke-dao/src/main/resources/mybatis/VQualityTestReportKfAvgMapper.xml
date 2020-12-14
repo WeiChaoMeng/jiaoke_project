@@ -89,7 +89,7 @@
     <!--获得类名为:VQualityTestReportKfAvg对应的数据库表的数据总行数 -->
     <select id="getVQualityTestReportKfAvgRowCount" parameterType="com.jiaoke.common.bean.Assist"
             resultType="java.lang.Long">
-        select count(*) from v_quality_test_report_kf_avg
+        select count(*) from V_quality_test_report_kf_avg
         <if test="require!=null">
             <include refid="assist"/>
         </if>
@@ -133,7 +133,7 @@
                 <include refid="v_quality_test_report_kf_avg_Column"/>
             </otherwise>
         </choose>
-        from v_quality_test_report_kf_avg
+        from V_quality_test_report_kf_avg
         <if test="require!=null">
             <include refid="assist"/>
         </if>
@@ -149,7 +149,7 @@
             resultMap="result_VQualityTestReportKfAvg_Map">
         select
         <include refid="v_quality_test_report_kf_avg_Column"/>
-        from v_quality_test_report_kf_avg
+        from V_quality_test_report_kf_avg
         <where>
             <if test="specification != null">and specification = #{specification}</if>
             <if test="sk06 != null">and sk06 = #{sk06}</if>
@@ -170,7 +170,7 @@
             resultMap="result_VQualityTestReportKfAvg_Map">
         select
         <include refid="v_quality_test_report_kf_avg_Column"/>
-        from v_quality_test_report_kf_avg
+        from V_quality_test_report_kf_avg
         <where>
             <if test="specification != null">and specification = #{specification}</if>
             <if test="sk06 != null">and sk06 = #{sk06}</if>
@@ -187,14 +187,14 @@
     <insert id="insertVQualityTestReportKfAvg"
             parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportKfAvg">
 		insert into 
-		v_quality_test_report_kf_avg (specification,sk06,sk03,sk015,sk0075,md,qsxs,jradx) 
+		V_quality_test_report_kf_avg (specification,sk06,sk03,sk015,sk0075,md,qsxs,jradx)
 		values(#{specification},#{sk06},#{sk03},#{sk015},#{sk0075},#{md},#{qsxs},#{jradx})
 	</insert>
 
     <!-- 将VQualityTestReportKfAvg中属性值不为null的数据,插入到对应数据库的表中 -->
     <insert id="insertNotNullVQualityTestReportKfAvg"
             parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportKfAvg">
-        insert into v_quality_test_report_kf_avg
+        insert into V_quality_test_report_kf_avg
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="specification != null">specification,</if>
             <if test="sk06 != null">sk06,</if>
@@ -219,7 +219,7 @@
 
     <!-- 将VQualityTestReportKfAvg批量插入到对应数据库的表中 -->
     <insert id="insertVQualityTestReportKfAvgByBatch" parameterType="ArrayList">
-        insert into v_quality_test_report_kf_avg(specification,sk06,sk03,sk015,sk0075,md,qsxs,jradx) values
+        insert into V_quality_test_report_kf_avg(specification,sk06,sk03,sk015,sk0075,md,qsxs,jradx) values
         <foreach collection="list" item="item" index="index"
                  separator=",">
             (#{item.specification},#{item.sk06},#{item.sk03},#{item.sk015},#{item.sk0075},#{item.md},#{item.qsxs},#{item.jradx})
@@ -229,7 +229,7 @@
 
     <!-- 通过辅助工具Assist中的条件将VQualityTestReportKfAvg对应的数据库表的数据删除 -->
     <delete id="deleteVQualityTestReportKfAvgByAssist" parameterType="com.jiaoke.common.bean.Assist">
-        delete from v_quality_test_report_kf_avg
+        delete from V_quality_test_report_kf_avg
         <if test="require!=null">
             <include refid="assist"/>
         </if>
@@ -238,7 +238,7 @@
 
     <!-- 通过辅助工具Assist中的条件将VQualityTestReportKfAvg中的数据更新到数据库对应的表中,包括值为null的数据 -->
     <update id="updateVQualityTestReportKfAvg" parameterType="map">
-        update v_quality_test_report_kf_avg
+        update V_quality_test_report_kf_avg
         <set>
             specification = #{enti.specification},
             sk06 = #{enti.sk06},
@@ -256,7 +256,7 @@
 
     <!-- 通过辅助工具Assist中的条件将VQualityTestReportKfAvg中属性值不为null的数据更新到数据库对应的表中 -->
     <update id="updateNotNullVQualityTestReportKfAvg" parameterType="map">
-        update v_quality_test_report_kf_avg
+        update V_quality_test_report_kf_avg
         <set>
             <if test="enti.specification != null">specification = #{enti.specification},</if>
             <if test="enti.sk06 != null">sk06 = #{enti.sk06},</if>

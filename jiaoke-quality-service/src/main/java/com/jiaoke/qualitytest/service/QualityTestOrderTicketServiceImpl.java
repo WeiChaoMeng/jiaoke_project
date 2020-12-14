@@ -1,14 +1,15 @@
 package com.jiaoke.qualitytest.service;
 
-import java.util.Date;
-import java.util.List;
-
+import com.alibaba.fastjson.JSONObject;
 import com.jiake.utils.DateUtil;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.common.bean.Assist;
 import com.jiaoke.common.bean.LayUIPage;
 import com.jiaoke.oa.bean.UserInfo;
-import com.jiaoke.qualitytest.bean.*;
+import com.jiaoke.qualitytest.bean.QualityTestExperimentDictionary;
+import com.jiaoke.qualitytest.bean.QualityTestExperimental;
+import com.jiaoke.qualitytest.bean.QualityTestExperimentalParam;
+import com.jiaoke.qualitytest.bean.QualityTestOrderTicket;
 import com.jiaoke.qualitytest.dao.QualityTestExperimentDictionaryDao;
 import com.jiaoke.qualitytest.dao.QualityTestExperimentalDao;
 import com.jiaoke.qualitytest.dao.QualityTestExperimentalParamDao;
@@ -20,7 +21,8 @@ import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.JSONObject;
+import java.util.Date;
+import java.util.List;
 
 /**
  * QualityTestOrderTicket的服务接口的实现类
@@ -337,8 +339,8 @@ public class QualityTestOrderTicketServiceImpl implements QualityTestOrderTicket
         }
         if (value.getBegindate()==null && value.getEnddate()==null)
         {
-            assist.andGte("create_time", DateUtil.dateConvertYYYYMMDD(DateUtils.addDays(new Date(), -30)));
-            assist.andLte("create_time", DateUtil.dateConvertYYYYMMDD(new Date()));
+            assist.andGte("create_time", DateUtil.dateConvertYYYYMMDDHHMMSS(DateUtils.addDays(new Date(), -31)));
+            assist.andLte("create_time", DateUtil.dateConvertYYYYMMDDHHMMSS(new Date()));
         }
 
         if (value.getStatus() != null && value.getStatus() >= 0) {

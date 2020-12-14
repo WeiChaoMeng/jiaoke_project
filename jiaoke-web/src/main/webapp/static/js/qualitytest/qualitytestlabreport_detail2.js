@@ -222,7 +222,7 @@ layui.use(['form', 'table', 'laydate'], function() {
 		$('#div_check').hide();
 		$('#div_commit').hide();
 		if (data.experimentStatus == undefined || data.experimentStatus == 0) {
-			$('#div_commit').show();
+			//$('#div_commit').show();
 		} else if (data.experimentStatus == 1) {
 			$('#div_check').show();
 		}

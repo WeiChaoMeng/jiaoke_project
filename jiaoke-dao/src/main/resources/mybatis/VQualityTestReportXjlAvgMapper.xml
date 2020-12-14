@@ -96,7 +96,7 @@
     <!--获得类名为:VQualityTestReportXjlAvg对应的数据库表的数据总行数 -->
     <select id="getVQualityTestReportXjlAvgRowCount" parameterType="com.jiaoke.common.bean.Assist"
             resultType="java.lang.Long">
-        select count(*) from v_quality_test_report_xjl_avg
+        select count(*) from V_quality_test_report_xjl_avg
         <if test="require!=null">
             <include refid="assist"/>
         </if>
@@ -113,7 +113,7 @@
                 <include refid="v_quality_test_report_xjl_avg_Column"/>
             </otherwise>
         </choose>
-        from v_quality_test_report_xjl_avg
+        from V_quality_test_report_xjl_avg
         <if test="require!=null">
             <include refid="assist"/>
         </if>
@@ -163,7 +163,7 @@
             resultMap="result_VQualityTestReportXjlAvg_Map">
         select
         <include refid="v_quality_test_report_xjl_avg_Column"/>
-        from v_quality_test_report_xjl_avg
+        from V_quality_test_report_xjl_avg
         <where>
             <if test="specification != null">and specification = #{specification}</if>
             <if test="sk132 != null">and sk132 = #{sk132}</if>
@@ -191,7 +191,7 @@
             resultMap="result_VQualityTestReportXjlAvg_Map">
         select
         <include refid="v_quality_test_report_xjl_avg_Column"/>
-        from v_quality_test_report_xjl_avg
+        from V_quality_test_report_xjl_avg
         <where>
             <if test="specification != null">and specification = #{specification}</if>
             <if test="sk132 != null">and sk132 = #{sk132}</if>

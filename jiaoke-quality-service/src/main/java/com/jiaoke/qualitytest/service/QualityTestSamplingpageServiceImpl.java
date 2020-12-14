@@ -1,16 +1,11 @@
 package com.jiaoke.qualitytest.service;
 
-import java.time.Instant;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
+import com.alibaba.fastjson.JSONObject;
 import com.jiake.utils.DateUtil;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.common.bean.Assist;
 import com.jiaoke.common.bean.LayUIPage;
 import com.jiaoke.oa.bean.UserInfo;
-import com.jiaoke.quality.dao.QualityExperimentalManagerDao;
 import com.jiaoke.qualitytest.bean.QualityTestMaterialDictionary;
 import com.jiaoke.qualitytest.bean.QualityTestOrderTicket;
 import com.jiaoke.qualitytest.bean.QualityTestSamplingpage;
@@ -20,12 +15,12 @@ import com.jiaoke.qualitytest.dao.QualityTestSamplingpageDao;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.poi.ss.formula.functions.T;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.JSONObject;
+import java.util.Date;
+import java.util.List;
 
 /**
  * QualityTestSamplingpage的服务接口的实现类
@@ -326,7 +321,7 @@ public class QualityTestSamplingpageServiceImpl implements QualityTestSamplingpa
         }
        if (value.getBegindate()==null && value.getEnddate()==null)
         {
-            assist.andGte("task_time", DateUtil.dateConvertYYYYMMDDHHMMSS(DateUtils.addDays(new Date(), -30)));
+            assist.andGte("task_time", DateUtil.dateConvertYYYYMMDDHHMMSS(DateUtils.addDays(new Date(), -31)));
             assist.andLte("task_time", DateUtil.dateConvertYYYYMMDDHHMMSS(new Date()));
         }
 

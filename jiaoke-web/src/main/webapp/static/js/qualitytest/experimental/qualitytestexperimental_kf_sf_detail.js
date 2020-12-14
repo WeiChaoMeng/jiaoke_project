@@ -131,7 +131,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 		//计算筛孔尺寸
 		for (var i = 0; i < myform.KF_SF_Data.length; i++) {
 			var data = myform.KF_SF_Data[i];
-			if (data['syzl_value1'] > 0) {
+			if (data['syzl_value1'] >= 0) {
 				data['fjsy_value1'] = (data['syzl_value1'] / CLL_SF_GZ_Value.syzl_value1).toFixed(2);
 				data['ljsy_value1'] = myform.getljsf1(i);
 				data['tgbfb_value1'] = 100 - data['ljsy_value1'];
@@ -141,7 +141,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 				data['tgbfb_value1'] = undefined;
 			}
 
-			if (data['syzl_value2'] > 0) {
+			if (data['syzl_value2'] >= 0) {
 				data['fjsy_value2'] = (data['syzl_value2'] / CLL_SF_GZ_Value.syzl_value2).toFixed(2);
 				data['ljsy_value2'] = myform.getljsf2(i);
 				data['tgbfb_value2'] = 100 - data['ljsy_value2'];
@@ -195,48 +195,50 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 	/**
 	 * 监听方向键
 	 */
-	$(document).on('keydown', '.layui-input', function(e) {
-		var td = $(this).parent('td'),
-			tr = td.parent('tr'),
-			trs = tr.parent().parent().find("tr"),
-			tr_index = tr.index(),
-			td_index = td.index(),
-			td_last_index = tr.find('[data-edid="text"]:last').index(),
-			td_first_index = tr.find('[data-edid="text"]:first').index();
-		switch (e.keyCode) {
-			case 13:
-			case 39:
-				td.nextAll('[data-edit="text"]:first').click();
-				if (td_index == td_last_index) {
-					tr.next().find('td').eq(td_first_index).click();
-					if (tr_index == trs.length - 1) {
-						trs.eq(0).find('td').eq(td_first_index).click()
+	myform.editData = function() {
+		$(document).on('keydown', '.layui-input', function(e) {
+			var td = $(this).parent('td'),
+				tr = td.parent('tr'),
+				trs = tr.parent().parent().find("tr"),
+				tr_index = tr.index(),
+				td_index = td.index(),
+				td_last_index = tr.find('[data-edid="text"]:last').index(),
+				td_first_index = tr.find('[data-edid="text"]:first').index();
+			switch (e.keyCode) {
+				case 13:
+				case 39:
+					td.nextAll('[data-edit="text"]:first').click();
+					if (td_index == td_last_index) {
+						tr.next().find('td').eq(td_first_index).click();
+						if (tr_index == trs.length - 1) {
+							trs.eq(0).find('td').eq(td_first_index).click()
+						}
 					}
-				}
-				setTimeout(function() {
-					$('.last-table-edit').select()
-				}, 0);
-				break;
-			case 37:
-				td.prevAll('[data-edit="text"]:first').click();
-				setTimeout(function() {
-					$('.last-table-edit').select()
-				}, 0);
-				break;
-			case 38:
-				tr.prev().find('td').eq(td_index).click();
-				setTimeout(function() {
-					$('.last-table-edit').select()
-				}, 0);
-				break;
-			case 40:
-				tr.next().find('td').eq(td_index).click();
-				setTimeout(function() {
-					$('.last-table-edit').select()
-				}, 0);
-				break;
-		}
-	});
+					setTimeout(function() {
+						$('.last-table-edit').select()
+					}, 0);
+					break;
+				case 37:
+					td.prevAll('[data-edit="text"]:first').click();
+					setTimeout(function() {
+						$('.last-table-edit').select()
+					}, 0);
+					break;
+				case 38:
+					tr.prev().find('td').eq(td_index).click();
+					setTimeout(function() {
+						$('.last-table-edit').select()
+					}, 0);
+					break;
+				case 40:
+					tr.next().find('td').eq(td_index).click();
+					setTimeout(function() {
+						$('.last-table-edit').select()
+					}, 0);
+					break;
+			}
+		});
+	}
 
 	/**
 	 * 计算结果
@@ -269,7 +271,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 		var saveData = {
 			ID: expID,
 			experimentalValueSf: JSON.stringify(myform.KF_SF_Data),
-			status:2
+			status: 2
 		}
 		$.ajax({
 			type: "POST",
@@ -345,8 +347,10 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 		if (expInfo['experimental_value_sf'] != null && expInfo['experimental_value_sf'].length > 0) {
 			myform.KF_SF_Data = $.parseJSON(expInfo.experimental_value_sf);
 		}
+		myform.editData();
 		if (expInfo['status'] == 3) {
-			myform.editData();
+			$("#div_button").show();
+		} else {
 			$("#div_button").hide();
 		}
 	}
