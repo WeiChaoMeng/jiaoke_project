@@ -282,7 +282,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 		if (expInfo['experimental_value_sf'] != null && expInfo['experimental_value_sf'].length > 0) {
 			myform.detail_Data = $.parseJSON(expInfo.experimental_value_sf);
 		}
-		if (expInfo['status'] == 3) {
+		if (expInfo['status'] != 3) {
 			//myform.editData();
 			$("#div_button").hide();
 		}
