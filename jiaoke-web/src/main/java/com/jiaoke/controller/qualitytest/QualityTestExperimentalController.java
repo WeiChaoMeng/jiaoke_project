@@ -5,7 +5,10 @@ import com.jiaoke.qualitytest.dao.QualityTestExperimentalDao;
 import com.jiaoke.qualitytest.service.QualityTestExperimentalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 /**
@@ -38,7 +41,7 @@ public class QualityTestExperimentalController {
         String strJsp = "qualitytest/qualitytestexperimental_detail.jsp?id=" + id;
         QualityTestExperimental obj = qualityTestExperimentalDao.selectQualityTestExperimentalById(id);
         if (obj!=null) {
-            if (obj.getExperimentalId()!=null && obj.getExperimentalId() == 17135370) {//粗集料筛分
+            if (obj.getExperimentalId()!=null && (obj.getExperimentalId() == 17135370||obj.getExperimentalId() ==17132508)) {//粗集料筛分
                 strJsp = "qualitytest/experimental/qualitytestexperimental_cjl_sf_detail.jsp?id=" + id;
             } else if (obj.getExperimentalId()!=null && obj.getExperimentalId() == 17072218) {//细集料筛分
                 strJsp = "qualitytest/experimental/qualitytestexperimental_xjl_sf_detail.jsp?id=" + id;
