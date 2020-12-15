@@ -96,12 +96,12 @@
 	<sql id="quality_test_lab_report_Column">
 		Id,experiment_num,experiment_status,experiment_result,order_ticket_num,materials_num,entrusting_party,manufacturers_name,sampling_date,test_date,required_experimental,experimental_procedures,sampling_spot,sampling_standard,verdict,charge_person,check_person,report_person,report_date,notice_dep,notice_dep_str
 	</sql>
-	<sql id="v_quality_test_lab_report_Column">
+	<sql id="V_quality_test_lab_report_Column">
 		num,materials,materials_num,manufacturers,specification,tunnage,create_time as sampling_date,sampling_remark,order_ticket_num,required_experimental,Id,experiment_status,experiment_result,test_date,verdict,charge_person,check_person,report_person,report_date,notice_dep_str
 	</sql>
 	<!--获得类名为:QualityTestLabReport对应的数据库表的数据总行数 -->
 	<select id="getQualityTestLabReportRowCount" parameterType="com.jiaoke.common.bean.Assist" resultType="java.lang.Long">
-		select count(*) from v_quality_test_lab_report
+		select count(*) from V_quality_test_lab_report
 		<if test="require!=null">
 			<include refid="assist" />
 		</if>
@@ -114,10 +114,10 @@
 		<choose>
 			<when test="resultColumn!=null">${resultColumn}</when>
 			<otherwise>
-				<include refid="v_quality_test_lab_report_Column" />
+				<include refid="V_quality_test_lab_report_Column" />
 			</otherwise>
 		</choose>
-		from v_quality_test_lab_report
+		from V_quality_test_lab_report
 		<if test="require!=null">
 			<include refid="assist" />
 		</if>
@@ -130,7 +130,7 @@
 	<!-- 通过QualityTestLabReport的id获得对应数据库中表的数据对象 -->
 	<select id="selectQualityTestLabReportById" parameterType="String" resultMap="result_QualityTestLabReport_Map">
 		select
-		<include refid="v_quality_test_lab_report_Column" />
+		<include refid="V_quality_test_lab_report_Column" />
 		from V_quality_test_lab_report
 		where Id = #{id}
 	</select>

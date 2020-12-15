@@ -300,4 +300,15 @@ public class DateUtil {
         //long sec = diff % nd % nh % nm / ns;
         return min;
     }
+
+    /**
+     * date转string（yyyy-MM-dd HH）
+     *
+     * @param date date
+     * @return string
+     */
+    public static String dateConvertYYYYMMDD2(Date date) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日");
+        return formatter.format(date);
+    }
 }
