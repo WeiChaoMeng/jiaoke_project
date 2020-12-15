@@ -108,8 +108,8 @@
 		</where>
 	</sql>
 
-	<!-- 数据库中表名为:V_quality_test_report_cjl的列名 -->
-	<sql id="V_quality_test_report_cjl_Column">
+	<!-- 数据库中表名为:v_quality_test_report_cjl的列名 -->
+	<sql id="v_quality_test_report_cjl_Column">
 		create_time,materials,materials_num,manufacturers,manufacturers_num,specification,specification_num,required_result,required_status,required_status_show,ID,order_ticket_num,experimental_name,experimental_id,SK375,SK315,SK265,SK19,SK16,SK132,SK95,SK475,SK236,SK118,SK06,SK03,SK015,SK0075,SD,bgxdmd1,bgxdmd2,mtjxdmd,zpzkl,ysz,rrkl,mh
 	</sql>
 
@@ -128,7 +128,7 @@
 		<choose>
 			<when test="resultColumn!=null">${resultColumn}</when>
 			<otherwise>
-				<include refid="V_quality_test_report_cjl_Column" />
+				<include refid="v_quality_test_report_cjl_Column" />
 			</otherwise>
 		</choose>
 		from V_quality_test_report_cjl
@@ -145,7 +145,7 @@
 	<!-- 获得一个VQualityTestReportCjl对象,以参数VQualityTestReportCjl对象中不为空的属性作为条件进行查询 -->
 	<select id="selectVQualityTestReportCjlObjSingle" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportCjl" resultMap="result_VQualityTestReportCjl_Map">
 		select
-		<include refid="V_quality_test_report_cjl_Column" />
+		<include refid="v_quality_test_report_cjl_Column" />
 		from V_quality_test_report_cjl
 		<where>
 		<if test="createTime != null"> and create_time = #{createTime}</if>
@@ -191,7 +191,7 @@
 	<!-- 获得VQualityTestReportCjl对象,以参数VQualityTestReportCjl对象中不为空的属性作为条件进行查询 -->
 	<select id="selectVQualityTestReportCjlByObj" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportCjl" resultMap="result_VQualityTestReportCjl_Map">
 		select
-		<include refid="V_quality_test_report_cjl_Column" />
+		<include refid="v_quality_test_report_cjl_Column" />
 		from V_quality_test_report_cjl
 		<where>
 		<if test="createTime != null"> and create_time = #{createTime}</if>
@@ -236,7 +236,7 @@
 	<!-- 将VQualityTestReportCjl插入到对应数据库的表中,包括属性值为null的数据 -->
 	<insert id="insertVQualityTestReportCjl" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportCjl">
 		insert into 
-		V_quality_test_report_cjl (create_time,materials,materials_num,manufacturers,manufacturers_num,specification,specification_num,required_result,required_status,required_status_show,ID,order_ticket_num,experimental_name,experimental_id,SK315,SK265,SK19,SK16,SK132,SK95,SK475,SK236,SK118,SK06,SK03,SK015,SK0075,SD,bgxdmd1,bgxdmd2,mtjxdmd,zpzkl,ysz,rrkl,mh) 
+		v_quality_test_report_cjl (create_time,materials,materials_num,manufacturers,manufacturers_num,specification,specification_num,required_result,required_status,required_status_show,ID,order_ticket_num,experimental_name,experimental_id,SK315,SK265,SK19,SK16,SK132,SK95,SK475,SK236,SK118,SK06,SK03,SK015,SK0075,SD,bgxdmd1,bgxdmd2,mtjxdmd,zpzkl,ysz,rrkl,mh) 
 		values(#{createTime},#{materials},#{materialsNum},#{manufacturers},#{manufacturersNum},#{specification},#{specificationNum},#{requiredResult},#{requiredStatus},#{requiredStatusShow},#{iD},#{orderTicketNum},#{experimentalName},#{experimentalId},#{sK315},#{sK265},#{sK19},#{sK16},#{sK132},#{sK95},#{sK475},#{sK236},#{sK118},#{sK06},#{sK03},#{sK015},#{sK0075},#{sD},#{bgxdmd1},#{bgxdmd2},#{mtjxdmd},#{zpzkl},#{ysz},#{rrkl},#{mh})
 	</insert>
 

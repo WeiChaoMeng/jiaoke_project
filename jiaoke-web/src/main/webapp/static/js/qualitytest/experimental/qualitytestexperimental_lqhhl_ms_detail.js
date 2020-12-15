@@ -80,6 +80,11 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 			} else {
 				data['sjgdpj'] = undefined;
 			}
+			if (data['kzz'] > 0 && data['szz'] > 0 && data['bhngz'] > 0) {
+				data['mtjxdmd'] = (data['kzz'] / (data['bhngz'] - data['szz'])).toFixed(2);
+			} else {
+				data['mtjxdmd'] = undefined;
+			}
 		}
 	}
 
@@ -190,7 +195,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 		var saveData = {
 			ID: expID,
 			experimentalValueSf: JSON.stringify(myform.detail_Data),
-			status:2
+			status: 2
 		}
 		$.ajax({
 			type: "POST",

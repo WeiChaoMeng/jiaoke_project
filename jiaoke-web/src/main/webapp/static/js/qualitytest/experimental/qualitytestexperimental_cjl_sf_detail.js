@@ -416,8 +416,10 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 		if (expInfo['experimental_value_sf'] != null && expInfo['experimental_value_sf'].length > 0) {
 			myform.CJL_SF_Data = $.parseJSON(expInfo.experimental_value_sf);
 		}
+		myform.editData();
 		if (expInfo['status'] == 3) {
-			myform.editData();
+			$("#div_button").show();
+		} else {
 			$("#div_button").hide();
 		}
 	}
