@@ -93,7 +93,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 			if (i <= order) {
 				var data = myform.CJL_SF_Data[i];
 				if (data['fjsy_value1'] > 0) {
-					result = (Number(result) + Number(data['fjsy_value1'])).toFixed(2);
+					result = (Number(result) + Number(data['fjsy_value1'])).toFixed(1);
 				}
 			} else {
 				break;
@@ -112,7 +112,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 			if (i <= order) {
 				var data = myform.CJL_SF_Data[i];
 				if (data['fjsy_value2'] > 0) {
-					result = (Number(result) + Number(data['fjsy_value2'])).toFixed(2);
+					result = (Number(result) + Number(data['fjsy_value2'])).toFixed(1);
 				}
 			} else {
 				break;
@@ -144,7 +144,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 		for (var i = 0; i < myform.CJL_SF_Data.length; i++) {
 			var data = myform.CJL_SF_Data[i];
 			if (data['ssz_value1'] >= 0) {
-				data['fjsy_value1'] = (data['ssz_value1'] / CLL_SF_GZ_Value.gzsyzl_value1).toFixed(2);
+				data['fjsy_value1'] = ((data['ssz_value1'] / CLL_SF_GZ_Value.gzsyzl_value1)*100)).toFixed(1);
 				data['ljsy_value1'] = myform.getljsf1(i);
 				data['tgbfb_value1'] = 100 - data['ljsy_value1'];
 			} else {
@@ -154,7 +154,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 			}
 
 			if (data['ssz_value2'] >= 0) {
-				data['fjsy_value2'] = (data['ssz_value2'] / CLL_SF_GZ_Value.gzsyzl_value2).toFixed(2);
+				data['fjsy_value2'] = ((data['ssz_value2'] / CLL_SF_GZ_Value.gzsyzl_value2)*100)).toFixed(1);
 				data['ljsy_value2'] = myform.getljsf2(i);
 				data['tgbfb_value2'] = 100 - data['ljsy_value2'];
 			} else {
@@ -164,7 +164,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 			}
 
 			if (data['ssz_value1'] > 0 && data['ssz_value2'] > 0) {
-				data['pjtgbfb_value'] = ((data['tgbfb_value1'] + data['tgbfb_value2']) / 2).toFixed(2);;
+				data['pjtgbfb_value'] = ((data['tgbfb_value1'] + data['tgbfb_value2']) / 2).toFixed(1);;
 			} else if (data['ssz_value1'] > 0) {
 				data['pjtgbfb_value'] = data['tgbfb_value1'];
 			} else {
@@ -177,7 +177,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 		for (var i = 0; i < myform.CJL_SF_Data.length; i++) {
 			var data = myform.CJL_SF_Data[i];
 			if (data['ssz_value1'] > 0) {
-				gshzz_value1 = (Number(gshzz_value1) + Number(data['ssz_value1'])).toFixed(2);
+				gshzz_value1 = (Number(gshzz_value1) + Number(data['ssz_value1'])).toFixed(1);
 			}
 		}
 		$("#gshzz_value1").html(gshzz_value1);
@@ -185,7 +185,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 		for (var i = 0; i < myform.CJL_SF_Data.length; i++) {
 			var data = myform.CJL_SF_Data[i];
 			if (data['ssz_value2'] > 0) {
-				gshzz_value2 = (Number(gshzz_value2) + Number(data['ssz_value2'])).toFixed(2);
+				gshzz_value2 = (Number(gshzz_value2) + Number(data['ssz_value2'])).toFixed(1);
 			}
 		}
 		$("#gshzz_value2").html(gshzz_value2);
@@ -195,9 +195,9 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 		var sh_value2 = CLL_SF_GZ_Value.sxhsyzl_value2 - gshzz_value2;
 		$("#sh_value2").html(sh_value2);
 		//计算损耗率
-		var shl_value1 = (sh_value1 / CLL_SF_GZ_Value.sxhsyzl_value1).toFixed(2);
+		var shl_value1 = (sh_value1 / CLL_SF_GZ_Value.sxhsyzl_value1).toFixed(1);
 		$("#shl_value1").html(shl_value1);
-		var shl_value2 = (sh_value2 / CLL_SF_GZ_Value.sxhsyzl_value2).toFixed(2);
+		var shl_value2 = (sh_value2 / CLL_SF_GZ_Value.sxhsyzl_value2).toFixed(1);
 		$("#shl_value2").html(shl_value2);
 	}
 

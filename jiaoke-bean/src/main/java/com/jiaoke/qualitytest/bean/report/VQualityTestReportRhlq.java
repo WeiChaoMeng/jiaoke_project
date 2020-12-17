@@ -7,15 +7,15 @@ import com.jiaoke.common.bean.QualityTestSearchDate;
 import java.util.Date;
 
 /**
- * V_quality_test_report_kf实体类
+ * V_quality_test_report_rhlq实体类
  * 
  * @author 
  *
  */
-public class VQualityTestReportKf extends QualityTestSearchDate {
+public class VQualityTestReportRhlq extends QualityTestSearchDate {
 	/***/
 	@JSONField(name="create_time")
-	private Date createTime;
+	private Date createTime; 
 	/***/
 	@JSONField(name="materials")
 	private String materials; 
@@ -47,48 +47,27 @@ public class VQualityTestReportKf extends QualityTestSearchDate {
 	@JSONField(name="required_status_show")
 	private String requiredStatusShow; 
 	/***/
-	@JSONField(name="ID")
-	private Integer iD; 
+	@JSONField(name="zfllwhl")
+	private String zfllwhl; 
 	/***/
-	@JSONField(name="experimental_id")
-	private String experimentalId; 
+	@JSONField(name="bznd")
+	private String bznd; 
 	/***/
-	@JSONField(name="experimental_name")
-	private String experimentalName; 
+	@JSONField(name="zrd")
+	private String zrd; 
 	/***/
-	@JSONField(name="SK118")
-	private Double sK118; 
+	@JSONField(name="yd")
+	private String yd; 
 	/***/
-	@JSONField(name="SK06")
-	private Double sK06; 
+	@JSONField(name="ccwdx1")
+	private String ccwdx1; 
 	/***/
-	@JSONField(name="SK03")
-	private Double sK03; 
-	/***/
-	@JSONField(name="SK015")
-	private Double sK015; 
-	/***/
-	@JSONField(name="SK0075")
-	private Double sK0075; 
-	/***/
-	@JSONField(name="bgmd")
-	private String bgmd; 
-	/***/
-	@JSONField(name="hsl")
-	private String hsl; 
-	/***/
-	@JSONField(name="qsxs")
-	private String qsxs; 
-	/***/
-	@JSONField(name="sxzl")
-	private String sxzl; 
-	/***/
-	@JSONField(name="jradx")
-	private String jradx; 
+	@JSONField(name="ccwdx5")
+	private String ccwdx5; 
 	/**
 	 * 实例化
 	 */
-	public VQualityTestReportKf() {
+	public VQualityTestReportRhlq() {
 		super();
 	}
 	/**
@@ -96,7 +75,7 @@ public class VQualityTestReportKf extends QualityTestSearchDate {
 	 * 
 	 * @param obj
 	 */
-	public VQualityTestReportKf(JSONObject obj) {
+	public VQualityTestReportRhlq(JSONObject obj) {
 		this();
 		this.setCreateTime((Date)obj.get("createTime"));
 		if (obj.get("materials") instanceof String) {
@@ -129,44 +108,23 @@ public class VQualityTestReportKf extends QualityTestSearchDate {
 		if (obj.get("requiredStatusShow") instanceof String) {
 			this.setRequiredStatusShow((String) obj.get("requiredStatusShow"));
 		}
-		if (obj.get("iD") instanceof Number) {
-			this.setID(((Number) obj.get("iD")).intValue());
+		if (obj.get("zfllwhl") instanceof String) {
+			this.setZfllwhl((String) obj.get("zfllwhl"));
 		}
-		if (obj.get("experimentalId") instanceof String) {
-			this.setExperimentalId((String) obj.get("experimentalId"));
+		if (obj.get("bznd") instanceof String) {
+			this.setBznd((String) obj.get("bznd"));
 		}
-		if (obj.get("experimentalName") instanceof String) {
-			this.setExperimentalName((String) obj.get("experimentalName"));
+		if (obj.get("zrd") instanceof String) {
+			this.setZrd((String) obj.get("zrd"));
 		}
-		if (obj.get("sK118") instanceof Number) {
-			this.setSK118(((Number) obj.get("sK118")).doubleValue());
+		if (obj.get("yd") instanceof String) {
+			this.setYd((String) obj.get("yd"));
 		}
-		if (obj.get("sK06") instanceof Number) {
-			this.setSK06(((Number) obj.get("sK06")).doubleValue());
+		if (obj.get("ccwdx1") instanceof String) {
+			this.setCcwdx1((String) obj.get("ccwdx1"));
 		}
-		if (obj.get("sK03") instanceof Number) {
-			this.setSK03(((Number) obj.get("sK03")).doubleValue());
-		}
-		if (obj.get("sK015") instanceof Number) {
-			this.setSK015(((Number) obj.get("sK015")).doubleValue());
-		}
-		if (obj.get("sK0075") instanceof Number) {
-			this.setSK0075(((Number) obj.get("sK0075")).doubleValue());
-		}
-		if (obj.get("bgmd") instanceof String) {
-			this.setBgmd((String) obj.get("bgmd"));
-		}
-		if (obj.get("hsl") instanceof String) {
-			this.setHsl((String) obj.get("hsl"));
-		}
-		if (obj.get("qsxs") instanceof String) {
-			this.setQsxs((String) obj.get("qsxs"));
-		}
-		if (obj.get("sxzl") instanceof String) {
-			this.setSxzl((String) obj.get("sxzl"));
-		}
-		if (obj.get("jradx") instanceof String) {
-			this.setJradx((String) obj.get("jradx"));
+		if (obj.get("ccwdx5") instanceof String) {
+			this.setCcwdx5((String) obj.get("ccwdx5"));
 		}
 	}
 	
@@ -210,44 +168,23 @@ public class VQualityTestReportKf extends QualityTestSearchDate {
 		if (this.getRequiredStatusShow() != null) {
 			result.put("requiredStatusShow",this.getRequiredStatusShow());
 		}
-		if (this.getID() != null) {
-			result.put("iD",this.getID());
+		if (this.getZfllwhl() != null) {
+			result.put("zfllwhl",this.getZfllwhl());
 		}
-		if (this.getExperimentalId() != null) {
-			result.put("experimentalId",this.getExperimentalId());
+		if (this.getBznd() != null) {
+			result.put("bznd",this.getBznd());
 		}
-		if (this.getExperimentalName() != null) {
-			result.put("experimentalName",this.getExperimentalName());
+		if (this.getZrd() != null) {
+			result.put("zrd",this.getZrd());
 		}
-		if (this.getSK118() != null) {
-			result.put("sK118",this.getSK118());
+		if (this.getYd() != null) {
+			result.put("yd",this.getYd());
 		}
-		if (this.getSK06() != null) {
-			result.put("sK06",this.getSK06());
+		if (this.getCcwdx1() != null) {
+			result.put("ccwdx1",this.getCcwdx1());
 		}
-		if (this.getSK03() != null) {
-			result.put("sK03",this.getSK03());
-		}
-		if (this.getSK015() != null) {
-			result.put("sK015",this.getSK015());
-		}
-		if (this.getSK0075() != null) {
-			result.put("sK0075",this.getSK0075());
-		}
-		if (this.getBgmd() != null) {
-			result.put("bgmd",this.getBgmd());
-		}
-		if (this.getHsl() != null) {
-			result.put("hsl",this.getHsl());
-		}
-		if (this.getQsxs() != null) {
-			result.put("qsxs",this.getQsxs());
-		}
-		if (this.getSxzl() != null) {
-			result.put("sxzl",this.getSxzl());
-		}
-		if (this.getJradx() != null) {
-			result.put("jradx",this.getJradx());
+		if (this.getCcwdx5() != null) {
+			result.put("ccwdx5",this.getCcwdx5());
 		}
 		return result;
 	}
@@ -452,242 +389,116 @@ public class VQualityTestReportKf extends QualityTestSearchDate {
 	}
 	
 	/**
-	 * 获取iD
+	 * 获取zfllwhl
 	 * 
 	 * @return
 	 */
-	public Integer getID() {
-		return iD;
+	public String getZfllwhl() {
+		return zfllwhl;
 	}
 
 	/**
-	 * 设置iD
+	 * 设置zfllwhl
 	 * 
-	 * @param iD
+	 * @param zfllwhl
 	 */
-	public void setID(Integer iD) {
-		this.iD = iD;
+	public void setZfllwhl(String zfllwhl) {
+		this.zfllwhl = zfllwhl;
 	}
 	
 	/**
-	 * 获取experimentalId
+	 * 获取bznd
 	 * 
 	 * @return
 	 */
-	public String getExperimentalId() {
-		return experimentalId;
+	public String getBznd() {
+		return bznd;
 	}
 
 	/**
-	 * 设置experimentalId
+	 * 设置bznd
 	 * 
-	 * @param experimentalId
+	 * @param bznd
 	 */
-	public void setExperimentalId(String experimentalId) {
-		this.experimentalId = experimentalId;
+	public void setBznd(String bznd) {
+		this.bznd = bznd;
 	}
 	
 	/**
-	 * 获取experimentalName
+	 * 获取zrd
 	 * 
 	 * @return
 	 */
-	public String getExperimentalName() {
-		return experimentalName;
+	public String getZrd() {
+		return zrd;
 	}
 
 	/**
-	 * 设置experimentalName
+	 * 设置zrd
 	 * 
-	 * @param experimentalName
+	 * @param zrd
 	 */
-	public void setExperimentalName(String experimentalName) {
-		this.experimentalName = experimentalName;
+	public void setZrd(String zrd) {
+		this.zrd = zrd;
 	}
 	
 	/**
-	 * 获取sK118
+	 * 获取yd
 	 * 
 	 * @return
 	 */
-	public Double getSK118() {
-		return sK118;
+	public String getYd() {
+		return yd;
 	}
 
 	/**
-	 * 设置sK118
+	 * 设置yd
 	 * 
-	 * @param sK118
+	 * @param yd
 	 */
-	public void setSK118(Double sK118) {
-		this.sK118 = sK118;
+	public void setYd(String yd) {
+		this.yd = yd;
 	}
 	
 	/**
-	 * 获取sK06
+	 * 获取ccwdx1
 	 * 
 	 * @return
 	 */
-	public Double getSK06() {
-		return sK06;
+	public String getCcwdx1() {
+		return ccwdx1;
 	}
 
 	/**
-	 * 设置sK06
+	 * 设置ccwdx1
 	 * 
-	 * @param sK06
+	 * @param ccwdx1
 	 */
-	public void setSK06(Double sK06) {
-		this.sK06 = sK06;
+	public void setCcwdx1(String ccwdx1) {
+		this.ccwdx1 = ccwdx1;
 	}
 	
 	/**
-	 * 获取sK03
+	 * 获取ccwdx5
 	 * 
 	 * @return
 	 */
-	public Double getSK03() {
-		return sK03;
+	public String getCcwdx5() {
+		return ccwdx5;
 	}
 
 	/**
-	 * 设置sK03
+	 * 设置ccwdx5
 	 * 
-	 * @param sK03
+	 * @param ccwdx5
 	 */
-	public void setSK03(Double sK03) {
-		this.sK03 = sK03;
-	}
-	
-	/**
-	 * 获取sK015
-	 * 
-	 * @return
-	 */
-	public Double getSK015() {
-		return sK015;
-	}
-
-	/**
-	 * 设置sK015
-	 * 
-	 * @param sK015
-	 */
-	public void setSK015(Double sK015) {
-		this.sK015 = sK015;
-	}
-	
-	/**
-	 * 获取sK0075
-	 * 
-	 * @return
-	 */
-	public Double getSK0075() {
-		return sK0075;
-	}
-
-	/**
-	 * 设置sK0075
-	 * 
-	 * @param sK0075
-	 */
-	public void setSK0075(Double sK0075) {
-		this.sK0075 = sK0075;
-	}
-	
-	/**
-	 * 获取bgmd
-	 * 
-	 * @return
-	 */
-	public String getBgmd() {
-		return bgmd;
-	}
-
-	/**
-	 * 设置bgmd
-	 * 
-	 * @param bgmd
-	 */
-	public void setBgmd(String bgmd) {
-		this.bgmd = bgmd;
-	}
-	
-	/**
-	 * 获取hsl
-	 * 
-	 * @return
-	 */
-	public String getHsl() {
-		return hsl;
-	}
-
-	/**
-	 * 设置hsl
-	 * 
-	 * @param hsl
-	 */
-	public void setHsl(String hsl) {
-		this.hsl = hsl;
-	}
-	
-	/**
-	 * 获取qsxs
-	 * 
-	 * @return
-	 */
-	public String getQsxs() {
-		return qsxs;
-	}
-
-	/**
-	 * 设置qsxs
-	 * 
-	 * @param qsxs
-	 */
-	public void setQsxs(String qsxs) {
-		this.qsxs = qsxs;
-	}
-	
-	/**
-	 * 获取sxzl
-	 * 
-	 * @return
-	 */
-	public String getSxzl() {
-		return sxzl;
-	}
-
-	/**
-	 * 设置sxzl
-	 * 
-	 * @param sxzl
-	 */
-	public void setSxzl(String sxzl) {
-		this.sxzl = sxzl;
-	}
-	
-	/**
-	 * 获取jradx
-	 * 
-	 * @return
-	 */
-	public String getJradx() {
-		return jradx;
-	}
-
-	/**
-	 * 设置jradx
-	 * 
-	 * @param jradx
-	 */
-	public void setJradx(String jradx) {
-		this.jradx = jradx;
+	public void setCcwdx5(String ccwdx5) {
+		this.ccwdx5 = ccwdx5;
 	}
 
 	@Override
 	public String toString() {
-		return "VQualityTestReportKf [createTime=" + createTime + " , materials=" + materials + " , materialsNum=" + materialsNum + " , manufacturers=" + manufacturers + " , manufacturersNum=" + manufacturersNum + " , specification=" + specification + " , specificationNum=" + specificationNum + " , requiredResult=" + requiredResult + " , requiredStatus=" + requiredStatus + " , orderTicketNum=" + orderTicketNum + " , requiredStatusShow=" + requiredStatusShow + " , iD=" + iD + " , experimentalId=" + experimentalId + " , experimentalName=" + experimentalName + " , sK118=" + sK118 + " , sK06=" + sK06 + " , sK03=" + sK03 + " , sK015=" + sK015 + " , sK0075=" + sK0075 + " , bgmd=" + bgmd + " , hsl=" + hsl + " , qsxs=" + qsxs + " , sxzl=" + sxzl + " , jradx=" + jradx + "  ]";
+		return "VQualityTestReportRhlq [createTime=" + createTime + " , materials=" + materials + " , materialsNum=" + materialsNum + " , manufacturers=" + manufacturers + " , manufacturersNum=" + manufacturersNum + " , specification=" + specification + " , specificationNum=" + specificationNum + " , requiredResult=" + requiredResult + " , requiredStatus=" + requiredStatus + " , orderTicketNum=" + orderTicketNum + " , requiredStatusShow=" + requiredStatusShow + " , zfllwhl=" + zfllwhl + " , bznd=" + bznd + " , zrd=" + zrd + " , yd=" + yd + " , ccwdx1=" + ccwdx1 + " , ccwdx5=" + ccwdx5 + "  ]";
 	
 	}
 	

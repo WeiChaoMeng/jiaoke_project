@@ -7,15 +7,15 @@ import com.jiaoke.common.bean.QualityTestSearchDate;
 import java.util.Date;
 
 /**
- * V_quality_test_report_xjl实体类
+ * V_quality_test_report_lqhhl实体类
  * 
  * @author 
  *
  */
-public class VQualityTestReportXjl extends QualityTestSearchDate {
+public class VQualityTestReportLqhhl extends QualityTestSearchDate {
 	/***/
 	@JSONField(name="create_time")
-	private Date createTime; 
+	private Date createTime;
 	/***/
 	@JSONField(name="materials")
 	private String materials; 
@@ -56,6 +56,21 @@ public class VQualityTestReportXjl extends QualityTestSearchDate {
 	@JSONField(name="experimental_name")
 	private String experimentalName; 
 	/***/
+	@JSONField(name="SK375")
+	private Double sK375; 
+	/***/
+	@JSONField(name="SK315")
+	private Double sK315; 
+	/***/
+	@JSONField(name="SK265")
+	private Double sK265; 
+	/***/
+	@JSONField(name="SK19")
+	private Double sK19; 
+	/***/
+	@JSONField(name="SK16")
+	private Double sK16; 
+	/***/
 	@JSONField(name="SK132")
 	private Double sK132; 
 	/***/
@@ -86,36 +101,54 @@ public class VQualityTestReportXjl extends QualityTestSearchDate {
 	@JSONField(name="SD")
 	private Double sD; 
 	/***/
-	@JSONField(name="bgxdmd2")
-	private String bgxdmd2; 
+	@JSONField(name="zdlhxdmd")
+	private String zdlhxdmd; 
 	/***/
 	@JSONField(name="mtjxdmd")
 	private String mtjxdmd; 
 	/***/
-	@JSONField(name="bgmd")
-	private String bgmd; 
+	@JSONField(name="kxl")
+	private String kxl; 
 	/***/
-	@JSONField(name="mdjxsl")
-	private String mdjxsl; 
+	@JSONField(name="lqbhd")
+	private String lqbhd; 
 	/***/
-	@JSONField(name="sdl")
-	private String sdl; 
+	@JSONField(name="kljxl")
+	private String kljxl; 
 	/***/
-	@JSONField(name="lj")
-	private String lj; 
+	@JSONField(name="cjlgjjxl")
+	private String cjlgjjxl; 
 	/***/
-	@JSONField(name="yjl")
-	private String yjl; 
+	@JSONField(name="wdd")
+	private String wdd; 
 	/***/
-	@JSONField(name="jgx")
-	private String jgx; 
+	@JSONField(name="lz")
+	private String lz; 
 	/***/
-	@JSONField(name="hnl")
-	private String hnl;
+	@JSONField(name="xl")
+	private String xl; 
+	/***/
+	@JSONField(name="fs")
+	private String fs; 
+	/***/
+	@JSONField(name="clwdd")
+	private String clwdd; 
+	/***/
+	@JSONField(name="drplqdb")
+	private String drplqdb; 
+	/***/
+	@JSONField(name="dwdd")
+	private String dwdd; 
+	/***/
+	@JSONField(name="ssxs")
+	private String ssxs; 
+	/***/
+	@JSONField(name="gzsd")
+	private String gzsd; 
 	/**
 	 * 实例化
 	 */
-	public VQualityTestReportXjl() {
+	public VQualityTestReportLqhhl() {
 		super();
 	}
 	/**
@@ -123,7 +156,7 @@ public class VQualityTestReportXjl extends QualityTestSearchDate {
 	 * 
 	 * @param obj
 	 */
-	public VQualityTestReportXjl(JSONObject obj) {
+	public VQualityTestReportLqhhl(JSONObject obj) {
 		this();
 		this.setCreateTime((Date)obj.get("createTime"));
 		if (obj.get("materials") instanceof String) {
@@ -165,6 +198,21 @@ public class VQualityTestReportXjl extends QualityTestSearchDate {
 		if (obj.get("experimentalName") instanceof String) {
 			this.setExperimentalName((String) obj.get("experimentalName"));
 		}
+		if (obj.get("sK375") instanceof Number) {
+			this.setSK375(((Number) obj.get("sK375")).doubleValue());
+		}
+		if (obj.get("sK315") instanceof Number) {
+			this.setSK315(((Number) obj.get("sK315")).doubleValue());
+		}
+		if (obj.get("sK265") instanceof Number) {
+			this.setSK265(((Number) obj.get("sK265")).doubleValue());
+		}
+		if (obj.get("sK19") instanceof Number) {
+			this.setSK19(((Number) obj.get("sK19")).doubleValue());
+		}
+		if (obj.get("sK16") instanceof Number) {
+			this.setSK16(((Number) obj.get("sK16")).doubleValue());
+		}
 		if (obj.get("sK132") instanceof Number) {
 			this.setSK132(((Number) obj.get("sK132")).doubleValue());
 		}
@@ -195,32 +243,50 @@ public class VQualityTestReportXjl extends QualityTestSearchDate {
 		if (obj.get("sD") instanceof Number) {
 			this.setSD(((Number) obj.get("sD")).doubleValue());
 		}
-		if (obj.get("bgxdmd2") instanceof String) {
-			this.setBgxdmd2((String) obj.get("bgxdmd2"));
+		if (obj.get("zdlhxdmd") instanceof String) {
+			this.setZdlhxdmd((String) obj.get("zdlhxdmd"));
 		}
 		if (obj.get("mtjxdmd") instanceof String) {
 			this.setMtjxdmd((String) obj.get("mtjxdmd"));
 		}
-		if (obj.get("bgmd") instanceof String) {
-			this.setBgmd((String) obj.get("bgmd"));
+		if (obj.get("kxl") instanceof String) {
+			this.setKxl((String) obj.get("kxl"));
 		}
-		if (obj.get("mdjxsl") instanceof String) {
-			this.setMdjxsl((String) obj.get("mdjxsl"));
+		if (obj.get("lqbhd") instanceof String) {
+			this.setLqbhd((String) obj.get("lqbhd"));
 		}
-		if (obj.get("sdl") instanceof String) {
-			this.setSdl((String) obj.get("sdl"));
+		if (obj.get("kljxl") instanceof String) {
+			this.setKljxl((String) obj.get("kljxl"));
 		}
-		if (obj.get("lj") instanceof String) {
-			this.setLj((String) obj.get("lj"));
+		if (obj.get("cjlgjjxl") instanceof String) {
+			this.setCjlgjjxl((String) obj.get("cjlgjjxl"));
 		}
-		if (obj.get("yjl") instanceof String) {
-			this.setYjl((String) obj.get("yjl"));
+		if (obj.get("wdd") instanceof String) {
+			this.setWdd((String) obj.get("wdd"));
 		}
-		if (obj.get("jgx") instanceof String) {
-			this.setJgx((String) obj.get("jgx"));
+		if (obj.get("lz") instanceof String) {
+			this.setLz((String) obj.get("lz"));
 		}
-		if (obj.get("hnl") instanceof String) {
-			this.setHll((String) obj.get("hnl"));
+		if (obj.get("xl") instanceof String) {
+			this.setXl((String) obj.get("xl"));
+		}
+		if (obj.get("fs") instanceof String) {
+			this.setFs((String) obj.get("fs"));
+		}
+		if (obj.get("clwdd") instanceof String) {
+			this.setClwdd((String) obj.get("clwdd"));
+		}
+		if (obj.get("drplqdb") instanceof String) {
+			this.setDrplqdb((String) obj.get("drplqdb"));
+		}
+		if (obj.get("dwdd") instanceof String) {
+			this.setDwdd((String) obj.get("dwdd"));
+		}
+		if (obj.get("ssxs") instanceof String) {
+			this.setSsxs((String) obj.get("ssxs"));
+		}
+		if (obj.get("gzsd") instanceof String) {
+			this.setGzsd((String) obj.get("gzsd"));
 		}
 	}
 	
@@ -273,6 +339,21 @@ public class VQualityTestReportXjl extends QualityTestSearchDate {
 		if (this.getExperimentalName() != null) {
 			result.put("experimentalName",this.getExperimentalName());
 		}
+		if (this.getSK375() != null) {
+			result.put("sK375",this.getSK375());
+		}
+		if (this.getSK315() != null) {
+			result.put("sK315",this.getSK315());
+		}
+		if (this.getSK265() != null) {
+			result.put("sK265",this.getSK265());
+		}
+		if (this.getSK19() != null) {
+			result.put("sK19",this.getSK19());
+		}
+		if (this.getSK16() != null) {
+			result.put("sK16",this.getSK16());
+		}
 		if (this.getSK132() != null) {
 			result.put("sK132",this.getSK132());
 		}
@@ -303,32 +384,50 @@ public class VQualityTestReportXjl extends QualityTestSearchDate {
 		if (this.getSD() != null) {
 			result.put("sD",this.getSD());
 		}
-		if (this.getBgxdmd2() != null) {
-			result.put("bgxdmd2",this.getBgxdmd2());
+		if (this.getZdlhxdmd() != null) {
+			result.put("zdlhxdmd",this.getZdlhxdmd());
 		}
 		if (this.getMtjxdmd() != null) {
 			result.put("mtjxdmd",this.getMtjxdmd());
 		}
-		if (this.getBgmd() != null) {
-			result.put("bgmd",this.getBgmd());
+		if (this.getKxl() != null) {
+			result.put("kxl",this.getKxl());
 		}
-		if (this.getMdjxsl() != null) {
-			result.put("mdjxsl",this.getMdjxsl());
+		if (this.getLqbhd() != null) {
+			result.put("lqbhd",this.getLqbhd());
 		}
-		if (this.getSdl() != null) {
-			result.put("sdl",this.getSdl());
+		if (this.getKljxl() != null) {
+			result.put("kljxl",this.getKljxl());
 		}
-		if (this.getLj() != null) {
-			result.put("lj",this.getLj());
+		if (this.getCjlgjjxl() != null) {
+			result.put("cjlgjjxl",this.getCjlgjjxl());
 		}
-		if (this.getYjl() != null) {
-			result.put("yjl",this.getYjl());
+		if (this.getWdd() != null) {
+			result.put("wdd",this.getWdd());
 		}
-		if (this.getJgx() != null) {
-			result.put("jgx",this.getJgx());
+		if (this.getLz() != null) {
+			result.put("lz",this.getLz());
 		}
-		if (this.getHll() != null) {
-			result.put("hnl",this.getHll());
+		if (this.getXl() != null) {
+			result.put("xl",this.getXl());
+		}
+		if (this.getFs() != null) {
+			result.put("fs",this.getFs());
+		}
+		if (this.getClwdd() != null) {
+			result.put("clwdd",this.getClwdd());
+		}
+		if (this.getDrplqdb() != null) {
+			result.put("drplqdb",this.getDrplqdb());
+		}
+		if (this.getDwdd() != null) {
+			result.put("dwdd",this.getDwdd());
+		}
+		if (this.getSsxs() != null) {
+			result.put("ssxs",this.getSsxs());
+		}
+		if (this.getGzsd() != null) {
+			result.put("gzsd",this.getGzsd());
 		}
 		return result;
 	}
@@ -587,6 +686,96 @@ public class VQualityTestReportXjl extends QualityTestSearchDate {
 	}
 	
 	/**
+	 * 获取sK375
+	 * 
+	 * @return
+	 */
+	public Double getSK375() {
+		return sK375;
+	}
+
+	/**
+	 * 设置sK375
+	 * 
+	 * @param sK375
+	 */
+	public void setSK375(Double sK375) {
+		this.sK375 = sK375;
+	}
+	
+	/**
+	 * 获取sK315
+	 * 
+	 * @return
+	 */
+	public Double getSK315() {
+		return sK315;
+	}
+
+	/**
+	 * 设置sK315
+	 * 
+	 * @param sK315
+	 */
+	public void setSK315(Double sK315) {
+		this.sK315 = sK315;
+	}
+	
+	/**
+	 * 获取sK265
+	 * 
+	 * @return
+	 */
+	public Double getSK265() {
+		return sK265;
+	}
+
+	/**
+	 * 设置sK265
+	 * 
+	 * @param sK265
+	 */
+	public void setSK265(Double sK265) {
+		this.sK265 = sK265;
+	}
+	
+	/**
+	 * 获取sK19
+	 * 
+	 * @return
+	 */
+	public Double getSK19() {
+		return sK19;
+	}
+
+	/**
+	 * 设置sK19
+	 * 
+	 * @param sK19
+	 */
+	public void setSK19(Double sK19) {
+		this.sK19 = sK19;
+	}
+	
+	/**
+	 * 获取sK16
+	 * 
+	 * @return
+	 */
+	public Double getSK16() {
+		return sK16;
+	}
+
+	/**
+	 * 设置sK16
+	 * 
+	 * @param sK16
+	 */
+	public void setSK16(Double sK16) {
+		this.sK16 = sK16;
+	}
+	
+	/**
 	 * 获取sK132
 	 * 
 	 * @return
@@ -767,21 +956,21 @@ public class VQualityTestReportXjl extends QualityTestSearchDate {
 	}
 	
 	/**
-	 * 获取bgxdmd2
+	 * 获取zdlhxdmd
 	 * 
 	 * @return
 	 */
-	public String getBgxdmd2() {
-		return bgxdmd2;
+	public String getZdlhxdmd() {
+		return zdlhxdmd;
 	}
 
 	/**
-	 * 设置bgxdmd2
+	 * 设置zdlhxdmd
 	 * 
-	 * @param bgxdmd2
+	 * @param zdlhxdmd
 	 */
-	public void setBgxdmd2(String bgxdmd2) {
-		this.bgxdmd2 = bgxdmd2;
+	public void setZdlhxdmd(String zdlhxdmd) {
+		this.zdlhxdmd = zdlhxdmd;
 	}
 	
 	/**
@@ -803,134 +992,242 @@ public class VQualityTestReportXjl extends QualityTestSearchDate {
 	}
 	
 	/**
-	 * 获取bgmd
+	 * 获取kxl
 	 * 
 	 * @return
 	 */
-	public String getBgmd() {
-		return bgmd;
+	public String getKxl() {
+		return kxl;
 	}
 
 	/**
-	 * 设置bgmd
+	 * 设置kxl
 	 * 
-	 * @param bgmd
+	 * @param kxl
 	 */
-	public void setBgmd(String bgmd) {
-		this.bgmd = bgmd;
+	public void setKxl(String kxl) {
+		this.kxl = kxl;
 	}
 	
 	/**
-	 * 获取mdjxsl
+	 * 获取lqbhd
 	 * 
 	 * @return
 	 */
-	public String getMdjxsl() {
-		return mdjxsl;
+	public String getLqbhd() {
+		return lqbhd;
 	}
 
 	/**
-	 * 设置mdjxsl
+	 * 设置lqbhd
 	 * 
-	 * @param mdjxsl
+	 * @param lqbhd
 	 */
-	public void setMdjxsl(String mdjxsl) {
-		this.mdjxsl = mdjxsl;
+	public void setLqbhd(String lqbhd) {
+		this.lqbhd = lqbhd;
 	}
 	
 	/**
-	 * 获取sdl
+	 * 获取kljxl
 	 * 
 	 * @return
 	 */
-	public String getSdl() {
-		return sdl;
+	public String getKljxl() {
+		return kljxl;
 	}
 
 	/**
-	 * 设置sdl
+	 * 设置kljxl
 	 * 
-	 * @param sdl
+	 * @param kljxl
 	 */
-	public void setSdl(String sdl) {
-		this.sdl = sdl;
+	public void setKljxl(String kljxl) {
+		this.kljxl = kljxl;
 	}
 	
 	/**
-	 * 获取lj
+	 * 获取cjlgjjxl
 	 * 
 	 * @return
 	 */
-	public String getLj() {
-		return lj;
+	public String getCjlgjjxl() {
+		return cjlgjjxl;
 	}
 
 	/**
-	 * 设置lj
+	 * 设置cjlgjjxl
 	 * 
-	 * @param lj
+	 * @param cjlgjjxl
 	 */
-	public void setLj(String lj) {
-		this.lj = lj;
+	public void setCjlgjjxl(String cjlgjjxl) {
+		this.cjlgjjxl = cjlgjjxl;
 	}
 	
 	/**
-	 * 获取yjl
+	 * 获取wdd
 	 * 
 	 * @return
 	 */
-	public String getYjl() {
-		return yjl;
+	public String getWdd() {
+		return wdd;
 	}
 
 	/**
-	 * 设置yjl
+	 * 设置wdd
 	 * 
-	 * @param yjl
+	 * @param wdd
 	 */
-	public void setYjl(String yjl) {
-		this.yjl = yjl;
+	public void setWdd(String wdd) {
+		this.wdd = wdd;
 	}
 	
 	/**
-	 * 获取jgx
+	 * 获取lz
 	 * 
 	 * @return
 	 */
-	public String getJgx() {
-		return jgx;
+	public String getLz() {
+		return lz;
 	}
 
 	/**
-	 * 设置jgx
+	 * 设置lz
 	 * 
-	 * @param jgx
+	 * @param lz
 	 */
-	public void setJgx(String jgx) {
-		this.jgx = jgx;
+	public void setLz(String lz) {
+		this.lz = lz;
 	}
 	
 	/**
-	 * 获取hnl
+	 * 获取xl
 	 * 
 	 * @return
 	 */
-	public String getHll() {
-		return hnl;
+	public String getXl() {
+		return xl;
 	}
 
 	/**
-	 * 设置hll
+	 * 设置xl
 	 * 
-	 * @param hnl
+	 * @param xl
 	 */
-	public void setHll(String hnl) {
-		this.hnl = hnl;
+	public void setXl(String xl) {
+		this.xl = xl;
+	}
+	
+	/**
+	 * 获取fs
+	 * 
+	 * @return
+	 */
+	public String getFs() {
+		return fs;
+	}
+
+	/**
+	 * 设置fs
+	 * 
+	 * @param fs
+	 */
+	public void setFs(String fs) {
+		this.fs = fs;
+	}
+	
+	/**
+	 * 获取clwdd
+	 * 
+	 * @return
+	 */
+	public String getClwdd() {
+		return clwdd;
+	}
+
+	/**
+	 * 设置clwdd
+	 * 
+	 * @param clwdd
+	 */
+	public void setClwdd(String clwdd) {
+		this.clwdd = clwdd;
+	}
+	
+	/**
+	 * 获取drplqdb
+	 * 
+	 * @return
+	 */
+	public String getDrplqdb() {
+		return drplqdb;
+	}
+
+	/**
+	 * 设置drplqdb
+	 * 
+	 * @param drplqdb
+	 */
+	public void setDrplqdb(String drplqdb) {
+		this.drplqdb = drplqdb;
+	}
+	
+	/**
+	 * 获取dwdd
+	 * 
+	 * @return
+	 */
+	public String getDwdd() {
+		return dwdd;
+	}
+
+	/**
+	 * 设置dwdd
+	 * 
+	 * @param dwdd
+	 */
+	public void setDwdd(String dwdd) {
+		this.dwdd = dwdd;
+	}
+	
+	/**
+	 * 获取ssxs
+	 * 
+	 * @return
+	 */
+	public String getSsxs() {
+		return ssxs;
+	}
+
+	/**
+	 * 设置ssxs
+	 * 
+	 * @param ssxs
+	 */
+	public void setSsxs(String ssxs) {
+		this.ssxs = ssxs;
+	}
+	
+	/**
+	 * 获取gzsd
+	 * 
+	 * @return
+	 */
+	public String getGzsd() {
+		return gzsd;
+	}
+
+	/**
+	 * 设置gzsd
+	 * 
+	 * @param gzsd
+	 */
+	public void setGzsd(String gzsd) {
+		this.gzsd = gzsd;
 	}
 
 	@Override
 	public String toString() {
-		return "VQualityTestReportXjl [createTime=" + createTime + " , materials=" + materials + " , materialsNum=" + materialsNum + " , manufacturers=" + manufacturers + " , manufacturersNum=" + manufacturersNum + " , specification=" + specification + " , specificationNum=" + specificationNum + " , requiredResult=" + requiredResult + " , requiredStatus=" + requiredStatus + " , orderTicketNum=" + orderTicketNum + " , requiredStatusShow=" + requiredStatusShow + " , iD=" + iD + " , experimentalId=" + experimentalId + " , experimentalName=" + experimentalName + " , sK132=" + sK132 + " , sK95=" + sK95 + " , sK475=" + sK475 + " , sK236=" + sK236 + " , sK118=" + sK118 + " , sK06=" + sK06 + " , sK03=" + sK03 + " , sK015=" + sK015 + " , sK0075=" + sK0075 + " , sD=" + sD + " , bgxdmd2=" + bgxdmd2 + " , mtjxdmd=" + mtjxdmd + " , bgmd=" + bgmd + " , mdjxsl=" + mdjxsl + " , sdl=" + sdl + " , lj=" + lj + " , yjl=" + yjl + " , jgx=" + jgx + " , hnl=" + hnl + "  ]";
+		return "VQualityTestReportLqhhl [createTime=" + createTime + " , materials=" + materials + " , materialsNum=" + materialsNum + " , manufacturers=" + manufacturers + " , manufacturersNum=" + manufacturersNum + " , specification=" + specification + " , specificationNum=" + specificationNum + " , requiredResult=" + requiredResult + " , requiredStatus=" + requiredStatus + " , orderTicketNum=" + orderTicketNum + " , requiredStatusShow=" + requiredStatusShow + " , iD=" + iD + " , experimentalId=" + experimentalId + " , experimentalName=" + experimentalName + " , sK375=" + sK375 + " , sK315=" + sK315 + " , sK265=" + sK265 + " , sK19=" + sK19 + " , sK16=" + sK16 + " , sK132=" + sK132 + " , sK95=" + sK95 + " , sK475=" + sK475 + " , sK236=" + sK236 + " , sK118=" + sK118 + " , sK06=" + sK06 + " , sK03=" + sK03 + " , sK015=" + sK015 + " , sK0075=" + sK0075 + " , sD=" + sD + " , zdlhxdmd=" + zdlhxdmd + " , mtjxdmd=" + mtjxdmd + " , kxl=" + kxl + " , lqbhd=" + lqbhd + " , kljxl=" + kljxl + " , cjlgjjxl=" + cjlgjjxl + " , wdd=" + wdd + " , lz=" + lz + " , xl=" + xl + " , fs=" + fs + " , clwdd=" + clwdd + " , drplqdb=" + drplqdb + " , dwdd=" + dwdd + " , ssxs=" + ssxs + " , gzsd=" + gzsd + "  ]";
 	
 	}
 	

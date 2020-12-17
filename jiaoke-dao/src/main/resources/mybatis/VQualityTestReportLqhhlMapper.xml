@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jiaoke.qualitytest.dao.report.VQualityTestReportXjlDao">
-	<!-- VQualityTestReportXjl的resultMap,column是给数据库列起的别名,它对应property类的属性 -->
-	<resultMap id="result_VQualityTestReportXjl_Map" type="com.jiaoke.qualitytest.bean.report.VQualityTestReportXjl">
+<mapper namespace="com.jiaoke.qualitytest.dao.report.VQualityTestReportLqhhlDao">
+	<!-- VQualityTestReportLqhhl的resultMap,column是给数据库列起的别名,它对应property类的属性 -->
+	<resultMap id="result_VQualityTestReportLqhhl_Map" type="com.jiaoke.qualitytest.bean.report.VQualityTestReportLqhhl">
 		
 		<result column="create_time" property="createTime" />
 		<result column="materials" property="materials" />
@@ -18,6 +18,11 @@
 		<result column="ID" property="iD" />
 		<result column="experimental_id" property="experimentalId" />
 		<result column="experimental_name" property="experimentalName" />
+		<result column="SK375" property="sK375" />
+		<result column="SK315" property="sK315" />
+		<result column="SK265" property="sK265" />
+		<result column="SK19" property="sK19" />
+		<result column="SK16" property="sK16" />
 		<result column="SK132" property="sK132" />
 		<result column="SK95" property="sK95" />
 		<result column="SK475" property="sK475" />
@@ -28,15 +33,21 @@
 		<result column="SK015" property="sK015" />
 		<result column="SK0075" property="sK0075" />
 		<result column="SD" property="sD" />
-		<result column="bgxdmd2" property="bgxdmd2" />
+		<result column="zdlhxdmd" property="zdlhxdmd" />
 		<result column="mtjxdmd" property="mtjxdmd" />
-		<result column="bgmd" property="bgmd" />
-		<result column="mdjxsl" property="mdjxsl" />
-		<result column="sdl" property="sdl" />
-		<result column="lj" property="lj" />
-		<result column="yjl" property="yjl" />
-		<result column="jgx" property="jgx" />
-		<result column="hnl" property="hnl" />
+		<result column="kxl" property="kxl" />
+		<result column="lqbhd" property="lqbhd" />
+		<result column="kljxl" property="kljxl" />
+		<result column="cjlgjjxl" property="cjlgjjxl" />
+		<result column="wdd" property="wdd" />
+		<result column="lz" property="lz" />
+		<result column="xl" property="xl" />
+		<result column="fs" property="fs" />
+		<result column="clwdd" property="clwdd" />
+		<result column="drplqdb" property="drplqdb" />
+		<result column="dwdd" property="dwdd" />
+		<result column="ssxs" property="ssxs" />
+		<result column="gzsd" property="gzsd" />
 	</resultMap>
 
 	<!-- assist是查询辅助工具类, ${req.require}表示列名,#{req.value}表示值它是防SQL注入的 -->
@@ -105,30 +116,30 @@
 		</where>
 	</sql>
 
-	<!-- 数据库中表名为:V_quality_test_report_xjl的列名 -->
-	<sql id="V_quality_test_report_xjl_Column">
-		create_time,materials,materials_num,manufacturers,manufacturers_num,specification,specification_num,required_result,required_status,order_ticket_num,required_status_show,ID,experimental_id,experimental_name,SK132,SK95,SK475,SK236,SK118,SK06,SK03,SK015,SK0075,SD,bgxdmd2,mtjxdmd,bgmd,mdjxsl,sdl,lj,yjl,jgx,hnl
+	<!-- 数据库中表名为:V_quality_test_report_lqhhl的列名 -->
+	<sql id="V_quality_test_report_lqhhl_Column">
+		create_time,materials,materials_num,manufacturers,manufacturers_num,specification,specification_num,required_result,required_status,order_ticket_num,required_status_show,ID,experimental_id,experimental_name,SK375,SK315,SK265,SK19,SK16,SK132,SK95,SK475,SK236,SK118,SK06,SK03,SK015,SK0075,SD,zdlhxdmd,mtjxdmd,kxl,lqbhd,kljxl,cjlgjjxl,wdd,lz,xl,fs,clwdd,drplqdb,dwdd,ssxs,gzsd
 	</sql>
 
-	<!--获得类名为:VQualityTestReportXjl对应的数据库表的数据总行数 -->
-	<select id="getVQualityTestReportXjlRowCount" parameterType="com.jiaoke.common.bean.Assist" resultType="java.lang.Long">
-		select count(*) from V_quality_test_report_xjl
+	<!--获得类名为:VQualityTestReportLqhhl对应的数据库表的数据总行数 -->
+	<select id="getVQualityTestReportLqhhlRowCount" parameterType="com.jiaoke.common.bean.Assist" resultType="java.lang.Long">
+		select count(*) from V_quality_test_report_lqhhl
 		<if test="require!=null">
 			<include refid="assist" />
 		</if>
 	</select>
 	
-	<!-- 获得类名为:VQualityTestReportXjl对应数据库中表的数据集合 -->
-	<select id="selectVQualityTestReportXjl" parameterType="com.jiaoke.common.bean.Assist" resultMap="result_VQualityTestReportXjl_Map">
+	<!-- 获得类名为:VQualityTestReportLqhhl对应数据库中表的数据集合 -->
+	<select id="selectVQualityTestReportLqhhl" parameterType="com.jiaoke.common.bean.Assist" resultMap="result_VQualityTestReportLqhhl_Map">
 		select
 		<if test="distinct !=null">${distinct}</if>
 		<choose>
 			<when test="resultColumn!=null">${resultColumn}</when>
 			<otherwise>
-				<include refid="V_quality_test_report_xjl_Column" />
+				<include refid="V_quality_test_report_lqhhl_Column" />
 			</otherwise>
 		</choose>
-		from V_quality_test_report_xjl
+		from V_quality_test_report_lqhhl
 		<if test="require!=null">
 			<include refid="assist" />
 		</if>
@@ -139,11 +150,11 @@
 		</choose>
 	</select>
 	
-	<!-- 获得一个VQualityTestReportXjl对象,以参数VQualityTestReportXjl对象中不为空的属性作为条件进行查询 -->
-	<select id="selectVQualityTestReportXjlObjSingle" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportXjl" resultMap="result_VQualityTestReportXjl_Map">
+	<!-- 获得一个VQualityTestReportLqhhl对象,以参数VQualityTestReportLqhhl对象中不为空的属性作为条件进行查询 -->
+	<select id="selectVQualityTestReportLqhhlObjSingle" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportLqhhl" resultMap="result_VQualityTestReportLqhhl_Map">
 		select
-		<include refid="V_quality_test_report_xjl_Column" />
-		from V_quality_test_report_xjl
+		<include refid="V_quality_test_report_lqhhl_Column" />
+		from V_quality_test_report_lqhhl
 		<where>
 		<if test="createTime != null"> and create_time = #{createTime}</if>
 		<if test="materials != null"> and materials = #{materials}</if>
@@ -159,6 +170,11 @@
 		<if test="iD != null"> and ID = #{iD}</if>
 		<if test="experimentalId != null"> and experimental_id = #{experimentalId}</if>
 		<if test="experimentalName != null"> and experimental_name = #{experimentalName}</if>
+		<if test="sK375 != null"> and SK375 = #{sK375}</if>
+		<if test="sK315 != null"> and SK315 = #{sK315}</if>
+		<if test="sK265 != null"> and SK265 = #{sK265}</if>
+		<if test="sK19 != null"> and SK19 = #{sK19}</if>
+		<if test="sK16 != null"> and SK16 = #{sK16}</if>
 		<if test="sK132 != null"> and SK132 = #{sK132}</if>
 		<if test="sK95 != null"> and SK95 = #{sK95}</if>
 		<if test="sK475 != null"> and SK475 = #{sK475}</if>
@@ -169,25 +185,31 @@
 		<if test="sK015 != null"> and SK015 = #{sK015}</if>
 		<if test="sK0075 != null"> and SK0075 = #{sK0075}</if>
 		<if test="sD != null"> and SD = #{sD}</if>
-		<if test="bgxdmd2 != null"> and bgxdmd2 = #{bgxdmd2}</if>
+		<if test="zdlhxdmd != null"> and zdlhxdmd = #{zdlhxdmd}</if>
 		<if test="mtjxdmd != null"> and mtjxdmd = #{mtjxdmd}</if>
-		<if test="bgmd != null"> and bgmd = #{bgmd}</if>
-		<if test="mdjxsl != null"> and mdjxsl = #{mdjxsl}</if>
-		<if test="sdl != null"> and sdl = #{sdl}</if>
-		<if test="lj != null"> and lj = #{lj}</if>
-		<if test="yjl != null"> and yjl = #{yjl}</if>
-		<if test="jgx != null"> and jgx = #{jgx}</if>
-		<if test="hnl != null"> and hnl = #{hnl}</if>
+		<if test="kxl != null"> and kxl = #{kxl}</if>
+		<if test="lqbhd != null"> and lqbhd = #{lqbhd}</if>
+		<if test="kljxl != null"> and kljxl = #{kljxl}</if>
+		<if test="cjlgjjxl != null"> and cjlgjjxl = #{cjlgjjxl}</if>
+		<if test="wdd != null"> and wdd = #{wdd}</if>
+		<if test="lz != null"> and lz = #{lz}</if>
+		<if test="xl != null"> and xl = #{xl}</if>
+		<if test="fs != null"> and fs = #{fs}</if>
+		<if test="clwdd != null"> and clwdd = #{clwdd}</if>
+		<if test="drplqdb != null"> and drplqdb = #{drplqdb}</if>
+		<if test="dwdd != null"> and dwdd = #{dwdd}</if>
+		<if test="ssxs != null"> and ssxs = #{ssxs}</if>
+		<if test="gzsd != null"> and gzsd = #{gzsd}</if>
 		
 		</where>
 		LIMIT 1
 	</select>
 	
-	<!-- 获得VQualityTestReportXjl对象,以参数VQualityTestReportXjl对象中不为空的属性作为条件进行查询 -->
-	<select id="selectVQualityTestReportXjlByObj" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportXjl" resultMap="result_VQualityTestReportXjl_Map">
+	<!-- 获得VQualityTestReportLqhhl对象,以参数VQualityTestReportLqhhl对象中不为空的属性作为条件进行查询 -->
+	<select id="selectVQualityTestReportLqhhlByObj" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportLqhhl" resultMap="result_VQualityTestReportLqhhl_Map">
 		select
-		<include refid="V_quality_test_report_xjl_Column" />
-		from V_quality_test_report_xjl
+		<include refid="V_quality_test_report_lqhhl_Column" />
+		from V_quality_test_report_lqhhl
 		<where>
 		<if test="createTime != null"> and create_time = #{createTime}</if>
 		<if test="materials != null"> and materials = #{materials}</if>
@@ -203,6 +225,11 @@
 		<if test="iD != null"> and ID = #{iD}</if>
 		<if test="experimentalId != null"> and experimental_id = #{experimentalId}</if>
 		<if test="experimentalName != null"> and experimental_name = #{experimentalName}</if>
+		<if test="sK375 != null"> and SK375 = #{sK375}</if>
+		<if test="sK315 != null"> and SK315 = #{sK315}</if>
+		<if test="sK265 != null"> and SK265 = #{sK265}</if>
+		<if test="sK19 != null"> and SK19 = #{sK19}</if>
+		<if test="sK16 != null"> and SK16 = #{sK16}</if>
 		<if test="sK132 != null"> and SK132 = #{sK132}</if>
 		<if test="sK95 != null"> and SK95 = #{sK95}</if>
 		<if test="sK475 != null"> and SK475 = #{sK475}</if>
@@ -213,29 +240,35 @@
 		<if test="sK015 != null"> and SK015 = #{sK015}</if>
 		<if test="sK0075 != null"> and SK0075 = #{sK0075}</if>
 		<if test="sD != null"> and SD = #{sD}</if>
-		<if test="bgxdmd2 != null"> and bgxdmd2 = #{bgxdmd2}</if>
+		<if test="zdlhxdmd != null"> and zdlhxdmd = #{zdlhxdmd}</if>
 		<if test="mtjxdmd != null"> and mtjxdmd = #{mtjxdmd}</if>
-		<if test="bgmd != null"> and bgmd = #{bgmd}</if>
-		<if test="mdjxsl != null"> and mdjxsl = #{mdjxsl}</if>
-		<if test="sdl != null"> and sdl = #{sdl}</if>
-		<if test="lj != null"> and lj = #{lj}</if>
-		<if test="yjl != null"> and yjl = #{yjl}</if>
-		<if test="jgx != null"> and jgx = #{jgx}</if>
-		<if test="hnl != null"> and hll = #{hnl}</if>
+		<if test="kxl != null"> and kxl = #{kxl}</if>
+		<if test="lqbhd != null"> and lqbhd = #{lqbhd}</if>
+		<if test="kljxl != null"> and kljxl = #{kljxl}</if>
+		<if test="cjlgjjxl != null"> and cjlgjjxl = #{cjlgjjxl}</if>
+		<if test="wdd != null"> and wdd = #{wdd}</if>
+		<if test="lz != null"> and lz = #{lz}</if>
+		<if test="xl != null"> and xl = #{xl}</if>
+		<if test="fs != null"> and fs = #{fs}</if>
+		<if test="clwdd != null"> and clwdd = #{clwdd}</if>
+		<if test="drplqdb != null"> and drplqdb = #{drplqdb}</if>
+		<if test="dwdd != null"> and dwdd = #{dwdd}</if>
+		<if test="ssxs != null"> and ssxs = #{ssxs}</if>
+		<if test="gzsd != null"> and gzsd = #{gzsd}</if>
 		
 		</where>
 	</select>
 
-	<!-- 将VQualityTestReportXjl插入到对应数据库的表中,包括属性值为null的数据 -->
-	<insert id="insertVQualityTestReportXjl" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportXjl">
+	<!-- 将VQualityTestReportLqhhl插入到对应数据库的表中,包括属性值为null的数据 -->
+	<insert id="insertVQualityTestReportLqhhl" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportLqhhl">
 		insert into 
-		V_quality_test_report_xjl (create_time,materials,materials_num,manufacturers,manufacturers_num,specification,specification_num,required_result,required_status,order_ticket_num,required_status_show,ID,experimental_id,experimental_name,SK132,SK95,SK475,SK236,SK118,SK06,SK03,SK015,SK0075,SD,bgxdmd2,mtjxdmd,bgmd,mdjxsl,sdl,lj,yjl,jgx,hnl)
-		values(#{createTime},#{materials},#{materialsNum},#{manufacturers},#{manufacturersNum},#{specification},#{specificationNum},#{requiredResult},#{requiredStatus},#{orderTicketNum},#{requiredStatusShow},#{iD},#{experimentalId},#{experimentalName},#{sK132},#{sK95},#{sK475},#{sK236},#{sK118},#{sK06},#{sK03},#{sK015},#{sK0075},#{sD},#{bgxdmd2},#{mtjxdmd},#{bgmd},#{mdjxsl},#{sdl},#{lj},#{yjl},#{jgx},#{hnl})
+		V_quality_test_report_lqhhl (create_time,materials,materials_num,manufacturers,manufacturers_num,specification,specification_num,required_result,required_status,order_ticket_num,required_status_show,ID,experimental_id,experimental_name,SK375,SK315,SK265,SK19,SK16,SK132,SK95,SK475,SK236,SK118,SK06,SK03,SK015,SK0075,SD,zdlhxdmd,mtjxdmd,kxl,lqbhd,kljxl,cjlgjjxl,wdd,lz,xl,fs,clwdd,drplqdb,dwdd,ssxs,gzsd) 
+		values(#{createTime},#{materials},#{materialsNum},#{manufacturers},#{manufacturersNum},#{specification},#{specificationNum},#{requiredResult},#{requiredStatus},#{orderTicketNum},#{requiredStatusShow},#{iD},#{experimentalId},#{experimentalName},#{sK375},#{sK315},#{sK265},#{sK19},#{sK16},#{sK132},#{sK95},#{sK475},#{sK236},#{sK118},#{sK06},#{sK03},#{sK015},#{sK0075},#{sD},#{zdlhxdmd},#{mtjxdmd},#{kxl},#{lqbhd},#{kljxl},#{cjlgjjxl},#{wdd},#{lz},#{xl},#{fs},#{clwdd},#{drplqdb},#{dwdd},#{ssxs},#{gzsd})
 	</insert>
 
-	<!-- 将VQualityTestReportXjl中属性值不为null的数据,插入到对应数据库的表中 -->
-	<insert id="insertNotNullVQualityTestReportXjl" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportXjl">
-		insert into V_quality_test_report_xjl
+	<!-- 将VQualityTestReportLqhhl中属性值不为null的数据,插入到对应数据库的表中 -->
+	<insert id="insertNotNullVQualityTestReportLqhhl" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportLqhhl">
+		insert into V_quality_test_report_lqhhl
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="createTime != null">create_time,</if>
 			<if test="materials != null">materials,</if>
@@ -251,6 +284,11 @@
 			<if test="iD != null">ID,</if>
 			<if test="experimentalId != null">experimental_id,</if>
 			<if test="experimentalName != null">experimental_name,</if>
+			<if test="sK375 != null">SK375,</if>
+			<if test="sK315 != null">SK315,</if>
+			<if test="sK265 != null">SK265,</if>
+			<if test="sK19 != null">SK19,</if>
+			<if test="sK16 != null">SK16,</if>
 			<if test="sK132 != null">SK132,</if>
 			<if test="sK95 != null">SK95,</if>
 			<if test="sK475 != null">SK475,</if>
@@ -261,15 +299,21 @@
 			<if test="sK015 != null">SK015,</if>
 			<if test="sK0075 != null">SK0075,</if>
 			<if test="sD != null">SD,</if>
-			<if test="bgxdmd2 != null">bgxdmd2,</if>
+			<if test="zdlhxdmd != null">zdlhxdmd,</if>
 			<if test="mtjxdmd != null">mtjxdmd,</if>
-			<if test="bgmd != null">bgmd,</if>
-			<if test="mdjxsl != null">mdjxsl,</if>
-			<if test="sdl != null">sdl,</if>
-			<if test="lj != null">lj,</if>
-			<if test="yjl != null">yjl,</if>
-			<if test="jgx != null">jgx,</if>
-			<if test="hnl != null">hnl,</if>
+			<if test="kxl != null">kxl,</if>
+			<if test="lqbhd != null">lqbhd,</if>
+			<if test="kljxl != null">kljxl,</if>
+			<if test="cjlgjjxl != null">cjlgjjxl,</if>
+			<if test="wdd != null">wdd,</if>
+			<if test="lz != null">lz,</if>
+			<if test="xl != null">xl,</if>
+			<if test="fs != null">fs,</if>
+			<if test="clwdd != null">clwdd,</if>
+			<if test="drplqdb != null">drplqdb,</if>
+			<if test="dwdd != null">dwdd,</if>
+			<if test="ssxs != null">ssxs,</if>
+			<if test="gzsd != null">gzsd,</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="createTime != null">#{createTime},</if>
@@ -286,6 +330,11 @@
 			<if test="iD != null">#{iD},</if>
 			<if test="experimentalId != null">#{experimentalId},</if>
 			<if test="experimentalName != null">#{experimentalName},</if>
+			<if test="sK375 != null">#{sK375},</if>
+			<if test="sK315 != null">#{sK315},</if>
+			<if test="sK265 != null">#{sK265},</if>
+			<if test="sK19 != null">#{sK19},</if>
+			<if test="sK16 != null">#{sK16},</if>
 			<if test="sK132 != null">#{sK132},</if>
 			<if test="sK95 != null">#{sK95},</if>
 			<if test="sK475 != null">#{sK475},</if>
@@ -296,31 +345,37 @@
 			<if test="sK015 != null">#{sK015},</if>
 			<if test="sK0075 != null">#{sK0075},</if>
 			<if test="sD != null">#{sD},</if>
-			<if test="bgxdmd2 != null">#{bgxdmd2},</if>
+			<if test="zdlhxdmd != null">#{zdlhxdmd},</if>
 			<if test="mtjxdmd != null">#{mtjxdmd},</if>
-			<if test="bgmd != null">#{bgmd},</if>
-			<if test="mdjxsl != null">#{mdjxsl},</if>
-			<if test="sdl != null">#{sdl},</if>
-			<if test="lj != null">#{lj},</if>
-			<if test="yjl != null">#{yjl},</if>
-			<if test="jgx != null">#{jgx},</if>
-			<if test="hnl != null">#{hnl},</if>
+			<if test="kxl != null">#{kxl},</if>
+			<if test="lqbhd != null">#{lqbhd},</if>
+			<if test="kljxl != null">#{kljxl},</if>
+			<if test="cjlgjjxl != null">#{cjlgjjxl},</if>
+			<if test="wdd != null">#{wdd},</if>
+			<if test="lz != null">#{lz},</if>
+			<if test="xl != null">#{xl},</if>
+			<if test="fs != null">#{fs},</if>
+			<if test="clwdd != null">#{clwdd},</if>
+			<if test="drplqdb != null">#{drplqdb},</if>
+			<if test="dwdd != null">#{dwdd},</if>
+			<if test="ssxs != null">#{ssxs},</if>
+			<if test="gzsd != null">#{gzsd},</if>
 		</trim>
 	</insert>
 
-	<!-- 将VQualityTestReportXjl批量插入到对应数据库的表中 -->
-	<insert id="insertVQualityTestReportXjlByBatch" parameterType="ArrayList">
-		insert into V_quality_test_report_xjl(create_time,materials,materials_num,manufacturers,manufacturers_num,specification,specification_num,required_result,required_status,order_ticket_num,required_status_show,ID,experimental_id,experimental_name,SK132,SK95,SK475,SK236,SK118,SK06,SK03,SK015,SK0075,SD,bgxdmd2,mtjxdmd,bgmd,mdjxsl,sdl,lj,yjl,jgx,hnl) values
+	<!-- 将VQualityTestReportLqhhl批量插入到对应数据库的表中 -->
+	<insert id="insertVQualityTestReportLqhhlByBatch" parameterType="ArrayList">
+		insert into V_quality_test_report_lqhhl(create_time,materials,materials_num,manufacturers,manufacturers_num,specification,specification_num,required_result,required_status,order_ticket_num,required_status_show,ID,experimental_id,experimental_name,SK375,SK315,SK265,SK19,SK16,SK132,SK95,SK475,SK236,SK118,SK06,SK03,SK015,SK0075,SD,zdlhxdmd,mtjxdmd,kxl,lqbhd,kljxl,cjlgjjxl,wdd,lz,xl,fs,clwdd,drplqdb,dwdd,ssxs,gzsd) values
 		<foreach collection="list" item="item" index="index"
 			separator=",">
-			(#{item.createTime},#{item.materials},#{item.materialsNum},#{item.manufacturers},#{item.manufacturersNum},#{item.specification},#{item.specificationNum},#{item.requiredResult},#{item.requiredStatus},#{item.orderTicketNum},#{item.requiredStatusShow},#{item.iD},#{item.experimentalId},#{item.experimentalName},#{item.sK132},#{item.sK95},#{item.sK475},#{item.sK236},#{item.sK118},#{item.sK06},#{item.sK03},#{item.sK015},#{item.sK0075},#{item.sD},#{item.bgxdmd2},#{item.mtjxdmd},#{item.bgmd},#{item.mdjxsl},#{item.sdl},#{item.lj},#{item.yjl},#{item.jgx},#{item.hnl})
+			(#{item.createTime},#{item.materials},#{item.materialsNum},#{item.manufacturers},#{item.manufacturersNum},#{item.specification},#{item.specificationNum},#{item.requiredResult},#{item.requiredStatus},#{item.orderTicketNum},#{item.requiredStatusShow},#{item.iD},#{item.experimentalId},#{item.experimentalName},#{item.sK375},#{item.sK315},#{item.sK265},#{item.sK19},#{item.sK16},#{item.sK132},#{item.sK95},#{item.sK475},#{item.sK236},#{item.sK118},#{item.sK06},#{item.sK03},#{item.sK015},#{item.sK0075},#{item.sD},#{item.zdlhxdmd},#{item.mtjxdmd},#{item.kxl},#{item.lqbhd},#{item.kljxl},#{item.cjlgjjxl},#{item.wdd},#{item.lz},#{item.xl},#{item.fs},#{item.clwdd},#{item.drplqdb},#{item.dwdd},#{item.ssxs},#{item.gzsd})
 		</foreach>
 	</insert>
 	
 
-	<!-- 通过辅助工具Assist中的条件将VQualityTestReportXjl对应的数据库表的数据删除 -->
-	<delete id="deleteVQualityTestReportXjlByAssist" parameterType="com.jiaoke.common.bean.Assist">
-		delete from V_quality_test_report_xjl
+	<!-- 通过辅助工具Assist中的条件将VQualityTestReportLqhhl对应的数据库表的数据删除 -->
+	<delete id="deleteVQualityTestReportLqhhlByAssist" parameterType="com.jiaoke.common.bean.Assist">
+		delete from V_quality_test_report_lqhhl
 		<if test="require!=null">
 			<include refid="assist" />
 		</if>
@@ -328,9 +383,9 @@
 	
 	
 	
-	<!-- 通过辅助工具Assist中的条件将VQualityTestReportXjl中的数据更新到数据库对应的表中,包括值为null的数据 -->
-	<update id="updateVQualityTestReportXjl" parameterType="map">
-		update V_quality_test_report_xjl
+	<!-- 通过辅助工具Assist中的条件将VQualityTestReportLqhhl中的数据更新到数据库对应的表中,包括值为null的数据 -->
+	<update id="updateVQualityTestReportLqhhl" parameterType="map">
+		update V_quality_test_report_lqhhl
 		<set>
 			create_time = #{enti.createTime},
 			materials = #{enti.materials},
@@ -346,6 +401,11 @@
 			ID = #{enti.iD},
 			experimental_id = #{enti.experimentalId},
 			experimental_name = #{enti.experimentalName},
+			SK375 = #{enti.sK375},
+			SK315 = #{enti.sK315},
+			SK265 = #{enti.sK265},
+			SK19 = #{enti.sK19},
+			SK16 = #{enti.sK16},
 			SK132 = #{enti.sK132},
 			SK95 = #{enti.sK95},
 			SK475 = #{enti.sK475},
@@ -356,24 +416,30 @@
 			SK015 = #{enti.sK015},
 			SK0075 = #{enti.sK0075},
 			SD = #{enti.sD},
-			bgxdmd2 = #{enti.bgxdmd2},
+			zdlhxdmd = #{enti.zdlhxdmd},
 			mtjxdmd = #{enti.mtjxdmd},
-			bgmd = #{enti.bgmd},
-			mdjxsl = #{enti.mdjxsl},
-			sdl = #{enti.sdl},
-			lj = #{enti.lj},
-			yjl = #{enti.yjl},
-			jgx = #{enti.jgx},
-			hnl = #{enti.hnl},
+			kxl = #{enti.kxl},
+			lqbhd = #{enti.lqbhd},
+			kljxl = #{enti.kljxl},
+			cjlgjjxl = #{enti.cjlgjjxl},
+			wdd = #{enti.wdd},
+			lz = #{enti.lz},
+			xl = #{enti.xl},
+			fs = #{enti.fs},
+			clwdd = #{enti.clwdd},
+			drplqdb = #{enti.drplqdb},
+			dwdd = #{enti.dwdd},
+			ssxs = #{enti.ssxs},
+			gzsd = #{enti.gzsd},
 		</set>
 		<if test="assist.require!=null">
 			<include refid="updateAssist" />
 		</if>
 	</update>
 
-	<!-- 通过辅助工具Assist中的条件将VQualityTestReportXjl中属性值不为null的数据更新到数据库对应的表中 -->
-	<update id="updateNotNullVQualityTestReportXjl" parameterType="map">
-		update V_quality_test_report_xjl
+	<!-- 通过辅助工具Assist中的条件将VQualityTestReportLqhhl中属性值不为null的数据更新到数据库对应的表中 -->
+	<update id="updateNotNullVQualityTestReportLqhhl" parameterType="map">
+		update V_quality_test_report_lqhhl
 		<set>
 			<if test="enti.createTime != null">create_time = #{enti.createTime},</if>
 			<if test="enti.materials != null">materials = #{enti.materials},</if>
@@ -389,6 +455,11 @@
 			<if test="enti.iD != null">ID = #{enti.iD},</if>
 			<if test="enti.experimentalId != null">experimental_id = #{enti.experimentalId},</if>
 			<if test="enti.experimentalName != null">experimental_name = #{enti.experimentalName},</if>
+			<if test="enti.sK375 != null">SK375 = #{enti.sK375},</if>
+			<if test="enti.sK315 != null">SK315 = #{enti.sK315},</if>
+			<if test="enti.sK265 != null">SK265 = #{enti.sK265},</if>
+			<if test="enti.sK19 != null">SK19 = #{enti.sK19},</if>
+			<if test="enti.sK16 != null">SK16 = #{enti.sK16},</if>
 			<if test="enti.sK132 != null">SK132 = #{enti.sK132},</if>
 			<if test="enti.sK95 != null">SK95 = #{enti.sK95},</if>
 			<if test="enti.sK475 != null">SK475 = #{enti.sK475},</if>
@@ -399,15 +470,21 @@
 			<if test="enti.sK015 != null">SK015 = #{enti.sK015},</if>
 			<if test="enti.sK0075 != null">SK0075 = #{enti.sK0075},</if>
 			<if test="enti.sD != null">SD = #{enti.sD},</if>
-			<if test="enti.bgxdmd2 != null">bgxdmd2 = #{enti.bgxdmd2},</if>
+			<if test="enti.zdlhxdmd != null">zdlhxdmd = #{enti.zdlhxdmd},</if>
 			<if test="enti.mtjxdmd != null">mtjxdmd = #{enti.mtjxdmd},</if>
-			<if test="enti.bgmd != null">bgmd = #{enti.bgmd},</if>
-			<if test="enti.mdjxsl != null">mdjxsl = #{enti.mdjxsl},</if>
-			<if test="enti.sdl != null">sdl = #{enti.sdl},</if>
-			<if test="enti.lj != null">lj = #{enti.lj},</if>
-			<if test="enti.yjl != null">yjl = #{enti.yjl},</if>
-			<if test="enti.jgx != null">jgx = #{enti.jgx},</if>
-			<if test="enti.hnl != null">hll = #{enti.hnl},</if>
+			<if test="enti.kxl != null">kxl = #{enti.kxl},</if>
+			<if test="enti.lqbhd != null">lqbhd = #{enti.lqbhd},</if>
+			<if test="enti.kljxl != null">kljxl = #{enti.kljxl},</if>
+			<if test="enti.cjlgjjxl != null">cjlgjjxl = #{enti.cjlgjjxl},</if>
+			<if test="enti.wdd != null">wdd = #{enti.wdd},</if>
+			<if test="enti.lz != null">lz = #{enti.lz},</if>
+			<if test="enti.xl != null">xl = #{enti.xl},</if>
+			<if test="enti.fs != null">fs = #{enti.fs},</if>
+			<if test="enti.clwdd != null">clwdd = #{enti.clwdd},</if>
+			<if test="enti.drplqdb != null">drplqdb = #{enti.drplqdb},</if>
+			<if test="enti.dwdd != null">dwdd = #{enti.dwdd},</if>
+			<if test="enti.ssxs != null">ssxs = #{enti.ssxs},</if>
+			<if test="enti.gzsd != null">gzsd = #{enti.gzsd},</if>
 		</set>
 		<if test="assist.require!=null">
 			<include refid="updateAssist" />

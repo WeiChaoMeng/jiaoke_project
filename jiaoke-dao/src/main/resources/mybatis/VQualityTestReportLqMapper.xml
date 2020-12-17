@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.qualitytest.dao.report.VQualityTestReportLqDao">
+	<!-- VQualityTestReportLq的resultMap,column是给数据库列起的别名,它对应property类的属性 -->
+	<resultMap id="result_VQualityTestReportLq_Map" type="com.jiaoke.qualitytest.bean.report.VQualityTestReportLq">
+		
+		<result column="create_time" property="createTime" />
+		<result column="materials" property="materials" />
+		<result column="materials_num" property="materialsNum" />
+		<result column="manufacturers" property="manufacturers" />
+		<result column="manufacturers_num" property="manufacturersNum" />
+		<result column="specification" property="specification" />
+		<result column="specification_num" property="specificationNum" />
+		<result column="required_result" property="requiredResult" />
+		<result column="required_status" property="requiredStatus" />
+		<result column="order_ticket_num" property="orderTicketNum" />
+		<result column="required_status_show" property="requiredStatusShow" />
+		<result column="zrd30" property="zrd30" />
+		<result column="zrd25" property="zrd25" />
+		<result column="zrd15" property="zrd15" />
+		<result column="zrd10" property="zrd10" />
+		<result column="zrd5" property="zrd5" />
+		<result column="yd25" property="yd25" />
+		<result column="yd15" property="yd15" />
+		<result column="yd10" property="yd10" />
+		<result column="yd5" property="yd5" />
+		<result column="rhd" property="rhd" />
+		<result column="sd" property="sd" />
+		<result column="rjd" property="rjd" />
+		<result column="dlnd" property="dlnd" />
+		<result column="md15" property="md15" />
+		<result column="xdmd" property="xdmd" />
+		<result column="txhf" property="txhf" />
+		<result column="lx" property="lx" />
+		<result column="zlbh" property="zlbh" />
+		<result column="clzrdb" property="clzrdb" />
+		<result column="clyd25" property="clyd25" />
+		<result column="clyd15" property="clyd15" />
+		<result column="clyd10" property="clyd10" />
+		<result column="clyd5" property="clyd5" />
+	</resultMap>
+
+	<!-- assist是查询辅助工具类, ${req.require}表示列名,#{req.value}表示值它是防SQL注入的 -->
+	<sql id="assist">
+		<where>
+			<foreach collection="require" item="req" separator=" ">
+				${req.require}
+				<if test="req.value != null">
+					#{req.value}
+				</if>
+				<if test="req.values != null">
+					<foreach collection="req.values" item="value" separator=",">
+						#{value}
+					</foreach>
+				</if>
+				<if test="req.customRequire !=null">
+					<foreach collection="req.customRequire" item="cr" separator=" ">
+						${cr.require}
+						<if test="cr.value != null">
+							#{cr.value}
+						</if>
+						<if test="cr.values != null">
+							<foreach collection="cr.values" item="value"
+								separator=",">
+								#{value}
+							</foreach>
+						</if>
+						<if test="cr.suffix != null"> ${cr.suffix}</if>
+					</foreach>
+				</if>
+				<if test="req.suffix != null"> ${req.suffix}</if>
+			</foreach>
+		</where>
+	</sql>
+
+	<!-- updateAssist用于更新数据查询辅助工具类,作用assist与一致 -->
+	<sql id="updateAssist">
+		<where>
+			<foreach collection="assist.require" item="req" separator=" ">
+				${req.require}
+				<if test="req.value != null">
+					#{req.value}
+				</if>
+				<if test="req.values != null">
+					<foreach collection="req.values" item="value" separator=",">
+						#{value}
+					</foreach>
+				</if>
+				<if test="req.customRequire !=null">
+					<foreach collection="req.customRequire" item="cr" separator=" ">
+						${cr.require}
+						<if test="cr.value != null">
+							#{cr.value}
+						</if>
+						<if test="cr.values != null">
+							<foreach collection="cr.values" item="value"
+								separator=",">
+								#{value}
+							</foreach>
+						</if>
+						<if test="cr.suffix != null"> ${cr.suffix}</if>
+					</foreach>
+				</if>
+				<if test="req.suffix != null"> ${req.suffix}</if>
+			</foreach>
+		</where>
+	</sql>
+
+	<!-- 数据库中表名为:V_quality_test_report_lq的列名 -->
+	<sql id="V_quality_test_report_lq_Column">
+		create_time,materials,materials_num,manufacturers,manufacturers_num,specification,specification_num,required_result,required_status,order_ticket_num,required_status_show,zrd30,zrd25,zrd15,zrd10,zrd5,yd25,yd15,yd10,yd5,rhd,sd,rjd,dlnd,md15,xdmd,txhf,lx,zlbh,clzrdb,clyd25,clyd15,clyd10,clyd5
+	</sql>
+
+	<!--获得类名为:VQualityTestReportLq对应的数据库表的数据总行数 -->
+	<select id="getVQualityTestReportLqRowCount" parameterType="com.jiaoke.common.bean.Assist" resultType="java.lang.Long">
+		select count(*) from V_quality_test_report_lq
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+	</select>
+	
+	<!-- 获得类名为:VQualityTestReportLq对应数据库中表的数据集合 -->
+	<select id="selectVQualityTestReportLq" parameterType="com.jiaoke.common.bean.Assist" resultMap="result_VQualityTestReportLq_Map">
+		select
+		<if test="distinct !=null">${distinct}</if>
+		<choose>
+			<when test="resultColumn!=null">${resultColumn}</when>
+			<otherwise>
+				<include refid="V_quality_test_report_lq_Column" />
+			</otherwise>
+		</choose>
+		from V_quality_test_report_lq
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+		<if test="order !=null">${order}</if>
+		<choose>
+			<when test="startRow !=null and rowSize !=null">LIMIT #{startRow},#{rowSize} </when>
+			<when test="rowSize !=null">LIMIT #{rowSize}</when>
+		</choose>
+	</select>
+	
+	<!-- 获得一个VQualityTestReportLq对象,以参数VQualityTestReportLq对象中不为空的属性作为条件进行查询 -->
+	<select id="selectVQualityTestReportLqObjSingle" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportLq" resultMap="result_VQualityTestReportLq_Map">
+		select
+		<include refid="V_quality_test_report_lq_Column" />
+		from V_quality_test_report_lq
+		<where>
+		<if test="createTime != null"> and create_time = #{createTime}</if>
+		<if test="materials != null"> and materials = #{materials}</if>
+		<if test="materialsNum != null"> and materials_num = #{materialsNum}</if>
+		<if test="manufacturers != null"> and manufacturers = #{manufacturers}</if>
+		<if test="manufacturersNum != null"> and manufacturers_num = #{manufacturersNum}</if>
+		<if test="specification != null"> and specification = #{specification}</if>
+		<if test="specificationNum != null"> and specification_num = #{specificationNum}</if>
+		<if test="requiredResult != null"> and required_result = #{requiredResult}</if>
+		<if test="requiredStatus != null"> and required_status = #{requiredStatus}</if>
+		<if test="orderTicketNum != null"> and order_ticket_num = #{orderTicketNum}</if>
+		<if test="requiredStatusShow != null"> and required_status_show = #{requiredStatusShow}</if>
+		<if test="zrd30 != null"> and zrd30 = #{zrd30}</if>
+		<if test="zrd25 != null"> and zrd25 = #{zrd25}</if>
+		<if test="zrd15 != null"> and zrd15 = #{zrd15}</if>
+		<if test="zrd10 != null"> and zrd10 = #{zrd10}</if>
+		<if test="zrd5 != null"> and zrd5 = #{zrd5}</if>
+		<if test="yd25 != null"> and yd25 = #{yd25}</if>
+		<if test="yd15 != null"> and yd15 = #{yd15}</if>
+		<if test="yd10 != null"> and yd10 = #{yd10}</if>
+		<if test="yd5 != null"> and yd5 = #{yd5}</if>
+		<if test="rhd != null"> and rhd = #{rhd}</if>
+		<if test="sd != null"> and sd = #{sd}</if>
+		<if test="rjd != null"> and rjd = #{rjd}</if>
+		<if test="dlnd != null"> and dlnd = #{dlnd}</if>
+		<if test="md15 != null"> and md15 = #{md15}</if>
+		<if test="xdmd != null"> and xdmd = #{xdmd}</if>
+		<if test="txhf != null"> and txhf = #{txhf}</if>
+		<if test="lx != null"> and lx = #{lx}</if>
+		<if test="zlbh != null"> and zlbh = #{zlbh}</if>
+		<if test="clzrdb != null"> and clzrdb = #{clzrdb}</if>
+		<if test="clyd25 != null"> and clyd25 = #{clyd25}</if>
+		<if test="clyd15 != null"> and clyd15 = #{clyd15}</if>
+		<if test="clyd10 != null"> and clyd10 = #{clyd10}</if>
+		<if test="clyd5 != null"> and clyd5 = #{clyd5}</if>
+		
+		</where>
+		LIMIT 1
+	</select>
+	
+	<!-- 获得VQualityTestReportLq对象,以参数VQualityTestReportLq对象中不为空的属性作为条件进行查询 -->
+	<select id="selectVQualityTestReportLqByObj" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportLq" resultMap="result_VQualityTestReportLq_Map">
+		select
+		<include refid="V_quality_test_report_lq_Column" />
+		from V_quality_test_report_lq
+		<where>
+		<if test="createTime != null"> and create_time = #{createTime}</if>
+		<if test="materials != null"> and materials = #{materials}</if>
+		<if test="materialsNum != null"> and materials_num = #{materialsNum}</if>
+		<if test="manufacturers != null"> and manufacturers = #{manufacturers}</if>
+		<if test="manufacturersNum != null"> and manufacturers_num = #{manufacturersNum}</if>
+		<if test="specification != null"> and specification = #{specification}</if>
+		<if test="specificationNum != null"> and specification_num = #{specificationNum}</if>
+		<if test="requiredResult != null"> and required_result = #{requiredResult}</if>
+		<if test="requiredStatus != null"> and required_status = #{requiredStatus}</if>
+		<if test="orderTicketNum != null"> and order_ticket_num = #{orderTicketNum}</if>
+		<if test="requiredStatusShow != null"> and required_status_show = #{requiredStatusShow}</if>
+		<if test="zrd30 != null"> and zrd30 = #{zrd30}</if>
+		<if test="zrd25 != null"> and zrd25 = #{zrd25}</if>
+		<if test="zrd15 != null"> and zrd15 = #{zrd15}</if>
+		<if test="zrd10 != null"> and zrd10 = #{zrd10}</if>
+		<if test="zrd5 != null"> and zrd5 = #{zrd5}</if>
+		<if test="yd25 != null"> and yd25 = #{yd25}</if>
+		<if test="yd15 != null"> and yd15 = #{yd15}</if>
+		<if test="yd10 != null"> and yd10 = #{yd10}</if>
+		<if test="yd5 != null"> and yd5 = #{yd5}</if>
+		<if test="rhd != null"> and rhd = #{rhd}</if>
+		<if test="sd != null"> and sd = #{sd}</if>
+		<if test="rjd != null"> and rjd = #{rjd}</if>
+		<if test="dlnd != null"> and dlnd = #{dlnd}</if>
+		<if test="md15 != null"> and md15 = #{md15}</if>
+		<if test="xdmd != null"> and xdmd = #{xdmd}</if>
+		<if test="txhf != null"> and txhf = #{txhf}</if>
+		<if test="lx != null"> and lx = #{lx}</if>
+		<if test="zlbh != null"> and zlbh = #{zlbh}</if>
+		<if test="clzrdb != null"> and clzrdb = #{clzrdb}</if>
+		<if test="clyd25 != null"> and clyd25 = #{clyd25}</if>
+		<if test="clyd15 != null"> and clyd15 = #{clyd15}</if>
+		<if test="clyd10 != null"> and clyd10 = #{clyd10}</if>
+		<if test="clyd5 != null"> and clyd5 = #{clyd5}</if>
+		
+		</where>
+	</select>
+
+	<!-- 将VQualityTestReportLq插入到对应数据库的表中,包括属性值为null的数据 -->
+	<insert id="insertVQualityTestReportLq" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportLq">
+		insert into 
+		V_quality_test_report_lq (create_time,materials,materials_num,manufacturers,manufacturers_num,specification,specification_num,required_result,required_status,order_ticket_num,required_status_show,zrd30,zrd25,zrd15,zrd10,zrd5,yd25,yd15,yd10,yd5,rhd,sd,rjd,dlnd,md15,xdmd,txhf,lx,zlbh,clzrdb,clyd25,clyd15,clyd10,clyd5) 
+		values(#{createTime},#{materials},#{materialsNum},#{manufacturers},#{manufacturersNum},#{specification},#{specificationNum},#{requiredResult},#{requiredStatus},#{orderTicketNum},#{requiredStatusShow},#{zrd30},#{zrd25},#{zrd15},#{zrd10},#{zrd5},#{yd25},#{yd15},#{yd10},#{yd5},#{rhd},#{sd},#{rjd},#{dlnd},#{md15},#{xdmd},#{txhf},#{lx},#{zlbh},#{clzrdb},#{clyd25},#{clyd15},#{clyd10},#{clyd5})
+	</insert>
+
+	<!-- 将VQualityTestReportLq中属性值不为null的数据,插入到对应数据库的表中 -->
+	<insert id="insertNotNullVQualityTestReportLq" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportLq">
+		insert into V_quality_test_report_lq
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="createTime != null">create_time,</if>
+			<if test="materials != null">materials,</if>
+			<if test="materialsNum != null">materials_num,</if>
+			<if test="manufacturers != null">manufacturers,</if>
+			<if test="manufacturersNum != null">manufacturers_num,</if>
+			<if test="specification != null">specification,</if>
+			<if test="specificationNum != null">specification_num,</if>
+			<if test="requiredResult != null">required_result,</if>
+			<if test="requiredStatus != null">required_status,</if>
+			<if test="orderTicketNum != null">order_ticket_num,</if>
+			<if test="requiredStatusShow != null">required_status_show,</if>
+			<if test="zrd30 != null">zrd30,</if>
+			<if test="zrd25 != null">zrd25,</if>
+			<if test="zrd15 != null">zrd15,</if>
+			<if test="zrd10 != null">zrd10,</if>
+			<if test="zrd5 != null">zrd5,</if>
+			<if test="yd25 != null">yd25,</if>
+			<if test="yd15 != null">yd15,</if>
+			<if test="yd10 != null">yd10,</if>
+			<if test="yd5 != null">yd5,</if>
+			<if test="rhd != null">rhd,</if>
+			<if test="sd != null">sd,</if>
+			<if test="rjd != null">rjd,</if>
+			<if test="dlnd != null">dlnd,</if>
+			<if test="md15 != null">md15,</if>
+			<if test="xdmd != null">xdmd,</if>
+			<if test="txhf != null">txhf,</if>
+			<if test="lx != null">lx,</if>
+			<if test="zlbh != null">zlbh,</if>
+			<if test="clzrdb != null">clzrdb,</if>
+			<if test="clyd25 != null">clyd25,</if>
+			<if test="clyd15 != null">clyd15,</if>
+			<if test="clyd10 != null">clyd10,</if>
+			<if test="clyd5 != null">clyd5,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="createTime != null">#{createTime},</if>
+			<if test="materials != null">#{materials},</if>
+			<if test="materialsNum != null">#{materialsNum},</if>
+			<if test="manufacturers != null">#{manufacturers},</if>
+			<if test="manufacturersNum != null">#{manufacturersNum},</if>
+			<if test="specification != null">#{specification},</if>
+			<if test="specificationNum != null">#{specificationNum},</if>
+			<if test="requiredResult != null">#{requiredResult},</if>
+			<if test="requiredStatus != null">#{requiredStatus},</if>
+			<if test="orderTicketNum != null">#{orderTicketNum},</if>
+			<if test="requiredStatusShow != null">#{requiredStatusShow},</if>
+			<if test="zrd30 != null">#{zrd30},</if>
+			<if test="zrd25 != null">#{zrd25},</if>
+			<if test="zrd15 != null">#{zrd15},</if>
+			<if test="zrd10 != null">#{zrd10},</if>
+			<if test="zrd5 != null">#{zrd5},</if>
+			<if test="yd25 != null">#{yd25},</if>
+			<if test="yd15 != null">#{yd15},</if>
+			<if test="yd10 != null">#{yd10},</if>
+			<if test="yd5 != null">#{yd5},</if>
+			<if test="rhd != null">#{rhd},</if>
+			<if test="sd != null">#{sd},</if>
+			<if test="rjd != null">#{rjd},</if>
+			<if test="dlnd != null">#{dlnd},</if>
+			<if test="md15 != null">#{md15},</if>
+			<if test="xdmd != null">#{xdmd},</if>
+			<if test="txhf != null">#{txhf},</if>
+			<if test="lx != null">#{lx},</if>
+			<if test="zlbh != null">#{zlbh},</if>
+			<if test="clzrdb != null">#{clzrdb},</if>
+			<if test="clyd25 != null">#{clyd25},</if>
+			<if test="clyd15 != null">#{clyd15},</if>
+			<if test="clyd10 != null">#{clyd10},</if>
+			<if test="clyd5 != null">#{clyd5},</if>
+		</trim>
+	</insert>
+
+	<!-- 将VQualityTestReportLq批量插入到对应数据库的表中 -->
+	<insert id="insertVQualityTestReportLqByBatch" parameterType="ArrayList">
+		insert into V_quality_test_report_lq(create_time,materials,materials_num,manufacturers,manufacturers_num,specification,specification_num,required_result,required_status,order_ticket_num,required_status_show,zrd30,zrd25,zrd15,zrd10,zrd5,yd25,yd15,yd10,yd5,rhd,sd,rjd,dlnd,md15,xdmd,txhf,lx,zlbh,clzrdb,clyd25,clyd15,clyd10,clyd5) values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.createTime},#{item.materials},#{item.materialsNum},#{item.manufacturers},#{item.manufacturersNum},#{item.specification},#{item.specificationNum},#{item.requiredResult},#{item.requiredStatus},#{item.orderTicketNum},#{item.requiredStatusShow},#{item.zrd30},#{item.zrd25},#{item.zrd15},#{item.zrd10},#{item.zrd5},#{item.yd25},#{item.yd15},#{item.yd10},#{item.yd5},#{item.rhd},#{item.sd},#{item.rjd},#{item.dlnd},#{item.md15},#{item.xdmd},#{item.txhf},#{item.lx},#{item.zlbh},#{item.clzrdb},#{item.clyd25},#{item.clyd15},#{item.clyd10},#{item.clyd5})
+		</foreach>
+	</insert>
+	
+
+	<!-- 通过辅助工具Assist中的条件将VQualityTestReportLq对应的数据库表的数据删除 -->
+	<delete id="deleteVQualityTestReportLqByAssist" parameterType="com.jiaoke.common.bean.Assist">
+		delete from V_quality_test_report_lq
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+	</delete>
+	
+	
+	
+	<!-- 通过辅助工具Assist中的条件将VQualityTestReportLq中的数据更新到数据库对应的表中,包括值为null的数据 -->
+	<update id="updateVQualityTestReportLq" parameterType="map">
+		update V_quality_test_report_lq
+		<set>
+			create_time = #{enti.createTime},
+			materials = #{enti.materials},
+			materials_num = #{enti.materialsNum},
+			manufacturers = #{enti.manufacturers},
+			manufacturers_num = #{enti.manufacturersNum},
+			specification = #{enti.specification},
+			specification_num = #{enti.specificationNum},
+			required_result = #{enti.requiredResult},
+			required_status = #{enti.requiredStatus},
+			order_ticket_num = #{enti.orderTicketNum},
+			required_status_show = #{enti.requiredStatusShow},
+			zrd30 = #{enti.zrd30},
+			zrd25 = #{enti.zrd25},
+			zrd15 = #{enti.zrd15},
+			zrd10 = #{enti.zrd10},
+			zrd5 = #{enti.zrd5},
+			yd25 = #{enti.yd25},
+			yd15 = #{enti.yd15},
+			yd10 = #{enti.yd10},
+			yd5 = #{enti.yd5},
+			rhd = #{enti.rhd},
+			sd = #{enti.sd},
+			rjd = #{enti.rjd},
+			dlnd = #{enti.dlnd},
+			md15 = #{enti.md15},
+			xdmd = #{enti.xdmd},
+			txhf = #{enti.txhf},
+			lx = #{enti.lx},
+			zlbh = #{enti.zlbh},
+			clzrdb = #{enti.clzrdb},
+			clyd25 = #{enti.clyd25},
+			clyd15 = #{enti.clyd15},
+			clyd10 = #{enti.clyd10},
+			clyd5 = #{enti.clyd5},
+		</set>
+		<if test="assist.require!=null">
+			<include refid="updateAssist" />
+		</if>
+	</update>
+
+	<!-- 通过辅助工具Assist中的条件将VQualityTestReportLq中属性值不为null的数据更新到数据库对应的表中 -->
+	<update id="updateNotNullVQualityTestReportLq" parameterType="map">
+		update V_quality_test_report_lq
+		<set>
+			<if test="enti.createTime != null">create_time = #{enti.createTime},</if>
+			<if test="enti.materials != null">materials = #{enti.materials},</if>
+			<if test="enti.materialsNum != null">materials_num = #{enti.materialsNum},</if>
+			<if test="enti.manufacturers != null">manufacturers = #{enti.manufacturers},</if>
+			<if test="enti.manufacturersNum != null">manufacturers_num = #{enti.manufacturersNum},</if>
+			<if test="enti.specification != null">specification = #{enti.specification},</if>
+			<if test="enti.specificationNum != null">specification_num = #{enti.specificationNum},</if>
+			<if test="enti.requiredResult != null">required_result = #{enti.requiredResult},</if>
+			<if test="enti.requiredStatus != null">required_status = #{enti.requiredStatus},</if>
+			<if test="enti.orderTicketNum != null">order_ticket_num = #{enti.orderTicketNum},</if>
+			<if test="enti.requiredStatusShow != null">required_status_show = #{enti.requiredStatusShow},</if>
+			<if test="enti.zrd30 != null">zrd30 = #{enti.zrd30},</if>
+			<if test="enti.zrd25 != null">zrd25 = #{enti.zrd25},</if>
+			<if test="enti.zrd15 != null">zrd15 = #{enti.zrd15},</if>
+			<if test="enti.zrd10 != null">zrd10 = #{enti.zrd10},</if>
+			<if test="enti.zrd5 != null">zrd5 = #{enti.zrd5},</if>
+			<if test="enti.yd25 != null">yd25 = #{enti.yd25},</if>
+			<if test="enti.yd15 != null">yd15 = #{enti.yd15},</if>
+			<if test="enti.yd10 != null">yd10 = #{enti.yd10},</if>
+			<if test="enti.yd5 != null">yd5 = #{enti.yd5},</if>
+			<if test="enti.rhd != null">rhd = #{enti.rhd},</if>
+			<if test="enti.sd != null">sd = #{enti.sd},</if>
+			<if test="enti.rjd != null">rjd = #{enti.rjd},</if>
+			<if test="enti.dlnd != null">dlnd = #{enti.dlnd},</if>
+			<if test="enti.md15 != null">md15 = #{enti.md15},</if>
+			<if test="enti.xdmd != null">xdmd = #{enti.xdmd},</if>
+			<if test="enti.txhf != null">txhf = #{enti.txhf},</if>
+			<if test="enti.lx != null">lx = #{enti.lx},</if>
+			<if test="enti.zlbh != null">zlbh = #{enti.zlbh},</if>
+			<if test="enti.clzrdb != null">clzrdb = #{enti.clzrdb},</if>
+			<if test="enti.clyd25 != null">clyd25 = #{enti.clyd25},</if>
+			<if test="enti.clyd15 != null">clyd15 = #{enti.clyd15},</if>
+			<if test="enti.clyd10 != null">clyd10 = #{enti.clyd10},</if>
+			<if test="enti.clyd5 != null">clyd5 = #{enti.clyd5},</if>
+		</set>
+		<if test="assist.require!=null">
+			<include refid="updateAssist" />
+		</if>
+	</update>
+</mapper>

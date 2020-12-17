@@ -75,7 +75,9 @@
 								</div>
 							</div>
 						</div>
-						<table class="layui-hide" id="mytable" lay-filter="mytable"></table>
+						<div id="div_talbe">
+							<table class="layui-hide" id="mytable" lay-filter="mytable"></table>
+						</div>
 					</div>
 				</div>
 			</div>
