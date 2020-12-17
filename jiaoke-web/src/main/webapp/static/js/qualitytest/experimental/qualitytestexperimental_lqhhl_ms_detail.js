@@ -73,7 +73,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 				count = count + 1;
 			}
 			if (count > 1) {
-				pjgd = (pjgd / count).toFixed(2);
+				pjgd = (pjgd / count).toFixed(1);
 			}
 			if (pjgd > 0) {
 				data['sjgdpj'] = pjgd;
@@ -81,7 +81,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 				data['sjgdpj'] = undefined;
 			}
 			if (data['kzz'] > 0 && data['szz'] > 0 && data['bhngz'] > 0) {
-				data['mtjxdmd'] = (data['kzz'] / (data['bhngz'] - data['szz'])).toFixed(2);
+				data['mtjxdmd'] = (data['kzz'] / (data['bhngz'] - data['szz'])).toFixed(1);
 			} else {
 				data['mtjxdmd'] = undefined;
 			}

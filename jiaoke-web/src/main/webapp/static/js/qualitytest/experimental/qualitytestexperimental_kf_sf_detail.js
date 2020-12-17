@@ -81,7 +81,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 			if (i <= order) {
 				var data = myform.KF_SF_Data[i];
 				if (data['fjsy_value1'] > 0) {
-					result = (Number(result) + Number(data['fjsy_value1'])).toFixed(2);
+					result = (Number(result) + Number(data['fjsy_value1'])).toFixed(1);
 				}
 			} else {
 				break;
@@ -100,7 +100,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 			if (i <= order) {
 				var data = myform.KF_SF_Data[i];
 				if (data['fjsy_value2'] > 0) {
-					result = (Number(result) + Number(data['fjsy_value2'])).toFixed(2);
+					result = (Number(result) + Number(data['fjsy_value2'])).toFixed(1);
 				}
 			} else {
 				break;
@@ -132,7 +132,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 		for (var i = 0; i < myform.KF_SF_Data.length; i++) {
 			var data = myform.KF_SF_Data[i];
 			if (data['syzl_value1'] >= 0) {
-				data['fjsy_value1'] = (data['syzl_value1'] / CLL_SF_GZ_Value.syzl_value1).toFixed(2);
+				data['fjsy_value1'] = ((data['syzl_value1'] / CLL_SF_GZ_Value.syzl_value1)*100).toFixed(1);
 				data['ljsy_value1'] = myform.getljsf1(i);
 				data['tgbfb_value1'] = 100 - data['ljsy_value1'];
 			} else {
@@ -142,7 +142,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 			}
 
 			if (data['syzl_value2'] >= 0) {
-				data['fjsy_value2'] = (data['syzl_value2'] / CLL_SF_GZ_Value.syzl_value2).toFixed(2);
+				data['fjsy_value2'] = ((data['syzl_value2'] / CLL_SF_GZ_Value.syzl_value2)*100).toFixed(1);
 				data['ljsy_value2'] = myform.getljsf2(i);
 				data['tgbfb_value2'] = 100 - data['ljsy_value2'];
 			} else {
@@ -152,7 +152,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 			}
 
 			if (data['syzl_value1'] > 0 && data['syzl_value2'] > 0) {
-				data['pjtgbfb_value'] = ((data['tgbfb_value1'] + data['tgbfb_value2']) / 2).toFixed(2);;
+				data['pjtgbfb_value'] = ((data['tgbfb_value1'] + data['tgbfb_value2']) / 2).toFixed(1);;
 			} else if (data['syzl_value1'] > 0) {
 				data['pjtgbfb_value'] = data['tgbfb_value1'];
 			} else {

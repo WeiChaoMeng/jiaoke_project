@@ -151,7 +151,7 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 				msg += myForm.display_title("粗集料（" + spec + "）");
 			}
 			div_name = "pro_item_cjl" + i;
-
+			msg += myForm.display_item('sK375@2@' + spec, div_name, '37.5', myForm.CJL_Data[i]['sk375']);
 			msg += myForm.display_item('sK315@2@' + spec, div_name, '31.5', myForm.CJL_Data[i]['sk315']);
 			msg += myForm.display_item('sK265@2@' + spec, div_name, '26.5', myForm.CJL_Data[i]['sk265']);
 			msg += myForm.display_item('sK19@2@' + spec, div_name, '19', myForm.CJL_Data[i]['sk19']);
@@ -168,10 +168,15 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 			msg += myForm.display_item('bgxdmd1@2@' + spec, div_name, '表观相对密度', myForm.CJL_Data[i]['bgxdmd1']);
 			msg += myForm.display_item('bgxdmd2@2@' + spec, div_name, '表干相对密度', myForm.CJL_Data[i]['bgxdmd2']);
 			msg += myForm.display_item('mtjxdmd@2@' + spec, div_name, '毛体积相对密度', myForm.CJL_Data[i]['mtjxdmd']);
-			msg += myForm.display_item('zpzkl@2@' + spec, div_name, '针片状颗粒', myForm.CJL_Data[i]['zpzkl']);
+			msg += myForm.display_item('xsl@2@' + spec, div_name, '吸水率', myForm.CJL_Data[i]['xsl']);
+			msg += myForm.display_item('zpzkl@2@' + spec, div_name, '针片状', myForm.CJL_Data[i]['zpzkl']);
 			msg += myForm.display_item('ysz@2@' + spec, div_name, '压碎值', myForm.CJL_Data[i]['ysz']);
-			msg += myForm.display_item('rrkl@2@' + spec, div_name, '软弱颗粒', myForm.CJL_Data[i]['rrkl']);
-			msg += myForm.display_item('mh@2@' + spec, div_name, '磨耗', myForm.CJL_Data[i]['mh']);
+			msg += myForm.display_item('rrkl@2@' + spec, div_name, '软石含量', myForm.CJL_Data[i]['rrkl']);
+			msg += myForm.display_item('mh@2@' + spec, div_name, '磨耗损失', myForm.CJL_Data[i]['mh']);
+			msg += myForm.display_item('jgx@2@' + spec, div_name, '坚固性', myForm.CJL_Data[i]['jgx']);
+			msg += myForm.display_item('klhl0075@2@' + spec, div_name, '＜0.075mm颗粒含量', myForm.CJL_Data[i]['klhl0075']);
+			msg += myForm.display_item('hsl@2@' + spec, div_name, '含水率', myForm.CJL_Data[i]['hsl']);
+			msg += myForm.display_item('nfx@2@' + spec, div_name, '粘附性', myForm.CJL_Data[i]['nfx']);
 			msg += '</div>';
 
 			$("#div_cjl").append(msg);
@@ -214,11 +219,13 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 			msg += myForm.display_item('sK03@1@' + spec, div_name, '0.3', myForm.XJL_Data[i]['sk03']);
 			msg += myForm.display_item('sK015@1@' + spec, div_name, '0.15', myForm.XJL_Data[i]['sk015']);
 			msg += myForm.display_item('sK0075@1@' + spec, div_name, '0.075', myForm.XJL_Data[i]['sk0075']);
-			msg += myForm.display_item('bgmd@1@' + spec, div_name, '表观密度', myForm.XJL_Data[i]['bgmd']);
+			msg += myForm.display_item('bgmd@1@' + spec, div_name, '表观相对密度', myForm.XJL_Data[i]['bgmd']);
 			msg += myForm.display_item('mdjxsl@1@' + spec, div_name, '密度及吸水率', myForm.XJL_Data[i]['mdjxsl']);
 			msg += myForm.display_item('sdl@1@' + spec, div_name, '砂当量', myForm.XJL_Data[i]['sdl']);
 			msg += myForm.display_item('lj@1@' + spec, div_name, '棱角性', myForm.XJL_Data[i]['lj']);
-			msg += myForm.display_item('yjl@1@' + spec, div_name, '亚甲蓝', myForm.XJL_Data[i]['yjl']);
+			msg += myForm.display_item('yjl@1@' + spec, div_name, '亚甲蓝值', myForm.XJL_Data[i]['yjl']);
+			msg += myForm.display_item('hnl@1@' + spec, div_name, '含泥量', myForm.XJL_Data[i]['hnl']);
+			msg += myForm.display_item('jgx@1@' + spec, div_name, '坚固性', myForm.XJL_Data[i]['jgx']);
 			msg += '</div>';
 
 			$("#div_xjl").append(msg);
@@ -252,13 +259,16 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 				msg += myForm.display_title("矿粉（" + spec + "）");
 			}
 			div_name = "pro_item_kf" + i;
+			msg += myForm.display_item('sK118@3@' + spec, div_name, '1.18', myForm.KF_Data[i]['sk118']);
 			msg += myForm.display_item('sK06@3@' + spec, div_name, '0.6', myForm.KF_Data[i]['sk06']);
 			msg += myForm.display_item('sK03@3@' + spec, div_name, '0.3', myForm.KF_Data[i]['sk03']);
 			msg += myForm.display_item('sK015@3@' + spec, div_name, '0.15', myForm.KF_Data[i]['sk015']);
 			msg += myForm.display_item('sK0075@3@' + spec, div_name, '0.075', myForm.KF_Data[i]['sk0075']);
-			msg += myForm.display_item('md@3@' + spec, div_name, '密度', myForm.KF_Data[i]['md']);
+			msg += myForm.display_item('bgmd@3@' + spec, div_name, '表观密度', myForm.KF_Data[i]['bgmd']);
 			msg += myForm.display_item('qsxs@3@' + spec, div_name, '亲水系数', myForm.KF_Data[i]['qsxs']);
 			msg += myForm.display_item('jradx@3@' + spec, div_name, '加热安定性', myForm.KF_Data[i]['jradx']);
+			msg += myForm.display_item('sxzl@3@' + spec, div_name, '塑性指数', myForm.KF_Data[i]['sxzl']);
+			msg += myForm.display_item('hsl@3@' + spec, div_name, '含水量', myForm.KF_Data[i]['hsl']);
 			msg += '</div>';
 
 			$("#div_kf").append(msg);

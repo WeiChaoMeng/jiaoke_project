@@ -53,6 +53,7 @@
 													<option value="">请选择</option>
 													<option value="0">未试验</option>
 													<option value="1">试验中</option>
+													<option value="3">待补充数据</option>													
 													<option value="2">完成试验</option>
 												</select>
 											</div>

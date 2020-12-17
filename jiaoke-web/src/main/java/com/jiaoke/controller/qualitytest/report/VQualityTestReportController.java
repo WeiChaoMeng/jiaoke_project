@@ -2,17 +2,16 @@ package com.jiaoke.controller.qualitytest.report;
 
 import com.jiaoke.qualitytest.bean.QualityTestOrderTicket;
 import com.jiaoke.qualitytest.bean.QualityTestSamplingpage;
-import com.jiaoke.qualitytest.bean.report.VQualityTestReportCjl;
-import com.jiaoke.qualitytest.bean.report.VQualityTestReportKf;
-import com.jiaoke.qualitytest.bean.report.VQualityTestReportXjl;
+import com.jiaoke.qualitytest.bean.report.*;
 import com.jiaoke.qualitytest.service.QualityTestOrderTicketService;
 import com.jiaoke.qualitytest.service.QualityTestSamplingpageService;
-import com.jiaoke.qualitytest.service.report.VQualityTestReportCjlService;
-import com.jiaoke.qualitytest.service.report.VQualityTestReportKfService;
-import com.jiaoke.qualitytest.service.report.VQualityTestReportXjlService;
+import com.jiaoke.qualitytest.service.report.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 /**
@@ -43,7 +42,12 @@ public class VQualityTestReportController {
 	/** VQualityTestReportCjlService服务 */
 	@Autowired
 	private VQualityTestReportCjlService vQualityTestReportCjlService;
-
+	@Autowired
+	private VQualityTestReportLqService vQualityTestReportLqService;
+	@Autowired
+	private VQualityTestReportRhlqService vQualityTestReportRhlqService;
+	@Autowired
+	private VQualityTestReportLqhhlService vQualityTestReportLqhhlService;
 	/**
 	 * 委托单台账页面
 	 * @return
@@ -125,7 +129,36 @@ public class VQualityTestReportController {
 	public String ReportXJL(VQualityTestReportXjl value) {
 		return vQualityTestReportXjlService.find(value);
 	}
-
+	/**
+	 * 试验台账-沥青
+	 * @param value
+	 * @return
+	 */
+	@GetMapping(value = "/ReportLQ", produces = {"application/json;charset=UTF-8"})
+	@ResponseBody
+	public String ReportLQ(VQualityTestReportLq value) {
+		return vQualityTestReportLqService.find(value);
+	}
+	/**
+	 * 试验台账-乳化沥青
+	 * @param value
+	 * @return
+	 */
+	@GetMapping(value = "/ReportRHLQ", produces = {"application/json;charset=UTF-8"})
+	@ResponseBody
+	public String ReportRHLQ(VQualityTestReportRhlq value) {
+		return vQualityTestReportRhlqService.find(value);
+	}
+	/**
+	 * 试验台账-细集料
+	 * @param value
+	 * @return
+	 */
+	@GetMapping(value = "/ReportLQHHL", produces = {"application/json;charset=UTF-8"})
+	@ResponseBody
+	public String ReportLQHHL(VQualityTestReportLqhhl value) {
+		return vQualityTestReportLqhhlService.find(value);
+	}
 
 
 }

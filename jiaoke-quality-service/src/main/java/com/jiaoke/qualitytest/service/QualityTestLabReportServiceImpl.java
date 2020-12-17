@@ -1,8 +1,6 @@
 package com.jiaoke.qualitytest.service;
 
-import java.util.Date;
-import java.util.List;
-
+import com.alibaba.fastjson.JSONObject;
 import com.jiake.utils.DateUtil;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.common.bean.Assist;
@@ -14,14 +12,14 @@ import com.jiaoke.qualitytest.bean.QualityTestOrderTicket;
 import com.jiaoke.qualitytest.dao.QualityTestExperimentalDao;
 import com.jiaoke.qualitytest.dao.QualityTestLabReportDao;
 import com.jiaoke.qualitytest.dao.QualityTestOrderTicketDao;
-import org.apache.commons.lang3.time.DateUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.JSONObject;
+import java.util.Date;
+import java.util.List;
 
 /**
  * QualityTestLabReport的服务接口的实现类
@@ -184,7 +182,8 @@ public class QualityTestLabReportServiceImpl implements QualityTestLabReportServ
             List<QualityTestExperimental> lstExperimental = qualityTestExperimentalDao.selectQualityTestExperimentalByObj(obj);
             String UnExp = "", strVerdict = "", strDate = "";
             Date minDate = new Date(), maxDate = new Date();
-            int nExperimentResult = 1;//0 未完成 1完成
+            int nExperimentStatus = 1;//0 未完成 1完成
+            int nExperimentResult = 0;//-1 不合格 1合格
             if (lstExperimental != null && lstExperimental.size() > 0) {
                 for (int i = 0; i <= lstExperimental.size() - 1; i++) {
                     obj = lstExperimental.get(i);
@@ -206,25 +205,32 @@ public class QualityTestLabReportServiceImpl implements QualityTestLabReportServ
                         UnExp += obj.getExperimentalName();
                     }
                     if (obj.getStatus() != 2) {
-                        nExperimentResult = 0;
+                        nExperimentStatus = 0;
                     }
                 }
                 if (UnExp.trim().length() > 0) {
                     strVerdict = "依据《公路沥青路面施工技术规范》(JTGF40-2004),其所检项目" + UnExp + "试验结果不符合规范的技术要求。";
-                    value.setExperimentResult(-1);
+                    nExperimentResult = -1;
                 } else {
                     strVerdict = "依据《公路沥青路面施工技术规范》(JTGF40-2004),其所检项目试验结果符合规范的技术要求。";
-                    value.setExperimentResult(1);
+                    nExperimentResult = 1;
                 }
+
                 if (minDate.getDay() != maxDate.getDay()) {
                     strDate = DateUtil.dateConvertYYYYMMDD2(minDate) + "-" + DateUtil.dateConvertYYYYMMDD2(maxDate);
                 } else {
                     strDate = DateUtil.dateConvertYYYYMMDD2(minDate);
                 }
             }
+            //所有试验完成后判定是否合格
+            if (nExperimentStatus == 1) {
+                value.setExperimentResult(nExperimentResult);
+            } else {
+                value.setExperimentResult(0);
+            }
             value.setTestDate(strDate);
             value.setVerdict(strVerdict);
-            value.setExperimentResult(nExperimentResult);
+            value.setExperimentStatus(nExperimentStatus);
         }
         UserInfo user = (UserInfo) SecurityUtils.getSubject().getPrincipal();
         if (user.getPosition().indexOf("副总经理") > -1) {
@@ -281,7 +287,7 @@ public class QualityTestLabReportServiceImpl implements QualityTestLabReportServ
         Assist assist = new Assist();
         assist.setStartRow(0);
         assist.setRowSize(1000);
-        assist.andGt("status",-1);
+        assist.andGt("status", -1);
         List<QualityTestOrderTicket> lstData = qualityTestOrderTicketDao.selectUnCompleteQualityTestOrderTicket(assist);
         if (lstData.size() <= 0) {
             return;
