@@ -164,11 +164,11 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 				}, {
 					field: 'mh',
 					title: '磨耗损失',
-					width: 80
+					width: 90
 				}, {
 					field: 'klhl0075',
 					title: '＜0.075mm颗粒含量',
-					width: 80
+					width: 90
 				}, {
 					field: 'hsl',
 					title: '含水率',
@@ -513,8 +513,8 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 	myForm.KF_COL_Visble = function(data) {
 		myForm.columnHide(data, 'jradx', 16, 13);
 		myForm.columnHide(data, 'sxzl', 15, 12);
-		myForm.columnHide(data, 'hsl', 14, 11);
-		myForm.columnHide(data, 'qsxs', 13, 10);
+		myForm.columnHide(data, 'qsxs', 14, 11);
+		myForm.columnHide(data, 'hsl', 13, 10);
 		myForm.columnHide(data, 'bgmd', 12, 9);
 
 		myForm.columnHide(data, 'sK0075', 11, 8);
@@ -682,19 +682,20 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 	 * @param {Object} data
 	 */
 	myForm.LQ_COL_Visble = function(data) {
-		myForm.columnHide(data, 'clyd5', 28, 25);
-		myForm.columnHide(data, 'clyd10', 27, 24);
-		myForm.columnHide(data, 'clyd15', 26, 23);
-		myForm.columnHide(data, 'clyd25', 25, 22);
-		myForm.columnHide(data, 'clzrdb', 24, 21);
-		myForm.columnHide(data, 'zlbh', 23, 20);
-		myForm.columnHide(data, 'lx', 22, 19);
-		myForm.columnHide(data, 'txhf', 21, 18);
-		myForm.columnHide(data, 'xdmd', 20, 17);
-		myForm.columnHide(data, 'md15', 19, 16);
-		myForm.columnHide(data, 'dlnd', 18, 15);
-		myForm.columnHide(data, 'rjd', 17, 14);
-		myForm.columnHide(data, 'sd', 16, 13);
+		myForm.columnHide(data, 'clyd5', 29, 26);
+		myForm.columnHide(data, 'clyd10', 28, 25);
+		myForm.columnHide(data, 'clyd15', 27, 24);
+		myForm.columnHide(data, 'clyd25', 26, 23);
+		myForm.columnHide(data, 'clzrdb', 25, 22);
+		myForm.columnHide(data, 'zlbh', 24, 21);
+		myForm.columnHide(data, 'lx', 23, 20);
+		myForm.columnHide(data, 'txhf', 22, 19);
+		myForm.columnHide(data, 'xdmd', 21, 18);
+		myForm.columnHide(data, 'md15', 20, 17);
+		myForm.columnHide(data, 'dlnd', 19, 16);
+		myForm.columnHide(data, 'rjd', 18, 15);
+		myForm.columnHide(data, 'sd', 17, 14);
+		myForm.columnHide(data, 'rhd', 16, 13);
 		myForm.columnHide(data, 'yd5', 15, 12);
 		myForm.columnHide(data, 'yd10', 14, 11);
 		myForm.columnHide(data, 'yd15', 13, 10);
@@ -955,23 +956,23 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 				}, {
 					field: 'clwdd',
 					title: '残留稳定度',
-					width: 80
+					width: 100
 				}, {
 					field: 'drplqdb',
 					title: '冻融劈裂强度比',
-					width: 80
+					width: 100
 				}, {
 					field: 'dwdd',
 					title: '动稳定度',
-					width: 80
+					width: 100
 				}, {
 					field: 'ssxs',
 					title: '渗水系数',
-					width: 80
+					width: 100
 				}, {
 					field: 'gzsd',
 					title: '构造深度',
-					width: 80
+					width: 100
 				}]
 
 			],
@@ -1205,7 +1206,7 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 		}
 
 
-		table.reload(myForm.tableId, {
+		/* table.reload(myForm.tableId, {
 			where: queryData,
 			limit: common.maxLimitValue,
 			page: false,
@@ -1232,7 +1233,7 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 						break;
 				}
 			}
-		});
+		}); */
 	};
 
 	/**

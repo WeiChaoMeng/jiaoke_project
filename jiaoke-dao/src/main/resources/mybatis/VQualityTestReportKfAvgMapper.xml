@@ -1,274 +1,291 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jiaoke.qualitytest.dao.report.VQualityTestReportKfAvgDao">
-    <!-- VQualityTestReportKfAvg的resultMap,column是给数据库列起的别名,它对应property类的属性 -->
-    <resultMap id="result_VQualityTestReportKfAvg_Map"
-               type="com.jiaoke.qualitytest.bean.report.VQualityTestReportKfAvg">
+	<!-- VQualityTestReportKfAvg的resultMap,column是给数据库列起的别名,它对应property类的属性 -->
+	<resultMap id="result_VQualityTestReportKfAvg_Map" type="com.jiaoke.qualitytest.bean.report.VQualityTestReportKfAvg">
+		
+		<result column="specification" property="specification" />
+		<result column="sk118" property="sk118" />
+		<result column="sk06" property="sk06" />
+		<result column="sk03" property="sk03" />
+		<result column="sk015" property="sk015" />
+		<result column="sk0075" property="sk0075" />
+		<result column="bgmd" property="bgmd" />
+		<result column="qsxs" property="qsxs" />
+		<result column="jradx" property="jradx" />
+		<result column="sxzl" property="sxzl" />
+		<result column="hsl" property="hsl" />
+	</resultMap>
 
-        <result column="specification" property="specification"/>
-        <result column="sk06" property="sk06"/>
-        <result column="sk03" property="sk03"/>
-        <result column="sk015" property="sk015"/>
-        <result column="sk0075" property="sk0075"/>
-        <result column="md" property="md"/>
-        <result column="qsxs" property="qsxs"/>
-        <result column="jradx" property="jradx"/>
-    </resultMap>
-
-    <!-- assist是查询辅助工具类, ${req.require}表示列名,#{req.value}表示值它是防SQL注入的 -->
-    <sql id="assist">
-        <where>
-            <foreach collection="require" item="req" separator=" ">
-                ${req.require}
-                <if test="req.value != null">
-                    #{req.value}
-                </if>
-                <if test="req.values != null">
-                    <foreach collection="req.values" item="value" separator=",">
-                        #{value}
-                    </foreach>
-                </if>
-                <if test="req.customRequire !=null">
-                    <foreach collection="req.customRequire" item="cr" separator=" ">
-                        ${cr.require}
-                        <if test="cr.value != null">
-                            #{cr.value}
-                        </if>
-                        <if test="cr.values != null">
-                            <foreach collection="cr.values" item="value"
-                                     separator=",">
-                                #{value}
-                            </foreach>
-                        </if>
-                        <if test="cr.suffix != null">${cr.suffix}</if>
-                    </foreach>
-                </if>
-                <if test="req.suffix != null">${req.suffix}</if>
-            </foreach>
-        </where>
-    </sql>
-
-    <!-- updateAssist用于更新数据查询辅助工具类,作用assist与一致 -->
-    <sql id="updateAssist">
-        <where>
-            <foreach collection="assist.require" item="req" separator=" ">
-                ${req.require}
-                <if test="req.value != null">
-                    #{req.value}
-                </if>
-                <if test="req.values != null">
-                    <foreach collection="req.values" item="value" separator=",">
-                        #{value}
-                    </foreach>
-                </if>
-                <if test="req.customRequire !=null">
-                    <foreach collection="req.customRequire" item="cr" separator=" ">
-                        ${cr.require}
-                        <if test="cr.value != null">
-                            #{cr.value}
-                        </if>
-                        <if test="cr.values != null">
-                            <foreach collection="cr.values" item="value"
-                                     separator=",">
-                                #{value}
-                            </foreach>
-                        </if>
-                        <if test="cr.suffix != null">${cr.suffix}</if>
-                    </foreach>
-                </if>
-                <if test="req.suffix != null">${req.suffix}</if>
-            </foreach>
-        </where>
-    </sql>
-
-    <!-- 数据库中表名为:v_quality_test_report_kf_avg的列名 -->
-    <sql id="v_quality_test_report_kf_avg_Column">
-		specification,sk06,sk03,sk015,sk0075,md,qsxs,jradx
+	<!-- assist是查询辅助工具类, ${req.require}表示列名,#{req.value}表示值它是防SQL注入的 -->
+	<sql id="assist">
+		<where>
+			<foreach collection="require" item="req" separator=" ">
+				${req.require}
+				<if test="req.value != null">
+					#{req.value}
+				</if>
+				<if test="req.values != null">
+					<foreach collection="req.values" item="value" separator=",">
+						#{value}
+					</foreach>
+				</if>
+				<if test="req.customRequire !=null">
+					<foreach collection="req.customRequire" item="cr" separator=" ">
+						${cr.require}
+						<if test="cr.value != null">
+							#{cr.value}
+						</if>
+						<if test="cr.values != null">
+							<foreach collection="cr.values" item="value"
+								separator=",">
+								#{value}
+							</foreach>
+						</if>
+						<if test="cr.suffix != null"> ${cr.suffix}</if>
+					</foreach>
+				</if>
+				<if test="req.suffix != null"> ${req.suffix}</if>
+			</foreach>
+		</where>
 	</sql>
 
-    <!--获得类名为:VQualityTestReportKfAvg对应的数据库表的数据总行数 -->
-    <select id="getVQualityTestReportKfAvgRowCount" parameterType="com.jiaoke.common.bean.Assist"
-            resultType="java.lang.Long">
-        select count(*) from V_quality_test_report_kf_avg
-        <if test="require!=null">
-            <include refid="assist"/>
-        </if>
-    </select>
+	<!-- updateAssist用于更新数据查询辅助工具类,作用assist与一致 -->
+	<sql id="updateAssist">
+		<where>
+			<foreach collection="assist.require" item="req" separator=" ">
+				${req.require}
+				<if test="req.value != null">
+					#{req.value}
+				</if>
+				<if test="req.values != null">
+					<foreach collection="req.values" item="value" separator=",">
+						#{value}
+					</foreach>
+				</if>
+				<if test="req.customRequire !=null">
+					<foreach collection="req.customRequire" item="cr" separator=" ">
+						${cr.require}
+						<if test="cr.value != null">
+							#{cr.value}
+						</if>
+						<if test="cr.values != null">
+							<foreach collection="cr.values" item="value"
+								separator=",">
+								#{value}
+							</foreach>
+						</if>
+						<if test="cr.suffix != null"> ${cr.suffix}</if>
+					</foreach>
+				</if>
+				<if test="req.suffix != null"> ${req.suffix}</if>
+			</foreach>
+		</where>
+	</sql>
 
-    <!-- 获得类名为:VQualityTestReportKfAvg对应数据库中表的数据集合 -->
-    <select id="selectVQualityTestReportKfAvg" parameterType="com.jiaoke.common.bean.Assist"
-            resultMap="result_VQualityTestReportKfAvg_Map">
-        select '' as specification,
-        round(avg(sk06),2) as sk06,round(avg(sk03),2) as sk03,
-        round(avg(sk015),2) as sk015,round(avg(sk0075),2) as sk0075,
-        round(avg(md),2) as md,round(avg(qsxs),2) as qsxs,
-        round(avg(jradx),2) as jradx
-        from V_quality_test_report_kf
-        <if test="require!=null">
-            <include refid="assist"/>
-        </if>
+	<!-- 数据库中表名为:V_quality_test_report_kf_avg的列名 -->
+	<sql id="V_quality_test_report_kf_avg_Column">
+		specification,sk118,sk06,sk03,sk015,sk0075,bgmd,qsxs,jradx,sxzl,hsl
+	</sql>
 
-        UNION
+	<!--获得类名为:VQualityTestReportKfAvg对应的数据库表的数据总行数 -->
+	<select id="getVQualityTestReportKfAvgRowCount" parameterType="com.jiaoke.common.bean.Assist" resultType="java.lang.Long">
+		select count(*) from V_quality_test_report_kf_avg
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+	</select>
+	<!-- 获得类名为:VQualityTestReportKfAvg对应数据库中表的数据集合 -->
+	<select id="selectVQualityTestReportKfAvg" parameterType="com.jiaoke.common.bean.Assist"
+			resultMap="result_VQualityTestReportKfAvg_Map">
+		select '' as specification,
+		round(avg(sk118),2) as sk118,
+		round(avg(sk06),2) as sk06,round(avg(sk03),2) as sk03,
+		round(avg(sk015),2) as sk015,round(avg(sk0075),2) as sk0075,
+		round(avg(bgmd),2) as bgmd,round(avg(qsxs),2) as qsxs,
+		round(avg(jradx),2) as jradx,round(avg(sxzl),2) as sxzl,
+		round(avg(hsl),2) as hsl
+		from V_quality_test_report_kf
+		<if test="require!=null">
+			<include refid="assist"/>
+		</if>
 
-        select specification,
-        round(avg(sk06),2) as sk06,round(avg(sk03),2) as sk03,
-        round(avg(sk015),2) as sk015,round(avg(sk0075),2) as sk0075,
-        round(avg(md),2) as md,round(avg(qsxs),2) as qsxs,
-        round(avg(jradx),2) as jradx
-        from V_quality_test_report_kf
-        <if test="require!=null">
-            <include refid="assist"/>
-        </if>
-        GROUP BY specification
-    </select>
+		UNION
 
-    <!-- 获得类名为:VQualityTestReportKfAvg对应数据库中表的数据集合 -->
-    <select id="selectVQualityTestReportKfAvg1" parameterType="com.jiaoke.common.bean.Assist"
-            resultMap="result_VQualityTestReportKfAvg_Map">
-        select
-        <if test="distinct !=null">${distinct}</if>
-        <choose>
-            <when test="resultColumn!=null">${resultColumn}</when>
-            <otherwise>
-                <include refid="v_quality_test_report_kf_avg_Column"/>
-            </otherwise>
-        </choose>
-        from V_quality_test_report_kf_avg
-        <if test="require!=null">
-            <include refid="assist"/>
-        </if>
-        <if test="order !=null">${order}</if>
-        <choose>
-            <when test="startRow !=null and rowSize !=null">LIMIT #{startRow},#{rowSize}</when>
-            <when test="rowSize !=null">LIMIT #{rowSize}</when>
-        </choose>
-    </select>
-    <!-- 获得一个VQualityTestReportKfAvg对象,以参数VQualityTestReportKfAvg对象中不为空的属性作为条件进行查询 -->
-    <select id="selectVQualityTestReportKfAvgObjSingle"
-            parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportKfAvg"
-            resultMap="result_VQualityTestReportKfAvg_Map">
-        select
-        <include refid="v_quality_test_report_kf_avg_Column"/>
-        from V_quality_test_report_kf_avg
-        <where>
-            <if test="specification != null">and specification = #{specification}</if>
-            <if test="sk06 != null">and sk06 = #{sk06}</if>
-            <if test="sk03 != null">and sk03 = #{sk03}</if>
-            <if test="sk015 != null">and sk015 = #{sk015}</if>
-            <if test="sk0075 != null">and sk0075 = #{sk0075}</if>
-            <if test="md != null">and md = #{md}</if>
-            <if test="qsxs != null">and qsxs = #{qsxs}</if>
-            <if test="jradx != null">and jradx = #{jradx}</if>
+		select specification,
+		round(avg(sk118),2) as sk118,
+		round(avg(sk06),2) as sk06,round(avg(sk03),2) as sk03,
+		round(avg(sk015),2) as sk015,round(avg(sk0075),2) as sk0075,
+		round(avg(bgmd),2) as bgmd,round(avg(qsxs),2) as qsxs,
+		round(avg(jradx),2) as jradx,round(avg(sxzl),2) as sxzl,
+		round(avg(hsl),2) as hsl
+		from V_quality_test_report_kf
+		<if test="require!=null">
+			<include refid="assist"/>
+		</if>
+		GROUP BY specification
+	</select>
+	<!-- 获得类名为:VQualityTestReportKfAvg对应数据库中表的数据集合
+	<select id="selectVQualityTestReportKfAvg" parameterType="com.jiaoke.common.bean.Assist" resultMap="result_VQualityTestReportKfAvg_Map">
+		select
+		<if test="distinct !=null">${distinct}</if>
+		<choose>
+			<when test="resultColumn!=null">${resultColumn}</when>
+			<otherwise>
+				<include refid="V_quality_test_report_kf_avg_Column" />
+			</otherwise>
+		</choose>
+		from V_quality_test_report_kf_avg
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+		<if test="order !=null">${order}</if>
+		<choose>
+			<when test="startRow !=null and rowSize !=null">LIMIT #{startRow},#{rowSize} </when>
+			<when test="rowSize !=null">LIMIT #{rowSize}</when>
+		</choose>
+	</select>-->
+	
+	<!-- 获得一个VQualityTestReportKfAvg对象,以参数VQualityTestReportKfAvg对象中不为空的属性作为条件进行查询 -->
+	<select id="selectVQualityTestReportKfAvgObjSingle" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportKfAvg" resultMap="result_VQualityTestReportKfAvg_Map">
+		select
+		<include refid="V_quality_test_report_kf_avg_Column" />
+		from V_quality_test_report_kf_avg
+		<where>
+		<if test="specification != null"> and specification = #{specification}</if>
+		<if test="sk118 != null"> and sk118 = #{sk118}</if>
+		<if test="sk06 != null"> and sk06 = #{sk06}</if>
+		<if test="sk03 != null"> and sk03 = #{sk03}</if>
+		<if test="sk015 != null"> and sk015 = #{sk015}</if>
+		<if test="sk0075 != null"> and sk0075 = #{sk0075}</if>
+		<if test="bgmd != null"> and bgmd = #{bgmd}</if>
+		<if test="qsxs != null"> and qsxs = #{qsxs}</if>
+		<if test="jradx != null"> and jradx = #{jradx}</if>
+		<if test="sxzl != null"> and sxzl = #{sxzl}</if>
+		<if test="hsl != null"> and hsl = #{hsl}</if>
+		
+		</where>
+		LIMIT 1
+	</select>
+	
+	<!-- 获得VQualityTestReportKfAvg对象,以参数VQualityTestReportKfAvg对象中不为空的属性作为条件进行查询 -->
+	<select id="selectVQualityTestReportKfAvgByObj" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportKfAvg" resultMap="result_VQualityTestReportKfAvg_Map">
+		select
+		<include refid="V_quality_test_report_kf_avg_Column" />
+		from V_quality_test_report_kf_avg
+		<where>
+		<if test="specification != null"> and specification = #{specification}</if>
+		<if test="sk118 != null"> and sk118 = #{sk118}</if>
+		<if test="sk06 != null"> and sk06 = #{sk06}</if>
+		<if test="sk03 != null"> and sk03 = #{sk03}</if>
+		<if test="sk015 != null"> and sk015 = #{sk015}</if>
+		<if test="sk0075 != null"> and sk0075 = #{sk0075}</if>
+		<if test="bgmd != null"> and bgmd = #{bgmd}</if>
+		<if test="qsxs != null"> and qsxs = #{qsxs}</if>
+		<if test="jradx != null"> and jradx = #{jradx}</if>
+		<if test="sxzl != null"> and sxzl = #{sxzl}</if>
+		<if test="hsl != null"> and hsl = #{hsl}</if>
+		
+		</where>
+	</select>
 
-        </where>
-        LIMIT 1
-    </select>
-
-    <!-- 获得VQualityTestReportKfAvg对象,以参数VQualityTestReportKfAvg对象中不为空的属性作为条件进行查询 -->
-    <select id="selectVQualityTestReportKfAvgByObj"
-            parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportKfAvg"
-            resultMap="result_VQualityTestReportKfAvg_Map">
-        select
-        <include refid="v_quality_test_report_kf_avg_Column"/>
-        from V_quality_test_report_kf_avg
-        <where>
-            <if test="specification != null">and specification = #{specification}</if>
-            <if test="sk06 != null">and sk06 = #{sk06}</if>
-            <if test="sk03 != null">and sk03 = #{sk03}</if>
-            <if test="sk015 != null">and sk015 = #{sk015}</if>
-            <if test="sk0075 != null">and sk0075 = #{sk0075}</if>
-            <if test="md != null">and md = #{md}</if>
-            <if test="qsxs != null">and qsxs = #{qsxs}</if>
-            <if test="jradx != null">and jradx = #{jradx}</if>
-        </where>
-    </select>
-
-    <!-- 将VQualityTestReportKfAvg插入到对应数据库的表中,包括属性值为null的数据 -->
-    <insert id="insertVQualityTestReportKfAvg"
-            parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportKfAvg">
+	<!-- 将VQualityTestReportKfAvg插入到对应数据库的表中,包括属性值为null的数据 -->
+	<insert id="insertVQualityTestReportKfAvg" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportKfAvg">
 		insert into 
-		V_quality_test_report_kf_avg (specification,sk06,sk03,sk015,sk0075,md,qsxs,jradx)
-		values(#{specification},#{sk06},#{sk03},#{sk015},#{sk0075},#{md},#{qsxs},#{jradx})
+		V_quality_test_report_kf_avg (specification,sk118,sk06,sk03,sk015,sk0075,bgmd,qsxs,jradx,sxzl,hsl) 
+		values(#{specification},#{sk118},#{sk06},#{sk03},#{sk015},#{sk0075},#{bgmd},#{qsxs},#{jradx},#{sxzl},#{hsl})
 	</insert>
 
-    <!-- 将VQualityTestReportKfAvg中属性值不为null的数据,插入到对应数据库的表中 -->
-    <insert id="insertNotNullVQualityTestReportKfAvg"
-            parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportKfAvg">
-        insert into V_quality_test_report_kf_avg
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="specification != null">specification,</if>
-            <if test="sk06 != null">sk06,</if>
-            <if test="sk03 != null">sk03,</if>
-            <if test="sk015 != null">sk015,</if>
-            <if test="sk0075 != null">sk0075,</if>
-            <if test="md != null">md,</if>
-            <if test="qsxs != null">qsxs,</if>
-            <if test="jradx != null">jradx,</if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="specification != null">#{specification},</if>
-            <if test="sk06 != null">#{sk06},</if>
-            <if test="sk03 != null">#{sk03},</if>
-            <if test="sk015 != null">#{sk015},</if>
-            <if test="sk0075 != null">#{sk0075},</if>
-            <if test="md != null">#{md},</if>
-            <if test="qsxs != null">#{qsxs},</if>
-            <if test="jradx != null">#{jradx},</if>
-        </trim>
-    </insert>
+	<!-- 将VQualityTestReportKfAvg中属性值不为null的数据,插入到对应数据库的表中 -->
+	<insert id="insertNotNullVQualityTestReportKfAvg" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportKfAvg">
+		insert into V_quality_test_report_kf_avg
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="specification != null">specification,</if>
+			<if test="sk118 != null">sk118,</if>
+			<if test="sk06 != null">sk06,</if>
+			<if test="sk03 != null">sk03,</if>
+			<if test="sk015 != null">sk015,</if>
+			<if test="sk0075 != null">sk0075,</if>
+			<if test="bgmd != null">bgmd,</if>
+			<if test="qsxs != null">qsxs,</if>
+			<if test="jradx != null">jradx,</if>
+			<if test="sxzl != null">sxzl,</if>
+			<if test="hsl != null">hsl,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="specification != null">#{specification},</if>
+			<if test="sk118 != null">#{sk118},</if>
+			<if test="sk06 != null">#{sk06},</if>
+			<if test="sk03 != null">#{sk03},</if>
+			<if test="sk015 != null">#{sk015},</if>
+			<if test="sk0075 != null">#{sk0075},</if>
+			<if test="bgmd != null">#{bgmd},</if>
+			<if test="qsxs != null">#{qsxs},</if>
+			<if test="jradx != null">#{jradx},</if>
+			<if test="sxzl != null">#{sxzl},</if>
+			<if test="hsl != null">#{hsl},</if>
+		</trim>
+	</insert>
 
-    <!-- 将VQualityTestReportKfAvg批量插入到对应数据库的表中 -->
-    <insert id="insertVQualityTestReportKfAvgByBatch" parameterType="ArrayList">
-        insert into V_quality_test_report_kf_avg(specification,sk06,sk03,sk015,sk0075,md,qsxs,jradx) values
-        <foreach collection="list" item="item" index="index"
-                 separator=",">
-            (#{item.specification},#{item.sk06},#{item.sk03},#{item.sk015},#{item.sk0075},#{item.md},#{item.qsxs},#{item.jradx})
-        </foreach>
-    </insert>
+	<!-- 将VQualityTestReportKfAvg批量插入到对应数据库的表中 -->
+	<insert id="insertVQualityTestReportKfAvgByBatch" parameterType="ArrayList">
+		insert into V_quality_test_report_kf_avg(specification,sk118,sk06,sk03,sk015,sk0075,bgmd,qsxs,jradx,sxzl,hsl) values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.specification},#{item.sk118},#{item.sk06},#{item.sk03},#{item.sk015},#{item.sk0075},#{item.bgmd},#{item.qsxs},#{item.jradx},#{item.sxzl},#{item.hsl})
+		</foreach>
+	</insert>
+	
 
+	<!-- 通过辅助工具Assist中的条件将VQualityTestReportKfAvg对应的数据库表的数据删除 -->
+	<delete id="deleteVQualityTestReportKfAvgByAssist" parameterType="com.jiaoke.common.bean.Assist">
+		delete from V_quality_test_report_kf_avg
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+	</delete>
+	
+	
+	
+	<!-- 通过辅助工具Assist中的条件将VQualityTestReportKfAvg中的数据更新到数据库对应的表中,包括值为null的数据 -->
+	<update id="updateVQualityTestReportKfAvg" parameterType="map">
+		update V_quality_test_report_kf_avg
+		<set>
+			specification = #{enti.specification},
+			sk118 = #{enti.sk118},
+			sk06 = #{enti.sk06},
+			sk03 = #{enti.sk03},
+			sk015 = #{enti.sk015},
+			sk0075 = #{enti.sk0075},
+			bgmd = #{enti.bgmd},
+			qsxs = #{enti.qsxs},
+			jradx = #{enti.jradx},
+			sxzl = #{enti.sxzl},
+			hsl = #{enti.hsl},
+		</set>
+		<if test="assist.require!=null">
+			<include refid="updateAssist" />
+		</if>
+	</update>
 
-    <!-- 通过辅助工具Assist中的条件将VQualityTestReportKfAvg对应的数据库表的数据删除 -->
-    <delete id="deleteVQualityTestReportKfAvgByAssist" parameterType="com.jiaoke.common.bean.Assist">
-        delete from V_quality_test_report_kf_avg
-        <if test="require!=null">
-            <include refid="assist"/>
-        </if>
-    </delete>
-
-
-    <!-- 通过辅助工具Assist中的条件将VQualityTestReportKfAvg中的数据更新到数据库对应的表中,包括值为null的数据 -->
-    <update id="updateVQualityTestReportKfAvg" parameterType="map">
-        update V_quality_test_report_kf_avg
-        <set>
-            specification = #{enti.specification},
-            sk06 = #{enti.sk06},
-            sk03 = #{enti.sk03},
-            sk015 = #{enti.sk015},
-            sk0075 = #{enti.sk0075},
-            md = #{enti.md},
-            qsxs = #{enti.qsxs},
-            jradx = #{enti.jradx},
-        </set>
-        <if test="assist.require!=null">
-            <include refid="updateAssist"/>
-        </if>
-    </update>
-
-    <!-- 通过辅助工具Assist中的条件将VQualityTestReportKfAvg中属性值不为null的数据更新到数据库对应的表中 -->
-    <update id="updateNotNullVQualityTestReportKfAvg" parameterType="map">
-        update V_quality_test_report_kf_avg
-        <set>
-            <if test="enti.specification != null">specification = #{enti.specification},</if>
-            <if test="enti.sk06 != null">sk06 = #{enti.sk06},</if>
-            <if test="enti.sk03 != null">sk03 = #{enti.sk03},</if>
-            <if test="enti.sk015 != null">sk015 = #{enti.sk015},</if>
-            <if test="enti.sk0075 != null">sk0075 = #{enti.sk0075},</if>
-            <if test="enti.md != null">md = #{enti.md},</if>
-            <if test="enti.qsxs != null">qsxs = #{enti.qsxs},</if>
-            <if test="enti.jradx != null">jradx = #{enti.jradx},</if>
-        </set>
-        <if test="assist.require!=null">
-            <include refid="updateAssist"/>
-        </if>
-    </update>
+	<!-- 通过辅助工具Assist中的条件将VQualityTestReportKfAvg中属性值不为null的数据更新到数据库对应的表中 -->
+	<update id="updateNotNullVQualityTestReportKfAvg" parameterType="map">
+		update V_quality_test_report_kf_avg
+		<set>
+			<if test="enti.specification != null">specification = #{enti.specification},</if>
+			<if test="enti.sk118 != null">sk118 = #{enti.sk118},</if>
+			<if test="enti.sk06 != null">sk06 = #{enti.sk06},</if>
+			<if test="enti.sk03 != null">sk03 = #{enti.sk03},</if>
+			<if test="enti.sk015 != null">sk015 = #{enti.sk015},</if>
+			<if test="enti.sk0075 != null">sk0075 = #{enti.sk0075},</if>
+			<if test="enti.bgmd != null">bgmd = #{enti.bgmd},</if>
+			<if test="enti.qsxs != null">qsxs = #{enti.qsxs},</if>
+			<if test="enti.jradx != null">jradx = #{enti.jradx},</if>
+			<if test="enti.sxzl != null">sxzl = #{enti.sxzl},</if>
+			<if test="enti.hsl != null">hsl = #{enti.hsl},</if>
+		</set>
+		<if test="assist.require!=null">
+			<include refid="updateAssist" />
+		</if>
+	</update>
 </mapper>

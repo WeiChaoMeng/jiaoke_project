@@ -1,12 +1,9 @@
 package com.jiaoke.qualitytest.service.report;
 
-import java.util.Date;
-import java.util.List;
-
+import com.alibaba.fastjson.JSONObject;
 import com.jiake.utils.DateUtil;
 import com.jiaoke.common.bean.Assist;
 import com.jiaoke.qualitytest.bean.report.VQualityTestReportCjlAvg;
-import com.jiaoke.qualitytest.bean.report.VQualityTestReportKf;
 import com.jiaoke.qualitytest.dao.report.VQualityTestReportCjlAvgDao;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.logging.log4j.LogManager;
@@ -14,7 +11,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.JSONObject;
+import java.util.Date;
+import java.util.List;
 
 /**
  * VQualityTestReportCjlAvg的服务接口的实现类
@@ -48,7 +46,7 @@ public class VQualityTestReportCjlAvgServiceImpl implements VQualityTestReportCj
             assist.andLte("create_time", value.getEnddate());
         }
         if (value.getBegindate() == null && value.getEnddate() == null) {
-            assist.andGte("create_time", DateUtil.dateConvertYYYYMMDDHHMMSS(DateUtils.addDays(new Date(), -30)));
+            assist.andGte("create_time", DateUtil.dateConvertYYYYMMDDHHMMSS(DateUtils.addDays(new Date(), -31)));
             assist.andLte("create_time", DateUtil.dateConvertYYYYMMDDHHMMSS(new Date()));
         }
     }

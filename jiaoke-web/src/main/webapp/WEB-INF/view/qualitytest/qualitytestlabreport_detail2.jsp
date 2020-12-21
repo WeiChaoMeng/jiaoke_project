@@ -25,13 +25,13 @@
 								 name="orderTicketNum" lay-verify="title" autocomplete="off" class="layui-input" value="">
 								<div style="border: 2px solid #c8cccf;">
 									<div class="layui-form-item layui-row" style="margin-top: 20px;">
-										<div class="layui-col-xs12">
+										<div class="layui-col-xs12" style="display: none;">
 											<label class="layui-form-label input-title">工程名称：</label>
 											<div class="layui-input-inline" style="width: 83%;">
 												<input type="text" name="projectname" lay-verify="title" autocomplete="off" disabled=true class="layui-input">
 											</div>
 										</div>
-										<div class="layui-col-xs12">
+										<div class="layui-col-xs12" style="display: none;">
 											<label class="layui-form-label input-title">使用单位：</label>
 											<div class="layui-input-inline" style="width: 83%;">
 												<input type="text" name="useunit" lay-verify="title" autocomplete="off" disabled=true class="layui-input">
@@ -66,7 +66,7 @@
 										<div class="layui-col-xs12">
 											<label class="layui-form-label input-title">取样地点：</label>
 											<div class="layui-input-inline" style="width: 83%;">
-												<input type="text" name="" lay-verify="title" autocomplete="off" disabled=true class="layui-input" value="北京市政路桥建材集团有限公司路驰分公司">
+												<input type="text" name="manufacturers" lay-verify="title" autocomplete="off" disabled=true class="layui-input" value="">
 											</div>
 										</div>
 										<div class="layui-col-xs12">

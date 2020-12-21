@@ -1,7 +1,7 @@
 package com.jiaoke.qualitytest.bean.report;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.annotation.JSONField;
 import com.jiaoke.common.bean.QualityTestSearchDate;
 
 /**
@@ -13,49 +13,55 @@ import com.jiaoke.common.bean.QualityTestSearchDate;
 public class VQualityTestReportXjlAvg extends QualityTestSearchDate {
 	/***/
 	@JSONField(name="specification")
-	private String specification; 
+	private String specification;
 	/***/
 	@JSONField(name="sk132")
-	private Double sk132; 
+	private Double sk132;
 	/***/
 	@JSONField(name="sk95")
-	private Double sk95; 
+	private Double sk95;
 	/***/
 	@JSONField(name="sk475")
-	private Double sk475; 
+	private Double sk475;
 	/***/
 	@JSONField(name="sk236")
-	private Double sk236; 
+	private Double sk236;
 	/***/
 	@JSONField(name="sk118")
-	private Double sk118; 
+	private Double sk118;
 	/***/
 	@JSONField(name="sk06")
-	private Double sk06; 
+	private Double sk06;
 	/***/
 	@JSONField(name="sk03")
-	private Double sk03; 
+	private Double sk03;
 	/***/
 	@JSONField(name="sk015")
-	private Double sk015; 
+	private Double sk015;
 	/***/
 	@JSONField(name="sk0075")
-	private Double sk0075; 
+	private Double sk0075;
 	/***/
 	@JSONField(name="bgmd")
-	private Double bgmd; 
+	private Double bgmd;
 	/***/
 	@JSONField(name="mdjxsl")
-	private Double mdjxsl; 
+	private Double mdjxsl;
 	/***/
 	@JSONField(name="sdl")
-	private Double sdl; 
+	private Double sdl;
 	/***/
 	@JSONField(name="lj")
-	private Double lj; 
+	private Double lj;
 	/***/
 	@JSONField(name="yjl")
-	private Double yjl; 
+	private Double yjl;
+	/***/
+	@JSONField(name="jgx")
+	private Double jgx;
+	/***/
+	@JSONField(name="hnl")
+	private Double hnl;
 	/**
 	 * 实例化
 	 */
@@ -64,7 +70,7 @@ public class VQualityTestReportXjlAvg extends QualityTestSearchDate {
 	}
 	/**
 	 * 实例化
-	 * 
+	 *
 	 * @param obj
 	 */
 	public VQualityTestReportXjlAvg(JSONObject obj) {
@@ -114,11 +120,17 @@ public class VQualityTestReportXjlAvg extends QualityTestSearchDate {
 		if (obj.get("yjl") instanceof Number) {
 			this.setYjl(((Number) obj.get("yjl")).doubleValue());
 		}
+		if (obj.get("jgx") instanceof Number) {
+			this.setJgx(((Number) obj.get("jgx")).doubleValue());
+		}
+		if (obj.get("hnl") instanceof Number) {
+			this.setHnl(((Number) obj.get("hnl")).doubleValue());
+		}
 	}
-	
+
 	/**
 	 * 将当前对象转换为JsonObject
-	 * 
+	 *
 	 * @return
 	 */
 	public JSONObject toJson() {
@@ -168,13 +180,19 @@ public class VQualityTestReportXjlAvg extends QualityTestSearchDate {
 		if (this.getYjl() != null) {
 			result.put("yjl",this.getYjl());
 		}
+		if (this.getJgx() != null) {
+			result.put("jgx",this.getJgx());
+		}
+		if (this.getHnl() != null) {
+			result.put("hnl",this.getHnl());
+		}
 		return result;
 	}
-	
-	
+
+
 	/**
 	 * 获取specification
-	 * 
+	 *
 	 * @return
 	 */
 	public String getSpecification() {
@@ -183,16 +201,16 @@ public class VQualityTestReportXjlAvg extends QualityTestSearchDate {
 
 	/**
 	 * 设置specification
-	 * 
+	 *
 	 * @param specification
 	 */
 	public void setSpecification(String specification) {
 		this.specification = specification;
 	}
-	
+
 	/**
 	 * 获取sk132
-	 * 
+	 *
 	 * @return
 	 */
 	public Double getSk132() {
@@ -201,16 +219,16 @@ public class VQualityTestReportXjlAvg extends QualityTestSearchDate {
 
 	/**
 	 * 设置sk132
-	 * 
+	 *
 	 * @param sk132
 	 */
 	public void setSk132(Double sk132) {
 		this.sk132 = sk132;
 	}
-	
+
 	/**
 	 * 获取sk95
-	 * 
+	 *
 	 * @return
 	 */
 	public Double getSk95() {
@@ -219,16 +237,16 @@ public class VQualityTestReportXjlAvg extends QualityTestSearchDate {
 
 	/**
 	 * 设置sk95
-	 * 
+	 *
 	 * @param sk95
 	 */
 	public void setSk95(Double sk95) {
 		this.sk95 = sk95;
 	}
-	
+
 	/**
 	 * 获取sk475
-	 * 
+	 *
 	 * @return
 	 */
 	public Double getSk475() {
@@ -237,16 +255,16 @@ public class VQualityTestReportXjlAvg extends QualityTestSearchDate {
 
 	/**
 	 * 设置sk475
-	 * 
+	 *
 	 * @param sk475
 	 */
 	public void setSk475(Double sk475) {
 		this.sk475 = sk475;
 	}
-	
+
 	/**
 	 * 获取sk236
-	 * 
+	 *
 	 * @return
 	 */
 	public Double getSk236() {
@@ -255,16 +273,16 @@ public class VQualityTestReportXjlAvg extends QualityTestSearchDate {
 
 	/**
 	 * 设置sk236
-	 * 
+	 *
 	 * @param sk236
 	 */
 	public void setSk236(Double sk236) {
 		this.sk236 = sk236;
 	}
-	
+
 	/**
 	 * 获取sk118
-	 * 
+	 *
 	 * @return
 	 */
 	public Double getSk118() {
@@ -273,16 +291,16 @@ public class VQualityTestReportXjlAvg extends QualityTestSearchDate {
 
 	/**
 	 * 设置sk118
-	 * 
+	 *
 	 * @param sk118
 	 */
 	public void setSk118(Double sk118) {
 		this.sk118 = sk118;
 	}
-	
+
 	/**
 	 * 获取sk06
-	 * 
+	 *
 	 * @return
 	 */
 	public Double getSk06() {
@@ -291,16 +309,16 @@ public class VQualityTestReportXjlAvg extends QualityTestSearchDate {
 
 	/**
 	 * 设置sk06
-	 * 
+	 *
 	 * @param sk06
 	 */
 	public void setSk06(Double sk06) {
 		this.sk06 = sk06;
 	}
-	
+
 	/**
 	 * 获取sk03
-	 * 
+	 *
 	 * @return
 	 */
 	public Double getSk03() {
@@ -309,16 +327,16 @@ public class VQualityTestReportXjlAvg extends QualityTestSearchDate {
 
 	/**
 	 * 设置sk03
-	 * 
+	 *
 	 * @param sk03
 	 */
 	public void setSk03(Double sk03) {
 		this.sk03 = sk03;
 	}
-	
+
 	/**
 	 * 获取sk015
-	 * 
+	 *
 	 * @return
 	 */
 	public Double getSk015() {
@@ -327,16 +345,16 @@ public class VQualityTestReportXjlAvg extends QualityTestSearchDate {
 
 	/**
 	 * 设置sk015
-	 * 
+	 *
 	 * @param sk015
 	 */
 	public void setSk015(Double sk015) {
 		this.sk015 = sk015;
 	}
-	
+
 	/**
 	 * 获取sk0075
-	 * 
+	 *
 	 * @return
 	 */
 	public Double getSk0075() {
@@ -345,16 +363,16 @@ public class VQualityTestReportXjlAvg extends QualityTestSearchDate {
 
 	/**
 	 * 设置sk0075
-	 * 
+	 *
 	 * @param sk0075
 	 */
 	public void setSk0075(Double sk0075) {
 		this.sk0075 = sk0075;
 	}
-	
+
 	/**
 	 * 获取bgmd
-	 * 
+	 *
 	 * @return
 	 */
 	public Double getBgmd() {
@@ -363,16 +381,16 @@ public class VQualityTestReportXjlAvg extends QualityTestSearchDate {
 
 	/**
 	 * 设置bgmd
-	 * 
+	 *
 	 * @param bgmd
 	 */
 	public void setBgmd(Double bgmd) {
 		this.bgmd = bgmd;
 	}
-	
+
 	/**
 	 * 获取mdjxsl
-	 * 
+	 *
 	 * @return
 	 */
 	public Double getMdjxsl() {
@@ -381,16 +399,16 @@ public class VQualityTestReportXjlAvg extends QualityTestSearchDate {
 
 	/**
 	 * 设置mdjxsl
-	 * 
+	 *
 	 * @param mdjxsl
 	 */
 	public void setMdjxsl(Double mdjxsl) {
 		this.mdjxsl = mdjxsl;
 	}
-	
+
 	/**
 	 * 获取sdl
-	 * 
+	 *
 	 * @return
 	 */
 	public Double getSdl() {
@@ -399,16 +417,16 @@ public class VQualityTestReportXjlAvg extends QualityTestSearchDate {
 
 	/**
 	 * 设置sdl
-	 * 
+	 *
 	 * @param sdl
 	 */
 	public void setSdl(Double sdl) {
 		this.sdl = sdl;
 	}
-	
+
 	/**
 	 * 获取lj
-	 * 
+	 *
 	 * @return
 	 */
 	public Double getLj() {
@@ -417,16 +435,16 @@ public class VQualityTestReportXjlAvg extends QualityTestSearchDate {
 
 	/**
 	 * 设置lj
-	 * 
+	 *
 	 * @param lj
 	 */
 	public void setLj(Double lj) {
 		this.lj = lj;
 	}
-	
+
 	/**
 	 * 获取yjl
-	 * 
+	 *
 	 * @return
 	 */
 	public Double getYjl() {
@@ -435,18 +453,54 @@ public class VQualityTestReportXjlAvg extends QualityTestSearchDate {
 
 	/**
 	 * 设置yjl
-	 * 
+	 *
 	 * @param yjl
 	 */
 	public void setYjl(Double yjl) {
 		this.yjl = yjl;
 	}
 
+	/**
+	 * 获取jgx
+	 *
+	 * @return
+	 */
+	public Double getJgx() {
+		return jgx;
+	}
+
+	/**
+	 * 设置jgx
+	 *
+	 * @param jgx
+	 */
+	public void setJgx(Double jgx) {
+		this.jgx = jgx;
+	}
+
+	/**
+	 * 获取hnl
+	 *
+	 * @return
+	 */
+	public Double getHnl() {
+		return hnl;
+	}
+
+	/**
+	 * 设置hnl
+	 *
+	 * @param hnl
+	 */
+	public void setHnl(Double hnl) {
+		this.hnl = hnl;
+	}
+
 	@Override
 	public String toString() {
-		return "VQualityTestReportXjlAvg [specification=" + specification + " , sk132=" + sk132 + " , sk95=" + sk95 + " , sk475=" + sk475 + " , sk236=" + sk236 + " , sk118=" + sk118 + " , sk06=" + sk06 + " , sk03=" + sk03 + " , sk015=" + sk015 + " , sk0075=" + sk0075 + " , bgmd=" + bgmd + " , mdjxsl=" + mdjxsl + " , sdl=" + sdl + " , lj=" + lj + " , yjl=" + yjl + "  ]";
-	
+		return "VQualityTestReportXjlAvg [specification=" + specification + " , sk132=" + sk132 + " , sk95=" + sk95 + " , sk475=" + sk475 + " , sk236=" + sk236 + " , sk118=" + sk118 + " , sk06=" + sk06 + " , sk03=" + sk03 + " , sk015=" + sk015 + " , sk0075=" + sk0075 + " , bgmd=" + bgmd + " , mdjxsl=" + mdjxsl + " , sdl=" + sdl + " , lj=" + lj + " , yjl=" + yjl + " , jgx=" + jgx + " , hnl=" + hnl + "  ]";
+
 	}
-	
-	
+
+
 }

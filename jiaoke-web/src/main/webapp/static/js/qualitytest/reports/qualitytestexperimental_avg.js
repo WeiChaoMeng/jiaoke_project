@@ -15,11 +15,14 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 
 	dictionaryFunc.getMaterialsToSelect("materials", "请选择", basePath);
 
-	console.log("qualitytestexperimental_passrate.js");
+	console.log("qualitytestexperimental_avg.js");
 	var myForm = {
 		CJL_Data: null,
 		XJL_Data: null,
-		KF_Data: null
+		KF_Data: null,
+		LQ_Data: null,
+		RHLQ_Data: null,
+		LQHHL_Data: null
 	};
 	/**
 	 * 获取粗集料数据
@@ -87,12 +90,78 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 		})
 		return result;
 	}
+	/**
+	 * 获取沥青数据
+	 */
+	myForm.getLQData = function(searchData) {
+		myForm.chartData = null;
+		var result = null;
+		$.ajax({
+			type: "GET",
+			async: false,
+			url: basePath + "/QualityTestReportAvg/LQ.do",
+			data: searchData,
+			dataType: 'json',
+			success: function(msg) {
+				if (msg.code == 200) {
+					result = msg.data;
+					myForm.LQ_Data = msg.data;
+				}
+				console.log(msg);
+			}
+		})
+		return result;
+	}
+	/**
+	 * 乳化沥青数据
+	 */
+	myForm.getRHLQData = function(searchData) {
+		myForm.chartData = null;
+		var result = null;
+		$.ajax({
+			type: "GET",
+			async: false,
+			url: basePath + "/QualityTestReportAvg/RHLQ.do",
+			data: searchData,
+			dataType: 'json',
+			success: function(msg) {
+				if (msg.code == 200) {
+					result = msg.data;
+					myForm.RHLQ_Data = msg.data;
+				}
+				console.log(msg);
+			}
+		})
+		return result;
+	}
+	/**
+	 * 获取沥青混合料数据
+	 */
+	myForm.getLQHHLData = function(searchData) {
+		myForm.chartData = null;
+		var result = null;
+		$.ajax({
+			type: "GET",
+			async: false,
+			url: basePath + "/QualityTestReportAvg/LQHHL.do",
+			data: searchData,
+			dataType: 'json',
+			success: function(msg) {
+				if (msg.code == 200) {
+					result = msg.data;
+					myForm.LQHHL_Data = msg.data;
+				}
+				console.log(msg);
+			}
+		})
+		return result;
+	}
 	myForm.display_title = function(title) {
 		var msg =
 			'<div class="layui-form-item" style="margin:0 auto;"><label class="layui-form-label" style="width: 100%;text-align: center;font-size: 18px;">' +
 			title + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></div>' +
 			'<div class="layui-form-item" style=" width:80%;margin:0 auto;">' +
-			'<label class="layui-form-label" style="text-align: left; margin-left: 1px;font-size: 14px;">试验项目</label>' +
+			'<label class="layui-form-label" style="text-align: left; margin-left: 10px;font-size: 14px;">试验项目</label>' +
 			'<label class="layui-form-label" style="text-align: left; margin-left: 85px;font-size: 14px;">平均值</label>' +
 			'</div>';
 		return msg;
@@ -107,7 +176,7 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 			'" style=" width:80%;margin:0 auto;margin-bottom: 5px; text-align:center; border:1px solid #e6e6e6; border-radius:5px;">' +
 			'<label class="layui-form-label" style="width:0px;margin-top: 4px;"><span class="layui-badge-dot layui-bg-green"' +
 			'style="width:12px;height:12px"></span></label>' +
-			'<label class="layui-form-label" style="text-align: left; margin-left: 1px;font-size: 15px; width:25%">' + colum +
+			'<label class="layui-form-label" style="text-align: left; margin-left: 1px;font-size: 15px; width:30%">' + colum +
 			'</label>' +
 			'<label class="layui-form-label" style="text-align: left; margin-left: 50px;font-size: 15px;">' + value +
 			'</label>' +
@@ -124,7 +193,7 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 			'" style=" width:80%;margin:0 auto;margin-bottom: 5px; text-align:center; border:1px solid #e6e6e6; border-radius:5px;">' +
 			'<label class="layui-form-label" style="width:0px;margin-top: 4px;"><span class="layui-badge-dot layui-bg-green"' +
 			'style="width:12px;height:12px"></span></label>' +
-			'<label class="layui-form-label" style="width:25%;text-align: left; margin-left: 1px;font-size: 15px; ">' + colum +
+			'<label class="layui-form-label" style="width:35%;text-align: left; margin-left: 1px;font-size: 15px; ">' + colum +
 			'</label>' +
 			'<label class="layui-form-label" style="width:10%;text-align: left; margin-left: 50px;font-size: 15px;">' + value +
 			'</label>' +
@@ -283,6 +352,165 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 		}
 	}
 	/**
+	 * 显示沥青信息
+	 */
+	myForm.display_LQData = function() {
+		if (myForm.LQ_Data == null) {
+			return;
+		}
+		var msg = "";;
+		$("#div_avg_value").append('<div id="div_lq" class="layui-row"></div>');
+		var div_name = "";
+		for (var i = 0; i < myForm.LQ_Data.length; i++) {
+			var spec = myForm.LQ_Data[i]['specification'];
+			msg +=
+				'<div class="layui-col-sm3 layui-col-space10" style=" border:1px solid #e6e6e6; border-radius:5px;box-shadow: 1px 1px 5px #e6e6e6;">';
+			if (i == 0) {
+				msg += myForm.display_title("沥青");
+			} else {
+				msg += myForm.display_title("沥青（" + spec + "）");
+			}
+			div_name = "pro_item_lq" + i;
+			msg += myForm.display_item('zrd30@4@' + spec, div_name, '针入度（30℃）', myForm.LQ_Data[i]['zrd30']);
+			msg += myForm.display_item('zrd25@4@' + spec, div_name, '针入度（25℃）', myForm.LQ_Data[i]['zrd25']);
+			msg += myForm.display_item('zrd15@4@' + spec, div_name, '针入度（15℃）', myForm.LQ_Data[i]['zrd15']);
+			msg += myForm.display_item('zrd10@4@' + spec, div_name, '针入度（10℃）', myForm.LQ_Data[i]['zrd10']);
+			msg += myForm.display_item('zrd5@4@' + spec, div_name, '针入度（5℃）', myForm.LQ_Data[i]['zrd5']);
+			msg += myForm.display_item('yd25@4@' + spec, div_name, '延度（25℃）', myForm.LQ_Data[i]['yd25']);
+			msg += myForm.display_item('yd15@4@' + spec, div_name, '延度（15℃）', myForm.LQ_Data[i]['yd15']);
+			msg += myForm.display_item('yd10@4@' + spec, div_name, '延度（10℃）', myForm.LQ_Data[i]['yd10']);
+			msg += myForm.display_item('yd5@4@' + spec, div_name, '延度（5℃）', myForm.LQ_Data[i]['yd5']);
+			msg += myForm.display_item('rhd@4@' + spec, div_name, '软化点', myForm.LQ_Data[i]['rhd']);
+			msg += myForm.display_item('sd@4@' + spec, div_name, '闪点', myForm.LQ_Data[i]['sd']);
+			msg += myForm.display_item('rjd@4@' + spec, div_name, '溶解度', myForm.LQ_Data[i]['rjd']);
+			msg += myForm.display_item('dlnd@4@' + spec, div_name, '60℃动力粘度', myForm.LQ_Data[i]['dlnd']);
+			msg += myForm.display_item('md15@4@' + spec, div_name, '密度（15℃）', myForm.LQ_Data[i]['md15']);
+			msg += myForm.display_item('xdmd25@4@' + spec, div_name, '相对密度（25℃）', myForm.LQ_Data[i]['xdmd25']);
+			msg += myForm.display_item('txhf@4@' + spec, div_name, '弹性恢复', myForm.LQ_Data[i]['txhf']);
+			msg += myForm.display_item('lx@4@' + spec, div_name, '离析', myForm.LQ_Data[i]['lx']);
+			msg += myForm.display_item('zlbh@4@' + spec, div_name, '质量变化', myForm.LQ_Data[i]['zlbh']);
+			msg += myForm.display_item('clzrdb@4@' + spec, div_name, '残留针入度比', myForm.LQ_Data[i]['clzrdb']);
+			msg += myForm.display_item('clyd25@4@' + spec, div_name, '残留延度（25℃）', myForm.LQ_Data[i]['clyd25']);
+			msg += myForm.display_item('clyd15@4@' + spec, div_name, '残留延度（15℃）', myForm.LQ_Data[i]['clyd15']);
+			msg += myForm.display_item('clyd10@4@' + spec, div_name, '残留延度（10℃）', myForm.LQ_Data[i]['clyd10']);
+			msg += myForm.display_item('clyd5@4@' + spec, div_name, '残留延度（5℃）', myForm.LQ_Data[i]['clyd5']);
+			msg += '</div>';
+	
+			$("#div_lq").append(msg);
+			$('div[name=' + div_name + ']').each(function() {
+				var that = $(this);
+				that.bind("click", function() {
+					myForm.openZTPBTPage(that[0].id);
+				})
+	
+			});
+			msg = "";
+		}
+	}
+	/**
+	 * 显示乳化沥青信息
+	 */
+	myForm.display_RHLQData = function() {
+		if (myForm.RHLQ_Data == null) {
+			return;
+		}
+		var msg = "";;
+		$("#div_avg_value").append('<div id="div_rhlq" class="layui-row"></div>');
+		var div_name = "";
+		for (var i = 0; i < myForm.RHLQ_Data.length; i++) {
+			var spec = myForm.RHLQ_Data[i]['specification'];
+			msg +=
+				'<div class="layui-col-sm3 layui-col-space10" style=" border:1px solid #e6e6e6; border-radius:5px;box-shadow: 1px 1px 5px #e6e6e6;">';
+			if (i == 0) {
+				msg += myForm.display_title("乳化沥青");
+			} else {
+				msg += myForm.display_title("乳化沥青（" + spec + "）");
+			}
+			div_name = "pro_item_rhlq" + i;
+			msg += myForm.display_item('zfllwhl@8@' + spec, div_name, '蒸发残留物含量', myForm.RHLQ_Data[i]['zfllwhl']);
+			msg += myForm.display_item('bznd@8@' + spec, div_name, '标准粘度', myForm.RHLQ_Data[i]['bznd']);
+			msg += myForm.display_item('zrd@8@' + spec, div_name, '针入度', myForm.RHLQ_Data[i]['zrd']);
+			msg += myForm.display_item('yd@8@' + spec, div_name, '延度', myForm.RHLQ_Data[i]['yd']);
+			msg += myForm.display_item('ccwdx1@8@' + spec, div_name, '1d储存稳定性', myForm.RHLQ_Data[i]['ccwdx1']);
+			msg += myForm.display_item('ccwdx5@8@' + spec, div_name, '5d储存稳定性', myForm.RHLQ_Data[i]['ccwdx5']);
+				msg += '</div>';
+	
+			$("#div_rhlq").append(msg);
+			$('div[name=' + div_name + ']').each(function() {
+				var that = $(this);
+				that.bind("click", function() {
+					myForm.openZTPBTPage(that[0].id);
+				})
+	
+			});
+			msg = "";
+		}
+	}
+	/**
+	 * 显示沥青混合料信息
+	 */
+	myForm.display_LQHHLData = function() {
+		if (myForm.LQHHL_Data == null) {
+			return;
+		}
+		var msg = '';
+		$("#div_avg_value").append('<div id="div_lqhhl" class="layui-row"></div>');
+		var div_name = "";
+		for (var i = 0; i < myForm.LQHHL_Data.length; i++) {
+			var spec = myForm.LQHHL_Data[i]['specification'];
+			msg +=
+				'<div class="layui-col-sm3 layui-col-space10" style=" border:1px solid #e6e6e6; border-radius:5px;box-shadow: 1px 1px 5px #e6e6e6;">';
+			if (i == 0) {
+				msg += myForm.display_title("沥青混合料");
+			} else {
+				msg += myForm.display_title("沥青混合料（" + spec + "）");
+			}
+			div_name = "pro_item_lqhhl" + i;
+			msg += myForm.display_item('sK375@9@' + spec, div_name, '37.5', myForm.LQHHL_Data[i]['sk375']);
+			msg += myForm.display_item('sK315@9@' + spec, div_name, '31.5', myForm.LQHHL_Data[i]['sk315']);
+			msg += myForm.display_item('sK265@9@' + spec, div_name, '26.5', myForm.LQHHL_Data[i]['sk265']);
+			msg += myForm.display_item('sK19@9@' + spec, div_name, '19', myForm.LQHHL_Data[i]['sk19']);
+			msg += myForm.display_item('sK16@9@' + spec, div_name, '16', myForm.LQHHL_Data[i]['sk16']);
+			msg += myForm.display_item('sK132@9@' + spec, div_name, '13.2', myForm.LQHHL_Data[i]['sk132']);
+			msg += myForm.display_item('sK95@9@' + spec, div_name, '9.5', myForm.LQHHL_Data[i]['sk95']);
+			msg += myForm.display_item('sK475@9@' + spec, div_name, '4.75', myForm.LQHHL_Data[i]['sk475']);
+			msg += myForm.display_item('sK236@9@' + spec, div_name, '2.36', myForm.LQHHL_Data[i]['sk236']);
+			msg += myForm.display_item('sK118@9@' + spec, div_name, '1.18', myForm.LQHHL_Data[i]['sk118']);
+			msg += myForm.display_item('sK06@9@' + spec, div_name, '0.6', myForm.LQHHL_Data[i]['sk06']);
+			msg += myForm.display_item('sK03@9@' + spec, div_name, '0.3', myForm.LQHHL_Data[i]['sk03']);
+			msg += myForm.display_item('sK015@9@' + spec, div_name, '0.15', myForm.LQHHL_Data[i]['sk015']);
+			msg += myForm.display_item('sK0075@9@' + spec, div_name, '0.075', myForm.LQHHL_Data[i]['sk0075']);
+			msg += myForm.display_item('zdlhxdmd@9@' + spec, div_name, '最大理论相对密度', myForm.LQHHL_Data[i]['zdlhxdmd']);
+			msg += myForm.display_item('mtjxdmd@9@' + spec, div_name, '毛体积相对密度', myForm.LQHHL_Data[i]['mtjxdmd']);
+			msg += myForm.display_item('kxl@9@' + spec, div_name, '空隙率', myForm.LQHHL_Data[i]['kxl']);
+			msg += myForm.display_item('lqbhd@9@' + spec, div_name, '沥青饱和度', myForm.LQHHL_Data[i]['lqbhd']);
+			msg += myForm.display_item('kljxl@9@' + spec, div_name, '矿料间隙率', myForm.LQHHL_Data[i]['kljxl']);
+			msg += myForm.display_item('cjlgjjxl@9@' + spec, div_name, '粗集料骨架间隙率', myForm.LQHHL_Data[i]['cjlgjjxl']);
+			msg += myForm.display_item('wdd@9@' + spec, div_name, '稳定度', myForm.LQHHL_Data[i]['wdd']);
+			msg += myForm.display_item('lz@9@' + spec, div_name, '流值', myForm.LQHHL_Data[i]['lz']);
+			msg += myForm.display_item('xl@9@' + spec, div_name, '析漏', myForm.LQHHL_Data[i]['xl']);
+			msg += myForm.display_item('fs@9@' + spec, div_name, '飞散', myForm.LQHHL_Data[i]['fs']);
+			msg += myForm.display_item('clwdd@9@' + spec, div_name, '残留稳定度', myForm.LQHHL_Data[i]['clwdd']);
+			msg += myForm.display_item('drplqdb@9@' + spec, div_name, '冻融劈裂强度比', myForm.LQHHL_Data[i]['drplqdb']);
+			msg += myForm.display_item('dwdd@9@' + spec, div_name, '动稳定度', myForm.LQHHL_Data[i]['dwdd']);
+			msg += myForm.display_item('ssxs@9@' + spec, div_name, '渗水系数', myForm.LQHHL_Data[i]['ssxs']);
+			msg += myForm.display_item('gzsd@9@' + spec, div_name, '构造深度', myForm.LQHHL_Data[i]['gzsd']);
+			
+			msg += '</div>';
+	
+			$("#div_lqhhl").append(msg);
+			$('div[name=' + div_name + ']').each(function() {
+				var that = $(this);
+				that.bind("click", function() {
+					myForm.openZTPBTPage(that[0].id);
+				})
+	
+			});
+			msg = "";
+		}
+	}
+	
+	/**
 	 * 获取查询条件
 	 */
 	myForm.getQueryData = function() {
@@ -310,17 +538,40 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 	 */
 	myForm.search = function() {
 		console.log('search');
-		var queryData = myForm.getQueryData();
+
 		myForm.CJL_Data = null;
 		myForm.XJL_Data = null;
 		myForm.KF_Data = null;
-		myForm.getCJLData(queryData);
-		myForm.getXJLData(queryData);
-		myForm.getKFData(queryData);
 		$("#div_avg_value").html('');
-		myForm.display_CJLData();
-		myForm.display_XJLData();
-		myForm.display_KFData();
+
+		var queryData = myForm.getQueryData();
+		var mvalue = $("#materials").val();
+		switch (mvalue) {
+			case '1':
+				myForm.getXJLData(queryData);
+				myForm.display_XJLData();
+				break;
+			case '2':
+				myForm.getCJLData(queryData);
+				myForm.display_CJLData();
+				break;
+			case '3':
+				myForm.getKFData(queryData);
+				myForm.display_KFData();
+				break;
+			case '4':
+				myForm.getLQData(queryData);
+				myForm.display_LQData();
+				break;
+			case '8':
+				myForm.getRHLQData(queryData);
+				myForm.display_RHLQData();
+				break;
+			case '9':
+				myForm.getLQHHLData(queryData);
+				myForm.display_LQHHLData();
+				break;
+		}
 	};
 
 
@@ -379,15 +630,10 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 	form.on('select(materials)', function(data) {
 		console.log("select(materials)" + data.value);
 	});
-
 	myForm.CJL_Data = null;
 	myForm.XJL_Data = null;
 	myForm.KF_Data = null;
-	myForm.getCJLData(null);
-	myForm.getXJLData(null);
-	myForm.getKFData(null);
 	$("#div_avg_value").html('');
+	myForm.getCJLData(null);
 	myForm.display_CJLData();
-	myForm.display_XJLData();
-	myForm.display_KFData();
 });

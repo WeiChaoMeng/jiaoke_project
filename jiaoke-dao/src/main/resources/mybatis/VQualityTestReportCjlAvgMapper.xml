@@ -1,370 +1,410 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jiaoke.qualitytest.dao.report.VQualityTestReportCjlAvgDao">
-    <!-- VQualityTestReportCjlAvg的resultMap,column是给数据库列起的别名,它对应property类的属性 -->
-    <resultMap id="result_VQualityTestReportCjlAvg_Map"
-               type="com.jiaoke.qualitytest.bean.report.VQualityTestReportCjlAvg">
+	<!-- VQualityTestReportCjlAvg的resultMap,column是给数据库列起的别名,它对应property类的属性 -->
+	<resultMap id="result_VQualityTestReportCjlAvg_Map" type="com.jiaoke.qualitytest.bean.report.VQualityTestReportCjlAvg">
+		
+		<result column="specification" property="specification" />
+		<result column="sk375" property="sk375" />
+		<result column="sk315" property="sk315" />
+		<result column="sk265" property="sk265" />
+		<result column="sk19" property="sk19" />
+		<result column="sk16" property="sk16" />
+		<result column="sk132" property="sk132" />
+		<result column="sk95" property="sk95" />
+		<result column="sk475" property="sk475" />
+		<result column="sk236" property="sk236" />
+		<result column="sk118" property="sk118" />
+		<result column="sk06" property="sk06" />
+		<result column="sk03" property="sk03" />
+		<result column="sk015" property="sk015" />
+		<result column="sk0075" property="sk0075" />
+		<result column="bgxdmd1" property="bgxdmd1" />
+		<result column="bgxdmd2" property="bgxdmd2" />
+		<result column="zpzkl" property="zpzkl" />
+		<result column="ysz" property="ysz" />
+		<result column="rrkl" property="rrkl" />
+		<result column="mh" property="mh" />
+		<result column="jgx" property="jgx" />
+		<result column="klhl0075" property="klhl0075" />
+		<result column="hsl" property="hsl" />
+		<result column="nfx" property="nfx" />
+	</resultMap>
 
-        <result column="specification" property="specification"/>
-        <result column="sk315" property="sk315"/>
-        <result column="sk265" property="sk265"/>
-        <result column="sk19" property="sk19"/>
-        <result column="sk16" property="sk16"/>
-        <result column="sk132" property="sk132"/>
-        <result column="sk95" property="sk95"/>
-        <result column="sk475" property="sk475"/>
-        <result column="sk236" property="sk236"/>
-        <result column="sk118" property="sk118"/>
-        <result column="sk06" property="sk06"/>
-        <result column="sk03" property="sk03"/>
-        <result column="sk015" property="sk015"/>
-        <result column="sk0075" property="sk0075"/>
-        <result column="bgxdmd1" property="bgxdmd1"/>
-        <result column="bgxdmd2" property="bgxdmd2"/>
-        <result column="zpzkl" property="zpzkl"/>
-        <result column="ysz" property="ysz"/>
-        <result column="rrkl" property="rrkl"/>
-        <result column="mh" property="mh"/>
-    </resultMap>
-
-    <!-- assist是查询辅助工具类, ${req.require}表示列名,#{req.value}表示值它是防SQL注入的 -->
-    <sql id="assist">
-        <where>
-            <foreach collection="require" item="req" separator=" ">
-                ${req.require}
-                <if test="req.value != null">
-                    #{req.value}
-                </if>
-                <if test="req.values != null">
-                    <foreach collection="req.values" item="value" separator=",">
-                        #{value}
-                    </foreach>
-                </if>
-                <if test="req.customRequire !=null">
-                    <foreach collection="req.customRequire" item="cr" separator=" ">
-                        ${cr.require}
-                        <if test="cr.value != null">
-                            #{cr.value}
-                        </if>
-                        <if test="cr.values != null">
-                            <foreach collection="cr.values" item="value"
-                                     separator=",">
-                                #{value}
-                            </foreach>
-                        </if>
-                        <if test="cr.suffix != null">${cr.suffix}</if>
-                    </foreach>
-                </if>
-                <if test="req.suffix != null">${req.suffix}</if>
-            </foreach>
-        </where>
-    </sql>
-
-    <!-- updateAssist用于更新数据查询辅助工具类,作用assist与一致 -->
-    <sql id="updateAssist">
-        <where>
-            <foreach collection="assist.require" item="req" separator=" ">
-                ${req.require}
-                <if test="req.value != null">
-                    #{req.value}
-                </if>
-                <if test="req.values != null">
-                    <foreach collection="req.values" item="value" separator=",">
-                        #{value}
-                    </foreach>
-                </if>
-                <if test="req.customRequire !=null">
-                    <foreach collection="req.customRequire" item="cr" separator=" ">
-                        ${cr.require}
-                        <if test="cr.value != null">
-                            #{cr.value}
-                        </if>
-                        <if test="cr.values != null">
-                            <foreach collection="cr.values" item="value"
-                                     separator=",">
-                                #{value}
-                            </foreach>
-                        </if>
-                        <if test="cr.suffix != null">${cr.suffix}</if>
-                    </foreach>
-                </if>
-                <if test="req.suffix != null">${req.suffix}</if>
-            </foreach>
-        </where>
-    </sql>
-
-    <!-- 数据库中表名为:v_quality_test_report_cjl_avg的列名 -->
-    <sql id="v_quality_test_report_cjl_avg_Column">
-		specification,sk315,sk265,sk19,sk16,sk132,sk95,sk475,sk236,sk118,sk06,sk03,sk015,sk0075,bgxdmd1,bgxdmd2,zpzkl,ysz,rrkl,mh
+	<!-- assist是查询辅助工具类, ${req.require}表示列名,#{req.value}表示值它是防SQL注入的 -->
+	<sql id="assist">
+		<where>
+			<foreach collection="require" item="req" separator=" ">
+				${req.require}
+				<if test="req.value != null">
+					#{req.value}
+				</if>
+				<if test="req.values != null">
+					<foreach collection="req.values" item="value" separator=",">
+						#{value}
+					</foreach>
+				</if>
+				<if test="req.customRequire !=null">
+					<foreach collection="req.customRequire" item="cr" separator=" ">
+						${cr.require}
+						<if test="cr.value != null">
+							#{cr.value}
+						</if>
+						<if test="cr.values != null">
+							<foreach collection="cr.values" item="value"
+								separator=",">
+								#{value}
+							</foreach>
+						</if>
+						<if test="cr.suffix != null"> ${cr.suffix}</if>
+					</foreach>
+				</if>
+				<if test="req.suffix != null"> ${req.suffix}</if>
+			</foreach>
+		</where>
 	</sql>
 
-    <!--获得类名为:VQualityTestReportCjlAvg对应的数据库表的数据总行数 -->
-    <select id="getVQualityTestReportCjlAvgRowCount" parameterType="com.jiaoke.common.bean.Assist"
-            resultType="java.lang.Long">
-        select count(*) from V_quality_test_report_cjl_avg
-        <if test="require!=null">
-            <include refid="assist"/>
-        </if>
-    </select>
+	<!-- updateAssist用于更新数据查询辅助工具类,作用assist与一致 -->
+	<sql id="updateAssist">
+		<where>
+			<foreach collection="assist.require" item="req" separator=" ">
+				${req.require}
+				<if test="req.value != null">
+					#{req.value}
+				</if>
+				<if test="req.values != null">
+					<foreach collection="req.values" item="value" separator=",">
+						#{value}
+					</foreach>
+				</if>
+				<if test="req.customRequire !=null">
+					<foreach collection="req.customRequire" item="cr" separator=" ">
+						${cr.require}
+						<if test="cr.value != null">
+							#{cr.value}
+						</if>
+						<if test="cr.values != null">
+							<foreach collection="cr.values" item="value"
+								separator=",">
+								#{value}
+							</foreach>
+						</if>
+						<if test="cr.suffix != null"> ${cr.suffix}</if>
+					</foreach>
+				</if>
+				<if test="req.suffix != null"> ${req.suffix}</if>
+			</foreach>
+		</where>
+	</sql>
 
-    <!-- 获得类名为:VQualityTestReportCjlAvg对应数据库中表的数据集合 -->
-    <select id="selectVQualityTestReportCjlAvg1" parameterType="com.jiaoke.common.bean.Assist"
-            resultMap="result_VQualityTestReportCjlAvg_Map">
-        select
-        <if test="distinct !=null">${distinct}</if>
-        <choose>
-            <when test="resultColumn!=null">${resultColumn}</when>
-            <otherwise>
-                <include refid="v_quality_test_report_cjl_avg_Column"/>
-            </otherwise>
-        </choose>
-        from V_quality_test_report_cjl_avg
-        <if test="require!=null">
-            <include refid="assist"/>
-        </if>
-        <if test="order !=null">${order}</if>
-        <choose>
-            <when test="startRow !=null and rowSize !=null">LIMIT #{startRow},#{rowSize}</when>
-            <when test="rowSize !=null">LIMIT #{rowSize}</when>
-        </choose>
-    </select>
+	<!-- 数据库中表名为:V_quality_test_report_cjl_avg的列名 -->
+	<sql id="V_quality_test_report_cjl_avg_Column">
+		specification,sk375,sk315,sk265,sk19,sk16,sk132,sk95,sk475,sk236,sk118,sk06,sk03,sk015,sk0075,bgxdmd1,bgxdmd2,zpzkl,ysz,rrkl,mh,jgx,klhl0075,hsl,nfx
+	</sql>
 
-    <!-- 获得类名为:VQualityTestReportCjlAvg对应数据库中表的数据集合 -->
-    <select id="selectVQualityTestReportCjlAvg" parameterType="com.jiaoke.common.bean.Assist"
-            resultMap="result_VQualityTestReportCjlAvg_Map">
-        select '' as specification,round(avg(sk315),2) as sk315,round(avg(sk265),2) as sk265,
-        round(avg(sk19),2) as sk19,
-        round(avg(sk16),2) as sk16,round(avg(sk132),2) as sk132,
-        round(avg(sk95),2) as sk95,round(avg(sk475),2) as sk475,
-        round(avg(sk236),2) as sk236,round(avg(sk118),2) as sk118,
-        round(avg(sk06),2) as sk06,round(avg(sk03),2) as sk03,
-        round(avg(sk015),2) as sk015,round(avg(sk0075),2) as sk0075,
-        round(avg(bgxdmd1),2) as bgxdmd1,round(avg(bgxdmd2),2) as bgxdmd2,
-        round(avg(zpzkl),2) as zpzkl,round(avg(ysz),2) as ysz,
-        round(avg(rrkl),2) as rrkl,round(avg(mh),2) as mh
-        from V_quality_test_report_cjl
-        <if test="require!=null">
-            <include refid="assist"/>
-        </if>
-        UNION
-        select specification,round(avg(sk315),2) as sk315,round(avg(sk265),2) as sk265,
-        round(avg(sk19),2) as sk19,
-        round(avg(sk16),2) as sk16,round(avg(sk132),2) as sk132,
-        round(avg(sk95),2) as sk95,round(avg(sk475),2) as sk475,
-        round(avg(sk236),2) as sk236,round(avg(sk118),2) as sk118,
-        round(avg(sk06),2) as sk06,round(avg(sk03),2) as sk03,
-        round(avg(sk015),2) as sk015,round(avg(sk0075),2) as sk0075,
-        round(avg(bgxdmd1),2) as bgxdmd1,round(avg(bgxdmd2),2) as bgxdmd2,
-        round(avg(zpzkl),2) as zpzkl,round(avg(ysz),2) as ysz,
-        round(avg(rrkl),2) as rrkl,round(avg(mh),2) as mh
-        from V_quality_test_report_cjl
-        <if test="require!=null">
-            <include refid="assist"/>
-        </if>
-        GROUP BY specification
-    </select>
+	<!--获得类名为:VQualityTestReportCjlAvg对应的数据库表的数据总行数 -->
+	<select id="getVQualityTestReportCjlAvgRowCount" parameterType="com.jiaoke.common.bean.Assist" resultType="java.lang.Long">
+		select count(*) from V_quality_test_report_cjl_avg
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+	</select>
 
-    <!-- 获得一个VQualityTestReportCjlAvg对象,以参数VQualityTestReportCjlAvg对象中不为空的属性作为条件进行查询 -->
-    <select id="selectVQualityTestReportCjlAvgObjSingle"
-            parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportCjlAvg"
-            resultMap="result_VQualityTestReportCjlAvg_Map">
-        select
-        <include refid="v_quality_test_report_cjl_avg_Column"/>
-        from V_quality_test_report_cjl_avg
-        <where>
-            <if test="specification != null">and specification = #{specification}</if>
-            <if test="sk315 != null">and sk315 = #{sk315}</if>
-            <if test="sk265 != null">and sk265 = #{sk265}</if>
-            <if test="sk19 != null">and sk19 = #{sk19}</if>
-            <if test="sk16 != null">and sk16 = #{sk16}</if>
-            <if test="sk132 != null">and sk132 = #{sk132}</if>
-            <if test="sk95 != null">and sk95 = #{sk95}</if>
-            <if test="sk475 != null">and sk475 = #{sk475}</if>
-            <if test="sk236 != null">and sk236 = #{sk236}</if>
-            <if test="sk118 != null">and sk118 = #{sk118}</if>
-            <if test="sk06 != null">and sk06 = #{sk06}</if>
-            <if test="sk03 != null">and sk03 = #{sk03}</if>
-            <if test="sk015 != null">and sk015 = #{sk015}</if>
-            <if test="sk0075 != null">and sk0075 = #{sk0075}</if>
-            <if test="bgxdmd1 != null">and bgxdmd1 = #{bgxdmd1}</if>
-            <if test="bgxdmd2 != null">and bgxdmd2 = #{bgxdmd2}</if>
-            <if test="zpzkl != null">and zpzkl = #{zpzkl}</if>
-            <if test="ysz != null">and ysz = #{ysz}</if>
-            <if test="rrkl != null">and rrkl = #{rrkl}</if>
-            <if test="mh != null">and mh = #{mh}</if>
+	<!-- 获得类名为:VQualityTestReportCjlAvg对应数据库中表的数据集合 -->
+	<select id="selectVQualityTestReportCjlAvg" parameterType="com.jiaoke.common.bean.Assist"
+			resultMap="result_VQualityTestReportCjlAvg_Map">
+		select '' as specification,
+		round(avg(sk375),2) as sk375,
+		round(avg(sk315),2) as sk315,
+		round(avg(sk265),2) as sk265,
+		round(avg(sk19),2) as sk19,
+		round(avg(sk16),2) as sk16,round(avg(sk132),2) as sk132,
+		round(avg(sk95),2) as sk95,round(avg(sk475),2) as sk475,
+		round(avg(sk236),2) as sk236,round(avg(sk118),2) as sk118,
+		round(avg(sk06),2) as sk06,round(avg(sk03),2) as sk03,
+		round(avg(sk015),2) as sk015,round(avg(sk0075),2) as sk0075,
+		round(avg(bgxdmd1),2) as bgxdmd1,round(avg(bgxdmd2),2) as bgxdmd2,
+		round(avg(zpzkl),2) as zpzkl,round(avg(ysz),2) as ysz,
+		round(avg(rrkl),2) as rrkl,round(avg(mh),2) as mh,
+		round(avg(jgx),2) as jgx,
+		round(avg(klhl0075),2) as klhl0075,
+		round(avg(hsl),2) as hsl,
+		round(avg(nfx),2) as nfx
+		from V_quality_test_report_cjl
+		<if test="require!=null">
+			<include refid="assist"/>
+		</if>
+		UNION
+		select specification,
+		round(avg(sk375),2) as sk375,
+		round(avg(sk315),2) as sk315,
+		round(avg(sk265),2) as sk265,
+		round(avg(sk19),2) as sk19,
+		round(avg(sk16),2) as sk16,round(avg(sk132),2) as sk132,
+		round(avg(sk95),2) as sk95,round(avg(sk475),2) as sk475,
+		round(avg(sk236),2) as sk236,round(avg(sk118),2) as sk118,
+		round(avg(sk06),2) as sk06,round(avg(sk03),2) as sk03,
+		round(avg(sk015),2) as sk015,round(avg(sk0075),2) as sk0075,
+		round(avg(bgxdmd1),2) as bgxdmd1,round(avg(bgxdmd2),2) as bgxdmd2,
+		round(avg(zpzkl),2) as zpzkl,round(avg(ysz),2) as ysz,
+		round(avg(rrkl),2) as rrkl,round(avg(mh),2) as mh,
+		round(avg(jgx),2) as jgx,
+		round(avg(klhl0075),2) as klhl0075,
+		round(avg(hsl),2) as hsl,
+		round(avg(nfx),2) as nfx
+		from V_quality_test_report_cjl
+		<if test="require!=null">
+			<include refid="assist"/>
+		</if>
+		GROUP BY specification
+	</select>
 
-        </where>
-        LIMIT 1
-    </select>
 
-    <!-- 获得VQualityTestReportCjlAvg对象,以参数VQualityTestReportCjlAvg对象中不为空的属性作为条件进行查询 -->
-    <select id="selectVQualityTestReportCjlAvgByObj"
-            parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportCjlAvg"
-            resultMap="result_VQualityTestReportCjlAvg_Map">
-        select
-        <include refid="v_quality_test_report_cjl_avg_Column"/>
-        from V_quality_test_report_cjl_avg
-        <where>
-            <if test="specification != null">and specification = #{specification}</if>
-            <if test="sk315 != null">and sk315 = #{sk315}</if>
-            <if test="sk265 != null">and sk265 = #{sk265}</if>
-            <if test="sk19 != null">and sk19 = #{sk19}</if>
-            <if test="sk16 != null">and sk16 = #{sk16}</if>
-            <if test="sk132 != null">and sk132 = #{sk132}</if>
-            <if test="sk95 != null">and sk95 = #{sk95}</if>
-            <if test="sk475 != null">and sk475 = #{sk475}</if>
-            <if test="sk236 != null">and sk236 = #{sk236}</if>
-            <if test="sk118 != null">and sk118 = #{sk118}</if>
-            <if test="sk06 != null">and sk06 = #{sk06}</if>
-            <if test="sk03 != null">and sk03 = #{sk03}</if>
-            <if test="sk015 != null">and sk015 = #{sk015}</if>
-            <if test="sk0075 != null">and sk0075 = #{sk0075}</if>
-            <if test="bgxdmd1 != null">and bgxdmd1 = #{bgxdmd1}</if>
-            <if test="bgxdmd2 != null">and bgxdmd2 = #{bgxdmd2}</if>
-            <if test="zpzkl != null">and zpzkl = #{zpzkl}</if>
-            <if test="ysz != null">and ysz = #{ysz}</if>
-            <if test="rrkl != null">and rrkl = #{rrkl}</if>
-            <if test="mh != null">and mh = #{mh}</if>
+	<!-- 获得类名为:VQualityTestReportCjlAvg对应数据库中表的数据集合
+	<select id="selectVQualityTestReportCjlAvg" parameterType="com.jiaoke.common.bean.Assist" resultMap="result_VQualityTestReportCjlAvg_Map">
+		select
+		<if test="distinct !=null">${distinct}</if>
+		<choose>
+			<when test="resultColumn!=null">${resultColumn}</when>
+			<otherwise>
+				<include refid="V_quality_test_report_cjl_avg_Column" />
+			</otherwise>
+		</choose>
+		from V_quality_test_report_cjl_avg
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+		<if test="order !=null">${order}</if>
+		<choose>
+			<when test="startRow !=null and rowSize !=null">LIMIT #{startRow},#{rowSize} </when>
+			<when test="rowSize !=null">LIMIT #{rowSize}</when>
+		</choose>
+	</select>-->
+	
+	<!-- 获得一个VQualityTestReportCjlAvg对象,以参数VQualityTestReportCjlAvg对象中不为空的属性作为条件进行查询 -->
+	<select id="selectVQualityTestReportCjlAvgObjSingle" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportCjlAvg" resultMap="result_VQualityTestReportCjlAvg_Map">
+		select
+		<include refid="V_quality_test_report_cjl_avg_Column" />
+		from V_quality_test_report_cjl_avg
+		<where>
+		<if test="specification != null"> and specification = #{specification}</if>
+		<if test="sk375 != null"> and sk375 = #{sk375}</if>
+		<if test="sk315 != null"> and sk315 = #{sk315}</if>
+		<if test="sk265 != null"> and sk265 = #{sk265}</if>
+		<if test="sk19 != null"> and sk19 = #{sk19}</if>
+		<if test="sk16 != null"> and sk16 = #{sk16}</if>
+		<if test="sk132 != null"> and sk132 = #{sk132}</if>
+		<if test="sk95 != null"> and sk95 = #{sk95}</if>
+		<if test="sk475 != null"> and sk475 = #{sk475}</if>
+		<if test="sk236 != null"> and sk236 = #{sk236}</if>
+		<if test="sk118 != null"> and sk118 = #{sk118}</if>
+		<if test="sk06 != null"> and sk06 = #{sk06}</if>
+		<if test="sk03 != null"> and sk03 = #{sk03}</if>
+		<if test="sk015 != null"> and sk015 = #{sk015}</if>
+		<if test="sk0075 != null"> and sk0075 = #{sk0075}</if>
+		<if test="bgxdmd1 != null"> and bgxdmd1 = #{bgxdmd1}</if>
+		<if test="bgxdmd2 != null"> and bgxdmd2 = #{bgxdmd2}</if>
+		<if test="zpzkl != null"> and zpzkl = #{zpzkl}</if>
+		<if test="ysz != null"> and ysz = #{ysz}</if>
+		<if test="rrkl != null"> and rrkl = #{rrkl}</if>
+		<if test="mh != null"> and mh = #{mh}</if>
+		<if test="jgx != null"> and jgx = #{jgx}</if>
+		<if test="klhl0075 != null"> and klhl0075 = #{klhl0075}</if>
+		<if test="hsl != null"> and hsl = #{hsl}</if>
+		<if test="nfx != null"> and nfx = #{nfx}</if>
+		
+		</where>
+		LIMIT 1
+	</select>
+	
+	<!-- 获得VQualityTestReportCjlAvg对象,以参数VQualityTestReportCjlAvg对象中不为空的属性作为条件进行查询 -->
+	<select id="selectVQualityTestReportCjlAvgByObj" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportCjlAvg" resultMap="result_VQualityTestReportCjlAvg_Map">
+		select
+		<include refid="V_quality_test_report_cjl_avg_Column" />
+		from V_quality_test_report_cjl_avg
+		<where>
+		<if test="specification != null"> and specification = #{specification}</if>
+		<if test="sk375 != null"> and sk375 = #{sk375}</if>
+		<if test="sk315 != null"> and sk315 = #{sk315}</if>
+		<if test="sk265 != null"> and sk265 = #{sk265}</if>
+		<if test="sk19 != null"> and sk19 = #{sk19}</if>
+		<if test="sk16 != null"> and sk16 = #{sk16}</if>
+		<if test="sk132 != null"> and sk132 = #{sk132}</if>
+		<if test="sk95 != null"> and sk95 = #{sk95}</if>
+		<if test="sk475 != null"> and sk475 = #{sk475}</if>
+		<if test="sk236 != null"> and sk236 = #{sk236}</if>
+		<if test="sk118 != null"> and sk118 = #{sk118}</if>
+		<if test="sk06 != null"> and sk06 = #{sk06}</if>
+		<if test="sk03 != null"> and sk03 = #{sk03}</if>
+		<if test="sk015 != null"> and sk015 = #{sk015}</if>
+		<if test="sk0075 != null"> and sk0075 = #{sk0075}</if>
+		<if test="bgxdmd1 != null"> and bgxdmd1 = #{bgxdmd1}</if>
+		<if test="bgxdmd2 != null"> and bgxdmd2 = #{bgxdmd2}</if>
+		<if test="zpzkl != null"> and zpzkl = #{zpzkl}</if>
+		<if test="ysz != null"> and ysz = #{ysz}</if>
+		<if test="rrkl != null"> and rrkl = #{rrkl}</if>
+		<if test="mh != null"> and mh = #{mh}</if>
+		<if test="jgx != null"> and jgx = #{jgx}</if>
+		<if test="klhl0075 != null"> and klhl0075 = #{klhl0075}</if>
+		<if test="hsl != null"> and hsl = #{hsl}</if>
+		<if test="nfx != null"> and nfx = #{nfx}</if>
+		
+		</where>
+	</select>
 
-        </where>
-    </select>
-
-    <!-- 将VQualityTestReportCjlAvg插入到对应数据库的表中,包括属性值为null的数据 -->
-    <insert id="insertVQualityTestReportCjlAvg"
-            parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportCjlAvg">
+	<!-- 将VQualityTestReportCjlAvg插入到对应数据库的表中,包括属性值为null的数据 -->
+	<insert id="insertVQualityTestReportCjlAvg" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportCjlAvg">
 		insert into 
-		V_quality_test_report_cjl_avg (specification,sk315,sk265,sk19,sk16,sk132,sk95,sk475,sk236,sk118,sk06,sk03,sk015,sk0075,bgxdmd1,bgxdmd2,zpzkl,ysz,rrkl,mh)
-		values(#{specification},#{sk315},#{sk265},#{sk19},#{sk16},#{sk132},#{sk95},#{sk475},#{sk236},#{sk118},#{sk06},#{sk03},#{sk015},#{sk0075},#{bgxdmd1},#{bgxdmd2},#{zpzkl},#{ysz},#{rrkl},#{mh})
+		V_quality_test_report_cjl_avg (specification,sk375,sk315,sk265,sk19,sk16,sk132,sk95,sk475,sk236,sk118,sk06,sk03,sk015,sk0075,bgxdmd1,bgxdmd2,zpzkl,ysz,rrkl,mh,jgx,klhl0075,hsl,nfx) 
+		values(#{specification},#{sk375},#{sk315},#{sk265},#{sk19},#{sk16},#{sk132},#{sk95},#{sk475},#{sk236},#{sk118},#{sk06},#{sk03},#{sk015},#{sk0075},#{bgxdmd1},#{bgxdmd2},#{zpzkl},#{ysz},#{rrkl},#{mh},#{jgx},#{klhl0075},#{hsl},#{nfx})
 	</insert>
 
-    <!-- 将VQualityTestReportCjlAvg中属性值不为null的数据,插入到对应数据库的表中 -->
-    <insert id="insertNotNullVQualityTestReportCjlAvg"
-            parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportCjlAvg">
-        insert into V_quality_test_report_cjl_avg
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="specification != null">specification,</if>
-            <if test="sk315 != null">sk315,</if>
-            <if test="sk265 != null">sk265,</if>
-            <if test="sk19 != null">sk19,</if>
-            <if test="sk16 != null">sk16,</if>
-            <if test="sk132 != null">sk132,</if>
-            <if test="sk95 != null">sk95,</if>
-            <if test="sk475 != null">sk475,</if>
-            <if test="sk236 != null">sk236,</if>
-            <if test="sk118 != null">sk118,</if>
-            <if test="sk06 != null">sk06,</if>
-            <if test="sk03 != null">sk03,</if>
-            <if test="sk015 != null">sk015,</if>
-            <if test="sk0075 != null">sk0075,</if>
-            <if test="bgxdmd1 != null">bgxdmd1,</if>
-            <if test="bgxdmd2 != null">bgxdmd2,</if>
-            <if test="zpzkl != null">zpzkl,</if>
-            <if test="ysz != null">ysz,</if>
-            <if test="rrkl != null">rrkl,</if>
-            <if test="mh != null">mh,</if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="specification != null">#{specification},</if>
-            <if test="sk315 != null">#{sk315},</if>
-            <if test="sk265 != null">#{sk265},</if>
-            <if test="sk19 != null">#{sk19},</if>
-            <if test="sk16 != null">#{sk16},</if>
-            <if test="sk132 != null">#{sk132},</if>
-            <if test="sk95 != null">#{sk95},</if>
-            <if test="sk475 != null">#{sk475},</if>
-            <if test="sk236 != null">#{sk236},</if>
-            <if test="sk118 != null">#{sk118},</if>
-            <if test="sk06 != null">#{sk06},</if>
-            <if test="sk03 != null">#{sk03},</if>
-            <if test="sk015 != null">#{sk015},</if>
-            <if test="sk0075 != null">#{sk0075},</if>
-            <if test="bgxdmd1 != null">#{bgxdmd1},</if>
-            <if test="bgxdmd2 != null">#{bgxdmd2},</if>
-            <if test="zpzkl != null">#{zpzkl},</if>
-            <if test="ysz != null">#{ysz},</if>
-            <if test="rrkl != null">#{rrkl},</if>
-            <if test="mh != null">#{mh},</if>
-        </trim>
-    </insert>
+	<!-- 将VQualityTestReportCjlAvg中属性值不为null的数据,插入到对应数据库的表中 -->
+	<insert id="insertNotNullVQualityTestReportCjlAvg" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportCjlAvg">
+		insert into V_quality_test_report_cjl_avg
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="specification != null">specification,</if>
+			<if test="sk375 != null">sk375,</if>
+			<if test="sk315 != null">sk315,</if>
+			<if test="sk265 != null">sk265,</if>
+			<if test="sk19 != null">sk19,</if>
+			<if test="sk16 != null">sk16,</if>
+			<if test="sk132 != null">sk132,</if>
+			<if test="sk95 != null">sk95,</if>
+			<if test="sk475 != null">sk475,</if>
+			<if test="sk236 != null">sk236,</if>
+			<if test="sk118 != null">sk118,</if>
+			<if test="sk06 != null">sk06,</if>
+			<if test="sk03 != null">sk03,</if>
+			<if test="sk015 != null">sk015,</if>
+			<if test="sk0075 != null">sk0075,</if>
+			<if test="bgxdmd1 != null">bgxdmd1,</if>
+			<if test="bgxdmd2 != null">bgxdmd2,</if>
+			<if test="zpzkl != null">zpzkl,</if>
+			<if test="ysz != null">ysz,</if>
+			<if test="rrkl != null">rrkl,</if>
+			<if test="mh != null">mh,</if>
+			<if test="jgx != null">jgx,</if>
+			<if test="klhl0075 != null">klhl0075,</if>
+			<if test="hsl != null">hsl,</if>
+			<if test="nfx != null">nfx,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="specification != null">#{specification},</if>
+			<if test="sk375 != null">#{sk375},</if>
+			<if test="sk315 != null">#{sk315},</if>
+			<if test="sk265 != null">#{sk265},</if>
+			<if test="sk19 != null">#{sk19},</if>
+			<if test="sk16 != null">#{sk16},</if>
+			<if test="sk132 != null">#{sk132},</if>
+			<if test="sk95 != null">#{sk95},</if>
+			<if test="sk475 != null">#{sk475},</if>
+			<if test="sk236 != null">#{sk236},</if>
+			<if test="sk118 != null">#{sk118},</if>
+			<if test="sk06 != null">#{sk06},</if>
+			<if test="sk03 != null">#{sk03},</if>
+			<if test="sk015 != null">#{sk015},</if>
+			<if test="sk0075 != null">#{sk0075},</if>
+			<if test="bgxdmd1 != null">#{bgxdmd1},</if>
+			<if test="bgxdmd2 != null">#{bgxdmd2},</if>
+			<if test="zpzkl != null">#{zpzkl},</if>
+			<if test="ysz != null">#{ysz},</if>
+			<if test="rrkl != null">#{rrkl},</if>
+			<if test="mh != null">#{mh},</if>
+			<if test="jgx != null">#{jgx},</if>
+			<if test="klhl0075 != null">#{klhl0075},</if>
+			<if test="hsl != null">#{hsl},</if>
+			<if test="nfx != null">#{nfx},</if>
+		</trim>
+	</insert>
 
-    <!-- 将VQualityTestReportCjlAvg批量插入到对应数据库的表中 -->
-    <insert id="insertVQualityTestReportCjlAvgByBatch" parameterType="ArrayList">
-        insert into
-        V_quality_test_report_cjl_avg(specification,sk315,sk265,sk19,sk16,sk132,sk95,sk475,sk236,sk118,sk06,sk03,sk015,sk0075,bgxdmd1,bgxdmd2,zpzkl,ysz,rrkl,mh)
-        values
-        <foreach collection="list" item="item" index="index"
-                 separator=",">
-            (#{item.specification},#{item.sk315},#{item.sk265},#{item.sk19},#{item.sk16},#{item.sk132},#{item.sk95},#{item.sk475},#{item.sk236},#{item.sk118},#{item.sk06},#{item.sk03},#{item.sk015},#{item.sk0075},#{item.bgxdmd1},#{item.bgxdmd2},#{item.zpzkl},#{item.ysz},#{item.rrkl},#{item.mh})
-        </foreach>
-    </insert>
+	<!-- 将VQualityTestReportCjlAvg批量插入到对应数据库的表中 -->
+	<insert id="insertVQualityTestReportCjlAvgByBatch" parameterType="ArrayList">
+		insert into V_quality_test_report_cjl_avg(specification,sk375,sk315,sk265,sk19,sk16,sk132,sk95,sk475,sk236,sk118,sk06,sk03,sk015,sk0075,bgxdmd1,bgxdmd2,zpzkl,ysz,rrkl,mh,jgx,klhl0075,hsl,nfx) values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.specification},#{item.sk375},#{item.sk315},#{item.sk265},#{item.sk19},#{item.sk16},#{item.sk132},#{item.sk95},#{item.sk475},#{item.sk236},#{item.sk118},#{item.sk06},#{item.sk03},#{item.sk015},#{item.sk0075},#{item.bgxdmd1},#{item.bgxdmd2},#{item.zpzkl},#{item.ysz},#{item.rrkl},#{item.mh},#{item.jgx},#{item.klhl0075},#{item.hsl},#{item.nfx})
+		</foreach>
+	</insert>
+	
 
+	<!-- 通过辅助工具Assist中的条件将VQualityTestReportCjlAvg对应的数据库表的数据删除 -->
+	<delete id="deleteVQualityTestReportCjlAvgByAssist" parameterType="com.jiaoke.common.bean.Assist">
+		delete from V_quality_test_report_cjl_avg
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+	</delete>
+	
+	
+	
+	<!-- 通过辅助工具Assist中的条件将VQualityTestReportCjlAvg中的数据更新到数据库对应的表中,包括值为null的数据 -->
+	<update id="updateVQualityTestReportCjlAvg" parameterType="map">
+		update V_quality_test_report_cjl_avg
+		<set>
+			specification = #{enti.specification},
+			sk375 = #{enti.sk375},
+			sk315 = #{enti.sk315},
+			sk265 = #{enti.sk265},
+			sk19 = #{enti.sk19},
+			sk16 = #{enti.sk16},
+			sk132 = #{enti.sk132},
+			sk95 = #{enti.sk95},
+			sk475 = #{enti.sk475},
+			sk236 = #{enti.sk236},
+			sk118 = #{enti.sk118},
+			sk06 = #{enti.sk06},
+			sk03 = #{enti.sk03},
+			sk015 = #{enti.sk015},
+			sk0075 = #{enti.sk0075},
+			bgxdmd1 = #{enti.bgxdmd1},
+			bgxdmd2 = #{enti.bgxdmd2},
+			zpzkl = #{enti.zpzkl},
+			ysz = #{enti.ysz},
+			rrkl = #{enti.rrkl},
+			mh = #{enti.mh},
+			jgx = #{enti.jgx},
+			klhl0075 = #{enti.klhl0075},
+			hsl = #{enti.hsl},
+			nfx = #{enti.nfx},
+		</set>
+		<if test="assist.require!=null">
+			<include refid="updateAssist" />
+		</if>
+	</update>
 
-    <!-- 通过辅助工具Assist中的条件将VQualityTestReportCjlAvg对应的数据库表的数据删除 -->
-    <delete id="deleteVQualityTestReportCjlAvgByAssist" parameterType="com.jiaoke.common.bean.Assist">
-        delete from V_quality_test_report_cjl_avg
-        <if test="require!=null">
-            <include refid="assist"/>
-        </if>
-    </delete>
-
-
-    <!-- 通过辅助工具Assist中的条件将VQualityTestReportCjlAvg中的数据更新到数据库对应的表中,包括值为null的数据 -->
-    <update id="updateVQualityTestReportCjlAvg" parameterType="map">
-        update V_quality_test_report_cjl_avg
-        <set>
-            specification = #{enti.specification},
-            sk315 = #{enti.sk315},
-            sk265 = #{enti.sk265},
-            sk19 = #{enti.sk19},
-            sk16 = #{enti.sk16},
-            sk132 = #{enti.sk132},
-            sk95 = #{enti.sk95},
-            sk475 = #{enti.sk475},
-            sk236 = #{enti.sk236},
-            sk118 = #{enti.sk118},
-            sk06 = #{enti.sk06},
-            sk03 = #{enti.sk03},
-            sk015 = #{enti.sk015},
-            sk0075 = #{enti.sk0075},
-            bgxdmd1 = #{enti.bgxdmd1},
-            bgxdmd2 = #{enti.bgxdmd2},
-            zpzkl = #{enti.zpzkl},
-            ysz = #{enti.ysz},
-            rrkl = #{enti.rrkl},
-            mh = #{enti.mh},
-        </set>
-        <if test="assist.require!=null">
-            <include refid="updateAssist"/>
-        </if>
-    </update>
-
-    <!-- 通过辅助工具Assist中的条件将VQualityTestReportCjlAvg中属性值不为null的数据更新到数据库对应的表中 -->
-    <update id="updateNotNullVQualityTestReportCjlAvg" parameterType="map">
-        update V_quality_test_report_cjl_avg
-        <set>
-            <if test="enti.specification != null">specification = #{enti.specification},</if>
-            <if test="enti.sk315 != null">sk315 = #{enti.sk315},</if>
-            <if test="enti.sk265 != null">sk265 = #{enti.sk265},</if>
-            <if test="enti.sk19 != null">sk19 = #{enti.sk19},</if>
-            <if test="enti.sk16 != null">sk16 = #{enti.sk16},</if>
-            <if test="enti.sk132 != null">sk132 = #{enti.sk132},</if>
-            <if test="enti.sk95 != null">sk95 = #{enti.sk95},</if>
-            <if test="enti.sk475 != null">sk475 = #{enti.sk475},</if>
-            <if test="enti.sk236 != null">sk236 = #{enti.sk236},</if>
-            <if test="enti.sk118 != null">sk118 = #{enti.sk118},</if>
-            <if test="enti.sk06 != null">sk06 = #{enti.sk06},</if>
-            <if test="enti.sk03 != null">sk03 = #{enti.sk03},</if>
-            <if test="enti.sk015 != null">sk015 = #{enti.sk015},</if>
-            <if test="enti.sk0075 != null">sk0075 = #{enti.sk0075},</if>
-            <if test="enti.bgxdmd1 != null">bgxdmd1 = #{enti.bgxdmd1},</if>
-            <if test="enti.bgxdmd2 != null">bgxdmd2 = #{enti.bgxdmd2},</if>
-            <if test="enti.zpzkl != null">zpzkl = #{enti.zpzkl},</if>
-            <if test="enti.ysz != null">ysz = #{enti.ysz},</if>
-            <if test="enti.rrkl != null">rrkl = #{enti.rrkl},</if>
-            <if test="enti.mh != null">mh = #{enti.mh},</if>
-        </set>
-        <if test="assist.require!=null">
-            <include refid="updateAssist"/>
-        </if>
-    </update>
+	<!-- 通过辅助工具Assist中的条件将VQualityTestReportCjlAvg中属性值不为null的数据更新到数据库对应的表中 -->
+	<update id="updateNotNullVQualityTestReportCjlAvg" parameterType="map">
+		update V_quality_test_report_cjl_avg
+		<set>
+			<if test="enti.specification != null">specification = #{enti.specification},</if>
+			<if test="enti.sk375 != null">sk375 = #{enti.sk375},</if>
+			<if test="enti.sk315 != null">sk315 = #{enti.sk315},</if>
+			<if test="enti.sk265 != null">sk265 = #{enti.sk265},</if>
+			<if test="enti.sk19 != null">sk19 = #{enti.sk19},</if>
+			<if test="enti.sk16 != null">sk16 = #{enti.sk16},</if>
+			<if test="enti.sk132 != null">sk132 = #{enti.sk132},</if>
+			<if test="enti.sk95 != null">sk95 = #{enti.sk95},</if>
+			<if test="enti.sk475 != null">sk475 = #{enti.sk475},</if>
+			<if test="enti.sk236 != null">sk236 = #{enti.sk236},</if>
+			<if test="enti.sk118 != null">sk118 = #{enti.sk118},</if>
+			<if test="enti.sk06 != null">sk06 = #{enti.sk06},</if>
+			<if test="enti.sk03 != null">sk03 = #{enti.sk03},</if>
+			<if test="enti.sk015 != null">sk015 = #{enti.sk015},</if>
+			<if test="enti.sk0075 != null">sk0075 = #{enti.sk0075},</if>
+			<if test="enti.bgxdmd1 != null">bgxdmd1 = #{enti.bgxdmd1},</if>
+			<if test="enti.bgxdmd2 != null">bgxdmd2 = #{enti.bgxdmd2},</if>
+			<if test="enti.zpzkl != null">zpzkl = #{enti.zpzkl},</if>
+			<if test="enti.ysz != null">ysz = #{enti.ysz},</if>
+			<if test="enti.rrkl != null">rrkl = #{enti.rrkl},</if>
+			<if test="enti.mh != null">mh = #{enti.mh},</if>
+			<if test="enti.jgx != null">jgx = #{enti.jgx},</if>
+			<if test="enti.klhl0075 != null">klhl0075 = #{enti.klhl0075},</if>
+			<if test="enti.hsl != null">hsl = #{enti.hsl},</if>
+			<if test="enti.nfx != null">nfx = #{enti.nfx},</if>
+		</set>
+		<if test="assist.require!=null">
+			<include refid="updateAssist" />
+		</if>
+	</update>
 </mapper>
