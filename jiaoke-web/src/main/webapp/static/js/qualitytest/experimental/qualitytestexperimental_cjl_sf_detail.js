@@ -56,15 +56,16 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 		$("#sxhsyzl_value1").html(CLL_SF_GZ_Value.sxhsyzl_value1);
 		$("#sxhsyzl_value2").html(CLL_SF_GZ_Value.sxhsyzl_value2);
 		//水洗后0.075mm筛下量m0.075(g)/0.075mm通过率P0.075（%）
-		$("#sxh0075sxl_value1").html(CLL_SF_GZ_Value.gzsyzl_value1 - CLL_SF_GZ_Value.sxhsyzl_value1);
-		$("#sxh0075sxl_value2").html(CLL_SF_GZ_Value.gzsyzl_value2 - CLL_SF_GZ_Value.sxhsyzl_value2);
-		var tgl_value1 = ((CLL_SF_GZ_Value.gzsyzl_value1 - CLL_SF_GZ_Value.sxhsyzl_value1) / CLL_SF_GZ_Value.gzsyzl_value1)
+		$("#sxh0075sxl_value1").html((CLL_SF_GZ_Value.gzsyzl_value1 - CLL_SF_GZ_Value.sxhsyzl_value1).toFixed(1));
+		$("#sxh0075sxl_value2").html((CLL_SF_GZ_Value.gzsyzl_value2 - CLL_SF_GZ_Value.sxhsyzl_value2).toFixed(1));
+		//0.075通过率
+		var tgl_value1 = (((CLL_SF_GZ_Value.gzsyzl_value1 - CLL_SF_GZ_Value.sxhsyzl_value1) / CLL_SF_GZ_Value.gzsyzl_value1)*100)
 			.toFixed(1);
 		$("#0075tgl_value1").html(tgl_value1);
-		var tgl_value2 = ((CLL_SF_GZ_Value.gzsyzl_value2 - CLL_SF_GZ_Value.sxhsyzl_value2) / CLL_SF_GZ_Value.gzsyzl_value2)
+		var tgl_value2 = (((CLL_SF_GZ_Value.gzsyzl_value2 - CLL_SF_GZ_Value.sxhsyzl_value2) / CLL_SF_GZ_Value.gzsyzl_value2)*100)
 			.toFixed(1);
 		$("#0075tgl_value2").html(tgl_value2);
-		$("#0075tgl_value_pj").html(((tgl_value1 + tgl_value2) / 2).toFixed(1));
+		$("#0075tgl_value_pj").html(((Number(tgl_value1) + Number(tgl_value2)) / 2).toFixed(1));
 
 	}
 
@@ -76,6 +77,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 			return;
 		}
 		var data = [];
+		data.push('37.5');
 		data.push('31.5');
 		data.push('26.5');
 		data.push('19');
@@ -207,14 +209,14 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 		}
 		$("#gshzz_value2").html(gshzz_value2);
 		//计算损耗
-		var sh_value1 = CLL_SF_GZ_Value.sxhsyzl_value1 - gshzz_value1;
-		$("#sh_value1").html(sh_value1);
-		var sh_value2 = CLL_SF_GZ_Value.sxhsyzl_value2 - gshzz_value2;
-		$("#sh_value2").html(sh_value2);
+		var sh_value1 = (CLL_SF_GZ_Value.sxhsyzl_value1 - gshzz_value1).toFixed(1);
+		$("#sh_value1").html(Number(sh_value1));
+		var sh_value2 = (CLL_SF_GZ_Value.sxhsyzl_value2 - gshzz_value2).toFixed(1);
+		$("#sh_value2").html(Number(sh_value2));
 		//计算损耗率
-		var shl_value1 = (sh_value1 / CLL_SF_GZ_Value.sxhsyzl_value1).toFixed(1);
+		var shl_value1 = (sh_value1 / CLL_SF_GZ_Value.sxhsyzl_value1 *100).toFixed(2);
 		$("#shl_value1").html(Number(shl_value1));
-		var shl_value2 = (sh_value2 / CLL_SF_GZ_Value.sxhsyzl_value2).toFixed(1);
+		var shl_value2 = (sh_value2 / CLL_SF_GZ_Value.sxhsyzl_value2 *100).toFixed(2);
 		$("#shl_value2").html(Number(shl_value2));
 		//计算扣除损耗后总量(g)
 		var kcshlzl_value1 = (CLL_SF_GZ_Value.gzsyzl_value1 - sh_value1).toFixed(1);

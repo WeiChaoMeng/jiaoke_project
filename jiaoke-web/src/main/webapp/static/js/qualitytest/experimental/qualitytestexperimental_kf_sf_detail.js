@@ -344,8 +344,8 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 	 */
 	myform.checkExpResult = function() {
 		var result = 1;
-		for (var i = 0; i < myform.CJL_SF_Data.length; i++) {
-			var data = myform.CJL_SF_Data[i];
+		for (var i = 0; i < myform.KF_SF_Data.length; i++) {
+			var data = myform.KF_SF_Data[i];
 			var value = data['pjtgbfb_value'];
 			if (value == undefined) {
 				continue;

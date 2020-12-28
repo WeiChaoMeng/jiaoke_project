@@ -191,10 +191,10 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 		}
 		$("#gshzz_value2").html(gshzz_value2);
 		//计算损耗
-		var sh_value1 = CLL_SF_GZ_Value.sxhsyzl_value1 - gshzz_value1;
-		$("#sh_value1").html(sh_value1);
+	 	var sh_value1 = CLL_SF_GZ_Value.sxhsyzl_value1 - gshzz_value1;
+		//$("#sh_value1").html(sh_value1);
 		var sh_value2 = CLL_SF_GZ_Value.sxhsyzl_value2 - gshzz_value2;
-		$("#sh_value2").html(sh_value2);
+		//$("#sh_value2").html(sh_value2); 
 		//计算损耗率
 		var shl_value1 = (sh_value1 / CLL_SF_GZ_Value.sxhsyzl_value1).toFixed(1);
 		$("#shl_value1").html(shl_value1);
