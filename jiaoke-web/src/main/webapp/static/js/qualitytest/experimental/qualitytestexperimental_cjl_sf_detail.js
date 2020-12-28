@@ -12,7 +12,8 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 	var myform = {
 		tableId: "mytable",
 		expValue: [], //试验信息
-		CJL_SF_Data: [] //筛分数据
+		CJL_SF_Data: [],//筛分数据
+		StandValue: []//规范值
 	}
 	/**
 	 * 根据ID获取试验输入值
@@ -161,7 +162,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 			if (data['ssz_value1'] != undefined) {
 				data['fjsy_value1'] = ((data['ssz_value1'] / CLL_SF_GZ_Value.gzsyzl_value1)*100).toFixed(1);
 				data['ljsy_value1'] = myform.getljsf1(i);
-				data['tgbfb_value1'] = 100 - data['ljsy_value1'];
+				data['tgbfb_value1'] = Number(100 - data['ljsy_value1']).toFixed(1);
 			} else {
 				data['fjsy_value1'] = undefined;
 				data['ljsy_value1'] = undefined;
@@ -171,16 +172,17 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 			if (data['ssz_value2'] != undefined) {
 				data['fjsy_value2'] = ((data['ssz_value2'] / CLL_SF_GZ_Value.gzsyzl_value2)*100).toFixed(1);
 				data['ljsy_value2'] = myform.getljsf2(i);
-				data['tgbfb_value2'] = 100 - data['ljsy_value2'];
+				data['tgbfb_value2'] = Number(100 - data['ljsy_value2']).toFixed(1);
+				
 			} else {
 				data['fjsy_value2'] = undefined;
 				data['ljsy_value2'] = undefined;
 				data['tgbfb_value2'] = undefined;
 			}
 
-			if (data['ssz_value1'] > 0 && data['ssz_value2'] > 0) {
-				data['pjtgbfb_value'] = ((data['tgbfb_value1'] + data['tgbfb_value2']) / 2).toFixed(1);;
-			} else if (data['ssz_value1'] > 0) {
+			if (data['tgbfb_value1'] > 0 && data['tgbfb_value2'] > 0) {
+				data['pjtgbfb_value'] = ((Number(data['tgbfb_value1']) + Number(data['tgbfb_value2'])) / 2).toFixed(1);;
+			} else if (data['tgbfb_value1'] > 0) {
 				data['pjtgbfb_value'] = data['tgbfb_value1'];
 			} else {
 				data['pjtgbfb_value'] = data['tgbfb_value2'];
@@ -211,14 +213,14 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 		$("#sh_value2").html(sh_value2);
 		//计算损耗率
 		var shl_value1 = (sh_value1 / CLL_SF_GZ_Value.sxhsyzl_value1).toFixed(1);
-		$("#shl_value1").html(shl_value1);
+		$("#shl_value1").html(Number(shl_value1));
 		var shl_value2 = (sh_value2 / CLL_SF_GZ_Value.sxhsyzl_value2).toFixed(1);
-		$("#shl_value2").html(shl_value2);
+		$("#shl_value2").html(Number(shl_value2));
 		//计算扣除损耗后总量(g)
 		var kcshlzl_value1 = (CLL_SF_GZ_Value.gzsyzl_value1 - sh_value1).toFixed(1);
-		$("#kcshlzl_value1").html(kcshlzl_value1);
+		$("#kcshlzl_value1").html(Number(kcshlzl_value1));
 		var kcshlzl_value2 = (CLL_SF_GZ_Value.gzsyzl_value2 - sh_value2).toFixed(1);
-		$("#kcshlzl_value2").html(kcshlzl_value2);
+		$("#kcshlzl_value2").html(Number(kcshlzl_value2));
 	}
 
 
@@ -327,10 +329,12 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 	 */
 	myform.savaDetail = function() {
 		var result = false;
+		var expResult = myform.checkExpResult();
 		var saveData = {
 			ID: expID,
 			experimentalValueSf: JSON.stringify(myform.CJL_SF_Data),
-			status: 2
+			status: 2, 
+			experimentalResult: expResult
 		}
 		$.ajax({
 			type: "POST",
@@ -388,6 +392,46 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 		return result;
 	}
 	/**
+	 * 获取某项标准值配置
+	 * @param {Object} column
+	 */
+	myform.getOneStandValue = function(column) {
+		var standValue = null;
+		for (var i = 0; i < myform.StandValue.length; i++) {
+			var data = myform.StandValue[i];
+			if (data['experimentalItem'] == column) {
+				standValue = data;
+				break;
+			}
+	
+		}
+		return standValue;
+	}
+	/**
+	 * 判断试验是否合格
+	 */
+	myform.checkExpResult = function() {
+		var result = 1;
+		for (var i = 0; i < myform.CJL_SF_Data.length; i++) {
+			var data = myform.CJL_SF_Data[i];
+			var value = data['pjtgbfb_value'];
+			if (value == undefined) {
+				continue;
+			}
+			var standValueObj = myform.getOneStandValue(data['skcc']);
+			if (standValueObj != undefined && standValueObj != null) {
+				if (common.diffValue(value, standValueObj.minValue, standValueObj.maxValue, standValueObj.comparemethod) ==
+					false) {
+					{
+						result = -1;
+						break;
+					}
+				}
+			}			
+		}
+		return result;
+	}
+	/**
 	 * 获取试验信息
 	 * @param {Object} id
 	 */
@@ -408,6 +452,28 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 		return result;
 	}
 
+/**
+	 * 获取规范值
+	 */
+	myform.getStandValue = function() {
+		myform.StandValue = [];
+		var queryData = {
+			experimentalId: expInfo['experimental_id'],
+			specification: expInfo['specification']
+		};
+		$.ajax({
+			type: "GET",
+			async: false,
+			url: basePath + "/QualityTestExperimentalStandardvalue/list.do",
+			data: queryData,
+			dataType: 'json',
+			success: function(msg) {
+				if (msg.count = 200) {
+					myform.StandValue = msg.data;
+				}
+			}
+		})
+	}
 	var expInfo = myform.getExperimentalInfo(expID);
 	if (expInfo != null) {
 		if (expInfo['experimental_content'] != null && expInfo['experimental_content'].length > 0) {
@@ -425,7 +491,8 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 	}
 	myform.init_GZSY_Value();
 	myform.ini_SFZ_Value();
-	myform.computeValue();
+	myform.computeValue();	
+	myform.getStandValue();
 	/**
 	 * TABEL数据更新
 	 */

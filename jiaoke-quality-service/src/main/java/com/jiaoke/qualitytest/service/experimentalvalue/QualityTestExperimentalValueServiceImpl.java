@@ -1,10 +1,8 @@
 package com.jiaoke.qualitytest.service.experimentalvalue;
 
-import java.util.List;
-
+import com.alibaba.fastjson.JSONObject;
 import com.jiaoke.common.bean.Assist;
 import com.jiaoke.common.bean.LayUIPage;
-import com.jiaoke.qualitytest.bean.QualityTestExperimental;
 import com.jiaoke.qualitytest.bean.experimentalvalue.QualityTestExperimentalValue;
 import com.jiaoke.qualitytest.dao.experimentalvalue.QualityTestExperimentalValueDao;
 import org.apache.logging.log4j.LogManager;
@@ -12,7 +10,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.JSONObject;
+import java.util.List;
 
 /**
  * QualityTestExperimentalValue的服务接口的实现类
@@ -44,6 +42,13 @@ public class QualityTestExperimentalValueServiceImpl implements QualityTestExper
         }
         if (value.getOrderTicketNum() != null && !value.getOrderTicketNum().isEmpty()) {
             assist.andEq("order_ticket_num", value.getOrderTicketNum());
+        }
+        if (value.getExperimentalId() != null && !value.getExperimentalId().isEmpty()) {
+            assist.andEq("experimental_id", value.getExperimentalId());
+        }
+
+        if (value.getExperimentalType() != null && !value.getExperimentalType().isEmpty()) {
+            assist.andEq("experimental_type", value.getExperimentalType());
         }
     }
 
@@ -97,7 +102,18 @@ public class QualityTestExperimentalValueServiceImpl implements QualityTestExper
             }
             return resultFormat(C412, null);
         }
-        int result = qualityTestExperimentalValueDao.insertNotNullQualityTestExperimentalValue(value);
+        Assist assist = new Assist();
+        assist.setStartRow(0);
+        assist.setRowSize(1);
+        setSeachFilter(assist, value);
+        List<QualityTestExperimentalValue> searchResult = qualityTestExperimentalValueDao.selectQualityTestExperimentalValue(assist);
+        int result = 0;
+        if (searchResult != null && searchResult.size() > 0) {
+            value.setId(searchResult.get(0).getId());
+            result = qualityTestExperimentalValueDao.updateNotNullQualityTestExperimentalValueById(value);
+        } else {
+            result = qualityTestExperimentalValueDao.insertNotNullQualityTestExperimentalValue(value);
+        }
         if (LOG.isDebugEnabled()) {
             LOG.debug("执行将QualityTestExperimentalValue中属性值不为null的数据保存到数据库-->结果:", result);
         }

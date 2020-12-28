@@ -26,7 +26,8 @@ layui.use(['form', 'table', 'laydate'], function() {
 		tableId: "mytable",
 		tableId_sf: "mytable_sf",
 		expParam: null,
-		reportValue: []
+		reportValue: [],
+		StandValue: []
 	};
 	/**
 	 * 获取试验报告信息
@@ -109,12 +110,34 @@ layui.use(['form', 'table', 'laydate'], function() {
 		$("#mytable").append(msg);
 
 	}
+	/**
+	 * 获取规范值
+	 */
+	myForm.getLabReport_SF_StandValue = function() {
+		myForm.StandValue = [];
+		var queryData = {
+			experimentalId: 17280350,
+			specification: myForm.reportValue.specification
+		};
+		$.ajax({
+			type: "GET",
+			async: false,
+			url: basePath + "/QualityTestExperimentalStandardvalue/list.do",
+			data: queryData,
+			dataType: 'json',
+			success: function(msg) {
+				if (msg.count = 200) {
+					myForm.StandValue = msg.data;
+				}
+			}
+		})
+	}
 
 	/**
 	 * 获取沥青混合料筛分数据
 	 * @param {Object} num
 	 */
-	myForm.getLabReportInfoValue_lqhhl = function(num) {
+	myForm.getLabReportInfoValue_SF = function(num) {
 		var queryData = {
 			orderTicketNum: expID
 		};
@@ -132,11 +155,6 @@ layui.use(['form', 'table', 'laydate'], function() {
 			}
 		})
 
-
-		/* if (dataInfo==null || dataInfo.length <= 0) {
-			$("#div_sf").hide();
-			return;
-		} */
 		$("div_sf").show();
 		$("#mytable_sf").html('');
 		var msg = "";
@@ -145,15 +163,21 @@ layui.use(['form', 'table', 'laydate'], function() {
 			"<th>31.5</th><th>26.5</th><th>19</th><th>16</th><th>13.2</th><th>9.5</th><th>4.75</th><th>2.36</th><th>1.18</th><th>0.6</th><th>0.3</th><th>0.15</th><th>0.075</th>";
 		msg += "</tr></thead>";
 		msg += "<tbody><tr><td>规范值</td>";
-		msg += "<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>";
-		/* var value = "";
-		for (var i = 0; i < dataInfo.length; i++) {
-			value = dataInfo[i]['unit1'];
-			if (value == undefined) {
-				value = "";
-			}
-			msg += "<td>" + value + "</td>";
-		} */
+		
+		msg += "<td>" + myForm.getStandValue('31.5', myForm.StandValue) + "</td>";
+		msg += "<td>" + myForm.getStandValue('26.5', myForm.StandValue) + "</td>";
+		msg += "<td>" + myForm.getStandValue('19', myForm.StandValue) + "</td>";
+		msg += "<td>" + myForm.getStandValue('16', myForm.StandValue) + "</td>";
+		msg += "<td>" + myForm.getStandValue('13.2', myForm.StandValue) + "</td>";
+		msg += "<td>" + myForm.getStandValue('9.5', myForm.StandValue) + "</td>";
+		msg += "<td>" + myForm.getStandValue('4.75', myForm.StandValue) + "</td>";
+		msg += "<td>" + myForm.getStandValue('2.36', myForm.StandValue) + "</td>";
+		msg += "<td>" + myForm.getStandValue('1.18', myForm.StandValue) + "</td>";
+		msg += "<td>" + myForm.getStandValue('0.6', myForm.StandValue) + "</td>";
+		msg += "<td>" + myForm.getStandValue('0.3', myForm.StandValue) + "</td>";
+		msg += "<td>" + myForm.getStandValue('0.15', myForm.StandValue) + "</td>";
+		msg += "<td>" + myForm.getStandValue('0.075', myForm.StandValue) + "</td>";
+
 		msg += "</tr><td>实测值</td>";
 		msg += "<td>" + myForm.getValue('sK315', dataInfo) + "</td>";
 		msg += "<td>" + myForm.getValue('sK265', dataInfo) + "</td>";
@@ -172,6 +196,11 @@ layui.use(['form', 'table', 'laydate'], function() {
 		$("#mytable_sf").append(msg);
 
 	}
+	/**
+	 * 获取字段值
+	 * @param {Object} column
+	 * @param {Object} data
+	 */
 	myForm.getValue = function(column, data) {
 		if (data != null && data.length > 0) {
 			var value = data[column];
@@ -180,6 +209,23 @@ layui.use(['form', 'table', 'laydate'], function() {
 			}
 		}
 		return ""
+	}
+	/**
+	 * 获取规范值
+	 * @param {Object} column
+	 * @param {Object} data
+	 */
+	myForm.getStandValue = function(column, data) {
+		var standValue = "-";
+		for (var i = 0; i < data.length; i++) {
+			var dataValue = data[i];
+			if (dataValue['experimentalItem'] == column) {
+				standValue = dataValue['requirements'];
+				break;
+			}
+			
+		}
+		return standValue;
 	}
 	/**
 	 * 显示筛分数据
@@ -305,8 +351,9 @@ layui.use(['form', 'table', 'laydate'], function() {
 	if (expInfo != null && expInfo.code == 200) {
 		myForm.reportValue = expInfo.data;
 		myForm.setLabReportIInfo(expInfo.data);
+		myForm.getLabReport_SF_StandValue();
 		myForm.getLabReportInfoValue(expID);
-		myForm.getLabReportInfoValue_lqhhl(expInfo.data.materialsNum, expID);
+		myForm.getLabReportInfoValue_SF(expInfo.data.materialsNum, expID);
 		myForm.buttonVisible(expInfo.data);
 	}
 

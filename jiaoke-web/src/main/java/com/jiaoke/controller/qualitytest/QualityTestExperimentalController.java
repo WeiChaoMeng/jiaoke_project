@@ -54,7 +54,6 @@ public class QualityTestExperimentalController {
             }else if (obj.getExperimentalId()!=null && obj.getExperimentalId() == 17280350) {//沥青混合料矿料级配检验
                 strJsp = "qualitytest/experimental/qualitytestexperimental_lqhhl_kljp_detail.jsp?id=" + id;
             }
-
         }
         return strJsp;
     }

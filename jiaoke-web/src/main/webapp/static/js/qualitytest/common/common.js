@@ -34,8 +34,8 @@ var common = {
 common.getUrlParam = function(name) {
 	console.log("common.getUrlParam.js");
 	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-	 var url =decodeURI(decodeURI(location.search));
-	 var r = url.substr(1).match(reg);
+	var url = decodeURI(decodeURI(location.search));
+	var r = url.substr(1).match(reg);
 	//var r = window.location.search.substr(1).match(reg);
 	if (r != null) {
 		return unescape(r[2]);
@@ -63,6 +63,61 @@ common.print = function(tablelayid) {
 	h.print();
 	h.close();
 };
+/**
+ * 数值比较
+ * @param {Object} value
+ * @param {Object} standvalue1 规范值1
+ * @param {Object} standvalue2 规范值2
+ * @param {Object} comparemethod 比较方法
+ */
+common.diffValue = function(value, standvalue1, standvalue2, comparemethod) {
+	var result = true;
+	switch (comparemethod) {
+		case "=":
+			{
+				if (value != standvalue1) {
+					result = false;
+				}
+				break;
+			}
+		case ">":
+			{
+				if (value <= standvalue1) {
+					result = false;
+				}
+				break;
+			}
+		case "<":
+			{
+				if (value >= standvalue1) {
+					result = false;
+				}
+				break;
+			}
+		case ">=":
+			{
+				if (value < standvalue1) {
+					result = false;
+				}
+				break;
+			}
+		case "<=":
+			{
+				if (value > standvalue1) {
+					result = false;
+				}
+				break;
+			}
+		case "-":
+			{
+				if (value < standvalue1 || value > standvalue2) {
+					result = false;
+				}
+				break;
+			}
+	}
+	return result;
+}
 /**
  * 格式化日期
  * @param {Object} date

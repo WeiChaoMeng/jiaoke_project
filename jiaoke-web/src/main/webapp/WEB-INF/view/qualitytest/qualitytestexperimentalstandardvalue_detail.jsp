@@ -61,6 +61,7 @@
 						<div class="layui-input-block">
 							<select name="comparemethod" id="comparemethod" lay-filter="comparemethod" lay-verify="required" required>
 								<option value="">请选择</option>
+								<option value=" ">-</option>
 								<option value=">">大于</option>
 								<option value="<">大于</option>
 								<option value=">=">大于等于</option>
@@ -75,7 +76,7 @@
 						<div class="layui-input-block">
 							<div id="conferDept" class="xm-select-demo"></div>
 							<input id="minValue" name="minValue" placeholder="" type="number" class="layui-input" lay-verify="required"
-							 min="0" />
+							  />
 						</div>
 					</div>
 					<div class="layui-form-item" id="maxvalue_item">
@@ -83,7 +84,7 @@
 						<div class="layui-input-block">
 							<div id="conferDept" class="xm-select-demo"></div>
 							<input id="maxValue" name="maxValue" placeholder="0" type="number" class="layui-input" lay-verify="required"
-							 min="0" />
+							  />
 						</div>
 					</div>
 

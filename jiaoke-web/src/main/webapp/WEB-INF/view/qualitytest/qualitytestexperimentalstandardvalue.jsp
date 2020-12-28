@@ -47,7 +47,7 @@
 											</div>
 										</div>
 										<div class="layui-inline">
-											<button id="btnSearch" class="layui-btn layui-btn-sm icon-btn">&nbsp;<i class="layui-icon">&#xe615;</i>&nbsp;
+											<button id="btnSearch" type="button" class="layui-btn layui-btn-sm icon-btn">&nbsp;<i class="layui-icon">&#xe615;</i>&nbsp;
 											</button>
 										</div>
 									</div>

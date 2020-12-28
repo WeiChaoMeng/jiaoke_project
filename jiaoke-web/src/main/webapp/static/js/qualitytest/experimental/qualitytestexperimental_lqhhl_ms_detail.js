@@ -38,7 +38,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 		if (myform.detail_Data.length > 0) {
 			return;
 		}
-		for (var i = 0; i < 15; i++) {
+		for (var i = 0; i < 6; i++) {
 			var data1 = {
 				'num': i + 1
 			}
@@ -52,6 +52,8 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 	 */
 	myform.computeValue = function() {
 		//计算
+		var mtjxdmdSum = 0,
+			mtjxdmdCount = 0;
 		for (var i = 0; i < myform.detail_Data.length; i++) {
 			var data = myform.detail_Data[i];
 			var pjgd = 0;
@@ -81,10 +83,19 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 				data['sjgdpj'] = undefined;
 			}
 			if (data['kzz'] > 0 && data['szz'] > 0 && data['bhngz'] > 0) {
-				data['mtjxdmd'] = (data['kzz'] / (data['bhngz'] - data['szz'])).toFixed(1);
+				var value = (data['kzz'] / (data['bhngz'] - data['szz'])).toFixed(3);
+				data['mtjxdmd'] = value;
+				mtjxdmdSum += Number(value);
+				mtjxdmdCount = mtjxdmdCount + 1;
 			} else {
 				data['mtjxdmd'] = undefined;
 			}
+		}
+		var value = (mtjxdmdSum / mtjxdmdCount).toFixed(3);
+		if (isNaN(value)) {
+			$("#value").html("");
+		} else {
+			$("#value").html(value);
 		}
 	}
 
@@ -194,6 +205,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 		var result = false;
 		var saveData = {
 			ID: expID,
+			experimentalValue: '[{"result":"' + $("#value").html() + '","name":"毛体积相对密度"}]',
 			experimentalValueSf: JSON.stringify(myform.detail_Data),
 			status: 2
 		}
@@ -214,35 +226,25 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 		return result;
 	}
 	/**
-	 * 保存筛分台账
+	 * 保存结果
 	 */
 	myform.savaReport = function() {
-		return true;
-		/* var result = false;
+		var result = false;
 		var saveData = {
 			orderTicketNum: expInfo['order_ticket_num'],
 			experimentalId: expID,
 			experimentalName: expInfo['experimental_name'],
-			sK315: myform.getPJTGBFB("31.5"),
-			sK265: myform.getPJTGBFB("26.5"),
-			sK19: myform.getPJTGBFB("19"),
-			sK16: myform.getPJTGBFB("16"),
-			sK132: myform.getPJTGBFB("13.2"),
-			sK95: myform.getPJTGBFB("9.5"),
-			sK475: myform.getPJTGBFB("4.75"),
-			sK236: myform.getPJTGBFB("2.36"),
-			sK118: myform.getPJTGBFB("1.18"),
-			sK06: myform.getPJTGBFB("0.6"),
-			sK03: myform.getPJTGBFB("0.3"),
-			sK015: myform.getPJTGBFB("0.15"),
-			sK0075: myform.getPJTGBFB("0.075"),
-			sD: myform.getPJTGBFB("筛底"),
+			experimentalType: "毛体积相对密度",
+			value: $("#value").html(),
+			unit: "-",
+			method: "-",
+			requirements: ""
 		}
 		$.ajax({
 			type: "POST",
 			async: false,
 			data: saveData,
-			url: basePath + "/QualityTestExperimentalValueCjlSf/save.do",
+			url: basePath + "/QualityTestExperimentalValue/save.do",
 			dataType: 'json',
 			success: function(msg) {
 				if (msg.code == 200) {
@@ -251,7 +253,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 				console.log(msg);
 			}
 		})
-		return result; */
+		return result;
 	}
 	/**
 	 * 获取试验信息

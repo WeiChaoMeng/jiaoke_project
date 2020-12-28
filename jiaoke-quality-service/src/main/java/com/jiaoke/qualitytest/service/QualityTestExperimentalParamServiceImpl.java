@@ -1,22 +1,17 @@
 package com.jiaoke.qualitytest.service;
-import java.util.Date;
-import java.util.List;
 
+import com.alibaba.fastjson.JSONObject;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.common.bean.Assist;
 import com.jiaoke.common.bean.LayUIPage;
-import com.jiaoke.oa.bean.UserInfo;
-import com.jiaoke.qualitytest.bean.QualityTestExperimentDictionary;
 import com.jiaoke.qualitytest.bean.QualityTestExperimentalParam;
-import com.jiaoke.qualitytest.bean.QualityTestSamplingpage;
 import com.jiaoke.qualitytest.dao.QualityTestExperimentalParamDao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.JSONObject;
+import java.util.List;
 /**
  * QualityTestExperimentalParam的服务接口的实现类
  * 
@@ -67,7 +62,7 @@ public class QualityTestExperimentalParamServiceImpl implements QualityTestExper
 			assist.setStartRow((value.getPage() - 1) * value.getLimit());
 			assist.setRowSize(value.getLimit());
 		}
-		assist.setOrder(Assist.order("material_id", false));
+		assist.setOrder(Assist.order("material_id", true));
 		setSeachFilter(assist, value);
 		List<QualityTestExperimentalParam> result = qualityTestExperimentalParamDao.selectQualityTestExperimentalParam(assist);
 		if (LOG.isDebugEnabled()) {
