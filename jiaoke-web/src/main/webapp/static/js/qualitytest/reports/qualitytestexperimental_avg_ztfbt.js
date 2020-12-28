@@ -41,6 +41,12 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 				break;
 			case '3': //矿粉
 				data = myForm.getKFData(queryData);
+			case '4': //沥青
+				data = myForm.getLQData(queryData);
+			case '8': //乳化沥青
+				data = myForm.getRHLQData(queryData);
+			case '9': //沥青混合料
+				data = myForm.getLQHHLData(queryData);
 				break;
 		}
 		myForm.sourceData = [];
@@ -103,6 +109,69 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 			type: "GET",
 			async: false,
 			url: basePath + "/QualityTestReport/ReportKF.do",
+			data: searchData,
+			dataType: 'json',
+			success: function(msg) {
+				if (msg.count > 0) {
+					result = msg.data;
+				}
+				console.log(msg);
+			}
+		})
+		return result;
+	}
+	/**
+	 * 获取沥青数据
+	 */
+	myForm.getLQData = function(searchData) {
+		myForm.chartData = null;
+		var result = null;
+		$.ajax({
+			type: "GET",
+			async: false,
+			url: basePath + "/QualityTestReport/ReportLQ.do",
+			data: searchData,
+			dataType: 'json',
+			success: function(msg) {
+				if (msg.count > 0) {
+					result = msg.data;
+				}
+				console.log(msg);
+			}
+		})
+		return result;
+	}
+	/**
+	 * 获取乳化沥青数据
+	 */
+	myForm.getRHLQData = function(searchData) {
+		myForm.chartData = null;
+		var result = null;
+		$.ajax({
+			type: "GET",
+			async: false,
+			url: basePath + "/QualityTestReport/ReportRHLQ.do",
+			data: searchData,
+			dataType: 'json',
+			success: function(msg) {
+				if (msg.count > 0) {
+					result = msg.data;
+				}
+				console.log(msg);
+			}
+		})
+		return result;
+	}
+	/**
+	 * 获取沥青混合料数据
+	 */
+	myForm.getLQHHLData = function(searchData) {
+		myForm.chartData = null;
+		var result = null;
+		$.ajax({
+			type: "GET",
+			async: false,
+			url: basePath + "/QualityTestReport/ReportLQHHL.do",
 			data: searchData,
 			dataType: 'json',
 			success: function(msg) {
@@ -329,7 +398,7 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 	//myForm.getTestData();	
 	myForm.computeData();
 	//测试数据 应用时注释掉
-	 myForm.chartData = [
+	myForm.chartData = [
 		['80', 17],
 		['90', 88],
 		['100', 298],
@@ -339,6 +408,6 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 		['140', 221],
 		['150', 81],
 		['160', 11]
-	]; 
+	];
 	myForm.refreshChart();
 });

@@ -20,7 +20,7 @@
 						<div class="layui-card">
 							<div class="layui-card-body">
 								<div class="layui-form toolbar">
-									<div class="layui-form-item">
+									<div class="layui-form-item" style="margin-bottom: 0px;">
 										<div class="layui-inline">
 											<label class="layui-form-label w-auto">材料：</label>
 											<div class="layui-input-inline mr0">
@@ -56,6 +56,8 @@
 												</select>
 											</div>
 										</div>
+									</div>
+									<div class="layui-form-item" style="margin-bottom: 0px;">
 										<div class="layui-inline">
 											<label class="layui-form-label w-auto">试验结果：</label>
 											<div class="layui-input-inline mr0">
@@ -67,17 +69,18 @@
 											</div>
 										</div>
 										<div class="layui-inline">
-											<button id="btnSearch" class="layui-btn layui-btn-sm icon-btn">&nbsp;<i class="layui-icon">&#xe615;</i>&nbsp;
+											<button id="btnSearch" type="button" class="layui-btn layui-btn-sm icon-btn">&nbsp;<i class="layui-icon">&#xe615;</i>&nbsp;
 											</button>
 										</div>
 									</div>
 								</div>
-								<table class="layui-hide" id="mytable" lay-filter="mytable"></table>
-								
 							</div>
+							<table class="layui-hide" id="mytable" lay-filter="mytable"></table>
+
 						</div>
 					</div>
 				</div>
+			</div>
 			</div>
 
 		</form>

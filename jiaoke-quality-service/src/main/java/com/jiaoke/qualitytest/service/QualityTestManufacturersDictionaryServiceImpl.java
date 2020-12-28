@@ -1,10 +1,9 @@
 package com.jiaoke.qualitytest.service;
-import java.util.List;
 
+import com.alibaba.fastjson.JSONObject;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.common.bean.Assist;
 import com.jiaoke.common.bean.LayUIPage;
-import com.jiaoke.qualitytest.bean.QualityTestExperimentDictionary;
 import com.jiaoke.qualitytest.bean.QualityTestManufacturersDictionary;
 import com.jiaoke.qualitytest.dao.QualityTestManufacturersDictionaryDao;
 import org.apache.logging.log4j.LogManager;
@@ -12,7 +11,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.JSONObject;
+import java.util.List;
 /**
  * QualityTestManufacturersDictionary的服务接口的实现类
  * 
@@ -52,7 +51,7 @@ public class QualityTestManufacturersDictionaryServiceImpl implements QualityTes
 			assist.setStartRow((value.getPage() - 1) * value.getLimit());
 			assist.setRowSize(value.getLimit());
 		}
-		assist.setOrder(Assist.order("material_id", false));
+		assist.setOrder(Assist.order("material_id", true));
 		setSeachFilter(assist, value);
 
 		List<QualityTestManufacturersDictionary> result = qualityTestManufacturersDictionaryDao.selectQualityTestManufacturersDictionary(assist);

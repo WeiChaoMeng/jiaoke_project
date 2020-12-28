@@ -90,7 +90,7 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 
 		var queryData = {};
 		queryData['materials'] = "";
-		queryData['experimental'] = "";
+		queryData['experimentalName'] = "";
 		queryData['specification'] = "";
 		var maIndex = $("#materials").get(0).selectedIndex;
 		var muIndex = $("#experimental").get(0).selectedIndex;
@@ -99,7 +99,7 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 			queryData['materials'] = $("#materials option:selected").text();
 		}
 		if (muIndex > 0) {
-			queryData['experimental'] = $("#experimental option:selected").text();
+			queryData['experimentalName'] = $("#experimental option:selected").text();
 		}
 		if (spIndex > 0) {
 			queryData['specification'] = $("#specification option:selected").text();

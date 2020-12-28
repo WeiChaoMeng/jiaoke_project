@@ -1,10 +1,9 @@
 package com.jiaoke.qualitytest.service;
-import java.util.List;
 
+import com.alibaba.fastjson.JSONObject;
 import com.jiake.utils.RandomUtil;
 import com.jiaoke.common.bean.Assist;
 import com.jiaoke.common.bean.LayUIPage;
-import com.jiaoke.qualitytest.bean.QualityTestExperimentalParam;
 import com.jiaoke.qualitytest.bean.QualityTestExperimentalStandardvalue;
 import com.jiaoke.qualitytest.dao.QualityTestExperimentalStandardvalueDao;
 import org.apache.logging.log4j.LogManager;
@@ -12,7 +11,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.JSONObject;
+import java.util.List;
 /**
  * QualityTestExperimentalStandardvalue的服务接口的实现类
  * 
@@ -47,6 +46,15 @@ public class QualityTestExperimentalStandardvalueServiceImpl implements QualityT
 		if (value.getExperimentalName() != null && !value.getExperimentalName().isEmpty()) {
 			assist.andLike("experimental_name", "%" + value.getExperimentalName() + "%");
 		}
+		if (value.getSpecificationId() != null && !value.getSpecificationId().isEmpty()) {
+			assist.andLike("specification_id",  value.getSpecificationId());
+		}
+		if (value.getExperimentalId() != null && value.getExperimentalId()>0){
+			assist.andLike("experimental_id",  value.getExperimentalId());
+		}
+		if (value.getExperimentalItem() != null && !value.getExperimentalItem().isEmpty()) {
+			assist.andLike("experimental_type",  value.getExperimentalItem());
+		}
 	}
 	@Override
 	public String find(QualityTestExperimentalStandardvalue value) {
@@ -57,12 +65,16 @@ public class QualityTestExperimentalStandardvalueServiceImpl implements QualityT
 			assist.setStartRow((value.getPage() - 1) * value.getLimit());
 			assist.setRowSize(value.getLimit());
 		}
-
+		Assist.WhereOrder[] whereOrders=new Assist.WhereOrder[3];
+		whereOrders[0]=Assist.order("materials_id", true);
+		whereOrders[1]=Assist.order("specification", true);
+		whereOrders[2]=Assist.order("experimental_name", true);
+		assist.setOrder(whereOrders);
 /*
-		assist.setOrder(Assist.order("material_id", true));
+		assist.setOrder();
 		assist.setOrder(Assist.order("specification", true));
 */
-		assist.setOrder(Assist.order("experimental_name", true));
+		//assist.setOrder(Assist.order("experimental_name", true));
 
 		setSeachFilter(assist, value);
 		List<QualityTestExperimentalStandardvalue> result = qualityTestExperimentalStandardvalueDao.selectQualityTestExperimentalStandardvalue(assist);

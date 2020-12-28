@@ -67,7 +67,7 @@
 									</div>
 									<div class="layui-col-xs12">
 										<label class="layui-form-label w-auto" >试验值：</label>
-										<div class="layui-input-inline mr0" style="width:770px;">
+										<div class="layui-input-inline mr0" style="width:800px;">
 											<input class="layui-input" type="text" id="experimental_value" name="experimental_value" lay-verify="title"
 											 disabled=true autocomplete="off">
 										</div>

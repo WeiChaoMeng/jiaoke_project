@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaoke.qualitytest.dao.report.VQualityTestReportRhlqAvgDao">
+	<!-- VQualityTestReportRhlqAvg的resultMap,column是给数据库列起的别名,它对应property类的属性 -->
+	<resultMap id="result_VQualityTestReportRhlqAvg_Map" type="com.jiaoke.qualitytest.bean.report.VQualityTestReportRhlqAvg">
+		
+		<result column="specification" property="specification" />
+		<result column="zfllwhl" property="zfllwhl" />
+		<result column="bznd" property="bznd" />
+		<result column="zrd" property="zrd" />
+		<result column="yd" property="yd" />
+		<result column="ccwdx1" property="ccwdx1" />
+		<result column="ccwdx5" property="ccwdx5" />
+	</resultMap>
+
+	<!-- assist是查询辅助工具类, ${req.require}表示列名,#{req.value}表示值它是防SQL注入的 -->
+	<sql id="assist">
+		<where>
+			<foreach collection="require" item="req" separator=" ">
+				${req.require}
+				<if test="req.value != null">
+					#{req.value}
+				</if>
+				<if test="req.values != null">
+					<foreach collection="req.values" item="value" separator=",">
+						#{value}
+					</foreach>
+				</if>
+				<if test="req.customRequire !=null">
+					<foreach collection="req.customRequire" item="cr" separator=" ">
+						${cr.require}
+						<if test="cr.value != null">
+							#{cr.value}
+						</if>
+						<if test="cr.values != null">
+							<foreach collection="cr.values" item="value"
+								separator=",">
+								#{value}
+							</foreach>
+						</if>
+						<if test="cr.suffix != null"> ${cr.suffix}</if>
+					</foreach>
+				</if>
+				<if test="req.suffix != null"> ${req.suffix}</if>
+			</foreach>
+		</where>
+	</sql>
+
+	<!-- updateAssist用于更新数据查询辅助工具类,作用assist与一致 -->
+	<sql id="updateAssist">
+		<where>
+			<foreach collection="assist.require" item="req" separator=" ">
+				${req.require}
+				<if test="req.value != null">
+					#{req.value}
+				</if>
+				<if test="req.values != null">
+					<foreach collection="req.values" item="value" separator=",">
+						#{value}
+					</foreach>
+				</if>
+				<if test="req.customRequire !=null">
+					<foreach collection="req.customRequire" item="cr" separator=" ">
+						${cr.require}
+						<if test="cr.value != null">
+							#{cr.value}
+						</if>
+						<if test="cr.values != null">
+							<foreach collection="cr.values" item="value"
+								separator=",">
+								#{value}
+							</foreach>
+						</if>
+						<if test="cr.suffix != null"> ${cr.suffix}</if>
+					</foreach>
+				</if>
+				<if test="req.suffix != null"> ${req.suffix}</if>
+			</foreach>
+		</where>
+	</sql>
+
+	<!-- 数据库中表名为:V_quality_test_report_rhlq_avg的列名 -->
+	<sql id="V_quality_test_report_rhlq_avg_Column">
+		specification,zfllwhl,bznd,zrd,yd,ccwdx1,ccwdx5
+	</sql>
+
+	<!--获得类名为:VQualityTestReportRhlqAvg对应的数据库表的数据总行数 -->
+	<select id="getVQualityTestReportRhlqAvgRowCount" parameterType="com.jiaoke.common.bean.Assist" resultType="java.lang.Long">
+		select count(*) from V_quality_test_report_rhlq_avg
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+	</select>
+
+
+	<!-- 获得类名为:VQualityTestReportRhlqAvg对应数据库中表的数据集合
+	<select id="selectVQualityTestReportRhlqAvg" parameterType="com.jiaoke.common.bean.Assist" resultMap="result_VQualityTestReportRhlqAvg_Map">
+		select
+		<if test="distinct !=null">${distinct}</if>
+		<choose>
+			<when test="resultColumn!=null">${resultColumn}</when>
+			<otherwise>
+				<include refid="V_quality_test_report_rhlq_avg_Column" />
+			</otherwise>
+		</choose>
+		from V_quality_test_report_rhlq_avg
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+		<if test="order !=null">${order}</if>
+		<choose>
+			<when test="startRow !=null and rowSize !=null">LIMIT #{startRow},#{rowSize} </when>
+			<when test="rowSize !=null">LIMIT #{rowSize}</when>
+		</choose>
+	</select> -->
+	<select id="selectVQualityTestReportRhlqAvg" parameterType="com.jiaoke.common.bean.Assist"
+			resultMap="result_VQualityTestReportRhlqAvg_Map">
+		select '' as specification,
+		round(avg(zfllwhl),2) as zfllwhl,
+		round(avg(bznd),2) as bznd,
+		round(avg(zrd),2) as zrd,
+		round(avg(yd),2) as yd,
+		round(avg(ccwdx1),2) as ccwdx1,
+		round(avg(ccwdx5),2) as ccwdx5
+		from V_quality_test_report_rhlq
+		<if test="require!=null">
+			<include refid="assist"/>
+		</if>
+
+		UNION
+
+		select specification,
+		round(avg(zfllwhl),2) as zfllwhl,
+		round(avg(bznd),2) as bznd,
+		round(avg(zrd),2) as zrd,
+		round(avg(yd),2) as yd,
+		round(avg(ccwdx1),2) as ccwdx1,
+		round(avg(ccwdx5),2) as ccwdx5
+		from V_quality_test_report_rhlq
+		<if test="require!=null">
+			<include refid="assist"/>
+		</if>
+		GROUP BY specification
+	</select>
+
+	<!-- 获得一个VQualityTestReportRhlqAvg对象,以参数VQualityTestReportRhlqAvg对象中不为空的属性作为条件进行查询 -->
+	<select id="selectVQualityTestReportRhlqAvgObjSingle" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportRhlqAvg" resultMap="result_VQualityTestReportRhlqAvg_Map">
+		select
+		<include refid="V_quality_test_report_rhlq_avg_Column" />
+		from V_quality_test_report_rhlq_avg
+		<where>
+		<if test="specification != null"> and specification = #{specification}</if>
+		<if test="zfllwhl != null"> and zfllwhl = #{zfllwhl}</if>
+		<if test="bznd != null"> and bznd = #{bznd}</if>
+		<if test="zrd != null"> and zrd = #{zrd}</if>
+		<if test="yd != null"> and yd = #{yd}</if>
+		<if test="ccwdx1 != null"> and ccwdx1 = #{ccwdx1}</if>
+		<if test="ccwdx5 != null"> and ccwdx5 = #{ccwdx5}</if>
+		
+		</where>
+		LIMIT 1
+	</select>
+	
+	<!-- 获得VQualityTestReportRhlqAvg对象,以参数VQualityTestReportRhlqAvg对象中不为空的属性作为条件进行查询 -->
+	<select id="selectVQualityTestReportRhlqAvgByObj" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportRhlqAvg" resultMap="result_VQualityTestReportRhlqAvg_Map">
+		select
+		<include refid="V_quality_test_report_rhlq_avg_Column" />
+		from V_quality_test_report_rhlq_avg
+		<where>
+		<if test="specification != null"> and specification = #{specification}</if>
+		<if test="zfllwhl != null"> and zfllwhl = #{zfllwhl}</if>
+		<if test="bznd != null"> and bznd = #{bznd}</if>
+		<if test="zrd != null"> and zrd = #{zrd}</if>
+		<if test="yd != null"> and yd = #{yd}</if>
+		<if test="ccwdx1 != null"> and ccwdx1 = #{ccwdx1}</if>
+		<if test="ccwdx5 != null"> and ccwdx5 = #{ccwdx5}</if>
+		
+		</where>
+	</select>
+
+	<!-- 将VQualityTestReportRhlqAvg插入到对应数据库的表中,包括属性值为null的数据 -->
+	<insert id="insertVQualityTestReportRhlqAvg" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportRhlqAvg">
+		insert into 
+		V_quality_test_report_rhlq_avg (specification,zfllwhl,bznd,zrd,yd,ccwdx1,ccwdx5) 
+		values(#{specification},#{zfllwhl},#{bznd},#{zrd},#{yd},#{ccwdx1},#{ccwdx5})
+	</insert>
+
+	<!-- 将VQualityTestReportRhlqAvg中属性值不为null的数据,插入到对应数据库的表中 -->
+	<insert id="insertNotNullVQualityTestReportRhlqAvg" parameterType="com.jiaoke.qualitytest.bean.report.VQualityTestReportRhlqAvg">
+		insert into V_quality_test_report_rhlq_avg
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="specification != null">specification,</if>
+			<if test="zfllwhl != null">zfllwhl,</if>
+			<if test="bznd != null">bznd,</if>
+			<if test="zrd != null">zrd,</if>
+			<if test="yd != null">yd,</if>
+			<if test="ccwdx1 != null">ccwdx1,</if>
+			<if test="ccwdx5 != null">ccwdx5,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="specification != null">#{specification},</if>
+			<if test="zfllwhl != null">#{zfllwhl},</if>
+			<if test="bznd != null">#{bznd},</if>
+			<if test="zrd != null">#{zrd},</if>
+			<if test="yd != null">#{yd},</if>
+			<if test="ccwdx1 != null">#{ccwdx1},</if>
+			<if test="ccwdx5 != null">#{ccwdx5},</if>
+		</trim>
+	</insert>
+
+	<!-- 将VQualityTestReportRhlqAvg批量插入到对应数据库的表中 -->
+	<insert id="insertVQualityTestReportRhlqAvgByBatch" parameterType="ArrayList">
+		insert into V_quality_test_report_rhlq_avg(specification,zfllwhl,bznd,zrd,yd,ccwdx1,ccwdx5) values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.specification},#{item.zfllwhl},#{item.bznd},#{item.zrd},#{item.yd},#{item.ccwdx1},#{item.ccwdx5})
+		</foreach>
+	</insert>
+	
+
+	<!-- 通过辅助工具Assist中的条件将VQualityTestReportRhlqAvg对应的数据库表的数据删除 -->
+	<delete id="deleteVQualityTestReportRhlqAvgByAssist" parameterType="com.jiaoke.common.bean.Assist">
+		delete from V_quality_test_report_rhlq_avg
+		<if test="require!=null">
+			<include refid="assist" />
+		</if>
+	</delete>
+	
+	
+	
+	<!-- 通过辅助工具Assist中的条件将VQualityTestReportRhlqAvg中的数据更新到数据库对应的表中,包括值为null的数据 -->
+	<update id="updateVQualityTestReportRhlqAvg" parameterType="map">
+		update V_quality_test_report_rhlq_avg
+		<set>
+			specification = #{enti.specification},
+			zfllwhl = #{enti.zfllwhl},
+			bznd = #{enti.bznd},
+			zrd = #{enti.zrd},
+			yd = #{enti.yd},
+			ccwdx1 = #{enti.ccwdx1},
+			ccwdx5 = #{enti.ccwdx5},
+		</set>
+		<if test="assist.require!=null">
+			<include refid="updateAssist" />
+		</if>
+	</update>
+
+	<!-- 通过辅助工具Assist中的条件将VQualityTestReportRhlqAvg中属性值不为null的数据更新到数据库对应的表中 -->
+	<update id="updateNotNullVQualityTestReportRhlqAvg" parameterType="map">
+		update V_quality_test_report_rhlq_avg
+		<set>
+			<if test="enti.specification != null">specification = #{enti.specification},</if>
+			<if test="enti.zfllwhl != null">zfllwhl = #{enti.zfllwhl},</if>
+			<if test="enti.bznd != null">bznd = #{enti.bznd},</if>
+			<if test="enti.zrd != null">zrd = #{enti.zrd},</if>
+			<if test="enti.yd != null">yd = #{enti.yd},</if>
+			<if test="enti.ccwdx1 != null">ccwdx1 = #{enti.ccwdx1},</if>
+			<if test="enti.ccwdx5 != null">ccwdx5 = #{enti.ccwdx5},</if>
+		</set>
+		<if test="assist.require!=null">
+			<include refid="updateAssist" />
+		</if>
+	</update>
+</mapper>

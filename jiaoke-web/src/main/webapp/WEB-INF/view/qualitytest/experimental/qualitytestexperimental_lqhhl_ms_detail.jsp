@@ -7,8 +7,8 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<link href="/static/layui/css/layui.css" rel="stylesheet" type="text/css">
-		<link rel="stylesheet" href="/static/css/qualitytest/common.css" media="all">	
-			<link rel="stylesheet" href="/static/css/qualitytest/experimental/qualitytestexperimental_cjl_sf_detail.css" media="all">
+		<link rel="stylesheet" href="/static/css/qualitytest/common.css" media="all">
+		<link rel="stylesheet" href="/static/css/qualitytest/experimental/qualitytestexperimental_cjl_sf_detail.css" media="all">
 		<link rel="stylesheet" href="/static/css/qualitytest/qualitytestexperimental_detail.css" media="all">
 	</head>
 
@@ -37,6 +37,8 @@
 											<table class="layui-table" id="mytable" lay-filter="mytable"></table>
 
 											<div class=" layui-form-item">
+												<label class="layui-form-label"style="font-size: 16px;">毛体积相对密度:</label>
+												<label id="value" class="layui-form-label" style="text-align:left;font-size: 16px;"></label>
 												<div id="div_button" class="div_button" style="width: 350px;  margin: 10px auto;">
 													<button id="btn_compute" type="button" class="layui-btn">计算结果</button>
 													<button id="btn_save" type="button" class="layui-btn" style="margin-left:100px">保存</button>

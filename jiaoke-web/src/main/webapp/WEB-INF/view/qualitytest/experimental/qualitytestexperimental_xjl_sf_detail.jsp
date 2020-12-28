@@ -80,7 +80,7 @@
 														<td style="width: 94px;"></td>
 														<td style="width: 94px;"></td>
 													</tr>
-													<tr>
+													<!-- <tr>
 														<td>损耗m<span style="font-size: 0.3px;">5</span>(g)</td>
 														<td id="sh_value1"></td>
 														<td></td>
@@ -91,7 +91,7 @@
 														<td></td>
 														<td></td>
 														<td></td>
-													</tr>
+													</tr> -->
 													<tr>
 														<td>损耗率(%)</td>
 														<td id="shl_value1"></td>

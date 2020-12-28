@@ -92,7 +92,7 @@ layui.use(['form', 'table', 'ax', 'laydate', 'dictionary'], function() {
 		layer.open({
 			type: 2,
 			title: "生成试验报告",
-			area: ['1000px', '600'],
+			area: ['1200px', '600'],
 			content: '/QualityTestLabReport/detail.do?num=' + id,
 			success: function(layero, index) {
 
