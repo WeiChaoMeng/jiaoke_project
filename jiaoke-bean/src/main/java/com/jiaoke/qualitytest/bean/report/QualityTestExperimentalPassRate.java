@@ -3,9 +3,6 @@ package com.jiaoke.qualitytest.bean.report;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.jiaoke.common.bean.QualityTestPage;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.util.Date;
 
 /**
  * quality_test_experimental实体类
@@ -59,6 +56,9 @@ public class QualityTestExperimentalPassRate extends QualityTestPage {
         if (obj.get("experimentalResult") instanceof Number) {
             this.setExperimentalResult(((Number) obj.get("experimentalResult")).intValue());
         }
+        if (obj.get("experimental_name") instanceof String) {
+            this.setExperimentalName((String) obj.get("experimental_name"));
+        }
     }
 
     /**
@@ -96,7 +96,13 @@ public class QualityTestExperimentalPassRate extends QualityTestPage {
     public Integer getExperimentalResult() {
         return experimentalResult;
     }
+    public String getExperimentalName() {
+        return experimentalName;
+    }
 
+    public void setExperimentalName(String experimentalName) {
+        this.experimentalName = experimentalName;
+    }
     /**
      * 设置experimentalResult
      *
