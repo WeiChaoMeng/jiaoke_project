@@ -61,7 +61,7 @@
 						<div class="layui-input-block">
 							<select name="comparemethod" id="comparemethod" lay-filter="comparemethod" lay-verify="required" required>
 								<option value="">请选择</option>
-								<option value=" ">-</option>
+								<option value="无">-</option>
 								<option value=">">大于</option>
 								<option value="<">大于</option>
 								<option value=">=">大于等于</option>

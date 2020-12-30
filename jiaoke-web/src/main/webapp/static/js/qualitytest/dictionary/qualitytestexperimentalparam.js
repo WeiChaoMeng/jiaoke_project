@@ -147,12 +147,12 @@ layui.use(['form', 'table', 'ax', 'laydate', 'dictionary'], function() {
 	myForm.view = function(id) {
 		layer.open({
 			type: 2,
-			title: "查试验过程",
+			title: "查看试验过程",
 			area: ['1100px', '700px'],
 			content: '/QualityTestExperimentalParam/view.do?id=' + id + '&view=1',
 			success: function(layero, index) {},
 			end: function() {
-				table.reload(myForm.tableId);
+				//table.reload(myForm.tableId);
 			}
 		});
 	};

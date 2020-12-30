@@ -87,8 +87,7 @@
 									<div class="layui-col-xs12">
 										<label class="layui-form-label" style="font-size: 16px;font-weight: bold; width: 50px;">结论：</label>
 									</div>
-									<input type="text" style="margin-left: 36px; width: 90%; border: 0px solid #c8cccf;  color: #888;" name="verdict"
-									 lay-verify="title" disabled=true autocomplete="off" class="layui-input" value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;依据《公路沥青路面施工技术规范>(JTGF40-2004),其所检项目试验结果符合规范的技术要求.">
+									<textarea name="verdict" style="text-indent:2em;line-height: 2; font-size: 16px; margin-left: 36px; width: 95%; border: 0px solid #c8cccf;  color: #888;" lay-verify="title" disabled=true class="layui-textarea"></textarea>
 								</div>
 								<div class="layui-form-item layui-row" style="margin-top: 20px;">
 									<div class="layui-inline" style="margin-left: 60px;">

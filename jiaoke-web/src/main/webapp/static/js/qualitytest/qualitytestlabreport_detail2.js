@@ -145,7 +145,7 @@ layui.use(['form', 'table', 'laydate'], function() {
 		$.ajax({
 			type: "GET",
 			async: false,
-			url: basePath + "/QualityTestExperimentalValueLQHHL/list.do",
+			url: basePath + "/QualityTestExperimentalValueCjlSf/list.do",
 			data: queryData,
 			dataType: 'json',
 			success: function(msg) {
@@ -163,7 +163,7 @@ layui.use(['form', 'table', 'laydate'], function() {
 			"<th>31.5</th><th>26.5</th><th>19</th><th>16</th><th>13.2</th><th>9.5</th><th>4.75</th><th>2.36</th><th>1.18</th><th>0.6</th><th>0.3</th><th>0.15</th><th>0.075</th>";
 		msg += "</tr></thead>";
 		msg += "<tbody><tr><td>规范值</td>";
-		
+
 		msg += "<td>" + myForm.getStandValue('31.5', myForm.StandValue) + "</td>";
 		msg += "<td>" + myForm.getStandValue('26.5', myForm.StandValue) + "</td>";
 		msg += "<td>" + myForm.getStandValue('19', myForm.StandValue) + "</td>";
@@ -202,13 +202,14 @@ layui.use(['form', 'table', 'laydate'], function() {
 	 * @param {Object} data
 	 */
 	myForm.getValue = function(column, data) {
+		var value = "";
 		if (data != null && data.length > 0) {
-			var value = data[column];
+			value = data[0][column];
 			if (value == undefined) {
 				value = "";
 			}
 		}
-		return ""
+		return value;
 	}
 	/**
 	 * 获取规范值
@@ -221,9 +222,12 @@ layui.use(['form', 'table', 'laydate'], function() {
 			var dataValue = data[i];
 			if (dataValue['experimentalItem'] == column) {
 				standValue = dataValue['requirements'];
+				if (standValue == undefined || standValue.length == 0) {
+					standValue = "-";
+				}
 				break;
 			}
-			
+
 		}
 		return standValue;
 	}

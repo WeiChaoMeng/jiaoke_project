@@ -83,7 +83,7 @@ layui.use(['form', 'laydate'], function() {
 			var experimental_value = $.parseJSON(data.experimental_value);
 			var msg = "";
 			for (var i = 0; i < experimental_value.length; i++) {
-				msg += experimental_value[i]['name'] + " : " + experimental_value[i]['result']+"     ";
+				msg += experimental_value[i]['name'] + " : " + experimental_value[i]['result'] + "     ";
 			}
 			$('#experimental_value').val(msg);
 		} else {
@@ -175,9 +175,10 @@ layui.use(['form', 'laydate'], function() {
 				var stepInfo = myForm.expParam[i];
 				var stepid = stepInfo['id'];
 				if (stepid == btn_id) {
+
 					$("#stepvalue_tip").html(stepInfo['tip']);
 					//设备
-					if (stepInfo['device'] != null && stepInfo['device']!=undefined && stepInfo['device'] != "") {
+					if (stepInfo['device'] != null && stepInfo['device'] != undefined && stepInfo['device'] != "") {
 						$("#div_value_device").show();
 					} else {
 						$("#div_value_device").hide();
@@ -209,6 +210,9 @@ layui.use(['form', 'laydate'], function() {
 		//赋值
 		var stepValue = myForm.getStepValue(btn_id);
 		if (stepValue != null) {
+			if (stepValue['title']!=undefined) {
+				$("#stepvalue_tip").html(stepValue['title']);
+			}
 			var deviceValue = stepValue['device'];
 			if ((!(deviceValue === undefined)) && deviceValue != null && deviceValue.length > 0) {
 				deviceValue = stepValue['device'].replace("/", "、");

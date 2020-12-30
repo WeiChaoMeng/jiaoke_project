@@ -20,7 +20,7 @@
 						<div class="layui-card">
 							<div class="layui-card-body">
 								<div class="layui-form toolbar">
-									<div class="layui-form-item">
+									<div class="layui-form-item" style="margin-bottom: 0px;">
 										<div class="layui-inline">
 											<label class="layui-form-label w-auto">材料：</label>
 											<div class="layui-input-inline mr0">
@@ -47,13 +47,23 @@
 											</div>
 										</div>
 										<div class="layui-inline">
+											<label class="layui-form-label w-auto">试验名称：</label>
+											<div class="layui-input-inline mr0">
+												<select name="experimental" id="experimental" lay-filter="experimental" lay-verify="required" required>
+													<option value="">请选择</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="layui-form-item" style="margin-bottom: 0px;">
+										<div class="layui-inline">
 											<label class="layui-form-label w-auto">状态：</label>
 											<div class="layui-input-inline mr0">
 												<select name="status" id="status" lay-filter="status" lay-verify="required" required>
 													<option value="">请选择</option>
 													<option value="0">未试验</option>
 													<option value="1">试验中</option>
-													<option value="3">待补充数据</option>													
+													<option value="3">待补充数据</option>
 													<option value="2">完成试验</option>
 												</select>
 											</div>
@@ -64,11 +74,12 @@
 										</div>
 									</div>
 								</div>
-								<table class="layui-hide" id="mytable" lay-filter="mytable"></table>
 							</div>
+							<table class="layui-hide" id="mytable" lay-filter="mytable"></table>
 						</div>
 					</div>
 				</div>
+			</div>
 			</div>
 
 		</form>
@@ -92,8 +103,6 @@
 		<script src="/static/js/qualitytest/common/dictionary.js" charset="utf-8"></script>
 		<script src="/static/js/qualitytest/common/ax.js" charset="utf-8"></script>
 		<script src="/static/js/qualitytest/qualitytestexperimental.js" charset="utf-8"></script>
-
-
 		<input id="path" value="${path}" type="hidden">
 	</body>
 </html>

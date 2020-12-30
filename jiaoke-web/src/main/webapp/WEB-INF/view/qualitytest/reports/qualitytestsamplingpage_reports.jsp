@@ -52,7 +52,7 @@
 												<select name="experimentResult" id="experimentResult" lay-filter="required_result" lay-verify="required"
 												 required>
 													<option value="">请选择</option>
-													<option value="0">不合格</option>
+													<option value="-1">不合格</option>
 													<option value="1">合格</option>
 												</select>
 											</div>
@@ -73,7 +73,7 @@
 											</div>
 										</div>
 										<div class="layui-inline">
-											<button id="btnSearch" class="layui-btn layui-btn-sm icon-btn">&nbsp;<i class="layui-icon">&#xe615;</i>&nbsp;
+											<button id="btnSearch"  type="button" class="layui-btn layui-btn-sm icon-btn">&nbsp;<i class="layui-icon">&#xe615;</i>&nbsp;
 											</button>
 										</div>
 									</div>

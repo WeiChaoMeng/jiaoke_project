@@ -188,7 +188,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 				gshzz_value1 = (Number(gshzz_value1) + Number(data['ssz_value1'])).toFixed(1);
 			}
 		}
-		$("#gshzz_value1").html(gshzz_value1);
+		//$("#gshzz_value1").html(gshzz_value1);
 		var gshzz_value2 = 0;
 		for (var i = 0; i < myform.CJL_SF_Data.length; i++) {
 			var data = myform.CJL_SF_Data[i];
@@ -196,12 +196,12 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 				gshzz_value2 = (Number(gshzz_value2) + Number(data['ssz_value2'])).toFixed(1);
 			}
 		}
-		$("#gshzz_value2").html(gshzz_value2);
+		//$("#gshzz_value2").html(gshzz_value2);
 		//计算损耗
 		var sh_value1 = Number((CLL_SF_GZ_Value.sxhsyzl_value1 - gshzz_value1).toFixed(1));
-		$("#sh_value1").html(sh_value1);
+		//$("#sh_value1").html(sh_value1);
 		var sh_value2 = Number((CLL_SF_GZ_Value.sxhsyzl_value2 - gshzz_value2).toFixed(1));
-		$("#sh_value2").html(sh_value2);
+		//$("#sh_value2").html(sh_value2);
 		//计算损耗率
 		var shl_value1 = (sh_value1 / CLL_SF_GZ_Value.sxhsyzl_value1 * 100).toFixed(2);
 		$("#shl_value1").html(shl_value1);
@@ -408,6 +408,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 			}
 			var standValueObj = myform.getOneStandValue(data['skcc']);
 			if (standValueObj != undefined && standValueObj != null) {
+				console.log("diffItem:"+standValueObj.experimentalItem)
 				if (common.diffValue(value, standValueObj.minValue, standValueObj.maxValue, standValueObj.comparemethod) ==
 					false) {
 					{

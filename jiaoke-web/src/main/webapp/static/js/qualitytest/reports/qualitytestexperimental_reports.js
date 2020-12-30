@@ -23,12 +23,13 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 	/**
 	 * 粗集料台账
 	 */
-	myForm.report_CJL = function() {
+	myForm.report_CJL = function(queryData) {
 		table.render({
 			elem: '#' + myForm.tableId,
 			title: '粗集料台账',
 			limit: common.maxLimitValue,
 			url: basePath + '/QualityTestReport/ReportCJL.do',
+			where: queryData,
 			defaultToolbar: [],
 			toolbar: '#toolbarButton',
 			cols: [
@@ -233,6 +234,10 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 			if (column == expSelect) {
 				result = false;
 			}
+		} else if (expSelect == 'SF') {
+			if (column.indexOf("sK") >= 0) {
+				result = false;
+			}
 		} else {
 			for (var i = 0; i < data.length; i++) {
 				if (data[i][column] != undefined && data[i][column] != "") {
@@ -259,12 +264,13 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 	/**
 	 * 细集料台账
 	 */
-	myForm.report_XJL = function() {
+	myForm.report_XJL = function(queryData) {
 		table.render({
 			elem: '#' + myForm.tableId,
 			title: '细集料台账',
 			limit: common.maxLimitValue,
 			url: basePath + '/QualityTestReport/ReportXJL.do',
+			where: queryData,
 			defaultToolbar: [],
 			toolbar: '#toolbarButton',
 			cols: [
@@ -407,12 +413,13 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 	/**
 	 * 矿粉台账
 	 */
-	myForm.report_KF = function() {
+	myForm.report_KF = function(queryData) {
 		table.render({
 			elem: '#' + myForm.tableId,
 			title: '矿粉台账',
 			limit: common.maxLimitValue,
 			url: basePath + '/QualityTestReport/ReportKF.do',
+			where: queryData,
 			defaultToolbar: [],
 			toolbar: '#toolbarButton',
 			cols: [
@@ -526,12 +533,13 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 	/**
 	 * 沥青台账
 	 */
-	myForm.report_LQ = function() {
+	myForm.report_LQ = function(queryData) {
 		table.render({
 			elem: '#' + myForm.tableId,
 			title: '沥青台账',
 			limit: common.maxLimitValue,
 			url: basePath + '/QualityTestReport/ReportLQ.do',
+			where: queryData,
 			defaultToolbar: [],
 			toolbar: '#toolbarButton',
 			cols: [
@@ -709,12 +717,13 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 	/**
 	 * 乳化沥青台账
 	 */
-	myForm.report_RHLQ = function() {
+	myForm.report_RHLQ = function(queryData) {
 		table.render({
 			elem: '#' + myForm.tableId,
 			title: '乳化沥青台账',
 			limit: common.maxLimitValue,
 			url: basePath + '/QualityTestReport/ReportRHLQ.do',
+			where: queryData,
 			defaultToolbar: [],
 			toolbar: '#toolbarButton',
 			cols: [
@@ -807,12 +816,13 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 	/**
 	 * 沥青混合料台账
 	 */
-	myForm.report_LQHHL = function() {
+	myForm.report_LQHHL = function(queryData) {
 		table.render({
 			elem: '#' + myForm.tableId,
 			title: '沥青混合料台账',
 			limit: common.maxLimitValue,
 			url: basePath + '/QualityTestReport/ReportLQHHL.do',
+			where: queryData,
 			defaultToolbar: [],
 			toolbar: '#toolbarButton',
 			cols: [
@@ -1183,22 +1193,22 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 		var mvalue = $("#materials").val();
 		switch (mvalue) {
 			case '1':
-				myForm.report_XJL();
+				myForm.report_XJL(queryData);
 				break;
 			case '2':
-				myForm.report_CJL();
+				myForm.report_CJL(queryData);
 				break;
 			case '3':
-				myForm.report_KF();
+				myForm.report_KF(queryData);
 				break;
 			case '4':
-				myForm.report_LQ();
+				myForm.report_LQ(queryData);
 				break;
 			case '8':
-				myForm.report_RHLQ();
+				myForm.report_RHLQ(queryData);
 				break;
 			case '9':
-				myForm.report_LQHHL();
+				myForm.report_LQHHL(queryData);
 				break;
 			default:
 				$("#div_talbe").hide();
@@ -1243,7 +1253,7 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 		layer.open({
 			type: 2,
 			title: "试验报告",
-			area: ['1000px', '600'],
+			area: ['1200px', '600'],
 			content: '/QualityTestLabReport/detail.do?num=' + num,
 			success: function(layero, index) {
 

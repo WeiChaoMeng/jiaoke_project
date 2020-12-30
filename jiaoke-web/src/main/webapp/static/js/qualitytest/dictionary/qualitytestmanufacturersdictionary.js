@@ -123,12 +123,12 @@ layui.use(['form', 'table', 'ax', 'laydate', 'dictionary'], function() {
 	myForm.view = function(id) {
 		layer.open({
 			type: 2,
-			title: "查看试验",
+			title: "查看材料厂家",
 			area: ['550px', '500px'],
 			content: '/QualityTestManufacturersDictionary/view.do?id=' + id+'&view=1',
 			success: function(layero, index) {},
 			end: function() {
-				table.reload(myForm.tableId);
+				//table.reload(myForm.tableId);
 			}
 		});
 	};

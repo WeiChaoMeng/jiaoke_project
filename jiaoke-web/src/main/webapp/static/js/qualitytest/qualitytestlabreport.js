@@ -82,23 +82,26 @@ layui.use(['form', 'table', 'ax', 'laydate', 'dictionary'], function() {
 	table.on('tool(' + myForm.tableId + ')', function(obj) {
 		var data = obj.data;
 		if (obj.event === 'btn_view') {
-			myForm.openReport(data.orderTicketNum);
+			myForm.openReport(data);
 		}
 	});
 	/**
 	 *查看试验报告
 	 */
-	myForm.openReport = function(id) {
+	myForm.openReport = function(data) {
+		id = data.orderTicketNum;
 		layer.open({
 			type: 2,
 			title: "生成试验报告",
-			area: ['1200px', '600'],
+			area: ['1250px', '600'],
 			content: '/QualityTestLabReport/detail.do?num=' + id,
 			success: function(layero, index) {
 
 			},
 			end: function() {
-				table.reload(myForm.tableId);
+				if (data.experimentStatus == 1) {
+					table.reload(myForm.tableId);
+				}
 			}
 		});
 	};
