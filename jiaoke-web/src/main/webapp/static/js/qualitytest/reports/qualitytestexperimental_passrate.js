@@ -208,10 +208,10 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 					$("#echart10").show();
 					break;
 				case '8':
-					$("#echart5").show();
+					$("#echart6").show();
 					break;
 				case '9':
-					$("#echart6").show();
+					$("#echart5").show();
 					break;
 				case '10':
 					$("#echart7").show();
