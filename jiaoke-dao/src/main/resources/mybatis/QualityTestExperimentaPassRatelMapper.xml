@@ -105,6 +105,7 @@
 		<if test="require!=null">
 			<include refid="assist" />
 		</if>
+		 and order_ticket_num in (select order_ticket_num from quality_test_lab_report where experiment_status=3)
 		GROUP BY experimental_name,experimental_result
 		<if test="order !=null">${order}</if>
 	</select>
