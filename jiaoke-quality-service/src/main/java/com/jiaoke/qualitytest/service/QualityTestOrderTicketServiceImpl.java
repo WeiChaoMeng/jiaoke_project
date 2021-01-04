@@ -225,6 +225,8 @@ public class QualityTestOrderTicketServiceImpl implements QualityTestOrderTicket
         if (orderInfo == null || orderInfo.getStatus() == 2) {
             return resultFormat(C412, null);
         }
+        lstExperiment= qualityTestExperimentDictionaryDao.selectQualityTestExperimentDictionary(null);
+        lstExperimentParam= qualityTestExperimentalParamDao.selectQualityTestExperimentalParam(null);
 
         String[] ids = eID.split(",");
         int nAddCount = 0;
@@ -273,10 +275,7 @@ public class QualityTestOrderTicketServiceImpl implements QualityTestOrderTicket
      */
     private  String getExpName(int id)
     {
-        if (lstExperiment==null)
-        {
-            lstExperiment= qualityTestExperimentDictionaryDao.selectQualityTestExperimentDictionary(null);
-        }
+
         if (lstExperiment.size()>0)
         {
            for(QualityTestExperimentDictionary obj:lstExperiment)
@@ -297,10 +296,7 @@ public class QualityTestOrderTicketServiceImpl implements QualityTestOrderTicket
      */
     public   Integer getExpParamID(int id)
     {
-        if (lstExperimentParam==null)
-        {
-            lstExperimentParam= qualityTestExperimentalParamDao.selectQualityTestExperimentalParam(null);
-        }
+
         if (lstExperimentParam.size()>0)
         {
             for(QualityTestExperimentalParam obj:lstExperimentParam)
