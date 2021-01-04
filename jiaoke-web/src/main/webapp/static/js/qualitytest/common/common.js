@@ -71,6 +71,7 @@ common.print = function(tablelayid) {
  * @param {Object} comparemethod 比较方法
  */
 common.diffValue = function(value, standvalue1, standvalue2, comparemethod) {
+	console.log("common.js diffValue :"+value+comparemethod+"("+ standvalue1+"-"+standvalue2+")");	
 	var result = true;
 	switch (comparemethod) {
 		case "=":

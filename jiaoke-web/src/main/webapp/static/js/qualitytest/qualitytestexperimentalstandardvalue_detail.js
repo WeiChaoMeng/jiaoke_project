@@ -210,7 +210,17 @@ layui.use(['form', 'layedit', 'laydate'], function() {
 		myform.initSpecificationSelect("specification", "请选择", data.materialsId);
 		myform.initExperimentalSelect("experimental", "请选择", data.materialsId);
 		form.val('myform', data);
-		//$("#materialId").val(data['material_id']);
+		
+		if (data.comparemethod == '-') {
+			$("#minvalue_title").html('最小值');
+			$("#maxvalue_item").show();
+		} else {
+			$("#minvalue_title").html('比较值');
+			$("#maxvalue_item").hide();
+			$("#maxValue").val('0');
+			
+		}
+		
 		form.render();
 	}
 	/**

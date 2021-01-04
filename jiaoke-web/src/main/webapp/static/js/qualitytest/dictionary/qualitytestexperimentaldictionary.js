@@ -146,7 +146,7 @@ layui.use(['form', 'table', 'ax', 'laydate', 'dictionary'], function() {
 			content: '/QualityTestExperimentDictionary/view.do?id=' + id+'&view=1',
 			success: function(layero, index) {},
 			end: function() {
-				table.reload(myForm.tableId);
+				//table.reload(myForm.tableId);
 			}
 		});
 	};

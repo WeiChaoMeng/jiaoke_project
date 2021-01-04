@@ -53,7 +53,7 @@ public class QualityTestExperimentalStandardvalueServiceImpl implements QualityT
 			assist.andLike("experimental_id",  value.getExperimentalId());
 		}
 		if (value.getExperimentalItem() != null && !value.getExperimentalItem().isEmpty()) {
-			assist.andLike("experimental_type",  value.getExperimentalItem());
+			assist.andLike("experimental_item",  value.getExperimentalItem());
 		}
 	}
 	@Override

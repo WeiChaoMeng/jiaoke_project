@@ -94,7 +94,7 @@ layui.use(['form', 'table', 'ax', 'laydate', 'dictionary'], function() {
 	myForm.openDetail = function(id) {
 		layer.open({
 			type: 2,
-			title: "查看试验",
+			title: "查看规格",
 			area: ['1200px', '500px'],
 			content: '/QualityTestSpecificationDictionary/detail.do?id=' + id,
 			success: function(layero, index) {
@@ -108,7 +108,7 @@ layui.use(['form', 'table', 'ax', 'laydate', 'dictionary'], function() {
 	myForm.add = function() {
 		layer.open({
 			type: 2,
-			title: "新建试验",
+			title: "新建规格",
 			area: ['550px', '500px'],
 			content: '/QualityTestSpecificationDictionary/add.do',
 			success: function(layero, index) {},
@@ -123,12 +123,12 @@ layui.use(['form', 'table', 'ax', 'laydate', 'dictionary'], function() {
 	myForm.view = function(id) {
 		layer.open({
 			type: 2,
-			title: "查看试验",
+			title: "查看规格",
 			area: ['550px', '500px'],
 			content: '/QualityTestSpecificationDictionary/view.do?id=' + id+'&view=1',
 			success: function(layero, index) {},
 			end: function() {
-				table.reload(myForm.tableId);
+				//table.reload(myForm.tableId);
 			}
 		});
 	};
@@ -138,7 +138,7 @@ layui.use(['form', 'table', 'ax', 'laydate', 'dictionary'], function() {
 	myForm.edit = function(id) {
 		layer.open({
 			type: 2,
-			title: "编辑试验",
+			title: "编辑规格",
 			area: ['550px', '500px'],
 			content: '/QualityTestSpecificationDictionary/edit.do?id=' + id,
 			success: function(layero, index) {},

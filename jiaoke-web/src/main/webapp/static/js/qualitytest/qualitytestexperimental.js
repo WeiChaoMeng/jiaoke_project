@@ -89,11 +89,10 @@ layui.use(['form', 'table', 'ax', 'laydate', 'dictionary'], function() {
 			myForm.delete(data.id);
 		} else if (obj.event === 'btn_detail') {
 			if (data.status == 0) {
-				//layer.msg("未试验，不能查看");
-				myForm.openDetail(data.id);
+
 			} else {
 				//layer.msg("查看试验详情");
-				myForm.openDetail(data.id);
+				myForm.openDetail(data);
 			}
 		}
 	});
@@ -110,10 +109,12 @@ layui.use(['form', 'table', 'ax', 'laydate', 'dictionary'], function() {
 		queryData['materials'] = "";
 		queryData['manufacturers'] = "";
 		queryData['specification'] = "";
+		queryData['experimentalId'] = "";
 		queryData['status'] = "";
 		var maIndex = $("#materials").get(0).selectedIndex;
 		var muIndex = $("#manufacturers").get(0).selectedIndex;
 		var spIndex = $("#specification").get(0).selectedIndex;
+		var meIndex = $("#experimental").get(0).selectedIndex;
 		if (maIndex > 0) {
 			queryData['materials'] = $("#materials option:selected").text();
 		}
@@ -122,6 +123,9 @@ layui.use(['form', 'table', 'ax', 'laydate', 'dictionary'], function() {
 		}
 		if (spIndex > 0) {
 			queryData['specification'] = $("#specification option:selected").text();
+		}
+		if (meIndex > 0) {
+			queryData['experimentalId'] =$("#experimental").val(); //$("#experimental option:selected").text();
 		}
 		queryData['status'] = $("#status").val();
 
@@ -137,7 +141,8 @@ layui.use(['form', 'table', 'ax', 'laydate', 'dictionary'], function() {
 	/**
 	 * 点击添加查看试验过程
 	 */
-	myForm.openDetail = function(id) {
+	myForm.openDetail = function(data) {
+		id = data.id;
 		layer.open({
 			type: 2,
 			title: "查看试验",
@@ -147,7 +152,10 @@ layui.use(['form', 'table', 'ax', 'laydate', 'dictionary'], function() {
 
 			},
 			end: function() {
-				table.reload(myForm.tableId);
+				//待补充数据的刷新
+				if (data.status == 3) { 
+					table.reload(myForm.tableId);
+				}
 			}
 		});
 	};
@@ -188,6 +196,7 @@ layui.use(['form', 'table', 'ax', 'laydate', 'dictionary'], function() {
 		console.log("select(materials)" + data.value);
 		dictionaryFunc.getSpecificationToSelect("specification", "请选择", basePath, data.value);
 		dictionaryFunc.getFacturersToSelect("manufacturers", "请选择", basePath, data.value);
+		dictionaryFunc.getExperimentalToSelect("experimental", "请选择", basePath, data.value);
 	});
 
 

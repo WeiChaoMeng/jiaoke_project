@@ -185,7 +185,7 @@ layui.use(['form', 'table', 'ax', 'laydate', 'dictionary'], function() {
 			return;
 		}
 		for (var i = 0; i < dataInfo.length; i++) {
-			var name = dataInfo[i]['experimentalName'];
+			var name = dataInfo[i]['experimental_name'];
 			var count = dataInfo[i]['count'];
 			var obj = {
 				value: count,
@@ -251,7 +251,7 @@ layui.use(['form', 'table', 'ax', 'laydate', 'dictionary'], function() {
 		myChart1.setOption(option);
 	}
 	myForm.getChartData();
-	myForm.legendData = ['试验1', '试验2', '试验3', '试验4', '试验5'];
+	/* myForm.legendData = ['试验1', '试验2', '试验3', '试验4', '试验5'];
 	myForm.chartData = [{
 			value: 335,
 			name: '试验1'
@@ -272,7 +272,7 @@ layui.use(['form', 'table', 'ax', 'laydate', 'dictionary'], function() {
 			value: 108,
 			name: '试验5'
 		}
-	];
+	]; */
 	myForm.createChart();
 
 });

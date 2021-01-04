@@ -11,6 +11,7 @@
 		<result column="unit" property="unit" />
 		<result column="value" property="value" />
 		<result column="method" property="method" />
+		<result column="requirements" property="requirements" />
 		<result column="remark" property="remark" />
 
 		<result column="test_date" property="testDate" />
@@ -186,6 +187,7 @@
 			<if test="unit != null">unit,</if>
 			<if test="value != null">value,</if>
 			<if test="method != null">method,</if>
+			<if test="requirements != null">requirements</if>
 			<if test="remark != null">remark,</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -197,6 +199,7 @@
 			<if test="unit != null">#{unit},</if>
 			<if test="value != null">#{value},</if>
 			<if test="method != null">#{method},</if>
+			<if test="requirements != null">#{requirements},</if>
 			<if test="remark != null">#{remark},</if>
 		</trim>
 	</insert>
@@ -251,6 +254,7 @@
 					<if test="unit != null">unit = #{unit},</if>
 					<if test="value != null">value = #{value},</if>
 					<if test="method != null">method = #{method},</if>
+					<if test="requirements != null">requirements = #{requirements},</if>
 					<if test="remark != null">remark = #{remark},</if>
 		</set>
 		where id = #{id}

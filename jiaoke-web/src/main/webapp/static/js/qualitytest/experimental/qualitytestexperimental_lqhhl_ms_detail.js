@@ -12,7 +12,8 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 	var myform = {
 		tableId: "mytable",
 		expValue: [], //试验信息
-		detail_Data: [] //筛分数据
+		detail_Data: [], //详细数据
+		StandValue: [] //规范值
 	}
 	/**
 	 * 根据ID获取试验输入值
@@ -38,7 +39,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 		if (myform.detail_Data.length > 0) {
 			return;
 		}
-		for (var i = 0; i < 6; i++) {
+		for (var i = 0; i < 8; i++) {
 			var data1 = {
 				'num': i + 1
 			}
@@ -82,13 +83,27 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 			} else {
 				data['sjgdpj'] = undefined;
 			}
-			if (data['kzz'] > 0 && data['szz'] > 0 && data['bhngz'] > 0) {
-				var value = (data['kzz'] / (data['bhngz'] - data['szz'])).toFixed(3);
-				data['mtjxdmd'] = value;
-				mtjxdmdSum += Number(value);
-				mtjxdmdCount = mtjxdmdCount + 1;
+			if (expInfo.experimental_id == 17204742) {
+				if (data['kzz'] > 0 && pjgd > 0) {
+					//var sjtj = (Math.PI * Math.pow(10.61, 2)) / 4 * (pjgd / 10); 
+					var sjtj = (3.1415926 * 10.16 * 10.16) / 4 * (pjgd / 10); //试件体积
+					var mtmd = data['kzz'] / sjtj; //试件毛体积密度
+					var value = (mtmd / 0.9971).toFixed(3); //试件毛体积相对密度
+					data['mtjxdmd'] = value;
+					mtjxdmdSum += Number(value);
+					mtjxdmdCount = mtjxdmdCount + 1;
+				} else {
+					data['mtjxdmd'] = undefined;
+				}
 			} else {
-				data['mtjxdmd'] = undefined;
+				if (data['kzz'] > 0 && data['szz'] > 0 && data['bhngz'] > 0) {
+					var value = (data['kzz'] / (data['bhngz'] - data['szz'])).toFixed(3);
+					data['mtjxdmd'] = value;
+					mtjxdmdSum += Number(value);
+					mtjxdmdCount = mtjxdmdCount + 1;
+				} else {
+					data['mtjxdmd'] = undefined;
+				}
 			}
 		}
 		var value = (mtjxdmdSum / mtjxdmdCount).toFixed(3);
@@ -203,11 +218,13 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 	 */
 	myform.savaDetail = function() {
 		var result = false;
+		var expResult = myform.checkExpResult();
 		var saveData = {
 			ID: expID,
 			experimentalValue: '[{"result":"' + $("#value").html() + '","name":"毛体积相对密度"}]',
 			experimentalValueSf: JSON.stringify(myform.detail_Data),
-			status: 2
+			status: 2,
+			experimentalResult: expResult
 		}
 		$.ajax({
 			type: "POST",
@@ -226,10 +243,32 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 		return result;
 	}
 	/**
+	 * 判断试验是否合格
+	 */
+	myform.checkExpResult = function() {
+		var result = 1;
+		if (myform.StandValue.length > 0) {
+			var standValueObj = myform.StandValue[0];
+			if (standValueObj != undefined && standValueObj != null) {
+				if (common.diffValue(value, standValueObj.minValue, standValueObj.maxValue, standValueObj.comparemethod) ==
+					false) {
+					{
+						result = -1;
+					}
+				}
+			}
+		}
+		return result;
+	}
+	/**
 	 * 保存结果
 	 */
 	myform.savaReport = function() {
 		var result = false;
+		var requirementsValue = "";
+		if (myform.StandValue.length > 0) {
+			requirementsValue = myform.StandValue[0].requirements;
+		}
 		var saveData = {
 			orderTicketNum: expInfo['order_ticket_num'],
 			experimentalId: expID,
@@ -238,7 +277,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 			value: $("#value").html(),
 			unit: "-",
 			method: "-",
-			requirements: ""
+			requirements: requirementsValue
 		}
 		$.ajax({
 			type: "POST",
@@ -275,7 +314,29 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 		});
 		return result;
 	}
-
+	/**
+	 * 获取规范值
+	 */
+	myform.getStandValue = function() {
+		myform.StandValue = [];
+		var queryData = {
+			experimentalId: expInfo['experimental_id'],
+			specification: expInfo['specification'],
+			experimentalItem: "毛体积相对密度"
+		};
+		$.ajax({
+			type: "GET",
+			async: false,
+			url: basePath + "/QualityTestExperimentalStandardvalue/list.do",
+			data: queryData,
+			dataType: 'json',
+			success: function(msg) {
+				if (msg.count = 200) {
+					myform.StandValue = msg.data;
+				}
+			}
+		})
+	}
 	var expInfo = myform.getExperimentalInfo(expID);
 	if (expInfo != null) {
 		if (expInfo['experimental_content'] != null && expInfo['experimental_content'].length > 0) {
@@ -292,6 +353,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 
 	myform.ini_Detail_Value();
 	myform.computeValue();
+	myform.getStandValue();
 	/**
 	 * TABEL数据更新
 	 */
