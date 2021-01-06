@@ -231,11 +231,46 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 		myForm.sourceData.push(81);
 	}
 	/**
+	 * 获取平均值
+	 */
+	myForm.getAvgData = function() {
+		var avgValue = 0;
+		var avgCount = 0;
+		for (var i = 0; i < myForm.sourceData.length; i++) {
+			if (myForm.sourceData[i] > 0) {
+				avgValue = avgValue + myForm.sourceData[i];
+				avgCount++;
+			}
+		}
+		if (avgCount > 0) {
+			avgValue = (avgValue / avgCount).toFixed(1);
+		}
+		return avgValue;
+	}
+	/**
+	 * 获取标准差
+	 */
+	myForm.getBzcData = function() {
+		var bzcValue = 0;
+		var data = 0;
+		var avgValue = myForm.getAvgData();
+		var avgCount = 0;
+		for (var i = 0; i < myForm.sourceData.length; i++) {
+			data = myForm.sourceData[i];
+			if (data > 0) {
+				bzcValue = bzcValue + Math.pow((data - avgValue), 2);
+				avgCount++;
+			}
+		}
+		bzcValue = (Math.sqrt(bzcValue / avgCount)).toFixed(1);
+		return bzcValue;
+	}
+	/**
 	 * 获取最大值
 	 */
 	myForm.getMaxData = function() {
 		var maxValue = 0;
-		for (var i = 0; i < myForm.sourceData.length - 1; i++) {
+		for (var i = 0; i < myForm.sourceData.length; i++) {
 			if (myForm.sourceData[i] > maxValue) {
 				maxValue = myForm.sourceData[i];
 			}
@@ -247,7 +282,7 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 	 */
 	myForm.getMinData = function() {
 		var minValue = 1000000;
-		for (var i = 0; i < myForm.sourceData.length - 1; i++) {
+		for (var i = 0; i < myForm.sourceData.length; i++) {
 			if (myForm.sourceData[i] < minValue) {
 				minValue = myForm.sourceData[i];
 			}
@@ -258,6 +293,64 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 	 * 数据计算
 	 */
 	myForm.computeData = function() {
+		var avgValue = myForm.getAvgData();
+		var bzcValue = myForm.getBzcData();
+		myForm.processData = [];
+		for (var i = 0; i < 7; i++) {
+			var obj = {};
+			switch (i) {
+				case 0:
+					obj['value'] = (avgValue - 3 * bzcValue).toFixed(1);
+					break;
+				case 1:
+					obj['value'] = (avgValue - 2 * bzcValue).toFixed(1);
+					break;
+				case 2:
+					obj['value'] = (avgValue - 1 * bzcValue).toFixed(1);
+					break;
+				case 3:
+					obj['value'] = avgValue;
+					break;
+				case 4:
+					obj['value'] = (Number(avgValue) + Number(1 * bzcValue)).toFixed(1);
+					break;
+				case 5:
+					obj['value'] = (Number(avgValue) + Number(2 * bzcValue)).toFixed(1);
+					break;
+				case 6:
+					obj['value'] = (Number(avgValue) + Number(3 * bzcValue)).toFixed(1);
+					break;
+			}
+			obj['count'] = 0;
+			myForm.processData.push(obj);
+		}
+		for (var i = 0; i < myForm.sourceData.length; i++) {
+			var value = myForm.sourceData[i];
+			for (var j = 0; j < myForm.processData.length - 1; j++) {
+				if (value >= Number(myForm.processData[j]['value']) && value < Number(myForm.processData[
+						j + 1]['value'])) {
+					var v = myForm.processData[j + 1]['count'];
+					if (v == undefined) {
+						v = 0;
+					}
+					myForm.processData[j + 1]['count'] = v + 1;
+					break;
+				}
+			}
+		}
+		myForm.chartData = [];
+		for (var j = 0; j < myForm.processData.length; j++) {
+			var obj = [];
+			obj[0] = myForm.processData[j]['value'];
+			obj[1] = myForm.processData[j]['count'];
+			myForm.chartData.push(obj);
+		}
+	}
+
+	/**
+	 * 数据计算
+	 */
+	myForm.computeData1 = function() {
 		var minvalue = myForm.getMinData();
 		var maxvalue = myForm.getMaxData();
 		var diffValue = maxvalue - minvalue;
@@ -358,6 +451,14 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 					gt: 7,
 					lt: 8,
 					color: '#009688'
+				}, {
+					gt: 8,
+					lt: 9,
+					color: '#009688'
+				}, {
+					gt: 9,
+					lt: 10,
+					color: '#009688'
 				}]
 			},
 			series: [{
@@ -374,16 +475,19 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 						show: false
 					},
 					data: [{
-							xAxis: 1
-						},
-						{
+							xAxis: 2
+						}, {
 							xAxis: 3
 						},
 						{
-							xAxis: 5
+							xAxis: 4
 						},
 						{
+							xAxis: 6
+						}, {
 							xAxis: 7
+						}, {
+							xAxis: 8
 						}
 					]
 				},
@@ -427,10 +531,22 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 	myForm.setTitle();
 	var myChart1 = echarts.init(document.getElementById('echart1'));
 	myForm.getData();
-	//myForm.getTestData();	
+	//myForm.getTestData();
 	myForm.computeData();
 	//测试数据 应用时注释掉
+	/* 	myForm.chartData = [
+			['80', 17],
+			['90', 88],
+			['100', 298],
+			['110', 498],
+			['120', 1029],
+			['130', 454],
+			['140', 221],
+			['150', 81],
+			['160', 11]
+		]; */
 	myForm.chartData = [
+		['70', 10],
 		['80', 17],
 		['90', 88],
 		['100', 298],
@@ -439,7 +555,8 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 		['130', 454],
 		['140', 221],
 		['150', 81],
-		['160', 11]
+		['160', 11],
+		['170', 8]
 	];
 	myForm.refreshChart();
 });
