@@ -16,7 +16,7 @@
 		</div>
 
 		<div id="echart1" class="layui-col-sm6" style="height: 370px;  margin: 0 auto;"></div>
-		<div id="title" class="layui-form-mid layui-word-aux" style="margin-left: 25px;    margin-top: -25px;">粗集料-10-20mm石灰岩-9.5</div>
+		<div id="title" class="layui-form-mid layui-word-aux" style="margin-left: 25px;    margin-top: -25px;"></div>
 		<script src="/static/js/jquery.js"></script>
 		<script src="/static/layui/layui.js" charset="utf-8"></script>
 		<script src="/static/js/qualitytest/common/dictionary.js" charset="utf-8"></script>
