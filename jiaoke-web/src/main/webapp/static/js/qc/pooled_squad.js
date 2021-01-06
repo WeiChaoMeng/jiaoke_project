@@ -1,21 +1,4 @@
-var legal_person_data = {"uploadData":[{"count":630},{"count":986},{"count":792},{"count":642},{"count":521},{"count":573}
-        ,{"count":832},{"count":747},{"count":983},{"count":836},{"count":831},{"count":633}],
-    "updateData":[{"count":110},{"count":181},{"count":123},{"count":197},{"count":123},{"count":173}
-        ,{"count":123},{"count":151},{"count":101},{"count":152},{"count":101},{"count":177}],
-    "viewData":[{"count":651},{"count":842},{"count":223},{"count":223},{"count":221},{"count":812}
-        ,{"count":928},{"count":219},{"count":613},{"count":254},{"count":981},{"count":301}]};
-var people_data = {"uploadData":[{"count":1300},{"count":1686},{"count":1692},{"count":1742},{"count":1621},{"count":773}
-        ,{"count":832},{"count":1047},{"count":1483},{"count":1336},{"count":831},{"count":973}],
-    "updateData":[{"count":103},{"count":281},{"count":203},{"count":197},{"count":173},{"count":154}
-        ,{"count":223},{"count":251},{"count":201},{"count":252},{"count":201},{"count":277}],
-    "viewData":[{"count":651},{"count":842},{"count":223},{"count":223},{"count":221},{"count":812}
-        ,{"count":928},{"count":219},{"count":613},{"count":254},{"count":981},{"count":301}]};
-var picture_data = {"uploadData":[{"count":330},{"count":786},{"count":492},{"count":842},{"count":421},{"count":673}
-        ,{"count":932},{"count":447},{"count":583},{"count":436},{"count":331},{"count":433}],
-    "updateData":[{"count":10},{"count":81},{"count":23},{"count":97},{"count":23},{"count":73}
-        ,{"count":23},{"count":51},{"count":01},{"count":52},{"count":01},{"count":77}],
-    "viewData":[{"count":451},{"count":342},{"count":523},{"count":323},{"count":421},{"count":812}
-        ,{"count":728},{"count":619},{"count":613},{"count":554},{"count":481},{"count":301}]};
+
 
 var Tpl1 = '<li>' +
     '<p class="data-count">5681</p>' +
@@ -193,7 +176,7 @@ function getAllSquadRegenerate(startDate,lastDate) {
             var sumTotal = 0;
             if (res.message === 'success'){
                 var list = res.body;
-
+                debugger
                 if (list.length > 0){
                     var total = [];
                     var regeneratetotal = [];
