@@ -187,6 +187,7 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 		if (value == undefined) {
 			value = 0;
 		}
+		id = id + "@" + colum;
 		var msg =
 			'<div id="' + id +
 			'" class="layui-form-item" name="' + div_name +
@@ -395,14 +396,14 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 			msg += myForm.display_item('clyd10@4@' + spec, div_name, '残留延度（10℃）', myForm.LQ_Data[i]['clyd10']);
 			msg += myForm.display_item('clyd5@4@' + spec, div_name, '残留延度（5℃）', myForm.LQ_Data[i]['clyd5']);
 			msg += '</div>';
-	
+
 			$("#div_lq").append(msg);
 			$('div[name=' + div_name + ']').each(function() {
 				var that = $(this);
 				that.bind("click", function() {
 					myForm.openZTPBTPage(that[0].id);
 				})
-	
+
 			});
 			msg = "";
 		}
@@ -433,15 +434,15 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 			msg += myForm.display_item('yd@8@' + spec, div_name, '延度', myForm.RHLQ_Data[i]['yd']);
 			msg += myForm.display_item('ccwdx1@8@' + spec, div_name, '1d储存稳定性', myForm.RHLQ_Data[i]['ccwdx1']);
 			msg += myForm.display_item('ccwdx5@8@' + spec, div_name, '5d储存稳定性', myForm.RHLQ_Data[i]['ccwdx5']);
-				msg += '</div>';
-	
+			msg += '</div>';
+
 			$("#div_rhlq").append(msg);
 			$('div[name=' + div_name + ']').each(function() {
 				var that = $(this);
 				that.bind("click", function() {
 					myForm.openZTPBTPage(that[0].id);
 				})
-	
+
 			});
 			msg = "";
 		}
@@ -495,21 +496,21 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 			msg += myForm.display_item('dwdd@9@' + spec, div_name, '动稳定度', myForm.LQHHL_Data[i]['dwdd']);
 			msg += myForm.display_item('ssxs@9@' + spec, div_name, '渗水系数', myForm.LQHHL_Data[i]['ssxs']);
 			msg += myForm.display_item('gzsd@9@' + spec, div_name, '构造深度', myForm.LQHHL_Data[i]['gzsd']);
-			
+
 			msg += '</div>';
-	
+
 			$("#div_lqhhl").append(msg);
 			$('div[name=' + div_name + ']').each(function() {
 				var that = $(this);
 				that.bind("click", function() {
 					myForm.openZTPBTPage(that[0].id);
 				})
-	
+
 			});
 			msg = "";
 		}
 	}
-	
+
 	/**
 	 * 获取查询条件
 	 */
@@ -617,7 +618,7 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 		layer.open({
 			type: 2,
 			title: "查看正态分布图",
-			area: ['700px', '450px'],
+			area: ['700px', '455px'],
 			content: '/QualityTestReportAvg/ztfbt_page.do?param=' +
 				id + '&begindate=' + begindate + '&enddate=' + enddate,
 			success: function(layero, index) {

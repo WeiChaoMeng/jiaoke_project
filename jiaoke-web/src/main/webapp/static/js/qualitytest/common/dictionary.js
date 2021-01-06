@@ -197,13 +197,32 @@ layui.define(['form', 'jquery', 'layer', 'table'], function(exports) {
 			}
 		})
 		return result;
-		/* var data = {
-
-		};
-		data['code'] = 200;
-		data['data'] = $.parseJSON('[{"Id":1,"name":"筛分试验"},{"Id":2,"name":"表观相对密度"},{"Id":3,"name":"砂当量"}]');
-		return data['data']; */
 	}
+/**
+	 * 根据试验ID获取试验项字典
+	 */
+	dictionaryFunc.getExperimentalItemData = function(id,basePath) {
+		var result = null;
+
+		var queryData = {
+			"experimentalId": id
+		};
+		$.ajax({
+			type: "GET",
+			async: false,
+			url: basePath + "/QualityTestExperimentalStandardvalueItem/list.do",
+			dataType: 'JSON',
+			data: queryData,
+			success: function(msg) {
+				if (msg.code == 0) {
+					result = msg.data;
+				}
+				console.log(msg);
+			}
+		})
+		return result;
+	}
+
 
 	exports('dictionary', dictionaryFunc)
 });

@@ -33,11 +33,11 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 				field: 'specification',
 				title: '规格',
 				width: 150
-			}, {
+			}, /* {
 				field: 'specificationLevel',
 				title: '等级',
 				width: 130
-			}, {
+			}, */ {
 				field: 'experimentalName',
 				title: '试验名称',
 				width: 250
@@ -119,7 +119,7 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 		layer.open({
 			type: 2,
 			title: "新建试验标准值",
-			area: ['550px', '650px'],
+			area: ['550px', '600px'],
 			content: '/QualityTestExperimentalStandardvalue/add.do',
 			success: function(layero, index) {
 				var iframe = layero.find('iframe')[0].contentWindow;
