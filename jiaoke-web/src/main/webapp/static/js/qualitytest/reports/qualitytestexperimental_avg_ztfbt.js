@@ -393,6 +393,38 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 		};
 		return option;
 	}
+	myForm.setTitle = function() {
+		var str = param.split('@');
+		var materials = str[1];
+		var spec = str[2];
+		var columnName = str[3];
+		switch (materials) {
+			case '1':
+				materials = "细集料";
+				break;
+			case '2':
+				materials = "粗集料";
+				break;
+			case '3':
+				materialsa = "矿粉";
+				break;
+			case '4':
+				materialsa = "沥青";
+				break;
+			case '8':
+				materials = "乳化沥青";
+				break;
+			case '9':
+				materials = "沥青混合料";
+				break;
+		}
+		if (spec == undefined) {
+			$("#title").html(materials + "-" + columnName);
+		} else {
+			$("#title").html(materials + "-" + spec + "-" + columnName);
+		}
+	}
+	myForm.setTitle();
 	var myChart1 = echarts.init(document.getElementById('echart1'));
 	myForm.getData();
 	//myForm.getTestData();	

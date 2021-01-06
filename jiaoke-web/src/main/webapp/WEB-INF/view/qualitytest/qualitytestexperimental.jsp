@@ -54,8 +54,6 @@
 												</select>
 											</div>
 										</div>
-									</div>
-									<div class="layui-form-item" style="margin-bottom: 0px;">
 										<div class="layui-inline">
 											<label class="layui-form-label w-auto">状态：</label>
 											<div class="layui-input-inline mr0">
