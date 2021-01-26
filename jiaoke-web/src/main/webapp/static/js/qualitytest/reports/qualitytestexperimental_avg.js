@@ -17,12 +17,14 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 
 	console.log("qualitytestexperimental_avg.js");
 	var myForm = {
+		tableId: "mytable",
 		CJL_Data: null,
 		XJL_Data: null,
 		KF_Data: null,
 		LQ_Data: null,
 		RHLQ_Data: null,
-		LQHHL_Data: null
+		LQHHL_Data: null,
+		exportData: ""
 	};
 	/**
 	 * 获取粗集料数据
@@ -40,10 +42,12 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 				if (msg.code == 200) {
 					result = msg.data;
 					myForm.CJL_Data = msg.data;
+					myForm.exportData = msg.data;
 				}
 				console.log(msg);
 			}
 		})
+		myForm.table_CJL();
 		return result;
 	}
 	/**
@@ -62,10 +66,12 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 				if (msg.code == 200) {
 					result = msg.data;
 					myForm.XJL_Data = msg.data;
+					myForm.exportData = msg.data;
 				}
 				console.log(msg);
 			}
 		})
+		myForm.table_XJL();
 		return result;
 	}
 	/**
@@ -84,10 +90,12 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 				if (msg.code == 200) {
 					result = msg.data;
 					myForm.KF_Data = msg.data;
+					myForm.exportData = msg.data;
 				}
 				console.log(msg);
 			}
 		})
+		myForm.table_KF();
 		return result;
 	}
 	/**
@@ -106,10 +114,12 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 				if (msg.code == 200) {
 					result = msg.data;
 					myForm.LQ_Data = msg.data;
+					myForm.exportData = msg.data;
 				}
 				console.log(msg);
 			}
 		})
+		myForm.table_LQ();
 		return result;
 	}
 	/**
@@ -128,10 +138,12 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 				if (msg.code == 200) {
 					result = msg.data;
 					myForm.RHLQ_Data = msg.data;
+					myForm.exportData = msg.data;
 				}
 				console.log(msg);
 			}
 		})
+		myForm.table_RHLQ();
 		return result;
 	}
 	/**
@@ -150,11 +162,603 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 				if (msg.code == 200) {
 					result = msg.data;
 					myForm.LQHHL_Data = msg.data;
+					myForm.exportData = msg.data;
 				}
 				console.log(msg);
 			}
 		})
+		myForm.table_LQHHL();
 		return result;
+	}
+	/**
+	 * 显示粗集料数据
+	 */
+	myForm.table_CJL = function() {
+		table.render({
+			elem: '#' + myForm.tableId,
+			data: myForm.CJL_Data,
+			title: '粗集料平均值',
+			defaultToolbar: [],
+			toolbar: '#toolbarButton',
+			cols: [
+				[{
+					field: 'xuhao',
+					title: '序号',
+					width: 70,
+					type: "numbers"
+				}, {
+					field: 'specification',
+					title: '规格',
+					width: 70
+				}, {
+					field: 'sk375',
+					title: '37.5',
+					width: 70
+				}, {
+					field: 'sk315',
+					title: '31.5',
+					width: 70
+				}, {
+					field: 'sk265',
+					title: '26.5',
+					width: 70
+				}, {
+					field: 'sk19',
+					title: '19',
+					width: 70
+				}, {
+					field: 'sk16',
+					title: '16',
+					width: 70
+				}, {
+					field: 'sk132',
+					title: '13.2',
+					width: 70
+				}, {
+					field: 'sk95',
+					title: '9.5',
+					width: 70
+				}, {
+					field: 'sk475',
+					title: '4.75',
+					width: 70
+				}, {
+					field: 'sk236',
+					title: '2.36',
+					width: 70
+				}, {
+					field: 'sk118',
+					title: '1.18',
+					width: 70
+				}, {
+					field: 'sk06',
+					title: '0.6',
+					width: 70
+				}, {
+					field: 'sk03',
+					title: '0.3',
+					width: 70
+				}, {
+					field: 'sk015',
+					title: '0.15',
+					width: 70
+				}, {
+					field: 'sk0075',
+					title: '0.075',
+					width: 70
+				}, {
+					field: 'bgxdmd1',
+					title: '表观相对密度',
+					width: 120
+				}, {
+					field: 'bgxdmd2',
+					title: '表干相对密度',
+					width: 120
+				}, {
+					field: 'mtjxdmd',
+					title: '毛体积相对密度',
+					width: 130
+				}, {
+					field: 'xsl',
+					title: '吸水率',
+					width: 130
+				}, {
+					field: 'jgx',
+					title: '坚固性',
+					width: 130
+				}, {
+					field: 'zpzkl',
+					title: '针片状',
+					width: 110
+				}, {
+					field: 'ysz',
+					title: '压碎值',
+					width: 80
+				}, {
+					field: 'rrkl',
+					title: '软石含量',
+					width: 100
+				}, {
+					field: 'mh',
+					title: '磨耗损失',
+					width: 90
+				}, {
+					field: 'klhl0075',
+					title: '＜0.075mm颗粒含量',
+					width: 90
+				}, {
+					field: 'hsl',
+					title: '含水率',
+					width: 80
+				}, {
+					field: 'nfx',
+					title: '粘附性',
+					width: 80
+				}]
+			],
+			page: false
+		});
+	}
+	/**
+	 * 显示细集料数据
+	 */
+	myForm.table_XJL = function() {
+		table.render({
+			elem: '#' + myForm.tableId,
+			data: myForm.XJL_Data,
+			title: '细集料平均值',
+			defaultToolbar: [],
+			toolbar: '#toolbarButton',
+			cols: [
+				[{
+					field: 'xuhao',
+					title: '序号',
+					width: 70,
+					type: "numbers"
+				}, {
+					field: 'specification',
+					title: '规格',
+					width: 70
+				}, {
+					field: 'sk132',
+					title: '13.2',
+					width: 70
+				}, {
+					field: 'sk95',
+					title: '9.5',
+					width: 70
+				}, {
+					field: 'sk475',
+					title: '4.75',
+					width: 70
+				}, {
+					field: 'sk236',
+					title: '2.36',
+					width: 70
+				}, {
+					field: 'sk118',
+					title: '1.18',
+					width: 70
+				}, {
+					field: 'sk06',
+					title: '0.6',
+					width: 70
+				}, {
+					field: 'sk03',
+					title: '0.3',
+					width: 70
+				}, {
+					field: 'sk015',
+					title: '0.15',
+					width: 70
+				}, {
+					field: 'sk0075',
+					title: '0.075',
+					width: 70
+				}, {
+					field: 'bgmd',
+					title: '表观相对密度',
+					width: 90
+				}, {
+					field: 'mdjxsl',
+					title: '吸水率',
+					width: 120
+				}, {
+					field: 'sdl',
+					title: '砂当量',
+					width: 80
+				}, {
+					field: 'lj',
+					title: '棱角性',
+					width: 80
+				}, {
+					field: 'yjl',
+					title: '亚甲蓝',
+					width: 80
+				}, {
+					field: 'jgx',
+					title: '坚固性',
+					width: 80
+				}, {
+					field: 'hnl',
+					title: '含泥量',
+					width: 80
+				}]
+			],
+			page: false
+		});
+	}
+	/**
+	 * 显示矿粉数据
+	 */
+	myForm.table_KF = function() {
+		table.render({
+			elem: '#' + myForm.tableId,
+			data: myForm.KF_Data,
+			title: '矿粉平均值',
+			defaultToolbar: [],
+			toolbar: '#toolbarButton',
+			cols: [
+				[{
+					field: 'xuhao',
+					title: '序号',
+					width: 70,
+					type: "numbers"
+				}, {
+					field: 'specification',
+					title: '规格',
+					width: 70
+				}, {
+					field: 'sk118',
+					title: '1.18',
+					width: 70
+				}, {
+					field: 'sk06',
+					title: '0.6',
+					width: 70
+				}, {
+					field: 'sk03',
+					title: '0.3',
+					width: 70
+				}, {
+					field: 'sk015',
+					title: '0.15',
+					width: 70
+				}, {
+					field: 'sk0075',
+					title: '0.075',
+					width: 70
+				}, {
+					field: 'bgmd',
+					title: '表观密度',
+					width: 120
+				}, {
+					field: 'hsl',
+					title: '含水量',
+					width: 120
+				}, {
+					field: 'qsxs',
+					title: '亲水系数',
+					width: 120
+				}, {
+					field: 'sxzl',
+					title: '塑性指数',
+					width: 120
+				}, {
+					field: 'jradx',
+					title: '加热安定性',
+					width: 120
+				}]
+			],
+			page: false
+		});
+	}
+	/**
+	 * 显示沥青数据
+	 */
+	myForm.table_LQ = function() {
+		table.render({
+			elem: '#' + myForm.tableId,
+			data: myForm.LQ_Data,
+			title: '沥青平均值',
+			defaultToolbar: [],
+			toolbar: '#toolbarButton',
+			cols: [
+				[{
+					field: 'xuhao',
+					title: '序号',
+					width: 70,
+					type: "numbers"
+				}, {
+					field: 'specification',
+					title: '规格',
+					width: 70
+				}, {
+					field: 'zrd30',
+					title: '针入度（30℃）',
+					width: 140
+				}, {
+					field: 'zrd25',
+					title: '针入度（25℃）',
+					width: 140
+				}, {
+					field: 'zrd15',
+					title: '针入度（15℃）',
+					width: 140
+				}, {
+					field: 'zrd10',
+					title: '针入度（10℃）',
+					width: 140
+				}, {
+					field: 'zrd5',
+					title: '针入度（5℃）',
+					width: 140
+				}, {
+					field: 'yd25',
+					title: '延度（25℃）',
+					width: 120
+				}, {
+					field: 'yd15',
+					title: '延度（15℃）',
+					width: 120
+				}, {
+					field: 'yd10',
+					title: '延度（10℃）',
+					width: 120
+				}, {
+					field: 'yd5',
+					title: '延度（5℃）',
+					width: 120
+				}, {
+					field: 'rhd',
+					title: '软化点',
+					width: 120
+				}, {
+					field: 'sd',
+					title: '闪点',
+					width: 120
+				}, {
+					field: 'rjd',
+					title: '溶解度',
+					width: 120
+				}, {
+					field: 'dlnd',
+					title: '60℃动力粘度',
+					width: 120
+				}, {
+					field: 'md15',
+					title: '密度（15℃）',
+					width: 120
+				}, {
+					field: 'xdmd',
+					title: '相对密度（25℃）',
+					width: 120
+				}, {
+					field: 'txhf',
+					title: '弹性恢复',
+					width: 120
+				}, {
+					field: 'lx',
+					title: '离析',
+					width: 120
+				}, {
+					field: 'zlbh',
+					title: '质量变化',
+					width: 120
+				}, {
+					field: 'clzrdb',
+					title: '残留针入度比',
+					width: 120
+				}, {
+					field: 'clyd25',
+					title: '残留延度（25℃）',
+					width: 120
+				}, {
+					field: 'clyd15',
+					title: '残留延度（15℃）',
+					width: 120
+				}, {
+					field: 'clyd10',
+					title: '残留延度（10℃）',
+					width: 120
+				}, {
+					field: 'clyd5',
+					title: '残留延度（5℃）',
+					width: 120
+				}]
+			],
+			page: false
+		});
+	}
+	/**
+	 * 显示乳化沥青数据
+	 */
+	myForm.table_RHLQ = function() {
+		table.render({
+			elem: '#' + myForm.tableId,
+			data: myForm.RHLQ_Data,
+			title: '乳化沥青平均值',
+			defaultToolbar: [],
+			toolbar: '#toolbarButton',
+			cols: [
+				[{
+					field: 'xuhao',
+					title: '序号',
+					width: 70,
+					type: "numbers"
+				}, {
+					field: 'specification',
+					title: '规格',
+					width: 70
+				}, {
+					field: 'zfllwhl',
+					title: '蒸发残留物含量',
+					width: 150
+				}, {
+					field: 'bznd',
+					title: '标准粘度',
+					width: 120
+				}, {
+					field: 'zrd',
+					title: '针入度',
+					width: 120
+				}, {
+					field: 'yd',
+					title: '延度',
+					width: 120
+				}, {
+					field: 'ccwdx1',
+					title: '1d储存稳定性',
+					width: 120
+				}, {
+					field: 'ccwdx5',
+					title: '5d储存稳定性',
+					width: 120
+				}]
+			],
+			page: false
+		});
+	}
+	/**
+	 * 显示乳化沥青数据
+	 */
+	myForm.table_LQHHL = function() {
+		table.render({
+			elem: '#' + myForm.tableId,
+			data: myForm.LQHHL_Data,
+			title: '沥青混合料平均值',
+			defaultToolbar: [],
+			toolbar: '#toolbarButton',
+			cols: [
+				[{
+					field: 'xuhao',
+					title: '序号',
+					width: 70,
+					type: "numbers"
+				}, {
+					field: 'specification',
+					title: '规格',
+					width: 70
+				}, {
+					field: 'sk375',
+					title: '37.5',
+					width: 70
+				}, {
+					field: 'sk315',
+					title: '31.5',
+					width: 70
+				}, {
+					field: 'sk265',
+					title: '26.5',
+					width: 70
+				}, {
+					field: 'sk19',
+					title: '19',
+					width: 70
+				}, {
+					field: 'sk16',
+					title: '16',
+					width: 70
+				}, {
+					field: 'sk132',
+					title: '13.2',
+					width: 70
+				}, {
+					field: 'sk95',
+					title: '9.5',
+					width: 70
+				}, {
+					field: 'sk475',
+					title: '4.75',
+					width: 70
+				}, {
+					field: 'sk236',
+					title: '2.36',
+					width: 70
+				}, {
+					field: 'sk118',
+					title: '1.18',
+					width: 70
+				}, {
+					field: 'sk06',
+					title: '0.6',
+					width: 70
+				}, {
+					field: 'sk03',
+					title: '0.3',
+					width: 70
+				}, {
+					field: 'sk015',
+					title: '0.15',
+					width: 70
+				}, {
+					field: 'sk0075',
+					title: '0.075',
+					width: 70
+				}, {
+					field: 'zdlhxdmd',
+					title: '最大理论相对密度',
+					width: 120
+				}, {
+					field: 'mtjxdmd',
+					title: '毛体积相对密度',
+					width: 120
+				}, {
+					field: 'kxl',
+					title: '空隙率',
+					width: 130
+				}, {
+					field: 'lqbhd',
+					title: '沥青饱和度',
+					width: 130
+				}, {
+					field: 'kljxl',
+					title: '矿料间隙率',
+					width: 130
+				}, {
+					field: 'cjlgjjxl',
+					title: '粗集料骨架间隙率',
+					width: 110
+				}, {
+					field: 'wdd',
+					title: '稳定度',
+					width: 80
+				}, {
+					field: 'lz',
+					title: '流值',
+					width: 100
+				}, {
+					field: 'xl',
+					title: '析漏	',
+					width: 80
+				}, {
+					field: 'fs',
+					title: '飞散',
+					width: 80
+				}, {
+					field: 'clwdd',
+					title: '残留稳定度',
+					width: 100
+				}, {
+					field: 'drplqdb',
+					title: '冻融劈裂强度比',
+					width: 100
+				}, {
+					field: 'dwdd',
+					title: '动稳定度',
+					width: 100
+				}, {
+					field: 'ssxs',
+					title: '渗水系数',
+					width: 100
+				}, {
+					field: 'gzsd',
+					title: '构造深度',
+					width: 100
+				}]
+			],
+			page: false
+		});
 	}
 	myForm.display_title = function(title) {
 		var msg =
@@ -187,6 +791,11 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 		if (value == undefined) {
 			value = 0;
 		}
+		id = id + "@";
+		var muIndex = $("#manufacturers").get(0).selectedIndex;
+		if (muIndex > 0) {
+			id = id + $("#manufacturers option:selected").text();
+		}
 		id = id + "@" + colum;
 		var msg =
 			'<div id="' + id +
@@ -212,12 +821,13 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 		$("#div_avg_value").append('<div id="div_cjl" class="layui-row"></div>');
 		var div_name = "";
 		for (var i = 0; i < myForm.CJL_Data.length; i++) {
-			var spec = myForm.CJL_Data[i]['specification'];
+			var spec = "";
 			msg +=
 				'<div class="layui-col-sm3 layui-col-space10" style=" border:1px solid #e6e6e6; border-radius:5px;box-shadow: 1px 1px 5px #e6e6e6;">';
 			if (i == 0) {
 				msg += myForm.display_title("粗集料");
 			} else {
+				spec = myForm.CJL_Data[i]['specification'];
 				msg += myForm.display_title("粗集料（" + spec + "）");
 			}
 			div_name = "pro_item_cjl" + i;
@@ -271,13 +881,15 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 		$("#div_avg_value").append('<div id="div_xjl" class="layui-row"></div>');
 		var div_name = "";
 		for (var i = 0; i < myForm.XJL_Data.length; i++) {
-			var spec = myForm.XJL_Data[i]['specification'];
+			var spec = "";
 			msg +=
 				'<div class="layui-col-sm3 layui-col-space10" style=" border:1px solid #e6e6e6; border-radius:5px;box-shadow: 1px 1px 5px #e6e6e6;">';
 			if (i == 0) {
 				msg += myForm.display_title("细集料");
 			} else {
+				spec = myForm.XJL_Data[i]['specification'];
 				msg += myForm.display_title("细集料（" + spec + "）");
+
 			}
 			div_name = "pro_item_xjl" + i;
 			msg += myForm.display_item('sK132@1@' + spec, div_name, '13.2', myForm.XJL_Data[i]['sk132']);
@@ -320,12 +932,13 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 		$("#div_avg_value").append('<div id="div_kf" class="layui-row"></div>');
 		var div_name = "";
 		for (var i = 0; i < myForm.KF_Data.length; i++) {
-			var spec = myForm.KF_Data[i]['specification'];
+			var spec = "";
 			msg +=
 				'<div class="layui-col-sm3 layui-col-space10" style=" border:1px solid #e6e6e6; border-radius:5px;box-shadow: 1px 1px 5px #e6e6e6;">';
 			if (i == 0) {
 				msg += myForm.display_title("矿粉");
 			} else {
+				spec = myForm.KF_Data[i]['specification'];
 				msg += myForm.display_title("矿粉（" + spec + "）");
 			}
 			div_name = "pro_item_kf" + i;
@@ -363,12 +976,13 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 		$("#div_avg_value").append('<div id="div_lq" class="layui-row"></div>');
 		var div_name = "";
 		for (var i = 0; i < myForm.LQ_Data.length; i++) {
-			var spec = myForm.LQ_Data[i]['specification'];
+			var spec = "";
 			msg +=
 				'<div class="layui-col-sm3 layui-col-space10" style=" border:1px solid #e6e6e6; border-radius:5px;box-shadow: 1px 1px 5px #e6e6e6;">';
 			if (i == 0) {
 				msg += myForm.display_title("沥青");
 			} else {
+				spec = myForm.LQ_Data[i]['specification'];
 				msg += myForm.display_title("沥青（" + spec + "）");
 			}
 			div_name = "pro_item_lq" + i;
@@ -419,12 +1033,13 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 		$("#div_avg_value").append('<div id="div_rhlq" class="layui-row"></div>');
 		var div_name = "";
 		for (var i = 0; i < myForm.RHLQ_Data.length; i++) {
-			var spec = myForm.RHLQ_Data[i]['specification'];
+			var spec = "";
 			msg +=
 				'<div class="layui-col-sm3 layui-col-space10" style=" border:1px solid #e6e6e6; border-radius:5px;box-shadow: 1px 1px 5px #e6e6e6;">';
 			if (i == 0) {
 				msg += myForm.display_title("乳化沥青");
 			} else {
+				spec = myForm.RHLQ_Data[i]['specification'];
 				msg += myForm.display_title("乳化沥青（" + spec + "）");
 			}
 			div_name = "pro_item_rhlq" + i;
@@ -458,12 +1073,13 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 		$("#div_avg_value").append('<div id="div_lqhhl" class="layui-row"></div>');
 		var div_name = "";
 		for (var i = 0; i < myForm.LQHHL_Data.length; i++) {
-			var spec = myForm.LQHHL_Data[i]['specification'];
+			var spec = "";
 			msg +=
 				'<div class="layui-col-sm3 layui-col-space10" style=" border:1px solid #e6e6e6; border-radius:5px;box-shadow: 1px 1px 5px #e6e6e6;">';
 			if (i == 0) {
 				msg += myForm.display_title("沥青混合料");
 			} else {
+				spec = myForm.LQHHL_Data[i]['specification'];
 				msg += myForm.display_title("沥青混合料（" + spec + "）");
 			}
 			div_name = "pro_item_lqhhl" + i;
@@ -532,6 +1148,10 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 			queryData['enddate'] = common.formatDate($("#enddate").val() + ' 23:59:59',
 				'MM/dd/yyyy hh:mm:ss');
 		}
+		var muIndex = $("#manufacturers").get(0).selectedIndex;
+		if (muIndex > 0) {
+			queryData['manufacturers'] = $("#manufacturers option:selected").text();
+		}
 		return queryData;
 	}
 	/**
@@ -581,6 +1201,10 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 		myForm.search();
 	});
 
+	// 导出按钮点击事件
+	$('#btnExport').click(function() {
+		table.exportFile(myForm.tableId, myForm.exportData, 'xls');
+	});
 
 	myForm.getParam = function(data) {
 		let url = '';
@@ -629,8 +1253,13 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 
 	//材料下拉框选择
 	form.on('select(materials)', function(data) {
-		console.log("select(materials)" + data.value);
+		dictionaryFunc.getFacturersToSelect("manufacturers", "请选择", basePath, data.value);
 	});
+
+
+
+
+
 	myForm.CJL_Data = null;
 	myForm.XJL_Data = null;
 	myForm.KF_Data = null;

@@ -29,6 +29,14 @@
 											</div>
 										</div>
 										<div class="layui-inline">
+											<label class="layui-form-label w-auto">所属厂家：</label>
+											<div class="layui-input-inline mr0">
+												<select name="manufacturers" id="manufacturers" lay-filter="manufacturers" lay-verify="required" required>
+													<option value="">请选择</option>
+												</select>
+											</div>
+										</div>
+										<div class="layui-inline">
 											<label class="layui-form-label w-auto">开始日期：</label>
 											<div class="layui-input-inline mr0">
 												<input type="text" name="begindate" id="begindate" lay-verify="date" placeholder="" autocomplete="off"
@@ -42,16 +50,25 @@
 											</div>
 										</div>
 										<div class="layui-inline">
-											<button id="btnSearch" type="button" class="layui-btn layui-btn-sm icon-btn">&nbsp;<i class="layui-icon">&#xe615;</i>&nbsp;
+											<button id="btnSearch" type="button" class="layui-btn layui-btn-sm icon-btn"> &nbsp;<i class="layui-icon">&#xe615;</i>&nbsp;
+											</button>
+										</div>
+										<div>
+											<button id="btnExport" type="button" class="layui-btn layui-btn-sm icon-btn" style="float:right;">&nbsp;<i
+												 class="layui-icon">&#xe67d;</i>&nbsp;
 											</button>
 										</div>
 									</div>
 								</div>
+								<div style="display: none;">
+									<table class="layui-hide" id="mytable" lay-filter="mytable"></table>
+								</div>
 							</div>
 						</div>
 					</div>
-					<div id='div_avg_value' class=" layui-row layui-col-space15">
-						<!-- <div class="layui-col-sm3" style=" border:1px solid #e6e6e6; border-radius:5px;box-shadow: 1px 1px 5px #e6e6e6;">
+				</div>
+				<div id='div_avg_value' class=" layui-row layui-col-space15">
+					<!-- <div class="layui-col-sm3" style=" border:1px solid #e6e6e6; border-radius:5px;box-shadow: 1px 1px 5px #e6e6e6;">
 					
 							<div class="layui-form-item" style="margin:0 auto;"><label class="layui-form-label" style="width: 100%;text-align: center;font-size: 18px;">粗集料台账</label></div>
 							<div class="layui-form-item" style=" width:80%;margin:0 auto;">
@@ -72,8 +89,8 @@
 								<label class="layui-form-label" style="text-align: left; margin-left: 50px;font-size: 16px;">31.5</label>
 							</div>
 						</div> -->
-					</div>
 				</div>
+			</div>
 			</div>
 			</div>
 		</form>

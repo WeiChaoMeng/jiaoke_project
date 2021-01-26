@@ -47,6 +47,9 @@ public class VQualityTestReportLqhhlAvgServiceImpl implements VQualityTestReport
 			assist.andGte("create_time", DateUtil.dateConvertYYYYMMDDHHMMSS(DateUtils.addDays(new Date(), -31)));
 			assist.andLte("create_time", DateUtil.dateConvertYYYYMMDDHHMMSS(new Date()));
 		}
+		if (value.getManufacturers() != null && !value.getManufacturers().isEmpty()) {
+			assist.andEq("manufacturers",  value.getManufacturers() );
+		}
 	}
 	@Override
 	public String find(VQualityTestReportLqhhlAvg value) {

@@ -15,6 +15,9 @@ public class VQualityTestReportKfAvg extends QualityTestSearchDate {
 	@JSONField(name="specification")
 	private String specification;
 	/***/
+	@JSONField(name="manufacturers")
+	private String manufacturers;
+	/***/
 	@JSONField(name="sk118")
 	private Double sk118;
 	/***/
@@ -60,6 +63,9 @@ public class VQualityTestReportKfAvg extends QualityTestSearchDate {
 		if (obj.get("specification") instanceof String) {
 			this.setSpecification((String) obj.get("specification"));
 		}
+		if (obj.get("manufacturers") instanceof String) {
+			this.setManufacturers((String) obj.get("manufacturers"));
+		}
 		if (obj.get("sk118") instanceof Number) {
 			this.setSk118(((Number) obj.get("sk118")).doubleValue());
 		}
@@ -101,6 +107,9 @@ public class VQualityTestReportKfAvg extends QualityTestSearchDate {
 		JSONObject result = new JSONObject();
 		if (this.getSpecification() != null) {
 			result.put("specification",this.getSpecification());
+		}
+		if (this.getManufacturers() != null) {
+			result.put("manufacturers",this.getManufacturers());
 		}
 		if (this.getSk118() != null) {
 			result.put("sk118",this.getSk118());
@@ -152,6 +161,23 @@ public class VQualityTestReportKfAvg extends QualityTestSearchDate {
 	 */
 	public void setSpecification(String specification) {
 		this.specification = specification;
+	}
+	/**
+	 * 获取manufacturers
+	 *
+	 * @return
+	 */
+	public String getManufacturers() {
+		return manufacturers;
+	}
+
+	/**
+	 * 设置manufacturers
+	 *
+	 * @param manufacturers
+	 */
+	public void setManufacturers(String manufacturers) {
+		this.manufacturers = manufacturers;
 	}
 
 	/**

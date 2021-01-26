@@ -13,7 +13,10 @@ import com.jiaoke.common.bean.QualityTestSearchDate;
 public class VQualityTestReportLqhhlAvg extends QualityTestSearchDate {
 	/***/
 	@JSONField(name="specification")
-	private String specification; 
+	private String specification;
+	/***/
+	@JSONField(name="manufacturers")
+	private String manufacturers;
 	/***/
 	@JSONField(name="sk375")
 	private Double sk375; 
@@ -117,6 +120,9 @@ public class VQualityTestReportLqhhlAvg extends QualityTestSearchDate {
 		if (obj.get("specification") instanceof String) {
 			this.setSpecification((String) obj.get("specification"));
 		}
+		if (obj.get("manufacturers") instanceof String) {
+			this.setManufacturers((String) obj.get("manufacturers"));
+		}
 		if (obj.get("sk375") instanceof Number) {
 			this.setSk375(((Number) obj.get("sk375")).doubleValue());
 		}
@@ -215,6 +221,9 @@ public class VQualityTestReportLqhhlAvg extends QualityTestSearchDate {
 		JSONObject result = new JSONObject();
 		if (this.getSpecification() != null) {
 			result.put("specification",this.getSpecification());
+		}
+		if (this.getManufacturers() != null) {
+			result.put("manufacturers",this.getManufacturers());
 		}
 		if (this.getSk375() != null) {
 			result.put("sk375",this.getSk375());
@@ -324,7 +333,24 @@ public class VQualityTestReportLqhhlAvg extends QualityTestSearchDate {
 	public void setSpecification(String specification) {
 		this.specification = specification;
 	}
-	
+	/**
+	 * 获取manufacturers
+	 *
+	 * @return
+	 */
+	public String getManufacturers() {
+		return manufacturers;
+	}
+
+	/**
+	 * 设置manufacturers
+	 *
+	 * @param manufacturers
+	 */
+	public void setManufacturers(String manufacturers) {
+		this.manufacturers = manufacturers;
+	}
+
 	/**
 	 * 获取sk375
 	 * 

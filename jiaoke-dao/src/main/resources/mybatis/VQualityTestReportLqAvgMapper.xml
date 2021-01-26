@@ -110,7 +110,7 @@
 	</select>
 	<select id="selectVQualityTestReportLqAvg" parameterType="com.jiaoke.common.bean.Assist"
 			resultMap="result_VQualityTestReportLqAvg_Map">
-		select '' as specification,
+		select '全部' as specification,
 		round(avg(clyd5),2) as clyd5,
 		round(avg(clyd10),2) as clyd10,
 		round(avg(clyd15),2) as clyd15,

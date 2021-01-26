@@ -14,9 +14,13 @@
 		<div style="margin: 0 auto;margin-top: 15px;">
 			<label class="layui-form-label" style="width:90%; text-align: center;font-size: 26px;"> 正态分布图</label>
 		</div>
-
+		<!-- layui-form-mid layui-word-aux -->
 		<div id="echart1" class="layui-col-sm6" style="height: 370px;  margin: 0 auto;"></div>
-		<div id="title" class="layui-form-mid layui-word-aux" style="margin-left: 25px;    margin-top: -25px;"></div>
+
+		<div class="layui-form-item" style="width: 90%;margin-left: 25px; margin-top: -25px;margin-right: 25px;">
+			<label id="title" class="layui-form-mid layui-word-aux"></label>
+			<div id="title_info" class="layui-form-mid layui-word-aux" style="float: right;"></div>
+		</div>
 		<script src="/static/js/jquery.js"></script>
 		<script src="/static/layui/layui.js" charset="utf-8"></script>
 		<script src="/static/js/qualitytest/common/dictionary.js" charset="utf-8"></script>
