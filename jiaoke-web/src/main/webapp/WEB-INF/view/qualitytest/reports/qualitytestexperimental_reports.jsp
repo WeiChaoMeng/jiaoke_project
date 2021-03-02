@@ -106,12 +106,11 @@
 	<div>已完成</div>
 	{{# } }} -->
 		<script type="text/html" id="experiment_status">
-
-
 			{{# if(d.requiredStatus ==1){ }}
 	    <div>待审批</div>
+
 	  {{# if(d.requiredStatus ==3){} }}
-		<div>已完成</div>
+		<div>已完成</div> 
 	  {{#  } else { }}
 	   <div>未完成</div>
 	  {{#  } }}  
