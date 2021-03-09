@@ -136,6 +136,7 @@
                             SELECT
                                    produce_proportioning_num,
                                    produce_date,
+                                   material_aggregate_1,
                                    material_aggregate_2,
                                    material_aggregate_3,
                                    material_aggregate_4,
@@ -162,9 +163,9 @@
                                    temperature_aggregate,
                                    material_total
                             FROM
-                                 quality_monitoring_realtime_$ { crewNum }
+                                 quality_monitoring_realtime_${crewNum}
                                     WHERE
-                                    Id = $ { id }
+                                    Id = ${id}
                             ) AS t2 ON t1.crew1_modele_id = t2.produce_proportioning_num
         WHERE
                 YEAR (t1.create_time) = YEAR (t2.produce_date)
