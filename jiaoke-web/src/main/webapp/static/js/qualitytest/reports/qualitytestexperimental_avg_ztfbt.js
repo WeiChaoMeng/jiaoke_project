@@ -26,10 +26,12 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 		var materials = str[1];
 		var column = str[0];
 		var spec = str[2];
+		var manufacturers=str[3];
 		var queryData = {
 			specification: spec,
 			begindate: begindate,
-			enddate: enddate
+			enddate: enddate,
+			manufacturers:manufacturers
 		};
 		var data = [];
 		switch (materials) {
@@ -188,54 +190,89 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 	 */
 	myForm.getTestData = function() {
 		myForm.sourceData = [];
+		myForm.sourceData.push(89.5);
+		myForm.sourceData.push(90.5);
+		myForm.sourceData.push(79.5);
 		myForm.sourceData.push(88);
+		myForm.sourceData.push(89.5);
 		myForm.sourceData.push(84);
-		myForm.sourceData.push(85);
-		myForm.sourceData.push(80);
+		myForm.sourceData.push(82);
+		myForm.sourceData.push(92);
+		myForm.sourceData.push(98);
+		myForm.sourceData.push(70);
+		myForm.sourceData.push(77);
+		myForm.sourceData.push(92);
+		myForm.sourceData.push(92);
+		myForm.sourceData.push(89);
+		myForm.sourceData.push(86);
+		myForm.sourceData.push(85.5);
+		myForm.sourceData.push(77.5);
+		myForm.sourceData.push(89.5);
+		myForm.sourceData.push(94);
+		myForm.sourceData.push(95);
+		myForm.sourceData.push(88);
+		myForm.sourceData.push(73.5);
+		myForm.sourceData.push(88);
+		myForm.sourceData.push(88);
+		myForm.sourceData.push(88.5);
+		myForm.sourceData.push(83);
+		myForm.sourceData.push(98);
+		myForm.sourceData.push(94.5);
+		myForm.sourceData.push(86.5);
+		myForm.sourceData.push(94);
+		myForm.sourceData.push(81);
+		myForm.sourceData.push(90.5);
+		myForm.sourceData.push(92);
+		myForm.sourceData.push(82);
 		myForm.sourceData.push(90);
-		myForm.sourceData.push(81);
-		myForm.sourceData.push(84);
-		myForm.sourceData.push(87);
-		myForm.sourceData.push(88);
-		myForm.sourceData.push(83);
-		myForm.sourceData.push(89);
-		myForm.sourceData.push(86);
-		myForm.sourceData.push(82);
-		myForm.sourceData.push(81);
-		myForm.sourceData.push(81);
-		myForm.sourceData.push(84);
-		myForm.sourceData.push(87);
-		myForm.sourceData.push(88);
-		myForm.sourceData.push(83);
-		myForm.sourceData.push(89);
-		myForm.sourceData.push(86);
-		myForm.sourceData.push(82);
-		myForm.sourceData.push(81);
-		myForm.sourceData.push(81);
-		myForm.sourceData.push(84);
-		myForm.sourceData.push(87);
-		myForm.sourceData.push(88);
-		myForm.sourceData.push(83);
-		myForm.sourceData.push(89);
-		myForm.sourceData.push(86);
-		myForm.sourceData.push(82);
-		myForm.sourceData.push(81);
-		myForm.sourceData.push(81);
-		myForm.sourceData.push(84);
-		myForm.sourceData.push(87);
-		myForm.sourceData.push(88);
-		myForm.sourceData.push(83);
-		myForm.sourceData.push(89);
-		myForm.sourceData.push(86);
-		myForm.sourceData.push(82);
-		myForm.sourceData.push(81);
+		myForm.sourceData.push(89.5);
+		myForm.sourceData.push(92.5);
+		myForm.sourceData.push(87.5);
+		myForm.sourceData.push(91);
+		myForm.sourceData.push(84.5);
+		
+	}
+	/**
+	 * 获取平均值
+	 */
+	myForm.getAvgData = function() {
+		var avgValue = 0;
+		var avgCount = 0;
+		for (var i = 0; i < myForm.sourceData.length; i++) {
+			if (myForm.sourceData[i] > 0) {
+				avgValue = avgValue + myForm.sourceData[i];
+				avgCount++;
+			}
+		}
+		if (avgCount > 0) {
+			avgValue = (avgValue / avgCount).toFixed(1);
+		}
+		return avgValue;
+	}
+	/**
+	 * 获取标准差
+	 */
+	myForm.getBzcData = function() {
+		var bzcValue = 0;
+		var data = 0;
+		var avgValue = myForm.getAvgData();
+		var avgCount = 0;
+		for (var i = 0; i < myForm.sourceData.length; i++) {
+			data = myForm.sourceData[i];
+			if (data > 0) {
+				bzcValue = bzcValue + Math.pow((data - avgValue), 2);
+				avgCount++;
+			}
+		}
+		bzcValue = (Math.sqrt(bzcValue / avgCount)).toFixed(1);
+		return bzcValue;
 	}
 	/**
 	 * 获取最大值
 	 */
 	myForm.getMaxData = function() {
 		var maxValue = 0;
-		for (var i = 0; i < myForm.sourceData.length - 1; i++) {
+		for (var i = 0; i < myForm.sourceData.length; i++) {
 			if (myForm.sourceData[i] > maxValue) {
 				maxValue = myForm.sourceData[i];
 			}
@@ -247,7 +284,7 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 	 */
 	myForm.getMinData = function() {
 		var minValue = 1000000;
-		for (var i = 0; i < myForm.sourceData.length - 1; i++) {
+		for (var i = 0; i < myForm.sourceData.length; i++) {
 			if (myForm.sourceData[i] < minValue) {
 				minValue = myForm.sourceData[i];
 			}
@@ -258,6 +295,89 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 	 * 数据计算
 	 */
 	myForm.computeData = function() {
+		var avgValue = myForm.getAvgData();
+		var bzcValue = myForm.getBzcData();
+		myForm.processData = [];
+		for (var i = 0; i < 11; i++) {
+			var obj = {};
+			switch (i) {
+				case 0:
+					obj['value'] = (avgValue - 5 * bzcValue).toFixed(1);
+					break;
+				case 1:
+					obj['value'] = (avgValue - 4 * bzcValue).toFixed(1);
+					break;
+				case 2:
+					obj['value'] = (avgValue - 3 * bzcValue).toFixed(1);
+					break;
+				case 3:
+					obj['value'] = (avgValue - 2 * bzcValue).toFixed(1);
+					break;
+				case 4:
+					obj['value'] = (avgValue - 1 * bzcValue).toFixed(1);
+					break;
+				case 5:
+					obj['value'] = avgValue;
+					break;
+				case 6:
+					obj['value'] = (Number(avgValue) + Number(1 * bzcValue)).toFixed(1);
+					break;
+				case 7:
+					obj['value'] = (Number(avgValue) + Number(2 * bzcValue)).toFixed(1);
+					break;
+				case 8:
+					obj['value'] = (Number(avgValue) + Number(3 * bzcValue)).toFixed(1);
+					break;
+				case 9:
+					obj['value'] = (Number(avgValue) + Number(4 * bzcValue)).toFixed(1);
+					break;
+				case 10:
+					obj['value'] = (Number(avgValue) + Number(5 * bzcValue)).toFixed(1);
+					break;
+			}
+			obj['count'] = 0;
+			myForm.processData.push(obj);
+		}
+		for (var i = 0; i < myForm.sourceData.length; i++) {
+			var value = myForm.sourceData[i];
+			for (var j = 0; j < myForm.processData.length - 1; j++) {
+				if (value >= Number(myForm.processData[j]['value']) && value < Number(myForm.processData[
+						j + 1]['value'])) {
+					var v = myForm.processData[j + 1]['count'];
+					if (v == undefined) {
+						v = 0;
+					}
+					myForm.processData[j + 1]['count'] = v + 1;
+					break;
+				}
+			}
+		}
+		myForm.chartData = [];
+		for (var j = 0; j < myForm.processData.length; j++) {
+			var obj = [];
+			obj[0] = myForm.processData[j]['value'];
+			obj[1] = myForm.processData[j]['count'];
+			myForm.chartData.push(obj);
+		}
+		//计算σ占比
+		var count = myForm.sourceData.length;
+		var ratio1 = ((myForm.processData[5]['count'] + myForm.processData[4]['count'] + myForm.processData[6]['count'])*100 /
+			count).toFixed(1);
+		var ratio2 = ((myForm.processData[5]['count'] + myForm.processData[4]['count'] + myForm.processData[6]['count'] +
+				myForm.processData[3]['count'] + myForm.processData[7]['count'])*100 /
+			count).toFixed(1);
+		var ratio3 = ((myForm.processData[5]['count'] + myForm.processData[4]['count'] + myForm.processData[6]['count'] +
+				myForm.processData[3]['count'] + myForm.processData[7]['count'] +
+				myForm.processData[2]['count'] + myForm.processData[8]['count'])*100 /
+			count).toFixed(1);
+		var ration = "1σ:"+ratio1+"%&nbsp;&nbsp;2σ:"+ratio2+"%   3σ:"+ratio3+"%";
+		$("#title_info").html(ration);
+	}
+
+	/**
+	 * 数据计算
+	 */
+	myForm.computeData1 = function() {
 		var minvalue = myForm.getMinData();
 		var maxvalue = myForm.getMaxData();
 		var diffValue = maxvalue - minvalue;
@@ -297,6 +417,8 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 			obj[1] = myForm.processData[j]['count'];
 			myForm.chartData.push(obj);
 		}
+
+		
 	}
 
 	/**
@@ -358,6 +480,14 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 					gt: 7,
 					lt: 8,
 					color: '#009688'
+				}, {
+					gt: 8,
+					lt: 9,
+					color: '#009688'
+				}, {
+					gt: 9,
+					lt: 10,
+					color: '#009688'
 				}]
 			},
 			series: [{
@@ -374,16 +504,19 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 						show: false
 					},
 					data: [{
-							xAxis: 1
-						},
-						{
+							xAxis: 2
+						}, {
 							xAxis: 3
 						},
 						{
-							xAxis: 5
+							xAxis: 4
 						},
 						{
+							xAxis: 6
+						}, {
 							xAxis: 7
+						}, {
+							xAxis: 8
 						}
 					]
 				},
@@ -397,7 +530,8 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 		var str = param.split('@');
 		var materials = str[1];
 		var spec = str[2];
-		var columnName = str[3];
+		var manufacturers=str[3];
+		var columnName = str[4];
 		switch (materials) {
 			case '1':
 				materials = "细集料";
@@ -421,16 +555,18 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 		if (spec == undefined) {
 			$("#title").html(materials + "-" + columnName);
 		} else {
-			$("#title").html(materials + "-" + spec + "-" + columnName);
+			$("#title").html(materials + "-" + spec + "-" +manufacturers+"-" + columnName);
 		}
 	}
 	myForm.setTitle();
 	var myChart1 = echarts.init(document.getElementById('echart1'));
-	myForm.getData();
-	//myForm.getTestData();	
+	//myForm.getData();
+	myForm.getTestData();
 	myForm.computeData();
 	//测试数据 应用时注释掉
+	 
 	myForm.chartData = [
+		['70', 10],
 		['80', 17],
 		['90', 88],
 		['100', 298],
@@ -439,7 +575,8 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 		['130', 454],
 		['140', 221],
 		['150', 81],
-		['160', 11]
+		['160', 11],
+		['170', 8]
 	];
 	myForm.refreshChart();
 });

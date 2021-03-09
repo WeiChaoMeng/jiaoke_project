@@ -96,14 +96,25 @@
 		<button id="btnExcel" lay-event="btnExcel" class="layui-btn layui-btn-sm icon-btn ">导出</button>
     </div>
 </script>
-
-		<script type="text/html" id="experiment_status">
-			{{# if(d.requiredStatus !=3){ }}
+		<!--	{{# if(d.requiredStatus ==0){ }}
 	<div>未完成</div>
+	{{# } }}
+	{{# if(d.requiredStatus ==1){ }}
+	<div>待审批</div>
 	{{# } }}
 	{{# if(d.requiredStatus ==3){ }}
 	<div>已完成</div>
-	{{# } }}
+	{{# } }} -->
+		<script type="text/html" id="experiment_status">
+			{{# if(d.requiredStatus ==1){ }}
+	    <div>待审批</div>
+
+	  {{# if(d.requiredStatus ==3){} }}
+		<div>已完成</div> 
+	  {{#  } else { }}
+	   <div>未完成</div>
+	  {{#  } }}  
+	
 </script>
 
 

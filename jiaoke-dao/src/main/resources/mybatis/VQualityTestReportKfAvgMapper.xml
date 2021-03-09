@@ -98,7 +98,7 @@
 	<!-- 获得类名为:VQualityTestReportKfAvg对应数据库中表的数据集合 -->
 	<select id="selectVQualityTestReportKfAvg" parameterType="com.jiaoke.common.bean.Assist"
 			resultMap="result_VQualityTestReportKfAvg_Map">
-		select '' as specification,
+		select '全部' as specification,
 		round(avg(sk118),2) as sk118,
 		round(avg(sk06),2) as sk06,round(avg(sk03),2) as sk03,
 		round(avg(sk015),2) as sk015,round(avg(sk0075),2) as sk0075,

@@ -184,6 +184,18 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 			done: function(res, curr, count) {
 				myForm.exportData = res.data;
 				myForm.CJL_COL_Visble(res.data);
+
+				currPage = curr;
+				var that = this.elem.next();
+				$.each(res.data, function(index, obj) {
+					if (obj['requiredStatus'] == 0) {
+						//that.find(".layui-table-box tbody tr[data-index='" + index + "']").css("color", "#FFF");
+						//that.find(".layui-table-box tbody tr[data-index='" + index + "']").css("background", "#FF0000");
+						that.find(".layui-table-box tbody tr[data-index='" + index + "']").css("color", "#FF0000");
+					}
+
+				})
+
 			}
 		});
 	}
@@ -385,6 +397,14 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 			done: function(res, curr, count) {
 				myForm.exportData = res.data;
 				myForm.XJL_COL_Visble(res.data);
+				currPage = curr;
+				var that = this.elem.next();
+				$.each(res.data, function(index, obj) {
+					if (obj['requiredStatus'] == 0) {
+						that.find(".layui-table-box tbody tr[data-index='" + index + "']").css("color", "#FF0000");
+					}
+
+				})
 			}
 		});
 	}
@@ -510,6 +530,14 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 			done: function(res, curr, count) {
 				myForm.exportData = res.data;
 				myForm.KF_COL_Visble(res.data);
+				currPage = curr;
+				var that = this.elem.next();
+				$.each(res.data, function(index, obj) {
+					if (obj['requiredStatus'] == 0) {
+						that.find(".layui-table-box tbody tr[data-index='" + index + "']").css("color", "#FF0000");
+					}
+				
+				})
 			}
 		});
 	}
@@ -682,6 +710,14 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 			done: function(res, curr, count) {
 				myForm.exportData = res.data;
 				myForm.LQ_COL_Visble(res.data);
+				currPage = curr;
+				var that = this.elem.next();
+				$.each(res.data, function(index, obj) {
+					if (obj['requiredStatus'] == 0) {
+						that.find(".layui-table-box tbody tr[data-index='" + index + "']").css("color", "#FF0000");
+					}
+				
+				})
 			}
 		});
 	}
@@ -798,6 +834,14 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 			done: function(res, curr, count) {
 				myForm.exportData = res.data;
 				myForm.RHLQ_COL_Visble(res.data);
+				currPage = curr;
+				var that = this.elem.next();
+				$.each(res.data, function(index, obj) {
+					if (obj['requiredStatus'] == 0) {
+						that.find(".layui-table-box tbody tr[data-index='" + index + "']").css("color", "#FF0000");
+					}
+				
+				})
 			}
 		});
 	}
@@ -989,6 +1033,14 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 			done: function(res, curr, count) {
 				myForm.exportData = res.data;
 				myForm.LQHHL_COL_Visble(res.data);
+				currPage = curr;
+				var that = this.elem.next();
+				$.each(res.data, function(index, obj) {
+					if (obj['requiredStatus'] == 0) {
+						that.find(".layui-table-box tbody tr[data-index='" + index + "']").css("color", "#FF0000");
+					}
+				
+				})
 			}
 		});
 	}
@@ -1299,7 +1351,7 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 		var checkStatus = table.checkStatus(obj.config.id);
 		switch (obj.event) {
 			case 'btnExcel':
-				table.exportFile(obj.config.id, myForm.exportData, 'xls')
+				table.exportFile(obj.config.id, myForm.exportData, 'xls');
 				break;
 			case 'btnPrint':
 				common.print(obj.config.id);

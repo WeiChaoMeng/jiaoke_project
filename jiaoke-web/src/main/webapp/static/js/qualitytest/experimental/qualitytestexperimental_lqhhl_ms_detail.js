@@ -76,7 +76,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 				count = count + 1;
 			}
 			if (count > 1) {
-				pjgd = (pjgd / count).toFixed(1);
+				pjgd = (pjgd / count).toFixed(2);
 			}
 			if (pjgd > 0) {
 				data['sjgdpj'] = pjgd;
