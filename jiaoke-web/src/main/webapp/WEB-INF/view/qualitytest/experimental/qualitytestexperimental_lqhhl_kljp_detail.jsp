@@ -53,7 +53,7 @@
 														<td>&nbsp;&nbsp;&nbsp;试样总量(g)</td>
 														<td id="gzsyzl_value1"></td>
 														<td id="gzsyzl_value2"></td>
-														<td rowspan="2">平均值</td>
+														<td rowspan="3">平均值</td>
 													</tr>
 													<tr>
 														<td>水洗后筛上总量m<span style="font-size: 1px;">4</span>(g)</td>
@@ -61,7 +61,7 @@
 														<td id="sxhsyzl_value2"></td>
 													</tr>
 													<tr>
-														<td>燃烧料后重</td>
+														<td>燃烧后筐加料重</td>
 														<td id="rshlz_value1"></td>
 														<td id="rshlz_value2"></td>
 													</tr>
