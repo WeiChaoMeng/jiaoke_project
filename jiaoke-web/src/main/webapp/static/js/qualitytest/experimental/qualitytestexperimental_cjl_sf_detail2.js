@@ -74,7 +74,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 		data.push('0.15');
 		data.push('0.075');
 		data.push('筛底');
-		for (var i = 0; i <= data.length; i++) {
+		for (var i = 0; i < data.length; i++) {
 			var data1 = {
 				'skcc': data[i]
 			}
@@ -88,7 +88,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 	 */
 	myform.getljsf1 = function(order) {
 		var result = 0;
-		for (var i = 0; i <= myform.CJL_SF_Data.length; i++) {
+		for (var i = 0; i < myform.CJL_SF_Data.length; i++) {
 			if (i <= order) {
 				var data = myform.CJL_SF_Data[i];
 
@@ -478,7 +478,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 	table.render({
 		elem: '#' + myform.tableId,
 		data: myform.CJL_SF_Data,
-		limit: 14,
+		limit: 15,
 		defaultToolbar: [],
 		cols: [
 			[{

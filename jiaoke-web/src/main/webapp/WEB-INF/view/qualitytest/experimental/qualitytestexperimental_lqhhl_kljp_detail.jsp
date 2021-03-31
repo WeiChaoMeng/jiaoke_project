@@ -60,6 +60,11 @@
 														<td id="sxhsyzl_value1"></td>
 														<td id="sxhsyzl_value2"></td>
 													</tr>
+													<tr>
+														<td>燃烧料后重</td>
+														<td id="rshlz_value1"></td>
+														<td id="rshlz_value2"></td>
+													</tr>
 												</tbody>
 											</table>
 											<table class="layui-table" id="mytable" lay-filter="mytable"></table>

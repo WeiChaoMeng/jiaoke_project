@@ -38,7 +38,9 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 		gzsyzl_value1: 0,
 		gzsyzl_value2: 0,
 		sxhsyzl_value1: 0,
-		sxhsyzl_value2: 0
+		sxhsyzl_value2: 0,
+		rshlz_value1: 0,
+		rshlz_value2: 0
 	}
 
 	/**
@@ -49,12 +51,17 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 		CLL_SF_GZ_Value.gzsyzl_value1 = myform.getItemValue('100003');
 		CLL_SF_GZ_Value.gzsyzl_value2 = myform.getItemValue('100011');
 		CLL_SF_GZ_Value.sxhsyzl_value1 = myform.getItemValue('100009');
-		CLL_SF_GZ_Value.sxhsyzl_value2 = myform.getItemValue('100017');
-		//干燥试样总量/水洗后筛上总量 
+		CLL_SF_GZ_Value.sxhsyzl_value2 = myform.getItemValue('100017');		
+		CLL_SF_GZ_Value.rshlz_value1 = myform.getItemValue('100006');
+		CLL_SF_GZ_Value.rshlz_value2 = myform.getItemValue('100014');
+		
+		//干燥试样总量/水洗后筛上总量/燃烧后料重
 		$("#gzsyzl_value1").html(CLL_SF_GZ_Value.gzsyzl_value1);
 		$("#gzsyzl_value2").html(CLL_SF_GZ_Value.gzsyzl_value2);
 		$("#sxhsyzl_value1").html(CLL_SF_GZ_Value.sxhsyzl_value1);
 		$("#sxhsyzl_value2").html(CLL_SF_GZ_Value.sxhsyzl_value2);
+		$("#rshlz_value1").html(CLL_SF_GZ_Value.rshlz_value1);
+		$("#rshlz_value2").html(CLL_SF_GZ_Value.rshlz_value2);
 
 
 	}
@@ -82,7 +89,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 		data.push('0.15');
 		data.push('0.075');
 		data.push('筛底');
-		for (var i = 0; i <= data.length; i++) {
+		for (var i = 0; i < data.length; i++) {
 			var data1 = {
 				'skcc': data[i]
 			}
@@ -96,7 +103,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 	 */
 	myform.getljsf1 = function(order) {
 		var result = 0;
-		for (var i = 0; i <= myform.CJL_SF_Data.length; i++) {
+		for (var i = 0; i < myform.CJL_SF_Data.length; i++) {
 			if (i <= order) {
 				var data = myform.CJL_SF_Data[i];
 
@@ -152,7 +159,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 		for (var i = 0; i < myform.CJL_SF_Data.length; i++) {
 			var data = myform.CJL_SF_Data[i];
 			if (data['ssz_value1'] != undefined) {
-				data['fjsy_value1'] = ((data['ssz_value1'] / CLL_SF_GZ_Value.gzsyzl_value1) * 100).toFixed(1);
+				data['fjsy_value1'] = ((data['ssz_value1'] / CLL_SF_GZ_Value.rshlz_value1) * 100).toFixed(1);
 				data['ljsy_value1'] = myform.getljsf1(i);
 				data['tgbfb_value1'] = Number(100 - data['ljsy_value1']).toFixed(1);
 			} else {
@@ -162,7 +169,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 			}
 
 			if (data['ssz_value2'] != undefined) {
-				data['fjsy_value2'] = ((data['ssz_value2'] / CLL_SF_GZ_Value.gzsyzl_value2) * 100).toFixed(1);
+				data['fjsy_value2'] = ((data['ssz_value2'] / CLL_SF_GZ_Value.rshlz_value2) * 100).toFixed(1);
 				data['ljsy_value2'] = myform.getljsf2(i);
 				data['tgbfb_value2'] = Number(100 - data['ljsy_value2']).toFixed(1);
 			} else {
@@ -408,7 +415,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 			}
 			var standValueObj = myform.getOneStandValue(data['skcc']);
 			if (standValueObj != undefined && standValueObj != null) {
-				console.log("diffItem:"+standValueObj.experimentalItem)
+				console.log("diffItem:" + standValueObj.experimentalItem)
 				if (common.diffValue(value, standValueObj.minValue, standValueObj.maxValue, standValueObj.comparemethod) ==
 					false) {
 					{
@@ -489,7 +496,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 	table.render({
 		elem: '#' + myform.tableId,
 		data: myform.CJL_SF_Data,
-		limit: 14,
+		limit: 15,
 		defaultToolbar: [],
 		cols: [
 			[{

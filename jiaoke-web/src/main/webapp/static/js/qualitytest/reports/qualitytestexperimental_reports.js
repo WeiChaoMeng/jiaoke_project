@@ -48,7 +48,7 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 					},
 					{
 						field: 'orderTicketNum',
-						title: '试验编号',
+						title: '委托单编号',
 						width: 160,
 						rowspan: 2
 					}, {
@@ -56,7 +56,14 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 						title: '试样名称',
 						width: 100,
 						rowspan: 2
-					}, {
+					},
+					{
+						field: 'manufacturers',
+						title: '所属厂家',
+						width: 100,
+						rowspan: 2
+					},
+					{
 						colspan: 26,
 						field: '',
 						align: 'center',
@@ -204,32 +211,32 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 	 * @param {Object} data
 	 */
 	myForm.CJL_COL_Visble = function(data) {
-		myForm.columnHide(data, 'nfx', 32, 29);
-		myForm.columnHide(data, 'hsl', 31, 28);
-		myForm.columnHide(data, 'klhl0075', 30, 27);
-		myForm.columnHide(data, 'mh', 29, 26);
-		myForm.columnHide(data, 'rrkl', 28, 25);
-		myForm.columnHide(data, 'ysz', 27, 24);
-		myForm.columnHide(data, 'zpzkl', 26, 23);
-		myForm.columnHide(data, 'jgx', 25, 22);
-		myForm.columnHide(data, 'xsl', 24, 21);
-		myForm.columnHide(data, 'mtjxdmd', 23, 20);
-		myForm.columnHide(data, 'bgxdmd2', 22, 19);
-		myForm.columnHide(data, 'bgxdmd1', 21, 18);
-		myForm.columnHide(data, 'sK0075', 20, 17);
-		myForm.columnHide(data, 'sK015', 19, 16);
-		myForm.columnHide(data, 'sK03', 18, 15);
-		myForm.columnHide(data, 'sK06', 17, 14);
-		myForm.columnHide(data, 'sK118', 16, 13);
-		myForm.columnHide(data, 'sK236', 15, 12);
-		myForm.columnHide(data, 'sK475', 14, 11);
-		myForm.columnHide(data, 'sK95', 13, 10);
-		myForm.columnHide(data, 'sK132', 12, 9);
-		myForm.columnHide(data, 'sK16', 11, 8);
-		myForm.columnHide(data, 'sK19', 10, 7);
-		myForm.columnHide(data, 'sK265', 9, 6);
-		myForm.columnHide(data, 'sK315', 8, 5);
-		myForm.columnHide(data, 'sK375', 7, 4);
+		myForm.columnHide(data, 'nfx', 33, 30);
+		myForm.columnHide(data, 'hsl', 32, 29);
+		myForm.columnHide(data, 'klhl0075', 31, 28);
+		myForm.columnHide(data, 'mh', 30, 27);
+		myForm.columnHide(data, 'rrkl', 29, 26);
+		myForm.columnHide(data, 'ysz', 28, 25);
+		myForm.columnHide(data, 'zpzkl', 27, 24);
+		myForm.columnHide(data, 'jgx', 26, 23);
+		myForm.columnHide(data, 'xsl', 25, 22);
+		myForm.columnHide(data, 'mtjxdmd', 24, 21);
+		myForm.columnHide(data, 'bgxdmd2', 23, 20);
+		myForm.columnHide(data, 'bgxdmd1', 22, 19);
+		myForm.columnHide(data, 'sK0075', 21, 18);
+		myForm.columnHide(data, 'sK015', 20, 17);
+		myForm.columnHide(data, 'sK03', 19, 16);
+		myForm.columnHide(data, 'sK06', 18, 15);
+		myForm.columnHide(data, 'sK118', 17, 14);
+		myForm.columnHide(data, 'sK236', 16, 13);
+		myForm.columnHide(data, 'sK475', 15, 12);
+		myForm.columnHide(data, 'sK95', 14, 11);
+		myForm.columnHide(data, 'sK132', 13, 10);
+		myForm.columnHide(data, 'sK16', 12, 9);
+		myForm.columnHide(data, 'sK19', 11, 8);
+		myForm.columnHide(data, 'sK265', 10, 7);
+		myForm.columnHide(data, 'sK315', 9, 6);
+		myForm.columnHide(data, 'sK375', 8, 5);
 	}
 
 
@@ -301,7 +308,7 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 					},
 					{
 						field: 'orderTicketNum',
-						title: '试验编号',
+						title: '委托单编号',
 						width: 160,
 						rowspan: 2
 					}, {
@@ -310,6 +317,11 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 						width: 100,
 						rowspan: 2
 					}, {
+						field: 'manufacturers',
+						title: '所属厂家',
+						width: 100,
+						rowspan: 2
+					},{
 						colspan: 16,
 						field: '',
 						align: 'center',
@@ -413,22 +425,22 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 	 * @param {Object} data
 	 */
 	myForm.XJL_COL_Visble = function(data) {
-		myForm.columnHide(data, 'hnl', 22, 19);
-		myForm.columnHide(data, 'jgx', 21, 18);
-		myForm.columnHide(data, 'yjl', 20, 17);
-		myForm.columnHide(data, 'lj', 19, 16);
-		myForm.columnHide(data, 'sdl', 18, 15);
-		myForm.columnHide(data, 'mdjxsl', 17, 14);
-		myForm.columnHide(data, 'bgmd', 16, 13);
-		myForm.columnHide(data, 'sK0075', 15, 12);
-		myForm.columnHide(data, 'sK015', 14, 11);
-		myForm.columnHide(data, 'sK03', 13, 10);
-		myForm.columnHide(data, 'sK06', 12, 9);
-		myForm.columnHide(data, 'sK118', 11, 8);
-		myForm.columnHide(data, 'sK236', 10, 7);
-		myForm.columnHide(data, 'sK475', 9, 6);
-		myForm.columnHide(data, 'sK95', 8, 5);
-		myForm.columnHide(data, 'sK132', 7, 4);
+		myForm.columnHide(data, 'hnl', 23, 20);
+		myForm.columnHide(data, 'jgx', 22, 19);
+		myForm.columnHide(data, 'yjl', 21, 18);
+		myForm.columnHide(data, 'lj', 20, 17);
+		myForm.columnHide(data, 'sdl', 19, 16);
+		myForm.columnHide(data, 'mdjxsl', 18, 15);
+		myForm.columnHide(data, 'bgmd', 17, 14);
+		myForm.columnHide(data, 'sK0075', 16, 13);
+		myForm.columnHide(data, 'sK015', 15, 12);
+		myForm.columnHide(data, 'sK03', 14, 11);
+		myForm.columnHide(data, 'sK06', 13, 10);
+		myForm.columnHide(data, 'sK118', 12, 9);
+		myForm.columnHide(data, 'sK236', 11, 8);
+		myForm.columnHide(data, 'sK475', 10, 7);
+		myForm.columnHide(data, 'sK95', 9, 6);
+		myForm.columnHide(data, 'sK132', 8, 5);
 	}
 	/**
 	 * 矿粉台账
@@ -458,7 +470,7 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 					},
 					{
 						field: 'orderTicketNum',
-						title: '试验编号',
+						title: '委托单编号',
 						width: 160,
 						rowspan: 2
 					}, {
@@ -467,6 +479,11 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 						width: 100,
 						rowspan: 2
 					}, {
+						field: 'manufacturers',
+						title: '所属厂家',
+						width: 100,
+						rowspan: 2
+					},{
 						colspan: 10,
 						field: '',
 						align: 'center',
@@ -536,27 +553,27 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 					if (obj['requiredStatus'] == 0) {
 						that.find(".layui-table-box tbody tr[data-index='" + index + "']").css("color", "#FF0000");
 					}
-				
+
 				})
 			}
 		});
 	}
 	/**
-	 * 细集料字段显示判断
+	 * 矿粉字段显示判断
 	 * @param {Object} data
 	 */
 	myForm.KF_COL_Visble = function(data) {
-		myForm.columnHide(data, 'jradx', 16, 13);
-		myForm.columnHide(data, 'sxzl', 15, 12);
-		myForm.columnHide(data, 'qsxs', 14, 11);
-		myForm.columnHide(data, 'hsl', 13, 10);
-		myForm.columnHide(data, 'bgmd', 12, 9);
+		myForm.columnHide(data, 'jradx', 17, 14);
+		myForm.columnHide(data, 'sxzl', 16, 13);
+		myForm.columnHide(data, 'qsxs', 15, 12);
+		myForm.columnHide(data, 'hsl',14, 11);
+		myForm.columnHide(data, 'bgmd', 13, 10);
 
-		myForm.columnHide(data, 'sK0075', 11, 8);
-		myForm.columnHide(data, 'sK015', 10, 7);
-		myForm.columnHide(data, 'sK03', 9, 6);
-		myForm.columnHide(data, 'sK06', 8, 5);
-		myForm.columnHide(data, 'sK118', 7, 4);
+		myForm.columnHide(data, 'sK0075', 12, 9);
+		myForm.columnHide(data, 'sK015',  11, 8);
+		myForm.columnHide(data, 'sK03', 10, 7);
+		myForm.columnHide(data, 'sK06', 9, 6);
+		myForm.columnHide(data, 'sK118', 8, 5);
 	}
 	/**
 	 * 沥青台账
@@ -586,12 +603,17 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 					},
 					{
 						field: 'orderTicketNum',
-						title: '试验编号',
+						title: '委托单编号',
 						width: 160,
 						rowspan: 2
 					}, {
 						field: 'specification',
 						title: '试样名称',
+						width: 100,
+						rowspan: 2
+					},{
+						field: 'manufacturers',
+						title: '所属厂家',
 						width: 100,
 						rowspan: 2
 					}, {
@@ -716,7 +738,7 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 					if (obj['requiredStatus'] == 0) {
 						that.find(".layui-table-box tbody tr[data-index='" + index + "']").css("color", "#FF0000");
 					}
-				
+
 				})
 			}
 		});
@@ -726,29 +748,29 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 	 * @param {Object} data
 	 */
 	myForm.LQ_COL_Visble = function(data) {
-		myForm.columnHide(data, 'clyd5', 29, 26);
-		myForm.columnHide(data, 'clyd10', 28, 25);
-		myForm.columnHide(data, 'clyd15', 27, 24);
-		myForm.columnHide(data, 'clyd25', 26, 23);
-		myForm.columnHide(data, 'clzrdb', 25, 22);
-		myForm.columnHide(data, 'zlbh', 24, 21);
-		myForm.columnHide(data, 'lx', 23, 20);
-		myForm.columnHide(data, 'txhf', 22, 19);
-		myForm.columnHide(data, 'xdmd', 21, 18);
-		myForm.columnHide(data, 'md15', 20, 17);
-		myForm.columnHide(data, 'dlnd', 19, 16);
-		myForm.columnHide(data, 'rjd', 18, 15);
-		myForm.columnHide(data, 'sd', 17, 14);
-		myForm.columnHide(data, 'rhd', 16, 13);
-		myForm.columnHide(data, 'yd5', 15, 12);
-		myForm.columnHide(data, 'yd10', 14, 11);
-		myForm.columnHide(data, 'yd15', 13, 10);
-		myForm.columnHide(data, 'yd25', 12, 9);
-		myForm.columnHide(data, 'zrd5', 11, 8);
-		myForm.columnHide(data, 'zrd10', 10, 7);
-		myForm.columnHide(data, 'zrd15', 9, 6);
-		myForm.columnHide(data, 'zrd25', 8, 5);
-		myForm.columnHide(data, 'zrd30', 7, 4);
+		myForm.columnHide(data, 'clyd5', 30, 27);
+		myForm.columnHide(data, 'clyd10', 29, 26);
+		myForm.columnHide(data, 'clyd15', 28, 25);
+		myForm.columnHide(data, 'clyd25', 27, 24);
+		myForm.columnHide(data, 'clzrdb', 26, 23);
+		myForm.columnHide(data, 'zlbh', 25, 22);
+		myForm.columnHide(data, 'lx', 24, 21);
+		myForm.columnHide(data, 'txhf', 23, 20);
+		myForm.columnHide(data, 'xdmd',  22, 19);
+		myForm.columnHide(data, 'md15', 21, 18);
+		myForm.columnHide(data, 'dlnd', 20, 17);
+		myForm.columnHide(data, 'rjd', 19, 16);
+		myForm.columnHide(data, 'sd',  18, 15);
+		myForm.columnHide(data, 'rhd', 17, 14);
+		myForm.columnHide(data, 'yd5', 16, 13);
+		myForm.columnHide(data, 'yd10', 15, 12);
+		myForm.columnHide(data, 'yd15', 14, 11);
+		myForm.columnHide(data, 'yd25', 13, 10);
+		myForm.columnHide(data, 'zrd5', 12, 9);
+		myForm.columnHide(data, 'zrd10', 11, 8);
+		myForm.columnHide(data, 'zrd15',10, 7);
+		myForm.columnHide(data, 'zrd25', 9, 6);
+		myForm.columnHide(data, 'zrd30', 8, 5);
 	}
 	/**
 	 * 乳化沥青台账
@@ -778,7 +800,7 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 					},
 					{
 						field: 'orderTicketNum',
-						title: '试验编号',
+						title: '委托单编号',
 						width: 160,
 						rowspan: 2
 					}, {
@@ -787,6 +809,11 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 						width: 100,
 						rowspan: 2
 					}, {
+						field: 'manufacturers',
+						title: '所属厂家',
+						width: 100,
+						rowspan: 2
+					},{
 						colspan: 6,
 						field: '',
 						align: 'center',
@@ -840,7 +867,7 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 					if (obj['requiredStatus'] == 0) {
 						that.find(".layui-table-box tbody tr[data-index='" + index + "']").css("color", "#FF0000");
 					}
-				
+
 				})
 			}
 		});
@@ -850,12 +877,12 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 	 * @param {Object} data
 	 */
 	myForm.RHLQ_COL_Visble = function(data) {
-		myForm.columnHide(data, 'ccwdx5', 12, 9);
-		myForm.columnHide(data, 'ccwdx1', 11, 8);
-		myForm.columnHide(data, 'yd', 10, 7);
-		myForm.columnHide(data, 'zrd', 9, 6);
-		myForm.columnHide(data, 'bznd', 8, 5);
-		myForm.columnHide(data, 'zfllwhl', 7, 4);
+		myForm.columnHide(data, 'ccwdx5', 13, 10);
+		myForm.columnHide(data, 'ccwdx1', 12, 9);
+		myForm.columnHide(data, 'yd', 11, 8);
+		myForm.columnHide(data, 'zrd',10, 7);
+		myForm.columnHide(data, 'bznd', 9, 6);
+		myForm.columnHide(data, 'zfllwhl', 8, 5);
 	}
 	/**
 	 * 沥青混合料台账
@@ -885,12 +912,17 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 					},
 					{
 						field: 'orderTicketNum',
-						title: '试验编号',
+						title: '委托单编号',
 						width: 160,
 						rowspan: 2
 					}, {
 						field: 'specification',
 						title: '试样名称',
+						width: 100,
+						rowspan: 2
+					},{
+						field: 'manufacturers',
+						title: '所属厂家',
 						width: 100,
 						rowspan: 2
 					}, {
@@ -1039,7 +1071,7 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 					if (obj['requiredStatus'] == 0) {
 						that.find(".layui-table-box tbody tr[data-index='" + index + "']").css("color", "#FF0000");
 					}
-				
+
 				})
 			}
 		});
@@ -1049,35 +1081,35 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 	 * @param {Object} data
 	 */
 	myForm.LQHHL_COL_Visble = function(data) {
-		myForm.columnHide(data, 'gzsd', 35, 32);
-		myForm.columnHide(data, 'ssxs', 34, 31);
-		myForm.columnHide(data, 'dwdd', 33, 30);
-		myForm.columnHide(data, 'drplqdb', 32, 29);
-		myForm.columnHide(data, 'clwdd', 31, 28);
-		myForm.columnHide(data, 'fs', 30, 27);
-		myForm.columnHide(data, 'xl', 29, 26);
-		myForm.columnHide(data, 'lz', 28, 25);
-		myForm.columnHide(data, 'wdd', 27, 24);
-		myForm.columnHide(data, 'cjlgjjxl', 26, 23);
-		myForm.columnHide(data, 'kljxl', 25, 22);
-		myForm.columnHide(data, 'lqbhd', 24, 21);
-		myForm.columnHide(data, 'kxl', 23, 20);
-		myForm.columnHide(data, 'mtjxdmd', 22, 19);
-		myForm.columnHide(data, 'zdlhxdmd', 21, 18);
-		myForm.columnHide(data, 'sK0075', 20, 17);
-		myForm.columnHide(data, 'sK015', 19, 16);
-		myForm.columnHide(data, 'sK03', 18, 15);
-		myForm.columnHide(data, 'sK06', 17, 14);
-		myForm.columnHide(data, 'sK118', 16, 13);
-		myForm.columnHide(data, 'sK236', 15, 12);
-		myForm.columnHide(data, 'sK475', 14, 11);
-		myForm.columnHide(data, 'sK95', 13, 10);
-		myForm.columnHide(data, 'sK132', 12, 9);
-		myForm.columnHide(data, 'sK16', 11, 8);
-		myForm.columnHide(data, 'sK19', 10, 7);
-		myForm.columnHide(data, 'sK265', 9, 6);
-		myForm.columnHide(data, 'sK315', 8, 5);
-		myForm.columnHide(data, 'sK375', 7, 4);
+		myForm.columnHide(data, 'gzsd', 36, 33);
+		myForm.columnHide(data, 'ssxs', 35, 32);
+		myForm.columnHide(data, 'dwdd', 34, 31);
+		myForm.columnHide(data, 'drplqdb', 33, 30);
+		myForm.columnHide(data, 'clwdd', 32, 29);
+		myForm.columnHide(data, 'fs',  31, 28);
+		myForm.columnHide(data, 'xl', 30, 27);
+		myForm.columnHide(data, 'lz', 29, 26);
+		myForm.columnHide(data, 'wdd',28, 25);
+		myForm.columnHide(data, 'cjlgjjxl', 27, 24);
+		myForm.columnHide(data, 'kljxl', 26, 23);
+		myForm.columnHide(data, 'lqbhd', 25, 22);
+		myForm.columnHide(data, 'kxl', 24, 21);
+		myForm.columnHide(data, 'mtjxdmd', 23, 20);
+		myForm.columnHide(data, 'zdlhxdmd',  22, 19);
+		myForm.columnHide(data, 'sK0075', 21, 18);
+		myForm.columnHide(data, 'sK015',20, 17);
+		myForm.columnHide(data, 'sK03',19, 16);
+		myForm.columnHide(data, 'sK06', 18, 15);
+		myForm.columnHide(data, 'sK118', 17, 14);
+		myForm.columnHide(data, 'sK236', 16, 13);
+		myForm.columnHide(data, 'sK475', 15, 12);
+		myForm.columnHide(data, 'sK95',  14, 11);
+		myForm.columnHide(data, 'sK132', 13, 10);
+		myForm.columnHide(data, 'sK16', 12, 9);
+		myForm.columnHide(data, 'sK19', 11, 8);
+		myForm.columnHide(data, 'sK265', 10, 7);
+		myForm.columnHide(data, 'sK315', 9, 6);
+		myForm.columnHide(data, 'sK375', 8, 5);
 	}
 	/**
 	 * 增加试验项目
