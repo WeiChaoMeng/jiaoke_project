@@ -64,7 +64,8 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 		data.push('0.3');
 		data.push('0.15');
 		data.push('0.075');
-		for (var i = 0; i <= data.length; i++) {
+		data.push('筛底');
+		for (var i = 0; i < data.length; i++) {
 			var data1 = {
 				'skcc': data[i]
 			}
@@ -78,7 +79,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 	 */
 	myform.getljsf1 = function(order) {
 		var result = 0;
-		for (var i = 0; i <= myform.KF_SF_Data.length; i++) {
+		for (var i = 0; i < myform.KF_SF_Data.length; i++) {
 			if (i <= order) {
 				var data = myform.KF_SF_Data[i];
 				if (data['fjsy_value1'] > 0) {
@@ -307,6 +308,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 			sK03: myform.getPJTGBFB("0.3"),
 			sK015: myform.getPJTGBFB("0.15"),
 			sK0075: myform.getPJTGBFB("0.075")
+			sD:myform.getPJTGBFB("筛底")
 		}
 		$.ajax({
 			type: "POST",
@@ -430,7 +432,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 	table.render({
 		elem: '#' + myform.tableId,
 		data: myform.KF_SF_Data,
-		limit: 4,
+		limit: 5,
 		defaultToolbar: [],
 		cols: [
 			[{
