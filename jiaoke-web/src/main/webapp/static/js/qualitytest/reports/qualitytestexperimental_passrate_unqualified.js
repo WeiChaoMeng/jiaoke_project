@@ -15,71 +15,73 @@ layui.use(['form', 'table', 'ax', 'laydate', 'dictionary'], function() {
 	};
 
 
-	/*
-		var queryData = {};
-		queryData['materials'] = common.getUrlParam("materials");
-		queryData['manufacturers'] = common.getUrlParam("manufacturers");
-		queryData['specification'] = common.getUrlParam("specification");
-		queryData['experimentalId'] = common.getUrlParam("experimentalId");
-		queryData['begindate'] = common.getUrlParam("begindate");
-		queryData['enddate'] = common.getUrlParam("enddate");
-		queryData['experimentalResult'] = common.getUrlParam("experimental_result");
 
-		table.render({
-			elem: '#' + myForm.tableId,
-			title: '不合格试验',
-			limit: common.maxLimitValue,
-			url: basePath + '/QualityTestExperimental/list.do',
-			defaultToolbar: [],
-			where: queryData,
-			toolbar: '#toolbarButton',
-			cols: [
-				[{
-					field: 'xuhao',
-					title: '序号',
-					width: 55,
-					type: "numbers"
-				}, {
-					field: 'experimentalNum',
-					title: '试验编号',
-					width: 170
-				}, {
-					field: 'experimentalName',
-					title: '试验名称',
-					width: 250
-				}, {
-					field: 'num',
-					title: '取样单编号',
-					width: 140
-				}, {
-					field: 'materials',
-					title: '材料',
-					width: 100
-				}, {
-					field: 'specification',
-					title: '规格',
-					width: 130
-				}, {
-					field: 'manufacturers',
-					title: '所属厂家',
-					width: 130
-				}, {
-					field: 'samplingcreateTime',
-					title: '取样时间',
-					width: 160,
-					templet: "<div>{{layui.util.toDateString(d.samplingcreateTime, 'yyyy-MM-dd HH:mm:ss')}}</div>"
-				}, {
-					field: 'result_show',
-					title: '试验结果',
-					width: 90
-				}]
-			],
-			page: false,
-			done: function(res, curr, count) {
-				myForm.exportData = res.data;
-			}
-		});
-		*/
+	var queryData = {};
+	queryData['materials'] = common.getUrlParam("materials");
+	queryData['manufacturers'] = common.getUrlParam("manufacturers");
+	queryData['specification'] = common.getUrlParam("specification");
+	queryData['experimentalId'] = common.getUrlParam("experimentalId");
+	queryData['begindate'] = common.getUrlParam("begindate");
+	queryData['enddate'] = common.getUrlParam("enddate");
+	queryData['experimentalResult'] = common.getUrlParam("experimental_result");
+
+
+	console.log(queryData);
+	/*table.render({
+		elem: '#' + myForm.tableId,
+		title: '不合格试验',
+		limit: common.maxLimitValue,
+		url: basePath + '/QualityTestExperimental/list.do',
+		defaultToolbar: [],
+		where: queryData,
+		toolbar: '#toolbarButton',
+		cols: [
+			[{
+				field: 'xuhao',
+				title: '序号',
+				width: 55,
+				type: "numbers"
+			}, {
+				field: 'experimentalNum',
+				title: '试验编号',
+				width: 170
+			}, {
+				field: 'experimentalName',
+				title: '试验名称',
+				width: 230
+			}, {
+				field: 'num',
+				title: '取样单编号',
+				width: 140
+			}, {
+				field: 'materials',
+				title: '材料',
+				width: 100
+			}, {
+				field: 'specification',
+				title: '规格',
+				width: 130
+			}, {
+				field: 'manufacturers',
+				title: '所属厂家',
+				width: 130
+			}, {
+				field: 'samplingcreateTime',
+				title: '取样时间',
+				width: 160,
+				templet: "<div>{{layui.util.toDateString(d.samplingcreateTime, 'yyyy-MM-dd HH:mm:ss')}}</div>"
+			}, {
+				field: 'result_show',
+				title: '试验结果',
+				width: 90
+			}]
+		],
+		page: false,
+		done: function(res, curr, count) {
+			myForm.exportData = res.data;
+		}
+	});
+*/
 	var queryData = {};
 	queryData['materials'] = common.getUrlParam("materials");
 	queryData['manufacturers'] = common.getUrlParam("manufacturers");
@@ -115,11 +117,11 @@ layui.use(['form', 'table', 'ax', 'laydate', 'dictionary'], function() {
 				}, {
 					field: 'materials',
 					title: '材料',
-					width: 100
+					width: 90
 				}, {
 					field: 'specification',
 					title: '规格',
-					width: 130
+					width: 100
 				}, {
 					field: 'manufacturers',
 					title: '所属厂家',
@@ -136,12 +138,17 @@ layui.use(['form', 'table', 'ax', 'laydate', 'dictionary'], function() {
 				}, {
 					field: 'requiredExperimental',
 					title: '试验项目',
-					width: 180
+					width: 150
 				}, {
 					field: '',
 					title: '试验结果',
-					width: 100,
+					width: 95,
 					templet: "<div>不合格</div>"
+				}, {
+					title: '操作',
+					toolbar: '#tableBar',
+					rowspan: 2,
+					width: 100
 				}
 			]
 		],
@@ -164,6 +171,27 @@ layui.use(['form', 'table', 'ax', 'laydate', 'dictionary'], function() {
 				break;
 		};
 	});
+	//监听行工具事件
+	table.on('tool(' + myForm.tableId + ')', function(obj) {
+		var data = obj.data;
+		if (obj.event === 'btn_report') {
+			myForm.report(data.orderTicketNum);
+		}
+	});
+	/**
+	 * 试验报告
+	 */
+	myForm.report = function(num) {
+		layer.open({
+			type: 2,
+			title: "试验报告",
+			area: ['1200px', '600'],
+			content: '/QualityTestLabReport/detail.do?num=' + num,
+			success: function(layero, index) {
+	
+			}
+		});
+	}
 	/**
 	 * 得到图表数据
 	 */
@@ -178,6 +206,7 @@ layui.use(['form', 'table', 'ax', 'laydate', 'dictionary'], function() {
 			success: function(msg) {
 				if (msg.count = 200) {
 					dataInfo = msg.data;
+					console.log(dataInfo);
 				}
 			}
 		})

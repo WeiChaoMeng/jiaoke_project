@@ -30,6 +30,10 @@
 			</div>
 
 		</form>
+		<script type="text/html" id="tableBar">
+			<a class="layui-btn layui-btn-sm" lay-event="btn_report">试验报告</a>
+
+		</script>
 		<script type="text/html" id="toolbarButton">
 			<div class="customToolbar">
 		        <button id="btnPrint" lay-event="btnPrint" class="layui-btn layui-btn-sm icon-btn ">打印</button>

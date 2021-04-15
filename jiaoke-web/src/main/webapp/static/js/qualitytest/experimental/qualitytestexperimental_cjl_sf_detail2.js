@@ -12,8 +12,8 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 	var myform = {
 		tableId: "mytable",
 		expValue: [], //试验信息
-		CJL_SF_Data: [] ,//筛分数据
-		StandValue: []//规范值
+		CJL_SF_Data: [], //筛分数据
+		StandValue: [] //规范值
 	}
 	/**
 	 * 根据ID获取试验输入值
@@ -140,39 +140,6 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 	 * 自动计算值
 	 */
 	myform.computeValue = function() {
-		//计算筛孔尺寸
-		for (var i = 0; i < myform.CJL_SF_Data.length; i++) {
-			var data = myform.CJL_SF_Data[i];
-			if (data['ssz_value1'] != undefined) {
-				data['fjsy_value1'] = ((data['ssz_value1'] / CLL_SF_GZ_Value.gzsyzl_value1)*100).toFixed(1);
-				data['ljsy_value1'] = myform.getljsf1(i);
-				data['tgbfb_value1'] = Number(100 - data['ljsy_value1']).toFixed(1);
-			} else {
-				data['fjsy_value1'] = undefined;
-				data['ljsy_value1'] = undefined;
-				data['tgbfb_value1'] = undefined;
-			}
-
-			if (data['ssz_value2'] != undefined) {
-				data['fjsy_value2'] = ((data['ssz_value2'] / CLL_SF_GZ_Value.gzsyzl_value2)*100).toFixed(1);
-				data['ljsy_value2'] = myform.getljsf2(i);
-				data['tgbfb_value2'] = Number(100 - data['ljsy_value2']).toFixed(1);
-				
-			} else {
-				data['fjsy_value2'] = undefined;
-				data['ljsy_value2'] = undefined;
-				data['tgbfb_value2'] = undefined;
-			}
-
-			if (data['tgbfb_value1'] > 0 && data['tgbfb_value2'] > 0) {
-				data['pjtgbfb_value'] = ((Number(data['tgbfb_value1']) + Number(data['tgbfb_value2'])) / 2).toFixed(1);;
-			} else if (data['tgbfb_value1'] > 0) {
-				data['pjtgbfb_value'] = data['tgbfb_value1'];
-			} else {
-				data['pjtgbfb_value'] = data['tgbfb_value2'];
-			}
-		}
-
 		//计算干筛后总量
 		var gshzz_value1 = 0;
 		for (var i = 0; i < myform.CJL_SF_Data.length; i++) {
@@ -190,6 +157,43 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 			}
 		}
 		$("#gshzz_value2").html(gshzz_value2);
+
+		//计算筛孔尺寸
+		for (var i = 0; i < myform.CJL_SF_Data.length; i++) {
+			var data = myform.CJL_SF_Data[i];
+			if (data['ssz_value1'] != undefined) {
+				//data['fjsy_value1'] = ((data['ssz_value1'] / CLL_SF_GZ_Value.gzsyzl_value1)*100).toFixed(1);
+				data['fjsy_value1'] = ((data['ssz_value1'] / gshzz_value1) * 100).toFixed(1);
+				data['ljsy_value1'] = myform.getljsf1(i);
+				data['tgbfb_value1'] = Number(100 - data['ljsy_value1']).toFixed(1);
+			} else {
+				data['fjsy_value1'] = undefined;
+				data['ljsy_value1'] = undefined;
+				data['tgbfb_value1'] = undefined;
+			}
+
+			if (data['ssz_value2'] != undefined) {
+				//data['fjsy_value2'] = ((data['ssz_value2'] / CLL_SF_GZ_Value.gzsyzl_value2)*100).toFixed(1);
+				data['fjsy_value2'] = ((data['ssz_value2'] / gshzz_value2) * 100).toFixed(1);
+				data['ljsy_value2'] = myform.getljsf2(i);
+				data['tgbfb_value2'] = Number(100 - data['ljsy_value2']).toFixed(1);
+
+			} else {
+				data['fjsy_value2'] = undefined;
+				data['ljsy_value2'] = undefined;
+				data['tgbfb_value2'] = undefined;
+			}
+
+			if (data['tgbfb_value1'] > 0 && data['tgbfb_value2'] > 0) {
+				data['pjtgbfb_value'] = ((Number(data['tgbfb_value1']) + Number(data['tgbfb_value2'])) / 2).toFixed(1);;
+			} else if (data['tgbfb_value1'] > 0) {
+				data['pjtgbfb_value'] = data['tgbfb_value1'];
+			} else {
+				data['pjtgbfb_value'] = data['tgbfb_value2'];
+			}
+		}
+
+
 		/* //计算损耗
 		var sh_value1 = CLL_SF_GZ_Value.sxhsyzl_value1 - gshzz_value1;
 		$("#sh_value1").html(sh_value1);
@@ -310,9 +314,9 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 		var result = false;
 		var expResult = myform.checkExpResult();
 		var saveData = {
-			ID: expID,			
+			ID: expID,
 			experimentalValueSf: JSON.stringify(myform.CJL_SF_Data),
-			status: 2, 
+			status: 2,
 			experimentalResult: expResult
 		}
 		$.ajax({
@@ -382,7 +386,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 				standValue = data;
 				break;
 			}
-	
+
 		}
 		return standValue;
 	}
@@ -406,7 +410,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 						break;
 					}
 				}
-			}			
+			}
 		}
 		return result;
 	}
@@ -431,7 +435,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 		return result;
 	}
 
-/**
+	/**
 	 * 获取规范值
 	 */
 	myform.getStandValue = function() {
@@ -470,7 +474,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 	}
 	myform.init_GZSY_Value();
 	myform.ini_SFZ_Value();
-	myform.computeValue();	
+	myform.computeValue();
 	myform.getStandValue();
 	/**
 	 * TABEL数据更新

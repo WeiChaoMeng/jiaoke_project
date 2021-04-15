@@ -1,22 +1,19 @@
 package com.jiaoke.qualitytest.service;
-import java.util.Date;
-import java.util.List;
 
-
+import com.alibaba.fastjson.JSONObject;
 import com.jiaoke.common.bean.Assist;
 import com.jiaoke.common.bean.LayUIPage;
 import com.jiaoke.oa.bean.UserInfo;
-import com.jiaoke.qualitytest.bean.QualityTestOrderTicket;
-import com.jiaoke.qualitytest.bean.QualityTestSamplingpage;
-import com.jiaoke.qualitytest.dao.QualityTestExperimentalDao;
 import com.jiaoke.qualitytest.bean.QualityTestExperimental;
+import com.jiaoke.qualitytest.dao.QualityTestExperimentalDao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.JSONObject;
+import java.util.Date;
+import java.util.List;
 /**
  * QualityTestExperimental的服务接口的实现类
  * 
@@ -50,7 +47,7 @@ public class QualityTestExperimentalServiceImpl implements QualityTestExperiment
 			assist.andLike("num", "%" + value.getNum() + "%");
 		}
 		if (value.getMaterials() != null && !value.getMaterials().isEmpty()) {
-			assist.andLike("materials", "%" + value.getMaterials() + "%");
+			assist.andEq("materials",  value.getMaterials() );
 		}
 		if (value.getSpecification() != null && !value.getSpecification().isEmpty()) {
 			assist.andLike("specification", "%" + value.getSpecification() + "%");

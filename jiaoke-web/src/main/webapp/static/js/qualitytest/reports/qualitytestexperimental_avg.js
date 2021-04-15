@@ -1242,7 +1242,7 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 		layer.open({
 			type: 2,
 			title: "查看正态分布图",
-			area: ['700px', '455px'],
+			area: ['700px', '480px'],
 			content: '/QualityTestReportAvg/ztfbt_page.do?param=' +
 				id + '&begindate=' + begindate + '&enddate=' + enddate,
 			success: function(layero, index) {
