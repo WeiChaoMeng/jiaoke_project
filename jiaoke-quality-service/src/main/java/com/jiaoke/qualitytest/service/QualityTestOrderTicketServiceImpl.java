@@ -67,7 +67,7 @@ public class QualityTestOrderTicketServiceImpl implements QualityTestOrderTicket
             assist.andLike("order_ticket_num", "%" + value.getNum() + "%");
         }
         if (value.getMaterials() != null && !value.getMaterials().isEmpty()) {
-            assist.andLike("materials", "%" + value.getMaterials() + "%");
+            assist.andEq("materials", value.getMaterials() );
         }
         if (value.getSpecification() != null && !value.getSpecification().isEmpty()) {
             assist.andLike("specification", "%" + value.getSpecification() + "%");
@@ -320,7 +320,7 @@ public class QualityTestOrderTicketServiceImpl implements QualityTestOrderTicket
             assist.andLike("order_ticket_num", "%" + value.getNum() + "%");
         }
         if (value.getMaterials() != null && !value.getMaterials().isEmpty()) {
-            assist.andLike("materials", "%" + value.getMaterials() + "%");
+            assist.andEq("materials", value.getMaterials() );
         }
         if (value.getSpecification() != null && !value.getSpecification().isEmpty()) {
             assist.andLike("specification", "%" + value.getSpecification() + "%");

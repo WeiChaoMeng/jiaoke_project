@@ -66,7 +66,7 @@ public class QualityTestSamplingpageServiceImpl implements QualityTestSamplingpa
             assist.andLike("num", "%" + value.getNum() + "%");
         }
         if (value.getMaterials() != null && !value.getMaterials().isEmpty()) {
-            assist.andLike("materials", "%" + value.getMaterials() + "%");
+            assist.andEq("materials", value.getMaterials());
         }
         if (value.getSpecification() != null && !value.getSpecification().isEmpty()) {
             assist.andLike("specification", "%" + value.getSpecification() + "%");
@@ -222,12 +222,27 @@ public class QualityTestSamplingpageServiceImpl implements QualityTestSamplingpa
         Date date = new Date();
         String strYear = DateUtil.dateConvertYYYY(date);
 
-        Assist assist = new Assist();
+       /*  Assist assist = new Assist();
         assist.andLike("num", "%"+strYear + "-%");
-        long strCount = qualityTestSamplingpageDao.getQualityTestSamplingpageRowCount(assist);
+        long strCount = qualityTestSamplingpageDao.getQualityTestSamplingpageRowCount(assist);*/
 
+        long strCount = getSamplingPageMaxNum(strYear);
         String strNum = String.format("LC-%s-%05d", strYear, strCount + 1);
         return strNum;
+    }
+
+    private Long getSamplingPageMaxNum(String year) {
+        Long maxNum = Long.valueOf(1);
+        Assist assist = new Assist();
+        assist.andLike("num", "%" + year + "-%");
+        assist.setOrder(Assist.order("num", false));
+
+        List<QualityTestSamplingpage> result = qualityTestSamplingpageDao.selectQualityTestSamplingpage(assist);
+        if (result != null && result.size() > 0) {
+            String strNum = result.get(0).getNum();
+            maxNum = Long.valueOf(strNum.substring(strNum.lastIndexOf("-") + 1));
+        }
+        return maxNum;
     }
 
     /**
@@ -272,14 +287,33 @@ public class QualityTestSamplingpageServiceImpl implements QualityTestSamplingpa
         Date date = new Date();
         String strYear = DateUtil.dateConvertYYYY(date);
 
-        Assist assist = new Assist();
+       /* Assist assist = new Assist();
         assist.andLike("order_ticket_num", "%"+strYear + "-%");
-        long strCount = qualityTestOrderTicketDao.getQualityTestOrderTicketRowCount(assist);
-
+        long strCount = qualityTestOrderTicketDao.getQualityTestOrderTicketRowCount(assist);*/
+        long strCount = getTestOrderTicketMaxNum(strYear);
         String strMeaterialName = getMaterialAbbreviation(nID);
 
         String strNum = String.format("LC-%s-%s-%05d", strYear, strMeaterialName, strCount + 1);
         return strNum;
+    }
+
+    private Long getTestOrderTicketMaxNum(String year) {
+        Long maxNum = Long.valueOf(1);
+        Assist assist = new Assist();
+        assist.andLike("order_ticket_num", "%" + year + "-%");
+        assist.setOrder(Assist.order("order_ticket_num", false));
+
+        List<QualityTestOrderTicket> result = qualityTestOrderTicketDao.selectQualityTestOrderTicket(assist);
+        if (result != null && result.size() > 0) {
+            for (int i = 0; i <= result.size() - 1; i++) {
+                String strNum = result.get(i).getOrderTicketNum();
+                long num = Long.valueOf(strNum.substring(strNum.lastIndexOf("-") + 1));
+                if (maxNum < num) {
+                    maxNum = num;
+                }
+            }
+        }
+        return maxNum;
     }
 
     public String getMaterialAbbreviation(int nID) {
@@ -288,8 +322,7 @@ public class QualityTestSamplingpageServiceImpl implements QualityTestSamplingpa
             materiaList = qualityTestMaterialDictionaryDao.selectQualityTestMaterialDictionary(null);
         }
         for (QualityTestMaterialDictionary obj : materiaList) {
-            if (obj.getId()==nID)
-            {
+            if (obj.getId() == nID) {
                 return obj.getLogogramName();
             }
         }
@@ -303,7 +336,7 @@ public class QualityTestSamplingpageServiceImpl implements QualityTestSamplingpa
             return;
         }
         if (value.getMaterials() != null && !value.getMaterials().isEmpty()) {
-            assist.andLike("materials", "%" + value.getMaterials() + "%");
+            assist.andEq("materials", value.getMaterials());
         }
         if (value.getSpecification() != null && !value.getSpecification().isEmpty()) {
             assist.andLike("specification", "%" + value.getSpecification() + "%");
@@ -314,13 +347,13 @@ public class QualityTestSamplingpageServiceImpl implements QualityTestSamplingpa
         if (value.getExperimentResult() != null) {
             assist.andEq("experiment_result", value.getExperimentResult());
         }
-        if (value.getBegindate() != null ) {
+        if (value.getBegindate() != null) {
             assist.andGte("task_time", value.getBegindate());
-        }if (value.getEnddate() != null ) {
+        }
+        if (value.getEnddate() != null) {
             assist.andLte("task_time", value.getEnddate());
         }
-       if (value.getBegindate()==null && value.getEnddate()==null)
-        {
+        if (value.getBegindate() == null && value.getEnddate() == null) {
             assist.andGte("task_time", DateUtil.dateConvertYYYYMMDDHHMMSS(DateUtils.addDays(new Date(), -31)));
             assist.andLte("task_time", DateUtil.dateConvertYYYYMMDDHHMMSS(new Date()));
         }
@@ -331,14 +364,15 @@ public class QualityTestSamplingpageServiceImpl implements QualityTestSamplingpa
             assist.andGt("status", -1);
         }
     }
+
     /**
      * 取样单台账
+     *
      * @param value
      * @return
      */
     @Override
-    public String reports(QualityTestSamplingpage value)
-    {
+    public String reports(QualityTestSamplingpage value) {
         Assist assist = new Assist();
         assist.setStartRow((value.getPage() - 1) * value.getLimit());
         assist.setRowSize(value.getLimit());

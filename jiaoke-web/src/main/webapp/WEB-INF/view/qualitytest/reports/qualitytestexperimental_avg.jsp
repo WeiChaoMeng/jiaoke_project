@@ -52,14 +52,19 @@
 										<div class="layui-inline">
 											<button id="btnSearch" type="button" class="layui-btn layui-btn-sm icon-btn"> &nbsp;<i class="layui-icon">&#xe615;</i>&nbsp;
 											</button>
-										</div>
-										<div>
 											<button id="btnExport" type="button" class="layui-btn layui-btn-sm icon-btn" style="float:right;">&nbsp;<i
 												 class="layui-icon">&#xe67d;</i>&nbsp;
 											</button>
 										</div>
+										<div>
+
+										</div>
+									</div>
+									<div class="layui-form-item" style="margin-bottom: 0px;">
+										<div class="layui-form-mid layui-word-aux" style="margin-left: 50px;">默认展示一月内的试验平均值</div>
 									</div>
 								</div>
+
 								<div style="display: none;">
 									<table class="layui-hide" id="mytable" lay-filter="mytable"></table>
 								</div>

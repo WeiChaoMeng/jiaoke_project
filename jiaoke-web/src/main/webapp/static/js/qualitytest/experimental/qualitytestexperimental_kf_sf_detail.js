@@ -64,7 +64,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 		data.push('0.3');
 		data.push('0.15');
 		data.push('0.075');
-		data.push('筛底');
+		//data.push('筛底');
 		for (var i = 0; i < data.length; i++) {
 			var data1 = {
 				'skcc': data[i]
@@ -307,8 +307,8 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 			sK06: myform.getPJTGBFB("0.6"),
 			sK03: myform.getPJTGBFB("0.3"),
 			sK015: myform.getPJTGBFB("0.15"),
-			sK0075: myform.getPJTGBFB("0.075")
-			sD:myform.getPJTGBFB("筛底")
+			sK0075: myform.getPJTGBFB("0.075")/* ,
+			sD:myform.getPJTGBFB("筛底") */
 		}
 		$.ajax({
 			type: "POST",

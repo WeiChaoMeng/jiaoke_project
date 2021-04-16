@@ -560,12 +560,12 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 	}
 	myForm.setTitle();
 	var myChart1 = echarts.init(document.getElementById('echart1'));
-	//myForm.getData();
-	myForm.getTestData();
+	myForm.getData();
+	//myForm.getTestData();
 	myForm.computeData();
 	//测试数据 应用时注释掉
 	 
-	myForm.chartData = [
+	/* myForm.chartData = [
 		['70', 10],
 		['80', 17],
 		['90', 88],
@@ -577,6 +577,6 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 		['150', 81],
 		['160', 11],
 		['170', 8]
-	];
+	]; */
 	myForm.refreshChart();
 });

@@ -3,16 +3,12 @@ package com.jiaoke.qualitytest.service.report;
 import com.alibaba.fastjson.JSONObject;
 import com.jiake.utils.DateUtil;
 import com.jiaoke.common.bean.Assist;
-import com.jiaoke.common.bean.LayUIPage;
-import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.qualitytest.bean.QualityTestExperimental;
 import com.jiaoke.qualitytest.bean.report.QualityTestExperimentalPassRate;
-import com.jiaoke.qualitytest.dao.QualityTestExperimentalDao;
 import com.jiaoke.qualitytest.dao.report.QualityTestExperimentalPassRateDao;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,7 +40,7 @@ public class QualityTestExperimentalPassRateServiceImpl implements QualityTestEx
 	}
 	public void setSeachFilter(Assist assist, QualityTestExperimental value) {
 		if (value.getMaterials() != null && !value.getMaterials().isEmpty()) {
-			assist.andLike("materials", "%" + value.getMaterials() + "%");
+			assist.andEq("materials", value.getMaterials() );
 		}
 		if (value.getSpecification() != null && !value.getSpecification().isEmpty()) {
 			assist.andLike("specification", "%" + value.getSpecification() + "%");
@@ -87,7 +83,7 @@ public class QualityTestExperimentalPassRateServiceImpl implements QualityTestEx
 
 	public void setSeachFilter2(Assist assist, QualityTestExperimental value) {
 		if (value.getMaterials() != null && !value.getMaterials().isEmpty()) {
-			assist.andLike("materials", "%" + value.getMaterials() + "%");
+			assist.andEq("materials", value.getMaterials() );
 		}
 		if (value.getSpecification() != null && !value.getSpecification().isEmpty()) {
 			assist.andLike("specification", "%" + value.getSpecification() + "%");

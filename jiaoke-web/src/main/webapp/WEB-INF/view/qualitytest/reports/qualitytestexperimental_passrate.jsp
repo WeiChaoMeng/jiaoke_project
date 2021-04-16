@@ -74,6 +74,9 @@
 											</button>
 										</div>
 									</div>
+									<div class="layui-form-item" style="margin-bottom: 0px;">
+										<div class="layui-form-mid layui-word-aux" style="margin-left: 50px;">默认展示一月内的试验合格率</div>
+									</div>
 								</div>
 							</div>
 
