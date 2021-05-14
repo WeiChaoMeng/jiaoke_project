@@ -81,6 +81,11 @@ public class QualityTestOrderTicketServiceImpl implements QualityTestOrderTicket
         if (value.getExperimentStatus() != null) {
             assist.andEq("experiment_status", value.getExperimentStatus());
         }
+        if (value.getBegindate() != null ) {
+            assist.andGte("sampling_create_time", value.getBegindate());
+        }if (value.getEnddate() != null ) {
+            assist.andLte("sampling_create_time", value.getEnddate());
+        }
         if (value.getStatus() != null && value.getStatus() >= 0) {
             assist.andEq("status", value.getStatus());
         } else {

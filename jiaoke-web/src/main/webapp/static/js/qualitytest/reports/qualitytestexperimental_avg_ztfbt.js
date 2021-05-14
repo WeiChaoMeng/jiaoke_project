@@ -43,10 +43,13 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 				break;
 			case '3': //矿粉
 				data = myForm.getKFData(queryData);
+				break;
 			case '4': //沥青
 				data = myForm.getLQData(queryData);
+				break;
 			case '8': //乳化沥青
 				data = myForm.getRHLQData(queryData);
+				break;
 			case '9': //沥青混合料
 				data = myForm.getLQHHLData(queryData);
 				break;
@@ -240,7 +243,7 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 		var avgCount = 0;
 		for (var i = 0; i < myForm.sourceData.length; i++) {
 			if (myForm.sourceData[i] > 0) {
-				avgValue = avgValue + myForm.sourceData[i];
+				avgValue = avgValue + Number(myForm.sourceData[i]);
 				avgCount++;
 			}
 		}
@@ -540,10 +543,10 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function() {
 				materials = "粗集料";
 				break;
 			case '3':
-				materialsa = "矿粉";
+				materials = "矿粉";
 				break;
 			case '4':
-				materialsa = "沥青";
+				materials = "沥青";
 				break;
 			case '8':
 				materials = "乳化沥青";
