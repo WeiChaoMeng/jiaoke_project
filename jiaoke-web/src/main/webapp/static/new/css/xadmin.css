@@ -148,6 +148,7 @@ body {
     text-align: center;
     margin-top: 12px;
     cursor: pointer;
+    font-size: 23px;
 }
 
 .container .left_open i:hover {
@@ -245,7 +246,7 @@ body {
 }
 
 .left-nav #nav li a cite {
-    font-size: 14px;
+    font-size: 18px;
 }
 
 .left-nav #nav li .sub-menu {

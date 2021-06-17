@@ -14,6 +14,17 @@
                 to_days(NOW()) - TO_DAYS(produce_date) = 2;
     </select>
 
+    <select id="getLastWeekToChars" resultType="java.util.Map">
+        SELECT
+               produce_disc_num,
+               material_asphalt,
+               material_total,
+               produce_proportioning_num
+        FROM
+             quality_monitoring_realtime_data1
+        WHERE
+                to_days(NOW()) - TO_DAYS(produce_date) = 7;
+    </select>
 
     <select id="getAggregateRatioByMoudelId" resultType="java.util.Map">
 

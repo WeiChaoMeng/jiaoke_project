@@ -590,7 +590,7 @@
                             <li>
                                 <a onclick="xadmin.add_tab('实时监测','qc_real_time_surveillance.do',true)">
                                     <i class="iconfont">&#xe6bb;</i>
-                                    <cite>实时监测</cite></a>
+                                    <cite style="color: #eabcbc;">实时监测</cite></a>
                             </li>
                             </shiro:hasPermission>
 
@@ -598,7 +598,7 @@
                             <li>
                                 <a onclick="xadmin.add_tab('历史数据','qc_historical_data.do',true)">
                                     <i class="iconfont">&#xe70c;</i>
-                                    <cite>历史数据</cite></a>
+                                    <cite style="color: #eabcbc;" >历史数据</cite></a>
                             </li>
                                 </shiro:hasPermission>
 
@@ -607,90 +607,143 @@
                                     <%--<i class="iconfont">&#xe6a7;</i>--%>
                                     <%--<cite>工程管理</cite></a>--%>
                             <%--</li>--%>
+                                <shiro:hasPermission name="quality:monitor">
+                                    <li>
+                                        <a href="javascript:;">
+                                            <i class="iconfont">&#xe6ce;</i>
+                                            <cite>实时监控</cite>
+                                            <i class="iconfont nav_right">&#xe697;</i>
+                                        </a>
+                                        <ul class="sub-menu">
+                                            <shiro:hasPermission name="quality:monitor">
+                                                <li>
+                                                    <a onclick="xadmin.add_tab('实时监控','qc_real_time_monitoring.do',true)">
+                                                        <i class="iconfont">&#xe829;</i>
+                                                        <cite>实时监控</cite></a>
+                                                </li>
+                                            </shiro:hasPermission>
+
+                                            <shiro:hasPermission name="quality:warning">
+                                                <li>
+                                                    <a onclick="xadmin.add_tab('质量预警','qc_quality_warning.do',true)">
+                                                        <i class="iconfont">&#xe713;</i>
+                                                        <cite>实时预警</cite></a>
+                                                </li>
+                                            </shiro:hasPermission>
+                                        </ul>
+                                    </li>
+                                </shiro:hasPermission>
 
                                 <shiro:hasPermission name="quality:proportioning">
-                            <li>
-                                <a onclick="xadmin.add_tab('配比管理','qc_matching_model.do',true)">
-                                    <i class="iconfont">&#xe6fa;</i>
-                                    <cite>配比管理</cite></a>
-                            </li>
-                                </shiro:hasPermission>
+                                    <li>
+                                        <a href="javascript:;">
+                                            <i class="iconfont">&#xe83d;</i>
+                                            <cite>级配管理</cite>
+                                            <i class="iconfont nav_right">&#xe697;</i>
+                                        </a>
+                                        <ul class="sub-menu">
+                                            <shiro:hasPermission name="quality:proportioning">
+                                                <li>
+                                                    <a onclick="xadmin.add_tab('生产配比','qc_matching_model.do',true)">
+                                                        <i class="iconfont">&#xe6fa;</i>
+                                                        <cite>生产配比</cite></a>
+                                                </li>
+                                            </shiro:hasPermission>
 
-                                <shiro:hasPermission name="quality:grading">
-                            <li>
-                                <a onclick="xadmin.add_tab('级配管理','qc_grading_manager.do',true)">
-                                    <i class="iconfont">&#xe6b5;</i>
-                                    <cite>级配管理</cite></a>
-                            </li>
-                                </shiro:hasPermission>
-
-                                <shiro:hasPermission name="quality:dynamic">
-                            <li>
-                                <a onclick="xadmin.add_tab('动态管理','qc_dynamic_management.do',true)">
-                                    <i class="iconfont">&#xe6b3;</i>
-                                    <cite>动态管理</cite></a>
-                            </li>
-                                </shiro:hasPermission>
-
-                                <shiro:hasPermission name="quality:monitor">
-                            <li>
-                                <a onclick="xadmin.add_tab('实时监控','qc_real_time_monitoring.do',true)">
-                                    <i class="iconfont">&#xe829;</i>
-                                    <cite>实时监控</cite></a>
-                            </li>
-                                </shiro:hasPermission>
-
-                                <shiro:hasPermission name="quality:warning">
-                            <li>
-                                <a onclick="xadmin.add_tab('质量预警','qc_quality_warning.do',true)">
-                                    <i class="iconfont">&#xe713;</i>
-                                    <cite>质量预警</cite></a>
-                            </li>
+                                            <shiro:hasPermission name="quality:grading">
+                                                <li>
+                                                    <a onclick="xadmin.add_tab('级配曲线','qc_grading_manager.do',true)">
+                                                        <i class="iconfont">&#xe6b5;</i>
+                                                        <cite>级配曲线</cite></a>
+                                                </li>
+                                            </shiro:hasPermission>
+                                        </ul>
+                                    </li>
                                 </shiro:hasPermission>
 
                                 <shiro:hasPermission name="quality:data">
-                            <li>
-                                <a onclick="xadmin.add_tab('数据管理','qc_data_manager.do',true)">
-                                    <i class="iconfont">&#xe70c;</i>
-                                    <cite>数据管理</cite></a>
-                            </li>
-                                </shiro:hasPermission>
-
-                                <shiro:hasPermission name="quality:assist">
-                            <li>
-                                <a onclick="xadmin.add_tab('辅助分析','qc_auxiliary_analysis.do',true)">
-                                    <i class="iconfont">&#xe704;</i>
-                                    <cite>辅助分析</cite></a>
-                            </li>
-                                </shiro:hasPermission>
-
-                                <shiro:hasPermission name="quality:summary">
-                            <li>
-                                <a onclick="xadmin.add_tab('数据汇总','qc_data_summary.do',true)">
-                                    <i class="iconfont">&#xe724;</i>
-                                    <cite>数据汇总</cite></a>
-                            </li>
+                                    <li>
+                                        <a href="javascript:;">
+                                            <i class="iconfont">&#xe70c;</i>
+                                            <cite>数据管理</cite>
+                                            <i class="iconfont nav_right">&#xe697;</i>
+                                        </a>
+                                        <ul class="sub-menu">
+                                            <shiro:hasPermission name="quality:data">
+                                                <li>
+                                                    <a onclick="xadmin.add_tab('数据管理','qc_data_manager.do',true)">
+                                                        <i class="iconfont">&#xe70c;</i>
+                                                        <cite>当日数据</cite></a>
+                                                </li>
+                                            </shiro:hasPermission>
+                                            <shiro:hasPermission name="quality:summary">
+                                                <li>
+                                                    <a onclick="xadmin.add_tab('数据汇总','qc_data_summary.do',true)">
+                                                        <i class="iconfont">&#xe724;</i>
+                                                        <cite>数据汇总</cite></a>
+                                                </li>
+                                            </shiro:hasPermission>
+                                        </ul>
+                                    </li>
                                 </shiro:hasPermission>
 
                                 <shiro:hasPermission name="quality:alarm">
-                            <li>
-                                <a onclick="xadmin.add_tab('警报管理','qc_critical_warning.do',true)">
-                                    <i class="iconfont">&#xe70e;</i>
-                                    <cite>警报管理</cite></a>
-                            </li>
-                                </shiro:hasPermission>
-                                <shiro:hasPermission name="quality:dispose">
-                                <li>
-                                    <a onclick="xadmin.add_tab('警报处理','qc_warning_dispose.do',true)">
-                                        <i class="iconfont">&#xe6b2;</i>
-                                        <cite>警报处理</cite></a>
-                                </li>
-                                </shiro:hasPermission>
-                                <shiro:hasPermission name="quality:pooledAnalysis">
                                     <li>
-                                        <a onclick="xadmin.add_tab('汇总分析','qc_pooled_analysis.do',true)">
-                                            <i class="iconfont">&#xe6b2;</i>
-                                            <cite>汇总分析</cite></a>
+                                        <a href="javascript:;">
+                                            <i class="iconfont">&#xe6b6;</i>
+                                            <cite>预警分析</cite>
+                                            <i class="iconfont nav_right">&#xe697;</i>
+                                        </a>
+                                        <ul class="sub-menu">
+                                            <shiro:hasPermission name="quality:alarm">
+                                                <li>
+                                                    <a onclick="xadmin.add_tab('警报管理','qc_critical_warning.do',true)">
+                                                        <i class="iconfont">&#xe70e;</i>
+                                                        <cite>警报管理</cite></a>
+                                                </li>
+                                            </shiro:hasPermission>
+                                            <shiro:hasPermission name="quality:assist">
+                                                <li>
+                                                    <a onclick="xadmin.add_tab('辅助分析','qc_auxiliary_analysis.do',true)">
+                                                        <i class="iconfont">&#xe704;</i>
+                                                        <cite>警报查询</cite></a>
+                                                </li>
+                                            </shiro:hasPermission>
+                                            <shiro:hasPermission name="quality:dispose">
+                                                <li>
+                                                    <a onclick="xadmin.add_tab('警报处理','qc_warning_dispose.do',true)">
+                                                        <i class="iconfont">&#xe6b2;</i>
+                                                        <cite>警报处理</cite></a>
+                                                </li>
+                                            </shiro:hasPermission>
+                                        </ul>
+                                    </li>
+                                </shiro:hasPermission>
+
+                                <shiro:hasPermission name="quality:dynamic">
+                                    <li>
+                                        <a href="javascript:;">
+                                            <i class="iconfont">&#xe6b3;</i>
+                                            <cite>数据分析</cite>
+                                            <i class="iconfont nav_right">&#xe697;</i>
+                                        </a>
+                                        <ul class="sub-menu">
+                                            <shiro:hasPermission name="quality:dynamic">
+                                                <li>
+                                                    <a onclick="xadmin.add_tab('动态管理','qc_dynamic_management.do',true)">
+                                                        <i class="iconfont">&#xe6b3;</i>
+                                                        <cite>参数分析</cite></a>
+                                                </li>
+                                            </shiro:hasPermission>
+
+                                            <shiro:hasPermission name="quality:pooledAnalysis">
+                                                <li>
+                                                    <a onclick="xadmin.add_tab('汇总分析','qc_pooled_analysis.do',true)">
+                                                        <i class="iconfont">&#xe6b2;</i>
+                                                        <cite>生产分析</cite></a>
+                                                </li>
+                                            </shiro:hasPermission>
+                                        </ul>
                                     </li>
                                 </shiro:hasPermission>
                         </ul>
@@ -1039,7 +1092,8 @@
                 </div>
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
-                        <iframe src='/basePage.do' id="iframes" frameborder="0" scrolling="yes" class="x-iframe"></iframe>
+                      <!--  <iframe src='/basePage.do' id="iframes" frameborder="0" scrolling="yes" class="x-iframe"></iframe> -->
+                        <iframe src='/newBasePage.do' id="iframes" frameborder="0" scrolling="yes" class="x-iframe"></iframe>
                     </div>
                 </div>
                 <div id="tab_show"></div>

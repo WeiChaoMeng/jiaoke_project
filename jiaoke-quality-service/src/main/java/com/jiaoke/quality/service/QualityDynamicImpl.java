@@ -141,6 +141,17 @@ public class QualityDynamicImpl implements QualityDynamicInf {
     }
 
 
+    @Override
+    public void getLastWeekToChars(HttpServletRequest request) {
+        List<Map<String,String>> list = qualityDynamicDao.getLastWeekToChars();
 
+        if (list.size() == 0) return;
+        //设置日期格式
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
+        String format = df.format(new Date());
+
+        QualityDynamicUtil.setRequestAttributeUtil(list,qualityDynamicDao,"ratio_stone","material_asphalt","crew1",request,format);
+
+    }
 }

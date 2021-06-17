@@ -31,4 +31,5 @@ public interface QualityDynamicDao {
 
     List<Map<String, String>> selectProductByMaterialAndDate(@Param("startDate") String startDate,@Param("endDate") String endDate,@Param("material")  String material, @Param("ratioNum")String ratioNum,  @Param("crew")String crew);
 
+    List<Map<String, String>> getLastWeekToChars();
 }

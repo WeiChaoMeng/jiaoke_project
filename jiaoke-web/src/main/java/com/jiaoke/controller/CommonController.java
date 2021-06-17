@@ -14,6 +14,7 @@ import com.jiaoke.oa.bean.UserInfo;
 import com.jiaoke.oa.service.OaNewsCenterService;
 import com.jiaoke.oa.service.OaNoticeService;
 import com.jiaoke.oa.service.SecurityService;
+import com.jiaoke.quality.service.QualityDynamicInf;
 import com.jiaoke.quality.service.QualityIndexInf;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 /**
@@ -46,6 +48,9 @@ public class CommonController {
     @Resource
     private SecurityService securityService;
 
+    @Resource
+    private QualityDynamicInf qualityDynamicInf;
+
     /**
      *
      * 功能描述: <br>
@@ -59,7 +64,9 @@ public class CommonController {
     public String index(){
 //        return "login";
         //新ui框架主页
-        return "new/login";
+        //return "new/login";
+        //更新的主页
+        return "new/newLogin";
     }
 
     /**
@@ -144,6 +151,24 @@ public class CommonController {
         model.addAttribute("oaNewsCenterList", oaNewsCenterList);
         model.addAttribute("oaNoticeList", oaNoticeList);
         return "new/basePage";
+    }
+    /**
+     *
+     * 功能描述: <br>
+     *  <登陆成功后进入新首页>
+     * @param
+     * @return
+     * @auther Melone
+     * @date 2021/6/4 13:55
+     */
+    @RequestMapping("/newBasePage.do")
+    public String newBasePage(Model model, HttpServletRequest request) {
+        UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
+        List<OaNewsCenter> oaNewsCenterList = oaNewsCenterService.homePageData();
+        model.addAttribute("userInfo", userInfo);
+        model.addAttribute("oaNewsCenterList", oaNewsCenterList);
+        qualityDynamicInf.getLastWeekToChars(request);
+        return "new/newBasePage";
     }
 
     /**

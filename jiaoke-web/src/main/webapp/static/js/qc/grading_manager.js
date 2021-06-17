@@ -372,7 +372,7 @@ $('#excel-file').change(function (e) {
 
             readWorkbook(workbook);
 
-            if(getCharts(workbook,0) != 'A'  || getCharts(workbook,3) != 'Z' ){
+            if(getCharts(workbook,0) != 'A'  || getCharts(workbook,3) > 'Z' ){
                 layer.alert('Excell格式不对', {
                     skin: 'layui-layer-lan'
                     ,closeBtn: 0
@@ -463,13 +463,8 @@ function getjsonList(workbook){
 function isAllJsonData(jsonStr) {
     var resBoole = false;
     for (var i = 0; i < jsonStr.length;i++) {
-        var array = [];
         for (var i in jsonStr[i]) {
-            array.push(i);
-        }
-        if(array.length != 26){
-            resBoole = true;
-            break;
+            resBoole = blank(i)
         }
     }
 

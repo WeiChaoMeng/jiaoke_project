@@ -257,7 +257,31 @@ public class QualityController {
 
         return lastWeekCrewDataJson;
     }
+    @ResponseBody
+    @RequestMapping("/getLastYearEverMonthTotalToEchart.do")
+    public String getLastYearEverMonthTotalToEchart(){
+        String res = null;
+        try{
+          res =  qualityIndexInf.getLastYearEverMonthTotalToEchart();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
 
+        return res;
+    }
+
+    @ResponseBody
+    @RequestMapping("/getLastTenWarning.do")
+    public String getLastTenWarning(){
+        String res = null;
+        try{
+            res =  qualityIndexInf.getLastTenWarning();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return res;
+    }
     /**********************************  质量监控首页 end ************************************************/
 
     /************************************  工程管理 start **********************************************/
@@ -1196,6 +1220,7 @@ public class QualityController {
 
         return "quality/qc_dynamic_management";
     }
+
 
     @ResponseBody
     @RequestMapping(value = "/getRatioListByDate.do" , method = RequestMethod.POST)

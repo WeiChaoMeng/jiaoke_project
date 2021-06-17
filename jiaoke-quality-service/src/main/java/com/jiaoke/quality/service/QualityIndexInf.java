@@ -31,4 +31,14 @@ public interface QualityIndexInf {
      * @return
      */
     List<Map<String,String>> getLastProductData();
+    /**
+     * 返回本年每月中每日数据
+     * @return
+     */
+    String getLastYearEverMonthTotalToEchart();
+    /**
+     * 返回两个机组各五条最新预警数据
+     * @return
+     */
+    String getLastTenWarning();
 }

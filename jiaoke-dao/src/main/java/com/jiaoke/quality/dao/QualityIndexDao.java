@@ -31,4 +31,15 @@ public interface QualityIndexDao {
      * @return
      */
     List<Map<String,String>> getLastProductData();
+
+    /**
+     * 返回本年每月中每日数据
+     * @return
+     */
+    List<Map<String, String>> selectLastYearEverMonthTotalToEchart();
+    /**
+     * 返回两个机组各五条最新预警数据
+     * @return
+     */
+    List<Map<String, String>> selectLastTenWarning();
 }

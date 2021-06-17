@@ -50,4 +50,34 @@
                 LIMIT 8
                 )
     </select>
+
+    <select id="selectLastYearEverMonthTotalToEchart" resultType="java.util.HashMap">
+        (SELECT
+                'crew1' AS crew,
+                MONTH(produce_date) as month_date,
+                DAY(produce_date) as day_date,
+                SUM(material_total)/1000 AS total
+         FROM
+              `quality_monitoring_realtime_data1`
+         WHERE
+                 YEAR(produce_date)	= YEAR(NOW())
+         GROUP BY produce_date
+         ORDER BY produce_date)
+        UNION ALL
+                (SELECT
+                        'crew2' AS crew,
+                        MONTH(produce_date) as month_date,
+                        DAY(produce_date) as day_date,
+                        SUM(material_total)/1000 AS total
+                 FROM
+                      `quality_monitoring_realtime_data2`
+                 WHERE
+                         YEAR(produce_date)	= YEAR(NOW())
+                 GROUP BY produce_date
+                 ORDER BY produce_date)
+    </select>
+
+    <select id="selectLastTenWarning" resultType="java.util.HashMap">
+
+    </select>
 </mapper>

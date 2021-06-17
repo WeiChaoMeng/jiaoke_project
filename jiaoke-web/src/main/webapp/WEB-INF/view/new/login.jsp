@@ -45,7 +45,7 @@
 <body class="login-bg">
 
 <div class="login layui-anim layui-anim-up">
-    <div class="message" style="padding: 18px 10px 18px 40px;font-size: 20px;">路驰公司企业综合管理平台</div>
+    <div class="message" style="padding: 18px 10px 18px 40px;font-size: 20px;">沥青材料生产智能管控系统</div>
     <div id="darkbannerwrap"></div>
 
     <form method="post" class="layui-form">
