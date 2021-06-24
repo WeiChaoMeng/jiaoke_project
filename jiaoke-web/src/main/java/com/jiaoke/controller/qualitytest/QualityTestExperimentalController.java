@@ -51,7 +51,9 @@ public class QualityTestExperimentalController {
                 strJsp = "qualitytest/experimental/qualitytestexperimental_kf_sf_detail.jsp?id=" + id;
             }else if (obj.getExperimentalId()!=null && (obj.getExperimentalId() == 17195257||obj.getExperimentalId() == 17204742)) {//沥青混合料马氏
                 strJsp = "qualitytest/experimental/qualitytestexperimental_lqhhl_ms_detail.jsp?id=" + id;
-            }else if (obj.getExperimentalId()!=null && obj.getExperimentalId() == 17280350) {//沥青混合料矿料级配检验
+            }else if (obj.getExperimentalId()!=null &&
+                    (obj.getExperimentalId() == 17280350 || obj.getExperimentalId() ==8353589 ||
+                     obj.getExperimentalId() ==8361037 || obj.getExperimentalId() ==9031216)) {//沥青混合料矿料级配检验
                 strJsp = "qualitytest/experimental/qualitytestexperimental_lqhhl_kljp_detail.jsp?id=" + id;
             }
         }
