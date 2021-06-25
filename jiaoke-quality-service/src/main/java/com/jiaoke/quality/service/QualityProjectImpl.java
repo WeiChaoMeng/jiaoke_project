@@ -135,8 +135,7 @@ public class QualityProjectImpl implements QualityProjectInf {
             }
             System.out.println(insertMap);
             qualityProjectDao.insertWeighingInformation(insertMap);
-            Map<String,String> carMap = new HashMap<>();
-            carMap = qualityProjectDao.selectCarNumByWeighing(insertMap);
+            Map<String,String> carMap = qualityProjectDao.selectCarNumByWeighing(insertMap);
             if (null == carMap ){
                 //查询半小时内近似车牌
                 List<Map<String,String>> carList = qualityProjectDao.selectCarNumByLeaveFactory(insertMap);
@@ -157,7 +156,7 @@ public class QualityProjectImpl implements QualityProjectInf {
             if (carMap == null || carMap.isEmpty()){
                 amqpTemplate.convertAndSend("","delay_queue",JSON.toJSONString(insertMap));
             }else {
-                int updataNum = qualityProjectDao.updateRealTimeCarNumAndProject(String.valueOf(carMap.get("crew_num")),carMap.get("car_num"),String.valueOf(carMap.get("up_time")),String.valueOf(carMap.get("lastTime")),insertMap.get("project_name"));
+                int updataNum = qualityProjectDao.updateRealTimeCarNumAndProject(String.valueOf(carMap.get("crew_num")),carMap.get("car_num"),carMap.get("up_time") + "",carMap.get("lastTime") + "",insertMap.get("project_name"));
 
                 //未更新生产数据的情况
                 if (updataNum == 0 ){

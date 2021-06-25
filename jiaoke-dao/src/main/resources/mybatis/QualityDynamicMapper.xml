@@ -11,7 +11,7 @@
         FROM
              quality_monitoring_realtime_data1
         WHERE
-                to_days(NOW()) - TO_DAYS(produce_date) = 2;
+                DATE_SUB(CURDATE(), INTERVAL 2 DAY) &lt;= date(produce_date);
     </select>
 
     <select id="getLastWeekToChars" resultType="java.util.Map">
@@ -23,7 +23,7 @@
         FROM
              quality_monitoring_realtime_data1
         WHERE
-                to_days(NOW()) - TO_DAYS(produce_date) = 7;
+                DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(produce_date);
     </select>
 
     <select id="getAggregateRatioByMoudelId" resultType="java.util.Map">
@@ -71,13 +71,24 @@
     <select id="selectProductByMaterialAndDate" resultType="java.util.Map">
         SELECT
                 *
-                FROM
-                quality_monitoring_realtime_${crew}
-                WHERE
+        FROM
+             quality_monitoring_realtime_${crew}
+        WHERE
                 produce_date BETWEEN &apos;${startDate}&apos;
-                AND &apos;${endDate}&apos;
-                AND produce_proportioning_num = ${ratioNum}
+                        AND &apos;${endDate}&apos;
+          AND produce_proportioning_num = ${ratioNum}
     </select>
 
-
+    <select id="getLastWeekByRationAndCrew" resultType="java.util.Map">
+        SELECT
+               produce_disc_num,
+               material_asphalt,
+               material_total,
+               produce_proportioning_num
+        FROM
+             quality_monitoring_realtime_${crew}
+        WHERE
+                DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(produce_date)
+          AND produce_proportioning_num = ${ratioNum}
+    </select>
 </mapper>

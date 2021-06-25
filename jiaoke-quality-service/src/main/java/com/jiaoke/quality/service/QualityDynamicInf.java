@@ -26,4 +26,7 @@ public interface QualityDynamicInf {
     void getEcharsDataByMaterialAndDate(String date, String material, String ratioNum, String crew,HttpServletRequest request);
 
     void getLastWeekToChars( HttpServletRequest request);
+
+
+    String getDataToIndexChars(String ratioNum, String crew, HttpServletRequest request);
 }

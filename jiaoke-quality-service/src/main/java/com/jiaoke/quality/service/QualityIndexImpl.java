@@ -8,6 +8,7 @@
  **/
 package com.jiaoke.quality.service;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jiaoke.quality.dao.QualityIndexDao;
@@ -67,19 +68,19 @@ public class QualityIndexImpl implements QualityIndexInf {
                 boolean crew1IsExist = false;
                 boolean crew2IsExist = false;
                 for (int d = 0;d < list.size();d++){
-                        String crewTmp = list.get(d).get("crew");
-                        String monthNumTmp = String.valueOf(list.get(d).get("month_date"));
-                        String dayNumTmp = String.valueOf(list.get(d).get("day_date"));
-                        String totalTmp = String.valueOf(list.get(d).get("total"));
-                        //处理日期内有生产
-                        if (Integer.parseInt(monthNumTmp) == i && Integer.parseInt(dayNumTmp)  == j && "crew1".equals(crewTmp)){
-                            crew1Total = totalTmp;
-                            crew1IsExist = true;
-                        }
-                        if (Integer.parseInt(monthNumTmp) == i && Integer.parseInt(dayNumTmp)  == j && "crew2".equals(crewTmp)){
-                            crew2Total = totalTmp;
-                            crew2IsExist = true;
-                        }
+                    String crewTmp = list.get(d).get("crew");
+                    String monthNumTmp = String.valueOf(list.get(d).get("month_date"));
+                    String dayNumTmp = String.valueOf(list.get(d).get("day_date"));
+                    String totalTmp = String.valueOf(list.get(d).get("total"));
+                    //处理日期内有生产
+                    if (Integer.parseInt(monthNumTmp) == i && Integer.parseInt(dayNumTmp)  == j && "crew1".equals(crewTmp)){
+                        crew1Total = totalTmp;
+                        crew1IsExist = true;
+                    }
+                    if (Integer.parseInt(monthNumTmp) == i && Integer.parseInt(dayNumTmp)  == j && "crew2".equals(crewTmp)){
+                        crew2Total = totalTmp;
+                        crew2IsExist = true;
+                    }
                 }
 
                 if (crew1IsExist){
@@ -113,5 +114,23 @@ public class QualityIndexImpl implements QualityIndexInf {
         if(null == list) return null;
 
         return list;
+    }
+
+    @Override
+    public String getLastSevenDayTemperaturesDataToChart() {
+        List<Map<String,String>> list = qualityIndexDao.selectLastSevenDayTemperaturesDataToChart();
+        if (null == list){
+            return "";
+        }
+        return JSON.toJSONString(list);
+    }
+
+    @Override
+    public String getTemperaturesDataByConditions(String crew, String ratioNum) {
+        List<Map<String,String>> list = qualityIndexDao.selectTemperaturesDataByConditions(crew,ratioNum);
+        if (null == list){
+            return "";
+        }
+        return JSON.toJSONString(list);
     }
 }

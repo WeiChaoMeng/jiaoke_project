@@ -262,7 +262,7 @@ public class QualityController {
     public String getLastYearEverMonthTotalToEchart(){
         String res = null;
         try{
-          res =  qualityIndexInf.getLastYearEverMonthTotalToEchart();
+            res =  qualityIndexInf.getLastYearEverMonthTotalToEchart();
         }catch (Exception e) {
             e.printStackTrace();
         }
@@ -276,6 +276,31 @@ public class QualityController {
         String res = null;
         try{
             res =  qualityIndexInf.getLastTenWarning();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return res;
+    }
+    @ResponseBody
+    @RequestMapping("/getLastSevenDayTemperaturesDataToChart.do")
+    public String getLastSevenDayTemperaturesDataToChart(){
+        String res = null;
+        try{
+            res =  qualityIndexInf.getLastSevenDayTemperaturesDataToChart();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return res;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getTemperaturesDataByConditions.do",method = RequestMethod.POST)
+    public String getTemperaturesDataByConditions(@RequestParam("crew") String crew,@RequestParam("ratioNum") String ratioNum){
+        String res = null;
+        try{
+            res =  qualityIndexInf.getTemperaturesDataByConditions(crew,ratioNum);
         }catch (Exception e) {
             e.printStackTrace();
         }
@@ -441,12 +466,12 @@ public class QualityController {
      * @auther Melone
      * @date 2020/3/19 22:01
      */
-      @ResponseBody
-      @RequestMapping("/getOldRation.do")
-      public String getOldRation(){
-          String str = qualityMatchingInf.getOldRation();
-          return str;
-      }
+    @ResponseBody
+    @RequestMapping("/getOldRation.do")
+    public String getOldRation(){
+        String str = qualityMatchingInf.getOldRation();
+        return str;
+    }
     /**
      *
      * 功能描述: <br>
@@ -629,7 +654,7 @@ public class QualityController {
         }catch (Exception e){
             e.printStackTrace();
         }
-       return res;
+        return res;
     }
 
 
@@ -820,7 +845,7 @@ public class QualityController {
             e.printStackTrace();
         }
 
-       return res;
+        return res;
     }
 
     @ResponseBody
@@ -829,7 +854,7 @@ public class QualityController {
 
         String res = "";
         try{
-             res = qualityDataManagerInf.getProductSvgGrading(ProductSVG);
+            res = qualityDataManagerInf.getProductSvgGrading(ProductSVG);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -982,7 +1007,7 @@ public class QualityController {
             e.printStackTrace();
         }
 
-         return "quality/qc_auxiliary_message";
+        return "quality/qc_auxiliary_message";
     }
 
     @ResponseBody
@@ -1039,7 +1064,7 @@ public class QualityController {
         }
 
 
-       return res;
+        return res;
     }
 
     @ResponseBody
@@ -1221,6 +1246,18 @@ public class QualityController {
         return "quality/qc_dynamic_management";
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/getDataToIndexChars.do",method = RequestMethod.POST)
+    public String getDataToIndexChars(String ratioNum ,String crew,HttpServletRequest request){
+        String res = "";
+        try{
+            res =  qualityDynamicInf.getDataToIndexChars(ratioNum,crew,request);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return res;
+    }
 
     @ResponseBody
     @RequestMapping(value = "/getRatioListByDate.do" , method = RequestMethod.POST)
@@ -1470,7 +1507,7 @@ public class QualityController {
         }catch (Exception e) {
             e.printStackTrace();
         }
-       return res;
+        return res;
     };
 
     /**
@@ -1482,50 +1519,50 @@ public class QualityController {
      * @auther Melone
      * @date 2019/6/26 17:38
      */
-     @ResponseBody
-     @RequestMapping(value = "/removeSampleById.do",method = RequestMethod.POST)
-     @Transactional(rollbackFor=Exception.class)
-     public String removeSampleById(@RequestParam("id") String id){
-         String res = "";
-         try{
-             res = qualityExperimentalManagerInf.removeSampleById(id);
-         }catch (Exception e) {
-             e.printStackTrace();
-         }
-         return res;
-     }
-
-     @ResponseBody
-     @RequestMapping(value = "/confirmCompletedById.do",method = RequestMethod.POST)
-     public String confirmCompletedById(@RequestParam("id") String id){
-
-         String res = "";
-         try{
-             res = qualityExperimentalManagerInf.confirmCompletedById(id);
-         }catch (Exception e) {
-             e.printStackTrace();
-         }
+    @ResponseBody
+    @RequestMapping(value = "/removeSampleById.do",method = RequestMethod.POST)
+    @Transactional(rollbackFor=Exception.class)
+    public String removeSampleById(@RequestParam("id") String id){
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.removeSampleById(id);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
         return res;
-     }
+    }
 
-     @ResponseBody
-     @RequestMapping(value = "/getSampleStatusById.do",method = RequestMethod.POST)
-     @Transactional(rollbackFor=Exception.class)
-     public String getSampleStatusById(@RequestParam("id") String id){
-         String res = "";
-         try{
-             res = qualityExperimentalManagerInf.getSampleStatusById(id);
-         }catch (Exception e) {
-             System.out.println(e.fillInStackTrace());
-         }
-         return res;
-     }
+    @ResponseBody
+    @RequestMapping(value = "/confirmCompletedById.do",method = RequestMethod.POST)
+    public String confirmCompletedById(@RequestParam("id") String id){
 
-     //实验管理页面(委托单列表)
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.confirmCompletedById(id);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getSampleStatusById.do",method = RequestMethod.POST)
+    @Transactional(rollbackFor=Exception.class)
+    public String getSampleStatusById(@RequestParam("id") String id){
+        String res = "";
+        try{
+            res = qualityExperimentalManagerInf.getSampleStatusById(id);
+        }catch (Exception e) {
+            System.out.println(e.fillInStackTrace());
+        }
+        return res;
+    }
+
+    //实验管理页面(委托单列表)
 
     @RequestMapping(value = "/getExperimentalManagement.do")
     public String getExperimentalManagement(){
-         return "quality/qc_em_experimental_management";
+        return "quality/qc_em_experimental_management";
     }
 
     @ResponseBody
@@ -1537,7 +1574,7 @@ public class QualityController {
         }catch (Exception e) {
             e.printStackTrace();
         }
-       return res;
+        return res;
     }
 
     @ResponseBody
@@ -1549,7 +1586,7 @@ public class QualityController {
         }catch (Exception e) {
             e.printStackTrace();
         }
-         return res;
+        return res;
     }
     /**
      *
@@ -1592,7 +1629,7 @@ public class QualityController {
         }catch (Exception e) {
             e.printStackTrace();
         }
-         return res;
+        return res;
     }
     @ResponseBody
     @RequestMapping(value = "/getExperimentalItemCount.do",method = RequestMethod.POST)
@@ -1736,8 +1773,8 @@ public class QualityController {
     @RequestMapping(value = "/sendFromData.do",method = RequestMethod.POST)
     @Transactional(rollbackFor=Exception.class)
     public String sendFromData(@RequestParam("fromJson") String fromJson,
-                                   @RequestParam("firstTest") String firstTest,
-                                       @RequestParam("coarseTest") String coarseTest,
+                               @RequestParam("firstTest") String firstTest,
+                               @RequestParam("coarseTest") String coarseTest,
                                HttpServletRequest request){
 
 
@@ -2423,7 +2460,7 @@ public class QualityController {
         }
         return res;
     }
-     /********************************  设置相关 end *****************************************/
+    /********************************  设置相关 end *****************************************/
 
 
     /********************************  实验管理(对外) start *****************************************/
@@ -2620,7 +2657,7 @@ public class QualityController {
     public String addExperimentalItemByOrderTicketNumForeign(@RequestParam("orderTicketNum") String orderTicketNum,@RequestParam("experimentalItemId") String experimentalItemId){
         String res = "";
         try{
-          res = QualityExperimentalManagerForeignInf.addExperimentalItemByOrderTicketNum(orderTicketNum,experimentalItemId);
+            res = QualityExperimentalManagerForeignInf.addExperimentalItemByOrderTicketNum(orderTicketNum,experimentalItemId);
         }catch (Exception e) {
             e.printStackTrace();
         }

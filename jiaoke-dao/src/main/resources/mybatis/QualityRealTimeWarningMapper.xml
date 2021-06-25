@@ -22,26 +22,22 @@
              quality_warning_data AS t1
                  INNER JOIN (
                             (
-                            SELECT
-                                   QC.*
-                            FROM
-                                 quality_warning_promessage_crew AS QC
-                            WHERE
-                                    QC.produce_crewNum = 1
-                            ORDER BY
-                                     QC.id DESC
+                            SELECT QWPC.* FROM quality_warning_promessage_crew AS QWPC
+                                                   INNER JOIN quality_warning_data AS QWD
+                                                       ON QWPC.id = QWD.crew_id
+                            WHERE QWD.id IS NOT NULL
+                              AND QWPC.produce_crewNum = 1
+                            ORDER BY QWPC.id DESC
                             LIMIT 1
                             )
                             UNION ALL
                             (
-                            SELECT
-                                   QC.*
-                            FROM
-                                 quality_warning_promessage_crew AS QC
-                            WHERE
-                                    QC.produce_crewNum = 2
-                            ORDER BY
-                                     QC.id DESC
+                            SELECT QWPC.* FROM quality_warning_promessage_crew AS QWPC
+                                                   INNER JOIN quality_warning_data AS QWD
+                                                       ON QWPC.id = QWD.crew_id
+                            WHERE QWD.id IS NOT NULL
+                              AND QWPC.produce_crewNum = 2
+                            ORDER BY QWPC.id DESC
                             LIMIT 1
                             )
                             ) AS t2 ON t1.crew_id = t2.id

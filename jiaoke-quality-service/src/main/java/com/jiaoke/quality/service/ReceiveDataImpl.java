@@ -58,6 +58,7 @@ public class ReceiveDataImpl implements ReceiveDataInf {
     @Override
     public synchronized void receiveDataToDB(String messageData)  throws Exception  {
 
+        System.out.println("数据发送"+ messageData);
         if(StringUtils.isEmpty(messageData)) return;
 
         Map<String,String> map = new HashMap<String, String>();
@@ -122,8 +123,10 @@ public class ReceiveDataImpl implements ReceiveDataInf {
             return;
         }
         //插入数据库表quality_warning_promessage_crew，返回主键ID
+        System.out.println("准备插入" + messageData);
         qualityWarningDao.insertQualityWarningCrew(map);
         int id =Integer.parseInt(map.get("id"));
+        System.out.println("插入完成ID" + id);
         //更新当日生产人员
         List<Map<String,String>> userList  = qualityWarningDao.selectProductionPeople(crewNum);
         //初始化生产时间
@@ -189,7 +192,11 @@ public class ReceiveDataImpl implements ReceiveDataInf {
                 //根据时间、机组号、产品类型获取最近的三盘数据
                 List<Map<String,String>>  threeList =  qualityWarningDao.selectThreeProductByTime(tem,crewNum,map.get("produce_ratio_id"));
                 //获取平均后的三盘数据，计算差值
-                warningDataList.addAll(QualityWarningUtil.avgThreeProductWarningLeve(id,threeList,warningLeveMap,ratioTemplate));
+                List<QualityWarningData> tmpList =  QualityWarningUtil.avgThreeProductWarningLeve(id,threeList,warningLeveMap,ratioTemplate);
+                if (tmpList != null){
+                    warningDataList.addAll(tmpList);
+                }
+
             }
 
             if (Integer.parseInt(count) == 10){
@@ -237,7 +244,8 @@ public class ReceiveDataImpl implements ReceiveDataInf {
         }
 
         //插入数据库
-         qualityWarningDao.insertQualityWarningData(warningDataList);
+        System.out.println("插入详细信息" );
+         qualityWarningDao.insertQualityWarningData(warningDataList,crewNum);
         int criticalWarning = 0;
         int upWarning = 0;
         for (int i = 0; i < warningDataList.size(); i++){

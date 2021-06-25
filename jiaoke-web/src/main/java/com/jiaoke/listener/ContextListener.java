@@ -27,7 +27,7 @@ public class ContextListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         ServletContext sc = sce.getServletContext();
         String path = getContextPath(sc);
-//        sc.setAttribute("path","http://localhost:8090" );
+//        sc.setAttribute("path","http://localhost:8181" );
        sc.setAttribute("path","http://47.94.248.16" );
     }
 

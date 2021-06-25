@@ -41,7 +41,7 @@ public interface QualityWarningDao {
     QualityRatioTemplate selectRatioTemplateByCrew1MoudelId(@Param("crewMoudelId") String crewMoudelId, @Param("columeName")String columeName,@Param("proDate") String produceDate);
 
 
-    void insertQualityWarningData( @Param("warningDataList") List<QualityWarningData> warningDataList);
+    void insertQualityWarningData( @Param("warningDataList") List<QualityWarningData> warningDataList,@Param("crewNum") String crewNum);
 
     QualityRatioTemplate getQualityRatioTemplateById(@Param("id") int id,@Param("crewNum") String crewNum,@Param("proDate") String produceDate);
 

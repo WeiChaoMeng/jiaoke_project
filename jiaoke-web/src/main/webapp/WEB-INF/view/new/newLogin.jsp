@@ -35,7 +35,7 @@
                 <div class="con_left">
                     <img data-v-b16e4358="" src="../../../static/images/login/aaa.png" class="dl-img">
                 </div>
-                <div data-v-b16e4358="" class="title-container"><h3 data-v-b16e4358="" class="title-lg">路驰沥青生产管理平台</h3></div>
+                <div data-v-b16e4358="" class="title-container"><h3 data-v-b16e4358="" class="title-lg">路驰沥青生产智能管控系统</h3></div>
                 <div class="con_right">
                     <div class="con_r_top"><a href="javascript:;" class="left"
                                               style="color: rgb(153, 153, 153); border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(222, 222, 222);">关注我们</a>

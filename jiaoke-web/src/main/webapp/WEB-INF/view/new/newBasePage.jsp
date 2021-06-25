@@ -23,7 +23,8 @@
     <script src="../../../static/new/lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="../../../static/new/js/jquery-3.4.1.min.js"></script>
     <script src="../../../static/js/echarts/echarts.js" charset="utf-8"></script>
-
+    <script type="text/javascript" src="../../../static/new/js/xadmin.js"></script>
+    <script type="text/javascript" src="../../../static/js/jquery.js"></script>
 </head>
 <body>
 <div class="wrap-container welcome-container">
@@ -32,7 +33,7 @@
             <div class="data-show">
                 <ul class="clearfix">
                     <li class="col-sm-12 col-md-4 col-xs-12">
-                        <a href="javascript:;" class="clearfix">
+                        <a  href="javascript:;" class="clearfix" onclick="parent.xadmin.add_tab('实时监控','qc_real_time_monitoring.do',true)" >
                             <div class="icon-bg bg-org f-l">
                                 <span class="iconfont">&#xe70e;</span>
                             </div>
@@ -43,7 +44,7 @@
                         </a>
                     </li>
                     <li class="col-sm-12 col-md-4 col-xs-12">
-                        <a href="javascript:;" class="clearfix">
+                        <a href="javascript:;" class="clearfix" onclick="parent.xadmin.add_tab('数据管理','qc_data_manager.do',true)">
                             <div class="icon-bg bg-blue f-l">
                                 <span class="iconfont">&#xe705;</span>
                             </div>
@@ -54,7 +55,7 @@
                         </a>
                     </li>
                     <li class="col-sm-12 col-md-4 col-xs-12">
-                        <a href="javascript:;" class="clearfix">
+                        <a href="javascript:;" class="clearfix" onclick="parent.xadmin.add_tab('辅助分析','qc_auxiliary_analysis.do',true)" >
                             <div class="icon-bg bg-green f-l">
                                 <span class="iconfont">&#xe713;</span>
                             </div>
@@ -65,7 +66,7 @@
                         </a>
                     </li>
                     <li class="col-sm-12 col-md-4 col-xs-12">
-                        <a href="javascript:;" class="clearfix">
+                        <a href="javascript:;" class="clearfix"  onclick="parent.xadmin.add_tab('汇总分析','qc_pooled_analysis.do',true)">
                             <div class="icon-bg bg-green f-l">
                                 <span class="iconfont">&#xe74c;</span>
                             </div>
@@ -116,7 +117,7 @@
                             </li>
                             <li class="item cl"> <a href="#"><i class="avatar size-L radius"><img alt="" src="../../../static/images/baojing.png"></i></a>
                                 <div class="comment-main">
-                                    <header class="comment-header">
+                                    <header class="comment-header"  style="background-color: rgba(255,73,50,0.31);color: #ffffff" >
                                         <div class="comment-meta"><a class="comment-author" href="#">机组一</a>    AC-31C
                                             <time title="2014年8月31日 下午3:20" datetime="2014-08-31T03:54:20">2014-8-31 15:20:00</time>
                                         </div>
@@ -152,7 +153,7 @@
                             </li>
                             <li class="item cl"> <a href="#"><i class="avatar size-L radius"><img alt="" src="../../../static/images/baojing.png"></i></a>
                                 <div class="comment-main">
-                                    <header class="comment-header">
+                                    <header class="comment-header"  style="background-color: rgba(255,73,50,0.31);color: #ffffff" >
                                         <div class="comment-meta"><a class="comment-author" href="#">机组一</a>    AC-31C
                                             <time title="2014年8月31日 下午3:20" datetime="2014-08-31T03:54:20">2014-8-31 15:20:00</time>
                                         </div>
@@ -218,584 +219,325 @@
                 </div>
             </div>
         </div>
-        <div style="padding-top: 15px;">
-            <c:choose>
-                <c:when test="${!empty rationList}">
-                    <c:forEach items="${rationList}" var="keys" varStatus="status">
-
-                        <li class="card-item active">
-                            <div class="card">
-                                <div class="card-title title-even">
-                                    <div class="content">
-                                        <div class="zq-product-img">
-                                            <i class="zq-icon icon40x40 crad-area-icon1"></i>
+    </div>
+    <div style="width: 100%;">
+        <div class="my_chars" style="margin-bottom: 25px;">
+        <c:choose>
+            <c:when test="${!empty ratioMap}">
+                <c:forEach items="${rationList}" var="keys" begin="0" end="0" varStatus="status">
+                    <div class="card">
+                        <div style="    width: 100%;height: 45px;">
+                            <div class="content">
+                                <div style="width: 50%;    float: left;">
+                                    <c:forEach items="${ratioMap}" var="rationMess" >
+                                        <c:if test="${rationMess.crew1_modele_id == keys || rationMess.crew2_modele_id == keys}">
+                                            <c:set var="rationName" value="${rationMess.pro_name}"></c:set>
+                                        </c:if>
+                                    </c:forEach>
+                                    <c:if test="${rationName != null}">
+                                        <p class="box_title_p" >${rationMess.pro_name}产品油石比走势图</p>
+                                    </c:if>
+                                    <c:if test="${rationName == null}">
+                                        <p class="box_title_p">七日内${keys}号产品油石比走势图</p>
+                                    </c:if>
+                                </div>
+                                <div style="width: 50%;float: left">
+                                    <div style="margin-left: 30%;">
+                                        <label class="jelabel">机组选择：</label>
+                                        <div class="dy_select_div"   >
+                                            <select id="crew_num" class="dy_select"  onchange="getProduceRatioByCrew();" >
+                                                <option value="data1">机组一</option>
+                                                <option value="data2">机组二</option>
+                                            </select>
                                         </div>
-                                        <c:choose>
-                                            <C:when test="${empty material}">
 
+                                        <label class="jelabel">模板选择：</label>
+                                        <div class="dy_select_div" >
+                                            <select  id="ratio_id" class="dy_select" onchange="updateChar5()">
                                                 <c:forEach items="${ratioMap}" var="rationMess" >
-                                                    <c:if test="${rationMess.crew1_modele_id == keys || rationMess.crew2_modele_id == keys}">
-                                                        <h2>一星期内${rationMess.pro_name}产品油石比走势图</h2>
-                                                        <c:set var="rationName" value="${rationMess.pro_name}"></c:set>
-                                                    </c:if>
+                                                    <option value="${rationMess.crew1_modele_id}">${rationMess.pro_name}</option>
                                                 </c:forEach>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                                            </C:when>
-                                            <c:otherwise>
-                                                <c:forEach items="${ratioMap}" var="rationMess" >
-                                                    <c:if test="${rationMess.crew1_modele_id == keys || rationMess.crew2_modele_id == keys}">
-                                                        <h2>一星期内${rationMess.pro_name}产品${material}走势图</h2>
-                                                        <c:set var="rationName" value="${rationMess.pro_name}"></c:set>
-                                                    </c:if>
+                        <div class="card-content content-second">
+                            <div class="main-info">
+                                <div id="chart5" class="charts1"></div>
+
+                                <script type="text/javascript">
+                                    var myChart5= echarts.init(document.getElementById('chart5'));
+                                    // 指定图表的配置项和数据
+                                    var linecolor ={show:true,lineStyle:{color:'#17334e'}};
+                                    // function getxAxis(total) {
+                                    //     var categoryData = [];
+                                    //     var month= total;
+                                    //     var linecolor ={show:true,lineStyle:{color:'#17334e'}};
+                                    //     for(var j = 1; j <= month; j++) {
+                                    //         categoryData.push(j);
+                                    //     };
+                                    //     return categoryData;
+                                    // }
+
+                                    var option5 = {
+
+                                        tooltip:{
+                                            trigger: 'axis',
+                                            backgroundColor:'transparent',
+                                            showDelay: 0,
+                                            hideDelay: 0,
+                                            enterable: true,
+                                            transitionDuration: 0,
+                                            extraCssText: 'z-index:100',
+                                            formatter: function(params) {
+                                                //  console.log(params.Array.value);
+                                                var res = "";
+                                                var value = params[0].value;
+                                                var times = params[0].name
+                                                //  var times = "2017-11-23 11:00:18";
+                                                res = "<div style='border-top:5px solid #0066cc;background:#010204;padding:0 30px 10px 20px;font-weight:700;font-size:14;'><p>盘号："
+                                                    + times+ "</p><p>含量："
+                                                    + value+ "</p></div>";
+                                                return res;
+                                            }
+                                        },
+                                        dataZoom: [
+                                            {
+                                                start:0,
+                                                end:100,
+                                                bottom:"5%",
+                                            },
+                                            {
+                                                type: 'inside'
+                                            }],
+                                        grid: {
+                                            left: '5%',
+                                            right: '5%',
+                                            bottom: '15%',
+                                            top:'20%'
+                                            // containLabel: true
+                                        },
+                                        xAxis: {
+                                            type: 'category',
+                                            name: '',
+                                            // splitLine: linecolor,
+                                            axisTick:{show:false},
+                                            axisLine:linecolor,
+                                            // axisLabel:{color:'#fff'},
+                                            //  boundaryGap:false,
+                                            data:
+                                            <c:forEach items="${discNumMap}" var="discNum">
+                                            <c:if test="${discNum.key == keys}">
+                                            ${discNum.value},
+                                            </c:if>
+                                            </c:forEach>
+                                        },
+                                        yAxis: {
+                                            type: 'value',
+                                            name: '含量',
+                                            axisTick:{show:false},
+                                            axisLine:linecolor,
+                                            axisLabel: {
+                                                formatter: '{value} %'
+                                            },
+                                            splitLine: {
+                                                show: false
+                                            },
+                                            max: function (value) {
+                                                return (${moudelRatio[keys] + 1}).toFixed(2);
+                                            },
+                                            min:function (value) {
+                                                return (${moudelRatio[keys] - 1}) < 0? 0:(${moudelRatio[keys] - 1}).toFixed(2);
+                                            },
+                                            // max: function (v) {
+                                            //     return (v.max + v.min)/2
+                                            // },
+                                            // min: function (v) {
+                                            //     return v.min - 5 < 0? 0:(v.min - 5).toFixed(1);
+                                            // },
+
+                                        },
+                                        series: [
+                                            {
+                                                name: '3的指数',
+                                                type: 'line',
+                                                lineStyle:{normal:{color:'#010204',width:2}},
+                                                smooth:true,  //这句就是让曲线变平滑的
+                                                symbol:'circle',
+                                                symbolSize: 7,
+                                                data:
+                                                <c:forEach items="${allItem}" var="materialsRation">
+                                                <c:if test="${materialsRation.key == keys}" >
+                                                ${materialsRation.value},
+                                                </c:if>
                                                 </c:forEach>
-                                            </c:otherwise>
-                                        </c:choose>
+                                                <%--markLine:{--%>
+                                                <%--silent: true,--%>
+                                                <%--data: [--%>
+                                                <%--<c:choose>--%>
+                                                <%--<c:when test="${material == '油石比' || material == '石粉' ||empty material}">--%>
+                                                <%--{ yAxis: '${moudelRatio[keys] + 0.2}', xAxis: '${fn:length(allItem[keys])}'},--%>
+                                                <%--{ yAxis: '${moudelRatio[keys] - 0.2}', xAxis: '${fn:length(allItem[keys])}'}--%>
+                                                <%--</c:when>--%>
+                                                <%--<c:otherwise>--%>
+                                                <%--{ yAxis: '${moudelRatio[keys] + 3}', xAxis: '${fn:length(allItem[keys])}'},--%>
+                                                <%--{ yAxis: '${moudelRatio[keys] - 3}', xAxis: '${fn:length(allItem[keys])}'}--%>
+                                                <%--</c:otherwise>--%>
+                                                <%--</c:choose>--%>
+                                                <%--]--%>
+                                                <%--},--%>
+                                                markArea: {
+                                                    data: [
+                                                        [{
 
-                                    </div>
-                                </div>
-                                <div class="card-content content-first bg-e8e8e8">
-                                    <!-- <ul class="content-first-list">
-                                    <li>分天查看油石比</li>
-                                    </ul> -->
-                                </div>
-                                <div class="card-content content-second">
+                                                            yAxis: ${moudelRatio[keys] - 1},
+                                                            itemStyle:{
+                                                                normal:{color:'rgba(30, 144, 255, 1)', opacity:0.7},
+                                                            },
+                                                        },
+                                                            {
+                                                                yAxis: ${moudelRatio[keys] - 0.2},
+                                                                itemStyle:{
+                                                                    normal:{color:'rgba(30, 144, 255, 1)', opacity:0.7},
+                                                                },
+                                                            }],
+                                                        [{
 
-                                    <div class="main-info">
-                                        <div id="chart${status.index + 100}" class="charts1"></div>
-
-                                        <script type="text/javascript">
-                                            var myChart${status.index + 100} = echarts.init(document.getElementById('chart${status.index + 100}'));
-                                            // 指定图表的配置项和数据
-                                            var linecolor ={show:true,lineStyle:{color:'#17334e'}};
-                                            function getxAxis(total) {
-                                                var categoryData = [];
-                                                var month= total;
-                                                var linecolor ={show:true,lineStyle:{color:'#17334e'}};
-                                                for(var j = 1; j <= month; j++) {
-                                                    categoryData.push(j);
-                                                };
-                                                return categoryData;
+                                                            yAxis: ${moudelRatio[keys] - 0.2},
+                                                            itemStyle:{
+                                                                normal:{color:'#00e7bc', opacity:0.7},
+                                                            },
+                                                        },
+                                                            {
+                                                                yAxis: ${moudelRatio[keys] + 0.2},
+                                                                itemStyle:{
+                                                                    normal:{color:'#00e7bc', opacity:0.7},
+                                                                },
+                                                            }],
+                                                        [{
+                                                            yAxis: ${moudelRatio[keys] + 0.2},
+                                                            itemStyle:{
+                                                                normal:{color:'rgba(30, 144, 255, 1)', opacity:0.7},
+                                                            },
+                                                        },
+                                                            {
+                                                                yAxis: ${moudelRatio[keys] + 1},
+                                                                itemStyle:{
+                                                                    normal:{color:'rgba(30, 144, 255, 1)', opacity:0.7},
+                                                                },
+                                                            }]
+                                                    ]
+                                                }
                                             }
 
-                                            var option${status.index + 100} = {
-
-                                                tooltip:{
-                                                    trigger: 'axis',
-                                                    backgroundColor:'transparent',
-                                                    showDelay: 0,
-                                                    hideDelay: 0,
-                                                    enterable: true,
-                                                    transitionDuration: 0,
-                                                    extraCssText: 'z-index:100',
-                                                    formatter: function(params) {
-                                                        //  console.log(params.Array.value);
-                                                        var res = "";
-                                                        var value = params[0].value;
-                                                        var times = params[0].name
-                                                        //  var times = "2017-11-23 11:00:18";
-                                                        res = "<div style='border-top:5px solid #0066cc;background:#010204;padding:0 30px 10px 20px;font-weight:700;font-size:14;'><p>盘号："
-                                                            + times+ "</p><p>含量："
-                                                            + value+ "</p></div>";
-                                                        return res;
-                                                    }
-                                                },
-                                                dataZoom: [
-                                                    {
-                                                        start:0,
-                                                        end:100,
-                                                    },
-                                                    {
-                                                        type: 'inside'
-                                                    }],
-                                                grid: {
-                                                    left: '7%',
-                                                    right: '7%',
-                                                    bottom: '15%',
-                                                    top:'15%'
-                                                    // containLabel: true
-                                                },
-                                                toolbox: {
-                                                    feature: {
-                                                        saveAsImage: {}
-                                                    }
-                                                },
-                                                xAxis: {
-                                                    type: 'category',
-                                                    name: '',
-                                                    // splitLine: linecolor,
-                                                    axisTick:{show:false},
-                                                    axisLine:linecolor,
-                                                    // axisLabel:{color:'#fff'},
-                                                    //  boundaryGap:false,
-                                                    data:
-                                                    <c:forEach items="${discNumMap}" var="discNum">
-                                                    <c:if test="${discNum.key == keys}">
-                                                    ${discNum.value},
-                                                    </c:if>
-                                                    </c:forEach>
-                                                },
-                                                yAxis: {
-                                                    type: 'value',
-                                                    name: '含量',
-                                                    axisTick:{show:false},
-                                                    axisLine:linecolor,
-                                                    axisLabel: {
-                                                        formatter: '{value} %'
-                                                    },
-                                                    max: function (value) {
-                                                        return (value.max + 0.25).toFixed(2);
-                                                    },
-                                                    min:function (value) {
-                                                        return (value.min - 0.25) < 0? 0:(value.min - 0.25).toFixed(2);
-                                                    },
-                                                    // max: function (v) {
-                                                    //     return (v.max + v.min)/2
-                                                    // },
-                                                    // min: function (v) {
-                                                    //     return v.min - 5 < 0? 0:(v.min - 5).toFixed(1);
-                                                    // },
-
-                                                },
-                                                series: [
-                                                    {
-                                                        name: '3的指数',
-                                                        type: 'line',
-                                                        lineStyle:{normal:{color:'#333333',width:2}},
-                                                        smooth:true,  //这句就是让曲线变平滑的
-                                                        symbol:'circle',
-                                                        //     symbol:"image://",
-                                                        symbolSize: 7,
-
-                                                        data:
-                                                        <c:forEach items="${allItem}" var="materialsRation">
-                                                        <c:if test="${materialsRation.key == keys}" >
-                                                        ${materialsRation.value},
-                                                        </c:if>
-                                                        </c:forEach>
-                                                        markLine:{
-                                                            silent: true,
-                                                            data: [
-                                                                <c:choose>
-                                                                <c:when test="${material == '油石比' || material == '石粉' ||empty material}">
-                                                                { yAxis: '${moudelRatio[keys] + 0.2}', xAxis: '${fn:length(allItem[keys])}'},
-                                                                { yAxis: '${moudelRatio[keys] - 0.2}', xAxis: '${fn:length(allItem[keys])}'}
-                                                                </c:when>
-                                                                <c:otherwise>
-                                                                { yAxis: '${moudelRatio[keys] + 3}', xAxis: '${fn:length(allItem[keys])}'},
-                                                                { yAxis: '${moudelRatio[keys] - 3}', xAxis: '${fn:length(allItem[keys])}'}
-                                                                </c:otherwise>
-                                                                </c:choose>
-                                                            ]
-                                                        }
-
-                                                    },
-
-                                                ]
-                                            };
-                                            myChart${status.index + 100}.setOption(option${status.index + 100});
-                                            window.addEventListener("resize", function () {
-                                                myChart${status.index + 100}.resize();
-                                            });
-                                        </script>
+                                        ]
+                                    };
+                                    myChart5.setOption(option5);
+                                    window.addEventListener("resize", function () {
+                                        myChart5.resize();
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
+            </c:when>
+            <c:otherwise>
+                <p id="pro_message" style="width: 100%; padding-left: 45%;padding-top: 5%;font-size: 14px;">七日内无生产</p>
+            </c:otherwise>
+        </c:choose>
+    </div>
+        <div class="my_chars">
+                        <div class="card">
+                            <div style="    width: 100%;height: 45px;">
+                                <div class="content">
+                                    <div style="width: 50%;    float: left;">
+                                        <p class="box_title_p" style="margin-top: 15px;">七日内所有产品温度趋势图</p>
                                     </div>
-
                                 </div>
                             </div>
-                        </li>
 
+                            <div class="card-content content-second">
+                                <div class="main-info">
+                                    <div id="chart7" class="charts1"></div>
 
-                        <li class="card-item active">
-                            <div class="card">
-                                <div class="card-title title-even">
-                                    <div class="content">
-                                        <div class="zq-product-img">
-                                            <i class="zq-icon icon40x40 crad-area-icon1"></i>
-                                        </div>
+                                    <script type="text/javascript">
+                                        var myChart7= echarts.init(document.getElementById('chart7'));
+                                        // 指定图表的配置项和数据
+                                        var linecolor ={show:true,lineStyle:{color:'#17334e'}};
+                                        // function getxAxis(total) {
+                                        //     var categoryData = [];
+                                        //     var month= total;
+                                        //     var linecolor ={show:true,lineStyle:{color:'#17334e'}};
+                                        //     for(var j = 1; j <= month; j++) {
+                                        //         categoryData.push(j);
+                                        //     };
+                                        //     return categoryData;
+                                        // }
 
-                                        <c:choose>
-                                            <C:when test="${empty material}">
-                                                <h2>一星期内${rationName}产品油石比极差走势图</h2>
-                                            </C:when>
-                                            <c:otherwise>
-                                                <h2>一星期内${rationName}产品${material}极差走势图</h2>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </div>
-                                </div>
-                                <div class="card-content content-first bg-e8e8e8">
-                                    <ul class="content-first-list">
-                                        <li></li>
-                                    </ul>
-                                </div>
-                                <div class="card-content content-second">
-
-                                    <div class="main-info">
-                                        <div id="chart${status.index + 200}" class="charts1"></div>
-
-                                        <script type="text/javascript">
-
-                                            var myChart${status.index + 200} = echarts.init(document.getElementById('chart${status.index + 200}'));
-                                            // 指定图表的配置项和数据
-                                            var linecolor ={show:true,lineStyle:{color:'#17334e'}};
-                                            function getxAxis(total) {
-                                                var categoryData = [];
-                                                var month= total;
-                                                var linecolor ={show:true,lineStyle:{color:'#17334e'}};
-                                                for(var j = 1; j <= month; j++) {
-                                                    categoryData.push(j);
-                                                };
-                                                return categoryData;
-                                            }
-                                            var option${status.index + 200} = {
-                                                tooltip:{
-                                                    trigger: 'axis',
-                                                    backgroundColor:'transparent',
-                                                    showDelay: 0,
-                                                    hideDelay: 0,
-                                                    enterable: true,
-                                                    transitionDuration: 0,
-                                                    extraCssText: 'z-index:100',
-                                                    formatter: function(params) {
-                                                        //  console.log(params.Array.value);
-                                                        var res = "";
-                                                        var value = params[0].value;
-                                                        var times = params[0].name
-                                                        //  var times = "2017-11-23 11:00:18";
-                                                        res = "<div style='border-top:5px solid #0066cc;background:#010204;padding:0 30px 10px 20px;font-weight:700;font-size:14;'><p>次数："
-                                                            + times+ "</p><p>含量："
-                                                            + value+ "</p></div>";
-                                                        return res;
-                                                    }
+                                        option7 = {
+                                            tooltip: {
+                                                trigger: 'axis'
+                                            },
+                                            legend: {
+                                                data: ['骨料温度', '混合料温度', '沥青温度'],
+                                                right:'30'
+                                            },
+                                            grid: {
+                                                left: '3%',
+                                                right: '4%',
+                                                bottom: '1%',
+                                                containLabel: true
+                                            },
+                                            xAxis: {
+                                                type: 'category',
+                                                boundaryGap: false,
+                                                data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+                                            },
+                                            yAxis: {
+                                                type: 'value'
+                                            },
+                                            series: [
+                                                {
+                                                    name: '骨料温度',
+                                                    type: 'line',
+                                                    stack: '总量',
+                                                    data: [120, 132, 101, 134, 90, 230, 210]
                                                 },
-                                                dataZoom: [
-                                                    {
-                                                        start:0,
-                                                        end:100,
-                                                    },
-                                                    {
-                                                        type: 'inside'
-                                                    }],
-                                                toolbox: {
-                                                    feature: {
-                                                        saveAsImage: {}
-                                                    }
-                                                },
-                                                grid: {
-                                                    left: '7%',
-                                                    right: '7%',
-                                                    bottom: '15%',
-                                                    top:'15%'
-                                                },
-                                                xAxis: {
-                                                    type: 'category',
-                                                    name: '',
-                                                    // splitLine: linecolor,
-                                                    axisTick:{show:false},
-                                                    axisLine:linecolor,
-                                                    // axisLabel:{color:'#fff'},
-                                                    //  boundaryGap:false,
-                                                    data: getxAxis(${fn:length(maxMin[keys])})
-                                                },
-                                                yAxis: {
-                                                    type: 'value',
-                                                    name: '',
-                                                    axisTick:{show:false},
-                                                    axisLine:linecolor,
-                                                    // splitLine: linecolor,
-                                                    // axisLabel:{color:'#fff'},
-                                                    axisLabel: {
-                                                        formatter: '{value} %'
-                                                    },
-                                                    max: function (value) {
-                                                        return (value.max + 0.25).toFixed(2);
-                                                    },
-                                                    min:function (value) {
-                                                        return (value.min - 0.25) < 0? 0:(value.min - 0.25).toFixed(2);
-                                                    },
-                                                },
-                                                series: [
-                                                    {
-                                                        name: '3的指数',
-                                                        type: 'line',
-                                                        lineStyle:{normal:{color:'#333333',width:2}},
 
-                                                        smooth:true,  //这句就是让曲线变平滑的
-                                                        symbol:'circle',
-                                                        //     symbol:"image://",
-                                                        symbolSize: 7,
-
-                                                        data:
-                                                        <c:forEach items="${maxMin}" var="maxMinRation">
-                                                        <c:if test="${maxMinRation.key == keys}" >
-                                                        //极差是偏差值*2
-                                                        ${maxMinRation.value},
-                                                        </c:if>
-                                                        </c:forEach>
-                                                    },
-                                                    {
-                                                        name: '5的指数',
-                                                        type: 'line',
-                                                        lineStyle:{normal:{color:'#333333',width:2}},
-                                                        step: 'start',
-                                                        symbol:'none',  //这句就是去掉点的
-                                                        smooth:false,  //这句就是让曲线变平滑的
-                                                        itemStyle:{
-                                                            normal:{
-                                                                lineStyle:{
-                                                                    width:2,
-                                                                    type:'dotted'  //'dotted'虚线 'solid'实线
-                                                                }
-                                                            }
-                                                        },
-                                                        <%--markLine:{--%>
-                                                        <%--silent: true,--%>
-                                                        <%--data: [--%>
-                                                        <%--<c:choose>--%>
-                                                        <%--<c:when test="${material == '油石比' || material == '石粉' ||empty material}">--%>
-                                                        <%--{ yAxis: '${(moudelRatio[keys] + 0.2)/2}', xAxis: '${fn:length(allItem[keys])}'},--%>
-                                                        <%--{ yAxis: '${(moudelRatio[keys] - 0.2)/2}', xAxis: '${fn:length(allItem[keys])}'}--%>
-                                                        <%--</c:when>--%>
-                                                        <%--<c:otherwise>--%>
-                                                        <%--{ yAxis: '${(moudelRatio[keys] + 3)/2}', xAxis: '${fn:length(allItem[keys])}'},--%>
-                                                        <%--{ yAxis: '${(moudelRatio[keys] - 3)/2}', xAxis: '${fn:length(allItem[keys])}'}--%>
-                                                        <%--</c:otherwise>--%>
-                                                        <%--</c:choose>--%>
-                                                        <%--]--%>
-                                                        <%--},--%>
-                                                        data:[
-                                                            //极差是偏差值*2
-                                                            <c:forEach items="${maxMinUp[keys]}" var="maxMinUpRation" varStatus="statusMaxMin">
-                                                            ${maxMinUpRation}, ${maxMinUpRation}, ${maxMinUpRation}, ${maxMinUpRation}, ${maxMinUpRation},
-                                                            </c:forEach>
-                                                        ]},
-
-                                                ]
-                                            };
-                                            myChart${status.index + 200}.setOption(option${status.index + 200});
-                                            window.addEventListener("resize", function () {
-                                                myChart${status.index + 200}.resize();
-                                            });
-                                        </script>
-                                    </div>
-
+                                                {
+                                                    name: '沥青温度',
+                                                    type: 'line',
+                                                    stack: '总量',
+                                                    data: [150, 232, 201, 154, 190, 330, 410]
+                                                },
+                                                {
+                                                    name: '混合料温度',
+                                                    type: 'line',
+                                                    stack: '总量',
+                                                    data: [220, 182, 191, 234, 290, 330, 310]
+                                                }
+                                            ]
+                                        };
+                                        myChart7.setOption(option7);
+                                        window.addEventListener("resize", function () {
+                                            myChart7.resize();
+                                        });
+                                    </script>
                                 </div>
                             </div>
-                        </li>
-
-
-                        <li class="card-item active">
-                            <div class="card">
-                                <div class="card-title title-even">
-                                    <div class="content">
-                                        <div class="zq-product-img">
-                                            <i class="zq-icon icon40x40 crad-area-icon3"></i>
-                                        </div>
-
-                                        <c:choose>
-                                            <C:when test="${empty material}">
-                                                <h2>一星期内${rationName}产品平均油石比走势图</h2>
-                                            </C:when>
-                                            <c:otherwise>
-                                                <h2>一星期内${rationName}产品平均${material}走势图</h2>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </div>
-                                </div>
-                                <div class="card-content content-first bg-e8e8e8">
-                                    <ul class="content-first-list">
-                                        <li></li>
-                                    </ul>
-                                </div>
-                                <div class="card-content content-second">
-
-                                    <div class="main-info">
-                                        <div id="chart${status.index + 300}" class="charts1"></div>
-
-                                        <script type="text/javascript">
-                                            var myChart${status.index + 300} = echarts.init(document.getElementById('chart${status.index + 300}'));
-                                            // 指定图表的配置项和数据
-                                            var linecolor ={show:true,lineStyle:{color:'#17334e'}};
-                                            function getxAxis(total) {
-                                                var categoryData = [];
-                                                var month= total;
-                                                var linecolor ={show:true,lineStyle:{color:'#17334e'}};
-                                                for(var j = 1; j <= month; j++) {
-                                                    categoryData.push(j);
-                                                };
-                                                return categoryData;
-                                            }
-                                            var option${status.index + 300} = {
-                                                tooltip:{
-                                                    trigger: 'axis',
-                                                    backgroundColor:'transparent',
-                                                    showDelay: 0,
-                                                    hideDelay: 0,
-                                                    enterable: true,
-                                                    transitionDuration: 0,
-                                                    extraCssText: 'z-index:100',
-                                                    formatter: function(params) {
-                                                        //  console.log(params.Array.value);
-                                                        var res = "";
-                                                        var value = params[0].value;
-                                                        var times = params[0].name;
-                                                        //  var times = "2017-11-23 11:00:18";
-                                                        res = "<div style='border-top:5px solid #0066cc;background:#010204;padding:0 30px 10px 20px;font-weight:700;font-size:14;'><p>序号："
-                                                            + times+ "</p><p>含量："
-                                                            + value+ "</p></div>";
-                                                        return res;
-                                                    }
-                                                },
-                                                toolbox: {
-                                                    feature: {
-                                                        saveAsImage: {}
-                                                    }
-                                                },
-                                                grid: {
-                                                    left: '7%',
-                                                    right: '7%',
-                                                    bottom: '15%',
-                                                    top:'15%'
-                                                },
-                                                dataZoom: [
-                                                    {
-                                                        start:0,
-                                                        end:100,
-                                                    },
-                                                    {
-                                                        type: 'inside'
-                                                    }],
-                                                xAxis: {
-                                                    type: 'category',
-                                                    name: '',
-                                                    // splitLine: linecolor,
-                                                    axisTick:{show:false},
-                                                    axisLine:linecolor,
-                                                    // axisLabel:{color:'#fff'},
-                                                    //  boundaryGap:false,
-                                                    data: getxAxis(${fn:length(svg3[keys])})
-                                                },
-                                                yAxis: {
-                                                    type: 'value',
-                                                    name: '',
-                                                    axisTick:{show:false},
-                                                    axisLine:linecolor,
-                                                    // splitLine: linecolor,
-                                                    // axisLabel:{color:'#fff'},
-                                                    axisLabel: {
-                                                        formatter: '{value} %'
-                                                    },
-                                                    Interval:0.5,
-                                                    max: function (value) {
-                                                        return (value.max + 0.25).toFixed(2);
-                                                    },
-                                                    min:function (value) {
-                                                        return (value.min - 0.25) < 0? 0:(value.min - 0.25).toFixed(2);
-                                                    },
-                                                    // max: function (v) {
-                                                    //     return (v.max + 0.5).toFixed(1)
-                                                    // },
-                                                    // min: function (v) {
-                                                    //     return v.min - 0.5 < 0? 0:(v.min - 5).toFixed(1);
-                                                    // },
-                                                },
-                                                series: [
-
-                                                    {
-                                                        name: '3的指数',
-                                                        type: 'line',
-                                                        lineStyle:{normal:{color:'#333333',width:2}},
-                                                        smooth:true,  //这句就是让曲线变平滑的
-                                                        symbol:'circle',
-                                                        //     symbol:"image://",
-                                                        symbolSize: 7,
-
-                                                        data:
-
-                                                        <c:forEach items="${svg3}" var="svg3Ration">
-                                                        <c:if test="${svg3Ration.key == keys}" >
-                                                        ${svg3Ration.value},
-                                                        </c:if>
-                                                        </c:forEach>
-                                                    },
-                                                    {
-                                                        name: '上限',
-                                                        type: 'line',
-                                                        lineStyle:{normal:{color:'#333333',width:2}},
-                                                        step: 'start',
-                                                        symbol:'none',  //这句就是去掉点的
-                                                        smooth:false,  //这句就是让曲线变平滑的
-                                                        itemStyle:{
-                                                            normal:{
-                                                                lineStyle:{
-                                                                    width:2,
-                                                                    type:'dotted'  //'dotted'虚线 'solid'实线
-                                                                }
-                                                            }
-                                                        },
-                                                        data:[
-                                                            <c:forEach items="${svg5up[keys]}" var="svg5upRation">
-                                                            ${svg5upRation}, ${svg5upRation}, ${svg5upRation}, ${svg5upRation}, ${svg5upRation},
-                                                            </c:forEach>
-                                                        ]},
-                                                    {
-                                                        name: '下限',
-                                                        type: 'line',
-                                                        lineStyle:{normal:{color:'#333333',width:2}},
-                                                        step: 'start',
-                                                        symbol:'none',  //这句就是去掉点的
-                                                        smooth:false,  //这句就是让曲线变平滑的
-                                                        itemStyle:{
-                                                            normal:{
-                                                                lineStyle:{
-                                                                    width:2,
-                                                                    type:'dotted'  //'dotted'虚线 'solid'实线
-                                                                }
-                                                            }
-                                                        },
-                                                        markLine:{
-                                                            silent: true,
-                                                            data: [
-                                                                <c:choose>
-                                                                <c:when test="${material == '油石比' || material == '石粉' ||empty material}">
-                                                                { yAxis: '${moudelRatio[keys] + 0.2}', xAxis: '${fn:length(allItem[keys])}'},
-                                                                { yAxis: '${moudelRatio[keys] - 0.2}', xAxis: '${fn:length(allItem[keys])}'}
-                                                                </c:when>
-                                                                <c:otherwise>
-                                                                { yAxis: '${moudelRatio[keys] + 3}', xAxis: '${fn:length(allItem[keys])}'},
-                                                                { yAxis: '${moudelRatio[keys] - 3}', xAxis: '${fn:length(allItem[keys])}'}
-                                                                </c:otherwise>
-                                                                </c:choose>
-                                                            ]
-                                                        },
-                                                        data:[
-                                                            <c:forEach items="${svg5down[keys]}" var="svg5downRation">
-                                                            ${svg5downRation}, ${svg5downRation}, ${svg5downRation}, ${svg5downRation}, ${svg5downRation},
-                                                            </c:forEach>
-                                                        ]},
-                                                ]
-                                            };
-                                            myChart${status.index + 300}.setOption(option${status.index + 300});
-                                            window.addEventListener("resize", function () {
-                                                myChart${status.index + 300}.resize();
-                                            });
-                                        </script>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </li>
-                    </c:forEach>
-                </c:when>
-                <c:otherwise>
-                    <p id="pro_message" style="width: 100%; padding-left: 45%;padding-top: 5%;font-size: 14px;">一星期内无生产</p>
-                </c:otherwise>
-            </c:choose>
+                        </div>
         </div>
     </div>
-    <%--js获取路径--%>
-    <input id="path" type="hidden" value="${path}"/>
+
 </div>
 
+
+<%--js获取路径--%>
+<input id="path" type="hidden" value="${path}"/>
 <script type="text/javascript">
     var basePath ;
     $(function () {
@@ -804,6 +546,8 @@
         getLastYearEverMonthTotalToEchart();
         //预警相关
         getLastTenWarning();
+        //查询温度曲线
+        getLastSevenDayTemperaturesDataToChart();
     })
     
     function getLastYearEverMonthTotalToEchart() {
@@ -815,7 +559,7 @@
                 if (res == null || res === ""){
                     layui.use('layer', function(){
                         var layer = layui.layer;
-                        layer.alert("未查询到生产信息")
+                        layer.msg("未查询到生产信息")
                     });
 
                     return
@@ -838,7 +582,7 @@
                     if (res.length == 0){
                         layui.use('layer', function(){
                             var layer = layui.layer;
-                            layer.alert("今日暂无预警信息")
+                            layer.msg("今日暂无预警信息")
                         });
                         return
                     }
@@ -877,6 +621,10 @@
                         maxWraName = "骨料1";
                         maxwraNum = res[i]['骨料1deviation'];
                         maxWraLeve = res[i]['骨料1'];
+                    }
+                    var colorByLeve = '<header class="comment-header">';
+                    if (maxWraLeve > 3){
+                        colorByLeve = '<header class="comment-header" style="background-color: rgba(255,73,50,0.31);color: #ffffff" >'
                     }
 
                     tmpHtml += '<li class="item cl"> <a href="#"><i class="avatar size-L radius"><img alt="" src="../../../static/images/baojing.png"></i></a>'
@@ -961,7 +709,6 @@
                         break;
                     case 8:
                         strArry.push2("八月");
-                        return "八月";
                         break;
                     case 9:
                         strArry.push2("九月");
@@ -985,13 +732,23 @@
             for (var i = 0;i < array.length;i++){
                 var intex = array[i];
                 option.push({
-                    title : {text: monthArray[i] + '月两台机组产量'},
+                    title : {text: monthArray[i] + '两台机组产量'},
                     series : [
                         {data: crew1[intex]},
                         {data:  crew2[intex]},
                         {data: [
-                                {name: '机组一', value: crew1[intex + 'sum']},
-                                {name: '机组二', value: crew2[intex + 'sum']}
+                                {name: '机组一', value: crew1[intex + 'sum'].toFixed(1),label: {
+                                        normal: {
+                                            formatter: '{b}: {c}吨 ({d}%)',
+                                            position: 'inside'
+                                        }
+                                    },},
+                                {name: '机组二', value: crew2[intex + 'sum'].toFixed(1), label: {
+                                        normal: {
+                                            formatter: '{b}: {c}吨 ({d}%)',
+                                            position: 'inside'
+                                        }
+                                    },}
                             ]}
                     ]
                 })
@@ -1019,7 +776,7 @@
                     // loop: false,
                     autoPlay: true,
                     // currentIndex: 2,
-                    playInterval: 2000,
+                    playInterval: 4000,
                     // controlStyle: {
                     //     position: 'left'
                     // },
@@ -1076,21 +833,22 @@
                         type: 'bar',
                         itemStyle:{
                                     normal:{
-                                        color:'#91cc75'
+                                        color:'#53d6bc'
                                     }
                                 }
                                 },
-                    {name: '机组二', type: 'bar',                       itemStyle:{
+                    {name: '机组二', type: 'bar',
+                        itemStyle:{
                             normal:{
-                                color:'#31acfa'
+                                color:'#62cdfa'
                             }
                         }},
                     {
                         name: '各机组生产',
                         type: 'pie',
-                        center: ['75%', '35%'],
+                        center: ['90%', '25%'],
                         radius: '28%',
-                        color:["#91cc75","#31acfa"],
+                        color:["#53d6bc","#62cdfa"],
                         z: 100
                     }
                 ]
@@ -1102,6 +860,221 @@
         })
     }
 
+    function updateChar5(){
+        var crew = $("#crew_num option:selected").val();
+        var ratioNum = $("#ratio_id option:selected").val();
+        if (ratioNum == null || ratioNum == ""){
+            layui.use('layer', function(){
+                var layer = layui.layer;
+                layer.msg("未获取配比，请重新选择");
+            });
+            return
+        }else {
+            $.ajax({
+                url:basePath + "/getDataToIndexChars.do",
+                type:"post",
+                dataType:"json",
+                data:{
+                    "crew":crew,
+                    "ratioNum":ratioNum
+                },
+                success:function (res) {
+                    if (res.length === 0){
+                        if (res === null || res.length === 0){
+                            layui.use('layer', function(){
+                                var layer = layui.layer;
+                                layer.alert("查询错误")
+                            });
+                            return
+                        }
+                    }
+                    var tem =Number(res['moudelRatio'][ratioNum]);
+                    var markArea = {
+                        silent:false,
+                        data: [
+                            [{
+
+                                yAxis: tem - 1,
+                                itemStyle:{
+                                    normal:{color:'#6b6af7', opacity:0.3},
+                                },
+                            },
+                                {
+                                    yAxis: tem - 0.2,
+                                    itemStyle:{
+                                        normal:{color:'#6b6af7', opacity:0.3},
+                                    },
+                                }],
+                            [{
+
+                                yAxis: tem - 0.2,
+                                itemStyle:{
+                                    normal:{color:'#25d607', opacity:0.3},
+                                },
+                            },
+                                {
+                                    yAxis: tem  + 0.2,
+                                    itemStyle:{
+                                        normal:{color:'#25d607', opacity:0.3},
+                                    },
+                                }],
+                            [{
+                                yAxis: tem + 0.2,
+                                itemStyle:{
+                                    normal:{color:'#6b6af7', opacity:0.3},
+                                },
+                            },
+                                {
+                                    yAxis: tem  + 1,
+                                    itemStyle:{
+                                        normal:{color:'#bule', opacity:0.3},
+                                    },
+                                }]
+                        ]
+
+                    };
+                    option5.yAxis.max = (tem + 1).toFixed(1);
+                    option5.yAxis.min = (tem - 1).toFixed(1);
+                    option5.xAxis.data = res['discNumMap'][ratioNum];
+                    option5.series[0].data = res['allItem'][ratioNum];
+                    //option5.series[0].markLine.data = [{yAxis:tem + 0.2,xAxis:  res['allItem'][ratioNum]},{yAxis:tem - 0.2,xAxis:  res['allItem'][ratioNum]}];
+                    option5.series[0].markArea = markArea;
+                    myChart5.setOption(option5);
+                    window.addEventListener("resize", function () {
+                        myChart5.resize();
+                    });
+                }
+
+            })
+            getTemperaturesDataByConditions(crew,ratioNum);
+        }
+
+    }
+
+    //选择日期与机组后查询日期内生产的模板
+    function  getProduceRatioByCrew() {
+
+        var crew = $("#crew_num option:selected").val();
+        var proDate = "";
+        var day1 = new Date();
+        day1.setDate(day1.getDate() - 7);
+        var s1 = day1.format("yyyy-MM-dd");
+        var endDate = s1 + " " + "00:00:00";
+        var startDate = new Date().format("yyyy-MM-dd hh:mm:ss");
+        proDate = endDate + "to" + startDate ;
+        if (crew == null || crew == ""){
+            layui.use('layer', function(){
+                var layer = layui.layer;
+                layer.alert("请先选择机组")
+            });
+        }else {
+            debugger
+            $.ajax({
+                url: basePath + "/getRatioListByDate.do",
+                type: "post",
+                dataType:"json",
+                data:{"proData":proDate,"crew":crew},
+                success:function (res) {
+                    if (res.length <= 0){
+                        layui.use('layer', function(){
+                            var layer = layui.layer;
+                            layer.alert("该日期并无生产");
+                        });
+                        $("#pro_message").text("该日期并无生产");
+                    }else {
+                        $("#ratio_id").empty();
+                        for (var i = 0; i < res.length;i++){
+                            $("#ratio_id").append("<option value=" + res[i].modele_id + ">" + res[i].pro_name + "</option>");
+                        }
+                    }
+                }
+            })
+        }
+    }
+
+    function getLastSevenDayTemperaturesDataToChart(){
+        $.ajax({
+            url: basePath + "/getLastSevenDayTemperaturesDataToChart.do",
+            type: "get",
+            dataType:"json",
+            success:function (res) {
+                if (res.length <= 0){
+                    layui.use('layer', function(){
+                        var layer = layui.layer;
+                        layer.msg("日期内无温度信息");
+                    });
+                }else {
+                    var proTimeArry = [];
+                    var discNumArry = [];
+                    var aggregateArry = [];
+                    var asphaltArry = [];
+                    var mixtureArry = [];
+                    for (var i = 0; i < res.length;i++){
+                        proTimeArry.push(res[i].proTime);
+                        discNumArry.push(res[i].produce_disc_num);
+                        aggregateArry.push(res[i].temperature_aggregate);
+                        asphaltArry.push(res[i].temperature_asphalt);
+                        mixtureArry.push(res[i].temperature_mixture);
+                    }
+
+                    option7.xAxis.data = discNumArry;
+                    option7.series[0].data = aggregateArry;
+                    option7.series[1].data = asphaltArry;
+                    option7.series[2].data = mixtureArry;
+                    myChart7.setOption(option7);
+                    window.addEventListener("resize", function () {
+                        myChart7.resize();
+                    });
+                }
+            }
+        })
+    }
+
+    function getTemperaturesDataByConditions(crew,ratioNum){
+        $.ajax({
+            url:basePath + "/getTemperaturesDataByConditions.do",
+            type:"post",
+            dataType:"json",
+            data:{
+                "crew":crew,
+                "ratioNum":ratioNum
+            },
+            success:function (res) {
+                if (res.length === 0){
+                    if (res === null || res.length === 0){
+                        layui.use('layer', function(){
+                            var layer = layui.layer;
+                            layer.alert("查询错误")
+                        });
+                        return
+                    }
+                }
+                var proTimeArry = [];
+                var discNumArry = [];
+                var aggregateArry = [];
+                var asphaltArry = [];
+                var mixtureArry = [];
+                for (var i = 0; i < res.length;i++){
+                    proTimeArry.push(res[i].proTime);
+                    discNumArry.push(res[i].produce_disc_num);
+                    aggregateArry.push(res[i].temperature_aggregate);
+                    asphaltArry.push(res[i].temperature_asphalt);
+                    mixtureArry.push(res[i].temperature_mixture);
+                }
+
+                option7.xAxis.data = discNumArry;
+                option7.series[0].data = aggregateArry;
+                option7.series[1].data = asphaltArry;
+                option7.series[2].data = mixtureArry;
+                myChart7.setOption(option7);
+                window.addEventListener("resize", function () {
+                    myChart7.resize();
+                });
+            }
+
+        })
+    }
+
     Array.prototype.push2 =function(){
         for(var i=0; i<arguments.length; i++){
             var ele = arguments[i];
@@ -1110,6 +1083,31 @@
             }
         }
     };
+
+
+    /**
+     *对Date的扩展，将 Date 转化为指定格式的String
+     *月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，
+     *年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)
+     *例子：
+     *(new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423
+     *(new Date()).Format("yyyy-M-d h:m:s.S")      ==> 2006-7-2 8:9:4.18
+     */
+    Date.prototype.format = function (fmt) {
+        var o = {
+            "M+": this.getMonth() + 1, //月份
+            "d+": this.getDate(), //日
+            "h+": this.getHours(), //小时
+            "m+": this.getMinutes(), //分
+            "s+": this.getSeconds(), //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    }
 </script>
 </body>
 <script type="text/javascript" src="../../../static/js/jquery.js"></script>

@@ -53,7 +53,7 @@ public class QualityDynamicImpl implements QualityDynamicInf {
     @Override
     public String getRatioListByDate(String proData,String crew) {
 
-        if (proData.isEmpty() || crew.isEmpty()) return null;
+        if (proData.isEmpty() || crew.isEmpty()) {return null;}
         String[] array = proData.split("to");
 
         //处理 一、二机组区别
@@ -65,8 +65,8 @@ public class QualityDynamicImpl implements QualityDynamicInf {
             case "data2":
                 crewNum = "crew2";
                 break;
-                default:
-                    crewNum = "crew1";
+            default:
+                crewNum = "crew1";
         }
 
         List<Map<String,String>> map = qualityDynamicDao.selectRatioListByDate(array[0], array[1],crew,crewNum);
@@ -81,7 +81,7 @@ public class QualityDynamicImpl implements QualityDynamicInf {
         List<Map<String,String>> list = qualityDynamicDao.selectProductByMaterialAndDate(strArray[0],strArray[1],material,ratioNum,crew);
         String ratioName;
         String crewName = "crew1";
-        if (list.size() == 0) return;
+        if (list.size() == 0){ return;}
 
         switch (crew){
             case "data1":
@@ -126,8 +126,8 @@ public class QualityDynamicImpl implements QualityDynamicInf {
                 ratioName = "breeze";
                 request.setAttribute("material","石粉含量");
                 break;
-                default:
-                    ratioName = "ratio_stone";
+            default:
+                ratioName = "ratio_stone";
         }
 
 
@@ -142,10 +142,36 @@ public class QualityDynamicImpl implements QualityDynamicInf {
 
 
     @Override
+    public String getDataToIndexChars(String ratioNum, String crew, HttpServletRequest request) {
+        List<Map<String,String>> list = qualityDynamicDao.getLastWeekByRationAndCrew(ratioNum,crew);
+
+        if (list == null){
+            return  null;
+        }
+        //设置日期格式
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
+        String format = df.format(new Date());
+        String crewName = " ";
+        switch (crew){
+            case "data1":
+                crewName = "crew1";
+                request.setAttribute("crewNum","一号");
+                break;
+            case "data2":
+                crewName = "crew2";
+                request.setAttribute("crewNum","二号");
+                break;
+        }
+        return QualityDynamicUtil.returnJsonData(list,qualityDynamicDao,"ratio_stone","material_asphalt",crewName,request,format);
+
+    }
+
+    @Override
     public void getLastWeekToChars(HttpServletRequest request) {
         List<Map<String,String>> list = qualityDynamicDao.getLastWeekToChars();
 
-        if (list.size() == 0) return;
+        if (list.size() == 0) {return;}
         //设置日期格式
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 

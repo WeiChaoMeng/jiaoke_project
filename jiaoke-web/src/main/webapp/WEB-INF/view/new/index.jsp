@@ -673,7 +673,7 @@
                                                 <li>
                                                     <a onclick="xadmin.add_tab('数据管理','qc_data_manager.do',true)">
                                                         <i class="iconfont">&#xe70c;</i>
-                                                        <cite>当日数据</cite></a>
+                                                        <cite>每日数据</cite></a>
                                                 </li>
                                             </shiro:hasPermission>
                                             <shiro:hasPermission name="quality:summary">

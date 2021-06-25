@@ -8,6 +8,8 @@
  **/
 package com.jiaoke.quality.dao;
 
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 import java.util.Map;
 
@@ -42,4 +44,14 @@ public interface QualityIndexDao {
      * @return
      */
     List<Map<String, String>> selectLastTenWarning();
+    /**
+     * 返回两个机组七日内温度数据
+     * @return
+     */
+    List<Map<String, String>> selectLastSevenDayTemperaturesDataToChart();
+    /**
+     * 根据条件返回温度数据
+     * @return
+     */
+    List<Map<String, String>> selectTemperaturesDataByConditions(@Param("crew") String crew,@Param("ratioNum") String ratioNum);
 }
