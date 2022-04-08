@@ -1,17 +1,10 @@
 package com.jiaoke.controller.qualitytest;
 
-import com.jiake.utils.RandomUtil;
-import com.jiaoke.common.bean.Assist;
 import com.jiaoke.qualitytest.bean.QualityTestLabReport;
-import com.jiaoke.qualitytest.bean.QualityTestOrderTicket;
-import com.jiaoke.qualitytest.dao.QualityTestLabReportDao;
 import com.jiaoke.qualitytest.service.QualityTestLabReportService;
-import com.jiaoke.qualitytest.service.QualityTestOrderTicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 
 /**
@@ -44,10 +37,10 @@ public class QualityTestLabReportController {
         if (obj == null) {
             QualityTestLabReport value = new QualityTestLabReport();
             value.setOrderTicketNum(num);
-            qualityTestLabReportService.saveNotNull(value);
+            qualityTestLabReportService.saveNotNull(value,false);
 
         } else if (obj.getExperimentStatus() != null && obj.getExperimentStatus() != 3) {
-            qualityTestLabReportService.updateNotNullById(obj);
+            qualityTestLabReportService.updateNotNullById(obj,false);
         }
         obj = qualityTestLabReportService.findOneByOrderTicketNum(num);
         String strJsp = "qualitytest/qualitytestlabreport_detail1.jsp?view=2&id=" + obj.getId();
@@ -81,6 +74,13 @@ public class QualityTestLabReportController {
         return qualityTestLabReportService.find(value);
     }
 
+    @GetMapping(value = "/refresh", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public int refresh() {
+        qualityTestLabReportService.autoCreateReport();
+        return 1;
+    }
+
     /**
      * 通过id查询QualityTestLabReport数据的方法
      *
@@ -108,25 +108,25 @@ public class QualityTestLabReportController {
     /**
      * 插入QualityTestLabReport属性不为空的数据方法
      *
-     * @param id
+     * @param
      * @return
      */
     @PostMapping(value = "/save", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String save(QualityTestLabReport value) {
-        return qualityTestLabReportService.saveNotNull(value);
+        return qualityTestLabReportService.saveNotNull(value,true);
     }
 
     /**
      * 更新QualityTestLabReport属性不为空的数据方法
      *
-     * @param id
+     * @param
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String update(QualityTestLabReport value) {
-        return qualityTestLabReportService.updateNotNullById(value);
+        return qualityTestLabReportService.updateNotNullById(value,true);
     }
 
     /**
@@ -138,5 +138,18 @@ public class QualityTestLabReportController {
     @DeleteMapping(value = "/QualityTestLabReport/{id}", produces = {"application/json;charset=UTF-8"})
     public String delete(@PathVariable(name = "id") String id) {
         return qualityTestLabReportService.deleteById(id);
+    }
+
+
+    /**
+     * 通过id查询QualityTestLabReport数据的方法
+     *
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "UserInfo", method = RequestMethod.GET)
+    public String UserInfo() {
+        return qualityTestLabReportService.UserInfo();
     }
 }

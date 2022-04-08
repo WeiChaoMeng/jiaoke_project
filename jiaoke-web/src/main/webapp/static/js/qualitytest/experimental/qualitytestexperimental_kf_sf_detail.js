@@ -72,7 +72,34 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 			myform.KF_SF_Data.push(data1);
 		}
 	}
-
+/**
+     *筛上重1有数据
+     */
+    myform.ssz1IsHaveData = function () {
+        var result = false;
+        for (var i = 0; i < myform.KF_SF_Data.length; i++) {
+            var data = myform.KF_SF_Data[i];
+            if (data['syzl_value1'] != undefined && data['syzl_value1'] > 0) {
+                result = true;
+                break;
+            }
+        }
+        return result;
+    }
+    /**
+     *筛上重2有数据
+     */
+    myform.ssz2IsHaveData = function () {
+        var result = false;
+        for (var i = 0; i < myform.KF_SF_Data.length; i++) {
+            var data = myform.KF_SF_Data[i];
+            if (data['syzl_value2'] != undefined && data['syzl_value2'] > 0) {
+                result = true;
+                break;
+            }
+        }
+        return result;
+    }
 	/**
 	 * 得到累计筛分1
 	 * @param {Object} order
@@ -130,9 +157,15 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 	 * 自动计算值
 	 */
 	myform.computeValue = function() {
+		var ssz1HaveData = myform.ssz1IsHaveData();
+		var ssz2HaveData = myform.ssz2IsHaveData();	
+		
 		//计算筛孔尺寸
 		for (var i = 0; i < myform.KF_SF_Data.length; i++) {
 			var data = myform.KF_SF_Data[i];
+			if (ssz1HaveData && (data['syzl_value1'] == undefined || data['syzl_value1'] == null)) {
+			    data['syzl_value1'] = 0.0;
+			}
 			if (data['syzl_value1'] >= 0) {
 				data['fjsy_value1'] = ((data['syzl_value1'] / CLL_SF_GZ_Value.syzl_value1)*100).toFixed(1);
 				data['ljsy_value1'] = myform.getljsf1(i);
@@ -142,7 +175,9 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 				data['ljsy_value1'] = undefined;
 				data['tgbfb_value1'] = undefined;
 			}
-
+			if (ssz2HaveData && (data['syzl_value2'] == undefined || data['syzl_value2'] == null)) {
+			    data['syzl_value2'] = 0.0;
+			}
 			if (data['syzl_value2'] >= 0) {
 				data['fjsy_value2'] = ((data['syzl_value2'] / CLL_SF_GZ_Value.syzl_value2)*100).toFixed(1);
 				data['ljsy_value2'] = myform.getljsf2(i);
@@ -155,7 +190,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 
 			if (data['tgbfb_value1'] > 0 && data['tgbfb_value2'] > 0) {
 				data['pjtgbfb_value'] = ((Number(data['tgbfb_value1']) + Number(data['tgbfb_value2'])) / 2).toFixed(1);;
-			} else if (data['tgbfb_value1'] > 0) {
+			} else if (data['tgbfb_value1'] !=undefined) {
 				data['pjtgbfb_value'] = data['tgbfb_value1'];
 			} else {
 				data['pjtgbfb_value'] = data['tgbfb_value2'];

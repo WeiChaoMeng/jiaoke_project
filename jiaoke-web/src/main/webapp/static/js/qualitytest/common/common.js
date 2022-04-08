@@ -44,6 +44,21 @@ common.getUrlParam = function(name) {
 	}
 };
 /**
+ * @param {Object} name获取网址参数
+ */
+common.getUrlParam2 = function(name) {
+	console.log("common.getUrlParam.js");
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+	var url = decodeURI(decodeURI(location.search+location.hash));
+	var r = url.substr(1).match(reg);
+	//var r = window.location.search.substr(1).match(reg);
+	if (r != null) {
+		return unescape(r[2]);
+	} else {
+		return null;
+	}
+};
+/**
  * @param {Object} tablelayid打印表单
  */
 common.print = function(tablelayid) {

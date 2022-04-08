@@ -16,7 +16,7 @@ layui.use(['form', 'table', 'ax', 'laydate', 'dictionary'], function() {
 
 
 
-	var queryData = {};
+	/*var queryData = {};
 	queryData['materials'] = common.getUrlParam("materials");
 	queryData['manufacturers'] = common.getUrlParam("manufacturers");
 	queryData['specification'] = common.getUrlParam("specification");
@@ -27,7 +27,7 @@ layui.use(['form', 'table', 'ax', 'laydate', 'dictionary'], function() {
 
 
 	console.log(queryData);
-	/*table.render({
+	table.render({
 		elem: '#' + myForm.tableId,
 		title: '不合格试验',
 		limit: common.maxLimitValue,

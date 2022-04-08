@@ -81,13 +81,40 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 			myform.CJL_SF_Data.push(data1);
 		}
 	}
-
+/**
+     *筛上重1有数据
+     */
+    myform.ssz1IsHaveData = function () {
+        var result = false;
+        for (var i = 0; i < myform.CJL_SF_Data.length; i++) {
+            var data = myform.CJL_SF_Data[i];
+            if (data['ssz_value1'] != undefined && data['ssz_value1'] > 0) {
+                result = true;
+                break;
+            }
+        }
+        return result;
+    }
+    /**
+     *筛上重2有数据
+     */
+    myform.ssz2IsHaveData = function () {
+        var result = false;
+        for (var i = 0; i < myform.CJL_SF_Data.length; i++) {
+            var data = myform.CJL_SF_Data[i];
+            if (data['ssz_value1'] != undefined && data['ssz_value2'] > 0) {
+                result = true;
+                break;
+            }
+        }
+        return result;
+    }
 	/**
 	 * 得到累计筛分1
 	 * @param {Object} order
 	 */
 	myform.getljsf1 = function(order) {
-		var result = 0;
+		var result = 0.0;
 		for (var i = 0; i < myform.CJL_SF_Data.length; i++) {
 			if (i <= order) {
 				var data = myform.CJL_SF_Data[i];
@@ -107,7 +134,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 	 * @param {Object} order
 	 */
 	myform.getljsf2 = function(order) {
-		var result = 0;
+		var result = 0.0;
 		for (var i = 0; i < myform.CJL_SF_Data.length; i++) {
 			if (i <= order) {
 				var data = myform.CJL_SF_Data[i];
@@ -157,12 +184,16 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 			}
 		}
 		$("#gshzz_value2").html(gshzz_value2);
-
+		
+        var ssz1HaveData = myform.ssz1IsHaveData();
+        var ssz2HaveData = myform.ssz2IsHaveData();		
 		//计算筛孔尺寸
 		for (var i = 0; i < myform.CJL_SF_Data.length; i++) {
 			var data = myform.CJL_SF_Data[i];
-			if (data['ssz_value1'] != undefined) {
-				//data['fjsy_value1'] = ((data['ssz_value1'] / CLL_SF_GZ_Value.gzsyzl_value1)*100).toFixed(1);
+			if (ssz1HaveData && (data['ssz_value1'] == undefined || data['ssz_value1'] == null)) {
+			    data['ssz_value1'] = 0.0;
+			}
+			if (data['ssz_value1'] >= 0) {				
 				data['fjsy_value1'] = ((data['ssz_value1'] / gshzz_value1) * 100).toFixed(1);
 				data['ljsy_value1'] = myform.getljsf1(i);
 				data['tgbfb_value1'] = Number(100 - data['ljsy_value1']).toFixed(1);
@@ -172,8 +203,10 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 				data['tgbfb_value1'] = undefined;
 			}
 
-			if (data['ssz_value2'] != undefined) {
-				//data['fjsy_value2'] = ((data['ssz_value2'] / CLL_SF_GZ_Value.gzsyzl_value2)*100).toFixed(1);
+			if (ssz2HaveData && (data['ssz_value2'] == undefined || data['ssz_value2'] == null)) {
+			    data['ssz_value2'] = 0.0;
+			}
+			if (data['ssz_value2'] >= 0) {				
 				data['fjsy_value2'] = ((data['ssz_value2'] / gshzz_value2) * 100).toFixed(1);
 				data['ljsy_value2'] = myform.getljsf2(i);
 				data['tgbfb_value2'] = Number(100 - data['ljsy_value2']).toFixed(1);
@@ -186,7 +219,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function() {
 
 			if (data['tgbfb_value1'] > 0 && data['tgbfb_value2'] > 0) {
 				data['pjtgbfb_value'] = ((Number(data['tgbfb_value1']) + Number(data['tgbfb_value2'])) / 2).toFixed(1);;
-			} else if (data['tgbfb_value1'] > 0) {
+			} else if (data['tgbfb_value1']!=undefined) {
 				data['pjtgbfb_value'] = data['tgbfb_value1'];
 			} else {
 				data['pjtgbfb_value'] = data['tgbfb_value2'];

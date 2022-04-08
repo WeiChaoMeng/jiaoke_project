@@ -47,7 +47,24 @@ layui.use(['form', 'table', 'laydate'], function() {
 		})
 		return result;
 	}
-
+/**
+     * 获取登录人员信息
+     * @param {Object} id
+     */
+    myForm.getLabReportUserInfo = function () {
+        var result = null;
+        $.ajax({
+            type: "GET",
+            async: false,
+            url: basePath + "/QualityTestLabReport/UserInfo.do",
+            dataType: 'json',
+            success: function (msg) {
+                result = msg;
+                console.log(msg);
+            }
+        })
+        return result;
+    }
 
 	/**
 	 * 获取试验结果信息
@@ -246,7 +263,19 @@ layui.use(['form', 'table', 'laydate'], function() {
 	 * 显示试验信息
 	 * @param {Object} data
 	 */
-	myForm.setLabReportIInfo = function(data) {
+	myForm.setLabReportIInfo = function(data, loginUserInfo) {
+		if (loginUserInfo.position.indexOf("副总经理")>-1 && data.experimentStatus == 21 && data.chargePerson == null) {
+		    data.chargePerson = loginUserInfo.nickname;
+		} else if (loginUserInfo.position.indexOf("部长")>-1 && data.experimentStatus == 2 && data.checkPerson == null) {
+		    data.checkPerson = loginUserInfo.nickname;
+		} else if
+		(data.reportPerson == null && (loginUserInfo.position == "试验员" && data.experimentStatus == 1) ||
+		    (loginUserInfo.position == "实验员" && data.experimentStatus == 1)) {
+		    data.reportPerson = loginUserInfo.nickname;
+		    var date = new Date();
+		    data.reportDate = date.toLocaleDateString();
+		}
+		
 		form.val('myform', data);
 		laydate.render({
 			elem: '#sampling_create_time',
@@ -268,13 +297,30 @@ layui.use(['form', 'table', 'laydate'], function() {
 	 * 控制提交按钮和审核按钮是否显示
 	 * @param {Object} data
 	 */
-	myForm.buttonVisible = function(data) {
-		$('#div_check').hide();
+	myForm.buttonVisible = function(expData,loginUserInfo) {
+		/* $('#div_check').hide();
 		$('#div_commit').hide();
 		if (data.experimentStatus == undefined || data.experimentStatus == 0) {
 			//$('#div_commit').show();
 		} else if (data.experimentStatus == 1) {
 			$('#div_check').show();
+		} */
+		$('#div_commit').hide();
+		$("#btn_check").hide();
+		if (expData.experimentStatus != 3 &&
+		    (loginUserInfo.position == "试验员" && expData.experimentStatus == 1) ||
+		    (loginUserInfo.position == "实验员" && expData.experimentStatus == 1)) {
+		    $('#div_check_zf').show();
+		
+		} else {
+		    $('#div_check_zf').hide();
+		}
+		if (expData.experimentStatus != 3 &&
+		    ((loginUserInfo.position.indexOf("副总经理")>-1 && expData.experimentStatus == 21) ||
+		        (loginUserInfo.position.indexOf("部长")>-1 && expData.experimentStatus == 2) ||
+		        (loginUserInfo.position == "试验员" && expData.experimentStatus == 1) ||
+		        (loginUserInfo.position == "实验员" && expData.experimentStatus == 1))) {
+		    $("#btn_check").show();
 		}
 	}
 	/**
@@ -305,6 +351,15 @@ layui.use(['form', 'table', 'laydate'], function() {
 	 * 试验报告确认
 	 */
 	myForm.check = function() {
+		var nexperimentStatus = 1;// 1待试验员确认  2 待部长审核 21 待负责人确认  3 已经完成
+		if (loginUserInfo.data.position.indexOf("副总经理")>-1 && expInfo.data.experimentStatus == 21) {
+		    nexperimentStatus = 3;
+		} else if (loginUserInfo.data.position.indexOf("部长")>-1 && expInfo.data.experimentStatus == 2) {
+		    nexperimentStatus = 21;
+		} else if (loginUserInfo.data.position == "试验员" && expInfo.data.experimentStatus == 1) {
+		    nexperimentStatus = 2;
+		}
+		
 		var noticeDep = "",
 			noticeDepStr = "";
 		if ($("#send_sc")[0].checked && $("#send_cl")[0].checked) {
@@ -319,7 +374,7 @@ layui.use(['form', 'table', 'laydate'], function() {
 		}
 		var saveData = {
 			id: myForm.reportValue.id,
-			experimentStatus: 3,
+			experimentStatus: nexperimentStatus,
 			noticeDep: noticeDep,
 			noticeDepStr: noticeDepStr
 		}
@@ -351,14 +406,15 @@ layui.use(['form', 'table', 'laydate'], function() {
 		myForm.check();
 	});
 	var expInfo = myForm.getLabReportInfo(expID);
-
+    var loginUserInfo = myForm.getLabReportUserInfo();
+	
 	if (expInfo != null && expInfo.code == 200) {
 		myForm.reportValue = expInfo.data;
-		myForm.setLabReportIInfo(expInfo.data);
+		myForm.setLabReportIInfo(expInfo.data,loginUserInfo.data);
 		myForm.getLabReport_SF_StandValue();
 		myForm.getLabReportInfoValue(expID);
 		myForm.getLabReportInfoValue_SF(expInfo.data.materialsNum, expID);
-		myForm.buttonVisible(expInfo.data);
+		myForm.buttonVisible(expInfo.data,loginUserInfo.data);
 	}
 
 });
