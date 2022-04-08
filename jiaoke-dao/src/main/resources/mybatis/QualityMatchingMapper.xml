@@ -533,6 +533,8 @@
                      ON t1.id = t3.ration_id
         WHERE
                 t1.id = #{idStr}
+        ORDER BY t3.id DESC
+        LIMIT 1
     </select>
 
     <insert id="insetGrading" parameterType="java.util.Map">

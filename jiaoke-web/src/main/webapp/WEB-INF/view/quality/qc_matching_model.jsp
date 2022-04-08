@@ -197,14 +197,14 @@
                 <tr>
                     <td class="my_tlabels">配比名称：</td>
                     <td colspan="3">
-                        <input type="text" id="proName" name="proName"  required="required"  style="width: 82%;" class="my_form_input" style="width: 72%;" value="cl-17沥青模板">
+                        <input type="text" id="proName" name="proName"  required="required"  style="width: 82%;" class="my_form_input" style="width: 72%;" placeholder="cl-17沥青模板">
                     </td>
                 </tr>
 
                 <tr>
                     <td class="my_tlabels">1#仓：</td>
                     <td>
-                        <input type="number" required="required"  min="0.0" step="0.01" name="repertoryOne" class="my_form_input" value="0.0">
+                        <input type="number" required="required"  min="0.0" step="0.01" name="repertoryOne" class="my_form_input" placeholder="0.0">
                     </td>
                     <td class="my_tlabels">一级预警上/下限设定值：</td>
                     <td>
@@ -225,7 +225,7 @@
                 <tr>
                     <td class="my_tlabels">2#仓：</td>
                     <td>
-                        <input type="number" required="required"  min="0.0" step="0.01"  name="repertoryTwo" class="my_form_input" value="0.0">
+                        <input type="number" required="required"  min="0.0" step="0.01"  name="repertoryTwo" class="my_form_input" placeholder="0.0">
                     </td>
                     <td class="my_tlabels">一级预警上/下限设定值：</td>
                     <td>
@@ -234,7 +234,7 @@
                     </td>
                     <td class="my_tlabels">二级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="repertoryTwo_leve2_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="repertoryTwo_leve2_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="repertoryTwo_leve2_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">三级预警上/下限设定值：</td>
@@ -246,7 +246,7 @@
                 <tr>
                     <td class="my_tlabels">3#仓：</td>
                     <td>
-                        <input type="number" required="required"  min="0.0" step="0.01" name="repertoryThree" class="my_form_input" value="0.0">
+                        <input type="number" required="required"  min="0.0" step="0.01" name="repertoryThree" class="my_form_input" placeholder="0.0">
                     </td>
                     <td class="my_tlabels">一级预警上/下限设定值：</td>
                     <td>
@@ -267,7 +267,7 @@
                 <tr>
                     <td class="my_tlabels">4#仓：</td>
                     <td>
-                        <input type="number" required="required"  min="0.0" step="0.01" name="repertoryFour" class="my_form_input" value="0.0">
+                        <input type="number" required="required"  min="0.0" step="0.01" name="repertoryFour" class="my_form_input" placeholder="0.0">
                     </td>
                     <td class="my_tlabels">一级预警上/下限设定值：</td>
                     <td>
@@ -276,258 +276,258 @@
                     </td>
                     <td class="my_tlabels">二级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="repertoryFour_leve2_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="repertoryFour_leve2_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"   name="repertoryFour_leve2_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">三级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="repertoryFour_leve3_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required"  min="0.0" step="0.01"  name="repertoryFour_leve3_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"   name="repertoryFour_leve3_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                 </tr>
                 <tr>
                     <td class="my_tlabels">5#仓：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01" name="repertoryFive" class="my_form_input" value="0.0">
+                        <input type="number" required="required"  min="0.0" step="0.01" name="repertoryFive" class="my_form_input" placeholder="0.0">
                     </td>
                     <td class="my_tlabels">一级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="repertoryFive_leve1_up" class="my_form_input"   placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="repertoryFive_leve1_up" class="my_form_input"   placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="repertoryFive_leve1_down" class="my_form_input"  placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">二级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="repertoryFive_leve2_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="repertoryFive_leve2_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="repertoryFive_leve2_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">三级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="repertoryFive_leve3_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="repertoryFive_leve3_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="repertoryFive_leve3_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                 </tr>
                 <tr>
                     <td class="my_tlabels">6#仓：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01" name="repertorySix" class="my_form_input" value="0.0">
+                        <input type="number" required="required" min="0.0" step="0.01" name="repertorySix" class="my_form_input" placeholder="0.0">
                     </td>
                     <td class="my_tlabels">一级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="repertorySix_leve1_up" class="my_form_input"   placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="repertorySix_leve1_up" class="my_form_input"   placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="repertorySix_leve1_down" class="my_form_input"  placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">二级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="repertorySix_leve2_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="repertorySix_leve2_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="repertorySix_leve2_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">三级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="repertorySix_leve3_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="repertorySix_leve3_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="repertorySix_leve3_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                 </tr>
                 <tr>
                     <td class="my_tlabels">7#仓：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01" name="repertorySeven" class="my_form_input" value="0.0">
+                        <input type="number" required="required" min="0.0" step="0.01" name="repertorySeven" class="my_form_input" placeholder="0.0">
                     </td>
                     <td class="my_tlabels">一级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="repertorySeven_leve1_up" class="my_form_input"   placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="repertorySeven_leve1_up" class="my_form_input"   placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="repertorySeven_leve1_down" class="my_form_input"  placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">二级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="repertorySeven_leve2_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="repertorySeven_leve2_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="repertorySeven_leve2_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">三级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="repertorySeven_leve3_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="repertorySeven_leve3_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="repertorySeven_leve3_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                 </tr>
                 <tr>
                     <td class="my_tlabels">8#仓：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01" name="repertoryEight" class="my_form_input" value="0.0">
+                        <input type="number" required="required" min="0.0" step="0.01" name="repertoryEight" class="my_form_input" placeholder="0.0">
                     </td>
                     <td class="my_tlabels">一级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="repertoryEight_leve1_up" class="my_form_input"   placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="repertoryEight_leve1_up" class="my_form_input"   placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="repertoryEight_leve1_down" class="my_form_input"  placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">二级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="repertoryEight_leve2_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="repertoryEight_leve2_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="repertoryEight_leve2_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">三级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="repertoryEight_leve3_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="repertoryEight_leve3_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="repertoryEight_leve3_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                 </tr>
                 <tr>
                     <td class="my_tlabels">9#仓：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01" name="repertoryNine" class="my_form_input" value="0.0">
+                        <input type="number" required="required" min="0.0" step="0.01" name="repertoryNine" class="my_form_input" placeholder="0.0">
                     </td>
                     <td class="my_tlabels">一级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="repertoryNine_leve1_up" class="my_form_input"   placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="repertoryNine_leve1_up" class="my_form_input"   placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="repertoryNine_leve1_down" class="my_form_input"  placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">二级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="repertoryNine_leve2_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="repertoryNine_leve2_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="repertoryNine_leve2_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">三级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="repertoryNine_leve3_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="repertoryNine_leve3_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="repertoryNine_leve3_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                 </tr>
                 <tr>
                     <td class="my_tlabels">10#仓：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01" name="repertoryTen" class="my_form_input" value="0.0">
+                        <input type="number" required="required" min="0.0" step="0.01" name="repertoryTen" class="my_form_input" placeholder="0.0">
                     </td>
                     <td class="my_tlabels">一级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="repertoryTen_leve1_up" class="my_form_input"   placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="repertoryTen_leve1_up" class="my_form_input"   placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="repertoryTen_leve1_down" class="my_form_input"  placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">二级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="repertoryTen_leve2_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="repertoryTen_leve2_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="repertoryTen_leve2_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">三级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="repertoryTen_leve3_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="repertoryTen_leve3_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="repertoryTen_leve3_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                 </tr>
                 <tr>
                     <td class="my_tlabels">矿粉1：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01" name="breeze" class="my_form_input" value="0.0">
+                        <input type="number" required="required" min="0.0" step="0.01" name="breeze" class="my_form_input" placeholder="0.0">
                     </td>
                     <td class="my_tlabels">一级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="breeze1_leve1_up" class="my_form_input"   placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="breeze1_leve1_up" class="my_form_input"   placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="breeze1_leve1_down" class="my_form_input"  placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">二级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="breeze1_leve2_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="breeze1_leve2_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="breeze1_leve2_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">三级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="breeze1_leve3_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="breeze1_leve3_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="breeze1_leve3_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                 </tr>
                 <tr>
                     <td class="my_tlabels">矿粉2：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01" name="breeze2" class="my_form_input" value="0.0">
+                        <input type="number" required="required" min="0.0" step="0.01" name="breeze2" class="my_form_input" placeholder="0.0">
                     </td>
                     <td class="my_tlabels">一级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="breeze2_leve1_up" class="my_form_input"   placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="breeze2_leve1_up" class="my_form_input"   placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="breeze2_leve1_down" class="my_form_input"  placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">二级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="breeze2_leve2_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="breeze2_leve2_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="breeze2_leve2_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">三级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="breeze2_leve3_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="breeze2_leve3_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="breeze2_leve3_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                 </tr>
                 <tr>
                     <td class="my_tlabels">矿粉3：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01" name="breeze3" class="my_form_input" value="0.0">
+                        <input type="number" required="required" min="0.0" step="0.01" name="breeze3" class="my_form_input" placeholder="0.0">
                     </td>
                     <td class="my_tlabels">一级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="breeze3_leve1_up" class="my_form_input"   placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="breeze3_leve1_up" class="my_form_input"   placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="breeze3_leve1_down" class="my_form_input"  placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">二级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="breeze3_leve2_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="breeze3_leve2_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="breeze3_leve2_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">三级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="breeze3_leve3_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="breeze3_leve3_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="breeze3_leve3_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                 </tr>
                 <tr>
                     <td class="my_tlabels">矿粉4：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01" name="breeze4" class="my_form_input" value="0.0">
+                        <input type="number" required="required" min="0.0" step="0.01" name="breeze4" class="my_form_input" placeholder="0.0">
                     </td>
                     <td class="my_tlabels">一级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="breeze4_leve1_up" class="my_form_input"   placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="breeze4_leve1_up" class="my_form_input"   placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="breeze4_leve1_down" class="my_form_input"  placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">二级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="breeze4_leve2_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="breeze4_leve2_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="breeze4_leve2_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">三级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="breeze4_leve3_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="breeze4_leve3_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="breeze4_leve3_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                 </tr>
                 <tr>
                     <td class="my_tlabels">沥青(含量)：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01" name="ratioStone" class="my_form_input" value="0.0">
+                        <input type="number" required="required" min="0.0" step="0.01" name="ratioStone" class="my_form_input" value="0.0">
                     </td>
                     <td class="my_tlabels">一级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="ratioStone_leve1_up" class="my_form_input"   placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="ratioStone_leve1_up" class="my_form_input"   placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="ratioStone_leve1_down" class="my_form_input"  placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">二级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="ratioStone_leve2_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="ratioStone_leve2_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="ratioStone_leve2_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">三级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="ratioStone_leve3_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="ratioStone_leve3_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="ratioStone_leve3_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                 </tr>
                 <tr>
                     <td class="my_tlabels">粗再生料：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01" style="width: 120px;" name="ratioRegenerate1" class="my_form_input" placeholder="0.0">
+                        <input type="number" required="required" min="0.0" step="0.01" style="width: 120px;" name="ratioRegenerate1" class="my_form_input" placeholder="0.0">
                     </td>
                     <td class="my_tlabels">细再生料：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01" style="width: 120px;" name="ratioRegenerate2" class="my_form_input" placeholder="0.0">
+                        <input type="number" required="required" min="0.0" step="0.01" style="width: 120px;" name="ratioRegenerate2" class="my_form_input" placeholder="0.0">
                     </td>
                     <td class="my_tlabels">中再生料：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01" style="width: 120px;" name="ratioRegenerate3" class="my_form_input" placeholder="0.0">
+                        <input type="number" required="required" min="0.0" step="0.01" style="width: 120px;" name="ratioRegenerate3" class="my_form_input" placeholder="0.0">
                     </td>
                     <td class="my_tlabels">再生类型：</td>
                     <td>
@@ -541,145 +541,145 @@
                 <tr>
                     <td class="my_tlabels">再生料一级预警上/下限：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="regenerate_leve1_up" class="my_form_input"   placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="regenerate_leve1_up" class="my_form_input"   placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="regenerate_leve1_down" class="my_form_input"  placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">再生料二级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="regenerate_leve2_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required"  min="0.0" step="0.01"  name="regenerate_leve2_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="regenerate_leve2_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">再生料三级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="regenerate_leve3_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="regenerate_leve3_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="regenerate_leve3_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                 </tr>
                 <tr>
                     <td class="my_tlabels">添加剂一：</td>
                     <td>
-                        <input type="number"  min="0.0" step="0.01" name="ratioAdditive" class="my_form_input" placeholder="0">
+                        <input type="number" required="required"  min="0.0" step="0.01" name="ratioAdditive" class="my_form_input" placeholder="0">
                     </td>
                     <td class="my_tlabels">一级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="additive_leve1_up" class="my_form_input"   placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="additive_leve1_up" class="my_form_input"   placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="additive_leve1_down" class="my_form_input"  placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">二级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="additive_leve2_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="additive_leve2_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="additive_leve2_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">三级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="additive_leve3_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="additive_leve3_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="additive_leve3_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                 </tr>
                 <tr>
                     <td class="my_tlabels">添加剂二：</td>
                     <td>
-                        <input type="number"  min="0.0" step="0.01"  name="ratioAdditiveTwo" class="my_form_input" placeholder="0">
+                        <input type="number"  required="required" min="0.0" step="0.01"  name="ratioAdditiveTwo" class="my_form_input" placeholder="0">
                     </td>
                     <td class="my_tlabels">一级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="additive1_leve1_up" class="my_form_input"   placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="additive1_leve1_up" class="my_form_input"   placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="additive1_leve1_down" class="my_form_input"  placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">二级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="additive1_leve2_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="additive1_leve2_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="additive1_leve2_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">三级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="additive1_leve3_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="additive1_leve3_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="additive1_leve3_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                 </tr>
                 <tr>
                     <td class="my_tlabels">添加剂三：</td>
                     <td>
-                        <input type="number"  min="0.0" step="0.01" name="ratioAdditiveThree" class="my_form_input" placeholder="0">
+                        <input type="number" required="required"  min="0.0" step="0.01" name="ratioAdditiveThree" class="my_form_input" placeholder="0">
                     </td>
                     <td class="my_tlabels">一级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="additive2_leve1_up" class="my_form_input"   placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="additive2_leve1_up" class="my_form_input"   placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="additive2_leve1_down" class="my_form_input"  placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">二级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="additive2_leve2_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="additive2_leve2_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="additive2_leve2_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">三级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="additive2_leve3_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="additive2_leve3_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="additive2_leve3_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                 </tr>
                 <tr>
                     <td class="my_tlabels">添加剂四：</td>
                     <td>
-                        <input type="number"  min="0.0" step="0.01" name="ratioAdditiveFour" class="my_form_input" placeholder="0">
+                        <input type="number" required="required"  min="0.0" step="0.01" name="ratioAdditiveFour" class="my_form_input" placeholder="0">
                     </td>
                     <td class="my_tlabels">一级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="additive3_leve1_up" class="my_form_input"   placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="additive3_leve1_up" class="my_form_input"   placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="additive3_leve1_down" class="my_form_input"  placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">二级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="additive3_leve2_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="additive3_leve2_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="additive3_leve2_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">三级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="additive3_leve3_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="additive3_leve3_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="additive3_leve3_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                 </tr>
                 <tr>
                     <td class="my_tlabels">沥青温度上/下限：</td>
                     <td>
-                        <input type="number" min="0"   name="temperatureAsphaltUp" class="my_form_input" placeholder="上限">
-                        <input type="number" min="0"  name="temperatureAsphalt" class="my_form_input" placeholder="下限 例: -10">
+                        <input type="number" required="required" min="0"   name="temperatureAsphaltUp" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0"  name="temperatureAsphalt" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">一级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="temperatureAsphalt_leve1_up" class="my_form_input"   placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="temperatureAsphalt_leve1_up" class="my_form_input"   placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="temperatureAsphalt_leve1_down" class="my_form_input"  placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">二级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="temperatureAsphalt_leve2_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="temperatureAsphalt_leve2_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="temperatureAsphalt_leve2_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">三级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="temperatureAsphalt_leve3_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="temperatureAsphalt_leve3_up" class="my_form_input" placeholder="上限">
                         <input type="number"required="required"  max="0.0" step="0.01"  name="temperatureAsphalt_leve3_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                 </tr>
                 <tr>
                     <td class="my_tlabels">骨料加热温度上/下限：</td>
                     <td>
-                        <input type="number" min="0"  name="temperatureAggregateUp" class="my_form_input" placeholder="上限">
-                        <input type="number" min="0"   name="temperatureAggregate" class="my_form_input" placeholder="下限">
+                        <input type="number" required="required" min="0"  name="temperatureAggregateUp" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0"   name="temperatureAggregate" class="my_form_input" placeholder="下限">
                     </td>
                     <td class="my_tlabels">一级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="temperatureAggregate_leve1_up" class="my_form_input"   placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="temperatureAggregate_leve1_up" class="my_form_input"   placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="temperatureAggregate_leve1_down" class="my_form_input"  placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">二级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="temperatureAggregate_leve2_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="temperatureAggregate_leve2_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="temperatureAggregate_leve2_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">三级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="temperatureAggregate_leve3_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="temperatureAggregate_leve3_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="temperatureAggregate_leve3_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                 </tr>
@@ -687,55 +687,55 @@
 
                     <td class="my_tlabels">混合料温度上/下限：</td>
                     <td>
-                        <input type="number"  min="0"  name="temperatureMixtureUp" class="my_form_input" placeholder="上限">
-                        <input type="number" min="0"  name="temperatureMixture" class="my_form_input" placeholder="下限">
+                        <input type="number" required="required"  min="0"  name="temperatureMixtureUp" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0"  name="temperatureMixture" class="my_form_input" placeholder="下限">
                     </td>
                     <td class="my_tlabels">一级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="temperatureMixture_leve1_up" class="my_form_input"   placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="temperatureMixture_leve1_up" class="my_form_input"   placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="temperatureMixture_leve1_down" class="my_form_input"  placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">二级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="temperatureMixture_leve2_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="temperatureMixture_leve2_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="temperatureMixture_leve2_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">三级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="temperatureMixture_leve3_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="temperatureMixture_leve3_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="temperatureMixture_leve3_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                 </tr>
                 <tr>
                     <td class="my_tlabels">一仓温度上/下限限：</td>
                     <td>
-                        <input type="number" min="0"  name="temperatureMilling" class="my_form_input" placeholder="下限">
-                        <input type="number" min="0"  name="temperatureMillingUp" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0"  name="temperatureMilling" class="my_form_input" placeholder="下限">
+                        <input type="number" required="required" min="0"  name="temperatureMillingUp" class="my_form_input" placeholder="上限">
                     </td>
                     <td class="my_tlabels">一级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="temperatureMilling_leve1_up" class="my_form_input"   placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="temperatureMilling_leve1_up" class="my_form_input"   placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="temperatureMilling_leve1_down" class="my_form_input"  placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">二级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="temperatureMilling_leve2_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="temperatureMilling_leve2_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="temperatureMilling_leve2_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                     <td class="my_tlabels">三级预警上/下限设定值：</td>
                     <td>
-                        <input type="number" min="0.0" step="0.01"  name="temperatureMilling_leve3_up" class="my_form_input" placeholder="上限">
+                        <input type="number" required="required" min="0.0" step="0.01"  name="temperatureMilling_leve3_up" class="my_form_input" placeholder="上限">
                         <input type="number" required="required"  max="0.0" step="0.01"  name="temperatureMilling_leve3_down" class="my_form_input" placeholder="下限 例: -10">
                     </td>
                 </tr>
                 <tr>
                     <td class="my_tlabels">模板在机组一的编号：</td>
                     <td>
-                        <input type="number" id="crew1ModeleId" name="crew1ModeleId"  required="required"  class="my_form_input" style="width: 120px;" value="0">
+                        <input type="number"  id="crew1ModeleId" name="crew1ModeleId"  required="required"  class="my_form_input" style="width: 120px;" placeholder="0">
                     </td>
                     <td class="my_tlabels">模板在机组二的编号：</td>
                     <td>
-                        <input type="number"  id="crew2ModeleId" name="crew2ModeleId"  required="required"  class="my_form_input" style="width: 120px;" value="0">
+                        <input type="number"  id="crew2ModeleId" name="crew2ModeleId"  required="required"  class="my_form_input" style="width: 120px;" placeholder="0">
                     </td>
                     <td class="my_tlabels">上传人：</td>
                     <td>

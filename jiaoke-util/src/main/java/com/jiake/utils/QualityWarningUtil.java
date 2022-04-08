@@ -870,11 +870,11 @@ public class QualityWarningUtil {
     }
 
     public static List<QualityWarningData> avgThreeProductWarningLeve(int id, List<Map<String, String>> threeList, Map<String, String> warningLeveMap, QualityRatioTemplate ratioTemplate) {
-
-        if (threeList ==null || 0 == threeList.size() || null == ratioTemplate) {
-            return null;
-        }
         List<QualityWarningData> list = new ArrayList<QualityWarningData>();
+
+        if (threeList == null || 0 == threeList.size() || null == ratioTemplate) {
+            return list;
+        }
 
         //计算三盘平均值
         double materialAggregate10 = 0.00;

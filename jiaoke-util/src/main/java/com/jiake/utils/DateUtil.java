@@ -309,4 +309,5 @@ public class DateUtil {
         //long sec = diff % nd % nh % nm / ns;
         return min;
     }
+
 }

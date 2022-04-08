@@ -57,12 +57,12 @@
     <delete id="delectUserProjectByIdArray" parameterType="java.lang.String">
         DELETE
         FROM
-             quality_test_project
+        quality_test_project
         WHERE
-                id in
-                        <foreach collection="idArr" item="id"  separator="," open="(" close=")">
-                            #{id}
-                        </foreach>
+        id in
+        <foreach collection="idArr" item="id"  separator="," open="(" close=")">
+            #{id}
+        </foreach>
 
     </delete>
     <update id="updateProjectItem" parameterType="com.jiaoke.quality.bean.QualityProjectItem">
@@ -93,17 +93,17 @@
     </select>
     <select id="selectLastCarNumByCrewNumAndTime" resultType="java.util.Map">
         SELECT
-        id,
-        car_num AS carNum,
-        up_time AS upTime,
-        crew_num AS crewNum
+               id,
+               car_num AS carNum,
+               up_time AS upTime,
+               crew_num AS crewNum
         FROM
-        `quality_car_num_history`
+             `quality_car_num_history`
         WHERE
-        crew_num = #{crewId}
-        AND up_time &lt;  #{recotime}
+                crew_num = #{crewId}
+          AND up_time &lt;  #{recotime}
         ORDER BY
-        up_time DESC
+                 up_time DESC
         LIMIT 1;
     </select>
     <insert id="insertCarNum" parameterType="java.lang.String" useGeneratedKeys="true">
@@ -123,39 +123,39 @@
             SELECT LAST_INSERT_ID()
         </selectKey>
         insert into `quality_leave_factory_history`
-                (
-                        `project_name`,
-                        `client_name`,
-                        `construction_site_name`,
-                        `traffic_unit`,
-                        `construction_unit`,
-                        `car_num`,
-                        `finish_date`,
-                        `finish_time`,
-                        `haul_distance`,
-                        `amount`,
-                        `product_variety`,
-                        `crewNum`,
-                        `result`,
-                        `msg`
-                        )
+        (
+        `project_name`,
+        `client_name`,
+        `construction_site_name`,
+        `traffic_unit`,
+        `construction_unit`,
+        `car_num`,
+        `finish_date`,
+        `finish_time`,
+        `haul_distance`,
+        `amount`,
+        `product_variety`,
+        `crewNum`,
+        `result`,
+        `msg`
+        )
         values(
 
-               #{map.gcmc},
-               #{map.khmc},
-               #{map.gdm},
-               #{map.gysm},
-               #{map.sgdw},
-               #{map.ch},
-               #{map.fhrq},
-               #{map.fhsj},
-               #{map.yj},
-               #{map.scsl},
-               #{map.cpmc},
-               #{map.crewNum},
-               #{map.Result},
-               #{map.Msgs}
-                      );
+        #{map.gcmc},
+        #{map.khmc},
+        #{map.gdm},
+        #{map.gysm},
+        #{map.sgdw},
+        #{map.ch},
+        #{map.fhrq},
+        #{map.fhsj},
+        #{map.yj},
+        #{map.scsl},
+        #{map.cpmc},
+        #{map.crewNum},
+        #{map.Result},
+        #{map.Msgs}
+        );
 
     </insert>
 
@@ -163,7 +163,7 @@
 
         UPDATE quality_monitoring_realtime_${crewNum}
         set produce_car_num = &apos;${license}&apos;,
-           project_name = &apos;${proName}&apos;
+            project_name = &apos;${proName}&apos;
         WHERE
                 str_to_date(CONCAT('',produce_date,produce_time),'%Y-%m-%d %H:%i:%s') between  &apos;${lastTime}&apos;  and &apos;${carTime}&apos;;
     </update>
@@ -176,9 +176,9 @@
     <update id="updateWarningDataByDate" parameterType="java.lang.String">
         UPDATE quality_warning_promessage_crew
         set produce_car_num = &apos;${license}&apos;,
-            project_name = &apos;${proName}&apos;
+        project_name = &apos;${proName}&apos;
         WHERE
-                str_to_date(CONCAT('',produce_date,produce_time),'%Y-%m-%d %H:%i:%s') between  &apos;${lastTime}&apos;  and &apos;${carTime}&apos;
+        str_to_date(CONCAT('',produce_date,produce_time),'%Y-%m-%d %H:%i:%s') between  &apos;${lastTime}&apos;  and &apos;${carTime}&apos;
         AND
         <choose>
             <when test="crewNum == 'data1'">
@@ -239,28 +239,31 @@
     </select>
     <select id="selectCarNumByWeighing" resultType="java.util.Map">
         SELECT
-               T1.*,
-        (SELECT up_time AS lastTime FROM quality_car_num_history WHERE crew_num = T1.crew_num AND up_time &lt; T1.up_time ORDER BY up_time DESC limit 1) AS lastTime
+               T1.id,
+               T1.car_num,
+               DATE_FORMAT(T1.up_time,'%Y-%m-%d %H:%i:%s') AS up_time ,
+               T1.crew_num,
+               (SELECT DATE_FORMAT(up_time,'%Y-%m-%d %H:%i:%s')  AS lastTime FROM quality_car_num_history WHERE crew_num = T1.crew_num AND up_time &lt; T1.up_time ORDER BY up_time DESC limit 1) AS lastTime
         FROM
-        quality_car_num_history AS T1
+             quality_car_num_history AS T1
         WHERE
                 T1.up_time &lt;  DATE_ADD(STR_TO_DATE(CONCAT(#{insertMap.finish_date},' ',#{insertMap.finish_time}),'%Y-%m-%d %H:%i:%s'),interval 30 MINUTE)
-        AND T1.crew_num = #{insertMap.crewNum}
-        AND T1.car_num = #{insertMap.car_num}
-        AND TIMESTAMPDIFF(HOUR,T1.up_time,DATE_ADD(STR_TO_DATE(CONCAT(#{insertMap.finish_date},' ',#{insertMap.finish_time}),'%Y-%m-%d %H:%i:%s'),interval 30 MINUTE)) &lt; 1
+          AND T1.crew_num = #{insertMap.crewNum}
+          AND T1.car_num = #{insertMap.car_num}
+          AND TIMESTAMPDIFF(HOUR,T1.up_time,DATE_ADD(STR_TO_DATE(CONCAT(#{insertMap.finish_date},' ',#{insertMap.finish_time}),'%Y-%m-%d %H:%i:%s'),interval 30 MINUTE)) &lt; 1
         ORDER BY T1.up_time DESC
         LIMIT 1
     </select>
     <select id="selectCarNumByLeaveFactory" resultType="java.util.Map">
         SELECT
-        T1.*,
-        (SELECT up_time AS lastTime FROM quality_car_num_history WHERE  crew_num = T1.crew_num AND up_time &lt; T1.up_time ORDER BY up_time DESC limit 1) AS lastTime
+               T1.*,
+               (SELECT up_time AS lastTime FROM quality_car_num_history WHERE  crew_num = T1.crew_num AND up_time &lt; T1.up_time ORDER BY up_time DESC limit 1) AS lastTime
         FROM
-        quality_car_num_history AS T1
+             quality_car_num_history AS T1
         WHERE
-        T1.up_time &lt; DATE_ADD(STR_TO_DATE(CONCAT(#{insertMap.finish_date},' ',#{insertMap.finish_time}),'%Y-%m-%d %H:%i:%s'),interval 30 MINUTE)
-        AND T1.crew_num = #{insertMap.crewNum}
-        AND TIMESTAMPDIFF(MINUTE,T1.up_time,DATE_ADD(STR_TO_DATE(CONCAT(#{insertMap.finish_date},' ',#{insertMap.finish_time}),'%Y-%m-%d %H:%i:%s'),interval 30 MINUTE)) &lt; 30
+                T1.up_time &lt; DATE_ADD(STR_TO_DATE(CONCAT(#{insertMap.finish_date},' ',#{insertMap.finish_time}),'%Y-%m-%d %H:%i:%s'),interval 30 MINUTE)
+          AND T1.crew_num = #{insertMap.crewNum}
+          AND TIMESTAMPDIFF(MINUTE,T1.up_time,DATE_ADD(STR_TO_DATE(CONCAT(#{insertMap.finish_date},' ',#{insertMap.finish_time}),'%Y-%m-%d %H:%i:%s'),interval 30 MINUTE)) &lt; 30
         ORDER BY T1.up_time DESC
     </select>
     <update id="updateRealTimeCarNumAndProject" parameterType="java.lang.String" >

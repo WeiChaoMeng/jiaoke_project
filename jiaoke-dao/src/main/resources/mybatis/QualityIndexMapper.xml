@@ -50,4 +50,49 @@
                 LIMIT 8
                 )
     </select>
+
+    <select id="selectLastYearEverMonthTotalToEchart" resultType="java.util.HashMap">
+        (SELECT
+                'crew1' AS crew,
+                MONTH(produce_date) as month_date,
+                DAY(produce_date) as day_date,
+                SUM(material_total)/1000 AS total
+         FROM
+              `quality_monitoring_realtime_data1`
+         WHERE
+                 YEAR(produce_date)	= YEAR(NOW())
+         GROUP BY produce_date
+         ORDER BY produce_date)
+        UNION ALL
+                (SELECT
+                        'crew2' AS crew,
+                        MONTH(produce_date) as month_date,
+                        DAY(produce_date) as day_date,
+                        SUM(material_total)/1000 AS total
+                 FROM
+                      `quality_monitoring_realtime_data2`
+                 WHERE
+                         YEAR(produce_date)	= YEAR(NOW())
+                 GROUP BY produce_date
+                 ORDER BY produce_date)
+    </select>
+
+    <select id="selectLastTenWarning" resultType="java.util.HashMap">
+
+    </select>
+    <select id="selectLastSevenDayTemperaturesDataToChart" resultType="java.util.Map">
+        SELECT CONCAT(produce_date,' ',produce_time) AS proTime, produce_disc_num, temperature_aggregate,temperature_asphalt,temperature_mixture
+        FROM quality_monitoring_realtime_data1
+        WHERE YEARWEEK(date_format(produce_date,'%Y-%m-%d'), 1) = YEARWEEK(now(), 1)-1
+        UNION ALL
+        SELECT CONCAT(produce_date,' ',produce_time) AS proTime, produce_disc_num, temperature_aggregate,temperature_asphalt,temperature_mixture
+        FROM quality_monitoring_realtime_data2
+        WHERE YEARWEEK(date_format(produce_date,'%Y-%m-%d'), 1) = YEARWEEK(now(), 1)-1
+    </select>
+    <select id="selectTemperaturesDataByConditions" resultType="java.util.Map">
+        SELECT CONCAT(produce_date,' ',produce_time) AS proTime, produce_disc_num, temperature_aggregate,temperature_asphalt,temperature_mixture
+        FROM quality_monitoring_realtime_${crew}
+        WHERE YEARWEEK(date_format(produce_date,'%Y-%m-%d'), 1) = YEARWEEK(now(), 1)-1
+          AND produce_proportioning_num = ${ratioNum}
+    </select>
 </mapper>
