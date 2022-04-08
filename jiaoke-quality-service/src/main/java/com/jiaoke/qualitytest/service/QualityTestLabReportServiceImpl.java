@@ -59,7 +59,7 @@ public class QualityTestLabReportServiceImpl implements QualityTestLabReportServ
             assist.andLike("order_ticket_num", "%" + value.getNum() + "%");
         }
         if (value.getMaterials() != null && !value.getMaterials().isEmpty()) {
-            assist.andEq("materials", value.getMaterials() );
+            assist.andEq("materials", value.getMaterials());
         }
         if (value.getSpecification() != null && !value.getSpecification().isEmpty()) {
             assist.andLike("specification", "%" + value.getSpecification() + "%");
@@ -80,7 +80,7 @@ public class QualityTestLabReportServiceImpl implements QualityTestLabReportServ
     @Override
     public String find(QualityTestLabReport value) {
 
-        autoCreateReport();
+        //autoCreateReport();
 
         //TODO这里可以做通过Assist做添加查询
         Assist assist = new Assist();
@@ -146,7 +146,7 @@ public class QualityTestLabReportServiceImpl implements QualityTestLabReportServ
     }
 
     @Override
-    public String saveNotNull(QualityTestLabReport value) {
+    public String saveNotNull(QualityTestLabReport value,boolean updateCheckUser) {
         if (value == null) {
             if (LOG.isDebugEnabled()) {
                 LOG.debug("执行将QualityTestLabReport中属性值不为null的数据保存到数据库-->失败:对象不能为空");
@@ -161,7 +161,7 @@ public class QualityTestLabReportServiceImpl implements QualityTestLabReportServ
         }
         String id = String.valueOf(RandomUtil.random());
         value.setId(id);
-        updateReportInfo(value);
+        updateReportInfo(value,updateCheckUser);
 
         int result = qualityTestLabReportDao.insertNotNullQualityTestLabReport(value);
         if (LOG.isDebugEnabled()) {
@@ -175,7 +175,7 @@ public class QualityTestLabReportServiceImpl implements QualityTestLabReportServ
      *
      * @param value
      */
-    public void updateReportInfo(QualityTestLabReport value) {
+    public void updateReportInfo(QualityTestLabReport value,boolean updateCheckUser) {
         if (value.getExperimentStatus() == null || value.getExperimentStatus() == 0) {
             QualityTestExperimental obj = new QualityTestExperimental();
             obj.setOrderTicketNum(value.getOrderTicketNum());
@@ -232,30 +232,38 @@ public class QualityTestLabReportServiceImpl implements QualityTestLabReportServ
             value.setVerdict(strVerdict);
             value.setExperimentStatus(nExperimentStatus);
         }
-        UserInfo user = (UserInfo) SecurityUtils.getSubject().getPrincipal();
-        if (user.getPosition().indexOf("副总经理") > -1) {
-            value.setChargePerson(user.getNickname());
-        } else if (user.getPosition().indexOf("部长") > -1) {
-            value.setCheckPerson(user.getNickname());
-        } else {
-            value.setReportPerson(user.getNickname());
-            value.setReportDate(new Date());
-        }
-        if (value.getReportDate() == null) {
-            value.setReportDate(new Date());
+        if (updateCheckUser) {
+            UserInfo user = (UserInfo) SecurityUtils.getSubject().getPrincipal();
+            if (user.getPosition().indexOf("副总经理") > -1) {
+                if (value.getChargePerson() == null) {
+                    value.setChargePerson(user.getNickname());
+                }
+            } else if (user.getPosition().indexOf("部长") > -1) {
+                if (value.getCheckPerson() == null) {
+                    value.setCheckPerson(user.getNickname());
+                }
+            } else {
+                if (value.getReportPerson() == null) {
+                    value.setReportPerson(user.getNickname());
+                    value.setReportDate(new Date());
+                }
+            }
+            if (value.getReportDate() == null) {
+                value.setReportDate(new Date());
+            }
         }
 
     }
 
     @Override
-    public String updateNotNullById(QualityTestLabReport value) {
+    public String updateNotNullById(QualityTestLabReport value,boolean updateCheckUser) {
         if (value == null) {
             if (LOG.isDebugEnabled()) {
                 LOG.debug("执行通过QualityTestLabReport的id更新QualityTestLabReport中属性不为null的数据-->失败:对象为null");
             }
             return resultFormat(C412, null);
         }
-        updateReportInfo(value);
+        updateReportInfo(value,updateCheckUser);
         int result = qualityTestLabReportDao.updateNotNullQualityTestLabReportById(value);
         if (LOG.isDebugEnabled()) {
             LOG.debug("执行通过QualityTestLabReport的id更新QualityTestLabReport中属性不为null的数据-->结果:", result);
@@ -283,6 +291,7 @@ public class QualityTestLabReportServiceImpl implements QualityTestLabReportServ
      *
      * @return
      */
+    @Override
     public void autoCreateReport() {
         Assist assist = new Assist();
         assist.setStartRow(0);
@@ -297,14 +306,18 @@ public class QualityTestLabReportServiceImpl implements QualityTestLabReportServ
             if (obj == null) {
                 QualityTestLabReport value = new QualityTestLabReport();
                 value.setOrderTicketNum(lstData.get(i).getOrderTicketNum());
-                saveNotNull(value);
+                saveNotNull(value,false);
 
             } else if (obj.getExperimentStatus() != null && obj.getExperimentStatus() != 3) {
-                updateNotNullById(obj);
+                updateNotNullById(obj,false);
             }
         }
 
     }
 
-
+    @Override
+    public String UserInfo() {
+        UserInfo user = (UserInfo) SecurityUtils.getSubject().getPrincipal();
+        return resultFormat(C200, user);
+    }
 }

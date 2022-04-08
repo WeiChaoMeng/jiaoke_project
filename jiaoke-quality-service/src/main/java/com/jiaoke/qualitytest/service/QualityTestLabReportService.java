@@ -1,5 +1,4 @@
 package com.jiaoke.qualitytest.service;
-import java.util.List;
 
 import com.jiaoke.qualitytest.bean.QualityTestLabReport;
 
@@ -44,7 +43,7 @@ public interface QualityTestLabReportService {
 	 * @param value
 	 * @return
 	 */
-	String saveNotNull(QualityTestLabReport value);
+	String saveNotNull(QualityTestLabReport value,boolean updateCheckUser);
 	
 	/**
 	 * 通过QualityTestLabReport的id更新QualityTestLabReport中属性不为null的数据
@@ -52,7 +51,7 @@ public interface QualityTestLabReportService {
 	 * @param enti
 	 * @return
 	 */
-	String updateNotNullById(QualityTestLabReport enti);
+	String updateNotNullById(QualityTestLabReport enti,boolean updateCheckUser);
 	
 	/**
 	 * 通过QualityTestLabReport的id删除QualityTestLabReport
@@ -61,6 +60,17 @@ public interface QualityTestLabReportService {
 	 * @return
 	 */
 	String deleteById(String id);
+
+	/**
+	 * 刷新部门报告
+	 */
+	void autoCreateReport();
+
+	/**
+	 * 获取用户信息
+	 * @return
+	 */
+	String UserInfo();
 
 
 }
