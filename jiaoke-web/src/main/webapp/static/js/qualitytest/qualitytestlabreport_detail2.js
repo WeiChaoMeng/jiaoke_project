@@ -101,7 +101,7 @@ layui.use(['form', 'table', 'laydate'], function() {
 		msg += "<tbody><tr><td>单位</td>";
 		var value = "";
 		for (var i = 0; i < dataInfo.length; i++) {
-			value = dataInfo[i]['unit1'];
+			value = dataInfo[i]['unit'];
 			if (value == undefined) {
 				value = "";
 			}

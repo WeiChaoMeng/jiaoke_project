@@ -61,7 +61,10 @@ public class QualityTestExperimentalPassRateServiceImpl implements QualityTestEx
 			assist.andGte("sampling_create_time", DateUtil.dateConvertYYYYMMDDHHMMSS(DateUtils.addDays(new Date(), -30)));
 			assist.andLte("sampling_create_time", DateUtil.dateConvertYYYYMMDDHHMMSS(new Date()));
 		}
-		assist.andEq("experiment_status", 3);
+
+		assist.andGte("experiment_status", 1);
+		//assist.andEq("experiment_status", 3);
+
 
 	}
 	@Override
@@ -93,9 +96,9 @@ public class QualityTestExperimentalPassRateServiceImpl implements QualityTestEx
 		}
 
 		if (value.getBegindate() != null ) {
-			assist.andGte("sampling_create_time", value.getBegindate());
+			assist.andGte("sampling_create_time", DateUtil.dateConvertYYYYMMDDHHMMSS(value.getBegindate()));
 		}if (value.getEnddate() != null ) {
-			assist.andLte("sampling_create_time", value.getEnddate());
+			assist.andLte("sampling_create_time", DateUtil.dateConvertYYYYMMDDHHMMSS(value.getEnddate()));
 		}
 		if (value.getBegindate()==null && value.getEnddate()==null)
 		{

@@ -85,7 +85,7 @@ layui.use(['form', 'table', 'laydate'], function () {
                     width: 185
                 },
                     {
-                        field: 'unit1',
+                        field: 'unit',
                         title: '单位',
                         width: 160
                     }, {

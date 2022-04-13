@@ -176,6 +176,6 @@ layui.use(['form', 'table', 'ax', 'laydate', 'dictionary'], function () {
         dictionaryFunc.getSpecificationToSelect("specification", "请选择", basePath, data.value);
         dictionaryFunc.getFacturersToSelect("manufacturers", "请选择", basePath, data.value);
     });
-
+	myForm.refresh();
 
 });

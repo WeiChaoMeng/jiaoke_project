@@ -305,6 +305,10 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function () {
     myForm.computeData = function () {
         var avgValue = myForm.getAvgData();
         var bzcValue = myForm.getBzcData();
+		if (bzcValue==0)
+		{
+			bzcValue=(avgValue/myForm.sourceData.length).toFixed(1);
+		}
         myForm.processData = [];
         for (var i = 0; i < 11; i++) {
             var obj = {};
@@ -349,7 +353,7 @@ layui.use(['form', 'table', 'laydate', 'dictionary'], function () {
         for (var i = 0; i < myForm.sourceData.length; i++) {
             var value = myForm.sourceData[i];
             for (var j = 0; j < myForm.processData.length - 1; j++) {
-                if (value >= Number(myForm.processData[j]['value']) && value < Number(myForm.processData[
+                if (value > Number(myForm.processData[j]['value']) && value <= Number(myForm.processData[
                 j + 1]['value'])) {
                     var v = myForm.processData[j + 1]['count'];
                     if (v == undefined) {

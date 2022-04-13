@@ -41,7 +41,7 @@
 					</div>
 				</fieldset>
 				<div class="form-group-bottom layui-footer text-center"style="margin-top: 20px;">
-					<button class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;提交&emsp;</button>
+					<button class="layui-btn" id ="btn_submit" lay-filter="btnSubmit" lay-submit>&emsp;提交&emsp;</button>
 					<button type="reset" class="layui-btn layui-btn-primary" id="cancel">&emsp;重置&emsp;</button>
 				</div>
 			</div>

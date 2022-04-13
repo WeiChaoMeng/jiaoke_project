@@ -146,7 +146,7 @@ public class QualityTestLabReportServiceImpl implements QualityTestLabReportServ
     }
 
     @Override
-    public String saveNotNull(QualityTestLabReport value,boolean updateCheckUser) {
+    public String saveNotNull(QualityTestLabReport value, boolean updateCheckUser) {
         if (value == null) {
             if (LOG.isDebugEnabled()) {
                 LOG.debug("执行将QualityTestLabReport中属性值不为null的数据保存到数据库-->失败:对象不能为空");
@@ -161,7 +161,7 @@ public class QualityTestLabReportServiceImpl implements QualityTestLabReportServ
         }
         String id = String.valueOf(RandomUtil.random());
         value.setId(id);
-        updateReportInfo(value,updateCheckUser);
+        updateReportInfo(value, updateCheckUser);
 
         int result = qualityTestLabReportDao.insertNotNullQualityTestLabReport(value);
         if (LOG.isDebugEnabled()) {
@@ -175,7 +175,7 @@ public class QualityTestLabReportServiceImpl implements QualityTestLabReportServ
      *
      * @param value
      */
-    public void updateReportInfo(QualityTestLabReport value,boolean updateCheckUser) {
+    public void updateReportInfo(QualityTestLabReport value, boolean updateCheckUser) {
         if (value.getExperimentStatus() == null || value.getExperimentStatus() == 0) {
             QualityTestExperimental obj = new QualityTestExperimental();
             obj.setOrderTicketNum(value.getOrderTicketNum());
@@ -184,28 +184,33 @@ public class QualityTestLabReportServiceImpl implements QualityTestLabReportServ
             Date minDate = new Date(), maxDate = new Date();
             int nExperimentStatus = 1;//0 未完成 1完成
             int nExperimentResult = 0;//-1 不合格 1合格
+            int nExperimentCount = 0;
             if (lstExperimental != null && lstExperimental.size() > 0) {
                 for (int i = 0; i <= lstExperimental.size() - 1; i++) {
                     obj = lstExperimental.get(i);
-                    if (i == 0) {
-                        minDate = obj.getCreateTime();
-                        maxDate = obj.getCreateTime();
-                    } else {
-                        if (minDate.after(obj.getCreateTime())) {
+                    if (obj.getStatus() != -1)//除去删除的试验
+                    {
+                        nExperimentCount++;
+                        if (i == 0) {
                             minDate = obj.getCreateTime();
-                        }
-                        if (maxDate.before(obj.getCreateTime())) {
                             maxDate = obj.getCreateTime();
+                        } else {
+                            if (minDate.after(obj.getCreateTime())) {
+                                minDate = obj.getCreateTime();
+                            }
+                            if (maxDate.before(obj.getCreateTime())) {
+                                maxDate = obj.getCreateTime();
+                            }
                         }
-                    }
-                    if (obj.getExperimentalResult() != null && obj.getExperimentalResult() == -1) {
-                        if (UnExp.trim().length() > 0) {
-                            UnExp += "、";
+                        if (obj.getExperimentalResult() != null && obj.getExperimentalResult() == -1) {
+                            if (UnExp.trim().length() > 0) {
+                                UnExp += "、";
+                            }
+                            UnExp += obj.getExperimentalName();
                         }
-                        UnExp += obj.getExperimentalName();
-                    }
-                    if (obj.getStatus() != 2) {
-                        nExperimentStatus = 0;
+                        if (obj.getStatus() != 2) {
+                            nExperimentStatus = 0;
+                        }
                     }
                 }
                 if (UnExp.trim().length() > 0) {
@@ -221,6 +226,10 @@ public class QualityTestLabReportServiceImpl implements QualityTestLabReportServ
                 } else {
                     strDate = DateUtil.dateConvertYYYYMMDD2(minDate);
                 }
+            }
+            //委托单没有试验为未完成
+            if (nExperimentCount == 0) {
+                nExperimentStatus = 0;
             }
             //所有试验完成后判定是否合格
             if (nExperimentStatus == 1) {
@@ -256,14 +265,14 @@ public class QualityTestLabReportServiceImpl implements QualityTestLabReportServ
     }
 
     @Override
-    public String updateNotNullById(QualityTestLabReport value,boolean updateCheckUser) {
+    public String updateNotNullById(QualityTestLabReport value, boolean updateCheckUser) {
         if (value == null) {
             if (LOG.isDebugEnabled()) {
                 LOG.debug("执行通过QualityTestLabReport的id更新QualityTestLabReport中属性不为null的数据-->失败:对象为null");
             }
             return resultFormat(C412, null);
         }
-        updateReportInfo(value,updateCheckUser);
+        updateReportInfo(value, updateCheckUser);
         int result = qualityTestLabReportDao.updateNotNullQualityTestLabReportById(value);
         if (LOG.isDebugEnabled()) {
             LOG.debug("执行通过QualityTestLabReport的id更新QualityTestLabReport中属性不为null的数据-->结果:", result);
@@ -297,6 +306,7 @@ public class QualityTestLabReportServiceImpl implements QualityTestLabReportServ
         assist.setStartRow(0);
         assist.setRowSize(1000);
         assist.andGt("status", -1);
+        assist.setOrder(Assist.order("sampling_create_time", false));
         List<QualityTestOrderTicket> lstData = qualityTestOrderTicketDao.selectUnCompleteQualityTestOrderTicket(assist);
         if (lstData.size() <= 0) {
             return;
@@ -306,10 +316,10 @@ public class QualityTestLabReportServiceImpl implements QualityTestLabReportServ
             if (obj == null) {
                 QualityTestLabReport value = new QualityTestLabReport();
                 value.setOrderTicketNum(lstData.get(i).getOrderTicketNum());
-                saveNotNull(value,false);
+                saveNotNull(value, false);
 
             } else if (obj.getExperimentStatus() != null && obj.getExperimentStatus() != 3) {
-                updateNotNullById(obj,false);
+                updateNotNullById(obj, false);
             }
         }
 

@@ -90,7 +90,7 @@ layui.use(['form', 'table', 'ax', 'laydate', 'dictionary'], function() {
 	queryData['begindate'] = common.getUrlParam("begindate");
 	queryData['enddate'] = common.getUrlParam("enddate");
 	queryData['experimentResult'] = -1;
-	queryData['experimentStatus'] = 3;
+	//queryData['experimentStatus'] = 3;
 
 	table.render({
 		elem: '#' + myForm.tableId,
