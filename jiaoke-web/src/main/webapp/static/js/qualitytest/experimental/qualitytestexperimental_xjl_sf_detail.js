@@ -176,7 +176,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function () {
             if (ssz1HaveData && (data['ssz_value1'] == undefined || data['ssz_value1'] == null)) {
                 data['ssz_value1'] = 0;
             }
-            if (data['ssz_value1'] >= 0) {
+            if (data['ssz_value1'] >= 0 && i<myform.CJL_SF_Data.length-2) {
                 data['fjsy_value1'] = ((data['ssz_value1'] / CLL_SF_GZ_Value.gzsyzl_value1) * 100).toFixed(1);
                 data['ljsy_value1'] = Number(myform.getljsf1(i)).toFixed(1);
                 data['tgbfb_value1'] = Number(100 - data['ljsy_value1']).toFixed(1);
@@ -188,7 +188,7 @@ layui.use(['form', 'table', 'laydate', 'element'], function () {
             if (ssz2HaveData && (data['ssz_value2'] == undefined || data['ssz_value2'] == null)) {
                 data['ssz_value2'] = 0;
             }
-            if (data['ssz_value2'] >= 0) {
+            if (data['ssz_value2'] >= 0 && i<myform.CJL_SF_Data.length-2) {
                 data['fjsy_value2'] = ((data['ssz_value2'] / CLL_SF_GZ_Value.gzsyzl_value2) * 100).toFixed(1);
                 data['ljsy_value2'] = Number(myform.getljsf2(i)).toFixed(1);
                 data['tgbfb_value2'] = Number(100 - data['ljsy_value2']).toFixed(1);
@@ -235,13 +235,13 @@ layui.use(['form', 'table', 'laydate', 'element'], function () {
         }
         var shl_value1 = 0.0;
         if (CLL_SF_GZ_Value.sxhsyzl_value1 > 0) {
-            shl_value1 = (sh_value1 / CLL_SF_GZ_Value.sxhsyzl_value1).toFixed(1);
+            shl_value1 = ((sh_value1 / CLL_SF_GZ_Value.sxhsyzl_value1)*100).toFixed(2);
         }
         $("#shl_value1").html(shl_value1);
 
         var shl_value2 = 0.0;
         if (CLL_SF_GZ_Value.sxhsyzl_value2 > 0) {
-            shl_value2 = (sh_value2 / CLL_SF_GZ_Value.sxhsyzl_value2).toFixed(1);
+            shl_value2 = ((sh_value2 / CLL_SF_GZ_Value.sxhsyzl_value2)*100).toFixed(2);
         }
         $("#shl_value2").html(shl_value2);
     }

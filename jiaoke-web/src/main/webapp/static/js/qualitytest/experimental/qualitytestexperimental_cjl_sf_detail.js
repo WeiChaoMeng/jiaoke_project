@@ -203,7 +203,8 @@ layui.use(['form', 'table', 'laydate', 'element'], function () {
             if (ssz1HaveData && (data['ssz_value1'] == undefined || data['ssz_value1'] == null)) {
                 data['ssz_value1'] = 0.0;
             }
-            if (data['ssz_value1'] >= 0) {
+			//筛底不计算
+            if (data['ssz_value1'] >= 0 && i<myform.CJL_SF_Data.length-1) {
                 data['fjsy_value1'] = ((data['ssz_value1'] / CLL_SF_GZ_Value.gzsyzl_value1) * 100).toFixed(1);
                 data['ljsy_value1'] = myform.getljsf1(i);
                 data['tgbfb_value1'] = Number(100 - data['ljsy_value1']).toFixed(1);
@@ -216,7 +217,8 @@ layui.use(['form', 'table', 'laydate', 'element'], function () {
             if (ssz2HaveData && (data['ssz_value2'] == undefined || data['ssz_value2'] == null)) {
                 data['ssz_value2'] = 0.0;
             }
-            if (data['ssz_value2'] >= 0) {
+			//筛底不计算
+            if (data['ssz_value2'] >= 0 && i<myform.CJL_SF_Data.length-1) {
                 data['fjsy_value2'] = ((data['ssz_value2'] / CLL_SF_GZ_Value.gzsyzl_value2) * 100).toFixed(1);
                 data['ljsy_value2'] = myform.getljsf2(i);
                 data['tgbfb_value2'] = Number(100 - data['ljsy_value2']).toFixed(1);
